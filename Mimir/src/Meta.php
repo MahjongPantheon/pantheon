@@ -26,14 +26,6 @@ class Meta
      */
     protected $_authToken;
     /**
-     * @var integer
-     */
-    protected $_requestedVersionMajor;
-    /**
-     * @var integer
-     */
-    protected $_requestedVersionMinor;
-    /**
      * @var integer|null
      */
     protected $_currentEventId;
@@ -157,9 +149,6 @@ class Meta
     protected function _fillFrom(array $input): void
     {
         $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN']) ? '' : $input['HTTP_X_AUTH_TOKEN']);
-        list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = array_map('intval', explode('.', (
-            empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
-        )));
 
         $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
             ? null
@@ -199,9 +188,6 @@ class Meta
                 $this->_authToken = null;
             }
         }
-
-        $this->_requestedVersionMinor = $this->_requestedVersionMinor ? intval($this->_requestedVersionMinor) : 0;
-        $this->_requestedVersionMajor = $this->_requestedVersionMajor ? intval($this->_requestedVersionMajor) : 1;
     }
 
     public function getAuthToken(): ?string
@@ -271,19 +257,6 @@ class Meta
     public function isInternalRequest()
     {
         return $this->_isInternalRequest;
-    }
-
-    /**
-     * @return int[]
-     *
-     * @psalm-return array{0: int, 1: int}
-     */
-    public function getRequestedVersion(): array
-    {
-        return [
-            $this->_requestedVersionMajor,
-            $this->_requestedVersionMinor
-        ];
     }
 
     public function getSelectedLocale(): string

@@ -20,7 +20,7 @@ import * as React from 'react';
 import { Checkbox, NumberInput, Radio, Space, Stack } from '@mantine/core';
 import { IconClockPlay, IconUserX } from '@tabler/icons-react';
 import { FormHandle } from '#/pages/OwnedEventsEdit/types';
-import { EndingPolicy } from '#/clients/atoms.pb';
+import { EndingPolicy } from '#/clients/proto/atoms.pb';
 
 type TournamentSettingsProps = {
   form: FormHandle;
@@ -49,15 +49,15 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         <Space h='md' />
         <Stack spacing='xs'>
           <Radio
-            value={EndingPolicy.EP_NONE}
+            value={EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED}
             label={i18n._t('Do not interrupt session until it ends')}
           />
           <Radio
-            value={EndingPolicy.EP_END_AFTER_HAND}
+            value={EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND}
             label={i18n._t('When time is out, finish current hand and interrupt the session')}
           />
           <Radio
-            value={EndingPolicy.EP_ONE_MORE_HAND}
+            value={EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND}
             label={i18n._t(
               'When time is out, finish current hand, play one more, and then interrup the session'
             )}

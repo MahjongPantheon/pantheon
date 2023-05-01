@@ -24,7 +24,6 @@ import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { useCallback, useState } from 'react';
 import { I18nService } from '#/services/i18n';
-import { environment } from '#config';
 
 export const ProfileResetPassword: React.FC = () => {
   const api = useApi();
@@ -50,7 +49,7 @@ export const ProfileResetPassword: React.FC = () => {
       api
         .requestPasswordRecovery(values.email.trim().toLowerCase())
         .then((resp) => {
-          if (resp.resetToken && !environment.production) {
+          if (resp.resetToken && process.env.NODE_ENV !== 'production') {
             // debug mode; code will not be sent in production mode
             alert('Reset link: ' + resp.resetToken);
           }

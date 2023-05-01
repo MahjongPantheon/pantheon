@@ -25,31 +25,31 @@ import {
   RoundState,
   SessionHistoryResult,
   TableState,
-} from '#/clients/atoms.pb';
+} from '#/clients/proto/atoms.pb';
 import {
-  Events_GetTimerState_Response,
-  Games_AddRound_Response,
-  Games_GetSessionOverview_Response,
-} from '#/clients/mimir.pb';
-import { Auth_Authorize_Response } from '#/clients/frey.pb';
+  EventsGetTimerStateResponse,
+  GamesAddRoundResponse,
+  GamesGetSessionOverviewResponse,
+} from '#/clients/proto/mimir.pb';
+import { AuthAuthorizeResponse } from '#/clients/proto/frey.pb';
 
 export interface IRiichiApi {
   setCredentials(personId: number, token: string): void;
   startGame(eventId: number, playerIds: number[]): Promise<string>;
   getMyEvents(): Promise<MyEvent[]>;
   getGameConfig(eventId: number): Promise<GameConfig>;
-  getTimerState(eventId: number): Promise<Events_GetTimerState_Response>;
+  getTimerState(eventId: number): Promise<EventsGetTimerStateResponse>;
   getLastResults(playerId: number, eventId: number): Promise<SessionHistoryResult[]>;
   getAllPlayers(eventId: number): Promise<RegisteredPlayer[]>;
-  getGameOverview(sessionHashcode: string): Promise<Games_GetSessionOverview_Response>;
+  getGameOverview(sessionHashcode: string): Promise<GamesGetSessionOverviewResponse>;
   getCurrentGames(playerId: number, eventId: number): Promise<CurrentSession[]>;
   getUserInfo(personIds: number[]): Promise<PersonEx[]>;
   getChangesOverview(state: IAppState): Promise<RoundState>;
   getLastRoundByHash(sessionHashcode: string): Promise<RoundState>;
   getLastRound(playerId: number, eventId: number): Promise<RoundState>;
   getAllRounds(sessionHashcode: string): Promise<RoundState[]>;
-  addRound(state: IAppState): Promise<Games_AddRound_Response>;
+  addRound(state: IAppState): Promise<GamesAddRoundResponse>;
   getTablesState(eventId: number): Promise<TableState[]>;
   quickAuthorize(): Promise<boolean>;
-  authorize(email: string, password: string): Promise<Auth_Authorize_Response>;
+  authorize(email: string, password: string): Promise<AuthAuthorizeResponse>;
 }

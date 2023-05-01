@@ -27,6 +27,7 @@ import {
 } from '@tabler/icons-react';
 import { Tabs } from '@mantine/core';
 import { FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { EventType } from '#/clients/proto/atoms.pb';
 
 type TabsProps = {
   i18n: I18nService;
@@ -39,17 +40,17 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
       <Tabs.Tab value='basic' icon={<IconTool size='0.8rem' />}>
         {i18n._t('Basic settings')}
       </Tabs.Tab>
-      {form.getTransformedValues().event.type === 'LOCAL' && (
+      {form.getTransformedValues().event.type === EventType.EVENT_TYPE_LOCAL && (
         <Tabs.Tab value='LOCAL' icon={<IconFriends size='0.8rem' />}>
           {i18n._t('Local event settings')}
         </Tabs.Tab>
       )}
-      {form.getTransformedValues().event.type === 'TOURNAMENT' && (
+      {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
         <Tabs.Tab value='TOURNAMENT' icon={<IconTournament size='0.8rem' />}>
           {i18n._t('Tournament settings')}
         </Tabs.Tab>
       )}
-      {form.getTransformedValues().event.type === 'ONLINE' && (
+      {form.getTransformedValues().event.type === EventType.EVENT_TYPE_ONLINE && (
         <Tabs.Tab value='ONLINE' icon={<IconNetwork size='0.8rem' />}>
           {i18n._t('Online event settings')}
         </Tabs.Tab>

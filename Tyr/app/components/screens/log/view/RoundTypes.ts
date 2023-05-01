@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { RoundOutcome } from '#/clients/atoms.pb';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export interface IRoundOverviewBase {
   outcome: RoundOutcome;
@@ -25,7 +25,7 @@ export interface IRoundOverviewBase {
 }
 
 export interface IRoundOverviewRon extends IRoundOverviewBase {
-  outcome: 'RON';
+  outcome: typeof RoundOutcome.ROUND_OUTCOME_RON;
   loser: string;
   winner: string;
   paoPlayer?: string;
@@ -36,7 +36,7 @@ export interface IRoundOverviewRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
-  outcome: 'MULTIRON';
+  outcome: typeof RoundOutcome.ROUND_OUTCOME_MULTIRON;
   loser: string;
   winnerList: string[];
   paoPlayerList: (string | undefined)[];
@@ -47,7 +47,7 @@ export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewTsumo extends IRoundOverviewBase {
-  outcome: 'TSUMO';
+  outcome: typeof RoundOutcome.ROUND_OUTCOME_TSUMO;
   winner: string;
   paoPlayer?: string;
   yakuList: string[];
@@ -57,21 +57,21 @@ export interface IRoundOverviewTsumo extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewDraw extends IRoundOverviewBase {
-  outcome: 'DRAW';
+  outcome: typeof RoundOutcome.ROUND_OUTCOME_DRAW;
   tempai: string[];
 }
 
 export interface IRoundOverviewAbort extends IRoundOverviewBase {
-  outcome: 'ABORT';
+  outcome: typeof RoundOutcome.ROUND_OUTCOME_ABORT;
 }
 
 export interface IRoundOverviewChombo extends IRoundOverviewBase {
-  outcome: 'CHOMBO';
+  outcome: typeof RoundOutcome.ROUND_OUTCOME_CHOMBO;
   penaltyFor: string;
 }
 
 export interface IRoundOverviewNagashi extends IRoundOverviewBase {
-  outcome: 'NAGASHI';
+  outcome: typeof RoundOutcome.ROUND_OUTCOME_NAGASHI;
   tempai: string[];
   nagashi: string[];
 }

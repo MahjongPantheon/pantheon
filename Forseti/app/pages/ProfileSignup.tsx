@@ -33,7 +33,6 @@ import { IconCircleCheck, IconLock, IconMailQuestion, IconSignature } from '@tab
 import { Link } from 'wouter';
 import { useCallback, useState } from 'react';
 import { useApi } from '#/hooks/api';
-import { environment } from '#config';
 import { useDisclosure } from '@mantine/hooks';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { calcPasswordStrength } from '#/helpers/passwordStrength';
@@ -74,7 +73,7 @@ export const ProfileSignup: React.FC = () => {
           values.password.trim()
         )
         .then((resp) => {
-          if (resp.approvalCode && !environment.production) {
+          if (resp.approvalCode && process.env.NODE_ENV !== 'production') {
             // debug mode; code will not be sent in production mode
             alert('Confirmation link: ' + window.location.host + resp.approvalCode);
           }
@@ -154,8 +153,8 @@ export const ProfileSignup: React.FC = () => {
         <small>Effective date: March 28, 2023</small>
         <Collapse in={opened}>
           <p>
-            Pantheon ("us", "we", or "our") operates the {environment.rootUrl} domain and subdomains
-            (the "Service").
+            Pantheon ("us", "we", or "our") operates the {window.__cfg.ROOT_HOST} domain and
+            subdomains (the "Service").
           </p>
           <p>
             This page informs you of our policies regarding the collection, use, and disclosure of
@@ -166,7 +165,7 @@ export const ProfileSignup: React.FC = () => {
             We use your data to provide and improve the Service. By using the Service, you agree to
             the collection and use of information in accordance with this policy. Unless otherwise
             defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings
-            as in our Terms and Conditions, accessible from {environment.rootUrl}
+            as in our Terms and Conditions, accessible from {window.__cfg.ROOT_HOST}
           </p>
 
           <h3>Information Collection And Use</h3>
@@ -370,7 +369,8 @@ export const ProfileSignup: React.FC = () => {
           <p>If you have any questions about this Privacy Policy, please contact us:</p>
           <ul>
             <li>
-              By email: <a href={'mailto:' + environment.adminEmail}>{environment.adminEmail}</a>
+              By email:{' '}
+              <a href={`mailto:${window.__cfg.ADMIN_EMAIL}`}>{window.__cfg.ADMIN_EMAIL}</a>
             </li>
           </ul>
         </Collapse>

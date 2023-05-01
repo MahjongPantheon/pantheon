@@ -16,7 +16,7 @@
  */
 
 import { UseFormReturnType } from '@mantine/form';
-import { EventData, RulesetConfig } from '#/clients/atoms.pb';
+import { EventData, RulesetConfig } from '#/clients/proto/atoms.pb';
 
 export type EventCustom = Omit<Omit<EventData, 'rulesetConfig'>, 'autostart'>;
 

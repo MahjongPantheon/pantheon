@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { RoundOutcome } from '#/clients/atoms.pb';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export interface Outcome {
   selectedOutcome: RoundOutcome;
@@ -35,7 +35,7 @@ export interface WinProps {
 }
 
 export interface AppOutcomeRon extends Outcome {
-  selectedOutcome: 'RON';
+  selectedOutcome: typeof RoundOutcome.ROUND_OUTCOME_RON;
   loser?: number; // id of player
   loserIsDealer: boolean;
   multiRon: number;
@@ -44,25 +44,25 @@ export interface AppOutcomeRon extends Outcome {
 }
 
 export interface AppOutcomeTsumo extends Outcome, WinProps {
-  selectedOutcome: 'TSUMO';
+  selectedOutcome: typeof RoundOutcome.ROUND_OUTCOME_TSUMO;
   riichiBets: number[]; // ids of players
 }
 
 export interface AppOutcomeAbort extends Outcome {
-  selectedOutcome: 'ABORT';
+  selectedOutcome: typeof RoundOutcome.ROUND_OUTCOME_ABORT;
   riichiBets: number[]; // ids of players
   deadhands: number[]; // ids of players
 }
 
 export interface AppOutcomeDraw extends Outcome {
-  selectedOutcome: 'DRAW';
+  selectedOutcome: typeof RoundOutcome.ROUND_OUTCOME_DRAW;
   riichiBets: number[]; // ids of players
   tempai: number[]; // ids of players
   deadhands: number[]; // ids of players
 }
 
 export interface AppOutcomeNagashi extends Outcome {
-  selectedOutcome: 'NAGASHI';
+  selectedOutcome: typeof RoundOutcome.ROUND_OUTCOME_NAGASHI;
   riichiBets: number[]; // ids of players
   tempai: number[]; // ids of players
   deadhands: number[]; // ids of players
@@ -70,7 +70,7 @@ export interface AppOutcomeNagashi extends Outcome {
 }
 
 export interface AppOutcomeChombo extends Outcome {
-  selectedOutcome: 'CHOMBO';
+  selectedOutcome: typeof RoundOutcome.ROUND_OUTCOME_CHOMBO;
   loser?: number; // id of player
   loserIsDealer: boolean;
 }

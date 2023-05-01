@@ -104,10 +104,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function RequestRegistration(array $ctx, \Common\Auth_RequestRegistration_Payload $req): \Common\Auth_RequestRegistration_Response
+    public function RequestRegistration(array $ctx, \Common\AuthRequestRegistrationPayload $req): \Common\AuthRequestRegistrationResponse
     {
         try {
-            return (new \Common\Auth_RequestRegistration_Response())
+            return (new \Common\AuthRequestRegistrationResponse())
                 ->setApprovalCode($this->_authController->requestRegistration(
                     $req->getEmail(),
                     $req->getTitle(),
@@ -123,10 +123,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function ApproveRegistration(array $ctx, \Common\Auth_ApproveRegistration_Payload $req): \Common\Auth_ApproveRegistration_Response
+    public function ApproveRegistration(array $ctx, \Common\AuthApproveRegistrationPayload $req): \Common\AuthApproveRegistrationResponse
     {
         try {
-            return (new \Common\Auth_ApproveRegistration_Response())
+            return (new \Common\AuthApproveRegistrationResponse())
                 ->setPersonId($this->_authController->approveRegistration(
                     $req->getApprovalCode()
                 ));
@@ -140,11 +140,11 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws AuthFailedException
      */
-    public function Authorize(array $ctx, \Common\Auth_Authorize_Payload $req): \Common\Auth_Authorize_Response
+    public function Authorize(array $ctx, \Common\AuthAuthorizePayload $req): \Common\AuthAuthorizeResponse
     {
         try {
             $ret = $this->_authController->authorize($req->getEmail(), $req->getPassword());
-            return (new \Common\Auth_Authorize_Response())
+            return (new \Common\AuthAuthorizeResponse())
                 ->setPersonId($ret[0])
                 ->setAuthToken($ret[1]);
         } catch (\Exception $e) {
@@ -156,10 +156,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function QuickAuthorize(array $ctx, \Common\Auth_QuickAuthorize_Payload $req): \Common\Auth_QuickAuthorize_Response
+    public function QuickAuthorize(array $ctx, \Common\AuthQuickAuthorizePayload $req): \Common\AuthQuickAuthorizeResponse
     {
         try {
-            return (new \Common\Auth_QuickAuthorize_Response())
+            return (new \Common\AuthQuickAuthorizeResponse())
                 ->setAuthSuccess($this->_authController->quickAuthorize(
                     $req->getPersonId(),
                     $req->getAuthToken()
@@ -174,11 +174,11 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws AuthFailedException
      */
-    public function Me(array $ctx, \Common\Auth_Me_Payload $req): \Common\Auth_Me_Response
+    public function Me(array $ctx, \Common\AuthMePayload $req): \Common\AuthMeResponse
     {
         try {
             $ret = $this->_authController->me($req->getPersonId(), $req->getAuthToken());
-            return (new \Common\Auth_Me_Response())
+            return (new \Common\AuthMeResponse())
                 ->setPersonId($ret['id'])
                 ->setCountry($ret['country'])
                 ->setCity($ret['city'])
@@ -197,10 +197,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws AuthFailedException
      */
-    public function ChangePassword(array $ctx, \Common\Auth_ChangePassword_Payload $req): \Common\Auth_ChangePassword_Response
+    public function ChangePassword(array $ctx, \Common\AuthChangePasswordPayload $req): \Common\AuthChangePasswordResponse
     {
         try {
-            return (new \Common\Auth_ChangePassword_Response())
+            return (new \Common\AuthChangePasswordResponse())
                 ->setAuthToken($this->_authController->changePassword(
                     $req->getEmail(),
                     $req->getPassword(),
@@ -215,10 +215,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function RequestResetPassword(array $ctx, \Common\Auth_RequestResetPassword_Payload $req): \Common\Auth_RequestResetPassword_Response
+    public function RequestResetPassword(array $ctx, \Common\AuthRequestResetPasswordPayload $req): \Common\AuthRequestResetPasswordResponse
     {
         try {
-            return (new \Common\Auth_RequestResetPassword_Response())
+            return (new \Common\AuthRequestResetPasswordResponse())
                 ->setResetToken($this->_authController->requestResetPassword($req->getEmail(), $req->getSendEmail()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -230,10 +230,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws AuthFailedException
      */
-    public function ApproveResetPassword(array $ctx, \Common\Auth_ApproveResetPassword_Payload $req): \Common\Auth_ApproveResetPassword_Response
+    public function ApproveResetPassword(array $ctx, \Common\AuthApproveResetPasswordPayload $req): \Common\AuthApproveResetPasswordResponse
     {
         try {
-            return (new \Common\Auth_ApproveResetPassword_Response())
+            return (new \Common\AuthApproveResetPasswordResponse())
                 ->setNewTmpPassword($this->_authController->approveResetPassword($req->getEmail(), $req->getResetToken()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -244,11 +244,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetAccessRules(array $ctx, \Common\Access_GetAccessRules_Payload $req): \Common\Access_GetAccessRules_Response
+    public function GetAccessRules(array $ctx, \Common\AccessGetAccessRulesPayload $req): \Common\AccessGetAccessRulesResponse
     {
         try {
             $ret = $this->_accessController->getAccessRules($req->getPersonId(), $req->getEventId());
-            return (new \Common\Access_GetAccessRules_Response())
+            return (new \Common\AccessGetAccessRulesResponse())
                 ->setRules((new \Common\AccessRules())->setRules(
                     array_combine(
                         array_keys($ret),
@@ -265,11 +265,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetRuleValue(array $ctx, \Common\Access_GetRuleValue_Payload $req): \Common\Access_GetRuleValue_Response
+    public function GetRuleValue(array $ctx, \Common\AccessGetRuleValuePayload $req): \Common\AccessGetRuleValueResponse
     {
         try {
             $ret = $this->_accessController->getRuleValue($req->getPersonId(), $req->getEventId(), $req->getRuleName());
-            return (new \Common\Access_GetRuleValue_Response())->setValue(self::_toRuleValue($ret));
+            return (new \Common\AccessGetRuleValueResponse())->setValue(self::_toRuleValue($ret));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;
@@ -279,10 +279,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $req): \Common\Generic_Success_Response
+    public function UpdatePersonalInfo(array $ctx, \Common\PersonsUpdatePersonalInfoPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())->setSuccess(
+            return (new \Common\GenericSuccessResponse())->setSuccess(
                 $this->_personsController->updatePersonalInfo(
                     $req->getId(),
                     $req->getTitle(),
@@ -302,10 +302,10 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetPersonalInfo(array $ctx, \Common\Persons_GetPersonalInfo_Payload $req): \Common\Persons_GetPersonalInfo_Response
+    public function GetPersonalInfo(array $ctx, \Common\PersonsGetPersonalInfoPayload $req): \Common\PersonsGetPersonalInfoResponse
     {
         try {
-            return (new \Common\Persons_GetPersonalInfo_Response())->setPersons(
+            return (new \Common\PersonsGetPersonalInfoResponse())->setPeople(
                 array_map(function ($person) {
                     return (new \Common\PersonEx())
                         ->setId($person['id'])
@@ -327,11 +327,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function FindByTenhouIds(array $ctx, \Common\Persons_FindByTenhouIds_Payload $req): \Common\Persons_FindByTenhouIds_Response
+    public function FindByTenhouIds(array $ctx, \Common\PersonsFindByTenhouIdsPayload $req): \Common\PersonsFindByTenhouIdsResponse
     {
         try {
-            return (new \Common\Persons_FindByTenhouIds_Response())
-                ->setPersons(array_map(function ($person) {
+            return (new \Common\PersonsFindByTenhouIdsResponse())
+                ->setPeople(array_map(function ($person) {
                     return (new \Common\PersonEx())
                         ->setId($person['id'])
                         ->setCity($person['city'])
@@ -350,11 +350,11 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function FindByTitle(array $ctx, \Common\Persons_FindByTitle_Payload $req): \Common\Persons_FindByTitle_Response
+    public function FindByTitle(array $ctx, \Common\PersonsFindByTitlePayload $req): \Common\PersonsFindByTitleResponse
     {
         try {
-            return (new \Common\Persons_FindByTitle_Response())
-                ->setPersons(array_map(function ($person) {
+            return (new \Common\PersonsFindByTitleResponse())
+                ->setPeople(array_map(function ($person) {
                     return (new \Common\Person())
                         ->setId($person['id'])
                         ->setCity($person['city'])
@@ -370,10 +370,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function GetGroups(array $ctx, \Common\Persons_GetGroups_Payload $req): \Common\Persons_GetGroups_Response
+    public function GetGroups(array $ctx, \Common\PersonsGetGroupsPayload $req): \Common\PersonsGetGroupsResponse
     {
         try {
-            return (new \Common\Persons_GetGroups_Response())
+            return (new \Common\PersonsGetGroupsResponse())
                 ->setGroups(array_map(function ($group) {
                     return (new \Common\Group())
                         ->setId($group['id'])
@@ -387,10 +387,10 @@ final class TwirpServer implements Frey
         }
     }
 
-    public function GetEventAdmins(array $ctx, \Common\Access_GetEventAdmins_Payload $req): \Common\Access_GetEventAdmins_Response
+    public function GetEventAdmins(array $ctx, \Common\AccessGetEventAdminsPayload $req): \Common\AccessGetEventAdminsResponse
     {
         try {
-            return (new \Common\Access_GetEventAdmins_Response())
+            return (new \Common\AccessGetEventAdminsResponse())
                 ->setAdmins(array_map(function ($rule) {
                     return (new \Common\EventAdmin())
                         ->setPersonId($rule['id'])
@@ -406,10 +406,10 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetSuperadminFlag(array $ctx, \Common\Access_GetSuperadminFlag_Payload $req): \Common\Access_GetSuperadminFlag_Response
+    public function GetSuperadminFlag(array $ctx, \Common\AccessGetSuperadminFlagPayload $req): \Common\AccessGetSuperadminFlagResponse
     {
         try {
-            return (new \Common\Access_GetSuperadminFlag_Response())
+            return (new \Common\AccessGetSuperadminFlagResponse())
                 ->setIsAdmin($this->_accessController->getSuperadminFlag($req->getPersonId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -420,10 +420,10 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetOwnedEventIds(array $ctx, \Common\Access_GetOwnedEventIds_Payload $req): \Common\Access_GetOwnedEventIds_Response
+    public function GetOwnedEventIds(array $ctx, \Common\AccessGetOwnedEventIdsPayload $req): \Common\AccessGetOwnedEventIdsResponse
     {
         try {
-            return (new \Common\Access_GetOwnedEventIds_Response())
+            return (new \Common\AccessGetOwnedEventIdsResponse())
                 ->setEventIds($this->_accessController->getOwnedEventIds($req->getPersonId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -434,10 +434,10 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetRulesList(array $ctx, \Common\Access_GetRulesList_Payload $req): \Common\Access_GetRulesList_Response
+    public function GetRulesList(array $ctx, \Common\AccessGetRulesListPayload $req): \Common\AccessGetRulesListResponse
     {
         try {
-            return (new \Common\Access_GetRulesList_Response())
+            return (new \Common\AccessGetRulesListResponse())
                 ->setItems($this->_accessController->getRulesList());
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -448,11 +448,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetAllEventRules(array $ctx, \Common\Access_GetAllEventRules_Payload $req): \Common\Access_GetAllEventRules_Response
+    public function GetAllEventRules(array $ctx, \Common\AccessGetAllEventRulesPayload $req): \Common\AccessGetAllEventRulesResponse
     {
         try {
             $rules = $this->_accessController->getAllEventRules($req->getEventId());
-            return (new \Common\Access_GetAllEventRules_Response())
+            return (new \Common\AccessGetAllEventRulesResponse())
                 /** @phpstan-ignore-next-line */
                 ->setGroupRules(array_map('self::_toRuleListItem', $rules['group']))
                 /** @phpstan-ignore-next-line */
@@ -466,11 +466,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetPersonAccess(array $ctx, \Common\Access_GetPersonAccess_Payload $req): \Common\Access_GetPersonAccess_Response
+    public function GetPersonAccess(array $ctx, \Common\AccessGetPersonAccessPayload $req): \Common\AccessGetPersonAccessResponse
     {
         try {
             $ret = $this->_accessController->getPersonAccess($req->getPersonId(), $req->getEventId());
-            return (new \Common\Access_GetPersonAccess_Response())->setRules(
+            return (new \Common\AccessGetPersonAccessResponse())->setRules(
                 (new \Common\AccessRules())->setRules(
                     array_combine(
                         array_keys($ret),
@@ -488,11 +488,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetGroupAccess(array $ctx, \Common\Access_GetGroupAccess_Payload $req): \Common\Access_GetGroupAccess_Response
+    public function GetGroupAccess(array $ctx, \Common\AccessGetGroupAccessPayload $req): \Common\AccessGetGroupAccessResponse
     {
         try {
             $ret = $this->_accessController->getGroupAccess($req->getGroupId(), $req->getEventId());
-            return (new \Common\Access_GetGroupAccess_Response())
+            return (new \Common\AccessGetGroupAccessResponse())
                 ->setRules(
                     (new \Common\AccessRules())->setRules(
                         array_combine(
@@ -511,11 +511,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetAllPersonAccess(array $ctx, \Common\Access_GetAllPersonAccess_Payload $req): \Common\Access_GetAllPersonAccess_Response
+    public function GetAllPersonAccess(array $ctx, \Common\AccessGetAllPersonAccessPayload $req): \Common\AccessGetAllPersonAccessResponse
     {
         try {
             $ret = $this->_accessController->getAllPersonAccess($req->getPersonId());
-            return (new \Common\Access_GetAllPersonAccess_Response())
+            return (new \Common\AccessGetAllPersonAccessResponse())
                 ->setRulesByEvent(array_combine(
                     array_keys($ret),
                     array_map(function ($eventRules) {
@@ -538,11 +538,11 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function GetAllGroupAccess(array $ctx, \Common\Access_GetAllGroupAccess_Payload $req): \Common\Access_GetAllGroupAccess_Response
+    public function GetAllGroupAccess(array $ctx, \Common\AccessGetAllGroupAccessPayload $req): \Common\AccessGetAllGroupAccessResponse
     {
         try {
             $ret = $this->_accessController->getAllGroupAccess($req->getGroupId());
-            return (new \Common\Access_GetAllGroupAccess_Response())
+            return (new \Common\AccessGetAllGroupAccessResponse())
                 ->setRulesByEvent(array_combine(
                     array_keys($ret),
                     array_map(function ($eventRules) {
@@ -566,10 +566,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws DuplicateEntityException
      */
-    public function AddRuleForPerson(array $ctx, \Common\Access_AddRuleForPerson_Payload $req): \Common\Access_AddRuleForPerson_Response
+    public function AddRuleForPerson(array $ctx, \Common\AccessAddRuleForPersonPayload $req): \Common\AccessAddRuleForPersonResponse
     {
         try {
-            return (new \Common\Access_AddRuleForPerson_Response())
+            return (new \Common\AccessAddRuleForPersonResponse())
                 ->setRuleId($this->_accessController->addRuleForPerson(
                     $req->getRuleName(),
                     self::_fromRuleValue($req->getRuleValue()),
@@ -587,10 +587,10 @@ final class TwirpServer implements Frey
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      */
-    public function AddRuleForGroup(array $ctx, \Common\Access_AddRuleForGroup_Payload $req): \Common\Access_AddRuleForGroup_Response
+    public function AddRuleForGroup(array $ctx, \Common\AccessAddRuleForGroupPayload $req): \Common\AccessAddRuleForGroupResponse
     {
         try {
-            return (new \Common\Access_AddRuleForGroup_Response())
+            return (new \Common\AccessAddRuleForGroupResponse())
                 ->setRuleId($this->_accessController->addRuleForGroup(
                     $req->getRuleName(),
                     self::_fromRuleValue($req->getRuleValue()),
@@ -607,10 +607,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $req): \Common\Generic_Success_Response
+    public function UpdateRuleForPerson(array $ctx, \Common\AccessUpdateRuleForPersonPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_accessController->updateRuleForPerson(
                     $req->getRuleId(),
                     self::_fromRuleValue($req->getRuleValue()),
@@ -625,10 +625,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $req): \Common\Generic_Success_Response
+    public function UpdateRuleForGroup(array $ctx, \Common\AccessUpdateRuleForGroupPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_accessController->updateRuleForGroup(
                     $req->getRuleId(),
                     self::_fromRuleValue($req->getRuleValue()),
@@ -643,10 +643,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $req): \Common\Generic_Success_Response
+    public function DeleteRuleForPerson(array $ctx, \Common\AccessDeleteRuleForPersonPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_accessController->deleteRuleForPerson($req->getRuleId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -657,10 +657,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $req): \Common\Generic_Success_Response
+    public function DeleteRuleForGroup(array $ctx, \Common\AccessDeleteRuleForGroupPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_accessController->deleteRuleForGroup($req->getRuleId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -671,10 +671,10 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $req): \Common\Generic_Success_Response
+    public function ClearAccessCache(array $ctx, \Common\AccessClearAccessCachePayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_accessController->clearAccessCache(
                     $req->getPersonId(),
                     $req->getEventId()
@@ -688,10 +688,10 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function CreateAccount(array $ctx, \Common\Persons_CreateAccount_Payload $req): \Common\Persons_CreateAccount_Response
+    public function CreateAccount(array $ctx, \Common\PersonsCreateAccountPayload $req): \Common\PersonsCreateAccountResponse
     {
         try {
-            return (new \Common\Persons_CreateAccount_Response())
+            return (new \Common\PersonsCreateAccountResponse())
                 ->setPersonId($this->_personsController->createAccount(
                     $req->getEmail(),
                     $req->getPassword(),
@@ -710,10 +710,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function CreateGroup(array $ctx, \Common\Persons_CreateGroup_Payload $req): \Common\Persons_CreateGroup_Response
+    public function CreateGroup(array $ctx, \Common\PersonsCreateGroupPayload $req): \Common\PersonsCreateGroupResponse
     {
         try {
-            return (new \Common\Persons_CreateGroup_Response())
+            return (new \Common\PersonsCreateGroupResponse())
                 ->setGroupId($this->_personsController->createGroup(
                     $req->getTitle(),
                     $req->getDescription(),
@@ -728,10 +728,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $req): \Common\Generic_Success_Response
+    public function UpdateGroup(array $ctx, \Common\PersonsUpdateGroupPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_personsController->updateGroup(
                     $req->getGroupId(),
                     $req->getTitle(),
@@ -747,10 +747,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $req): \Common\Generic_Success_Response
+    public function DeleteGroup(array $ctx, \Common\PersonsDeleteGroupPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_personsController->deleteGroup($req->getGroupId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -762,10 +762,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $req): \Common\Generic_Success_Response
+    public function AddPersonToGroup(array $ctx, \Common\PersonsAddPersonToGroupPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_personsController->addPersonToGroup($req->getPersonId(), $req->getGroupId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -777,10 +777,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $req): \Common\Generic_Success_Response
+    public function RemovePersonFromGroup(array $ctx, \Common\PersonsRemovePersonFromGroupPayload $req): \Common\GenericSuccessResponse
     {
         try {
-            return (new \Common\Generic_Success_Response())
+            return (new \Common\GenericSuccessResponse())
                 ->setSuccess($this->_personsController->removePersonFromGroup($req->getPersonId(), $req->getGroupId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -792,11 +792,11 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    public function GetPersonsOfGroup(array $ctx, \Common\Persons_GetPersonsOfGroup_Payload $req): \Common\Persons_GetPersonsOfGroup_Response
+    public function GetPersonsOfGroup(array $ctx, \Common\PersonsGetPersonsOfGroupPayload $req): \Common\PersonsGetPersonsOfGroupResponse
     {
         try {
-            return (new \Common\Persons_GetPersonsOfGroup_Response())
-                ->setPersons(array_map(function ($person) {
+            return (new \Common\PersonsGetPersonsOfGroupResponse())
+                ->setPeople(array_map(function ($person) {
                     return (new \Common\Person())
                         ->setId($person['id'])
                         ->setCity($person['city'])
@@ -813,10 +813,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    public function GetGroupsOfPerson(array $ctx, \Common\Persons_GetGroupsOfPerson_Payload $req): \Common\Persons_GetGroupsOfPerson_Response
+    public function GetGroupsOfPerson(array $ctx, \Common\PersonsGetGroupsOfPersonPayload $req): \Common\PersonsGetGroupsOfPersonResponse
     {
         try {
-            return (new \Common\Persons_GetGroupsOfPerson_Response())
+            return (new \Common\PersonsGetGroupsOfPersonResponse())
                 ->setGroups(array_map(function ($group) {
                     return (new \Common\Group())
                         ->setId($group['id'])
@@ -834,10 +834,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws DuplicateEntityException
      */
-    public function AddSystemWideRuleForPerson(array $ctx, \Common\Access_AddSystemWideRuleForPerson_Payload $req): \Common\Access_AddSystemWideRuleForPerson_Response
+    public function AddSystemWideRuleForPerson(array $ctx, \Common\AccessAddSystemWideRuleForPersonPayload $req): \Common\AccessAddSystemWideRuleForPersonResponse
     {
         try {
-            return (new \Common\Access_AddSystemWideRuleForPerson_Response())
+            return (new \Common\AccessAddSystemWideRuleForPersonResponse())
                 ->setRuleId($this->_accessController->addSystemWideRuleForPerson(
                     $req->getRuleName(),
                     self::_fromRuleValue($req->getRuleValue()),
@@ -854,10 +854,10 @@ final class TwirpServer implements Frey
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      */
-    public function AddSystemWideRuleForGroup(array $ctx, \Common\Access_AddSystemWideRuleForGroup_Payload $req): \Common\Access_AddSystemWideRuleForGroup_Response
+    public function AddSystemWideRuleForGroup(array $ctx, \Common\AccessAddSystemWideRuleForGroupPayload $req): \Common\AccessAddSystemWideRuleForGroupResponse
     {
         try {
-            return (new \Common\Access_AddSystemWideRuleForGroup_Response())
+            return (new \Common\AccessAddSystemWideRuleForGroupResponse())
                 ->setRuleId($this->_accessController->addSystemWideRuleForGroup(
                     $req->getRuleName(),
                     self::_fromRuleValue($req->getRuleValue()),

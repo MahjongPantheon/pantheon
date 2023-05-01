@@ -35,14 +35,15 @@ import {
   NagashiResult,
   RonResult,
   Round,
+  RoundOutcome,
   TsumoResult,
-} from '#/clients/atoms.pb';
+} from '#/clients/proto/atoms.pb';
 import { AppOutcomeRon } from '#/interfaces/app';
 import { unpack } from '#/primitives/yaku-compat';
 
 export function formatRoundToTwirp(state: IAppState): Round | undefined {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'RON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
       const wins = Object.keys(state.currentOutcome.wins).map((playerId) => {
         const win = (state.currentOutcome as AppOutcomeRon).wins[playerId];
         const yaku = unpack(win.yaku);
@@ -86,7 +87,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
         } as RonResult,
       };
 
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return {
         tsumo: {
           roundIndex: state.sessionState?.roundIndex,
@@ -104,7 +105,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
           openHand: getSelectedYaku(state).includes(YakuId.__OPENHAND),
         } as TsumoResult,
       };
-    case 'DRAW':
+    case RoundOutcome.ROUND_OUTCOME_DRAW:
       return {
         draw: {
           roundIndex: state.sessionState?.roundIndex,
@@ -113,7 +114,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
           tempai: getWinningUsers(state).map((player) => player.id),
         } as DrawResult,
       };
-    case 'NAGASHI':
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       return {
         nagashi: {
           roundIndex: state.sessionState?.roundIndex,
@@ -123,7 +124,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
           nagashi: getNagashiUsers(state).map((player) => player.id),
         } as NagashiResult,
       };
-    case 'ABORT':
+    case RoundOutcome.ROUND_OUTCOME_ABORT:
       return {
         abort: {
           roundIndex: state.sessionState?.roundIndex,
@@ -131,7 +132,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
           riichiBets: getRiichiUsers(state).map((player) => player.id),
         } as AbortResult,
       };
-    case 'CHOMBO':
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       return {
         chombo: {
           roundIndex: state.sessionState?.roundIndex,

@@ -19,6 +19,7 @@ import { Center, Group, NumberInput, Radio, SimpleGrid, Stack, Text } from '@man
 import * as React from 'react';
 import { I18nService } from '#/services/i18n';
 import { FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { UmaType } from '#/clients/proto/atoms.pb';
 
 type UmaSelectProps = {
   form: FormHandle;
@@ -37,7 +38,7 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
           <Radio value='UMA_COMPLEX' label={i18n._t('Complex position-based')} />
         </Group>
       </Radio.Group>
-      {form.getTransformedValues().ruleset.umaType === 'UMA_SIMPLE' && (
+      {form.getTransformedValues().ruleset.umaType === UmaType.UMA_TYPE_UMA_SIMPLE && (
         <SimpleGrid cols={2}>
           <NumberInput
             hideControls
@@ -65,7 +66,7 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
           />
         </SimpleGrid>
       )}
-      {form.getTransformedValues().ruleset.umaType === 'UMA_COMPLEX' && (
+      {form.getTransformedValues().ruleset.umaType === UmaType.UMA_TYPE_UMA_COMPLEX && (
         <Group align='flex-end'>
           <Stack w='20%'>
             <Center>{i18n._t('Place / Session result')}</Center>

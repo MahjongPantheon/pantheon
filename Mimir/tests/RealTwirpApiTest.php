@@ -20,23 +20,22 @@ namespace Mimir;
 use Common\Country;
 use Common\Event;
 use Common\EventData;
-use Common\Events_GetCountries_Payload;
-use Common\Events_GetEvents_Payload;
-use Common\Events_GetEventsById_Payload;
-use Common\Events_GetRulesets_Payload;
-use Common\Events_GetTimezones_Payload;
-use Common\Events_RegisterPlayer_Payload;
-use Common\Events_UnregisterPlayer_Payload;
-use Common\Events_UpdateEvent_Payload;
+use Common\EventsGetCountriesPayload;
+use Common\EventsGetEventsPayload;
+use Common\EventsGetEventsByIdPayload;
+use Common\EventsGetRulesetsPayload;
+use Common\EventsGetTimezonesPayload;
+use Common\EventsRegisterPlayerPayload;
+use Common\EventsUnregisterPlayerPayload;
+use Common\EventsUpdateEventPayload;
 use Common\EventType;
-use Common\Games_CancelGame_Payload;
-use Common\Games_EndGame_Payload;
-use Common\Games_StartGame_Payload;
-use Common\Generic_Event_Payload;
+use Common\GamesCancelGamePayload;
+use Common\GamesEndGamePayload;
+use Common\GamesStartGamePayload;
+use Common\GenericEventPayload;
 use Common\MyEvent;
-use Common\Players_GetMyEvents_Payload;
+use Common\PlayersGetMyEventsPayload;
 use Common\RulesetConfig;
-use Common\RulesetGenerated;
 
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/DataSource.php';
@@ -105,7 +104,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     {
         $ids = [10, 20, 30, 40];
         foreach ($ids as $id) {
-            $this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+            $this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
                 ->setEventId($eventId)->setPlayerId($id));
         }
         return $ids;
@@ -121,14 +120,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     {
         $ids = [10, 20, 30, 40];
         foreach ($ids as $id) {
-            $this->_client->UnregisterPlayer([], (new Events_UnregisterPlayer_Payload())
+            $this->_client->UnregisterPlayer([], (new EventsUnregisterPlayerPayload())
                 ->setEventId($eventId)->setPlayerId($id));
         }
     }
 
     public function testGetRulesets()
     {
-        $response = $this->_client->GetRulesets([], (new Events_GetRulesets_Payload()))->getRulesets();
+        $response = $this->_client->GetRulesets([], (new EventsGetRulesetsPayload()))->getRulesets();
         /** @var RulesetConfig[] $rulesets */
         $rulesets = iterator_to_array($response);
 
@@ -138,7 +137,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
     public function testGetTimezones()
     {
-        $response = $this->_client->GetTimezones([], (new Events_GetTimezones_Payload())->setAddr('8.8.8.8'));
+        $response = $this->_client->GetTimezones([], (new EventsGetTimezonesPayload())->setAddr('8.8.8.8'));
         $this->assertNotEmpty($response);
         // Google's 8.8.8.8 DNS server should be in Chicago timezone
         $this->assertEquals('America/Chicago', $response->getPreferredByIp());
@@ -149,7 +148,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
     public function testGetCountries()
     {
-        $response = $this->_client->GetCountries([], (new Events_GetCountries_Payload())->setAddr('8.8.8.8'));
+        $response = $this->_client->GetCountries([], (new EventsGetCountriesPayload())->setAddr('8.8.8.8'));
         $this->assertNotEmpty($response);
         // Google's 8.8.8.8 DNS server should be in the US
         $this->assertEquals('US', $response->getPreferredByIp());
@@ -160,7 +159,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
     public function testGetEvents()
     {
-        $response = $this->_client->GetEvents([], (new Events_GetEvents_Payload())->setLimit(10)->setOffset(0));
+        $response = $this->_client->GetEvents([], (new EventsGetEventsPayload())->setLimit(10)->setOffset(0));
         $this->assertEmpty(iterator_to_array($response->getEvents()));
         $this->assertEquals(0, $response->getTotal());
 
@@ -172,19 +171,19 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             return $acc;
         }, []);
 
-        $response = $this->_client->GetEvents([], (new Events_GetEvents_Payload())->setLimit(10)->setOffset(0));
+        $response = $this->_client->GetEvents([], (new EventsGetEventsPayload())->setLimit(10)->setOffset(0));
         $this->assertNotEmpty(iterator_to_array($response->getEvents()));
         $this->assertEquals(5, $response->getTotal());
 
         // Some pagination testing
 
-        $response = $this->_client->GetEvents([], (new Events_GetEvents_Payload())->setLimit(2)->setOffset(0));
+        $response = $this->_client->GetEvents([], (new EventsGetEventsPayload())->setLimit(2)->setOffset(0));
         $data = iterator_to_array($response->getEvents());
         $this->assertNotEmpty($data);
         $this->assertEquals(2, count($data));
         $this->assertEquals(5, $response->getTotal());
 
-        $response = $this->_client->GetEvents([], (new Events_GetEvents_Payload())->setLimit(2)->setOffset(4));
+        $response = $this->_client->GetEvents([], (new EventsGetEventsPayload())->setLimit(2)->setOffset(4));
         $data = iterator_to_array($response->getEvents());
         $this->assertNotEmpty($data);
         $this->assertEquals(1, count($data));
@@ -195,7 +194,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $events[0]->setIsListed(0)->save();
         $events[1]->setIsListed(0)->save();
 
-        $response = $this->_client->GetEvents([], (new Events_GetEvents_Payload())->setLimit(2)->setOffset(2)->setFilterUnlisted(true));
+        $response = $this->_client->GetEvents([], (new EventsGetEventsPayload())->setLimit(2)->setOffset(2)->setFilterUnlisted(true));
         $data = iterator_to_array($response->getEvents());
         $this->assertNotEmpty($data);
         $this->assertEquals(1, count($data));
@@ -216,7 +215,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             return $acc;
         }, []);
 
-        $response = iterator_to_array($this->_client->GetEventsById([], (new Events_GetEventsById_Payload())
+        $response = iterator_to_array($this->_client->GetEventsById([], (new EventsGetEventsByIdPayload())
             ->setIds([$events[0]->getId(), $events[1]->getId()]))
             ->getEvents());
 
@@ -238,20 +237,20 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             $acc []= $ev;
             return $acc;
         }, []);
-        $this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+        $this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
             ->setEventId($events[0]->getId())->setPlayerId(self::CURRENT_PERSON));
-        $this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+        $this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
             ->setEventId($events[1]->getId())->setPlayerId(self::CURRENT_PERSON));
 
-        $response = iterator_to_array($this->_client->GetMyEvents([], (new Players_GetMyEvents_Payload()))->getEvents());
+        $response = iterator_to_array($this->_client->GetMyEvents([], (new PlayersGetMyEventsPayload()))->getEvents());
         $this->assertNotEmpty($response);
         $this->assertEquals(2, count($response));
         $this->assertInstanceOf(MyEvent::class, $response[0]);
 
         // cleanup
-        $this->_client->UnregisterPlayer([], (new Events_UnregisterPlayer_Payload())
+        $this->_client->UnregisterPlayer([], (new EventsUnregisterPlayerPayload())
             ->setEventId($events[0]->getId())->setPlayerId(self::CURRENT_PERSON));
-        $this->_client->UnregisterPlayer([], (new Events_UnregisterPlayer_Payload())
+        $this->_client->UnregisterPlayer([], (new EventsUnregisterPlayerPayload())
             ->setEventId($events[1]->getId())->setPlayerId(self::CURRENT_PERSON));
         foreach ($events as $e) {
             $e->drop();
@@ -266,7 +265,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $event = $this->_createEvent();
         $response = $this->_client->GetGameConfig(
             [],
-            (new Generic_Event_Payload())->setEventId($event->getId())
+            (new GenericEventPayload())->setEventId($event->getId())
         );
         $this->assertEquals(false, $response->getRulesetConfig()->getWithAbortives());
         $this->assertEquals(30000, $response->getRulesetConfig()->getStartPoints());
@@ -323,7 +322,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     {
         $id = $this->_client->CreateEvent([], (new EventData())
             ->setTitle('New Event')
-            ->setType(EventType::LOCAL)
+            ->setType(EventType::EVENT_TYPE_LOCAL)
             ->setMinGames(3)
             ->setAutostart(10)
             ->setDescription('New Event description')
@@ -358,11 +357,11 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     {
         $event = $this->_createEvent();
 
-        $ret = $this->_client->UpdateEvent([], (new Events_UpdateEvent_Payload())
+        $ret = $this->_client->UpdateEvent([], (new EventsUpdateEventPayload())
             ->setId($event->getId())
             ->setEvent((new EventData())
                 ->setTitle('New Event')
-                ->setType(EventType::LOCAL)
+                ->setType(EventType::EVENT_TYPE_LOCAL)
                 ->setMinGames(3)
                 ->setAutostart(10)
                 ->setDescription('New Event description')
@@ -400,7 +399,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     {
         $event = $this->_createEvent();
         $this->assertEquals(false, $event->getIsFinished());
-        $ret = $this->_client->FinishEvent([], (new Generic_Event_Payload())->setEventId($event->getId()))->getSuccess();
+        $ret = $this->_client->FinishEvent([], (new GenericEventPayload())->setEventId($event->getId()))->getSuccess();
         $this->assertTrue($ret);
         // reload data
         $event = EventPrimitive::findById($this->_ds, [$event->getId()])[0];
@@ -413,13 +412,13 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $event = $this->_createEvent();
         $this->assertEquals(false, $event->getIsListed());
         // toggle to on
-        $ret = $this->_client->ToggleListed([], (new Generic_Event_Payload())->setEventId($event->getId()))->getSuccess();
+        $ret = $this->_client->ToggleListed([], (new GenericEventPayload())->setEventId($event->getId()))->getSuccess();
         $this->assertTrue($ret);
         // reload data
         $event = EventPrimitive::findById($this->_ds, [$event->getId()])[0];
         $this->assertEquals(true, $event->getIsListed());
         // toggle to off
-        $ret = $this->_client->ToggleListed([], (new Generic_Event_Payload())->setEventId($event->getId()))->getSuccess();
+        $ret = $this->_client->ToggleListed([], (new GenericEventPayload())->setEventId($event->getId()))->getSuccess();
         $this->assertTrue($ret);
         // reload data
         $event = EventPrimitive::findById($this->_ds, [$event->getId()])[0];
@@ -430,9 +429,9 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     public function testRegisterPlayer()
     {
         $event = $this->_createEvent();
-        $this->assertTrue($this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+        $this->assertTrue($this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(10))->getSuccess());
-        $this->assertTrue($this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+        $this->assertTrue($this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(20))->getSuccess());
 
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $event->getId());
@@ -447,18 +446,18 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     public function testUnregisterPlayer()
     {
         $event = $this->_createEvent();
-        $this->assertTrue($this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+        $this->assertTrue($this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(10))->getSuccess());
-        $this->assertTrue($this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+        $this->assertTrue($this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(20))->getSuccess());
 
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $event->getId());
         $this->assertEquals(2, count($regs));
         $this->assertEquals([10, 20], [$regs[0]->getPlayerId(), $regs[1]->getPlayerId()]);
 
-        $this->assertTrue($this->_client->UnregisterPlayer([], (new Events_UnregisterPlayer_Payload())
+        $this->assertTrue($this->_client->UnregisterPlayer([], (new EventsUnregisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(10))->getSuccess());
-        $this->assertTrue($this->_client->UnregisterPlayer([], (new Events_UnregisterPlayer_Payload())
+        $this->assertTrue($this->_client->UnregisterPlayer([], (new EventsUnregisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(20))->getSuccess());
 
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $event->getId());
@@ -472,7 +471,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $event = $this->_createEvent();
         $playerIds = $this->_addPlayers($event->getId());
 
-        $hash = $this->_client->StartGame([], (new Games_StartGame_Payload())
+        $hash = $this->_client->StartGame([], (new GamesStartGamePayload())
             ->setEventId($event->getId())->setPlayers($playerIds))->getSessionHash();
 
         $this->assertNotEmpty($hash);
@@ -490,10 +489,10 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     {
         $event = $this->_createEvent();
         $playerIds = $this->_addPlayers($event->getId());
-        $this->_client->RegisterPlayer([], (new Events_RegisterPlayer_Payload())
+        $this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(self::CURRENT_PERSON));
 
-        $hash = $this->_client->StartGame([], (new Games_StartGame_Payload())
+        $hash = $this->_client->StartGame([], (new GamesStartGamePayload())
             ->setEventId($event->getId())
             ->setPlayers([$playerIds[0], $playerIds[1], $playerIds[2], self::CURRENT_PERSON]))->getSessionHash();
 
@@ -504,7 +503,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('inprogress', $sessions[0]->getStatus());
 
         $this->assertTrue(
-            $this->_client->EndGame([], (new Games_EndGame_Payload())->setSessionHash($hash))->getSuccess()
+            $this->_client->EndGame([], (new GamesEndGamePayload())->setSessionHash($hash))->getSuccess()
         );
 
         $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
@@ -512,7 +511,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, count($sessions));
         $this->assertEquals('finished', $sessions[0]->getStatus());
 
-        $this->_client->UnregisterPlayer([], (new Events_UnregisterPlayer_Payload())
+        $this->_client->UnregisterPlayer([], (new EventsUnregisterPlayerPayload())
             ->setEventId($event->getId())->setPlayerId(self::CURRENT_PERSON));
         $this->_removePlayers($event->getId(), $playerIds);
         foreach (SessionResultsPrimitive::findBySessionId($this->_ds, [$sessions[0]->getId()]) as $res) {
@@ -534,7 +533,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $event = $this->_createEvent();
         $playerIds = $this->_addPlayers($event->getId());
 
-        $hash = $this->_client->StartGame([], (new Games_StartGame_Payload())
+        $hash = $this->_client->StartGame([], (new GamesStartGamePayload())
             ->setEventId($event->getId())->setPlayers($playerIds))->getSessionHash();
 
         $this->assertNotEmpty($hash);
@@ -544,7 +543,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('inprogress', $sessions[0]->getStatus());
 
         $this->assertTrue(
-            $this->_client->CancelGame([], (new Games_CancelGame_Payload())->setSessionHash($hash))->getSuccess()
+            $this->_client->CancelGame([], (new GamesCancelGamePayload())->setSessionHash($hash))->getSuccess()
         );
 
         $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);

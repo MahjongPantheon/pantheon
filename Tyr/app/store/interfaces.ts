@@ -28,8 +28,8 @@ import {
   SessionHistoryResult,
   SessionState,
   TableState,
-} from '#/clients/atoms.pb';
-import { Games_GetSessionOverview_Response } from '#/clients/mimir.pb';
+} from '#/clients/proto/atoms.pb';
+import { GamesGetSessionOverviewResponse } from '#/clients/proto/mimir.pb';
 
 export type AppScreen =
   | 'eventSelector'
@@ -122,7 +122,7 @@ export interface IAppState {
   otherTablesList: TableState[];
   otherTablesListError?: ErrorState;
 
-  currentOtherTable?: Games_GetSessionOverview_Response;
+  currentOtherTable?: GamesGetSessionOverviewResponse;
   otherTableError?: ErrorState;
 
   overviewDiffBy?: number;

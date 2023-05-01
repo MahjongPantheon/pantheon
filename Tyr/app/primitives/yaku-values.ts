@@ -16,7 +16,7 @@
  */
 
 import { YakuId as Y } from './yaku';
-import { RoundOutcome } from '#/clients/atoms.pb';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 const handValues: [Y, number, number][] = [
   [Y.TOITOI, 2, 2],
@@ -89,7 +89,7 @@ export function getFixedFu(yakuList: Y[], outcome: RoundOutcome): number[] {
     return [20];
   }
 
-  if (outcome === 'RON' && !yakuList.includes(Y.__OPENHAND)) {
+  if (outcome === RoundOutcome.ROUND_OUTCOME_RON && !yakuList.includes(Y.__OPENHAND)) {
     if (yakuList.includes(Y.PINFU)) {
       return [30];
     }

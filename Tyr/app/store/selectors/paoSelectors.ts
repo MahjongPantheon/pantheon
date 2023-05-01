@@ -17,6 +17,7 @@
 
 import { IAppState } from '#/store/interfaces';
 import { playerHasYakuWithPao } from '#/store/util';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export function getFirstWinnerWithPao(state: IAppState): number | undefined {
   return getNextWinnerWithPao(state, undefined);
@@ -30,7 +31,7 @@ export function getNextWinnerWithPao(
   if (
     !gameConfig ||
     state.currentScreen !== 'paoSelect' ||
-    state.currentOutcome?.selectedOutcome !== 'RON'
+    state.currentOutcome?.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_RON
   ) {
     return undefined;
   }

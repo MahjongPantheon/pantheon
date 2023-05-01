@@ -1,0 +1,103 @@
+version: "3.9"
+volumes:
+  datavolume01: {}
+  pgadmindata:
+services:
+  db:
+    build: ./Database
+    ports:
+      - "5532:5532"
+    volumes:
+      - datavolume01:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "127.0.0.1:5632:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+  tyr:
+    build: ./Tyr
+    ports:
+      - "127.0.0.1:4003:80"
+      - "127.0.0.1:4103:8080"
+    links:
+      - mimir:mimir
+      - frey:frey
+    depends_on:
+      - frey
+      - mimir
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Tyr:/var/www/html/Tyr
+      - ./Tyr-dist:/var/www/html/Tyr-dist
+      - ./Common:/var/www/html/Common
+  forseti:
+    build: ./Forseti
+    ports:
+      - "127.0.0.1:4007:80"
+      - "127.0.0.1:4107:8080"
+    links:
+      - mimir:mimir
+      - frey:frey
+    depends_on:
+      - frey
+      - mimir
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Forseti:/var/www/html/Forseti
+      - ./Forseti-dist:/var/www/html/Forseti-dist
+      - ./Common:/var/www/html/Common
+  mimir:
+    build: ./Mimir
+    ports:
+      - "127.0.0.1:4001:80"
+    links:
+      - frey:frey
+      - db:db
+    depends_on:
+      - frey
+      - db
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Mimir:/var/www/html/Mimir
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_PORT: 5532
+      PHINX_DB_HOST: db
+  frey:
+    build: ./Frey
+    ports:
+      - "127.0.0.1:4004:80"
+    links:
+      - db:db
+    depends_on:
+      - db
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Frey:/var/www/html/Frey
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_FREY_PORT: 5532
+      PHINX_DB_FREY_HOST: db
+  rheda:
+    build: ./Rheda
+    ports:
+      - "127.0.0.1:4002:80"
+    depends_on:
+      - frey
+      - mimir
+    links:
+      - mimir:mimir
+      - frey:frey
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Rheda:/var/www/html/Rheda
+      - ./Common:/var/www/html/Common

@@ -35,8 +35,20 @@ const THEME_KEY = 'thm';
 const SINGLE_DEVICE_MODE_KEY = 'sdm';
 const TWIRP_ENABLED = 'twrp';
 
+const endsWith = (haystack: string, needle: string) =>
+  haystack.indexOf(needle, haystack.length - needle.length) !== -1;
+
 export class Storage implements IStorage {
-  constructor(private readonly cookieDomain: string | null) {}
+  constructor(private readonly cookieDomain: string | null) {
+    if (
+      this.cookieDomain &&
+      !endsWith(window.location.hostname, this.cookieDomain)
+    ) {
+      console.error(
+        'Cookie domain does not match current location - saving cookies is not possible. Please check your environment settings.'
+      );
+    }
+  }
 
   public getAuthToken(): string | null {
     return this.get(AUTH_TOKEN_KEY, 'string') as string | null;

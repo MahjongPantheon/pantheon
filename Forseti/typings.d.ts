@@ -1,6 +1,17 @@
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
-  ym: (counterId: number, funcName: string, param1: any, param2?: any) => void;
+  __cfg: {
+    RHEDA_URL: string;
+    FORSETI_URL: string;
+    MIMIR_URL: string;
+    FREY_URL: string;
+    TYR_URL: string;
+    COOKIE_DOMAIN: string;
+    STAT_HOST: string;
+    ROOT_HOST: string;
+    STAT_SITE_ID: string;
+    ADMIN_EMAIL: string;
+  };
 }
 
 declare module '*.svg?svgr' {
@@ -13,7 +24,7 @@ declare module '*.svg?svgr' {
 
 declare module '*.css' {
   interface IClassNames {
-    [className: string]: string
+    [className: string]: string;
   }
   const classNames: IClassNames;
   export = classNames;

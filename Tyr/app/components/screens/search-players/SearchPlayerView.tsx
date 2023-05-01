@@ -18,7 +18,7 @@
 import * as React from 'react';
 import './page-search-player.css';
 import { TopPanel } from '#/components/general/top-panel/TopPanel';
-import { RegisteredPlayer } from '#/clients/atoms.pb';
+import { RegisteredPlayer } from '#/clients/proto/atoms.pb';
 
 type IProps = {
   users: RegisteredPlayer[];

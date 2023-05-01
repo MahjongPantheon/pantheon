@@ -68,7 +68,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $title = 'test testov';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
@@ -86,14 +86,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $title = 'test testov';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $userId = $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
         $this->assertIsInt($userId);
@@ -109,19 +109,19 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $title = 'test testov';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
         $auth = $this->_client->Authorize(
             [],
-            (new \Common\Auth_Authorize_Payload())
+            (new \Common\AuthAuthorizePayload())
                 ->setEmail($email)
                 ->setPassword($password)
         );
@@ -137,26 +137,26 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $title = 'test testov';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $userId = $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
         $auth = $this->_client->Authorize(
             [],
-            (new \Common\Auth_Authorize_Payload())
+            (new \Common\AuthAuthorizePayload())
                 ->setEmail($email)
                 ->setPassword($password)
         );
 
         $response = $this->_client->QuickAuthorize(
             [],
-            (new \Common\Auth_QuickAuthorize_Payload())
+            (new \Common\AuthQuickAuthorizePayload())
                 ->setPersonId($auth->getPersonId())
                 ->setAuthToken($auth->getAuthToken())
         )->getAuthSuccess();
@@ -171,33 +171,33 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $newPassword = '8765test!4321';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
         $this->_client->Authorize(
             [],
-            (new \Common\Auth_Authorize_Payload())
+            (new \Common\AuthAuthorizePayload())
                 ->setEmail($email)
                 ->setPassword($password)
         );
 
         $this->_client->ChangePassword(
             [],
-            (new \Common\Auth_ChangePassword_Payload())
+            (new \Common\AuthChangePasswordPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setNewPassword($newPassword)
         )->getAuthToken();
         $auth = $this->_client->Authorize(
             [],
-            (new \Common\Auth_Authorize_Payload())
+            (new \Common\AuthAuthorizePayload())
                 ->setEmail($email)
                 ->setPassword($newPassword)
         );
@@ -211,26 +211,26 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $title = 'test testov';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
         $this->_client->Authorize(
             [],
-            (new \Common\Auth_Authorize_Payload())
+            (new \Common\AuthAuthorizePayload())
                 ->setEmail($email)
                 ->setPassword($password)
         );
 
         $resetToken = $this->_client->RequestResetPassword(
             [],
-            (new \Common\Auth_RequestResetPassword_Payload())
+            (new \Common\AuthRequestResetPasswordPayload())
                 ->setEmail($email)
         )->getResetToken();
         $this->assertIsString($resetToken);
@@ -243,32 +243,32 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $title = 'test testov';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
         $this->_client->Authorize(
             [],
-            (new \Common\Auth_Authorize_Payload())
+            (new \Common\AuthAuthorizePayload())
                 ->setEmail($email)
                 ->setPassword($password)
         );
 
         $resetToken =  $this->_client->RequestResetPassword(
             [],
-            (new \Common\Auth_RequestResetPassword_Payload())
+            (new \Common\AuthRequestResetPasswordPayload())
                 ->setEmail($email)
         )->getResetToken();
 
         $newPassword = $this->_client->ApproveResetPassword(
             [],
-            (new \Common\Auth_ApproveResetPassword_Payload())
+            (new \Common\AuthApproveResetPasswordPayload())
                 ->setEmail($email)
                 ->setResetToken($resetToken)
         )->getNewTmpPassword();
@@ -277,7 +277,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->Authorize(
             [],
-            (new \Common\Auth_Authorize_Payload())
+            (new \Common\AuthAuthorizePayload())
                 ->setEmail($email)
                 ->setPassword($newPassword)
         );
@@ -293,14 +293,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $password = '1234test!5678';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $userId = $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
 
@@ -312,7 +312,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $success = $this->_client->UpdatePersonalInfo(
             [],
-            (new \Common\Persons_UpdatePersonalInfo_Payload())
+            (new \Common\PersonsUpdatePersonalInfoPayload())
                 ->setId($userId)
                 ->setTitle($title)
                 ->setCountry($country)
@@ -340,14 +340,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $title = 'test testov';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $userId = $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
 
@@ -359,7 +359,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->UpdatePersonalInfo(
             [],
-            (new \Common\Persons_UpdatePersonalInfo_Payload())
+            (new \Common\PersonsUpdatePersonalInfoPayload())
                 ->setId($userId)
                 ->setTitle($title)
                 ->setCountry($country)
@@ -371,9 +371,9 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $response = $this->_client->GetPersonalInfo(
             [],
-            (new \Common\Persons_GetPersonalInfo_Payload())
+            (new \Common\PersonsGetPersonalInfoPayload())
                 ->setIds([$userId])
-        )->getPersons();
+        )->getPeople();
 
         $this->assertNotEmpty($response);
         $this->assertNotEmpty($response[0]);
@@ -402,14 +402,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $password = '1234test!5678';
         $approvalCode = $this->_client->RequestRegistration(
             [],
-            (new \Common\Auth_RequestRegistration_Payload())
+            (new \Common\AuthRequestRegistrationPayload())
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
         $userId = $this->_client->ApproveRegistration(
             [],
-            (new \Common\Auth_ApproveRegistration_Payload())
+            (new \Common\AuthApproveRegistrationPayload())
                 ->setApprovalCode($approvalCode)
         )->getPersonId();
 
@@ -421,7 +421,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->UpdatePersonalInfo(
             [],
-            (new \Common\Persons_UpdatePersonalInfo_Payload())
+            (new \Common\PersonsUpdatePersonalInfoPayload())
                 ->setId($userId)
                 ->setTitle($title)
                 ->setCountry($country)
@@ -433,9 +433,9 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $response = $this->_client->FindByTitle(
             [],
-            (new \Common\Persons_FindByTitle_Payload())
+            (new \Common\PersonsFindByTitlePayload())
                 ->setQuery('new')
-        )->getPersons();
+        )->getPeople();
 
         $this->assertNotEmpty($response);
         $this->assertNotEmpty($response[0]);
@@ -465,7 +465,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -490,7 +490,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -510,7 +510,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -518,7 +518,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $groups = $this->_client->GetGroups(
             [],
-            (new \Common\Persons_GetGroups_Payload())
+            (new \Common\PersonsGetGroupsPayload())
                 ->setIds([$grpId])
         )->getGroups();
 
@@ -547,7 +547,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -555,7 +555,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $success = $this->_client->UpdateGroup(
             [],
-            (new \Common\Persons_UpdateGroup_Payload())
+            (new \Common\PersonsUpdateGroupPayload())
                 ->setGroupId($grpId)
                 ->setTitle('newtestgrp')
                 ->setDescription('newtestgrp_description')
@@ -581,7 +581,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -589,7 +589,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->DeleteGroup(
             [],
-            (new \Common\Persons_DeleteGroup_Payload())
+            (new \Common\PersonsDeleteGroupPayload())
                 ->setGroupId($grpId)
         )->getSuccess();
         $grp = \Frey\GroupPrimitive::findById($this->_db, [$grpId]);
@@ -607,7 +607,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -622,7 +622,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -633,7 +633,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $success = $this->_client->AddPersonToGroup(
             [],
-            (new \Common\Persons_AddPersonToGroup_Payload())
+            (new \Common\PersonsAddPersonToGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
@@ -659,7 +659,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -674,7 +674,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -685,14 +685,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddPersonToGroup(
             [],
-            (new \Common\Persons_AddPersonToGroup_Payload())
+            (new \Common\PersonsAddPersonToGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
 
         $success = $this->_client->RemovePersonFromGroup(
             [],
-            (new \Common\Persons_RemovePersonFromGroup_Payload())
+            (new \Common\PersonsRemovePersonFromGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
@@ -712,7 +712,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -727,7 +727,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -738,16 +738,16 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddPersonToGroup(
             [],
-            (new \Common\Persons_AddPersonToGroup_Payload())
+            (new \Common\PersonsAddPersonToGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
 
         $response = $this->_client->GetPersonsOfGroup(
             [],
-            (new \Common\Persons_GetPersonsOfGroup_Payload())
+            (new \Common\PersonsGetPersonsOfGroupPayload())
                 ->setGroupId($grpId)
-        )->getPersons();
+        )->getPeople();
 
         $this->assertNotEmpty($response);
         $this->assertNotEmpty($response[0]);
@@ -774,7 +774,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -789,7 +789,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -797,14 +797,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddPersonToGroup(
             [],
-            (new \Common\Persons_AddPersonToGroup_Payload())
+            (new \Common\PersonsAddPersonToGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
 
         $groups = $this->_client->GetGroupsOfPerson(
             [],
-            (new \Common\Persons_GetGroupsOfPerson_Payload())
+            (new \Common\PersonsGetGroupsOfPersonPayload())
                 ->setPersonId($userId)
         )->getGroups();
 
@@ -836,7 +836,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -848,7 +848,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $ruleId = $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -877,7 +877,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -886,7 +886,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $ruleId = $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -918,7 +918,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -930,7 +930,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $ruleId = $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -940,7 +940,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->UpdateRuleForPerson(
             [],
-            (new \Common\Access_UpdateRuleForPerson_Payload())
+            (new \Common\AccessUpdateRuleForPersonPayload())
                 ->setRuleId($ruleId)
                 ->setRuleValue((new \Common\RuleValue())->setNumberValue(123))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_INT)
@@ -965,7 +965,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -974,7 +974,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $ruleId = $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -984,7 +984,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->UpdateRuleForGroup(
             [],
-            (new \Common\Access_UpdateRuleForGroup_Payload())
+            (new \Common\AccessUpdateRuleForGroupPayload())
                 ->setRuleId($ruleId)
                 ->setRuleValue((new \Common\RuleValue())->setNumberValue(321))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_INT)
@@ -1011,7 +1011,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -1023,7 +1023,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $ruleId = $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1033,7 +1033,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->DeleteRuleForPerson(
             [],
-            (new \Common\Access_DeleteRuleForPerson_Payload())
+            (new \Common\AccessDeleteRuleForPersonPayload())
                 ->setRuleId($ruleId)
         )->getSuccess();
 
@@ -1052,7 +1052,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -1061,7 +1061,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $ruleId = $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1071,7 +1071,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->DeleteRuleForGroup(
             [],
-            (new \Common\Access_DeleteRuleForGroup_Payload())
+            (new \Common\AccessDeleteRuleForGroupPayload())
                 ->setRuleId($ruleId)
         )->getSuccess();
 
@@ -1094,7 +1094,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -1107,7 +1107,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $ruleIds = [
             $this->_client->AddRuleForPerson(
                 [],
-                (new \Common\Access_AddRuleForPerson_Payload())
+                (new \Common\AccessAddRuleForPersonPayload())
                     ->setRuleName('testrule1')
                     ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
                     ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1116,7 +1116,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             )->getRuleId(),
             $this->_client->AddRuleForPerson(
                 [],
-                (new \Common\Access_AddRuleForPerson_Payload())
+                (new \Common\AccessAddRuleForPersonPayload())
                     ->setRuleName('testrule2')
                     ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2'))
                     ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1128,7 +1128,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $response = $this->_client->GetPersonAccess(
             [],
-            (new \Common\Access_GetPersonAccess_Payload())
+            (new \Common\AccessGetPersonAccessPayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
         )->getRules();
@@ -1157,7 +1157,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -1167,7 +1167,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $ruleIds = [
             $this->_client->AddRuleForGroup(
                 [],
-                (new \Common\Access_AddRuleForGroup_Payload())
+                (new \Common\AccessAddRuleForGroupPayload())
                     ->setRuleName('testrule1')
                     ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
                     ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1176,7 +1176,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             )->getRuleId(),
             $this->_client->AddRuleForGroup(
                 [],
-                (new \Common\Access_AddRuleForGroup_Payload())
+                (new \Common\AccessAddRuleForGroupPayload())
                     ->setRuleName('testrule2')
                     ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2'))
                     ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1189,7 +1189,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $response = $this->_client->GetGroupAccess(
             [],
-            (new \Common\Access_GetGroupAccess_Payload())
+            (new \Common\AccessGetGroupAccessPayload())
                 ->setGroupId($grpId)
                 ->setEventId($eventId)
         )->getRules();
@@ -1219,7 +1219,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -1231,7 +1231,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule1')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1240,7 +1240,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         )->getRuleId();
         $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule2')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_p'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1254,7 +1254,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -1263,7 +1263,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule2')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_g'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1272,7 +1272,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         )->getRuleId();
         $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule3')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval3'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1282,14 +1282,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddPersonToGroup(
             [],
-            (new \Common\Persons_AddPersonToGroup_Payload())
+            (new \Common\PersonsAddPersonToGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
 
         $response = $this->_client->GetAccessRules(
             [],
-            (new \Common\Access_GetAccessRules_Payload())
+            (new \Common\AccessGetAccessRulesPayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
         )->getRules();
@@ -1321,7 +1321,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -1333,7 +1333,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule1')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1342,7 +1342,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         )->getRuleId();
         $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule2')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_p'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1356,7 +1356,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -1365,7 +1365,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule1')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_g'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1374,7 +1374,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         )->getRuleId();
         $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule3')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval3'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1384,14 +1384,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddPersonToGroup(
             [],
-            (new \Common\Persons_AddPersonToGroup_Payload())
+            (new \Common\PersonsAddPersonToGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
 
         $val = $this->_client->GetRuleValue(
             [],
-            (new \Common\Access_GetRuleValue_Payload())
+            (new \Common\AccessGetRuleValuePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
                 ->setRuleName('testrule2')
@@ -1412,7 +1412,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $userId = $this->_client->CreateAccount(
             [],
-            (new \Common\Persons_CreateAccount_Payload())
+            (new \Common\PersonsCreateAccountPayload())
                 ->setEmail($email)
                 ->setPassword($password)
                 ->setTitle($title)
@@ -1424,7 +1424,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule1')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1433,7 +1433,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         )->getRuleId();
         $personRuleId = $this->_client->AddRuleForPerson(
             [],
-            (new \Common\Access_AddRuleForPerson_Payload())
+            (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName('testrule2')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_p'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1447,7 +1447,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $grpId = $this->_client->CreateGroup(
             [],
-            (new \Common\Persons_CreateGroup_Payload())
+            (new \Common\PersonsCreateGroupPayload())
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setColor($color)
@@ -1456,7 +1456,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule2')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_g'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1466,7 +1466,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $groupRuleId = $this->_client->AddRuleForGroup(
             [],
-            (new \Common\Access_AddRuleForGroup_Payload())
+            (new \Common\AccessAddRuleForGroupPayload())
                 ->setRuleName('testrule3')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval3'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
@@ -1476,14 +1476,14 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->AddPersonToGroup(
             [],
-            (new \Common\Persons_AddPersonToGroup_Payload())
+            (new \Common\PersonsAddPersonToGroupPayload())
                 ->setPersonId($userId)
                 ->setGroupId($grpId)
         )->getSuccess();
 
         $val = $this->_client->GetRuleValue(
             [],
-            (new \Common\Access_GetRuleValue_Payload())
+            (new \Common\AccessGetRuleValuePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
                 ->setRuleName('testrule2')
@@ -1491,7 +1491,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('testval2_p', $val->getStringValue());
         $val = $this->_client->GetRuleValue(
             [],
-            (new \Common\Access_GetRuleValue_Payload())
+            (new \Common\AccessGetRuleValuePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
                 ->setRuleName('testrule3')
@@ -1500,7 +1500,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->UpdateRuleForPerson(
             [],
-            (new \Common\Access_UpdateRuleForPerson_Payload())
+            (new \Common\AccessUpdateRuleForPersonPayload())
                 ->setRuleId($personRuleId)
                 ->setRuleValue((new \Common\RuleValue())->setNumberValue(123))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_INT)
@@ -1508,7 +1508,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->UpdateRuleForGroup(
             [],
-            (new \Common\Access_UpdateRuleForGroup_Payload())
+            (new \Common\AccessUpdateRuleForGroupPayload())
                 ->setRuleId($groupRuleId)
                 ->setRuleValue((new \Common\RuleValue())->setNumberValue(321))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_INT)
@@ -1517,7 +1517,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         // Should be same before cache clear...
         $val = $this->_client->GetRuleValue(
             [],
-            (new \Common\Access_GetRuleValue_Payload())
+            (new \Common\AccessGetRuleValuePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
                 ->setRuleName('testrule2')
@@ -1525,7 +1525,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('testval2_p', $val->getStringValue());
         $val = $this->_client->GetRuleValue(
             [],
-            (new \Common\Access_GetRuleValue_Payload())
+            (new \Common\AccessGetRuleValuePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
                 ->setRuleName('testrule3')
@@ -1534,7 +1534,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->ClearAccessCache(
             [],
-            (new \Common\Access_ClearAccessCache_Payload())
+            (new \Common\AccessClearAccessCachePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
         )->getSuccess();
@@ -1542,7 +1542,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         // Should be updated after cache clear...
         $val = $this->_client->GetRuleValue(
             [],
-            (new \Common\Access_GetRuleValue_Payload())
+            (new \Common\AccessGetRuleValuePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
                 ->setRuleName('testrule2')
@@ -1550,7 +1550,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(123, $val->getNumberValue());
         $val = $this->_client->GetRuleValue(
             [],
-            (new \Common\Access_GetRuleValue_Payload())
+            (new \Common\AccessGetRuleValuePayload())
                 ->setPersonId($userId)
                 ->setEventId($eventId)
                 ->setRuleName('testrule3')

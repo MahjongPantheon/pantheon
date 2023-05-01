@@ -15,7 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { environment } from '#config';
 import {
   AddPenalty,
   CancelGame,
@@ -51,7 +50,7 @@ import {
   UpdatePlayersLocalIds,
   UpdatePlayersTeams,
   UpdatePrescriptedEventConfig,
-} from '#/clients/mimir.pb';
+} from '#/clients/proto/mimir.pb';
 import {
   AddRuleForPerson,
   ApproveRegistration,
@@ -69,9 +68,9 @@ import {
   RequestRegistration,
   RequestResetPassword,
   UpdatePersonalInfo,
-} from '#/clients/frey.pb';
+} from '#/clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { EventData, IntermediateResultOfSession } from '#/clients/atoms.pb';
+import { EventData, IntermediateResultOfSession } from '#/clients/proto/atoms.pb';
 import { handleReleaseTag } from '#/services/releaseTags';
 import { Analytics } from '#/services/analytics';
 
@@ -105,13 +104,13 @@ export class ApiService {
     headers.append('X-Auth-Token', this._authToken ?? '');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConfMimir.baseURL = environment.apiUrl;
-    this._clientConfFrey.baseURL = environment.uaUrl;
+    this._clientConfMimir.baseURL = window.__cfg.MIMIR_URL;
+    this._clientConfFrey.baseURL = window.__cfg.FREY_URL;
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
-      return fetch(url + (environment.production ? '' : '?XDEBUG_SESSION=start'), {
+      return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
         ...opts,
         headers,
       })
@@ -196,7 +195,7 @@ export class ApiService {
   getPersonalInfo(personId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetPersonalInfo' });
     return GetPersonalInfo({ ids: [personId] }, this._clientConfFrey).then(
-      (resp) => resp.persons[0]
+      (resp) => resp.people[0]
     );
   }
 
@@ -339,7 +338,7 @@ export class ApiService {
 
   findByTitle(query: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'FindByTitle' });
-    return FindByTitle({ query }, this._clientConfFrey).then((r) => r.persons);
+    return FindByTitle({ query }, this._clientConfFrey).then((r) => r.people);
   }
 
   addEventAdmin(playerId: number, eventId: number) {
@@ -374,7 +373,7 @@ export class ApiService {
     return UpdatePlayersLocalIds(
       {
         eventId,
-        idMap: Object.keys(idMap).map((k) => {
+        idsToLocalIds: Object.keys(idMap).map((k) => {
           const playerId = typeof k === 'number' ? k : parseInt(k, 10);
           return { playerId, localId: idMap[playerId] };
         }),
@@ -388,7 +387,7 @@ export class ApiService {
     return UpdatePlayersTeams(
       {
         eventId,
-        teamNameMap: Object.keys(teamMap).map((k) => {
+        idsToTeamNames: Object.keys(teamMap).map((k) => {
           const playerId = typeof k === 'number' ? k : parseInt(k, 10);
           return { playerId, teamName: teamMap[playerId] };
         }),

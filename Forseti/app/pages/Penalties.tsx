@@ -21,7 +21,7 @@ import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
-import { GameConfig } from '#/clients/atoms.pb';
+import { GameConfig } from '#/clients/proto/atoms.pb';
 import { useForm } from '@mantine/form';
 import { Container, LoadingOverlay, NumberInput, Select, Space, TextInput } from '@mantine/core';
 import {

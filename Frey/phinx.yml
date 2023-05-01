@@ -25,7 +25,7 @@ environments:
 
     testing:
         adapter: pgsql
-        host: localhost
+        host: db
         name: frey_unit
         user: frey
         pass: pgpass
@@ -34,7 +34,7 @@ environments:
 
     docker:
         adapter: pgsql
-        host: localhost
+        host: %%PHINX_DB_FREY_HOST%%
         name: %%PHINX_DB_FREY_NAME%%
         user: %%PHINX_DB_FREY_USER%%
         pass: %%PHINX_DB_FREY_PASS%%

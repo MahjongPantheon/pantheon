@@ -23,7 +23,7 @@ import {
   getWinningUsers,
 } from './mimirSelectors';
 import { IAppState } from '../interfaces';
-import { PlayerInSession } from '#/clients/atoms.pb';
+import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export function winPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getWinningUsers(state).indexOf(userData);
@@ -35,12 +35,12 @@ export function losePressed(state: IAppState, userData: PlayerInSession) {
 
 export function paoPressed(state: IAppState, userData: PlayerInSession) {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'RON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
       if (state.multironCurrentWinner) {
         return state.currentOutcome.wins[state.multironCurrentWinner].paoPlayerId === userData.id;
       }
       break;
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return state.currentOutcome.paoPlayerId === userData.id;
     default:
   }
@@ -70,7 +70,7 @@ export function winDisabled(state: IAppState, userData: PlayerInSession) {
 
   // for multiron
   if (
-    state.currentOutcome.selectedOutcome === 'RON' &&
+    state.currentOutcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON &&
     !state.gameConfig?.rulesetConfig.withAtamahane
   ) {
     return -1 !== getLosingUsers(state).indexOf(userData);

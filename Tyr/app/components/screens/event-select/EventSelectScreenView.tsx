@@ -22,7 +22,7 @@ import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
 import BackIcon from '../../../img/icons/arrow-left.svg?svgr';
 import SettingsIcon from '../../../img/icons/settings.svg?svgr';
-import { MyEvent } from '#/clients/atoms.pb';
+import { MyEvent } from '#/clients/proto/atoms.pb';
 
 interface IProps {
   playerName: string;

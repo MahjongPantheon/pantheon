@@ -20,6 +20,7 @@ import { ADD_YAKU, AppActionTypes, REMOVE_YAKU } from '../actions/interfaces';
 import { I18nService } from '#/services/i18n';
 import { YakuId } from '#/primitives/yaku';
 import { IAppState } from '../interfaces';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export const yaku =
   (i18n: I18nService) =>
@@ -40,7 +41,10 @@ export const yaku =
 
         if (action.payload.id === YakuId.DOUBLERIICHI) {
           const outcome = mw.getState().currentOutcome;
-          if (outcome?.selectedOutcome === 'RON' || outcome?.selectedOutcome === 'TSUMO') {
+          if (
+            outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON ||
+            outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
+          ) {
             if (action.payload.winner && !outcome.riichiBets.includes(action.payload.winner)) {
               alert(
                 i18n._t(

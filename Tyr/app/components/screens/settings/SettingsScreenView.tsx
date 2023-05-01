@@ -23,7 +23,6 @@ import classNames from 'classnames';
 import { Theme } from '#/services/themes';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
-import { environment } from '#config';
 
 interface IProps {
   playerName: string;
@@ -67,7 +66,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
             className='flat-btn flat-btn--large'
             style={{ width: '100%' }}
             target='_blank'
-            href={`${environment.paUrl}/profile/manage`}
+            href={`${window.__cfg.FORSETI_URL}/profile/manage`}
           >
             {loc._t('Go to personal area')}
           </a>

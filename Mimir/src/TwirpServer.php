@@ -18,7 +18,6 @@ require_once __DIR__ . '/controllers/Seating.php';
 use Common\AbortResult;
 use Common\Achievement;
 use Common\ChomboResult;
-use Common\ComplexUma;
 use Common\Country;
 use Common\CurrentSession;
 use Common\DoraSummary;
@@ -28,75 +27,74 @@ use Common\EventData;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
 use Common\PrescriptedTable;
-use Common\RulesetConfig;
 use Common\SessionHistoryResultTable;
 use Common\Storage;
 use Common\TableItemSwiss;
 use Common\TeamMapping;
-use Common\Events_GetAchievements_Payload;
-use Common\Events_GetAchievements_Response;
-use Common\Events_GetAllRegisteredPlayers_Payload;
-use Common\Events_GetAllRegisteredPlayers_Response;
-use Common\Events_GetCountries_Payload;
-use Common\Events_GetCountries_Response;
-use Common\Events_GetCurrentSeating_Response;
-use Common\Events_GetEventForEdit_Payload;
-use Common\Events_GetEventForEdit_Response;
-use Common\Events_GetEvents_Payload;
-use Common\Events_GetEvents_Response;
-use Common\Events_GetEventsById_Payload;
-use Common\Events_GetEventsById_Response;
-use Common\Events_GetGame_Payload;
-use Common\Events_GetGame_Response;
-use Common\Events_GetGamesSeries_Response;
-use Common\Events_GetLastGames_Payload;
-use Common\Events_GetLastGames_Response;
-use Common\Events_GetPrescriptedEventConfig_Response;
-use Common\Events_GetRatingTable_Payload;
-use Common\Events_GetRatingTable_Response;
-use Common\Events_GetRulesets_Payload;
-use Common\Events_GetRulesets_Response;
-use Common\Events_GetStartingTimer_Response;
-use Common\Events_GetTablesState_Response;
-use Common\Events_GetTimerState_Response;
-use Common\Events_GetTimezones_Payload;
-use Common\Events_GetTimezones_Response;
-use Common\Events_RegisterPlayer_Payload;
-use Common\Events_UnregisterPlayer_Payload;
-use Common\Events_UpdateEvent_Payload;
-use Common\Events_UpdatePlayerReplacement_Payload;
-use Common\Events_UpdatePlayerSeatingFlag_Payload;
-use Common\Events_UpdatePlayersLocalIds_Payload;
-use Common\Events_UpdatePlayersTeams_Payload;
-use Common\Events_UpdatePrescriptedEventConfig_Payload;
+use Common\EventsGetAchievementsPayload;
+use Common\EventsGetAchievementsResponse;
+use Common\EventsGetAllRegisteredPlayersPayload;
+use Common\EventsGetAllRegisteredPlayersResponse;
+use Common\EventsGetCountriesPayload;
+use Common\EventsGetCountriesResponse;
+use Common\EventsGetCurrentSeatingResponse;
+use Common\EventsGetEventForEditPayload;
+use Common\EventsGetEventForEditResponse;
+use Common\EventsGetEventsPayload;
+use Common\EventsGetEventsResponse;
+use Common\EventsGetEventsByIdPayload;
+use Common\EventsGetEventsByIdResponse;
+use Common\EventsGetGamePayload;
+use Common\EventsGetGameResponse;
+use Common\EventsGetGamesSeriesResponse;
+use Common\EventsGetLastGamesPayload;
+use Common\EventsGetLastGamesResponse;
+use Common\EventsGetPrescriptedEventConfigResponse;
+use Common\EventsGetRatingTablePayload;
+use Common\EventsGetRatingTableResponse;
+use Common\EventsGetRulesetsPayload;
+use Common\EventsGetRulesetsResponse;
+use Common\EventsGetStartingTimerResponse;
+use Common\EventsGetTablesStateResponse;
+use Common\EventsGetTimerStateResponse;
+use Common\EventsGetTimezonesPayload;
+use Common\EventsGetTimezonesResponse;
+use Common\EventsRegisterPlayerPayload;
+use Common\EventsUnregisterPlayerPayload;
+use Common\EventsUpdateEventPayload;
+use Common\EventsUpdatePlayerReplacementPayload;
+use Common\EventsUpdatePlayerSeatingFlagPayload;
+use Common\EventsUpdatePlayersLocalIdsPayload;
+use Common\EventsUpdatePlayersTeamsPayload;
+use Common\EventsUpdatePrescriptedEventConfigPayload;
 use Common\EventType;
 use Common\FinalResultOfSession;
 use Common\GameConfig;
 use Common\GameResult;
-use Common\Games_AddOnlineReplay_Payload;
-use Common\Games_AddOnlineReplay_Response;
-use Common\Games_AddPenalty_Payload;
-use Common\Games_AddPenaltyGame_Payload;
-use Common\Games_AddPenaltyGame_Response;
-use Common\Games_AddRound_Payload;
-use Common\Games_AddRound_Response;
-use Common\Games_CancelGame_Payload;
-use Common\Games_DefinalizeGame_Payload;
-use Common\Games_DropLastRound_Payload;
-use Common\Games_EndGame_Payload;
-use Common\Games_GetSessionOverview_Payload;
-use Common\Games_GetSessionOverview_Response;
-use Common\Games_PreviewRound_Payload;
-use Common\Games_PreviewRound_Response;
-use Common\Games_StartGame_Payload;
-use Common\Games_StartGame_Response;
-use Common\Generic_Event_Payload;
-use Common\Generic_Success_Response;
+use Common\GamesAddOnlineReplayPayload;
+use Common\GamesAddOnlineReplayResponse;
+use Common\GamesAddPenaltyPayload;
+use Common\GamesAddPenaltyGamePayload;
+use Common\GamesAddPenaltyGameResponse;
+use Common\GamesAddRoundPayload;
+use Common\GamesAddRoundResponse;
+use Common\GamesCancelGamePayload;
+use Common\GamesDefinalizeGamePayload;
+use Common\GamesDropLastRoundPayload;
+use Common\GamesEndGamePayload;
+use Common\GamesGetSessionOverviewPayload;
+use Common\GamesGetSessionOverviewResponse;
+use Common\GamesPreviewRoundPayload;
+use Common\GamesPreviewRoundResponse;
+use Common\GamesStartGamePayload;
+use Common\GamesStartGameResponse;
+use Common\GenericEventPayload;
+use Common\GenericSuccessResponse;
 use Common\HandValueStat;
 use Common\IntermediateResultOfSession;
 use Common\LocalIdMapping;
 use Common\Mimir;
-use Common\Misc_AddErrorLog_Payload;
+use Common\MiscAddErrorLogPayload;
 use Common\MultironResult;
 use Common\MultironWin;
 use Common\MyEvent;
@@ -109,22 +107,22 @@ use Common\Player;
 use Common\PlayerInRating;
 use Common\PlayerInSession;
 use Common\PlayerPlaceInSeries;
-use Common\Players_GetAllRounds_Payload;
-use Common\Players_GetAllRounds_Response;
-use Common\Players_GetCurrentSessions_Payload;
-use Common\Players_GetCurrentSessions_Response;
-use Common\Players_GetLastResults_Payload;
-use Common\Players_GetLastResults_Response;
-use Common\Players_GetLastRound_Payload;
-use Common\Players_GetLastRound_Response;
-use Common\Players_GetLastRoundByHash_Payload;
-use Common\Players_GetLastRoundByHash_Response;
-use Common\Players_GetMyEvents_Payload;
-use Common\Players_GetMyEvents_Response;
-use Common\Players_GetPlayer_Payload;
-use Common\Players_GetPlayer_Response;
-use Common\Players_GetPlayerStats_Payload;
-use Common\Players_GetPlayerStats_Response;
+use Common\PlayersGetAllRoundsPayload;
+use Common\PlayersGetAllRoundsResponse;
+use Common\PlayersGetCurrentSessionsPayload;
+use Common\PlayersGetCurrentSessionsResponse;
+use Common\PlayersGetLastResultsPayload;
+use Common\PlayersGetLastResultsResponse;
+use Common\PlayersGetLastRoundPayload;
+use Common\PlayersGetLastRoundResponse;
+use Common\PlayersGetLastRoundByHashPayload;
+use Common\PlayersGetLastRoundByHashResponse;
+use Common\PlayersGetMyEventsPayload;
+use Common\PlayersGetMyEventsResponse;
+use Common\PlayersGetPlayerPayload;
+use Common\PlayersGetPlayerResponse;
+use Common\PlayersGetPlayerStatsPayload;
+use Common\PlayersGetPlayerStatsResponse;
 use Common\PlayerWinSummary;
 use Common\RegisteredPlayer;
 use Common\ReplacementPlayer;
@@ -133,12 +131,11 @@ use Common\RonResult;
 use Common\Round;
 use Common\RoundOutcome;
 use Common\RoundState;
-use Common\RulesetGenerated;
-use Common\Seating_GenerateSwissSeating_Response;
-use Common\Seating_GetNextPrescriptedSeating_Response;
-use Common\Seating_MakeIntervalSeating_Payload;
-use Common\Seating_MakePrescriptedSeating_Payload;
-use Common\Seating_MakeShuffledSeating_Payload;
+use Common\SeatingGenerateSwissSeatingResponse;
+use Common\SeatingGetNextPrescriptedSeatingResponse;
+use Common\SeatingMakeIntervalSeatingPayload;
+use Common\SeatingMakePrescriptedSeatingPayload;
+use Common\SeatingMakeShuffledSeatingPayload;
 use Common\SeriesResult;
 use Common\SessionHistoryResult;
 use Common\SessionStatus;
@@ -146,7 +143,6 @@ use Common\TableState;
 use Common\TournamentGamesStatus;
 use Common\TsumoResult;
 use Common\TwirpError;
-use Common\Uma;
 use Common\YakuStat;
 use Exception;
 use Monolog\Handler\ErrorLogHandler;
@@ -264,13 +260,13 @@ final class TwirpServer implements Mimir
     protected static function _toOutcome(string $val): int
     {
         return match ($val) {
-            'ron' => RoundOutcome::RON,
-            'tsumo' => RoundOutcome::TSUMO,
-            'draw' => RoundOutcome::DRAW,
-            'abort' => RoundOutcome::ABORT,
-            'chombo' => RoundOutcome::CHOMBO,
-            'nagashi' => RoundOutcome::NAGASHI,
-            'multiron' => RoundOutcome::MULTIRON,
+            'ron' => RoundOutcome::ROUND_OUTCOME_RON,
+            'tsumo' => RoundOutcome::ROUND_OUTCOME_TSUMO,
+            'draw' => RoundOutcome::ROUND_OUTCOME_DRAW,
+            'abort' => RoundOutcome::ROUND_OUTCOME_ABORT,
+            'chombo' => RoundOutcome::ROUND_OUTCOME_CHOMBO,
+            'nagashi' => RoundOutcome::ROUND_OUTCOME_NAGASHI,
+            'multiron' => RoundOutcome::ROUND_OUTCOME_MULTIRON,
             default => throw new InvalidParametersException()
         };
     }
@@ -278,11 +274,11 @@ final class TwirpServer implements Mimir
     protected static function _toTableStatus(string $val): int
     {
         return match ($val) {
-            'planned' => SessionStatus::PLANNED,
-            'inprogress' => SessionStatus::INPROGRESS,
-            'prefinished' => SessionStatus::PREFINISHED,
-            'finished' => SessionStatus::FINISHED,
-            'cancelled' => SessionStatus::CANCELLED,
+            'planned' => SessionStatus::SESSION_STATUS_PLANNED,
+            'inprogress' => SessionStatus::SESSION_STATUS_INPROGRESS,
+            'prefinished' => SessionStatus::SESSION_STATUS_PREFINISHED,
+            'finished' => SessionStatus::SESSION_STATUS_FINISHED,
+            'cancelled' => SessionStatus::SESSION_STATUS_CANCELLED,
             default => throw new InvalidParametersException()
         };
     }
@@ -291,10 +287,10 @@ final class TwirpServer implements Mimir
     {
         $data = (new EventData())
             ->setType($ret['isOnline']
-                ? EventType::ONLINE
+                ? EventType::EVENT_TYPE_ONLINE
                 : ($ret['isTournament']
-                    ? EventType::TOURNAMENT
-                    : EventType::LOCAL))
+                    ? EventType::EVENT_TYPE_TOURNAMENT
+                    : EventType::EVENT_TYPE_LOCAL))
             ->setTitle($ret['title'])
             ->setDescription($ret['description'])
             ->setTimezone($ret['timezone'])
@@ -348,9 +344,9 @@ final class TwirpServer implements Mimir
     protected static function _toGamesStatus(string $status): int
     {
         return match ($status) {
-            'seating_ready' => TournamentGamesStatus::SEATING_READY,
-            'started' => TournamentGamesStatus::STARTED,
-            default => TournamentGamesStatus::NONE
+            'seating_ready' => TournamentGamesStatus::TOURNAMENT_GAMES_STATUS_SEATING_READY,
+            'started' => TournamentGamesStatus::TOURNAMENT_GAMES_STATUS_STARTED,
+            default => TournamentGamesStatus::TOURNAMENT_GAMES_STATUS_UNSPECIFIED
         };
     }
 
@@ -435,9 +431,9 @@ final class TwirpServer implements Mimir
     protected static function _toEventTypeEnum($val): int
     {
         return match ($val) {
-            'online' => EventType::ONLINE,
-            'tournament' => EventType::TOURNAMENT,
-            default => EventType::LOCAL,
+            'online' => EventType::EVENT_TYPE_ONLINE,
+            'tournament' => EventType::EVENT_TYPE_TOURNAMENT,
+            default => EventType::EVENT_TYPE_LOCAL,
         };
     }
 
@@ -448,8 +444,8 @@ final class TwirpServer implements Mimir
     protected static function _fromEventTypeEnum(int $val): string
     {
         return match ($val) {
-            EventType::ONLINE => 'online',
-            EventType::TOURNAMENT => 'tournament',
+            EventType::EVENT_TYPE_ONLINE => 'online',
+            EventType::EVENT_TYPE_TOURNAMENT => 'tournament',
             default => 'club',
         };
     }
@@ -744,7 +740,7 @@ final class TwirpServer implements Mimir
                 ->setDate($game['date'])
                 ->setReplayLink($game['replay_link'])
                 ->setPlayers($game['players'])
-                ->setPenaltyLog(self::_toPenaltiesLog($game['penalties']))
+                ->setPenaltyLogs(self::_toPenaltiesLog($game['penalties']))
                 ->setFinalResults(array_map(function ($result) {
                     return (new FinalResultOfSession())
                         ->setPlayerId($result['player_id'])
@@ -758,10 +754,10 @@ final class TwirpServer implements Mimir
         }, $games);
     }
 
-    public function GetRulesets(array $ctx, Events_GetRulesets_Payload $req): Events_GetRulesets_Response
+    public function GetRulesets(array $ctx, EventsGetRulesetsPayload $req): EventsGetRulesetsResponse
     {
         $ret = $this->_eventsController->getRulesets();
-        return (new Events_GetRulesets_Response())
+        return (new EventsGetRulesetsResponse())
             ->setRulesetIds(array_map(function ($r) { return $r['id']; },  $ret))
             ->setRulesetTitles(array_map(function ($r) { return $r['description']; },  $ret))
             ->setRulesets(array_map(function ($r) { return $r['originalRules']; },  $ret));
@@ -770,10 +766,10 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetTimezones(array $ctx, Events_GetTimezones_Payload $req): Events_GetTimezones_Response
+    public function GetTimezones(array $ctx, EventsGetTimezonesPayload $req): EventsGetTimezonesResponse
     {
         $ret = $this->_eventsController->getTimezones($req->getAddr());
-        return (new Events_GetTimezones_Response())
+        return (new EventsGetTimezonesResponse())
             ->setTimezones($ret['timezones'])
             ->setPreferredByIp($ret['preferredByIp']);
     }
@@ -781,10 +777,10 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetCountries(array $ctx, Events_GetCountries_Payload $req): Events_GetCountries_Response
+    public function GetCountries(array $ctx, EventsGetCountriesPayload $req): EventsGetCountriesResponse
     {
         $ret = $this->_eventsController->getCountries($req->getAddr());
-        return (new Events_GetCountries_Response())
+        return (new EventsGetCountriesResponse())
             ->setCountries(array_map(function ($country) {
                 return (new Country())
                     ->setCode($country['code'])
@@ -796,10 +792,10 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetEvents(array $ctx, Events_GetEvents_Payload $req): Events_GetEvents_Response
+    public function GetEvents(array $ctx, EventsGetEventsPayload $req): EventsGetEventsResponse
     {
         $ret = $this->_eventsController->getEvents($req->getLimit(), $req->getOffset(), $req->getFilterUnlisted());
-        return (new Events_GetEvents_Response())
+        return (new EventsGetEventsResponse())
             ->setTotal($ret['total'])
             ->setEvents(array_map(function ($ev) {
                 return (new Event())
@@ -818,9 +814,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetEventsById(array $ctx, Events_GetEventsById_Payload $req): Events_GetEventsById_Response
+    public function GetEventsById(array $ctx, EventsGetEventsByIdPayload $req): EventsGetEventsByIdResponse
     {
-        return (new Events_GetEventsById_Response())
+        return (new EventsGetEventsByIdResponse())
             ->setEvents(array_map(function ($ev) {
                 return (new Event())
                     ->setId($ev['id'])
@@ -838,9 +834,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetMyEvents(array $ctx, Players_GetMyEvents_Payload $req): Players_GetMyEvents_Response
+    public function GetMyEvents(array $ctx, PlayersGetMyEventsPayload $req): PlayersGetMyEventsResponse
     {
-        return (new Players_GetMyEvents_Response())
+        return (new PlayersGetMyEventsResponse())
             ->setEvents(array_map(function ($ev) {
                 return (new MyEvent())
                     ->setId($ev['id'])
@@ -853,7 +849,7 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function GetGameConfig(array $ctx, Generic_Event_Payload $req): GameConfig
+    public function GetGameConfig(array $ctx, GenericEventPayload $req): GameConfig
     {
         $ret = $this->_eventsController->getGameConfig($req->getEventId());
 
@@ -890,9 +886,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function GetRatingTable(array $ctx, Events_GetRatingTable_Payload $req): Events_GetRatingTable_Response
+    public function GetRatingTable(array $ctx, EventsGetRatingTablePayload $req): EventsGetRatingTableResponse
     {
-        return (new Events_GetRatingTable_Response())
+        return (new EventsGetRatingTableResponse())
             ->setList(array_map(function ($player) {
                 return (new PlayerInRating())
                     ->setId($player['id'])
@@ -916,7 +912,7 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws TwirpError
      */
-    public function GetLastGames(array $ctx, Events_GetLastGames_Payload $req): Events_GetLastGames_Response
+    public function GetLastGames(array $ctx, EventsGetLastGamesPayload $req): EventsGetLastGamesResponse
     {
         $ret = $this->_eventsController->getLastGames(
             iterator_to_array($req->getEventIdList()),
@@ -925,7 +921,7 @@ final class TwirpServer implements Mimir
             $req->getOrderBy(),
             $req->getOrder()
         );
-        return (new Events_GetLastGames_Response())
+        return (new EventsGetLastGamesResponse())
             ->setTotalGames($ret['total_games'])
             ->setPlayers(self::_toPlayers($ret['players']))
             ->setGames(self::_formatGames($ret['games']));
@@ -935,10 +931,10 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws TwirpError
      */
-    public function GetGame(array $ctx, Events_GetGame_Payload $req): Events_GetGame_Response
+    public function GetGame(array $ctx, EventsGetGamePayload $req): EventsGetGameResponse
     {
         $ret = $this->_eventsController->getGame($req->getSessionHash());
-        return (new Events_GetGame_Response())
+        return (new EventsGetGameResponse())
             ->setPlayers(self::_toPlayers($ret['players']))
             ->setGame(self::_formatGames($ret['games'])[0]);
     }
@@ -946,9 +942,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function GetGamesSeries(array $ctx, Generic_Event_Payload $req): Events_GetGamesSeries_Response
+    public function GetGamesSeries(array $ctx, GenericEventPayload $req): EventsGetGamesSeriesResponse
     {
-        return (new Events_GetGamesSeries_Response())
+        return (new EventsGetGamesSeriesResponse())
             ->setResults(array_map(function ($result) {
                 return (new SeriesResult())
                     ->setPlayer(self::_toPlayers([$result['player']])[0])
@@ -974,9 +970,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetCurrentSessions(array $ctx, Players_GetCurrentSessions_Payload $req): Players_GetCurrentSessions_Response
+    public function GetCurrentSessions(array $ctx, PlayersGetCurrentSessionsPayload $req): PlayersGetCurrentSessionsResponse
     {
-        return (new Players_GetCurrentSessions_Response())
+        return (new PlayersGetCurrentSessionsResponse())
             ->setSessions(array_map(function ($session) {
                 $sess = (new CurrentSession())
                     ->setSessionHash($session['hashcode'])
@@ -1005,9 +1001,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetAllRegisteredPlayers(array $ctx, Events_GetAllRegisteredPlayers_Payload $req): Events_GetAllRegisteredPlayers_Response
+    public function GetAllRegisteredPlayers(array $ctx, EventsGetAllRegisteredPlayersPayload $req): EventsGetAllRegisteredPlayersResponse
     {
-        return (new Events_GetAllRegisteredPlayers_Response())
+        return (new EventsGetAllRegisteredPlayersResponse())
             ->setPlayers(self::_toRegisteredPlayers($this->_eventsController->getAllRegisteredPlayers(
                 iterator_to_array($req->getEventIds())
             )));
@@ -1016,13 +1012,13 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function GetTimerState(array $ctx, Generic_Event_Payload $req): Events_GetTimerState_Response
+    public function GetTimerState(array $ctx, GenericEventPayload $req): EventsGetTimerStateResponse
     {
         $ret = $this->_eventsController->getTimerState($req->getEventId());
         if (empty($ret)) {
-            return new Events_GetTimerState_Response(); // not using timer -> not setting fields
+            return new EventsGetTimerStateResponse(); // not using timer -> not setting fields
         }
-        return (new Events_GetTimerState_Response())
+        return (new EventsGetTimerStateResponse())
             ->setStarted($ret['started'])
             ->setFinished($ret['finished'])
             ->setTimeRemaining($ret['time_remaining'] ?? 0)
@@ -1035,10 +1031,10 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws EntityNotFoundException
      */
-    public function GetSessionOverview(array $ctx, Games_GetSessionOverview_Payload $req): Games_GetSessionOverview_Response
+    public function GetSessionOverview(array $ctx, GamesGetSessionOverviewPayload $req): GamesGetSessionOverviewResponse
     {
         $ret = $this->_gamesController->getSessionOverview($req->getSessionHash());
-        $overview = (new Games_GetSessionOverview_Response())
+        $overview = (new GamesGetSessionOverviewResponse())
             ->setId($ret['id'])
             ->setEventId($ret['event_id'])
             ->setPlayers(array_map(function ($player) {
@@ -1070,17 +1066,17 @@ final class TwirpServer implements Mimir
     /**
      * @throws EntityNotFoundException
      */
-    public function GetPlayerStats(array $ctx, Players_GetPlayerStats_Payload $req): Players_GetPlayerStats_Response
+    public function GetPlayerStats(array $ctx, PlayersGetPlayerStatsPayload $req): PlayersGetPlayerStatsResponse
     {
         $ret = $this->_playersController->getPlayerStats(
             $req->getPlayerId(),
             iterator_to_array($req->getEventIdList())
         );
-        return (new Players_GetPlayerStats_Response())
+        return (new PlayersGetPlayerStatsResponse())
             ->setRatingHistory($ret['rating_history'])
             ->setScoreHistory(array_map(function ($table) {
                 return (new SessionHistoryResultTable())
-                    ->setTable(self::_toResultsHistory($table));
+                    ->setTables(self::_toResultsHistory($table));
             }, array_values($ret['score_history'])))
             ->setPlayersInfo(self::_toPlayers($ret['players_info']))
             ->setPlacesSummary(self::_toPlacesSummary($ret['places_summary']))
@@ -1118,7 +1114,7 @@ final class TwirpServer implements Mimir
      * @throws BadActionException
      * @throws TwirpError
      */
-    public function AddRound(array $ctx, Games_AddRound_Payload $req): Games_AddRound_Response
+    public function AddRound(array $ctx, GamesAddRoundPayload $req): GamesAddRoundResponse
     {
         $ret = $this->_gamesController->addRound(
             $req->getSessionHash(),
@@ -1127,9 +1123,9 @@ final class TwirpServer implements Mimir
         if (!is_array($ret)) {
             throw new InvalidParametersException();
         }
-        return (new Games_AddRound_Response())
+        return (new GamesAddRoundResponse())
             ->setScores(self::_makeScores($ret['_scores']))
-            ->setExtraPenaltyLog(self::_toPenaltiesLog($ret['_extraPenaltyLog']))
+            ->setExtraPenaltyLogs(self::_toPenaltiesLog($ret['_extraPenaltyLog']))
             ->setRound($ret['_round'])
             ->setHonba($ret['_honba'])
             ->setRiichiBets($ret['_riichiBets'])
@@ -1144,7 +1140,7 @@ final class TwirpServer implements Mimir
      * @throws TwirpError
      * @throws BadActionException
      */
-    public function PreviewRound(array $ctx, Games_PreviewRound_Payload $req): Games_PreviewRound_Response
+    public function PreviewRound(array $ctx, GamesPreviewRoundPayload $req): GamesPreviewRoundResponse
     {
         $ret = $this->_gamesController->addRound(
             $req->getSessionHash(),
@@ -1154,7 +1150,7 @@ final class TwirpServer implements Mimir
         if (!is_array($ret)) {
             throw new InvalidParametersException();
         }
-        return (new Games_PreviewRound_Response())
+        return (new GamesPreviewRoundResponse())
             ->setState(self::_toRoundState($ret));
     }
 
@@ -1163,10 +1159,10 @@ final class TwirpServer implements Mimir
      * @throws TwirpError
      * @throws ParseException
      */
-    public function AddOnlineReplay(array $ctx, Games_AddOnlineReplay_Payload $req): Games_AddOnlineReplay_Response
+    public function AddOnlineReplay(array $ctx, GamesAddOnlineReplayPayload $req): GamesAddOnlineReplayResponse
     {
         $ret = $this->_gamesController->addOnlineReplay($req->getEventId(), $req->getLink());
-        return (new Games_AddOnlineReplay_Response())
+        return (new GamesAddOnlineReplayResponse())
             ->setPlayers(self::_toPlayers($ret['players']))
             ->setGame(self::_formatGames($ret['games'])[0]);
     }
@@ -1174,47 +1170,47 @@ final class TwirpServer implements Mimir
     /**
      * @throws EntityNotFoundException
      */
-    public function GetLastResults(array $ctx, Players_GetLastResults_Payload $req): Players_GetLastResults_Response
+    public function GetLastResults(array $ctx, PlayersGetLastResultsPayload $req): PlayersGetLastResultsResponse
     {
         $ret = $this->_playersController->getLastResults($req->getPlayerId(), $req->getEventId());
-        return (new Players_GetLastResults_Response())
+        return (new PlayersGetLastResultsResponse())
             ->setResults(empty($ret) ? [] : self::_toResultsHistory($ret));
     }
 
     /**
      * @throws Exception
      */
-    public function GetLastRound(array $ctx, Players_GetLastRound_Payload $req): Players_GetLastRound_Response
+    public function GetLastRound(array $ctx, PlayersGetLastRoundPayload $req): PlayersGetLastRoundResponse
     {
         $ret = $this->_playersController->getLastRound($req->getPlayerId(), $req->getEventId());
         if (empty($ret)) {
             throw new InvalidParametersException();
         }
-        return (new Players_GetLastRound_Response())
+        return (new PlayersGetLastRoundResponse())
             ->setRound(self::_toRoundState($ret));
     }
 
     /**
      * @throws Exception
      */
-    public function GetAllRounds(array $ctx, Players_GetAllRounds_Payload $req): Players_GetAllRounds_Response
+    public function GetAllRounds(array $ctx, PlayersGetAllRoundsPayload $req): PlayersGetAllRoundsResponse
     {
         $ret = $this->_playersController->getAllRoundsByHash($req->getSessionHash());
-        return (new Players_GetAllRounds_Response())
+        return (new PlayersGetAllRoundsResponse())
             /** @phpstan-ignore-next-line */
-            ->setRound(array_map('self::_toRoundState', $ret ?? []));
+            ->setRounds(array_map('self::_toRoundState', $ret ?? []));
     }
 
     /**
      * @throws Exception
      */
-    public function GetLastRoundByHash(array $ctx, Players_GetLastRoundByHash_Payload $req): Players_GetLastRoundByHash_Response
+    public function GetLastRoundByHash(array $ctx, PlayersGetLastRoundByHashPayload $req): PlayersGetLastRoundByHashResponse
     {
         $ret = $this->_playersController->getLastRoundByHashcode($req->getSessionHash());
         if (empty($ret)) {
             throw new InvalidParametersException();
         }
-        return (new Players_GetLastRoundByHash_Response())
+        return (new PlayersGetLastRoundByHashResponse())
             ->setRound(self::_toRoundState($ret));
     }
 
@@ -1222,10 +1218,10 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws BadActionException
      */
-    public function GetEventForEdit(array $ctx, Events_GetEventForEdit_Payload $req): Events_GetEventForEdit_Response
+    public function GetEventForEdit(array $ctx, EventsGetEventForEditPayload $req): EventsGetEventForEditResponse
     {
         $ret = $this->_eventsController->getEventForEdit($req->getId());
-        return (new Events_GetEventForEdit_Response())
+        return (new EventsGetEventForEditResponse())
             ->setId($ret['id'])
             ->setEvent(self::_toEventData($ret));
     }
@@ -1233,9 +1229,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws BadActionException
      */
-    public function RebuildScoring(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function RebuildScoring(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->rebuildEventScoring($req->getEventId()));
     }
 
@@ -1243,9 +1239,9 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws BadActionException
      */
-    public function CreateEvent(array $ctx, EventData $req): Generic_Event_Payload
+    public function CreateEvent(array $ctx, EventData $req): GenericEventPayload
     {
-        return (new Generic_Event_Payload())
+        return (new GenericEventPayload())
             ->setEventId($this->_eventsController->createEvent(
                 self::_fromEventTypeEnum($req->getType()),
                 $req->getTitle(),
@@ -1266,13 +1262,13 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws BadActionException
      */
-    public function UpdateEvent(array $ctx, Events_UpdateEvent_Payload $req): Generic_Success_Response
+    public function UpdateEvent(array $ctx, EventsUpdateEventPayload $req): GenericSuccessResponse
     {
         $ev = $req->getEvent();
         if (empty($ev)) {
             throw new InvalidParametersException();
         }
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->updateEvent(
                 $req->getId(),
                 $ev->getTitle(),
@@ -1292,34 +1288,34 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function FinishEvent(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function FinishEvent(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->finishEvent($req->getEventId()));
     }
 
     /**
      * @throws InvalidParametersException
      */
-    public function ToggleListed(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function ToggleListed(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->toggleListed($req->getEventId()));
     }
 
     /**
      * @throws Exception
      */
-    public function GetTablesState(array $ctx, Generic_Event_Payload $req): Events_GetTablesState_Response
+    public function GetTablesState(array $ctx, GenericEventPayload $req): EventsGetTablesStateResponse
     {
         $ret = $this->_eventsController->getTablesState($req->getEventId());
-        return (new Events_GetTablesState_Response())
+        return (new EventsGetTablesStateResponse())
             ->setTables(array_map(function ($table) {
                 $state = (new TableState())
                     ->setStatus(self::_toTableStatus($table['status']))
                     ->setMayDefinalize($table['may_definalize'])
                     ->setSessionHash($table['hash'])
-                    ->setPenaltyLog(self::_toPenaltiesLog($table['penalties']))
+                    ->setPenaltyLogs(self::_toPenaltiesLog($table['penalties']))
                     ->setCurrentRoundIndex($table['current_round'])
                     ->setScores(self::_makeScores($table['scores']))
                     ->setPlayers(self::_toRegisteredPlayers($table['players']));
@@ -1336,18 +1332,18 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function StartTimer(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function StartTimer(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->startTimer($req->getEventId()));
     }
 
     /**
      * @throws InvalidParametersException
      */
-    public function RegisterPlayer(array $ctx, Events_RegisterPlayer_Payload $req): Generic_Success_Response
+    public function RegisterPlayer(array $ctx, EventsRegisterPlayerPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->registerPlayerAdmin(
                 $req->getPlayerId(),
                 $req->getEventId()
@@ -1357,9 +1353,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function UnregisterPlayer(array $ctx, Events_UnregisterPlayer_Payload $req): Generic_Success_Response
+    public function UnregisterPlayer(array $ctx, EventsUnregisterPlayerPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->unregisterPlayerAdmin(
                 $req->getPlayerId(),
                 $req->getEventId()
@@ -1369,9 +1365,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function UpdatePlayerSeatingFlag(array $ctx, Events_UpdatePlayerSeatingFlag_Payload $req): Generic_Success_Response
+    public function UpdatePlayerSeatingFlag(array $ctx, EventsUpdatePlayerSeatingFlagPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->updatePlayerSeatingFlag(
                 $req->getPlayerId(),
                 $req->getEventId(),
@@ -1382,13 +1378,13 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function GetAchievements(array $ctx, Events_GetAchievements_Payload $req): Events_GetAchievements_Response
+    public function GetAchievements(array $ctx, EventsGetAchievementsPayload $req): EventsGetAchievementsResponse
     {
         $ret = $this->_eventsController->getAchievements(
             $req->getEventId(),
             iterator_to_array($req->getAchievementsList())
         );
-        return (new Events_GetAchievements_Response())
+        return (new EventsGetAchievementsResponse())
             ->setAchievements(array_map(function ($id, $ach) {
                 return (new Achievement())
                     ->setAchievementId($id)
@@ -1399,21 +1395,21 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function ToggleHideResults(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function ToggleHideResults(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->toggleHideResults($req->getEventId()));
     }
 
     /**
      * @throws AuthFailedException
      */
-    public function UpdatePlayersLocalIds(array $ctx, Events_UpdatePlayersLocalIds_Payload $req): Generic_Success_Response
+    public function UpdatePlayersLocalIds(array $ctx, EventsUpdatePlayersLocalIdsPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->updateLocalIds(
                 $req->getEventId(),
-                array_reduce(iterator_to_array($req->getIdMap()), function ($acc, LocalIdMapping $val) {
+                array_reduce(iterator_to_array($req->getIdsToLocalIds()), function ($acc, LocalIdMapping $val) {
                     $acc[$val->getPlayerId()] = $val->getLocalId();
                     return $acc;
                 }, [])
@@ -1423,9 +1419,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function UpdatePlayerReplacement(array $ctx, Events_UpdatePlayerReplacement_Payload $req): Generic_Success_Response
+    public function UpdatePlayerReplacement(array $ctx, EventsUpdatePlayerReplacementPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->updatePlayerReplacement(
                 $req->getPlayerId(),
                 $req->getEventId(),
@@ -1436,12 +1432,12 @@ final class TwirpServer implements Mimir
     /**
      * @throws AuthFailedException
      */
-    public function UpdatePlayersTeams(array $ctx, Events_UpdatePlayersTeams_Payload $req): Generic_Success_Response
+    public function UpdatePlayersTeams(array $ctx, EventsUpdatePlayersTeamsPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->updateTeamNames(
                 $req->getEventId(),
-                array_reduce(iterator_to_array($req->getTeamNameMap()), function ($acc, TeamMapping $val) {
+                array_reduce(iterator_to_array($req->getIdsToTeamNames()), function ($acc, TeamMapping $val) {
                     $acc[$val->getPlayerId()] = $val->getTeamName();
                     return $acc;
                 }, [])
@@ -1452,9 +1448,9 @@ final class TwirpServer implements Mimir
      * @throws InvalidUserException
      * @throws DatabaseException
      */
-    public function StartGame(array $ctx, Games_StartGame_Payload $req): Games_StartGame_Response
+    public function StartGame(array $ctx, GamesStartGamePayload $req): GamesStartGameResponse
     {
-        return (new Games_StartGame_Response())
+        return (new GamesStartGameResponse())
             ->setSessionHash($this->_gamesController->start(
                 $req->getEventId(),
                 iterator_to_array($req->getPlayers())
@@ -1464,36 +1460,36 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function EndGame(array $ctx, Games_EndGame_Payload $req): Generic_Success_Response
+    public function EndGame(array $ctx, GamesEndGamePayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->end($req->getSessionHash()));
     }
 
     /**
      * @throws Exception
      */
-    public function CancelGame(array $ctx, Games_CancelGame_Payload $req): Generic_Success_Response
+    public function CancelGame(array $ctx, GamesCancelGamePayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->cancel($req->getSessionHash()));
     }
 
     /**
      * @throws Exception
      */
-    public function FinalizeSession(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function FinalizeSession(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->finalizeSessions($req->getEventId()));
     }
 
     /**
      * @throws Exception
      */
-    public function DropLastRound(array $ctx, Games_DropLastRound_Payload $req): Generic_Success_Response
+    public function DropLastRound(array $ctx, GamesDropLastRoundPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->dropLastRound(
                 $req->getSessionHash(),
                 iterator_to_array($req->getIntermediateResults())
@@ -1503,18 +1499,18 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function DefinalizeGame(array $ctx, Games_DefinalizeGame_Payload $req): Generic_Success_Response
+    public function DefinalizeGame(array $ctx, GamesDefinalizeGamePayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->definalizeGame($req->getSessionHash()));
     }
 
     /**
      * @throws Exception
      */
-    public function AddPenalty(array $ctx, Games_AddPenalty_Payload $req): Generic_Success_Response
+    public function AddPenalty(array $ctx, GamesAddPenaltyPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->addPenalty(
                 $req->getEventId(),
                 $req->getPlayerId(),
@@ -1527,9 +1523,9 @@ final class TwirpServer implements Mimir
      * @throws DatabaseException
      * @throws InvalidUserException
      */
-    public function AddPenaltyGame(array $ctx, Games_AddPenaltyGame_Payload $req): Games_AddPenaltyGame_Response
+    public function AddPenaltyGame(array $ctx, GamesAddPenaltyGamePayload $req): GamesAddPenaltyGameResponse
     {
-        return (new Games_AddPenaltyGame_Response())
+        return (new GamesAddPenaltyGameResponse())
             ->setHash($this->_gamesController->addPenaltyGame(
                 $req->getEventId(),
                 iterator_to_array($req->getPlayers())
@@ -1539,9 +1535,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws EntityNotFoundException
      */
-    public function GetPlayer(array $ctx, Players_GetPlayer_Payload $req): Players_GetPlayer_Response
+    public function GetPlayer(array $ctx, PlayersGetPlayerPayload $req): PlayersGetPlayerResponse
     {
-        return (new Players_GetPlayer_Response())
+        return (new PlayersGetPlayerResponse())
             ->setPlayers(
                 self::_toPlayers([$this->_playersController->get($req->getId())])[0]
             );
@@ -1550,10 +1546,10 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function GetCurrentSeating(array $ctx, Generic_Event_Payload $req): Events_GetCurrentSeating_Response
+    public function GetCurrentSeating(array $ctx, GenericEventPayload $req): EventsGetCurrentSeatingResponse
     {
         $ret = $this->_eventsController->getCurrentSeating($req->getEventId());
-        return (new Events_GetCurrentSeating_Response())
+        return (new EventsGetCurrentSeatingResponse())
             ->setSeating(array_map(function ($seat) {
                 return (new PlayerSeating())
                     ->setPlayerId($seat['player_id'])
@@ -1569,9 +1565,9 @@ final class TwirpServer implements Mimir
      * @throws AuthFailedException
      * @throws InvalidParametersException
      */
-    public function MakeShuffledSeating(array $ctx, Seating_MakeShuffledSeating_Payload $req): Generic_Success_Response
+    public function MakeShuffledSeating(array $ctx, SeatingMakeShuffledSeatingPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->makeShuffledSeating(
                 $req->getEventId(),
                 $req->getGroupsCount(),
@@ -1583,18 +1579,18 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws AuthFailedException
      */
-    public function MakeSwissSeating(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function MakeSwissSeating(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->makeSwissSeating($req->getEventId()));
     }
 
     /**
      * @throws Exception
      */
-    public function ResetSeating(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function ResetSeating(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->resetSeating($req->getEventId()));
     }
 
@@ -1602,9 +1598,9 @@ final class TwirpServer implements Mimir
      * @throws AuthFailedException
      * @throws InvalidParametersException
      */
-    public function GenerateSwissSeating(array $ctx, Generic_Event_Payload $req): Seating_GenerateSwissSeating_Response
+    public function GenerateSwissSeating(array $ctx, GenericEventPayload $req): SeatingGenerateSwissSeatingResponse
     {
-        return (new Seating_GenerateSwissSeating_Response())
+        return (new SeatingGenerateSwissSeatingResponse())
             ->setTables(array_map(function ($table) {
                 return (new TableItemSwiss())
                     ->setPlayers(array_map(function ($player, $rating) {
@@ -1621,9 +1617,9 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws InvalidUserException
      */
-    public function MakeIntervalSeating(array $ctx, Seating_MakeIntervalSeating_Payload $req): Generic_Success_Response
+    public function MakeIntervalSeating(array $ctx, SeatingMakeIntervalSeatingPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->makeIntervalSeating(
                 $req->getEventId(),
                 $req->getStep()
@@ -1636,9 +1632,9 @@ final class TwirpServer implements Mimir
      * @throws AuthFailedException
      * @throws InvalidUserException
      */
-    public function MakePrescriptedSeating(array $ctx, Seating_MakePrescriptedSeating_Payload $req): Generic_Success_Response
+    public function MakePrescriptedSeating(array $ctx, SeatingMakePrescriptedSeatingPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->makePrescriptedSeating(
                 $req->getEventId(),
                 $req->getRandomizeAtTables()
@@ -1649,9 +1645,9 @@ final class TwirpServer implements Mimir
      * @throws AuthFailedException
      * @throws InvalidParametersException
      */
-    public function GetNextPrescriptedSeating(array $ctx, Generic_Event_Payload $req): Seating_GetNextPrescriptedSeating_Response
+    public function GetNextPrescriptedSeating(array $ctx, GenericEventPayload $req): SeatingGetNextPrescriptedSeatingResponse
     {
-        return (new Seating_GetNextPrescriptedSeating_Response())
+        return (new SeatingGetNextPrescriptedSeatingResponse())
             ->setTables(array_map(function ($table) {
                 return (new PrescriptedTable())
                     ->setPlayers(self::_toRegisteredPlayers($table));
@@ -1661,10 +1657,10 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function GetPrescriptedEventConfig(array $ctx, Generic_Event_Payload $req): Events_GetPrescriptedEventConfig_Response
+    public function GetPrescriptedEventConfig(array $ctx, GenericEventPayload $req): EventsGetPrescriptedEventConfigResponse
     {
         $ret = $this->_eventsController->getPrescriptedEventConfig($req->getEventId());
-        return (new Events_GetPrescriptedEventConfig_Response())
+        return (new EventsGetPrescriptedEventConfigResponse())
             ->setEventId($ret['event_id'])
             ->setNextSessionIndex($ret['next_session_index'])
             ->setPrescript($ret['prescript'])
@@ -1674,9 +1670,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws InvalidParametersException
      */
-    public function UpdatePrescriptedEventConfig(array $ctx, Events_UpdatePrescriptedEventConfig_Payload $req): Generic_Success_Response
+    public function UpdatePrescriptedEventConfig(array $ctx, EventsUpdatePrescriptedEventConfigPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->updatePrescriptedEventConfig(
                 $req->getEventId(),
                 $req->getNextSessionIndex(),
@@ -1688,24 +1684,24 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws BadActionException
      */
-    public function InitStartingTimer(array $ctx, Generic_Event_Payload $req): Generic_Success_Response
+    public function InitStartingTimer(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->initStartingTimer($req->getEventId()));
     }
 
     /**
      * @throws InvalidParametersException
      */
-    public function GetStartingTimer(array $ctx, Generic_Event_Payload $req): Events_GetStartingTimer_Response
+    public function GetStartingTimer(array $ctx, GenericEventPayload $req): EventsGetStartingTimerResponse
     {
-        return (new Events_GetStartingTimer_Response())
+        return (new EventsGetStartingTimerResponse())
             ->setTimer($this->_eventsController->getStartingTimer($req->getEventId()));
     }
 
-    public function AddErrorLog(array $ctx, Misc_AddErrorLog_Payload $req): Generic_Success_Response
+    public function AddErrorLog(array $ctx, MiscAddErrorLogPayload $req): GenericSuccessResponse
     {
-        return (new Generic_Success_Response())
+        return (new GenericSuccessResponse())
             ->setSuccess($this->_miscController->addErrorLog(
                 $req->getFacility(),
                 $req->getSessionHash(),

@@ -13,6 +13,8 @@ php-errors.log
 .DS_Store
 Thumbs.db
 
+Common/protoc-bin/
+
 Mimir/config/local/*
 Mimir/vendor/
 Mimir/data/db.sqlite

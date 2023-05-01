@@ -44,7 +44,7 @@ import {
 import { AppOutcome } from '#/interfaces/app';
 import { getRequiredYaku } from '../selectors/yaku';
 import { YakuId } from '#/primitives/yaku';
-import { PlayerInSession } from '#/clients/atoms.pb';
+import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
 
 /**
  * Get id of player who is dealer in this round
@@ -63,7 +63,7 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
   let winProps;
   yakuToAdd.forEach((yId) => {
     switch (stateUpdated.currentOutcome?.selectedOutcome) {
-      case 'TSUMO':
+      case RoundOutcome.ROUND_OUTCOME_TSUMO:
         winProps = addYakuToProps(
           stateUpdated.currentOutcome,
           stateUpdated.currentOutcome.selectedOutcome,
@@ -76,7 +76,7 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           return;
         }
         break;
-      case 'RON':
+      case RoundOutcome.ROUND_OUTCOME_RON:
         if (!targetPlayer) {
           return;
         }
@@ -122,9 +122,9 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       );
     case INIT_REQUIRED_YAKU:
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'TSUMO':
+        case RoundOutcome.ROUND_OUTCOME_TSUMO:
           return addYakuList(state, getRequiredYaku(state), state.multironCurrentWinner);
-        case 'RON':
+        case RoundOutcome.ROUND_OUTCOME_RON:
           let stateModified = state;
           Object.keys(state.currentOutcome.wins).forEach((pId) => {
             stateModified = addYakuList(
@@ -144,7 +144,7 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       }
 
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'TSUMO':
+        case RoundOutcome.ROUND_OUTCOME_TSUMO:
           winProps = removeYakuFromProps(
             state.currentOutcome,
             state.currentOutcome.selectedOutcome,
@@ -155,7 +155,7 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
             return state;
           }
           break;
-        case 'RON':
+        case RoundOutcome.ROUND_OUTCOME_RON:
           winProps = removeYakuFromProps(
             state.currentOutcome.wins[action.payload.winner!],
             state.currentOutcome.selectedOutcome,
@@ -174,7 +174,7 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
     case TOGGLE_RIICHI:
       const outcome = state.currentOutcome;
       playerId = action.payload;
-      if (outcome && outcome.selectedOutcome === 'CHOMBO') {
+      if (outcome && outcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO) {
         return state;
       }
 
@@ -183,7 +183,10 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
         : [...(outcome?.riichiBets ?? []), playerId];
 
       // Custom logic which disables tempai and/or riichi
-      if (outcome?.selectedOutcome === 'DRAW' || outcome?.selectedOutcome === 'NAGASHI') {
+      if (
+        outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_DRAW ||
+        outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_NAGASHI
+      ) {
         if (!outcome.tempai.includes(playerId) && !outcome.deadhands.includes(playerId)) {
           return modifyDrawOutcome(state, {
             tempai: [...outcome.tempai, playerId],
@@ -199,12 +202,15 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
         }
       }
 
-      if (outcome?.selectedOutcome === 'RON' || outcome?.selectedOutcome === 'TSUMO') {
+      if (
+        outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON ||
+        outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
+      ) {
         return modifyWinOutcomeCommons(state, { riichiBets: riichiList });
       } else if (
-        outcome?.selectedOutcome === 'DRAW' ||
-        outcome?.selectedOutcome === 'NAGASHI' ||
-        outcome?.selectedOutcome === 'ABORT'
+        outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_DRAW ||
+        outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_NAGASHI ||
+        outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_ABORT
       ) {
         return modifyDrawOutcome(state, {
           riichiBets: riichiList,
@@ -214,7 +220,7 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       return state;
     case TOGGLE_WINNER:
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'TSUMO':
+        case RoundOutcome.ROUND_OUTCOME_TSUMO:
           return modifyWinOutcome(state, {
             winner: state.currentOutcome.winner === action.payload ? undefined : action.payload,
             winnerIsDealer:
@@ -222,8 +228,8 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
               state.players !== undefined &&
               getDealerId(state.currentOutcome, state.players) === action.payload,
           });
-        case 'DRAW':
-        case 'NAGASHI': // select tempai players for nagashi or draw
+        case RoundOutcome.ROUND_OUTCOME_DRAW:
+        case RoundOutcome.ROUND_OUTCOME_NAGASHI: // select tempai players for nagashi or draw
           if (!state.currentOutcome.riichiBets.includes(action.payload)) {
             if (!state.currentOutcome.tempai.includes(action.payload)) {
               return modifyDrawOutcome(state, {
@@ -247,7 +253,7 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
               throw Error('Tempai button cannot exist while deadhand button pressed');
             }
           }
-        case 'RON':
+        case RoundOutcome.ROUND_OUTCOME_RON:
           return modifyMultiwin(
             state,
             action.payload,
@@ -260,8 +266,8 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       }
     case TOGGLE_LOSER:
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'RON':
-        case 'CHOMBO':
+        case RoundOutcome.ROUND_OUTCOME_RON:
+        case RoundOutcome.ROUND_OUTCOME_CHOMBO:
           return modifyLoseOutcome(state, {
             loser: state.currentOutcome.loser === action.payload ? undefined : action.payload,
             loserIsDealer:
@@ -275,11 +281,11 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
     case TOGGLE_PAO:
       playerId = action.payload;
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'TSUMO':
+        case RoundOutcome.ROUND_OUTCOME_TSUMO:
           return modifyWinOutcome(state, {
             paoPlayerId: state.currentOutcome.paoPlayerId === playerId ? undefined : playerId,
           });
-        case 'RON':
+        case RoundOutcome.ROUND_OUTCOME_RON:
           if (state.multironCurrentWinner) {
             return modifyWinOutcome(
               state,
@@ -298,8 +304,8 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       }
     case TOGGLE_DEADHAND:
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'DRAW':
-        case 'NAGASHI':
+        case RoundOutcome.ROUND_OUTCOME_DRAW:
+        case RoundOutcome.ROUND_OUTCOME_NAGASHI:
           if (state.currentOutcome.riichiBets.includes(action.payload)) {
             if (
               !state.currentOutcome.tempai.includes(action.payload) &&
@@ -320,7 +326,7 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       }
     case TOGGLE_NAGASHI:
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'NAGASHI':
+        case RoundOutcome.ROUND_OUTCOME_NAGASHI:
           if (!state.currentOutcome.nagashi.includes(action.payload)) {
             return modifyDrawOutcome(state, {
               nagashi: [...state.currentOutcome.nagashi, action.payload],

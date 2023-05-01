@@ -20,8 +20,7 @@
       "node_modules/@types"
     ],
     "paths": {
-      "#/*": ["app/*"],
-      "#config": ["app/envConfig/environment.prod.ts"]
+      "#/*": ["app/*"]
     }
   },
   "exclude": ["*/**/*.spec.ts"]

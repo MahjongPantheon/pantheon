@@ -15,7 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { environment } from '#config';
 import debounce from 'lodash.debounce';
 
 export class Analytics {
@@ -101,8 +100,8 @@ export class Analytics {
   }
 
   constructor() {
-    this._statDomain = environment.statDomain;
-    this._siteId = environment.siteId;
+    this._statDomain = window.__cfg.STAT_HOST;
+    this._siteId = window.__cfg.STAT_SITE_ID;
     if (!this._statDomain) {
       return;
     }

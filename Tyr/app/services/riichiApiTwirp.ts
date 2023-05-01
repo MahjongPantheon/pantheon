@@ -16,7 +16,6 @@
  */
 
 import { IAppState } from '#/store/interfaces';
-import { environment } from '#config';
 import {
   AddRound,
   GetAllRegisteredPlayers,
@@ -32,12 +31,12 @@ import {
   GetTimerState,
   PreviewRound,
   StartGame,
-} from '#/clients/mimir.pb';
+} from '#/clients/proto/mimir.pb';
 import { IRiichiApi } from '#/services/IRiichiApi';
-import { Authorize, GetPersonalInfo, QuickAuthorize } from '#/clients/frey.pb';
+import { Authorize, GetPersonalInfo, QuickAuthorize } from '#/clients/proto/frey.pb';
 import { formatRoundToTwirp } from '#/services/formatters';
 import { ClientConfiguration } from 'twirpscript';
-import { SessionStatus } from '#/clients/atoms.pb';
+import { SessionStatus } from '#/clients/proto/atoms.pb';
 
 import { handleReleaseTag } from '#/services/releaseTags';
 
@@ -56,17 +55,16 @@ export class RiichiApiTwirpService implements IRiichiApi {
     this._personId = (personId || 0).toString();
 
     const headers = new Headers();
-    headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
     headers.append('X-Auth-Token', this._authToken ?? '');
     headers.append('X-Twirp', 'true');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConfMimir.baseURL = environment.apiUrl;
-    this._clientConfFrey.baseURL = environment.uaUrl;
+    this._clientConfMimir.baseURL = window.__cfg.MIMIR_URL;
+    this._clientConfFrey.baseURL = window.__cfg.FREY_URL;
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
-      return fetch(url + (environment.production ? '' : '?XDEBUG_SESSION=start'), {
+      return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
         ...opts,
         headers,
       }).then(handleReleaseTag);
@@ -126,7 +124,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getUserInfo(personIds: number[]) {
-    return GetPersonalInfo({ ids: personIds }, this._clientConfFrey).then((val) => val.persons);
+    return GetPersonalInfo({ ids: personIds }, this._clientConfFrey).then((val) => val.people);
   }
 
   /**
@@ -161,7 +159,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
   getAllRounds(sessionHashcode: string) {
     return GetAllRounds({ sessionHash: sessionHashcode }, this._clientConfMimir).then(
-      (val) => val.round
+      (val) => val.rounds
     );
   }
 
@@ -176,7 +174,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
   getTablesState(eventId: number) {
     return GetTablesState({ eventId }, this._clientConfMimir).then((v) =>
-      v.tables.filter((t) => t.status === SessionStatus.INPROGRESS)
+      v.tables.filter((t) => t.status === SessionStatus.SESSION_STATUS_INPROGRESS)
     );
   }
 

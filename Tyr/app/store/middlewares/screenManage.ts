@@ -42,6 +42,7 @@ import { AppScreen, IAppState } from '../interfaces';
 import { getWinningUsers } from '#/store/selectors/mimirSelectors';
 import { YakuId } from '#/primitives/yaku';
 import { getFirstWinnerWithPao } from '#/store/selectors/paoSelectors';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export const screenManageMw =
   () =>
@@ -81,7 +82,7 @@ export const screenManageMw =
               mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
               mw.dispatch({ type: INIT_REQUIRED_YAKU });
 
-              if (state.currentOutcome?.selectedOutcome === 'TSUMO') {
+              if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
                 mw.dispatch({
                   type: ADD_YAKU,
                   payload: { id: YakuId.MENZENTSUMO, winner: currentWinnerId },

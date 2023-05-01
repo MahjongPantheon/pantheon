@@ -54,8 +54,7 @@ import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useStorage } from '#/hooks/storage';
-import type { Event } from '#/clients/atoms.pb';
-import { environment } from '#config';
+import { Event, EventType } from '#/clients/proto/atoms.pb';
 import { authCtx } from '#/hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
@@ -217,7 +216,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                 }}
               >
                 <Group sx={{ flex: 1 }}>
-                  {event.type === 'LOCAL' && (
+                  {event.type === EventType.EVENT_TYPE_LOCAL && (
                     <Tooltip
                       openDelay={500}
                       position='bottom'
@@ -229,7 +228,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  {event.type === 'TOURNAMENT' && (
+                  {event.type === EventType.EVENT_TYPE_TOURNAMENT && (
                     <Tooltip
                       openDelay={500}
                       position='bottom'
@@ -241,7 +240,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  {event.type === 'ONLINE' && (
+                  {event.type === EventType.EVENT_TYPE_ONLINE && (
                     <Tooltip
                       openDelay={500}
                       position='bottom'
@@ -253,7 +252,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  <a href={`${environment.guiUrl}/eid${event.id}`} target='_blank'>
+                  <a href={`${window.__cfg.RHEDA_URL}/eid${event.id}`} target='_blank'>
                     {event.title}
                   </a>
                 </Group>

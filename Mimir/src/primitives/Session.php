@@ -752,7 +752,7 @@ class SessionPrimitive extends Primitive
         $lastTimer = $this->getEvent()->getLastTimer(); // may be null if timer is not set!
 
         switch ($this->getEvent()->getRulesetConfig()->rules()->getEndingPolicy()) {
-            case EndingPolicy::EP_ONE_MORE_HAND:
+            case EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND:
                 $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
                     $lastTimer + (
                         $this->getEvent()->getGameDuration() * 60
@@ -780,7 +780,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 break;
-            case EndingPolicy::EP_END_AFTER_HAND:
+            case EndingPolicy::ENDING_POLICY_EP_END_AFTER_HAND:
                 $this->getCurrentState()->update($round);
                 $success = $this->save();
 

@@ -32,7 +32,7 @@ import { Link, useRoute } from 'wouter';
 import { useI18n } from '#/hooks/i18n';
 import { authCtx } from '#/hooks/auth';
 import { useContext, useEffect, useState } from 'react';
-import { Event } from './clients/atoms.pb';
+import { Event } from '#/clients/proto/atoms.pb';
 import { useApi } from '#/hooks/api';
 import { useStorage } from '#/hooks/storage';
 

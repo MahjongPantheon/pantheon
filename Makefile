@@ -7,390 +7,225 @@ GREEN = $(shell echo -e '\033[1;32m')
 YELLOW = $(shell echo -e '\033[1;33m')
 NC = $(shell echo -e '\033[0m') # No Color
 
-.PHONY: get_docker_id
-get_docker_id:
-	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep pantheondev | awk '{print $$1}'))
+.EXPORT_ALL_VARIABLES:
 
-.PHONY: get_docker_idle_id
-get_docker_idle_id:
-	$(eval IDLE_DOCKER_ID := $(shell docker ps -a | grep pantheondev | awk '{print $$1}'))
-
-.PHONY: get_pgadmin_id
-get_pgadmin_id:
-	$(eval RUNNING_PGADMIN_ID := $(shell docker ps | grep pgadmin4 | grep 5632 | awk '{print $$1}'))
-
-.PHONY: get_pgadmin_idle_id
-get_pgadmin_idle_id:
-	$(eval IDLE_PGADMIN_ID := $(shell docker ps -a | grep pgadmin4 | grep 5632 | awk '{print $$1}'))
+ENV_FILENAME ?= default.env
 
 .PHONY: deps
-deps: get_docker_id
+deps:
 	@echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't make deps. Do 'make run' before.${NC}"; \
-	else \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make deps'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make deps'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make deps'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make deps'; \
-	fi
+	cd Tyr && ${MAKE} docker_deps
+	cd Mimir && ${MAKE} docker_deps
+	cd Frey && ${MAKE} docker_deps
+	cd Rheda && ${MAKE} docker_deps
+	cd Forseti && ${MAKE} docker_deps
 
 .PHONY: kill
-kill: stop get_docker_idle_id get_pgadmin_idle_id
-	@if [ "$(IDLE_DOCKER_ID)" != "" ]; then \
-		docker rm $(IDLE_DOCKER_ID) ; \
-	fi ; \
-	if [ "$(IDLE_PGADMIN_ID)" != "" ]; then \
-		docker rm $(IDLE_PGADMIN_ID) ; \
-	fi
+kill:
+	docker-compose down
+	cd Tyr && ${MAKE} kill
+	cd Mimir && ${MAKE} kill
+	cd Frey && ${MAKE} kill
+	cd Rheda && ${MAKE} kill
+	cd Forseti && ${MAKE} kill
+	cd Database && ${MAKE} kill
+	docker-compose rm -v
 
 .PHONY: container
-container: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
-		docker build -t pantheondev . ; \
-	else \
-		echo "${RED}Pantheon container is running, you must stop it before rebuild.${NC}"; \
-	fi
-
+container:
+	docker-compose down
+	docker-compose up --build -d
 
 # Alias for conformity
 .PHONY: start
 start: run
 
-.PHONY: pgadmin_start
-pgadmin_start: get_pgadmin_id get_pgadmin_idle_id
-	@if [ "$(RUNNING_PGADMIN_ID)" != "" ]; then \
-		echo "${YELLOW}Pantheon pgadmin container have already been started.${NC}"; \
-	else \
-		if [ "$(IDLE_PGADMIN_ID)" != "" ]; then \
-			docker start $(IDLE_PGADMIN_ID) ; \
-		else \
-			docker pull dpage/pgadmin4 && \
-			docker run -it --link=pantheondev -p 5632:80 \
-				-e "PGADMIN_DEFAULT_EMAIL=dev@riichimahjong.org" \
-				-e "PGADMIN_DEFAULT_PASSWORD=password" \
-				-d dpage/pgadmin4 \
-				pantheonpgadmin; \
-		fi \
-	fi
-
-.PHONY: pgadmin_stop
-pgadmin_stop: get_pgadmin_id
-	@if [ "$(RUNNING_PGADMIN_ID)" = "" ]; then \
-		echo "${RED}Pantheon pgadmin container is not running, can't stop it.${NC}"; \
-	else \
-		echo "${GREEN}Stopping pgadmin container...${NC}"; \
-		docker kill $(RUNNING_PGADMIN_ID); \
-	fi
-
 .PHONY: pantheon_run
-pantheon_run: get_docker_id get_docker_idle_id
-	@if [ "$(RUNNING_DOCKER_ID)" != "" ]; then \
-		echo "${YELLOW}Pantheon containers have already been started.${NC}"; \
-	else \
-		echo "----------------------------------------------------------------------------------"; \
-		echo "${GREEN}Starting container. Don't forget to run 'make stop' to stop it when you're done :)${NC}"; \
-		echo "----------------------------------------------------------------------------------"; \
-		echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
-		echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
-		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
-		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
-		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
-		echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
-  		echo "----------------------------------------------------------------------------------"; \
-  		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
-  		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
-  		echo "    -> Login to PgAdmin4 as: "; \
-  		echo "    ->     Username: dev@riichimahjong.org "; \
-  		echo "    ->     Password: password "; \
-  		echo "    -> PgAdmin4 pgsql connection credentials hint: "; \
-  		echo "    ->     Hostname: pantheondev "; \
-  		echo "    ->     Port:     5532 "; \
-  		echo "    ->     Username: mimir "; \
-  		echo "    ->     Password: pgpass "; \
-  		echo "----------------------------------------------------------------------------------"; \
-  		echo " ${GREEN}Run 'make logs' in separate console to view container logs on-line${NC} "; \
-  		echo " ${GREEN}Run 'make php_logs' in separate console to view php logs on-line${NC} "; \
-  		echo " ${YELLOW}Run 'make shell' in separate console to get into container shell${NC} "; \
-  		echo " ${YELLOW}Also you can use 'make shell_{tyr|rheda|frey|mimir}' to get ${NC} "; \
-  		echo " ${YELLOW}to specific subproject folder after entering container shell${NC} "; \
-  		echo "----------------------------------------------------------------------------------"; \
-		if [ "$(IDLE_DOCKER_ID)" != "" ]; then \
-  			docker start $(IDLE_DOCKER_ID) ; \
-  		else \
-			docker run \
-			  -m 2048m \
-				-d -e LOCAL_USER_ID=$(UID) \
-				-e COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN) \
-				-e COVERALLS_RUN_LOCALLY=1 \
-				-p 127.0.0.1:4001:4001 \
-				-p 127.0.0.1:4002:4002 \
-				-p 127.0.0.1:4003:4003 \
-				-p 127.0.0.1:4004:4004 \
-				-p 127.0.0.1:5532:5532 \
-				-p 127.0.0.1:4007:4007 \
-				-v `pwd`/Tyr:/var/www/html/Tyr:z \
-				-v `pwd`/Mimir:/var/www/html/Mimir:z \
-				-v `pwd`/Rheda:/var/www/html/Rheda:z \
-				-v `pwd`/Frey:/var/www/html/Frey:z \
-				-v `pwd`/Forseti:/var/www/html/Forseti:z \
-				-v `pwd`/Common:/var/www/html/Common:z \
-				-v `pwd`/:/var/www/html/pantheon:z \
-				--name=pantheondev \
-				pantheondev; \
-		fi \
-	fi
+pantheon_run:
+	docker-compose up --build -d
+	echo "----------------------------------------------------------------------------------"; \
+	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
+	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
+	echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
+	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
+	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
+	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
+	echo "----------------------------------------------------------------------------------"; \
+	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
+	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
+	echo "    -> Login to PgAdmin4 as: "; \
+	echo "    ->     Username: dev@riichimahjong.org "; \
+	echo "    ->     Password: password "; \
+	echo "    -> PgAdmin4-mimir pgsql connection credentials hint: "; \
+	echo "    ->     Hostname: db "; \
+	echo "    ->     Port:     5532 "; \
+	echo "    ->     Username: mimir "; \
+	echo "    ->     Password: pgpass "; \
+	echo "    -> PgAdmin4-frey pgsql connection credentials hint: "; \
+	echo "    ->     Hostname: db "; \
+	echo "    ->     Port:     5532 "; \
+	echo "    ->     Username: frey "; \
+	echo "    ->     Password: pgpass "; \
+	echo "----------------------------------------------------------------------------------"; \
+	echo " ${GREEN}Run 'make logs' in each subproject folder to view container logs on-line${NC} "; \
+	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \
+	echo " ${YELLOW}Run 'make shell' in each subproject folder to get into each container shell${NC} "; \
+	echo " ${YELLOW}Also you can use 'make shell_{tyr|rheda|frey|mimir|forseti}' to get ${NC} "; \
+	echo " ${YELLOW}to specific subproject folder after entering container shell${NC} "; \
+
 
 .PHONY: pantheon_stop
-pantheon_stop: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't stop it.${NC}"; \
-	else \
-		echo "${GREEN}Stopping all the party...${NC}"; \
-		docker kill $(RUNNING_DOCKER_ID); \
-	fi
+pantheon_stop:
+	docker-compose down
 
 .PHONY: run
-run: pantheon_run# pgadmin_start
+run: pantheon_run
 
 .PHONY: stop
-stop: pantheon_stop pgadmin_stop
+stop: pantheon_stop
 
 .PHONY: dev_tyr
-dev_tyr: get_docker_id
-	@docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Tyr && HOME=/home/user su-exec user make docker'
+dev_tyr:
+	cd Tyr && ${MAKE} docker_dev
 
 .PHONY: dev_forseti
-dev_forseti: get_docker_id
-	@docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Forseti && HOME=/home/user su-exec user make docker'
+dev_forseti:
+	cd Forseti && ${MAKE} docker_dev
+
+.PHONY: forseti_stop
+forseti_stop:
+	cd Forseti && ${MAKE} docker_stop
+
+.PHONY: tyr_stop
+tyr_stop:
+	cd Tyr && ${MAKE} docker_stop
 
 .PHONY: dev
 dev: run
-	@echo "${GREEN}Use 'make php_logs' to see errors in realtime${NC}"; \
 	${MAKE} deps
 	${MAKE} migrate
-	${MAKE} -j2 dev_tyr dev_forseti
-
-.PHONY: tdev
-tdev: run
-	@if [ -n $TMUX ]; then \
-     tmux split-window -dv '${MAKE} php_logs | tee php-errors.log' ; \
-  fi
-	${MAKE} deps
-	${MAKE} migrate
-	${MAKE} frontdev
+	bash ./parallel_dev.sh
 
 .PHONY: migrate
-migrate: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't run migrations.${NC}"; \
-	else \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user bin/phinx migrate -e docker'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx migrate -e docker'; \
-	fi
-
-.PHONY: open_container
-open_container: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't open it.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh; \
-	fi
-
-.PHONY: seed
-seed: get_docker_id migrate
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
-	else \
-	  docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s BasicSeeder --verbose'; \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s ClubEventSeeder --verbose'; \
-	fi
-
-.PHONY: seed_bigevent
-seed_bigevent: get_docker_id migrate
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
-	else \
-	  docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s BasicSeeder --verbose'; \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && SEED_REPEAT=20 HOME=/home/user su-exec user bin/phinx seed:run -e docker -s ClubEventSeeder --verbose'; \
-	fi
-
-
-.PHONY: seed_tournament
-seed_tournament: get_docker_id migrate
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
-	else \
-	  docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s BasicSeeder --verbose'; \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s TournamentSeeder --verbose'; \
-	fi
-
-.PHONY: logs
-logs: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
-	else \
-		docker logs -f $(RUNNING_DOCKER_ID); \
-	fi
-
-.PHONY: php_logs
-php_logs: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/php-errors.log | grep -v xdebug' ; \
-	fi
-
-.PHONY: shell
-shell: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && /bin/sh' ; \
-	fi
+migrate:
+	cd Mimir && ${MAKE} docker_migrate
+	cd Frey && ${MAKE} docker_migrate
 
 .PHONY: shell_tyr
-shell_tyr: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Tyr && /bin/sh' ; \
-	fi
+shell_tyr:
+	cd Tyr && ${MAKE} shell
 
 .PHONY: shell_rheda
-shell_rheda: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Rheda && /bin/sh' ; \
-	fi
+shell_rheda:
+	cd Rheda && ${MAKE} shell
 
 .PHONY: shell_mimir
-shell_mimir: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Mimir && /bin/sh' ; \
-	fi
+shell_mimir:
+	cd Mimir && ${MAKE} shell
 
 .PHONY: shell_frey
-shell_frey: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Frey && /bin/sh' ; \
-	fi
+shell_frey:
+	cd Frey && ${MAKE} shell
 
-.PHONY: dump_users
-dump_users: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cat /tmp/frey_tokens_debug' ; \
-	fi
+.PHONY: shell_forseti
+shell_forseti:
+	cd Forseti && ${MAKE} shell
+
+.PHONY: shell_db
+shell_db:
+	cd Database && ${MAKE} shell
 
 # Some shortcuts for common tasks
 
-.PHONY: empty_event
-empty_event: migrate
-	@curl -s http://localhost:4001 \
-		-H 'content-type: application/json' \
-		-d '{"jsonrpc": "2.0", "method": "createEvent", "params": ["Test offline", "description", "ema", 90, "Europe/Moscow"], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' \
-		| php -r 'echo "New event: http://localhost:4002/eid" . json_decode(file_get_contents("php://stdin"))->result . PHP_EOL;'
+.PHONY: seed
+seed:
+	cd Frey && ${MAKE} docker_seed
+	cd Mimir && ${MAKE} docker_seed
 
-.PHONY: global_admin
-global_admin: migrate
-		@if [ "${USERID}" = "" ] || [ "${EVENTID}" = "" ]; then \
-			echo "Usage: USERID=[id] EVENTID=[id] make global_admin"; \
-			echo "Event id should be set to clear access cache immediately. It may be omitted if it is not required"; \
-		else \
-			curl -s http://localhost:4004/ \
-				-H 'content-type: application/json' \
-				-d '{"jsonrpc": "2.0", "method": "addSystemWideRuleForPerson", "params": ["admin_event", true, "bool", ${USERID}], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' && \
-			curl -s http://localhost:4004/ \
-				-H 'content-type: application/json' \
-				-d '{"jsonrpc": "2.0", "method": "clearAccessCache", "params": [${USERID}, ${EVENTID}], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' ; \
-		fi
+.PHONY: seed_bigevent
+seed_bigevent:
+	cd Frey && ${MAKE} docker_seed
+	cd Mimir && ${MAKE} docker_seed_bigevent
+
+.PHONY: seed_tournament
+seed_tournament:
+	cd Frey && ${MAKE} docker_seed
+	cd Mimir && ${MAKE} docker_seed_tournament
+
+.PHONY: dump_users
+dump_users:
+	cd Frey && ${MAKE} docker_dump_users
 
 .PHONY: check
-check: get_docker_id lint
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make unit';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make unit';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make unit';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make unit';
-
-.PHONY: lint
-lint: get_docker_id
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make lint';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make lint';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make lint';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make lint';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make lint';
-
-.PHONY: check_covered
-check_covered: get_docker_id lint
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Frey && HOME=/home/user su-exec user make unit_covered';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Mimir && HOME=/home/user su-exec user make unit_covered';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Rheda && HOME=/home/user su-exec user make unit_covered';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Tyr && HOME=/home/user su-exec user make unit_covered';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon && HOME=/home/user su-exec user php bin/php-coveralls.phar \
-	            --json_path=/tmp/coverall.json --coverage_clover=/tmp/coverage-*.xml' || true; # suppress error ftw
-
-.PHONY: run_single_mimir_test
-run_single_mimir_test: get_docker_id
-	@if [ -z "${NAME}" ]; then \
-		echo "${RED}Error: NAME is required.${NC} Typical command usage is: ${GREEN}make run_single_mimir_test NAME=myTestMethodName${NC}"; \
-	else \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user php bin/unit.php --filter=${NAME}' ; \
-	fi
+check:
+	cd Mimir && ${MAKE} docker_check
+	cd Frey && ${MAKE} docker_check
+	cd Frey && ${MAKE} docker_check_common
+	cd Rheda && ${MAKE} docker_check
+	cd Tyr && ${MAKE} docker_lint
+	cd Tyr && ${MAKE} docker_unit
+	cd Forseti && ${MAKE} docker_lint
 
 .PHONY: autofix
-autofix: get_docker_id
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make autofix';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make autofix';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make autofix';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make autofix';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make autofix';
+autofix:
+	cd Mimir && ${MAKE} docker_autofix
+	cd Frey && ${MAKE} docker_autofix
+	cd Frey && ${MAKE} docker_autofix_common
+	cd Rheda && ${MAKE} docker_autofix
+	cd Tyr && ${MAKE} docker_autofix
+	cd Forseti && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
-proto_gen: get_docker_id
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make proto_gen';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make proto_gen';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make proto_gen';
+proto_gen:
+	cd Mimir && ${MAKE} docker_proto_gen
+	cd Frey && ${MAKE} docker_proto_gen
+	cd Forseti && ${MAKE} docker_proto_gen
+	cd Tyr && ${MAKE} docker_proto_gen
+	cd Rheda && ${MAKE} docker_proto_gen
 
 # Prod related tasks & shortcuts
 
 .PHONY: prod_deps
 prod_deps:
-	cd Mimir && make deps
-	cd Rheda && make deps
-	cd Frey && make deps
-	cd Forseti && make deps
+	cd Mimir && ${MAKE} docker_deps
+	cd Rheda && ${MAKE} docker_deps
+	cd Frey && ${MAKE} docker_deps
+	cd Tyr && ${MAKE} docker_deps
+	cd Forseti && ${MAKE} docker_deps
 
 .PHONY: prod_build_tyr
-prod_build_tyr: get_docker_id # this is for automated builds, don't run it manually
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make deps && make build';
-	cd Tyr && make cleanup_prebuilts && make prebuild
+prod_build_tyr: # this is for automated builds, don't run it manually
+	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
 
 .PHONY: prod_build_forseti
-prod_build_forseti: get_docker_id # this is for automated builds, don't run it manually
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make deps && make build';
-	cd Forseti && make cleanup_prebuilts && make prebuild
+prod_build_forseti: # this is for automated builds, don't run it manually
+	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: prod_compile
+prod_compile:
+	@if [ "$(ENV_FILENAME)" = "" ]; then \
+		echo "${RED}Please set env file name using ENV_FILENAME environment variable. The file should be placed in Common/envs folder.${NC}"; \
+		exit 1; \
+	fi
+	docker-compose --env-file ./Common/envs/${ENV_FILENAME} up --build -d
+	${MAKE} prod_deps
+	${MAKE} migrate
+	cd Frey && ${MAKE} docker_seed # bootstrap admin
+	${MAKE} prod_build_tyr
+	${MAKE} prod_build_forseti
 
 # i18n related
 .PHONY: i18n_extract
-i18n_extract: get_docker_id
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_extract';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make i18n_extract';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make i18n_extract';
+i18n_extract:
+	cd Rheda && ${MAKE} docker_i18n_extract
+	cd Tyr && ${MAKE} docker_i18n_extract
+	cd Forseti && ${MAKE} docker_i18n_extract
 
 .PHONY: i18n_compile
 i18n_compile: get_docker_id
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_compile';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make i18n_update';
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make i18n_update';
+	cd Rheda && ${MAKE} docker_i18n_compile
+	cd Tyr && ${MAKE} docker_i18n_update
+	cd Forseti && ${MAKE} docker_i18n_update
 
 .PHONY: bump_release
 bump_release:

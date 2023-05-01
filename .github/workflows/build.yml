@@ -12,9 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build container with project
-        run: make container
-
       - name: Run container
         run: make pantheon_run
 
@@ -24,12 +21,17 @@ jobs:
       - name: Apply db migrations
         run: make migrate
 
-      - name: Run all tests with coverage
+      - name: Run all tests
         run: make check
+
+      - name: Stop containers
+        if: always()
+        run: make stop
   build:
     runs-on: ubuntu-latest
     env:
       NO_XDEBUG: true
+      ENV_FILENAME: primary.env
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
@@ -46,7 +48,7 @@ jobs:
       - name: Apply db migrations
         run: make migrate
 
-      - name: Run all tests with coverage
+      - name: Run all tests
         run: make check
 
       - name: Make prod Tyr build
@@ -58,3 +60,7 @@ jobs:
       - name: Push prod builds to repo
         if: github.repository=='MahjongPantheon/pantheon'
         run: ./.built-dist-push.sh
+
+      - name: Stop containers
+        if: always()
+        run: make stop

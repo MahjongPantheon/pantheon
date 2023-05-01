@@ -19,6 +19,7 @@ import { IAppState } from '../interfaces';
 import { yakumanInYaku } from './yaku';
 import { getHan } from './hanFu';
 import { getLosingUsers, getWinningUsers } from './mimirSelectors';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export function doraOptions(state: IAppState) {
   if (yakumanInYaku(state)) {
@@ -39,9 +40,9 @@ export function han(state: IAppState): number {
 
 export function mayGoNextFromYakuSelect(state: IAppState) {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return getHan(state) != 0;
-    case 'RON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
       const out = state.currentOutcome;
       return getWinningUsers(state).reduce((acc, user) => acc && out.wins[user.id].han != 0, true);
     default:
@@ -51,15 +52,15 @@ export function mayGoNextFromYakuSelect(state: IAppState) {
 
 export function mayGoNextFromPlayersSelect(state: IAppState) {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return getWinningUsers(state).length === 1;
-    case 'DRAW':
-    case 'ABORT':
-    case 'NAGASHI':
+    case RoundOutcome.ROUND_OUTCOME_DRAW:
+    case RoundOutcome.ROUND_OUTCOME_ABORT:
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       return true;
-    case 'RON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
       return getWinningUsers(state).length >= 1 && getLosingUsers(state).length === 1;
-    case 'CHOMBO':
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       return getLosingUsers(state).length === 1;
     default:
       return undefined;

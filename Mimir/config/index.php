@@ -21,13 +21,11 @@ $locals = [];
 if (file_exists(__DIR__ . '/local/index.php')) {
     $locals = require __DIR__ . '/local/index.php';
 } else {
-    if (getenv('IS_DOCKER', true) != '1') {
-        trigger_error(
-            'Notice: using default config & DB settings. '
-            . 'It\'s fine on developer machine, but wrong on prod server. '
-            . 'You might want to create config/local/* files with production settings.'
-        );
-    }
+    trigger_error(
+        'Notice: using default config & DB settings. '
+        . 'It\'s fine on developer machine, but wrong on prod server. '
+        . 'You might want to create config/local/* files with production settings.'
+    );
 }
 
 return array_merge([
@@ -37,8 +35,8 @@ return array_merge([
         'debug_token' => 'CHANGE_ME', // TODO: change this in your local config!
     ],
     'db'        => require __DIR__ . '/db.php',
-    'freyUrl'   => 'http://localhost:4004', // TODO: change this in your local config!
-    'rhedaUrl'  => 'http://localhost:4002', // TODO: change this in your local config!
+    'freyUrl'   => 'http://frey', // TODO: change this in your local config!
+    'rhedaUrl'  => getenv('RHEDA_URL'), // TODO: change this in your local config!
     'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
     'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!

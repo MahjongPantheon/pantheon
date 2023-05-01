@@ -81,7 +81,7 @@ import {
   getTimeRemaining,
 } from '#/store/selectors/overviewSelectors';
 import { I18nService } from '#/services/i18n';
-import { PlayerInSession, RoundOutcome } from '#/clients/atoms.pb';
+import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
 
 // todo move to selectors most of code from here
 
@@ -140,25 +140,25 @@ export function getOutcomeModalInfo(
     {
       text: loc._t('Ron'),
       onSelect: () => {
-        onItemSelect('RON');
+        onItemSelect(RoundOutcome.ROUND_OUTCOME_RON);
       },
     },
     {
       text: loc._t('Tsumo'),
       onSelect: () => {
-        onItemSelect('TSUMO');
+        onItemSelect(RoundOutcome.ROUND_OUTCOME_TSUMO);
       },
     },
     {
       text: loc._t('Exhaustive draw'),
       onSelect: () => {
-        onItemSelect('DRAW');
+        onItemSelect(RoundOutcome.ROUND_OUTCOME_DRAW);
       },
     },
     {
       text: loc._t('Chombo'),
       onSelect: () => {
-        onItemSelect('CHOMBO');
+        onItemSelect(RoundOutcome.ROUND_OUTCOME_CHOMBO);
       },
     },
   ];
@@ -169,7 +169,7 @@ export function getOutcomeModalInfo(
       items.push({
         text: loc._t('Abortive draw'),
         onSelect: () => {
-          onItemSelect('ABORT');
+          onItemSelect(RoundOutcome.ROUND_OUTCOME_ABORT);
         },
         unavailable: false,
       });
@@ -179,7 +179,7 @@ export function getOutcomeModalInfo(
       items.push({
         text: loc._t('Nagashi mangan'),
         onSelect: () => {
-          onItemSelect('NAGASHI');
+          onItemSelect(RoundOutcome.ROUND_OUTCOME_NAGASHI);
         },
         unavailable: false,
       });
@@ -217,7 +217,10 @@ function getPlayerPaymentResult(
 
   //todo add reverse mangan tsumo (mimir)
   if (paymentsInfo.length === 0) {
-    if (state.changesOverview && state.changesOverview.outcome === 'CHOMBO') {
+    if (
+      state.changesOverview &&
+      state.changesOverview.outcome === RoundOutcome.ROUND_OUTCOME_CHOMBO
+    ) {
       if (
         state.changesOverview.scoresDelta.find((d) => d.penaltyScore && d.playerId === player.id)
       ) {
@@ -396,7 +399,7 @@ function getPlayer(
       let hasPaoButton = false;
 
       switch (currentOutcome.selectedOutcome) {
-        case 'RON':
+        case RoundOutcome.ROUND_OUTCOME_RON:
           if (state.multironCurrentWinner === player.id) {
             points = loc._t('Winner');
             pointsMode = PlayerPointsMode.POSITIVE;
@@ -407,7 +410,7 @@ function getPlayer(
             hasPaoButton = true;
           }
           break;
-        case 'TSUMO':
+        case RoundOutcome.ROUND_OUTCOME_TSUMO:
           if (currentOutcome.winner !== player.id) {
             hasPaoButton = true;
           } else {
@@ -464,14 +467,14 @@ function getTitleForOutcome(
   }
 
   switch (selectedOutcome) {
-    case 'RON':
-    case 'MULTIRON':
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_RON:
+    case RoundOutcome.ROUND_OUTCOME_MULTIRON:
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       if (currentScreen === 'paoSelect') {
         return loc._t('Select pao');
       }
       break;
-    case 'NAGASHI':
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       if (currentScreen === 'playersSelect') {
         return loc._t('Select tempai');
       }
@@ -485,19 +488,21 @@ function getTitleForOutcome(
 // todo replace with common selector
 export function getOutcomeName(loc: I18nService, selectedOutcome: RoundOutcome): string {
   switch (selectedOutcome) {
-    case 'RON':
-    case 'MULTIRON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
+    case RoundOutcome.ROUND_OUTCOME_MULTIRON:
       return loc._t('Ron');
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return loc._t('Tsumo');
-    case 'DRAW':
+    case RoundOutcome.ROUND_OUTCOME_DRAW:
       return loc._t('Draw');
-    case 'ABORT':
+    case RoundOutcome.ROUND_OUTCOME_ABORT:
       return loc._t('Abort');
-    case 'CHOMBO':
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       return loc._t('Chombo');
-    case 'NAGASHI':
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       return loc._t('Nagashi');
+    default:
+      return '';
   }
 }
 
@@ -528,7 +533,10 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
 
   // todo simplify
   const nextClickHandler = () => {
-    if (state.currentScreen === 'paoSelect' && state.currentOutcome?.selectedOutcome === 'RON') {
+    if (
+      state.currentScreen === 'paoSelect' &&
+      state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON
+    ) {
       const nextPaoWinnerId = getNextWinnerWithPao(state, state.multironCurrentWinner);
       if (nextPaoWinnerId !== undefined) {
         return () =>
@@ -730,14 +738,14 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
   // const paoPlayer = changesOverview.paoPlayer
 
   const paoPlayersByWinners: number[] = [];
-  if (state.currentOutcome?.selectedOutcome === 'TSUMO') {
+  if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
     if (state.currentOutcome.winner && state.changesOverview.round.tsumo?.paoPlayerId) {
       paoPlayersByWinners[state.currentOutcome.winner] =
         state.changesOverview.round.tsumo?.paoPlayerId;
     }
   }
 
-  if (state.currentOutcome?.selectedOutcome === 'RON') {
+  if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON) {
     const wins = state.currentOutcome.wins;
     Object.keys(wins).forEach((winnerKey) => {
       const winner = wins[winnerKey];

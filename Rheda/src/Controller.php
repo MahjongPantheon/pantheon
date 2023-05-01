@@ -255,8 +255,6 @@ abstract class Controller
             'X-Current-Person-Id' => $this->_currentPersonId,
             'X-Internal-Query-Secret' => Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
             'X-Locale' => $locale,
-            // @phpstan-ignore-next-line
-            'X-Api-Version' => Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
 
         $this->_gameConfig = [];
@@ -513,16 +511,6 @@ DATA;
         }
 
         list ($major, $minor) = explode('.', trim(str_replace('X-Api-Version: ', '', $header)));
-
-        // @phpstan-ignore-next-line
-        if (intval($major) !== Sysconf::API_VERSION_MAJOR) {
-            throw new \Exception('API major version mismatch. Update your app or API instance!');
-        }
-
-        // @phpstan-ignore-next-line
-        if (intval($minor) > Sysconf::API_VERSION_MINOR && Sysconf::DEBUG_MODE) {
-            trigger_error('API minor version mismatch. Consider updating if possible', E_USER_WARNING);
-        }
     }
 
     /**
