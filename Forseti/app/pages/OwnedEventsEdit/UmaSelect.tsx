@@ -34,8 +34,8 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
         {...form.getInputProps('ruleset.umaType')}
       >
         <Group mt='xs'>
-          <Radio value='UMA_SIMPLE' label={i18n._t('Simple rank-based')} />
-          <Radio value='UMA_COMPLEX' label={i18n._t('Complex position-based')} />
+          <Radio value={UmaType.UMA_TYPE_UMA_SIMPLE} label={i18n._t('Simple rank-based')} />
+          <Radio value={UmaType.UMA_TYPE_UMA_COMPLEX} label={i18n._t('Complex position-based')} />
         </Group>
       </Radio.Group>
       {form.getTransformedValues().ruleset.umaType === UmaType.UMA_TYPE_UMA_SIMPLE && (
