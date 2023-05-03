@@ -242,7 +242,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
                 setFormValues={setFormValues}
               />
             </Tabs.Panel>
-            <Tabs.Panel value={form.getTransformedValues().event.type ?? 'LOCAL'} pt='xs'>
+            <Tabs.Panel
+              value={form.getTransformedValues().event.type ?? EventType.EVENT_TYPE_LOCAL}
+              pt='xs'
+            >
               <Stack>
                 {form.getTransformedValues().event.type === EventType.EVENT_TYPE_ONLINE && (
                   <OnlineSettings form={form} i18n={i18n} />

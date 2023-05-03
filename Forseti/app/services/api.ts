@@ -434,7 +434,7 @@ export class ApiService {
       {
         eventId,
         groupsCount: 1,
-        seed: (Math.random() * 1_000_000) % 1_000_000,
+        seed: Math.floor(Math.random() * 1_000_000) % 1_000_000,
       },
       this._clientConfMimir
     )

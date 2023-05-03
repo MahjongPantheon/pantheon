@@ -29,18 +29,20 @@ import { I18nProvider } from '#/hooks/i18n';
 const root = createRoot(document.getElementById('forseti-root')!);
 window.addEventListener('DOMContentLoaded', () => {
   root.render(
-    <PageTitleProvider>
-      <StorageProvider>
-        <I18nProvider>
-          <AnalyticsProvider>
-            <ApiProvider>
-              <Layout>
-                <App />
-              </Layout>
-            </ApiProvider>
-          </AnalyticsProvider>
-        </I18nProvider>
-      </StorageProvider>
-    </PageTitleProvider>
+    <React.StrictMode>
+      <PageTitleProvider>
+        <StorageProvider>
+          <I18nProvider>
+            <AnalyticsProvider>
+              <ApiProvider>
+                <Layout>
+                  <App />
+                </Layout>
+              </ApiProvider>
+            </AnalyticsProvider>
+          </I18nProvider>
+        </StorageProvider>
+      </PageTitleProvider>
+    </React.StrictMode>
   );
 });

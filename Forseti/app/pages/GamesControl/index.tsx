@@ -85,16 +85,13 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       });
   }, [isLoggedIn]);
 
-  const errHandler = useCallback(
-    (err: Error) => {
-      notifications.show({
-        title: i18n._t('Error has occurred'),
-        message: err.message,
-        color: 'red',
-      });
-    },
-    [isLoggedIn]
-  );
+  const errHandler = useCallback((err: Error) => {
+    notifications.show({
+      title: i18n._t('Error has occurred'),
+      message: err.message,
+      color: 'red',
+    });
+  }, []);
 
   const doReloadConfigAndTables = useCallback(() => {
     return Promise.all([api.getGameConfig(eventId), api.getTablesState(eventId)]).then(
@@ -103,19 +100,19 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         setTablesState(tables);
       }
     );
-  }, [isLoggedIn]);
+  }, []);
 
   const doReloadConfigOnly = useCallback(() => {
     return api.getGameConfig(eventId).then((cfg) => {
       setEventConfig(cfg);
     });
-  }, [isLoggedIn]);
+  }, []);
 
   const doReloadTablesOnly = useCallback(() => {
     return api.getTablesState(eventId).then((tables) => {
       setTablesState(tables);
     });
-  }, [isLoggedIn]);
+  }, []);
 
   const onCancelRound = useCallback(
     (sessionHash: string, intermediateResults: IntermediateResultOfSession[]) => {
@@ -128,36 +125,30 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         .then(doReloadTablesOnly)
         .catch(errHandler);
     },
-    [isLoggedIn]
+    []
   );
 
-  const onDefinalize = useCallback(
-    (sessionHash: string) => {
-      if (!id) return;
-      api
-        .definalizeGame(sessionHash)
-        .then((r) => {
-          if (!r) throw new Error(i18n._t('Failed to definalize game'));
-        })
-        .then(doReloadTablesOnly)
-        .catch(errHandler);
-    },
-    [isLoggedIn]
-  );
+  const onDefinalize = useCallback((sessionHash: string) => {
+    if (!id) return;
+    api
+      .definalizeGame(sessionHash)
+      .then((r) => {
+        if (!r) throw new Error(i18n._t('Failed to definalize game'));
+      })
+      .then(doReloadTablesOnly)
+      .catch(errHandler);
+  }, []);
 
-  const onRemoveGame = useCallback(
-    (sessionHash: string) => {
-      if (!id) return;
-      api
-        .cancelGame(sessionHash)
-        .then((r) => {
-          if (!r) throw new Error(i18n._t('Failed to cancel game'));
-        })
-        .then(doReloadTablesOnly)
-        .catch(errHandler);
-    },
-    [isLoggedIn]
-  );
+  const onRemoveGame = useCallback((sessionHash: string) => {
+    if (!id) return;
+    api
+      .cancelGame(sessionHash)
+      .then((r) => {
+        if (!r) throw new Error(i18n._t('Failed to cancel game'));
+      })
+      .then(doReloadTablesOnly)
+      .catch(errHandler);
+  }, []);
 
   const onStartTimer = useCallback(() => {
     api
@@ -169,7 +160,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigAndTables)
       .catch(errHandler);
-  }, [isLoggedIn]);
+  }, []);
 
   const onToggleResults = useCallback(() => {
     api
@@ -181,7 +172,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigOnly)
       .catch(errHandler);
-  }, [isLoggedIn]);
+  }, []);
 
   const onApproveResults = useCallback(() => {
     api
@@ -193,26 +184,23 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigAndTables)
       .catch(errHandler);
-  }, [isLoggedIn]);
+  }, []);
 
-  const onMakeIntervalSeating = useCallback(
-    (interval: number) => {
-      setSeatingLoading(true);
-      api
-        .makeIntervalSeating(eventId, interval)
-        .then((r) => {
-          if (!r) {
-            throw new Error(i18n._t('Failed to generate interval seating'));
-          }
-        })
-        .then(doReloadConfigAndTables)
-        .catch(errHandler)
-        .finally(() => {
-          setSeatingLoading(false);
-        });
-    },
-    [isLoggedIn]
-  );
+  const onMakeIntervalSeating = useCallback((interval: number) => {
+    setSeatingLoading(true);
+    api
+      .makeIntervalSeating(eventId, interval)
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to generate interval seating'));
+        }
+      })
+      .then(doReloadConfigAndTables)
+      .catch(errHandler)
+      .finally(() => {
+        setSeatingLoading(false);
+      });
+  }, []);
 
   const onMakeRandomSeating = useCallback(() => {
     setSeatingLoading(true);
@@ -228,7 +216,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .finally(() => {
         setSeatingLoading(false);
       });
-  }, [isLoggedIn]);
+  }, []);
 
   const onMakeSwissSeating = useCallback(() => {
     setSeatingLoading(true);
@@ -244,26 +232,23 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .finally(() => {
         setSeatingLoading(false);
       });
-  }, [isLoggedIn]);
+  }, []);
 
-  const onMakePrescriptedSeating = useCallback(
-    (rndSeats: boolean) => {
-      setSeatingLoading(true);
-      api
-        .makePrescriptedSeating(eventId, rndSeats)
-        .then((r) => {
-          if (!r) {
-            throw new Error(i18n._t('Failed to generate prescripted seating'));
-          }
-        })
-        .then(doReloadConfigAndTables)
-        .catch(errHandler)
-        .finally(() => {
-          setSeatingLoading(false);
-        });
-    },
-    [isLoggedIn]
-  );
+  const onMakePrescriptedSeating = useCallback((rndSeats: boolean) => {
+    setSeatingLoading(true);
+    api
+      .makePrescriptedSeating(eventId, rndSeats)
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to generate prescripted seating'));
+        }
+      })
+      .then(doReloadConfigAndTables)
+      .catch(errHandler)
+      .finally(() => {
+        setSeatingLoading(false);
+      });
+  }, []);
 
   const onResetSeating = useCallback(() => {
     api
@@ -275,7 +260,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigAndTables)
       .catch(errHandler);
-  }, [isLoggedIn]);
+  }, []);
 
   let timer: ReturnType<typeof setInterval> | null = null;
   const reloader = useCallback(() => {

@@ -41,17 +41,17 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
         {i18n._t('Basic settings')}
       </Tabs.Tab>
       {form.getTransformedValues().event.type === EventType.EVENT_TYPE_LOCAL && (
-        <Tabs.Tab value='LOCAL' icon={<IconFriends size='0.8rem' />}>
+        <Tabs.Tab value={EventType.EVENT_TYPE_LOCAL} icon={<IconFriends size='0.8rem' />}>
           {i18n._t('Local event settings')}
         </Tabs.Tab>
       )}
       {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
-        <Tabs.Tab value='TOURNAMENT' icon={<IconTournament size='0.8rem' />}>
+        <Tabs.Tab value={EventType.EVENT_TYPE_TOURNAMENT} icon={<IconTournament size='0.8rem' />}>
           {i18n._t('Tournament settings')}
         </Tabs.Tab>
       )}
       {form.getTransformedValues().event.type === EventType.EVENT_TYPE_ONLINE && (
-        <Tabs.Tab value='ONLINE' icon={<IconNetwork size='0.8rem' />}>
+        <Tabs.Tab value={EventType.EVENT_TYPE_ONLINE} icon={<IconNetwork size='0.8rem' />}>
           {i18n._t('Online event settings')}
         </Tabs.Tab>
       )}
