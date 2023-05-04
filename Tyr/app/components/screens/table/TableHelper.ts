@@ -313,17 +313,35 @@ function getPlayer(
       points = undefined;
       penaltyPoints = undefined;
 
-      const selectedOutcome = currentOutcome?.selectedOutcome;
+      const selectedOutcome: RoundOutcome | undefined = currentOutcome?.selectedOutcome;
       if (!selectedOutcome) {
         throw new Error('empty outcome');
       }
-      const hasWinButton = ['RON', 'TSUMO', 'DRAW', 'NAGASHI'].includes(selectedOutcome);
-      const hasLoseButton = ['RON', 'CHOMBO'].includes(selectedOutcome);
-      const hasRiichiButton = ['RON', 'TSUMO', 'DRAW', 'ABORT', 'NAGASHI'].includes(
-        selectedOutcome
-      );
+      const hasWinButton = (
+        [
+          RoundOutcome.ROUND_OUTCOME_RON,
+          RoundOutcome.ROUND_OUTCOME_TSUMO,
+          RoundOutcome.ROUND_OUTCOME_DRAW,
+          RoundOutcome.ROUND_OUTCOME_NAGASHI,
+        ] as RoundOutcome[]
+      ).includes(selectedOutcome);
+      const hasLoseButton = (
+        [RoundOutcome.ROUND_OUTCOME_RON, RoundOutcome.ROUND_OUTCOME_CHOMBO] as RoundOutcome[]
+      ).includes(selectedOutcome);
+      const hasRiichiButton = (
+        [
+          RoundOutcome.ROUND_OUTCOME_RON,
+          RoundOutcome.ROUND_OUTCOME_TSUMO,
+          RoundOutcome.ROUND_OUTCOME_DRAW,
+          RoundOutcome.ROUND_OUTCOME_ABORT,
+          RoundOutcome.ROUND_OUTCOME_NAGASHI,
+        ] as RoundOutcome[]
+      ).includes(selectedOutcome);
 
-      showDeadButton = ['DRAW', 'NAGASHI'].includes(selectedOutcome) && deadPressed(state, player);
+      showDeadButton =
+        (
+          [RoundOutcome.ROUND_OUTCOME_DRAW, RoundOutcome.ROUND_OUTCOME_NAGASHI] as RoundOutcome[]
+        ).includes(selectedOutcome) && deadPressed(state, player);
 
       if (hasWinButton && !showDeadButton) {
         let winButtonMode: PlayerButtonMode;

@@ -64,7 +64,12 @@ export function winDisabled(state: IAppState, userData: PlayerInSession) {
     return false;
   }
 
-  if (-1 !== ['DRAW', 'NAGASHI'].indexOf(state.currentOutcome.selectedOutcome)) {
+  if (
+    -1 !==
+    (
+      [RoundOutcome.ROUND_OUTCOME_DRAW, RoundOutcome.ROUND_OUTCOME_NAGASHI] as RoundOutcome[]
+    ).indexOf(state.currentOutcome.selectedOutcome)
+  ) {
     return -1 !== getDeadhandUsers(state).indexOf(userData);
   }
 

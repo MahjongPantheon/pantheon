@@ -75,7 +75,9 @@ export const screenManageMw =
           case 'handSelect':
             if (
               state.currentOutcome &&
-              ['RON', 'TSUMO'].includes(state.currentOutcome.selectedOutcome)
+              (
+                [RoundOutcome.ROUND_OUTCOME_RON, RoundOutcome.ROUND_OUTCOME_TSUMO] as RoundOutcome[]
+              ).includes(state.currentOutcome.selectedOutcome)
             ) {
               const currentWinnerId = getWinningUsers(state)[0].id;
               mw.dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
