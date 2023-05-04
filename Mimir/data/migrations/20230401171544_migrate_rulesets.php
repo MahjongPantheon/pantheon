@@ -24,7 +24,7 @@ class MigrateRulesets extends AbstractMigration
                 $base->rules()->setAllowedYaku(array_map('intval', $changes['allowedYaku']));
             }
             if (isset($changes['chomboPenalty'])) {
-                $base->rules()->setChipsValue((int)$changes['chomboPenalty']);
+                $base->rules()->setChomboPenalty((int)$changes['chomboPenalty']);
             }
             if (isset($changes['equalizeUma'])) {
                 $base->rules()->setEqualizeUma((bool)$changes['equalizeUma']);
