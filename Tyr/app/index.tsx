@@ -25,7 +25,7 @@ import { observe } from '#/scripts/dimensionsObserver';
 import { registerFrontErrorHandler } from '#/scripts/logFrontError';
 import { Storage } from '../../Common/storage';
 
-const storage = new Storage(window.__cfg.STAT_HOST || null);
+const storage = new Storage(window.__cfg.COOKIE_DOMAIN || null);
 
 // Storage cleanup: use if some trouble happened during logging in
 if (window.location.search.startsWith('?clear')) {
