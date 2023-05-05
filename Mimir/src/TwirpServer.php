@@ -297,6 +297,7 @@ final class TwirpServer implements Mimir
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGames($ret['minGames'])
             ->setIsTeam($ret['isTeam'])
+            ->setIsListed($ret['isListed'])
             ->setIsPrescripted($ret['isPrescripted'])
             ->setAutostart($ret['autostart'])
             ->setRulesetConfig($ret['ruleset']);
@@ -1254,6 +1255,7 @@ final class TwirpServer implements Mimir
                 $req->getIsTeam(),
                 $req->getIsPrescripted(),
                 $req->getAutostart(),
+                $req->getIsListed(),
                 $req->getRulesetConfig(),
             ));
     }
@@ -1281,6 +1283,7 @@ final class TwirpServer implements Mimir
                 $ev->getIsTeam(),
                 $ev->getIsPrescripted(),
                 $ev->getAutostart(),
+                $ev->getIsListed(),
                 $ev->getRulesetConfig(),
             ));
     }

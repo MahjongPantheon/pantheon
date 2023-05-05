@@ -67,6 +67,10 @@ class EventData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.common.RulesetConfig ruleset_config = 14;</code>
      */
     protected $ruleset_config = null;
+    /**
+     * Generated from protobuf field <code>bool is_listed = 15;</code>
+     */
+    protected $is_listed = false;
 
     /**
      * Constructor.
@@ -89,6 +93,7 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     @type int $autostart
      *           time until game autostart
      *     @type \Common\RulesetConfig $ruleset_config
+     *     @type bool $is_listed
      * }
      */
     public function __construct($data = NULL) {
@@ -388,6 +393,28 @@ class EventData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\RulesetConfig::class);
         $this->ruleset_config = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool is_listed = 15;</code>
+     * @return bool
+     */
+    public function getIsListed()
+    {
+        return $this->is_listed;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool is_listed = 15;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsListed($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->is_listed = $var;
 
         return $this;
     }

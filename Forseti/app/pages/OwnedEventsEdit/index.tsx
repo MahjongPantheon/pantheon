@@ -66,6 +66,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const form = useForm<FormFields>({
     initialValues: {
       event: {
+        isListed: true,
         type: EventType.EVENT_TYPE_LOCAL,
         title: '',
         description: '',

@@ -43,6 +43,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games autostart
+     * @param bool $isListed If event is shown on main page
      * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -61,6 +62,7 @@ class EventsController extends Controller
         $isTeam,
         $isPrescripted,
         $autostartTimer,
+        $isListed,
         $rulesetConfig
     ) {
         $this->_log->info('Creating new event...');
@@ -85,6 +87,7 @@ class EventsController extends Controller
             ->setDescription($description)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
+            ->setIsListed($isListed ? 1 : 0)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
@@ -173,6 +176,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games are started automatically
+     * @param bool $isListed If event is shown on main page
      * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -191,6 +195,7 @@ class EventsController extends Controller
         $isTeam,
         $isPrescripted,
         $autostartTimer,
+        $isListed,
         $rulesetConfig
     ) {
         $this->_log->info('Updating event with id #' . $id);
@@ -214,6 +219,7 @@ class EventsController extends Controller
             ->setDescription($description)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
+            ->setIsListed($isListed ? 1 : 0)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRulesetConfig(new Ruleset($rulesetConfig))
@@ -282,7 +288,8 @@ class EventsController extends Controller
             'isTeam' => $event->getIsTeam(),
             'isPrescripted' => $event->getIsPrescripted(),
             'autostart' => $event->getTimeToStart(),
-            'ruleset' => $event->getRulesetConfig()->rules()
+            'ruleset' => $event->getRulesetConfig()->rules(),
+            'isListed' => $event->getIsListed(),
         ];
 
         $this->_log->info('Successfully got event settings for event #' . $id);

@@ -472,6 +472,7 @@ export interface EventData {
   isPrescripted: boolean;
   autostart: number;
   rulesetConfig: RulesetConfig;
+  isListed: boolean;
 }
 
 export interface TableState {
@@ -5777,6 +5778,7 @@ export const EventData = {
       isPrescripted: false,
       autostart: 0,
       rulesetConfig: RulesetConfig.initialize(),
+      isListed: false,
     };
   },
 
@@ -5822,6 +5824,9 @@ export const EventData = {
     }
     if (msg.rulesetConfig) {
       writer.writeMessage(14, msg.rulesetConfig, RulesetConfig._writeMessage);
+    }
+    if (msg.isListed) {
+      writer.writeBool(15, msg.isListed);
     }
     return writer;
   },
@@ -5879,6 +5884,10 @@ export const EventData = {
         }
         case 14: {
           reader.readMessage(msg.rulesetConfig, RulesetConfig._readMessage);
+          break;
+        }
+        case 15: {
+          msg.isListed = reader.readBool();
           break;
         }
         default: {
@@ -11955,6 +11964,7 @@ export const EventDataJSON = {
       isPrescripted: false,
       autostart: 0,
       rulesetConfig: RulesetConfigJSON.initialize(),
+      isListed: false,
     };
   },
 
@@ -12003,6 +12013,9 @@ export const EventDataJSON = {
       if (Object.keys(_rulesetConfig_).length > 0) {
         json["rulesetConfig"] = _rulesetConfig_;
       }
+    }
+    if (msg.isListed) {
+      json["isListed"] = msg.isListed;
     }
     return json;
   },
@@ -12060,6 +12073,10 @@ export const EventDataJSON = {
       const m = RulesetConfig.initialize();
       RulesetConfigJSON._readMessage(m, _rulesetConfig_);
       msg.rulesetConfig = m;
+    }
+    const _isListed_ = json["isListed"] ?? json["is_listed"];
+    if (_isListed_) {
+      msg.isListed = _isListed_;
     }
     return msg;
   },
