@@ -17,7 +17,7 @@
 
 import { I18nService } from '#/services/i18n';
 import * as React from 'react';
-import { Text, Select, Stack, Textarea, TextInput, Radio, Group } from '@mantine/core';
+import { Text, Select, Stack, Textarea, TextInput, Radio, Group, Checkbox } from '@mantine/core';
 import { IconAbc, IconChecklist, IconMap2 } from '@tabler/icons-react';
 import { EventCustom, FormHandle } from '#/pages/OwnedEventsEdit/types';
 import { EventType, RulesetConfig } from '#/clients/proto/atoms.pb';
@@ -71,6 +71,13 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           icon={<IconAbc size='1rem' />}
           label={i18n._t('Event title')}
           {...form.getInputProps('event.title')}
+        />
+        <Checkbox
+          label={i18n._t('Show in ratings global list')}
+          description={i18n._t(
+            'If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link'
+          )}
+          {...form.getInputProps('event.isListed', { type: 'checkbox' })}
         />
         {newEvent && (
           <Select

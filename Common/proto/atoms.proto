@@ -448,6 +448,7 @@ message EventData {
   bool is_prescripted = 11;
   int32 autostart = 12; // time until game autostart
   RulesetConfig ruleset_config = 14;
+  bool is_listed = 15;
 }
 
 message TableState {
