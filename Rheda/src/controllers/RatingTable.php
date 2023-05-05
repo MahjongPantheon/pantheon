@@ -223,7 +223,7 @@ class RatingTable extends Controller
                 ],
             ];
 
-        if ($_GET['csv'] === '1') {
+        if ($_GET['csv'] === '1' && !empty($data)) {
             $this->_toCsv(
                 $data,
                 ($this->_mainEventGameConfig->getRulesetConfig()?->getChipsValue() ?? 0) > 0,
@@ -305,12 +305,14 @@ class RatingTable extends Controller
             ];
         }
 
-        header( 'Content-Type: text/csv' );
+        header('Content-Type: text/csv');
         $out = fopen('php://output', 'w');
-        foreach ($rows as $row) {
-            fputcsv($out, $row);
+        if ($out) {
+            foreach ($rows as $row) {
+                fputcsv($out, $row);
+            }
+            fclose($out);
         }
-        fclose($out);
         return '';
     }
 }
