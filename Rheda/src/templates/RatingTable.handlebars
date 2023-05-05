@@ -22,7 +22,7 @@
     }
 </script>
 
-  <h3>{{_t 'Rating table'}}</h3>
+  <h3>{{_t 'Rating table'}} <small> - <a href="{{csvUrl}}" target="_blank">{{_t 'Export to CSV'}}</a></small></h3>
   {{#withMinGamesCount}}
     <div class="row"><div class="col">
       <select class="form-control" size="1" onChange="onChange(this.value)">
@@ -106,7 +106,7 @@
                         ">{{rating}}</span>
                     </div>
                     {{#if withChips}}
-                      <div class="rating-chips">12{{!chips}}</div>
+                      <div class="rating-chips">{{chips}}</div>
                     {{/if}}
                     <div class="rating-avgplace">{{avg_place_less_precision}}</div>
                     <div class="rating-avgscore">{{avg_score_int}}</div>
