@@ -202,6 +202,7 @@ function loginWithRetry(
       .then((auth) => {
         retriesCount = 0;
         dispatch({ type: LOGIN_SUCCESS, payload: auth });
+        startupWithAuth(api, dispatch, next, auth.personId, auth.authToken);
       })
       .catch((e) => {
         retriesCount++;
