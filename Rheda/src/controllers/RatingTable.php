@@ -223,7 +223,20 @@ class RatingTable extends Controller
                 ],
             ];
 
+        if ($_GET['csv'] === '1' && !empty($data)) {
+            $this->_toCsv(
+                $data,
+                ($this->_mainEventGameConfig->getRulesetConfig()?->getChipsValue() ?? 0) > 0,
+                $this->_mainEventGameConfig->getIsTeam()
+            );
+            exit();
+        }
+
         return [
+            'csvUrl'            => str_contains($_SERVER['REQUEST_URI'], '?')
+                ? $_SERVER['REQUEST_URI'] . '&csv=1'
+                : $_SERVER['REQUEST_URI'] . '?csv=1',
+
             'error'             => $errMsg,
             'data'              => $data,
             'titlePlayer'        => _t('Player'),
@@ -261,5 +274,45 @@ class RatingTable extends Controller
     {
         list($surname, $name) = explode(' ', $name . ' '); // Trailing slash will suppress errors with names without any space
         return $surname . ' ' . mb_substr($name, 0, 1, 'utf8') . '.';
+    }
+
+    private function _toCsv(array $data, bool $withChips, bool $isTeam): string
+    {
+        $rows = [
+            [
+                _t('Place'),
+                _t('Player ID'),
+                _t('Player name'),
+                ...($isTeam ? [_t('Team')] : []),
+                ...($withChips ? [_t('Chips')] : []),
+                _t('Rating points'),
+                _t('Average place'),
+                _t('Average points'),
+                _t('Games played'),
+            ]
+        ];
+        foreach ($data as $i => $item) {
+            $rows []= [
+                $i,
+                $item['id'],
+                $item['title'],
+                ...($isTeam ? [$item['team_name']] : []),
+                ...($withChips ? [$item['chips']] : []),
+                $item['rating'],
+                $item['avg_place_less_precision'],
+                $item['avg_score_int'],
+                $item['games_played']
+            ];
+        }
+
+        header('Content-Type: text/csv');
+        $out = fopen('php://output', 'w');
+        if ($out) {
+            foreach ($rows as $row) {
+                fputcsv($out, $row);
+            }
+            fclose($out);
+        }
+        return '';
     }
 }
