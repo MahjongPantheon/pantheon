@@ -1034,7 +1034,7 @@ function getMaxDifferentYakuCount(Db $db, array $eventIdList, array $players)
         }
 
         foreach (explode(',', $round['yaku']) as $yaku) {
-            if (in_array($yaku, [Y_YAKUHAI2, Y_YAKUHAI3, Y_YAKUHAI4, Y_YAKUHAI5])) {
+            if (in_array($yaku, [Y_YAKUHAI2, Y_YAKUHAI3, Y_YAKUHAI4])) {
                 $yaku = Y_YAKUHAI1;
             }
 

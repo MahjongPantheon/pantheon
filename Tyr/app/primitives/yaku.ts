@@ -36,7 +36,6 @@ export enum YakuId {
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,
   YAKUHAI4 = 16,
-  YAKUHAI5 = 17,
   SHOSANGEN = 18,
   DAISANGEN = 19,
   SHOSUUSHII = 20,
@@ -84,7 +83,6 @@ export interface YakuMap<T> {
   [YakuId.YAKUHAI2]: T;
   [YakuId.YAKUHAI3]: T;
   [YakuId.YAKUHAI4]: T;
-  [YakuId.YAKUHAI5]: T;
   [YakuId.SHOSANGEN]: T;
   [YakuId.DAISANGEN]: T;
   [YakuId.SHOSUUSHII]: T;
@@ -407,7 +405,6 @@ const viewPriority = [
   YakuId.YAKUHAI2,
   YakuId.YAKUHAI3,
   YakuId.YAKUHAI4,
-  YakuId.YAKUHAI5,
   YakuId.TOITOI,
   YakuId.SANKANTSU,
   YakuId.SANANKOU,

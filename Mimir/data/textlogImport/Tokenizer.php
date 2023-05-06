@@ -187,7 +187,6 @@ class Tokenizer
                     |yakuhai2                         # ' . Y_YAKUHAI2 . '
                     |yakuhai3                         # ' . Y_YAKUHAI3 . '
                     |yakuhai4                         # ' . Y_YAKUHAI4 . '
-                    |yakuhai5                         # ' . Y_YAKUHAI5 . '
                 )$%xi',
 
                 'FROM' => '#^from$#',

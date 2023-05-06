@@ -59,7 +59,6 @@ define('Y_YAKUHAI1', 13);
 define('Y_YAKUHAI2', 14);
 define('Y_YAKUHAI3', 15);
 define('Y_YAKUHAI4', 16);
-define('Y_YAKUHAI5', 17);
 define('Y_OPENRIICHI', 44);
 
 class YakuMap
@@ -129,7 +128,6 @@ class YakuMap
             Y_YAKUHAI2,
             Y_YAKUHAI3,
             Y_YAKUHAI4,
-            Y_YAKUHAI5,
             Y_OPENRIICHI
         ];
     }
@@ -267,7 +265,7 @@ class YakuMap
 //          54 => -1 // akadora
         ];
 
-        $yakuhaiCountMap = [1 => Y_YAKUHAI1, Y_YAKUHAI2, Y_YAKUHAI3, Y_YAKUHAI4, Y_YAKUHAI5];
+        $yakuhaiCountMap = [1 => Y_YAKUHAI1, Y_YAKUHAI2, Y_YAKUHAI3, Y_YAKUHAI4];
         $result = [
             'yaku' => [],
             'dora' => 0,

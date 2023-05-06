@@ -35,7 +35,6 @@ export enum YakuId {
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,
   YAKUHAI4 = 16,
-  YAKUHAI5 = 17,
   SHOSANGEN = 18,
   DAISANGEN = 19,
   SHOSUUSHII = 20,
