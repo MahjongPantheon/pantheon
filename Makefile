@@ -222,7 +222,7 @@ i18n_extract:
 	cd Forseti && ${MAKE} docker_i18n_extract
 
 .PHONY: i18n_compile
-i18n_compile: get_docker_id
+i18n_compile:
 	cd Rheda && ${MAKE} docker_i18n_compile
 	cd Tyr && ${MAKE} docker_i18n_update
 	cd Forseti && ${MAKE} docker_i18n_update

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 19:24+0300\n"
+"POT-Creation-Date: 2023-05-06 16:25+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -275,6 +275,9 @@ msgstr "Unentschieden (alle noten)."
 msgid "Exhaustive draw (tenpai: %s)."
 msgstr "Unentschieden(Tenpai:%s)."
 
+msgid "Export to CSV"
+msgstr ""
+
 msgid "Final game points:"
 msgstr "Spielergebnis:"
 
@@ -501,6 +504,9 @@ msgstr "Persönliche Statistiken"
 msgid "Pinfu"
 msgstr "Pinfu"
 
+msgid "Place"
+msgstr ""
+
 msgid "Places stat:"
 msgstr "Platzierungsstatistik:"
 
@@ -518,6 +524,13 @@ msgstr[1] "Spielte weniger als %d Spiele"
 
 msgid "Player"
 msgstr "Spieler"
+
+#, fuzzy
+msgid "Player ID"
+msgstr "Spieler"
+
+msgid "Player name"
+msgstr "Spielername"
 
 msgid "Points of best series"
 msgstr "Punkte der besten Serie"
@@ -1568,9 +1581,6 @@ msgstr "Yakuman"
 
 #~ msgid "Player already registered to this event"
 #~ msgstr "Spieler ist bereits für das Event registriert"
-
-#~ msgid "Player name"
-#~ msgstr "Spielername"
 
 #~ msgid ""
 #~ "Player name must be at least 4 characters length. Please enter your real "

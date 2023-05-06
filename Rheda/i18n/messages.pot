@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 19:24+0300\n"
+"POT-Creation-Date: 2023-05-06 16:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,13 +78,34 @@ msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "Achievements"
+msgstr ""
+
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add online game"
+msgstr ""
+
+msgid "Add game"
+msgstr ""
+
+msgid "Game details"
+msgstr ""
+
+msgid "Recent games"
+msgstr ""
+
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
+msgstr ""
+
 msgid "To event list"
 msgstr ""
 
 msgid "Open assistant"
-msgstr ""
-
-msgid "Recent games"
 msgstr ""
 
 msgid "Rating table"
@@ -96,13 +117,7 @@ msgstr ""
 msgid "Team table"
 msgstr ""
 
-msgid "Add online game"
-msgstr ""
-
 msgid "Timer & seating"
-msgstr ""
-
-msgid "Achievements"
 msgstr ""
 
 msgid "Admin panel"
@@ -111,16 +126,31 @@ msgstr ""
 msgid "Personal area"
 msgstr ""
 
-msgid "No games has been played yet"
+msgid "Aggregated event"
 msgstr ""
 
-msgid "%d - %d (%d total)"
+msgid "Event owners: "
 msgstr ""
 
-msgid "The game has been successfully added!"
+msgid "Finished"
 msgstr ""
 
-msgid "Add game"
+msgid "Player"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Rheda: mahjong statistic system"
 msgstr ""
 
 msgid "Personal stats"
@@ -249,10 +279,7 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-msgid "Game details"
-msgstr ""
-
-msgid "Rheda: mahjong statistic system"
+msgid "Export to CSV"
 msgstr ""
 
 msgid "Rating table has been hidden by tournament administrator"
@@ -276,45 +303,6 @@ msgstr ""
 msgid "Team:"
 msgstr ""
 
-msgid "Aggregated event"
-msgstr ""
-
-msgid "Event owners: "
-msgstr ""
-
-msgid "Finished"
-msgstr ""
-
-msgid "Player"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Points of last series"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Last series"
-msgstr ""
-
-msgid "Rating"
-msgstr ""
-
-msgid "Rating graph"
-msgstr ""
-
-msgid "Hands value"
-msgstr ""
-
-msgid "Han"
-msgstr ""
-
-msgid "Yaku collected over all time"
-msgstr ""
-
 msgid "Starting now!"
 msgstr ""
 
@@ -322,18 +310,6 @@ msgid "STARTING IN:"
 msgstr ""
 
 msgid "Table #"
-msgstr ""
-
-msgid "First page"
-msgstr ""
-
-msgid "Previous page"
-msgstr ""
-
-msgid "Next page"
-msgstr ""
-
-msgid "Last page"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -424,6 +400,33 @@ msgid "%s - %d points (%s)"
 msgstr ""
 
 msgid "Full game log:"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Rating graph"
+msgstr ""
+
+msgid "Hands value"
+msgstr ""
+
+msgid "Han"
+msgstr ""
+
+msgid "Yaku collected over all time"
+msgstr ""
+
+msgid "First page"
+msgstr ""
+
+msgid "Previous page"
+msgstr ""
+
+msgid "Next page"
+msgstr ""
+
+msgid "Last page"
 msgstr ""
 
 msgid "Best hand"
@@ -602,6 +605,15 @@ msgid "Average place"
 msgstr ""
 
 msgid "Average points"
+msgstr ""
+
+msgid "Place"
+msgstr ""
+
+msgid "Player ID"
+msgstr ""
+
+msgid "Player name"
 msgstr ""
 
 msgid "Timer"

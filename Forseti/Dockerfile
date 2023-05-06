@@ -24,7 +24,7 @@ RUN apk update && \
     npm \
     protoc
 
-RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
+RUN npm install -g i18n-stex i18n-po-json i18n-json-po yarn
 
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)
