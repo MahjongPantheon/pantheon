@@ -44,16 +44,27 @@ class Mailer
      */
     protected function _send(string $to, string $subject, string $message, array $additionalHeaders, string $additionalParams)
     {
-        $additionalHeaders['Content-Transfer-Encoding'] = 'base64';
+        $boundary = md5(uniqid() . microtime());
+        $additionalHeaders['Content-Type'] = 'multipart/alternative; boundary="' . $boundary . '"';
 
-        $message = nl2br(preg_replace('#https://(\S+)#is', '<a href="$0">$0</a>', $message) ?: '');
-        $message = "<html><head><meta charset='UTF-8'><title>$subject</title></head><body>$message</body></html>";
-        $message = rtrim(chunk_split(base64_encode($message)));
+        $htmlContent = nl2br(preg_replace('#https://(\S+)#is', '<a href="$0">$0</a>', $message) ?: '');
+        $htmlContent = "<html><head><meta charset='UTF-8'><title>$subject</title></head><body>$htmlContent</body></html>";
+        $htmlContent = rtrim(chunk_split(base64_encode($htmlContent)));
+
         $subject = '=?utf-8?B?' . base64_encode($subject) . '?=';
+        $body = "--$boundary\r\n" .
+            "Content-Type: text/plain; charset=UTF-8\r\n" .
+            "Content-Transfer-Encoding: base64\r\n\r\n" .
+            rtrim(chunk_split(base64_encode($message))) . "\r\n" .
+            "--$boundary\r\n" .
+            "Content-Type: text/html; charset=UTF-8\r\n" .
+            "Content-Transfer-Encoding: base64\r\n\r\n" .
+            $htmlContent . "\r\n" .
+            "--$boundary--";
 
         /* @phpstan-ignore-next-line */
         if ($this->_mailMode === 'local_mta') {
-            mail($to, $subject, $message, $additionalHeaders, $additionalParams);
+            mail($to, $subject, $body, $additionalHeaders, $additionalParams);
             return;
         }
 
@@ -64,7 +75,7 @@ class Mailer
             curl_setopt($handle, CURLOPT_POST, true);
             curl_setopt($handle, CURLOPT_POSTFIELDS, [
                 'actionkey' => $this->_mailRemoteActionKey,
-                'data' => base64_encode(json_encode([$to, $subject, $message, $additionalHeaders, $additionalParams]) ?: '')
+                'data' => base64_encode(json_encode([$to, $subject, $body, $additionalHeaders, $additionalParams]) ?: '')
             ]);
             curl_setopt($handle, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
             curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
@@ -103,7 +114,6 @@ Pantheon support team
 ", $this->_guiUrl . $regLink),
             [
                 'MIME-Version' => '1.0',
-                'Content-Type' => 'text/html; charset=UTF-8',
                 'List-Unsubscribe' => $this->_mailerAddress,
                 'X-Mailer' => 'PantheonNotifier/2.0'
             ],
@@ -145,7 +155,6 @@ Pantheon support team
                 $message,
                 [
                     'MIME-Version' => '1.0',
-                    'Content-Type' => 'text/html; charset=UTF-8',
                     'List-Unsubscribe' => $this->_mailerAddress,
                     'X-Mailer' => 'PantheonNotifier/2.0'
                 ],
