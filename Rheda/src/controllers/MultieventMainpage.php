@@ -30,11 +30,6 @@ class MultieventMainpage extends Controller
 
     protected function _beforeRun()
     {
-        if (!empty($this->_path['action']) && $this->_path['action'] === 'toggleProto') {
-            $this->_storage->setTwirpEnabled(!$this->_storage->getTwirpEnabled());
-            header('Location: /');
-            return false;
-        }
         return true;
     }
 

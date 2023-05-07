@@ -2,7 +2,7 @@ import { StorageStrategy } from "./storage";
 const endsWith = (haystack: string, needle: string) =>
   haystack.indexOf(needle, haystack.length - needle.length) !== -1;
 
-export class StorageImplClient implements StorageStrategy {
+export class StorageStrategyClient implements StorageStrategy {
   constructor(private readonly cookieDomain: string | null) {
     if (
       this.cookieDomain &&

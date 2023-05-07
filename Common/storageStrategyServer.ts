@@ -1,6 +1,6 @@
 import { StorageStrategy } from "./storage";
 
-export class StorageImplServer implements StorageStrategy {
+export class StorageStrategyServer implements StorageStrategy {
   private _cookies: Record<string, string> = {};
   private _cookiesAdd: Record<string, string> = {};
   private _cookiesRemove: string[] = [];

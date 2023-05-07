@@ -18,11 +18,14 @@
 import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { Storage } from '../../../Common/storage';
+import { StorageStrategyClient } from '../../../Common/storageStrategyClient';
 
+const storageStrategy = new StorageStrategyClient(window.__cfg.COOKIE_DOMAIN || null);
 /**
  * @deprecated Please don't use it directly. Use useStorage() instead.
  */
-export const storage = new Storage(window.__cfg.COOKIE_DOMAIN || null);
+export const storage = new Storage();
+storage.setStrategy(storageStrategy);
 export const storageCtx = createContext(storage);
 
 export const useStorage = () => {
