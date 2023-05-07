@@ -1,0 +1,62 @@
+{
+  "name": "rheda",
+  "license": "GPL-3.0-or-later",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "vitest",
+    "coverage": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "lint": "eslint . --fix",
+    "format": "prettier . --write",
+    "build": "tsc && yarn build:client && yarn build:server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --ssr src/server.tsx --outDir dist/server",
+    "generate": "vite build --outDir dist/static && yarn build:server && node prerender",
+    "serve": "cross-env NODE_ENV=production node server"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@mantine/core": "^6.0.10",
+    "@mantine/hooks": "^6.0.10",
+    "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.1",
+    "@tabler/icons-react": "^2.11.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@types/testing-library__jest-dom": "^5.14.5",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "@vitest/coverage-istanbul": "^0.29.8",
+    "@vitest/ui": "^0.29.8",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "jsdom": "^21.1.1",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.3",
+    "vite": "^4.2.0",
+    "vite-tsconfig-paths": "^4.0.8",
+    "vitest": "^0.29.8"
+  },
+  "module": "index.ts",
+  "lint-staged": {
+    "*.{ts,tsx}": "yarn lint",
+    "*.{ts,tsx,css,md,html,json}": "yarn format"
+  }
+}
