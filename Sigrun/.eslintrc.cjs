@@ -1,17 +1,5 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
-  },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/jsx-runtime",
-    "prettier",
-  ],
-  overrides: [],
+  root: true,
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
@@ -21,7 +9,13 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ["react", "@typescript-eslint", 'unused-imports'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  extends: ['prettier'],
+  plugins: ['react', '@typescript-eslint', 'unused-imports'],
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'react/jsx-props-no-spreading': 'off',
@@ -85,7 +79,6 @@ module.exports = {
     '@typescript-eslint/member-delimiter-style': ['error'],
     '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
     '@typescript-eslint/no-extra-non-null-assertion': ['error'],
-    '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-extraneous-class': ['error'],
     '@typescript-eslint/no-inferrable-types': ['error'],
     '@typescript-eslint/no-invalid-void-type': ['error'],
@@ -118,10 +111,5 @@ module.exports = {
     ],
     '@typescript-eslint/no-useless-constructor': ['error'],
     '@typescript-eslint/no-non-null-asserted-nullish-coalescing': ['error'],
-  },
-  settings: {
-    react: {
-      version: "detect",
-    },
   },
 };

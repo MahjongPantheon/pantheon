@@ -19,6 +19,7 @@ deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Rheda && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
+	cd Sigrun && ${MAKE} docker_deps
 
 .PHONY: kill
 kill:
@@ -28,6 +29,7 @@ kill:
 	cd Frey && ${MAKE} kill
 	cd Rheda && ${MAKE} kill
 	cd Forseti && ${MAKE} kill
+	cd Sigrun && ${MAKE} kill
 	cd Database && ${MAKE} kill
 	docker-compose rm -v
 
@@ -50,6 +52,7 @@ pantheon_run:
 	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
 	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
+	echo "- ${YELLOW}Sigrun${NC} is exposed on port 4008"; \
 	echo "----------------------------------------------------------------------------------"; \
 	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
 	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -70,7 +73,7 @@ pantheon_run:
 	echo " ${GREEN}Run 'make logs' in each subproject folder to view container logs on-line${NC} "; \
 	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \
 	echo " ${YELLOW}Run 'make shell' in each subproject folder to get into each container shell${NC} "; \
-	echo " ${YELLOW}Also you can use 'make shell_{tyr|rheda|frey|mimir|forseti}' to get ${NC} "; \
+	echo " ${YELLOW}Also you can use 'make shell_{tyr|rheda|frey|mimir|forseti|sigrun}' to get ${NC} "; \
 	echo " ${YELLOW}to specific subproject folder after entering container shell${NC} "; \
 
 
@@ -131,6 +134,10 @@ shell_frey:
 shell_forseti:
 	cd Forseti && ${MAKE} shell
 
+.PHONY: shell_sigrun
+shell_sigrun:
+	cd Sigrun && ${MAKE} shell
+
 .PHONY: shell_db
 shell_db:
 	cd Database && ${MAKE} shell
@@ -165,6 +172,7 @@ check:
 	cd Tyr && ${MAKE} docker_lint
 	cd Tyr && ${MAKE} docker_unit
 	cd Forseti && ${MAKE} docker_lint
+	cd Sigrun && ${MAKE} docker_lint
 
 .PHONY: autofix
 autofix:
@@ -174,6 +182,7 @@ autofix:
 	cd Rheda && ${MAKE} docker_autofix
 	cd Tyr && ${MAKE} docker_autofix
 	cd Forseti && ${MAKE} docker_autofix
+	cd Sigrun && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -182,6 +191,7 @@ proto_gen:
 	cd Forseti && ${MAKE} docker_proto_gen
 	cd Tyr && ${MAKE} docker_proto_gen
 	cd Rheda && ${MAKE} docker_proto_gen
+	cd Sigrun && ${MAKE} docker_proto_gen
 
 # Prod related tasks & shortcuts
 
@@ -192,6 +202,7 @@ prod_deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
+	cd Sigrun && ${MAKE} docker_deps
 
 .PHONY: prod_build_tyr
 prod_build_tyr: # this is for automated builds, don't run it manually
@@ -221,12 +232,14 @@ i18n_extract:
 	cd Rheda && ${MAKE} docker_i18n_extract
 	cd Tyr && ${MAKE} docker_i18n_extract
 	cd Forseti && ${MAKE} docker_i18n_extract
+	cd Sigrun && ${MAKE} docker_i18n_extract
 
 .PHONY: i18n_compile
 i18n_compile:
 	cd Rheda && ${MAKE} docker_i18n_compile
 	cd Tyr && ${MAKE} docker_i18n_update
 	cd Forseti && ${MAKE} docker_i18n_update
+	cd Sigrun && ${MAKE} docker_i18n_update
 
 .PHONY: bump_release
 bump_release:

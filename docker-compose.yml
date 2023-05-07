@@ -101,3 +101,20 @@ services:
     volumes:
       - ./Rheda:/var/www/html/Rheda
       - ./Common:/var/www/html/Common
+  sigrun:
+    build: ./Sigrun
+    ports:
+      - "127.0.0.1:4008:80"
+      - "127.0.0.1:4108:8080"
+    links:
+      - mimir:mimir
+      - frey:frey
+    depends_on:
+      - frey
+      - mimir
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Sigrun:/var/www/html/Sigrun
+      #- ./Sigrun-dist:/var/www/html/Sigrun-dist
+      - ./Common:/var/www/html/Common
