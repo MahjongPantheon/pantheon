@@ -8,8 +8,8 @@ import { storage } from './storage';
  * @deprecated
  */
 export const analytics = new Analytics(
-  import.meta.env.STAT_HOST,
-  import.meta.env.STAT_SITE_ID_SIGRUN
+  import.meta.env.VITE_STAT_HOST,
+  import.meta.env.VITE_STAT_SITE_ID_SIGRUN
 );
 analytics.setUserId(storage.getPersonId() ?? 0);
 analytics.setEventId(storage.getEventId() ?? 0);

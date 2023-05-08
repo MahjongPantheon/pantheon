@@ -29,24 +29,26 @@ export async function createServer(app) {
     );
     const render = (await import('./dist/server/server.js')).SSRRender;
 
-    const { cookies, appHtml } = render(url, req.cookies);
-    const html = template.replace(`<!--app-html-->`, appHtml);
-
-    res.status(200);
-    res.set({ 'Content-Type': 'text/html' });
-    for (let name in cookies.add) {
-      res.cookie(name, cookies.add[name], {
-        domain: import.meta.env.COOKIE_DOMAIN,
-        expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
-      });
-    }
-    for (let name of cookies.remove) {
-      res.clearCookie(name, {
-        domain: import.meta.env.COOKIE_DOMAIN,
-        expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
-      });
-    }
-    res.end(html);
+    render(url, req.cookies).then(({ cookies, appHtml, serverData }) => {
+      const html = template
+        .replace(`<!--app-html-->`, appHtml)
+        .replace(`<!--app-server-data-->`, serverData);
+      res.status(200);
+      res.set({ 'Content-Type': 'text/html' });
+      for (let name in cookies.add) {
+        res.cookie(name, cookies.add[name], {
+          domain: import.meta.env.COOKIE_DOMAIN,
+          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
+        });
+      }
+      for (let name of cookies.remove) {
+        res.clearCookie(name, {
+          domain: import.meta.env.COOKIE_DOMAIN,
+          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
+        });
+      }
+      res.end(html);
+    });
   });
 
   return app;

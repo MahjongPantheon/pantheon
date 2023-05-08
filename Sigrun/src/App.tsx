@@ -6,6 +6,7 @@ import { StorageProvider } from './hooks/storage';
 import { I18nProvider } from './hooks/i18n';
 import { ApiProvider } from './hooks/api';
 import { StorageStrategy } from '../../Common/storage';
+import { EventList } from './pages/EventList';
 
 export function App({ storageStrategy }: { storageStrategy: StorageStrategy }) {
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ export function App({ storageStrategy }: { storageStrategy: StorageStrategy }) {
               <div className='App'>
                 <h1>Vite + React</h1>
                 <Text>Welcome to Mantine!</Text>
+                <EventList />
                 <Button>Kek</Button>
                 <div className='card'>
                   <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>

@@ -4,7 +4,10 @@ import { ApiService } from '../services/api';
 import { storage } from './storage';
 import { analytics } from './analytics';
 
-const api = new ApiService(import.meta.env.FREY_URL, import.meta.env.MIMIR_URL);
+const api = new ApiService(
+  import.meta.env.SSR ? import.meta.env.VITE_FREY_URL_SSR : import.meta.env.VITE_FREY_URL_CLIENT,
+  import.meta.env.SSR ? import.meta.env.VITE_MIMIR_URL_SSR : import.meta.env.VITE_MIMIR_URL_CLIENT
+);
 api
   .setAnalytics(analytics)
   .setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');

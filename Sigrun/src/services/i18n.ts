@@ -74,10 +74,12 @@ export class I18nService {
       }
     }
 
-    for (const navlang of window.navigator.languages) {
-      if (supportedLanguages.includes(navlang)) {
-        this.i18nController.setLocale(navlang, onReady, onError);
-        return;
+    if (!import.meta.env.SSR) {
+      for (const navlang of window.navigator.languages) {
+        if (supportedLanguages.includes(navlang)) {
+          this.i18nController.setLocale(navlang, onReady, onError);
+          return;
+        }
       }
     }
 
