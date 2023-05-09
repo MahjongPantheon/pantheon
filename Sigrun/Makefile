@@ -62,7 +62,7 @@ cleanup_prebuilts:
 	#cd ../Sigrun-dist && find -name '*.js' -or -name '*.css' -or -name '*.js.gz' -or -name '*.css.gz' | tail -n +30 | xargs -I {} rm {}
 
 dev:
-	./node_modules/.bin/vite
+	yarn run vite
 
 PHONY: i18n_extract
 i18n_extract:

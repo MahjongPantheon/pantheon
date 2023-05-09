@@ -4,8 +4,6 @@
   "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "preview": "vite preview",
     "test": "vitest",
     "coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
