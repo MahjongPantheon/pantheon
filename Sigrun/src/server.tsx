@@ -1,20 +1,22 @@
 import ReactDOMServer from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
 import { App } from './App';
+import { Router } from 'wouter';
 import { StorageStrategyServer } from '../../Common/storageStrategyServer';
 import { Isomorphic } from './hooks/isomorphic';
+import staticLocationHook from 'wouter/static-location';
 
-export async function SSRRender(url: string | Partial<Location>, cookies: Record<string, string>) {
+export async function SSRRender(url: string, cookies: Record<string, string>) {
   const storageStrategy = new StorageStrategyServer();
   storageStrategy.fill(cookies);
   const isomorphicCtxValue: Record<string, any> & { requests?: any[] } = { requests: [] };
+  const locHook = staticLocationHook(url);
 
   // First pass to collect effects
   ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <StaticRouter location={url}>
+      <Router hook={locHook}>
         <App storageStrategy={storageStrategy} />
-      </StaticRouter>
+      </Router>
     </Isomorphic.Provider>
   );
 
@@ -25,9 +27,9 @@ export async function SSRRender(url: string | Partial<Location>, cookies: Record
 
   const appHtml = ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <StaticRouter location={url}>
+      <Router hook={locHook}>
         <App storageStrategy={storageStrategy} />
-      </StaticRouter>
+      </Router>
     </Isomorphic.Provider>
   );
 

@@ -22,6 +22,7 @@
     "@mantine/core": "^6.0.10",
     "@mantine/hooks": "^6.0.10",
     "@tabler/icons-react": "^2.11.0",
+    "@types/wouter": "^2.2.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
@@ -33,7 +34,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
-    "serve-static": "^1.15.0"
+    "serve-static": "^1.15.0",
+    "wouter": "https://github.com/ctizen/wouter"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",

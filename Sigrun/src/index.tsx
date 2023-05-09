@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
+import { Router } from 'wouter';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 import { Isomorphic } from './hooks/isomorphic';
+import useLocation from 'wouter/use-location';
 
 const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
 
@@ -15,7 +17,9 @@ if (import.meta.env.MODE === 'development') {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
-        <App storageStrategy={storageStrategy} />
+        <Router hook={useLocation}>
+          <App storageStrategy={storageStrategy} />
+        </Router>
       </Isomorphic.Provider>
     </React.StrictMode>
   );
@@ -24,7 +28,9 @@ if (import.meta.env.MODE === 'development') {
     document.getElementById('root') as HTMLElement,
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
-        <App storageStrategy={storageStrategy} />
+        <Router hook={useLocation}>
+          <App storageStrategy={storageStrategy} />
+        </Router>
       </Isomorphic.Provider>
     </React.StrictMode>
   );

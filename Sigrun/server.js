@@ -7,7 +7,7 @@ import { availableParallelism } from 'node:os';
 import process from 'node:process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const numCPUs = availableParallelism();
-const PORT = 4108;
+const PORT = process.env.PORT ?? 4108;
 
 export async function createServer(app) {
   const resolve = (p) => path.resolve(__dirname, p);
@@ -21,7 +21,7 @@ export async function createServer(app) {
   );
 
   app.use('*', async (req, res) => {
-    const url = '/';
+    const url = req.baseUrl;
 
     const template = fs.readFileSync(
       resolve('dist/client/index.html'),

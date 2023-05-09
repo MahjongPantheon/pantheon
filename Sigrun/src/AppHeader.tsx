@@ -1,21 +1,12 @@
-import {
-  createStyles,
-  Header,
-  Menu,
-  Group,
-  Center,
-  Burger,
-  Container,
-  rem,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconChevronDown } from "@tabler/icons-react";
-import rhedaIco from "../assets/ico/rhedaico.png";
+import { createStyles, Header, Menu, Group, Center, Burger, Container, rem } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconChevronDown } from '@tabler/icons-react';
+import rhedaIco from '../assets/ico/rhedaico.png';
 
 const useStyles = createStyles((theme) => ({
   header: {
     backgroundColor: theme.fn.variant({
-      variant: "filled",
+      variant: 'filled',
       color: theme.primaryColor,
     }).background,
     borderBottom: 0,
@@ -23,37 +14,36 @@ const useStyles = createStyles((theme) => ({
 
   inner: {
     height: rem(56),
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   links: {
-    [theme.fn.smallerThan("sm")]: {
-      display: "none",
+    [theme.fn.smallerThan('sm')]: {
+      display: 'none',
     },
   },
 
   burger: {
-    [theme.fn.largerThan("sm")]: {
-      display: "none",
+    [theme.fn.largerThan('sm')]: {
+      display: 'none',
     },
   },
 
   link: {
-    display: "block",
+    display: 'block',
     lineHeight: 1,
     padding: `${rem(8)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
-    textDecoration: "none",
+    textDecoration: 'none',
     color: theme.white,
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: "filled", color: theme.primaryColor })
-          .background!,
+        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
         0.1
       ),
     },
@@ -64,7 +54,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface HeaderSearchProps {
+interface AppHeaderProps {
   links: {
     link: string;
     label: string;
@@ -72,7 +62,7 @@ interface HeaderSearchProps {
   }[];
 }
 
-export function HeaderMenuColored({ links }: HeaderSearchProps) {
+export function AppHeader({ links }: AppHeaderProps) {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
 
@@ -83,12 +73,7 @@ export function HeaderMenuColored({ links }: HeaderSearchProps) {
 
     if (menuItems) {
       return (
-        <Menu
-          key={link.label}
-          trigger="hover"
-          transitionProps={{ exitDuration: 0 }}
-          withinPortal
-        >
+        <Menu key={link.label} trigger='hover' transitionProps={{ exitDuration: 0 }} withinPortal>
           <Menu.Target>
             <a
               href={link.link}
@@ -97,7 +82,7 @@ export function HeaderMenuColored({ links }: HeaderSearchProps) {
             >
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
-                <IconChevronDown size="0.9rem" stroke={1.5} />
+                <IconChevronDown size='0.9rem' stroke={1.5} />
               </Center>
             </a>
           </Menu.Target>
@@ -122,7 +107,7 @@ export function HeaderMenuColored({ links }: HeaderSearchProps) {
     <Header height={56} className={classes.header} mb={120}>
       <Container>
         <div className={classes.inner}>
-          <img src={rhedaIco} alt="Rheda" height="28" />
+          <img src={rhedaIco} alt='Rheda' height='28' />
           <Group spacing={5} className={classes.links}>
             {items}
           </Group>
@@ -130,8 +115,8 @@ export function HeaderMenuColored({ links }: HeaderSearchProps) {
             opened={opened}
             onClick={toggle}
             className={classes.burger}
-            size="sm"
-            color="#fff"
+            size='sm'
+            color='#fff'
           />
         </div>
       </Container>
