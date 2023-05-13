@@ -24,6 +24,7 @@ import {
   IconHourglass,
   IconNumbers,
   IconUsers,
+  IconUserX,
 } from '@tabler/icons-react';
 import { FormHandle } from '#/pages/OwnedEventsEdit/types';
 
@@ -88,6 +89,26 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         defaultValue={0}
         step={5}
         min={0}
+      />
+      <NumberInput
+        icon={<IconUserX size='1rem' />}
+        {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
+        label={i18n._t('Fixed score applied to replacement player')}
+        description={i18n._t(
+          'Fixed amount of result score applied for each replacement player regardless of session results.'
+        )}
+        defaultValue={-15000}
+        max={0}
+      />
+      <NumberInput
+        icon={<IconUserX size='1rem' />}
+        {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
+        label={i18n._t('Fixed uma for replacement player')}
+        description={i18n._t(
+          'Fixed amount of rank penalty applied for each replacement player regardless of session results.'
+        )}
+        defaultValue={-15000}
+        max={0}
       />
     </>
   );
