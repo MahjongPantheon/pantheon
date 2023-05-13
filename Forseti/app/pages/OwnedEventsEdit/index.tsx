@@ -102,7 +102,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         maxPenalty: 20000,
         minPenalty: 100,
         penaltyStep: 100,
-        replacementPlayerOverrideUma: -15000, // tourn
+        replacementPlayerOverrideUma: -15000,
         oka: 0,
         uma: { place1: 15000, place2: 5000, place3: -5000, place4: -15000 },
         complexUma: {
@@ -111,8 +111,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           otherwise: { place1: 8000, place2: 4000, place3: -4000, place4: -8000 },
         },
         umaType: UmaType.UMA_TYPE_UMA_SIMPLE,
-        allowedYaku: {}, // TODO: reformat to array, as required by protocol
-        yakuWithPao: {}, // TODO: reformat to array, as required by protocol
+        allowedYaku: {},
+        yakuWithPao: {},
         withWinningDealerHonbaSkipped: false,
         endingPolicy: EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED,
         startRating: 0,
