@@ -6,12 +6,14 @@ import { Isomorphic } from './hooks/isomorphic';
 import staticLocationHook from 'wouter/static-location';
 import { Layout } from './Layout';
 import React from 'react';
+import { JSDOM } from 'jsdom';
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
   const storageStrategy = new StorageStrategyServer();
   storageStrategy.fill(cookies);
   const isomorphicCtxValue: Record<string, any> & { requests?: any[] } = { requests: [] };
   const locHook = staticLocationHook(url);
+  (global as any).JSDOM = JSDOM;
 
   // First pass to collect effects
   ReactDOMServer.renderToString(

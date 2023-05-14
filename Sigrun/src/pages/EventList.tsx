@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useApi } from '../hooks/api';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import {
-  Avatar,
   Center,
   Container,
   Divider,
@@ -11,16 +10,29 @@ import {
   Space,
   Text,
   Stack,
-  Tooltip,
   useMantineColorScheme,
   useMantineTheme,
   ActionIcon,
 } from '@mantine/core';
 import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
-import { EventType } from '../clients/proto/atoms.pb';
-import { IconFriends, IconNetwork, IconTournament } from '@tabler/icons-react';
 import { CSSProperties } from 'react';
+import { EventTypeIcon } from '../helpers/EventTypeIcon';
+import { useRemarkSync } from 'react-remark';
+import strip from 'strip-markdown';
+import { renderToString } from 'react-dom/server';
+
+let stripHtml: (dirtyString: string) => string;
+if (import.meta.env.SSR) {
+  stripHtml = (dirtyString) => {
+    return (global as any).JSDOM.fragment(dirtyString).textContent ?? '';
+  };
+} else {
+  stripHtml = (dirtyString: string) => {
+    const doc = new DOMParser().parseFromString(dirtyString, 'text/html');
+    return doc.body.textContent ?? '';
+  };
+}
 
 const PERPAGE = 20;
 export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
@@ -42,57 +54,43 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
       <h2>{i18n._t('Riichi mahjong events list')}</h2>
       <Divider size='xs' />
       <Stack justify='flex-start' spacing='0'>
-        {(events?.events ?? []).map((e, idx) => (
-          <Group
-            key={`ev_${idx}`}
-            style={{
-              padding: '10px',
-              backgroundColor:
-                idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
-            }}
-          >
-            {e.type === EventType.EVENT_TYPE_LOCAL && (
-              <Tooltip openDelay={500} position='bottom' withArrow label={i18n._t('Local rating')}>
-                <Avatar color='green' radius='xl'>
-                  <IconFriends />
-                </Avatar>
-              </Tooltip>
-            )}
-            {e.type === EventType.EVENT_TYPE_TOURNAMENT && (
-              <Tooltip openDelay={500} position='bottom' withArrow label={i18n._t('Tournament')}>
-                <Avatar color='red' radius='xl'>
-                  <IconTournament />
-                </Avatar>
-              </Tooltip>
-            )}
-            {e.type === EventType.EVENT_TYPE_ONLINE && (
-              <Tooltip openDelay={500} position='bottom' withArrow label={i18n._t('Online event')}>
-                <Avatar color='blue' radius='xl'>
-                  <IconNetwork />
-                </Avatar>
-              </Tooltip>
-            )}
-            <a href={`/event/${e.id}/rating`} onClick={() => navigate(`/event/${e.id}/rating`)}>
-              <ActionIcon color='grape' variant='filled' title={i18n._t('Rating table')}>
-                <PodiumIco size='1.1rem' />
-              </ActionIcon>
-            </a>
-            <a href={`/event/${e.id}`} onClick={() => navigate(`/event/${e.id}`)}>
-              {e.title}
-            </a>
-            <Text
-              c='dimmed'
+        {(events?.events ?? []).map((e, idx) => {
+          const desc = useRemarkSync(e.description, {
+            remarkPlugins: [strip as any],
+          });
+          const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300) + '...';
+          return (
+            <Group
+              key={`ev_${idx}`}
               style={{
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                flex: 1,
+                padding: '10px',
+                backgroundColor:
+                  idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
               }}
             >
-              {e.description}
-            </Text>
-          </Group>
-        ))}
+              <EventTypeIcon event={e} />
+              <a href={`/event/${e.id}/rating`} onClick={() => navigate(`/event/${e.id}/rating`)}>
+                <ActionIcon color='grape' variant='filled' title={i18n._t('Rating table')}>
+                  <PodiumIco size='1.1rem' />
+                </ActionIcon>
+              </a>
+              <a href={`/event/${e.id}`} onClick={() => navigate(`/event/${e.id}`)}>
+                {e.title}
+              </a>
+              <Text
+                c='dimmed'
+                style={{
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  flex: 1,
+                }}
+              >
+                {renderedDesc}
+              </Text>
+            </Group>
+          );
+        })}
       </Stack>
       <Divider size='xs' />
       <Space h='md' />

@@ -20,6 +20,7 @@
     "@mantine/core": "^6.0.10",
     "@mantine/hooks": "^6.0.10",
     "@tabler/icons-react": "^2.11.0",
+    "@types/jsdom": "^21.1.1",
     "@types/wouter": "^2.2.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -31,8 +32,10 @@
     "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-remark": "^2.1.0",
     "react-router-dom": "^6.11.1",
     "serve-static": "^1.15.0",
+    "strip-markdown": "^5.0.0",
     "wouter": "https://github.com/ctizen/wouter"
   },
   "devDependencies": {
@@ -55,7 +58,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "i18n-dialect": "^1.1.1",
     "i18n-proto": "^1.0.5",
-    "jsdom": "^21.1.1",
+    "jsdom": "^22.0.0",
     "lint-staged": "^13.2.0",
     "prettier": "^2.8.7",
     "twirpscript": "^0.0.66",
