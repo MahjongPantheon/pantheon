@@ -221,9 +221,7 @@ function getPlayerPaymentResult(
       state.changesOverview &&
       state.changesOverview.outcome === RoundOutcome.ROUND_OUTCOME_CHOMBO
     ) {
-      if (
-        state.changesOverview.scoresDelta.find((d) => d.penaltyScore && d.playerId === player.id)
-      ) {
+      if (state.changesOverview.round.chombo?.loserId === player.id) {
         return loc._t('Penalty');
       }
     }
