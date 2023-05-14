@@ -1,7 +1,19 @@
-import { createStyles, Header, Menu, Group, Center, Burger, Container, rem } from '@mantine/core';
+import {
+  createStyles,
+  Header,
+  Menu,
+  Group,
+  Center,
+  Burger,
+  Container,
+  rem,
+  ActionIcon,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown } from '@tabler/icons-react';
+import { IconChevronDown, IconLanguageHiragana, IconMoonStars, IconSun } from '@tabler/icons-react';
 import rhedaIco from '../assets/ico/rhedaico.png';
+import { FlagEn, FlagRu } from './helpers/flags';
+import { useI18n } from './hooks/i18n';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -60,11 +72,15 @@ interface AppHeaderProps {
     label: string;
     links?: { link: string; label: string }[];
   }[];
+  dark: boolean;
+  toggleColorScheme: () => void;
+  saveLang: (lang: string) => void;
 }
 
-export function AppHeader({ links }: AppHeaderProps) {
+export function AppHeader({ links, dark, toggleColorScheme, saveLang }: AppHeaderProps) {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
+  const i18n = useI18n();
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
@@ -110,6 +126,31 @@ export function AppHeader({ links }: AppHeaderProps) {
           <img src={rhedaIco} alt='Rheda' height='28' />
           <Group spacing={5} className={classes.links}>
             {items}
+          </Group>
+          <Group>
+            <ActionIcon
+              variant='filled'
+              color={dark ? 'grape' : 'indigo'}
+              onClick={() => toggleColorScheme()}
+              title={i18n._t('Toggle color scheme')}
+            >
+              {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
+            </ActionIcon>
+            <Menu shadow='md' width={200}>
+              <Menu.Target>
+                <ActionIcon color='green' variant='filled' title={i18n._t('Language')}>
+                  <IconLanguageHiragana size='1.1rem' />
+                </ActionIcon>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item onClick={() => saveLang('en')} icon={<FlagEn width={24} />}>
+                  en
+                </Menu.Item>
+                <Menu.Item onClick={() => saveLang('ru')} icon={<FlagRu width={24} />}>
+                  ru
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
           </Group>
           <Burger
             opened={opened}

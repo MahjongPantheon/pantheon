@@ -5,6 +5,7 @@ import { Router } from 'wouter';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 import { Isomorphic } from './hooks/isomorphic';
 import useLocation from 'wouter/use-location';
+import { Layout } from './Layout';
 
 const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
 
@@ -18,7 +19,9 @@ if (import.meta.env.MODE === 'development') {
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
         <Router hook={useLocation}>
-          <App storageStrategy={storageStrategy} />
+          <Layout storageStrategy={storageStrategy}>
+            <App />
+          </Layout>
         </Router>
       </Isomorphic.Provider>
     </React.StrictMode>
@@ -29,7 +32,9 @@ if (import.meta.env.MODE === 'development') {
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
         <Router hook={useLocation}>
-          <App storageStrategy={storageStrategy} />
+          <Layout storageStrategy={storageStrategy}>
+            <App />
+          </Layout>
         </Router>
       </Isomorphic.Provider>
     </React.StrictMode>

@@ -35,5 +35,5 @@ export const useIsomorphicState = <I, R, E extends Error>(
         });
     }
   }, dependencies);
-  return [data, error] as [R, E | null];
+  return [data, error] as [R | undefined, E | null];
 };
