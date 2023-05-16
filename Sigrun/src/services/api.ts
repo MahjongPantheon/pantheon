@@ -13,6 +13,7 @@ import {
   GetEventsById,
   GetGameConfig,
   GetPrescriptedEventConfig,
+  GetRatingTable,
   GetRulesets,
   GetTablesState,
   GetTimezones,
@@ -134,6 +135,21 @@ export class ApiService {
       method: 'GetTablesState',
     });
     return GetTablesState({ eventId }, this._clientConfMimir).then((v) => v.tables);
+  }
+
+  getRatingTable(
+    eventId: number,
+    order: 'asc' | 'desc',
+    orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score',
+    withPrefinished: boolean
+  ) {
+    this._analytics?.track(Analytics.LOAD_STARTED, {
+      method: 'GetRatingTable',
+    });
+    return GetRatingTable(
+      { eventIdList: [eventId], order, orderBy, withPrefinished },
+      this._clientConfMimir
+    ).then((r) => r.list);
   }
 
   quickAuthorize() {

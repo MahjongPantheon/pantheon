@@ -32,6 +32,7 @@ class EventRatingTableModel extends Model
 {
     /**
      * @param EventPrimitive[] $eventList
+     * @param array $playerRegs
      * @param string $orderBy
      * @param string $order
      * @param bool $withPrefinished
@@ -39,7 +40,7 @@ class EventRatingTableModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, string $orderBy, string $order, $withPrefinished = false)
+    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $withPrefinished = false)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
@@ -146,13 +147,19 @@ class EventRatingTableModel extends Model
             );
         }
 
-        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $startRating) {
+        $teams = [];
+        foreach ($playerRegs as $reg) {
+            $teams[$reg['id']] = $reg['team_name'];
+        }
+
+        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $teams, $startRating) {
             return [
                 'id'            => (int)$el->getPlayerId(),
                 'title'  => $playerItems[$el->getPlayerId()]->getDisplayName(),
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),
+                'team_name'     => empty($teams[$el->getPlayerId()]) ? '' : $teams[$el->getPlayerId()],
                 'winner_zone'   => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
                 'avg_place'     => round($el->getAvgPlace(), 4),
                 'avg_score'     => $el->getGamesPlayed() == 0

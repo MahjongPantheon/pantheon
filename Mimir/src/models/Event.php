@@ -383,6 +383,7 @@ class EventModel extends Model
             ->select('event.sync_start', 'sync_start')
             ->select('event.finished', 'finished')
             ->select('event.is_prescripted', 'prescripted')
+            ->select('event.is_team', 'is_team')
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
             ->selectExpr('count(session.id)', 'sessioncnt')
@@ -414,6 +415,7 @@ class EventModel extends Model
                     'finished' => !!$event['finished'],
                     'prescripted' => !!$event['prescripted'],
                     'isListed' => !!$event['is_listed'],
+                    'isTeam' => !!$event['is_team'],
                     'isRatingShown' => !!$event['hide_results'],
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                     'type' => $type
@@ -440,6 +442,7 @@ class EventModel extends Model
             ->select('event.finished', 'finished')
             ->select('event.is_prescripted', 'prescripted')
             ->select('event.is_listed', 'is_listed')
+            ->select('event.is_team', 'is_team')
             ->select('event.hide_results', 'hide_results')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
@@ -458,6 +461,7 @@ class EventModel extends Model
                 'finished' => !!$event['finished'],
                 'prescripted' => !!$event['prescripted'],
                 'isListed' => !!$event['is_listed'],
+                'isTeam' => !!$event['is_team'],
                 'isRatingShown' => !!$event['hide_results'],
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                 'type' => $type

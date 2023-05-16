@@ -10,7 +10,7 @@ export function App() {
       <Route path='/' component={EventList} />
       <Route path='/page/:page' component={EventList} />
       <Route path='/event/:eventId' component={EventInfo} />
-      <Route path='/event/:eventId/rating' component={RatingTable} />
+      <Route path='/event/:eventId/:orderBy' component={RatingTable} />
     </Switch>
   );
 }

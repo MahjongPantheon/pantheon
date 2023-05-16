@@ -383,7 +383,8 @@ class PlayerRegistrationPrimitive extends Primitive
             return [
                 'id' => $p->_playerId,
                 'local_id' => $p->_localId,
-                'replacement_id' => $p->_replacementPlayerId
+                'replacement_id' => $p->_replacementPlayerId,
+                'team_name' => $p->_teamName
             ];
         }, self::_findBy($ds, 'event_id', $eventIdList));
     }

@@ -127,6 +127,7 @@ message Event {
   bool tournament_started = 7;
   EventType type = 8;
   bool is_prescripted = 9;
+  bool is_team = 10;
 }
 
 message MyEvent {
@@ -172,6 +173,7 @@ message PlayerInRating {
   float avg_place = 7;
   float avg_score = 8;
   int32 games_played = 9;
+  optional string team_name = 10;
 }
 
 message Player {

@@ -626,8 +626,9 @@ class EventsController extends Controller
             throw new InvalidParametersException('Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
+        $playerRegs = PlayerRegistrationPrimitive::fetchPlayerRegData($this->_ds, $eventIdList);
         $table = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
-            ->getRatingTable($eventList, $orderBy, $order, $withPrefinished);
+            ->getRatingTable($eventList, $playerRegs, $orderBy, $order, $withPrefinished);
 
         $this->_log->info('Successfully received rating table for event ids: ' . implode(", ", $eventIdList));
 
