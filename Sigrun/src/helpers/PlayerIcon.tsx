@@ -1,8 +1,7 @@
 import { Avatar, MantineColor } from '@mantine/core';
-import { PlayerInRating } from '../clients/proto/atoms.pb';
 import { crc32 } from '@foxglove/crc';
 
-export const PlayerIcon = ({ p }: { p: PlayerInRating }) => {
+export const PlayerIcon = ({ p }: { p: { title: string; id: number } }) => {
   return (
     <Avatar variant='outline' color={makeColor(p.title)} radius='xl' size='md' title={`#${p.id}`}>
       {makeInitials(p.title)}

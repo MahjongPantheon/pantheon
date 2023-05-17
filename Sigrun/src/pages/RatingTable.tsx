@@ -20,6 +20,7 @@ import { EventType } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 
+// TODO: aggregated events
 // TODO: superadmin flag to show prefinished results
 // TODO: hide or show table depending on corresponding flag
 // TODO: csv export on mimir side

@@ -12,6 +12,8 @@ import {
   GetEvents,
   GetEventsById,
   GetGameConfig,
+  GetPlayer,
+  GetPlayerStats,
   GetPrescriptedEventConfig,
   GetRatingTable,
   GetRulesets,
@@ -270,6 +272,16 @@ export class ApiService {
   getEventsById(ids: number[]) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventsById' });
     return GetEventsById({ ids }, this._clientConfMimir).then((r) => r.events);
+  }
+
+  getPlayerStat(eventIdList: number[], playerId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'getPlayerStat' });
+    return GetPlayerStats({ playerId, eventIdList }, this._clientConfMimir);
+  }
+
+  getPlayer(playerId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'getPlayer' });
+    return GetPlayer({ id: playerId }, this._clientConfMimir).then((r) => r.players);
   }
 
   getEventAdmins(eventId: number) {
