@@ -202,6 +202,7 @@ prod_build_forseti: # this is for automated builds, don't run it manually
 	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
 
 .PHONY: prod_compile
+prod_compile: export NO_XDEBUG=1
 prod_compile:
 	@if [ "$(ENV_FILENAME)" = "" ]; then \
 		echo "${RED}Please set env file name using ENV_FILENAME environment variable. The file should be placed in Common/envs folder.${NC}"; \
