@@ -224,13 +224,13 @@ class PersonalStats extends Controller
                         : 0,
 
                     'pointsWonAverage' => $winCount ?
-                        round(1.0 * $data['win_summary']['points_won'] / $winCount, 2)
+                        round(1.0 * $data['win_summary']['points_won'] / $winCount, 0)
                         : 0,
                     'pointsLostRonAverage' => $feedCount ?
-                        round(1.0 * $data['win_summary']['points_lost_ron'] / $feedCount, 2)
+                        round(1.0 * $data['win_summary']['points_lost_ron'] / $feedCount, 0)
                         : 0,
                     'pointsLostTsumoAverage' => $tsumoFeedCount ?
-                        round(1.0 * $data['win_summary']['points_lost_tsumo'] / $tsumoFeedCount, 2)
+                        round(1.0 * $data['win_summary']['points_lost_tsumo'] / $tsumoFeedCount, 0)
                         : 0,
 
                     'place1' => $data['places_summary'][1],
