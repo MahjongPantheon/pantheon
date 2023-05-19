@@ -12,6 +12,7 @@ import {
   GetEvents,
   GetEventsById,
   GetGameConfig,
+  GetLastGames,
   GetPlayer,
   GetPlayerStats,
   GetPrescriptedEventConfig,
@@ -272,6 +273,14 @@ export class ApiService {
   getEventsById(ids: number[]) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventsById' });
     return GetEventsById({ ids }, this._clientConfMimir).then((r) => r.events);
+  }
+
+  getRecentGames(eventId: number, limit: number, offset: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetRecentGames' });
+    return GetLastGames(
+      { eventIdList: [eventId], limit, offset, order: 'desc', orderBy: 'id' },
+      this._clientConfMimir
+    );
   }
 
   getPlayerStat(eventIdList: number[], playerId: number) {

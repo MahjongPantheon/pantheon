@@ -11,7 +11,7 @@ import {
   LinearScale,
   Title,
 } from 'chart.js';
-import { YakuId, yakuList } from './yaku';
+import { YakuId, yakuList } from '../helpers/yaku';
 import { YakuStat } from '../clients/proto/atoms.pb';
 ChartJS.register(Tooltip, BarElement, BarController, CategoryScale, LinearScale, Title);
 ChartJS.defaults.font.size = 16;

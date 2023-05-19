@@ -17,7 +17,7 @@ import {
 import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
 import { CSSProperties } from 'react';
-import { EventTypeIcon } from '../helpers/EventTypeIcon';
+import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useRemarkSync } from 'react-remark';
 import strip from 'strip-markdown';
 import { renderToString } from 'react-dom/server';
@@ -69,12 +69,24 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
               }}
             >
               <EventTypeIcon event={e} />
-              <a href={`/event/${e.id}/rating`} onClick={() => navigate(`/event/${e.id}/rating`)}>
+              <a
+                href={`/event/${e.id}/rating`}
+                onClick={(ev) => {
+                  navigate(`/event/${e.id}/rating`);
+                  ev.preventDefault();
+                }}
+              >
                 <ActionIcon color='grape' variant='filled' title={i18n._t('Rating table')}>
                   <PodiumIco size='1.1rem' />
                 </ActionIcon>
               </a>
-              <a href={`/event/${e.id}`} onClick={() => navigate(`/event/${e.id}`)}>
+              <a
+                href={`/event/${e.id}`}
+                onClick={(ev) => {
+                  navigate(`/event/${e.id}`);
+                  ev.preventDefault();
+                }}
+              >
                 {e.title}
               </a>
               <Text

@@ -3,7 +3,7 @@ import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { Redirect } from 'wouter';
 import { Container, Divider, Space } from '@mantine/core';
-import { EventTypeIcon } from '../helpers/EventTypeIcon';
+import { EventTypeIcon } from '../components/EventTypeIcon';
 import { Remark } from 'react-remark';
 
 export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {

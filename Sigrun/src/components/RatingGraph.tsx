@@ -32,6 +32,7 @@ export const RatingGraph = ({
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [lastSelectionX, setLastSelectionX] = useState<number | null>(null);
+  const [lastSelectionHash, setLastSelectionHash] = useState<string | null>(null);
 
   const games = playerStats?.scoreHistory;
   const points = (playerStats?.ratingHistory ?? []).map((item, idx) => ({
@@ -47,6 +48,17 @@ export const RatingGraph = ({
   const gamesIdx: number[] = [];
   games?.forEach((g, idx) => gamesIdx.push(idx));
   const chartRef = useRef();
+
+  useEffect(() => {
+    const idx =
+      playerStats?.scoreHistory?.findIndex((v) => v.tables[0].sessionHash === lastSelectionHash) ??
+      null;
+    if (idx !== null) {
+      setLastSelectionX(1 + idx);
+    } else {
+      setLastSelectionX(null);
+    }
+  }, [playerId, playerStats]);
 
   useEffect(() => {
     if (!(window as any).__ratingStarIcon) {
@@ -82,6 +94,7 @@ export const RatingGraph = ({
           if (d.length) {
             const { index } = d[0];
             setLastSelectionX(index);
+            setLastSelectionHash(games?.[gamesIdx[index - 1]].tables[0].sessionHash ?? null);
             if (games?.[gamesIdx[index - 1]]) {
               onSelectGame(games?.[gamesIdx[index - 1]]);
             }
@@ -104,7 +117,7 @@ export const RatingGraph = ({
         },
         elements: {
           point: {
-            radius: (context) => (context.dataIndex === lastSelectionX ? 8 : 3),
+            radius: (context) => (lastSelectionX && context.dataIndex === lastSelectionX ? 8 : 3),
             hoverRadius: 8,
             hoverBorderWidth: 1,
             pointStyle: (context) => {

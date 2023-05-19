@@ -14,8 +14,8 @@ import {
   useMantineTheme,
   Badge,
 } from '@mantine/core';
-import { EventTypeIcon } from '../helpers/EventTypeIcon';
-import { PlayerIcon } from '../helpers/PlayerIcon';
+import { EventTypeIcon } from '../components/EventTypeIcon';
+import { PlayerIcon } from '../components/PlayerIcon';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
@@ -71,7 +71,6 @@ export const RatingTable: React.FC<{
           {event?.title}
         </h2>
         <DataCmp grow={largeScreen ? true : undefined}>
-          {/*<RatingBadgeLegend sortBy={orderBy} />*/}
           <Stack>
             <DataCmp position='right' spacing='md'>
               {largeScreen && (
@@ -92,9 +91,9 @@ export const RatingTable: React.FC<{
                   radius='sm'
                   variant={orderBy === 'rating' ? 'filled' : 'light'}
                   component={'a'}
-                  href={`/event/${event.id}/rating`}
+                  href={`/event/${event.id}/order/rating`}
                   onClick={(e) => {
-                    navigate(`/event/${event.id}/rating`);
+                    navigate(`/event/${event.id}/order/rating`);
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -107,9 +106,9 @@ export const RatingTable: React.FC<{
                   radius='sm'
                   variant={orderBy === 'avg_score' ? 'filled' : 'light'}
                   component={'a'}
-                  href={`/event/${event.id}/avg_score`}
+                  href={`/event/${event.id}/order/avg_score`}
                   onClick={(e) => {
-                    navigate(`/event/${event.id}/avg_score`);
+                    navigate(`/event/${event.id}/order/avg_score`);
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -124,9 +123,9 @@ export const RatingTable: React.FC<{
                   radius='sm'
                   variant={orderBy === 'avg_place' ? 'filled' : 'light'}
                   component={'a'}
-                  href={`/event/${event.id}/avg_place`}
+                  href={`/event/${event.id}/order/avg_place`}
                   onClick={(e) => {
-                    navigate(`/event/${event.id}/avg_place`);
+                    navigate(`/event/${event.id}/order/avg_place`);
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -167,7 +166,10 @@ export const RatingTable: React.FC<{
                   <Stack spacing={2}>
                     <Anchor
                       href={`/event/${event.id}/player/${player.id}`}
-                      onClick={() => navigate(`/event/${event.id}/player/${player.id}`)}
+                      onClick={(e) => {
+                        navigate(`/event/${event.id}/player/${player.id}`);
+                        e.preventDefault();
+                      }}
                     >
                       {player.title}
                     </Anchor>

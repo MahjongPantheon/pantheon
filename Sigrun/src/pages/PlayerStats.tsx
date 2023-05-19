@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { Redirect } from 'wouter';
+import { Redirect, useLocation } from 'wouter';
 import {
+  Anchor,
   Badge,
   Container,
   Divider,
@@ -13,15 +14,15 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import { EventTypeIcon } from '../helpers/EventTypeIcon';
-import { RatingGraph } from '../helpers/RatingGraph';
+import { EventTypeIcon } from '../components/EventTypeIcon';
+import { RatingGraph } from '../components/RatingGraph';
 import { useState } from 'react';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
-import { PlayerIcon } from '../helpers/PlayerIcon';
+import { PlayerIcon } from '../components/PlayerIcon';
 import { useMediaQuery } from '@mantine/hooks';
-import { PlayerStatsListing } from '../helpers/PlayerStatsListing';
-import { HandsGraph } from '../helpers/HandsGraph';
-import { YakuGraph } from '../helpers/YakuGraph';
+import { PlayerStatsListing } from '../components/PlayerStatsListing';
+import { HandsGraph } from '../components/HandsGraph';
+import { YakuGraph } from '../components/YakuGraph';
 
 // TODO: aggregated events
 
@@ -30,6 +31,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
 }) => {
   const winds = ['東', '南', '西', '北'];
   const api = useApi();
+  const [, navigate] = useLocation();
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const DataCmp = largeScreen ? Group : Stack;
   const theme = useMantineTheme();
@@ -82,7 +84,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Space h='md' />
       {selectedGame && (
         <>
-          <Stack>
+          <Stack spacing={0}>
             {selectedGame.tables
               // .sort((a, b) => a.place - b.place)
               .map((seat, idx) => (
@@ -110,9 +112,19 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                         {winds[idx]}
                       </Badge>
                       <PlayerIcon p={{ title: seat.title, id: seat.playerId }} />
-                      <Text weight={seat.playerId === player.id ? 'bold' : 'normal'}>
-                        {seat.title}
-                      </Text>
+                      {seat.playerId === player.id ? (
+                        <Text weight='bold'>{seat.title}</Text>
+                      ) : (
+                        <Anchor
+                          href={`/event/${eventId}/player/${seat.playerId}`}
+                          onClick={(e) => {
+                            navigate(`/event/${eventId}/player/${seat.playerId}`);
+                            e.preventDefault();
+                          }}
+                        >
+                          {seat.title}
+                        </Anchor>
+                      )}
                     </Group>
                     <Group spacing={2} grow={!largeScreen}>
                       <Badge w={65} size='lg' color='cyan' radius='sm' style={{ padding: 0 }}>
