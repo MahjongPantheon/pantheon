@@ -11,6 +11,7 @@ import {
   GetEventForEdit,
   GetEvents,
   GetEventsById,
+  GetGame,
   GetGameConfig,
   GetLastGames,
   GetPlayer,
@@ -281,6 +282,11 @@ export class ApiService {
       { eventIdList: [eventId], limit, offset, order: 'desc', orderBy: 'id' },
       this._clientConfMimir
     );
+  }
+
+  getGame(sessionHash: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetGame' });
+    return GetGame({ sessionHash: sessionHash }, this._clientConfMimir);
   }
 
   getPlayerStat(eventIdList: number[], playerId: number) {

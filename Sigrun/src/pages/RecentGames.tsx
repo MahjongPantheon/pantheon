@@ -16,6 +16,7 @@ import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
 import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
+import { Fragment } from 'react';
 
 // TODO: aggregated events
 const PERPAGE = 10;
@@ -28,7 +29,6 @@ export const RecentGames: React.FC<{
   page = page ?? '1';
   const api = useApi();
   const i18n = useI18n();
-  // const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
@@ -64,14 +64,13 @@ export const RecentGames: React.FC<{
         </h2>
         <Stack spacing={0}>
           {games?.games?.map((game, idx) => (
-            <>
+            <Fragment key={`gm_${idx}`}>
               <GameListing
                 showShareLink={true}
                 isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
                 eventId={eventId}
                 game={game}
                 players={players}
-                key={`gm_${idx}`}
                 rowStyle={{
                   padding: '16px',
                   backgroundColor:
@@ -83,7 +82,7 @@ export const RecentGames: React.FC<{
                 }}
               />
               <Divider size='xs' />
-            </>
+            </Fragment>
           ))}
         </Stack>
         <Divider size='xs' />

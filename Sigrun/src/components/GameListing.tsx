@@ -142,7 +142,7 @@ export const GameListing: React.FC<GameListingProps> = ({
                 }}
               >
                 <Button leftIcon={<IconShare size={rem(15)} />} size='xs' variant='light'>
-                  {i18n._t('Share')}
+                  {i18n._t('Game link')}
                 </Button>
               </Anchor>
             )}

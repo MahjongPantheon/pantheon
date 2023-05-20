@@ -5,6 +5,7 @@ import { RatingTable } from './pages/RatingTable';
 import { PlayerStats } from './pages/PlayerStats';
 import { RecentGames } from './pages/RecentGames';
 import './App.css';
+import { Game } from './pages/Game';
 
 export function App() {
   return (
@@ -16,7 +17,7 @@ export function App() {
       <Route path='/event/:eventId/player/:playerId' component={PlayerStats} />
       <Route path='/event/:eventId/games' component={RecentGames} />
       <Route path='/event/:eventId/games/page/:page' component={RecentGames} />
-      {/*<Route path='/event/:eventId/game/:sessionHash' component={Game} />*/}
+      <Route path='/event/:eventId/game/:sessionHash' component={Game} />
     </Switch>
   );
 }
