@@ -62,20 +62,28 @@ export const RecentGames: React.FC<{
           {event && <EventTypeIcon event={event} />}
           {event?.title} - {i18n._t('Last games')}
         </h2>
-        <Stack>
+        <Stack spacing={0}>
           {games?.games?.map((game, idx) => (
-            <GameListing
-              isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
-              eventId={eventId}
-              game={game}
-              players={players}
-              key={`gm_${idx}`}
-              rowStyle={{
-                padding: '10px',
-                backgroundColor:
-                  idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
-              }}
-            />
+            <>
+              <GameListing
+                showShareLink={true}
+                isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
+                eventId={eventId}
+                game={game}
+                players={players}
+                key={`gm_${idx}`}
+                rowStyle={{
+                  padding: '16px',
+                  backgroundColor:
+                    idx % 2
+                      ? isDark
+                        ? theme.colors.dark[7]
+                        : theme.colors.gray[1]
+                      : 'transparent',
+                }}
+              />
+              <Divider size='xs' />
+            </>
           ))}
         </Stack>
         <Divider size='xs' />

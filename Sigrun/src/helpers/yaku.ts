@@ -239,6 +239,12 @@ export const yakuList = [
   },
 ];
 
+export const yakuNameMap = (i18n: I18nService) =>
+  Object.values(yakuList).reduce((acc, y) => {
+    acc.set(y.id, y.name(i18n));
+    return acc;
+  }, new Map<YakuId, string>());
+
 export const yakuWithPao = [
   {
     id: YakuId.DAISANGEN,

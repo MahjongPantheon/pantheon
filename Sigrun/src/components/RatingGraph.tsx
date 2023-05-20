@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Line as LineGraph } from 'react-chartjs-2';
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
@@ -23,16 +23,22 @@ export const RatingGraph = ({
   playerId,
   playerStats,
   onSelectGame,
+  lastSelectionX,
+  setLastSelectionX,
+  lastSelectionHash,
+  setLastSelectionHash,
 }: {
   playerId: number;
   playerStats?: PlayersGetPlayerStatsResponse;
   onSelectGame: (game: SessionHistoryResultTable) => void;
+  lastSelectionX: number | null;
+  setLastSelectionX: (x: number | null) => void;
+  lastSelectionHash: string | null;
+  setLastSelectionHash: (hash: string | null) => void;
 }) => {
   const i18n = useI18n();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
-  const [lastSelectionX, setLastSelectionX] = useState<number | null>(null);
-  const [lastSelectionHash, setLastSelectionHash] = useState<string | null>(null);
 
   const games = playerStats?.scoreHistory;
   const points = (playerStats?.ratingHistory ?? []).map((item, idx) => ({

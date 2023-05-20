@@ -11,8 +11,9 @@ import {
   LinearScale,
   Title,
 } from 'chart.js';
-import { YakuId, yakuList } from '../helpers/yaku';
+import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
 import { YakuStat } from '../clients/proto/atoms.pb';
+import { useMemo } from 'react';
 ChartJS.register(Tooltip, BarElement, BarController, CategoryScale, LinearScale, Title);
 ChartJS.defaults.font.size = 16;
 ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
@@ -26,9 +27,8 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
     return null;
   }
 
-  const yakuNames = {} as Record<YakuId, string>;
+  const yakuNameMap = useMemo(() => yakuNameMapGen(i18n), []);
   const yaku = Object.values(yakuList).reduce((acc, y) => {
-    yakuNames[y.id] = y.name(i18n);
     acc.set(y.id, 0);
     return acc;
   }, new Map<YakuId, number>());
@@ -55,7 +55,7 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
 
   const yakuStats = [...yaku.entries()]
     .map(([key, value]) => {
-      return { x: value, y: yakuNames[key] };
+      return { x: value, y: yakuNameMap.get(key) };
     })
     .filter((v) => v.x > 0);
 

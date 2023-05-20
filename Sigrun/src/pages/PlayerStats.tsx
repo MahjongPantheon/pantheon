@@ -3,6 +3,7 @@ import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { Redirect, useLocation } from 'wouter';
 import {
+  ActionIcon,
   Anchor,
   Badge,
   Container,
@@ -23,6 +24,8 @@ import { useMediaQuery } from '@mantine/hooks';
 import { PlayerStatsListing } from '../components/PlayerStatsListing';
 import { HandsGraph } from '../components/HandsGraph';
 import { YakuGraph } from '../components/YakuGraph';
+import { useI18n } from '../hooks/i18n';
+import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
 
 // TODO: aggregated events
 
@@ -31,11 +34,15 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
 }) => {
   const winds = ['東', '南', '西', '北'];
   const api = useApi();
+  const i18n = useI18n();
   const [, navigate] = useLocation();
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const DataCmp = largeScreen ? Group : Stack;
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
+
+  const [lastSelectionX, setLastSelectionX] = useState<number | null>(null);
+  const [lastSelectionHash, setLastSelectionHash] = useState<string | null>(null);
   const [selectedGame, setSelectedGame] = useState<SessionHistoryResultTable | null>(null);
   const [events] = useIsomorphicState(
     [],
@@ -74,6 +81,10 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Space h='md' />
       {!import.meta.env.SSR && (
         <RatingGraph
+          lastSelectionHash={lastSelectionHash}
+          lastSelectionX={lastSelectionX}
+          setLastSelectionHash={setLastSelectionHash}
+          setLastSelectionX={setLastSelectionX}
           playerStats={playerStats}
           onSelectGame={setSelectedGame}
           playerId={parseInt(playerId, 10)}
@@ -84,6 +95,74 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Space h='md' />
       {selectedGame && (
         <>
+          <Group position='apart'>
+            <Anchor
+              href={`/event/${eventId}/game/${selectedGame.tables[0].sessionHash}`}
+              onClick={(e) => {
+                navigate(`/event/${eventId}/game/${selectedGame.tables[0].sessionHash}`);
+                e.preventDefault();
+              }}
+            >
+              {i18n._t('View selected game details')}
+            </Anchor>
+            <Group>
+              <ActionIcon
+                size='lg'
+                color='blue'
+                variant='filled'
+                title={i18n._t('Previous game')}
+                disabled={lastSelectionX === null || lastSelectionX < 2}
+                onClick={() => {
+                  if (lastSelectionX !== null) {
+                    setLastSelectionX((x) => {
+                      const newSelection = x ? x - 1 : 1;
+                      setSelectedGame(playerStats?.scoreHistory?.[newSelection - 1] ?? null);
+                      return newSelection;
+                    });
+                  }
+                }}
+              >
+                <IconChevronLeft size='1.5rem' />
+              </ActionIcon>
+              <ActionIcon
+                size='lg'
+                color='blue'
+                variant='filled'
+                title={i18n._t('Next game')}
+                disabled={
+                  lastSelectionX === null ||
+                  (playerStats?.scoreHistory && lastSelectionX >= playerStats?.scoreHistory?.length)
+                }
+                onClick={() => {
+                  if (lastSelectionX !== null) {
+                    setLastSelectionX((x) => {
+                      const newSelection = x ? x + 1 : 1;
+                      setSelectedGame(playerStats?.scoreHistory?.[newSelection - 1] ?? null);
+                      return newSelection;
+                    });
+                  }
+                }}
+              >
+                <IconChevronRight size='1.5rem' />
+              </ActionIcon>
+              <Space w='xl' />
+              <ActionIcon
+                size='lg'
+                color='red'
+                variant='filled'
+                title={i18n._t('Close game preview')}
+                onClick={() => {
+                  setLastSelectionX(null);
+                  setSelectedGame(null);
+                }}
+              >
+                <IconX size='1.5rem' />
+              </ActionIcon>
+            </Group>
+          </Group>
+          <Space h='md' />
+          <Divider size='xs' />
+          <Space h='md' />
           <Stack spacing={0}>
             {selectedGame.tables
               // .sort((a, b) => a.place - b.place)
