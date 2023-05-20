@@ -26,6 +26,7 @@ import { HandsGraph } from '../components/HandsGraph';
 import { YakuGraph } from '../components/YakuGraph';
 import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
+import { EventTopNavigation } from '../components/EventTopNavigation';
 
 // TODO: aggregated events
 
@@ -73,10 +74,13 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   return (
     <Container>
       <h2>{player.title}</h2>
-      <h4 style={{ display: 'flex', gap: '20px' }}>
-        {event && <EventTypeIcon size='sm' iconSize={14} event={event} />}
-        {event?.title}
-      </h4>
+      <Group>
+        <h4 style={{ display: 'flex', gap: '20px', maxWidth: 'calc(100% - 200px)' }}>
+          {event && <EventTypeIcon size='sm' iconSize={14} event={event} />}
+          {event?.title}
+        </h4>
+        <EventTopNavigation eventId={eventId} size='xs' />
+      </Group>
       <Divider size='xs' />
       <Space h='md' />
       {!import.meta.env.SSR && (

@@ -2,11 +2,12 @@ import * as React from 'react';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { Redirect } from 'wouter';
-import { Container } from '@mantine/core';
+import { Container, Divider, Group, Space } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
 import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
+import { EventTopNavigation } from '../components/EventTopNavigation';
 
 export const Game: React.FC<{
   params: {
@@ -38,14 +39,22 @@ export const Game: React.FC<{
     return acc;
   }, {} as Record<number, Player>);
 
+  // TODO: fix universal navigation markup for small/large screens
+
   return (
     game?.game &&
     event && (
       <Container>
-        <h2 style={{ display: 'flex', gap: '20px' }}>
-          {event && <EventTypeIcon event={event} />}
-          {event?.title} - {i18n._t('View game')}
-        </h2>
+        <Group position='apart' grow>
+          <h2 style={{ display: 'flex', flexGrow: 1, gap: '20px', maxWidth: 'calc(100% - 200px)' }}>
+            {event && <EventTypeIcon event={event} />}
+            {event?.title} - {i18n._t('View game')}
+          </h2>
+          <EventTopNavigation eventId={eventId} />
+        </Group>
+        <Space h='md' />
+        <Divider size='xs' />
+        <Space h='md' />
         <GameListing
           showShareLink={false}
           isOnline={event.type === EventType.EVENT_TYPE_ONLINE}

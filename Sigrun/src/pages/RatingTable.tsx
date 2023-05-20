@@ -19,6 +19,7 @@ import { PlayerIcon } from '../components/PlayerIcon';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
+import { EventTopNavigation } from '../components/EventTopNavigation';
 
 // TODO: aggregated events
 // TODO: superadmin flag to show prefinished results
@@ -66,10 +67,16 @@ export const RatingTable: React.FC<{
   return (
     event && (
       <Container>
-        <h2 style={{ display: 'flex', gap: '20px' }}>
-          {event && <EventTypeIcon event={event} />}
-          {event?.title}
-        </h2>
+        <Group position='apart'>
+          <h2 style={{ display: 'flex', gap: '20px' }}>
+            {event && <EventTypeIcon event={event} />}
+            {event?.title} - {i18n._t('Rating table')}
+          </h2>
+          <EventTopNavigation eventId={eventId} />
+        </Group>
+        <Space h='md' />
+        <Divider size='xs' />
+        <Space h='md' />
         <DataCmp grow={largeScreen ? true : undefined}>
           <Stack>
             <DataCmp position='right' spacing='md'>
