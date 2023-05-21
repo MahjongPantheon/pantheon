@@ -2,6 +2,7 @@ import {
   AppShell,
   ColorScheme,
   ColorSchemeProvider,
+  Footer,
   MantineProvider,
   useMantineTheme,
 } from '@mantine/core';
@@ -14,6 +15,8 @@ import { StorageStrategy } from '../../Common/storage';
 import './App.css';
 import { useLocalStorage } from '@mantine/hooks';
 import { useCallback, useState, ReactNode } from 'react';
+import { globalsCtx } from './hooks/globals';
+import { AppFooter } from './AppFooter';
 
 export function Layout({
   children,
@@ -22,8 +25,6 @@ export function Layout({
   children: ReactNode;
   storageStrategy: StorageStrategy;
 }) {
-  const links = [{ label: 'Test', link: 'http://kek.com' }];
-
   const theme = useMantineTheme();
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
@@ -36,6 +37,8 @@ export function Layout({
   const storage = useStorage();
   const i18n = useI18n();
   const dark = colorScheme === 'dark';
+
+  const [eventId, setEventId] = useState<number | null>(null);
 
   // Small kludge to forcefully rerender after language change
   const [, updateState] = useState({});
@@ -62,30 +65,39 @@ export function Layout({
     >
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>
-          <StorageProvider strategy={storageStrategy}>
-            <I18nProvider>
-              <ApiProvider>
-                <AppShell
-                  padding='md'
-                  header={
-                    <AppHeader
-                      links={links}
-                      dark={dark}
-                      toggleColorScheme={toggleColorScheme}
-                      saveLang={saveLang}
-                    />
-                  }
-                  styles={{
-                    main: {
-                      background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
-                    },
-                  }}
-                >
-                  {children}
-                </AppShell>
-              </ApiProvider>
-            </I18nProvider>
-          </StorageProvider>
+          <globalsCtx.Provider value={{ eventId, setEventId }}>
+            <StorageProvider strategy={storageStrategy}>
+              <I18nProvider>
+                <ApiProvider>
+                  <AppShell
+                    padding='md'
+                    header={<AppHeader />}
+                    footer={
+                      <Footer
+                        height={60}
+                        bg={theme.primaryColor}
+                        fixed={false}
+                        style={{ position: 'static' }}
+                      >
+                        <AppFooter
+                          dark={dark}
+                          toggleColorScheme={toggleColorScheme}
+                          saveLang={saveLang}
+                        />
+                      </Footer>
+                    }
+                    styles={{
+                      main: {
+                        background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
+                      },
+                    }}
+                  >
+                    {children}
+                  </AppShell>
+                </ApiProvider>
+              </I18nProvider>
+            </StorageProvider>
+          </globalsCtx.Provider>
         </AnalyticsProvider>
       </ColorSchemeProvider>
     </MantineProvider>

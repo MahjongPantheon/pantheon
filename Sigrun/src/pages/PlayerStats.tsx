@@ -17,7 +17,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { RatingGraph } from '../components/RatingGraph';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
 import { PlayerIcon } from '../components/PlayerIcon';
 import { useMediaQuery } from '@mantine/hooks';
@@ -26,7 +26,7 @@ import { HandsGraph } from '../components/HandsGraph';
 import { YakuGraph } from '../components/YakuGraph';
 import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
-import { EventTopNavigation } from '../components/EventTopNavigation';
+import { globalsCtx } from '../hooks/globals';
 
 // TODO: aggregated events
 
@@ -37,6 +37,10 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   const api = useApi();
   const i18n = useI18n();
   const [, navigate] = useLocation();
+  const globals = useContext(globalsCtx);
+  useEffect(() => {
+    globals.setEventId(parseInt(eventId, 10));
+  }, [eventId]);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const DataCmp = largeScreen ? Group : Stack;
   const theme = useMantineTheme();
@@ -75,11 +79,10 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
     <Container>
       <h2>{player.title}</h2>
       <Group>
-        <h4 style={{ display: 'flex', gap: '20px', maxWidth: 'calc(100% - 200px)' }}>
+        <h4 style={{ display: 'flex', gap: '20px' }}>
           {event && <EventTypeIcon size='sm' iconSize={14} event={event} />}
           {event?.title}
         </h4>
-        <EventTopNavigation eventId={eventId} size='xs' />
       </Group>
       <Divider size='xs' />
       <Space h='md' />

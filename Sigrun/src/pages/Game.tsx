@@ -2,12 +2,13 @@ import * as React from 'react';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { Redirect } from 'wouter';
-import { Container, Divider, Group, Space } from '@mantine/core';
+import { Container, Divider, Space } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
 import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
-import { EventTopNavigation } from '../components/EventTopNavigation';
+import { useContext, useEffect } from 'react';
+import { globalsCtx } from '../hooks/globals';
 
 export const Game: React.FC<{
   params: {
@@ -17,6 +18,11 @@ export const Game: React.FC<{
 }> = ({ params: { eventId, sessionHash } }) => {
   const api = useApi();
   const i18n = useI18n();
+  const globals = useContext(globalsCtx);
+  useEffect(() => {
+    globals.setEventId(parseInt(eventId, 10));
+  }, [eventId]);
+
   const [events] = useIsomorphicState(
     [],
     'EventInfo_event_' + eventId,
@@ -45,13 +51,10 @@ export const Game: React.FC<{
     game?.game &&
     event && (
       <Container>
-        <Group position='apart' grow>
-          <h2 style={{ display: 'flex', flexGrow: 1, gap: '20px', maxWidth: 'calc(100% - 200px)' }}>
-            {event && <EventTypeIcon event={event} />}
-            {event?.title} - {i18n._t('View game')}
-          </h2>
-          <EventTopNavigation eventId={eventId} />
-        </Group>
+        <h2 style={{ display: 'flex', gap: '20px' }}>
+          {event && <EventTypeIcon event={event} />}
+          {event?.title} - {i18n._t('View game')}
+        </h2>
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />

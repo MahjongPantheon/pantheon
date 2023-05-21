@@ -19,7 +19,8 @@ import { PlayerIcon } from '../components/PlayerIcon';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
-import { EventTopNavigation } from '../components/EventTopNavigation';
+import { useContext, useEffect } from 'react';
+import { globalsCtx } from '../hooks/globals';
 
 // TODO: aggregated events
 // TODO: superadmin flag to show prefinished results
@@ -41,6 +42,10 @@ export const RatingTable: React.FC<{
   }[orderBy] as 'asc' | 'desc';
   const api = useApi();
   const i18n = useI18n();
+  const globals = useContext(globalsCtx);
+  useEffect(() => {
+    globals.setEventId(parseInt(eventId, 10));
+  }, [eventId]);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
@@ -67,30 +72,19 @@ export const RatingTable: React.FC<{
   return (
     event && (
       <Container>
-        <Group position='apart'>
-          <h2 style={{ display: 'flex', gap: '20px' }}>
-            {event && <EventTypeIcon event={event} />}
-            {event?.title} - {i18n._t('Rating table')}
-          </h2>
-          <EventTopNavigation eventId={eventId} />
-        </Group>
+        <h2 style={{ display: 'flex', gap: '20px' }}>
+          {event && <EventTypeIcon event={event} />}
+          {event?.title} - {i18n._t('Rating table')}
+        </h2>
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
         <DataCmp grow={largeScreen ? true : undefined}>
           <Stack>
             <DataCmp position='right' spacing='md'>
-              {largeScreen && (
-                <Badge
-                  size='lg'
-                  color='blue'
-                  radius='sm'
-                  variant='light'
-                  style={{ backgroundColor: 'transparent' }}
-                >
-                  {i18n._t('Player name')}
-                </Badge>
-              )}
+              <Text size='sm' c='dimmed'>
+                {i18n._t('Legend / sorting: ')}
+              </Text>
               <Group spacing='md' grow={!largeScreen}>
                 <Badge
                   size='lg'

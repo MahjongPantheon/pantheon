@@ -1,19 +1,29 @@
 import {
   createStyles,
   Header,
-  Menu,
   Group,
-  Center,
-  Burger,
   Container,
   rem,
+  Anchor,
+  Button,
   ActionIcon,
+  Menu,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown, IconLanguageHiragana, IconMoonStars, IconSun } from '@tabler/icons-react';
-import rhedaIco from '../assets/ico/rhedaico.png';
-import { FlagEn, FlagRu } from './helpers/flags';
+import { useMediaQuery } from '@mantine/hooks';
+import {
+  IconChartBar,
+  IconChevronDown,
+  IconDeviceMobileShare,
+  IconList,
+  IconOlympics,
+} from '@tabler/icons-react';
 import { useI18n } from './hooks/i18n';
+import { useContext } from 'react';
+import { useLocation } from 'wouter';
+import { globalsCtx } from './hooks/globals';
+import * as React from 'react';
+
+const HEADER_HEIGHT = rem(60);
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -29,18 +39,6 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  links: {
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
-  burger: {
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
   },
 
   link: {
@@ -64,101 +62,119 @@ const useStyles = createStyles((theme) => ({
   linkLabel: {
     marginRight: rem(5),
   },
+
+  dropdown: {
+    position: 'absolute',
+    top: HEADER_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopWidth: 0,
+    overflow: 'hidden',
+
+    [theme.fn.largerThan('sm')]: {
+      display: 'none',
+    },
+  },
 }));
 
-interface AppHeaderProps {
-  links: {
-    link: string;
-    label: string;
-    links?: { link: string; label: string }[];
-  }[];
-  dark: boolean;
-  toggleColorScheme: () => void;
-  saveLang: (lang: string) => void;
-}
-
-export function AppHeader({ links, dark, toggleColorScheme, saveLang }: AppHeaderProps) {
-  const [opened, { toggle }] = useDisclosure(false);
+export function AppHeader() {
   const { classes } = useStyles();
   const i18n = useI18n();
-
-  const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
-    ));
-
-    if (menuItems) {
-      return (
-        <Menu key={link.label} trigger='hover' transitionProps={{ exitDuration: 0 }} withinPortal>
-          <Menu.Target>
-            <a
-              href={link.link}
-              className={classes.link}
-              onClick={(event) => event.preventDefault()}
-            >
-              <Center>
-                <span className={classes.linkLabel}>{link.label}</span>
-                <IconChevronDown size='0.9rem' stroke={1.5} />
-              </Center>
-            </a>
-          </Menu.Target>
-          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
-        </Menu>
-      );
-    }
-
-    return (
-      <a
-        key={link.label}
-        href={link.link}
-        className={classes.link}
-        onClick={(event) => event.preventDefault()}
-      >
-        {link.label}
-      </a>
-    );
-  });
+  const largeScreen = useMediaQuery('(min-width: 768px)');
+  const [, navigate] = useLocation();
+  const globals = useContext(globalsCtx);
 
   return (
-    <Header height={56} className={classes.header} mb={120}>
+    <Header height={HEADER_HEIGHT} className={classes.header} mb={120}>
       <Container>
         <div className={classes.inner}>
-          <img src={rhedaIco} alt='Rheda' height='28' />
-          <Group spacing={5} className={classes.links}>
-            {items}
-          </Group>
           <Group>
-            <ActionIcon
-              variant='filled'
-              color={dark ? 'grape' : 'indigo'}
-              onClick={() => toggleColorScheme()}
-              title={i18n._t('Toggle color scheme')}
+            <Anchor
+              href={`/`}
+              onClick={(e) => {
+                navigate(`/`);
+                e.preventDefault();
+              }}
             >
-              {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
-            </ActionIcon>
-            <Menu shadow='md' width={200}>
-              <Menu.Target>
-                <ActionIcon color='green' variant='filled' title={i18n._t('Language')}>
-                  <IconLanguageHiragana size='1.1rem' />
+              {largeScreen ? (
+                <Button
+                  className={classes.link}
+                  leftIcon={<IconList size={20} />}
+                  title={i18n._t('To events list')}
+                >
+                  {i18n._t('Events list')}
+                </Button>
+              ) : (
+                <ActionIcon
+                  title={i18n._t('To events list')}
+                  variant='filled'
+                  color='green'
+                  size='lg'
+                >
+                  <IconList size='1.5rem' />
                 </ActionIcon>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item onClick={() => saveLang('en')} icon={<FlagEn width={24} />}>
-                  en
-                </Menu.Item>
-                <Menu.Item onClick={() => saveLang('ru')} icon={<FlagRu width={24} />}>
-                  ru
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+              )}
+            </Anchor>
+            <Anchor href={import.meta.env.VITE_TYR_URL} target='_blank'>
+              {largeScreen ? (
+                <Button
+                  className={classes.link}
+                  leftIcon={<IconDeviceMobileShare size={20} />}
+                  title={i18n._t('Open assitant')}
+                >
+                  {i18n._t('Open assistant')}
+                </Button>
+              ) : (
+                <ActionIcon
+                  title={i18n._t('Open assistant')}
+                  variant='filled'
+                  color='orange'
+                  size='lg'
+                >
+                  <IconDeviceMobileShare size='1.5rem' />
+                </ActionIcon>
+              )}
+            </Anchor>
           </Group>
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size='sm'
-            color='#fff'
-          />
+
+          {globals.eventId && (
+            <Group spacing={5}>
+              <Menu shadow='md'>
+                <Menu.Target>
+                  <Button
+                    className={classes.link}
+                    leftIcon={<IconChevronDown size={20} />}
+                    title={i18n._t('Event contents')}
+                  >
+                    {i18n._t('Event contents')}
+                  </Button>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/event/${globals.eventId}/games`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconOlympics size={24} />}
+                  >
+                    {i18n._t('Recent games')}
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/event/${globals.eventId}/order/rating`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconChartBar size={24} />}
+                  >
+                    {i18n._t('Rating table')}
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
+          )}
         </div>
       </Container>
     </Header>
