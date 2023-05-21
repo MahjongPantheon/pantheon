@@ -21,6 +21,7 @@ import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useRemarkSync } from 'react-remark';
 import strip from 'strip-markdown';
 import { renderToString } from 'react-dom/server';
+import { Filler } from '../components/Filler';
 
 let stripHtml: (dirtyString: string) => string;
 if (import.meta.env.SSR) {
@@ -113,6 +114,7 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
           total={Math.ceil((events?.total ?? 0) / PERPAGE)}
         />
       </Center>
+      <Filler h='100px' />
     </Container>
   );
 };

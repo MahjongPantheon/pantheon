@@ -1,9 +1,19 @@
-import { Avatar, MantineColor } from '@mantine/core';
+import { Avatar, MantineColor, MantineSize } from '@mantine/core';
 import { crc32 } from '@foxglove/crc';
 
-export const PlayerIcon = ({ p }: { p: { title: string; id: number } }) => {
+export const PlayerIcon = ({
+  p,
+  size,
+  radius,
+}: {
+  size?: MantineSize;
+  radius?: MantineSize;
+  p: { title: string; id: number };
+}) => {
+  size = size ?? 'md';
+  radius = radius ?? 'xl';
   return (
-    <Avatar variant='outline' color={makeColor(p.title)} radius='xl' size='md' title={`#${p.id}`}>
+    <Avatar color={makeColor(p.title)} radius={radius} size={size} title={`#${p.id}`}>
       {makeInitials(p.title)}
     </Avatar>
   );

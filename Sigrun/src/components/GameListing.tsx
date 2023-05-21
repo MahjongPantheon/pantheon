@@ -49,26 +49,48 @@ export const GameListing: React.FC<GameListingProps> = ({
   return (
     <DataCmp
       grow={largeScreen ? true : undefined}
-      style={{ ...rowStyle, alignItems: 'flex-start' }}
+      style={{ ...rowStyle, alignItems: 'flex-start', position: 'relative' }}
     >
+      <div style={{ position: 'absolute', right: '16px' }}>
+        {showShareLink && (
+          <Anchor
+            href={`/event/${eventId}/game/${game.sessionHash}`}
+            onClick={(e) => {
+              navigate(`/event/${eventId}/game/${game.sessionHash}`);
+              e.preventDefault();
+            }}
+          >
+            <Button leftIcon={<IconShare size={rem(15)} />} size='xs' variant='light'>
+              {i18n._t('Game link')}
+            </Button>
+          </Anchor>
+        )}
+      </div>
       {/* Players list */}
-      <Stack style={{ flexGrow: 0 }}>
+      <Stack style={{ flexGrow: 0, minWidth: '300px' }}>
         <Text>{game.date}</Text>
         {game.finalResults.map((result, idx) => (
-          <Group key={`pl_${idx}`}>
+          <Group key={`pl_${idx}`} style={{ alignItems: 'flex-start' }}>
             <Badge
-              w={50}
-              size='xl'
+              w={54}
+              pr={0}
+              pl={5}
+              size='lg'
               color='blue'
-              radius='sm'
-              style={{ padding: 0, fontSize: '22px' }}
+              radius='xl'
+              style={{ fontSize: '16px' }}
+              rightSection={
+                players[result.playerId]?.title && (
+                  <PlayerIcon
+                    size='sm'
+                    p={{ title: players[result.playerId]?.title, id: result.playerId }}
+                  />
+                )
+              }
             >
               {winds[idx]}
             </Badge>
-            <Group>
-              {players[result.playerId]?.title && (
-                <PlayerIcon p={{ title: players[result.playerId]?.title, id: result.playerId }} />
-              )}
+            <Group style={{ maxWidth: '230px' }}>
               <Stack spacing={0}>
                 <Anchor
                   href={`/event/${eventId}/player/${result.playerId}`}
@@ -110,43 +132,26 @@ export const GameListing: React.FC<GameListingProps> = ({
             </a>
           </>
         )}
-        <Group grow>
-          <Group spacing={2}>
-            <Badge size='lg' color='red' radius='sm' variant='outline'>
-              {i18n._t('Ron: %1', [outcomes.ron || '0'])}
+        <Group spacing={2} style={{ marginRight: largeScreen ? '200px' : 0 }}>
+          <Badge h={30} size='md' color='red' radius='sm' variant='outline'>
+            {i18n._t('Ron: %1', [outcomes.ron || '0'])}
+          </Badge>
+          <Badge h={30} size='md' color='grape' radius='sm' variant='outline'>
+            {i18n._t('Tsumo: %1', [outcomes.tsumo || '0'])}
+          </Badge>
+          <Badge h={30} size='md' color='cyan' radius='sm' variant='outline'>
+            {i18n._t('Draw: %1', [outcomes.draw || '0'])}
+          </Badge>
+          {outcomes.chombo > 0 && (
+            <Badge h={30} size='md' color='dark' radius='sm' variant='outline'>
+              {i18n._t('Chombo: %1', [outcomes.chombo])}
             </Badge>
-            <Badge size='lg' color='grape' radius='sm' variant='outline'>
-              {i18n._t('Tsumo: %1', [outcomes.tsumo || '0'])}
+          )}
+          {outcomes.nagashi > 0 && (
+            <Badge h={30} size='md' color='indigo' radius='sm' variant='outline'>
+              {i18n._t('Nagashi: %1', [outcomes.nagashi])}
             </Badge>
-            <Badge size='lg' color='cyan' radius='sm' variant='outline'>
-              {i18n._t('Draw: %1', [outcomes.draw || '0'])}
-            </Badge>
-            {outcomes.chombo > 0 && (
-              <Badge size='lg' color='dark' radius='sm' variant='outline'>
-                {i18n._t('Chombo: %1', [outcomes.chombo])}
-              </Badge>
-            )}
-            {outcomes.nagashi > 0 && (
-              <Badge size='lg' color='indigo' radius='sm' variant='outline'>
-                {i18n._t('Nagashi: %1', [outcomes.nagashi])}
-              </Badge>
-            )}
-          </Group>
-          <Group position='right'>
-            {showShareLink && (
-              <Anchor
-                href={`/event/${eventId}/game/${game.sessionHash}`}
-                onClick={(e) => {
-                  navigate(`/event/${eventId}/game/${game.sessionHash}`);
-                  e.preventDefault();
-                }}
-              >
-                <Button leftIcon={<IconShare size={rem(15)} />} size='xs' variant='light'>
-                  {i18n._t('Game link')}
-                </Button>
-              </Anchor>
-            )}
-          </Group>
+          )}
         </Group>
         <List>
           {makeLog(game.rounds, players, i18n).map((item, idxLog) => (

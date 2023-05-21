@@ -19,6 +19,8 @@ import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { Fragment } from 'react';
 import { EventTopNavigation } from '../components/EventTopNavigation';
+import { Filler } from '../components/Filler';
+import { useMediaQuery } from '@mantine/hooks';
 
 // TODO: aggregated events
 const PERPAGE = 10;
@@ -31,6 +33,7 @@ export const RecentGames: React.FC<{
   page = page ?? '1';
   const api = useApi();
   const i18n = useI18n();
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
@@ -97,11 +100,13 @@ export const RecentGames: React.FC<{
         <Space h='md' />
         <Center>
           <Pagination
+            size={largeScreen ? 'md' : 'sm'}
             value={parseInt(page, 10)}
             onChange={(p) => navigate(`/event/${eventId}/games/page/${p}`)}
             total={Math.ceil((games?.totalGames ?? 0) / PERPAGE)}
           />
         </Center>
+        <Filler h='100px' />
       </Container>
     )
   );
