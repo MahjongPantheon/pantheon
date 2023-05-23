@@ -30,7 +30,7 @@ export const useEvent = (eventId: string | null) => {
         hasSeries: events?.[0]?.hasSeries,
       });
     }
-  }, [eventId]);
+  }, [eventId, events]);
 
   return events?.[0] ?? null;
 };

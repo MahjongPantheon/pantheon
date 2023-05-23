@@ -11,16 +11,17 @@ import {
 } from '@mantine/core';
 import {
   IconChartBar,
+  IconChartLine,
   IconChevronDown,
   IconDeviceMobileShare,
   IconList,
   IconNotes,
   IconOlympics,
 } from '@tabler/icons-react';
-import { useI18n } from './hooks/i18n';
+import { useI18n } from '../hooks/i18n';
 import { useContext } from 'react';
 import { useLocation } from 'wouter';
-import { globalsCtx } from './hooks/globals';
+import { globalsCtx } from '../hooks/globals';
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -181,6 +182,17 @@ export function AppHeader() {
                   >
                     {i18n._pt('Event menu', 'Rating table')}
                   </Menu.Item>
+                  {globals.data.hasSeries && (
+                    <Menu.Item
+                      onClick={(e) => {
+                        navigate(`/event/${globals.data.eventId}/seriesRating`);
+                        e.preventDefault();
+                      }}
+                      icon={<IconChartLine size={24} />}
+                    >
+                      {i18n._pt('Event menu', 'Series rating')}
+                    </Menu.Item>
+                  )}
                 </Menu.Dropdown>
               </Menu>
             </Group>

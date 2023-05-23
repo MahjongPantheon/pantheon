@@ -6,7 +6,7 @@ import {
   MantineProvider,
   useMantineTheme,
 } from '@mantine/core';
-import { AppHeader } from './AppHeader';
+import { AppHeader } from './components/AppHeader';
 import { AnalyticsProvider } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
 import { I18nProvider, useI18n } from './hooks/i18n';
@@ -16,7 +16,7 @@ import './App.css';
 import { useLocalStorage } from '@mantine/hooks';
 import { useCallback, useState, ReactNode } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
-import { AppFooter } from './AppFooter';
+import { AppFooter } from './components/AppFooter';
 
 export function Layout({
   children,

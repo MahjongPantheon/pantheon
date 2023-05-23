@@ -4,6 +4,7 @@ import { EventInfo } from './pages/EventInfo';
 import { RatingTable } from './pages/RatingTable';
 import { PlayerStats } from './pages/PlayerStats';
 import { RecentGames } from './pages/RecentGames';
+import { SeriesRating } from './pages/SeriesRating';
 import './App.css';
 import { Game } from './pages/Game';
 
@@ -18,6 +19,7 @@ export function App() {
       <Route path='/event/:eventId/games' component={RecentGames} />
       <Route path='/event/:eventId/games/page/:page' component={RecentGames} />
       <Route path='/event/:eventId/game/:sessionHash' component={Game} />
+      <Route path='/event/:eventId/seriesRating' component={SeriesRating} />
     </Switch>
   );
 }

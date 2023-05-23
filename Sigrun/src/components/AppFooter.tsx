@@ -5,11 +5,11 @@ import {
   IconMoonStars,
   IconSun,
 } from '@tabler/icons-react';
-import { FlagEn, FlagRu } from './helpers/flags';
-import { useI18n } from './hooks/i18n';
+import { FlagEn, FlagRu } from '../helpers/flags';
+import { useI18n } from '../hooks/i18n';
 import * as React from 'react';
 import { useContext } from 'react';
-import { globalsCtx } from './hooks/globals';
+import { globalsCtx } from '../hooks/globals';
 import { useMediaQuery } from '@mantine/hooks';
 
 interface AppFooterProps {
@@ -49,6 +49,15 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
               <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/order/rating`}>
                 {i18n._t('Rating table')}
               </Anchor>
+              {globals.data.hasSeries && (
+                <Anchor
+                  color='white'
+                  size='xs'
+                  href={`/event/${globals.data.eventId}/seriesRating`}
+                >
+                  {i18n._t('Series rating')}
+                </Anchor>
+              )}
             </Stack>
           </Group>
           <Group position='right' mt={0}>

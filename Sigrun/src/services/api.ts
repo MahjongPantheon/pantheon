@@ -13,6 +13,7 @@ import {
   GetEventsById,
   GetGame,
   GetGameConfig,
+  GetGamesSeries,
   GetLastGames,
   GetPlayer,
   GetPlayerStats,
@@ -287,6 +288,11 @@ export class ApiService {
   getGame(sessionHash: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetGame' });
     return GetGame({ sessionHash: sessionHash }, this._clientConfMimir);
+  }
+
+  getGameSeries(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetGameSeries' });
+    return GetGamesSeries({ eventId }, this._clientConfMimir);
   }
 
   getPlayerStat(eventIdList: number[], playerId: number) {
