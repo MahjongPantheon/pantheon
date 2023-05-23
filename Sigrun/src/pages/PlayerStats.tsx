@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { Redirect, useLocation } from 'wouter';
+import { useLocation } from 'wouter';
 import {
   ActionIcon,
   Anchor,
@@ -17,7 +17,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { RatingGraph } from '../components/RatingGraph';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
 import { PlayerIcon } from '../components/PlayerIcon';
 import { useMediaQuery } from '@mantine/hooks';
@@ -26,7 +26,7 @@ import { HandsGraph } from '../components/HandsGraph';
 import { YakuGraph } from '../components/YakuGraph';
 import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
-import { globalsCtx } from '../hooks/globals';
+import { useEvent } from '../hooks/useEvent';
 
 // TODO: aggregated events
 
@@ -37,10 +37,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   const api = useApi();
   const i18n = useI18n();
   const [, navigate] = useLocation();
-  const globals = useContext(globalsCtx);
-  useEffect(() => {
-    globals.setEventId(parseInt(eventId, 10));
-  }, [eventId]);
+  const event = useEvent(eventId);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const DataCmp = largeScreen ? Group : Stack;
   const theme = useMantineTheme();
@@ -49,12 +46,6 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   const [lastSelectionX, setLastSelectionX] = useState<number | null>(null);
   const [lastSelectionHash, setLastSelectionHash] = useState<string | null>(null);
   const [selectedGame, setSelectedGame] = useState<SessionHistoryResultTable | null>(null);
-  const [events] = useIsomorphicState(
-    [],
-    'PlayerStats_event_' + eventId,
-    () => api.getEventsById([parseInt(eventId, 10)]),
-    [eventId]
-  );
 
   const [player] = useIsomorphicState(
     [],
@@ -70,10 +61,9 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
     [eventId, playerId]
   );
 
-  if (!events || !player) {
-    return <Redirect to='/' />;
+  if (!event || !player) {
+    return null;
   }
-  const [event] = events;
 
   return (
     <Container>

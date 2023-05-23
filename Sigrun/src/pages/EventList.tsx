@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useApi } from '../hooks/api';
-import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import {
   Center,
   Container,
@@ -16,12 +14,14 @@ import {
 } from '@mantine/core';
 import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
-import { CSSProperties, useContext, useEffect } from 'react';
+import { CSSProperties } from 'react';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useRemarkSync } from 'react-remark';
 import strip from 'strip-markdown';
 import { renderToString } from 'react-dom/server';
-import { globalsCtx } from '../hooks/globals';
+import { useEvent } from '../hooks/useEvent';
+import { useIsomorphicState } from '../hooks/useIsomorphicState';
+import { useApi } from '../hooks/api';
 
 let stripHtml: (dirtyString: string) => string;
 if (import.meta.env.SSR) {
@@ -43,10 +43,7 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [, navigate] = useLocation();
-  const globals = useContext(globalsCtx);
-  useEffect(() => {
-    globals.setEventId(null);
-  }, []);
+  useEvent(null); // this resets global state
   const [events] = useIsomorphicState(
     [],
     'EventList_events_' + page,

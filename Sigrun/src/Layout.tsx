@@ -15,7 +15,7 @@ import { StorageStrategy } from '../../Common/storage';
 import './App.css';
 import { useLocalStorage } from '@mantine/hooks';
 import { useCallback, useState, ReactNode } from 'react';
-import { globalsCtx } from './hooks/globals';
+import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './AppFooter';
 
 export function Layout({
@@ -38,7 +38,15 @@ export function Layout({
   const i18n = useI18n();
   const dark = colorScheme === 'dark';
 
-  const [eventId, setEventId] = useState<number | null>(null);
+  const [data, setDataInt] = useState<Globals>({
+    eventId: null,
+    type: null,
+    isTeam: false,
+    isPrescripted: false,
+  });
+  const setData = (newData: Partial<Globals>) => {
+    setDataInt((old) => ({ ...old, ...newData }));
+  };
 
   // Small kludge to forcefully rerender after language change
   const [, updateState] = useState({});
@@ -65,7 +73,7 @@ export function Layout({
     >
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>
-          <globalsCtx.Provider value={{ eventId, setEventId }}>
+          <globalsCtx.Provider value={{ data, setData }}>
             <StorageProvider strategy={storageStrategy}>
               <I18nProvider>
                 <ApiProvider>
@@ -77,7 +85,7 @@ export function Layout({
                         height={60}
                         bg={theme.primaryColor}
                         fixed={false}
-                        style={{ position: 'static' }}
+                        style={{ position: 'static', display: 'flex', alignItems: 'center' }}
                       >
                         <AppFooter
                           dark={dark}

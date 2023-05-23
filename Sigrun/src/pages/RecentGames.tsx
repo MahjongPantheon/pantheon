@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { Redirect, useLocation } from 'wouter';
+import { useLocation } from 'wouter';
 import {
   Container,
   Divider,
@@ -16,9 +16,9 @@ import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
 import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
-import { globalsCtx } from '../hooks/globals';
+import { useEvent } from '../hooks/useEvent';
 
 // TODO: aggregated events
 const PERPAGE = 10;
@@ -31,20 +31,11 @@ export const RecentGames: React.FC<{
   page = page ?? '1';
   const api = useApi();
   const i18n = useI18n();
-  const globals = useContext(globalsCtx);
-  useEffect(() => {
-    globals.setEventId(parseInt(eventId, 10));
-  }, [eventId]);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
-  const [events] = useIsomorphicState(
-    [],
-    'EventInfo_event_' + eventId,
-    () => api.getEventsById([parseInt(eventId, 10)]),
-    [eventId]
-  );
+  const event = useEvent(eventId);
   const [games] = useIsomorphicState(
     [],
     'RecentGames_games_' + eventId,
@@ -53,10 +44,9 @@ export const RecentGames: React.FC<{
     [eventId, page]
   );
 
-  if (!games || !events) {
-    return <Redirect to='/' />;
+  if (!games || !event) {
+    return null;
   }
-  const [event] = events;
   const players = games?.players?.reduce((acc, p) => {
     acc[p.id] = p;
     return acc;

@@ -9,12 +9,12 @@ import {
   ActionIcon,
   Menu,
 } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import {
   IconChartBar,
   IconChevronDown,
   IconDeviceMobileShare,
   IconList,
+  IconNotes,
   IconOlympics,
 } from '@tabler/icons-react';
 import { useI18n } from './hooks/i18n';
@@ -22,6 +22,7 @@ import { useContext } from 'react';
 import { useLocation } from 'wouter';
 import { globalsCtx } from './hooks/globals';
 import * as React from 'react';
+import { useMediaQuery } from '@mantine/hooks';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -140,7 +141,7 @@ export function AppHeader() {
             </Anchor>
           </Group>
 
-          {globals.eventId && (
+          {globals.data.eventId && (
             <Group spacing={5}>
               <Menu shadow='md'>
                 <Menu.Target>
@@ -155,21 +156,30 @@ export function AppHeader() {
                 <Menu.Dropdown>
                   <Menu.Item
                     onClick={(e) => {
-                      navigate(`/event/${globals.eventId}/games`);
+                      navigate(`/event/${globals.data.eventId}`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconNotes size={24} />}
+                  >
+                    {i18n._pt('Event menu', 'Description')}
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/event/${globals.data.eventId}/games`);
                       e.preventDefault();
                     }}
                     icon={<IconOlympics size={24} />}
                   >
-                    {i18n._t('Recent games')}
+                    {i18n._pt('Event menu', 'Recent games')}
                   </Menu.Item>
                   <Menu.Item
                     onClick={(e) => {
-                      navigate(`/event/${globals.eventId}/order/rating`);
+                      navigate(`/event/${globals.data.eventId}/order/rating`);
                       e.preventDefault();
                     }}
                     icon={<IconChartBar size={24} />}
                   >
-                    {i18n._t('Rating table')}
+                    {i18n._pt('Event menu', 'Rating table')}
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>

@@ -1,4 +1,4 @@
-import { Menu, Group, ActionIcon, Space, Container } from '@mantine/core';
+import { Menu, Group, ActionIcon, Container, Anchor, Stack } from '@mantine/core';
 import {
   IconArrowBarToUp,
   IconLanguageHiragana,
@@ -8,6 +8,9 @@ import {
 import { FlagEn, FlagRu } from './helpers/flags';
 import { useI18n } from './hooks/i18n';
 import * as React from 'react';
+import { useContext } from 'react';
+import { globalsCtx } from './hooks/globals';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface AppFooterProps {
   dark: boolean;
@@ -17,21 +20,38 @@ interface AppFooterProps {
 
 export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps) {
   const i18n = useI18n();
+  const largeScreen = useMediaQuery('(min-width: 640px)');
+  const globals = useContext(globalsCtx);
 
   return (
     <>
-      <Space h={16} />
-      <Container>
+      <Container style={{ flex: 1 }}>
         <Group position='apart'>
           <ActionIcon
             variant='filled'
             color='blue'
             onClick={() => window.scrollTo({ top: 0 })}
             title={i18n._t('Back to top')}
+            mt={0}
           >
             <IconArrowBarToUp size='1.1rem' />
           </ActionIcon>
-          <Group position='right'>
+          <Group style={{ display: largeScreen ? 'inherit' : 'none' }}>
+            <Stack spacing={0}>
+              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}`}>
+                {i18n._t('Description')}
+              </Anchor>
+              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/games`}>
+                {i18n._t('Recent games')}
+              </Anchor>
+            </Stack>
+            <Stack spacing={0}>
+              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/order/rating`}>
+                {i18n._t('Rating table')}
+              </Anchor>
+            </Stack>
+          </Group>
+          <Group position='right' mt={0}>
             <ActionIcon
               variant='filled'
               color={dark ? 'grape' : 'indigo'}

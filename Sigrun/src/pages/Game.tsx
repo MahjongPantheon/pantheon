@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { Redirect } from 'wouter';
 import { Container, Divider, Space } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
 import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
-import { useContext, useEffect } from 'react';
-import { globalsCtx } from '../hooks/globals';
+import { useEvent } from '../hooks/useEvent';
 
 export const Game: React.FC<{
   params: {
@@ -18,17 +16,7 @@ export const Game: React.FC<{
 }> = ({ params: { eventId, sessionHash } }) => {
   const api = useApi();
   const i18n = useI18n();
-  const globals = useContext(globalsCtx);
-  useEffect(() => {
-    globals.setEventId(parseInt(eventId, 10));
-  }, [eventId]);
-
-  const [events] = useIsomorphicState(
-    [],
-    'EventInfo_event_' + eventId,
-    () => api.getEventsById([parseInt(eventId, 10)]),
-    [eventId]
-  );
+  const event = useEvent(eventId);
   const [game] = useIsomorphicState(
     null,
     'RecentGames_games_' + eventId,
@@ -36,10 +24,9 @@ export const Game: React.FC<{
     [eventId, sessionHash]
   );
 
-  if (game === undefined || !events) {
-    return <Redirect to='/' />;
+  if (game === undefined || !event) {
+    return null;
   }
-  const [event] = events;
   const players = game?.players?.reduce((acc, p) => {
     acc[p.id] = p;
     return acc;

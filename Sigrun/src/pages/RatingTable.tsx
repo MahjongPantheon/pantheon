@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { Redirect, useLocation } from 'wouter';
+import { useLocation } from 'wouter';
 import {
   Anchor,
   Container,
@@ -19,8 +19,7 @@ import { PlayerIcon } from '../components/PlayerIcon';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
-import { useContext, useEffect } from 'react';
-import { globalsCtx } from '../hooks/globals';
+import { useEvent } from '../hooks/useEvent';
 
 // TODO: aggregated events
 // TODO: superadmin flag to show prefinished results
@@ -42,10 +41,7 @@ export const RatingTable: React.FC<{
   }[orderBy] as 'asc' | 'desc';
   const api = useApi();
   const i18n = useI18n();
-  const globals = useContext(globalsCtx);
-  useEffect(() => {
-    globals.setEventId(parseInt(eventId, 10));
-  }, [eventId]);
+  const event = useEvent(eventId);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
@@ -56,17 +52,10 @@ export const RatingTable: React.FC<{
     () => api.getRatingTable(parseInt(eventId, 10), order ?? 'desc', orderBy ?? 'rating', false),
     [eventId, order, orderBy]
   );
-  const [events] = useIsomorphicState(
-    [],
-    'EventInfo_event_' + eventId,
-    () => api.getEventsById([parseInt(eventId, 10)]),
-    [eventId]
-  );
 
-  if (!players || !events) {
-    return <Redirect to='/' />;
+  if (!players || !event) {
+    return null;
   }
-  const [event] = events;
   const DataCmp = largeScreen ? Group : Stack;
 
   return (
