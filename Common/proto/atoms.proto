@@ -128,6 +128,7 @@ message Event {
   EventType type = 8;
   bool is_prescripted = 9;
   bool is_team = 10;
+  bool has_series = 11;
 }
 
 message MyEvent {

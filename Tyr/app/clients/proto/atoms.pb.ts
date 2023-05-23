@@ -154,6 +154,7 @@ export interface Event {
   type: EventType;
   isPrescripted: boolean;
   isTeam: boolean;
+  hasSeries: boolean;
 }
 
 export interface MyEvent {
@@ -1994,6 +1995,7 @@ export const Event = {
       type: EventType._fromInt(0),
       isPrescripted: false,
       isTeam: false,
+      hasSeries: false,
     };
   },
 
@@ -2033,6 +2035,9 @@ export const Event = {
     }
     if (msg.isTeam) {
       writer.writeBool(10, msg.isTeam);
+    }
+    if (msg.hasSeries) {
+      writer.writeBool(11, msg.hasSeries);
     }
     return writer;
   },
@@ -2082,6 +2087,10 @@ export const Event = {
         }
         case 10: {
           msg.isTeam = reader.readBool();
+          break;
+        }
+        case 11: {
+          msg.hasSeries = reader.readBool();
           break;
         }
         default: {
@@ -8649,6 +8658,7 @@ export const EventJSON = {
       type: EventType._fromInt(0),
       isPrescripted: false,
       isTeam: false,
+      hasSeries: false,
     };
   },
 
@@ -8686,6 +8696,9 @@ export const EventJSON = {
     }
     if (msg.isTeam) {
       json["isTeam"] = msg.isTeam;
+    }
+    if (msg.hasSeries) {
+      json["hasSeries"] = msg.hasSeries;
     }
     return json;
   },
@@ -8734,6 +8747,10 @@ export const EventJSON = {
     const _isTeam_ = json["isTeam"] ?? json["is_team"];
     if (_isTeam_) {
       msg.isTeam = _isTeam_;
+    }
+    const _hasSeries_ = json["hasSeries"] ?? json["has_series"];
+    if (_hasSeries_) {
+      msg.hasSeries = _hasSeries_;
     }
     return msg;
   },

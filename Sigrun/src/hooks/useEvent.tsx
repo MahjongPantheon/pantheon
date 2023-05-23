@@ -27,6 +27,7 @@ export const useEvent = (eventId: string | null) => {
         isTeam: events?.[0]?.isTeam,
         isPrescripted: events?.[0]?.isPrescripted,
         type: events?.[0]?.type,
+        hasSeries: events?.[0]?.hasSeries,
       });
     }
   }, [eventId]);

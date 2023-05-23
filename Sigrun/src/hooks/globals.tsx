@@ -6,6 +6,7 @@ export type Globals = {
   type: EventType | null;
   isTeam: boolean;
   isPrescripted: boolean;
+  hasSeries: boolean;
 };
 export const globals: { data: Globals; setData: (data: Partial<Globals>) => void } = {
   data: {
@@ -13,6 +14,7 @@ export const globals: { data: Globals; setData: (data: Partial<Globals>) => void
     type: null,
     isPrescripted: false,
     isTeam: false,
+    hasSeries: false,
   },
   setData: () => {},
 };
