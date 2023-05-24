@@ -30,7 +30,7 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
           <ActionIcon
             variant='filled'
             color='blue'
-            onClick={() => window.scrollTo({ top: 0 })}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             title={i18n._t('Back to top')}
             mt={0}
           >

@@ -11,6 +11,8 @@ import {
   useMantineTheme,
   Center,
   Pagination,
+  LoadingOverlay,
+  Box,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
@@ -36,7 +38,7 @@ export const RecentGames: React.FC<{
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const event = useEvent(eventId);
-  const [games] = useIsomorphicState(
+  const [games, , gamesLoading] = useIsomorphicState(
     [],
     'RecentGames_games_' + eventId,
     () =>
@@ -62,36 +64,42 @@ export const RecentGames: React.FC<{
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
-        <Stack spacing={0}>
-          {games?.games?.map((game, idx) => (
-            <Fragment key={`gm_${idx}`}>
-              <GameListing
-                showShareLink={true}
-                isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
-                eventId={eventId}
-                game={game}
-                players={players}
-                rowStyle={{
-                  padding: '16px',
-                  backgroundColor:
-                    idx % 2
-                      ? isDark
-                        ? theme.colors.dark[7]
-                        : theme.colors.gray[1]
-                      : 'transparent',
-                }}
-              />
-              <Divider size='xs' />
-            </Fragment>
-          ))}
-        </Stack>
+        <Box pos='relative'>
+          <LoadingOverlay visible={gamesLoading} overlayBlur={2} />
+          <Stack spacing={0}>
+            {games?.games?.map((game, idx) => (
+              <Fragment key={`gm_${idx}`}>
+                <GameListing
+                  showShareLink={true}
+                  isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
+                  eventId={eventId}
+                  game={game}
+                  players={players}
+                  rowStyle={{
+                    padding: '16px',
+                    backgroundColor:
+                      idx % 2
+                        ? isDark
+                          ? theme.colors.dark[7]
+                          : theme.colors.gray[1]
+                        : 'transparent',
+                  }}
+                />
+                <Divider size='xs' />
+              </Fragment>
+            ))}
+          </Stack>
+        </Box>
         <Divider size='xs' />
         <Space h='md' />
         <Center>
           <Pagination
             size={largeScreen ? 'md' : 'sm'}
             value={parseInt(page, 10)}
-            onChange={(p) => navigate(`/event/${eventId}/games/page/${p}`)}
+            onChange={(p) => {
+              navigate(`/event/${eventId}/games/page/${p}`);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             total={Math.ceil((games?.totalGames ?? 0) / PERPAGE)}
           />
         </Center>

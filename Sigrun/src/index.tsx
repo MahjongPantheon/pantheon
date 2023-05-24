@@ -9,9 +9,10 @@ import { Layout } from './Layout';
 
 const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
 
-let isomorphicCtxValue = {};
+let isomorphicCtxValue = { __running: 0 };
 if (window && (window as any).initialData) {
   isomorphicCtxValue = (window as any).initialData;
+  isomorphicCtxValue.__running = 0;
 }
 
 if (import.meta.env.MODE === 'development') {

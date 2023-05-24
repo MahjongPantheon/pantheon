@@ -34,6 +34,7 @@ const useStyles = createStyles((theme) => ({
       color: theme.primaryColor,
     }).background,
     borderBottom: 0,
+    zIndex: 10000,
   },
 
   inner: {

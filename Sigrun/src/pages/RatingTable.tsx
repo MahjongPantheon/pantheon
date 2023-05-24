@@ -15,6 +15,10 @@ import {
   Badge,
   Button,
   Alert,
+  Loader,
+  Center,
+  LoadingOverlay,
+  Box,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { PlayerIcon } from '../components/PlayerIcon';
@@ -49,8 +53,9 @@ export const RatingTable: React.FC<{
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
+  const DataCmp = largeScreen ? Group : Stack;
   const globals = useContext(globalsCtx);
-  const [players] = useIsomorphicState(
+  const [players, , playersLoading] = useIsomorphicState(
     [],
     'RatingTable_event_' + eventId + order + orderBy,
     () => api.getRatingTable(parseInt(eventId, 10), order ?? 'desc', orderBy ?? 'rating'),
@@ -60,9 +65,18 @@ export const RatingTable: React.FC<{
   if (!players || !event) {
     return null;
   }
-  const DataCmp = largeScreen ? Group : Stack;
 
-  if (event && globals.data.ratingHidden) {
+  if (globals.data.loading) {
+    return (
+      <Container h='100%'>
+        <Center h='100%'>
+          <Loader size='xl' />
+        </Center>
+      </Container>
+    );
+  }
+
+  if (event && !globals.data.loading && globals.data.ratingHidden) {
     return (
       <Container>
         <h2 style={{ display: 'flex', gap: '20px' }}>
@@ -169,86 +183,89 @@ export const RatingTable: React.FC<{
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
-        <Stack justify='flex-start' spacing='0'>
-          {(players ?? []).map((player, idx) => {
-            return (
-              <DataCmp
-                key={`pl_${idx}`}
-                spacing='xs'
-                style={{
-                  padding: '10px',
-                  backgroundColor:
-                    idx % 2
-                      ? isDark
-                        ? theme.colors.dark[7]
-                        : theme.colors.gray[1]
-                      : 'transparent',
-                }}
-              >
-                <Group style={{ flex: 1 }}>
-                  <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
-                    {idx + 1}
-                  </Badge>
-                  <PlayerIcon p={player} />
-                  <Stack spacing={2}>
-                    <Anchor
-                      href={`/event/${event.id}/player/${player.id}`}
-                      onClick={(e) => {
-                        navigate(`/event/${event.id}/player/${player.id}`);
-                        e.preventDefault();
-                      }}
+        <Box pos='relative'>
+          <LoadingOverlay visible={playersLoading} overlayBlur={2} />
+          <Stack justify='flex-start' spacing='0'>
+            {(players ?? []).map((player, idx) => {
+              return (
+                <DataCmp
+                  key={`pl_${idx}`}
+                  spacing='xs'
+                  style={{
+                    padding: '10px',
+                    backgroundColor:
+                      idx % 2
+                        ? isDark
+                          ? theme.colors.dark[7]
+                          : theme.colors.gray[1]
+                        : 'transparent',
+                  }}
+                >
+                  <Group style={{ flex: 1 }}>
+                    <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
+                      {idx + 1}
+                    </Badge>
+                    <PlayerIcon p={player} />
+                    <Stack spacing={2}>
+                      <Anchor
+                        href={`/event/${event.id}/player/${player.id}`}
+                        onClick={(e) => {
+                          navigate(`/event/${event.id}/player/${player.id}`);
+                          e.preventDefault();
+                        }}
+                      >
+                        {player.title}
+                      </Anchor>
+                      {event.type === EventType.EVENT_TYPE_ONLINE && (
+                        <Text c='dimmed'>{player.tenhouId}</Text>
+                      )}
+                      {event.isTeam && player.teamName && (
+                        <Text>
+                          {i18n._t('Team name:')} {player.teamName}
+                        </Text>
+                      )}
+                    </Stack>
+                  </Group>
+                  <Group spacing={2} grow={!largeScreen}>
+                    <Badge
+                      w={75}
+                      size='lg'
+                      variant={orderBy === 'rating' ? 'filled' : 'light'}
+                      color={player.winnerZone ? 'lime' : 'red'}
+                      radius='sm'
+                      style={{ padding: 0 }}
                     >
-                      {player.title}
-                    </Anchor>
-                    {event.type === EventType.EVENT_TYPE_ONLINE && (
-                      <Text c='dimmed'>{player.tenhouId}</Text>
-                    )}
-                    {event.isTeam && player.teamName && (
-                      <Text>
-                        {i18n._t('Team name:')} {player.teamName}
-                      </Text>
-                    )}
-                  </Stack>
-                </Group>
-                <Group spacing={2} grow={!largeScreen}>
-                  <Badge
-                    w={75}
-                    size='lg'
-                    variant={orderBy === 'rating' ? 'filled' : 'light'}
-                    color={player.winnerZone ? 'lime' : 'red'}
-                    radius='sm'
-                    style={{ padding: 0 }}
-                  >
-                    {player.rating}
-                  </Badge>
-                  <Badge
-                    w={65}
-                    size='lg'
-                    variant={orderBy === 'avg_score' ? 'filled' : 'light'}
-                    color={player.winnerZone ? 'green' : 'pink'}
-                    radius='sm'
-                    style={{ padding: 0 }}
-                  >
-                    {player.avgScore.toFixed(0)}
-                  </Badge>
-                  <Badge
-                    w={45}
-                    size='lg'
-                    color='cyan'
-                    variant={orderBy === 'avg_place' ? 'filled' : 'light'}
-                    radius='sm'
-                    style={{ padding: 0 }}
-                  >
-                    {player.avgPlace.toFixed(2)}
-                  </Badge>
-                  <Badge w={45} size='lg' color='gray' radius='sm' style={{ padding: 0 }}>
-                    {player.gamesPlayed.toFixed(0)}
-                  </Badge>
-                </Group>
-              </DataCmp>
-            );
-          })}
-        </Stack>
+                      {player.rating}
+                    </Badge>
+                    <Badge
+                      w={65}
+                      size='lg'
+                      variant={orderBy === 'avg_score' ? 'filled' : 'light'}
+                      color={player.winnerZone ? 'green' : 'pink'}
+                      radius='sm'
+                      style={{ padding: 0 }}
+                    >
+                      {player.avgScore.toFixed(0)}
+                    </Badge>
+                    <Badge
+                      w={45}
+                      size='lg'
+                      color='cyan'
+                      variant={orderBy === 'avg_place' ? 'filled' : 'light'}
+                      radius='sm'
+                      style={{ padding: 0 }}
+                    >
+                      {player.avgPlace.toFixed(2)}
+                    </Badge>
+                    <Badge w={45} size='lg' color='gray' radius='sm' style={{ padding: 0 }}>
+                      {player.gamesPlayed.toFixed(0)}
+                    </Badge>
+                  </Group>
+                </DataCmp>
+              );
+            })}
+          </Stack>
+        </Box>
       </Container>
     )
   );

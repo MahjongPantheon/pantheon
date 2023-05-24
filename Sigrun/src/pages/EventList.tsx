@@ -111,7 +111,10 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
       <Center>
         <Pagination
           value={parseInt(page, 10)}
-          onChange={(p) => navigate(`/page/${p}`)}
+          onChange={(p) => {
+            navigate(`/page/${p}`);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           total={Math.ceil((events?.total ?? 0) / PERPAGE)}
         />
       </Center>

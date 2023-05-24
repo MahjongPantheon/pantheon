@@ -17,6 +17,7 @@ import { useLocalStorage } from '@mantine/hooks';
 import { useCallback, useState, ReactNode } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
+import { NavigationProgress } from '@mantine/nprogress';
 
 export function Layout({
   children,
@@ -43,6 +44,9 @@ export function Layout({
     type: null,
     isTeam: false,
     isPrescripted: false,
+    loading: false,
+    ratingHidden: false,
+    hasSeries: false,
   });
   const setData = (newData: Partial<Globals>) => {
     setDataInt((old) => ({ ...old, ...newData }));
@@ -77,6 +81,7 @@ export function Layout({
             <StorageProvider strategy={storageStrategy}>
               <I18nProvider>
                 <ApiProvider>
+                  <NavigationProgress color='green' zIndex={10100} />
                   <AppShell
                     padding='md'
                     header={<AppHeader />}
