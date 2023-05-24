@@ -20,7 +20,14 @@ export const useEvent = (eventId: string | null) => {
 
   useEffect(() => {
     if (!events) {
-      globals.setData({ eventId: null, type: null, isPrescripted: false, isTeam: false });
+      globals.setData({
+        eventId: null,
+        type: null,
+        isPrescripted: false,
+        isTeam: false,
+        ratingHidden: false,
+        hasSeries: false,
+      });
     }
     if (eventId) {
       globals.setData({
@@ -28,6 +35,7 @@ export const useEvent = (eventId: string | null) => {
         isPrescripted: events?.[0]?.isPrescripted,
         type: events?.[0]?.type,
         hasSeries: events?.[0]?.hasSeries,
+        ratingHidden: !events?.[0]?.isRatingShown,
       });
     }
   }, [eventId, events]);

@@ -14,6 +14,7 @@ import {
   useMantineTheme,
   Badge,
   Button,
+  Alert,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { PlayerIcon } from '../components/PlayerIcon';
@@ -21,11 +22,12 @@ import { EventType, PlayerInRating } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 import { useEvent } from '../hooks/useEvent';
-import { IconDownload } from '@tabler/icons-react';
+import { IconDownload, IconExclamationCircle } from '@tabler/icons-react';
 import { I18nService } from '../services/i18n';
+import { useContext } from 'react';
+import { globalsCtx } from '../hooks/globals';
 
 // TODO: aggregated events
-// TODO: hide or show table depending on corresponding flag
 
 export const RatingTable: React.FC<{
   params: {
@@ -47,6 +49,7 @@ export const RatingTable: React.FC<{
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
+  const globals = useContext(globalsCtx);
   const [players] = useIsomorphicState(
     [],
     'RatingTable_event_' + eventId + order + orderBy,
@@ -58,6 +61,20 @@ export const RatingTable: React.FC<{
     return null;
   }
   const DataCmp = largeScreen ? Group : Stack;
+
+  if (event && globals.data.ratingHidden) {
+    return (
+      <Container>
+        <h2 style={{ display: 'flex', gap: '20px' }}>
+          {event && <EventTypeIcon event={event} />}
+          {event?.title} - {i18n._t('Rating table')}
+        </h2>
+        <Alert icon={<IconExclamationCircle />} color='yellow'>
+          {i18n._t('Rating table is hidden by tournament administrator')}
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     event && (
