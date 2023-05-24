@@ -13,18 +13,20 @@ import {
   useMantineColorScheme,
   useMantineTheme,
   Badge,
+  Button,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { PlayerIcon } from '../components/PlayerIcon';
-import { EventType } from '../clients/proto/atoms.pb';
+import { EventType, PlayerInRating } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 import { useEvent } from '../hooks/useEvent';
+import { IconDownload } from '@tabler/icons-react';
+import { I18nService } from '../services/i18n';
 
 // TODO: aggregated events
 // TODO: superadmin flag to show prefinished results
 // TODO: hide or show table depending on corresponding flag
-// TODO: csv export on mimir side
 
 export const RatingTable: React.FC<{
   params: {
@@ -61,10 +63,29 @@ export const RatingTable: React.FC<{
   return (
     event && (
       <Container>
-        <h2 style={{ display: 'flex', gap: '20px' }}>
-          {event && <EventTypeIcon event={event} />}
-          {event?.title} - {i18n._t('Rating table')}
-        </h2>
+        <DataCmp position='apart'>
+          <h2 style={{ display: 'flex', gap: '20px' }}>
+            {event && <EventTypeIcon event={event} />}
+            {event?.title} - {i18n._t('Rating table')}
+          </h2>
+          <Button
+            variant='light'
+            size='xs'
+            leftIcon={<IconDownload size='1.1rem' />}
+            onClick={() => {
+              // TODO: chips
+              downloadCsv(
+                i18n,
+                event?.isTeam,
+                false,
+                players,
+                'Rating_' + event?.title?.replace(/\W/g, '') + '.csv'
+              );
+            }}
+          >
+            {i18n._t('Save as CSV')}
+          </Button>
+        </DataCmp>
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
@@ -216,3 +237,72 @@ export const RatingTable: React.FC<{
     )
   );
 };
+
+function downloadCsv(
+  i18n: I18nService,
+  isTeam: boolean,
+  withChips: boolean,
+  content: PlayerInRating[],
+  fileName: string,
+  mimeType?: string
+) {
+  const quoteValue = (val: any) => {
+    const innerValue: string = val === null ? '' : val.toString();
+    let result = innerValue.replace(/"/g, '""');
+    if (result.search(/("|,|\n)/g) >= 0) result = '"' + result + '"';
+    return result;
+  };
+
+  const finalVal: string[] = [
+    [
+      i18n._t('Place'),
+      i18n._t('Player ID'),
+      i18n._t('Player name'),
+      ...(isTeam ? [i18n._t('Team')] : []),
+      ...(withChips ? [i18n._t('Chips')] : []),
+      i18n._t('Rating points'),
+      i18n._t('Average place'),
+      i18n._t('Average points'),
+      i18n._t('Games played'),
+    ]
+      .map(quoteValue)
+      .join(','),
+  ];
+
+  for (let i = 0; i < content.length; i++) {
+    finalVal.push(
+      [
+        i + 1,
+        content[i].id,
+        content[i].title,
+        ...(isTeam ? [content[i].teamName] : []),
+        ...(withChips ? [content[i].chips] : []),
+        content[i].rating,
+        content[i].avgPlace,
+        content[i].avgScore,
+        content[i].gamesPlayed,
+      ]
+        .map(quoteValue)
+        .join(',')
+    );
+  }
+
+  const a = document.createElement('a');
+  mimeType = mimeType ?? 'application/octet-stream';
+
+  if (URL && 'download' in a) {
+    // html5 A[download]
+    a.href = URL.createObjectURL(
+      new Blob([finalVal.join('\n')], {
+        type: mimeType,
+      })
+    );
+    a.setAttribute('download', fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    // only this mime type is supported
+    location.href = 'data:application/octet-stream,' + encodeURIComponent(finalVal.join('\n'));
+  }
+}
