@@ -110,23 +110,25 @@ export const RatingTable: React.FC<{
             {event && <EventTypeIcon event={event} />}
             {event?.title} - {i18n._t('Rating table')}
           </h2>
-          <Button
-            variant='light'
-            size='xs'
-            leftIcon={<IconDownload size='1.1rem' />}
-            onClick={() => {
-              // TODO: chips
-              downloadCsv(
-                i18n,
-                event?.isTeam,
-                false,
-                players,
-                'Rating_' + event?.title?.replace(/\W/g, '') + '.csv'
-              );
-            }}
-          >
-            {i18n._t('Save as CSV')}
-          </Button>
+          {orderBy !== 'team' && (
+            <Button
+              variant='light'
+              size='xs'
+              leftIcon={<IconDownload size='1.1rem' />}
+              onClick={() => {
+                // TODO: chips
+                downloadCsv(
+                  i18n,
+                  event?.isTeam,
+                  false,
+                  players,
+                  'Rating_' + event?.title?.replace(/\W/g, '') + '.csv'
+                );
+              }}
+            >
+              {i18n._t('Save as CSV')}
+            </Button>
+          )}
         </DataCmp>
         <Space h='md' />
         <Divider size='xs' />

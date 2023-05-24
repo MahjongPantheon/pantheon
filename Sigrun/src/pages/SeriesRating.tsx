@@ -45,94 +45,89 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
       <Space h='md' />
       {seriesData &&
         seriesData.results.map((item, idx) => (
-          <>
-            <Group style={{ flex: 1 }}>
-              <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
-                {idx + 1}
-              </Badge>
-              <PlayerIcon p={item.player} />
-              <Group spacing={2}>
-                <Anchor
-                  href={`/event/${event.id}/player/${item.player.id}`}
-                  onClick={(e) => {
-                    navigate(`/event/${event.id}/player/${item.player.id}`);
-                    e.preventDefault();
-                  }}
-                >
-                  {item.player.title}
-                </Anchor>
-              </Group>
-              <Stack spacing='xs' w='100%'>
-                <Stack spacing={0}>
-                  <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <Badge color='blue' size='sm' radius={0}>
-                      {i18n._t('Best series')}
-                    </Badge>
-                    <Badge color='green' size='sm' radius={0}>
-                      {i18n._t('Avg place:')} {item.bestSeriesAvgPlace} ({item.bestSeriesPlaces} /{' '}
-                      {Math.round(item.bestSeriesPlaces / parseFloat(item.bestSeriesAvgPlace))})
-                    </Badge>
-                    <Badge color='grape' size='sm' radius={0}>
-                      {i18n._t('Score:')} {item.bestSeriesScores}
-                    </Badge>
-                  </Box>
-                  <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {item.bestSeries.map((bs, bsidx) => (
-                      <Anchor
-                        style={{ textDecoration: 'none', display: 'flex' }}
-                        key={`bs_${bsidx}`}
-                        href={`/event/${eventId}/game/${bs.sessionHash}`}
-                        onClick={(e) => {
-                          navigate(`/event/${eventId}/game/${bs.sessionHash}`);
-                          e.preventDefault();
-                        }}
-                      >
-                        <Badge size='sm' variant='filled' radius={0} color={getColor(bs.place)}>
-                          {bs.place}
-                        </Badge>
-                      </Anchor>
-                    ))}
-                  </Box>
-                </Stack>
-                <Stack spacing={0}>
-                  <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <Badge color='blue' size='sm' radius={0}>
-                      {i18n._t('Last series')}
-                    </Badge>
-                    <Badge color='green' size='sm' radius={0}>
-                      {i18n._t('Avg place:')} {item.currentSeriesAvgPlace} (
-                      {item.currentSeriesPlaces} /{' '}
-                      {Math.round(
-                        item.currentSeriesPlaces / parseFloat(item.currentSeriesAvgPlace)
-                      )}
-                      )
-                    </Badge>
-                    <Badge color='grape' size='sm' radius={0}>
-                      {i18n._t('Score:')} {item.currentSeriesScores}
-                    </Badge>
-                  </Box>
-                  <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {item.currentSeries.map((ls, lsidx) => (
-                      <Anchor
-                        style={{ textDecoration: 'none', display: 'flex' }}
-                        key={`bs_${lsidx}`}
-                        href={`/event/${eventId}/game/${ls.sessionHash}`}
-                        onClick={(e) => {
-                          navigate(`/event/${eventId}/game/${ls.sessionHash}`);
-                          e.preventDefault();
-                        }}
-                      >
-                        <Badge size='sm' variant='filled' radius={0} color={getColor(ls.place)}>
-                          {ls.place}
-                        </Badge>
-                      </Anchor>
-                    ))}
-                  </Box>
-                </Stack>
-                <Space h='lg' />
-              </Stack>
+          <Group style={{ flex: 1 }} key={`series_${idx}`}>
+            <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
+              {idx + 1}
+            </Badge>
+            <PlayerIcon p={item.player} />
+            <Group spacing={2}>
+              <Anchor
+                href={`/event/${event.id}/player/${item.player.id}`}
+                onClick={(e) => {
+                  navigate(`/event/${event.id}/player/${item.player.id}`);
+                  e.preventDefault();
+                }}
+              >
+                {item.player.title}
+              </Anchor>
             </Group>
-          </>
+            <Stack spacing='xs' w='100%'>
+              <Stack spacing={0}>
+                <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
+                  <Badge color='blue' size='sm' radius={0}>
+                    {i18n._t('Best series')}
+                  </Badge>
+                  <Badge color='green' size='sm' radius={0}>
+                    {i18n._t('Avg place:')} {item.bestSeriesAvgPlace} ({item.bestSeriesPlaces} /{' '}
+                    {Math.round(item.bestSeriesPlaces / parseFloat(item.bestSeriesAvgPlace))})
+                  </Badge>
+                  <Badge color='grape' size='sm' radius={0}>
+                    {i18n._t('Score:')} {item.bestSeriesScores}
+                  </Badge>
+                </Box>
+                <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
+                  {item.bestSeries.map((bs, bsidx) => (
+                    <Anchor
+                      style={{ textDecoration: 'none', display: 'flex' }}
+                      key={`bs_${bsidx}`}
+                      href={`/event/${eventId}/game/${bs.sessionHash}`}
+                      onClick={(e) => {
+                        navigate(`/event/${eventId}/game/${bs.sessionHash}`);
+                        e.preventDefault();
+                      }}
+                    >
+                      <Badge size='sm' variant='filled' radius={0} color={getColor(bs.place)}>
+                        {bs.place}
+                      </Badge>
+                    </Anchor>
+                  ))}
+                </Box>
+              </Stack>
+              <Stack spacing={0}>
+                <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
+                  <Badge color='blue' size='sm' radius={0}>
+                    {i18n._t('Last series')}
+                  </Badge>
+                  <Badge color='green' size='sm' radius={0}>
+                    {i18n._t('Avg place:')} {item.currentSeriesAvgPlace} ({item.currentSeriesPlaces}{' '}
+                    /{' '}
+                    {Math.round(item.currentSeriesPlaces / parseFloat(item.currentSeriesAvgPlace))})
+                  </Badge>
+                  <Badge color='grape' size='sm' radius={0}>
+                    {i18n._t('Score:')} {item.currentSeriesScores}
+                  </Badge>
+                </Box>
+                <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
+                  {item.currentSeries.map((ls, lsidx) => (
+                    <Anchor
+                      style={{ textDecoration: 'none', display: 'flex' }}
+                      key={`bs_${lsidx}`}
+                      href={`/event/${eventId}/game/${ls.sessionHash}`}
+                      onClick={(e) => {
+                        navigate(`/event/${eventId}/game/${ls.sessionHash}`);
+                        e.preventDefault();
+                      }}
+                    >
+                      <Badge size='sm' variant='filled' radius={0} color={getColor(ls.place)}>
+                        {ls.place}
+                      </Badge>
+                    </Anchor>
+                  ))}
+                </Box>
+              </Stack>
+              <Space h='lg' />
+            </Stack>
+          </Group>
         ))}
     </Container>
   );
