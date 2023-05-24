@@ -8,6 +8,11 @@ import {
   Button,
   ActionIcon,
   Menu,
+  Modal,
+  useMantineTheme,
+  TextInput,
+  Space,
+  LoadingOverlay,
 } from '@mantine/core';
 import {
   IconChartBar,
@@ -15,15 +20,18 @@ import {
   IconChevronDown,
   IconDeviceMobileShare,
   IconList,
+  IconNetwork,
   IconNotes,
   IconOlympics,
 } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation } from 'wouter';
 import { globalsCtx } from '../hooks/globals';
 import * as React from 'react';
-import { useMediaQuery } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { EventType } from '../clients/proto/atoms.pb';
+import { useApi } from '../hooks/api';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -88,7 +96,36 @@ export function AppHeader() {
   const i18n = useI18n();
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
+  const theme = useMantineTheme();
   const globals = useContext(globalsCtx);
+
+  // Online add replay related
+  const [onlineModalOpened, { open: openOnlineModal, close: closeOnlineModal }] =
+    useDisclosure(false);
+  const [onlineLink, setOnlineLink] = useState('');
+  const [onlineLoading, setOnlineLoading] = useState(false);
+  const [onlineError, setOnlineError] = useState<string | null>(null);
+  const api = useApi();
+  const tryAddOnline = () => {
+    if (!onlineLink.match(/^https?:\/\/[^\/]+\/0\/\?log=\d+gm-\d+-\d+-[0-9a-f]+$/i)) {
+      setOnlineError(i18n._t('Replay link is invalid. Please check if you copied it correctly'));
+    } else {
+      setOnlineError(null);
+      setOnlineLoading(true);
+      if (globals.data.eventId) {
+        api
+          .addOnlineGame(globals.data.eventId, onlineLink)
+          .then(() => {
+            setOnlineLoading(false);
+            window.location.href = `/event/${globals.data.eventId}/games`;
+          })
+          .catch((e) => {
+            setOnlineLoading(false);
+            setOnlineError(e.message);
+          });
+      }
+    }
+  };
 
   return (
     <Header height={HEADER_HEIGHT} className={classes.header} mb={120}>
@@ -194,11 +231,47 @@ export function AppHeader() {
                       {i18n._pt('Event menu', 'Series rating')}
                     </Menu.Item>
                   )}
+                  {globals.data.type === EventType.EVENT_TYPE_ONLINE && (
+                    <Menu.Item
+                      onClick={(e) => {
+                        openOnlineModal();
+                        e.preventDefault();
+                      }}
+                      icon={<IconNetwork size={24} />}
+                    >
+                      {i18n._pt('Event menu', 'Add online game')}
+                    </Menu.Item>
+                  )}
                 </Menu.Dropdown>
               </Menu>
             </Group>
           )}
         </div>
+        <Modal
+          opened={onlineModalOpened}
+          onClose={closeOnlineModal}
+          overlayProps={{
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
+            opacity: 0.55,
+            blur: 3,
+          }}
+          title={i18n._t('Add online game')}
+          centered
+        >
+          <LoadingOverlay visible={onlineLoading} />
+          <TextInput
+            placeholder='http://tenhou.net/0/?log=XXXXXXXXXXgm-XXXX-XXXXX-XXXXXXXX'
+            label={'Enter replay URL'}
+            error={onlineError}
+            value={onlineLink}
+            onChange={(event) => setOnlineLink(event.currentTarget.value)}
+            withAsterisk
+          />
+          <Space h='md' />
+          <Group position='right'>
+            <Button onClick={tryAddOnline}>{i18n._t('Add replay')}</Button>
+          </Group>
+        </Modal>
       </Container>
     </Header>
   );

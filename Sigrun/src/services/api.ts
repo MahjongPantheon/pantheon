@@ -1,4 +1,5 @@
 import {
+  AddOnlineReplay,
   AddPenalty,
   CancelGame,
   CreateEvent,
@@ -256,6 +257,13 @@ export class ApiService {
       method: 'GetOwnedEventIds',
     });
     return GetOwnedEventIds({ personId }, this._clientConfFrey).then((r) => r.eventIds);
+  }
+
+  addOnlineGame(eventId: number, link: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, {
+      method: 'AddOnlineReplay',
+    });
+    return AddOnlineReplay({ eventId, link }, this._clientConfMimir);
   }
 
   getSuperadminFlag(personId: number) {
