@@ -15,6 +15,7 @@ import {
   LoadingOverlay,
 } from '@mantine/core';
 import {
+  IconAlarm,
   IconChartBar,
   IconChartLine,
   IconChevronDown,
@@ -229,6 +230,17 @@ export function AppHeader() {
                       icon={<IconChartLine size={24} />}
                     >
                       {i18n._pt('Event menu', 'Series rating')}
+                    </Menu.Item>
+                  )}
+                  {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
+                    <Menu.Item
+                      onClick={(e) => {
+                        navigate(`/event/${globals.data.eventId}/timer`);
+                        e.preventDefault();
+                      }}
+                      icon={<IconAlarm size={24} />}
+                    >
+                      {i18n._pt('Event menu', 'Timer & seating')}
                     </Menu.Item>
                   )}
                   {globals.data.type === EventType.EVENT_TYPE_ONLINE && (

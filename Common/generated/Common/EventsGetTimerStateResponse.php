@@ -37,6 +37,10 @@ class EventsGetTimerStateResponse extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool autostart_timer = 6;</code>
      */
     protected $autostart_timer = false;
+    /**
+     * Generated from protobuf field <code>bool show_seating = 7;</code>
+     */
+    protected $show_seating = false;
 
     /**
      * Constructor.
@@ -50,6 +54,7 @@ class EventsGetTimerStateResponse extends \Google\Protobuf\Internal\Message
      *     @type bool $waiting_for_timer
      *     @type bool $have_autostart
      *     @type bool $autostart_timer
+     *     @type bool $show_seating
      * }
      */
     public function __construct($data = NULL) {
@@ -185,6 +190,28 @@ class EventsGetTimerStateResponse extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->autostart_timer = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool show_seating = 7;</code>
+     * @return bool
+     */
+    public function getShowSeating()
+    {
+        return $this->show_seating;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool show_seating = 7;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setShowSeating($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->show_seating = $var;
 
         return $this;
     }

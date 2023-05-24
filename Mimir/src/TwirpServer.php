@@ -1029,6 +1029,7 @@ final class TwirpServer implements Mimir
             ->setTimeRemaining($ret['time_remaining'] ?? 0)
             ->setWaitingForTimer($ret['waiting_for_timer'])
             ->setHaveAutostart($ret['have_autostart'])
+            ->setShowSeating($ret['show_seating'])
             ->setAutostartTimer($ret['autostart_timer']);
     }
 

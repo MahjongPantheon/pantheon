@@ -5,8 +5,9 @@ import { RatingTable } from './pages/RatingTable';
 import { PlayerStats } from './pages/PlayerStats';
 import { RecentGames } from './pages/RecentGames';
 import { SeriesRating } from './pages/SeriesRating';
-import './App.css';
 import { Game } from './pages/Game';
+import { Timer } from './pages/Timer';
+import './App.css';
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
       <Route path='/event/:eventId/games/page/:page' component={RecentGames} />
       <Route path='/event/:eventId/game/:sessionHash' component={Game} />
       <Route path='/event/:eventId/seriesRating' component={SeriesRating} />
+      <Route path='/event/:eventId/timer' component={Timer} />
     </Switch>
   );
 }

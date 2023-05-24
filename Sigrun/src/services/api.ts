@@ -9,6 +9,7 @@ import {
   FinishEvent,
   GetAllRegisteredPlayers,
   GetCountries,
+  GetCurrentSeating,
   GetEventForEdit,
   GetEvents,
   GetEventsById,
@@ -22,6 +23,7 @@ import {
   GetRatingTable,
   GetRulesets,
   GetTablesState,
+  GetTimerState,
   GetTimezones,
   MakeIntervalSeating,
   MakePrescriptedSeating,
@@ -304,6 +306,16 @@ export class ApiService {
   getPlayerStat(eventIdList: number[], playerId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'getPlayerStat' });
     return GetPlayerStats({ playerId, eventIdList }, this._clientConfMimir);
+  }
+
+  getTimerState(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTimerState' });
+    return GetTimerState({ eventId }, this._clientConfMimir);
+  }
+
+  getSeating(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetCurrentSeating' });
+    return GetCurrentSeating({ eventId }, this._clientConfMimir);
   }
 
   getPlayer(playerId: number) {

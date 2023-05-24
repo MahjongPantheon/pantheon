@@ -796,6 +796,8 @@ class EventsController extends Controller
         $response['waiting_for_timer'] = ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
         $response['have_autostart'] = ($event[0]->getNextGameStartTime() > 0 && $event[0]->getTimeToStart() > 0);
         $response['autostart_timer'] = $event[0]->getNextGameStartTime() - time();
+        // show seating for 10 mins after start
+        $response['show_seating'] = ($event[0]->getGameDuration() * 60) - $response['time_remaining'] < 600;
 
         $this->_log->info('Successfully got timer data for event id#' . $eventId);
 

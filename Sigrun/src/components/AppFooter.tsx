@@ -11,6 +11,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { globalsCtx } from '../hooks/globals';
 import { useMediaQuery } from '@mantine/hooks';
+import { EventType } from '../clients/proto/atoms.pb';
 
 interface AppFooterProps {
   dark: boolean;
@@ -36,7 +37,7 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
           >
             <IconArrowBarToUp size='1.1rem' />
           </ActionIcon>
-          <Group style={{ display: largeScreen ? 'inherit' : 'none' }}>
+          <Group style={{ display: largeScreen ? 'inherit' : 'none' }} align='flex-start'>
             <Stack spacing={0}>
               <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}`}>
                 {i18n._t('Description')}
@@ -56,6 +57,13 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
                   href={`/event/${globals.data.eventId}/seriesRating`}
                 >
                   {i18n._t('Series rating')}
+                </Anchor>
+              )}
+            </Stack>
+            <Stack spacing={0}>
+              {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
+                <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/timer`}>
+                  {i18n._t('Timer & seating')}
                 </Anchor>
               )}
             </Stack>
