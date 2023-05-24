@@ -145,16 +145,14 @@ export class ApiService {
   getRatingTable(
     eventId: number,
     order: 'asc' | 'desc',
-    orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score',
-    withPrefinished: boolean
+    orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score'
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, {
       method: 'GetRatingTable',
     });
-    return GetRatingTable(
-      { eventIdList: [eventId], order, orderBy, withPrefinished },
-      this._clientConfMimir
-    ).then((r) => r.list);
+    return GetRatingTable({ eventIdList: [eventId], order, orderBy }, this._clientConfMimir).then(
+      (r) => r.list
+    );
   }
 
   quickAuthorize() {

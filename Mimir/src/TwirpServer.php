@@ -909,8 +909,7 @@ final class TwirpServer implements Mimir
             }, $this->_eventsController->getRatingTable(
                 iterator_to_array($req->getEventIdList()),
                 $req->getOrderBy(),
-                $req->getOrder(),
-                $req->getWithPrefinished()
+                $req->getOrder()
             )));
     }
 

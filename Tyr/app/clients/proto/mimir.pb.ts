@@ -71,7 +71,10 @@ export interface EventsGetRatingTablePayload {
   eventIdList: number[];
   orderBy: string;
   order: string;
-  withPrefinished: boolean;
+  /**
+   * @deprecated
+   */
+  withPrefinished?: boolean | null | undefined;
 }
 
 export interface EventsGetRatingTableResponse {
@@ -3856,7 +3859,7 @@ export const EventsGetRatingTablePayload = {
       eventIdList: [],
       orderBy: "",
       order: "",
-      withPrefinished: false,
+      withPrefinished: undefined,
     };
   },
 
@@ -3876,7 +3879,7 @@ export const EventsGetRatingTablePayload = {
     if (msg.order) {
       writer.writeString(3, msg.order);
     }
-    if (msg.withPrefinished) {
+    if (msg.withPrefinished != undefined) {
       writer.writeBool(4, msg.withPrefinished);
     }
     return writer;
@@ -9649,7 +9652,7 @@ export const EventsGetRatingTablePayloadJSON = {
       eventIdList: [],
       orderBy: "",
       order: "",
-      withPrefinished: false,
+      withPrefinished: undefined,
     };
   },
 
@@ -9669,7 +9672,7 @@ export const EventsGetRatingTablePayloadJSON = {
     if (msg.order) {
       json["order"] = msg.order;
     }
-    if (msg.withPrefinished) {
+    if (msg.withPrefinished != undefined) {
       json["withPrefinished"] = msg.withPrefinished;
     }
     return json;

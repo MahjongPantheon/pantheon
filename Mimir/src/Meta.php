@@ -295,6 +295,15 @@ class Meta
     }
 
     /**
+     * @param int $eventId
+     * @return bool
+     */
+    public function isAuthorizedForEvent($eventId)
+    {
+        return $this->_currentEventId === $eventId;
+    }
+
+    /**
      * @deprecated only for testing purposes!
      * @param int|null $personId
      * @return void

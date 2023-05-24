@@ -25,7 +25,6 @@ import { IconDownload } from '@tabler/icons-react';
 import { I18nService } from '../services/i18n';
 
 // TODO: aggregated events
-// TODO: superadmin flag to show prefinished results
 // TODO: hide or show table depending on corresponding flag
 
 export const RatingTable: React.FC<{
@@ -51,7 +50,7 @@ export const RatingTable: React.FC<{
   const [players] = useIsomorphicState(
     [],
     'RatingTable_event_' + eventId + order + orderBy,
-    () => api.getRatingTable(parseInt(eventId, 10), order ?? 'desc', orderBy ?? 'rating', false),
+    () => api.getRatingTable(parseInt(eventId, 10), order ?? 'desc', orderBy ?? 'rating'),
     [eventId, order, orderBy]
   );
 

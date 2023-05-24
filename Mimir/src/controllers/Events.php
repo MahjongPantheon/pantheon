@@ -608,12 +608,11 @@ class EventsController extends Controller
      * @param array $eventIdList
      * @param string $orderBy either 'name', 'rating', 'avg_place' or 'avg_score'
      * @param string $order either 'asc' or 'desc'
-     * @param bool $withPrefinished include prefinished games score
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getRatingTable($eventIdList, $orderBy, $order, $withPrefinished)
+    public function getRatingTable($eventIdList, $orderBy, $order)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
@@ -625,6 +624,12 @@ class EventsController extends Controller
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
+
+        // Show prefinished results only for event admin.
+        // We should also check that requested event matches authorization header.
+        $withPrefinished = count($eventIdList) === 1 &&
+            $this->_meta->isAuthorizedForEvent($eventIdList[0]) &&
+            $this->_meta->isEventAdmin();
 
         $playerRegs = PlayerRegistrationPrimitive::fetchPlayerRegData($this->_ds, $eventIdList);
         $table = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
