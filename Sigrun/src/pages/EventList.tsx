@@ -22,6 +22,7 @@ import { renderToString } from 'react-dom/server';
 import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
+import { Helmet } from 'react-helmet';
 
 let stripHtml: (dirtyString: string) => string;
 if (import.meta.env.SSR) {
@@ -53,6 +54,9 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
 
   return (
     <Container>
+      <Helmet>
+        <title>{i18n._t('Event list')} - Sigrun</title>
+      </Helmet>
       <h2>{i18n._t('Riichi mahjong events list')}</h2>
       <Divider size='xs' />
       <Stack justify='flex-start' spacing='0'>

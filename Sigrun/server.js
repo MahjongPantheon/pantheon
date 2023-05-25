@@ -29,8 +29,9 @@ export async function createServer(app) {
     );
     const render = (await import('./dist/server/server.js')).SSRRender;
 
-    render(url, req.cookies).then(({ cookies, appHtml, serverData }) => {
+    render(url, req.cookies).then(({ cookies, helmet, appHtml, serverData }) => {
       const html = template
+        .replace(`<!--app-head-->`, helmet)
         .replace(`<!--app-html-->`, appHtml)
         .replace(`<!--app-server-data-->`, serverData);
       res.status(200);

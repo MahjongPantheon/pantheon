@@ -27,6 +27,7 @@ import { YakuGraph } from '../components/YakuGraph';
 import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
 import { useEvent } from '../hooks/useEvent';
+import { Helmet } from 'react-helmet';
 
 export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string } }> = ({
   params: { eventId, playerId },
@@ -65,6 +66,11 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {player.title} - {i18n._t('Player stats')} - Sigrun
+        </title>
+      </Helmet>
       <h2>{player.title}</h2>
       {events?.map((event, eid) => {
         return (

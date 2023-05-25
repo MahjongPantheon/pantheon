@@ -37,6 +37,7 @@ import { I18nService } from '../services/i18n';
 import { useContext } from 'react';
 import { globalsCtx } from '../hooks/globals';
 import { TeamTable } from '../components/TeamTable';
+import { Helmet } from 'react-helmet';
 
 export const RatingTable: React.FC<{
   params: {
@@ -104,6 +105,18 @@ export const RatingTable: React.FC<{
   return (
     events && (
       <Container>
+        <Helmet>
+          {events?.length === 1 && (
+            <title>
+              {i18n._t('Rating table')} - {events?.[0].title} - Sigrun
+            </title>
+          )}
+          {(events?.length ?? 0) > 1 && (
+            <title>
+              {i18n._t('Rating table')} - {i18n._t('Aggregated event')} - Sigrun
+            </title>
+          )}
+        </Helmet>
         {events?.map((event, eid) => (
           <DataCmp position='apart' key={`ev_${eid}`}>
             <h2 style={{ display: 'flex', gap: '20px' }}>

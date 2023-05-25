@@ -6,6 +6,7 @@ import { Isomorphic } from './hooks/isomorphic';
 import staticLocationHook from 'wouter/static-location';
 import { Layout } from './Layout';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { JSDOM } from 'jsdom';
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
@@ -41,8 +42,10 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     </Isomorphic.Provider>
   );
 
+  const helmet = Helmet.renderStatic();
   return {
     appHtml,
+    helmet: [helmet.title.toString(), helmet.meta.toString(), helmet.link.toString()].join('\n'),
     cookies: storageStrategy.getCookies(),
     serverData: `<script>window.initialData = ${JSON.stringify(isomorphicCtxValue)};</script>`,
   };

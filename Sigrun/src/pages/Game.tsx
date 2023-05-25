@@ -7,6 +7,7 @@ import { useI18n } from '../hooks/i18n';
 import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { useEvent } from '../hooks/useEvent';
+import { Helmet } from 'react-helmet';
 
 export const Game: React.FC<{
   params: {
@@ -34,10 +35,15 @@ export const Game: React.FC<{
     return acc;
   }, {} as Record<number, Player>);
 
+  // TODO: finish helmet titles
+
   return (
     game?.game &&
     events && (
       <Container>
+        <Helmet>
+          <title>{i18n._t('Game preview')} - Sigrun</title>
+        </Helmet>
         <h2 style={{ display: 'flex', gap: '20px' }}>
           {events?.[0] && <EventTypeIcon event={events[0]} />}
           {events?.[0]?.title} - {i18n._t('View game')}

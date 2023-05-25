@@ -18,6 +18,7 @@ import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { IconAward } from '@tabler/icons-react';
 import { YakuId, yakuNameMap } from '../helpers/yaku';
+import { Helmet } from 'react-helmet';
 
 enum Achievement {
   BEST_HAND = 'bestHand',
@@ -727,6 +728,11 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {events?.[0].title} - {i18n._t('Achievements')} - Sigrun
+        </title>
+      </Helmet>
       <h2 style={{ display: 'flex', gap: '20px' }}>
         {events?.[0] && <EventTypeIcon event={events[0]} />}
         {events?.[0]?.title} - {i18n._t('Achievements')}

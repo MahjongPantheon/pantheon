@@ -18,6 +18,8 @@ import { useCallback, useState, ReactNode } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
+import { Helmet } from 'react-helmet';
+import favicon from '../assets/ico/favicon.png';
 
 export function Layout({
   children,
@@ -47,6 +49,7 @@ export function Layout({
     loading: false,
     ratingHidden: false,
     hasSeries: false,
+    withChips: false,
   });
   const setData = (newData: Partial<Globals>) => {
     setDataInt((old) => ({ ...old, ...newData }));
@@ -81,6 +84,12 @@ export function Layout({
             <StorageProvider strategy={storageStrategy}>
               <I18nProvider>
                 <ApiProvider>
+                  <Helmet>
+                    <title>Sigrun</title>
+                    <meta charSet='UTF-8' />
+                    <link rel='icon' type='image/png' href={favicon} />
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+                  </Helmet>
                   <NavigationProgress color='green' zIndex={10100} />
                   <AppShell
                     padding='md'

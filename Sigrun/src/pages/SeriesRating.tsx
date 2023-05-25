@@ -18,6 +18,7 @@ import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { PlayerIcon } from '../components/PlayerIcon';
 import { useLocation } from 'wouter';
+import { Helmet } from 'react-helmet';
 
 export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
   params: { eventId },
@@ -46,6 +47,11 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {i18n._t('Series rating')} - {events[0]?.title} - Sigrun
+        </title>
+      </Helmet>
       <h2 style={{ display: 'flex', gap: '20px' }}>
         {events[0] && <EventTypeIcon event={events[0]} />}
         {events[0]?.title} - {i18n._t('Series rating')}
