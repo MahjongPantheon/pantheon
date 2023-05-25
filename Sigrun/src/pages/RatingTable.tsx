@@ -117,13 +117,7 @@ export const RatingTable: React.FC<{
               leftIcon={<IconDownload size='1.1rem' />}
               onClick={() => {
                 // TODO: chips
-                downloadCsv(
-                  i18n,
-                  event?.isTeam,
-                  false,
-                  players,
-                  'Rating_' + event?.title?.replace(/\W/g, '') + '.csv'
-                );
+                downloadCsv(i18n, event?.isTeam, false, players, `Rating_${event?.id}.csv`);
               }}
             >
               {i18n._t('Save as CSV')}

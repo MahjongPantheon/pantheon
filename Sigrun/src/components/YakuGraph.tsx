@@ -23,16 +23,16 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
 
-  if (!yakuStat) {
-    return null;
-  }
-
   const yakuNameMap = useMemo(() => yakuNameMapGen(i18n), []);
   const yaku = Object.values(yakuList).reduce((acc, y) => {
     acc.set(y.id, 0);
     return acc;
   }, new Map<YakuId, number>());
   let totalYakuhai = 0;
+
+  if (!yakuStat) {
+    return null;
+  }
 
   yakuStat.forEach((stat) => {
     yaku.set(stat.yakuId as YakuId, stat.count);

@@ -32,8 +32,6 @@ export const Game: React.FC<{
     return acc;
   }, {} as Record<number, Player>);
 
-  // TODO: fix universal navigation markup for small/large screens
-
   return (
     game?.game &&
     event && (

@@ -89,7 +89,6 @@ export function Layout({
                       <Footer
                         height={60}
                         bg={theme.primaryColor}
-                        fixed={false}
                         style={{ position: 'static', display: 'flex', alignItems: 'center' }}
                       >
                         <AppFooter
@@ -101,6 +100,7 @@ export function Layout({
                     }
                     styles={{
                       main: {
+                        minHeight: 'calc(100vh - var(--mantine-footer-height, 0px))',
                         background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
                       },
                     }}

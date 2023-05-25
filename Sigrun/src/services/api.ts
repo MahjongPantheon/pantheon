@@ -158,7 +158,6 @@ export class ApiService {
     return GetPlayer({ id: playerId }, this._clientConfMimir).then((r) => r.players);
   }
 
-  // TODO: list on main page
   getEventAdmins(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, {
       method: 'GetEventAdmins',
