@@ -64,7 +64,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   }
 
   const tables = new Map<number, PlayerSeating[]>();
-  for (const t of seating.seating ?? []) {
+  for (const t of seating ?? []) {
     if (!tables.has(t.tableIndex)) {
       tables.set(t.tableIndex, []);
     }

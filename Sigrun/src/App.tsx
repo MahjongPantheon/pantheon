@@ -7,6 +7,7 @@ import { RecentGames } from './pages/RecentGames';
 import { SeriesRating } from './pages/SeriesRating';
 import { Game } from './pages/Game';
 import { Timer } from './pages/Timer';
+import { Achievements } from './pages/Achievements';
 import './App.css';
 
 export function App() {
@@ -22,6 +23,7 @@ export function App() {
       <Route path='/event/:eventId/game/:sessionHash' component={Game} />
       <Route path='/event/:eventId/seriesRating' component={SeriesRating} />
       <Route path='/event/:eventId/timer' component={Timer} />
+      <Route path='/event/:eventId/achievements' component={Achievements} />
     </Switch>
   );
 }

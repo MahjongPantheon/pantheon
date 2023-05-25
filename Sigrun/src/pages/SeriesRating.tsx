@@ -44,7 +44,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
       <Divider size='xs' />
       <Space h='md' />
       {seriesData &&
-        seriesData.results.map((item, idx) => (
+        seriesData.map((item, idx) => (
           <Group style={{ flex: 1 }} key={`series_${idx}`}>
             <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
               {idx + 1}

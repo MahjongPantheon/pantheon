@@ -50,6 +50,11 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
               <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/order/rating`}>
                 {i18n._t('Rating table')}
               </Anchor>
+              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/achievements`}>
+                {i18n._t('Achievements')}
+              </Anchor>
+            </Stack>
+            <Stack spacing={0}>
               {globals.data.hasSeries && (
                 <Anchor
                   color='white'
@@ -59,8 +64,6 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
                   {i18n._t('Series rating')}
                 </Anchor>
               )}
-            </Stack>
-            <Stack spacing={0}>
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
                 <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/timer`}>
                   {i18n._t('Timer & seating')}

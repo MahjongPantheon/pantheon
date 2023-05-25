@@ -16,6 +16,7 @@ import {
 } from '@mantine/core';
 import {
   IconAlarm,
+  IconAward,
   IconChartBar,
   IconChartLine,
   IconChevronDown,
@@ -220,6 +221,15 @@ export function AppHeader() {
                     icon={<IconChartBar size={24} />}
                   >
                     {i18n._pt('Event menu', 'Rating table')}
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/event/${globals.data.eventId}/achievements`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconAward size={24} />}
+                  >
+                    {i18n._pt('Event menu', 'Achievements')}
                   </Menu.Item>
                   {globals.data.hasSeries && (
                     <Menu.Item

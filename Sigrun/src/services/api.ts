@@ -1,5 +1,6 @@
 import {
   AddOnlineReplay,
+  GetAchievements,
   GetAllRegisteredPlayers,
   GetCurrentSeating,
   GetEvents,
@@ -134,7 +135,7 @@ export class ApiService {
 
   getGameSeries(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetGameSeries' });
-    return GetGamesSeries({ eventId }, this._clientConfMimir);
+    return GetGamesSeries({ eventId }, this._clientConfMimir).then((r) => r.results);
   }
 
   getPlayerStat(eventIdList: number[], playerId: number) {
@@ -149,7 +150,7 @@ export class ApiService {
 
   getSeating(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetCurrentSeating' });
-    return GetCurrentSeating({ eventId }, this._clientConfMimir);
+    return GetCurrentSeating({ eventId }, this._clientConfMimir).then((r) => r.seating);
   }
 
   getPlayer(playerId: number) {
@@ -157,10 +158,20 @@ export class ApiService {
     return GetPlayer({ id: playerId }, this._clientConfMimir).then((r) => r.players);
   }
 
+  // TODO: list on main page
   getEventAdmins(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, {
       method: 'GetEventAdmins',
     });
     return GetEventAdmins({ eventId }, this._clientConfFrey).then((r) => r.admins);
+  }
+
+  getAchievements(eventId: number, achievementsList: string[]) {
+    this._analytics?.track(Analytics.LOAD_STARTED, {
+      method: 'GetEventAdmins',
+    });
+    return GetAchievements({ eventId, achievementsList }, this._clientConfMimir).then(
+      (r) => r.achievements
+    );
   }
 }
