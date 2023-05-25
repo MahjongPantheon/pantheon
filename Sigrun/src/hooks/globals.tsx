@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { EventType } from '../clients/proto/atoms.pb';
 
 export type Globals = {
-  eventId: number | null;
+  eventId: number[] | null;
   type: EventType | null;
   isTeam: boolean;
   isPrescripted: boolean;

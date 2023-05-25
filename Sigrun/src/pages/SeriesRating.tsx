@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  Alert,
   Anchor,
   Badge,
   Box,
@@ -24,22 +25,30 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
   const api = useApi();
   const [, navigate] = useLocation();
   const i18n = useI18n();
-  const event = useEvent(eventId);
+  const events = useEvent(eventId);
   const [seriesData] = useIsomorphicState(
     null,
     'SeriesRating_games_' + eventId,
-    () => (event ? api.getGameSeries(parseInt(eventId, 10)) : Promise.resolve(null)),
-    [eventId, event]
+    () => (events ? api.getGameSeries(parseInt(eventId, 10)) : Promise.resolve(null)),
+    [eventId, events]
   );
-  if (!event) {
+  if (!events) {
     return null;
+  }
+
+  if (events?.length > 1) {
+    return (
+      <Container>
+        <Alert color='red'>{i18n._t('Series rating is not available for aggregated events')}</Alert>
+      </Container>
+    );
   }
 
   return (
     <Container>
       <h2 style={{ display: 'flex', gap: '20px' }}>
-        {event && <EventTypeIcon event={event} />}
-        {event?.title} - {i18n._t('Series rating')}
+        {events[0] && <EventTypeIcon event={events[0]} />}
+        {events[0]?.title} - {i18n._t('Series rating')}
       </h2>
       <Divider size='xs' />
       <Space h='md' />
@@ -52,9 +61,9 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
             <PlayerIcon p={item.player} />
             <Group spacing={2}>
               <Anchor
-                href={`/event/${event.id}/player/${item.player.id}`}
+                href={`/event/${events[0].id}/player/${item.player.id}`}
                 onClick={(e) => {
-                  navigate(`/event/${event.id}/player/${item.player.id}`);
+                  navigate(`/event/${events[0].id}/player/${item.player.id}`);
                   e.preventDefault();
                 }}
               >

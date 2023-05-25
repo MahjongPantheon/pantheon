@@ -13,7 +13,7 @@ import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useLocation } from 'wouter';
 
-export const TeamTable = ({ players, event }: { players: PlayerInRating[]; event: Event }) => {
+export const TeamTable = ({ players, events }: { players: PlayerInRating[]; events: Event[] }) => {
   const [, navigate] = useLocation();
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const DataCmp = largeScreen ? Group : Stack;
@@ -71,15 +71,17 @@ export const TeamTable = ({ players, event }: { players: PlayerInRating[]; event
                     <PlayerIcon p={player} />
                     <Stack spacing={2}>
                       <Anchor
-                        href={`/event/${event.id}/player/${player.id}`}
+                        href={`/event/${events.map((e) => e.id).join('.')}/player/${player.id}`}
                         onClick={(e) => {
-                          navigate(`/event/${event.id}/player/${player.id}`);
+                          navigate(
+                            `/event/${events.map((e) => e.id).join('.')}/player/${player.id}`
+                          );
                           e.preventDefault();
                         }}
                       >
                         {player.title}
                       </Anchor>
-                      {event.type === EventType.EVENT_TYPE_ONLINE && (
+                      {events?.[0]?.type === EventType.EVENT_TYPE_ONLINE && (
                         <Text c='dimmed'>{player.tenhouId}</Text>
                       )}
                     </Stack>

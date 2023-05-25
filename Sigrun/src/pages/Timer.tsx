@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  Alert,
   Badge,
   Center,
   Container,
@@ -18,9 +19,11 @@ import { ReactNode, useEffect, useState } from 'react';
 import { IconAlarm } from '@tabler/icons-react';
 import { PlayerSeating } from '../clients/proto/atoms.pb';
 import sound from '../../assets/snd/5min.wav';
+import { useI18n } from '../hooks/i18n';
 
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
-  const event = useEvent(eventId);
+  const events = useEvent(eventId);
+  const i18n = useI18n();
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
   const api = useApi();
@@ -59,8 +62,16 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     return () => clearInterval(timer);
   }, []);
 
-  if (!event || !seating) {
+  if (!events || !seating) {
     return null;
+  }
+
+  if (events?.length > 1) {
+    return (
+      <Container>
+        <Alert color='red'>{i18n._t('Timer is not available for aggregated events')}</Alert>
+      </Container>
+    );
   }
 
   const tables = new Map<number, PlayerSeating[]>();
@@ -88,8 +99,8 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
       {!showSeating && (
         <>
           <h2 style={{ display: 'flex', gap: '20px' }}>
-            {event && <EventTypeIcon event={event} />}
-            {event?.title}
+            {events[0] && <EventTypeIcon event={events[0]} />}
+            {events[0]?.title}
           </h2>
           <Divider size='xs' />
           <Space h='md' />

@@ -15,7 +15,7 @@ export function App() {
     <Switch>
       <Route path='/' component={EventList} />
       <Route path='/page/:page' component={EventList} />
-      <Route path='/event/:eventId' component={EventInfo} />
+      <Route path='/event/:eventId/info' component={EventInfo} />
       <Route path='/event/:eventId/order/:orderBy' component={RatingTable} />
       <Route path='/event/:eventId/player/:playerId' component={PlayerStats} />
       <Route path='/event/:eventId/games' component={RecentGames} />

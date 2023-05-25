@@ -38,8 +38,6 @@ import { useContext } from 'react';
 import { globalsCtx } from '../hooks/globals';
 import { TeamTable } from '../components/TeamTable';
 
-// TODO: aggregated events
-
 export const RatingTable: React.FC<{
   params: {
     eventId: string;
@@ -56,7 +54,7 @@ export const RatingTable: React.FC<{
   }[orderBy] as 'asc' | 'desc';
   const api = useApi();
   const i18n = useI18n();
-  const event = useEvent(eventId);
+  const events = useEvent(eventId);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
@@ -75,7 +73,7 @@ export const RatingTable: React.FC<{
     [eventId, order, orderBy]
   );
 
-  if (!players || !event) {
+  if (!players || !events) {
     return null;
   }
 
@@ -89,12 +87,12 @@ export const RatingTable: React.FC<{
     );
   }
 
-  if (event && !globals.data.loading && globals.data.ratingHidden) {
+  if (events && !globals.data.loading && globals.data.ratingHidden) {
     return (
       <Container>
         <h2 style={{ display: 'flex', gap: '20px' }}>
-          {event && <EventTypeIcon event={event} />}
-          {event?.title} - {i18n._t('Rating table')}
+          {events?.[0] && <EventTypeIcon event={events?.[0]} />}
+          {events?.[0]?.title} - {i18n._t('Rating table')}
         </h2>
         <Alert icon={<IconExclamationCircle />} color='yellow'>
           {i18n._t('Rating table is hidden by tournament administrator')}
@@ -104,32 +102,34 @@ export const RatingTable: React.FC<{
   }
 
   return (
-    event && (
+    events && (
       <Container>
-        <DataCmp position='apart'>
-          <h2 style={{ display: 'flex', gap: '20px' }}>
-            {event && <EventTypeIcon event={event} />}
-            {event?.title} - {i18n._t('Rating table')}
-          </h2>
-          {orderBy !== 'team' && (
-            <Button
-              variant='light'
-              size='xs'
-              leftIcon={<IconDownload size='1.1rem' />}
-              onClick={() => {
-                downloadCsv(
-                  i18n,
-                  event?.isTeam,
-                  event?.withChips,
-                  players,
-                  `Rating_${event?.id}.csv`
-                );
-              }}
-            >
-              {i18n._t('Save as CSV')}
-            </Button>
-          )}
-        </DataCmp>
+        {events?.map((event, eid) => (
+          <DataCmp position='apart' key={`ev_${eid}`}>
+            <h2 style={{ display: 'flex', gap: '20px' }}>
+              {event && <EventTypeIcon event={event} />}
+              {event?.title} - {i18n._t('Rating table')}
+            </h2>
+            {orderBy !== 'team' && events.length === 1 && (
+              <Button
+                variant='light'
+                size='xs'
+                leftIcon={<IconDownload size='1.1rem' />}
+                onClick={() => {
+                  downloadCsv(
+                    i18n,
+                    events?.[0]?.isTeam,
+                    events?.[0]?.withChips,
+                    players,
+                    `Rating_${events?.[0]?.id}.csv`
+                  );
+                }}
+              >
+                {i18n._t('Save as CSV')}
+              </Button>
+            )}
+          </DataCmp>
+        ))}
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
@@ -151,9 +151,9 @@ export const RatingTable: React.FC<{
                         <IconSortDescending2 size='1rem' />
                       </Box>
                     }
-                    href={`/event/${event.id}/order/team`}
+                    href={`/event/${eventId}/order/team`}
                     onClick={(e) => {
-                      navigate(`/event/${event.id}/order/team`);
+                      navigate(`/event/${eventId}/order/team`);
                       e.preventDefault();
                     }}
                     style={{ cursor: 'pointer' }}
@@ -174,9 +174,9 @@ export const RatingTable: React.FC<{
                       <IconSortDescending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${event.id}/order/rating`}
+                  href={`/event/${eventId}/order/rating`}
                   onClick={(e) => {
-                    navigate(`/event/${event.id}/order/rating`);
+                    navigate(`/event/${eventId}/order/rating`);
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -198,9 +198,9 @@ export const RatingTable: React.FC<{
                       <IconSortDescending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${event.id}/order/avg_score`}
+                  href={`/event/${eventId}/order/avg_score`}
                   onClick={(e) => {
-                    navigate(`/event/${event.id}/order/avg_score`);
+                    navigate(`/event/${eventId}/order/avg_score`);
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -220,9 +220,9 @@ export const RatingTable: React.FC<{
                       <IconSortAscending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${event.id}/order/avg_place`}
+                  href={`/event/${eventId}/order/avg_place`}
                   onClick={(e) => {
-                    navigate(`/event/${event.id}/order/avg_place`);
+                    navigate(`/event/${eventId}/order/avg_place`);
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -240,7 +240,7 @@ export const RatingTable: React.FC<{
           <LoadingOverlay visible={playersLoading} overlayBlur={2} />
           {orderBy === 'team' && (
             <Stack justify='flex-start' spacing='0'>
-              <TeamTable players={players} event={event} />
+              <TeamTable players={players} events={events} />
             </Stack>
           )}
           {orderBy !== 'team' && (
@@ -267,18 +267,18 @@ export const RatingTable: React.FC<{
                       <PlayerIcon p={player} />
                       <Stack spacing={2}>
                         <Anchor
-                          href={`/event/${event.id}/player/${player.id}`}
+                          href={`/event/${eventId}/player/${player.id}`}
                           onClick={(e) => {
-                            navigate(`/event/${event.id}/player/${player.id}`);
+                            navigate(`/event/${eventId}/player/${player.id}`);
                             e.preventDefault();
                           }}
                         >
                           {player.title}
                         </Anchor>
-                        {event.type === EventType.EVENT_TYPE_ONLINE && (
+                        {events?.[0]?.type === EventType.EVENT_TYPE_ONLINE && (
                           <Text c='dimmed'>{player.tenhouId}</Text>
                         )}
-                        {event.isTeam && player.teamName && <Text>{player.teamName}</Text>}
+                        {events?.[0]?.isTeam && player.teamName && <Text>{player.teamName}</Text>}
                       </Stack>
                     </Group>
                     <Group spacing={2} grow={!largeScreen}>
@@ -322,7 +322,7 @@ export const RatingTable: React.FC<{
                       >
                         {player.gamesPlayed.toFixed(0)}
                       </Badge>
-                      {event?.withChips && (
+                      {events?.[0]?.withChips && (
                         <Badge
                           title={i18n._t('Chips')}
                           w={45}

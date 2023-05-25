@@ -3,23 +3,24 @@ import { globalsCtx } from './globals';
 import { useIsomorphicState } from './useIsomorphicState';
 import { useApi } from './api';
 
-export const useEvent = (eventId: string | null) => {
+export const useEvent = (eventIdListStr: string | null) => {
   const globals = useContext(globalsCtx);
   const api = useApi();
+  const eventsId = eventIdListStr?.split('.').map((id) => parseInt(id, 10));
   const [events] = useIsomorphicState(
     null,
-    'EventInfo_event_' + (eventId ?? 'null'),
-    () => (eventId ? api.getEventsById([parseInt(eventId, 10)]) : Promise.resolve(null)),
-    [eventId]
+    'EventInfo_event_' + (eventIdListStr ?? 'null'),
+    () => (eventsId ? api.getEventsById(eventsId) : Promise.resolve(null)),
+    [eventIdListStr]
   );
   useEffect(() => {
-    if (eventId) {
-      globals.setData({ eventId: parseInt(eventId, 10) });
+    if (eventsId) {
+      globals.setData({ eventId: eventsId });
     }
-  }, [eventId]);
+  }, [eventIdListStr]);
 
   useEffect(() => {
-    if (!eventId) {
+    if (!eventIdListStr) {
       // we don't need event data
       globals.setData({
         eventId: null,
@@ -33,7 +34,7 @@ export const useEvent = (eventId: string | null) => {
       });
     } else {
       if (events) {
-        // we have the data
+        // we have the data; use first event to fill global data, other events should follow the first rules
         globals.setData({
           isTeam: events[0]?.isTeam,
           isPrescripted: events[0]?.isPrescripted,
@@ -56,7 +57,7 @@ export const useEvent = (eventId: string | null) => {
         });
       }
     }
-  }, [eventId, events]);
+  }, [eventIdListStr, events]);
 
-  return events?.[0] ?? null;
+  return events ?? null;
 };

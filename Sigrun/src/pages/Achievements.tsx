@@ -70,7 +70,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
 }) => {
   const i18n = useI18n();
   const api = useApi();
-  const event = useEvent(eventId);
+  const events = useEvent(eventId);
   const [achievementsData] = useIsomorphicState(
     null,
     'Achievements_' + eventId,
@@ -717,11 +717,19 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
   ];
 
+  if ((events?.length ?? 0) > 1) {
+    return (
+      <Container>
+        <Alert color='red'>{i18n._t('Achievements are not available for aggregated events')}</Alert>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <h2 style={{ display: 'flex', gap: '20px' }}>
-        {event && <EventTypeIcon event={event} />}
-        {event?.title} - {i18n._t('Achievements')}
+        {events?.[0] && <EventTypeIcon event={events[0]} />}
+        {events?.[0]?.title} - {i18n._t('Achievements')}
       </h2>
       <Divider size='xs' />
       <Space h='md' />

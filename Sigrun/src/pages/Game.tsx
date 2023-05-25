@@ -16,7 +16,9 @@ export const Game: React.FC<{
 }> = ({ params: { eventId, sessionHash } }) => {
   const api = useApi();
   const i18n = useI18n();
-  const event = useEvent(eventId);
+  const events = useEvent(eventId);
+  // Note: session is not checked against particular event;
+  // Player can request any eventId but with proper hash the session will be retrieved correctly
   const [game] = useIsomorphicState(
     null,
     'RecentGames_games_' + eventId,
@@ -24,7 +26,7 @@ export const Game: React.FC<{
     [eventId, sessionHash]
   );
 
-  if (game === undefined || !event) {
+  if (game === undefined || !events) {
     return null;
   }
   const players = game?.players?.reduce((acc, p) => {
@@ -34,19 +36,19 @@ export const Game: React.FC<{
 
   return (
     game?.game &&
-    event && (
+    events && (
       <Container>
         <h2 style={{ display: 'flex', gap: '20px' }}>
-          {event && <EventTypeIcon event={event} />}
-          {event?.title} - {i18n._t('View game')}
+          {events?.[0] && <EventTypeIcon event={events[0]} />}
+          {events?.[0]?.title} - {i18n._t('View game')}
         </h2>
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
         <GameListing
           showShareLink={false}
-          isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
-          eventId={eventId}
+          isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
+          eventId={events?.[0]?.id.toString()}
           game={game.game}
           players={players}
           rowStyle={{

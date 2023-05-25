@@ -83,9 +83,9 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
                 </ActionIcon>
               </a>
               <a
-                href={`/event/${e.id}`}
+                href={`/event/${e.id}/info`}
                 onClick={(ev) => {
-                  navigate(`/event/${e.id}`);
+                  navigate(`/event/${e.id}/info`);
                   ev.preventDefault();
                 }}
               >

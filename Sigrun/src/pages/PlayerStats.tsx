@@ -28,8 +28,6 @@ import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
 import { useEvent } from '../hooks/useEvent';
 
-// TODO: aggregated events
-
 export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string } }> = ({
   params: { eventId, playerId },
 }) => {
@@ -37,7 +35,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   const api = useApi();
   const i18n = useI18n();
   const [, navigate] = useLocation();
-  const event = useEvent(eventId);
+  const events = useEvent(eventId);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const DataCmp = largeScreen ? Group : Stack;
   const theme = useMantineTheme();
@@ -57,23 +55,27 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   const [playerStats] = useIsomorphicState(
     [],
     'PlayerStats_playerstats_' + playerId,
-    () => api.getPlayerStat([parseInt(eventId, 10)], parseInt(playerId, 10)),
-    [eventId, playerId]
+    () => api.getPlayerStat(events?.map((e) => e.id) ?? [], parseInt(playerId, 10)),
+    [events, playerId]
   );
 
-  if (!event || !player) {
+  if (!events || !player) {
     return null;
   }
 
   return (
     <Container>
       <h2>{player.title}</h2>
-      <Group>
-        <h4 style={{ display: 'flex', gap: '20px' }}>
-          {event && <EventTypeIcon size='sm' iconSize={14} event={event} />}
-          {event?.title}
-        </h4>
-      </Group>
+      {events?.map((event, eid) => {
+        return (
+          <Group key={`ev_${eid}`}>
+            <h4 style={{ display: 'flex', gap: '20px' }}>
+              {event && <EventTypeIcon size='sm' iconSize={14} event={event} />}
+              {event?.title}
+            </h4>
+          </Group>
+        );
+      })}
       <Divider size='xs' />
       <Space h='md' />
       {!import.meta.env.SSR && (

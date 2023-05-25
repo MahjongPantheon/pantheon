@@ -114,9 +114,9 @@ export function AppHeader() {
     } else {
       setOnlineError(null);
       setOnlineLoading(true);
-      if (globals.data.eventId) {
+      if (globals.data.eventId?.[0]) {
         api
-          .addOnlineGame(globals.data.eventId, onlineLink)
+          .addOnlineGame(globals.data.eventId?.[0], onlineLink)
           .then(() => {
             setOnlineLoading(false);
             window.location.href = `/event/${globals.data.eventId}/games`;
@@ -160,26 +160,28 @@ export function AppHeader() {
                 </ActionIcon>
               )}
             </Anchor>
-            <Anchor href={import.meta.env.VITE_TYR_URL} target='_blank'>
-              {largeScreen ? (
-                <Button
-                  className={classes.link}
-                  leftIcon={<IconDeviceMobileShare size={20} />}
-                  title={i18n._t('Open assitant')}
-                >
-                  {i18n._t('Open assistant')}
-                </Button>
-              ) : (
-                <ActionIcon
-                  title={i18n._t('Open assistant')}
-                  variant='filled'
-                  color='orange'
-                  size='lg'
-                >
-                  <IconDeviceMobileShare size='1.5rem' />
-                </ActionIcon>
-              )}
-            </Anchor>
+            {globals.data.eventId?.length === 1 && (
+              <Anchor href={import.meta.env.VITE_TYR_URL} target='_blank'>
+                {largeScreen ? (
+                  <Button
+                    className={classes.link}
+                    leftIcon={<IconDeviceMobileShare size={20} />}
+                    title={i18n._t('Open assitant')}
+                  >
+                    {i18n._t('Open assistant')}
+                  </Button>
+                ) : (
+                  <ActionIcon
+                    title={i18n._t('Open assistant')}
+                    variant='filled'
+                    color='orange'
+                    size='lg'
+                  >
+                    <IconDeviceMobileShare size='1.5rem' />
+                  </ActionIcon>
+                )}
+              </Anchor>
+            )}
           </Group>
 
           {globals.data.eventId && (
@@ -197,7 +199,7 @@ export function AppHeader() {
                 <Menu.Dropdown>
                   <Menu.Item
                     onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId}`);
+                      navigate(`/event/${globals.data.eventId?.join('.')}/info`);
                       e.preventDefault();
                     }}
                     icon={<IconNotes size={24} />}
@@ -206,7 +208,7 @@ export function AppHeader() {
                   </Menu.Item>
                   <Menu.Item
                     onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId}/games`);
+                      navigate(`/event/${globals.data.eventId?.join('.')}/games`);
                       e.preventDefault();
                     }}
                     icon={<IconOlympics size={24} />}
@@ -215,26 +217,28 @@ export function AppHeader() {
                   </Menu.Item>
                   <Menu.Item
                     onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId}/order/rating`);
+                      navigate(`/event/${globals.data.eventId?.join('.')}/order/rating`);
                       e.preventDefault();
                     }}
                     icon={<IconChartBar size={24} />}
                   >
                     {i18n._pt('Event menu', 'Rating table')}
                   </Menu.Item>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId}/achievements`);
-                      e.preventDefault();
-                    }}
-                    icon={<IconAward size={24} />}
-                  >
-                    {i18n._pt('Event menu', 'Achievements')}
-                  </Menu.Item>
-                  {globals.data.hasSeries && (
+                  {globals.data.eventId?.length === 1 && (
                     <Menu.Item
                       onClick={(e) => {
-                        navigate(`/event/${globals.data.eventId}/seriesRating`);
+                        navigate(`/event/${globals.data.eventId?.join('.')}/achievements`);
+                        e.preventDefault();
+                      }}
+                      icon={<IconAward size={24} />}
+                    >
+                      {i18n._pt('Event menu', 'Achievements')}
+                    </Menu.Item>
+                  )}
+                  {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
+                    <Menu.Item
+                      onClick={(e) => {
+                        navigate(`/event/${globals.data.eventId?.join('.')}/seriesRating`);
                         e.preventDefault();
                       }}
                       icon={<IconChartLine size={24} />}
@@ -242,28 +246,30 @@ export function AppHeader() {
                       {i18n._pt('Event menu', 'Series rating')}
                     </Menu.Item>
                   )}
-                  {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
-                    <Menu.Item
-                      onClick={(e) => {
-                        navigate(`/event/${globals.data.eventId}/timer`);
-                        e.preventDefault();
-                      }}
-                      icon={<IconAlarm size={24} />}
-                    >
-                      {i18n._pt('Event menu', 'Timer & seating')}
-                    </Menu.Item>
-                  )}
-                  {globals.data.type === EventType.EVENT_TYPE_ONLINE && (
-                    <Menu.Item
-                      onClick={(e) => {
-                        openOnlineModal();
-                        e.preventDefault();
-                      }}
-                      icon={<IconNetwork size={24} />}
-                    >
-                      {i18n._pt('Event menu', 'Add online game')}
-                    </Menu.Item>
-                  )}
+                  {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
+                    globals.data.eventId?.length === 1 && (
+                      <Menu.Item
+                        onClick={(e) => {
+                          navigate(`/event/${globals.data.eventId?.join('.')}/timer`);
+                          e.preventDefault();
+                        }}
+                        icon={<IconAlarm size={24} />}
+                      >
+                        {i18n._pt('Event menu', 'Timer & seating')}
+                      </Menu.Item>
+                    )}
+                  {globals.data.type === EventType.EVENT_TYPE_ONLINE &&
+                    globals.data.eventId?.length === 1 && (
+                      <Menu.Item
+                        onClick={(e) => {
+                          openOnlineModal();
+                          e.preventDefault();
+                        }}
+                        icon={<IconNetwork size={24} />}
+                      >
+                        {i18n._pt('Event menu', 'Add online game')}
+                      </Menu.Item>
+                    )}
                 </Menu.Dropdown>
               </Menu>
             </Group>

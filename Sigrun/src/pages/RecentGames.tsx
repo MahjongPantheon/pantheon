@@ -22,7 +22,6 @@ import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEvent } from '../hooks/useEvent';
 
-// TODO: aggregated events
 const PERPAGE = 10;
 export const RecentGames: React.FC<{
   params: {
@@ -37,7 +36,7 @@ export const RecentGames: React.FC<{
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
-  const event = useEvent(eventId);
+  const events = useEvent(eventId);
   const [games, , gamesLoading] = useIsomorphicState(
     [],
     'RecentGames_games_' + eventId,
@@ -46,7 +45,7 @@ export const RecentGames: React.FC<{
     [eventId, page]
   );
 
-  if (!games || !event) {
+  if (!games || !events) {
     return null;
   }
   const players = games?.players?.reduce((acc, p) => {
@@ -55,12 +54,14 @@ export const RecentGames: React.FC<{
   }, {} as Record<number, Player>);
 
   return (
-    event && (
+    events && (
       <Container>
-        <h2 style={{ display: 'flex', gap: '20px' }}>
-          {event && <EventTypeIcon event={event} />}
-          {event?.title} - {i18n._t('Last games')}
-        </h2>
+        {events?.map((event, eid) => (
+          <h2 style={{ display: 'flex', gap: '20px' }} key={`ev_${eid}`}>
+            {events && <EventTypeIcon event={event} />}
+            {event?.title} - {i18n._t('Last games')}
+          </h2>
+        ))}
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
@@ -71,7 +72,7 @@ export const RecentGames: React.FC<{
               <Fragment key={`gm_${idx}`}>
                 <GameListing
                   showShareLink={true}
-                  isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
+                  isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
                   eventId={eventId}
                   game={game}
                   players={players}

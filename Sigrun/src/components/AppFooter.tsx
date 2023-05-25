@@ -39,36 +39,59 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
           </ActionIcon>
           <Group style={{ display: largeScreen ? 'inherit' : 'none' }} align='flex-start'>
             <Stack spacing={0}>
-              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}`}>
+              <Anchor
+                color='white'
+                size='xs'
+                href={`/event/${globals.data.eventId?.join('.')}/info`}
+              >
                 {i18n._t('Description')}
               </Anchor>
-              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/games`}>
+              <Anchor
+                color='white'
+                size='xs'
+                href={`/event/${globals.data.eventId?.join('.')}/games`}
+              >
                 {i18n._t('Recent games')}
               </Anchor>
             </Stack>
             <Stack spacing={0}>
-              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/order/rating`}>
+              <Anchor
+                color='white'
+                size='xs'
+                href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
+              >
                 {i18n._t('Rating table')}
               </Anchor>
-              <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/achievements`}>
-                {i18n._t('Achievements')}
-              </Anchor>
-            </Stack>
-            <Stack spacing={0}>
-              {globals.data.hasSeries && (
+              {globals.data.eventId?.length === 1 && (
                 <Anchor
                   color='white'
                   size='xs'
-                  href={`/event/${globals.data.eventId}/seriesRating`}
+                  href={`/event/${globals.data.eventId.join('.')}/achievements`}
+                >
+                  {i18n._t('Achievements')}
+                </Anchor>
+              )}
+            </Stack>
+            <Stack spacing={0}>
+              {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
+                <Anchor
+                  color='white'
+                  size='xs'
+                  href={`/event/${globals.data.eventId.join('.')}/seriesRating`}
                 >
                   {i18n._t('Series rating')}
                 </Anchor>
               )}
-              {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
-                <Anchor color='white' size='xs' href={`/event/${globals.data.eventId}/timer`}>
-                  {i18n._t('Timer & seating')}
-                </Anchor>
-              )}
+              {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
+                globals.data.eventId?.length === 1 && (
+                  <Anchor
+                    color='white'
+                    size='xs'
+                    href={`/event/${globals.data.eventId.join('.')}/timer`}
+                  >
+                    {i18n._t('Timer & seating')}
+                  </Anchor>
+                )}
             </Stack>
           </Group>
           <Group position='right' mt={0}>
