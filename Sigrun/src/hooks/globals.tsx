@@ -9,6 +9,7 @@ export type Globals = {
   hasSeries: boolean;
   ratingHidden: boolean;
   loading: boolean;
+  withChips: boolean;
 };
 export const globals: { data: Globals; setData: (data: Partial<Globals>) => void } = {
   data: {
@@ -19,6 +20,7 @@ export const globals: { data: Globals; setData: (data: Partial<Globals>) => void
     hasSeries: false,
     ratingHidden: false,
     loading: false,
+    withChips: false,
   },
   setData: () => {},
 };

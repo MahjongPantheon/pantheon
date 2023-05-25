@@ -810,6 +810,7 @@ final class TwirpServer implements Mimir
                     ->setIsListed($ev['isListed'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setHasSeries($ev['hasSeries'])
+                    ->setWithChips($ev['withChips'])
                     ->setTournamentStarted($ev['tournamentStarted']);
             }, $ret['events']));
     }
@@ -830,6 +831,7 @@ final class TwirpServer implements Mimir
                     ->setIsTeam($ev['isTeam'])
                     ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
+                    ->setWithChips($ev['withChips'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setHasSeries($ev['hasSeries'])
                     ->setTournamentStarted($ev['tournamentStarted']);

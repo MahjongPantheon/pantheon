@@ -17,6 +17,9 @@
  */
 namespace Mimir;
 
+use Common\Ruleset;
+use Common\RulesetConfig;
+
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Event.php';
@@ -387,6 +390,7 @@ class EventModel extends Model
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
             ->select('event.series_length', 'series_length')
+            ->select('event.ruleset_config', 'ruleset_config')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
             ->groupBy('event.id')
@@ -406,6 +410,7 @@ class EventModel extends Model
         return [
             'total' => $count,
             'events' => array_map(function ($event) {
+                $ruleset = json_decode($event['ruleset_config'], true);
                 $type = $event['is_online']
                     ? 'online'
                     : ($event['sync_start'] ? 'tournament' : 'local');
@@ -419,6 +424,7 @@ class EventModel extends Model
                     'isTeam' => !!$event['is_team'],
                     'hasSeries' => $event['series_length'] > 0,
                     'isRatingShown' => !$event['hide_results'],
+                    'withChips' => !empty($ruleset) && $ruleset['chipsValue'] > 0,
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                     'type' => $type
                 ];
@@ -446,6 +452,7 @@ class EventModel extends Model
             ->select('event.is_listed', 'is_listed')
             ->select('event.is_team', 'is_team')
             ->select('event.hide_results', 'hide_results')
+            ->select('event.ruleset_config', 'ruleset_config')
             ->select('event.series_length', 'series_length')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
@@ -454,6 +461,7 @@ class EventModel extends Model
             ->findMany();
 
         return array_map(function ($event) {
+            $ruleset = json_decode($event['ruleset_config'], true);
             $type = $event['is_online']
                 ? 'online'
                 : ($event['sync_start'] ? 'tournament' : 'local');
@@ -467,6 +475,7 @@ class EventModel extends Model
                 'isTeam' => !!$event['is_team'],
                 'isRatingShown' => !$event['hide_results'],
                 'hasSeries' => $event['series_length'] > 0,
+                'withChips' => !empty($ruleset) && $ruleset['chipsValue'] > 0,
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                 'type' => $type
             ];

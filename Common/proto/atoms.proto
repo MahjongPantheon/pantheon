@@ -129,6 +129,7 @@ message Event {
   bool is_prescripted = 9;
   bool is_team = 10;
   bool has_series = 11;
+  bool with_chips = 12;
 }
 
 message MyEvent {

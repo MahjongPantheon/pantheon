@@ -57,6 +57,10 @@ class Event extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool has_series = 11;</code>
      */
     protected $has_series = false;
+    /**
+     * Generated from protobuf field <code>bool with_chips = 12;</code>
+     */
+    protected $with_chips = false;
 
     /**
      * Constructor.
@@ -75,6 +79,7 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type bool $is_prescripted
      *     @type bool $is_team
      *     @type bool $has_series
+     *     @type bool $with_chips
      * }
      */
     public function __construct($data = NULL) {
@@ -320,6 +325,28 @@ class Event extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->has_series = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool with_chips = 12;</code>
+     * @return bool
+     */
+    public function getWithChips()
+    {
+        return $this->with_chips;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool with_chips = 12;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setWithChips($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->with_chips = $var;
 
         return $this;
     }

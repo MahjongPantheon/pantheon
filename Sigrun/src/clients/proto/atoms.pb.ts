@@ -155,6 +155,7 @@ export interface Event {
   isPrescripted: boolean;
   isTeam: boolean;
   hasSeries: boolean;
+  withChips: boolean;
 }
 
 export interface MyEvent {
@@ -1996,6 +1997,7 @@ export const Event = {
       isPrescripted: false,
       isTeam: false,
       hasSeries: false,
+      withChips: false,
     };
   },
 
@@ -2038,6 +2040,9 @@ export const Event = {
     }
     if (msg.hasSeries) {
       writer.writeBool(11, msg.hasSeries);
+    }
+    if (msg.withChips) {
+      writer.writeBool(12, msg.withChips);
     }
     return writer;
   },
@@ -2091,6 +2096,10 @@ export const Event = {
         }
         case 11: {
           msg.hasSeries = reader.readBool();
+          break;
+        }
+        case 12: {
+          msg.withChips = reader.readBool();
           break;
         }
         default: {
@@ -8659,6 +8668,7 @@ export const EventJSON = {
       isPrescripted: false,
       isTeam: false,
       hasSeries: false,
+      withChips: false,
     };
   },
 
@@ -8699,6 +8709,9 @@ export const EventJSON = {
     }
     if (msg.hasSeries) {
       json["hasSeries"] = msg.hasSeries;
+    }
+    if (msg.withChips) {
+      json["withChips"] = msg.withChips;
     }
     return json;
   },
@@ -8751,6 +8764,10 @@ export const EventJSON = {
     const _hasSeries_ = json["hasSeries"] ?? json["has_series"];
     if (_hasSeries_) {
       msg.hasSeries = _hasSeries_;
+    }
+    const _withChips_ = json["withChips"] ?? json["with_chips"];
+    if (_withChips_) {
+      msg.withChips = _withChips_;
     }
     return msg;
   },

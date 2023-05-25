@@ -28,6 +28,7 @@ export const useEvent = (eventId: string | null) => {
         isTeam: false,
         ratingHidden: false,
         hasSeries: false,
+        withChips: false,
         loading: false,
       });
     } else {
@@ -39,6 +40,7 @@ export const useEvent = (eventId: string | null) => {
           type: events[0]?.type,
           hasSeries: events[0]?.hasSeries,
           ratingHidden: !events[0]?.isRatingShown,
+          withChips: events[0]?.withChips,
           loading: false,
         });
       } else {
@@ -49,6 +51,7 @@ export const useEvent = (eventId: string | null) => {
           isTeam: false,
           ratingHidden: false,
           hasSeries: false,
+          withChips: false,
           loading: true,
         });
       }

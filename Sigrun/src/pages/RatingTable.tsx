@@ -27,6 +27,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 import { useEvent } from '../hooks/useEvent';
 import {
+  IconCoins,
   IconDownload,
   IconExclamationCircle,
   IconSortAscending2,
@@ -116,8 +117,13 @@ export const RatingTable: React.FC<{
               size='xs'
               leftIcon={<IconDownload size='1.1rem' />}
               onClick={() => {
-                // TODO: chips
-                downloadCsv(i18n, event?.isTeam, false, players, `Rating_${event?.id}.csv`);
+                downloadCsv(
+                  i18n,
+                  event?.isTeam,
+                  event?.withChips,
+                  players,
+                  `Rating_${event?.id}.csv`
+                );
               }}
             >
               {i18n._t('Save as CSV')}
@@ -306,9 +312,29 @@ export const RatingTable: React.FC<{
                       >
                         {player.avgPlace.toFixed(2)}
                       </Badge>
-                      <Badge w={45} size='lg' color='gray' radius='sm' style={{ padding: 0 }}>
+                      <Badge
+                        title={i18n._t('Games played')}
+                        w={45}
+                        size='lg'
+                        color='gray'
+                        radius='sm'
+                        style={{ padding: 0 }}
+                      >
                         {player.gamesPlayed.toFixed(0)}
                       </Badge>
+                      {event?.withChips && (
+                        <Badge
+                          title={i18n._t('Chips')}
+                          w={45}
+                          leftSection={<IconCoins size='0.8rem' style={{ marginTop: '8px' }} />}
+                          size='lg'
+                          color='yellow'
+                          radius='sm'
+                          style={{ padding: 0 }}
+                        >
+                          {player.chips.toFixed(0)}
+                        </Badge>
+                      )}
                     </Group>
                   </DataCmp>
                 );
