@@ -1,0 +1,6 @@
+- Check SSR everywhere
+- Rheda redirects
+- Page with rules overview (take from forseti but readonly)
+- RU translation
+- CI integration (lint/test)
+- Production mode instructions & setup

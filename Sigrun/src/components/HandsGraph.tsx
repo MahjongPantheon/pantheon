@@ -1,20 +1,7 @@
-import { Bar as BarGraph } from 'react-chartjs-2';
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
-import {
-  Chart as ChartJS,
-  BarController,
-  BarElement,
-  Tooltip,
-  CategoryScale,
-  LinearScale,
-  Title,
-} from 'chart.js';
 import { HandValueStat } from '../clients/proto/atoms.pb';
-ChartJS.register(Tooltip, BarElement, BarController, CategoryScale, LinearScale, Title);
-ChartJS.defaults.font.size = 16;
-ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
 
 export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] }) => {
   const i18n = useI18n();
@@ -53,6 +40,7 @@ export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] 
 
   handValueStats.push({ x: '★', y: yakumanCount > 0 ? yakumanCount : 0 });
 
+  const BarGraph = (window as any).__chart.BarGraph;
   return (
     <BarGraph
       data={{ datasets: [{ data: handValueStats }] }}

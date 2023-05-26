@@ -8,6 +8,12 @@ import process from 'node:process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const numCPUs = availableParallelism();
 const PORT = process.env.PORT ?? 4108;
+import dotenv from 'dotenv';
+dotenv.config({
+  path: process.env.NODE_ENV === 'production'
+    ? '.env.production'
+    : '.env.development'
+})
 
 export async function createServer(app) {
   const resolve = (p) => path.resolve(__dirname, p);
@@ -19,6 +25,50 @@ export async function createServer(app) {
       index: false,
     })
   );
+
+  app.get('/eid:eventId', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
+  })
+
+  app.get('/eid:eventId/add-online', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
+  })
+
+  app.get('/eid:eventId/last', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games`);
+  })
+
+  app.get('/eid:eventId/last/page/:page', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games/page/${req.params.page}`);
+  })
+
+  app.get('/eid:eventId/stat', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/rating`);
+  })
+
+  app.get('/eid:eventId/stat/team', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/team`);
+  })
+
+  app.get('/eid:eventId/user/:playerId', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/player/${req.params.playerId}`);
+  })
+
+  app.get('/eid:eventId/game/:gameHash', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/game/${req.params.gameHash}`);
+  })
+
+  app.get('/eid:eventId/timer', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/timer`);
+  })
+
+  app.get('/eid:eventId/achievements', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
+  })
+
+  app.get('/eid:eventId/achievements/:achievement', (req, res) => {
+    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
+  })
 
   app.use('*', async (req, res) => {
     const url = req.baseUrl;
@@ -57,6 +107,7 @@ export async function createServer(app) {
 
 if (cluster.isPrimary) {
   console.log(`Primary ${process.pid} is running`);
+  console.log('Env settings: ', process.env);
 
   // Fork workers.
   for (let i = 0; i < numCPUs; i++) {

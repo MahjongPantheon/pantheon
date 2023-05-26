@@ -22,7 +22,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
     () => api.getEventAdmins(parseInt(eventId, 10)),
     [eventId]
   );
-  if (!event) {
+  if (!events) {
     return null;
   }
 
