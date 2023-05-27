@@ -10,11 +10,19 @@ import { Helmet } from 'react-helmet';
 import { JSDOM } from 'jsdom';
 import { createStylesServer, ServerStyles } from '@mantine/ssr';
 import { storage } from './hooks/storage';
+import { i18n } from './hooks/i18n';
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
   const storageStrategy = new StorageStrategyServer();
   storageStrategy.fill(cookies);
   storage.setStrategy(storageStrategy);
+  i18n.init(
+    (locale) => {
+      storage.setLang(locale);
+    },
+    (err) => console.error(err)
+  );
+
   const isomorphicCtxValue: Record<string, any> & { requests?: any[] } = { requests: [] };
   const locHook = staticLocationHook(url);
   (global as any).JSDOM = JSDOM;

@@ -13,7 +13,7 @@ import { I18nProvider, useI18n } from './hooks/i18n';
 import { ApiProvider } from './hooks/api';
 import './App.css';
 import { useLocalStorage } from '@mantine/hooks';
-import { useCallback, useState, ReactNode, useEffect } from 'react';
+import { useCallback, useState, ReactNode } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
@@ -47,16 +47,6 @@ export function Layout({ children }: { children: ReactNode }) {
   const setData = (newData: Partial<Globals>) => {
     setDataInt((old) => ({ ...old, ...newData }));
   };
-
-  // initial loading of locale
-  useEffect(() => {
-    i18n.init(
-      (locale) => {
-        storage.setLang(locale);
-      },
-      (err) => console.error(err)
-    );
-  }, []);
 
   // Small kludge to forcefully rerender after language change
   const [, updateState] = useState({});

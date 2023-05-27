@@ -20,6 +20,7 @@ import {
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Line as LineGraph, Bar as BarGraph } from 'react-chartjs-2';
 import { storage } from './hooks/storage';
+import { i18n } from './hooks/i18n';
 ChartJS.register(
   LineElement,
   Tooltip,
@@ -38,6 +39,12 @@ ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
 
 const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
 storage.setStrategy(storageStrategy);
+i18n.init(
+  (locale) => {
+    storage.setLang(locale);
+  },
+  (err) => console.error(err)
+);
 
 let isomorphicCtxValue = { __running: 0 };
 if (window && (window as any).initialData) {

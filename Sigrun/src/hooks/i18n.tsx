@@ -3,7 +3,10 @@ import { createContext, useContext } from 'react';
 import { I18nService } from '../services/i18n';
 import { storage } from './storage';
 
-const i18n = new I18nService(storage);
+/**
+ * @deprecated use hook useI18n instead!
+ */
+export const i18n = new I18nService(storage);
 export const i18nCtx = createContext(i18n);
 
 export const useI18n = () => {
