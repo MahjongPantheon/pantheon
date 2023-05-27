@@ -107,6 +107,10 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.common.RulesetConfig ruleset_config = 53;</code>
      */
     protected $ruleset_config = null;
+    /**
+     * Generated from protobuf field <code>int32 lobby_id = 54;</code>
+     */
+    protected $lobby_id = 0;
 
     /**
      * Constructor.
@@ -138,6 +142,7 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      *     @type bool $is_prescripted
      *     @type bool $is_finished
      *     @type \Common\RulesetConfig $ruleset_config
+     *     @type int $lobby_id
      * }
      */
     public function __construct($data = NULL) {
@@ -661,6 +666,28 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\RulesetConfig::class);
         $this->ruleset_config = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 lobby_id = 54;</code>
+     * @return int
+     */
+    public function getLobbyId()
+    {
+        return $this->lobby_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 lobby_id = 54;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setLobbyId($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->lobby_id = $var;
 
         return $this;
     }

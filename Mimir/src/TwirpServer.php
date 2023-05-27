@@ -884,6 +884,9 @@ final class TwirpServer implements Mimir
         if (!empty($ret['gameDuration'])) {
             $gc->setGameDuration($ret['gameDuration']);
         }
+        if (!empty($ret['lobbyId'])) {
+            $gc->setLobbyId($ret['lobbyId']);
+        }
         if (!empty($ret['gamesStatus'])) {
             $gc->setGamesStatus(self::_toGamesStatus($ret['gamesStatus']));
         }

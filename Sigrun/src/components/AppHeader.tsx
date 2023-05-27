@@ -22,6 +22,7 @@ import {
   IconChevronDown,
   IconDeviceMobileShare,
   IconList,
+  IconListCheck,
   IconNetwork,
   IconNotes,
   IconOlympics,
@@ -205,6 +206,15 @@ export function AppHeader() {
                     icon={<IconNotes size={24} />}
                   >
                     {i18n._pt('Event menu', 'Description')}
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/event/${globals.data.eventId?.join('.')}/rules`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconListCheck size={24} />}
+                  >
+                    {i18n._pt('Event menu', 'Rules overview')}
                   </Menu.Item>
                   <Menu.Item
                     onClick={(e) => {

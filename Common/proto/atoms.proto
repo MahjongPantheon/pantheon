@@ -163,6 +163,7 @@ message GameConfig {
   bool is_prescripted = 50;
   bool is_finished = 52;
   RulesetConfig ruleset_config = 53;
+  int32 lobby_id = 54;
 }
 
 message PlayerInRating {

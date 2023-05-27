@@ -8,6 +8,7 @@ import { SeriesRating } from './pages/SeriesRating';
 import { Game } from './pages/Game';
 import { Timer } from './pages/Timer';
 import { Achievements } from './pages/Achievements';
+import { EventRulesOverview } from './pages/EventRulesOverview';
 import './App.css';
 
 export function App() {
@@ -24,6 +25,7 @@ export function App() {
       <Route path='/event/:eventId/seriesRating' component={SeriesRating} />
       <Route path='/event/:eventId/timer' component={Timer} />
       <Route path='/event/:eventId/achievements' component={Achievements} />
+      <Route path='/event/:eventId/rules' component={EventRulesOverview} />
     </Switch>
   );
 }

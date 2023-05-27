@@ -189,6 +189,7 @@ export interface GameConfig {
   isPrescripted: boolean;
   isFinished: boolean;
   rulesetConfig: RulesetConfig;
+  lobbyId: number;
 }
 
 export interface PlayerInRating {
@@ -2240,6 +2241,7 @@ export const GameConfig = {
       isPrescripted: false,
       isFinished: false,
       rulesetConfig: RulesetConfig.initialize(),
+      lobbyId: 0,
     };
   },
 
@@ -2318,6 +2320,9 @@ export const GameConfig = {
     }
     if (msg.rulesetConfig) {
       writer.writeMessage(53, msg.rulesetConfig, RulesetConfig._writeMessage);
+    }
+    if (msg.lobbyId) {
+      writer.writeInt32(54, msg.lobbyId);
     }
     return writer;
   },
@@ -2419,6 +2424,10 @@ export const GameConfig = {
         }
         case 53: {
           reader.readMessage(msg.rulesetConfig, RulesetConfig._readMessage);
+          break;
+        }
+        case 54: {
+          msg.lobbyId = reader.readInt32();
           break;
         }
         default: {
@@ -8890,6 +8899,7 @@ export const GameConfigJSON = {
       isPrescripted: false,
       isFinished: false,
       rulesetConfig: RulesetConfigJSON.initialize(),
+      lobbyId: 0,
     };
   },
 
@@ -8971,6 +8981,9 @@ export const GameConfigJSON = {
       if (Object.keys(_rulesetConfig_).length > 0) {
         json["rulesetConfig"] = _rulesetConfig_;
       }
+    }
+    if (msg.lobbyId) {
+      json["lobbyId"] = msg.lobbyId;
     }
     return json;
   },
@@ -9075,6 +9088,10 @@ export const GameConfigJSON = {
       const m = RulesetConfig.initialize();
       RulesetConfigJSON._readMessage(m, _rulesetConfig_);
       msg.rulesetConfig = m;
+    }
+    const _lobbyId_ = json["lobbyId"] ?? json["lobby_id"];
+    if (_lobbyId_) {
+      msg.lobbyId = _lobbyId_;
     }
     return msg;
   },

@@ -6,6 +6,7 @@ import {
   GetEvents,
   GetEventsById,
   GetGame,
+  GetGameConfig,
   GetGamesSeries,
   GetLastGames,
   GetPlayer,
@@ -79,6 +80,13 @@ export class ApiService {
           return resp;
         });
     };
+  }
+
+  getGameConfig(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, {
+      method: 'GetGameConfig',
+    });
+    return GetGameConfig({ eventId }, this._clientConfMimir);
   }
 
   getAllPlayers(eventId: number) {

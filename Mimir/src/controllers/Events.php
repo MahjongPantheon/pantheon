@@ -590,12 +590,13 @@ class EventsController extends Controller
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
             'seriesLength'        => $event[0]->getSeriesLength(),
-            'minGamesCount'        => $event[0]->getMinGamesCount(),
+            'minGamesCount'       => $event[0]->getMinGamesCount(),
             'gamesStatus'         => $event[0]->getGamesStatus(),
             'hideResults'         => (bool)$event[0]->getHideResults(),
             'hideAddReplayButton' => false, // TODO: fix when tournaments are resurrected
             'isPrescripted'       => (bool)$event[0]->getIsPrescripted(),
             'isFinished'          => (bool)$event[0]->getIsFinished(),
+            'lobbyId'             => $event[0]->getLobbyId(),
         ];
 
         $this->_log->info('Successfully received config for event id# ' . $eventId);

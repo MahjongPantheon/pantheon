@@ -46,6 +46,17 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
               >
                 {i18n._t('Description')}
               </Anchor>
+              {globals.data.eventId?.length === 1 && (
+                <Anchor
+                  color='white'
+                  size='xs'
+                  href={`/event/${globals.data.eventId?.join('.')}/rules`}
+                >
+                  {i18n._t('Rules overview')}
+                </Anchor>
+              )}
+            </Stack>
+            <Stack spacing={0}>
               <Anchor
                 color='white'
                 size='xs'
@@ -53,8 +64,6 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
               >
                 {i18n._t('Recent games')}
               </Anchor>
-            </Stack>
-            <Stack spacing={0}>
               <Anchor
                 color='white'
                 size='xs'
@@ -62,6 +71,8 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
               >
                 {i18n._t('Rating table')}
               </Anchor>
+            </Stack>
+            <Stack spacing={0}>
               {globals.data.eventId?.length === 1 && (
                 <Anchor
                   color='white'
@@ -71,8 +82,6 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
                   {i18n._t('Achievements')}
                 </Anchor>
               )}
-            </Stack>
-            <Stack spacing={0}>
               {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
                 <Anchor
                   color='white'
@@ -82,6 +91,8 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
                   {i18n._t('Series rating')}
                 </Anchor>
               )}
+            </Stack>
+            <Stack spacing={0}>
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
                 globals.data.eventId?.length === 1 && (
                   <Anchor
