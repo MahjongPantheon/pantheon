@@ -167,7 +167,7 @@ export function AppHeader() {
                   <Button
                     className={classes.link}
                     leftIcon={<IconDeviceMobileShare size={20} />}
-                    title={i18n._t('Open assitant')}
+                    title={i18n._t('Open assistant')}
                   >
                     {i18n._t('Open assistant')}
                   </Button>

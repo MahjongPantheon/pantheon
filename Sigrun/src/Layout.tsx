@@ -11,23 +11,16 @@ import { AnalyticsProvider } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
 import { I18nProvider, useI18n } from './hooks/i18n';
 import { ApiProvider } from './hooks/api';
-import { StorageStrategy } from '../../Common/storage';
 import './App.css';
 import { useLocalStorage } from '@mantine/hooks';
-import { useCallback, useState, ReactNode } from 'react';
+import { useCallback, useState, ReactNode, useEffect } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
 import { Helmet } from 'react-helmet';
 import favicon from '../assets/ico/favicon.png';
 
-export function Layout({
-  children,
-  storageStrategy,
-}: {
-  children: ReactNode;
-  storageStrategy: StorageStrategy;
-}) {
+export function Layout({ children }: { children: ReactNode }) {
   const theme = useMantineTheme();
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
@@ -55,6 +48,16 @@ export function Layout({
     setDataInt((old) => ({ ...old, ...newData }));
   };
 
+  // initial loading of locale
+  useEffect(() => {
+    i18n.init(
+      (locale) => {
+        storage.setLang(locale);
+      },
+      (err) => console.error(err)
+    );
+  }, []);
+
   // Small kludge to forcefully rerender after language change
   const [, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -81,7 +84,7 @@ export function Layout({
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>
           <globalsCtx.Provider value={{ data, setData }}>
-            <StorageProvider strategy={storageStrategy}>
+            <StorageProvider>
               <I18nProvider>
                 <ApiProvider>
                   <Helmet>

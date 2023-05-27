@@ -19,6 +19,7 @@ import {
 } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Line as LineGraph, Bar as BarGraph } from 'react-chartjs-2';
+import { storage } from './hooks/storage';
 ChartJS.register(
   LineElement,
   Tooltip,
@@ -36,6 +37,7 @@ ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
 (window as any).__chart = { LineGraph, BarGraph };
 
 const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
+storage.setStrategy(storageStrategy);
 
 let isomorphicCtxValue = { __running: 0 };
 if (window && (window as any).initialData) {
@@ -54,7 +56,7 @@ if (import.meta.env.MODE === 'development') {
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
         <Router hook={useLocation}>
-          <Layout storageStrategy={storageStrategy}>
+          <Layout>
             <App />
           </Layout>
         </Router>
@@ -67,7 +69,7 @@ if (import.meta.env.MODE === 'development') {
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
         <Router hook={useLocation}>
-          <Layout storageStrategy={storageStrategy}>
+          <Layout>
             <App />
           </Layout>
         </Router>

@@ -9,10 +9,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { JSDOM } from 'jsdom';
 import { createStylesServer, ServerStyles } from '@mantine/ssr';
+import { storage } from './hooks/storage';
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
   const storageStrategy = new StorageStrategyServer();
   storageStrategy.fill(cookies);
+  storage.setStrategy(storageStrategy);
   const isomorphicCtxValue: Record<string, any> & { requests?: any[] } = { requests: [] };
   const locHook = staticLocationHook(url);
   (global as any).JSDOM = JSDOM;
@@ -21,7 +23,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <Router hook={locHook}>
-        <Layout storageStrategy={storageStrategy}>
+        <Layout>
           <App />
         </Layout>
       </Router>
@@ -36,7 +38,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   const appHtml = ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <Router hook={locHook}>
-        <Layout storageStrategy={storageStrategy}>
+        <Layout>
           <App />
         </Layout>
       </Router>
