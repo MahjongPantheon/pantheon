@@ -1,4 +1,4 @@
-/*  Forseti: personal area & event control panel
+/*  Sigrun: rating tables and statistics frontend
  *  Copyright (C) 2023  o.klimenko aka ctizen
  *
  *  This program is free software: you can redistribute it and/or modify
