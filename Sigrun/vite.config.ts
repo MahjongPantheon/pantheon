@@ -24,4 +24,15 @@ export default defineConfig({
   server: {
     port: 4008,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: function manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
 });

@@ -48,3 +48,6 @@ Frey/vendor/
 Frey/data/verbose.log
 Frey/data/db.sqlite
 Frey/tests/data/*
+
+Sigrun-dist/.env.production
+Sigrun-dist/node_modules

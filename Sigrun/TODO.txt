@@ -1,4 +1,3 @@
-- Add legal info to files
 - CI integration (lint/test)
 - Production mode instructions & setup
 - Delete Rheda

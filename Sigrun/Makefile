@@ -34,7 +34,7 @@ eslint:
 
 PHONY: prettier
 prettier:
-	./node_modules/.bin/prettier -c ./app
+	./node_modules/.bin/prettier -c ./src
 
 PHONY: typecheck
 typecheck:
@@ -47,19 +47,31 @@ test:
 PHONY: autofix
 autofix:
 	./node_modules/.bin/eslint . --ext .js,.ts,.tsx --fix
-	./node_modules/.bin/prettier -w ./app
+	./node_modules/.bin/prettier -w ./src
 
 PHONY: build
 build:
 	./node_modules/.bin/tsc
 	./node_modules/.bin/vite build --outDir dist/client
 	./node_modules/.bin/vite build --ssr src/server.tsx --outDir dist/server
-	#cd dist && gzip -k -9 -f *.js *.css
+
+.PHONY: prod_deps
+prod_deps:
+	cd ../Sigrun-dist && NODE_ENV=production yarn install
+
+.PHONY: prebuild
+prebuild:
+	cd dist/client/assets && gzip -k -9 -f *.js *.css
+	cp -R dist ../Sigrun-dist/
+	cp -f server.js ../Sigrun-dist/
+	cp -f package.json ../Sigrun-dist/
+	cp -f yarn.lock ../Sigrun-dist/
 
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:
+	mkdir -p ../Sigrun-dist/dist/client/assets
 	# clean all generated bundle files except last 30
-	#cd ../Sigrun-dist && find -name '*.js' -or -name '*.css' -or -name '*.js.gz' -or -name '*.css.gz' | tail -n +30 | xargs -I {} rm {}
+	cd ../Sigrun-dist/dist/client/assets && find -name '*.js' -or -name '*.css' -or -name '*.js.gz' -or -name '*.css.gz' | tail -n +30 | xargs -I {} rm {}
 
 dev:
 	yarn run vite
@@ -70,12 +82,12 @@ i18n_extract:
 	./node_modules/.bin/jsonpo -s src/i18n/messages.pot.json -o src/i18n/messages.pot --printOccurences
 	rm src/i18n/messages.pot.json
 	msgmerge -s -U ./src/i18n/ru.po ./src/i18n/messages.pot --backup=none
-	#msgmerge -s -U ./app/i18n/de.po ./app/i18n/messages.pot --backup=none
+	#msgmerge -s -U ./src/i18n/de.po ./src/i18n/messages.pot --backup=none
 
 PHONY: i18n_update
 i18n_update:
 	./node_modules/.bin/pojson -s src/i18n/ru.po -o src/i18n/ru.json --withMeta
-	#./node_modules/.bin/pojson -s app/i18n/de.po -o app/i18n/de.json --withMeta
+	#./node_modules/.bin/pojson -s src/i18n/de.po -o src/i18n/de.json --withMeta
 
 PHONY: proto_gen
 proto_gen:
@@ -104,6 +116,15 @@ docker_deps: get_docker_id
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Sigrun && HOME=/home/user su-exec user make deps' ; \
 	fi
+
+PHONY: docker_prod_deps
+docker_prod_deps: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Sigrun container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Sigrun && HOME=/home/user su-exec user make prod_deps' ; \
+	fi
+
 
 PHONY: docker_lint
 docker_lint: get_docker_id

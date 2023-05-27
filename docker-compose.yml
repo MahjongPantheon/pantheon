@@ -116,5 +116,5 @@ services:
       - ./Common/envs/${ENV_FILENAME}
     volumes:
       - ./Sigrun:/var/www/html/Sigrun
-      #- ./Sigrun-dist:/var/www/html/Sigrun-dist
+      - ./Sigrun-dist:/var/www/html/Sigrun-dist
       - ./Common:/var/www/html/Common

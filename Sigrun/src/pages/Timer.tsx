@@ -42,7 +42,7 @@ import { Helmet } from 'react-helmet';
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
   const i18n = useI18n();
-  const [soundPlayed, setSoundPlayed] = useState(false);
+  const [, setSoundPlayed] = useState(false);
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
   const api = useApi();

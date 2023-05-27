@@ -88,10 +88,10 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
                     <PlayerIcon p={player} />
                     <Stack spacing={2}>
                       <Anchor
-                        href={`/event/${events.map((e) => e.id).join('.')}/player/${player.id}`}
+                        href={`/event/${events.map((ev) => ev.id).join('.')}/player/${player.id}`}
                         onClick={(e) => {
                           navigate(
-                            `/event/${events.map((e) => e.id).join('.')}/player/${player.id}`
+                            `/event/${events.map((ev) => ev.id).join('.')}/player/${player.id}`
                           );
                           e.preventDefault();
                         }}

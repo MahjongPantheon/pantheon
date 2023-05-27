@@ -57,6 +57,9 @@ jobs:
       - name: Make prod Forseti build
         run: make prod_build_forseti
 
+      - name: Make prod Sigrun build
+        run: make prod_build_sigrun
+
       - name: Push prod builds to repo
         if: github.repository=='MahjongPantheon/pantheon'
         run: ./.built-dist-push.sh

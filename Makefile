@@ -72,9 +72,9 @@ pantheon_run:
 	echo "----------------------------------------------------------------------------------"; \
 	echo " ${GREEN}Run 'make logs' in each subproject folder to view container logs on-line${NC} "; \
 	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \
-	echo " ${YELLOW}Run 'make shell' in each subproject folder to get into each container shell${NC} "; \
+	echo " ${YELLOW}Run 'make shell' in each subproject folder to get into each container shell.${NC} "; \
 	echo " ${YELLOW}Also you can use 'make shell_{tyr|rheda|frey|mimir|forseti|sigrun}' to get ${NC} "; \
-	echo " ${YELLOW}to specific subproject folder after entering container shell${NC} "; \
+	echo " ${YELLOW}to specific subproject folder${NC} "; \
 
 
 .PHONY: pantheon_stop
@@ -202,7 +202,7 @@ prod_deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
-	cd Sigrun && ${MAKE} docker_deps
+	cd Sigrun && ${MAKE} docker_prod_deps
 
 .PHONY: prod_build_tyr
 prod_build_tyr: # this is for automated builds, don't run it manually
@@ -211,6 +211,10 @@ prod_build_tyr: # this is for automated builds, don't run it manually
 .PHONY: prod_build_forseti
 prod_build_forseti: # this is for automated builds, don't run it manually
 	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: prod_build_sigrun
+prod_build_sigrun: # this is for automated builds, don't run it manually
+	cd Sigrun && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
 
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1
@@ -225,6 +229,7 @@ prod_compile:
 	cd Frey && ${MAKE} docker_seed # bootstrap admin
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
+	${MAKE} prod_build_sigrun
 
 # i18n related
 .PHONY: i18n_extract
