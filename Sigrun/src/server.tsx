@@ -25,9 +25,13 @@ import { Layout } from './Layout';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { JSDOM } from 'jsdom';
-import { createStylesServer, ServerStyles } from '@mantine/ssr';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
+import { createEmotionCache } from '@mantine/core';
+import { createStylesServer } from '@mantine/ssr';
+
+const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
+const stylesServer = createStylesServer(cache);
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
   const storageStrategy = new StorageStrategyServer();
@@ -48,7 +52,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <Router hook={locHook}>
-        <Layout>
+        <Layout cache={cache}>
           <App />
         </Layout>
       </Router>
@@ -63,7 +67,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   const appHtml = ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <Router hook={locHook}>
-        <Layout>
+        <Layout cache={cache}>
           <App />
         </Layout>
       </Router>
@@ -71,16 +75,14 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   );
 
   const helmet = Helmet.renderStatic();
-  const stylesServer = createStylesServer();
-  const styles = ReactDOMServer.renderToString(
-    <ServerStyles html={appHtml} server={stylesServer} />
-  );
-
   return {
     appHtml,
-    helmet: [helmet.title.toString(), helmet.meta.toString(), helmet.link.toString(), styles].join(
-      '\n'
-    ),
+    helmet: [
+      helmet.title.toString(),
+      helmet.meta.toString(),
+      helmet.link.toString(),
+      `<style>${stylesServer.extractCritical(appHtml).css}</style>`,
+    ].join('\n'),
     cookies: storageStrategy.getCookies(),
     serverData: `<script>window.initialData = ${JSON.stringify(isomorphicCtxValue)};</script>`,
   };

@@ -36,8 +36,9 @@ import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
 import { Helmet } from 'react-helmet';
 import favicon from '../assets/ico/favicon.png';
+import { EmotionCache } from '@emotion/css';
 
-export function Layout({ children }: { children: ReactNode }) {
+export function Layout({ children, cache }: { children: ReactNode; cache: EmotionCache }) {
   const theme = useMantineTheme();
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
@@ -87,6 +88,7 @@ export function Layout({ children }: { children: ReactNode }) {
         colorScheme,
         fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
       }}
+      emotionCache={cache}
     >
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>

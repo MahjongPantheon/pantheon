@@ -38,6 +38,7 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 import { Line as LineGraph, Bar as BarGraph } from 'react-chartjs-2';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
+import { createEmotionCache } from '@mantine/core';
 ChartJS.register(
   LineElement,
   Tooltip,
@@ -54,6 +55,7 @@ ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
 
 (window as any).__chart = { LineGraph, BarGraph };
 
+const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
 const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
 storage.setStrategy(storageStrategy);
 i18n.init(
@@ -80,7 +82,7 @@ if (import.meta.env.MODE === 'development') {
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
         <Router hook={useLocation}>
-          <Layout>
+          <Layout cache={cache}>
             <App />
           </Layout>
         </Router>
@@ -93,7 +95,7 @@ if (import.meta.env.MODE === 'development') {
     <React.StrictMode>
       <Isomorphic.Provider value={isomorphicCtxValue}>
         <Router hook={useLocation}>
-          <Layout>
+          <Layout cache={cache}>
             <App />
           </Layout>
         </Router>

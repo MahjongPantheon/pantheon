@@ -1,3 +1,2 @@
-- CI integration (lint/test)
 - Production mode instructions & setup
-- Delete Rheda
+- Delete Rheda & reintegrate Sigrun into docker prod build

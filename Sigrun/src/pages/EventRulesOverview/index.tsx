@@ -73,10 +73,13 @@ export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
         </h2>
         <Divider size='xs' />
         <Space h='md' />
-        <Tabs defaultValue={event.type ?? EventType.EVENT_TYPE_LOCAL}>
+        <Tabs defaultValue='ruleset_tuning'>
           <Tabs.List position='left'>
             <TabsList i18n={i18n} eventType={event.type} />
           </Tabs.List>
+          <Tabs.Panel value='ruleset_tuning' pt='xs'>
+            <RulesetSettings config={ruleset} i18n={i18n} />
+          </Tabs.Panel>
           <Tabs.Panel value={event.type ?? EventType.EVENT_TYPE_LOCAL} pt='xs'>
             <Stack>
               {event.type === EventType.EVENT_TYPE_ONLINE && (
@@ -89,9 +92,6 @@ export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
                 <TournamentSettings config={ruleset} i18n={i18n} />
               )}
             </Stack>
-          </Tabs.Panel>
-          <Tabs.Panel value='ruleset_tuning' pt='xs'>
-            <RulesetSettings config={ruleset} i18n={i18n} />
           </Tabs.Panel>
           <Tabs.Panel value='yaku_tuning' pt='xs'>
             <YakuSettings config={ruleset} i18n={i18n} />

@@ -55,40 +55,44 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
             <IconArrowBarToUp size='1.1rem' />
           </ActionIcon>
           <Group style={{ display: largeScreen ? 'inherit' : 'none' }} align='flex-start'>
-            <Stack spacing={0}>
-              <Anchor
-                color='white'
-                size='xs'
-                href={`/event/${globals.data.eventId?.join('.')}/info`}
-              >
-                {i18n._t('Description')}
-              </Anchor>
-              {globals.data.eventId?.length === 1 && (
+            {globals.data.eventId && (
+              <Stack spacing={0}>
                 <Anchor
                   color='white'
                   size='xs'
-                  href={`/event/${globals.data.eventId?.join('.')}/rules`}
+                  href={`/event/${globals.data.eventId?.join('.')}/info`}
                 >
-                  {i18n._t('Rules overview')}
+                  {i18n._t('Description')}
                 </Anchor>
-              )}
-            </Stack>
-            <Stack spacing={0}>
-              <Anchor
-                color='white'
-                size='xs'
-                href={`/event/${globals.data.eventId?.join('.')}/games`}
-              >
-                {i18n._t('Recent games')}
-              </Anchor>
-              <Anchor
-                color='white'
-                size='xs'
-                href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
-              >
-                {i18n._t('Rating table')}
-              </Anchor>
-            </Stack>
+                {globals.data.eventId?.length === 1 && (
+                  <Anchor
+                    color='white'
+                    size='xs'
+                    href={`/event/${globals.data.eventId?.join('.')}/rules`}
+                  >
+                    {i18n._t('Rules overview')}
+                  </Anchor>
+                )}
+              </Stack>
+            )}
+            {globals.data.eventId && (
+              <Stack spacing={0}>
+                <Anchor
+                  color='white'
+                  size='xs'
+                  href={`/event/${globals.data.eventId?.join('.')}/games`}
+                >
+                  {i18n._t('Recent games')}
+                </Anchor>
+                <Anchor
+                  color='white'
+                  size='xs'
+                  href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
+                >
+                  {i18n._t('Rating table')}
+                </Anchor>
+              </Stack>
+            )}
             <Stack spacing={0}>
               {globals.data.eventId?.length === 1 && (
                 <Anchor

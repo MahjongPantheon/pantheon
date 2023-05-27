@@ -35,6 +35,9 @@ type TabsProps = {
 export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
   return (
     <>
+      <Tabs.Tab value='ruleset_tuning' icon={<IconAdjustments size='0.8rem' />}>
+        {i18n._t('Ruleset details')}
+      </Tabs.Tab>
       {eventType === EventType.EVENT_TYPE_LOCAL && (
         <Tabs.Tab value={EventType.EVENT_TYPE_LOCAL} icon={<IconFriends size='0.8rem' />}>
           {i18n._t('Local event settings')}
@@ -50,9 +53,6 @@ export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
           {i18n._t('Online event settings')}
         </Tabs.Tab>
       )}
-      <Tabs.Tab value='ruleset_tuning' icon={<IconAdjustments size='0.8rem' />}>
-        {i18n._t('Ruleset details')}
-      </Tabs.Tab>
       <Tabs.Tab value='yaku_tuning' icon={<IconListCheck size='0.8rem' />}>
         {i18n._t('Yaku settings')}
       </Tabs.Tab>
