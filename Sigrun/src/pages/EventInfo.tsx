@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Anchor, Container, Divider, Group, Space, Text } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
-import { Remark } from 'react-remark';
+import { useRemarkSync } from 'react-remark';
 import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
@@ -41,7 +41,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
             </h2>
             <Divider size='xs' />
             <Space h='md' />
-            <Remark>{event?.description}</Remark>
+            {useRemarkSync(event?.description)}
             <Space h='md' />
             <Divider size='xs' />
             <Space h='md' />

@@ -5,8 +5,11 @@ import { nprogress } from '@mantine/nprogress';
 // Note: there should be no nested calls to useIsomorphicState. The render cycle happens only twice:
 // 1) Collect isomorphic state effects,
 // 2) Render components using settled data from isomorphic state effects.
-// If a component depending on some data fetched with useIsomorphicState on upper level, tries to use
-// useIsomorphicState itself, it won't work.
+// Caveats:
+// - If a component depending on some data fetched with useIsomorphicState on upper level, tries to use
+// useIsomorphicState itself, it won't work on server and will lead to hydration error.
+// - If you try to use return value of useIsomorphicState as an argument for another useIsomorphicState,
+// it won't work on server and will lead to hydration error.
 export const useIsomorphicState = <I, R, E extends Error>(
   initial: I,
   key: string,

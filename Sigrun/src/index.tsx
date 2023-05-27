@@ -43,6 +43,12 @@ if (window && (window as any).initialData) {
   isomorphicCtxValue.__running = 0;
 }
 
+window.addEventListener('error', (event) => {
+  if (event.message.includes('React error #419')) {
+    event.preventDefault();
+  }
+});
+
 if (import.meta.env.MODE === 'development') {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>

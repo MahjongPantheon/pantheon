@@ -9,6 +9,7 @@ import {
   Container,
   Divider,
   Group,
+  Loader,
   Space,
   Stack,
   Text,
@@ -17,7 +18,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { RatingGraph } from '../components/RatingGraph';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
 import { PlayerIcon } from '../components/PlayerIcon';
 import { useMediaQuery } from '@mantine/hooks';
@@ -56,11 +57,15 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   const [playerStats] = useIsomorphicState(
     [],
     'PlayerStats_playerstats_' + eventId + playerId,
-    () => api.getPlayerStat(events?.map((e) => e.id) ?? [], parseInt(playerId, 10)),
-    [events, playerId]
+    () =>
+      api.getPlayerStat(
+        eventId.split('.').map((e) => parseInt(e, 10)),
+        parseInt(playerId, 10)
+      ),
+    [eventId, playerId]
   );
 
-  if (!events || !player) {
+  if (!events || !player || !playerStats) {
     return null;
   }
 
@@ -84,7 +89,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       })}
       <Divider size='xs' />
       <Space h='md' />
-      {!import.meta.env.SSR && (
+      <Suspense fallback={<Loader />}>
         <RatingGraph
           lastSelectionHash={lastSelectionHash}
           lastSelectionX={lastSelectionX}
@@ -94,7 +99,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           onSelectGame={setSelectedGame}
           playerId={parseInt(playerId, 10)}
         />
-      )}
+      </Suspense>
       <Space h='md' />
       <Divider size='xs' />
       <Space h='md' />
@@ -240,11 +245,15 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Space h='md' />
       <Divider size='xs' />
       <Space h='md' />
-      {!import.meta.env.SSR && <HandsGraph handValueStat={playerStats?.handsValueSummary} />}
+      <Suspense fallback={<Loader />}>
+        <HandsGraph handValueStat={playerStats?.handsValueSummary} />
+      </Suspense>
       <Space h='md' />
       <Divider size='xs' />
       <Space h='md' />
-      {!import.meta.env.SSR && <YakuGraph yakuStat={playerStats?.yakuSummary} />}
+      <Suspense fallback={<Loader />}>
+        <YakuGraph yakuStat={playerStats?.yakuSummary} />
+      </Suspense>
     </Container>
   );
 };

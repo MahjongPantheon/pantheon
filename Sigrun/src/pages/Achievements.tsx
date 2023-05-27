@@ -79,7 +79,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     [eventId, fullList]
   );
 
-  if (!achievementsData || !event) {
+  if (!achievementsData || !events) {
     return null;
   }
 
