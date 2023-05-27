@@ -25,6 +25,7 @@ import { Helmet } from 'react-helmet';
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
   const i18n = useI18n();
+  const [soundPlayed, setSoundPlayed] = useState(false);
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
   const api = useApi();
@@ -38,7 +39,6 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   useEffect(() => {
     if (!(window as any).__endingSound) {
       (window as any).__endingSound = new Audio(sound); // buffers automatically when created
-      (window as any).__endingSoundPlayed = false;
     }
   });
 
@@ -46,10 +46,15 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     const timer = setInterval(() => {
       api.getTimerState(parseInt(eventId, 10)).then((newState) => {
         setShowSeating(newState.showSeating);
-        if (newState.finished && !(window as any).__endingSoundPlayed) {
-          (window as any).__endingSound.play();
-          (window as any).__endingSoundPlayed = true;
-        }
+        setSoundPlayed((old) => {
+          if (newState.finished && !old) {
+            (window as any).__endingSound.play();
+            return true;
+          } else {
+            return old;
+          }
+        });
+
         setFormattedTimer(
           formatTimer(
             newState.waitingForTimer,
