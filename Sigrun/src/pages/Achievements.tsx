@@ -19,6 +19,26 @@ import { useApi } from '../hooks/api';
 import { IconAward } from '@tabler/icons-react';
 import { YakuId, yakuNameMap } from '../helpers/yaku';
 import { Helmet } from 'react-helmet';
+import bestHand from '../../assets/img/bestHand.png';
+import bestFu from '../../assets/img/bestFu.png';
+import bestTsumoist from '../../assets/img/bestTsumoist.png';
+import dieHard from '../../assets/img/dieHard.png';
+import braveSapper from '../../assets/img/braveSapper.png';
+import dovakins from '../../assets/img/dovakins.png';
+import bestDealer from '../../assets/img/bestDealer.png';
+import shithander from '../../assets/img/shithander.png';
+import yakumans from '../../assets/img/yakumans.png';
+import impossibleWait from '../../assets/img/impossibleWait.png';
+import honoredDonor from '../../assets/img/honoredDonor.png';
+import justAsPlanned from '../../assets/img/justAsPlanned.png';
+import carefulPlanning from '../../assets/img/carefulPlanning.png';
+import doraLord from '../../assets/img/doraLord.png';
+import catchEmAll from '../../assets/img/catchEmAll.png';
+import favoriteAsapinApprentice from '../../assets/img/favoriteAsapinApprentice.png';
+import andYourRiichiBet from '../../assets/img/andYourRiichiBet.png';
+import covetousKnight from '../../assets/img/covetousKnight.png';
+import ninja from '../../assets/img/ninja.png';
+import needMoreGold from '../../assets/img/needMoreGold.png';
 
 enum Achievement {
   BEST_HAND = 'bestHand',
@@ -97,7 +117,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   const ach = [
     {
       id: Achievement.BEST_HAND,
-      image: '',
+      image: bestHand,
       label: i18n._t('Best hand'),
       description: i18n._t(
         'Given for collecting the hand with biggest han count (independent of cost).'
@@ -125,7 +145,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.BEST_FU,
-      image: '',
+      image: bestFu,
       label: i18n._t('Over 9000 fu'),
       description: i18n._t('Given for collecting the hand with biggest minipoints (fu) count.'),
       content: achDataByKey[Achievement.BEST_FU] ? (
@@ -151,7 +171,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.BEST_TSUMOIST,
-      image: '',
+      image: bestTsumoist,
       label: i18n._t('I saw them dancing'),
       description: i18n._t('Given for collecting the most of tsumo hands during single game.'),
       content: achDataByKey[Achievement.BEST_TSUMOIST] ? (
@@ -179,7 +199,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.DIE_HARD,
-      image: '',
+      image: dieHard,
       label: i18n._t('Die Hard'),
       description: i18n._t('Given for smallest count of feeding into ron during the tournament.'),
       content: achDataByKey[Achievement.DIE_HARD] ? (
@@ -210,7 +230,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.BRAVE_SAPPER,
-      image: '',
+      image: braveSapper,
       label: i18n._t('Brave minesweeper'),
       description: i18n._t('Given for largest count of feeding into ron during the tournament.'),
       content: achDataByKey[Achievement.BRAVE_SAPPER] ? (
@@ -241,7 +261,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.DOVAKINS,
-      image: '',
+      image: dovakins,
       label: i18n._t('Guest of honors'),
       description: i18n._t('Given for collecting the most of yakuhais during the tournament.'),
       content: achDataByKey[Achievement.DOVAKINS] ? (
@@ -272,7 +292,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.BEST_DEALER,
-      image: '',
+      image: bestDealer,
       label: i18n._t('The great dealer'),
       description: i18n._t('Given for largest count of dealer wins during the tournament.'),
       content: achDataByKey[Achievement.BEST_DEALER] ? (
@@ -303,7 +323,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.SHITHANDER,
-      image: '',
+      image: shithander,
       label: i18n._t('The 1k Flash'),
       description: i18n._t('Given for the most of 1/30 wins during tournament.'),
       content: achDataByKey[Achievement.SHITHANDER] ? (
@@ -334,7 +354,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.YAKUMANS,
-      image: '',
+      image: yakumans,
       label: i18n._t('Jewelry included'),
       description: i18n._t('Given for collecting a yakuman during tournament.'),
       content: achDataByKey[Achievement.YAKUMANS] ? (
@@ -366,7 +386,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.IMPOSSIBLE_WAIT,
-      image: '',
+      image: impossibleWait,
       label: i18n._t("This can't be your wait"),
       description: i18n._t(
         'Given for feeding into largest hand during tournament (but not while in riichi).'
@@ -402,7 +422,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.HONORED_DONOR,
-      image: '',
+      image: honoredDonor,
       label: i18n._t('Honored donor'),
       description: i18n._t('Given for losing largest amount of points as riichi bets.'),
       content: achDataByKey[Achievement.HONORED_DONOR] ? (
@@ -433,7 +453,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.JUST_AS_PLANNED,
-      image: '',
+      image: justAsPlanned,
       label: i18n._t('Just as planned'),
       description: i18n._t('Given for getting largest number of ippatsu during tournament.'),
       content: achDataByKey[Achievement.JUST_AS_PLANNED] ? (
@@ -462,7 +482,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.CAREFUL_PLANNING,
-      image: '',
+      image: carefulPlanning,
       label: i18n._t('Careful planning'),
       description: i18n._t(
         'Given for the smallest average cost of opponents hand that player has dealt.'
@@ -493,7 +513,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.DORA_LORD,
-      image: '',
+      image: doraLord,
       label: i18n._t('Dora lord'),
       description: i18n._t("Given for the largest average count of dora in player's hand."),
       content: achDataByKey[Achievement.DORA_LORD] ? (
@@ -524,7 +544,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.CATCH_EM_ALL,
-      image: '',
+      image: catchEmAll,
       label: i18n._t("Gotta Catch'Em All"),
       description: i18n._t(
         'Given for the largest amount of unique yaku collected during the tournament.'
@@ -555,7 +575,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.FAVORITE_ASAPIN_APPRENTICE,
-      image: '',
+      image: favoriteAsapinApprentice,
       label: i18n._t('The favorite apprentice of ASAPIN'),
       description: i18n._t(
         'Given for the largest amount of points received as ryuukyoku (draw) payments.'
@@ -586,7 +606,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.AND_YOUR_RIICHI_BET,
-      image: '',
+      image: andYourRiichiBet,
       label: i18n._t('And your riichi bet, please'),
       description: i18n._t(
         "Given for collecting the largest amount of other players' riichi bets during the tournament."
@@ -622,7 +642,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.COVETOUS_KNIGHT,
-      image: '',
+      image: covetousKnight,
       label: i18n._t('The Covetous Knight'),
       description: i18n._t('Given for losing the smallest number of riichi bets.'),
       content: achDataByKey[Achievement.COVETOUS_KNIGHT] ? (
@@ -656,7 +676,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.NINJA,
-      image: '',
+      image: ninja,
       label: i18n._t('Ninja'),
       description: i18n._t('Given for winning the largest number of hands with damaten.'),
       content: achDataByKey[Achievement.NINJA] ? (
@@ -687,7 +707,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.NEED_MORE_GOLD,
-      image: '',
+      image: needMoreGold,
       label: i18n._t('We need more gold'),
       description: i18n._t(
         'Given for having biggest score in the end of the session across the tournament.'

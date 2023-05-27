@@ -1,6 +1,3 @@
-- Page with rules overview (take from forseti but readonly)
-
-- Add icons for achievements
 - Add legal info to files
 - RU translation
 - CI integration (lint/test)
