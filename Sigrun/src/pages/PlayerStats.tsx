@@ -48,14 +48,14 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
 
   const [player] = useIsomorphicState(
     [],
-    'PlayerStats_player_' + playerId,
+    'PlayerStats_player_' + eventId + playerId,
     () => api.getPlayer(parseInt(playerId, 10)),
     [eventId, playerId]
   );
 
   const [playerStats] = useIsomorphicState(
     [],
-    'PlayerStats_playerstats_' + playerId,
+    'PlayerStats_playerstats_' + eventId + playerId,
     () => api.getPlayerStat(events?.map((e) => e.id) ?? [], parseInt(playerId, 10)),
     [events, playerId]
   );

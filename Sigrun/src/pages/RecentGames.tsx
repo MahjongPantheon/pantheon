@@ -40,7 +40,7 @@ export const RecentGames: React.FC<{
   const events = useEvent(eventId);
   const [games, , gamesLoading] = useIsomorphicState(
     [],
-    'RecentGames_games_' + eventId,
+    'RecentGames_games_' + eventId + '_' + page,
     () =>
       api.getRecentGames(parseInt(eventId, 10), PERPAGE, (parseInt(page ?? '1', 10) - 1) * PERPAGE),
     [eventId, page]

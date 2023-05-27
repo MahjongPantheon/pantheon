@@ -22,7 +22,7 @@ export const Game: React.FC<{
   // Player can request any eventId but with proper hash the session will be retrieved correctly
   const [game] = useIsomorphicState(
     null,
-    'RecentGames_games_' + eventId,
+    'Game_game_' + eventId + sessionHash,
     () => api.getGame(sessionHash),
     [eventId, sessionHash]
   );

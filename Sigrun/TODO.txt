@@ -1,5 +1,5 @@
 - Check SSR everywhere
-- Rheda redirects
+  - After ssr, navigation does not work somehow
 - Page with rules overview (take from forseti but readonly)
 - RU translation
 - CI integration (lint/test)
