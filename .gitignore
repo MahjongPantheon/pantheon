@@ -21,11 +21,6 @@ Mimir/data/db.sqlite
 Mimir/data/verbose.log
 Mimir/tests/data/*
 
-Rheda/.vagrant
-Rheda/vendor/
-Rheda/var/www-error.log
-Rheda/config/local/index.php
-
 Tyr/dist
 Tyr/tmp
 Tyr/node_modules

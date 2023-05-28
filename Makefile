@@ -17,17 +17,15 @@ deps:
 	cd Tyr && ${MAKE} docker_deps
 	cd Mimir && ${MAKE} docker_deps
 	cd Frey && ${MAKE} docker_deps
-	cd Rheda && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
 	cd Sigrun && ${MAKE} docker_deps
 
 .PHONY: kill
 kill:
-	docker-compose down
+	docker-compose down --remove-orphans
 	cd Tyr && ${MAKE} kill
 	cd Mimir && ${MAKE} kill
 	cd Frey && ${MAKE} kill
-	cd Rheda && ${MAKE} kill
 	cd Forseti && ${MAKE} kill
 	cd Sigrun && ${MAKE} kill
 	cd Database && ${MAKE} kill
@@ -48,11 +46,10 @@ pantheon_run:
 	echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
-	echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
+	echo "- ${YELLOW}Sigrun${NC} is accessible on port 4002 (http://localhost:4002) without server-side rendering"; \
 	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
 	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
-	echo "- ${YELLOW}Sigrun${NC} is exposed on port 4008"; \
 	echo "----------------------------------------------------------------------------------"; \
 	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
 	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -73,7 +70,7 @@ pantheon_run:
 	echo " ${GREEN}Run 'make logs' in each subproject folder to view container logs on-line${NC} "; \
 	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \
 	echo " ${YELLOW}Run 'make shell' in each subproject folder to get into each container shell.${NC} "; \
-	echo " ${YELLOW}Also you can use 'make shell_{tyr|rheda|frey|mimir|forseti|sigrun}' to get ${NC} "; \
+	echo " ${YELLOW}Also you can use 'make shell_{tyr|frey|mimir|forseti|sigrun}' to get ${NC} "; \
 	echo " ${YELLOW}to specific subproject folder${NC} "; \
 
 
@@ -95,6 +92,10 @@ dev_tyr:
 dev_forseti:
 	cd Forseti && ${MAKE} docker_dev
 
+.PHONY: dev_sigrun
+dev_sigrun:
+	cd Sigrun && ${MAKE} docker_dev
+
 .PHONY: forseti_stop
 forseti_stop:
 	cd Forseti && ${MAKE} docker_stop
@@ -102,6 +103,10 @@ forseti_stop:
 .PHONY: tyr_stop
 tyr_stop:
 	cd Tyr && ${MAKE} docker_stop
+
+.PHONY: sigrun_stop
+sigrun_stop:
+	cd Sigrun && ${MAKE} docker_stop
 
 .PHONY: dev
 dev: run
@@ -117,10 +122,6 @@ migrate:
 .PHONY: shell_tyr
 shell_tyr:
 	cd Tyr && ${MAKE} shell
-
-.PHONY: shell_rheda
-shell_rheda:
-	cd Rheda && ${MAKE} shell
 
 .PHONY: shell_mimir
 shell_mimir:
@@ -168,7 +169,6 @@ check:
 	cd Mimir && ${MAKE} docker_check
 	cd Frey && ${MAKE} docker_check
 	cd Frey && ${MAKE} docker_check_common
-	cd Rheda && ${MAKE} docker_check
 	cd Tyr && ${MAKE} docker_lint
 	cd Tyr && ${MAKE} docker_unit
 	cd Forseti && ${MAKE} docker_lint
@@ -179,7 +179,6 @@ autofix:
 	cd Mimir && ${MAKE} docker_autofix
 	cd Frey && ${MAKE} docker_autofix
 	cd Frey && ${MAKE} docker_autofix_common
-	cd Rheda && ${MAKE} docker_autofix
 	cd Tyr && ${MAKE} docker_autofix
 	cd Forseti && ${MAKE} docker_autofix
 	cd Sigrun && ${MAKE} docker_autofix
@@ -190,7 +189,6 @@ proto_gen:
 	cd Frey && ${MAKE} docker_proto_gen
 	cd Forseti && ${MAKE} docker_proto_gen
 	cd Tyr && ${MAKE} docker_proto_gen
-	cd Rheda && ${MAKE} docker_proto_gen
 	cd Sigrun && ${MAKE} docker_proto_gen
 
 # Prod related tasks & shortcuts
@@ -198,7 +196,6 @@ proto_gen:
 .PHONY: prod_deps
 prod_deps:
 	cd Mimir && ${MAKE} docker_deps
-	cd Rheda && ${MAKE} docker_deps
 	cd Frey && ${MAKE} docker_deps
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
@@ -214,7 +211,7 @@ prod_build_forseti: # this is for automated builds, don't run it manually
 
 .PHONY: prod_build_sigrun
 prod_build_sigrun: # this is for automated builds, don't run it manually
-	cd Sigrun && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+	cd Sigrun && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_reload_pm2
 
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1
@@ -234,14 +231,12 @@ prod_compile:
 # i18n related
 .PHONY: i18n_extract
 i18n_extract:
-	cd Rheda && ${MAKE} docker_i18n_extract
 	cd Tyr && ${MAKE} docker_i18n_extract
 	cd Forseti && ${MAKE} docker_i18n_extract
 	cd Sigrun && ${MAKE} docker_i18n_extract
 
 .PHONY: i18n_compile
 i18n_compile:
-	cd Rheda && ${MAKE} docker_i18n_compile
 	cd Tyr && ${MAKE} docker_i18n_update
 	cd Forseti && ${MAKE} docker_i18n_update
 	cd Sigrun && ${MAKE} docker_i18n_update

@@ -81,7 +81,7 @@ class EventsController extends Controller
         }
 
         /** @phpstan-ignore-next-line */
-        $statHost = $this->_config->getStringValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
+        $statHost = $this->_config->getStringValue('sigrunUrl') . '/event/' . EventPrimitive::ID_PLACEHOLDER . '/info';
         $event = (new EventPrimitive($this->_ds))
             ->setTitle($title)
             ->setDescription($description)

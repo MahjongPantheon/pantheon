@@ -86,26 +86,11 @@ services:
     environment:
       PHINX_DB_FREY_PORT: 5532
       PHINX_DB_FREY_HOST: db
-  rheda:
-    build: ./Rheda
-    ports:
-      - "127.0.0.1:4002:80"
-    depends_on:
-      - frey
-      - mimir
-    links:
-      - mimir:mimir
-      - frey:frey
-    env_file:
-      - ./Common/envs/${ENV_FILENAME}
-    volumes:
-      - ./Rheda:/var/www/html/Rheda
-      - ./Common:/var/www/html/Common
   sigrun:
     build: ./Sigrun
     ports:
-      - "127.0.0.1:4008:80"
-      - "127.0.0.1:4108:8080"
+      - "127.0.0.1:4002:80"
+      - "127.0.0.1:4102:8080"
     links:
       - mimir:mimir
       - frey:frey

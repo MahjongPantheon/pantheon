@@ -89,6 +89,10 @@ i18n_update:
 	./node_modules/.bin/pojson -s src/i18n/ru.po -o src/i18n/ru.json --withMeta
 	#./node_modules/.bin/pojson -s src/i18n/de.po -o src/i18n/de.json --withMeta
 
+PHONY: reload_pm2
+reload_pm2:
+	./node_modules/.bin/pm2 restart all
+
 PHONY: proto_gen
 proto_gen:
 	./node_modules/.bin/twirpscript
@@ -106,7 +110,7 @@ docker_stop: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Sigrun container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall webpack' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall vite' ; \
 	fi
 
 PHONY: docker_deps
@@ -188,6 +192,14 @@ docker_i18n_update: get_docker_id
 		echo "${RED}Sigrun container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Sigrun && HOME=/home/user su-exec user make i18n_update' ; \
+	fi
+
+PHONY: docker_reload_pm2
+docker_reload_pm2: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Sigrun container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Sigrun && HOME=/home/user su-exec user make reload_pm2' ; \
 	fi
 
 PHONY: docker_proto_gen

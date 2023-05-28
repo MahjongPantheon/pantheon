@@ -1,5 +1,5 @@
 {
-  "name": "rheda",
+  "name": "sigrun",
   "license": "GPL-3.0-or-later",
   "version": "2.0.0",
   "type": "module",
@@ -36,6 +36,7 @@
     "i18n-stex": "^1.0.12",
     "jsdom": "^22.0.0",
     "lodash.debounce": "^4.0.8",
+    "pm2": "^5.3.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",

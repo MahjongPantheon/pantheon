@@ -19,12 +19,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import express from 'express';
-import cluster from 'node:cluster';
-import { availableParallelism } from 'node:os';
 import process from 'node:process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const numCPUs = availableParallelism();
-const PORT = process.env.PORT ?? 4108;
+const PORT = process.env.PORT ?? 4102;
 import dotenv from 'dotenv';
 dotenv.config({
   path: process.env.NODE_ENV === 'production'
@@ -122,26 +119,11 @@ export async function createServer(app) {
   return app;
 }
 
-if (cluster.isPrimary) {
-  console.log(`Primary ${process.pid} is running`);
-  console.log('Env settings: ', process.env);
+const app = express();
+createServer(app).then((app) =>
+  app.listen(PORT, () => {
+    console.log('http://localhost:' + PORT);
+  })
+);
 
-  // Fork workers.
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
-
-  cluster.on('exit', (worker) => {
-    console.log(`worker ${worker.process.pid} died`);
-  });
-} else {
-  const app = express();
-  createServer(app).then((app) =>
-    app.listen(PORT, () => {
-      console.log('http://localhost:' + PORT);
-    })
-  );
-
-  console.log(`Worker ${process.pid} started`);
-}
-
+console.log(`Worker ${process.pid} started`);

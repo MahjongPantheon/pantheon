@@ -29,7 +29,7 @@ class TournamentSeeder extends AbstractSeed
         $event->setSyncEnd(1)->save();
 
         echo '-----------------------------------------------------------------' . PHP_EOL;
-        echo "New seeded event link: " . getenv('RHEDA_URL') . "/eid{$event->getId()}" . PHP_EOL;
+        echo "New seeded event link: " . getenv('SIGRUN_URL') . "/event/{$event->getId()}/info" . PHP_EOL;
         echo '-----------------------------------------------------------------' . PHP_EOL;
     }
 

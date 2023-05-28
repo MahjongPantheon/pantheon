@@ -362,7 +362,7 @@ abstract class Model
 
     /**
      * Loose check of rights.
-     * Should only be used on non-admin api methods called from mimir/rheda, but not from tyr.
+     * Should only be used on non-admin api methods called from mimir, but not from tyr.
      * E.g., method of adding admin rights to just created event.
      *
      * @param string $key

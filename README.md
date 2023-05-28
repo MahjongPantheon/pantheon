@@ -21,12 +21,13 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
    1. Game API (Mimir) to port 4001 
    2. User API (Frey) to port 4004 
-   3. Ratings service (Rheda) to port 4002 
+   3. Ratings service (Sigrun) to port 4002 
    4. Mobile assistant (Tyr) to port 4103 
    5. Admin panel (Forseti) to port 4107 
 5. Run the following command: `ENV_FILENAME=yourenv.env make prod_compile`. This will build and run all containers, and also bootstrap an administrator account (admin@localhost.localdomain with password 123456).
-6. Review config files of Frey, Rheda and Mimir - probably you might want to create your local configs for better manageability. You can make `config/local/` folders in each subsystem and add there local configs.
-7. Basically, you're done :)
+6. Review config files of Frey and Mimir - probably you might want to create your local configs for better manageability. You can make `config/local/` folders in each subsystem and add there local configs.
+7. Create configuration file for Sigrun in `Sigrun-dist/.env.production`. You can take example configuration from Sigrun folder.
+8. Basically, you're done :)
 
 Please note that there is no default mail server included, so you probably would want to use external mail api. Please take a look on `Frey/src/helpers/mailer_remote_api.php` 
 file - this file should be hosted as plain php file on some host, where local mail transfer agent is available. On Frey config, you should set `mode` to `remote_api` and
@@ -59,7 +60,7 @@ A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md)
 
 Default ports for services are:
 - 4001 for **Mimir** game management API (http://localhost:4001/)
-- 4002 for **Rheda** interface (http://localhost:4002/)
+- 4002 for **Sigrun** public interface (http://localhost:4002/)
 - 4003 for **Tyr** mobile interface (http://localhost:4003/)
 - 4004 for **Frey** user management backend (http://localhost:4004/)
 - 4007 for **Forseti** management interface (http://localhost:4007/)

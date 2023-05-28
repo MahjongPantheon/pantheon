@@ -1,2 +1,2 @@
 - Production mode instructions & setup
-- Delete Rheda & reintegrate Sigrun into docker prod build
+- Попробовать заменить костыли с графиками на динамические импорты

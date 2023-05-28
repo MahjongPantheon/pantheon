@@ -43,7 +43,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Expose ports
-EXPOSE 4008 4108
+EXPOSE 4002 4102
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

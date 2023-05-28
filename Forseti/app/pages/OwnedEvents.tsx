@@ -252,7 +252,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  <a href={`${window.__cfg.RHEDA_URL}/eid${event.id}`} target='_blank'>
+                  <a href={`${window.__cfg.SIGRUN_URL}/event/${event.id}/info`} target='_blank'>
                     {event.title}
                   </a>
                 </Group>
