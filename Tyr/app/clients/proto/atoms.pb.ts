@@ -153,6 +153,9 @@ export interface Event {
   tournamentStarted: boolean;
   type: EventType;
   isPrescripted: boolean;
+  isTeam: boolean;
+  hasSeries: boolean;
+  withChips: boolean;
 }
 
 export interface MyEvent {
@@ -186,6 +189,7 @@ export interface GameConfig {
   isPrescripted: boolean;
   isFinished: boolean;
   rulesetConfig: RulesetConfig;
+  lobbyId: number;
 }
 
 export interface PlayerInRating {
@@ -198,6 +202,7 @@ export interface PlayerInRating {
   avgPlace: number;
   avgScore: number;
   gamesPlayed: number;
+  teamName?: string | null | undefined;
 }
 
 export interface Player {
@@ -1991,6 +1996,9 @@ export const Event = {
       tournamentStarted: false,
       type: EventType._fromInt(0),
       isPrescripted: false,
+      isTeam: false,
+      hasSeries: false,
+      withChips: false,
     };
   },
 
@@ -2027,6 +2035,15 @@ export const Event = {
     }
     if (msg.isPrescripted) {
       writer.writeBool(9, msg.isPrescripted);
+    }
+    if (msg.isTeam) {
+      writer.writeBool(10, msg.isTeam);
+    }
+    if (msg.hasSeries) {
+      writer.writeBool(11, msg.hasSeries);
+    }
+    if (msg.withChips) {
+      writer.writeBool(12, msg.withChips);
     }
     return writer;
   },
@@ -2072,6 +2089,18 @@ export const Event = {
         }
         case 9: {
           msg.isPrescripted = reader.readBool();
+          break;
+        }
+        case 10: {
+          msg.isTeam = reader.readBool();
+          break;
+        }
+        case 11: {
+          msg.hasSeries = reader.readBool();
+          break;
+        }
+        case 12: {
+          msg.withChips = reader.readBool();
           break;
         }
         default: {
@@ -2212,6 +2241,7 @@ export const GameConfig = {
       isPrescripted: false,
       isFinished: false,
       rulesetConfig: RulesetConfig.initialize(),
+      lobbyId: 0,
     };
   },
 
@@ -2290,6 +2320,9 @@ export const GameConfig = {
     }
     if (msg.rulesetConfig) {
       writer.writeMessage(53, msg.rulesetConfig, RulesetConfig._writeMessage);
+    }
+    if (msg.lobbyId) {
+      writer.writeInt32(54, msg.lobbyId);
     }
     return writer;
   },
@@ -2393,6 +2426,10 @@ export const GameConfig = {
           reader.readMessage(msg.rulesetConfig, RulesetConfig._readMessage);
           break;
         }
+        case 54: {
+          msg.lobbyId = reader.readInt32();
+          break;
+        }
         default: {
           reader.skipField();
           break;
@@ -2438,6 +2475,7 @@ export const PlayerInRating = {
       avgPlace: 0,
       avgScore: 0,
       gamesPlayed: 0,
+      teamName: undefined,
     };
   },
 
@@ -2474,6 +2512,9 @@ export const PlayerInRating = {
     }
     if (msg.gamesPlayed) {
       writer.writeInt32(9, msg.gamesPlayed);
+    }
+    if (msg.teamName != undefined) {
+      writer.writeString(10, msg.teamName);
     }
     return writer;
   },
@@ -2522,6 +2563,10 @@ export const PlayerInRating = {
         }
         case 9: {
           msg.gamesPlayed = reader.readInt32();
+          break;
+        }
+        case 10: {
+          msg.teamName = reader.readString();
           break;
         }
         default: {
@@ -8630,6 +8675,9 @@ export const EventJSON = {
       tournamentStarted: false,
       type: EventType._fromInt(0),
       isPrescripted: false,
+      isTeam: false,
+      hasSeries: false,
+      withChips: false,
     };
   },
 
@@ -8664,6 +8712,15 @@ export const EventJSON = {
     }
     if (msg.isPrescripted) {
       json["isPrescripted"] = msg.isPrescripted;
+    }
+    if (msg.isTeam) {
+      json["isTeam"] = msg.isTeam;
+    }
+    if (msg.hasSeries) {
+      json["hasSeries"] = msg.hasSeries;
+    }
+    if (msg.withChips) {
+      json["withChips"] = msg.withChips;
     }
     return json;
   },
@@ -8708,6 +8765,18 @@ export const EventJSON = {
     const _isPrescripted_ = json["isPrescripted"] ?? json["is_prescripted"];
     if (_isPrescripted_) {
       msg.isPrescripted = _isPrescripted_;
+    }
+    const _isTeam_ = json["isTeam"] ?? json["is_team"];
+    if (_isTeam_) {
+      msg.isTeam = _isTeam_;
+    }
+    const _hasSeries_ = json["hasSeries"] ?? json["has_series"];
+    if (_hasSeries_) {
+      msg.hasSeries = _hasSeries_;
+    }
+    const _withChips_ = json["withChips"] ?? json["with_chips"];
+    if (_withChips_) {
+      msg.withChips = _withChips_;
     }
     return msg;
   },
@@ -8830,6 +8899,7 @@ export const GameConfigJSON = {
       isPrescripted: false,
       isFinished: false,
       rulesetConfig: RulesetConfigJSON.initialize(),
+      lobbyId: 0,
     };
   },
 
@@ -8911,6 +8981,9 @@ export const GameConfigJSON = {
       if (Object.keys(_rulesetConfig_).length > 0) {
         json["rulesetConfig"] = _rulesetConfig_;
       }
+    }
+    if (msg.lobbyId) {
+      json["lobbyId"] = msg.lobbyId;
     }
     return json;
   },
@@ -9016,6 +9089,10 @@ export const GameConfigJSON = {
       RulesetConfigJSON._readMessage(m, _rulesetConfig_);
       msg.rulesetConfig = m;
     }
+    const _lobbyId_ = json["lobbyId"] ?? json["lobby_id"];
+    if (_lobbyId_) {
+      msg.lobbyId = _lobbyId_;
+    }
     return msg;
   },
 };
@@ -9052,6 +9129,7 @@ export const PlayerInRatingJSON = {
       avgPlace: 0,
       avgScore: 0,
       gamesPlayed: 0,
+      teamName: undefined,
     };
   },
 
@@ -9088,6 +9166,9 @@ export const PlayerInRatingJSON = {
     }
     if (msg.gamesPlayed) {
       json["gamesPlayed"] = msg.gamesPlayed;
+    }
+    if (msg.teamName != undefined) {
+      json["teamName"] = msg.teamName;
     }
     return json;
   },
@@ -9131,6 +9212,10 @@ export const PlayerInRatingJSON = {
     const _gamesPlayed_ = json["gamesPlayed"] ?? json["games_played"];
     if (_gamesPlayed_) {
       msg.gamesPlayed = _gamesPlayed_;
+    }
+    const _teamName_ = json["teamName"] ?? json["team_name"];
+    if (_teamName_) {
+      msg.teamName = _teamName_;
     }
     return msg;
   },

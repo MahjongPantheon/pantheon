@@ -805,9 +805,12 @@ final class TwirpServer implements Mimir
                     ->setDescription($ev['description'])
                     ->setType(self::_toEventTypeEnum($ev['type']))
                     ->setFinished($ev['finished'])
+                    ->setIsTeam($ev['isTeam'])
                     ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
                     ->setIsRatingShown($ev['isRatingShown'])
+                    ->setHasSeries($ev['hasSeries'])
+                    ->setWithChips($ev['withChips'])
                     ->setTournamentStarted($ev['tournamentStarted']);
             }, $ret['events']));
     }
@@ -825,9 +828,12 @@ final class TwirpServer implements Mimir
                     ->setDescription($ev['description'])
                     ->setType(self::_toEventTypeEnum($ev['type']))
                     ->setFinished($ev['finished'])
+                    ->setIsTeam($ev['isTeam'])
                     ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
+                    ->setWithChips($ev['withChips'])
                     ->setIsRatingShown($ev['isRatingShown'])
+                    ->setHasSeries($ev['hasSeries'])
                     ->setTournamentStarted($ev['tournamentStarted']);
             }, $this->_eventsController->getEventsById(iterator_to_array($req->getIds()))));
     }
@@ -878,6 +884,9 @@ final class TwirpServer implements Mimir
         if (!empty($ret['gameDuration'])) {
             $gc->setGameDuration($ret['gameDuration']);
         }
+        if (!empty($ret['lobbyId'])) {
+            $gc->setLobbyId($ret['lobbyId']);
+        }
         if (!empty($ret['gamesStatus'])) {
             $gc->setGamesStatus(self::_toGamesStatus($ret['gamesStatus']));
         }
@@ -897,6 +906,7 @@ final class TwirpServer implements Mimir
                     ->setRating($player['rating'])
                     ->setTenhouId($player['tenhou_id'])
                     ->setChips($player['chips'])
+                    ->setTeamName($player['team_name'])
                     ->setWinnerZone($player['winner_zone'])
                     ->setAvgPlace($player['avg_place'])
                     ->setAvgScore($player['avg_score'])
@@ -904,8 +914,7 @@ final class TwirpServer implements Mimir
             }, $this->_eventsController->getRatingTable(
                 iterator_to_array($req->getEventIdList()),
                 $req->getOrderBy(),
-                $req->getOrder(),
-                $req->getWithPrefinished()
+                $req->getOrder()
             )));
     }
 
@@ -1025,6 +1034,7 @@ final class TwirpServer implements Mimir
             ->setTimeRemaining($ret['time_remaining'] ?? 0)
             ->setWaitingForTimer($ret['waiting_for_timer'])
             ->setHaveAutostart($ret['have_autostart'])
+            ->setShowSeating($ret['show_seating'])
             ->setAutostartTimer($ret['autostart_timer']);
     }
 

@@ -36,7 +36,7 @@ return array_merge([
     ],
     'db'        => require __DIR__ . '/db.php',
     'freyUrl'   => 'http://frey', // TODO: change this in your local config!
-    'rhedaUrl'  => getenv('RHEDA_URL'), // TODO: change this in your local config!
+    'sigrunUrl'  => getenv('SIGRUN_URL'), // TODO: change this in your local config!
     'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
     'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!

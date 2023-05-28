@@ -175,7 +175,6 @@ function getRounds(DataSource $ds, array $sessionIds)
     return $result;
 }
 
-$riichiStat = [];
 /**
  * @param int $eventId
  * @param SessionPrimitive[] $games
@@ -186,6 +185,7 @@ $riichiStat = [];
  */
 function calcRiichiStat(int $eventId, array $games, array $players, array $rounds)
 {
+    static $riichiStat = [];
     if (!empty($riichiStat[$eventId])) {
         return $riichiStat[$eventId];
     }

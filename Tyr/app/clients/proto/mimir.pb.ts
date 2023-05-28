@@ -71,7 +71,10 @@ export interface EventsGetRatingTablePayload {
   eventIdList: number[];
   orderBy: string;
   order: string;
-  withPrefinished: boolean;
+  /**
+   * @deprecated
+   */
+  withPrefinished?: boolean | null | undefined;
 }
 
 export interface EventsGetRatingTableResponse {
@@ -129,6 +132,7 @@ export interface EventsGetTimerStateResponse {
   waitingForTimer: boolean;
   haveAutostart: boolean;
   autostartTimer: boolean;
+  showSeating: boolean;
 }
 
 export interface GamesGetSessionOverviewPayload {
@@ -3856,7 +3860,7 @@ export const EventsGetRatingTablePayload = {
       eventIdList: [],
       orderBy: "",
       order: "",
-      withPrefinished: false,
+      withPrefinished: undefined,
     };
   },
 
@@ -3876,7 +3880,7 @@ export const EventsGetRatingTablePayload = {
     if (msg.order) {
       writer.writeString(3, msg.order);
     }
-    if (msg.withPrefinished) {
+    if (msg.withPrefinished != undefined) {
       writer.writeBool(4, msg.withPrefinished);
     }
     return writer;
@@ -4746,6 +4750,7 @@ export const EventsGetTimerStateResponse = {
       waitingForTimer: false,
       haveAutostart: false,
       autostartTimer: false,
+      showSeating: false,
     };
   },
 
@@ -4773,6 +4778,9 @@ export const EventsGetTimerStateResponse = {
     }
     if (msg.autostartTimer) {
       writer.writeBool(6, msg.autostartTimer);
+    }
+    if (msg.showSeating) {
+      writer.writeBool(7, msg.showSeating);
     }
     return writer;
   },
@@ -4809,6 +4817,10 @@ export const EventsGetTimerStateResponse = {
         }
         case 6: {
           msg.autostartTimer = reader.readBool();
+          break;
+        }
+        case 7: {
+          msg.showSeating = reader.readBool();
           break;
         }
         default: {
@@ -9649,7 +9661,7 @@ export const EventsGetRatingTablePayloadJSON = {
       eventIdList: [],
       orderBy: "",
       order: "",
-      withPrefinished: false,
+      withPrefinished: undefined,
     };
   },
 
@@ -9669,7 +9681,7 @@ export const EventsGetRatingTablePayloadJSON = {
     if (msg.order) {
       json["order"] = msg.order;
     }
-    if (msg.withPrefinished) {
+    if (msg.withPrefinished != undefined) {
       json["withPrefinished"] = msg.withPrefinished;
     }
     return json;
@@ -10397,6 +10409,7 @@ export const EventsGetTimerStateResponseJSON = {
       waitingForTimer: false,
       haveAutostart: false,
       autostartTimer: false,
+      showSeating: false,
     };
   },
 
@@ -10424,6 +10437,9 @@ export const EventsGetTimerStateResponseJSON = {
     }
     if (msg.autostartTimer) {
       json["autostartTimer"] = msg.autostartTimer;
+    }
+    if (msg.showSeating) {
+      json["showSeating"] = msg.showSeating;
     }
     return json;
   },
@@ -10459,6 +10475,10 @@ export const EventsGetTimerStateResponseJSON = {
     const _autostartTimer_ = json["autostartTimer"] ?? json["autostart_timer"];
     if (_autostartTimer_) {
       msg.autostartTimer = _autostartTimer_;
+    }
+    const _showSeating_ = json["showSeating"] ?? json["show_seating"];
+    if (_showSeating_) {
+      msg.showSeating = _showSeating_;
     }
     return msg;
   },

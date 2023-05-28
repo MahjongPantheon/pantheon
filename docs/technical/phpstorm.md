@@ -35,7 +35,7 @@ Now you can use your IDE breakpoints functionality like shown on the screenshot 
 ![](../img/debug-result.png)
 
 Please note that `?XDEBUG_SESSION=start` parameter is not transferred between services, e.g.,
-setting the parameter for Rheda URL will not automatically pass it to Frey/Mimir. To debug
+setting the parameter for Sigrun URL will not automatically pass it to Frey/Mimir. To debug
 Frey/Mimir in this case, use step 4.2.
 
 Tyr sets the `?XDEBUG_SESSION=start` parameter automatically in developer build for all

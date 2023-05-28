@@ -2,9 +2,10 @@
 
 ![Mimir](www/mimirhires.png?raw=true "Mimir")
 
-**Mimir** is a backend for [Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr) and 
-[Rheda](https://github.com/MahjongPantheon/pantheon/tree/master/Rheda), which provides storage of game 
-information for japanese (riichi) mahjong sessions. 
+**Mimir** is a backend for [Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr) (mobile assistant),
+[Forseti](https://github.com/MahjongPantheon/pantheon/tree/master/Forseti) (user profile and administration service), and
+[Sigrun](https://github.com/MahjongPantheon/pantheon/tree/master/Sigrun) (rating tables and visualizations).
+Mimir provides storage of game information for japanese (riichi) mahjong sessions. 
 
 Please use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/MIMIR) for error reports
 and feature requests.

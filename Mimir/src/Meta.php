@@ -53,14 +53,6 @@ class Meta
      * @var bool
      */
     protected $_superadmin = false;
-    /**
-     * @var bool
-     */
-    protected $_isInternalRequest = false;
-    /**
-     * @var string
-     */
-    protected $_internalToken = '';
 
     /**
      * Meta constructor.
@@ -84,14 +76,6 @@ class Meta
         $testingToken = $config->getStringValue('testing_token');
         if (!empty($testingToken) && $this->_authToken == $testingToken) {
             $this->_superadmin = true;
-        }
-
-        // For direct calls from Rheda
-        if (!empty($_SERVER['HTTP_X_INTERNAL_QUERY_SECRET']) &&
-            $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $config->getStringValue('admin.internalQuerySecret')
-        ) {
-            $this->_isInternalRequest = true;
-            $this->_internalToken = $config->getStringValue('admin.internalQuerySecret');
         }
     }
 
@@ -162,7 +146,6 @@ class Meta
             try {
                 $this->_frey->withHeaders([
                     'X-Twirp' => 'true',
-                    'X-Internal-Query-Secret' => $this->_internalToken,
                     'X-Auth-Token' => $this->_authToken,
                     'X-Current-Event-Id' => ($this->_currentEventId ?: '0'),
                     'X-Current-Person-Id' => $this->_currentPersonId,
@@ -249,16 +232,6 @@ class Meta
         return false;
     }
 
-    /**
-     * Check if query comes from internal services (Rheda).
-     *
-     * @return boolean
-     */
-    public function isInternalRequest()
-    {
-        return $this->_isInternalRequest;
-    }
-
     public function getSelectedLocale(): string
     {
         return $this->_selectedLocale;
@@ -292,6 +265,15 @@ class Meta
     public function __setEventId($eventId)
     {
         $this->_currentEventId = $eventId;
+    }
+
+    /**
+     * @param int $eventId
+     * @return bool
+     */
+    public function isAuthorizedForEvent($eventId)
+    {
+        return $this->_currentEventId === $eventId;
     }
 
     /**

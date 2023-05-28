@@ -130,7 +130,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, array_sum($stats['places_summary']));
 
         $eventModel = new EventRatingTableModel($this->_ds, $this->_config, $this->_meta);
-        $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
+        $ratings = $eventModel->getRatingTable([$this->_event], [], 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);
         $this->assertEquals(4, $ratings[0]['id']);
@@ -226,7 +226,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(-31200 - 8000, $gameResults[3]['rating_delta']);
 
         $eventModel = new EventRatingTableModel($this->_ds, $this->_config, $this->_meta);
-        $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
+        $ratings = $eventModel->getRatingTable([$this->_event], [], 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);
         $this->assertEquals(2, $ratings[0]['chips']);

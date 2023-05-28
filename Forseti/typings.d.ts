@@ -1,7 +1,7 @@
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
   __cfg: {
-    RHEDA_URL: string;
+    SIGRUN_URL: string;
     FORSETI_URL: string;
     MIMIR_URL: string;
     FREY_URL: string;

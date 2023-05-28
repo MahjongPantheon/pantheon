@@ -49,6 +49,10 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 games_played = 9;</code>
      */
     protected $games_played = 0;
+    /**
+     * Generated from protobuf field <code>optional string team_name = 10;</code>
+     */
+    protected $team_name = null;
 
     /**
      * Constructor.
@@ -65,6 +69,7 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      *     @type float $avg_place
      *     @type float $avg_score
      *     @type int $games_played
+     *     @type string $team_name
      * }
      */
     public function __construct($data = NULL) {
@@ -266,6 +271,38 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->games_played = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string team_name = 10;</code>
+     * @return string
+     */
+    public function getTeamName()
+    {
+        return isset($this->team_name) ? $this->team_name : '';
+    }
+
+    public function hasTeamName()
+    {
+        return isset($this->team_name);
+    }
+
+    public function clearTeamName()
+    {
+        unset($this->team_name);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string team_name = 10;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setTeamName($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->team_name = $var;
 
         return $this;
     }

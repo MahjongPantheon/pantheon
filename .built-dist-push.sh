@@ -9,6 +9,7 @@ commit_built() {
   git checkout master
   git add Tyr-dist
   git add Forseti-dist
+  git add Sigrun-dist
   git commit --message "Auto build: $GITHUB_RUN_NUMBER"
 }
 

@@ -59,7 +59,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'app/index.html',
-      RHEDA_URL: process.env.RHEDA_URL,
+      SIGRUN_URL: process.env.SIGRUN_URL,
       FORSETI_URL: process.env.FORSETI_URL,
       MIMIR_URL: process.env.MIMIR_URL,
       FREY_URL: process.env.FREY_URL,

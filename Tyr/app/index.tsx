@@ -24,8 +24,11 @@ import { IAppState } from '#/store/interfaces';
 import { observe } from '#/scripts/dimensionsObserver';
 import { registerFrontErrorHandler } from '#/scripts/logFrontError';
 import { Storage } from '../../Common/storage';
+import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 
-const storage = new Storage(window.__cfg.COOKIE_DOMAIN || null);
+const storageStrategy = new StorageStrategyClient(window.__cfg.COOKIE_DOMAIN || null);
+const storage = new Storage();
+storage.setStrategy(storageStrategy);
 
 // Storage cleanup: use if some trouble happened during logging in
 if (window.location.search.startsWith('?clear')) {

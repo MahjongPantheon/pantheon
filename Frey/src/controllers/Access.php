@@ -44,7 +44,7 @@ class AccessController extends Controller
     }
 
     /**
-     * Client method to receive super-admin flag. Intended to be used only in Mimir/Rheda
+     * Client method to receive super-admin flag. Intended to be used only in Mimir
      * to determine if used has super-admin privileges independently of any event.
      * Cached for 10 minutes.
      *

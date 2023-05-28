@@ -2,9 +2,10 @@
 
 ![Frey](www/freyhires.png?raw=true "Frey")
 
-**Frey** is a low-level backend for [Mimir](https://github.com/MahjongPantheon/pantheon/tree/master/Mimir),
-[Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr) and 
-[Rheda](https://github.com/MahjongPantheon/pantheon/tree/master/Rheda), which provides authentication service
+**Frey** is a low-level backend for [Mimir](https://github.com/MahjongPantheon/pantheon/tree/master/Mimir) (storage service),
+[Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr) (mobile assistant),
+[Forseti](https://github.com/MahjongPantheon/pantheon/tree/master/Forseti) (user profile and administration service), and 
+[Sigrun](https://github.com/MahjongPantheon/pantheon/tree/master/Sigrun) (rating tables and visualizations). Frey provides authentication service
 and players' personal data storage. 
 
 Please use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/) for error reports

@@ -153,7 +153,7 @@ class SeatingController extends Controller
         }
 
         $currentRatingTable = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
-            ->getRatingTable($eventList, 'rating', 'desc');
+            ->getRatingTable($eventList, [], 'rating', 'desc');
 
         // In rare cases we want to exclude players from seating
         $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$eventId]);

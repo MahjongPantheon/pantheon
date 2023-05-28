@@ -104,7 +104,7 @@ class Meta
 
     protected function _fillFrom(\Common\Storage $storage, ?array $input): void
     {
-        // Rheda and Mimir MUST pass authToken from cookie to Frey as X-Auth-Token header.
+        // All services MUST pass authToken from cookie to Frey as X-Auth-Token header.
         // Also they MUST pass currentEventId as X-Current-Event-Id and currentPersonId as X-Current-Person-Id.
         // External services may choose to use either cookie or header.
         $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN'])

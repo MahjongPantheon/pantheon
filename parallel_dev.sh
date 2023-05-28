@@ -12,7 +12,12 @@ make dev_forseti &
 FORSETI_PID=$!
 echo $FORSETI_PID
 
-trap "TRAPPED_SIGNAL=true; make tyr_stop; make forseti_stop;" SIGTERM  SIGINT
+echo 'Starting Sigrun dev';
+make dev_sigrun &
+SIGRUN_PID=$!
+echo $SIGRUN_PID
+
+trap "TRAPPED_SIGNAL=true; make tyr_stop; make forseti_stop; make sigrun_stop;" SIGTERM  SIGINT
 
 while :
 do
@@ -22,8 +27,11 @@ do
     kill -0 $FORSETI_PID 2> /dev/null
     FORSETI_STATUS=$?
 
+    kill -0 $SIGRUN_PID 2> /dev/null
+    SIGRUN_STATUS=$?
+
     if [ "$TRAPPED_SIGNAL" = "false" ]; then
-        if [ $TYR_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ]; then
+        if [ $TYR_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ]; then
             if [ $FORSETI_STATUS -eq 0 ]; then
                 kill -15 $FORSETI_PID;
                 wait $FORSETI_PID;
@@ -32,10 +40,14 @@ do
                 kill -15 $TYR_PID;
                 wait $TYR_PID;
             fi
+            if [ $SIGRUN_STATUS -eq 0 ]; then
+                kill -15 $SIGRUN_PID;
+                wait $SIGRUN_PID;
+            fi
             exit 1;
         fi
     else
-       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ]; then
+       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $SIGRUN_STATUS -ne 0 ]; then
             exit 0;
        fi
     fi

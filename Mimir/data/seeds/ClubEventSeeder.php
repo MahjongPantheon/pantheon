@@ -28,7 +28,7 @@ class ClubEventSeeder extends AbstractSeed
         $this->_seedGames($src, $config, $event, $idMap, intval(getenv('SEED_REPEAT') ?: '1'));
 
         echo '-----------------------------------------------------------------' . PHP_EOL;
-        echo "New seeded event link: ' " . getenv('RHEDA_URL') . "/eid{$event->getId()}" . PHP_EOL;
+        echo "New seeded event link: ' " . getenv('SIGRUN_URL') . "/event/{$event->getId()}/info" . PHP_EOL;
         echo '-----------------------------------------------------------------' . PHP_EOL;
     }
 

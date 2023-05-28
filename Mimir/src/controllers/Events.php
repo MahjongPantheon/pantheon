@@ -81,7 +81,7 @@ class EventsController extends Controller
         }
 
         /** @phpstan-ignore-next-line */
-        $statHost = $this->_config->getStringValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
+        $statHost = $this->_config->getStringValue('sigrunUrl') . '/event/' . EventPrimitive::ID_PLACEHOLDER . '/info';
         $event = (new EventPrimitive($this->_ds))
             ->setTitle($title)
             ->setDescription($description)
@@ -590,12 +590,13 @@ class EventsController extends Controller
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
             'seriesLength'        => $event[0]->getSeriesLength(),
-            'minGamesCount'        => $event[0]->getMinGamesCount(),
+            'minGamesCount'       => $event[0]->getMinGamesCount(),
             'gamesStatus'         => $event[0]->getGamesStatus(),
             'hideResults'         => (bool)$event[0]->getHideResults(),
             'hideAddReplayButton' => false, // TODO: fix when tournaments are resurrected
             'isPrescripted'       => (bool)$event[0]->getIsPrescripted(),
             'isFinished'          => (bool)$event[0]->getIsFinished(),
+            'lobbyId'             => $event[0]->getLobbyId(),
         ];
 
         $this->_log->info('Successfully received config for event id# ' . $eventId);
@@ -608,12 +609,11 @@ class EventsController extends Controller
      * @param array $eventIdList
      * @param string $orderBy either 'name', 'rating', 'avg_place' or 'avg_score'
      * @param string $order either 'asc' or 'desc'
-     * @param bool $withPrefinished include prefinished games score
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getRatingTable($eventIdList, $orderBy, $order, $withPrefinished)
+    public function getRatingTable($eventIdList, $orderBy, $order)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
@@ -626,8 +626,15 @@ class EventsController extends Controller
             throw new InvalidParametersException('Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
+        // Show prefinished results only for event admin.
+        // We should also check that requested event matches authorization header.
+        $withPrefinished = count($eventIdList) === 1 &&
+            $this->_meta->isAuthorizedForEvent($eventIdList[0]) &&
+            $this->_meta->isEventAdmin();
+
+        $playerRegs = PlayerRegistrationPrimitive::fetchPlayerRegData($this->_ds, $eventIdList);
         $table = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
-            ->getRatingTable($eventList, $orderBy, $order, $withPrefinished);
+            ->getRatingTable($eventList, $playerRegs, $orderBy, $order, $withPrefinished);
 
         $this->_log->info('Successfully received rating table for event ids: ' . implode(", ", $eventIdList));
 
@@ -790,6 +797,8 @@ class EventsController extends Controller
         $response['waiting_for_timer'] = ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
         $response['have_autostart'] = ($event[0]->getNextGameStartTime() > 0 && $event[0]->getTimeToStart() > 0);
         $response['autostart_timer'] = $event[0]->getNextGameStartTime() - time();
+        // show seating for 10 mins after start
+        $response['show_seating'] = ($event[0]->getGameDuration() * 60) - $response['time_remaining'] < 600;
 
         $this->_log->info('Successfully got timer data for event id#' . $eventId);
 
