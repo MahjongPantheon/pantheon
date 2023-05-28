@@ -64,6 +64,7 @@ prebuild:
 	cd dist/client/assets && gzip -k -9 -f *.js *.css
 	cp -R dist ../Sigrun-dist/
 	cp -f server.js ../Sigrun-dist/
+	cp -f .env.production ../Sigrun-dist/
 	cp -f package.json ../Sigrun-dist/
 	cp -f yarn.lock ../Sigrun-dist/
 
