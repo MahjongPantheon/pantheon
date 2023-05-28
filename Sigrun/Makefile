@@ -91,7 +91,13 @@ i18n_update:
 
 PHONY: reload_pm2
 reload_pm2:
-	./node_modules/.bin/pm2 restart all
+	pm2 restart all
+
+.PHONY: rebuild_ssr
+rebuild_ssr:
+	${MAKE} build
+	${MAKE} prebuild
+	${MAKE} reload_pm2
 
 PHONY: proto_gen
 proto_gen:

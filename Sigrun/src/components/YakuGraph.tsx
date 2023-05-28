@@ -21,6 +21,7 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
 import { YakuStat } from '../clients/proto/atoms.pb';
 import { useMemo } from 'react';
+const BarGraph = React.lazy(() => import('./BarGraph'));
 
 export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
   const i18n = useI18n();
@@ -68,8 +69,6 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
   }
 
   const yakuStatsHeight = 40 + 24 * yakuStats.length;
-
-  const BarGraph = (window as any).__chart.BarGraph;
   return (
     <div style={{ position: 'relative', height: `${yakuStatsHeight}px` }}>
       <BarGraph
@@ -110,3 +109,5 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
     </div>
   );
 };
+
+export { YakuGraph as default }; // for React.lazy

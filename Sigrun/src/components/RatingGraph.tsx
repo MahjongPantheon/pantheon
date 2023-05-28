@@ -22,6 +22,7 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import starSvg from '../../assets/img/star.svg';
 import { PlayersGetPlayerStatsResponse } from '../clients/proto/mimir.pb';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
+const LineGraph = React.lazy(() => import('./LineGraph'));
 
 export const RatingGraph = ({
   playerId,
@@ -86,7 +87,6 @@ export const RatingGraph = ({
     }
   });
 
-  const LineGraph = (window as any).__chart.LineGraph;
   return (
     <LineGraph
       ref={chartRef}
@@ -180,3 +180,5 @@ export const RatingGraph = ({
 function getElementAtEvent(chart: any /* ChartJS*/, event: React.MouseEvent<HTMLCanvasElement>) {
   return chart.getElementsAtEventForMode(event.nativeEvent, 'nearest', { intersect: false }, false);
 }
+
+export { RatingGraph as default }; // for React.lazy

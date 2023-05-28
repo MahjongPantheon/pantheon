@@ -19,6 +19,7 @@ import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { HandValueStat } from '../clients/proto/atoms.pb';
+const BarGraph = React.lazy(() => import('./BarGraph'));
 
 export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] }) => {
   const i18n = useI18n();
@@ -57,7 +58,6 @@ export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] 
 
   handValueStats.push({ x: '★', y: yakumanCount > 0 ? yakumanCount : 0 });
 
-  const BarGraph = (window as any).__chart.BarGraph;
   return (
     <BarGraph
       data={{ datasets: [{ data: handValueStats }] }}
@@ -94,3 +94,5 @@ export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] 
     />
   );
 };
+
+export { HandsGraph as default }; // for React.lazy

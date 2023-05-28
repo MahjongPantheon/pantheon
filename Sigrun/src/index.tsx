@@ -23,37 +23,9 @@ import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 import { Isomorphic } from './hooks/isomorphic';
 import useLocation from 'wouter/use-location';
 import { Layout } from './Layout';
-import {
-  Chart as ChartJS,
-  BarController,
-  BarElement,
-  CategoryScale,
-  LineElement,
-  PointElement,
-  Tooltip,
-  LinearScale,
-  Title,
-} from 'chart.js';
-import zoomPlugin from 'chartjs-plugin-zoom';
-import { Line as LineGraph, Bar as BarGraph } from 'react-chartjs-2';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
 import { createEmotionCache } from '@mantine/core';
-ChartJS.register(
-  LineElement,
-  Tooltip,
-  BarElement,
-  BarController,
-  CategoryScale,
-  PointElement,
-  LinearScale,
-  Title,
-  zoomPlugin
-);
-ChartJS.defaults.font.size = 16;
-ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
-
-(window as any).__chart = { LineGraph, BarGraph };
 
 const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
 const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);

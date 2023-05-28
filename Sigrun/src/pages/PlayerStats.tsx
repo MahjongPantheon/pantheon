@@ -34,18 +34,19 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
-import { RatingGraph } from '../components/RatingGraph';
 import { Suspense, useState } from 'react';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
 import { PlayerIcon } from '../components/PlayerIcon';
 import { useMediaQuery } from '@mantine/hooks';
 import { PlayerStatsListing } from '../components/PlayerStatsListing';
-import { HandsGraph } from '../components/HandsGraph';
-import { YakuGraph } from '../components/YakuGraph';
 import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
 import { useEvent } from '../hooks/useEvent';
 import { Helmet } from 'react-helmet';
+
+const HandsGraph = React.lazy(() => import('../components/HandsGraph'));
+const YakuGraph = React.lazy(() => import('../components/YakuGraph'));
+const RatingGraph = React.lazy(() => import('../components/RatingGraph'));
 
 export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string } }> = ({
   params: { eventId, playerId },
