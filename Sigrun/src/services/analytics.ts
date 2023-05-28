@@ -108,6 +108,10 @@ export class Analytics {
 
     this._track = debounce(
       (action: string, params: { [key: string]: any } = {}, eventId?: number) => {
+        // TODO: fix server-side analytics
+        if (typeof window === 'undefined') {
+          return;
+        }
         this._trackEvent(
           action,
           {

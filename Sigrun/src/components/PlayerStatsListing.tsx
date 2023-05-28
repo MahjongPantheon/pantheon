@@ -79,15 +79,15 @@ export const PlayerStatsListing = ({
           <List>
             <List.Item>
               {i18n._t('Minimum: ')}
-              <b>{scoreSummary.min}</b>
+              <b>{scoreSummary.min.toFixed(2)}</b>
             </List.Item>
             <List.Item>
               {i18n._t('Maximum: ')}
-              <b>{scoreSummary.max}</b>
+              <b>{scoreSummary.max.toFixed(2)}</b>
             </List.Item>
             <List.Item>
               {i18n._t('Average: ')}
-              <b>{scoreSummary.avg}</b>
+              <b>{scoreSummary.avg.toFixed(2)}</b>
             </List.Item>
           </List>
         </List.Item>
@@ -121,7 +121,7 @@ export const PlayerStatsListing = ({
               <List>
                 <List.Item>
                   {i18n._t('Average dora per hand: ')}
-                  <b>{playerStats?.doraStat?.average}</b>
+                  <b>{playerStats?.doraStat?.average.toFixed(2)}</b>
                 </List.Item>
               </List>
             </List.Item>

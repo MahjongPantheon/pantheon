@@ -62,7 +62,8 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
     .map(([key, value]) => {
       return { x: value, y: yakuNameMap.get(key) };
     })
-    .filter((v) => v.x > 0);
+    .filter((v) => v.x > 0)
+    .sort((a, b) => b.x - a.x);
 
   if (totalYakuhai > 0) {
     yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') });
