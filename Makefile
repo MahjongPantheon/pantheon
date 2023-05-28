@@ -199,7 +199,7 @@ prod_deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
-	cd Sigrun && ${MAKE} docker_prod_deps
+	# sigrun should install deps after prebuild
 
 .PHONY: prod_build_tyr
 prod_build_tyr: # this is for automated builds, don't run it manually
@@ -211,7 +211,7 @@ prod_build_forseti: # this is for automated builds, don't run it manually
 
 .PHONY: prod_build_sigrun
 prod_build_sigrun: # this is for automated builds, don't run it manually
-	cd Sigrun && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_reload_pm2
+	cd Sigrun && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
 
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1

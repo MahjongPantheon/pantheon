@@ -24,7 +24,7 @@ RUN apk update && \
     npm \
     protoc
 
-RUN npm install -g i18n-stex i18n-po-json i18n-json-po yarn
+RUN npm install -g i18n-stex i18n-po-json i18n-json-po yarn pm2
 
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)
@@ -56,6 +56,7 @@ COPY sigrun-docker.nginx.conf /etc/nginx/http.d/sigrun.conf
 # Folders init
 RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Sigrun
+RUN mkdir -p /var/www/html/Sigrun-dist
 RUN mkdir -p /var/www/html/Common
 
 # Entry point

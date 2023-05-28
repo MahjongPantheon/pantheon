@@ -12,7 +12,7 @@ nginx -g "daemon off;" 2>&1 &
 NGINX_PID=$!
 
 echo 'Starting PM2';
-cd ../Sigrun-dist && ./node_modules/.bin/pm2 start server.js 2>&1 &
+cd /var/www/html/Sigrun-dist && pm2-runtime server.js 2>&1 &
 PM2_PID=$!
 
 trap "TRAPPED_SIGNAL=true; kill -15 $NGINX_PID; kill -15 $PM2_PID" SIGTERM  SIGINT
