@@ -29,7 +29,6 @@ import { StorageProvider, useStorage } from './hooks/storage';
 import { I18nProvider, useI18n } from './hooks/i18n';
 import { ApiProvider } from './hooks/api';
 import './App.css';
-import { useLocalStorage } from '@mantine/hooks';
 import { useCallback, useState, ReactNode } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
@@ -38,18 +37,32 @@ import { Helmet } from 'react-helmet';
 import favicon from '../assets/ico/favicon.png';
 import { EmotionCache } from '@emotion/css';
 
-export function Layout({ children, cache }: { children: ReactNode; cache: EmotionCache }) {
-  const theme = useMantineTheme();
-  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: 'mantine-color-scheme',
-    defaultValue: 'light',
-    getInitialValueInEffect: true,
-  });
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value ?? (colorScheme === 'dark' ? 'light' : 'dark'));
+// See also Tyr/app/services/themes.ts - we use names from there to sync themes
+const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
+  return ({
+    day: 'light',
+    night: 'dark',
+  }[theme ?? 'day'] ?? 'light') as ColorScheme;
+};
+const themeFromLocal: (theme?: ColorScheme | null) => string = (theme) => {
+  return (
+    {
+      light: 'day',
+      dark: 'night',
+    }[theme ?? 'light'] ?? 'day'
+  );
+};
 
+export function Layout({ children, cache }: { children: ReactNode; cache: EmotionCache }) {
   const storage = useStorage();
   const i18n = useI18n();
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const newValue = value ?? (colorScheme === 'dark' ? 'light' : 'dark');
+    setColorScheme(newValue);
+    storage.setTheme(themeFromLocal(newValue));
+  };
+  const theme = useMantineTheme();
   const dark = colorScheme === 'dark';
 
   const [data, setDataInt] = useState<Globals>({
