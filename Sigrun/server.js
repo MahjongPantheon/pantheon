@@ -20,19 +20,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'url';
 import process from 'node:process';
 const PORT = process.env.PORT ?? 4102;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
   Promise.all([
     import('express'), import('dotenv')
   ]).then(([express, dotenv]) => {
-    const __dirname = path.dirname(fileURLToPath(import.meta.url));
-    dotenv.config({
+    dotenv.default.config({
       path: process.env.NODE_ENV === 'production'
         ? '.env.production'
         : '.env.development'
     })
 
-    const app = express();
+    const app = express.default();
     createServer(app).then((app) =>
       app.listen(PORT, () => {
         console.log('http://localhost:' + PORT);

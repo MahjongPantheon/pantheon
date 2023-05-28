@@ -25,9 +25,9 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
     if (round.ron) {
       return i18n._pt('Ron log item', '%1: <b>%2</b> - %3 (<b>%4</b>), %5. Riichi bets: %6', [
         makeRound(round.ron.roundIndex),
-        players[round.ron.winnerId].title,
+        players[round.ron.winnerId]?.title,
         makeYaku(round.ron.yaku, round.ron.dora + round.ron.uradora, i18n, yakuNameMap),
-        players[round.ron.loserId].title,
+        players[round.ron.loserId]?.title,
         makeHanFu(round.ron.han, round.ron.fu, i18n),
         makeCsvPlayers(players, round.ron.riichiBets) || i18n._t('none'),
       ]);
@@ -36,7 +36,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
     if (round.tsumo) {
       return i18n._pt('Tsumo log item', '%1: <b>%2</b> - %3 (tsumo), %4. Riichi bets: %5', [
         makeRound(round.tsumo.roundIndex),
-        players[round.tsumo.winnerId].title,
+        players[round.tsumo.winnerId]?.title,
         makeYaku(round.tsumo.yaku, round.tsumo.dora + round.tsumo.uradora, i18n, yakuNameMap),
         makeHanFu(round.tsumo.han, round.tsumo.fu, i18n),
         makeCsvPlayers(players, round.tsumo.riichiBets) || i18n._t('none'),
@@ -63,7 +63,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
     if (round.chombo) {
       return i18n._pt('Chombo log item', '%1: Chombo (<b>%2</b>)', [
         makeRound(round.chombo.roundIndex),
-        players[round.chombo.loserId].title,
+        players[round.chombo.loserId]?.title,
       ]);
     }
 
@@ -81,7 +81,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
         round.multiron.wins
           .map((win) => {
             return i18n._pt('Multiron inner log item', '<li><b>%1</b> - %2, %3</li>', [
-              players[win.winnerId].title,
+              players[win.winnerId]?.title,
               makeYaku(win.yaku, win.dora + win.uradora, i18n, yakuNameMap),
               makeHanFu(win.han, win.fu, i18n),
             ]);
@@ -91,7 +91,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
       return (
         i18n._pt('Multiron outer log item', '%1: Ron (<b>%2</b>). Riichi bets: %3', [
           makeRound(round.multiron.roundIndex),
-          players[round.multiron.loserId].title,
+          players[round.multiron.loserId]?.title,
           makeCsvPlayers(players, round.multiron.riichiBets) || i18n._t('none'),
         ]) + list
       );
@@ -140,5 +140,5 @@ function makeHanFu(han: number, fu: number, i18n: I18nService) {
 }
 
 function makeCsvPlayers(players: Record<number, Player>, actualList: number[]) {
-  return actualList.map((id) => players[id].title).join(', ');
+  return actualList.map((id) => players[id]?.title).join(', ');
 }

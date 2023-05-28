@@ -24,10 +24,12 @@ To deploy pantheon on your own VPS or personal environment on production mode:
    3. Ratings service (Sigrun) to port 4002 
    4. Mobile assistant (Tyr) to port 4103 
    5. Admin panel (Forseti) to port 4107 
-5. Run the following command: `ENV_FILENAME=yourenv.env make prod_compile`. This will build and run all containers, and also bootstrap an administrator account (admin@localhost.localdomain with password 123456).
-6. Review config files of Frey and Mimir - probably you might want to create your local configs for better manageability. You can make `config/local/` folders in each subsystem and add there local configs.
-7. Create configuration file for Sigrun in `Sigrun-dist/.env.production`. You can take example configuration from Sigrun folder.
-8. Basically, you're done :)
+5. Modify Sigrun configuration file in `Sigrun/.env.production` to match your server settings.
+6. Run the following command: `ENV_FILENAME=yourenv.env make prod_compile`. This will build and run all containers.
+7. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456).
+8. Review config files of Frey and Mimir - probably you might want to create your local configs for better manageability. You can make `config/local/` folders in each subsystem and add there local configs.
+9. Copy configuration file for Sigrun from `Sigrun/.env.production` to `Sigrun-dist/.env.production`. Note that config files whould be the same, otherwise expect side-effects.
+10. Basically, you're done :)
 
 Please note that there is no default mail server included, so you probably would want to use external mail api. Please take a look on `Frey/src/helpers/mailer_remote_api.php` 
 file - this file should be hosted as plain php file on some host, where local mail transfer agent is available. On Frey config, you should set `mode` to `remote_api` and

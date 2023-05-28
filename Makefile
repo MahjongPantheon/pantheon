@@ -223,10 +223,13 @@ prod_compile:
 	docker-compose --env-file ./Common/envs/${ENV_FILENAME} up --build -d
 	${MAKE} prod_deps
 	${MAKE} migrate
-	cd Frey && ${MAKE} docker_seed # bootstrap admin
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_sigrun
+
+.PHONY: bootstrap_admin
+bootstrap_admin:
+	cd Frey && ${MAKE} docker_seed
 
 # i18n related
 .PHONY: i18n_extract
