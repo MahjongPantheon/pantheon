@@ -58,7 +58,7 @@ jobs:
         run: make prod_build_forseti
 
       - name: Make prod Sigrun build
-        run: make prod_build_sigrun
+        run: cp Sigrun/.env.primary Sigrun/.env.production && make prod_build_sigrun
 
       - name: Push prod builds to repo
         if: github.repository=='MahjongPantheon/pantheon'

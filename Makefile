@@ -211,7 +211,7 @@ prod_build_forseti: # this is for automated builds, don't run it manually
 
 .PHONY: prod_build_sigrun
 prod_build_sigrun: # this is for automated builds, don't run it manually
-	cd Sigrun && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
+	cd Sigrun && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
 
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1
@@ -225,7 +225,7 @@ prod_compile:
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
-	${MAKE} prod_build_sigrun
+	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
 
 .PHONY: bootstrap_admin
 bootstrap_admin:
