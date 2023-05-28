@@ -7757,6 +7757,9 @@ const _Analytics = class {
     }
     this._track = debounce(
       (action, params = {}, eventId) => {
+        if (typeof window === "undefined") {
+          return;
+        }
         this._trackEvent(
           action,
           {
@@ -8771,15 +8774,15 @@ const PlayerStatsListing = ({
         /* @__PURE__ */ jsxs(List, { children: [
           /* @__PURE__ */ jsxs(List.Item, { children: [
             i18n2._t("Minimum: "),
-            /* @__PURE__ */ jsx("b", { children: scoreSummary.min })
+            /* @__PURE__ */ jsx("b", { children: scoreSummary.min.toFixed(2) })
           ] }),
           /* @__PURE__ */ jsxs(List.Item, { children: [
             i18n2._t("Maximum: "),
-            /* @__PURE__ */ jsx("b", { children: scoreSummary.max })
+            /* @__PURE__ */ jsx("b", { children: scoreSummary.max.toFixed(2) })
           ] }),
           /* @__PURE__ */ jsxs(List.Item, { children: [
             i18n2._t("Average: "),
-            /* @__PURE__ */ jsx("b", { children: scoreSummary.avg })
+            /* @__PURE__ */ jsx("b", { children: scoreSummary.avg.toFixed(2) })
           ] })
         ] })
       ] }),
@@ -8815,7 +8818,7 @@ const PlayerStatsListing = ({
             /* @__PURE__ */ jsx("b", { children: (_p = playerStats == null ? void 0 : playerStats.doraStat) == null ? void 0 : _p.count }),
             /* @__PURE__ */ jsx(List, { children: /* @__PURE__ */ jsxs(List.Item, { children: [
               i18n2._t("Average dora per hand: "),
-              /* @__PURE__ */ jsx("b", { children: (_q = playerStats == null ? void 0 : playerStats.doraStat) == null ? void 0 : _q.average })
+              /* @__PURE__ */ jsx("b", { children: (_q = playerStats == null ? void 0 : playerStats.doraStat) == null ? void 0 : _q.average.toFixed(2) })
             ] }) })
           ] }),
           /* @__PURE__ */ jsxs(List.Item, { children: [
@@ -9024,7 +9027,7 @@ function makePercent(piece, total) {
   return (100 * piece / total).toFixed(2) + "%";
 }
 const HandsGraph = React.lazy(() => import("./assets/HandsGraph-585d13e7.js"));
-const YakuGraph = React.lazy(() => import("./assets/YakuGraph-e9085c6f.js"));
+const YakuGraph = React.lazy(() => import("./assets/YakuGraph-96b072d4.js"));
 const RatingGraph = React.lazy(() => import("./assets/RatingGraph-179ddefb.js"));
 const PlayerStats = ({
   params: { eventId, playerId }

@@ -125,13 +125,13 @@ export async function createServer(app, env) {
       res.set({ 'Content-Type': 'text/html' });
       for (let name in cookies.add) {
         res.cookie(name, cookies.add[name], {
-          domain: env.COOKIE_DOMAIN,
+          domain: env.VITE_COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
         });
       }
       for (let name of cookies.remove) {
         res.clearCookie(name, {
-          domain: env.COOKIE_DOMAIN,
+          domain: env.VITE_COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
         });
       }
