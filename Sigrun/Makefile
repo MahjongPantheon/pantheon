@@ -110,7 +110,7 @@ docker_stop: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Sigrun container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall vite' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall node' ; \
 	fi
 
 PHONY: docker_deps

@@ -32,6 +32,7 @@ import {
   LoadingOverlay,
 } from '@mantine/core';
 import {
+  IconAdjustmentsAlt,
   IconAlarm,
   IconAward,
   IconChartBar,
@@ -175,6 +176,26 @@ export function AppHeader() {
                   size='lg'
                 >
                   <IconList size='1.5rem' />
+                </ActionIcon>
+              )}
+            </Anchor>
+            <Anchor href={import.meta.env.VITE_FORSETI_URL} target='_blank'>
+              {largeScreen ? (
+                <Button
+                  className={classes.link}
+                  leftIcon={<IconAdjustmentsAlt size={20} />}
+                  title={i18n._t('Profile & admin panel')}
+                >
+                  {i18n._t('Profile & admin panel')}
+                </Button>
+              ) : (
+                <ActionIcon
+                  title={i18n._t('Profile & admin panel')}
+                  variant='filled'
+                  color='grape'
+                  size='lg'
+                >
+                  <IconAdjustmentsAlt size='1.5rem' />
                 </ActionIcon>
               )}
             </Anchor>
