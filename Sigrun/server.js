@@ -19,21 +19,21 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import process from 'node:process';
-const PORT = process.env.PORT ?? 4102;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
   Promise.all([
     import('express'), import('dotenv')
   ]).then(([express, dotenv]) => {
-    dotenv.default.config({
+    const out = dotenv.default.config({
       path: process.env.NODE_ENV === 'production'
         ? '.env.production'
         : '.env.development'
-    })
+    })?.parsed;
 
     const app = express.default();
-    createServer(app).then((app) =>
+    const PORT = out?.PORT ?? 4102;
+    createServer(app, out).then((app) =>
       app.listen(PORT, () => {
         console.log('http://localhost:' + PORT);
       })
@@ -52,7 +52,7 @@ if (fs.existsSync('./node_modules')) {
   })
 }
 
-export async function createServer(app) {
+export async function createServer(app, env) {
   const resolve = (p) => path.resolve(__dirname, p);
 
   app.use((await import('compression')).default());
@@ -64,47 +64,47 @@ export async function createServer(app) {
   );
 
   app.get('/eid:eventId', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
   })
 
   app.get('/eid:eventId/add-online', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
   })
 
   app.get('/eid:eventId/last', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games`);
   })
 
   app.get('/eid:eventId/last/page/:page', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games/page/${req.params.page}`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games/page/${req.params.page}`);
   })
 
   app.get('/eid:eventId/stat', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/rating`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/rating`);
   })
 
   app.get('/eid:eventId/stat/team', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/team`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/team`);
   })
 
   app.get('/eid:eventId/user/:playerId', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/player/${req.params.playerId}`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/player/${req.params.playerId}`);
   })
 
   app.get('/eid:eventId/game/:gameHash', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/game/${req.params.gameHash}`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/game/${req.params.gameHash}`);
   })
 
   app.get('/eid:eventId/timer', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/timer`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/timer`);
   })
 
   app.get('/eid:eventId/achievements', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
   })
 
   app.get('/eid:eventId/achievements/:achievement', (req, res) => {
-    res.redirect(301, `${process.env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
+    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
   })
 
   app.use('*', async (req, res) => {
@@ -125,13 +125,13 @@ export async function createServer(app) {
       res.set({ 'Content-Type': 'text/html' });
       for (let name in cookies.add) {
         res.cookie(name, cookies.add[name], {
-          domain: process.env.COOKIE_DOMAIN,
+          domain: env.COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
         });
       }
       for (let name of cookies.remove) {
         res.clearCookie(name, {
-          domain: process.env.COOKIE_DOMAIN,
+          domain: env.COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
         });
       }

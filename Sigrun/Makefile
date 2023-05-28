@@ -91,13 +91,13 @@ i18n_update:
 
 PHONY: reload_pm2
 reload_pm2:
-	pm2 restart all
+	HOME=/home/user su-exec user pm2 restart all
 
 .PHONY: rebuild_ssr
 rebuild_ssr:
-	${MAKE} build
-	${MAKE} prebuild
-	${MAKE} reload_pm2
+	HOME=/home/user su-exec user ${MAKE} build
+	HOME=/home/user su-exec user ${MAKE} prebuild
+	HOME=/home/user su-exec user ${MAKE} reload_pm2
 
 PHONY: proto_gen
 proto_gen:
