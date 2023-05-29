@@ -248,7 +248,7 @@ final class TwirpServer implements Mimir
                 ->setTitle($result['title'])
                 ->setPlayerId($result['player_id'])
                 ->setScore($result['score'])
-                ->setRatingDelta($result['rating_delta'])
+                ->setRatingDelta((float)$result['rating_delta'])
                 ->setPlace($result['place']);
         }, $scoreHistory);
     }
@@ -746,7 +746,7 @@ final class TwirpServer implements Mimir
                     return (new FinalResultOfSession())
                         ->setPlayerId($result['player_id'])
                         ->setScore($result['score'])
-                        ->setRatingDelta($result['rating_delta'])
+                        ->setRatingDelta((float)$result['rating_delta'])
                         ->setPlace($result['place']);
                 }, $game['final_results']))
                 ->setRounds(array_map(function ($r) {
@@ -903,13 +903,13 @@ final class TwirpServer implements Mimir
                 return (new PlayerInRating())
                     ->setId($player['id'])
                     ->setTitle($player['title'])
-                    ->setRating($player['rating'])
+                    ->setRating((float)$player['rating'])
                     ->setTenhouId($player['tenhou_id'])
                     ->setChips($player['chips'])
                     ->setTeamName($player['team_name'])
                     ->setWinnerZone($player['winner_zone'])
-                    ->setAvgPlace($player['avg_place'])
-                    ->setAvgScore($player['avg_score'])
+                    ->setAvgPlace((float)$player['avg_place'])
+                    ->setAvgScore((float)$player['avg_score'])
                     ->setGamesPlayed($player['games_played']);
             }, $this->_eventsController->getRatingTable(
                 iterator_to_array($req->getEventIdList()),
@@ -963,7 +963,7 @@ final class TwirpServer implements Mimir
                             ->setSessionHash($place['hash'])
                             ->setPlace($place['place']);
                     }, $result['best_series']))
-                    ->setBestSeriesScores($result['best_series_scores'])
+                    ->setBestSeriesScores((float)$result['best_series_scores'])
                     ->setBestSeriesPlaces($result['best_series_places'])
                     ->setBestSeriesAvgPlace($result['best_series_avg_place'])
                     ->setCurrentSeries(array_map(function ($place) {
@@ -971,7 +971,7 @@ final class TwirpServer implements Mimir
                             ->setSessionHash($place['hash'])
                             ->setPlace($place['place']);
                     }, $result['current_series']))
-                    ->setCurrentSeriesScores($result['current_series_scores'])
+                    ->setCurrentSeriesScores((float)$result['current_series_scores'])
                     ->setCurrentSeriesPlaces($result['current_series_places'])
                     ->setCurrentSeriesAvgPlace($result['current_series_avg_place']);
             }, $this->_eventsController->getGamesSeries($req->getEventId())));
@@ -991,7 +991,8 @@ final class TwirpServer implements Mimir
                         $reg = (new PlayerInSession())
                             ->setId($player['id'])
                             ->setTitle($player['title'])
-                            ->setScore($player['score']);
+                            ->setScore($player['score'])
+                            ->setRatingDelta(0.0); // wtf?
                         $repl = self::_replacement($player);
                         if (!empty($repl)) {
                             $reg->setReplacedBy($repl);
@@ -1052,7 +1053,8 @@ final class TwirpServer implements Mimir
                 $reg = (new PlayerInSession())
                     ->setId($player['id'])
                     ->setTitle($player['title'])
-                    ->setScore($player['score']);
+                    ->setScore($player['score'])
+                    ->setRatingDelta(0.0); // wtf?
                 $repl = self::_replacement($player);
                 if (!empty($repl)) {
                     $reg->setReplacedBy($repl);
@@ -1118,7 +1120,7 @@ final class TwirpServer implements Mimir
                 ->setFeedUnderRiichi($ret['riichi_summary']['feed_under_riichi']))
             ->setDoraStat((new DoraSummary())
                 ->setCount($ret['dora_stat']['count'])
-                ->setAverage($ret['dora_stat']['average']));
+                ->setAverage((float)$ret['dora_stat']['average']));
     }
 
     /**
