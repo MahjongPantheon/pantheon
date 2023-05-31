@@ -7750,11 +7750,9 @@ const _Analytics = class {
     __publicField(this, "_statDomain", null);
     __publicField(this, "_siteId", null);
     __publicField(this, "_track", null);
+    __publicField(this, "_trackView", null);
     this._statDomain = statDomain;
     this._siteId = siteId;
-    if (!this._statDomain) {
-      return;
-    }
     this._track = debounce(
       (action, params = {}, eventId) => {
         if (typeof window === "undefined") {
@@ -7771,9 +7769,18 @@ const _Analytics = class {
         );
       }
     );
+    this._trackView = debounce((url) => {
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Location changed to: ", url);
+      }
+      if (typeof window === "undefined") {
+        return;
+      }
+      this._trackViewEvent(url);
+    });
   }
-  trackView(url) {
-    if (!this._statDomain) {
+  _trackViewEvent(url) {
+    if (!this._statDomain || !url) {
       return;
     }
     const payload = {
@@ -7852,6 +7859,13 @@ const _Analytics = class {
       return;
     }
     (_a = this._track) == null ? void 0 : _a.call(this, action, params, eventId);
+  }
+  trackView(url) {
+    var _a;
+    if (!this._trackView) {
+      return;
+    }
+    (_a = this._trackView) == null ? void 0 : _a.call(this, url);
   }
 };
 let Analytics = _Analytics;
@@ -8023,6 +8037,9 @@ const analytics = new Analytics(
 analytics.setUserId(storage.getPersonId() ?? 0);
 analytics.setEventId(storage.getEventId() ?? 0);
 const analyticsCtx = createContext(analytics);
+const useAnalytics = () => {
+  return useContext(analyticsCtx);
+};
 const AnalyticsProvider = ({ children }) => {
   return /* @__PURE__ */ jsx(analyticsCtx.Provider, { value: analytics, children });
 };
@@ -12209,6 +12226,16 @@ function Layout({ children, cache: cache2 }) {
   const storage2 = useStorage();
   const i18n2 = useI18n();
   const [colorScheme, setColorScheme] = useState(themeToLocal(storage2.getTheme()));
+  const analytics2 = useAnalytics();
+  useEffect(() => {
+    const track = (e) => {
+      var _a, _b;
+      analytics2.trackView((_b = (_a = e == null ? void 0 : e.currentTarget) == null ? void 0 : _a.location) == null ? void 0 : _b.pathname);
+    };
+    window.addEventListener("popstate", track);
+    window.addEventListener("pushState", track);
+    window.addEventListener("replaceState", track);
+  }, []);
   const toggleColorScheme = (value) => {
     const newValue = value ?? (colorScheme === "dark" ? "light" : "dark");
     setColorScheme(newValue);
