@@ -24,12 +24,12 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { AppHeader } from './components/AppHeader';
-import { AnalyticsProvider } from './hooks/analytics';
+import { AnalyticsProvider, useAnalytics } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
 import { I18nProvider, useI18n } from './hooks/i18n';
 import { ApiProvider } from './hooks/api';
 import './App.css';
-import { useCallback, useState, ReactNode } from 'react';
+import { useCallback, useState, ReactNode, useEffect } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
@@ -57,6 +57,17 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   const storage = useStorage();
   const i18n = useI18n();
   const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
+
+  const analytics = useAnalytics();
+  useEffect(() => {
+    const track = (e: any) => {
+      analytics.trackView(e?.currentTarget?.location?.pathname);
+    };
+    window.addEventListener('popstate', track);
+    window.addEventListener('pushState', track);
+    window.addEventListener('replaceState', track);
+  }, []);
+
   const toggleColorScheme = (value?: ColorScheme) => {
     const newValue = value ?? (colorScheme === 'dark' ? 'light' : 'dark');
     setColorScheme(newValue);

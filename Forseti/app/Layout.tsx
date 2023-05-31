@@ -45,12 +45,9 @@ import { useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
 import { useAnalytics } from '#/hooks/analytics';
-import { useLocation } from 'wouter';
 import { useI18n } from '#/hooks/i18n';
 import { FlagEn, FlagRu } from '#/helpers/flags';
 import { useStorage } from '#/hooks/storage';
-
-let lastLocation = '';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
@@ -59,20 +56,20 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   ctxValue.setPageTitle = setPageTitle;
   // /kludges
 
-  const analytics = useAnalytics();
-  const [location] = useLocation();
-  if (lastLocation !== location) {
-    analytics.trackView(location);
-    lastLocation = location;
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Location change: ', lastLocation);
-    }
-  }
-
   const api = useApi();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [opened, setOpened] = useState(false);
+
+  const analytics = useAnalytics();
+  useEffect(() => {
+    const track = (e: any) => {
+      analytics.trackView(e?.currentTarget?.location?.pathname);
+    };
+    window.addEventListener('popstate', track);
+    window.addEventListener('pushState', track);
+    window.addEventListener('replaceState', track);
+  }, []);
 
   useEffect(() => {
     setAuthLoading(true);

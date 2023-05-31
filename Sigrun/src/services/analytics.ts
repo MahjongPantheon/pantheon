@@ -34,9 +34,10 @@ export class Analytics {
   private readonly _statDomain: string | null = null;
   private readonly _siteId: string | null = null;
   private readonly _track: typeof Analytics.prototype.track | null = null;
+  private readonly _trackView: typeof Analytics.prototype.trackView | null = null;
 
-  public trackView(url: string) {
-    if (!this._statDomain) {
+  protected _trackViewEvent(url: string) {
+    if (!this._statDomain || !url) {
       return;
     }
     const payload = {
@@ -102,9 +103,6 @@ export class Analytics {
   constructor(statDomain: string, siteId: string) {
     this._statDomain = statDomain;
     this._siteId = siteId;
-    if (!this._statDomain) {
-      return;
-    }
 
     this._track = debounce(
       (action: string, params: { [key: string]: any } = {}, eventId?: number) => {
@@ -125,6 +123,17 @@ export class Analytics {
         );
       }
     );
+
+    this._trackView = debounce((url: string) => {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Location changed to: ', url);
+      }
+      // TODO: fix server-side analytics
+      if (typeof window === 'undefined') {
+        return;
+      }
+      this._trackViewEvent(url);
+    });
   }
 
   setUserId(userId: number) {
@@ -146,5 +155,12 @@ export class Analytics {
       return;
     }
     this._track?.(action, params, eventId);
+  }
+
+  trackView(url: string) {
+    if (!this._trackView) {
+      return;
+    }
+    this._trackView?.(url);
   }
 }
