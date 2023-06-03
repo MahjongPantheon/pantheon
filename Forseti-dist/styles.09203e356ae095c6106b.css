@@ -1,0 +1,25 @@
+@font-face {
+  font-family: IBM Plex Sans;
+  src: url(51419eac038e6d0b7aab.ttf);
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: IBM Plex Sans;
+  src: url(dd893b474dfc6cc2eaf2.ttf);
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: Noto Sans Wind;
+  src: url(1454376fe62b8a2a3f38.woff2);
+  font-weight: 300;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: IBM Plex Sans, Noto Sans Wind, Sans, serif;
+  font-size: var(--font-size-primary);
+}
+

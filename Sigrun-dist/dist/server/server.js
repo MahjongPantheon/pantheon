@@ -19,8 +19,8 @@ import { nprogress, NavigationProgress } from "@mantine/nprogress";
 import { PBrequest } from "twirpscript";
 import debounce from "lodash.debounce";
 import { Helmet } from "react-helmet";
-import { crc32 } from "@foxglove/crc";
 import { useMediaQuery, useDisclosure } from "@mantine/hooks";
+import { crc32 } from "@foxglove/crc";
 import staticLocationHook from "wouter/static-location";
 import { JSDOM } from "jsdom";
 import { createStylesServer } from "@mantine/ssr";
@@ -8121,6 +8121,7 @@ const EventList = ({ params: { page } }) => {
   const api2 = useApi();
   const i18n2 = useI18n();
   const theme = useMantineTheme();
+  const largeScreen = useMediaQuery("(min-width: 768px)");
   const isDark = useMantineColorScheme().colorScheme === "dark";
   const [, navigate] = useLocation();
   useEvent(null);
@@ -8141,7 +8142,7 @@ const EventList = ({ params: { page } }) => {
       const desc = useRemarkSync(e.description, {
         remarkPlugins: [strip]
       });
-      const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300) + "...";
+      const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
       return /* @__PURE__ */ jsxs(
         Group,
         {
@@ -8162,28 +8163,43 @@ const EventList = ({ params: { page } }) => {
                 children: /* @__PURE__ */ jsx(ActionIcon, { color: "grape", variant: "filled", title: i18n2._t("Rating table"), children: /* @__PURE__ */ jsx(PodiumIco, { size: "1.1rem" }) })
               }
             ),
-            /* @__PURE__ */ jsx(
-              "a",
+            /* @__PURE__ */ jsxs(
+              Stack,
               {
-                href: `/event/${e.id}/info`,
-                onClick: (ev) => {
-                  navigate(`/event/${e.id}/info`);
-                  ev.preventDefault();
-                },
-                children: e.title
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              Text,
-              {
-                c: "dimmed",
-                style: {
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  flex: 1
-                },
-                children: renderedDesc
+                spacing: 0,
+                style: { flex: 1, maxWidth: largeScreen ? "calc(100% - 150px)" : "100%" },
+                children: [
+                  /* @__PURE__ */ jsx(
+                    "a",
+                    {
+                      style: {
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        flex: 1
+                      },
+                      href: `/event/${e.id}/info`,
+                      onClick: (ev) => {
+                        navigate(`/event/${e.id}/info`);
+                        ev.preventDefault();
+                      },
+                      children: e.title
+                    }
+                  ),
+                  /* @__PURE__ */ jsx(
+                    Text,
+                    {
+                      c: "dimmed",
+                      style: {
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        flex: 1
+                      },
+                      children: renderedDesc
+                    }
+                  )
+                ]
               }
             )
           ]
@@ -9043,9 +9059,9 @@ function makePercent(piece, total) {
     return "0.00%";
   return (100 * piece / total).toFixed(2) + "%";
 }
-const HandsGraph = React.lazy(() => import("./assets/HandsGraph-585d13e7.js"));
-const YakuGraph = React.lazy(() => import("./assets/YakuGraph-96b072d4.js"));
-const RatingGraph = React.lazy(() => import("./assets/RatingGraph-179ddefb.js"));
+const HandsGraph = React.lazy(() => import("./assets/HandsGraph-b68f9f02.js"));
+const YakuGraph = React.lazy(() => import("./assets/YakuGraph-135ac97d.js"));
+const RatingGraph = React.lazy(() => import("./assets/RatingGraph-f226ff40.js"));
 const PlayerStats = ({
   params: { eventId, playerId }
 }) => {
@@ -9602,6 +9618,9 @@ function makeYaku(yaku, dora, i18n2, yakuNames) {
   return yakuList2.join(", ");
 }
 function makeHanFu(han, fu, i18n2) {
+  if (han < 0) {
+    return i18n2._t("yakuman!");
+  }
   if (han >= 5) {
     return i18n2._t("%1 han", [han]);
   }
@@ -10020,6 +10039,7 @@ const Timer = ({ params: { eventId } }) => {
   const [, setSoundPlayed] = useState(false);
   const [formatterTimer, setFormattedTimer] = useState(null);
   const [showSeating, setShowSeating] = useState(false);
+  const [timerWaiting, setTimerWaiting] = useState(false);
   const api2 = useApi();
   const [seating] = useIsomorphicState(
     [],
@@ -10036,6 +10056,7 @@ const Timer = ({ params: { eventId } }) => {
     const timer = setInterval(() => {
       api2.getTimerState(parseInt(eventId, 10)).then((newState) => {
         setShowSeating(newState.showSeating);
+        setTimerWaiting(newState.waitingForTimer);
         setSoundPlayed((old) => {
           if (newState.finished && !old) {
             window.__endingSound.play();
@@ -10045,12 +10066,7 @@ const Timer = ({ params: { eventId } }) => {
           }
         });
         setFormattedTimer(
-          formatTimer(
-            newState.waitingForTimer,
-            newState.finished,
-            newState.timeRemaining,
-            newState.showSeating
-          )
+          formatTimer(newState.finished, newState.timeRemaining, newState.showSeating)
         );
       });
     }, 1e3);
@@ -10091,7 +10107,7 @@ const Timer = ({ params: { eventId } }) => {
       /* @__PURE__ */ jsx(Divider, { size: "xs" }),
       /* @__PURE__ */ jsx(Space, { h: "md" })
     ] }),
-    /* @__PURE__ */ jsx(Center, { children: formatterTimer }),
+    !timerWaiting && /* @__PURE__ */ jsx(Center, { children: formatterTimer }),
     showSeating && /* @__PURE__ */ jsx(Group, { children: tablesIterable.map((table, tidx) => /* @__PURE__ */ jsx(Table, { table: table.table, index: table.index }, `tbl_${tidx}`)) })
   ] });
 };
@@ -10129,8 +10145,8 @@ function Table({ index, table }) {
     }
   );
 }
-function formatTimer(waiting, finished, timeRemaining, small) {
-  if (waiting || finished) {
+function formatTimer(finished, timeRemaining, small) {
+  if (finished) {
     return /* @__PURE__ */ jsx(IconAlarm, { size: small ? 120 : 240 });
   }
   const minutes = (Math.ceil(timeRemaining / 60) - (timeRemaining % 60 === 0 ? 0 : 1)).toString();
@@ -12283,7 +12299,13 @@ function Layout({ children, cache: cache2 }) {
           /* @__PURE__ */ jsx("title", { children: "Sigrun" }),
           /* @__PURE__ */ jsx("meta", { charSet: "UTF-8" }),
           /* @__PURE__ */ jsx("link", { rel: "icon", type: "image/png", href: favicon }),
-          /* @__PURE__ */ jsx("meta", { name: "viewport", content: "width=device-width, initial-scale=1.0" })
+          /* @__PURE__ */ jsx(
+            "meta",
+            {
+              name: "viewport",
+              content: "width=device-width, initial-scale=1, maximum-scale=1"
+            }
+          )
         ] }),
         /* @__PURE__ */ jsx(NavigationProgress, { color: "green", zIndex: 10100 }),
         /* @__PURE__ */ jsx(
