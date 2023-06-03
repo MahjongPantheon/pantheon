@@ -40,6 +40,7 @@ import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { Helmet } from 'react-helmet';
+import { useMediaQuery } from '@mantine/hooks';
 
 let stripHtml: (dirtyString: string) => string;
 if (import.meta.env.SSR) {
@@ -59,6 +60,7 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
   const api = useApi();
   const i18n = useI18n();
   const theme = useMantineTheme();
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [, navigate] = useLocation();
   useEvent(null); // this resets global state
@@ -81,7 +83,7 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
           const desc = useRemarkSync(e.description, {
             remarkPlugins: [strip as any],
           });
-          const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300) + '...';
+          const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
           return (
             <Group
               key={`ev_${idx}`}
@@ -103,26 +105,37 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
                   <PodiumIco size='1.1rem' />
                 </ActionIcon>
               </a>
-              <a
-                href={`/event/${e.id}/info`}
-                onClick={(ev) => {
-                  navigate(`/event/${e.id}/info`);
-                  ev.preventDefault();
-                }}
+              <Stack
+                spacing={0}
+                style={{ flex: 1, maxWidth: largeScreen ? 'calc(100% - 150px)' : '100%' }}
               >
-                {e.title}
-              </a>
-              <Text
-                c='dimmed'
-                style={{
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                  flex: 1,
-                }}
-              >
-                {renderedDesc}
-              </Text>
+                <a
+                  style={{
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    flex: 1,
+                  }}
+                  href={`/event/${e.id}/info`}
+                  onClick={(ev) => {
+                    navigate(`/event/${e.id}/info`);
+                    ev.preventDefault();
+                  }}
+                >
+                  {e.title}
+                </a>
+                <Text
+                  c='dimmed'
+                  style={{
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    flex: 1,
+                  }}
+                >
+                  {renderedDesc}
+                </Text>
+              </Stack>
             </Group>
           );
         })}

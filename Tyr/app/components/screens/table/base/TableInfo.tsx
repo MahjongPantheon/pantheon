@@ -37,6 +37,7 @@ export type TableInfoProps = {
   currentTime?: string;
   tableNumber?: number | null;
   showRotators?: boolean;
+  timerWaiting?: boolean;
   onRotateCwClick?: () => void;
   onRotateCcwClick?: () => void;
   onTableInfoToggle?: () => void;
@@ -49,13 +50,14 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
     showTableNumber,
     showRotators,
     showTimer,
-    isAutostartTimer,
+    // isAutostartTimer,
     gamesLeft,
     round,
     honbaCount,
     riichiCount,
     currentTime,
     tableNumber,
+    timerWaiting,
     onTableInfoToggle,
     onRotateCcwClick,
     onRotateCwClick,
@@ -96,15 +98,16 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
         {showTableNumber && (
           <>
             <div className='table-info__table-caption'>{loc._t('Table #%1', [tableNumber])}</div>
-            {showTimer && isAutostartTimer && (
-              <>
-                <hr className='table-info__autostart-separator' />
-                <div className='table-info__autostart-hint'>
-                  {loc._t('Time before game start:')}
-                </div>
-              </>
-            )}
-            {showTimer && <div className='table-info__timer'>{currentTime}</div>}
+            {/*TODO*/}
+            {/*{showTimer && isAutostartTimer && (*/}
+            {/*  <>*/}
+            {/*    <hr className='table-info__autostart-separator' />*/}
+            {/*    <div className='table-info__autostart-hint'>*/}
+            {/*      {loc._t('Time before game start:')}*/}
+            {/*    </div>*/}
+            {/*  </>*/}
+            {/*)}*/}
+            {showTimer && !timerWaiting && <div className='table-info__timer'>{currentTime}</div>}
           </>
         )}
       </div>

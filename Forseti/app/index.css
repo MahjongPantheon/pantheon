@@ -21,5 +21,4 @@ body {
   margin: 0;
   font-family: IBM Plex Sans, Noto Sans Wind, Sans, serif;
   font-size: var(--font-size-primary);
-  user-select: none;
 }

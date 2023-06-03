@@ -25,8 +25,7 @@ function _getTimeRemaining(state: IAppState): { minutes: number; seconds: number
     return undefined;
   }
 
-  const lastGamesLeftZone = 15; //todo will work only for ema
-  const min = Math.floor((state.timer?.secondsRemaining ?? 0) / 60) - lastGamesLeftZone;
+  const min = Math.floor((state.timer?.secondsRemaining ?? 0) / 60);
 
   if (min < 0) {
     return {
