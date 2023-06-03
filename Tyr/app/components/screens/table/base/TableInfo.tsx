@@ -50,7 +50,7 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
     showTableNumber,
     showRotators,
     showTimer,
-    isAutostartTimer,
+    // isAutostartTimer,
     gamesLeft,
     round,
     honbaCount,
