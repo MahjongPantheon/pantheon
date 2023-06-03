@@ -133,6 +133,9 @@ function makeYaku(yaku: YakuId[], dora: number, i18n: I18nService, yakuNames: Ma
 }
 
 function makeHanFu(han: number, fu: number, i18n: I18nService) {
+  if (han < 0) {
+    return i18n._t('yakuman!');
+  }
   if (han >= 5) {
     return i18n._t('%1 han', [han]);
   }
