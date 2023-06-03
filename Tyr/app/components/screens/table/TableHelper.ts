@@ -75,11 +75,7 @@ import { TableInfoProps } from '#/components/screens/table/base/TableInfo';
 import { roundToString } from '#/components/helpers/Utils';
 import { AppOutcome } from '#/interfaces/app';
 import { getNextWinnerWithPao } from '#/store/selectors/paoSelectors';
-import {
-  formatTime,
-  getAutostartTimeRemaining,
-  getTimeRemaining,
-} from '#/store/selectors/overviewSelectors';
+import { formatTime, getTimeRemaining } from '#/store/selectors/overviewSelectors';
 import { I18nService } from '#/services/i18n';
 import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
 
@@ -616,7 +612,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
   const tableNumber = state.currentOtherTable?.tableIndex ?? state.tableIndex;
   let showRoundInfo = true;
   let showTimer = false;
-  let isAutostartTimer = false;
+  const isAutostartTimer = false;
   let currentTime: string | undefined = undefined;
   let gamesLeft: number | undefined = undefined;
 
@@ -632,12 +628,13 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
         showRoundInfo = false;
       }
 
-      const timeRemaining = getAutostartTimeRemaining(state);
-      if (timeRemaining !== undefined) {
-        showTimer = true;
-        isAutostartTimer = true;
-        currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds);
-      }
+      // TODO
+      // const timeRemaining = getAutostartTimeRemaining(state);
+      // if (timeRemaining !== undefined) {
+      //   showTimer = true;
+      //   isAutostartTimer = true;
+      //   currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds);
+      // }
     } else if (state.currentScreen === 'currentGame' || state.currentScreen === 'outcomeSelect') {
       const timeRemaining = getTimeRemaining(state);
       if (timeRemaining !== undefined) {
@@ -666,6 +663,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
     currentTime,
     tableNumber,
     onTableInfoToggle: onTableInfoToggle(state, dispatch),
+    timerWaiting: state.timer?.waiting,
     onRotateCwClick: () => dispatch({ type: TABLE_ROTATE_CLOCKWISE }),
     onRotateCcwClick: () => dispatch({ type: TABLE_ROTATE_COUNTERCLOCKWISE }),
   };

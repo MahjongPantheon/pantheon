@@ -124,7 +124,10 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
                     <title>Sigrun</title>
                     <meta charSet='UTF-8' />
                     <link rel='icon' type='image/png' href={favicon} />
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+                    <meta
+                      name='viewport'
+                      content='width=device-width, initial-scale=1, maximum-scale=1'
+                    />
                   </Helmet>
                   <NavigationProgress color='green' zIndex={10100} />
                   <AppShell

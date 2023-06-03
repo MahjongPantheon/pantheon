@@ -45,6 +45,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   const [, setSoundPlayed] = useState(false);
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
+  const [timerWaiting, setTimerWaiting] = useState(false);
   const api = useApi();
   const [seating] = useIsomorphicState(
     [],
@@ -63,6 +64,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     const timer = setInterval(() => {
       api.getTimerState(parseInt(eventId, 10)).then((newState) => {
         setShowSeating(newState.showSeating);
+        setTimerWaiting(newState.waitingForTimer);
         setSoundPlayed((old) => {
           if (newState.finished && !old) {
             (window as any).__endingSound.play();
@@ -73,12 +75,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
         });
 
         setFormattedTimer(
-          formatTimer(
-            newState.waitingForTimer,
-            newState.finished,
-            newState.timeRemaining,
-            newState.showSeating
-          )
+          formatTimer(newState.finished, newState.timeRemaining, newState.showSeating)
         );
       });
     }, 1000);
@@ -134,7 +131,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
           <Space h='md' />
         </>
       )}
-      <Center>{formatterTimer}</Center>
+      {!timerWaiting && <Center>{formatterTimer}</Center>}
       {showSeating && (
         <Group>
           {tablesIterable.map((table, tidx) => (
@@ -185,8 +182,8 @@ function Table({ index, table }: { index: number; table: PlayerSeating[] }) {
   );
 }
 
-function formatTimer(waiting: boolean, finished: boolean, timeRemaining: number, small: boolean) {
-  if (waiting || finished) {
+function formatTimer(finished: boolean, timeRemaining: number, small: boolean) {
+  if (finished) {
     return <IconAlarm size={small ? 120 : 240} />;
   }
 
