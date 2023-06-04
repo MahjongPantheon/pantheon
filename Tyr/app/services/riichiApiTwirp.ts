@@ -76,6 +76,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
                 fetch(window.__cfg.SIGRUN_URL + '/servicelog', {
                   method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     source: 'Tyr [twirp]',
                     requestTo: url,

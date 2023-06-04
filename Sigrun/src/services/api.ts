@@ -87,6 +87,7 @@ export class ApiService {
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
                 fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
                   method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     source: 'Sigrun [twirp]',
                     requestTo: url,

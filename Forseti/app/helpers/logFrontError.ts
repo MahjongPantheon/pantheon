@@ -24,6 +24,7 @@ function errHandler(
 ) {
   fetch(`${window.__cfg.SIGRUN_URL}/servicelog`, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       source: 'Forseti [common]',
       requestTo: '-',
