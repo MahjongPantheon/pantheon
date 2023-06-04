@@ -74,6 +74,7 @@ export async function createServer(app, env) {
     } catch (e) {
       // malformed payload, just swallow
     }
+    res.send('ok');
   })
 
   app.get('/eid:eventId', (req, res) => {
