@@ -67,7 +67,29 @@ export class RiichiApiTwirpService implements IRiichiApi {
       return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
         ...opts,
         headers,
-      }).then(handleReleaseTag);
+      })
+        .then(handleReleaseTag)
+        .then((resp) => {
+          if (!resp.ok) {
+            return resp.json().then((err) => {
+              // Twirp server error handling
+              if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
+                fetch(window.__cfg.SIGRUN_URL + '/servicelog', {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    source: 'Tyr [twirp]',
+                    requestTo: url,
+                    requestFrom: typeof window !== 'undefined' && window.location.href,
+                    details: err.meta.cause,
+                  }),
+                });
+                throw new Error(err.meta.cause);
+              }
+              return resp;
+            });
+          }
+          return resp;
+        });
     };
   }
 

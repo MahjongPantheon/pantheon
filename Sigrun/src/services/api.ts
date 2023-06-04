@@ -85,9 +85,14 @@ export class ApiService {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                this._analytics?.track(Analytics.REMOTE_ERROR, {
-                  url,
-                  message: err.meta.cause,
+                fetch(`${import.meta.env.SIGRUN_URL}/servicelog`, {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    source: 'Sigrun [twirp]',
+                    requestTo: url,
+                    requestFrom: typeof window !== 'undefined' && window.location.href,
+                    details: err.meta.cause,
+                  }),
                 });
                 throw new Error(err.meta.cause);
               }

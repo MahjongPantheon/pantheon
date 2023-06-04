@@ -63,6 +63,19 @@ export async function createServer(app, env) {
     })
   );
 
+  app.post('/servicelog', (req, res) => {
+    try {
+      const data = JSON.parse(req.body);
+      fs.writeFileSync(
+        '/var/log/pantheon-service.log',
+        `[${new Date}] ${data.source} ${data.requestFrom} -> ${data.requestTo} ${data.details}\n`,
+        { encoding: 'utf8', flag: 'as' }
+      );
+    } catch (e) {
+      // malformed payload, just swallow
+    }
+  })
+
   app.get('/eid:eventId', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
   })

@@ -1,5 +1,5 @@
-/* Tyr - Japanese mahjong assistant application
- * Copyright (C) 2016 Oleg Klimenko aka ctizen
+/*  Sigrun: rating tables and statistics frontend
+ *  Copyright (C) 2023  o.klimenko aka ctizen
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@ function errHandler(
   charNumber: number | undefined,
   err: Error | undefined
 ) {
-  fetch(window.__cfg.SIGRUN_URL + '/servicelog', {
+  fetch(`${import.meta.env.SIGRUN_URL}/servicelog`, {
     method: 'POST',
     body: JSON.stringify({
-      source: 'Tyr [common]',
+      source: 'Sigrun [common]',
       requestTo: '-',
       requestFrom: currentUrl,
       details: err?.message,
@@ -34,9 +34,10 @@ function errHandler(
 }
 
 export function registerFrontErrorHandler() {
-  if ((window as any).__errHandlerRegistered) {
+  if (typeof window === 'undefined' || (window as any).__errHandlerRegistered) {
     return;
   }
+
   if (window.onerror) {
     const prevHandler = window.onerror;
     window.onerror = function (

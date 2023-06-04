@@ -25,7 +25,8 @@ import { StorageProvider } from '#/hooks/storage';
 import { ApiProvider } from '#/hooks/api';
 import { AnalyticsProvider } from '#/hooks/analytics';
 import { I18nProvider } from '#/hooks/i18n';
-
+import { registerFrontErrorHandler } from '#/helpers/logFrontError';
+registerFrontErrorHandler();
 const root = createRoot(document.getElementById('forseti-root')!);
 window.addEventListener('DOMContentLoaded', () => {
   root.render(
