@@ -129,6 +129,9 @@ COPY mimir-docker.nginx.conf /etc/nginx/http.d/mimir.conf
 COPY bin/protoc-gen-twirp_php /usr/bin/protoc-gen-twirp_php
 RUN chmod +x /usr/bin/protoc-gen-twirp_php
 
+# Copy cron defs
+COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
+
 # Folders init
 RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Mimir
