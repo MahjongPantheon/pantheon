@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-06 16:25+0300\n"
+"POT-Creation-Date: 2023-06-04 23:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,189 +17,189 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/helpers/yaku.ts:71:34
+#: app/helpers/yaku.ts:70:34
 msgid "Riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:75:34
+#: app/helpers/yaku.ts:74:34
 msgid "Daburu riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:79:34
+#: app/helpers/yaku.ts:78:34
 msgid "Open riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:83:34
+#: app/helpers/yaku.ts:82:34
 msgid "Ippatsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:87:34
+#: app/helpers/yaku.ts:86:34
 msgid "Menzentsumo"
 msgstr ""
 
-#: app/helpers/yaku.ts:91:34
+#: app/helpers/yaku.ts:90:34
 msgid "Chiitoitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:95:34
+#: app/helpers/yaku.ts:94:34
 msgid "Pinfu"
 msgstr ""
 
-#: app/helpers/yaku.ts:99:34
+#: app/helpers/yaku.ts:98:34
 msgid "Tanyao"
 msgstr ""
 
-#: app/helpers/yaku.ts:103:34
+#: app/helpers/yaku.ts:102:34
 msgid "Chanta"
 msgstr ""
 
-#: app/helpers/yaku.ts:107:34
+#: app/helpers/yaku.ts:106:34
 msgid "Junchan"
 msgstr ""
 
-#: app/helpers/yaku.ts:111:34
+#: app/helpers/yaku.ts:110:34
 msgid "Iipeikou"
 msgstr ""
 
-#: app/helpers/yaku.ts:115:34
+#: app/helpers/yaku.ts:114:34
 msgid "Ryanpeikou"
 msgstr ""
 
-#: app/helpers/yaku.ts:119:34
+#: app/helpers/yaku.ts:118:34
 msgid "Sanshoku"
 msgstr ""
 
-#: app/helpers/yaku.ts:123:34
+#: app/helpers/yaku.ts:122:34
 msgid "Sanshoku doukou"
 msgstr ""
 
-#: app/helpers/yaku.ts:127:34
+#: app/helpers/yaku.ts:126:34
 msgid "Ittsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:131:34
+#: app/helpers/yaku.ts:130:34
 msgid "Yakuhai x1"
 msgstr ""
 
-#: app/helpers/yaku.ts:135:34
+#: app/helpers/yaku.ts:134:34
 msgid "Yakuhai x2"
 msgstr ""
 
-#: app/helpers/yaku.ts:139:34
+#: app/helpers/yaku.ts:138:34
 msgid "Yakuhai x3"
 msgstr ""
 
-#: app/helpers/yaku.ts:143:34
+#: app/helpers/yaku.ts:142:34
 msgid "Yakuhai x4"
 msgstr ""
 
-#: app/helpers/yaku.ts:147:34
+#: app/helpers/yaku.ts:146:34
 msgid "Toitoi"
 msgstr ""
 
-#: app/helpers/yaku.ts:151:34
+#: app/helpers/yaku.ts:150:34
 msgid "Honitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:155:34
+#: app/helpers/yaku.ts:154:34
 msgid "Honroutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:159:34
+#: app/helpers/yaku.ts:158:34
 msgid "Sanankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:163:34
+#: app/helpers/yaku.ts:162:34
 msgid "Shousangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:167:34
+#: app/helpers/yaku.ts:166:34
 msgid "Sankantsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:171:34
+#: app/helpers/yaku.ts:170:34
 msgid "Houtei raoyui"
 msgstr ""
 
-#: app/helpers/yaku.ts:175:34
+#: app/helpers/yaku.ts:174:34
 msgid "Haitei"
 msgstr ""
 
-#: app/helpers/yaku.ts:179:34
+#: app/helpers/yaku.ts:178:34
 msgid "Rinshan kaihou"
 msgstr ""
 
-#: app/helpers/yaku.ts:183:34
+#: app/helpers/yaku.ts:182:34
 msgid "Chankan"
 msgstr ""
 
-#: app/helpers/yaku.ts:187:34
+#: app/helpers/yaku.ts:186:34
 msgid "Renhou"
 msgstr ""
 
-#: app/helpers/yaku.ts:191:34
-#: app/helpers/yaku.ts:266:34
+#: app/helpers/yaku.ts:190:34
+#: app/helpers/yaku.ts:265:34
 msgid "Suukantsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:195:34
+#: app/helpers/yaku.ts:194:34
 msgid "Suuankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:199:34
-#: app/helpers/yaku.ts:246:34
+#: app/helpers/yaku.ts:198:34
+#: app/helpers/yaku.ts:245:34
 msgid "Daisangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:203:34
+#: app/helpers/yaku.ts:202:34
 msgid "Shousuushii"
 msgstr ""
 
-#: app/helpers/yaku.ts:207:34
-#: app/helpers/yaku.ts:250:34
+#: app/helpers/yaku.ts:206:34
+#: app/helpers/yaku.ts:249:34
 msgid "Daisuushii"
 msgstr ""
 
-#: app/helpers/yaku.ts:211:34
-#: app/helpers/yaku.ts:254:34
+#: app/helpers/yaku.ts:210:34
+#: app/helpers/yaku.ts:253:34
 msgid "Tsuuiisou"
 msgstr ""
 
-#: app/helpers/yaku.ts:215:34
-#: app/helpers/yaku.ts:262:34
+#: app/helpers/yaku.ts:214:34
+#: app/helpers/yaku.ts:261:34
 msgid "Chinroutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:219:34
+#: app/helpers/yaku.ts:218:34
 msgid "Chinitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:223:34
+#: app/helpers/yaku.ts:222:34
 msgid "Chuuren poutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:227:34
-#: app/helpers/yaku.ts:258:34
+#: app/helpers/yaku.ts:226:34
+#: app/helpers/yaku.ts:257:34
 msgid "Ryuuiisou"
 msgstr ""
 
-#: app/helpers/yaku.ts:231:34
+#: app/helpers/yaku.ts:230:34
 msgid "Kokushi musou"
 msgstr ""
 
-#: app/helpers/yaku.ts:235:34
+#: app/helpers/yaku.ts:234:34
 msgid "Tenhou"
 msgstr ""
 
-#: app/helpers/yaku.ts:239:34
+#: app/helpers/yaku.ts:238:34
 msgid "Chihou"
 msgstr ""
 
-#: app/Layout.tsx:145:30
+#: app/Layout.tsx:142:30
 msgid "Toggle color scheme"
 msgstr ""
 
-#: app/Layout.tsx:151:76
+#: app/Layout.tsx:148:76
 msgid "Language"
 msgstr ""
 
@@ -794,47 +794,67 @@ msgid "Save changes"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:35:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:73:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:74:16
 msgid "Series length"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:74:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:75:22
 msgid "Count of session in game series. Set to 0 to disable series functionality."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:46:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:84:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:16
 msgid "Minimal games count"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:47:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:86:22
 msgid "Minimal count of games the player should play to get into the rating table."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:39:10
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:40:10
 msgid "Please note: you should set up the rating accordingly to tournament settings in Tenhou.net, otherwise expect errors on replay submit!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:46:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:47:16
 msgid "Tenhou Lobby ID"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:52:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:16
 msgid "Game expiration time (in hours)"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:54:22
 msgid "Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:62:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:63:16
 msgid "Chips value"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:63:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:64:22
 msgid "Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:96:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
+msgid "Fixed score applied to replacement player"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:97:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
+msgid "Fixed amount of result score applied for each replacement player regardless of session results."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:106:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
+msgid "Fixed uma for replacement player"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:107:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
+msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:42:16
@@ -1087,22 +1107,6 @@ msgstr ""
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:22
 msgid "You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set."
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
-msgid "Fixed score applied to replacement player"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
-msgid "Fixed amount of result score applied for each replacement player regardless of session results."
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
-msgid "Fixed uma for replacement player"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
-msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/UmaSelect.tsx:33:16

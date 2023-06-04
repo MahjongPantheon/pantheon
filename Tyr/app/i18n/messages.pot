@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-06 16:25+0300\n"
+"POT-Creation-Date: 2023-06-04 23:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,23 +128,23 @@ msgid "Tsumo, %1"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:153:13
+#: app/components/screens/table/TableHelper.ts:149:13
 msgid "Exhaustive draw"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:170:15
+#: app/components/screens/table/TableHelper.ts:166:15
 msgid "Abortive draw"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:159:13
-#: app/components/screens/table/TableHelper.ts:519:14
+#: app/components/screens/table/TableHelper.ts:155:13
+#: app/components/screens/table/TableHelper.ts:513:14
 msgid "Chombo"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:180:15
+#: app/components/screens/table/TableHelper.ts:176:15
 msgid "Nagashi mangan"
 msgstr ""
 
@@ -278,309 +278,305 @@ msgstr ""
 msgid "Log out"
 msgstr ""
 
-#: app/components/screens/table/base/TableInfo.tsx:90:20
+#: app/components/screens/table/base/TableInfo.tsx:92:20
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/components/screens/table/base/TableInfo.tsx:98:57
+#: app/components/screens/table/base/TableInfo.tsx:100:57
 msgid "Table #%1"
 msgstr ""
 
-#: app/components/screens/table/base/TableInfo.tsx:103:20
-msgid "Time before game start:"
-msgstr ""
-
-#: app/components/screens/table/TableHelper.ts:141:13
-#: app/components/screens/table/TableHelper.ts:511:14
+#: app/components/screens/table/TableHelper.ts:137:13
+#: app/components/screens/table/TableHelper.ts:505:14
 msgid "Ron"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:147:13
-#: app/components/screens/table/TableHelper.ts:513:14
+#: app/components/screens/table/TableHelper.ts:143:13
+#: app/components/screens/table/TableHelper.ts:507:14
 msgid "Tsumo"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:227:16
+#: app/components/screens/table/TableHelper.ts:221:16
 msgid "Penalty"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:413:25
+#: app/components/screens/table/TableHelper.ts:407:25
 msgid "empty outcome"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:422:22
-#: app/components/screens/table/TableHelper.ts:435:22
+#: app/components/screens/table/TableHelper.ts:416:22
+#: app/components/screens/table/TableHelper.ts:429:22
 msgid "Winner"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:425:22
+#: app/components/screens/table/TableHelper.ts:419:22
 msgid "Loser"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:440:27
+#: app/components/screens/table/TableHelper.ts:434:27
 msgid "wrong outcome for paoSelect"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:492:16
+#: app/components/screens/table/TableHelper.ts:486:16
 msgid "Select pao"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:497:16
+#: app/components/screens/table/TableHelper.ts:491:16
 msgid "Select tempai"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:515:14
+#: app/components/screens/table/TableHelper.ts:509:14
 msgid "Draw"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:511:14
 msgid "Abort"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:521:14
+#: app/components/screens/table/TableHelper.ts:515:14
 msgid "Nagashi"
 msgstr ""
 
-#: app/primitives/yaku.ts:122:34
-#: app/primitives/yaku.ts:123:39
+#: app/primitives/yaku.ts:120:34
+#: app/primitives/yaku.ts:121:39
 msgid "Opened hand"
 msgstr ""
 
-#: app/primitives/yaku.ts:128:34
-#: app/primitives/yaku.ts:129:39
+#: app/primitives/yaku.ts:126:34
+#: app/primitives/yaku.ts:127:39
 msgid "Toitoi"
 msgstr ""
 
-#: app/primitives/yaku.ts:134:34
-#: app/primitives/yaku.ts:135:39
+#: app/primitives/yaku.ts:132:34
+#: app/primitives/yaku.ts:133:39
 msgid "Honroutou"
 msgstr ""
 
-#: app/primitives/yaku.ts:140:34
-#: app/primitives/yaku.ts:141:39
+#: app/primitives/yaku.ts:138:34
+#: app/primitives/yaku.ts:139:39
 msgid "Sanankou"
 msgstr ""
 
-#: app/primitives/yaku.ts:146:34
-#: app/primitives/yaku.ts:147:39
+#: app/primitives/yaku.ts:144:34
+#: app/primitives/yaku.ts:145:39
 msgid "Sankantsu"
 msgstr ""
 
-#: app/primitives/yaku.ts:152:34
-#: app/primitives/yaku.ts:153:39
+#: app/primitives/yaku.ts:150:34
+#: app/primitives/yaku.ts:151:39
 msgid "Suukantsu"
 msgstr ""
 
-#: app/primitives/yaku.ts:158:34
-#: app/primitives/yaku.ts:159:39
+#: app/primitives/yaku.ts:156:34
+#: app/primitives/yaku.ts:157:39
 msgid "Suuankou"
 msgstr ""
 
-#: app/primitives/yaku.ts:164:34
-#: app/primitives/yaku.ts:165:39
+#: app/primitives/yaku.ts:162:34
+#: app/primitives/yaku.ts:163:39
 msgid "Pinfu"
 msgstr ""
 
-#: app/primitives/yaku.ts:170:34
-#: app/primitives/yaku.ts:171:39
+#: app/primitives/yaku.ts:168:34
+#: app/primitives/yaku.ts:169:39
 msgid "Iipeikou"
 msgstr ""
 
-#: app/primitives/yaku.ts:176:34
-#: app/primitives/yaku.ts:177:39
+#: app/primitives/yaku.ts:174:34
+#: app/primitives/yaku.ts:175:39
 msgid "Ryanpeikou"
 msgstr ""
 
-#: app/primitives/yaku.ts:182:34
-#: app/primitives/yaku.ts:183:39
+#: app/primitives/yaku.ts:180:34
+#: app/primitives/yaku.ts:181:39
 msgid "Sanshoku"
 msgstr ""
 
-#: app/primitives/yaku.ts:188:34
-#: app/primitives/yaku.ts:189:39
+#: app/primitives/yaku.ts:186:34
+#: app/primitives/yaku.ts:187:39
 msgid "Sanshoku doukou"
 msgstr ""
 
-#: app/primitives/yaku.ts:194:34
-#: app/primitives/yaku.ts:195:39
+#: app/primitives/yaku.ts:192:34
+#: app/primitives/yaku.ts:193:39
 msgid "Ittsu"
 msgstr ""
 
-#: app/primitives/yaku.ts:200:34
+#: app/primitives/yaku.ts:198:34
 msgid "Yakuhai x1"
 msgstr ""
 
-#: app/primitives/yaku.ts:201:39
+#: app/primitives/yaku.ts:199:39
 msgid "Yakuhai"
 msgstr ""
 
-#: app/primitives/yaku.ts:206:34
+#: app/primitives/yaku.ts:204:34
 msgid "Yakuhai x2"
 msgstr ""
 
-#: app/primitives/yaku.ts:207:39
+#: app/primitives/yaku.ts:205:39
 msgid "x2"
 msgstr ""
 
-#: app/primitives/yaku.ts:212:34
+#: app/primitives/yaku.ts:210:34
 msgid "Yakuhai x3"
 msgstr ""
 
-#: app/primitives/yaku.ts:213:39
+#: app/primitives/yaku.ts:211:39
 msgid "x3"
 msgstr ""
 
-#: app/primitives/yaku.ts:218:34
+#: app/primitives/yaku.ts:216:34
 msgid "Yakuhai x4"
 msgstr ""
 
-#: app/primitives/yaku.ts:219:39
+#: app/primitives/yaku.ts:217:39
 msgid "x4"
 msgstr ""
 
-#: app/primitives/yaku.ts:224:34
-#: app/primitives/yaku.ts:225:39
+#: app/primitives/yaku.ts:222:34
+#: app/primitives/yaku.ts:223:39
 msgid "Shousangen"
 msgstr ""
 
-#: app/primitives/yaku.ts:230:34
-#: app/primitives/yaku.ts:231:39
+#: app/primitives/yaku.ts:228:34
+#: app/primitives/yaku.ts:229:39
 msgid "Daisangen"
 msgstr ""
 
-#: app/primitives/yaku.ts:236:34
-#: app/primitives/yaku.ts:237:39
+#: app/primitives/yaku.ts:234:34
+#: app/primitives/yaku.ts:235:39
 msgid "Shousuushii"
 msgstr ""
 
-#: app/primitives/yaku.ts:242:34
-#: app/primitives/yaku.ts:243:39
+#: app/primitives/yaku.ts:240:34
+#: app/primitives/yaku.ts:241:39
 msgid "Daisuushii"
 msgstr ""
 
-#: app/primitives/yaku.ts:248:34
-#: app/primitives/yaku.ts:249:39
+#: app/primitives/yaku.ts:246:34
+#: app/primitives/yaku.ts:247:39
 msgid "Tsuuiisou"
 msgstr ""
 
-#: app/primitives/yaku.ts:254:34
-#: app/primitives/yaku.ts:255:39
+#: app/primitives/yaku.ts:252:34
+#: app/primitives/yaku.ts:253:39
 msgid "Tanyao"
 msgstr ""
 
-#: app/primitives/yaku.ts:260:34
-#: app/primitives/yaku.ts:261:39
+#: app/primitives/yaku.ts:258:34
+#: app/primitives/yaku.ts:259:39
 msgid "Chanta"
 msgstr ""
 
-#: app/primitives/yaku.ts:266:34
-#: app/primitives/yaku.ts:267:39
+#: app/primitives/yaku.ts:264:34
+#: app/primitives/yaku.ts:265:39
 msgid "Junchan"
 msgstr ""
 
-#: app/primitives/yaku.ts:272:34
-#: app/primitives/yaku.ts:273:39
+#: app/primitives/yaku.ts:270:34
+#: app/primitives/yaku.ts:271:39
 msgid "Chinroutou"
 msgstr ""
 
-#: app/primitives/yaku.ts:278:34
-#: app/primitives/yaku.ts:279:39
+#: app/primitives/yaku.ts:276:34
+#: app/primitives/yaku.ts:277:39
 msgid "Honitsu"
 msgstr ""
 
-#: app/primitives/yaku.ts:284:34
-#: app/primitives/yaku.ts:285:39
+#: app/primitives/yaku.ts:282:34
+#: app/primitives/yaku.ts:283:39
 msgid "Chinitsu"
 msgstr ""
 
-#: app/primitives/yaku.ts:290:34
-#: app/primitives/yaku.ts:291:39
+#: app/primitives/yaku.ts:288:34
+#: app/primitives/yaku.ts:289:39
 msgid "Chuuren poutou"
 msgstr ""
 
-#: app/primitives/yaku.ts:296:34
-#: app/primitives/yaku.ts:297:39
+#: app/primitives/yaku.ts:294:34
+#: app/primitives/yaku.ts:295:39
 msgid "Ryuuiisou"
 msgstr ""
 
-#: app/primitives/yaku.ts:302:34
-#: app/primitives/yaku.ts:303:39
+#: app/primitives/yaku.ts:300:34
+#: app/primitives/yaku.ts:301:39
 msgid "Chiitoitsu"
 msgstr ""
 
-#: app/primitives/yaku.ts:308:34
-#: app/primitives/yaku.ts:309:39
+#: app/primitives/yaku.ts:306:34
+#: app/primitives/yaku.ts:307:39
 msgid "Kokushi musou"
 msgstr ""
 
-#: app/primitives/yaku.ts:314:34
-#: app/primitives/yaku.ts:315:39
+#: app/primitives/yaku.ts:312:34
+#: app/primitives/yaku.ts:313:39
 msgid "Riichi"
 msgstr ""
 
-#: app/primitives/yaku.ts:320:34
+#: app/primitives/yaku.ts:318:34
 msgid "Daburu riichi"
 msgstr ""
 
-#: app/primitives/yaku.ts:321:39
+#: app/primitives/yaku.ts:319:39
 msgid "Daburu"
 msgstr ""
 
-#: app/primitives/yaku.ts:326:34
-#: app/primitives/yaku.ts:327:39
+#: app/primitives/yaku.ts:324:34
+#: app/primitives/yaku.ts:325:39
 msgid "Ippatsu"
 msgstr ""
 
-#: app/primitives/yaku.ts:332:34
-#: app/primitives/yaku.ts:333:39
+#: app/primitives/yaku.ts:330:34
+#: app/primitives/yaku.ts:331:39
 msgid "Menzentsumo"
 msgstr ""
 
-#: app/primitives/yaku.ts:338:34
-#: app/primitives/yaku.ts:339:39
+#: app/primitives/yaku.ts:336:34
+#: app/primitives/yaku.ts:337:39
 msgid "Haitei"
 msgstr ""
 
-#: app/primitives/yaku.ts:344:34
+#: app/primitives/yaku.ts:342:34
 msgid "Rinshan kaihou"
 msgstr ""
 
-#: app/primitives/yaku.ts:345:39
+#: app/primitives/yaku.ts:343:39
 msgid "Rinshan"
 msgstr ""
 
-#: app/primitives/yaku.ts:350:34
-#: app/primitives/yaku.ts:351:39
+#: app/primitives/yaku.ts:348:34
+#: app/primitives/yaku.ts:349:39
 msgid "Tenhou"
 msgstr ""
 
-#: app/primitives/yaku.ts:356:34
-#: app/primitives/yaku.ts:357:39
+#: app/primitives/yaku.ts:354:34
+#: app/primitives/yaku.ts:355:39
 msgid "Chiihou"
 msgstr ""
 
-#: app/primitives/yaku.ts:362:34
+#: app/primitives/yaku.ts:360:34
 msgid "Houtei raoyui"
 msgstr ""
 
-#: app/primitives/yaku.ts:363:39
+#: app/primitives/yaku.ts:361:39
 msgid "Houtei"
 msgstr ""
 
-#: app/primitives/yaku.ts:368:34
-#: app/primitives/yaku.ts:369:39
+#: app/primitives/yaku.ts:366:34
+#: app/primitives/yaku.ts:367:39
 msgid "Chankan"
 msgstr ""
 
-#: app/primitives/yaku.ts:374:34
-#: app/primitives/yaku.ts:375:39
+#: app/primitives/yaku.ts:372:34
+#: app/primitives/yaku.ts:373:39
 msgid "Renhou"
 msgstr ""
 
-#: app/primitives/yaku.ts:380:34
-#: app/primitives/yaku.ts:381:39
+#: app/primitives/yaku.ts:378:34
+#: app/primitives/yaku.ts:379:39
 msgid "Open riichi"
 msgstr ""
 

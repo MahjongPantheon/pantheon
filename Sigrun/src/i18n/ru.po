@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-27 18:40+0300\n"
-"PO-Revision-Date: 2023-05-27 19:10+0300\n"
+"POT-Creation-Date: 2023-06-04 23:56+0300\n"
+"PO-Revision-Date: 2023-06-04 23:56+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -20,445 +20,1116 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: src/components/AppFooter.tsx:35:20
-msgid "Back to top"
-msgstr "К началу"
-
-#: src/components/AppFooter.tsx:47:18
-msgid "Description"
-msgstr "Описание"
-
-#: src/components/AppFooter.tsx:55:20
-#: src/pages/EventRulesOverview/index.tsx:50:36
-#: src/pages/EventRulesOverview/index.tsx:55:35
-msgid "Rules overview"
-msgstr "Обзор правил"
-
-#: src/components/AppFooter.tsx:65:18
-msgid "Recent games"
-msgstr "Последние игры"
-
-#: src/components/AppFooter.tsx:72:18 src/pages/EventList.tsx:85:67
-#: src/pages/RatingTable.tsx:96:35 src/pages/RatingTable.tsx:111:16
-#: src/pages/RatingTable.tsx:116:16 src/pages/RatingTable.tsx:124:33
-msgid "Rating table"
-msgstr "Рейтинг"
-
-#: src/components/AppFooter.tsx:82:20 src/pages/Achievements.tsx:753:34
-#: src/pages/Achievements.tsx:758:33
-msgid "Achievements"
-msgstr "Номинации"
-
-#: src/components/AppFooter.tsx:91:20 src/pages/SeriesRating.tsx:52:12
-#: src/pages/SeriesRating.tsx:57:31
-msgid "Series rating"
-msgstr "Рейтинг по сериям игр"
-
-#: src/components/AppFooter.tsx:103:22
-msgid "Timer & seating"
-msgstr "Таймер и рассадка"
-
-#: src/components/AppFooter.tsx:113:22
-msgid "Toggle color scheme"
-msgstr "Переключить цветовую схему"
-
-#: src/components/AppFooter.tsx:119:67
-msgid "Language"
-msgstr "Язык"
-
-#: src/components/AppHeader.tsx:114:22
-msgid "Replay link is invalid. Please check if you copied it correctly"
-msgstr "Ссылка на игру некорректна. Проверьте правильно ли вы ее скопировали"
-
-#: src/components/AppHeader.tsx:149:26 src/components/AppHeader.tsx:155:26
-msgid "To events list"
-msgstr "К списку событий"
-
-#: src/components/AppHeader.tsx:151:20
-msgid "Events list"
-msgstr "Список событий"
-
-#: src/components/AppHeader.tsx:170:28
-msgid "Open assitant"
-msgstr "Открыть ассистент"
-
-#: src/components/AppHeader.tsx:172:22 src/components/AppHeader.tsx:176:28
-msgid "Open assistant"
-msgstr "Открыть ассистент"
-
-#: src/components/AppHeader.tsx:195:28 src/components/AppHeader.tsx:197:22
-msgid "Event contents"
-msgstr "Данные события"
-
-#: src/components/AppHeader.tsx:208:22
-msgctxt "Event menu"
-msgid "Description"
-msgstr "Описание"
-
-#: src/components/AppHeader.tsx:217:22
-msgctxt "Event menu"
-msgid "Rules overview"
-msgstr "Обзор правил"
-
-#: src/components/AppHeader.tsx:226:22
-msgctxt "Event menu"
-msgid "Recent games"
-msgstr "Последние игры"
-
-#: src/components/AppHeader.tsx:235:22
-msgctxt "Event menu"
-msgid "Rating table"
-msgstr "Рейтинг"
-
-#: src/components/AppHeader.tsx:245:24
-msgctxt "Event menu"
-msgid "Achievements"
-msgstr "Номинации"
-
-#: src/components/AppHeader.tsx:256:24
-msgctxt "Event menu"
-msgid "Series rating"
-msgstr "Рейтинг по сериям игр"
-
-#: src/components/AppHeader.tsx:268:26
-msgctxt "Event menu"
-msgid "Timer & seating"
-msgstr "Таймер и рассадка"
-
-#: src/components/AppHeader.tsx:280:26
-msgctxt "Event menu"
-msgid "Add online game"
-msgstr "Добавить онлайн-игру"
-
-#: src/components/AppHeader.tsx:296:18
-msgid "Add online game"
-msgstr "Добавить онлайн-игру"
-
-#: src/components/AppHeader.tsx:310:45
-msgid "Add replay"
-msgstr "Добавить игру"
-
-#: src/components/EventTypeIcon.tsx:20:69
-msgid "Local rating"
-msgstr "Локальный рейтинг"
-
-#: src/components/EventTypeIcon.tsx:27:69
-msgid "Tournament"
-msgstr "Турнир"
-
-#: src/components/EventTypeIcon.tsx:34:69
-msgid "Online event"
-msgstr "Онлайн-рейтинг"
-
-#: src/components/GameListing.tsx:64:16
-msgid "Game link"
-msgstr "Ссылка на игру"
-
-#: src/components/GameListing.tsx:137:14
-msgid "Ron: %1"
-msgstr "Рон: %1"
-
-#: src/components/GameListing.tsx:140:14
-msgid "Tsumo: %1"
-msgstr "Цумо: %1"
-
-#: src/components/GameListing.tsx:143:14
-msgid "Draw: %1"
-msgstr "Ничья: %1"
-
-#: src/components/GameListing.tsx:147:16
-msgid "Chombo: %1"
-msgstr "Чомбо: %1"
-
-#: src/components/GameListing.tsx:152:16
-msgid "Nagashi: %1"
-msgstr "Нагаши манган: %1"
-
-#: src/components/HandsGraph.tsx:67:21
-msgid "Hands value"
-msgstr "Стоимость рук"
-
-#: src/components/PlayerStatsListing.tsx:17:5
-msgid "1st place: "
-msgstr "1 место: "
-
-#: src/components/PlayerStatsListing.tsx:18:5
-msgid "2nd place: "
-msgstr "2 место: "
-
-#: src/components/PlayerStatsListing.tsx:19:5
-msgid "3rd place: "
-msgstr "3 место: "
-
-#: src/components/PlayerStatsListing.tsx:20:5
-msgid "4th place: "
-msgstr "4 место: "
-
-#: src/components/PlayerStatsListing.tsx:34:32
-msgid "Common stats"
-msgstr "Общая статистика"
-
-#: src/components/PlayerStatsListing.tsx:37:16
-msgid "Games played: "
-msgstr "Сыграно игр: "
-
-#: src/components/PlayerStatsListing.tsx:41:16
-msgid "Rounds played: "
-msgstr "Сыграно раундов: "
-
-#: src/components/PlayerStatsListing.tsx:47:32
-msgid "Places stats"
-msgstr "Статистика по местам"
-
-#: src/components/PlayerStatsListing.tsx:61:32
-msgid "Final game score"
-msgstr "Финальный счет игры"
-
-#: src/components/PlayerStatsListing.tsx:64:16
-msgid "Minimum: "
-msgstr "Минимум: "
-
-#: src/components/PlayerStatsListing.tsx:68:16
-msgid "Maximum: "
-msgstr "Максимум: "
-
-#: src/components/PlayerStatsListing.tsx:72:16
-msgid "Average: "
-msgstr "Среднее: "
-
-#: src/components/PlayerStatsListing.tsx:78:32
-msgid "Misc stats"
-msgstr "Дополнительная статистика"
-
-#: src/components/PlayerStatsListing.tsx:81:16
-msgid "Draws: "
-msgstr "Ничьих: "
-
-#: src/components/PlayerStatsListing.tsx:86:20
-msgid "With tempai: "
-msgstr "С темпаем: "
-
-#: src/components/PlayerStatsListing.tsx:97:16
-msgid "Chombo penalties: "
-msgstr "Штрафов чомбо: "
-
-#: src/components/PlayerStatsListing.tsx:102:16
-msgid "Dora collected: "
-msgstr "Собрано дор: "
-
-#: src/components/PlayerStatsListing.tsx:106:20
-msgid "Average dora per hand: "
-msgstr "Среднее количество дор в руке: "
-
-#: src/components/PlayerStatsListing.tsx:112:16
-msgid "Riichi bets: "
-msgstr "Ставок риичи: "
-
-#: src/components/PlayerStatsListing.tsx:116:20
-msgid "Bets won: "
-msgstr "Выигравших ставок: "
-
-#: src/components/PlayerStatsListing.tsx:121:20
-msgid "Bets lost: "
-msgstr "Потерянных ставок: "
-
-#: src/components/PlayerStatsListing.tsx:132:15
-msgid "Win stats"
-msgstr "Статистика по победам"
-
-#: src/components/PlayerStatsListing.tsx:135:16
-msgid "Rounds won: "
-msgstr "Выиграно раундов: "
-
-#: src/components/PlayerStatsListing.tsx:139:20
-msgid "By ron: "
-msgstr "По рон: "
-
-#: src/components/PlayerStatsListing.tsx:144:20
-msgid "By tsumo: "
-msgstr "По цумо: "
-
-#: src/components/PlayerStatsListing.tsx:149:20
-msgid "With open hand: "
-msgstr "С открытой рукой: "
-
-#: src/components/PlayerStatsListing.tsx:154:20
-msgid "With riichi: "
-msgstr "С риичи: "
-
-#: src/components/PlayerStatsListing.tsx:159:20
-msgid "With damaten: "
-msgstr "В даматене: "
-
-#: src/components/PlayerStatsListing.tsx:166:16
-msgid "Total points gained: "
-msgstr "Всего набрано очков: "
-
-#: src/components/PlayerStatsListing.tsx:170:16
-msgid "Average win score: "
-msgstr "Среднее число выигранных очков: "
-
-#: src/components/PlayerStatsListing.tsx:176:15
-msgid "Loss stats"
-msgstr "Статистика потерь"
-
-#: src/components/PlayerStatsListing.tsx:179:16
-msgid "Deal-ins to ron: "
-msgstr "Набросов в рон: "
-
-#: src/components/PlayerStatsListing.tsx:184:20
-msgid "Because of riichi: "
-msgstr "Из-за риичи: "
-
-#: src/components/PlayerStatsListing.tsx:193:20
-msgid "Without declared riichi: "
-msgstr "Без объявления риичи: "
-
-#: src/components/PlayerStatsListing.tsx:198:24
-msgid "To open hands: "
-msgstr "В открытые руки: "
-
-#: src/components/PlayerStatsListing.tsx:207:24
-msgid "To hands with riichi: "
-msgstr "В руки с риичи: "
-
-#: src/components/PlayerStatsListing.tsx:216:24
-msgid "To damaten hands: "
-msgstr "В даматен: "
-
-#: src/components/PlayerStatsListing.tsx:227:20
-#: src/components/PlayerStatsListing.tsx:248:20
-msgid "Total points lost: "
-msgstr "Всего очков потеряно: "
-
-#: src/components/PlayerStatsListing.tsx:231:20
-msgid "Average deal-in: "
-msgstr "Средняя величина наброса: "
-
-#: src/components/PlayerStatsListing.tsx:242:16
-msgid "Tsumo payments: "
-msgstr "Выплаты по цумо: "
-
-#: src/components/PlayerStatsListing.tsx:252:20
-msgid "Average points lost: "
-msgstr "Среднее число потерянных очков: "
-
-#: src/components/RatingGraph.tsx:144:21 src/pages/RatingTable.tsx:329:32
-#: src/pages/RatingTable.tsx:388:7
-msgid "Games played"
-msgstr "Сыграно игр"
-
-#: src/components/RatingGraph.tsx:154:21 src/pages/RatingTable.tsx:197:20
-msgid "Rating"
-msgstr "Рейтинг"
-
-#: src/components/YakuGraph.tsx:50:42
-msgid "Yakuhai: total"
-msgstr "Якухай: всего"
-
-#: src/components/YakuGraph.tsx:79:23
-msgid "Yaku collected over all time"
-msgstr "Собранные яку за все время"
-
-#: src/helpers/gameLog.ts:9:14
+#: src/pages/Achievements.tsx:452:20
+msgctxt "Achievements badge"
+msgid "%1 bet"
+msgid_plural "%1 bets"
+msgstr[0] "%1 ставка"
+msgstr[1] "%1 ставки"
+msgstr[2] "%1 ставок"
+
+#: src/pages/Achievements.tsx:543:20
+msgctxt "Achievements badge"
+msgid "%1 dora"
+msgid_plural "%1 dora"
+msgstr[0] "%1 дора"
+msgstr[1] "%1 доры"
+msgstr[2] "%1 дор"
+
+#: src/pages/Achievements.tsx:236:14 src/pages/Achievements.tsx:267:14
+msgctxt "Achievements badge"
+msgid "%1 feed"
+msgid_plural "%1 feeds"
+msgstr[0] "%1 наброс"
+msgstr[1] "%1 наброса"
+msgstr[2] "%1 набросов"
+
+#: src/pages/Achievements.tsx:182:14
+msgctxt "Achievements badge"
+msgid "%1 fu"
+msgstr "%1 фу"
+
+#: src/helpers/gameLog.ts:141:12
+msgid "%1 han"
+msgstr "%1 хан"
+
+#: src/pages/Achievements.tsx:156:14 src/pages/Achievements.tsx:423:23
+msgctxt "Achievements badge"
+msgid "%1 han"
+msgstr "%1 хан"
+
+#: src/helpers/gameLog.ts:143:10
+msgid "%1 han, %2 fu"
+msgstr "%1 хан, %2 фу"
+
+#: src/pages/Achievements.tsx:419:23
+msgctxt "Achievements badge"
+msgid "%1 han, %2 fu"
+msgstr "%1 хан, %2 фу"
+
+#: src/pages/Achievements.tsx:483:20
+msgctxt "Achievements badge"
+msgid "%1 ippatsu"
+msgstr "%1 иппацу"
+
+#: src/pages/Achievements.tsx:514:20 src/pages/Achievements.tsx:607:20
+#: src/pages/Achievements.tsx:739:20
+msgctxt "Achievements badge"
+msgid "%1 points"
+msgstr "%1 очков"
+
+#: src/pages/Achievements.tsx:360:14
+msgctxt "Achievements badge"
+msgid "%1 quickest hand"
+msgid_plural "%1 quickest hands"
+msgstr[0] "%1 самая быстрая рука"
+msgstr[1] "%1 самых быстрых руки"
+msgstr[2] "%1 самых быстрых рук"
+
+#: src/pages/Achievements.tsx:638:20 src/pages/Achievements.tsx:672:20
+msgctxt "Achievements badge"
+msgid "%1 riichi bet"
+msgid_plural "%1 riichi bets"
+msgstr[0] "%1 риичи палочка"
+msgstr[1] "%1 риичи палочки"
+msgstr[2] "%1 риичи палочек"
+
+#: src/pages/Achievements.tsx:208:14
+msgctxt "Achievements badge"
+msgid "%1 tsumo"
+msgstr "%1 цумо"
+
+#: src/pages/Achievements.tsx:329:14 src/pages/Achievements.tsx:706:20
+msgctxt "Achievements badge"
+msgid "%1 win"
+msgid_plural "%1 wins"
+msgstr[0] "%1 победа"
+msgstr[1] "%1 победы"
+msgstr[2] "%1 побед"
+
+#: src/pages/Achievements.tsx:576:20
+msgctxt "Achievements badge"
+msgid "%1 yaku"
+msgstr "%1 яку"
+
+#: src/pages/Achievements.tsx:291:20
+msgctxt "Achievements badge"
+msgid "%1 yakuhai"
+msgid_plural "%1 yakuhais"
+msgstr[0] "%1 якухай"
+msgstr[1] "%1 якухая"
+msgstr[2] "%1 якухаев"
+
+#: src/helpers/gameLog.ts:27:14
 msgctxt "Ron log item"
 msgid "%1: <b>%2</b> - %3 (<b>%4</b>), %5. Riichi bets: %6"
 msgstr "%1: <b>%2</b> - %3 (<b>%4</b>), %5. Ставки риичи: %6"
 
-#: src/helpers/gameLog.ts:20:14
+#: src/helpers/gameLog.ts:38:14
 msgctxt "Tsumo log item"
 msgid "%1: <b>%2</b> - %3 (tsumo), %4. Riichi bets: %5"
 msgstr "%1: <b>%2</b> - %3 (цумо), %4. Ставки риичи: %5"
 
-#: src/helpers/gameLog.ts:30:14
-msgctxt "Draw log item"
-msgid "%1: Exhaustive draw (tenpai: %2). Riichi bets: %3"
-msgstr "%1: Ничья (темпай: %2). Ставки риичи: %3"
-
-#: src/helpers/gameLog.ts:40:14
+#: src/helpers/gameLog.ts:58:14
 msgctxt "Abortive draw log item"
 msgid "%1: Abortive draw. Riichi bets: %2"
 msgstr "%1: Абортивная ничья. Ставки риичи: %2"
 
-#: src/helpers/gameLog.ts:47:14
+#: src/helpers/gameLog.ts:65:14
 msgctxt "Chombo log item"
 msgid "%1: Chombo (<b>%2</b>)"
 msgstr "%1: Чомбо (<b>%2</b>)"
 
-#: src/helpers/gameLog.ts:54:14
+#: src/helpers/gameLog.ts:48:14
+msgctxt "Draw log item"
+msgid "%1: Exhaustive draw (tenpai: %2). Riichi bets: %3"
+msgstr "%1: Ничья (темпай: %2). Ставки риичи: %3"
+
+#: src/helpers/gameLog.ts:72:14
 msgctxt "Nagashi log item"
 msgid "%1: Nagashi mangan (<b>%2</b>). Riichi bets: %3"
 msgstr "%1: Нагаши манган (<b>%2</b>). Ставки риичи: %3"
 
-#: src/helpers/gameLog.ts:66:20
-msgctxt "Multiron inner log item"
-msgid "<li><b>%1</b> - %2, %3</li>"
-msgstr "<li><b>%1</b> - %2, %3</li>"
-
-#: src/helpers/gameLog.ts:75:9
+#: src/helpers/gameLog.ts:93:9
 msgctxt "Multiron outer log item"
 msgid "%1: Ron (<b>%2</b>). Riichi bets: %3"
 msgstr "%1: Рон (<b>%2</b>). Ставки риичи: %3"
 
-#: src/helpers/gameLog.ts:113:19
-msgid "dora %1"
-msgstr "дора %1"
+#: src/pages/EventRulesOverview/UmaSelect.tsx:113:22
+msgid "1 player with score less than starting"
+msgstr "1 игрок в минусе"
 
-#: src/helpers/gameLog.ts:120:12
-msgid "%1 han"
-msgstr "%1 хан"
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:155:22
+msgid "13+ han hands are considered yakuman, not sanbaiman."
+msgstr "Руки стоимостью в 13+ хан считаются якуманом, а не санбайманом."
 
-#: src/helpers/gameLog.ts:122:10
-msgid "%1 han, %2 fu"
-msgstr "%1 хан, %2 фу"
+#: src/pages/EventRulesOverview/UmaSelect.tsx:74:16
+msgid "1st"
+msgstr "1е"
 
-#: src/helpers/yaku.ts:70:34
-msgid "Riichi"
-msgstr "Риичи"
+#: src/components/PlayerStatsListing.tsx:34:5
+msgid "1st place: "
+msgstr "1 место: "
 
-#: src/helpers/yaku.ts:74:34
-msgid "Daburu riichi"
-msgstr "Дабл-риичи"
+#: src/pages/EventRulesOverview/UmaSelect.tsx:77:16
+msgid "2nd"
+msgstr "2е"
 
-#: src/helpers/yaku.ts:78:34
-msgid "Open riichi"
-msgstr "Опен риичи"
+#: src/components/PlayerStatsListing.tsx:35:5
+msgid "2nd place: "
+msgstr "2 место: "
 
-#: src/helpers/yaku.ts:82:34
-msgid "Ippatsu"
-msgstr "Иппацу"
+#: src/pages/EventRulesOverview/UmaSelect.tsx:88:22
+msgid "3 players with score less than starting"
+msgstr "3 игрока в минусе"
 
-#: src/helpers/yaku.ts:86:34
-msgid "Menzentsumo"
-msgstr "Мензенцумо"
+#: src/pages/EventRulesOverview/UmaSelect.tsx:80:16
+msgid "3rd"
+msgstr "3е"
 
-#: src/helpers/yaku.ts:90:34
-msgid "Chiitoitsu"
-msgstr "Чиитойцу"
+#: src/components/PlayerStatsListing.tsx:36:5
+msgid "3rd place: "
+msgstr "3 место: "
 
-#: src/helpers/yaku.ts:94:34
-msgid "Pinfu"
-msgstr "Пин-фу"
+#: src/pages/EventRulesOverview/UmaSelect.tsx:83:16
+msgid "4th"
+msgstr "4е"
 
-#: src/helpers/yaku.ts:98:34
-msgid "Tanyao"
-msgstr "Таняо"
+#: src/components/PlayerStatsListing.tsx:37:5
+msgid "4th place: "
+msgstr "4 место: "
+
+#: src/helpers/gameLog.ts:84:20
+msgctxt "Multiron inner log item"
+msgid "<li><b>%1</b> - %2, %3</li>"
+msgstr "<li><b>%1</b> - %2, %3</li>"
+
+#: src/components/AppFooter.tsx:103:20 src/pages/Achievements.tsx:770:34
+#: src/pages/Achievements.tsx:775:33
+msgid "Achievements"
+msgstr "Номинации"
+
+#: src/components/AppHeader.tsx:283:24
+msgctxt "Event menu"
+msgid "Achievements"
+msgstr "Номинации"
+
+#: src/pages/Achievements.tsx:761:29
+msgid "Achievements are not available for aggregated events"
+msgstr "Для агрегированных событий номинации недоступны"
+
+#: src/components/AppHeader.tsx:334:18
+msgid "Add online game"
+msgstr "Добавить онлайн-игру"
+
+#: src/components/AppHeader.tsx:318:26
+msgctxt "Event menu"
+msgid "Add online game"
+msgstr "Добавить онлайн-игру"
+
+#: src/components/AppHeader.tsx:348:45
+msgid "Add replay"
+msgstr "Добавить игру"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:65:16
+msgid "Agariyame"
+msgstr "Агарияме"
+
+#: src/pages/EventInfo.tsx:50:47 src/pages/RatingTable.tsx:133:44
+#: src/pages/RecentGames.tsx:85:42
+msgid "Aggregated event"
+msgstr "Агрегированное событие"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:146:22
+msgid ""
+"All riichi bets on the table will be given to the first winner. If not "
+"checked, winning riichi bets will always be given back, lost bets would be "
+"given to the first winner."
+msgstr ""
+"Все ставки на столе будут выданы первому победителю по порядку хода. Если не "
+"отмечено, выигравшие риичи-ставки всегда будут возвращены победителям, "
+"первому победителю достанутся только не выигравшие ставки."
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:114:16
+msgid "Allow abortive draws"
+msgstr "Разрешить абортивные ничьи"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:81:16
+msgid "Allow bankruptcy"
+msgstr "Банкротство"
+
+#: src/pages/EventRulesOverview/YakuSettings.tsx:42:22
+msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
+msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:195:18
+msgid "Amount of chombo penalty"
+msgstr "Размер штрафа чомбо"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:196:24
+msgid "Amount of penalty applied in the end of the session after uma bonus."
+msgstr ""
+"Количество очков, вычитаемое из очков игрока за каждый штраф чомбо после "
+"окончания игры."
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:61:22
+msgid ""
+"Amount of points given for each chip. Chips should be set up in tournament "
+"settings in Tenhou.net."
+msgstr ""
+"Количество очков, которое выдается за каждый чип. Чипы должны быть настроены "
+"на Tenhou.net."
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:51:22
+msgid ""
+"Amount of points given to every player in the beginning of every session"
+msgstr "Количество игровых очков у каждого игрока в начале игры"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:169:22
+msgid "Amount of points given to player at 1st place"
+msgstr "Количество бонусных очков за первое место в игре"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:99:24
+msgid "Amount of score player should get to end the game."
+msgstr "Количество очков, которое нужно набрать для завершения игры."
+
+#: src/pages/Achievements.tsx:627:14
+msgid "And your riichi bet, please"
+msgstr "И Ваша риичи палочка"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:106:16
+msgid "Atamahane"
+msgstr "Атамахане"
+
+#: src/components/PlayerStatsListing.tsx:248:20
+msgid "Average deal-in: "
+msgstr "Средняя величина наброса: "
+
+#: src/components/PlayerStatsListing.tsx:123:20
+msgid "Average dora per hand: "
+msgstr "Среднее количество дор в руке: "
+
+#: src/pages/RatingTable.tsx:260:20 src/pages/RatingTable.tsx:403:7
+msgid "Average place"
+msgstr "Среднее место"
+
+#: src/pages/RatingTable.tsx:404:7
+msgid "Average points"
+msgstr "Средние очки"
+
+#: src/components/PlayerStatsListing.tsx:269:20
+msgid "Average points lost: "
+msgstr "Среднее число потерянных очков: "
+
+#: src/pages/RatingTable.tsx:238:20
+msgid "Average score"
+msgstr "Средние очки"
+
+#: src/components/PlayerStatsListing.tsx:187:16
+msgid "Average win score: "
+msgstr "Среднее число выигранных очков: "
+
+#: src/components/PlayerStatsListing.tsx:89:16
+msgid "Average: "
+msgstr "Среднее: "
+
+#: src/pages/SeriesRating.tsx:103:22 src/pages/SeriesRating.tsx:134:22
+msgid "Avg place:"
+msgstr "Ср. место:"
+
+#: src/components/AppFooter.tsx:52:20
+msgid "Back to top"
+msgstr "К началу"
+
+#: src/components/PlayerStatsListing.tsx:201:20
+msgid "Because of riichi: "
+msgstr "Из-за риичи: "
+
+#: src/pages/Achievements.tsx:138:14
+msgid "Best hand"
+msgstr "Лучшая рука"
+
+#: src/pages/SeriesRating.tsx:100:22
+msgid "Best series"
+msgstr "Лучшая серия"
+
+#: src/components/PlayerStatsListing.tsx:138:20
+msgid "Bets lost: "
+msgstr "Потерянных ставок: "
+
+#: src/components/PlayerStatsListing.tsx:133:20
+msgid "Bets won: "
+msgstr "Выигравших ставок: "
+
+#: src/pages/Achievements.tsx:251:14
+msgid "Brave minesweeper"
+msgstr "Бравый сапёр"
+
+#: src/components/PlayerStatsListing.tsx:156:20
+msgid "By ron: "
+msgstr "По рон: "
+
+#: src/components/PlayerStatsListing.tsx:161:20
+msgid "By tsumo: "
+msgstr "По цумо: "
+
+#: src/pages/Achievements.tsx:503:14
+msgid "Careful planning"
+msgstr "Точный расчет"
+
+#: src/helpers/yaku.ts:182:34
+msgid "Chankan"
+msgstr "Чанкан"
 
 #: src/helpers/yaku.ts:102:34
 msgid "Chanta"
 msgstr "Чанта"
 
-#: src/helpers/yaku.ts:106:34
-msgid "Junchan"
-msgstr "Джунчан"
+#: src/helpers/yaku.ts:238:34
+msgid "Chihou"
+msgstr "Чихо"
+
+#: src/helpers/yaku.ts:90:34
+msgid "Chiitoitsu"
+msgstr "Чиитойцу"
+
+#: src/helpers/yaku.ts:218:34
+msgid "Chinitsu"
+msgstr "Чиницу"
+
+#: src/helpers/yaku.ts:214:34 src/helpers/yaku.ts:267:34
+msgid "Chinroutou"
+msgstr "Чинрото"
+
+#: src/pages/RatingTable.tsx:357:34 src/pages/RatingTable.tsx:401:24
+msgid "Chips"
+msgstr "Чипы"
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:60:16
+msgid "Chips value"
+msgstr "Стоимость чипа"
+
+#: src/components/PlayerStatsListing.tsx:114:16
+msgid "Chombo penalties: "
+msgstr "Штрафов чомбо: "
+
+#: src/components/GameListing.tsx:164:16
+msgid "Chombo: %1"
+msgstr "Чомбо: %1"
+
+#: src/helpers/yaku.ts:222:34
+msgid "Chuuren poutou"
+msgstr "Чууренпото"
+
+#: src/pages/PlayerStats.tsx:181:24
+msgid "Close game preview"
+msgstr "Закрыть предпросмотр"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:145:16
+msgid "Collect riichi bets by atamahane"
+msgstr "Риичи по атамахане"
+
+#: src/components/PlayerStatsListing.tsx:51:32
+msgid "Common stats"
+msgstr "Общая статистика"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:38:62
+msgid "Complex position-based"
+msgstr "Сложный, на основе позиций всех игроков"
+
+#: src/pages/Achievements.tsx:160:32 src/pages/Achievements.tsx:186:32
+#: src/pages/Achievements.tsx:214:32 src/pages/Achievements.tsx:245:32
+#: src/pages/Achievements.tsx:276:32 src/pages/Achievements.tsx:307:32
+#: src/pages/Achievements.tsx:338:32 src/pages/Achievements.tsx:369:32
+#: src/pages/Achievements.tsx:401:32 src/pages/Achievements.tsx:437:32
+#: src/pages/Achievements.tsx:468:32 src/pages/Achievements.tsx:497:32
+#: src/pages/Achievements.tsx:528:32 src/pages/Achievements.tsx:559:32
+#: src/pages/Achievements.tsx:590:32 src/pages/Achievements.tsx:621:32
+#: src/pages/Achievements.tsx:657:32 src/pages/Achievements.tsx:691:32
+#: src/pages/Achievements.tsx:722:32 src/pages/Achievements.tsx:753:32
+msgid "Couldn't get nomination details"
+msgstr "Не удалось получить данные номинаций"
+
+#: src/pages/EventRulesOverview/LocalSettings.tsx:36:22
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:71:22
+msgid "Count of session in game series."
+msgstr "Количество сессий в одной серии."
+
+#: src/helpers/yaku.ts:74:34
+msgid "Daburu riichi"
+msgstr "Дабл-риичи"
+
+#: src/helpers/yaku.ts:198:34 src/helpers/yaku.ts:251:34
+msgid "Daisangen"
+msgstr "Дайсанген"
+
+#: src/helpers/yaku.ts:206:34 src/helpers/yaku.ts:255:34
+msgid "Daisuushii"
+msgstr "Дайсуши"
+
+#: src/components/PlayerStatsListing.tsx:196:16
+msgid "Deal-ins to ron: "
+msgstr "Набросов в рон: "
+
+#: src/components/AppFooter.tsx:65:20
+msgid "Description"
+msgstr "Описание"
+
+#: src/components/AppHeader.tsx:246:22
+msgctxt "Event menu"
+msgid "Description"
+msgstr "Описание"
+
+#: src/pages/Achievements.tsx:220:14
+msgid "Die Hard"
+msgstr "Крепкий орешек"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:73:16
+msgid "Disable renchans"
+msgstr "Выключить ренчаны"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:52:20
+msgid "Do not interrupt session until it ends"
+msgstr "Не прерывать игру до тех пор, пока она не закончена"
+
+#: src/components/PlayerStatsListing.tsx:119:16
+msgid "Dora collected: "
+msgstr "Собрано дор: "
+
+#: src/pages/Achievements.tsx:534:14
+msgid "Dora lord"
+msgstr "Повелитель дор"
+
+#: src/components/GameListing.tsx:160:14
+msgid "Draw: %1"
+msgstr "Ничья: %1"
+
+#: src/components/PlayerStatsListing.tsx:98:16
+msgid "Draws: "
+msgstr "Ничьих: "
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:123:22
+msgid "Enable \"Nagashi\" outcome to record this special draw"
+msgstr "Включить возможность записи исхода \"Нагаши манган\""
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:175:16
+msgid "Equalize uma"
+msgstr "Выравнивание умы"
+
+#: src/pages/EventInfo.tsx:70:29
+msgid "Event administrators: "
+msgstr "Администраторы события: "
+
+#: src/components/AppHeader.tsx:233:28 src/components/AppHeader.tsx:235:22
+msgid "Event contents"
+msgstr "Данные события"
+
+#: src/pages/EventList.tsx:77:17
+msgid "Event list"
+msgstr "Список событий"
+
+#: src/components/AppHeader.tsx:169:20
+msgid "Events list"
+msgstr "Список событий"
+
+#: src/components/PlayerStatsListing.tsx:78:32
+msgid "Final game score"
+msgstr "Финальный счет игры"
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:99:22
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:90:22
+msgid ""
+"Fixed amount of rank penalty applied for each replacement player regardless "
+"of session results."
+msgstr ""
+"Фиксированный ранговый бонус/штраф, выдаваемый независимо от результатов "
+"игры."
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:89:22
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:80:22
+msgid ""
+"Fixed amount of result score applied for each replacement player regardless "
+"of session results."
+msgstr "Фиксированное число очков, применямое независимо от результатов игры."
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:88:16
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:79:16
+msgid "Fixed score applied to replacement player"
+msgstr "Фиксированное число итоговых очков у игрока замены"
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:98:16
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:89:16
+msgid "Fixed uma for replacement player"
+msgstr "Фиксированная ума для игрока замены"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:57:25
+msgid "Game duration"
+msgstr "Длительность сессии"
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:50:16
+msgid "Game expiration time (in hours)"
+msgstr "Время истечения игры (в часах)"
+
+#: src/components/GameListing.tsx:81:16
+msgid "Game link"
+msgstr "Ссылка на игру"
+
+#: src/pages/Game.tsx:62:19
+msgid "Game preview"
+msgstr "Просмотр игры"
+
+#: src/components/RatingGraph.tsx:161:21 src/pages/RatingTable.tsx:346:32
+#: src/pages/RatingTable.tsx:405:7
+msgid "Games played"
+msgstr "Сыграно игр"
+
+#: src/components/PlayerStatsListing.tsx:54:16
+msgid "Games played: "
+msgstr "Сыграно игр: "
+
+#: src/pages/Achievements.tsx:376:20
+msgid "Given for collecting a yakuman during tournament."
+msgstr "Дается за сбор якумана на турнире."
+
+#: src/pages/Achievements.tsx:139:20
+msgid ""
+"Given for collecting the hand with biggest han count (independent of cost)."
+msgstr "Дается за сбор руки с наибольшим число хан (независимо от стоимости)"
+
+#: src/pages/Achievements.tsx:167:20
+msgid "Given for collecting the hand with biggest minipoints (fu) count."
+msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
+
+#: src/pages/Achievements.tsx:628:20
+msgid ""
+"Given for collecting the largest amount of other players' riichi bets during "
+"the tournament."
+msgstr "Дается за сбор максимального числа чужих риичи палочек."
+
+#: src/pages/Achievements.tsx:193:20
+msgid "Given for collecting the most of tsumo hands during single game."
+msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
+
+#: src/pages/Achievements.tsx:283:20
+msgid "Given for collecting the most of yakuhais during the tournament."
+msgstr "Дается за сбор максимального числа якухаев за турнир."
+
+#: src/pages/Achievements.tsx:408:20
+msgid ""
+"Given for feeding into largest hand during tournament (but not while in "
+"riichi)."
+msgstr ""
+"Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
+"риичи)."
+
+#: src/pages/Achievements.tsx:475:20
+msgid "Given for getting largest number of ippatsu during tournament."
+msgstr "Дается за максимальное число побед с иппацу за турнир."
+
+#: src/pages/Achievements.tsx:729:20
+msgid ""
+"Given for having biggest score in the end of the session across the "
+"tournament."
+msgstr ""
+"Дается за максимальное число набранных очков в конце игры в рамках турнира."
+
+#: src/pages/Achievements.tsx:314:20
+msgid "Given for largest count of dealer wins during the tournament."
+msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
+
+#: src/pages/Achievements.tsx:252:20
+msgid "Given for largest count of feeding into ron during the tournament."
+msgstr "Дается за максимальное число набросов в рон за турнир."
+
+#: src/pages/Achievements.tsx:444:20
+msgid "Given for losing largest amount of points as riichi bets."
+msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
+
+#: src/pages/Achievements.tsx:664:20
+msgid "Given for losing the smallest number of riichi bets."
+msgstr "Дается за потерю минимального числа очков за счет риичи-ставок."
+
+#: src/pages/Achievements.tsx:221:20
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr "Дается за минимальное число набросов в рон за турнир."
+
+#: src/pages/Achievements.tsx:597:20
+msgid ""
+"Given for the largest amount of points received as ryuukyoku (draw) payments."
+msgstr "Дается за максимальную сумму, полученную за счет темпаев."
+
+#: src/pages/Achievements.tsx:566:20
+msgid ""
+"Given for the largest amount of unique yaku collected during the tournament."
+msgstr "Дается за самое большое число разнообразных яку за турнир."
+
+#: src/pages/Achievements.tsx:535:20
+msgid "Given for the largest average count of dora in player's hand."
+msgstr "Дается за максимальное среднее число дор в руке."
+
+#: src/pages/Achievements.tsx:345:20
+msgid "Given for the most of 1/30 wins during tournament."
+msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
+
+#: src/pages/Achievements.tsx:504:20
+msgid ""
+"Given for the smallest average cost of opponents hand that player has dealt."
+msgstr "Дается за минимальную среднюю величину наброса."
+
+#: src/pages/Achievements.tsx:698:20
+msgid "Given for winning the largest number of hands with damaten."
+msgstr "Дается за максимальное число побед из даматена."
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:98:18
+msgid "Goal score"
+msgstr "Целевое количество очков"
+
+#: src/pages/Achievements.tsx:565:14
+msgid "Gotta Catch'Em All"
+msgstr "Собери их всех"
+
+#: src/pages/Achievements.tsx:282:14
+msgid "Guest of honors"
+msgstr "Довакин aka The mother of dragons"
+
+#: src/helpers/yaku.ts:174:34
+msgid "Haitei"
+msgstr "Хайтей"
+
+#: src/components/HandsGraph.tsx:84:21
+msgid "Hands value"
+msgstr "Стоимость рук"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:161:22
+msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
+msgstr "Руки стоимостью в 4/30 и 3/60 округляются до мангана."
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:138:22
+msgid ""
+"Honba payments will be given only to the first winner. If not checked, "
+"payment will be given to all winners."
+msgstr ""
+"Выплата по хонбе будет выдана только первому победителю по ходу игры. Если "
+"не отмечено, выплата производится всем победителям."
+
+#: src/helpers/yaku.ts:150:34
+msgid "Honitsu"
+msgstr "Хоницу"
+
+#: src/pages/Achievements.tsx:443:14
+msgid "Honored donor"
+msgstr "Почетный донор"
+
+#: src/helpers/yaku.ts:154:34
+msgid "Honroutou"
+msgstr "Хонрото"
+
+#: src/helpers/yaku.ts:170:34
+msgid "Houtei raoyui"
+msgstr "Хотей раоюй"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:44:22
+msgid "How game sessions should end during the tournament"
+msgstr "Как игровые сессии завершаются во время турнира"
+
+#: src/pages/Achievements.tsx:192:14
+msgid "I saw them dancing"
+msgstr "Задолбал!"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:176:22
+msgid ""
+"If checked, players with equivalent score receive equivalent uma bonus. "
+"Otherwise, uma is assigned according to move order."
+msgstr ""
+"Если отмечено, игроки с одинаковыми очками получат одинаковый ранговый "
+"бонус, равный среднему их бонусу. В ином случае ума назначается по порядку "
+"хода."
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:88:22
+msgid ""
+"If nobody reaches the goal score at the last hand, the game continues to "
+"west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
+"reaches the goal"
+msgstr ""
+"Если никто не набирает заданное число очков после оорасу, игра продолжается "
+"в западных раундах (в ханчане) или в южных раундах (в тонпусене), до тех пор "
+"пока кто-либо не наберет заданное число очков"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:66:22
+msgid ""
+"If the dealer holds the 1st place after last hand in session, the game ends "
+"regardless of his winning hand or tempai."
+msgstr ""
+"Если дилер занимает первое место после последней раздачи в игре, игра "
+"завершается независимо от того, выиграл ли дилер (или был ли он темпай)."
 
 #: src/helpers/yaku.ts:110:34
 msgid "Iipeikou"
 msgstr "Иипейко"
 
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:50:16
+msgid "Initial points"
+msgstr "Начальные очки"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:42:16
+msgid "Initial rating"
+msgstr "Начальный рейтинг"
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:51:22
+msgid ""
+"Interval of time when played online game is still considered valid and can "
+"be added to the rating."
+msgstr ""
+"Интервал времени, в течение которого сыгранная игра все еще считается "
+"действительной и может быть внесена в рейтинг."
+
+#: src/helpers/yaku.ts:82:34
+msgid "Ippatsu"
+msgstr "Иппацу"
+
+#: src/helpers/yaku.ts:126:34
+msgid "Ittsu"
+msgstr "Иццу"
+
+#: src/pages/Achievements.tsx:375:14
+msgid "Jewelry included"
+msgstr "Якуман-мастер"
+
+#: src/helpers/yaku.ts:106:34
+msgid "Junchan"
+msgstr "Джунчан"
+
+#: src/pages/Achievements.tsx:474:14
+msgid "Just as planned"
+msgstr "Как и планировалось"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:154:16
+msgid "Kazoe yakuman"
+msgstr "Казое якуман"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:160:16
+msgid "Kiriage mangan"
+msgstr "Кириаге манган"
+
+#: src/helpers/yaku.ts:230:34
+msgid "Kokushi musou"
+msgstr "Кокуши мусо"
+
+#: src/pages/EventRulesOverview/YakuSettings.tsx:33:16
+msgid "Kuitan"
+msgstr "Куитан"
+
+#: src/components/AppFooter.tsx:140:67
+msgid "Language"
+msgstr "Язык"
+
+#: src/pages/RecentGames.tsx:80:16 src/pages/RecentGames.tsx:85:16
+#: src/pages/RecentGames.tsx:92:31
+msgid "Last games"
+msgstr "Последние игры"
+
+#: src/pages/SeriesRating.tsx:131:22
+msgid "Last series"
+msgstr "Текущая серия"
+
+#: src/pages/EventRulesOverview/TabsList.tsx:43:12
+msgid "Local event settings"
+msgstr "Настройки локального рейтинга"
+
+#: src/components/EventTypeIcon.tsx:37:69
+msgid "Local rating"
+msgstr "Локальный рейтинг"
+
+#: src/components/PlayerStatsListing.tsx:193:15
+msgid "Loss stats"
+msgstr "Статистика потерь"
+
+#: src/components/PlayerStatsListing.tsx:85:16
+msgid "Maximum: "
+msgstr "Максимум: "
+
+#: src/helpers/yaku.ts:86:34
+msgid "Menzentsumo"
+msgstr "Мензенцумо"
+
+#: src/pages/EventRulesOverview/LocalSettings.tsx:44:22
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:79:22
+msgid ""
+"Minimal count of games the player should play to get into the rating table."
+msgstr ""
+"Минимальное число сыгранных игр для того, чтобы игрок попал в рейтинговую "
+"таблицу."
+
+#: src/pages/EventRulesOverview/LocalSettings.tsx:43:16
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:78:16
+msgid "Minimal games count"
+msgstr "Минимальное число игр"
+
+#: src/components/PlayerStatsListing.tsx:81:16
+msgid "Minimum: "
+msgstr "Минимум: "
+
+#: src/components/PlayerStatsListing.tsx:95:32
+msgid "Misc stats"
+msgstr "Дополнительная статистика"
+
+#: src/pages/EventRulesOverview/YakuSettings.tsx:41:16
+msgid "Multiple yakumans"
+msgstr "Суммирование якуманов"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:122:16
+msgid "Nagashi mangan"
+msgstr "Нагаши манган"
+
+#: src/components/GameListing.tsx:169:16
+msgid "Nagashi: %1"
+msgstr "Нагаши манган: %1"
+
+#: src/pages/PlayerStats.tsx:159:24
+msgid "Next game"
+msgstr "Следующая игра"
+
+#: src/pages/Achievements.tsx:697:14
+msgid "Ninja"
+msgstr "Ниндзя"
+
+#: src/pages/Achievements.tsx:390:20
+msgid "No yakumans have been collected"
+msgstr "Ни одного якумана собрано не было"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:168:16
+msgid "Oka bonus"
+msgstr "Ока"
+
+#: src/components/EventTypeIcon.tsx:51:69
+msgid "Online event"
+msgstr "Онлайн-рейтинг"
+
+#: src/pages/EventRulesOverview/TabsList.tsx:53:12
+msgid "Online event settings"
+msgstr "Настройки онлайн-события"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:107:22
+msgid ""
+"Only first player by the order of the move from the loser would be "
+"considered a winner. If not checked, all players declaring Ron are "
+"considered winners."
+msgstr ""
+"Только первый игрок по ходу раздачи считается победителем по рон. Если "
+"галочка не отмечена, все игроки, объявившие рон, считаются победителями."
+
+#: src/components/AppHeader.tsx:208:28 src/components/AppHeader.tsx:210:22
+#: src/components/AppHeader.tsx:214:28
+msgid "Open assistant"
+msgstr "Открыть ассистент"
+
+#: src/helpers/yaku.ts:78:34
+msgid "Open riichi"
+msgstr "Опен риичи"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:137:20
+msgid "Otherwise"
+msgstr "Прочие ситуации"
+
+#: src/pages/Achievements.tsx:166:14
+msgid "Over 9000 fu"
+msgstr "Over 9000 fu"
+
+#: src/pages/EventRulesOverview/YakuSettings.tsx:64:25
+msgid "Pao rule enabled for:"
+msgstr "Пао разрешено для:"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:184:16
+msgid "Pay chombo as reverse mangan"
+msgstr "Чомбо как обратный манган"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:185:22
+msgid ""
+"Pay chombo right on occasion. If not checked, chombo is subtracted from "
+"player score after uma is applied."
+msgstr ""
+"Выплата штрафа чомбо производится на месте в размере обратного мангана. Если "
+"не отмечено, штраф чомбо будет вычтен из очков игрока после умы в конце игры."
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:137:16
+msgid "Pay for honba by atamahane"
+msgstr "Хонба по атамахане"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:152:25
+msgid "Payments and scores"
+msgstr "Выплаты и очки"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:182:25
+msgid "Penalties"
+msgstr "Штрафы"
+
+#: src/helpers/yaku.ts:94:34
+msgid "Pinfu"
+msgstr "Пин-фу"
+
+#: src/pages/RatingTable.tsx:397:7
+msgid "Place"
+msgstr "Место"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:72:22
+msgid "Place / Session result"
+msgstr "Место / результат"
+
+#: src/components/PlayerStatsListing.tsx:64:32
+msgid "Places stats"
+msgstr "Статистика по местам"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:87:16
+msgid "Play additional rounds"
+msgstr "Дополнительные раунды"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:60:22
+msgid "Play only east rounds"
+msgstr "Играть только восточные раунды"
+
+#: src/pages/RatingTable.tsx:398:7
+msgid "Player ID"
+msgstr "ID игрока"
+
+#: src/pages/RatingTable.tsx:399:7
+msgid "Player name"
+msgstr "Имя игрока"
+
+#: src/pages/PlayerStats.tsx:94:29
+msgid "Player stats"
+msgstr "Статистика игрока"
+
+#: src/pages/PlayerStats.tsx:141:24
+msgid "Previous game"
+msgstr "Предыдущая игра"
+
+#: src/components/AppHeader.tsx:187:26 src/components/AppHeader.tsx:189:20
+#: src/components/AppHeader.tsx:193:26
+msgid "Profile & admin panel"
+msgstr "Профиль и панель управления"
+
+#: src/components/RatingGraph.tsx:171:21 src/pages/RatingTable.tsx:214:20
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: src/pages/RatingTable.tsx:402:7
+msgid "Rating points"
+msgstr "Рейтинговые очки"
+
+#: src/components/AppFooter.tsx:92:20 src/pages/EventList.tsx:104:67
+#: src/pages/RatingTable.tsx:113:35 src/pages/RatingTable.tsx:128:16
+#: src/pages/RatingTable.tsx:133:16 src/pages/RatingTable.tsx:141:33
+msgid "Rating table"
+msgstr "Рейтинг"
+
+#: src/components/AppHeader.tsx:273:22
+msgctxt "Event menu"
+msgid "Rating table"
+msgstr "Рейтинг"
+
+#: src/pages/RatingTable.tsx:116:12
+msgid "Rating table is hidden by tournament administrator"
+msgstr "Рейтинговая таблица была скрыта администратором турнира"
+
+#: src/components/AppFooter.tsx:85:20
+msgid "Recent games"
+msgstr "Последние игры"
+
+#: src/components/AppHeader.tsx:264:22
+msgctxt "Event menu"
+msgid "Recent games"
+msgstr "Последние игры"
+
+#: src/helpers/yaku.ts:186:34
+msgid "Renhou"
+msgstr "Ренхо"
+
+#: src/components/AppHeader.tsx:132:22
+msgid "Replay link is invalid. Please check if you copied it correctly"
+msgstr "Ссылка на игру некорректна. Проверьте правильно ли вы ее скопировали"
+
+#: src/helpers/yaku.ts:70:34
+msgid "Riichi"
+msgstr "Риичи"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:127:25
+msgid "Riichi and honba"
+msgstr "Риичи и хонба"
+
+#: src/components/PlayerStatsListing.tsx:129:16
+msgid "Riichi bets: "
+msgstr "Ставок риичи: "
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:129:16
+msgid "Riichi goes to winner"
+msgstr "Риичи уходит победителю"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:130:22
+msgid ""
+"Riichi left on table in case of draw in the end of the session will be given "
+"to session winner"
+msgstr ""
+"После завершения игры все ставки риичи, оставшиеся на столе, отдаются "
+"победителю в игре"
+
+#: src/pages/EventList.tsx:79:12
+msgid "Riichi mahjong events list"
+msgstr "Список турниров и рейтингов"
+
+#: src/helpers/yaku.ts:178:34
+msgid "Rinshan kaihou"
+msgstr "Риншан кайхо"
+
+#: src/components/GameListing.tsx:154:14
+msgid "Ron: %1"
+msgstr "Рон: %1"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:104:25
+msgid "Round outcomes"
+msgstr "Исходы раздач"
+
+#: src/components/PlayerStatsListing.tsx:58:16
+msgid "Rounds played: "
+msgstr "Сыграно раундов: "
+
+#: src/components/PlayerStatsListing.tsx:152:16
+msgid "Rounds won: "
+msgstr "Выиграно раундов: "
+
+#: src/components/AppFooter.tsx:73:22
+#: src/pages/EventRulesOverview/index.tsx:67:36
+#: src/pages/EventRulesOverview/index.tsx:72:35
+msgid "Rules overview"
+msgstr "Обзор правил"
+
+#: src/components/AppHeader.tsx:255:22
+msgctxt "Event menu"
+msgid "Rules overview"
+msgstr "Обзор правил"
+
+#: src/pages/EventRulesOverview/TabsList.tsx:39:10
+msgid "Ruleset details"
+msgstr "Детали правил"
+
+#: src/pages/EventRulesOverview/index.tsx:55:12
+msgid "Ruleset details page is not available for aggregated events"
+msgstr "Для агрегированных событий обзор правил недоступен"
+
 #: src/helpers/yaku.ts:114:34
 msgid "Ryanpeikou"
 msgstr "Рянпейко"
+
+#: src/helpers/yaku.ts:226:34 src/helpers/yaku.ts:263:34
+msgid "Ryuuiisou"
+msgstr "Рюисо"
+
+#: src/helpers/yaku.ts:158:34
+msgid "Sanankou"
+msgstr "Сананко"
+
+#: src/helpers/yaku.ts:166:34
+msgid "Sankantsu"
+msgstr "Санканцу"
 
 #: src/helpers/yaku.ts:118:34
 msgid "Sanshoku"
@@ -468,9 +1139,303 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: src/helpers/yaku.ts:126:34
-msgid "Ittsu"
-msgstr "Иццу"
+#: src/pages/RatingTable.tsx:158:18
+msgid "Save as CSV"
+msgstr "Экспорт в CSV"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:43:22
+msgid "Score given to all players in the beginning of the rating"
+msgstr ""
+"Количество рейтинговых очков, изначально даваемое каждому новому игроку"
+
+#: src/pages/SeriesRating.tsx:107:22 src/pages/SeriesRating.tsx:139:22
+msgid "Score:"
+msgstr "Очки:"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:69:16
+msgid "Seating is defined in advance"
+msgstr "Предопределенная рассадка"
+
+#: src/pages/EventRulesOverview/LocalSettings.tsx:35:16
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:70:16
+msgid "Series length"
+msgstr "Длина серии"
+
+#: src/components/AppFooter.tsx:112:20 src/pages/SeriesRating.tsx:69:12
+#: src/pages/SeriesRating.tsx:74:31
+msgid "Series rating"
+msgstr "Рейтинг по сериям игр"
+
+#: src/components/AppHeader.tsx:294:24
+msgctxt "Event menu"
+msgid "Series rating"
+msgstr "Рейтинг по сериям игр"
+
+#: src/pages/SeriesRating.tsx:60:29
+msgid "Series rating is not available for aggregated events"
+msgstr "Для агрегированных событий рейтинг по сериям недоступен"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:35:16
+msgid "Session duration in minutes"
+msgstr "Длительность сессии в минутах"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:43:16
+msgid "Session ending policy"
+msgstr "Политика окончания игры"
+
+#: src/helpers/yaku.ts:162:34
+msgid "Shousangen"
+msgstr "Шосанген"
+
+#: src/helpers/yaku.ts:202:34
+msgid "Shousuushii"
+msgstr "Шосуши"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:37:61
+msgid "Simple rank-based"
+msgstr "Простой, на основе текущего места"
+
+#: src/helpers/yaku.ts:194:34
+msgid "Suuankou"
+msgstr "Сууанко"
+
+#: src/helpers/yaku.ts:190:34 src/helpers/yaku.ts:271:34
+msgid "Suukantsu"
+msgstr "Сууканцу"
+
+#: src/helpers/yaku.ts:98:34
+msgid "Tanyao"
+msgstr "Таняо"
+
+#: src/pages/EventRulesOverview/YakuSettings.tsx:34:22
+msgid ""
+"Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
+"open hand."
+msgstr ""
+"Тан-яо стоит 1 хан на открытой руке. Если не проставлено, тан-яо не работает "
+"на открытой руке."
+
+#: src/pages/RatingTable.tsx:191:22 src/pages/RatingTable.tsx:400:21
+msgid "Team"
+msgstr "Команда"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:67:24
+msgid "Team tournament"
+msgstr "Командный турнир"
+
+#: src/helpers/yaku.ts:234:34
+msgid "Tenhou"
+msgstr "Тенхо"
+
+#: src/pages/EventRulesOverview/OnlineSettings.tsx:41:16
+msgid ""
+"Tenhou Lobby ID. Please contact event administrator for proper link to lobby."
+msgstr ""
+"ID лобби на Tenhou. Свяжитесь с администратором события для получения ссылки "
+"на лобби."
+
+#: src/pages/Achievements.tsx:344:14
+msgid "The 1k Flash"
+msgstr "Мистер Хэнки"
+
+#: src/pages/Achievements.tsx:663:14
+msgid "The Covetous Knight"
+msgstr "Скупой рыцарь"
+
+#: src/pages/Achievements.tsx:596:14
+msgid "The favorite apprentice of ASAPIN"
+msgstr "Любимый ученик Асапина"
+
+#: src/pages/Achievements.tsx:313:14
+msgid "The great dealer"
+msgstr "Восточный мастер"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:115:22
+msgid ""
+"There will be a separate \"Abortive draw\" outcome to record draws due to "
+"four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
+msgstr ""
+"Включить отдельный исход \"Абортивная ничья\" для специальных ситуаций (4 "
+"риичи, 4 кана, одинаковый ветер в сбросе на первом круге, кюсюкюхай)."
+
+#: src/pages/Achievements.tsx:407:14
+msgid "This can't be your wait"
+msgstr "Он не может на это ждать"
+
+#: src/pages/Timer.tsx:121:12
+msgid "Timer"
+msgstr "Таймер"
+
+#: src/components/AppFooter.tsx:124:22
+msgid "Timer & seating"
+msgstr "Таймер и рассадка"
+
+#: src/components/AppHeader.tsx:306:26
+msgctxt "Event menu"
+msgid "Timer & seating"
+msgstr "Таймер и рассадка"
+
+#: src/pages/Timer.tsx:92:29
+msgid "Timer is not available for aggregated events"
+msgstr "Для агрегированных событий таймер недоступен"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:36:22
+msgid ""
+"Timer starting value. After time runs out, session ending policy is applied "
+"(see below)."
+msgstr ""
+"Стартовое значение таймера. После истечения таймера, применяется политика "
+"окончания игры (см. ниже)"
+
+#: src/components/PlayerStatsListing.tsx:233:24
+msgid "To damaten hands: "
+msgstr "В даматен: "
+
+#: src/components/AppHeader.tsx:167:26 src/components/AppHeader.tsx:173:26
+msgid "To events list"
+msgstr "К списку событий"
+
+#: src/components/PlayerStatsListing.tsx:224:24
+msgid "To hands with riichi: "
+msgstr "В руки с риичи: "
+
+#: src/components/PlayerStatsListing.tsx:215:24
+msgid "To open hands: "
+msgstr "В открытые руки: "
+
+#: src/components/AppFooter.tsx:134:22
+msgid "Toggle color scheme"
+msgstr "Переключить цветовую схему"
+
+#: src/helpers/yaku.ts:146:34
+msgid "Toitoi"
+msgstr "Тойтой"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:59:16
+msgid "Tonpuusen"
+msgstr "Тонпусены"
+
+#: src/components/PlayerStatsListing.tsx:183:16
+msgid "Total points gained: "
+msgstr "Всего набрано очков: "
+
+#: src/components/PlayerStatsListing.tsx:244:20
+#: src/components/PlayerStatsListing.tsx:265:20
+msgid "Total points lost: "
+msgstr "Всего очков потеряно: "
+
+#: src/components/EventTypeIcon.tsx:44:69
+msgid "Tournament"
+msgstr "Турнир"
+
+#: src/pages/EventRulesOverview/TabsList.tsx:48:12
+msgid "Tournament settings"
+msgstr "Настройки турнира"
+
+#: src/components/PlayerStatsListing.tsx:259:16
+msgid "Tsumo payments: "
+msgstr "Выплаты по цумо: "
+
+#: src/components/GameListing.tsx:157:14
+msgid "Tsumo: %1"
+msgstr "Цумо: %1"
+
+#: src/helpers/yaku.ts:210:34 src/helpers/yaku.ts:259:34
+msgid "Tsuuiisou"
+msgstr "Цуисо"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:45:20
+msgid "Uma bonus for 1st place"
+msgstr "Ума за 1 место"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:51:20
+msgid "Uma bonus for 2nd place"
+msgstr "Ума за 2 место"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:32:16
+msgid "Uma bonus type"
+msgstr "Тип рангового бонуса ума"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:57:20
+msgid "Uma penalty for 3rd place"
+msgstr "Ума за 3 место"
+
+#: src/pages/EventRulesOverview/UmaSelect.tsx:63:20
+msgid "Uma penalty for 4th place"
+msgstr "Ума за 4 место"
+
+#: src/pages/Game.tsx:66:35
+msgid "View game"
+msgstr "Посмотреть реплей"
+
+#: src/pages/PlayerStats.tsx:134:16
+msgid "View selected game details"
+msgstr "Подробнее об игре"
+
+#: src/pages/Achievements.tsx:728:14
+msgid "We need more gold"
+msgstr "Нужно больше золота"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:82:22
+msgid "When a player runs out of score points, the game immediately ends"
+msgstr "Когда игрок уходит в минус по очкам, игра немедленно завершается"
+
+#: src/pages/EventRulesOverview/RulesetSettings.tsx:74:22
+msgid ""
+"When dealer wins, or stays tempai after draw, seat winds will be changed. "
+"Honba is added only after draw."
+msgstr ""
+"Когда дилер выигрывает или остается темпай, ветра все равно меняются. Хонба "
+"добавляется только после ничьей."
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:56:20
+msgid "When time is out, finish current hand and interrupt the session"
+msgstr ""
+"Когда время вышло, завершить текущую раздачу и после этого прервать игру"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:60:20
+msgid ""
+"When time is out, finish current hand, play one more, and then interrup the "
+"session"
+msgstr ""
+"Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
+"прервать игру"
+
+#: src/components/PlayerStatsListing.tsx:149:15
+msgid "Win stats"
+msgstr "Статистика по победам"
+
+#: src/components/PlayerStatsListing.tsx:176:20
+msgid "With damaten: "
+msgstr "В даматене: "
+
+#: src/components/PlayerStatsListing.tsx:166:20
+msgid "With open hand: "
+msgstr "С открытой рукой: "
+
+#: src/components/PlayerStatsListing.tsx:171:20
+msgid "With riichi: "
+msgstr "С риичи: "
+
+#: src/components/PlayerStatsListing.tsx:103:20
+msgid "With tempai: "
+msgstr "С темпаем: "
+
+#: src/components/PlayerStatsListing.tsx:210:20
+msgid "Without declared riichi: "
+msgstr "Без объявления риичи: "
+
+#: src/pages/EventRulesOverview/YakuSettings.tsx:46:25
+msgid "Yaku allowed"
+msgstr "Разрешенные яку"
+
+#: src/components/YakuGraph.tsx:96:23
+msgid "Yaku collected over all time"
+msgstr "Собранные яку за все время"
+
+#: src/pages/EventRulesOverview/TabsList.tsx:57:10
+msgid "Yaku settings"
+msgstr "Настройки яку"
 
 #: src/helpers/yaku.ts:130:34
 msgid "Yakuhai x1"
@@ -488,785 +1453,11 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: src/helpers/yaku.ts:146:34
-msgid "Toitoi"
-msgstr "Тойтой"
-
-#: src/helpers/yaku.ts:150:34
-msgid "Honitsu"
-msgstr "Хоницу"
-
-#: src/helpers/yaku.ts:154:34
-msgid "Honroutou"
-msgstr "Хонрото"
-
-#: src/helpers/yaku.ts:158:34
-msgid "Sanankou"
-msgstr "Сананко"
-
-#: src/helpers/yaku.ts:162:34
-msgid "Shousangen"
-msgstr "Шосанген"
-
-#: src/helpers/yaku.ts:166:34
-msgid "Sankantsu"
-msgstr "Санканцу"
-
-#: src/helpers/yaku.ts:170:34
-msgid "Houtei raoyui"
-msgstr "Хотей раоюй"
-
-#: src/helpers/yaku.ts:174:34
-msgid "Haitei"
-msgstr "Хайтей"
-
-#: src/helpers/yaku.ts:178:34
-msgid "Rinshan kaihou"
-msgstr "Риншан кайхо"
-
-#: src/helpers/yaku.ts:182:34
-msgid "Chankan"
-msgstr "Чанкан"
-
-#: src/helpers/yaku.ts:186:34
-msgid "Renhou"
-msgstr "Ренхо"
-
-#: src/helpers/yaku.ts:190:34 src/helpers/yaku.ts:271:34
-msgid "Suukantsu"
-msgstr "Сууканцу"
-
-#: src/helpers/yaku.ts:194:34
-msgid "Suuankou"
-msgstr "Сууанко"
-
-#: src/helpers/yaku.ts:198:34 src/helpers/yaku.ts:251:34
-msgid "Daisangen"
-msgstr "Дайсанген"
-
-#: src/helpers/yaku.ts:202:34
-msgid "Shousuushii"
-msgstr "Шосуши"
-
-#: src/helpers/yaku.ts:206:34 src/helpers/yaku.ts:255:34
-msgid "Daisuushii"
-msgstr "Дайсуши"
-
-#: src/helpers/yaku.ts:210:34 src/helpers/yaku.ts:259:34
-msgid "Tsuuiisou"
-msgstr "Цуисо"
-
-#: src/helpers/yaku.ts:214:34 src/helpers/yaku.ts:267:34
-msgid "Chinroutou"
-msgstr "Чинрото"
-
-#: src/helpers/yaku.ts:218:34
-msgid "Chinitsu"
-msgstr "Чиницу"
-
-#: src/helpers/yaku.ts:222:34
-msgid "Chuuren poutou"
-msgstr "Чууренпото"
-
-#: src/helpers/yaku.ts:226:34 src/helpers/yaku.ts:263:34
-msgid "Ryuuiisou"
-msgstr "Рюисо"
-
-#: src/helpers/yaku.ts:230:34
-msgid "Kokushi musou"
-msgstr "Кокуши мусо"
-
-#: src/helpers/yaku.ts:234:34
-msgid "Tenhou"
-msgstr "Тенхо"
-
-#: src/helpers/yaku.ts:238:34
-msgid "Chihou"
-msgstr "Чихо"
-
-#: src/pages/Achievements.tsx:121:14
-msgid "Best hand"
-msgstr "Лучшая рука"
-
-#: src/pages/Achievements.tsx:122:20
-msgid ""
-"Given for collecting the hand with biggest han count (independent of cost)."
-msgstr "Дается за сбор руки с наибольшим число хан (независимо от стоимости)"
-
-#: src/pages/Achievements.tsx:139:14 src/pages/Achievements.tsx:406:23
-msgctxt "Achievements badge"
-msgid "%1 han"
-msgstr "%1 хан"
-
-#: src/pages/Achievements.tsx:143:32 src/pages/Achievements.tsx:169:32
-#: src/pages/Achievements.tsx:197:32 src/pages/Achievements.tsx:228:32
-#: src/pages/Achievements.tsx:259:32 src/pages/Achievements.tsx:290:32
-#: src/pages/Achievements.tsx:321:32 src/pages/Achievements.tsx:352:32
-#: src/pages/Achievements.tsx:384:32 src/pages/Achievements.tsx:420:32
-#: src/pages/Achievements.tsx:451:32 src/pages/Achievements.tsx:480:32
-#: src/pages/Achievements.tsx:511:32 src/pages/Achievements.tsx:542:32
-#: src/pages/Achievements.tsx:573:32 src/pages/Achievements.tsx:604:32
-#: src/pages/Achievements.tsx:640:32 src/pages/Achievements.tsx:674:32
-#: src/pages/Achievements.tsx:705:32 src/pages/Achievements.tsx:736:32
-msgid "Couldn't get nomination details"
-msgstr "Не удалось получить данные номинаций"
-
-#: src/pages/Achievements.tsx:149:14
-msgid "Over 9000 fu"
-msgstr "Over 9000 fu"
-
-#: src/pages/Achievements.tsx:150:20
-msgid "Given for collecting the hand with biggest minipoints (fu) count."
-msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
-
-#: src/pages/Achievements.tsx:165:14
-msgctxt "Achievements badge"
-msgid "%1 fu"
-msgstr "%1 фу"
-
-#: src/pages/Achievements.tsx:175:14
-msgid "I saw them dancing"
-msgstr "Задолбал!"
-
-#: src/pages/Achievements.tsx:176:20
-msgid "Given for collecting the most of tsumo hands during single game."
-msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
-
-#: src/pages/Achievements.tsx:191:14
-msgctxt "Achievements badge"
-msgid "%1 tsumo"
-msgstr "%1 цумо"
-
-#: src/pages/Achievements.tsx:203:14
-msgid "Die Hard"
-msgstr "Крепкий орешек"
-
-#: src/pages/Achievements.tsx:204:20
-msgid "Given for smallest count of feeding into ron during the tournament."
-msgstr "Дается за минимальное число набросов в рон за турнир."
-
-#: src/pages/Achievements.tsx:219:14 src/pages/Achievements.tsx:250:14
-msgctxt "Achievements badge"
-msgid "%1 feed"
-msgid_plural "%1 feeds"
-msgstr[0] "%1 наброс"
-msgstr[1] "%1 наброса"
-msgstr[2] "%1 набросов"
-
-#: src/pages/Achievements.tsx:234:14
-msgid "Brave minesweeper"
-msgstr "Бравый сапёр"
-
-#: src/pages/Achievements.tsx:235:20
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr "Дается за максимальное число набросов в рон за турнир."
-
-#: src/pages/Achievements.tsx:265:14
-msgid "Guest of honors"
-msgstr "Довакин aka The mother of dragons"
-
-#: src/pages/Achievements.tsx:266:20
-msgid "Given for collecting the most of yakuhais during the tournament."
-msgstr "Дается за сбор максимального числа якухаев за турнир."
-
-#: src/pages/Achievements.tsx:274:20
-msgctxt "Achievements badge"
-msgid "%1 yakuhai"
-msgid_plural "%1 yakuhais"
-msgstr[0] "%1 якухай"
-msgstr[1] "%1 якухая"
-msgstr[2] "%1 якухаев"
-
-#: src/pages/Achievements.tsx:296:14
-msgid "The great dealer"
-msgstr "Восточный мастер"
-
-#: src/pages/Achievements.tsx:297:20
-msgid "Given for largest count of dealer wins during the tournament."
-msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
-
-#: src/pages/Achievements.tsx:312:14 src/pages/Achievements.tsx:689:20
-msgctxt "Achievements badge"
-msgid "%1 win"
-msgid_plural "%1 wins"
-msgstr[0] "%1 победа"
-msgstr[1] "%1 победы"
-msgstr[2] "%1 побед"
-
-#: src/pages/Achievements.tsx:327:14
-msgid "The 1k Flash"
-msgstr "Мистер Хэнки"
-
-#: src/pages/Achievements.tsx:328:20
-msgid "Given for the most of 1/30 wins during tournament."
-msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
-
-#: src/pages/Achievements.tsx:343:14
-msgctxt "Achievements badge"
-msgid "%1 quickest hand"
-msgid_plural "%1 quickest hands"
-msgstr[0] "%1 самая быстрая рука"
-msgstr[1] "%1 самых быстрых руки"
-msgstr[2] "%1 самых быстрых рук"
-
-#: src/pages/Achievements.tsx:358:14
-msgid "Jewelry included"
-msgstr "Якуман-мастер"
-
-#: src/pages/Achievements.tsx:359:20
-msgid "Given for collecting a yakuman during tournament."
-msgstr "Дается за сбор якумана на турнире."
-
-#: src/pages/Achievements.tsx:373:20
-msgid "No yakumans have been collected"
-msgstr "Ни одного якумана собрано не было"
-
-#: src/pages/Achievements.tsx:390:14
-msgid "This can't be your wait"
-msgstr "Он не может на это ждать"
-
-#: src/pages/Achievements.tsx:391:20
-msgid ""
-"Given for feeding into largest hand during tournament (but not while in "
-"riichi)."
-msgstr ""
-"Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
-"риичи)."
-
-#: src/pages/Achievements.tsx:402:23
-msgctxt "Achievements badge"
-msgid "%1 han, %2 fu"
-msgstr "%1 хан, %2 фу"
-
-#: src/pages/Achievements.tsx:426:14
-msgid "Honored donor"
-msgstr "Почетный донор"
-
-#: src/pages/Achievements.tsx:427:20
-msgid "Given for losing largest amount of points as riichi bets."
-msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
-
-#: src/pages/Achievements.tsx:435:20
-msgctxt "Achievements badge"
-msgid "%1 bet"
-msgid_plural "%1 bets"
-msgstr[0] "%1 ставка"
-msgstr[1] "%1 ставки"
-msgstr[2] "%1 ставок"
-
-#: src/pages/Achievements.tsx:457:14
-msgid "Just as planned"
-msgstr "Как и планировалось"
-
-#: src/pages/Achievements.tsx:458:20
-msgid "Given for getting largest number of ippatsu during tournament."
-msgstr "Дается за максимальное число побед с иппацу за турнир."
-
-#: src/pages/Achievements.tsx:466:20
-msgctxt "Achievements badge"
-msgid "%1 ippatsu"
-msgstr "%1 иппацу"
-
-#: src/pages/Achievements.tsx:486:14
-msgid "Careful planning"
-msgstr "Точный расчет"
-
-#: src/pages/Achievements.tsx:487:20
-msgid ""
-"Given for the smallest average cost of opponents hand that player has dealt."
-msgstr "Дается за минимальную среднюю величину наброса."
-
-#: src/pages/Achievements.tsx:497:20 src/pages/Achievements.tsx:590:20
-#: src/pages/Achievements.tsx:722:20
-msgctxt "Achievements badge"
-msgid "%1 points"
-msgstr "%1 очков"
-
-#: src/pages/Achievements.tsx:517:14
-msgid "Dora lord"
-msgstr "Повелитель дор"
-
-#: src/pages/Achievements.tsx:518:20
-msgid "Given for the largest average count of dora in player's hand."
-msgstr "Дается за максимальное среднее число дор в руке."
-
-#: src/pages/Achievements.tsx:526:20
-msgctxt "Achievements badge"
-msgid "%1 dora"
-msgid_plural "%1 dora"
-msgstr[0] "%1 дора"
-msgstr[1] "%1 доры"
-msgstr[2] "%1 дор"
-
-#: src/pages/Achievements.tsx:548:14
-msgid "Gotta Catch'Em All"
-msgstr "Собери их всех"
-
-#: src/pages/Achievements.tsx:549:20
-msgid ""
-"Given for the largest amount of unique yaku collected during the tournament."
-msgstr "Дается за самое большое число разнообразных яку за турнир."
-
-#: src/pages/Achievements.tsx:559:20
-msgctxt "Achievements badge"
-msgid "%1 yaku"
-msgstr "%1 яку"
-
-#: src/pages/Achievements.tsx:579:14
-msgid "The favorite apprentice of ASAPIN"
-msgstr "Любимый ученик Асапина"
-
-#: src/pages/Achievements.tsx:580:20
-msgid ""
-"Given for the largest amount of points received as ryuukyoku (draw) payments."
-msgstr "Дается за максимальную сумму, полученную за счет темпаев."
-
-#: src/pages/Achievements.tsx:610:14
-msgid "And your riichi bet, please"
-msgstr "И Ваша риичи палочка"
-
-#: src/pages/Achievements.tsx:611:20
-msgid ""
-"Given for collecting the largest amount of other players' riichi bets during "
-"the tournament."
-msgstr "Дается за сбор максимального числа чужих риичи палочек."
-
-#: src/pages/Achievements.tsx:621:20 src/pages/Achievements.tsx:655:20
-msgctxt "Achievements badge"
-msgid "%1 riichi bet"
-msgid_plural "%1 riichi bets"
-msgstr[0] "%1 риичи палочка"
-msgstr[1] "%1 риичи палочки"
-msgstr[2] "%1 риичи палочек"
-
-#: src/pages/Achievements.tsx:646:14
-msgid "The Covetous Knight"
-msgstr "Скупой рыцарь"
-
-#: src/pages/Achievements.tsx:647:20
-msgid "Given for losing the smallest number of riichi bets."
-msgstr "Дается за потерю минимального числа очков за счет риичи-ставок."
-
-#: src/pages/Achievements.tsx:680:14
-msgid "Ninja"
-msgstr "Ниндзя"
-
-#: src/pages/Achievements.tsx:681:20
-msgid "Given for winning the largest number of hands with damaten."
-msgstr "Дается за максимальное число побед из даматена."
-
-#: src/pages/Achievements.tsx:711:14
-msgid "We need more gold"
-msgstr "Нужно больше золота"
-
-#: src/pages/Achievements.tsx:712:20
-msgid ""
-"Given for having biggest score in the end of the session across the "
-"tournament."
-msgstr ""
-"Дается за максимальное число набранных очков в конце игры в рамках турнира."
-
-#: src/pages/Achievements.tsx:744:29
-msgid "Achievements are not available for aggregated events"
-msgstr "Для агрегированных событий номинации недоступны"
-
-#: src/pages/EventInfo.tsx:33:47 src/pages/RatingTable.tsx:116:44
-#: src/pages/RecentGames.tsx:68:42
-msgid "Aggregated event"
-msgstr "Агрегированное событие"
-
-#: src/pages/EventInfo.tsx:53:29
-msgid "Event administrators: "
-msgstr "Администраторы события: "
-
-#: src/pages/EventList.tsx:58:17
-msgid "Event list"
-msgstr "Список событий"
-
-#: src/pages/EventList.tsx:60:12
-msgid "Riichi mahjong events list"
-msgstr "Список турниров и рейтингов"
-
-#: src/pages/EventRulesOverview/index.tsx:38:12
-msgid "Ruleset details page is not available for aggregated events"
-msgstr "Для агрегированных событий обзор правил недоступен"
-
-#: src/pages/EventRulesOverview/LocalSettings.tsx:18:16
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:53:16
-msgid "Series length"
-msgstr "Длина серии"
-
-#: src/pages/EventRulesOverview/LocalSettings.tsx:19:22
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:54:22
-msgid "Count of session in game series."
-msgstr "Количество сессий в одной серии."
-
-#: src/pages/EventRulesOverview/LocalSettings.tsx:26:16
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:61:16
-msgid "Minimal games count"
-msgstr "Минимальное число игр"
-
-#: src/pages/EventRulesOverview/LocalSettings.tsx:27:22
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:62:22
-msgid ""
-"Minimal count of games the player should play to get into the rating table."
-msgstr ""
-"Минимальное число сыгранных игр для того, чтобы игрок попал в рейтинговую "
-"таблицу."
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:24:16
-msgid ""
-"Tenhou Lobby ID. Please contact event administrator for proper link to lobby."
-msgstr ""
-"ID лобби на Tenhou. Свяжитесь с администратором события для получения ссылки "
-"на лобби."
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:33:16
-msgid "Game expiration time (in hours)"
-msgstr "Время истечения игры (в часах)"
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:34:22
-msgid ""
-"Interval of time when played online game is still considered valid and can "
-"be added to the rating."
-msgstr ""
-"Интервал времени, в течение которого сыгранная игра все еще считается "
-"действительной и может быть внесена в рейтинг."
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:43:16
-msgid "Chips value"
-msgstr "Стоимость чипа"
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:44:22
-msgid ""
-"Amount of points given for each chip. Chips should be set up in tournament "
-"settings in Tenhou.net."
-msgstr ""
-"Количество очков, которое выдается за каждый чип. Чипы должны быть настроены "
-"на Tenhou.net."
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:71:16
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:62:16
-msgid "Fixed score applied to replacement player"
-msgstr "Фиксированное число итоговых очков у игрока замены"
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:72:22
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:63:22
-msgid ""
-"Fixed amount of result score applied for each replacement player regardless "
-"of session results."
-msgstr "Фиксированное число очков, применямое независимо от результатов игры."
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:81:16
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:72:16
-msgid "Fixed uma for replacement player"
-msgstr "Фиксированная ума для игрока замены"
-
-#: src/pages/EventRulesOverview/OnlineSettings.tsx:82:22
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:73:22
-msgid ""
-"Fixed amount of rank penalty applied for each replacement player regardless "
-"of session results."
-msgstr ""
-"Фиксированный ранговый бонус/штраф, выдаваемый независимо от результатов "
-"игры."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:25:16
-msgid "Initial rating"
-msgstr "Начальный рейтинг"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:26:22
-msgid "Score given to all players in the beginning of the rating"
-msgstr ""
-"Количество рейтинговых очков, изначально даваемое каждому новому игроку"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:33:16
-msgid "Initial points"
-msgstr "Начальные очки"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:34:22
-msgid ""
-"Amount of points given to every player in the beginning of every session"
-msgstr "Количество игровых очков у каждого игрока в начале игры"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:40:25
-msgid "Game duration"
-msgstr "Длительность сессии"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:42:16
-msgid "Tonpuusen"
-msgstr "Тонпусены"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:43:22
-msgid "Play only east rounds"
-msgstr "Играть только восточные раунды"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:48:16
-msgid "Agariyame"
-msgstr "Агарияме"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:49:22
-msgid ""
-"If the dealer holds the 1st place after last hand in session, the game ends "
-"regardless of his winning hand or tempai."
-msgstr ""
-"Если дилер занимает первое место после последней раздачи в игре, игра "
-"завершается независимо от того, выиграл ли дилер (или был ли он темпай)."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:56:16
-msgid "Disable renchans"
-msgstr "Выключить ренчаны"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:57:22
-msgid ""
-"When dealer wins, or stays tempai after draw, seat winds will be changed. "
-"Honba is added only after draw."
-msgstr ""
-"Когда дилер выигрывает или остается темпай, ветра все равно меняются. Хонба "
-"добавляется только после ничьей."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:64:16
-msgid "Allow bankruptcy"
-msgstr "Банкротство"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:65:22
-msgid "When a player runs out of score points, the game immediately ends"
-msgstr "Когда игрок уходит в минус по очкам, игра немедленно завершается"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:70:16
-msgid "Play additional rounds"
-msgstr "Дополнительные раунды"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:71:22
-msgid ""
-"If nobody reaches the goal score at the last hand, the game continues to "
-"west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
-"reaches the goal"
-msgstr ""
-"Если никто не набирает заданное число очков после оорасу, игра продолжается "
-"в западных раундах (в ханчане) или в южных раундах (в тонпусене), до тех пор "
-"пока кто-либо не наберет заданное число очков"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:81:18
-msgid "Goal score"
-msgstr "Целевое количество очков"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:82:24
-msgid "Amount of score player should get to end the game."
-msgstr "Количество очков, которое нужно набрать для завершения игры."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:87:25
-msgid "Round outcomes"
-msgstr "Исходы раздач"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:89:16
-msgid "Atamahane"
-msgstr "Атамахане"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:90:22
-msgid ""
-"Only first player by the order of the move from the loser would be "
-"considered a winner. If not checked, all players declaring Ron are "
-"considered winners."
-msgstr ""
-"Только первый игрок по ходу раздачи считается победителем по рон. Если "
-"галочка не отмечена, все игроки, объявившие рон, считаются победителями."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:97:16
-msgid "Allow abortive draws"
-msgstr "Разрешить абортивные ничьи"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:98:22
-msgid ""
-"There will be a separate \"Abortive draw\" outcome to record draws due to "
-"four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
-msgstr ""
-"Включить отдельный исход \"Абортивная ничья\" для специальных ситуаций (4 "
-"риичи, 4 кана, одинаковый ветер в сбросе на первом круге, кюсюкюхай)."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:105:16
-msgid "Nagashi mangan"
-msgstr "Нагаши манган"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:106:22
-msgid "Enable \"Nagashi\" outcome to record this special draw"
-msgstr "Включить возможность записи исхода \"Нагаши манган\""
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:110:25
-msgid "Riichi and honba"
-msgstr "Риичи и хонба"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:112:16
-msgid "Riichi goes to winner"
-msgstr "Риичи уходит победителю"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:113:22
-msgid ""
-"Riichi left on table in case of draw in the end of the session will be given "
-"to session winner"
-msgstr ""
-"После завершения игры все ставки риичи, оставшиеся на столе, отдаются "
-"победителю в игре"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:120:16
-msgid "Pay for honba by atamahane"
-msgstr "Хонба по атамахане"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:121:22
-msgid ""
-"Honba payments will be given only to the first winner. If not checked, "
-"payment will be given to all winners."
-msgstr ""
-"Выплата по хонбе будет выдана только первому победителю по ходу игры. Если "
-"не отмечено, выплата производится всем победителям."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:128:16
-msgid "Collect riichi bets by atamahane"
-msgstr "Риичи по атамахане"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:129:22
-msgid ""
-"All riichi bets on the table will be given to the first winner. If not "
-"checked, winning riichi bets will always be given back, lost bets would be "
-"given to the first winner."
-msgstr ""
-"Все ставки на столе будут выданы первому победителю по порядку хода. Если не "
-"отмечено, выигравшие риичи-ставки всегда будут возвращены победителям, "
-"первому победителю достанутся только не выигравшие ставки."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:135:25
-msgid "Payments and scores"
-msgstr "Выплаты и очки"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:137:16
-msgid "Kazoe yakuman"
-msgstr "Казое якуман"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:138:22
-msgid "13+ han hands are considered yakuman, not sanbaiman."
-msgstr "Руки стоимостью в 13+ хан считаются якуманом, а не санбайманом."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:143:16
-msgid "Kiriage mangan"
-msgstr "Кириаге манган"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:144:22
-msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
-msgstr "Руки стоимостью в 4/30 и 3/60 округляются до мангана."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:151:16
-msgid "Oka bonus"
-msgstr "Ока"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:152:22
-msgid "Amount of points given to player at 1st place"
-msgstr "Количество бонусных очков за первое место в игре"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:158:16
-msgid "Equalize uma"
-msgstr "Выравнивание умы"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:159:22
-msgid ""
-"If checked, players with equivalent score receive equivalent uma bonus. "
-"Otherwise, uma is assigned according to move order."
-msgstr ""
-"Если отмечено, игроки с одинаковыми очками получат одинаковый ранговый "
-"бонус, равный среднему их бонусу. В ином случае ума назначается по порядку "
-"хода."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:165:25
-msgid "Penalties"
-msgstr "Штрафы"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:167:16
-msgid "Pay chombo as reverse mangan"
-msgstr "Чомбо как обратный манган"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:168:22
-msgid ""
-"Pay chombo right on occasion. If not checked, chombo is subtracted from "
-"player score after uma is applied."
-msgstr ""
-"Выплата штрафа чомбо производится на месте в размере обратного мангана. Если "
-"не отмечено, штраф чомбо будет вычтен из очков игрока после умы в конце игры."
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:178:18
-msgid "Amount of chombo penalty"
-msgstr "Размер штрафа чомбо"
-
-#: src/pages/EventRulesOverview/RulesetSettings.tsx:179:24
-msgid "Amount of penalty applied in the end of the session after uma bonus."
-msgstr ""
-"Количество очков, вычитаемое из очков игрока за каждый штраф чомбо после "
-"окончания игры."
-
-#: src/pages/EventRulesOverview/TabsList.tsx:23:12
-msgid "Local event settings"
-msgstr "Настройки локального рейтинга"
-
-#: src/pages/EventRulesOverview/TabsList.tsx:28:12
-msgid "Tournament settings"
-msgstr "Настройки турнира"
-
-#: src/pages/EventRulesOverview/TabsList.tsx:33:12
-msgid "Online event settings"
-msgstr "Настройки онлайн-события"
-
-#: src/pages/EventRulesOverview/TabsList.tsx:37:10
-msgid "Ruleset details"
-msgstr "Детали правил"
-
-#: src/pages/EventRulesOverview/TabsList.tsx:40:10
-msgid "Yaku settings"
-msgstr "Настройки яку"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:18:16
-msgid "Session duration in minutes"
-msgstr "Длительность сессии в минутах"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:19:22
-msgid ""
-"Timer starting value. After time runs out, session ending policy is applied "
-"(see below)."
-msgstr ""
-"Стартовое значение таймера. После истечения таймера, применяется политика "
-"окончания игры (см. ниже)"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:26:16
-msgid "Session ending policy"
-msgstr "Политика окончания игры"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:27:22
-msgid "How game sessions should end during the tournament"
-msgstr "Как игровые сессии завершаются во время турнира"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:35:20
-msgid "Do not interrupt session until it ends"
-msgstr "Не прерывать игру до тех пор, пока она не закончена"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:39:20
-msgid "When time is out, finish current hand and interrupt the session"
-msgstr ""
-"Когда время вышло, завершить текущую раздачу и после этого прервать игру"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:43:20
-msgid ""
-"When time is out, finish current hand, play one more, and then interrup the "
-"session"
-msgstr ""
-"Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
-"прервать игру"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:50:24
-msgid "Team tournament"
-msgstr "Командный турнир"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:52:16
-msgid "Seating is defined in advance"
-msgstr "Предопределенная рассадка"
-
-#: src/pages/EventRulesOverview/TournamentSettings.tsx:53:22
+#: src/components/YakuGraph.tsx:69:42
+msgid "Yakuhai: total"
+msgstr "Якухай: всего"
+
+#: src/pages/EventRulesOverview/TournamentSettings.tsx:70:22
 msgid ""
 "You should prepare the tournament script yourself. No automated seating "
 "functionality is available when this flag is set."
@@ -1274,195 +1465,16 @@ msgstr ""
 "Вы должны подготовить скрипт рассадки самостоятельно. Функциональность "
 "автоматических рассадок недоступна в этом режиме."
 
-#: src/pages/EventRulesOverview/UmaSelect.tsx:15:16
-msgid "Uma bonus type"
-msgstr "Тип рангового бонуса ума"
+#: src/helpers/gameLog.ts:131:19
+msgid "dora %1"
+msgstr "дора %1"
 
-#: src/pages/EventRulesOverview/UmaSelect.tsx:20:61
-msgid "Simple rank-based"
-msgstr "Простой, на основе текущего места"
+#: src/helpers/gameLog.ts:23:20
+msgctxt "Riichi bets count"
+msgid "none"
+msgstr "нет"
 
-#: src/pages/EventRulesOverview/UmaSelect.tsx:21:62
-msgid "Complex position-based"
-msgstr "Сложный, на основе позиций всех игроков"
+#: src/helpers/gameLog.ts:138:12
+msgid "yakuman!"
+msgstr "якуман!"
 
-#: src/pages/EventRulesOverview/UmaSelect.tsx:28:20
-msgid "Uma bonus for 1st place"
-msgstr "Ума за 1 место"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:34:20
-msgid "Uma bonus for 2nd place"
-msgstr "Ума за 2 место"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:40:20
-msgid "Uma penalty for 3rd place"
-msgstr "Ума за 3 место"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:46:20
-msgid "Uma penalty for 4th place"
-msgstr "Ума за 4 место"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:55:22
-msgid "Place / Session result"
-msgstr "Место / результат"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:57:16
-msgid "1st"
-msgstr "1е"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:60:16
-msgid "2nd"
-msgstr "2е"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:63:16
-msgid "3rd"
-msgstr "3е"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:66:16
-msgid "4th"
-msgstr "4е"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:71:22
-msgid "3 players with score less than starting"
-msgstr "3 игрока в минусе"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:96:22
-msgid "1 player with score less than starting"
-msgstr "1 игрок в минусе"
-
-#: src/pages/EventRulesOverview/UmaSelect.tsx:120:20
-msgid "Otherwise"
-msgstr "Прочие ситуации"
-
-#: src/pages/EventRulesOverview/YakuSettings.tsx:16:16
-msgid "Kuitan"
-msgstr "Куитан"
-
-#: src/pages/EventRulesOverview/YakuSettings.tsx:17:22
-msgid ""
-"Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
-"open hand."
-msgstr ""
-"Тан-яо стоит 1 хан на открытой руке. Если не проставлено, тан-яо не работает "
-"на открытой руке."
-
-#: src/pages/EventRulesOverview/YakuSettings.tsx:24:16
-msgid "Multiple yakumans"
-msgstr "Суммирование якуманов"
-
-#: src/pages/EventRulesOverview/YakuSettings.tsx:25:22
-msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
-msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
-
-#: src/pages/EventRulesOverview/YakuSettings.tsx:29:25
-msgid "Yaku allowed"
-msgstr "Разрешенные яку"
-
-#: src/pages/EventRulesOverview/YakuSettings.tsx:47:25
-msgid "Pao rule enabled for:"
-msgstr "Пао разрешено для:"
-
-#: src/pages/Game.tsx:45:19
-msgid "Game preview"
-msgstr "Просмотр игры"
-
-#: src/pages/Game.tsx:49:35
-msgid "View game"
-msgstr "Посмотреть реплей"
-
-#: src/pages/PlayerStats.tsx:76:29
-msgid "Player stats"
-msgstr "Статистика игрока"
-
-#: src/pages/PlayerStats.tsx:116:16
-msgid "View selected game details"
-msgstr "Подробнее об игре"
-
-#: src/pages/PlayerStats.tsx:123:24
-msgid "Previous game"
-msgstr "Предыдущая игра"
-
-#: src/pages/PlayerStats.tsx:141:24
-msgid "Next game"
-msgstr "Следующая игра"
-
-#: src/pages/PlayerStats.tsx:163:24
-msgid "Close game preview"
-msgstr "Закрыть предпросмотр"
-
-#: src/pages/RatingTable.tsx:99:12
-msgid "Rating table is hidden by tournament administrator"
-msgstr "Рейтинговая таблица была скрыта администратором турнира"
-
-#: src/pages/RatingTable.tsx:141:18
-msgid "Save as CSV"
-msgstr "Экспорт в CSV"
-
-#: src/pages/RatingTable.tsx:174:22 src/pages/RatingTable.tsx:383:21
-msgid "Team"
-msgstr "Команда"
-
-#: src/pages/RatingTable.tsx:221:20
-msgid "Average score"
-msgstr "Средние очки"
-
-#: src/pages/RatingTable.tsx:243:20 src/pages/RatingTable.tsx:386:7
-msgid "Average place"
-msgstr "Среднее место"
-
-#: src/pages/RatingTable.tsx:340:34 src/pages/RatingTable.tsx:384:24
-msgid "Chips"
-msgstr "Чипы"
-
-#: src/pages/RatingTable.tsx:380:7
-msgid "Place"
-msgstr "Место"
-
-#: src/pages/RatingTable.tsx:381:7
-msgid "Player ID"
-msgstr "ID игрока"
-
-#: src/pages/RatingTable.tsx:382:7
-msgid "Player name"
-msgstr "Имя игрока"
-
-#: src/pages/RatingTable.tsx:385:7
-msgid "Rating points"
-msgstr "Рейтинговые очки"
-
-#: src/pages/RatingTable.tsx:387:7
-msgid "Average points"
-msgstr "Средние очки"
-
-#: src/pages/RecentGames.tsx:63:16 src/pages/RecentGames.tsx:68:16
-#: src/pages/RecentGames.tsx:75:31
-msgid "Last games"
-msgstr "Последние игры"
-
-#: src/pages/SeriesRating.tsx:43:29
-msgid "Series rating is not available for aggregated events"
-msgstr "Для агрегированных событий рейтинг по сериям недоступен"
-
-#: src/pages/SeriesRating.tsx:83:22
-msgid "Best series"
-msgstr "Лучшая серия"
-
-#: src/pages/SeriesRating.tsx:86:22 src/pages/SeriesRating.tsx:117:22
-msgid "Avg place:"
-msgstr "Ср. место:"
-
-#: src/pages/SeriesRating.tsx:90:22 src/pages/SeriesRating.tsx:122:22
-msgid "Score:"
-msgstr "Очки:"
-
-#: src/pages/SeriesRating.tsx:114:22
-msgid "Last series"
-msgstr "Текущая серия"
-
-#: src/pages/Timer.tsx:78:29
-msgid "Timer is not available for aggregated events"
-msgstr "Для агрегированных событий таймер недоступен"
-
-#: src/pages/Timer.tsx:107:12
-msgid "Timer"
-msgstr "Таймер"

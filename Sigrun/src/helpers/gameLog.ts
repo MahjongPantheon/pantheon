@@ -20,6 +20,7 @@ import { I18nService } from '../services/i18n';
 import { YakuId, yakuNameMap as yakuNameMapGen } from './yaku';
 
 export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: I18nService) => {
+  const noRiichi = i18n._pt('Riichi bets count', 'none');
   const yakuNameMap = yakuNameMapGen(i18n);
   return rounds.map((round) => {
     if (round.ron) {
@@ -29,7 +30,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
         makeYaku(round.ron.yaku, round.ron.dora + round.ron.uradora, i18n, yakuNameMap),
         players[round.ron.loserId]?.title,
         makeHanFu(round.ron.han, round.ron.fu, i18n),
-        makeCsvPlayers(players, round.ron.riichiBets) || i18n._t('none'),
+        makeCsvPlayers(players, round.ron.riichiBets) || noRiichi,
       ]);
     }
 
@@ -39,7 +40,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
         players[round.tsumo.winnerId]?.title,
         makeYaku(round.tsumo.yaku, round.tsumo.dora + round.tsumo.uradora, i18n, yakuNameMap),
         makeHanFu(round.tsumo.han, round.tsumo.fu, i18n),
-        makeCsvPlayers(players, round.tsumo.riichiBets) || i18n._t('none'),
+        makeCsvPlayers(players, round.tsumo.riichiBets) || noRiichi,
       ]);
     }
 
@@ -49,14 +50,14 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
         round.draw.tempai.length === 4
           ? i18n._t('all tenpai')
           : makeCsvPlayers(players, round.draw.tempai) || i18n._t('all noten'),
-        makeCsvPlayers(players, round.draw.riichiBets) || i18n._t('none'),
+        makeCsvPlayers(players, round.draw.riichiBets) || noRiichi,
       ]);
     }
 
     if (round.abort) {
       return i18n._pt('Abortive draw log item', '%1: Abortive draw. Riichi bets: %2', [
         makeRound(round.abort.roundIndex),
-        makeCsvPlayers(players, round.abort.riichiBets) || i18n._t('none'),
+        makeCsvPlayers(players, round.abort.riichiBets) || noRiichi,
       ]);
     }
 
@@ -71,7 +72,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
       return i18n._pt('Nagashi log item', '%1: Nagashi mangan (<b>%2</b>). Riichi bets: %3', [
         makeRound(round.nagashi.roundIndex),
         makeCsvPlayers(players, round.nagashi.nagashi),
-        makeCsvPlayers(players, round.nagashi.riichiBets) || i18n._t('none'),
+        makeCsvPlayers(players, round.nagashi.riichiBets) || noRiichi,
       ]);
     }
 
@@ -92,7 +93,7 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
         i18n._pt('Multiron outer log item', '%1: Ron (<b>%2</b>). Riichi bets: %3', [
           makeRound(round.multiron.roundIndex),
           players[round.multiron.loserId]?.title,
-          makeCsvPlayers(players, round.multiron.riichiBets) || i18n._t('none'),
+          makeCsvPlayers(players, round.multiron.riichiBets) || noRiichi,
         ]) + list
       );
     }
