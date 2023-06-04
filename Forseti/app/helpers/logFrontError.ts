@@ -29,7 +29,7 @@ function errHandler(
       source: 'Forseti [common]',
       requestTo: '-',
       requestFrom: currentUrl,
-      details: err?.message,
+      details: errorMsg?.toString() ?? err?.message,
     }),
   });
 }

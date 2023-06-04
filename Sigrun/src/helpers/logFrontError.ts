@@ -29,7 +29,7 @@ function errHandler(
       source: 'Sigrun [common]',
       requestTo: '-',
       requestFrom: currentUrl,
-      details: err?.message,
+      details: errorMsg?.toString() ?? err?.message,
     }),
   });
 }
@@ -48,6 +48,9 @@ export function registerFrontErrorHandler() {
       charNumber: number | undefined,
       err: Error | undefined
     ) {
+      if (errorMsg instanceof ErrorEvent && errorMsg.message.includes('React error #419')) {
+        errorMsg.preventDefault();
+      }
       prevHandler(errorMsg, currentUrl, lineNumber, charNumber, err);
       errHandler(errorMsg, currentUrl, lineNumber, charNumber, err);
     };
