@@ -22,7 +22,7 @@ function errHandler(
   charNumber: number | undefined,
   err: Error | undefined
 ) {
-  fetch(`${import.meta.env.SIGRUN_URL}/servicelog`, {
+  fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
     method: 'POST',
     body: JSON.stringify({
       source: 'Sigrun [common]',

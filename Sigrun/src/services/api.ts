@@ -85,7 +85,7 @@ export class ApiService {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(`${import.meta.env.SIGRUN_URL}/servicelog`, {
+                fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
                   method: 'POST',
                   body: JSON.stringify({
                     source: 'Sigrun [twirp]',
