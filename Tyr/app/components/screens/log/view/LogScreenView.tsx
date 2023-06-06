@@ -36,6 +36,7 @@ type IProps = {
   results: IRoundResult[];
   rounds: IRoundOverviewInfo[];
   onBackClick: () => void;
+  startScore: number;
 };
 
 export const LogScreenView: React.FC<IProps> = (props) => {
@@ -75,6 +76,19 @@ export const LogScreenView: React.FC<IProps> = (props) => {
           </div>
 
           <div className='flex-container__content page-log__rounds'>
+            <div className='page-log__row-container'>
+              <div className='page-log__row'>
+                <div className='page-log__cell page-log__cell--first'></div>
+                {/* Four similar starting point cells for clarity */}
+                {[props.startScore, props.startScore, props.startScore, props.startScore].map(
+                  (v) => (
+                    <div className='page-log__cell'>
+                      <div className='page-log__score'>{v}</div>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
             {results.map((roundResult, i) => (
               <RoundResult
                 key={i}

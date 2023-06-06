@@ -39,7 +39,7 @@ export const RoundResultCell: React.FC<RoundResultCellProps> = (props) => {
       >
         {delta > 0 ? `+${delta}` : delta}
       </div>
-      <div className='page-log__score'>{score}</div>
+      <div className='page-log__score'>{score + delta}</div>
     </div>
   );
 };

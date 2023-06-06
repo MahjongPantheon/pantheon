@@ -61,6 +61,12 @@ export const LogScreen: React.FC<IComponentProps> = (props) => {
   }
 
   return (
-    <LogScreenView players={players} results={results} onBackClick={onBackClick} rounds={rounds} />
+    <LogScreenView
+      startScore={state.gameConfig?.rulesetConfig.startPoints ?? 0}
+      players={players}
+      results={results}
+      onBackClick={onBackClick}
+      rounds={rounds}
+    />
   );
 };
