@@ -8386,39 +8386,52 @@ const TeamTable = ({ players, events }) => {
           backgroundColor: idx % 2 ? isDark ? theme.colors.dark[7] : theme.colors.gray[1] : "transparent"
         },
         children: /* @__PURE__ */ jsxs(Group, { style: { flex: 1 }, position: "apart", children: [
-          /* @__PURE__ */ jsx(Badge, { w: 50, size: "xl", color: "blue", radius: "sm", style: { padding: 0 }, children: idx + 1 }),
-          /* @__PURE__ */ jsx(Text, { weight: "bold", children: team.name }),
-          /* @__PURE__ */ jsx(
-            Badge,
-            {
-              w: 75,
-              size: "lg",
-              variant: "filled",
-              color: team.data.rating > 0 ? "lime" : "red",
-              radius: "sm",
-              style: { padding: 0 },
-              children: team.data.rating
-            }
-          ),
-          /* @__PURE__ */ jsx(Stack, { children: team.data.players.map((player, pidx) => {
+          /* @__PURE__ */ jsxs(Group, { style: { flex: 1 }, children: [
+            /* @__PURE__ */ jsx(Badge, { w: 50, size: "xl", color: "blue", radius: "sm", style: { padding: 0 }, children: idx + 1 }),
+            /* @__PURE__ */ jsxs(Text, { weight: "bold", style: { flex: 1 }, children: [
+              /* @__PURE__ */ jsx(Text, { display: "inline-flex", mr: 14, children: team.name }),
+              /* @__PURE__ */ jsx(
+                Badge,
+                {
+                  w: 75,
+                  size: "lg",
+                  variant: "filled",
+                  color: team.data.rating > 0 ? "lime" : "red",
+                  radius: "sm",
+                  style: { padding: 0 },
+                  children: team.data.rating
+                }
+              )
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx(Stack, { style: { minWidth: "290px" }, children: team.data.players.map((player, pidx) => {
             var _a;
             return /* @__PURE__ */ jsxs(Group, { position: "apart", children: [
-              /* @__PURE__ */ jsx(PlayerIcon, { p: player }),
-              /* @__PURE__ */ jsxs(Stack, { spacing: 2, children: [
-                /* @__PURE__ */ jsx(
-                  Anchor,
+              /* @__PURE__ */ jsxs(Group, { children: [
+                /* @__PURE__ */ jsx(PlayerIcon, { p: player }),
+                /* @__PURE__ */ jsxs(
+                  Stack,
                   {
-                    href: `/event/${events.map((ev) => ev.id).join(".")}/player/${player.id}`,
-                    onClick: (e) => {
-                      navigate(
-                        `/event/${events.map((ev) => ev.id).join(".")}/player/${player.id}`
-                      );
-                      e.preventDefault();
-                    },
-                    children: player.title
+                    spacing: 2,
+                    style: { width: largeScreen ? "auto" : "calc(100vw - 245px)" },
+                    children: [
+                      /* @__PURE__ */ jsx(
+                        Anchor,
+                        {
+                          href: `/event/${events.map((ev) => ev.id).join(".")}/player/${player.id}`,
+                          onClick: (e) => {
+                            navigate(
+                              `/event/${events.map((ev) => ev.id).join(".")}/player/${player.id}`
+                            );
+                            e.preventDefault();
+                          },
+                          children: player.title
+                        }
+                      ),
+                      ((_a = events == null ? void 0 : events[0]) == null ? void 0 : _a.type) === EventType.EVENT_TYPE_ONLINE && /* @__PURE__ */ jsx(Text, { c: "dimmed", children: player.tenhouId })
+                    ]
                   }
-                ),
-                ((_a = events == null ? void 0 : events[0]) == null ? void 0 : _a.type) === EventType.EVENT_TYPE_ONLINE && /* @__PURE__ */ jsx(Text, { c: "dimmed", children: player.tenhouId })
+                )
               ] }),
               /* @__PURE__ */ jsx(
                 Badge,
