@@ -49,7 +49,7 @@ export class Analytics {
       url: url,
       referrer: '',
     };
-    fetch('https://' + this._statDomain + '/api/collect', {
+    fetch('https://' + this._statDomain + '/api/send', {
       credentials: 'omit',
       headers: {
         'User-Agent': navigator.userAgent,
@@ -82,7 +82,7 @@ export class Analytics {
       event_name: eventName,
       event_data: eventData,
     };
-    fetch('https://' + this._statDomain + '/api/collect', {
+    fetch('https://' + this._statDomain + '/api/send', {
       credentials: 'omit',
       headers: {
         'User-Agent': navigator.userAgent,
