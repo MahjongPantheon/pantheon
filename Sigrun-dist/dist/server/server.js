@@ -7799,6 +7799,7 @@ const _Analytics = class {
       hostname: window.location.hostname,
       screen: `${window.innerWidth}x${window.innerHeight}`,
       language: navigator.language,
+      title: window.document.title,
       cache: null,
       url,
       referrer: ""
@@ -7816,7 +7817,7 @@ const _Analytics = class {
         "Cache-Control": "max-age=0"
       },
       referrer: window.location.toString().substring(0, window.location.toString().indexOf("/", 9)),
-      body: '{"type":"pageview","payload":' + JSON.stringify(payload) + "}",
+      body: '{"type":"event","payload":' + JSON.stringify(payload) + "}",
       method: "POST",
       mode: "cors"
     });
