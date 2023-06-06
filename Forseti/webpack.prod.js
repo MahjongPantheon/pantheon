@@ -1,7 +1,7 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const TerserPlugin = require('terser-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
   mode: 'production',
@@ -10,10 +10,10 @@ module.exports = merge(common, {
     filename: "[name].[contenthash].js",
   },
   plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: 'analysis.html'
-    })
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   reportFilename: 'analysis.html'
+    // })
   ],
   optimization: {
     minimize: true,
