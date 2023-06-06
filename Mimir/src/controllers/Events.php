@@ -775,30 +775,36 @@ class EventsController extends Controller
         $response = [
             'started' => false,
             'finished' => true,
-            'time_remaining' => null
+            'time_remaining' => null,
+            'waiting_for_timer' => false,
+            'have_autostart' => false,
+            'autostart_timer' => 0,
+            'show_seating' => false,
         ];
 
-        if (empty($event[0]->getLastTimer())) {
-            // no timer started
-            $response = [
-                'started' => false,
-                'finished' => false,
-                'time_remaining' => null
-            ];
-        } else if ($event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 > time()) {
-            // game in progress
-            $response = [
-                'started' => true,
-                'finished' => false,
-                'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 - time()
-            ];
-        }
+        if (!$event[0]->getIsFinished()) {
+            if (empty($event[0]->getLastTimer())) {
+                // no timer started
+                $response = [
+                    'started' => false,
+                    'finished' => false,
+                    'time_remaining' => null
+                ];
+            } else if ($event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 > time()) {
+                // game in progress
+                $response = [
+                    'started' => true,
+                    'finished' => false,
+                    'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 - time()
+                ];
+            }
 
-        $response['waiting_for_timer'] = ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
-        $response['have_autostart'] = ($event[0]->getNextGameStartTime() > 0 && $event[0]->getTimeToStart() > 0);
-        $response['autostart_timer'] = $event[0]->getNextGameStartTime() - time();
-        // show seating for 10 mins after start
-        $response['show_seating'] = !$response['started'] || ($event[0]->getGameDuration() * 60) - $response['time_remaining'] < 600;
+            $response['waiting_for_timer'] = ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
+            $response['have_autostart'] = ($event[0]->getNextGameStartTime() > 0 && $event[0]->getTimeToStart() > 0);
+            $response['autostart_timer'] = $event[0]->getNextGameStartTime() - time();
+            // show seating for 10 mins after start
+            $response['show_seating'] = !$response['started'] || ($event[0]->getGameDuration() * 60) - $response['time_remaining'] < 600;
+        }
 
         $this->_log->info('Successfully got timer data for event id#' . $eventId);
 
