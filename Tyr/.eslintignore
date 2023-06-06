@@ -6,3 +6,5 @@ typings.d.ts
 app/primitives/memoize.ts
 app/clients/proto/*
 dist/
+vite.config.ts
+vitest.config.ts
