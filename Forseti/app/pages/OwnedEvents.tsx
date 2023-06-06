@@ -354,7 +354,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
         <TopActionButton
           title={i18n._t('Create new event')}
           loading={false}
-          disabled={false}
           icon={<IconTimelineEventPlus />}
           onClick={() => {
             navigate('/ownedEvents/new');

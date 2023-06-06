@@ -15,155 +15,362 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Box, LoadingOverlay, NavLink, Space, Text } from '@mantine/core';
+import {
+  ActionIcon,
+  Anchor,
+  Button,
+  Container,
+  createStyles,
+  Header,
+  rem,
+  Menu,
+  useMantineTheme,
+  Group,
+  Text,
+  Modal,
+} from '@mantine/core';
 import * as React from 'react';
 import {
   IconAlertOctagon,
+  IconChevronDown,
   IconFriends,
+  IconList,
+  IconTool,
   IconLogin,
   IconLogout,
   IconOlympics,
   IconScript,
-  IconTimelineEventText,
   IconUserCircle,
   IconUserPlus,
+  IconRefreshAlert,
+  IconHandStop,
 } from '@tabler/icons-react';
-import { Link, useRoute } from 'wouter';
+import { useLocation, useRoute } from 'wouter';
 import { useI18n } from './hooks/i18n';
-import { authCtx } from './hooks/auth';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Event } from './clients/proto/atoms.pb';
 import { useApi } from './hooks/api';
 import { useStorage } from './hooks/storage';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 
-function NavigationLink(props: {
-  to: string;
-  onClick: () => void;
-  disabled?: boolean;
-  icon: React.ReactNode;
-  label: string;
-}) {
-  const [isActive] = useRoute(props.to);
-  if (props.disabled) {
-    return null;
-  }
-  if (isActive) {
-    return <NavLink icon={props.icon} label={props.label} active={true} />;
-  }
-  return (
-    <Link to={props.to} onClick={props.onClick}>
-      <NavLink icon={props.icon} label={props.label} />
-    </Link>
-  );
-}
+const HEADER_HEIGHT = rem(60);
 
-export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = ({
-  onClick,
-  loading,
-}) => {
+const useStyles = createStyles((theme) => ({
+  header: {
+    backgroundColor: theme.fn.variant({
+      variant: 'filled',
+      color: theme.primaryColor,
+    }).background,
+    borderBottom: 0,
+    zIndex: 10000,
+  },
+
+  inner: {
+    height: rem(56),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  link: {
+    display: 'block',
+    lineHeight: 1,
+    padding: `${rem(8)} ${rem(12)}`,
+    borderRadius: theme.radius.sm,
+    textDecoration: 'none',
+    color: theme.white,
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 500,
+
+    '&:hover': {
+      backgroundColor: theme.fn.lighten(
+        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+        0.1
+      ),
+    },
+  },
+
+  linkLabel: {
+    marginRight: rem(5),
+  },
+
+  dropdown: {
+    position: 'absolute',
+    top: HEADER_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopWidth: 0,
+    overflow: 'hidden',
+
+    [theme.fn.largerThan('sm')]: {
+      display: 'none',
+    },
+  },
+}));
+
+export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+  const { classes } = useStyles();
   const i18n = useI18n();
   const api = useApi();
   const storage = useStorage();
+  const theme = useMantineTheme();
   const [match, params] = useRoute('/event/:id/:subpath');
-  const id = params?.id;
+  const [matchEdit, paramsEdit] = useRoute('/ownedEvents/edit/:id');
+  const id = (match ? params : paramsEdit)?.id;
+  const [, navigate] = useLocation();
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const personId = storage.getPersonId();
   const [isSuperadmin, setIsSuperadmin] = useState(false);
-  const [isLoading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<Event | null>(null);
+  const [stopEventModalOpened, { close: stopEventModalClose, open: stopEventModalOpen }] =
+    useDisclosure(false);
+  const [stopEventData, setStopEventData] = useState({ id: 0, title: '' });
 
   useEffect(() => {
     api.getSuperadminFlag(personId!).then((flag) => setIsSuperadmin(flag));
 
-    if (!match) {
+    if (!match && !matchEdit) {
       return;
     }
-    setLoading(true);
-    api
-      .getEventsById([parseInt(id ?? '0', 10)])
-      .then((e) => {
-        setEventData(e[0]);
-      })
-      .finally(() => setLoading(false));
+    api.getEventsById([parseInt(id ?? '0', 10)]).then((e) => {
+      setEventData(e[0]);
+    });
   }, [match, id, personId]);
 
-  const { isLoggedIn } = useContext(authCtx);
+  const rebuildScoring = (eid: number) => {
+    api.rebuildScoring(eid).then(() => {
+      window.location.reload();
+    });
+  };
+
+  const stopEvent = (eid: number) => {
+    api.finishEvent(eid).then(() => {
+      navigate('/ownedEvents');
+    });
+  };
+
+  const title =
+    (eventData?.title?.length ?? 0) > 13
+      ? `${eventData?.title?.slice(0, 13)}...`
+      : eventData?.title;
+
   return (
-    <Box pos='relative' sx={{ height: '100%' }}>
-      <LoadingOverlay visible={loading} overlayOpacity={1} />
-      {match && (
-        <>
-          <Text weight='bold'>{eventData?.title}</Text>
-          <Space h='lg' />
-          <NavigationLink
-            to={`event/${params.id}/players`}
-            onClick={onClick}
-            icon={<IconFriends size={18} />}
-            label={i18n._t('Manage players')}
-          />
-          <NavigationLink
-            to={`event/${params.id}/penalties`}
-            onClick={onClick}
-            icon={<IconAlertOctagon size={18} />}
-            label={i18n._t('Penalties')}
-          />
-          <NavigationLink
-            to={`event/${params.id}/games`}
-            onClick={onClick}
-            icon={<IconOlympics size={18} />}
-            label={i18n._t('Manage games')}
-          />
-          <NavigationLink
-            disabled={isLoading || !eventData?.isPrescripted}
-            to={`event/${params.id}/prescript`}
-            onClick={onClick}
-            icon={<IconScript size={18} />}
-            label={i18n._t('Predefined seating')}
-          />
-          <hr />
-        </>
-      )}
-      <NavigationLink
-        disabled={isLoggedIn}
-        to='profile/login'
-        onClick={onClick}
-        icon={<IconLogin size={18} />}
-        label={i18n._t('Sign in')}
-      />
-      <NavigationLink
-        disabled={isLoggedIn}
-        to='profile/signup'
-        onClick={onClick}
-        icon={<IconUserPlus size={18} />}
-        label={i18n._t('Sign up')}
-      />
-      <NavigationLink
-        disabled={!isSuperadmin}
-        to='profile/signupAdmin'
-        onClick={onClick}
-        icon={<IconUserPlus size={18} />}
-        label={i18n._t('Register player')}
-      />
-      <NavigationLink
-        disabled={!isLoggedIn}
-        to='profile/manage'
-        onClick={onClick}
-        icon={<IconUserCircle size={18} />}
-        label={i18n._t('My profile')}
-      />
-      <NavigationLink
-        disabled={!isLoggedIn}
-        to='ownedEvents'
-        onClick={onClick}
-        icon={<IconTimelineEventText size={18} />}
-        label={i18n._t('Manage events')}
-      />
-      <NavigationLink
-        disabled={!isLoggedIn}
-        to='profile/logout'
-        onClick={onClick}
-        icon={<IconLogout size={18} />}
-        label={i18n._t('Sign out')}
-      />
-    </Box>
+    <Header bg={theme.primaryColor} height={HEADER_HEIGHT} mb={120} pt={12}>
+      <Modal opened={stopEventModalOpened} onClose={stopEventModalClose} size='auto' centered>
+        <Text>
+          {i18n._t('Stop event "%1" (id #%2)? This action can\'t be undone!', [
+            stopEventData.title,
+            stopEventData.id,
+          ])}
+        </Text>
+        <Group mt='xl' grow>
+          <Button variant='outline' onClick={stopEventModalClose}>
+            {i18n._t('Cancel')}
+          </Button>
+          <Button
+            color='red'
+            variant='filled'
+            onClick={() => {
+              stopEvent(stopEventData.id);
+              stopEventModalClose();
+            }}
+          >
+            {i18n._t('Stop event')}
+          </Button>
+        </Group>
+      </Modal>
+      <Container>
+        <Group position='apart'>
+          <Anchor
+            href={`/ownedEvents`}
+            onClick={(e) => {
+              navigate(`/ownedEvents`);
+              e.preventDefault();
+            }}
+          >
+            {largeScreen ? (
+              <Button
+                className={classes.link}
+                leftIcon={<IconList size={20} />}
+                title={i18n._t('To events list')}
+              >
+                {i18n._t('Events list')}
+              </Button>
+            ) : (
+              <ActionIcon
+                title={i18n._t('To events list')}
+                variant='filled'
+                color='green'
+                size='lg'
+              >
+                <IconList size='1.5rem' />
+              </ActionIcon>
+            )}
+          </Anchor>
+          <Group>
+            {(match || matchEdit) && (
+              <Menu shadow='md'>
+                <Menu.Target>
+                  <Button
+                    className={classes.link}
+                    leftIcon={<IconChevronDown size={20} />}
+                    title={eventData?.title}
+                  >
+                    {title}
+                  </Button>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/ownedEvents/edit/${(match ? params : paramsEdit)?.id}`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconTool size={18} />}
+                  >
+                    {i18n._t('Settings')}
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/event/${(match ? params : paramsEdit)?.id}/players`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconFriends size={18} />}
+                  >
+                    {i18n._t('Manage players')}
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`event/${(match ? params : paramsEdit)?.id}/penalties`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconAlertOctagon size={18} />}
+                  >
+                    {i18n._t('Penalties')}
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate(`/event/${(match ? params : paramsEdit)?.id}/games`);
+                      e.preventDefault();
+                    }}
+                    icon={<IconOlympics size={18} />}
+                  >
+                    {i18n._t('Manage games')}
+                  </Menu.Item>
+                  {eventData?.isPrescripted && (
+                    <Menu.Item
+                      onClick={(e) => {
+                        navigate(`/event/${(match ? params : paramsEdit)?.id}/prescript`);
+                        e.preventDefault();
+                      }}
+                      icon={<IconScript size={18} />}
+                    >
+                      {i18n._t('Predefined seating')}
+                    </Menu.Item>
+                  )}
+                  <Menu.Divider />
+                  <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
+                  {isSuperadmin && (
+                    <Menu.Item
+                      title={i18n._t('Rebuild scoring')}
+                      onClick={() =>
+                        rebuildScoring(parseInt((match ? params : paramsEdit)?.id ?? '', 10))
+                      }
+                      icon={<IconRefreshAlert />}
+                    >
+                      {i18n._t('Rebuild scoring')}
+                    </Menu.Item>
+                  )}
+                  <Menu.Item
+                    title={i18n._t('Finish event')}
+                    color='red'
+                    icon={<IconHandStop />}
+                    onClick={() => {
+                      setStopEventData({
+                        id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                        title: eventData?.title ?? '',
+                      });
+                      stopEventModalOpen();
+                    }}
+                  >
+                    {i18n._t('Finish event')}
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            )}
+            <Menu shadow='md'>
+              <Menu.Target>
+                <Button
+                  className={classes.link}
+                  leftIcon={<IconChevronDown size={20} />}
+                  title={i18n._t('Your profile')}
+                >
+                  {i18n._t('Your profile')}
+                </Button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                {!isLoggedIn && (
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate('/profile/login');
+                      e.preventDefault();
+                    }}
+                    icon={<IconLogin size={18} />}
+                  >
+                    {i18n._t('Sign in')}
+                  </Menu.Item>
+                )}
+                {!isLoggedIn && (
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate('/profile/signup');
+                      e.preventDefault();
+                    }}
+                    icon={<IconUserPlus size={18} />}
+                  >
+                    {i18n._t('Sign up')}
+                  </Menu.Item>
+                )}
+                {!isSuperadmin && (
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate('/profile/signupAdmin');
+                      e.preventDefault();
+                    }}
+                    icon={<IconUserPlus size={18} />}
+                  >
+                    {i18n._t('Register player')}
+                  </Menu.Item>
+                )}
+                {isLoggedIn && (
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate('/profile/manage');
+                      e.preventDefault();
+                    }}
+                    icon={<IconUserCircle size={18} />}
+                  >
+                    {i18n._t('Edit profile')}
+                  </Menu.Item>
+                )}
+                {isLoggedIn && (
+                  <Menu.Item
+                    onClick={(e) => {
+                      navigate('/profile/logout');
+                      e.preventDefault();
+                    }}
+                    icon={<IconLogout size={18} />}
+                  >
+                    {i18n._t('Sign out')}
+                  </Menu.Item>
+                )}
+              </Menu.Dropdown>
+            </Menu>
+          </Group>
+        </Group>
+      </Container>
+    </Header>
   );
 };

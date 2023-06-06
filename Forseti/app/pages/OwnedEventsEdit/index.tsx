@@ -268,8 +268,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           </Tabs>
           <TopActionButton
             title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
-            loading={isSaving}
-            disabled={isLoading || isSaved}
+            loading={isSaving || isLoading || isSaved}
             icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
             onClick={() => {
               formRef.current?.requestSubmit();

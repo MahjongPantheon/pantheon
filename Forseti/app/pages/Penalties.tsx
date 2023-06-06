@@ -166,8 +166,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         />
         <TopActionButton
           title={isSaved ? i18n._t('Penalty applied!') : i18n._t('Apply penalty')}
-          loading={isSaving}
-          disabled={isLoading || isSaved}
+          loading={isSaving || isLoading || isSaved}
           icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
           onClick={() => {
             formRef.current?.requestSubmit();

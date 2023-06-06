@@ -24,7 +24,6 @@ import { actionButtonCtx } from '../hooks/actionButton';
 export type TopActionButtonProps = {
   title: string;
   loading: boolean;
-  disabled: boolean;
   icon: React.ReactNode;
   onClick: () => void;
   color?: MantineColor;
@@ -34,7 +33,6 @@ export type TopActionButtonProps = {
 export const TopActionButton: React.FC<TopActionButtonProps> = ({
   title,
   loading,
-  disabled,
   icon,
   onClick,
   color,
@@ -45,11 +43,10 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
       {actionButtonRef.current &&
         createPortal(
           <Button
-            color={color ?? 'blue'}
+            color={color ?? 'red'}
             size='xs'
             loading={loading}
             style={{ width: '230px' }}
-            disabled={disabled}
             leftIcon={icon}
             onClick={onClick}
           >

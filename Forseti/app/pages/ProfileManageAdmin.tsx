@@ -253,8 +253,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
                 ? i18n._t('Update player')
                 : i18n._t('Register player')
             }
-            loading={isSaving}
-            disabled={isSaved}
+            loading={isSaving || isSaved}
             icon={isSaved ? <IconCircleCheck /> : <IconUserPlus />}
             onClick={() => {
               formRef.current?.requestSubmit();
