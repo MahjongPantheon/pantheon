@@ -16,9 +16,9 @@
  */
 
 import * as React from 'react';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
-import { RegisteredPlayer } from '#/clients/proto/atoms.pb';
+import { useApi } from '../../hooks/api';
+import { useI18n } from '../../hooks/i18n';
+import { RegisteredPlayer } from '../../clients/proto/atoms.pb';
 import {
   Avatar,
   Text,
@@ -31,11 +31,11 @@ import {
   TextInput,
 } from '@mantine/core';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
-import { makeColor, makeInitials } from '#/helpers/playersList';
+import { makeColor, makeInitials } from '../../helpers/playersList';
 import { useCallback, useState } from 'react';
-import { TopActionButton } from '#/helpers/TopActionButton';
+import { TopActionButton } from '../../helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
-import { Filler } from '#/helpers/filler';
+import { Filler } from '../../helpers/filler';
 
 export const TeamNamesTab: React.FC<{
   eventId: number;

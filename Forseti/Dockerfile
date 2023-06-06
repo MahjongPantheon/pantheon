@@ -42,9 +42,6 @@ RUN mkdir /www && \
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-# Expose ports
-EXPOSE 4003
-
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
 RUN dos2unix /entrypoint.sh

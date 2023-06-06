@@ -23,7 +23,7 @@ import {
   SessionStatus,
   TableState,
   TournamentGamesStatus,
-} from '#/clients/proto/atoms.pb';
+} from '../../clients/proto/atoms.pb';
 import {
   ActionIcon,
   Avatar,
@@ -36,7 +36,7 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import { makeColor, makeInitials } from '#/helpers/playersList';
+import { makeColor, makeInitials } from '../../helpers/playersList';
 import {
   IconAlarm,
   IconArrowBackUp,
@@ -47,10 +47,10 @@ import {
 } from '@tabler/icons-react';
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
-import { I18nService } from '#/services/i18n';
-import { yakuList } from '#/helpers/yaku';
-import { useI18n } from '#/hooks/i18n';
-import { Confirmation } from '#/pages/GamesControl/Confirmation';
+import { I18nService } from '../../services/i18n';
+import { yakuList } from '../../helpers/yaku';
+import { useI18n } from '../../hooks/i18n';
+import { Confirmation } from './Confirmation';
 
 type GamesListProps = {
   tablesState: TableState[];

@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { useForm } from '@mantine/form';
-import { useI18n } from '#/hooks/i18n';
+import { useI18n } from '../hooks/i18n';
 import { Container, PasswordInput, Space, TextInput, LoadingOverlay, Select } from '@mantine/core';
 import {
   IconCircleCheck,
@@ -32,11 +32,11 @@ import {
 } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
 import { createRef, useCallback, useEffect, useState } from 'react';
-import { useApi } from '#/hooks/api';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { useApi } from '../hooks/api';
+import { usePageTitle } from '../hooks/pageTitle';
 import { notifications } from '@mantine/notifications';
-import { TopActionButton } from '#/helpers/TopActionButton';
-import { useStorage } from '#/hooks/storage';
+import { TopActionButton } from '../helpers/TopActionButton';
+import { useStorage } from '../hooks/storage';
 
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const i18n = useI18n();

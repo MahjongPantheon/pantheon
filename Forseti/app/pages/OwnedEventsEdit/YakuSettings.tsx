@@ -15,11 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { Checkbox, SimpleGrid, Stack, Title } from '@mantine/core';
-import { yakuList, yakuWithPao } from '#/helpers/yaku';
-import { FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { yakuList, yakuWithPao } from '../../helpers/yaku';
+import { FormHandle } from './types';
 
 type YakuSettingsProps = {
   form: FormHandle;

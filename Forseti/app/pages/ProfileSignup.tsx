@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { useForm } from '@mantine/form';
-import { useI18n } from '#/hooks/i18n';
+import { useI18n } from '../hooks/i18n';
 import {
   Alert,
   Button,
@@ -32,10 +32,10 @@ import {
 import { IconCircleCheck, IconLock, IconMailQuestion, IconSignature } from '@tabler/icons-react';
 import { Link } from 'wouter';
 import { useCallback, useState } from 'react';
-import { useApi } from '#/hooks/api';
+import { useApi } from '../hooks/api';
 import { useDisclosure } from '@mantine/hooks';
-import { usePageTitle } from '#/hooks/pageTitle';
-import { calcPasswordStrength } from '#/helpers/passwordStrength';
+import { usePageTitle } from '../hooks/pageTitle';
+import { calcPasswordStrength } from '../helpers/passwordStrength';
 
 export const ProfileSignup: React.FC = () => {
   const i18n = useI18n();
@@ -153,7 +153,7 @@ export const ProfileSignup: React.FC = () => {
         <small>Effective date: March 28, 2023</small>
         <Collapse in={opened}>
           <p>
-            Pantheon ("us", "we", or "our") operates the {window.__cfg.ROOT_HOST} domain and
+            Pantheon ("us", "we", or "our") operates the {import.meta.env.VITE_ROOT_HOST} domain and
             subdomains (the "Service").
           </p>
           <p>
@@ -165,7 +165,7 @@ export const ProfileSignup: React.FC = () => {
             We use your data to provide and improve the Service. By using the Service, you agree to
             the collection and use of information in accordance with this policy. Unless otherwise
             defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings
-            as in our Terms and Conditions, accessible from {window.__cfg.ROOT_HOST}
+            as in our Terms and Conditions, accessible from {import.meta.env.VITE_ROOT_HOST}
           </p>
 
           <h3>Information Collection And Use</h3>
@@ -370,7 +370,9 @@ export const ProfileSignup: React.FC = () => {
           <ul>
             <li>
               By email:{' '}
-              <a href={`mailto:${window.__cfg.ADMIN_EMAIL}`}>{window.__cfg.ADMIN_EMAIL}</a>
+              <a href={`mailto:${import.meta.env.VITE_ADMIN_EMAIL}`}>
+                {import.meta.env.VITE_ADMIN_EMAIL}
+              </a>
             </li>
           </ul>
         </Collapse>

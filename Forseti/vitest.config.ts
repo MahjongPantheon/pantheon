@@ -15,22 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as React from 'react';
-import { createContext, useContext } from 'react';
-import { ApiService } from '../services/api';
-import { storage } from './storage';
-import { analytics } from './analytics';
+import { mergeConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
+import viteConfig from './vite.config';
 
-const api = new ApiService();
-api
-  .setAnalytics(analytics)
-  .setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
-export const apiCtx = createContext(api);
-
-export const useApi = () => {
-  return useContext(apiCtx);
-};
-
-export const ApiProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <apiCtx.Provider value={api}>{children}</apiCtx.Provider>;
-};
+export default mergeConfig(
+  viteConfig,
+  defineConfig({
+    test: {
+      coverage: {
+        provider: 'istanbul',
+      },
+      globals: true,
+      environment: 'jsdom',
+    },
+  })
+);

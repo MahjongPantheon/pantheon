@@ -16,14 +16,14 @@
  */
 
 import * as React from 'react';
-import { useI18n } from '#/hooks/i18n';
+import { useI18n } from '../../hooks/i18n';
 import {
   GameConfig,
   RegisteredPlayer,
   SessionStatus,
   TableState,
   TournamentGamesStatus,
-} from '#/clients/proto/atoms.pb';
+} from '../../clients/proto/atoms.pb';
 import {
   Box,
   Button,
@@ -36,7 +36,7 @@ import {
   Text,
 } from '@mantine/core';
 import { useState } from 'react';
-import { Confirmation } from '#/pages/GamesControl/Confirmation';
+import { Confirmation } from './Confirmation';
 import {
   IconArrowsRandom,
   IconEyeCheck,

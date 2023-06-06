@@ -1,27 +1,23 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "jsx": "react",
-    "baseUrl": "",
-    "lib": [
-      "es6",
-      "dom"
-    ],
-    "mapRoot": "./",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "outDir": "dist/out-tsc",
-    "sourceMap": true,
-    "target": "es5",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
     "skipLibCheck": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "paths": {
-      "#/*": ["app/*"]
-    }
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "app",
+    "types": ["vitest/globals"]
   },
-  "exclude": ["*/**/*.spec.ts"]
+  "include": ["app"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

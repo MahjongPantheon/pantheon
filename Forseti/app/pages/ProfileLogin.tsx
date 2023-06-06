@@ -16,16 +16,16 @@
  */
 
 import * as React from 'react';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../hooks/pageTitle';
 import { Button, Container, Group, TextInput, PasswordInput, Space } from '@mantine/core';
 import { IconLogin, IconLock } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { Link, Redirect, useLocation } from 'wouter';
-import { useStorage } from '#/hooks/storage';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
+import { useStorage } from '../hooks/storage';
+import { useApi } from '../hooks/api';
+import { useI18n } from '../hooks/i18n';
 import { useCallback, useContext } from 'react';
-import { authCtx } from '#/hooks/auth';
+import { authCtx } from '../hooks/auth';
 
 export const ProfileLogin: React.FC = () => {
   const storage = useStorage();

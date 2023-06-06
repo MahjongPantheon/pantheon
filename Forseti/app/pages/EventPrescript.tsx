@@ -29,17 +29,17 @@ import {
   Code,
   LoadingOverlay,
 } from '@mantine/core';
-import { useI18n } from '#/hooks/i18n';
+import { useI18n } from '../hooks/i18n';
 import { useCallback, useEffect, useState } from 'react';
-import { useApi } from '#/hooks/api';
+import { useApi } from '../hooks/api';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
-import { TopActionButton } from '#/helpers/TopActionButton';
+import { TopActionButton } from '../helpers/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../hooks/pageTitle';
 import { Redirect } from 'wouter';
-import { useStorage } from '#/hooks/storage';
+import { useStorage } from '../hooks/storage';
 
 const scriptExample = `1-2-3-4
 5-6-7-8

@@ -42,7 +42,7 @@ typecheck:
 
 PHONY: test
 test:
-	./node_modules/.bin/jest
+	./node_modules/.bin/vitest
 
 PHONY: autofix
 autofix:
@@ -51,9 +51,8 @@ autofix:
 
 PHONY: build
 build:
-	NODE_ENV=production ./node_modules/.bin/webpack --config webpack.prod.js
-	cp app/forsetiico.png dist
-	cd dist && gzip -k -9 -f *.js *.css
+	./node_modules/.bin/tsc
+	./node_modules/.bin/vite build --outDir dist
 
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:
@@ -61,12 +60,12 @@ cleanup_prebuilts:
 	cd ../Forseti-dist && find -name '*.js' -or -name '*.css' -or -name '*.js.gz' -or -name '*.css.gz' | tail -n +30 | xargs -I {} rm {}
 
 prebuild:
+	cd dist/assets && gzip -k -9 -f *.js *.css
 	cd dist && \
 	cp -R * ../../Forseti-dist/
 
 dev:
-	rm -rf dist
-	./node_modules/.bin/webpack-dev-server --config webpack.dev.js
+	./node_modules/.bin/vite --clearScreen=false
 
 PHONY: i18n_extract
 i18n_extract:
@@ -98,7 +97,7 @@ docker_stop: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Forseti container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall webpack' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall node' ; \
 	fi
 
 PHONY: docker_deps

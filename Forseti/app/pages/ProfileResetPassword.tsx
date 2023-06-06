@@ -16,14 +16,14 @@
  */
 
 import * as React from 'react';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../hooks/pageTitle';
 import { Button, Container, Group, TextInput, Alert } from '@mantine/core';
 import { IconLogin, IconCheck } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
+import { useApi } from '../hooks/api';
+import { useI18n } from '../hooks/i18n';
 import { useCallback, useState } from 'react';
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../services/i18n';
 
 export const ProfileResetPassword: React.FC = () => {
   const api = useApi();

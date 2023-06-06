@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../hooks/pageTitle';
 import {
   Group,
   Center,
@@ -50,15 +50,15 @@ import {
   IconTimelineEventPlus,
 } from '@tabler/icons-react';
 import { Link, Redirect, useLocation } from 'wouter';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
+import { useApi } from '../hooks/api';
+import { useI18n } from '../hooks/i18n';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { useStorage } from '#/hooks/storage';
-import { Event, EventType } from '#/clients/proto/atoms.pb';
-import { authCtx } from '#/hooks/auth';
+import { useStorage } from '../hooks/storage';
+import { Event, EventType } from '../clients/proto/atoms.pb';
+import { authCtx } from '../hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
-import { TopActionButton } from '#/helpers/TopActionButton';
+import { TopActionButton } from '../helpers/TopActionButton';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -252,7 +252,10 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  <a href={`${window.__cfg.SIGRUN_URL}/event/${event.id}/info`} target='_blank'>
+                  <a
+                    href={`${import.meta.env.VITE_SIGRUN_URL}/event/${event.id}/info`}
+                    target='_blank'
+                  >
                     {event.title}
                   </a>
                 </Group>

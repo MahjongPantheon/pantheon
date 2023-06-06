@@ -20,7 +20,7 @@ import { createContext, useContext } from 'react';
 import { Storage } from '../../../Common/storage';
 import { StorageStrategyClient } from '../../../Common/storageStrategyClient';
 
-const storageStrategy = new StorageStrategyClient(window.__cfg.COOKIE_DOMAIN || null);
+const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
 /**
  * @deprecated Please don't use it directly. Use useStorage() instead.
  */

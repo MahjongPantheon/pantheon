@@ -15,22 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as React from 'react';
-import { createContext, useContext } from 'react';
-import { ApiService } from '../services/api';
-import { storage } from './storage';
-import { analytics } from './analytics';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
-const api = new ApiService();
-api
-  .setAnalytics(analytics)
-  .setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
-export const apiCtx = createContext(api);
-
-export const useApi = () => {
-  return useContext(apiCtx);
-};
-
-export const ApiProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <apiCtx.Provider value={api}>{children}</apiCtx.Provider>;
-};
+export default defineConfig({
+  plugins: [react(), tsconfigPaths()],
+  server: {
+    port: 4007,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: function manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
+});

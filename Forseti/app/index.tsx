@@ -17,15 +17,15 @@
 
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from '#/App';
-import { PageTitleProvider } from '#/hooks/pageTitle';
-import { Layout } from '#/Layout';
+import { App } from './App';
+import { PageTitleProvider } from './hooks/pageTitle';
+import { Layout } from './Layout';
 import './index.css';
-import { StorageProvider } from '#/hooks/storage';
-import { ApiProvider } from '#/hooks/api';
-import { AnalyticsProvider } from '#/hooks/analytics';
-import { I18nProvider } from '#/hooks/i18n';
-import { registerFrontErrorHandler } from '#/helpers/logFrontError';
+import { StorageProvider } from './hooks/storage';
+import { ApiProvider } from './hooks/api';
+import { AnalyticsProvider } from './hooks/analytics';
+import { I18nProvider } from './hooks/i18n';
+import { registerFrontErrorHandler } from './helpers/logFrontError';
 registerFrontErrorHandler();
 const root = createRoot(document.getElementById('forseti-root')!);
 window.addEventListener('DOMContentLoaded', () => {

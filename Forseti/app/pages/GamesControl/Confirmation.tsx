@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { ActionIcon, Button, Group, MantineColor, Popover, Text } from '@mantine/core';
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../../services/i18n';
 import { useState } from 'react';
 import { IconArrowRight } from '@tabler/icons-react';
 

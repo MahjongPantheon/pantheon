@@ -15,11 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { NumberInput } from '@mantine/core';
 import { IconChartHistogram, IconNumbers } from '@tabler/icons-react';
-import { FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { FormHandle } from './types';
 
 type LocalSettingsProps = {
   form: FormHandle;

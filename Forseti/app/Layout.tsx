@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ctxValue } from '#/hooks/pageTitle';
+import { ctxValue } from './hooks/pageTitle';
 import {
   ActionIcon,
   AppShell,
@@ -36,18 +36,20 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import { Navigation } from '#/Navigation';
-import { authCtx } from '#/hooks/auth';
-import { actionButtonCtx, actionButtonRef } from '#/hooks/actionButton';
-import { useApi } from '#/hooks/api';
+import { Helmet } from 'react-helmet';
+import { Navigation } from './Navigation';
+import { authCtx } from './hooks/auth';
+import { actionButtonCtx, actionButtonRef } from './hooks/actionButton';
+import { useApi } from './hooks/api';
 import { IconLanguageHiragana, IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
-import { useAnalytics } from '#/hooks/analytics';
-import { useI18n } from '#/hooks/i18n';
-import { FlagEn, FlagRu } from '#/helpers/flags';
-import { useStorage } from '#/hooks/storage';
+import { useAnalytics } from './hooks/analytics';
+import { useI18n } from './hooks/i18n';
+import { FlagEn, FlagRu } from './helpers/flags';
+import { useStorage } from './hooks/storage';
+import favicon from './forsetiico.png';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
@@ -122,6 +124,16 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
               fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
             }}
           >
+            <Helmet>
+              <meta charSet='utf-8' />
+              <title>Forseti: game & profile manager</title>
+              <base href='/' />
+              <meta
+                name='viewport'
+                content='width=device-width, initial-scale=1, maximum-scale=1'
+              />
+              <link rel='icon' type='image/png' href={favicon} />
+            </Helmet>
             <NavigationProgress />
             <AppShell
               styles={{

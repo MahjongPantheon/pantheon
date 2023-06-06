@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { Checkbox, NumberInput, Stack, Title } from '@mantine/core';
 import {
@@ -25,8 +25,8 @@ import {
   IconMountain,
   IconTargetArrow,
 } from '@tabler/icons-react';
-import { UmaSelect } from '#/pages/OwnedEventsEdit/UmaSelect';
-import { FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { UmaSelect } from './UmaSelect';
+import { FormHandle } from './types';
 
 type RulesetSettingsProps = {
   form: FormHandle;

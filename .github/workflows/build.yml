@@ -55,7 +55,7 @@ jobs:
         run: make prod_build_tyr
 
       - name: Make prod Forseti build
-        run: make prod_build_forseti
+        run: cp Forseti/.env.primary Forseti/.env.production && make prod_build_forseti
 
       - name: Make prod Sigrun build
         run: cp Sigrun/.env.primary Sigrun/.env.production && make prod_build_sigrun

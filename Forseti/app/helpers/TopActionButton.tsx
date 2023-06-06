@@ -19,7 +19,7 @@ import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { Button, MantineColor } from '@mantine/core';
 import { useContext } from 'react';
-import { actionButtonCtx } from '#/hooks/actionButton';
+import { actionButtonCtx } from '../hooks/actionButton';
 
 export type TopActionButtonProps = {
   title: string;

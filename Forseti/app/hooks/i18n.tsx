@@ -17,8 +17,8 @@
 
 import * as React from 'react';
 import { createContext, useContext } from 'react';
-import { I18nService } from '#/services/i18n';
-import { storage } from '#/hooks/storage';
+import { I18nService } from '../services/i18n';
+import { storage } from './storage';
 
 const i18n = new I18nService(storage);
 i18n.init(

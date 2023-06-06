@@ -17,14 +17,14 @@
 
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../../hooks/pageTitle';
 import { nprogress } from '@mantine/nprogress';
-import { GameConfig, RegisteredPlayer, Event } from '#/clients/proto/atoms.pb';
+import { GameConfig, RegisteredPlayer, Event } from '../../clients/proto/atoms.pb';
 
-import { authCtx } from '#/hooks/auth';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
-import { ManagementTab } from '#/pages/PlayersManage/ManagementTab';
+import { authCtx } from '../../hooks/auth';
+import { useApi } from '../../hooks/api';
+import { useI18n } from '../../hooks/i18n';
+import { ManagementTab } from './ManagementTab';
 import { Badge, Container, LoadingOverlay, Tabs } from '@mantine/core';
 import {
   IconAlertTriangleFilled,
@@ -32,11 +32,11 @@ import {
   IconUserCircle,
   IconUsers,
 } from '@tabler/icons-react';
-import { LocalIdsTab } from '#/pages/PlayersManage/LocalIdsTab';
+import { LocalIdsTab } from './LocalIdsTab';
 import { notifications } from '@mantine/notifications';
-import { TeamNamesTab } from '#/pages/PlayersManage/TeamNamesTab';
+import { TeamNamesTab } from './TeamNamesTab';
 import { Redirect } from 'wouter';
-import { useStorage } from '#/hooks/storage';
+import { useStorage } from '../../hooks/storage';
 
 export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const eventId = parseInt(id, 10);

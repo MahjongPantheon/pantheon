@@ -17,26 +17,26 @@
 
 import * as React from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { authCtx } from '#/hooks/auth';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { authCtx } from '../../hooks/auth';
+import { useApi } from '../../hooks/api';
+import { useI18n } from '../../hooks/i18n';
+import { usePageTitle } from '../../hooks/pageTitle';
 import {
   GameConfig,
   IntermediateResultOfSession,
   RegisteredPlayer,
   TableState,
-} from '#/clients/proto/atoms.pb';
+} from '../../clients/proto/atoms.pb';
 import { Container, LoadingOverlay } from '@mantine/core';
 
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
-import { GamesList } from '#/pages/GamesControl/GamesList';
-import { TournamentControls } from '#/pages/GamesControl/TournamentControls';
-import { TopActionButton } from '#/helpers/TopActionButton';
+import { GamesList } from './GamesList';
+import { TournamentControls } from './TournamentControls';
+import { TopActionButton } from '../../helpers/TopActionButton';
 import { IconRefresh } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
-import { useStorage } from '#/hooks/storage';
+import { useStorage } from '../../hooks/storage';
 
 const DEFAULT_SECS_UNTIL_RELOAD = 60;
 export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {

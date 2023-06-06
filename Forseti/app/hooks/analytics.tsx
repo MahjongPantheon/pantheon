@@ -17,8 +17,8 @@
 
 import * as React from 'react';
 import { createContext, useContext } from 'react';
-import { Analytics } from '#/services/analytics';
-import { storage } from '#/hooks/storage';
+import { Analytics } from '../services/analytics';
+import { storage } from './storage';
 
 /**
  * Marked as deprecated to avoid using this in components. Use hook instead.

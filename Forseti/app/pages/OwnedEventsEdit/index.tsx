@@ -17,28 +17,28 @@
 
 import * as React from 'react';
 import { createRef, useContext, useEffect, useState } from 'react';
-import { authCtx } from '#/hooks/auth';
-import { useApi } from '#/hooks/api';
+import { authCtx } from '../../hooks/auth';
+import { useApi } from '../../hooks/api';
 import { Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useI18n } from '#/hooks/i18n';
-import { usePageTitle } from '#/hooks/pageTitle';
-import { TabsList } from '#/pages/OwnedEventsEdit/TabsList';
-import { BasicSettings } from '#/pages/OwnedEventsEdit/BasicSettings';
-import { LocalSettings } from '#/pages/OwnedEventsEdit/LocalSettings';
-import { TournamentSettings } from '#/pages/OwnedEventsEdit/TournamentSettings';
-import { OnlineSettings } from '#/pages/OwnedEventsEdit/OnlineSettings';
-import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
-import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
+import { useI18n } from '../../hooks/i18n';
+import { usePageTitle } from '../../hooks/pageTitle';
+import { TabsList } from './TabsList';
+import { BasicSettings } from './BasicSettings';
+import { LocalSettings } from './LocalSettings';
+import { TournamentSettings } from './TournamentSettings';
+import { OnlineSettings } from './OnlineSettings';
+import { RulesetSettings } from './RulesetSettings';
+import { YakuSettings } from './YakuSettings';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
-import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
-import { EndingPolicy, EventType, RulesetConfig, UmaType } from '#/clients/proto/atoms.pb';
-import { TopActionButton } from '#/helpers/TopActionButton';
+import { EventCustom, FormFields } from './types';
+import { EndingPolicy, EventType, RulesetConfig, UmaType } from '../../clients/proto/atoms.pb';
+import { TopActionButton } from '../../helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
-import { Filler } from '#/helpers/filler';
+import { Filler } from '../../helpers/filler';
 import { Redirect, useLocation } from 'wouter';
-import { useStorage } from '#/hooks/storage';
+import { useStorage } from '../../hooks/storage';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);

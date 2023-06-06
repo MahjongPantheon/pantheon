@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../services/i18n';
 
 export enum YakuId {
   __OPENHAND = -1,

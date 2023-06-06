@@ -50,7 +50,7 @@ import {
   UpdatePlayersLocalIds,
   UpdatePlayersTeams,
   UpdatePrescriptedEventConfig,
-} from '#/clients/proto/mimir.pb';
+} from '../clients/proto/mimir.pb';
 import {
   AddRuleForPerson,
   ApproveRegistration,
@@ -68,11 +68,11 @@ import {
   RequestRegistration,
   RequestResetPassword,
   UpdatePersonalInfo,
-} from '#/clients/proto/frey.pb';
+} from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { EventData, IntermediateResultOfSession } from '#/clients/proto/atoms.pb';
-import { handleReleaseTag } from '#/services/releaseTags';
-import { Analytics } from '#/services/analytics';
+import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
+import { handleReleaseTag } from './releaseTags';
+import { Analytics } from './analytics';
 
 export class ApiService {
   private _authToken: string | null = null;
@@ -104,8 +104,8 @@ export class ApiService {
     headers.append('X-Auth-Token', this._authToken ?? '');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConfMimir.baseURL = window.__cfg.MIMIR_URL;
-    this._clientConfFrey.baseURL = window.__cfg.FREY_URL;
+    this._clientConfMimir.baseURL = import.meta.env.VITE_MIMIR_URL;
+    this._clientConfFrey.baseURL = import.meta.env.VITE_FREY_URL;
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
@@ -120,7 +120,7 @@ export class ApiService {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(window.__cfg.SIGRUN_URL + '/servicelog', {
+                fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({

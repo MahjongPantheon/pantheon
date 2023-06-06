@@ -15,12 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { Text, Select, Stack, Textarea, TextInput, Radio, Group, Checkbox } from '@mantine/core';
 import { IconAbc, IconChecklist, IconMap2 } from '@tabler/icons-react';
-import { EventCustom, FormHandle } from '#/pages/OwnedEventsEdit/types';
-import { EventType, RulesetConfig } from '#/clients/proto/atoms.pb';
+import { EventCustom, FormHandle } from './types';
+import { EventType, RulesetConfig } from '../../clients/proto/atoms.pb';
 
 type BasicSettingsProps = {
   form: FormHandle;

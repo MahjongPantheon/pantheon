@@ -17,9 +17,9 @@
 
 import { Center, Group, NumberInput, Radio, SimpleGrid, Stack, Text } from '@mantine/core';
 import * as React from 'react';
-import { I18nService } from '#/services/i18n';
-import { FormHandle } from '#/pages/OwnedEventsEdit/types';
-import { UmaType } from '#/clients/proto/atoms.pb';
+import { I18nService } from '../../services/i18n';
+import { FormHandle } from './types';
+import { UmaType } from '../../clients/proto/atoms.pb';
 
 type UmaSelectProps = {
   form: FormHandle;

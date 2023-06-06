@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../../services/i18n';
 import {
   IconAdjustments,
   IconFriends,
@@ -26,8 +26,8 @@ import {
   IconTournament,
 } from '@tabler/icons-react';
 import { Tabs } from '@mantine/core';
-import { FormHandle } from '#/pages/OwnedEventsEdit/types';
-import { EventType } from '#/clients/proto/atoms.pb';
+import { FormHandle } from './types';
+import { EventType } from '../../clients/proto/atoms.pb';
 
 type TabsProps = {
   i18n: I18nService;

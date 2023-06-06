@@ -17,21 +17,21 @@
 
 import * as React from 'react';
 import { Route, Switch } from 'wouter';
-import { ProfileLogin } from '#/pages/ProfileLogin';
-import { ProfileSignup } from '#/pages/ProfileSignup';
-import { ProfileConfirm } from '#/pages/ProfileConfirm';
-import { ProfileResetPassword } from '#/pages/ProfileResetPassword';
-import { ProfileResetPasswordConfirm } from '#/pages/ProfileResetPasswordConfirm';
-import { ProfileManage } from '#/pages/ProfileManage';
-import { ProfileLogout } from '#/pages/ProfileLogout';
-import { OwnedEvents } from '#/pages/OwnedEvents';
-import { OwnedEventsEdit } from '#/pages/OwnedEventsEdit';
-import { Penalties } from '#/pages/Penalties';
-import { PlayersManage } from '#/pages/PlayersManage';
-import { GamesControl } from '#/pages/GamesControl';
-import { EventPrescript } from '#/pages/EventPrescript';
-import { ProfileImpersonate } from '#/pages/ProfileImpersonate';
-import { ProfileManageAdmin } from '#/pages/ProfileManageAdmin';
+import { ProfileLogin } from './pages/ProfileLogin';
+import { ProfileSignup } from './pages/ProfileSignup';
+import { ProfileConfirm } from './pages/ProfileConfirm';
+import { ProfileResetPassword } from './pages/ProfileResetPassword';
+import { ProfileResetPasswordConfirm } from './pages/ProfileResetPasswordConfirm';
+import { ProfileManage } from './pages/ProfileManage';
+import { ProfileLogout } from './pages/ProfileLogout';
+import { OwnedEvents } from './pages/OwnedEvents';
+import { OwnedEventsEdit } from './pages/OwnedEventsEdit';
+import { Penalties } from './pages/Penalties';
+import { PlayersManage } from './pages/PlayersManage';
+import { GamesControl } from './pages/GamesControl';
+import { EventPrescript } from './pages/EventPrescript';
+import { ProfileImpersonate } from './pages/ProfileImpersonate';
+import { ProfileManageAdmin } from './pages/ProfileManageAdmin';
 
 export const App = () => {
   return (

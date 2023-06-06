@@ -16,10 +16,10 @@
  */
 
 import * as React from 'react';
-import { useApi } from '#/hooks/api';
+import { useApi } from '../../hooks/api';
 import { useState } from 'react';
-import { useI18n } from '#/hooks/i18n';
-import { GameConfig, RegisteredPlayer, Event, EventType } from '#/clients/proto/atoms.pb';
+import { useI18n } from '../../hooks/i18n';
+import { GameConfig, RegisteredPlayer, Event, EventType } from '../../clients/proto/atoms.pb';
 import {
   ActionIcon,
   Avatar,
@@ -43,11 +43,11 @@ import {
   IconReplace,
   IconX,
 } from '@tabler/icons-react';
-import { PlayerSelector } from '#/pages/PlayersManage/PlayerSelector';
+import { PlayerSelector } from './PlayerSelector';
 import { useDisclosure } from '@mantine/hooks';
-import { makeColor, makeInitials } from '#/helpers/playersList';
-import { Filler } from '#/helpers/filler';
-import { useStorage } from '#/hooks/storage';
+import { makeColor, makeInitials } from '../../helpers/playersList';
+import { Filler } from '../../helpers/filler';
+import { useStorage } from '../../hooks/storage';
 
 export const ManagementTab: React.FC<{
   eventId: number;

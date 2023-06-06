@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../hooks/pageTitle';
 import {
   Button,
   Group,
@@ -29,13 +29,13 @@ import {
 } from '@mantine/core';
 import { IconCheck, IconAlertCircle, IconLock } from '@tabler/icons-react';
 import { Link } from 'wouter';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
+import { useApi } from '../hooks/api';
+import { useI18n } from '../hooks/i18n';
 import { useCallback, useEffect, useState } from 'react';
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../services/i18n';
 import { useForm } from '@mantine/form';
-import { ApiService } from '#/services/api';
-import { calcPasswordStrength } from '#/helpers/passwordStrength';
+import { ApiService } from '../services/api';
+import { calcPasswordStrength } from '../helpers/passwordStrength';
 
 export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }> = ({
   params: { code },

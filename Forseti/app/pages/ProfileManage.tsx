@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { useForm } from '@mantine/form';
-import { useI18n } from '#/hooks/i18n';
+import { useI18n } from '../hooks/i18n';
 import { Box, Container, LoadingOverlay, Select, Space, TextInput } from '@mantine/core';
 import {
   IconCircleCheck,
@@ -30,10 +30,10 @@ import {
   IconPhoneCall,
 } from '@tabler/icons-react';
 import { createRef, useCallback, useEffect, useState } from 'react';
-import { useApi } from '#/hooks/api';
-import { usePageTitle } from '#/hooks/pageTitle';
-import { useStorage } from '#/hooks/storage';
-import { TopActionButton } from '#/helpers/TopActionButton';
+import { useApi } from '../hooks/api';
+import { usePageTitle } from '../hooks/pageTitle';
+import { useStorage } from '../hooks/storage';
+import { TopActionButton } from '../helpers/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
 

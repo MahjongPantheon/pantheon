@@ -17,11 +17,11 @@
 
 import * as React from 'react';
 import { createRef, useContext, useEffect, useState } from 'react';
-import { authCtx } from '#/hooks/auth';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
-import { usePageTitle } from '#/hooks/pageTitle';
-import { GameConfig } from '#/clients/proto/atoms.pb';
+import { authCtx } from '../hooks/auth';
+import { useApi } from '../hooks/api';
+import { useI18n } from '../hooks/i18n';
+import { usePageTitle } from '../hooks/pageTitle';
+import { GameConfig } from '../clients/proto/atoms.pb';
 import { useForm } from '@mantine/form';
 import { Container, LoadingOverlay, NumberInput, Select, Space, TextInput } from '@mantine/core';
 import {
@@ -31,11 +31,11 @@ import {
   IconSignature,
   IconUserExclamation,
 } from '@tabler/icons-react';
-import { TopActionButton } from '#/helpers/TopActionButton';
+import { TopActionButton } from '../helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
-import { useStorage } from '#/hooks/storage';
+import { useStorage } from '../hooks/storage';
 
 export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);

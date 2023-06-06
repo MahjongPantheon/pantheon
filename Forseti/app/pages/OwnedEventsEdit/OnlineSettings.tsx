@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { NumberInput, Text, TextInput } from '@mantine/core';
 import {
@@ -26,7 +26,7 @@ import {
   IconUsers,
   IconUserX,
 } from '@tabler/icons-react';
-import { FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { FormHandle } from './types';
 
 type OnlineSettingsProps = {
   form: FormHandle;

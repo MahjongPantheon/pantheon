@@ -16,14 +16,14 @@
  */
 
 import * as React from 'react';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../hooks/pageTitle';
 import { Button, Group, Space, Alert, Container, LoadingOverlay } from '@mantine/core';
 import { IconCheck, IconAlertCircle } from '@tabler/icons-react';
 import { Link } from 'wouter';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
+import { useApi } from '../hooks/api';
+import { useI18n } from '../hooks/i18n';
 import { useEffect, useState } from 'react';
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../services/i18n';
 
 export const ProfileConfirm: React.FC<{ params: { code: string } }> = ({ params: { code } }) => {
   const api = useApi();

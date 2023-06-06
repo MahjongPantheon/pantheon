@@ -16,12 +16,12 @@
  */
 
 import * as React from 'react';
-import { usePageTitle } from '#/hooks/pageTitle';
+import { usePageTitle } from '../hooks/pageTitle';
 import { Redirect } from 'wouter';
-import { useApi } from '#/hooks/api';
-import { useI18n } from '#/hooks/i18n';
-import { useStorage } from '#/hooks/storage';
-import { authCtx } from '#/hooks/auth';
+import { useApi } from '../hooks/api';
+import { useI18n } from '../hooks/i18n';
+import { useStorage } from '../hooks/storage';
+import { authCtx } from '../hooks/auth';
 import { useContext } from 'react';
 
 export const ProfileLogout: React.FC = () => {
