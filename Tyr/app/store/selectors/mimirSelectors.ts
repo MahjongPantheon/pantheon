@@ -16,10 +16,10 @@
  */
 
 import { IAppState } from '../interfaces';
-import { YakuId } from '#/primitives/yaku';
-import { unpack } from '#/primitives/yaku-compat';
-import { memoize } from '#/primitives/memoize';
-import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
+import { YakuId } from '../../primitives/yaku';
+import { unpack } from '../../primitives/yaku-compat';
+import { memoize } from '../../primitives/memoize';
+import { PlayerInSession, RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export function getOutcome(state: IAppState) {
   return state.currentOutcome && state.currentOutcome.selectedOutcome;

@@ -16,8 +16,8 @@
  */
 
 import * as React from 'react';
-import { SettingsScreenView } from '#/components/screens/settings/SettingsScreenView';
-import { IComponentProps } from '#/components/IComponentProps';
+import { SettingsScreenView } from './SettingsScreenView';
+import { IComponentProps } from '../../IComponentProps';
 import {
   FORCE_LOGOUT,
   GOTO_EVENT_SELECT,
@@ -26,10 +26,10 @@ import {
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
   SETTINGS_SAVE_THEME,
-} from '#/store/actions/interfaces';
-import { I18nService, supportedLanguages } from '#/services/i18n';
-import { themes } from '#/services/themes';
-import { i18n } from '#/components/i18n';
+} from '../../../store/actions/interfaces';
+import { I18nService, supportedLanguages } from '../../../services/i18n';
+import { themes } from '../../../services/themes';
+import { i18n } from '../../i18n';
 
 export class SettingsScreen extends React.PureComponent<IComponentProps> {
   static contextType = i18n;

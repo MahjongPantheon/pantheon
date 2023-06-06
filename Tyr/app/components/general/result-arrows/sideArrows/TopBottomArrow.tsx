@@ -21,7 +21,7 @@ import { getPayment } from '../utils';
 import { RiichiBet } from '../base-components/RiichiBet';
 import { RIICHI_HEIGHT, RIICHI_WIDTH, TEXT_PATH_OFFSET } from '../vars';
 import { ArrowEndByAngle } from '../base-components/ArrowEnd';
-import { PlayerSide } from '#/components/general/result-arrows/ResultArrowsProps';
+import { PlayerSide } from '../ResultArrowsProps';
 
 type IProps = {
   width: number;

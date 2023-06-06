@@ -15,12 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { useContext } from 'react';
-import { getRoundDescription } from '#/components/screens/log/view/RoundSelectors';
-import { IRoundOverviewInfo } from '#/components/screens/log/view/RoundTypes';
-import { i18n } from '#/components/i18n';
+import { Fragment, FC, useContext } from 'react';
+import { getRoundDescription } from './RoundSelectors';
+import { IRoundOverviewInfo } from './RoundTypes';
+import { i18n } from '../../../i18n';
 
-export const RoundInfo: React.FC<IRoundOverviewInfo> = (props: IRoundOverviewInfo) => {
+export const RoundInfo: FC<IRoundOverviewInfo> = (props: IRoundOverviewInfo) => {
   const loc = useContext(i18n);
   const description = getRoundDescription(props, loc);
   const length = description.length;
@@ -28,10 +28,10 @@ export const RoundInfo: React.FC<IRoundOverviewInfo> = (props: IRoundOverviewInf
   return (
     <div className='page-log__info'>
       {description.map((line, i) => (
-        <React.Fragment key={i}>
+        <Fragment key={i}>
           {line}
           {i !== length - 1 && <br />}
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

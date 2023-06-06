@@ -16,17 +16,17 @@
  */
 
 import * as React from 'react';
-import { EventSelectScreenView } from '#/components/screens/event-select/EventSelectScreenView';
-import { IComponentProps } from '#/components/IComponentProps';
+import { EventSelectScreenView } from './EventSelectScreenView';
+import { IComponentProps } from '../../IComponentProps';
 import {
   EVENTS_GET_LIST_INIT,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
   SELECT_EVENT,
-} from '#/store/actions/interfaces';
-import { Preloader } from '#/components/general/preloader/Preloader';
-import { i18n } from '#/components/i18n';
-import { I18nService } from '#/services/i18n';
+} from '../../../store/actions/interfaces';
+import { Preloader } from '../../general/preloader/Preloader';
+import { i18n } from '../../i18n';
+import { I18nService } from '../../../services/i18n';
 
 export class EventSelectScreen extends React.PureComponent<IComponentProps> {
   static contextType = i18n;

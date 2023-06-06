@@ -30,7 +30,7 @@ lint:
 
 .PHONY: unit
 unit:
-	./node_modules/.bin/jest
+	./node_modules/.bin/vitest --run
 
 PHONY: eslint
 eslint:
@@ -51,9 +51,8 @@ autofix:
 
 PHONY: build
 build:
-	NODE_ENV=production ./node_modules/.bin/webpack --config webpack.prod.js
-	cp app/tyrico.png dist
-	cd dist && gzip -k -9 -f *.js *.css
+	./node_modules/.bin/tsc
+	./node_modules/.bin/vite build --outDir dist
 
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:
@@ -62,13 +61,13 @@ cleanup_prebuilts:
 
 .PHONY: prebuild
 prebuild:
+	cd dist/assets && gzip -k -9 -f *.js *.css
 	cd dist && \
 	cp -R * ../../Tyr-dist/
 
 .PHONY: dev
 dev:
-	rm -rf dist
-	./node_modules/.bin/webpack-dev-server --config webpack.dev.js
+	./node_modules/.bin/vite --clearScreen=false
 
 PHONY: i18n_extract
 i18n_extract:
@@ -99,7 +98,7 @@ docker_stop: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Tyr container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall webpack' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall node' ; \
 	fi
 
 PHONY: docker_deps

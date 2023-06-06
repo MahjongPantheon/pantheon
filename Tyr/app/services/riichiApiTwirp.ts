@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IAppState } from '#/store/interfaces';
+import { IAppState } from '../store/interfaces';
 import {
   AddRound,
   GetAllRegisteredPlayers,
@@ -31,14 +31,14 @@ import {
   GetTimerState,
   PreviewRound,
   StartGame,
-} from '#/clients/proto/mimir.pb';
-import { IRiichiApi } from '#/services/IRiichiApi';
-import { Authorize, GetPersonalInfo, QuickAuthorize } from '#/clients/proto/frey.pb';
-import { formatRoundToTwirp } from '#/services/formatters';
+} from '../clients/proto/mimir.pb';
+import { IRiichiApi } from './IRiichiApi';
+import { Authorize, GetPersonalInfo, QuickAuthorize } from '../clients/proto/frey.pb';
+import { formatRoundToTwirp } from './formatters';
 import { ClientConfiguration } from 'twirpscript';
-import { SessionStatus } from '#/clients/proto/atoms.pb';
+import { SessionStatus } from '../clients/proto/atoms.pb';
 
-import { handleReleaseTag } from '#/services/releaseTags';
+import { handleReleaseTag } from './releaseTags';
 
 export class RiichiApiTwirpService implements IRiichiApi {
   private _authToken: string | null = null;
@@ -59,8 +59,8 @@ export class RiichiApiTwirpService implements IRiichiApi {
     headers.append('X-Twirp', 'true');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConfMimir.baseURL = window.__cfg.MIMIR_URL;
-    this._clientConfFrey.baseURL = window.__cfg.FREY_URL;
+    this._clientConfMimir.baseURL = import.meta.env.VITE_MIMIR_URL;
+    this._clientConfFrey.baseURL = import.meta.env.VITE_FREY_URL;
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
@@ -74,7 +74,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(window.__cfg.SIGRUN_URL + '/servicelog', {
+                fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({

@@ -17,13 +17,13 @@
 
 import * as React from 'react';
 import './page-new-game.css';
-import { TopPanel } from '#/components/general/top-panel/TopPanel';
-import { PlayerDropdown } from '#/components/general/dropdown/PlayerDropdown';
+import { TopPanel } from '../../general/top-panel/TopPanel';
+import { PlayerDropdown } from '../../general/dropdown/PlayerDropdown';
 import classNames from 'classnames';
-import { i18n } from '#/components/i18n';
-import CloseIcon from '../../../img/icons/close.svg?svgr';
-import ShuffleIcon from '../../../img/icons/shuffle.svg?svgr';
-import SaveIcon from '../../../img/icons/check.svg?svgr';
+import { i18n } from '../../i18n';
+import { ReactComponent as CloseIcon } from '../../../img/icons/close.svg';
+import { ReactComponent as ShuffleIcon } from '../../../img/icons/shuffle.svg';
+import { ReactComponent as SaveIcon } from '../../../img/icons/check.svg';
 
 type IProps = {
   east?: string;

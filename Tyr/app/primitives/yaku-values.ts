@@ -16,7 +16,7 @@
  */
 
 import { YakuId as Y } from './yaku';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+import { RoundOutcome } from '../clients/proto/atoms.pb';
 
 const handValues: [Y, number, number][] = [
   [Y.TOITOI, 2, 2],

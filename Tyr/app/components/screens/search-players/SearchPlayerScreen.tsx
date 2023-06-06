@@ -17,8 +17,8 @@
 
 import * as React from 'react';
 import './page-search-player.css';
-import { SearchPlayerView } from '#/components/screens/search-players/SearchPlayerView';
-import { IComponentProps } from '#/components/IComponentProps';
+import { SearchPlayerView } from './SearchPlayerView';
+import { IComponentProps } from '../../IComponentProps';
 import {
   SELECT_NEWGAME_PLAYER_WEST,
   SELECT_NEWGAME_PLAYER_NORTH,
@@ -26,9 +26,9 @@ import {
   SELECT_NEWGAME_PLAYER_EAST,
   GOTO_PREV_SCREEN,
   GET_ALL_PLAYERS_INIT,
-} from '#/store/actions/interfaces';
-import { getPlayers } from '#/store/selectors/screenNewGameSelectors';
-import { RegisteredPlayer } from '#/clients/proto/atoms.pb';
+} from '../../../store/actions/interfaces';
+import { getPlayers } from '../../../store/selectors/screenNewGameSelectors';
+import { RegisteredPlayer } from '../../../clients/proto/atoms.pb';
 
 export class SearchPlayerScreen extends React.Component<IComponentProps> {
   private onUserClick(user: RegisteredPlayer) {

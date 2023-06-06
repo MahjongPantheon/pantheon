@@ -18,7 +18,7 @@
 import * as React from 'react';
 import { ReactNode, useCallback } from 'react';
 import classNames from 'classnames';
-import { IRoundResult } from '#/components/screens/log/view/LogScreenView';
+import { IRoundResult } from './LogScreenView';
 
 type RoundResultCellProps = {
   delta: number;

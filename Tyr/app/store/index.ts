@@ -22,7 +22,7 @@ import { mimirReducer } from './reducers/mimirReducer';
 import { outcomeReducer } from './reducers/outcomeReducer';
 import { analytics } from './middlewares/analytics';
 import { history } from './middlewares/history';
-import { Analytics } from '#/services/analytics';
+import { Analytics } from '../services/analytics';
 import { timerReducer } from './reducers/timerReducer';
 import { timerMw } from './middlewares/timer';
 import { IAppState, TimerStorage } from './interfaces';
@@ -30,13 +30,13 @@ import { commonReducer } from './reducers/commonReducer';
 import { persistentMw } from './middlewares/persistent';
 import { initialState } from './state';
 import { logging } from './middlewares/logging';
-import { I18nService } from '#/services/i18n';
+import { I18nService } from '../services/i18n';
 import { yaku } from './middlewares/yaku';
-import { reduceReducers } from '#/store/util';
-import { AppActionTypes } from '#/store/actions/interfaces';
-import { screenManageMw } from '#/store/middlewares/screenManage';
+import { reduceReducers } from './util';
+import { AppActionTypes } from './actions/interfaces';
+import { screenManageMw } from './middlewares/screenManage';
 import { IStorage } from '../../../Common/storage';
-import { RiichiApiTwirpService } from '#/services/riichiApiTwirp';
+import { RiichiApiTwirpService } from '../services/riichiApiTwirp';
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;

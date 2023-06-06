@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { PlayerButtonMode } from '#/components/types/PlayerEnums';
+import { PlayerButtonMode } from './PlayerEnums';
 
 export type PlayerButtonProps = {
   mode: PlayerButtonMode;

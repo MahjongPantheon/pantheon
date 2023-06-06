@@ -19,16 +19,12 @@ import * as React from 'react';
 import './page-set-hand.css';
 import { SelectYakuPanel } from './SelectYakuPanel';
 import { SelectTotalPanel } from './SelectTotalPanel';
-import { Tab } from '#/components/general/tab/Tab';
-import { BottomPanel } from '#/components/general/bottom-panel/BottomPanel';
-import {
-  ArrowState,
-  SelectHandActiveTab,
-  YakuGroup,
-} from '#/components/screens/select-hand/YakuTypes';
+import { Tab } from '../../../general/tab/Tab';
+import { BottomPanel } from '../../../general/bottom-panel/BottomPanel';
+import { ArrowState, SelectHandActiveTab, YakuGroup } from '../YakuTypes';
 import classNames from 'classnames';
-import ArrowLeftIcon from '../../../../img/icons/chevron-left.svg?svgr';
-import ArrowRightIcon from '../../../../img/icons/chevron-right.svg?svgr';
+import { ReactComponent as ArrowLeftIcon } from '../../../../img/icons/chevron-left.svg';
+import { ReactComponent as ArrowRightIcon } from '../../../../img/icons/chevron-right.svg';
 
 type IProps = {
   playerName: string;

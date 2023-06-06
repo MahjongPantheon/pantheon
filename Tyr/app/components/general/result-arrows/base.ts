@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { PlayerArrow } from '#/components/general/result-arrows/ResultArrowsProps';
+import { PlayerArrow } from './ResultArrowsProps';
 
 export class Point {
   x: number;

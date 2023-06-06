@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IAppState } from '#/store/interfaces';
+import { IAppState } from '../store/interfaces';
 import {
   CurrentSession,
   GameConfig,
@@ -25,13 +25,13 @@ import {
   RoundState,
   SessionHistoryResult,
   TableState,
-} from '#/clients/proto/atoms.pb';
+} from '../clients/proto/atoms.pb';
 import {
   EventsGetTimerStateResponse,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
-} from '#/clients/proto/mimir.pb';
-import { AuthAuthorizeResponse } from '#/clients/proto/frey.pb';
+} from '../clients/proto/mimir.pb';
+import { AuthAuthorizeResponse } from '../clients/proto/frey.pb';
 
 export interface IRiichiApi {
   setCredentials(personId: number, token: string): void;

@@ -16,7 +16,7 @@
  */
 
 import { PlayerPointsMode } from '../../types/PlayerEnums';
-import { PlayerButtonProps } from '#/components/types/PlayerButtonProps';
+import { PlayerButtonProps } from '../../types/PlayerButtonProps';
 
 export type PlayerProps = {
   name: string;

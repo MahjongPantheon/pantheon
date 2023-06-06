@@ -17,9 +17,9 @@
 
 import * as React from 'react';
 import './page-enter-credentials.css';
-import { IComponentProps } from '#/components/IComponentProps';
-import { EnterCredentialsView } from '#/components/screens/login/EnterCredentialsView';
-import { LOGIN_INIT } from '#/store/actions/interfaces';
+import { IComponentProps } from '../../IComponentProps';
+import { EnterCredentialsView } from './EnterCredentialsView';
+import { LOGIN_INIT } from '../../../store/actions/interfaces';
 import { useCallback } from 'react';
 
 export const EnterCredentialsScreen: React.FC<IComponentProps> = (props) => {
@@ -37,8 +37,8 @@ export const EnterCredentialsScreen: React.FC<IComponentProps> = (props) => {
   return (
     <EnterCredentialsView
       onSubmit={onSubmit}
-      signupLink={`${window.__cfg.FORSETI_URL}/profile/signup`}
-      recoveryLink={`${window.__cfg.FORSETI_URL}/profile/resetPassword`}
+      signupLink={`${import.meta.env.VITE_FORSETI_URL}/profile/signup`}
+      recoveryLink={`${import.meta.env.VITE_FORSETI_URL}/profile/resetPassword`}
     />
   );
 };

@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IAppState } from '#/store/interfaces';
-import { playerHasYakuWithPao } from '#/store/util';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+import { IAppState } from '../interfaces';
+import { playerHasYakuWithPao } from '../util';
+import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export function getFirstWinnerWithPao(state: IAppState): number | undefined {
   return getNextWinnerWithPao(state, undefined);

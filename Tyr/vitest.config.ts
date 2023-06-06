@@ -15,13 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { YakuId } from '../primitives/yaku';
-import { I18nService } from '../services/i18n';
+import { mergeConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
+import viteConfig from './vite.config';
 
-export interface Yaku {
-  id: YakuId;
-  name: (i18n: I18nService) => string;
-  shortName: (i18n: I18nService) => string;
-  yakuman: boolean;
-  disabled?: boolean;
-}
+export default mergeConfig(
+  viteConfig,
+  defineConfig({
+    test: {
+      coverage: {
+        provider: 'istanbul',
+      },
+      globals: true,
+      environment: 'jsdom',
+    },
+  })
+);

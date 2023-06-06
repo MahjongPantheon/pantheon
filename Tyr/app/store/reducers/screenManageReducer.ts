@@ -33,8 +33,8 @@ import {
   GO_TO_DONATE,
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
-import { AppOutcome } from '#/interfaces/app';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+import { AppOutcome } from '../../interfaces/app';
+import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export function screenManageReducer(state: IAppState, action: AppActionTypes): IAppState {
   switch (action.type) {

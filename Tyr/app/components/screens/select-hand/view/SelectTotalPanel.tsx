@@ -17,9 +17,9 @@
 
 import * as React from 'react';
 import './page-set-hand.css';
-import { NumberSelect } from '#/components/general/number-select/NumberSelect';
-import { i18n } from '#/components/i18n';
-import { I18nService } from '#/services/i18n';
+import { NumberSelect } from '../../../general/number-select/NumberSelect';
+import { i18n } from '../../../i18n';
+import { I18nService } from '../../../../services/i18n';
 
 type IProps = {
   isYakuman: boolean;

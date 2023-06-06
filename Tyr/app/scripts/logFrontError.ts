@@ -22,7 +22,7 @@ function errHandler(
   charNumber: number | undefined,
   err: Error | undefined
 ) {
-  fetch(window.__cfg.SIGRUN_URL + '/servicelog', {
+  fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

@@ -16,7 +16,7 @@
  */
 
 import { YakuId as Y, yakuList } from './yaku';
-import { Yaku } from '#/interfaces/common';
+import { Yaku } from '../interfaces/common';
 import { Node, Graph, EdgeType } from './graph';
 
 // TODO: придумать что-нибудь, чтобы вся эта ерунда не занимала столько места в бандле.

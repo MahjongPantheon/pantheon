@@ -17,10 +17,10 @@
 
 import * as React from 'react';
 import './other-tables-list.css';
-import { TopPanel } from '#/components/general/top-panel/TopPanel';
+import { TopPanel } from '../../general/top-panel/TopPanel';
 import { useContext } from 'react';
-import { i18n } from '#/components/i18n';
-import { TableState } from '#/clients/proto/atoms.pb';
+import { i18n } from '../../i18n';
+import { TableState } from '../../../clients/proto/atoms.pb';
 
 type IProps = {
   tables: TableState[];

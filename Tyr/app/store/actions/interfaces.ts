@@ -15,10 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { YakuId } from '#/primitives/yaku';
-import { RemoteError } from '#/services/remoteError';
+import { YakuId } from '../../primitives/yaku';
+import { RemoteError } from '../../services/remoteError';
 import { IAppState } from '../interfaces';
-import { AuthAuthorizeResponse } from '#/clients/proto/frey.pb';
+import { AuthAuthorizeResponse } from '../../clients/proto/frey.pb';
 import {
   CurrentSession,
   GameConfig,
@@ -29,12 +29,12 @@ import {
   RoundState,
   SessionHistoryResult,
   TableState,
-} from '#/clients/proto/atoms.pb';
+} from '../../clients/proto/atoms.pb';
 import {
   EventsGetTimerStateResponse,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
-} from '#/clients/proto/mimir.pb';
+} from '../../clients/proto/mimir.pb';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';

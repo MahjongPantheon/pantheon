@@ -16,14 +16,14 @@
  */
 
 import * as React from 'react';
-import { BottomPanel } from '#/components/general/bottom-panel/BottomPanel';
+import { BottomPanel } from '../../../general/bottom-panel/BottomPanel';
 import './page-log.css';
 import { useCallback, useContext, useState } from 'react';
-import { RoundResult } from '#/components/screens/log/view/RoundResult';
-import { IRoundOverviewInfo } from '#/components/screens/log/view/RoundTypes';
-import { RoundInfo } from '#/components/screens/log/view/RoundInfo';
-import { i18n } from '#/components/i18n';
-import { IntermediateResultOfSession } from '#/clients/proto/atoms.pb';
+import { RoundResult } from './RoundResult';
+import { IRoundOverviewInfo } from './RoundTypes';
+import { RoundInfo } from './RoundInfo';
+import { i18n } from '../../../i18n';
+import { IntermediateResultOfSession } from '../../../../clients/proto/atoms.pb';
 
 export interface IRoundResult {
   scoresDelta: IntermediateResultOfSession[];
@@ -81,8 +81,8 @@ export const LogScreenView: React.FC<IProps> = (props) => {
                 <div className='page-log__cell page-log__cell--first'></div>
                 {/* Four similar starting point cells for clarity */}
                 {[props.startScore, props.startScore, props.startScore, props.startScore].map(
-                  (v) => (
-                    <div className='page-log__cell'>
+                  (v, idx) => (
+                    <div className='page-log__cell' key={idx}>
                       <div className='page-log__score'>{v}</div>
                     </div>
                   )

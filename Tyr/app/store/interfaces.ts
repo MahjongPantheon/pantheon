@@ -15,10 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AppOutcome } from '#/interfaces/app';
-import { Yaku } from '#/interfaces/common';
-import { Graph } from '#/primitives/graph';
-import { RemoteError } from '#/services/remoteError';
+import { AppOutcome } from '../interfaces/app';
+import { Yaku } from '../interfaces/common';
+import { Graph } from '../primitives/graph';
+import { RemoteError } from '../services/remoteError';
 import {
   GameConfig,
   MyEvent,
@@ -28,8 +28,8 @@ import {
   SessionHistoryResult,
   SessionState,
   TableState,
-} from '#/clients/proto/atoms.pb';
-import { GamesGetSessionOverviewResponse } from '#/clients/proto/mimir.pb';
+} from '../clients/proto/atoms.pb';
+import { GamesGetSessionOverviewResponse } from '../clients/proto/mimir.pb';
 
 export type AppScreen =
   | 'eventSelector'

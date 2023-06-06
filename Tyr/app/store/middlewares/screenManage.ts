@@ -39,10 +39,10 @@ import {
   GET_GAME_OVERVIEW_INIT,
 } from '../actions/interfaces';
 import { AppScreen, IAppState } from '../interfaces';
-import { getWinningUsers } from '#/store/selectors/mimirSelectors';
-import { YakuId } from '#/primitives/yaku';
-import { getFirstWinnerWithPao } from '#/store/selectors/paoSelectors';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+import { getWinningUsers } from '../selectors/mimirSelectors';
+import { YakuId } from '../../primitives/yaku';
+import { getFirstWinnerWithPao } from '../selectors/paoSelectors';
+import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export const screenManageMw =
   () =>

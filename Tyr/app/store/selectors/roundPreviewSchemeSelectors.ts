@@ -18,7 +18,7 @@
 import { IAppState } from '../interfaces';
 import { getSeating } from './commonSelectors';
 import { getPaoUsers, getRiichiUsers } from './mimirSelectors';
-import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
+import { PlayerInSession, RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation';
 type Csp = RoundPreviewSchemePurpose; // alias for shorter name

@@ -17,15 +17,6 @@
 
 import { EdgeType, Graph } from './graph';
 
-declare global {
-  namespace jest {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    interface Matchers<R> {
-      toHaveSameItems(expected: any[]): CustomMatcherResult;
-    }
-  }
-}
-
 expect.extend({
   toHaveSameItems(actual: any[], expected: any[]) {
     const typeOk = actual.length !== undefined && expected.length !== undefined;

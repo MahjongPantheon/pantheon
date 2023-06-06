@@ -17,17 +17,17 @@
 
 import * as React from 'react';
 import './page-table.css';
-import { PlayerLeft } from '#/components/general/players/PlayerLeft';
-import { ResultArrowsProps } from '#/components/general/result-arrows/ResultArrowsProps';
-import { BottomPanelProps } from '#/components/general/bottom-panel/BottomPanelProps';
-import { PlayerProps } from '#/components/general/players/PlayerProps';
-import { PlayerBottom } from '#/components/general/players/PlayerBottom';
-import { PlayerTop } from '#/components/general/players/PlayerTop';
-import { BottomPanel } from '#/components/general/bottom-panel/BottomPanel';
-import { ResultArrows } from '#/components/general/result-arrows/ResultArrows';
-import { PlayerRight } from '#/components/general/players/PlayerRight';
-import { TableInfo, TableInfoProps } from '#/components/screens/table/base/TableInfo';
-import { SelectModal, SelectModalProps } from '#/components/general/select-modal/SelectModal';
+import { PlayerLeft } from '../../../general/players/PlayerLeft';
+import { ResultArrowsProps } from '../../../general/result-arrows/ResultArrowsProps';
+import { BottomPanelProps } from '../../../general/bottom-panel/BottomPanelProps';
+import { PlayerProps } from '../../../general/players/PlayerProps';
+import { PlayerBottom } from '../../../general/players/PlayerBottom';
+import { PlayerTop } from '../../../general/players/PlayerTop';
+import { BottomPanel } from '../../../general/bottom-panel/BottomPanel';
+import { ResultArrows } from '../../../general/result-arrows/ResultArrows';
+import { PlayerRight } from '../../../general/players/PlayerRight';
+import { TableInfo, TableInfoProps } from './TableInfo';
+import { SelectModal, SelectModalProps } from '../../../general/select-modal/SelectModal';
 
 type IProps = {
   topPlayer: PlayerProps;

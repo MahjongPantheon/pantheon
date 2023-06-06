@@ -18,7 +18,7 @@
 import * as React from 'react';
 import './page-enter-credentials.css';
 import { useContext, useState } from 'react';
-import { i18n } from '#/components/i18n';
+import { i18n } from '../../i18n';
 
 type IProps = {
   onSubmit: (email: string, password: string) => void;

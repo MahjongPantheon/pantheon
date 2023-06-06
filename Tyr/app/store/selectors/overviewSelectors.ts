@@ -16,7 +16,7 @@
  */
 
 import { IAppState } from '../interfaces';
-import { memoize } from '#/primitives/memoize';
+import { memoize } from '../../primitives/memoize';
 
 // TODO ##2: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно.
 //  Нужно делать остальные селекторы более специальными.

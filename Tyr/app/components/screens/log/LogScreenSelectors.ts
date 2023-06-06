@@ -25,10 +25,10 @@ import {
   IRoundOverviewAbort,
   IRoundOverviewChombo,
   IRoundOverviewNagashi,
-} from '#/components/screens/log/view/RoundTypes';
-import { I18nService } from '#/services/i18n';
-import { yakuMap } from '#/primitives/yaku';
-import { RoundOutcome, RoundState } from '#/clients/proto/atoms.pb';
+} from './view/RoundTypes';
+import { I18nService } from '../../../services/i18n';
+import { yakuMap } from '../../../primitives/yaku';
+import { RoundOutcome, RoundState } from '../../../clients/proto/atoms.pb';
 
 function getYakuList(yaku: number[], i18nService: I18nService): string[] {
   return yaku.map((id) => yakuMap[id].name(i18nService));

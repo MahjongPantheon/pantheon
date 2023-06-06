@@ -16,8 +16,8 @@
  */
 
 import * as React from 'react';
-import { SelectModal } from '#/components/general/select-modal/SelectModal';
-import { ItemSelect } from '#/components/general/select-modal/ItemSelect';
+import { SelectModal } from '../select-modal/SelectModal';
+import { ItemSelect } from '../select-modal/ItemSelect';
 
 type IProps = {
   possibleValues: number[];

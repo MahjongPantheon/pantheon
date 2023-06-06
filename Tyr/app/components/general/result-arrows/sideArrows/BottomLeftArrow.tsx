@@ -23,7 +23,7 @@ import { ArrowPath } from '../base-components/ArrowPath';
 import { RiichiBetByCurve } from '../base-components/RiichiBet';
 import { START_ARROWS_OFFSET } from '../vars';
 import { ArrowEnd } from '../base-components/ArrowEnd';
-import { PlayerSide } from '#/components/general/result-arrows/ResultArrowsProps';
+import { PlayerSide } from '../ResultArrowsProps';
 
 type IProps = {
   offsetX: number;

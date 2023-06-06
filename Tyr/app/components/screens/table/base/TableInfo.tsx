@@ -17,13 +17,13 @@
 
 import * as React from 'react';
 import './page-table.css';
-import { TableTenbou } from '#/components/screens/table/base/TableTenbou';
+import { TableTenbou } from './TableTenbou';
 import { useContext } from 'react';
-import { i18n } from '#/components/i18n';
-import RiichiIcon from '../../../../img/icons/riichi-small.svg?svgr';
-import HonbaIcon from '../../../../img/icons/honba.svg?svgr';
-import RotateCWIcon from '../../../../img/icons/rotate-cw.svg?svgr';
-import RotateCCWIcon from '../../../../img/icons/rotate-ccw.svg?svgr';
+import { i18n } from '../../../i18n';
+import { ReactComponent as RiichiIcon } from '../../../../img/icons/riichi-small.svg';
+import { ReactComponent as HonbaIcon } from '../../../../img/icons/honba.svg';
+import { ReactComponent as RotateCWIcon } from '../../../../img/icons/rotate-cw.svg';
+import { ReactComponent as RotateCCWIcon } from '../../../../img/icons/rotate-ccw.svg';
 
 export type TableInfoProps = {
   showRoundInfo?: boolean;

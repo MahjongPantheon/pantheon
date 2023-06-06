@@ -15,11 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { getAllowedYaku as getAllowedYakuCompat, limits, unpack } from '#/primitives/yaku-compat';
+import {
+  getAllowedYaku as getAllowedYakuCompat,
+  limits,
+  unpack,
+} from '../../primitives/yaku-compat';
 import { IAppState } from '../interfaces';
-import { YakuId } from '#/primitives/yaku';
-import { WinProps } from '#/interfaces/app';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+import { YakuId } from '../../primitives/yaku';
+import { WinProps } from '../../interfaces/app';
+import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuId[] {
   const outcome = state.currentOutcome;

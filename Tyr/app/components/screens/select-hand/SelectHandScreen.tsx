@@ -16,17 +16,12 @@
  */
 
 import * as React from 'react';
-import { IComponentProps } from '#/components/IComponentProps';
-import { SelectHandScreenView } from '#/components/screens/select-hand/view/SelectHandScreenView';
-import { getWinningUsers, hasYaku } from '#/store/selectors/mimirSelectors';
-import {
-  ArrowState,
-  SelectHandActiveTab,
-  YakuGroup,
-  YakuItem,
-} from '#/components/screens/select-hand/YakuTypes';
-import { getDisabledYaku, getYakuList } from '#/store/selectors/screenYakuSelectors';
-import { getSelectedYaku } from '#/store/selectors/yaku';
+import { IComponentProps } from '../../IComponentProps';
+import { SelectHandScreenView } from './view/SelectHandScreenView';
+import { getWinningUsers, hasYaku } from '../../../store/selectors/mimirSelectors';
+import { ArrowState, SelectHandActiveTab, YakuGroup, YakuItem } from './YakuTypes';
+import { getDisabledYaku, getYakuList } from '../../../store/selectors/screenYakuSelectors';
+import { getSelectedYaku } from '../../../store/selectors/yaku';
 import {
   ADD_YAKU,
   GOTO_NEXT_SCREEN,
@@ -36,13 +31,13 @@ import {
   SET_DORA_COUNT,
   SET_FU_COUNT,
   SET_SELECT_HAND_TAB,
-} from '#/store/actions/interfaces';
-import { doraOptions, mayGoNextFromYakuSelect } from '#/store/selectors/navbarSelectors';
-import { getDora, getFu, getPossibleFu, getHan } from '#/store/selectors/hanFu';
-import { getOutcomeName } from '#/components/screens/table/TableHelper';
-import { i18n } from '#/components/i18n';
-import { I18nService } from '#/services/i18n';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+} from '../../../store/actions/interfaces';
+import { doraOptions, mayGoNextFromYakuSelect } from '../../../store/selectors/navbarSelectors';
+import { getDora, getFu, getPossibleFu, getHan } from '../../../store/selectors/hanFu';
+import { getOutcomeName } from '../table/TableHelper';
+import { i18n } from '../../i18n';
+import { I18nService } from '../../../services/i18n';
+import { RoundOutcome } from '../../../clients/proto/atoms.pb';
 
 export class SelectHandScreen extends React.Component<IComponentProps> {
   static contextType = i18n;

@@ -19,13 +19,13 @@ import * as React from 'react';
 import { BottomPanelProps } from './BottomPanelProps';
 import './bottom-panel.css';
 import classNames from 'classnames';
-import BackIcon from '../../../img/icons/arrow-left.svg?svgr';
-import NextIcon from '../../../img/icons/arrow-right.svg?svgr';
-import SaveIcon from '../../../img/icons/check.svg?svgr';
-import HomeIcon from '../../../img/icons/home.svg?svgr';
-import RefreshIcon from '../../../img/icons/refresh.svg?svgr';
-import PlusIcon from '../../../img/icons/plus.svg?svgr';
-import LogIcon from '../../../img/icons/log.svg?svgr';
+import { ReactComponent as BackIcon } from '../../../img/icons/arrow-left.svg';
+import { ReactComponent as NextIcon } from '../../../img/icons/arrow-right.svg';
+import { ReactComponent as SaveIcon } from '../../../img/icons/check.svg';
+import { ReactComponent as HomeIcon } from '../../../img/icons/home.svg';
+import { ReactComponent as RefreshIcon } from '../../../img/icons/refresh.svg';
+import { ReactComponent as PlusIcon } from '../../../img/icons/plus.svg';
+import { ReactComponent as LogIcon } from '../../../img/icons/log.svg';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
   private onNextButtonClick() {

@@ -25,10 +25,7 @@ import { TopBottomArrow } from './sideArrows/TopBottomArrow';
 import { LeftRightArrow } from './sideArrows/LeftRightArrow';
 import { TopLeftArrow } from './sideArrows/TopLeftArrow';
 import { TopRightArrow } from './sideArrows/TopRightArrow';
-import {
-  PlayerSide,
-  ResultArrowsProps,
-} from '#/components/general/result-arrows/ResultArrowsProps';
+import { PlayerSide, ResultArrowsProps } from './ResultArrowsProps';
 
 declare var frame: any;
 

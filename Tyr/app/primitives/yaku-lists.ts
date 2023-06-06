@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Yaku } from '#/interfaces/common';
+import { Yaku } from '../interfaces/common';
 import { yakuList, YakuId } from './yaku';
 
 export function filterAllowed(group: Yaku[][], allowed: number[]) {

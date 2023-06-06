@@ -17,10 +17,10 @@
 
 import { Dispatch, MiddlewareAPI } from 'redux';
 import { ADD_YAKU, AppActionTypes, REMOVE_YAKU } from '../actions/interfaces';
-import { I18nService } from '#/services/i18n';
-import { YakuId } from '#/primitives/yaku';
+import { I18nService } from '../../services/i18n';
+import { YakuId } from '../../primitives/yaku';
 import { IAppState } from '../interfaces';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export const yaku =
   (i18n: I18nService) =>

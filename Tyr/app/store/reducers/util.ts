@@ -23,13 +23,13 @@ import {
   LoseOutcomeProps,
   WinOutcomeProps,
   WinProps,
-} from '#/interfaces/app';
-import { YakuId } from '#/primitives/yaku';
-import { addYakuToList, limits, pack, unpack } from '#/primitives/yaku-compat';
-import { getFixedFu, getHan } from '#/primitives/yaku-values';
-import { Graph } from '#/primitives/graph';
-import { Yaku } from '#/interfaces/common';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+} from '../../interfaces/app';
+import { YakuId } from '../../primitives/yaku';
+import { addYakuToList, limits, pack, unpack } from '../../primitives/yaku-compat';
+import { getFixedFu, getHan } from '../../primitives/yaku-values';
+import { Graph } from '../../primitives/graph';
+import { Yaku } from '../../interfaces/common';
+import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 /**
  * Should be used only for common win props, like riichiBets! For all other things modifyWinOutcome should be used.

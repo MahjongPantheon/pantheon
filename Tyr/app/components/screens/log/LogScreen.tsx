@@ -16,15 +16,15 @@
  */
 
 import * as React from 'react';
-import { IComponentProps } from '#/components/IComponentProps';
-import { IRoundResult, LogScreenView } from '#/components/screens/log/view/LogScreenView';
+import { IComponentProps } from '../../IComponentProps';
+import { IRoundResult, LogScreenView } from './view/LogScreenView';
 import { useCallback, useContext } from 'react';
-import { GOTO_PREV_SCREEN } from '#/store/actions/interfaces';
-import { roundToString } from '#/components/helpers/Utils';
-import { Preloader } from '#/components/general/preloader/Preloader';
-import { IRoundOverviewInfo } from '#/components/screens/log/view/RoundTypes';
-import { getRoundOverviewInfo } from '#/components/screens/log/LogScreenSelectors';
-import { i18n } from '#/components/i18n';
+import { GOTO_PREV_SCREEN } from '../../../store/actions/interfaces';
+import { roundToString } from '../../helpers/Utils';
+import { Preloader } from '../../general/preloader/Preloader';
+import { IRoundOverviewInfo } from './view/RoundTypes';
+import { getRoundOverviewInfo } from './LogScreenSelectors';
+import { i18n } from '../../i18n';
 
 export const LogScreen: React.FC<IComponentProps> = (props) => {
   const { state, dispatch } = props;

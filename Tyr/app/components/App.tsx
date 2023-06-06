@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 import '../styles/base.css';
 import '../styles/themes.css';
 import '../styles/variables.css';
-import { IAppState } from '#/store/interfaces';
+import { IAppState } from '../store/interfaces';
 import {
   AppActionTypes,
   HISTORY_INIT,
@@ -28,22 +28,22 @@ import {
   SELECT_EVENT,
   SETTINGS_SAVE_LANG,
   STARTUP_WITH_AUTH,
-} from '#/store/actions/interfaces';
+} from '../store/actions/interfaces';
 import { Dispatch } from 'redux';
-import { IComponentProps } from '#/components/IComponentProps';
-import { HomeScreen } from '#/components/screens/home/HomeScreen';
-import { SettingsScreen } from '#/components/screens/settings/SettingsScreen';
-import { NewGameScreen } from '#/components/screens/new-game/NewGameScreen';
-import { SearchPlayerScreen } from '#/components/screens/search-players/SearchPlayerScreen';
-import { TableScreen } from '#/components/screens/table/TableScreen';
-import { SelectHandScreen } from '#/components/screens/select-hand/SelectHandScreen';
-import { I18nService } from '#/services/i18n';
-import { GameResultScreen } from '#/components/screens/game-result/GameResultScreen';
-import { LoginScreen } from '#/components/screens/login/LoginScreen';
-import { LogScreen } from '#/components/screens/log/LogScreen';
-import { DonateScreen } from '#/components/screens/donate/DonateScreen';
-import { EventSelectScreen } from '#/components/screens/event-select/EventSelectScreen';
-import { OtherTablesList } from '#/components/screens/other-tables-list/OtherTablesListScreen';
+import { IComponentProps } from './IComponentProps';
+import { HomeScreen } from './screens/home/HomeScreen';
+import { SettingsScreen } from './screens/settings/SettingsScreen';
+import { NewGameScreen } from './screens/new-game/NewGameScreen';
+import { SearchPlayerScreen } from './screens/search-players/SearchPlayerScreen';
+import { TableScreen } from './screens/table/TableScreen';
+import { SelectHandScreen } from './screens/select-hand/SelectHandScreen';
+import { I18nService } from '../services/i18n';
+import { GameResultScreen } from './screens/game-result/GameResultScreen';
+import { LoginScreen } from './screens/login/LoginScreen';
+import { LogScreen } from './screens/log/LogScreen';
+import { DonateScreen } from './screens/donate/DonateScreen';
+import { EventSelectScreen } from './screens/event-select/EventSelectScreen';
+import { OtherTablesList } from './screens/other-tables-list/OtherTablesListScreen';
 import { i18n } from './i18n';
 import { IStorage } from '../../../Common/storage';
 

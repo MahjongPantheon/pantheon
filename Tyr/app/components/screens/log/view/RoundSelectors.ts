@@ -24,9 +24,9 @@ import {
   IRoundOverviewNagashi,
   IRoundOverviewRon,
   IRoundOverviewTsumo,
-} from '#/components/screens/log/view/RoundTypes';
-import { I18nService } from '#/services/i18n';
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+} from './RoundTypes';
+import { I18nService } from '../../../../services/i18n';
+import { RoundOutcome } from '../../../../clients/proto/atoms.pb';
 
 function getHandAmount(loc: I18nService, han: number, fu?: number): string {
   if (han < 0) {

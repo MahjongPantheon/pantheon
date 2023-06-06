@@ -17,10 +17,10 @@
 
 import * as React from 'react';
 import './page-login-error.css';
-import { IComponentProps } from '#/components/IComponentProps';
-import { LoginErrorView } from '#/components/screens/login/LoginErrorView';
+import { IComponentProps } from '../../IComponentProps';
+import { LoginErrorView } from './LoginErrorView';
 import { useCallback } from 'react';
-import { RESET_LOGIN_ERROR } from '#/store/actions/interfaces';
+import { RESET_LOGIN_ERROR } from '../../../store/actions/interfaces';
 
 export const LoginErrorScreen: React.FC<IComponentProps> = (props) => {
   const { dispatch } = props;
@@ -32,7 +32,7 @@ export const LoginErrorScreen: React.FC<IComponentProps> = (props) => {
   return (
     <LoginErrorView
       onOkClick={onOkClick}
-      recoveryLink={`${window.__cfg.FORSETI_URL}/profile/resetPassword`}
+      recoveryLink={`${import.meta.env.VITE_FORSETI_URL}/profile/resetPassword`}
     />
   );
 };

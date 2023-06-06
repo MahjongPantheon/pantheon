@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { memoize } from '#/primitives/memoize';
-import { PlayerInSession } from '#/clients/proto/atoms.pb';
+import { memoize } from '../../primitives/memoize';
+import { PlayerInSession } from '../../clients/proto/atoms.pb';
 
 function _getSeating(
   round: number,

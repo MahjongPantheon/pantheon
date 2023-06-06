@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IAppState } from '#/store/interfaces';
+import { IAppState } from '../store/interfaces';
 import { Dispatch } from 'redux';
 
 export interface IComponentProps {

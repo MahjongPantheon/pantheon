@@ -18,7 +18,7 @@
 import * as React from 'react';
 import './page-login-error.css';
 import { useContext } from 'react';
-import { i18n } from '#/components/i18n';
+import { i18n } from '../../i18n';
 
 type IProps = {
   onOkClick: () => void;
@@ -27,10 +27,9 @@ type IProps = {
 
 export const LoginErrorView: React.FC<IProps> = ({ onOkClick, recoveryLink }) => {
   const loc = useContext(i18n);
-  const regLink = `<a href='${window.__cfg.FORSETI_URL}/profile/signup' target='_blank'>${loc._pt(
-    'Name of registration link',
-    'register'
-  )}</a>`;
+  const regLink = `<a href='${
+    import.meta.env.VITE_FORSETI_URL
+  }/profile/signup' target='_blank'>${loc._pt('Name of registration link', 'register')}</a>`;
 
   return (
     <div className='page-login-error'>

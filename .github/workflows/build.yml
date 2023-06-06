@@ -52,7 +52,7 @@ jobs:
         run: make check
 
       - name: Make prod Tyr build
-        run: make prod_build_tyr
+        run: cp Tyr/.env.primary Tyr/.env.production && make prod_build_tyr
 
       - name: Make prod Forseti build
         run: cp Forseti/.env.primary Forseti/.env.production && make prod_build_forseti

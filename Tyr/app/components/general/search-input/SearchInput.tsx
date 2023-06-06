@@ -17,10 +17,10 @@
 
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import useDebounce from '#/components/general/search-input/UseDebounce';
-import { i18n } from '#/components/i18n';
-import { I18nService } from '#/services/i18n';
-import CloseIcon from '../../../img/icons/close.svg?svgr';
+import useDebounce from '../../../components/general/search-input/UseDebounce';
+import { i18n } from '../../i18n';
+import { I18nService } from '../../../services/i18n';
+import { ReactComponent as CloseIcon } from '../../../img/icons/close.svg';
 
 type IProps = {
   onChange: (value: string) => void;

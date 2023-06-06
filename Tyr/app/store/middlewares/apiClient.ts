@@ -68,11 +68,11 @@ import {
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import { RemoteError } from '#/services/remoteError';
+import { RemoteError } from '../../services/remoteError';
 import { IAppState } from '../interfaces';
-import { IRiichiApi } from '#/services/IRiichiApi';
-import { CurrentSession, GameConfig } from '#/clients/proto/atoms.pb';
-import { EventsGetTimerStateResponse } from '#/clients/proto/mimir.pb';
+import { IRiichiApi } from '../../services/IRiichiApi';
+import { CurrentSession, GameConfig } from '../../clients/proto/atoms.pb';
+import { EventsGetTimerStateResponse } from '../../clients/proto/mimir.pb';
 
 export const apiClient =
   (api: IRiichiApi) =>

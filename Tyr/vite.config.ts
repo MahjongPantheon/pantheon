@@ -15,13 +15,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { YakuId } from '../primitives/yaku';
-import { I18nService } from '../services/i18n';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import svgr from 'vite-plugin-svgr';
 
-export interface Yaku {
-  id: YakuId;
-  name: (i18n: I18nService) => string;
-  shortName: (i18n: I18nService) => string;
-  yakuman: boolean;
-  disabled?: boolean;
-}
+export default defineConfig({
+  plugins: [svgr(), react(), tsconfigPaths()],
+  server: {
+    port: 4003,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: function manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
+});

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { RoundOutcome } from '#/clients/proto/atoms.pb';
+import { RoundOutcome } from '../clients/proto/atoms.pb';
 
 export interface Outcome {
   selectedOutcome: RoundOutcome;

@@ -16,12 +16,11 @@
  */
 
 import * as React from 'react';
-import { IComponentProps } from '#/components/IComponentProps';
-import { GOTO_PREV_SCREEN } from '#/store/actions/interfaces';
-import { TopPanel } from '#/components/general/top-panel/TopPanel';
+import { IComponentProps } from '../../IComponentProps';
+import { GOTO_PREV_SCREEN } from '../../../store/actions/interfaces';
+import { TopPanel } from '../../general/top-panel/TopPanel';
 import './page-donate.css';
-// @ts-expect-error
-import donate from '#/img/donate.jpg';
+import donate from '../../../img/donate.jpg';
 
 export class DonateScreen extends React.PureComponent<IComponentProps> {
   private onBackClick() {

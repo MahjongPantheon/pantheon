@@ -17,12 +17,12 @@
 
 import * as React from 'react';
 import './page-setting.css';
-import { Switch } from '#/components/general/switch/Switch';
-import { TopPanel } from '#/components/general/top-panel/TopPanel';
+import { Switch } from '../../general/switch/Switch';
+import { TopPanel } from '../../general/top-panel/TopPanel';
 import classNames from 'classnames';
-import { Theme } from '#/services/themes';
+import { Theme } from '../../../services/themes';
 import { useContext } from 'react';
-import { i18n } from '#/components/i18n';
+import { i18n } from '../../i18n';
 
 interface IProps {
   playerName: string;
@@ -66,7 +66,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
             className='flat-btn flat-btn--large'
             style={{ width: '100%' }}
             target='_blank'
-            href={`${window.__cfg.FORSETI_URL}/profile/manage`}
+            href={`${import.meta.env.VITE_FORSETI_URL}/profile/manage`}
           >
             {loc._t('Go to personal area')}
           </a>

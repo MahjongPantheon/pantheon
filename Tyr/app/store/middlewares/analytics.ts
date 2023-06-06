@@ -44,8 +44,8 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import { Analytics } from '#/services/analytics';
-import { AppScreen, IAppState } from '#/store/interfaces';
+import { Analytics } from '../../services/analytics';
+import { AppScreen, IAppState } from '../interfaces';
 
 let currentScreen: AppScreen | null = null;
 

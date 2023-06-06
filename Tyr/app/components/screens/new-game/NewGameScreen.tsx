@@ -16,16 +16,16 @@
  */
 
 import * as React from 'react';
-import { IComponentProps } from '#/components/IComponentProps';
+import { IComponentProps } from '../../IComponentProps';
 import {
   CLEAR_NEWGAME_PLAYERS,
   GOTO_PREV_SCREEN,
   RANDOMIZE_NEWGAME_PLAYERS,
   SEARCH_PLAYER,
   START_GAME_INIT,
-} from '#/store/actions/interfaces';
-import { NewGameScreenView } from '#/components/screens/new-game/NewGameScreenView';
-import { Preloader } from '#/components/general/preloader/Preloader';
+} from '../../../store/actions/interfaces';
+import { NewGameScreenView } from './NewGameScreenView';
+import { Preloader } from '../../general/preloader/Preloader';
 
 export class NewGameScreen extends React.PureComponent<IComponentProps> {
   private onBackClick() {

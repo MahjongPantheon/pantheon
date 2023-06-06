@@ -41,10 +41,10 @@ import {
   modifyWinOutcomeCommons,
   removeYakuFromProps,
 } from './util';
-import { AppOutcome } from '#/interfaces/app';
+import { AppOutcome } from '../../interfaces/app';
 import { getRequiredYaku } from '../selectors/yaku';
-import { YakuId } from '#/primitives/yaku';
-import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
+import { YakuId } from '../../primitives/yaku';
+import { PlayerInSession, RoundOutcome } from '../../clients/proto/atoms.pb';
 
 /**
  * Get id of player who is dealer in this round

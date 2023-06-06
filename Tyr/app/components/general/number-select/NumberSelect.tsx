@@ -19,8 +19,8 @@ import * as React from 'react';
 import { SelectNumberModal } from './SelectNumberModal';
 import './number-select.css';
 import classNames from 'classnames';
-import { i18n } from '#/components/i18n';
-import { I18nService } from '#/services/i18n';
+import { i18n } from '../../i18n';
+import { I18nService } from '../../../services/i18n';
 
 type IProps = {
   value: number;

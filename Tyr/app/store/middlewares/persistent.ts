@@ -31,7 +31,7 @@ import {
   UPDATE_STATE_SETTINGS,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
-import { RemoteError } from '#/services/remoteError';
+import { RemoteError } from '../../services/remoteError';
 import { IStorage } from '../../../../Common/storage';
 
 export const persistentMw =

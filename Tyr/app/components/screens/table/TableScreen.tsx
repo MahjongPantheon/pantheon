@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { IComponentProps } from '#/components/IComponentProps';
+import { IComponentProps } from '../../IComponentProps';
 import {
   getOutcomeModalInfo,
   getPlayerBottomInfo,
@@ -26,11 +26,11 @@ import {
   getBottomPanel,
   getArrowsInfo,
   getTableInfo,
-} from '#/components/screens/table/TableHelper';
-import { TableScreenStateless } from '#/components/screens/table/base/TableScreenStateless';
-import { Preloader } from '#/components/general/preloader/Preloader';
-import { i18n } from '#/components/i18n';
-import { I18nService } from '#/services/i18n';
+} from './TableHelper';
+import { TableScreenStateless } from './base/TableScreenStateless';
+import { Preloader } from '../../general/preloader/Preloader';
+import { i18n } from '../../i18n';
+import { I18nService } from '../../../services/i18n';
 
 export class TableScreen extends React.Component<IComponentProps> {
   static contextType = i18n;

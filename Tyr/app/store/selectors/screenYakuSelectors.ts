@@ -17,9 +17,14 @@
 
 import { getWinningUsers, hasYaku } from './mimirSelectors';
 import { IAppState } from '../interfaces';
-import { Yaku } from '#/interfaces/common';
-import { filterAllowed, yakuGroups, yakumanGroups, yakuRareGroups } from '#/primitives/yaku-lists';
-import { memoize } from '#/primitives/memoize';
+import { Yaku } from '../../interfaces/common';
+import {
+  filterAllowed,
+  yakuGroups,
+  yakumanGroups,
+  yakuRareGroups,
+} from '../../primitives/yaku-lists';
+import { memoize } from '../../primitives/memoize';
 import { getAllowedYaku } from './yaku';
 
 function _getYakuList(state: IAppState): { [id: number]: Yaku[][] } {

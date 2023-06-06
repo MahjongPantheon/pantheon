@@ -42,7 +42,7 @@ typecheck:
 
 PHONY: test
 test:
-	./node_modules/.bin/vitest
+	./node_modules/.bin/vitest --run
 
 PHONY: autofix
 autofix:

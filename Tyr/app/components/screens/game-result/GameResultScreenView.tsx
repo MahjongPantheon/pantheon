@@ -18,10 +18,10 @@
 import * as React from 'react';
 import './page-game-result.css';
 import classNames from 'classnames';
-import { i18n } from '#/components/i18n';
+import { i18n } from '../../i18n';
 import { useContext } from 'react';
-import RepeatIcon from '../../../img/icons/repeat.svg?svgr';
-import SaveIcon from '../../../img/icons/check.svg?svgr';
+import { ReactComponent as RepeatIcon } from '../../../img/icons/repeat.svg';
+import { ReactComponent as SaveIcon } from '../../../img/icons/check.svg';
 
 type IProps = {
   showRepeatButton?: boolean;

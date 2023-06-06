@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { IComponentProps } from '#/components/IComponentProps';
+import { IComponentProps } from '../../IComponentProps';
 import {
   GET_OTHER_TABLES_LIST_INIT,
   GO_TO_CURRENT_GAME,
@@ -25,12 +25,12 @@ import {
   SHOW_LAST_RESULTS,
   START_NEW_GAME,
   UPDATE_CURRENT_GAMES_INIT,
-} from '#/store/actions/interfaces';
-import { HomeScreenView } from '#/components/screens/home/HomeScreenView';
-import { Preloader } from '#/components/general/preloader/Preloader';
-import { isLoading } from '#/store/selectors/screenConfirmationSelectors';
-import { i18n } from '#/components/i18n';
-import { I18nService } from '#/services/i18n';
+} from '../../../store/actions/interfaces';
+import { HomeScreenView } from './HomeScreenView';
+import { Preloader } from '../../general/preloader/Preloader';
+import { isLoading } from '../../../store/selectors/screenConfirmationSelectors';
+import { i18n } from '../../i18n';
+import { I18nService } from '../../../services/i18n';
 
 export class HomeScreen extends React.PureComponent<IComponentProps> {
   static contextType = i18n;

@@ -16,10 +16,10 @@
  */
 
 import * as React from 'react';
-import { IComponentProps } from '#/components/IComponentProps';
-import { EnterCredentialsScreen } from '#/components/screens/login/EnterCredentialsScreen';
-import { Preloader } from '#/components/general/preloader/Preloader';
-import { LoginErrorScreen } from '#/components/screens/login/LoginErrorScreen';
+import { IComponentProps } from '../../IComponentProps';
+import { EnterCredentialsScreen } from './EnterCredentialsScreen';
+import { Preloader } from '../../general/preloader/Preloader';
+import { LoginErrorScreen } from './LoginErrorScreen';
 
 export const LoginScreen: React.FC<IComponentProps> = (props) => {
   const { state } = props;

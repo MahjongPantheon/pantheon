@@ -15,17 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { YakuId } from '#/primitives/yaku';
+import { YakuId } from '../primitives/yaku';
 import {
   getLosingUsers,
   getNagashiUsers,
   getPaoUsers,
   getRiichiUsers,
   getWinningUsers,
-} from '#/store/selectors/mimirSelectors';
-import { IAppState } from '#/store/interfaces';
-import { getDora, getFu, getHan } from '#/store/selectors/hanFu';
-import { getSelectedYaku } from '#/store/selectors/yaku';
+} from '../store/selectors/mimirSelectors';
+import { IAppState } from '../store/interfaces';
+import { getDora, getFu, getHan } from '../store/selectors/hanFu';
+import { getSelectedYaku } from '../store/selectors/yaku';
 import {
   AbortResult,
   ChomboResult,
@@ -37,9 +37,9 @@ import {
   Round,
   RoundOutcome,
   TsumoResult,
-} from '#/clients/proto/atoms.pb';
-import { AppOutcomeRon } from '#/interfaces/app';
-import { unpack } from '#/primitives/yaku-compat';
+} from '../clients/proto/atoms.pb';
+import { AppOutcomeRon } from '../interfaces/app';
+import { unpack } from '../primitives/yaku-compat';
 
 export function formatRoundToTwirp(state: IAppState): Round | undefined {
   switch (state.currentOutcome?.selectedOutcome) {

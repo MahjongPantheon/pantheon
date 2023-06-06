@@ -100,8 +100,8 @@ export class Analytics {
   }
 
   constructor() {
-    this._statDomain = window.__cfg.STAT_HOST;
-    this._siteId = window.__cfg.STAT_SITE_ID;
+    this._statDomain = import.meta.env.VITE_STAT_HOST;
+    this._siteId = import.meta.env.VITE_STAT_SITE_ID;
     if (!this._statDomain) {
       return;
     }

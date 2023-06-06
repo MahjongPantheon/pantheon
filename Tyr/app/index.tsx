@@ -17,16 +17,16 @@
 
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from '#/components/App';
-import { Store } from '#/store';
-import { I18nService } from '#/services/i18n';
-import { IAppState } from '#/store/interfaces';
-import { observe } from '#/scripts/dimensionsObserver';
-import { registerFrontErrorHandler } from '#/scripts/logFrontError';
+import { App } from './components/App';
+import { Store } from './store';
+import { I18nService } from './services/i18n';
+import { IAppState } from './store/interfaces';
+import { observe } from './scripts/dimensionsObserver';
+import { registerFrontErrorHandler } from './scripts/logFrontError';
 import { Storage } from '../../Common/storage';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 
-const storageStrategy = new StorageStrategyClient(window.__cfg.COOKIE_DOMAIN || null);
+const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
 const storage = new Storage();
 storage.setStrategy(storageStrategy);
 

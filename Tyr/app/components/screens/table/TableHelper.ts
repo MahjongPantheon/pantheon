@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AppScreen, IAppState } from '#/store/interfaces';
+import { AppScreen, IAppState } from '../../../store/interfaces';
 import { Dispatch } from 'redux';
 import {
   getKamicha,
@@ -27,11 +27,11 @@ import {
   getShimocha,
   getToimen,
   RoundPreviewSchemePurpose,
-} from '#/store/selectors/roundPreviewSchemeSelectors';
-import { PlayerButtonMode, PlayerPointsMode } from '#/components/types/PlayerEnums';
-import { PlayerProps } from '#/components/general/players/PlayerProps';
-import { ItemSelect } from '#/components/general/select-modal/ItemSelect';
-import { SelectModalProps } from '#/components/general/select-modal/SelectModal';
+} from '../../../store/selectors/roundPreviewSchemeSelectors';
+import { PlayerButtonMode, PlayerPointsMode } from '../../types/PlayerEnums';
+import { PlayerProps } from '../../general/players/PlayerProps';
+import { ItemSelect } from '../../general/select-modal/ItemSelect';
+import { SelectModalProps } from '../../general/select-modal/SelectModal';
 import {
   ADD_ROUND_INIT,
   GET_OTHER_TABLE_RELOAD,
@@ -51,7 +51,7 @@ import {
   TOGGLE_RIICHI,
   TOGGLE_WINNER,
   UPDATE_CURRENT_GAMES_INIT,
-} from '#/store/actions/interfaces';
+} from '../../../store/actions/interfaces';
 import {
   deadPressed,
   loseDisabled,
@@ -62,22 +62,22 @@ import {
   riichiPressed,
   winDisabled,
   winPressed,
-} from '#/store/selectors/userItemSelectors';
-import { PlayerButtonProps } from '#/components/types/PlayerButtonProps';
-import { TableMode } from '#/components/types/TableMode';
-import { mayGoNextFromPlayersSelect } from '#/store/selectors/navbarSelectors';
+} from '../../../store/selectors/userItemSelectors';
+import { PlayerButtonProps } from '../../types/PlayerButtonProps';
+import { TableMode } from '../../types/TableMode';
+import { mayGoNextFromPlayersSelect } from '../../../store/selectors/navbarSelectors';
 import {
   PlayerArrow,
   PlayerSide,
   ResultArrowsProps,
-} from '#/components/general/result-arrows/ResultArrowsProps';
-import { TableInfoProps } from '#/components/screens/table/base/TableInfo';
-import { roundToString } from '#/components/helpers/Utils';
-import { AppOutcome } from '#/interfaces/app';
-import { getNextWinnerWithPao } from '#/store/selectors/paoSelectors';
-import { formatTime, getTimeRemaining } from '#/store/selectors/overviewSelectors';
-import { I18nService } from '#/services/i18n';
-import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
+} from '../../general/result-arrows/ResultArrowsProps';
+import { TableInfoProps } from './base/TableInfo';
+import { roundToString } from '../../helpers/Utils';
+import { AppOutcome } from '../../../interfaces/app';
+import { getNextWinnerWithPao } from '../../../store/selectors/paoSelectors';
+import { formatTime, getTimeRemaining } from '../../../store/selectors/overviewSelectors';
+import { I18nService } from '../../../services/i18n';
+import { PlayerInSession, RoundOutcome } from '../../../clients/proto/atoms.pb';
 
 // todo move to selectors most of code from here
 
