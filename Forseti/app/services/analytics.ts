@@ -46,6 +46,7 @@ export class Analytics {
       screen: `${window.innerWidth}x${window.innerHeight}`,
       language: navigator.language,
       cache: null,
+      title: window.document.title,
       url: url,
       referrer: '',
     };
@@ -62,7 +63,7 @@ export class Analytics {
         'Cache-Control': 'max-age=0',
       },
       referrer: window.location.toString().substring(0, window.location.toString().indexOf('/', 9)),
-      body: '{"type":"pageview","payload":' + JSON.stringify(payload) + '}',
+      body: '{"type":"event","payload":' + JSON.stringify(payload) + '}',
       method: 'POST',
       mode: 'cors',
     });
