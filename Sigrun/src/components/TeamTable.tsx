@@ -68,40 +68,51 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
             }}
           >
             <Group style={{ flex: 1 }} position='apart'>
-              <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
-                {idx + 1}
-              </Badge>
-              <Text weight='bold'>{team.name}</Text>
-              <Badge
-                w={75}
-                size='lg'
-                variant='filled'
-                color={team.data.rating > 0 ? 'lime' : 'red'}
-                radius='sm'
-                style={{ padding: 0 }}
-              >
-                {team.data.rating}
-              </Badge>
-              <Stack>
+              <Group style={{ flex: 1 }}>
+                <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
+                  {idx + 1}
+                </Badge>
+                <Text weight='bold' style={{ flex: 1 }}>
+                  <Text display='inline-flex' mr={14}>
+                    {team.name}
+                  </Text>
+                  <Badge
+                    w={75}
+                    size='lg'
+                    variant='filled'
+                    color={team.data.rating > 0 ? 'lime' : 'red'}
+                    radius='sm'
+                    style={{ padding: 0 }}
+                  >
+                    {team.data.rating}
+                  </Badge>
+                </Text>
+              </Group>
+              <Stack style={{ minWidth: '290px' }}>
                 {team.data.players.map((player, pidx) => (
                   <Group key={`pl_${pidx}`} position='apart'>
-                    <PlayerIcon p={player} />
-                    <Stack spacing={2}>
-                      <Anchor
-                        href={`/event/${events.map((ev) => ev.id).join('.')}/player/${player.id}`}
-                        onClick={(e) => {
-                          navigate(
-                            `/event/${events.map((ev) => ev.id).join('.')}/player/${player.id}`
-                          );
-                          e.preventDefault();
-                        }}
+                    <Group>
+                      <PlayerIcon p={player} />
+                      <Stack
+                        spacing={2}
+                        style={{ width: largeScreen ? 'auto' : 'calc(100vw - 245px)' }}
                       >
-                        {player.title}
-                      </Anchor>
-                      {events?.[0]?.type === EventType.EVENT_TYPE_ONLINE && (
-                        <Text c='dimmed'>{player.tenhouId}</Text>
-                      )}
-                    </Stack>
+                        <Anchor
+                          href={`/event/${events.map((ev) => ev.id).join('.')}/player/${player.id}`}
+                          onClick={(e) => {
+                            navigate(
+                              `/event/${events.map((ev) => ev.id).join('.')}/player/${player.id}`
+                            );
+                            e.preventDefault();
+                          }}
+                        >
+                          {player.title}
+                        </Anchor>
+                        {events?.[0]?.type === EventType.EVENT_TYPE_ONLINE && (
+                          <Text c='dimmed'>{player.tenhouId}</Text>
+                        )}
+                      </Stack>
+                    </Group>
                     <Badge
                       w={75}
                       size='lg'
