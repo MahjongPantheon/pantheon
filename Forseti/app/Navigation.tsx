@@ -52,6 +52,7 @@ import { Event } from './clients/proto/atoms.pb';
 import { useApi } from './hooks/api';
 import { useStorage } from './hooks/storage';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { MenuItemLink } from './helpers/MenuItemLink';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -223,52 +224,32 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
                   </Button>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/ownedEvents/edit/${(match ? params : paramsEdit)?.id}`);
-                      e.preventDefault();
-                    }}
+                  <MenuItemLink
+                    href={`/ownedEvents/edit/${(match ? params : paramsEdit)?.id}`}
                     icon={<IconTool size={18} />}
-                  >
-                    {i18n._t('Settings')}
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/event/${(match ? params : paramsEdit)?.id}/players`);
-                      e.preventDefault();
-                    }}
+                    text={i18n._t('Settings')}
+                  />
+                  <MenuItemLink
+                    href={`/event/${(match ? params : paramsEdit)?.id}/players`}
                     icon={<IconFriends size={18} />}
-                  >
-                    {i18n._t('Manage players')}
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`event/${(match ? params : paramsEdit)?.id}/penalties`);
-                      e.preventDefault();
-                    }}
+                    text={i18n._t('Manage players')}
+                  />
+                  <MenuItemLink
+                    href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
                     icon={<IconAlertOctagon size={18} />}
-                  >
-                    {i18n._t('Penalties')}
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/event/${(match ? params : paramsEdit)?.id}/games`);
-                      e.preventDefault();
-                    }}
+                    text={i18n._t('Penalties')}
+                  />
+                  <MenuItemLink
+                    href={`/event/${(match ? params : paramsEdit)?.id}/games`}
                     icon={<IconOlympics size={18} />}
-                  >
-                    {i18n._t('Manage games')}
-                  </Menu.Item>
+                    text={i18n._t('Manage games')}
+                  />
                   {eventData?.isPrescripted && (
-                    <Menu.Item
-                      onClick={(e) => {
-                        navigate(`/event/${(match ? params : paramsEdit)?.id}/prescript`);
-                        e.preventDefault();
-                      }}
+                    <MenuItemLink
+                      href={`/event/${(match ? params : paramsEdit)?.id}/prescript`}
                       icon={<IconScript size={18} />}
-                    >
-                      {i18n._t('Predefined seating')}
-                    </Menu.Item>
+                      text={i18n._t('Predefined seating')}
+                    />
                   )}
                   <Menu.Divider />
                   <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
@@ -312,59 +293,39 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
               </Menu.Target>
               <Menu.Dropdown>
                 {!isLoggedIn && (
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate('/profile/login');
-                      e.preventDefault();
-                    }}
+                  <MenuItemLink
+                    href={'/profile/login'}
                     icon={<IconLogin size={18} />}
-                  >
-                    {i18n._t('Sign in')}
-                  </Menu.Item>
+                    text={i18n._t('Sign in')}
+                  />
                 )}
                 {!isLoggedIn && (
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate('/profile/signup');
-                      e.preventDefault();
-                    }}
+                  <MenuItemLink
+                    href='/profile/signup'
                     icon={<IconUserPlus size={18} />}
-                  >
-                    {i18n._t('Sign up')}
-                  </Menu.Item>
+                    text={i18n._t('Sign up')}
+                  />
                 )}
                 {!isSuperadmin && (
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate('/profile/signupAdmin');
-                      e.preventDefault();
-                    }}
+                  <MenuItemLink
+                    href='/profile/signupAdmin'
                     icon={<IconUserPlus size={18} />}
-                  >
-                    {i18n._t('Register player')}
-                  </Menu.Item>
+                    text={i18n._t('Register player')}
+                  />
                 )}
                 {isLoggedIn && (
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate('/profile/manage');
-                      e.preventDefault();
-                    }}
+                  <MenuItemLink
+                    href='/profile/manage'
                     icon={<IconUserCircle size={18} />}
-                  >
-                    {i18n._t('Edit profile')}
-                  </Menu.Item>
+                    text={i18n._t('Edit profile')}
+                  />
                 )}
                 {isLoggedIn && (
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate('/profile/logout');
-                      e.preventDefault();
-                    }}
+                  <MenuItemLink
+                    href='/profile/logout'
                     icon={<IconLogout size={18} />}
-                  >
-                    {i18n._t('Sign out')}
-                  </Menu.Item>
+                    text={i18n._t('Sign out')}
+                  />
                 )}
               </Menu.Dropdown>
             </Menu>

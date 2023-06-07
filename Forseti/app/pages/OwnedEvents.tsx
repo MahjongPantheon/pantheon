@@ -49,7 +49,7 @@ import {
   IconScript,
   IconTimelineEventPlus,
 } from '@tabler/icons-react';
-import { Link, Redirect, useLocation } from 'wouter';
+import { Redirect, useLocation } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -59,6 +59,7 @@ import { authCtx } from '../hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
 import { TopActionButton } from '../helpers/TopActionButton';
+import { MenuItemLink } from '../helpers/MenuItemLink';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -268,41 +269,37 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       <Menu.Dropdown>
                         <Menu.Label>{i18n._t('Event management')}</Menu.Label>
                         {event.isPrescripted && (
-                          <Link to={`/event/${event.id}/prescript`}>
-                            <Menu.Item
-                              title={i18n._t('Manage predefined seating')}
-                              icon={<IconScript />}
-                            >
-                              {i18n._t('Predefined seating')}
-                            </Menu.Item>
-                          </Link>
+                          <MenuItemLink
+                            href={`/event/${event.id}/prescript`}
+                            title={i18n._t('Manage predefined seating')}
+                            icon={<IconScript />}
+                            text={i18n._t('Predefined seating')}
+                          />
                         )}
-                        <Link to={`/event/${event.id}/games`}>
-                          <Menu.Item
-                            title={i18n._t('Manage current games')}
-                            icon={<IconOlympics />}
-                          >
-                            {i18n._t('Manage games')}
-                          </Menu.Item>
-                        </Link>
-                        <Link to={`/event/${event.id}/penalties`}>
-                          <Menu.Item
-                            title={i18n._t('Manage penalties')}
-                            icon={<IconAlertOctagon />}
-                          >
-                            {i18n._t('Penalties')}
-                          </Menu.Item>
-                        </Link>
-                        <Link to={`/event/${event.id}/players`}>
-                          <Menu.Item title={i18n._t('Manage players')} icon={<IconFriends />}>
-                            {i18n._t('Manage players')}
-                          </Menu.Item>
-                        </Link>
-                        <Link to={`/ownedEvents/edit/${event.id}`}>
-                          <Menu.Item title={i18n._t('Edit event settings')} icon={<IconTool />}>
-                            {i18n._t('Settings')}
-                          </Menu.Item>
-                        </Link>
+                        <MenuItemLink
+                          href={`/event/${event.id}/games`}
+                          title={i18n._t('Manage current games')}
+                          icon={<IconOlympics />}
+                          text={i18n._t('Manage games')}
+                        />
+                        <MenuItemLink
+                          href={`/event/${event.id}/penalties`}
+                          title={i18n._t('Manage penalties')}
+                          icon={<IconAlertOctagon />}
+                          text={i18n._t('Penalties')}
+                        />
+                        <MenuItemLink
+                          href={`/event/${event.id}/players`}
+                          title={i18n._t('Manage players')}
+                          icon={<IconFriends />}
+                          text={i18n._t('Manage players')}
+                        />
+                        <MenuItemLink
+                          href={`/ownedEvents/edit/${event.id}`}
+                          title={i18n._t('Edit event settings')}
+                          icon={<IconTool />}
+                          text={i18n._t('Settings')}
+                        />
 
                         <Menu.Divider />
                         <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>

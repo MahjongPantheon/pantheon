@@ -53,6 +53,7 @@ import * as React from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useApi } from '../hooks/api';
+import { MenuItemLink } from './MenuItemLink';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -236,75 +237,47 @@ export function AppHeader() {
                   </Button>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId?.join('.')}/info`);
-                      e.preventDefault();
-                    }}
+                  <MenuItemLink
+                    href={`/event/${globals.data.eventId?.join('.')}/info`}
                     icon={<IconNotes size={24} />}
-                  >
-                    {i18n._pt('Event menu', 'Description')}
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId?.join('.')}/rules`);
-                      e.preventDefault();
-                    }}
+                    text={i18n._pt('Event menu', 'Description')}
+                  />
+                  <MenuItemLink
+                    href={`/event/${globals.data.eventId?.join('.')}/rules`}
                     icon={<IconListCheck size={24} />}
-                  >
-                    {i18n._pt('Event menu', 'Rules overview')}
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId?.join('.')}/games`);
-                      e.preventDefault();
-                    }}
+                    text={i18n._pt('Event menu', 'Rules overview')}
+                  />
+                  <MenuItemLink
+                    href={`/event/${globals.data.eventId?.join('.')}/games`}
                     icon={<IconOlympics size={24} />}
-                  >
-                    {i18n._pt('Event menu', 'Recent games')}
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={(e) => {
-                      navigate(`/event/${globals.data.eventId?.join('.')}/order/rating`);
-                      e.preventDefault();
-                    }}
+                    text={i18n._pt('Event menu', 'Recent games')}
+                  />
+                  <MenuItemLink
+                    href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
                     icon={<IconChartBar size={24} />}
-                  >
-                    {i18n._pt('Event menu', 'Rating table')}
-                  </Menu.Item>
+                    text={i18n._pt('Event menu', 'Rating table')}
+                  />
                   {globals.data.eventId?.length === 1 && (
-                    <Menu.Item
-                      onClick={(e) => {
-                        navigate(`/event/${globals.data.eventId?.join('.')}/achievements`);
-                        e.preventDefault();
-                      }}
+                    <MenuItemLink
+                      href={`/event/${globals.data.eventId?.join('.')}/achievements`}
                       icon={<IconAward size={24} />}
-                    >
-                      {i18n._pt('Event menu', 'Achievements')}
-                    </Menu.Item>
+                      text={i18n._pt('Event menu', 'Achievements')}
+                    />
                   )}
                   {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
-                    <Menu.Item
-                      onClick={(e) => {
-                        navigate(`/event/${globals.data.eventId?.join('.')}/seriesRating`);
-                        e.preventDefault();
-                      }}
+                    <MenuItemLink
+                      href={`/event/${globals.data.eventId?.join('.')}/seriesRating`}
                       icon={<IconChartLine size={24} />}
-                    >
-                      {i18n._pt('Event menu', 'Series rating')}
-                    </Menu.Item>
+                      text={i18n._pt('Event menu', 'Series rating')}
+                    />
                   )}
                   {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
                     globals.data.eventId?.length === 1 && (
-                      <Menu.Item
-                        onClick={(e) => {
-                          navigate(`/event/${globals.data.eventId?.join('.')}/timer`);
-                          e.preventDefault();
-                        }}
+                      <MenuItemLink
+                        href={`/event/${globals.data.eventId?.join('.')}/timer`}
                         icon={<IconAlarm size={24} />}
-                      >
-                        {i18n._pt('Event menu', 'Timer & seating')}
-                      </Menu.Item>
+                        text={i18n._pt('Event menu', 'Timer & seating')}
+                      />
                     )}
                   {globals.data.type === EventType.EVENT_TYPE_ONLINE &&
                     globals.data.eventId?.length === 1 && (
