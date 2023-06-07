@@ -78,6 +78,10 @@ export async function createServer(app, env) {
     res.send('ok');
   })
 
+  app.get('/robots.txt', (req, res) => {
+    res.send(`User-agent: *\n` + `Allow: /\n`);
+  })
+
   app.get('/eid:eventId', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
   })

@@ -42,7 +42,7 @@ import { PlayerStatsListing } from '../components/PlayerStatsListing';
 import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
 import { useEvent } from '../hooks/useEvent';
-import { Helmet } from 'react-helmet';
+import { Meta } from '../components/Meta';
 
 const HandsGraph = React.lazy(() => import('../components/HandsGraph'));
 const YakuGraph = React.lazy(() => import('../components/YakuGraph'));
@@ -89,11 +89,13 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
 
   return (
     <Container>
-      <Helmet>
-        <title>
-          {player.title} - {i18n._t('Player stats')} - Sigrun
-        </title>
-      </Helmet>
+      <Meta
+        title={`${player.title} - ${i18n._t('Player stats')} - Sigrun`}
+        description={i18n._t(
+          'Player statistics for %1 in the event "%2" provided by Mahjong Pantheon',
+          [player.title, events?.[0].title]
+        )}
+      />
       <h2>{player.title}</h2>
       {events?.map((event, eid) => {
         return (

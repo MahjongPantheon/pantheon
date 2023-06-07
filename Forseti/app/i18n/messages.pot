@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 09:55+0300\n"
+"POT-Creation-Date: 2023-06-07 18:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,99 +203,103 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: app/Navigation.tsx:165:12
+#: app/Navigation.tsx:166:12
 #: app/pages/OwnedEvents.tsx:182:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 
-#: app/Navigation.tsx:172:14
+#: app/Navigation.tsx:173:14
 #: app/pages/OwnedEvents.tsx:189:14
 msgid "Cancel"
 msgstr ""
 
-#: app/Navigation.tsx:182:14
+#: app/Navigation.tsx:183:14
 #: app/pages/OwnedEvents.tsx:199:14
 msgid "Stop event"
 msgstr ""
 
-#: app/Navigation.tsx:199:24
-#: app/Navigation.tsx:205:24
+#: app/Navigation.tsx:200:24
+#: app/Navigation.tsx:206:24
 msgid "To events list"
 msgstr ""
 
-#: app/Navigation.tsx:201:18
+#: app/Navigation.tsx:202:18
 msgid "Events list"
 msgstr ""
 
-#: app/Navigation.tsx:230:27
+#: app/Navigation.tsx:234:27
+msgid "Open event in new tab"
+msgstr ""
+
+#: app/Navigation.tsx:239:27
 #: app/pages/OwnedEvents.tsx:301:33
 msgid "Settings"
 msgstr ""
 
-#: app/Navigation.tsx:235:27
+#: app/Navigation.tsx:244:27
 #: app/pages/OwnedEvents.tsx:293:34
 #: app/pages/OwnedEvents.tsx:295:33
 msgid "Manage players"
 msgstr ""
 
-#: app/Navigation.tsx:240:27
+#: app/Navigation.tsx:249:27
 #: app/pages/OwnedEvents.tsx:289:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:25
 msgid "Penalties"
 msgstr ""
 
-#: app/Navigation.tsx:245:27
+#: app/Navigation.tsx:254:27
 #: app/pages/OwnedEvents.tsx:283:33
 msgid "Manage games"
 msgstr ""
 
-#: app/Navigation.tsx:251:29
+#: app/Navigation.tsx:260:29
 #: app/pages/OwnedEvents.tsx:276:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/Navigation.tsx:255:32
+#: app/Navigation.tsx:264:32
 #: app/pages/OwnedEvents.tsx:305:38
 msgid "Danger zone"
 msgstr ""
 
-#: app/Navigation.tsx:258:30
-#: app/Navigation.tsx:264:24
+#: app/Navigation.tsx:267:30
+#: app/Navigation.tsx:273:24
 #: app/pages/OwnedEvents.tsx:308:36
 #: app/pages/OwnedEvents.tsx:312:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/Navigation.tsx:268:28
-#: app/Navigation.tsx:279:22
+#: app/Navigation.tsx:277:28
+#: app/Navigation.tsx:288:22
 #: app/pages/OwnedEvents.tsx:316:34
 #: app/pages/OwnedEvents.tsx:324:28
 msgid "Finish event"
 msgstr ""
 
-#: app/Navigation.tsx:289:26
-#: app/Navigation.tsx:291:20
+#: app/Navigation.tsx:298:26
+#: app/Navigation.tsx:300:20
 msgid "Your profile"
 msgstr ""
 
-#: app/Navigation.tsx:299:27
+#: app/Navigation.tsx:308:27
 msgid "Sign in"
 msgstr ""
 
-#: app/Navigation.tsx:306:27
+#: app/Navigation.tsx:315:27
 msgid "Sign up"
 msgstr ""
 
-#: app/Navigation.tsx:313:27
+#: app/Navigation.tsx:322:27
 #: app/pages/ProfileManageAdmin.tsx:254:19
 msgid "Register player"
 msgstr ""
 
-#: app/Navigation.tsx:320:27
+#: app/Navigation.tsx:329:27
 msgid "Edit profile"
 msgstr ""
 
-#: app/Navigation.tsx:327:27
+#: app/Navigation.tsx:336:27
 msgid "Sign out"
 msgstr ""
 

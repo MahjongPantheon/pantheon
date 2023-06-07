@@ -35,7 +35,6 @@ import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { IconAward } from '@tabler/icons-react';
 import { YakuId, yakuNameMap } from '../helpers/yaku';
-import { Helmet } from 'react-helmet';
 import bestHand from '../../assets/img/bestHand.png';
 import bestFu from '../../assets/img/bestFu.png';
 import bestTsumoist from '../../assets/img/bestTsumoist.png';
@@ -56,6 +55,7 @@ import andYourRiichiBet from '../../assets/img/andYourRiichiBet.png';
 import covetousKnight from '../../assets/img/covetousKnight.png';
 import ninja from '../../assets/img/ninja.png';
 import needMoreGold from '../../assets/img/needMoreGold.png';
+import { Meta } from '../components/Meta';
 
 enum Achievement {
   BEST_HAND = 'bestHand',
@@ -765,11 +765,12 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
 
   return (
     <Container>
-      <Helmet>
-        <title>
-          {events?.[0].title} - {i18n._t('Achievements')} - Sigrun
-        </title>
-      </Helmet>
+      <Meta
+        title={`${events?.[0].title} - ${i18n._t('Achievements')} - Sigrun`}
+        description={i18n._t('Achievements list for the event "%1" provided by Mahjong Pantheon', [
+          events?.[0].title,
+        ])}
+      />
       <h2 style={{ display: 'flex', gap: '20px' }}>
         {events?.[0] && <EventTypeIcon event={events[0]} />}
         {events?.[0]?.title} - {i18n._t('Achievements')}

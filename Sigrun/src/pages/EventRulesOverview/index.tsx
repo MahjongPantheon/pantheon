@@ -28,8 +28,8 @@ import { LocalSettings } from './LocalSettings';
 import { TournamentSettings } from './TournamentSettings';
 import { RulesetSettings } from './RulesetSettings';
 import { YakuSettings } from './YakuSettings';
-import { Helmet } from 'react-helmet';
 import { EventTypeIcon } from '../../components/EventTypeIcon';
+import { Meta } from '../../components/Meta';
 
 export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
   params: { eventId },
@@ -62,11 +62,12 @@ export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
   return (
     <>
       <Container>
-        <Helmet>
-          <title>
-            {events?.[0].title} - {i18n._t('Rules overview')} - Sigrun
-          </title>
-        </Helmet>
+        <Meta
+          title={`${events?.[0].title} - ${i18n._t('Rules overview')} - Sigrun`}
+          description={i18n._t('Rules overview for the event "%1" provided by Mahjong Pantheon', [
+            events?.[0].title,
+          ])}
+        />
         <h2 style={{ display: 'flex', gap: '20px' }}>
           {events?.[0] && <EventTypeIcon event={events[0]} />}
           {events?.[0]?.title} - {i18n._t('Rules overview')}

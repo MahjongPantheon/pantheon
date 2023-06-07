@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 09:55+0300\n"
+"POT-Creation-Date: 2023-06-07 18:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,8 +26,8 @@ msgid "Description"
 msgstr ""
 
 #: src/components/AppFooter.tsx:73:22
-#: src/pages/EventRulesOverview/index.tsx:67:36
-#: src/pages/EventRulesOverview/index.tsx:72:35
+#: src/pages/EventRulesOverview/index.tsx:66:44
+#: src/pages/EventRulesOverview/index.tsx:73:35
 msgid "Rules overview"
 msgstr ""
 
@@ -36,23 +36,23 @@ msgid "Recent games"
 msgstr ""
 
 #: src/components/AppFooter.tsx:92:20
-#: src/pages/EventList.tsx:104:67
+#: src/pages/EventList.tsx:105:67
 #: src/pages/RatingTable.tsx:113:35
-#: src/pages/RatingTable.tsx:128:16
-#: src/pages/RatingTable.tsx:133:16
+#: src/pages/RatingTable.tsx:128:20
+#: src/pages/RatingTable.tsx:130:20
 #: src/pages/RatingTable.tsx:141:33
 msgid "Rating table"
 msgstr ""
 
 #: src/components/AppFooter.tsx:103:20
-#: src/pages/Achievements.tsx:770:34
-#: src/pages/Achievements.tsx:775:33
+#: src/pages/Achievements.tsx:769:42
+#: src/pages/Achievements.tsx:776:33
 msgid "Achievements"
 msgstr ""
 
 #: src/components/AppFooter.tsx:112:20
-#: src/pages/SeriesRating.tsx:69:12
-#: src/pages/SeriesRating.tsx:74:31
+#: src/pages/SeriesRating.tsx:68:42
+#: src/pages/SeriesRating.tsx:75:31
 msgid "Series rating"
 msgstr ""
 
@@ -609,6 +609,14 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
+#: src/Layout.tsx:123:28
+msgid "Sigrun: riichi mahjong ratings and statistics"
+msgstr ""
+
+#: src/Layout.tsx:124:34
+msgid "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list."
+msgstr ""
+
 #: src/pages/Achievements.tsx:138:14
 msgid "Best hand"
 msgstr ""
@@ -890,26 +898,42 @@ msgstr ""
 msgid "Achievements are not available for aggregated events"
 msgstr ""
 
-#: src/pages/EventInfo.tsx:50:47
-#: src/pages/RatingTable.tsx:133:44
-#: src/pages/RecentGames.tsx:85:42
+#: src/pages/Achievements.tsx:770:22
+msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+
+#: src/pages/EventInfo.tsx:54:18
+#: src/pages/RatingTable.tsx:130:49
+#: src/pages/RecentGames.tsx:82:47
 msgid "Aggregated event"
 msgstr ""
 
-#: src/pages/EventInfo.tsx:70:29
+#: src/pages/EventInfo.tsx:57:22
+msgid "Description of the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+
+#: src/pages/EventInfo.tsx:80:29
 msgid "Event administrators: "
 msgstr ""
 
-#: src/pages/EventList.tsx:77:17
+#: src/pages/EventList.tsx:77:19
 msgid "Event list"
 msgstr ""
 
-#: src/pages/EventList.tsx:79:12
+#: src/pages/EventList.tsx:78:22
+msgid "List of all events registered with Mahjong Pantheon"
+msgstr ""
+
+#: src/pages/EventList.tsx:80:12
 msgid "Riichi mahjong events list"
 msgstr ""
 
 #: src/pages/EventRulesOverview/index.tsx:55:12
 msgid "Ruleset details page is not available for aggregated events"
+msgstr ""
+
+#: src/pages/EventRulesOverview/index.tsx:67:24
+msgid "Rules overview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
 #: src/pages/EventRulesOverview/LocalSettings.tsx:35:16
@@ -1296,36 +1320,48 @@ msgstr ""
 msgid "Pao rule enabled for:"
 msgstr ""
 
-#: src/pages/Game.tsx:62:19
+#: src/pages/Game.tsx:60:44
 msgid "Game preview"
 msgstr ""
 
-#: src/pages/Game.tsx:66:35
+#: src/pages/Game.tsx:61:24
+msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+
+#: src/pages/Game.tsx:68:35
 msgid "View game"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:94:29
+#: src/pages/PlayerStats.tsx:93:37
 msgid "Player stats"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:134:16
+#: src/pages/PlayerStats.tsx:94:22
+msgid "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
+msgstr ""
+
+#: src/pages/PlayerStats.tsx:136:16
 msgid "View selected game details"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:141:24
+#: src/pages/PlayerStats.tsx:143:24
 msgid "Previous game"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:159:24
+#: src/pages/PlayerStats.tsx:161:24
 msgid "Next game"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:181:24
+#: src/pages/PlayerStats.tsx:183:24
 msgid "Close game preview"
 msgstr ""
 
 #: src/pages/RatingTable.tsx:116:12
 msgid "Rating table is hidden by tournament administrator"
+msgstr ""
+
+#: src/pages/RatingTable.tsx:133:24
+msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
 #: src/pages/RatingTable.tsx:158:18
@@ -1371,38 +1407,50 @@ msgstr ""
 msgid "Average points"
 msgstr ""
 
-#: src/pages/RecentGames.tsx:80:16
-#: src/pages/RecentGames.tsx:85:16
-#: src/pages/RecentGames.tsx:92:31
+#: src/pages/RecentGames.tsx:80:20
+#: src/pages/RecentGames.tsx:82:20
+#: src/pages/RecentGames.tsx:93:31
 msgid "Last games"
+msgstr ""
+
+#: src/pages/RecentGames.tsx:85:24
+msgid "Last games of the event \"%1\", page %2, provided by Mahjong Pantheon"
 msgstr ""
 
 #: src/pages/SeriesRating.tsx:60:29
 msgid "Series rating is not available for aggregated events"
 msgstr ""
 
-#: src/pages/SeriesRating.tsx:100:22
+#: src/pages/SeriesRating.tsx:69:22
+msgid "Series rating for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+
+#: src/pages/SeriesRating.tsx:101:22
 msgid "Best series"
 msgstr ""
 
-#: src/pages/SeriesRating.tsx:103:22
-#: src/pages/SeriesRating.tsx:134:22
+#: src/pages/SeriesRating.tsx:104:22
+#: src/pages/SeriesRating.tsx:135:22
 msgid "Avg place:"
 msgstr ""
 
-#: src/pages/SeriesRating.tsx:107:22
-#: src/pages/SeriesRating.tsx:139:22
+#: src/pages/SeriesRating.tsx:108:22
+#: src/pages/SeriesRating.tsx:140:22
 msgid "Score:"
 msgstr ""
 
-#: src/pages/SeriesRating.tsx:131:22
+#: src/pages/SeriesRating.tsx:132:22
 msgid "Last series"
 msgstr ""
 
-#: src/pages/Timer.tsx:92:29
+#: src/pages/Timer.tsx:120:29
 msgid "Timer is not available for aggregated events"
 msgstr ""
 
-#: src/pages/Timer.tsx:121:12
+#: src/pages/Timer.tsx:148:19
 msgid "Timer"
+msgstr ""
+
+#: src/pages/Timer.tsx:149:22
+msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""

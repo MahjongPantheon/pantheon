@@ -39,7 +39,7 @@ import { IconAlarm } from '@tabler/icons-react';
 import { PlayerSeating } from '../clients/proto/atoms.pb';
 import sound from '../../assets/snd/5min.wav';
 import { useI18n } from '../hooks/i18n';
-import { Helmet } from 'react-helmet';
+import { Meta } from '../components/Meta';
 
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
@@ -144,11 +144,12 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
 
   return (
     <Container w='100%' m={10} maw='100%'>
-      <Helmet>
-        <title>
-          {i18n._t('Timer')} - {events[0]?.title} - Sigrun
-        </title>
-      </Helmet>
+      <Meta
+        title={`${i18n._t('Timer')} - ${events?.[0].title} - Sigrun`}
+        description={i18n._t('Timer page for the event "%1" provided by Mahjong Pantheon', [
+          events?.[0].title,
+        ])}
+      />
       {!showSeating && (
         <>
           <h2 style={{ display: 'flex', gap: '20px' }}>

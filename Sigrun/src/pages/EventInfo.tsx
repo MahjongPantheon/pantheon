@@ -27,6 +27,7 @@ import { PlayerIcon } from '../components/PlayerIcon';
 import { useLocation } from 'wouter';
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
+import { Meta } from '../components/Meta';
 
 export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
@@ -45,10 +46,19 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
 
   return (
     <Container>
-      <Helmet>
-        {events?.length === 1 && <title>{events?.[0].title} - Sigrun</title>}
-        {(events?.length ?? 0) > 1 && <title>{i18n._t('Aggregated event')} - Sigrun</title>}
-      </Helmet>
+      <Meta
+        title={
+          events?.length === 1
+            ? `${events?.[0].title} - Sigrun`
+            : (events?.length ?? 0) > 1
+            ? `${i18n._t('Aggregated event')} - Sigrun`
+            : `Sigrun`
+        }
+        description={i18n._t('Description of the event "%1" provided by Mahjong Pantheon', [
+          events?.[0].title,
+        ])}
+      />
+      <Helmet>{}</Helmet>
       {events?.map((event, eid) => {
         return (
           <Fragment key={`ev_${eid}`}>

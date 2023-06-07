@@ -38,7 +38,7 @@ import { GameListing } from '../components/GameListing';
 import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEvent } from '../hooks/useEvent';
-import { Helmet } from 'react-helmet';
+import { Meta } from '../components/Meta';
 
 const PERPAGE = 10;
 export const RecentGames: React.FC<{
@@ -74,18 +74,19 @@ export const RecentGames: React.FC<{
   return (
     events && (
       <Container>
-        <Helmet>
-          {events?.length === 1 && (
-            <title>
-              {i18n._t('Last games')} - {events?.[0].title} - Sigrun
-            </title>
+        <Meta
+          title={
+            events?.length === 1
+              ? `${i18n._t('Last games')} - ${events?.[0].title} - Sigrun`
+              : (events?.length ?? 0) > 1
+              ? `${i18n._t('Last games')} - ${i18n._t('Aggregated event')} - Sigrun`
+              : `Sigrun`
+          }
+          description={i18n._t(
+            'Last games of the event "%1", page %2, provided by Mahjong Pantheon',
+            [events?.[0].title, page]
           )}
-          {(events?.length ?? 0) > 1 && (
-            <title>
-              {i18n._t('Last games')} - {i18n._t('Aggregated event')} - Sigrun
-            </title>
-          )}
-        </Helmet>
+        />
         {events?.map((event, eid) => (
           <h2 style={{ display: 'flex', gap: '20px' }} key={`ev_${eid}`}>
             {events && <EventTypeIcon event={event} />}

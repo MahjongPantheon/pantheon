@@ -35,7 +35,7 @@ import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { PlayerIcon } from '../components/PlayerIcon';
 import { useLocation } from 'wouter';
-import { Helmet } from 'react-helmet';
+import { Meta } from '../components/Meta';
 
 export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
   params: { eventId },
@@ -64,11 +64,12 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
 
   return (
     <Container>
-      <Helmet>
-        <title>
-          {i18n._t('Series rating')} - {events[0]?.title} - Sigrun
-        </title>
-      </Helmet>
+      <Meta
+        title={`${events?.[0].title} - ${i18n._t('Series rating')} - Sigrun`}
+        description={i18n._t('Series rating for the event "%1" provided by Mahjong Pantheon', [
+          events?.[0].title,
+        ])}
+      />
       <h2 style={{ display: 'flex', gap: '20px' }}>
         {events[0] && <EventTypeIcon event={events[0]} />}
         {events[0]?.title} - {i18n._t('Series rating')}

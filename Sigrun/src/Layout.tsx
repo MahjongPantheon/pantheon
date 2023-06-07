@@ -33,9 +33,8 @@ import { useCallback, useState, ReactNode, useEffect } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
-import { Helmet } from 'react-helmet';
-import favicon from '../assets/ico/favicon.png';
 import { EmotionCache } from '@emotion/css';
+import { Meta } from './components/Meta';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -120,15 +119,12 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
             <StorageProvider>
               <I18nProvider>
                 <ApiProvider>
-                  <Helmet>
-                    <title>Sigrun</title>
-                    <meta charSet='UTF-8' />
-                    <link rel='icon' type='image/png' href={favicon} />
-                    <meta
-                      name='viewport'
-                      content='width=device-width, initial-scale=1, maximum-scale=1'
-                    />
-                  </Helmet>
+                  <Meta
+                    title={i18n._t('Sigrun: riichi mahjong ratings and statistics')}
+                    description={i18n._t(
+                      'Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.'
+                    )}
+                  />
                   <NavigationProgress color='green' zIndex={10100} />
                   <AppShell
                     padding='md'

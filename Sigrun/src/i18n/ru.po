@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 09:55+0300\n"
-"PO-Revision-Date: 2023-06-07 10:01+0300\n"
+"POT-Creation-Date: 2023-06-07 18:24+0300\n"
+"PO-Revision-Date: 2023-06-07 18:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -204,8 +204,8 @@ msgctxt "Multiron inner log item"
 msgid "<li><b>%1</b> - %2, %3</li>"
 msgstr "<li><b>%1</b> - %2, %3</li>"
 
-#: src/components/AppFooter.tsx:103:20 src/pages/Achievements.tsx:770:34
-#: src/pages/Achievements.tsx:775:33
+#: src/components/AppFooter.tsx:103:20 src/pages/Achievements.tsx:769:42
+#: src/pages/Achievements.tsx:776:33
 msgid "Achievements"
 msgstr "Номинации"
 
@@ -217,6 +217,12 @@ msgstr "Номинации"
 #: src/pages/Achievements.tsx:761:29
 msgid "Achievements are not available for aggregated events"
 msgstr "Для агрегированных событий номинации недоступны"
+
+#: src/pages/Achievements.tsx:770:22
+msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+"Список номинаций для события \"%1\", предоставленные системой Mahjong "
+"Pantheon"
 
 #: src/components/AppHeader.tsx:307:18
 msgid "Add online game"
@@ -235,8 +241,8 @@ msgstr "Добавить игру"
 msgid "Agariyame"
 msgstr "Агарияме"
 
-#: src/pages/EventInfo.tsx:50:47 src/pages/RatingTable.tsx:133:44
-#: src/pages/RecentGames.tsx:85:42
+#: src/pages/EventInfo.tsx:54:18 src/pages/RatingTable.tsx:130:49
+#: src/pages/RecentGames.tsx:82:47
 msgid "Aggregated event"
 msgstr "Агрегированное событие"
 
@@ -333,7 +339,7 @@ msgstr "Среднее число выигранных очков: "
 msgid "Average: "
 msgstr "Среднее: "
 
-#: src/pages/SeriesRating.tsx:103:22 src/pages/SeriesRating.tsx:134:22
+#: src/pages/SeriesRating.tsx:104:22 src/pages/SeriesRating.tsx:135:22
 msgid "Avg place:"
 msgstr "Ср. место:"
 
@@ -349,7 +355,7 @@ msgstr "Из-за риичи: "
 msgid "Best hand"
 msgstr "Лучшая рука"
 
-#: src/pages/SeriesRating.tsx:100:22
+#: src/pages/SeriesRating.tsx:101:22
 msgid "Best series"
 msgstr "Лучшая серия"
 
@@ -421,7 +427,7 @@ msgstr "Чомбо: %1"
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
 
-#: src/pages/PlayerStats.tsx:181:24
+#: src/pages/PlayerStats.tsx:183:24
 msgid "Close game preview"
 msgstr "Закрыть предпросмотр"
 
@@ -480,6 +486,10 @@ msgctxt "Event menu"
 msgid "Description"
 msgstr "Описание"
 
+#: src/pages/EventInfo.tsx:57:22
+msgid "Description of the event \"%1\" provided by Mahjong Pantheon"
+msgstr "Описание события \"%1\", предоставленное системой Mahjong Pantheon"
+
 #: src/pages/Achievements.tsx:220:14
 msgid "Die Hard"
 msgstr "Крепкий орешек"
@@ -516,7 +526,7 @@ msgstr "Включить возможность записи исхода \"На
 msgid "Equalize uma"
 msgstr "Выравнивание умы"
 
-#: src/pages/EventInfo.tsx:70:29
+#: src/pages/EventInfo.tsx:80:29
 msgid "Event administrators: "
 msgstr "Администраторы события: "
 
@@ -524,7 +534,7 @@ msgstr "Администраторы события: "
 msgid "Event contents"
 msgstr "Данные события"
 
-#: src/pages/EventList.tsx:77:17
+#: src/pages/EventList.tsx:77:19
 msgid "Event list"
 msgstr "Список событий"
 
@@ -574,7 +584,7 @@ msgstr "Время истечения игры (в часах)"
 msgid "Game link"
 msgstr "Ссылка на игру"
 
-#: src/pages/Game.tsx:62:19
+#: src/pages/Game.tsx:60:44
 msgid "Game preview"
 msgstr "Просмотр игры"
 
@@ -823,14 +833,24 @@ msgstr "Куитан"
 msgid "Language"
 msgstr "Язык"
 
-#: src/pages/RecentGames.tsx:80:16 src/pages/RecentGames.tsx:85:16
-#: src/pages/RecentGames.tsx:92:31
+#: src/pages/RecentGames.tsx:80:20 src/pages/RecentGames.tsx:82:20
+#: src/pages/RecentGames.tsx:93:31
 msgid "Last games"
 msgstr "Последние игры"
 
-#: src/pages/SeriesRating.tsx:131:22
+#: src/pages/RecentGames.tsx:85:24
+msgid "Last games of the event \"%1\", page %2, provided by Mahjong Pantheon"
+msgstr ""
+"Последние игры события \"%1\", страница %2, предоставлено системой Mahjong "
+"Pantheon"
+
+#: src/pages/SeriesRating.tsx:132:22
 msgid "Last series"
 msgstr "Текущая серия"
+
+#: src/pages/EventList.tsx:78:22
+msgid "List of all events registered with Mahjong Pantheon"
+msgstr "Список событий, зарегистрированных в системе Mahjong Pantheon"
 
 #: src/pages/EventRulesOverview/TabsList.tsx:43:12
 msgid "Local event settings"
@@ -885,7 +905,7 @@ msgstr "Нагаши манган"
 msgid "Nagashi: %1"
 msgstr "Нагаши манган: %1"
 
-#: src/pages/PlayerStats.tsx:159:24
+#: src/pages/PlayerStats.tsx:161:24
 msgid "Next game"
 msgstr "Следующая игра"
 
@@ -995,11 +1015,18 @@ msgstr "ID игрока"
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: src/pages/PlayerStats.tsx:94:29
+#: src/pages/PlayerStats.tsx:94:22
+msgid ""
+"Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
+msgstr ""
+"Статистика игрока %1 в событии \"%2\", предоставленная системой Mahjong "
+"Pantheon"
+
+#: src/pages/PlayerStats.tsx:93:37
 msgid "Player stats"
 msgstr "Статистика игрока"
 
-#: src/pages/PlayerStats.tsx:141:24
+#: src/pages/PlayerStats.tsx:143:24
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
@@ -1016,9 +1043,9 @@ msgstr "Рейтинг"
 msgid "Rating points"
 msgstr "Рейтинговые очки"
 
-#: src/components/AppFooter.tsx:92:20 src/pages/EventList.tsx:104:67
-#: src/pages/RatingTable.tsx:113:35 src/pages/RatingTable.tsx:128:16
-#: src/pages/RatingTable.tsx:133:16 src/pages/RatingTable.tsx:141:33
+#: src/components/AppFooter.tsx:92:20 src/pages/EventList.tsx:105:67
+#: src/pages/RatingTable.tsx:113:35 src/pages/RatingTable.tsx:128:20
+#: src/pages/RatingTable.tsx:130:20 src/pages/RatingTable.tsx:141:33
 msgid "Rating table"
 msgstr "Рейтинг"
 
@@ -1030,6 +1057,11 @@ msgstr "Рейтинг"
 #: src/pages/RatingTable.tsx:116:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "Рейтинговая таблица была скрыта администратором турнира"
+
+#: src/pages/RatingTable.tsx:133:24
+msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+"Рейтинговая таблица события \"%1\", предоставленная системой Mahjong Pantheon"
 
 #: src/components/AppFooter.tsx:85:20
 msgid "Recent games"
@@ -1072,7 +1104,7 @@ msgstr ""
 "После завершения игры все ставки риичи, оставшиеся на столе, отдаются "
 "победителю в игре"
 
-#: src/pages/EventList.tsx:79:12
+#: src/pages/EventList.tsx:80:12
 msgid "Riichi mahjong events list"
 msgstr "Список турниров и рейтингов"
 
@@ -1097,8 +1129,8 @@ msgid "Rounds won: "
 msgstr "Выиграно раундов: "
 
 #: src/components/AppFooter.tsx:73:22
-#: src/pages/EventRulesOverview/index.tsx:67:36
-#: src/pages/EventRulesOverview/index.tsx:72:35
+#: src/pages/EventRulesOverview/index.tsx:66:44
+#: src/pages/EventRulesOverview/index.tsx:73:35
 msgid "Rules overview"
 msgstr "Обзор правил"
 
@@ -1106,6 +1138,10 @@ msgstr "Обзор правил"
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr "Обзор правил"
+
+#: src/pages/EventRulesOverview/index.tsx:67:24
+msgid "Rules overview for the event \"%1\" provided by Mahjong Pantheon"
+msgstr "Обзор правил события \"%1\", предоставленный системой Mahjong Pantheon"
 
 #: src/pages/EventRulesOverview/TabsList.tsx:39:10
 msgid "Ruleset details"
@@ -1148,7 +1184,7 @@ msgid "Score given to all players in the beginning of the rating"
 msgstr ""
 "Количество рейтинговых очков, изначально даваемое каждому новому игроку"
 
-#: src/pages/SeriesRating.tsx:107:22 src/pages/SeriesRating.tsx:139:22
+#: src/pages/SeriesRating.tsx:108:22 src/pages/SeriesRating.tsx:140:22
 msgid "Score:"
 msgstr "Очки:"
 
@@ -1161,8 +1197,8 @@ msgstr "Предопределенная рассадка"
 msgid "Series length"
 msgstr "Длина серии"
 
-#: src/components/AppFooter.tsx:112:20 src/pages/SeriesRating.tsx:69:12
-#: src/pages/SeriesRating.tsx:74:31
+#: src/components/AppFooter.tsx:112:20 src/pages/SeriesRating.tsx:68:42
+#: src/pages/SeriesRating.tsx:75:31
 msgid "Series rating"
 msgstr "Рейтинг по сериям игр"
 
@@ -1170,6 +1206,11 @@ msgstr "Рейтинг по сериям игр"
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr "Рейтинг по сериям игр"
+
+#: src/pages/SeriesRating.tsx:69:22
+msgid "Series rating for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+"Рейтинг серий события \"%1\", предоставленный системой Mahjong Pantheon"
 
 #: src/pages/SeriesRating.tsx:60:29
 msgid "Series rating is not available for aggregated events"
@@ -1191,9 +1232,29 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
+#: src/Layout.tsx:124:34
+msgid ""
+"Sigrun is the statistics viewer for riichi mahjong club games and "
+"tournaments powered by Mahjong Pantheon system. It provides game logs, "
+"player statistics with graphs, rating tables and achievements list."
+msgstr ""
+"Sigrun - это система просмотра статистики для клубных и турнирных игр в "
+"риичи-маджонг в системе Mahjong Pantheon. Предоставляет историю игр, "
+"статистику игроков с графиками, рейтинговые таблицы и списки номинаций."
+
+#: src/Layout.tsx:123:28
+msgid "Sigrun: riichi mahjong ratings and statistics"
+msgstr "Sigrun: рейтинги и статистика в риичи-маджонге"
+
 #: src/pages/EventRulesOverview/UmaSelect.tsx:37:61
 msgid "Simple rank-based"
 msgstr "Простой, на основе текущего места"
+
+#: src/pages/Game.tsx:61:24
+msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+"Просмотр одиночной игры в событии \"%1\", предоставленный системой Mahjong "
+"Pantheon"
 
 #: src/helpers/yaku.ts:194:34
 msgid "Suuankou"
@@ -1262,7 +1323,7 @@ msgstr ""
 msgid "This can't be your wait"
 msgstr "Он не может на это ждать"
 
-#: src/pages/Timer.tsx:121:12
+#: src/pages/Timer.tsx:148:19
 msgid "Timer"
 msgstr "Таймер"
 
@@ -1275,9 +1336,14 @@ msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr "Таймер и рассадка"
 
-#: src/pages/Timer.tsx:92:29
+#: src/pages/Timer.tsx:120:29
 msgid "Timer is not available for aggregated events"
 msgstr "Для агрегированных событий таймер недоступен"
+
+#: src/pages/Timer.tsx:149:22
+msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+"Страница таймера в событии \"%1\", предоставленная системой Mahjong Pantheon"
 
 #: src/pages/EventRulesOverview/TournamentSettings.tsx:36:22
 msgid ""
@@ -1364,11 +1430,11 @@ msgstr "Ума за 3 место"
 msgid "Uma penalty for 4th place"
 msgstr "Ума за 4 место"
 
-#: src/pages/Game.tsx:66:35
+#: src/pages/Game.tsx:68:35
 msgid "View game"
 msgstr "Посмотреть реплей"
 
-#: src/pages/PlayerStats.tsx:134:16
+#: src/pages/PlayerStats.tsx:136:16
 msgid "View selected game details"
 msgstr "Подробнее об игре"
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 09:55+0300\n"
-"PO-Revision-Date: 2023-06-07 09:56+0300\n"
+"POT-Creation-Date: 2023-06-07 18:24+0300\n"
+"PO-Revision-Date: 2023-06-07 18:31+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -174,7 +174,7 @@ msgstr ""
 "Невозможно сгенерировать рассадку: число зарегистрированных игроков не "
 "делится на 4"
 
-#: app/Navigation.tsx:172:14 app/pages/OwnedEvents.tsx:189:14
+#: app/Navigation.tsx:173:14 app/pages/OwnedEvents.tsx:189:14
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -288,7 +288,7 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
-#: app/Navigation.tsx:255:32 app/pages/OwnedEvents.tsx:305:38
+#: app/Navigation.tsx:264:32 app/pages/OwnedEvents.tsx:305:38
 msgid "Danger zone"
 msgstr "Зона особого внимания"
 
@@ -312,7 +312,7 @@ msgstr "Редактирование события :: %1"
 msgid "Edit event settings"
 msgstr "Настройки события"
 
-#: app/Navigation.tsx:320:27
+#: app/Navigation.tsx:329:27
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
@@ -391,7 +391,7 @@ msgstr "Инструкция по заполнения скрипта расса
 msgid "Event title"
 msgstr "Название события"
 
-#: app/Navigation.tsx:201:18
+#: app/Navigation.tsx:202:18
 msgid "Events list"
 msgstr "Список событий"
 
@@ -510,7 +510,7 @@ msgstr "Найти и добавить игрока по имени..."
 msgid "Find replacement player by name..."
 msgstr "Найти замену по имени..."
 
-#: app/Navigation.tsx:268:28 app/Navigation.tsx:279:22
+#: app/Navigation.tsx:277:28 app/Navigation.tsx:288:22
 #: app/pages/OwnedEvents.tsx:316:34 app/pages/OwnedEvents.tsx:324:28
 msgid "Finish event"
 msgstr "Завершить событие"
@@ -778,7 +778,7 @@ msgstr "Выйти"
 msgid "Manage current games"
 msgstr "Управление играми"
 
-#: app/Navigation.tsx:245:27 app/pages/OwnedEvents.tsx:283:33
+#: app/Navigation.tsx:254:27 app/pages/OwnedEvents.tsx:283:33
 msgid "Manage games"
 msgstr "Управление играми"
 
@@ -790,7 +790,7 @@ msgstr "Мои события"
 msgid "Manage penalties"
 msgstr "Штрафы"
 
-#: app/Navigation.tsx:235:27 app/pages/OwnedEvents.tsx:293:34
+#: app/Navigation.tsx:244:27 app/pages/OwnedEvents.tsx:293:34
 #: app/pages/OwnedEvents.tsx:295:33
 msgid "Manage players"
 msgstr "Управление игроками"
@@ -899,6 +899,10 @@ msgstr ""
 "Только первый игрок по ходу раздачи считается победителем по рон. Если "
 "галочка не отмечена, все игроки, объявившие рон, считаются победителями."
 
+#: app/Navigation.tsx:234:27
+msgid "Open event in new tab"
+msgstr "Открыть в новой вкладке"
+
 #: app/helpers/yaku.ts:78:34
 msgid "Open riichi"
 msgstr "Опен риичи"
@@ -939,7 +943,7 @@ msgstr "Хонба по атамахане"
 msgid "Payments and scores"
 msgstr "Выплаты и очки"
 
-#: app/Navigation.tsx:240:27 app/pages/OwnedEvents.tsx:289:33
+#: app/Navigation.tsx:249:27 app/pages/OwnedEvents.tsx:289:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:25
 msgid "Penalties"
 msgstr "Штрафы"
@@ -1048,7 +1052,7 @@ msgstr "Выберите игрока"
 msgid "Please wait unit seating is ready"
 msgstr "Пожалуйста, подождите, пока рассадка не будет готова"
 
-#: app/Navigation.tsx:251:29 app/pages/OwnedEvents.tsx:276:35
+#: app/Navigation.tsx:260:29 app/pages/OwnedEvents.tsx:276:35
 msgid "Predefined seating"
 msgstr "Предопределенная рассадка"
 
@@ -1088,7 +1092,7 @@ msgstr "Ждет подтверждения"
 msgid "Really reset timer?"
 msgstr "Действительно сбросить таймер?"
 
-#: app/Navigation.tsx:258:30 app/Navigation.tsx:264:24
+#: app/Navigation.tsx:267:30 app/Navigation.tsx:273:24
 #: app/pages/OwnedEvents.tsx:308:36 app/pages/OwnedEvents.tsx:312:30
 msgid "Rebuild scoring"
 msgstr "Перестроить скоринг"
@@ -1107,7 +1111,7 @@ msgstr "Обновить данные [%1]"
 msgid "Register new account"
 msgstr "Зарегистрировать новый аккаунт"
 
-#: app/Navigation.tsx:313:27 app/pages/ProfileManageAdmin.tsx:254:19
+#: app/Navigation.tsx:322:27 app/pages/ProfileManageAdmin.tsx:254:19
 msgid "Register player"
 msgstr "Зарегистрировать игрока"
 
@@ -1332,7 +1336,7 @@ msgstr "Сессия запланирована"
 msgid "Session started"
 msgstr "Сессии начаты"
 
-#: app/Navigation.tsx:230:27 app/pages/OwnedEvents.tsx:301:33
+#: app/Navigation.tsx:239:27 app/pages/OwnedEvents.tsx:301:33
 msgid "Settings"
 msgstr "Настройки"
 
@@ -1365,15 +1369,15 @@ msgstr "Показать в глобальном списке событий"
 msgid "Show results table"
 msgstr "Показать таблицу результатов"
 
-#: app/Navigation.tsx:299:27
+#: app/Navigation.tsx:308:27
 msgid "Sign in"
 msgstr "Войти"
 
-#: app/Navigation.tsx:327:27
+#: app/Navigation.tsx:336:27
 msgid "Sign out"
 msgstr "Выйти"
 
-#: app/Navigation.tsx:306:27
+#: app/Navigation.tsx:315:27
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
@@ -1397,11 +1401,11 @@ msgstr "Запустить игры и таймер"
 msgid "Step of arbitrary penalty scores"
 msgstr "Шаг штрафа"
 
-#: app/Navigation.tsx:182:14 app/pages/OwnedEvents.tsx:199:14
+#: app/Navigation.tsx:183:14 app/pages/OwnedEvents.tsx:199:14
 msgid "Stop event"
 msgstr "Завершить событие"
 
-#: app/Navigation.tsx:165:12 app/pages/OwnedEvents.tsx:182:12
+#: app/Navigation.tsx:166:12 app/pages/OwnedEvents.tsx:182:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr "Завершить событие \"%1\" (id #%2)? Отменить это действие невозможно!"
 
@@ -1547,7 +1551,7 @@ msgstr ""
 "Стартовое значение таймера. После истечения таймера, применяется политика "
 "окончания игры (см. ниже)"
 
-#: app/Navigation.tsx:199:24 app/Navigation.tsx:205:24
+#: app/Navigation.tsx:200:24 app/Navigation.tsx:206:24
 msgid "To events list"
 msgstr "К списку событий"
 
@@ -1761,7 +1765,7 @@ msgstr ""
 msgid "Your password is too weak. Please enter stronger password."
 msgstr "Ваш пароль слишком прост. Введите более сложный пароль."
 
-#: app/Navigation.tsx:289:26 app/Navigation.tsx:291:20
+#: app/Navigation.tsx:298:26 app/Navigation.tsx:300:20
 msgid "Your profile"
 msgstr "Ваш профиль"
 
