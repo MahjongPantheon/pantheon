@@ -135,7 +135,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
       )}
       {!timerWaiting && <Center>{formatterTimer}</Center>}
       {showSeating && (
-        <Group>
+        <Group style={{ alignItems: 'flex-start' }}>
           {tablesIterable.map((table, tidx) => (
             <Table key={`tbl_${tidx}`} table={table.table} index={table.index} />
           ))}
@@ -167,15 +167,19 @@ function Table({ index, table }: { index: number; table: PlayerSeating[] }) {
       </Badge>
       <Stack spacing={0}>
         {table.map((seat, idx) => (
-          <Group key={`st_${idx}`} position='apart'>
+          <Group key={`st_${idx}`} position='apart' style={{ alignItems: 'flex-start' }}>
             <Badge size='xl' radius='sm' p={5} color={colors[idx]}>
               {winds[idx]}
             </Badge>
-            {seat.playerTitle}
+            <Text pt={3} style={{ width: '160px', fontWeight: 'bold' }}>
+              {seat.playerTitle}
+            </Text>
             <Badge
+              w={60}
               radius='sm'
               pl={5}
               pr={5}
+              mt={5}
               color={seat.rating > 0 ? 'green' : 'red'}
               variant='filled'
             >
