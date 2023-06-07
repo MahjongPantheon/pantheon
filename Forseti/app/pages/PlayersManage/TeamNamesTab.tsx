@@ -109,8 +109,7 @@ export const TeamNamesTab: React.FC<{
         <Filler h='150px' />
         <TopActionButton
           title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
-          loading={isSaving}
-          disabled={isSaved}
+          loading={isSaving || isSaved}
           icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
           onClick={updateLocalIds}
         />

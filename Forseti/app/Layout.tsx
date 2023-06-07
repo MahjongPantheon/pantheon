@@ -19,20 +19,13 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { ctxValue } from './hooks/pageTitle';
 import {
-  ActionIcon,
   AppShell,
-  Burger,
   ColorScheme,
   ColorSchemeProvider,
   Container,
-  Group,
-  Header,
+  Footer,
   MantineProvider,
-  MediaQuery,
-  Menu,
-  Navbar,
   Space,
-  Text,
   Title,
   useMantineTheme,
 } from '@mantine/core';
@@ -41,15 +34,14 @@ import { Navigation } from './Navigation';
 import { authCtx } from './hooks/auth';
 import { actionButtonCtx, actionButtonRef } from './hooks/actionButton';
 import { useApi } from './hooks/api';
-import { IconLanguageHiragana, IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
 import { useAnalytics } from './hooks/analytics';
 import { useI18n } from './hooks/i18n';
-import { FlagEn, FlagRu } from './helpers/flags';
 import { useStorage } from './hooks/storage';
 import favicon from './forsetiico.png';
+import { AppFooter } from './AppFooter';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
@@ -60,8 +52,6 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   const api = useApi();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [opened, setOpened] = useState(false);
 
   const analytics = useAnalytics();
   useEffect(() => {
@@ -74,15 +64,9 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    setAuthLoading(true);
-    api
-      .quickAuthorize()
-      .then((resp) => {
-        setIsLoggedIn(resp);
-      })
-      .finally(() => {
-        setAuthLoading(false);
-      });
+    api.quickAuthorize().then((resp) => {
+      setIsLoggedIn(resp);
+    });
   }, []);
 
   // Themes related
@@ -141,66 +125,19 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                   background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
                 },
               }}
-              navbarOffsetBreakpoint='sm'
-              navbar={
-                <Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 300, lg: 300 }}>
-                  <Navigation loading={authLoading} onClick={() => setOpened(false)} />
-
-                  <Group>
-                    <ActionIcon
-                      variant='outline'
-                      color={dark ? 'yellow' : 'blue'}
-                      onClick={() => toggleColorScheme()}
-                      title={i18n._t('Toggle color scheme')}
-                    >
-                      {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
-                    </ActionIcon>
-                    <Menu shadow='md' width={200}>
-                      <Menu.Target>
-                        <ActionIcon color='green' variant='outline' title={i18n._t('Language')}>
-                          <IconLanguageHiragana size='1.1rem' />
-                        </ActionIcon>
-                      </Menu.Target>
-                      <Menu.Dropdown>
-                        <Menu.Item onClick={() => saveLang('en')} icon={<FlagEn width={24} />}>
-                          en
-                        </Menu.Item>
-                        <Menu.Item onClick={() => saveLang('ru')} icon={<FlagRu width={24} />}>
-                          ru
-                        </Menu.Item>
-                      </Menu.Dropdown>
-                    </Menu>
-                  </Group>
-                </Navbar>
-              }
-              header={
-                <Header height={{ base: 50, md: 70 }} p='md'>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      height: '100%',
-                      justifyContent: 'space-around',
-                    }}
-                  >
-                    <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-                      <Burger
-                        opened={opened}
-                        onClick={() => setOpened((o) => !o)}
-                        size='sm'
-                        color={theme.colors.gray[6]}
-                        mr='xl'
-                      />
-                    </MediaQuery>
-                    <Text style={{ flex: 1 }}>{/*Divider*/}</Text>
-                    <div
-                      style={{
-                        marginTop: '5px',
-                      }}
-                      ref={actionButtonRef}
-                    />
-                  </div>
-                </Header>
+              header={<Navigation isLoggedIn={isLoggedIn} />}
+              footer={
+                <Footer
+                  height={60}
+                  bg={theme.primaryColor}
+                  style={{ display: 'flex', alignItems: 'center' }}
+                >
+                  <AppFooter
+                    dark={dark}
+                    toggleColorScheme={toggleColorScheme}
+                    saveLang={saveLang}
+                  />
+                </Footer>
               }
             >
               <Container>

@@ -323,7 +323,6 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         color='green'
         title={i18n._t('Refresh data [%1]', [secsUntilReload <= 0 ? '0' : secsUntilReload])}
         loading={false}
-        disabled={false}
         icon={<IconRefresh />}
         onClick={() => {
           doReloadConfigAndTables().then(() => {

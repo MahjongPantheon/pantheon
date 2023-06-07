@@ -37,6 +37,7 @@ Tyr/yarn-error.log
 Tyr/app/i18n/*.mo
 
 Forseti/app/i18n/*.mo
+Sigrun/src/i18n/*.mo
 
 Frey/config/local/*
 Frey/vendor/

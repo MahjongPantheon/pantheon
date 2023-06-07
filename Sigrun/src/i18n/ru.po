@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 23:56+0300\n"
-"PO-Revision-Date: 2023-06-04 23:56+0300\n"
+"POT-Creation-Date: 2023-06-07 09:55+0300\n"
+"PO-Revision-Date: 2023-06-07 10:01+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -209,7 +209,7 @@ msgstr "<li><b>%1</b> - %2, %3</li>"
 msgid "Achievements"
 msgstr "Номинации"
 
-#: src/components/AppHeader.tsx:283:24
+#: src/components/AppHeader.tsx:264:29
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr "Номинации"
@@ -218,16 +218,16 @@ msgstr "Номинации"
 msgid "Achievements are not available for aggregated events"
 msgstr "Для агрегированных событий номинации недоступны"
 
-#: src/components/AppHeader.tsx:334:18
+#: src/components/AppHeader.tsx:307:18
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
 
-#: src/components/AppHeader.tsx:318:26
+#: src/components/AppHeader.tsx:291:26
 msgctxt "Event menu"
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
 
-#: src/components/AppHeader.tsx:348:45
+#: src/components/AppHeader.tsx:321:45
 msgid "Add replay"
 msgstr "Добавить игру"
 
@@ -475,7 +475,7 @@ msgstr "Набросов в рон: "
 msgid "Description"
 msgstr "Описание"
 
-#: src/components/AppHeader.tsx:246:22
+#: src/components/AppHeader.tsx:243:27
 msgctxt "Event menu"
 msgid "Description"
 msgstr "Описание"
@@ -520,7 +520,7 @@ msgstr "Выравнивание умы"
 msgid "Event administrators: "
 msgstr "Администраторы события: "
 
-#: src/components/AppHeader.tsx:233:28 src/components/AppHeader.tsx:235:22
+#: src/components/AppHeader.tsx:234:28 src/components/AppHeader.tsx:236:22
 msgid "Event contents"
 msgstr "Данные события"
 
@@ -528,7 +528,7 @@ msgstr "Данные события"
 msgid "Event list"
 msgstr "Список событий"
 
-#: src/components/AppHeader.tsx:169:20
+#: src/components/AppHeader.tsx:170:20
 msgid "Events list"
 msgstr "Список событий"
 
@@ -918,10 +918,10 @@ msgstr ""
 "Только первый игрок по ходу раздачи считается победителем по рон. Если "
 "галочка не отмечена, все игроки, объявившие рон, считаются победителями."
 
-#: src/components/AppHeader.tsx:208:28 src/components/AppHeader.tsx:210:22
-#: src/components/AppHeader.tsx:214:28
+#: src/components/AppHeader.tsx:209:28 src/components/AppHeader.tsx:211:22
+#: src/components/AppHeader.tsx:215:28
 msgid "Open assistant"
-msgstr "Открыть ассистент"
+msgstr "Ассистент"
 
 #: src/helpers/yaku.ts:78:34
 msgid "Open riichi"
@@ -1003,10 +1003,10 @@ msgstr "Статистика игрока"
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
-#: src/components/AppHeader.tsx:187:26 src/components/AppHeader.tsx:189:20
-#: src/components/AppHeader.tsx:193:26
+#: src/components/AppHeader.tsx:188:26 src/components/AppHeader.tsx:190:20
+#: src/components/AppHeader.tsx:194:26
 msgid "Profile & admin panel"
-msgstr "Профиль и панель управления"
+msgstr "Профиль и админ-панель"
 
 #: src/components/RatingGraph.tsx:171:21 src/pages/RatingTable.tsx:214:20
 msgid "Rating"
@@ -1022,7 +1022,7 @@ msgstr "Рейтинговые очки"
 msgid "Rating table"
 msgstr "Рейтинг"
 
-#: src/components/AppHeader.tsx:273:22
+#: src/components/AppHeader.tsx:258:27
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr "Рейтинг"
@@ -1035,7 +1035,7 @@ msgstr "Рейтинговая таблица была скрыта админи
 msgid "Recent games"
 msgstr "Последние игры"
 
-#: src/components/AppHeader.tsx:264:22
+#: src/components/AppHeader.tsx:253:27
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr "Последние игры"
@@ -1044,7 +1044,7 @@ msgstr "Последние игры"
 msgid "Renhou"
 msgstr "Ренхо"
 
-#: src/components/AppHeader.tsx:132:22
+#: src/components/AppHeader.tsx:133:22
 msgid "Replay link is invalid. Please check if you copied it correctly"
 msgstr "Ссылка на игру некорректна. Проверьте правильно ли вы ее скопировали"
 
@@ -1102,7 +1102,7 @@ msgstr "Выиграно раундов: "
 msgid "Rules overview"
 msgstr "Обзор правил"
 
-#: src/components/AppHeader.tsx:255:22
+#: src/components/AppHeader.tsx:248:27
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr "Обзор правил"
@@ -1166,7 +1166,7 @@ msgstr "Длина серии"
 msgid "Series rating"
 msgstr "Рейтинг по сериям игр"
 
-#: src/components/AppHeader.tsx:294:24
+#: src/components/AppHeader.tsx:271:29
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr "Рейтинг по сериям игр"
@@ -1270,7 +1270,7 @@ msgstr "Таймер"
 msgid "Timer & seating"
 msgstr "Таймер и рассадка"
 
-#: src/components/AppHeader.tsx:306:26
+#: src/components/AppHeader.tsx:279:31
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr "Таймер и рассадка"
@@ -1291,7 +1291,7 @@ msgstr ""
 msgid "To damaten hands: "
 msgstr "В даматен: "
 
-#: src/components/AppHeader.tsx:167:26 src/components/AppHeader.tsx:173:26
+#: src/components/AppHeader.tsx:168:26 src/components/AppHeader.tsx:174:26
 msgid "To events list"
 msgstr "К списку событий"
 
@@ -1477,4 +1477,3 @@ msgstr "нет"
 #: src/helpers/gameLog.ts:138:12
 msgid "yakuman!"
 msgstr "якуман!"
-

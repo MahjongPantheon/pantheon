@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 23:56+0300\n"
+"POT-Creation-Date: 2023-06-07 09:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,81 +68,81 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: src/components/AppHeader.tsx:132:22
+#: src/components/AppHeader.tsx:133:22
 msgid "Replay link is invalid. Please check if you copied it correctly"
 msgstr ""
 
-#: src/components/AppHeader.tsx:167:26
-#: src/components/AppHeader.tsx:173:26
+#: src/components/AppHeader.tsx:168:26
+#: src/components/AppHeader.tsx:174:26
 msgid "To events list"
 msgstr ""
 
-#: src/components/AppHeader.tsx:169:20
+#: src/components/AppHeader.tsx:170:20
 msgid "Events list"
 msgstr ""
 
-#: src/components/AppHeader.tsx:187:26
-#: src/components/AppHeader.tsx:189:20
-#: src/components/AppHeader.tsx:193:26
+#: src/components/AppHeader.tsx:188:26
+#: src/components/AppHeader.tsx:190:20
+#: src/components/AppHeader.tsx:194:26
 msgid "Profile & admin panel"
 msgstr ""
 
-#: src/components/AppHeader.tsx:208:28
-#: src/components/AppHeader.tsx:210:22
-#: src/components/AppHeader.tsx:214:28
+#: src/components/AppHeader.tsx:209:28
+#: src/components/AppHeader.tsx:211:22
+#: src/components/AppHeader.tsx:215:28
 msgid "Open assistant"
 msgstr ""
 
-#: src/components/AppHeader.tsx:233:28
-#: src/components/AppHeader.tsx:235:22
+#: src/components/AppHeader.tsx:234:28
+#: src/components/AppHeader.tsx:236:22
 msgid "Event contents"
 msgstr ""
 
-#: src/components/AppHeader.tsx:246:22
+#: src/components/AppHeader.tsx:243:27
 msgctxt "Event menu"
 msgid "Description"
 msgstr ""
 
-#: src/components/AppHeader.tsx:255:22
+#: src/components/AppHeader.tsx:248:27
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr ""
 
-#: src/components/AppHeader.tsx:264:22
+#: src/components/AppHeader.tsx:253:27
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr ""
 
-#: src/components/AppHeader.tsx:273:22
+#: src/components/AppHeader.tsx:258:27
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr ""
 
-#: src/components/AppHeader.tsx:283:24
+#: src/components/AppHeader.tsx:264:29
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr ""
 
-#: src/components/AppHeader.tsx:294:24
+#: src/components/AppHeader.tsx:271:29
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr ""
 
-#: src/components/AppHeader.tsx:306:26
+#: src/components/AppHeader.tsx:279:31
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr ""
 
-#: src/components/AppHeader.tsx:318:26
+#: src/components/AppHeader.tsx:291:26
 msgctxt "Event menu"
 msgid "Add online game"
 msgstr ""
 
-#: src/components/AppHeader.tsx:334:18
+#: src/components/AppHeader.tsx:307:18
 msgid "Add online game"
 msgstr ""
 
-#: src/components/AppHeader.tsx:348:45
+#: src/components/AppHeader.tsx:321:45
 msgid "Add replay"
 msgstr ""
 

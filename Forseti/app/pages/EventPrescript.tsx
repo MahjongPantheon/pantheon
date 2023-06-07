@@ -186,8 +186,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
       </Group>
       <TopActionButton
         title={isSaved ? i18n._t('Script updated!') : i18n._t('Update script')}
-        loading={isSaving}
-        disabled={isLoading || isSaved}
+        loading={isSaving || isLoading || isSaved}
         icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
         onClick={updateScript}
       />
