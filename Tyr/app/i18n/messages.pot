@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 23:56+0300\n"
+"POT-Creation-Date: 2023-06-07 09:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,11 +69,11 @@ msgstr ""
 msgid "Statistics"
 msgstr ""
 
-#: app/components/screens/log/view/LogScreenView.tsx:61:12
+#: app/components/screens/log/view/LogScreenView.tsx:62:12
 msgid "No results found"
 msgstr ""
 
-#: app/components/screens/log/view/LogScreenView.tsx:95:28
+#: app/components/screens/log/view/LogScreenView.tsx:109:28
 msgid "Game log"
 msgstr ""
 
@@ -169,40 +169,40 @@ msgid "Sign up"
 msgstr ""
 
 #: app/components/screens/login/EnterCredentialsView.tsx:81:12
-#: app/components/screens/login/LoginErrorView.tsx:49:16
+#: app/components/screens/login/LoginErrorView.tsx:48:16
 msgid "Forgot password?"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:30:91
+#: app/components/screens/login/LoginErrorView.tsx:32:39
 msgctxt "Name of registration link"
 msgid "register"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:37:49
+#: app/components/screens/login/LoginErrorView.tsx:36:49
 msgid "Pantheon"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:39:15
+#: app/components/screens/login/LoginErrorView.tsx:38:15
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:43:23
+#: app/components/screens/login/LoginErrorView.tsx:42:23
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:47:14
+#: app/components/screens/login/LoginErrorView.tsx:46:14
 msgid "Password check has failed"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:52:16
+#: app/components/screens/login/LoginErrorView.tsx:51:16
 msgid "Unexpected server error"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:55:12
+#: app/components/screens/login/LoginErrorView.tsx:54:12
 msgid "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:60:12
+#: app/components/screens/login/LoginErrorView.tsx:59:12
 msgid "OK"
 msgstr ""
 

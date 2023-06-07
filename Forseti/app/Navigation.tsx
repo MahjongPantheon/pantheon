@@ -306,7 +306,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
                     text={i18n._t('Sign up')}
                   />
                 )}
-                {!isSuperadmin && (
+                {isSuperadmin && (
                   <MenuItemLink
                     href='/profile/signupAdmin'
                     icon={<IconUserPlus size={18} />}
