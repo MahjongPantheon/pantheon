@@ -45,9 +45,11 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   const events = useEvent(eventId);
   const i18n = useI18n();
   const [, setSoundPlayed] = useState(false);
+  const [, setCurrentTimer] = useState(0);
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
   const [timerWaiting, setTimerWaiting] = useState(false);
+
   const api = useApi();
   const [seating] = useIsomorphicState(
     [],
@@ -63,23 +65,41 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   });
 
   useEffect(() => {
+    let shouldUpdateTimerFromServer = true;
+    let hideSeatingAfter = 0;
     const timer = setInterval(() => {
-      api.getTimerState(parseInt(eventId, 10)).then((newState) => {
-        setShowSeating(newState.showSeating);
-        setTimerWaiting(newState.waitingForTimer);
-        setSoundPlayed((old) => {
-          if (newState.finished && !old) {
-            (window as any).__endingSound.play();
-            return true;
-          } else {
-            return old;
-          }
-        });
+      if (shouldUpdateTimerFromServer) {
+        api.getTimerState(parseInt(eventId, 10)).then((newState) => {
+          setShowSeating(true);
+          setTimerWaiting(newState.waitingForTimer);
+          hideSeatingAfter = newState.hideSeatingAfter;
+          // If we're still watinig, we do updates every second.
+          shouldUpdateTimerFromServer = newState.waitingForTimer;
+          setSoundPlayed((old) => {
+            if (newState.finished && !old) {
+              (window as any).__endingSound.play();
+              return true;
+            } else {
+              return old;
+            }
+          });
 
-        setFormattedTimer(
-          formatTimer(newState.finished, newState.timeRemaining, newState.showSeating)
-        );
-      });
+          setCurrentTimer(newState.timeRemaining);
+          setFormattedTimer(formatTimer(newState.finished, newState.timeRemaining, true));
+        });
+      } else {
+        setCurrentTimer((oldT) => {
+          const newT = oldT - 1;
+          const showSeat = newT > hideSeatingAfter; // hideSeatingAfter contains time point on decreasing scale.
+          setFormattedTimer(formatTimer(newT <= 0, newT, showSeat));
+          setShowSeating(showSeat);
+          if (oldT > 0 && oldT % 60 === 0) {
+            // update timer from server once a minute (auto update in case of timer reset, for example)
+            shouldUpdateTimerFromServer = true;
+          }
+          return newT;
+        });
+      }
     }, 1000);
     return () => clearInterval(timer);
   }, []);

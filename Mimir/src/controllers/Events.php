@@ -779,7 +779,7 @@ class EventsController extends Controller
             'waiting_for_timer' => false,
             'have_autostart' => false,
             'autostart_timer' => 0,
-            'show_seating' => false,
+            'hide_seating_after' => 0,
         ];
 
         if (!$event[0]->getIsFinished()) {
@@ -803,7 +803,7 @@ class EventsController extends Controller
             $response['have_autostart'] = ($event[0]->getNextGameStartTime() > 0 && $event[0]->getTimeToStart() > 0);
             $response['autostart_timer'] = $event[0]->getNextGameStartTime() - time();
             // show seating for 10 mins after start
-            $response['show_seating'] = !$response['started'] || ($event[0]->getGameDuration() * 60) - $response['time_remaining'] < 600;
+            $response['hide_seating_after'] = ($event[0]->getGameDuration() - 10) * 60;
         }
 
         $this->_log->info('Successfully got timer data for event id#' . $eventId);

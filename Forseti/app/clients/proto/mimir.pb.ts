@@ -132,7 +132,7 @@ export interface EventsGetTimerStateResponse {
   waitingForTimer: boolean;
   haveAutostart: boolean;
   autostartTimer: boolean;
-  showSeating: boolean;
+  hideSeatingAfter: number;
 }
 
 export interface GamesGetSessionOverviewPayload {
@@ -4750,7 +4750,7 @@ export const EventsGetTimerStateResponse = {
       waitingForTimer: false,
       haveAutostart: false,
       autostartTimer: false,
-      showSeating: false,
+      hideSeatingAfter: 0,
     };
   },
 
@@ -4779,8 +4779,8 @@ export const EventsGetTimerStateResponse = {
     if (msg.autostartTimer) {
       writer.writeBool(6, msg.autostartTimer);
     }
-    if (msg.showSeating) {
-      writer.writeBool(7, msg.showSeating);
+    if (msg.hideSeatingAfter) {
+      writer.writeInt32(8, msg.hideSeatingAfter);
     }
     return writer;
   },
@@ -4819,8 +4819,8 @@ export const EventsGetTimerStateResponse = {
           msg.autostartTimer = reader.readBool();
           break;
         }
-        case 7: {
-          msg.showSeating = reader.readBool();
+        case 8: {
+          msg.hideSeatingAfter = reader.readInt32();
           break;
         }
         default: {
@@ -10409,7 +10409,7 @@ export const EventsGetTimerStateResponseJSON = {
       waitingForTimer: false,
       haveAutostart: false,
       autostartTimer: false,
-      showSeating: false,
+      hideSeatingAfter: 0,
     };
   },
 
@@ -10438,8 +10438,8 @@ export const EventsGetTimerStateResponseJSON = {
     if (msg.autostartTimer) {
       json["autostartTimer"] = msg.autostartTimer;
     }
-    if (msg.showSeating) {
-      json["showSeating"] = msg.showSeating;
+    if (msg.hideSeatingAfter) {
+      json["hideSeatingAfter"] = msg.hideSeatingAfter;
     }
     return json;
   },
@@ -10476,9 +10476,10 @@ export const EventsGetTimerStateResponseJSON = {
     if (_autostartTimer_) {
       msg.autostartTimer = _autostartTimer_;
     }
-    const _showSeating_ = json["showSeating"] ?? json["show_seating"];
-    if (_showSeating_) {
-      msg.showSeating = _showSeating_;
+    const _hideSeatingAfter_ =
+      json["hideSeatingAfter"] ?? json["hide_seating_after"];
+    if (_hideSeatingAfter_) {
+      msg.hideSeatingAfter = _hideSeatingAfter_;
     }
     return msg;
   },

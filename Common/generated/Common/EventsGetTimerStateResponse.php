@@ -38,9 +38,9 @@ class EventsGetTimerStateResponse extends \Google\Protobuf\Internal\Message
      */
     protected $autostart_timer = false;
     /**
-     * Generated from protobuf field <code>bool show_seating = 7;</code>
+     * Generated from protobuf field <code>int32 hide_seating_after = 8;</code>
      */
-    protected $show_seating = false;
+    protected $hide_seating_after = 0;
 
     /**
      * Constructor.
@@ -54,7 +54,7 @@ class EventsGetTimerStateResponse extends \Google\Protobuf\Internal\Message
      *     @type bool $waiting_for_timer
      *     @type bool $have_autostart
      *     @type bool $autostart_timer
-     *     @type bool $show_seating
+     *     @type int $hide_seating_after
      * }
      */
     public function __construct($data = NULL) {
@@ -195,23 +195,23 @@ class EventsGetTimerStateResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool show_seating = 7;</code>
-     * @return bool
+     * Generated from protobuf field <code>int32 hide_seating_after = 8;</code>
+     * @return int
      */
-    public function getShowSeating()
+    public function getHideSeatingAfter()
     {
-        return $this->show_seating;
+        return $this->hide_seating_after;
     }
 
     /**
-     * Generated from protobuf field <code>bool show_seating = 7;</code>
-     * @param bool $var
+     * Generated from protobuf field <code>int32 hide_seating_after = 8;</code>
+     * @param int $var
      * @return $this
      */
-    public function setShowSeating($var)
+    public function setHideSeatingAfter($var)
     {
-        GPBUtil::checkBool($var);
-        $this->show_seating = $var;
+        GPBUtil::checkInt32($var);
+        $this->hide_seating_after = $var;
 
         return $this;
     }

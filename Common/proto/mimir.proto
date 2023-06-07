@@ -263,7 +263,7 @@ message EventsGetTimerStateResponse {
   bool waiting_for_timer = 4;
   bool have_autostart = 5;
   bool autostart_timer = 6;
-  bool show_seating = 7;
+  int32 hide_seating_after = 8;
 }
 
 message GamesGetSessionOverviewPayload {
