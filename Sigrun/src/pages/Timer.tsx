@@ -70,7 +70,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     const timer = setInterval(() => {
       if (shouldUpdateTimerFromServer) {
         api.getTimerState(parseInt(eventId, 10)).then((newState) => {
-          setShowSeating(true);
+          setShowSeating(newState.timeRemaining > newState.hideSeatingAfter);
           setTimerWaiting(newState.waitingForTimer);
           hideSeatingAfter = newState.hideSeatingAfter;
           // If we're still watinig, we do updates every second.
@@ -85,7 +85,13 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
           });
 
           setCurrentTimer(newState.timeRemaining);
-          setFormattedTimer(formatTimer(newState.finished, newState.timeRemaining, true));
+          setFormattedTimer(
+            formatTimer(
+              newState.finished,
+              newState.timeRemaining,
+              newState.timeRemaining > newState.hideSeatingAfter
+            )
+          );
         });
       } else {
         setCurrentTimer((oldT) => {
