@@ -663,7 +663,7 @@ class PlayerStatModel extends Model
                 }
             }
         }
-        $average = $doraCount ? sprintf('%.2f', $doraCount / $roundsCount) : 0;
+        $average = $doraCount ? $doraCount / $roundsCount : 0;
         return [
             'count' => $doraCount,
             'average' => $average,
