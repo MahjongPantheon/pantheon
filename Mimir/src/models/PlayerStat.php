@@ -639,7 +639,7 @@ class PlayerStatModel extends Model
      * @return array
      * @throws \Exception
      *
-     * @psalm-return array{count: int|mixed, average: int|string}
+     * @psalm-return array{count: int|mixed, average: int|float}
      */
     protected function _getDoraStat(int $playerId, array $rounds): array
     {
