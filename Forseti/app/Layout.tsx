@@ -34,7 +34,6 @@ import { Navigation } from './Navigation';
 import { authCtx } from './hooks/auth';
 import { actionButtonCtx, actionButtonRef } from './hooks/actionButton';
 import { useApi } from './hooks/api';
-import { useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
 import { useAnalytics } from './hooks/analytics';
@@ -43,6 +42,22 @@ import { useStorage } from './hooks/storage';
 import favicon from './forsetiico.png';
 import { AppFooter } from './AppFooter';
 
+// See also Tyr/app/services/themes.ts - we use names from there to sync themes
+const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
+  return ({
+    day: 'light',
+    night: 'dark',
+  }[theme ?? 'day'] ?? 'light') as ColorScheme;
+};
+const themeFromLocal: (theme?: ColorScheme | null) => string = (theme) => {
+  return (
+    {
+      light: 'day',
+      dark: 'night',
+    }[theme ?? 'light'] ?? 'day'
+  );
+};
+
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
   const [pageTitle, setPageTitle] = useState('');
@@ -50,8 +65,10 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   ctxValue.setPageTitle = setPageTitle;
   // /kludges
 
+  const storage = useStorage();
   const api = useApi();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
 
   const analytics = useAnalytics();
   useEffect(() => {
@@ -69,18 +86,15 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     });
   }, []);
 
-  // Themes related
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const newValue = value ?? (colorScheme === 'dark' ? 'light' : 'dark');
+    setColorScheme(newValue);
+    storage.setTheme(themeFromLocal(newValue));
+  };
   const theme = useMantineTheme();
-  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: 'mantine-color-scheme',
-    defaultValue: 'light',
-    getInitialValueInEffect: true,
-  });
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value ?? (colorScheme === 'dark' ? 'light' : 'dark'));
   const dark = colorScheme === 'dark';
+
   const i18n = useI18n();
-  const storage = useStorage();
 
   // Small kludge to forcefully rerender after language change
   const [, updateState] = React.useState({});

@@ -27,6 +27,8 @@ import {
   Space,
   Stack,
   Text,
+  useMantineColorScheme,
+  useMantineTheme,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useEvent } from '../hooks/useEvent';
@@ -146,14 +148,18 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
 const winds = ['東', '南', '西', '北'];
 const colors: MantineColor[] = ['red', 'yellow', 'green', 'blue'];
 function Table({ index, table }: { index: number; table: PlayerSeating[] }) {
+  const isDark = useMantineColorScheme().colorScheme === 'dark';
+  const theme = useMantineTheme();
   return (
     <Group
       align='flex-start'
       style={{
-        border: '1px solid #ccc',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: isDark ? theme.colors.dark[4] : theme.colors.gray[4],
         borderRadius: '7px',
         padding: '5px',
-        backgroundColor: '#eee',
+        backgroundColor: isDark ? theme.colors.dark[6] : theme.colors.gray[2],
       }}
     >
       <Badge variant='filled' size='xl' radius='sm' pl={8} pr={8}>

@@ -7,21 +7,28 @@ export const MenuItemLink = ({
   icon,
   title,
   text,
+  external,
 }: {
   href: string;
   icon: React.ReactNode;
   title?: string;
   text: string;
+  external?: boolean;
 }) => {
   const [, navigate] = useLocation();
   return (
     <Menu.Item
       component='a'
       href={href}
-      onClick={(e) => {
-        navigate(href);
-        e.preventDefault();
-      }}
+      target={external ? '_blank' : undefined}
+      onClick={
+        external
+          ? undefined
+          : (e) => {
+              navigate(href);
+              e.preventDefault();
+            }
+      }
       icon={icon}
       title={title ?? text}
     >

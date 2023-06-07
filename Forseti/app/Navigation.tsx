@@ -44,6 +44,7 @@ import {
   IconUserPlus,
   IconRefreshAlert,
   IconHandStop,
+  IconExternalLink,
 } from '@tabler/icons-react';
 import { useLocation, useRoute } from 'wouter';
 import { useI18n } from './hooks/i18n';
@@ -224,6 +225,14 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
                   </Button>
                 </Menu.Target>
                 <Menu.Dropdown>
+                  <MenuItemLink
+                    external={true}
+                    href={`${import.meta.env.VITE_SIGRUN_URL}/event/${
+                      (match ? params : paramsEdit)?.id
+                    }/info`}
+                    icon={<IconExternalLink size={18} />}
+                    text={i18n._t('Open event in new tab')}
+                  />
                   <MenuItemLink
                     href={`/ownedEvents/edit/${(match ? params : paramsEdit)?.id}`}
                     icon={<IconTool size={18} />}
