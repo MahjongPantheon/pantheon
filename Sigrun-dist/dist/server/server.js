@@ -18,8 +18,8 @@ import strip from "strip-markdown";
 import { nprogress, NavigationProgress } from "@mantine/nprogress";
 import { PBrequest } from "twirpscript";
 import debounce from "lodash.debounce";
-import { Helmet } from "react-helmet";
 import { useMediaQuery, useDisclosure } from "@mantine/hooks";
+import { Helmet } from "react-helmet";
 import { crc32 } from "@foxglove/crc";
 import staticLocationHook from "wouter/static-location";
 import { JSDOM } from "jsdom";
@@ -27,8 +27,8 @@ import { createStylesServer } from "@mantine/ssr";
 const meta = {
   projectIdVersion: "PROJECT VERSION",
   reportMsgidBugsTo: "",
-  potCreationDate: "2023-06-07 09:55+0300",
-  poRevisionDate: "2023-06-07 10:01+0300",
+  potCreationDate: "2023-06-07 18:24+0300",
+  poRevisionDate: "2023-06-07 18:30+0300",
   languageTeam: "",
   language: "ru",
   mimeVersion: "1.0",
@@ -299,6 +299,11 @@ const items = [
     type: "single",
     entry: "Achievements are not available for aggregated events",
     translation: "Для агрегированных событий номинации недоступны"
+  },
+  {
+    type: "single",
+    entry: 'Achievements list for the event "%1" provided by Mahjong Pantheon',
+    translation: 'Список номинаций для события "%1", предоставленные системой Mahjong Pantheon'
   },
   {
     type: "single",
@@ -596,6 +601,11 @@ const items = [
     entry: "Description",
     context: "Event menu",
     translation: "Описание"
+  },
+  {
+    type: "single",
+    entry: 'Description of the event "%1" provided by Mahjong Pantheon',
+    translation: 'Описание события "%1", предоставленное системой Mahjong Pantheon'
   },
   {
     type: "single",
@@ -974,8 +984,18 @@ const items = [
   },
   {
     type: "single",
+    entry: 'Last games of the event "%1", page %2, provided by Mahjong Pantheon',
+    translation: 'Последние игры события "%1", страница %2, предоставлено системой Mahjong Pantheon'
+  },
+  {
+    type: "single",
     entry: "Last series",
     translation: "Текущая серия"
+  },
+  {
+    type: "single",
+    entry: "List of all events registered with Mahjong Pantheon",
+    translation: "Список событий, зарегистрированных в системе Mahjong Pantheon"
   },
   {
     type: "single",
@@ -1164,6 +1184,11 @@ const items = [
   },
   {
     type: "single",
+    entry: 'Player statistics for %1 in the event "%2" provided by Mahjong Pantheon',
+    translation: 'Статистика игрока %1 в событии "%2", предоставленная системой Mahjong Pantheon'
+  },
+  {
+    type: "single",
     entry: "Player stats",
     translation: "Статистика игрока"
   },
@@ -1202,6 +1227,11 @@ const items = [
     type: "single",
     entry: "Rating table is hidden by tournament administrator",
     translation: "Рейтинговая таблица была скрыта администратором турнира"
+  },
+  {
+    type: "single",
+    entry: 'Rating table of the event "%1" provided by Mahjong Pantheon',
+    translation: 'Рейтинговая таблица события "%1", предоставленная системой Mahjong Pantheon'
   },
   {
     type: "single",
@@ -1292,6 +1322,11 @@ const items = [
   },
   {
     type: "single",
+    entry: 'Rules overview for the event "%1" provided by Mahjong Pantheon',
+    translation: 'Обзор правил события "%1", предоставленный системой Mahjong Pantheon'
+  },
+  {
+    type: "single",
     entry: "Ruleset details",
     translation: "Детали правил"
   },
@@ -1368,6 +1403,11 @@ const items = [
   },
   {
     type: "single",
+    entry: 'Series rating for the event "%1" provided by Mahjong Pantheon',
+    translation: 'Рейтинг серий события "%1", предоставленный системой Mahjong Pantheon'
+  },
+  {
+    type: "single",
     entry: "Series rating is not available for aggregated events",
     translation: "Для агрегированных событий рейтинг по сериям недоступен"
   },
@@ -1393,8 +1433,23 @@ const items = [
   },
   {
     type: "single",
+    entry: "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.",
+    translation: "Sigrun - это система просмотра статистики для клубных и турнирных игр в риичи-маджонг в системе Mahjong Pantheon. Предоставляет историю игр, статистику игроков с графиками, рейтинговые таблицы и списки номинаций."
+  },
+  {
+    type: "single",
+    entry: "Sigrun: riichi mahjong ratings and statistics",
+    translation: "Sigrun: рейтинги и статистика в риичи-маджонге"
+  },
+  {
+    type: "single",
     entry: "Simple rank-based",
     translation: "Простой, на основе текущего места"
+  },
+  {
+    type: "single",
+    entry: 'Single game preview for the event "%1" provided by Mahjong Pantheon',
+    translation: 'Просмотр одиночной игры в событии "%1", предоставленный системой Mahjong Pantheon'
   },
   {
     type: "single",
@@ -1486,6 +1541,11 @@ const items = [
     type: "single",
     entry: "Timer is not available for aggregated events",
     translation: "Для агрегированных событий таймер недоступен"
+  },
+  {
+    type: "single",
+    entry: 'Timer page for the event "%1" provided by Mahjong Pantheon',
+    translation: 'Страница таймера в событии "%1", предоставленная системой Mahjong Pantheon'
   },
   {
     type: "single",
@@ -6849,7 +6909,7 @@ const EventsGetTimerStateResponse = {
       waitingForTimer: false,
       haveAutostart: false,
       autostartTimer: false,
-      showSeating: false
+      hideSeatingAfter: 0
     };
   },
   /**
@@ -6874,8 +6934,8 @@ const EventsGetTimerStateResponse = {
     if (msg.autostartTimer) {
       writer.writeBool(6, msg.autostartTimer);
     }
-    if (msg.showSeating) {
-      writer.writeBool(7, msg.showSeating);
+    if (msg.hideSeatingAfter) {
+      writer.writeInt32(8, msg.hideSeatingAfter);
     }
     return writer;
   },
@@ -6910,8 +6970,8 @@ const EventsGetTimerStateResponse = {
           msg.autostartTimer = reader.readBool();
           break;
         }
-        case 7: {
-          msg.showSeating = reader.readBool();
+        case 8: {
+          msg.hideSeatingAfter = reader.readInt32();
           break;
         }
         default: {
@@ -8126,6 +8186,26 @@ const useEvent = (eventIdListStr) => {
   }, [eventIdListStr, events]);
   return events ?? null;
 };
+const favicon = "/assets/favicon-8834d590.png";
+const Meta = ({ title, description }) => {
+  return /* @__PURE__ */ jsxs(Helmet, { children: [
+    /* @__PURE__ */ jsx("title", { children: title }),
+    /* @__PURE__ */ jsx("meta", { charSet: "UTF-8" }),
+    /* @__PURE__ */ jsx("meta", { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1" }),
+    /* @__PURE__ */ jsx("meta", { name: "title", content: title }),
+    description && /* @__PURE__ */ jsx("meta", { name: "description", content: description }),
+    /* @__PURE__ */ jsx("meta", { property: "og:type", content: "website" }),
+    /* @__PURE__ */ jsx("meta", { property: "og:url", content: "https://rating.riichimahjong.org" }),
+    /* @__PURE__ */ jsx("meta", { property: "og:title", content: title }),
+    description && /* @__PURE__ */ jsx("meta", { property: "og:description", content: description }),
+    /* @__PURE__ */ jsx("meta", { property: "twitter:card", content: "summary" }),
+    /* @__PURE__ */ jsx("meta", { property: "twitter:url", content: "https://rating.riichimahjong.org" }),
+    /* @__PURE__ */ jsx("meta", { property: "twitter:title", content: title }),
+    description && /* @__PURE__ */ jsx("meta", { property: "twitter:description", content: description }),
+    /* @__PURE__ */ jsx("link", { rel: "icon", type: "image/png", href: favicon }),
+    /* @__PURE__ */ jsx("link", { rel: "help", href: "https://riichimahjong.org/" })
+  ] });
+};
 let stripHtml;
 {
   stripHtml = (dirtyString) => {
@@ -8149,10 +8229,13 @@ const EventList = ({ params: { page } }) => {
     [page]
   );
   return /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsxs("title", { children: [
-      i18n2._t("Event list"),
-      " - Sigrun"
-    ] }) }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: `${i18n2._t("Event list")} - Sigrun`,
+        description: i18n2._t("List of all events registered with Mahjong Pantheon")
+      }
+    ),
     /* @__PURE__ */ jsx("h2", { children: i18n2._t("Riichi mahjong events list") }),
     /* @__PURE__ */ jsx(Divider, { size: "xs" }),
     /* @__PURE__ */ jsx(Stack, { justify: "flex-start", spacing: "0", children: ((events == null ? void 0 : events.events) ?? []).map((e, idx) => {
@@ -8314,16 +8397,16 @@ const EventInfo = ({ params: { eventId } }) => {
     return null;
   }
   return /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsxs(Helmet, { children: [
-      (events == null ? void 0 : events.length) === 1 && /* @__PURE__ */ jsxs("title", { children: [
-        events == null ? void 0 : events[0].title,
-        " - Sigrun"
-      ] }),
-      ((events == null ? void 0 : events.length) ?? 0) > 1 && /* @__PURE__ */ jsxs("title", { children: [
-        i18n2._t("Aggregated event"),
-        " - Sigrun"
-      ] })
-    ] }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: (events == null ? void 0 : events.length) === 1 ? `${events == null ? void 0 : events[0].title} - Sigrun` : ((events == null ? void 0 : events.length) ?? 0) > 1 ? `${i18n2._t("Aggregated event")} - Sigrun` : `Sigrun`,
+        description: i18n2._t('Description of the event "%1" provided by Mahjong Pantheon', [
+          events == null ? void 0 : events[0].title
+        ])
+      }
+    ),
+    /* @__PURE__ */ jsx(Helmet, {}),
     events == null ? void 0 : events.map((event, eid) => {
       return /* @__PURE__ */ jsxs(Fragment$1, { children: [
         /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
@@ -8501,20 +8584,15 @@ const RatingTable = ({ params: { eventId, orderBy } }) => {
     ] });
   }
   return events && /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsxs(Helmet, { children: [
-      (events == null ? void 0 : events.length) === 1 && /* @__PURE__ */ jsxs("title", { children: [
-        i18n2._t("Rating table"),
-        " - ",
-        events == null ? void 0 : events[0].title,
-        " - Sigrun"
-      ] }),
-      ((events == null ? void 0 : events.length) ?? 0) > 1 && /* @__PURE__ */ jsxs("title", { children: [
-        i18n2._t("Rating table"),
-        " - ",
-        i18n2._t("Aggregated event"),
-        " - Sigrun"
-      ] })
-    ] }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: (events == null ? void 0 : events.length) === 1 ? `${i18n2._t("Rating table")} - ${events == null ? void 0 : events[0].title} - Sigrun` : ((events == null ? void 0 : events.length) ?? 0) > 1 ? `${i18n2._t("Rating table")} - ${i18n2._t("Aggregated event")} - Sigrun` : `Sigrun`,
+        description: i18n2._t('Rating table of the event "%1" provided by Mahjong Pantheon', [
+          events == null ? void 0 : events[0].title
+        ])
+      }
+    ),
     events == null ? void 0 : events.map((event, eid) => /* @__PURE__ */ jsxs(DataCmp, { position: "apart", children: [
       /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
         event && /* @__PURE__ */ jsx(EventTypeIcon, { event }),
@@ -9089,9 +9167,9 @@ function makePercent(piece, total) {
     return "0.00%";
   return (100 * piece / total).toFixed(2) + "%";
 }
-const HandsGraph = React.lazy(() => import("./assets/HandsGraph-b68f9f02.js"));
-const YakuGraph = React.lazy(() => import("./assets/YakuGraph-135ac97d.js"));
-const RatingGraph = React.lazy(() => import("./assets/RatingGraph-f226ff40.js"));
+const HandsGraph = React.lazy(() => import("./assets/HandsGraph-d26d8eeb.js"));
+const YakuGraph = React.lazy(() => import("./assets/YakuGraph-2f187b30.js"));
+const RatingGraph = React.lazy(() => import("./assets/RatingGraph-3aab260e.js"));
 const PlayerStats = ({
   params: { eventId, playerId }
 }) => {
@@ -9127,12 +9205,16 @@ const PlayerStats = ({
     return null;
   }
   return /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsxs("title", { children: [
-      player.title,
-      " - ",
-      i18n2._t("Player stats"),
-      " - Sigrun"
-    ] }) }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: `${player.title} - ${i18n2._t("Player stats")} - Sigrun`,
+        description: i18n2._t(
+          'Player statistics for %1 in the event "%2" provided by Mahjong Pantheon',
+          [player.title, events == null ? void 0 : events[0].title]
+        )
+      }
+    ),
     /* @__PURE__ */ jsx("h2", { children: player.title }),
     events == null ? void 0 : events.map((event, eid) => {
       return /* @__PURE__ */ jsx(Group, { children: /* @__PURE__ */ jsxs("h4", { style: { display: "flex", gap: "20px" }, children: [
@@ -9815,20 +9897,16 @@ const RecentGames = ({ params: { eventId, page } }) => {
     return acc;
   }, {});
   return events && /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsxs(Helmet, { children: [
-      (events == null ? void 0 : events.length) === 1 && /* @__PURE__ */ jsxs("title", { children: [
-        i18n2._t("Last games"),
-        " - ",
-        events == null ? void 0 : events[0].title,
-        " - Sigrun"
-      ] }),
-      ((events == null ? void 0 : events.length) ?? 0) > 1 && /* @__PURE__ */ jsxs("title", { children: [
-        i18n2._t("Last games"),
-        " - ",
-        i18n2._t("Aggregated event"),
-        " - Sigrun"
-      ] })
-    ] }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: (events == null ? void 0 : events.length) === 1 ? `${i18n2._t("Last games")} - ${events == null ? void 0 : events[0].title} - Sigrun` : ((events == null ? void 0 : events.length) ?? 0) > 1 ? `${i18n2._t("Last games")} - ${i18n2._t("Aggregated event")} - Sigrun` : `Sigrun`,
+        description: i18n2._t(
+          'Last games of the event "%1", page %2, provided by Mahjong Pantheon',
+          [events == null ? void 0 : events[0].title, page]
+        )
+      }
+    ),
     events == null ? void 0 : events.map((event, eid) => /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
       events && /* @__PURE__ */ jsx(EventTypeIcon, { event }),
       event == null ? void 0 : event.title,
@@ -9880,7 +9958,7 @@ const RecentGames = ({ params: { eventId, page } }) => {
 const SeriesRating = ({
   params: { eventId }
 }) => {
-  var _a, _b;
+  var _a;
   const api2 = useApi();
   const [, navigate] = useLocation();
   const i18n2 = useI18n();
@@ -9898,15 +9976,18 @@ const SeriesRating = ({
     return /* @__PURE__ */ jsx(Container, { children: /* @__PURE__ */ jsx(Alert, { color: "red", children: i18n2._t("Series rating is not available for aggregated events") }) });
   }
   return /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsxs("title", { children: [
-      i18n2._t("Series rating"),
-      " - ",
-      (_a = events[0]) == null ? void 0 : _a.title,
-      " - Sigrun"
-    ] }) }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: `${events == null ? void 0 : events[0].title} - ${i18n2._t("Series rating")} - Sigrun`,
+        description: i18n2._t('Series rating for the event "%1" provided by Mahjong Pantheon', [
+          events == null ? void 0 : events[0].title
+        ])
+      }
+    ),
     /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
       events[0] && /* @__PURE__ */ jsx(EventTypeIcon, { event: events[0] }),
-      (_b = events[0]) == null ? void 0 : _b.title,
+      (_a = events[0]) == null ? void 0 : _a.title,
       " - ",
       i18n2._t("Series rating")
     ] }),
@@ -10034,10 +10115,16 @@ const Game = ({ params: { eventId, sessionHash } }) => {
     return acc;
   }, {});
   return (game == null ? void 0 : game.game) && events && /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsxs("title", { children: [
-      i18n2._t("Game preview"),
-      " - Sigrun"
-    ] }) }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: `${events == null ? void 0 : events[0].title} - ${i18n2._t("Game preview")} - Sigrun`,
+        description: i18n2._t(
+          'Single game preview for the event "%1" provided by Mahjong Pantheon',
+          [events == null ? void 0 : events[0].title]
+        )
+      }
+    ),
     /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
       (events == null ? void 0 : events[0]) && /* @__PURE__ */ jsx(EventTypeIcon, { event: events[0] }),
       (_b = events == null ? void 0 : events[0]) == null ? void 0 : _b.title,
@@ -10064,10 +10151,11 @@ const Game = ({ params: { eventId, sessionHash } }) => {
 };
 const sound = "/assets/5min-220673cb.wav";
 const Timer = ({ params: { eventId } }) => {
-  var _a, _b;
+  var _a;
   const events = useEvent(eventId);
   const i18n2 = useI18n();
   const [, setSoundPlayed] = useState(false);
+  const [, setCurrentTimer] = useState(0);
   const [formatterTimer, setFormattedTimer] = useState(null);
   const [showSeating, setShowSeating] = useState(false);
   const [timerWaiting, setTimerWaiting] = useState(false);
@@ -10084,22 +10172,44 @@ const Timer = ({ params: { eventId } }) => {
     }
   });
   useEffect(() => {
+    let shouldUpdateTimerFromServer = true;
+    let hideSeatingAfter = 0;
     const timer = setInterval(() => {
-      api2.getTimerState(parseInt(eventId, 10)).then((newState) => {
-        setShowSeating(newState.showSeating);
-        setTimerWaiting(newState.waitingForTimer);
-        setSoundPlayed((old) => {
-          if (newState.finished && !old) {
-            window.__endingSound.play();
-            return true;
-          } else {
-            return old;
-          }
+      if (shouldUpdateTimerFromServer) {
+        api2.getTimerState(parseInt(eventId, 10)).then((newState) => {
+          setShowSeating(newState.timeRemaining > newState.hideSeatingAfter);
+          setTimerWaiting(newState.waitingForTimer);
+          hideSeatingAfter = newState.hideSeatingAfter;
+          shouldUpdateTimerFromServer = newState.waitingForTimer;
+          setSoundPlayed((old) => {
+            if (newState.finished && !old) {
+              window.__endingSound.play();
+              return true;
+            } else {
+              return old;
+            }
+          });
+          setCurrentTimer(newState.timeRemaining);
+          setFormattedTimer(
+            formatTimer(
+              newState.finished,
+              newState.timeRemaining,
+              newState.timeRemaining > newState.hideSeatingAfter
+            )
+          );
         });
-        setFormattedTimer(
-          formatTimer(newState.finished, newState.timeRemaining, newState.showSeating)
-        );
-      });
+      } else {
+        setCurrentTimer((oldT) => {
+          const newT = oldT - 1;
+          const showSeat = newT > hideSeatingAfter;
+          setFormattedTimer(formatTimer(newT <= 0, newT, showSeat));
+          setShowSeating(showSeat);
+          if (oldT > 0 && oldT % 60 === 0) {
+            shouldUpdateTimerFromServer = true;
+          }
+          return newT;
+        });
+      }
     }, 1e3);
     return () => clearInterval(timer);
   }, []);
@@ -10124,48 +10234,57 @@ const Timer = ({ params: { eventId } }) => {
   }
   const tablesIterable = [...tables.entries()].map(([index, table]) => ({ index, table })).sort((a, b) => a.index - b.index);
   return /* @__PURE__ */ jsxs(Container, { w: "100%", m: 10, maw: "100%", children: [
-    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsxs("title", { children: [
-      i18n2._t("Timer"),
-      " - ",
-      (_a = events[0]) == null ? void 0 : _a.title,
-      " - Sigrun"
-    ] }) }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: `${i18n2._t("Timer")} - ${events == null ? void 0 : events[0].title} - Sigrun`,
+        description: i18n2._t('Timer page for the event "%1" provided by Mahjong Pantheon', [
+          events == null ? void 0 : events[0].title
+        ])
+      }
+    ),
     !showSeating && /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
         events[0] && /* @__PURE__ */ jsx(EventTypeIcon, { event: events[0] }),
-        (_b = events[0]) == null ? void 0 : _b.title
+        (_a = events[0]) == null ? void 0 : _a.title
       ] }),
       /* @__PURE__ */ jsx(Divider, { size: "xs" }),
       /* @__PURE__ */ jsx(Space, { h: "md" })
     ] }),
     !timerWaiting && /* @__PURE__ */ jsx(Center, { children: formatterTimer }),
-    showSeating && /* @__PURE__ */ jsx(Group, { children: tablesIterable.map((table, tidx) => /* @__PURE__ */ jsx(Table, { table: table.table, index: table.index }, `tbl_${tidx}`)) })
+    showSeating && /* @__PURE__ */ jsx(Group, { style: { alignItems: "flex-start" }, children: tablesIterable.map((table, tidx) => /* @__PURE__ */ jsx(Table, { table: table.table, index: table.index }, `tbl_${tidx}`)) })
   ] });
 };
 const winds = ["東", "南", "西", "北"];
 const colors = ["red", "yellow", "green", "blue"];
 function Table({ index, table }) {
+  const isDark = useMantineColorScheme().colorScheme === "dark";
+  const theme = useMantineTheme();
   return /* @__PURE__ */ jsxs(
     Group,
     {
       align: "flex-start",
       style: {
-        border: "1px solid #ccc",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: isDark ? theme.colors.dark[4] : theme.colors.gray[4],
         borderRadius: "7px",
         padding: "5px",
-        backgroundColor: "#eee"
+        backgroundColor: isDark ? theme.colors.dark[6] : theme.colors.gray[2]
       },
       children: [
         /* @__PURE__ */ jsx(Badge, { variant: "filled", size: "xl", radius: "sm", pl: 8, pr: 8, children: index }),
-        /* @__PURE__ */ jsx(Stack, { spacing: 0, children: table.map((seat, idx) => /* @__PURE__ */ jsxs(Group, { position: "apart", children: [
+        /* @__PURE__ */ jsx(Stack, { spacing: 0, children: table.map((seat, idx) => /* @__PURE__ */ jsxs(Group, { position: "apart", style: { alignItems: "flex-start" }, children: [
           /* @__PURE__ */ jsx(Badge, { size: "xl", radius: "sm", p: 5, color: colors[idx], children: winds[idx] }),
-          seat.playerTitle,
+          /* @__PURE__ */ jsx(Text, { pt: 3, style: { width: "160px", fontWeight: "bold" }, children: seat.playerTitle }),
           /* @__PURE__ */ jsx(
             Badge,
             {
+              w: 60,
               radius: "sm",
               pl: 5,
               pr: 5,
+              mt: 5,
               color: seat.rating > 0 ? "green" : "red",
               variant: "filled",
               children: seat.rating
@@ -10952,12 +11071,15 @@ const Achievements = ({
     return /* @__PURE__ */ jsx(Container, { children: /* @__PURE__ */ jsx(Alert, { color: "red", children: i18n2._t("Achievements are not available for aggregated events") }) });
   }
   return /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsxs("title", { children: [
-      events == null ? void 0 : events[0].title,
-      " - ",
-      i18n2._t("Achievements"),
-      " - Sigrun"
-    ] }) }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: `${events == null ? void 0 : events[0].title} - ${i18n2._t("Achievements")} - Sigrun`,
+        description: i18n2._t('Achievements list for the event "%1" provided by Mahjong Pantheon', [
+          events == null ? void 0 : events[0].title
+        ])
+      }
+    ),
     /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
       (events == null ? void 0 : events[0]) && /* @__PURE__ */ jsx(EventTypeIcon, { event: events[0] }),
       (_a = events == null ? void 0 : events[0]) == null ? void 0 : _a.title,
@@ -11737,12 +11859,15 @@ const EventRulesOverview = ({
   }
   const event = events[0];
   return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsxs(Container, { children: [
-    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsxs("title", { children: [
-      events == null ? void 0 : events[0].title,
-      " - ",
-      i18n2._t("Rules overview"),
-      " - Sigrun"
-    ] }) }),
+    /* @__PURE__ */ jsx(
+      Meta,
+      {
+        title: `${events == null ? void 0 : events[0].title} - ${i18n2._t("Rules overview")} - Sigrun`,
+        description: i18n2._t('Rules overview for the event "%1" provided by Mahjong Pantheon', [
+          events == null ? void 0 : events[0].title
+        ])
+      }
+    ),
     /* @__PURE__ */ jsxs("h2", { style: { display: "flex", gap: "20px" }, children: [
       (events == null ? void 0 : events[0]) && /* @__PURE__ */ jsx(EventTypeIcon, { event: events[0] }),
       (_a = events == null ? void 0 : events[0]) == null ? void 0 : _a.title,
@@ -12250,7 +12375,6 @@ function AppFooter({ dark, toggleColorScheme, saveLang }) {
     ] })
   ] }) }) });
 }
-const favicon = "/assets/favicon-8834d590.png";
 const themeToLocal = (theme) => {
   return {
     day: "light",
@@ -12320,18 +12444,15 @@ function Layout({ children, cache: cache2 }) {
       },
       emotionCache: cache2,
       children: /* @__PURE__ */ jsx(ColorSchemeProvider, { colorScheme, toggleColorScheme, children: /* @__PURE__ */ jsx(AnalyticsProvider, { children: /* @__PURE__ */ jsx(globalsCtx.Provider, { value: { data, setData }, children: /* @__PURE__ */ jsx(StorageProvider, { children: /* @__PURE__ */ jsx(I18nProvider, { children: /* @__PURE__ */ jsxs(ApiProvider, { children: [
-        /* @__PURE__ */ jsxs(Helmet, { children: [
-          /* @__PURE__ */ jsx("title", { children: "Sigrun" }),
-          /* @__PURE__ */ jsx("meta", { charSet: "UTF-8" }),
-          /* @__PURE__ */ jsx("link", { rel: "icon", type: "image/png", href: favicon }),
-          /* @__PURE__ */ jsx(
-            "meta",
-            {
-              name: "viewport",
-              content: "width=device-width, initial-scale=1, maximum-scale=1"
-            }
-          )
-        ] }),
+        /* @__PURE__ */ jsx(
+          Meta,
+          {
+            title: i18n2._t("Sigrun: riichi mahjong ratings and statistics"),
+            description: i18n2._t(
+              "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list."
+            )
+          }
+        ),
         /* @__PURE__ */ jsx(NavigationProgress, { color: "green", zIndex: 10100 }),
         /* @__PURE__ */ jsx(
           AppShell,
