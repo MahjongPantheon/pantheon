@@ -6,7 +6,7 @@ var __publicField = (obj, key, value) => {
 };
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import ReactDOMServer, { renderToString } from "react-dom/server";
-import { Tooltip, Avatar, useMantineTheme, useMantineColorScheme, Container, Divider, Stack, Group, ActionIcon, Text, Space, Center, Pagination, Anchor, Badge, Loader, Alert, Button, Box, LoadingOverlay, List, rem, Accordion, Tabs, TextInput, NumberInput, Radio, Checkbox, SimpleGrid, Title, createStyles, Header, Menu, Modal, MantineProvider, ColorSchemeProvider, AppShell, Footer, createEmotionCache } from "@mantine/core";
+import { Tooltip, Avatar, useMantineTheme, useMantineColorScheme, Container, Divider, Stack, Group, ActionIcon, Text, Space, Center, Pagination, Anchor, Badge, Loader, Alert, Button, Box, LoadingOverlay, List, rem, Accordion, Tabs, TextInput, NumberInput, Radio, Checkbox, SimpleGrid, Title, Menu, createStyles, Header, Modal, MantineProvider, ColorSchemeProvider, AppShell, Footer, createEmotionCache } from "@mantine/core";
 import { useLocation, Switch, Route, Router } from "wouter";
 import * as React from "react";
 import { createContext, useContext, useState, useEffect, Fragment as Fragment$1, Suspense, useCallback } from "react";
@@ -27,8 +27,8 @@ import { createStylesServer } from "@mantine/ssr";
 const meta = {
   projectIdVersion: "PROJECT VERSION",
   reportMsgidBugsTo: "",
-  potCreationDate: "2023-06-04 23:56+0300",
-  poRevisionDate: "2023-06-04 23:56+0300",
+  potCreationDate: "2023-06-07 09:55+0300",
+  poRevisionDate: "2023-06-07 10:01+0300",
   languageTeam: "",
   language: "ru",
   mimeVersion: "1.0",
@@ -1075,7 +1075,7 @@ const items = [
   {
     type: "single",
     entry: "Open assistant",
-    translation: "Открыть ассистент"
+    translation: "Ассистент"
   },
   {
     type: "single",
@@ -1175,7 +1175,7 @@ const items = [
   {
     type: "single",
     entry: "Profile & admin panel",
-    translation: "Профиль и панель управления"
+    translation: "Профиль и админ-панель"
   },
   {
     type: "single",
@@ -11814,6 +11814,28 @@ class StorageStrategyServer {
     this._cookies = {};
   }
 }
+const MenuItemLink = ({
+  href,
+  icon,
+  title,
+  text
+}) => {
+  const [, navigate] = useLocation();
+  return /* @__PURE__ */ jsx(
+    Menu.Item,
+    {
+      component: "a",
+      href,
+      onClick: (e) => {
+        navigate(href);
+        e.preventDefault();
+      },
+      icon,
+      title: title ?? text,
+      children: text
+    }
+  );
+};
 const HEADER_HEIGHT = rem(60);
 const useStyles = createStyles((theme) => ({
   header: {
@@ -11865,7 +11887,7 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 function AppHeader() {
-  var _a, _b, _c, _d, _e;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
   const { classes } = useStyles();
   const i18n2 = useI18n();
   const largeScreen = useMediaQuery("(min-width: 768px)");
@@ -11975,90 +11997,62 @@ function AppHeader() {
         ) }),
         /* @__PURE__ */ jsxs(Menu.Dropdown, { children: [
           /* @__PURE__ */ jsx(
-            Menu.Item,
+            MenuItemLink,
             {
-              onClick: (e) => {
-                var _a2;
-                navigate(`/event/${(_a2 = globals2.data.eventId) == null ? void 0 : _a2.join(".")}/info`);
-                e.preventDefault();
-              },
+              href: `/event/${(_b = globals2.data.eventId) == null ? void 0 : _b.join(".")}/info`,
               icon: /* @__PURE__ */ jsx(IconNotes, { size: 24 }),
-              children: i18n2._pt("Event menu", "Description")
+              text: i18n2._pt("Event menu", "Description")
             }
           ),
           /* @__PURE__ */ jsx(
-            Menu.Item,
+            MenuItemLink,
             {
-              onClick: (e) => {
-                var _a2;
-                navigate(`/event/${(_a2 = globals2.data.eventId) == null ? void 0 : _a2.join(".")}/rules`);
-                e.preventDefault();
-              },
+              href: `/event/${(_c = globals2.data.eventId) == null ? void 0 : _c.join(".")}/rules`,
               icon: /* @__PURE__ */ jsx(IconListCheck, { size: 24 }),
-              children: i18n2._pt("Event menu", "Rules overview")
+              text: i18n2._pt("Event menu", "Rules overview")
             }
           ),
           /* @__PURE__ */ jsx(
-            Menu.Item,
+            MenuItemLink,
             {
-              onClick: (e) => {
-                var _a2;
-                navigate(`/event/${(_a2 = globals2.data.eventId) == null ? void 0 : _a2.join(".")}/games`);
-                e.preventDefault();
-              },
+              href: `/event/${(_d = globals2.data.eventId) == null ? void 0 : _d.join(".")}/games`,
               icon: /* @__PURE__ */ jsx(IconOlympics, { size: 24 }),
-              children: i18n2._pt("Event menu", "Recent games")
+              text: i18n2._pt("Event menu", "Recent games")
             }
           ),
           /* @__PURE__ */ jsx(
-            Menu.Item,
+            MenuItemLink,
             {
-              onClick: (e) => {
-                var _a2;
-                navigate(`/event/${(_a2 = globals2.data.eventId) == null ? void 0 : _a2.join(".")}/order/rating`);
-                e.preventDefault();
-              },
+              href: `/event/${(_e = globals2.data.eventId) == null ? void 0 : _e.join(".")}/order/rating`,
               icon: /* @__PURE__ */ jsx(IconChartBar, { size: 24 }),
-              children: i18n2._pt("Event menu", "Rating table")
+              text: i18n2._pt("Event menu", "Rating table")
             }
           ),
-          ((_b = globals2.data.eventId) == null ? void 0 : _b.length) === 1 && /* @__PURE__ */ jsx(
-            Menu.Item,
+          ((_f = globals2.data.eventId) == null ? void 0 : _f.length) === 1 && /* @__PURE__ */ jsx(
+            MenuItemLink,
             {
-              onClick: (e) => {
-                var _a2;
-                navigate(`/event/${(_a2 = globals2.data.eventId) == null ? void 0 : _a2.join(".")}/achievements`);
-                e.preventDefault();
-              },
+              href: `/event/${(_g = globals2.data.eventId) == null ? void 0 : _g.join(".")}/achievements`,
               icon: /* @__PURE__ */ jsx(IconAward, { size: 24 }),
-              children: i18n2._pt("Event menu", "Achievements")
+              text: i18n2._pt("Event menu", "Achievements")
             }
           ),
-          globals2.data.hasSeries && ((_c = globals2.data.eventId) == null ? void 0 : _c.length) === 1 && /* @__PURE__ */ jsx(
-            Menu.Item,
+          globals2.data.hasSeries && ((_h = globals2.data.eventId) == null ? void 0 : _h.length) === 1 && /* @__PURE__ */ jsx(
+            MenuItemLink,
             {
-              onClick: (e) => {
-                var _a2;
-                navigate(`/event/${(_a2 = globals2.data.eventId) == null ? void 0 : _a2.join(".")}/seriesRating`);
-                e.preventDefault();
-              },
+              href: `/event/${(_i = globals2.data.eventId) == null ? void 0 : _i.join(".")}/seriesRating`,
               icon: /* @__PURE__ */ jsx(IconChartLine, { size: 24 }),
-              children: i18n2._pt("Event menu", "Series rating")
+              text: i18n2._pt("Event menu", "Series rating")
             }
           ),
-          globals2.data.type === EventType.EVENT_TYPE_TOURNAMENT && ((_d = globals2.data.eventId) == null ? void 0 : _d.length) === 1 && /* @__PURE__ */ jsx(
-            Menu.Item,
+          globals2.data.type === EventType.EVENT_TYPE_TOURNAMENT && ((_j = globals2.data.eventId) == null ? void 0 : _j.length) === 1 && /* @__PURE__ */ jsx(
+            MenuItemLink,
             {
-              onClick: (e) => {
-                var _a2;
-                navigate(`/event/${(_a2 = globals2.data.eventId) == null ? void 0 : _a2.join(".")}/timer`);
-                e.preventDefault();
-              },
+              href: `/event/${(_k = globals2.data.eventId) == null ? void 0 : _k.join(".")}/timer`,
               icon: /* @__PURE__ */ jsx(IconAlarm, { size: 24 }),
-              children: i18n2._pt("Event menu", "Timer & seating")
+              text: i18n2._pt("Event menu", "Timer & seating")
             }
           ),
-          globals2.data.type === EventType.EVENT_TYPE_ONLINE && ((_e = globals2.data.eventId) == null ? void 0 : _e.length) === 1 && /* @__PURE__ */ jsx(
+          globals2.data.type === EventType.EVENT_TYPE_ONLINE && ((_l = globals2.data.eventId) == null ? void 0 : _l.length) === 1 && /* @__PURE__ */ jsx(
             Menu.Item,
             {
               onClick: (e) => {
