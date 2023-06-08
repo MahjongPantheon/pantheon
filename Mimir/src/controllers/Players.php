@@ -17,7 +17,8 @@
  */
 namespace Mimir;
 
-use function GuzzleHttp\Promise\inspect;
+use Common\TwirpError;
+use Twirp\ErrorCode;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
@@ -74,7 +75,7 @@ class PlayersController extends Controller
 
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
-            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         $stats = (new PlayerStatModel($this->_ds, $this->_config, $this->_meta))

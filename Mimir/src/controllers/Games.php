@@ -18,6 +18,8 @@
 namespace Mimir;
 
 use Common\IntermediateResultOfSession;
+use Common\TwirpError;
+use Twirp\ErrorCode;
 
 require_once __DIR__ . '/../models/InteractiveSession.php';
 require_once __DIR__ . '/../models/PenaltySession.php';
@@ -196,7 +198,7 @@ class GamesController extends Controller
         $this->_log->info('Getting session overview for game # ' . $gameHashCode);
         $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHashCode]);
         if (empty($session)) {
-            throw new InvalidParametersException("Couldn't find session in DB", 404);
+            throw new TwirpError(ErrorCode::NotFound, "Couldn't find session in DB");
         }
 
         $playersReg = PlayerPrimitive::findPlayersForSession($this->_ds, $gameHashCode);

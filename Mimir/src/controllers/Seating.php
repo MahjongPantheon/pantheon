@@ -17,6 +17,9 @@
  */
 namespace Mimir;
 
+use Common\TwirpError;
+use Twirp\ErrorCode;
+
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/Seating.php';
 require_once __DIR__ . '/../models/Event.php';
@@ -149,7 +152,7 @@ class SeatingController extends Controller
 
         $eventList = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($eventList)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         $currentRatingTable = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
@@ -245,12 +248,12 @@ class SeatingController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);
         if (empty($prescript)) {
-            throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB', 1404);
+            throw new TwirpError(ErrorCode::NotFound, 'Event prescript for id#' . $eventId . ' not found in DB', 1404);
         }
         $prescriptForSession = $prescript[0]->getNextGameSeating();
         return Seating::makePrescriptedSeating(
@@ -354,7 +357,7 @@ class SeatingController extends Controller
         $this->_checkIfAllowed($eventId);
         $events = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($events) || $events[0]->getGamesStatus() !== EventPrimitive::GS_SEATING_READY) {
-            throw new InvalidParametersException('Event not found in database or event is not in proper state');
+            throw new TwirpError(ErrorCode::NotFound, 'Event not found in database or event is not in proper state');
         }
 
         if ($events[0]->getIsPrescripted()) {
@@ -407,7 +410,7 @@ class SeatingController extends Controller
         }
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event #' . $eventId . ' not found in database');
+            throw new TwirpError(ErrorCode::NotFound, 'Event #' . $eventId . ' not found in database');
         }
 
         if ($event[0]->getIsFinished()) {
@@ -427,7 +430,7 @@ class SeatingController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         // In rare cases we want to exclude players from seating

@@ -19,6 +19,8 @@ namespace Mimir;
 
 use Common\Ruleset;
 use Common\RulesetConfig;
+use Common\TwirpError;
+use Twirp\ErrorCode;
 
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventSeries.php';
@@ -206,7 +208,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$id]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event with id ' . $id . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event with id ' . $id . ' not found in DB');
         }
         $event = $event[0];
 
@@ -265,7 +267,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$id]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event with id ' . $id . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event with id ' . $id . ' not found in DB');
         }
         $event = $event[0];
 
@@ -351,7 +353,7 @@ class EventsController extends Controller
 
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
-            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         $needLocalIds = false;
@@ -569,7 +571,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         $rules = $event[0]->getRulesetConfig();
@@ -623,7 +625,7 @@ class EventsController extends Controller
 
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
-            throw new InvalidParametersException('Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         // Show prefinished results only for event admin.
@@ -656,7 +658,7 @@ class EventsController extends Controller
 
         $eventList = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($eventList)) {
-            throw new InvalidParametersException('Event id # ' . $eventId . ' was not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id # ' . $eventId . ' was not found in DB');
         }
 
         $table = AchievementsPrimitive::findByEventId($this->_ds, [$eventId])[0]->getData();
@@ -691,7 +693,7 @@ class EventsController extends Controller
 
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
-            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         if (!in_array($orderBy, ['id', 'end_date']) || !in_array($order, ['asc', 'desc'])) {
@@ -719,7 +721,7 @@ class EventsController extends Controller
 
         $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$representationalHash]);
         if (empty($session)) {
-            throw new InvalidParametersException('Session hash#' . $representationalHash . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Session hash#' . $representationalHash . ' not found in DB');
         }
 
         $result = (new EventFinishedGamesModel($this->_ds, $this->_config, $this->_meta))->getFinishedGame($session[0]);
@@ -742,7 +744,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         $data = (new EventSeriesModel($this->_ds, $this->_config, $this->_meta))->getGamesSeries($event[0]);
@@ -763,7 +765,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         if (!$event[0]->getUseTimer()) {
@@ -825,7 +827,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         // Check we have rights to register player modify timer for this event
@@ -856,7 +858,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         // Check we have rights to hide results for this event
@@ -883,7 +885,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         $config = (new EventModel($this->_ds, $this->_config, $this->_meta))
@@ -906,7 +908,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
         $event = $event[0];
 
@@ -935,7 +937,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
         $event = $event[0];
 
@@ -966,7 +968,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         // Check we have rights to modify this event
@@ -1139,7 +1141,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         $success = $event[0]->setNextGameStartTime(time() + $event[0]->getTimeToStart())->save();
@@ -1163,7 +1165,7 @@ class EventsController extends Controller
 
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
         }
 
         $this->_log->info('Successfully got starting timer for event #' . $eventId);

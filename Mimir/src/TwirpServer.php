@@ -147,6 +147,7 @@ use Common\YakuStat;
 use Exception;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
+use Twirp\ErrorCode;
 
 final class TwirpServer implements Mimir
 {
@@ -1197,7 +1198,7 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_playersController->getLastRound($req->getPlayerId(), $req->getEventId());
         if (empty($ret)) {
-            throw new InvalidParametersException();
+            throw new TwirpError(ErrorCode::NotFound, 'Last round not found');
         }
         return (new PlayersGetLastRoundResponse())
             ->setRound(self::_toRoundState($ret));
@@ -1221,7 +1222,7 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_playersController->getLastRoundByHashcode($req->getSessionHash());
         if (empty($ret)) {
-            throw new InvalidParametersException();
+            throw new TwirpError(ErrorCode::NotFound, 'Last round not found');
         }
         return (new PlayersGetLastRoundByHashResponse())
             ->setRound(self::_toRoundState($ret));
@@ -1280,7 +1281,7 @@ final class TwirpServer implements Mimir
     {
         $ev = $req->getEvent();
         if (empty($ev)) {
-            throw new InvalidParametersException();
+            throw new TwirpError(ErrorCode::NotFound, 'Event not found');
         }
         return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->updateEvent(
