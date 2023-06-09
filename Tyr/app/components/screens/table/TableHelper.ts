@@ -298,8 +298,7 @@ function getPlayer(
 
       const riichiPayments = state.changesOverview?.payments.riichi;
       const currentPlayerId = player.id;
-      const savedRiichiKey = `${currentPlayerId}<-${currentPlayerId}`;
-      if (riichiPayments && Object.keys(riichiPayments).includes(savedRiichiKey)) {
+      if (riichiPayments?.some((v) => v.from === currentPlayerId && v.to === undefined)) {
         showInlineRiichi = true;
       }
       break;
