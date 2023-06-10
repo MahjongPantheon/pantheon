@@ -9167,7 +9167,7 @@ function makePercent(piece, total) {
     return "0.00%";
   return (100 * piece / total).toFixed(2) + "%";
 }
-const HandsGraph = React.lazy(() => import("./assets/HandsGraph-d26d8eeb.js"));
+const HandsGraph = React.lazy(() => import("./assets/HandsGraph-14f3bb27.js"));
 const YakuGraph = React.lazy(() => import("./assets/YakuGraph-2f187b30.js"));
 const RatingGraph = React.lazy(() => import("./assets/RatingGraph-3aab260e.js"));
 const PlayerStats = ({
@@ -10668,7 +10668,7 @@ const Achievements = ({
           (item, idx) => /* @__PURE__ */ jsxs(List.Item, { children: [
             /* @__PURE__ */ jsx("b", { children: item.name }),
             ", ",
-            yMap.get(item.yaku)
+            yMap.get(parseInt(item.yaku, 10))
           ] }, `li_${idx}`)
         ) }) : /* @__PURE__ */ jsx(Text, { children: i18n2._t("No yakumans have been collected") }),
         /* @__PURE__ */ jsx(
