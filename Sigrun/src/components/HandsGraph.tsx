@@ -48,13 +48,14 @@ export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] 
   let yakumanCount = 0;
 
   const handValueStats = [];
-  for (let i = 1; i < 13; i++) {
-    if (hands[i] >= 0) {
-      handValueStats.push({ x: i.toString(), y: hands[i] });
+  Object.entries(hands).forEach(([hanStr, count]) => {
+    const han = parseInt(hanStr, 10);
+    if (han >= 0) {
+      handValueStats.push({ x: han.toString(), y: count });
     } else {
-      yakumanCount += hands[i];
+      yakumanCount += count;
     }
-  }
+  });
 
   handValueStats.push({ x: '★', y: yakumanCount > 0 ? yakumanCount : 0 });
 
