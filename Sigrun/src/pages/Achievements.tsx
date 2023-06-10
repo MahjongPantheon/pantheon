@@ -34,7 +34,7 @@ import { useI18n } from '../hooks/i18n';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { IconAward } from '@tabler/icons-react';
-import { YakuId, yakuNameMap } from '../helpers/yaku';
+import { yakuNameMap } from '../helpers/yaku';
 import bestHand from '../../assets/img/bestHand.png';
 import bestFu from '../../assets/img/bestFu.png';
 import bestTsumoist from '../../assets/img/bestTsumoist.png';
@@ -379,9 +379,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           {achDataByKey[Achievement.YAKUMANS].length > 0 ? (
             <List>
               {achDataByKey[Achievement.YAKUMANS].map(
-                (item: { name: string; yaku: YakuId }, idx: number) => (
+                (item: { name: string; yaku: string }, idx: number) => (
                   <List.Item key={`li_${idx}`}>
-                    <b>{item.name}</b>, {yMap.get(item.yaku)}
+                    <b>{item.name}</b>, {yMap.get(parseInt(item.yaku, 10))}
                   </List.Item>
                 )
               )}
