@@ -64,12 +64,11 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
     const { gameConfig } = this.props.state;
     if (gameConfig) {
       window.open(
-        `${
-          gameConfig.eventStatHost.startsWith('https://') ||
-          gameConfig.eventStatHost.startsWith('http://localhost:')
-            ? gameConfig.eventStatHost
-            : 'https://' + gameConfig.eventStatHost
-        }/last/`
+        `${(gameConfig.eventStatHost.startsWith('https://') ||
+        gameConfig.eventStatHost.startsWith('http://localhost:')
+          ? gameConfig.eventStatHost
+          : 'https://' + gameConfig.eventStatHost
+        ).replace(/\/info$/, '/order/rating')}`
       );
     }
   }
@@ -111,7 +110,8 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
           !state.gameConfig.isPrescripted
         }
         hasStartedGame={!!state.currentSessionHash && state.gameOverviewReady}
-        hasPrevGame={state.lastResults !== undefined}
+        // Show button always, if there is no prev game - empty screen with "No games found" text will be shown
+        hasPrevGame={true}
         canSeeOtherTables={true}
         showDonate={showDonate}
         hasStat={!!state.gameConfig.eventStatHost}
