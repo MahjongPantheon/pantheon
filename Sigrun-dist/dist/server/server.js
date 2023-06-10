@@ -10668,7 +10668,7 @@ const Achievements = ({
           (item, idx) => /* @__PURE__ */ jsxs(List.Item, { children: [
             /* @__PURE__ */ jsx("b", { children: item.name }),
             ", ",
-            yMap.get(item.yaku)
+            yMap.get(parseInt(item.yaku, 10))
           ] }, `li_${idx}`)
         ) }) : /* @__PURE__ */ jsx(Text, { children: i18n2._t("No yakumans have been collected") }),
         /* @__PURE__ */ jsx(
