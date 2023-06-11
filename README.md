@@ -53,6 +53,9 @@ of the `Database` container (you can get to shell using `make shell_db`). If you
 Every 15 minutes the database dump is made. You may view history of backups using `make backup_show_history` in `Database` folder. Use included pgadmin4
 container (running at 5632 port) to restore your database to previous state.
 
+Please note that backups will consume quite much disk space. To clean up some space you may consider deleting the `/var/lib/postgresql/backup/.git` directory
+and changing the `BACKUP_GIT_REMOTE` variable, followed by containers restart.
+
 ### Development environment
 
 Pantheon developer environment works on *nix hosts (mac, linux, *bsd). Windows-based systems 
