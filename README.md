@@ -36,6 +36,8 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 Pantheon provides container with pre-installed email agent (Hermod). If you want to send emails signed with DKIM, you will need to place your private keys
 to `Hermod/opendkim_keys` folder. Also please set up some unique key in environment file in `Common/envs/` folder to prevent unauthorized access.
 
+Also you should set up `mailer.mailer_addr` variable in your Frey config and set proper mailer address to send emails from.   
+
 ### Development environment
 
 Pantheon developer environment works on *nix hosts (mac, linux, *bsd). Windows-based systems 
