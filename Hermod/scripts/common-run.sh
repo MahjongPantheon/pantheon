@@ -1,0 +1,364 @@
+#!/usr/bin/env bash
+
+announce_startup() {
+	echo -e "${gray}${emphasis}★★★★★ ${reset}${lightblue}POSTFIX STARTING UP${reset}${gray}${emphasis} ★★★★★${reset}"
+}
+
+setup_timezone() {
+	if [ ! -z "$TZ" ]; then
+		TZ_FILE="/usr/share/zoneinfo/$TZ"
+		if [ -f "$TZ_FILE" ]; then
+			notice "Setting container timezone to: ${emphasis}$TZ${reset}"
+			ln -snf "$TZ_FILE" /etc/localtime
+			echo "$TZ" > /etc/timezone
+		else
+			warn "Cannot set timezone to: ${emphasis}$TZ${reset} -- this timezone does not exist."
+		fi
+	else
+		info "Not setting any timezone for the container"
+	fi
+}
+
+rsyslog_log_format() {
+	local log_format="${LOG_FORMAT}"
+	if [[ -z "${log_format}" ]]; then
+		log_format="plain"
+	fi
+	info "Using ${emphasis}${log_format}${reset} log format for rsyslog."
+	sed -i -E "s/<log-format>/${log_format}/" /etc/rsyslog.conf
+}
+
+reown_folders() {
+	mkdir -p /var/spool/postfix/ && mkdir -p /var/spool/postfix/pid
+	chown root: /var/spool/postfix/
+	chown root: /var/spool/postfix/pid
+}
+
+postfix_disable_utf8() {
+	postconf -e smtputf8_enable=no
+}
+
+postfix_create_aliases() {
+	postalias /etc/postfix/aliases
+}
+
+postfix_disable_local_mail_delivery() {
+	postconf -e mydestination=
+}
+
+postfix_disable_domain_relays() {
+	postconf -e relay_domains=
+}
+
+postfix_increase_header_size_limit() {
+	postconf -e "header_size_limit=4096000"
+}
+
+postfix_restrict_message_size() {
+	if [[ -n "${MESSAGE_SIZE_LIMIT}" ]]; then
+		deprecated "${emphasis}MESSAGE_SIZE_LIMIT${reset} variable is deprecated. Please use ${emphasis}POSTFIX_message_size_limit${reset} instead."
+		POSTFIX_message_size_limit="${MESSAGE_SIZE_LIMIT}"
+	fi
+
+	if [[ -n "${POSTFIX_message_size_limit}" ]]; then
+		notice "Restricting message_size_limit to: ${emphasis}${POSTFIX_message_size_limit} bytes${reset}"
+	else
+		info "Using ${emphasis}unlimited${reset} message size."
+		POSTFIX_message_size_limit=0
+	fi
+}
+
+postfix_reject_invalid_helos() {
+	postconf -e smtpd_delay_reject=yes
+	postconf -e smtpd_helo_required=yes
+	postconf -e "smtpd_helo_restrictions=permit_mynetworks,reject_invalid_helo_hostname,permit"
+	postconf -e "smtpd_sender_restrictions=permit_mynetworks"
+}
+
+postfix_set_hostname() {
+	postconf -# myhostname
+	if [[ -z "$POSTFIX_myhostname" ]]; then
+		POSTFIX_myhostname="${HOSTNAME}"
+	fi
+}
+
+postfix_set_relay_tls_level() {
+	if [ -z "$RELAYHOST_TLS_LEVEL" ]; then
+		info "Setting smtp_tls_security_level: ${emphasis}may${reset}"
+		postconf -e "smtp_tls_security_level=may"
+	else
+		notice "Setting smtp_tls_security_level: ${emphasis}$RELAYHOST_TLS_LEVEL${reset}"
+		postconf -e "smtp_tls_security_level=$RELAYHOST_TLS_LEVEL"
+	fi
+}
+
+postfix_setup_relayhost() {
+	if [ ! -z "$RELAYHOST" ]; then
+		noticen "Forwarding all emails to ${emphasis}$RELAYHOST${reset}"
+		postconf -e "relayhost=$RELAYHOST"
+		# Alternately, this could be a folder, like this:
+		# smtp_tls_CApath
+		postconf -e "smtp_tls_CAfile=/etc/ssl/certs/ca-certificates.crt"
+
+		if [ -n "$RELAYHOST_USERNAME" ] && [ -n "$RELAYHOST_PASSWORD" ]; then
+			echo -e " using username ${emphasis}$RELAYHOST_USERNAME${reset} and password ${emphasis}(redacted)${reset}."
+			echo "$RELAYHOST $RELAYHOST_USERNAME:$RELAYHOST_PASSWORD" >> /etc/postfix/sasl_passwd
+			postmap hash:/etc/postfix/sasl_passwd
+			postconf -e "smtp_sasl_auth_enable=yes"
+			postconf -e "smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd"
+			postconf -e "smtp_sasl_security_options=noanonymous"
+			postconf -e "smtp_sasl_tls_security_options=noanonymous"
+		else
+			echo -e " without any authentication. ${emphasis}Make sure your server is configured to accept emails coming from this IP.${reset}"
+		fi
+	else
+		notice "Will try to deliver emails directly to the final server. ${emphasis}Make sure your DNS is setup properly!${reset}"
+		postconf -# relayhost
+		postconf -# smtp_sasl_auth_enable
+		postconf -# smtp_sasl_password_maps
+		postconf -# smtp_sasl_security_options
+	fi
+}
+
+postfix_setup_networks() {
+	if [ ! -z "$MYNETWORKS" ]; then
+		deprecated "${emphasis}MYNETWORKS${reset} variable is deprecated. Please use ${emphasis}POSTFIX_mynetworks${reset} instead."
+		notice "Using custom allowed networks: ${emphasis}$MYNETWORKS${reset}"
+		POSTFIX_mynetworks="$MYNETWORKS"
+	elif [ ! -z "$POSTFIX_mynetworks" ]; then
+		notice "Using custom allowed networks: ${emphasis}$POSTFIX_mynetworks${reset}"
+	else
+		info "Using default private network list for trusted networks."
+		POSTFIX_mynetworks="127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+	fi
+}
+
+postfix_setup_debugging() {
+	if [ ! -z "$INBOUND_DEBUGGING" ]; then
+		notice "Enabling additional debbuging for: ${emphasis}$POSTFIX_mynetworks${reset}, as INBOUND_DEBUGGING=''${INBOUND_DEBUGGING}''"
+		postconf -e "debug_peer_list=$POSTFIX_mynetworks"
+
+		sed -i -E 's/^[ \t]*#?[ \t]*LogWhy[ \t]*.+$/LogWhy                  yes/' /etc/opendkim/opendkim.conf
+		if ! egrep -q '^LogWhy' /etc/opendkim/opendkim.conf; then
+			echo >> /etc/opendkim/opendkim.conf
+			echo "LogWhy                  yes" >> /etc/opendkim/opendkim.conf
+		fi
+	else
+		info "Debugging is disabled.${reset}"
+		sed -i -E 's/^[ \t]*#?[ \t]*LogWhy[ \t]*.+$/LogWhy                  no/' /etc/opendkim/opendkim.conf
+		if ! egrep -q '^LogWhy' /etc/opendkim/opendkim.conf; then
+			echo >> /etc/opendkim/opendkim.conf
+			echo "LogWhy                  no" >> /etc/opendkim/opendkim.conf
+		fi
+	fi
+}
+
+postfix_setup_sender_domains() {
+	if [ ! -z "$ALLOWED_SENDER_DOMAINS" ]; then
+		infon "Setting up allowed SENDER domains:"
+		allowed_senders=/etc/postfix/allowed_senders
+		rm -f $allowed_senders $allowed_senders.db > /dev/null
+		touch $allowed_senders
+		for i in $ALLOWED_SENDER_DOMAINS; do
+			echo -ne " ${emphasis}$i${reset}"
+			echo -e "$i\tOK" >> $allowed_senders
+		done
+		echo
+		postmap $allowed_senders
+
+		postconf -e "smtpd_recipient_restrictions=reject_non_fqdn_recipient, reject_unknown_recipient_domain, check_sender_access hash:$allowed_senders, reject"
+
+		# Since we are behind closed doors, let's just permit all relays.
+		postconf -e "smtpd_relay_restrictions=permit"
+	elif [ -z "$ALLOW_EMPTY_SENDER_DOMAINS" ]; then
+		error "You need to specify ALLOWED_SENDER_DOMAINS otherwise Postfix will not run!"
+		exit 1
+	fi
+}
+
+postfix_setup_masquarading() {
+	if [ ! -z "$MASQUERADED_DOMAINS" ]; then
+		notice "Setting up address masquerading: ${emphasis}$MASQUERADED_DOMAINS${reset}"
+		postconf -e "masquerade_domains = $MASQUERADED_DOMAINS"
+		postconf -e "local_header_rewrite_clients = static:all"
+	fi
+}
+
+postfix_setup_header_checks() {
+	if [ ! -z "$SMTP_HEADER_CHECKS" ]; then
+		if [ "$SMTP_HEADER_CHECKS" == "1" ]; then
+			info "Using default file for SMTP header checks"
+			SMTP_HEADER_CHECKS="regexp:/etc/postfix/smtp_header_checks"
+		fi
+
+		FORMAT=$(echo "$SMTP_HEADER_CHECKS" | cut -d: -f1)
+		FILE=$(echo "$SMTP_HEADER_CHECKS" | cut -d: -f2-)
+
+		if [ "$FORMAT" == "$FILE" ]; then
+			warn "No Postfix format defined for file ${emphasis}SMTP_HEADER_CHECKS${reset}. Using default ${emphasis}regexp${reset}. To avoid this message, set format explicitly, e.g. ${emphasis}SMTP_HEADER_CHECKS=regexp:$SMTP_HEADER_CHECKS${reset}."
+			FORMAT="regexp"
+		fi
+
+		if [ -f "$FILE" ]; then
+			notice "Setting up ${emphasis}smtp_header_checks${reset} to ${emphasis}$FORMAT:$FILE${reset}"
+			postconf -e "smtp_header_checks=$FORMAT:$FILE"
+		else
+			fatal "File ${emphasis}$FILE${reset} cannot be found. Please make sure your SMTP_HEADER_CHECKS variable points to the right file. Startup aborted."
+			exit 2
+		fi
+	fi
+}
+
+postfix_setup_dkim() {
+	local DKIM_ENABLED
+	local domain_dkim_selector
+	local private_key
+	local dkim_socket
+	local domain
+	local any_generated
+	local file
+
+	if [[ -n "${DKIM_AUTOGENERATE}" ]]; then
+		info "${emphasis}DKIM_AUTOGENERATE${reset} set -- will try to auto-generate keys for ${emphasis}${ALLOWED_SENDER_DOMAINS}${reset}."
+		mkdir -p /etc/opendkim/keys
+		if [[ -n "${ALLOWED_SENDER_DOMAINS}" ]]; then
+			for domain in ${ALLOWED_SENDER_DOMAINS}; do
+				private_key=/etc/opendkim/keys/${domain}.private
+				if [[ -f "${private_key}" ]]; then
+					info "Key for domain ${emphasis}${domain}${reset} already exists in ${emphasis}${private_key}${reset}. Will not overwrite"
+				else
+					notice "Auto-generating DKIM key for ${emphasis}${domain}${reset} into ${private_key}."
+					(
+						cd /tmp
+						domain_dkim_selector="$(get_dkim_selector "${domain}")"
+						opendkim-genkey -b 2048 -h rsa-sha256 -r -v --subdomains -s ${domain_dkim_selector} -d $domain
+						# Fixes https://github.com/linode/docs/pull/620
+						sed -i 's/h=rsa-sha256/h=sha256/' ${domain_dkim_selector}.txt
+						mv -v ${domain_dkim_selector}.private /etc/opendkim/keys/${domain}.private
+						mv -v ${domain_dkim_selector}.txt /etc/opendkim/keys/${domain}.txt
+					) | sed 's/^/       /'
+					any_generated=1
+				fi
+			done
+			if [[ -n "${any_generated}" ]]; then
+				notice "New DKIM keys have been generated! Please make sure to update your DNS records! You need to add the following details:"
+				for file in /etc/opendkim/keys/*.txt; do
+					echo "====== $file ======"
+					cat $file
+				done
+				echo
+			fi
+		else
+			warn "DKIM auto-generate requested, but ${emphasis}ALLOWED_SENDER_DOMAINS${reset} not set. Nothing to generate!"
+		fi
+	else
+		debug "${emphasis}DKIM_AUTOGENERATE${reset} not set -- you will need to provide your own keys."
+	fi
+
+	if [ -d /etc/opendkim/keys ] && [ ! -z "$(find /etc/opendkim/keys -type f ! -name .)" ]; then
+		DKIM_ENABLED=", ${emphasis}opendkim${reset}"
+		notice "Configuring OpenDKIM."
+		mkdir -p /var/run/opendkim
+		chown -R opendkim:opendkim /var/run/opendkim
+		dkim_socket=$(cat /etc/opendkim/opendkim.conf | egrep ^Socket | awk '{ print $2 }')
+		if [ $(echo "$dkim_socket" | cut -d: -f1) == "inet" ]; then
+			dkim_socket=$(echo "$dkim_socket" | cut -d: -f2)
+			dkim_socket="inet:$(echo "$dkim_socket" | cut -d@ -f2):$(echo "$dkim_socket" | cut -d@ -f1)"
+		fi
+		echo -e "        ...using socket $dkim_socket"
+
+		postconf -e "milter_protocol=6"
+		postconf -e "milter_default_action=accept"
+		postconf -e "smtpd_milters=$dkim_socket"
+		postconf -e "non_smtpd_milters=$dkim_socket"
+
+		echo > /etc/opendkim/TrustedHosts
+		echo > /etc/opendkim/KeyTable
+		echo > /etc/opendkim/SigningTable
+
+		# Since it's an internal service anyways, it's safe
+		# to assume that *all* hosts are trusted.
+		echo "0.0.0.0/0" > /etc/opendkim/TrustedHosts
+
+		if [ ! -z "$ALLOWED_SENDER_DOMAINS" ]; then
+			for domain in $ALLOWED_SENDER_DOMAINS; do
+				private_key=/etc/opendkim/keys/${domain}.private
+				if [ -f $private_key ]; then
+					domain_dkim_selector="$(get_dkim_selector "${domain}")"
+					echo -e "        ...for domain ${emphasis}${domain}${reset} (selector: ${emphasis}${domain_dkim_selector}${reset})"
+					echo "${domain_dkim_selector}._domainkey.${domain} ${domain}:${domain_dkim_selector}:${private_key}" >> /etc/opendkim/KeyTable
+					echo "*@${domain} ${domain_dkim_selector}._domainkey.${domain}" >> /etc/opendkim/SigningTable
+				else
+					error "Skipping DKIM for domain ${emphasis}${domain}${reset}. File ${private_key} not found!"
+				fi
+			done
+		fi
+	else
+		info "No DKIM keys found, will not use DKIM."
+		postconf -# smtpd_milters
+		postconf -# non_smtpd_milters
+	fi
+}
+
+opendkim_custom_commands() {
+	local setting
+	local key
+	local padded_key
+	local value
+	for setting in ${!OPENDKIM_*}; do
+		key="${setting:9}"
+		value="${!setting}"
+		if [ -n "${value}" ]; then
+			if [ "${#key}" -gt 23 ]; then
+				padded_key="${key} "
+			else
+				padded_key="$(printf %-24s "${key}")"
+			fi
+			if cat /etc/opendkim/opendkim.conf | egrep -q "^[[:space:]]*#?[[:space:]]*${key}"; then
+				info "Updating custom OpenDKIM setting: ${emphasis}${key}=${value}${reset}"
+				sed -i -E "s/^[ \t]*#?[ \t]*${key}[ \t]*.+$/${padded_key}${value}/" /etc/opendkim/opendkim.conf
+			else
+				info "Adding custom OpenDKIM setting: ${emphasis}${key}=${value}${reset}"
+				echo "Adding ${padded_key}${value}"
+				echo "${padded_key}${value}" >> /etc/opendkim/opendkim.conf
+			fi
+		else
+			info "Deleting custom OpenDKIM setting: ${emphasis}${key}${reset}"
+			sed -i -E "/^[ \t]*#?[ \t]*${key}[ \t]*.+$/d" /etc/opendkim/opendkim.conf
+		fi
+	done
+}
+
+postfix_custom_commands() {
+	local setting
+	local key
+	local value
+	for setting in ${!POSTFIX_*}; do
+		key="${setting:8}"
+		value="${!setting}"
+		if [ -n "${value}" ]; then
+			info "Applying custom postfix setting: ${emphasis}${key}=${value}${reset}"
+			postconf -e "${key}=${value}"
+		else
+			info "Deleting custom postfix setting: ${emphasis}${key}${reset}"
+			postconf -# "${key}"
+		fi
+	done
+}
+
+postfix_open_submission_port() {
+	# Use 587 (submission)
+	sed -i -r -e 's/^#submission/submission/' /etc/postfix/master.cf
+}
+
+execute_post_init_scripts() {
+	if [ -d /docker-init.db/ ]; then
+		notice "Executing any found custom scripts..."
+		for f in /docker-init.db/*; do
+			case "$f" in
+				*.sh)     chmod +x "$f"; echo -e "\trunning ${emphasis}$f${reset}"; . "$f" ;;
+				*)        echo "$0: ignoring $f" ;;
+			esac
+		done
+	fi
+}

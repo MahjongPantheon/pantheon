@@ -164,6 +164,10 @@ seed_tournament:
 dump_users:
 	cd Frey && ${MAKE} docker_dump_users
 
+.PHONY: dump_last_mail
+dump_last_mail:
+	cd Hermod && ${MAKE} docker_last_mail
+
 .PHONY: check
 check:
 	cd Mimir && ${MAKE} docker_check

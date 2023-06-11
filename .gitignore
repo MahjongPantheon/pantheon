@@ -47,3 +47,5 @@ Frey/tests/data/*
 
 Sigrun-dist/.env.production
 Sigrun-dist/node_modules
+
+Hermod/opendkim_keys/*.private

@@ -93,10 +93,6 @@ class Mailer
     public function sendSignupMail($signupEmail, $regLink)
     {
         /* @phpstan-ignore-next-line */
-        if ($this->_mailMode === 'debug') {
-            return $regLink;
-        }
-        /* @phpstan-ignore-next-line */
         self::_send(
             $signupEmail,
             _t('Pantheon: confirm your registration'),
@@ -120,7 +116,7 @@ Pantheon support team
             '-F "Pantheon mail service" -f ' . $this->_mailerAddress
         );
 
-        return ''; // Don't return approval code if we're sending mail ourselves
+        return '';
     }
 
     /**
@@ -130,7 +126,6 @@ Pantheon support team
      */
     public function sendPasswordRecovery($approvalToken, $emailSanitized)
     {
-        $debugMessage = '';
         $link = $this->_guiUrl . '/profile/resetPasswordConfirm/' . base64_encode($approvalToken . '@@@' . $emailSanitized);
         $message = _p("Hello!
 
@@ -144,24 +139,18 @@ If you didn't attempt to recover password, you can safely ignore this message.
 Sincerely yours,
 Pantheon support team
 ", $link);
-        /* @phpstan-ignore-next-line */
-        if ($this->_mailMode === 'debug') {
-            $debugMessage = $link;
-        /* @phpstan-ignore-next-line */
-        } else {
-            self::_send(
-                $emailSanitized,
-                _t('Pantheon: password recovery request'),
-                $message,
-                [
-                    'MIME-Version' => '1.0',
-                    'List-Unsubscribe' => $this->_mailerAddress,
-                    'X-Mailer' => 'PantheonNotifier/2.0'
-                ],
-                '-F "Pantheon mail service" -f ' . $this->_mailerAddress
-            );
-        }
+        self::_send(
+            $emailSanitized,
+            _t('Pantheon: password recovery request'),
+            $message,
+            [
+                'MIME-Version' => '1.0',
+                'List-Unsubscribe' => $this->_mailerAddress,
+                'X-Mailer' => 'PantheonNotifier/2.0'
+            ],
+            '-F "Pantheon mail service" -f ' . $this->_mailerAddress
+        );
 
-        return $debugMessage;
+        return '';
     }
 }

@@ -40,7 +40,8 @@ RUN apk update && \
     php81-xdebug \
     php81-xml \
     php81-xmlwriter \
-    php81-xmlreader
+    php81-xmlreader && \
+    (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
 ENV TIMEZONE            Europe/Moscow
 ENV PHP_MEMORY_LIMIT    512M

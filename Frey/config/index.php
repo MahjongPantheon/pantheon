@@ -39,10 +39,10 @@ return array_merge([
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',
     'mailer' => [
-        'mode' => 'debug', // 'local_mta' or 'remote_api'
-        'remote_url' => '', // if mode set to 'remote_api', this should point to API address
-        'remote_action_key' => '', // if mode set to 'remote_api', this should point to API auth token
-        'mailer_addr' => 'mailer@localhost.tld', // address of mailer
+        'mode' => 'remote_api', // 'local_mta' or 'remote_api'
+        'remote_url' => 'http://hermod', // if mode set to 'remote_api', this should point to API address
+        'remote_action_key' => getenv('MAIL_ACTION_KEY') ?: 'CHANGE_ME', // if mode set to 'remote_api', this should point to API auth token
+        'mailer_addr' => 'noreply@riichimahjong.org', // address of mailer
         'gui_url' => getenv('FORSETI_URL') // target host handling emailed links
     ],
     'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!
