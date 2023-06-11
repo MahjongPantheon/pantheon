@@ -16,7 +16,8 @@ RUN apk update && \
     curl \
     make \
     git \
-    postgresql13
+    postgresql13 && \
+    (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)

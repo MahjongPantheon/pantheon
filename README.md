@@ -31,11 +31,10 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 9. Copy configuration file for Sigrun from `Sigrun/.env.production` to `Sigrun-dist/.env.production`. Note that config files whould be the same, otherwise expect side-effects.
 10. Basically, you're done :)
 
-Please note that there is no default mail server included, so you probably would want to use external mail api. Please take a look on `Frey/src/helpers/mailer_remote_api.php` 
-file - this file should be hosted as plain php file on some host, where local mail transfer agent is available. On Frey config, you should set `mode` to `remote_api` and
-set remote url of the `mailer_remote_api` file and api key according to `MAIL_ACTION_KEY` value in it.
+#### Email agent
 
-You might want to use some external mailing service - feel free to modify the `mailer_remote_api` file in this case.
+Pantheon provides container with pre-installed email agent (Hermod). If you want to send emails signed with DKIM, you will need to place your private keys
+to `Hermod/opendkim_keys` folder. Also please set up some unique key in environment file in `Common/envs/` folder to prevent unauthorized access.
 
 ### Development environment
 
@@ -81,6 +80,12 @@ Default ports for services are:
 
 **Mimir** and **Frey** use [twirp](https://github.com/twitchtv/twirp) interface to communicate with other services.
 See protocol description files in `Common` folder.
+
+#### Email agent
+
+Pantheon provides container with pre-installed email agent (Hermod). You can view last sent email in CLI using `make dump_last_mail` command.
+This is useful to test registration and password recovery, because emails sent from the developer environment will most likely be rejected
+by target email relay (e.g. gmail rejects it in 100% of cases).
 
 ### Pull requests
 

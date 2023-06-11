@@ -9,6 +9,15 @@ services:
       - "5532:5532"
     volumes:
       - datavolume01:/var/lib/postgresql/data
+  hermod:
+    build: ./Hermod
+    ports:
+      - "127.0.0.1:4109:80"
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Hermod/www:/var/www/html/Hermod
+      - ./Hermod/opendkim_keys:/etc/opendkim/keys
   pgadmin:
     image: dpage/pgadmin4
     ports:
@@ -76,8 +85,10 @@ services:
       - "127.0.0.1:4004:80"
     links:
       - db:db
+      - hermod:hermod
     depends_on:
       - db
+      - hermod
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     volumes:

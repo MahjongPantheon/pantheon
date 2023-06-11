@@ -22,7 +22,8 @@ RUN apk update && \
     nginx \
     nodejs \
     npm \
-    protoc
+    protoc && \
+    (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
 RUN npm install -g i18n-stex i18n-po-json i18n-json-po yarn pm2
 
