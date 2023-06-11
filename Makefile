@@ -76,6 +76,7 @@ pantheon_run:
 
 .PHONY: pantheon_stop
 pantheon_stop:
+	cd Database && make stop 2>/dev/null || true # gracefully stop the db
 	docker-compose down
 
 .PHONY: run

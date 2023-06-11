@@ -2,6 +2,21 @@
 
 export HOME=/home/user
 
+# -l 0 for verbosity
+crond -b -l 8 -L /tmp/cronlogs
+
+if [ ! -f "/var/lib/postgresql/.ssh/id_rsa.pub" ]; then
+  su-exec postgres ssh-keygen -q -N "" -f /var/lib/postgresql/.ssh/id_rsa -t rsa
+  su-exec postgres echo "StrictHostKeyChecking no" > /var/lib/postgresql/.ssh/config
+fi
+if [ ! -d "/var/lib/postgresql/backup/.git" ]; then
+  cd /var/lib/postgresql/backup && su-exec postgres git init -b main
+  if [ -z "$BACKUP_GIT_REMOTE" ]; then
+    cd /var/lib/postgresql/backup && su-exec postgres git remote add origin "$BACKUP_GIT_REMOTE"
+    cd /var/lib/postgresql/backup && su-exec postgres git branch -M main
+  fi
+fi
+
 # ------------ Pgsql init --------------------------------------
 chown -R postgres "$PGDATA"
 
