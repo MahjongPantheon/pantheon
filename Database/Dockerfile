@@ -14,6 +14,7 @@ RUN apk update && \
     apk add --update \
     su-exec \
     curl \
+    openssh \
     make \
     git \
     postgresql13 && \
@@ -45,8 +46,20 @@ RUN mkdir -p /docker-entrypoint-initdb.d
 COPY dbinit.sql /docker-entrypoint-initdb.d/dbinit.sql
 COPY dbinit_frey.sql /docker-entrypoint-initdb.d/dbinit_frey.sql
 
+# Copy cron defs
+COPY cron/tabs/postgres /var/spool/cron/crontabs/postgres
+COPY cron/backup.sh /var/lib/postgresql/backup.sh
+
 # Folders init
 RUN mkdir -p /run/postgresql && chown postgres /run/postgresql
+RUN mkdir -p /var/lib/postgresql/.ssh && chown postgres /var/lib/postgresql/.ssh
+RUN mkdir -p /var/lib/postgresql/backup && chown postgres /var/lib/postgresql/backup
+
+# Git backups related
+RUN echo "" > /var/lib/postgresql/.gitconfig
+RUN echo "[user]" >> /var/lib/postgresql/.gitconfig
+RUN echo "    email = pantheon_backup@riichimahjong.org" >> /var/lib/postgresql/.gitconfig
+RUN echo "    name = Pantheon Backup" >> /var/lib/postgresql/.gitconfig
 
 # Entry point
 CMD ["/entrypoint.sh"]

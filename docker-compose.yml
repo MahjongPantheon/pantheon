@@ -1,14 +1,20 @@
 version: "3.9"
 volumes:
   datavolume01: {}
+  backupvolume01: {}
+  configvolume01: {}
   pgadmindata:
 services:
   db:
     build: ./Database
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
     ports:
       - "5532:5532"
     volumes:
       - datavolume01:/var/lib/postgresql/data
+      - configvolume01:/var/lib/postgresql/.ssh
+      - backupvolume01:/var/lib/postgresql/backup
   hermod:
     build: ./Hermod
     ports:

@@ -37,7 +37,24 @@ Pantheon provides container with pre-installed email agent (Hermod). If you want
 to `Hermod/opendkim_keys` folder. Also following setting are required: 
 - Some unique key in `MAIL_ACTION_KEY` variable environment file in `Common/envs/` folder to prevent unauthorized access.
 - Mailer root host in `ALLOWED_SENDER_DOMAINS` variable environment file in `Common/envs/` folder.
-- `mailer.mailer_addr` variable in your Frey config to set proper mailer address to send emails from.   
+- `mailer.mailer_addr` variable in your Frey config to set proper mailer address to send emails from.
+
+#### Setting up database backups
+
+Pantheon provides built-in database backups using git. By default, it just stores database dump as new commits in `/var/lib/postgresql/backup` folder
+of the `Database` container (you can get to shell using `make shell_db`). If you want to set up some remote backups, you should do the following:
+
+- Ensure containers are not running
+- Set the `BACKUP_GIT_REMOTE` variable in your environment config to point to your backup remote repository. There is an example included in the env file.
+- Go to `Database` folder and call `make backup_dump_pubkey` command to get ssh public key.
+- Add this key to trusted keys in your account in Github, Gitlab or wherever your remote repository will reside.
+- Start the containers
+
+Every 15 minutes the database dump is made. You may view history of backups using `make backup_show_history` in `Database` folder. Use included pgadmin4
+container (running at 5632 port) to restore your database to previous state.
+
+Please note that backups will consume quite much disk space. To clean up some space you may consider deleting the `/var/lib/postgresql/backup/.git` directory
+and changing the `BACKUP_GIT_REMOTE` variable, followed by containers restart.
 
 ### Development environment
 
