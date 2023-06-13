@@ -1,8 +1,8 @@
 #!/bin/sh
 
 cd ~ || exit
-pg_dump -p 5532 mimir > /var/lib/postgresql/backup/mimir.sql
-pg_dump -p 5532 frey > /var/lib/postgresql/backup/frey.sql
+pg_dump -p 5532 --clean mimir > /var/lib/postgresql/backup/mimir.sql
+pg_dump -p 5532 --clean frey > /var/lib/postgresql/backup/frey.sql
 cd /var/lib/postgresql/backup || exit
 
 git add .

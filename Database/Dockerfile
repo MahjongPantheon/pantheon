@@ -45,6 +45,7 @@ RUN chmod 755 /entrypoint.sh
 RUN mkdir -p /docker-entrypoint-initdb.d
 COPY dbinit.sql /docker-entrypoint-initdb.d/dbinit.sql
 COPY dbinit_frey.sql /docker-entrypoint-initdb.d/dbinit_frey.sql
+COPY Makefile /var/lib/postgresql/Makefile
 
 # Copy cron defs
 COPY cron/tabs/postgres /var/spool/cron/crontabs/postgres
