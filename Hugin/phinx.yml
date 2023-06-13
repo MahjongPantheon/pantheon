@@ -1,0 +1,44 @@
+paths:
+    migrations: %%PHINX_CONFIG_DIR%%/data/migrations
+    seeds: %%PHINX_CONFIG_DIR%%/data/seeds
+
+environments:
+    default_migration_table: phinxlog
+    default_database: development
+    production:
+        adapter: pgsql
+        host: localhost
+        name: %%PHINX_DBPROD_HUGIN_NAME%%
+        user: %%PHINX_DBPROD_HUGIN_USER%%
+        pass: %%PHINX_DBPROD_HUGIN_PASS%%
+        port: %%PHINX_DB_HUGIN_PORT%%
+        charset: utf8
+
+    staging:
+        adapter: pgsql
+        host: localhost
+        name: %%PHINX_DB_HUGIN_NAME%%
+        user: %%PHINX_DB_HUGIN_USER%%
+        pass: %%PHINX_DB_HUGIN_PASS%%
+        port: %%PHINX_DB_HUGIN_PORT%%
+        charset: utf8
+
+    testing:
+        adapter: pgsql
+        host: db
+        name: hugin_unit
+        user: hugin
+        pass: pgpass
+        port: 5532
+        charset: utf8
+
+    docker:
+        adapter: pgsql
+        host: %%PHINX_DB_HUGIN_HOST%%
+        name: %%PHINX_DB_HUGIN_NAME%%
+        user: %%PHINX_DB_HUGIN_USER%%
+        pass: %%PHINX_DB_HUGIN_PASS%%
+        port: %%PHINX_DB_HUGIN_PORT%%
+        charset: utf8
+
+version_order: creation
