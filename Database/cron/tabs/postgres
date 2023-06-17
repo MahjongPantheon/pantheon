@@ -1,2 +1,2 @@
-*/15 * * * * sh /var/lib/postgresql/backup.sh
+48 * * * * sh /var/lib/postgresql/backup.sh
 23 3 * * * sh cd /var/lib/postgresql/backup && git gc
