@@ -35,12 +35,12 @@ __restore:
 	if [ "$(COMMIT)" != "" ]; then \
 		cd /var/lib/postgresql/backup && \
 		git checkout ${COMMIT} && \
-		cp mimir.sql ../mimir-restore.sql && \
-		cp frey.sql ../frey-restore.sql && \
-		git checkout origin/main && \
-		psql -p 5532 frey < /var/lib/postgresql/frey-restore.sql && \
-		psql -p 5532 mimir < /var/lib/postgresql/mimir-restore.sql && \
-		rm -f /var/lib/postgresql/mimir-restore.sql /var/lib/postgresql/frey-restore.sql ; \
+		cp -R mimir ../mimir-restore && \
+		cp -R frey ../frey-restore && \
+		git checkout main && \
+		pg_restore -p 5532 -d frey --clean /var/lib/postgresql/frey-restore && \
+		pg_restore -p 5532 -d mimir --clean /var/lib/postgresql/mimir-restore && \
+		rm -rf /var/lib/postgresql/mimir-restore /var/lib/postgresql/frey-restore ; \
 	fi
 
 .PHONY: backup_dump_pubkey
