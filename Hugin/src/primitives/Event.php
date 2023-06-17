@@ -28,43 +28,47 @@ class EventPrimitive extends Primitive
      */
     protected $_sessionId;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_hostname;
     /**
-     * @var string
+     * @var string|null
+     */
+    protected $_browser;
+    /**
+     * @var string|null
      */
     protected $_os;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_device;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_screen;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_language;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_createdAt;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_eventType;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_eventMeta;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_country;
     /**
-     * @var string
+     * @var string|null
      */
     protected $_city;
 
@@ -73,6 +77,7 @@ class EventPrimitive extends Primitive
         'site_id'       => '_siteId',
         'session_id'    => '_sessionId',
         'hostname'      => '_hostname',
+        'browser'       => '_browser',
         'os'            => '_os',
         'device'        => '_device',
         'screen'        => '_screen',
@@ -157,180 +162,198 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHostname(): string
+    public function getHostname(): ?string
     {
         return $this->_hostname;
     }
 
     /**
-     * @param string $hostname
+     * @param string|null $hostname
      * @return EventPrimitive
      */
-    public function setHostname(string $hostname): EventPrimitive
+    public function setHostname(?string $hostname): EventPrimitive
     {
         $this->_hostname = $hostname;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOs(): string
+    public function getBrowser(): ?string
+    {
+        return $this->_browser;
+    }
+
+    /**
+     * @param string|null $browser
+     * @return EventPrimitive
+     */
+    public function setBrowser(?string $browser): EventPrimitive
+    {
+        $this->_browser = $browser;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOs(): ?string
     {
         return $this->_os;
     }
 
     /**
-     * @param string $os
+     * @param string|null $os
      * @return EventPrimitive
      */
-    public function setOs(string $os): EventPrimitive
+    public function setOs(?string $os): EventPrimitive
     {
         $this->_os = $os;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDevice(): string
+    public function getDevice(): ?string
     {
         return $this->_device;
     }
 
     /**
-     * @param string $device
+     * @param string|null $device
      * @return EventPrimitive
      */
-    public function setDevice(string $device): EventPrimitive
+    public function setDevice(?string $device): EventPrimitive
     {
         $this->_device = $device;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getScreen(): string
+    public function getScreen(): ?string
     {
         return $this->_screen;
     }
 
     /**
-     * @param string $screen
+     * @param string|null $screen
      * @return EventPrimitive
      */
-    public function setScreen(string $screen): EventPrimitive
+    public function setScreen(?string $screen): EventPrimitive
     {
         $this->_screen = $screen;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->_language;
     }
 
     /**
-     * @param string $language
+     * @param string|null $language
      * @return EventPrimitive
      */
-    public function setLanguage(string $language): EventPrimitive
+    public function setLanguage(?string $language): EventPrimitive
     {
         $this->_language = $language;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->_createdAt;
     }
 
     /**
-     * @param string $createdAt
+     * @param string|null $createdAt
      * @return EventPrimitive
      */
-    public function setCreatedAt(string $createdAt): EventPrimitive
+    public function setCreatedAt(?string $createdAt): EventPrimitive
     {
         $this->_createdAt = $createdAt;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEventType(): string
+    public function getEventType(): ?string
     {
         return $this->_eventType;
     }
 
     /**
-     * @param string $eventType
+     * @param string|null $eventType
      * @return EventPrimitive
      */
-    public function setEventType(string $eventType): EventPrimitive
+    public function setEventType(?string $eventType): EventPrimitive
     {
         $this->_eventType = $eventType;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEventMeta(): string
+    public function getEventMeta(): ?string
     {
         return $this->_eventMeta;
     }
 
     /**
-     * @param string $eventMeta
+     * @param string|null $eventMeta
      * @return EventPrimitive
      */
-    public function setEventMeta(string $eventMeta): EventPrimitive
+    public function setEventMeta(?string $eventMeta): EventPrimitive
     {
         $this->_eventMeta = $eventMeta;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->_country;
     }
 
     /**
-     * @param string $country
+     * @param string|null $country
      * @return EventPrimitive
      */
-    public function setCountry(string $country): EventPrimitive
+    public function setCountry(?string $country): EventPrimitive
     {
         $this->_country = $country;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->_city;
     }
 
     /**
-     * @param string $city
+     * @param string|null $city
      * @return EventPrimitive
      */
-    public function setCity(string $city): EventPrimitive
+    public function setCity(?string $city): EventPrimitive
     {
         $this->_city = $city;
         return $this;

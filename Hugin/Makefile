@@ -20,6 +20,14 @@ shell: get_docker_id
 kill:
 	docker rmi `docker images | grep 'pantheon' | grep 'hugin' | awk '{print $$1}'`
 
+.PHONY: docker_seed
+docker_seed: get_docker_id docker_migrate
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running, can't run seeding.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s TestEventsSeeder --verbose'; \
+	fi
+
 .PHONY: docker_migrate
 docker_migrate: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
