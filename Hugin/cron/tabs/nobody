@@ -1,0 +1,2 @@
+15 3 * * * php /var/www/html/Hugin/cron/aggregate_day.php
+15 4 1 * * php /var/www/html/Hugin/cron/aggregate_month.php

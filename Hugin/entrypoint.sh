@@ -2,6 +2,9 @@
 
 export HOME=/home/user
 
+# -l 0 for verbosity
+crond -b -l 8 -L /tmp/cronlogs
+
 TRAPPED_SIGNAL=false
 
 echo 'Starting NGINX';
