@@ -32,11 +32,13 @@ import { GamesControl } from './pages/GamesControl';
 import { EventPrescript } from './pages/EventPrescript';
 import { ProfileImpersonate } from './pages/ProfileImpersonate';
 import { ProfileManageAdmin } from './pages/ProfileManageAdmin';
+import { SystemStats } from './pages/SystemStats';
 
 export const App = () => {
   return (
     <Switch>
       <Route path='/' component={OwnedEvents} />
+      <Route path='/stats' component={SystemStats} />
 
       <Route path='/profile/login' component={ProfileLogin} />
       <Route path='/profile/signup' component={ProfileSignup} />
