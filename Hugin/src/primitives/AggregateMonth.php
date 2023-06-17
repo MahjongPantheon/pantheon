@@ -4,15 +4,15 @@ namespace Hugin;
 require_once __DIR__ . '/../Primitive.php';
 
 /**
- * Class EventPrimitive
- * Primitive for arbitrary analytics event
+ * Class AggregateMonthPrimitive
+ * Primitive for montly aggregated data
  *
  * Low-level model with basic CRUD operations and relations
  * @package Hugin
  */
-class EventPrimitive extends Primitive
+class AggregateMonthPrimitive extends Primitive
 {
-    protected static $_table = 'event';
+    protected static $_table = 'aggregate_month';
 
     /**
      * Local id
@@ -26,7 +26,15 @@ class EventPrimitive extends Primitive
     /**
      * @var string
      */
-    protected $_sessionId;
+    protected $_month;
+    /**
+     * @var int
+     */
+    protected $_eventCount;
+    /**
+     * @var int
+     */
+    protected $_uniqCount;
     /**
      * @var string|null
      */
@@ -54,15 +62,7 @@ class EventPrimitive extends Primitive
     /**
      * @var string|null
      */
-    protected $_createdAt;
-    /**
-     * @var string|null
-     */
     protected $_eventType;
-    /**
-     * @var string|null
-     */
-    protected $_eventMeta;
     /**
      * @var string|null
      */
@@ -74,17 +74,17 @@ class EventPrimitive extends Primitive
 
     protected static $_fieldsMapping = [
         'id'            => '_id',
+        'month'         => '_month',
         'site_id'       => '_siteId',
-        'session_id'    => '_sessionId',
+        'event_count'   => '_eventCount',
+        'uniq_count'    => '_uniqCount',
         'hostname'      => '_hostname',
         'browser'       => '_browser',
         'os'            => '_os',
         'device'        => '_device',
         'screen'        => '_screen',
         'language'      => '_language',
-        'created_at'    => '_createdAt',
         'event_type'    => '_eventType',
-        'event_meta'    => '_eventMeta',
         'country'       => '_country',
         'city'          => '_city',
     ];
@@ -119,13 +119,13 @@ class EventPrimitive extends Primitive
 
     /**
      * @param IDb $db
-     * @return EventPrimitive[]
+     * @return AggregateMonthPrimitive[]
      * @throws \Exception
      */
-    public static function findLastHours(IDb $db)
+    public static function findLastYear(IDb $db)
     {
         $result = $db->table(self::$_table)
-            ->whereGt('created_at', date('Y-m-d H:i:s', time() - 24 * 60 * 60))
+            ->whereGt('month', date('Y-m-d H:i:s', time() - 12 * 31 * 24 * 60 * 60))
             ->findArray();
         return array_map(function ($data) use ($db) {
             return self::_recreateInstance($db, $data);
@@ -152,7 +152,7 @@ class EventPrimitive extends Primitive
      * @param string $siteId
      * @return EventPrimitive
      */
-    public function setSiteId(string $siteId): EventPrimitive
+    public function setSiteId(string $siteId): AggregateMonthPrimitive
     {
         $this->_siteId = $siteId;
         return $this;
@@ -161,18 +161,18 @@ class EventPrimitive extends Primitive
     /**
      * @return string
      */
-    public function getSessionId(): string
+    public function getMonth(): string
     {
-        return $this->_sessionId;
+        return $this->_month;
     }
 
     /**
-     * @param string $sessionId
+     * @param string $month
      * @return EventPrimitive
      */
-    public function setSessionId(string $sessionId): EventPrimitive
+    public function setMonth(string $month): AggregateMonthPrimitive
     {
-        $this->_sessionId = $sessionId;
+        $this->_month = $month;
         return $this;
     }
 
@@ -188,7 +188,7 @@ class EventPrimitive extends Primitive
      * @param string|null $hostname
      * @return EventPrimitive
      */
-    public function setHostname(?string $hostname): EventPrimitive
+    public function setHostname(?string $hostname): AggregateMonthPrimitive
     {
         $this->_hostname = $hostname;
         return $this;
@@ -206,7 +206,7 @@ class EventPrimitive extends Primitive
      * @param string|null $browser
      * @return EventPrimitive
      */
-    public function setBrowser(?string $browser): EventPrimitive
+    public function setBrowser(?string $browser): AggregateMonthPrimitive
     {
         $this->_browser = $browser;
         return $this;
@@ -224,7 +224,7 @@ class EventPrimitive extends Primitive
      * @param string|null $os
      * @return EventPrimitive
      */
-    public function setOs(?string $os): EventPrimitive
+    public function setOs(?string $os): AggregateMonthPrimitive
     {
         $this->_os = $os;
         return $this;
@@ -242,7 +242,7 @@ class EventPrimitive extends Primitive
      * @param string|null $device
      * @return EventPrimitive
      */
-    public function setDevice(?string $device): EventPrimitive
+    public function setDevice(?string $device): AggregateMonthPrimitive
     {
         $this->_device = $device;
         return $this;
@@ -260,7 +260,7 @@ class EventPrimitive extends Primitive
      * @param string|null $screen
      * @return EventPrimitive
      */
-    public function setScreen(?string $screen): EventPrimitive
+    public function setScreen(?string $screen): AggregateMonthPrimitive
     {
         $this->_screen = $screen;
         return $this;
@@ -278,27 +278,9 @@ class EventPrimitive extends Primitive
      * @param string|null $language
      * @return EventPrimitive
      */
-    public function setLanguage(?string $language): EventPrimitive
+    public function setLanguage(?string $language): AggregateMonthPrimitive
     {
         $this->_language = $language;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCreatedAt(): ?string
-    {
-        return $this->_createdAt;
-    }
-
-    /**
-     * @param string|null $createdAt
-     * @return EventPrimitive
-     */
-    public function setCreatedAt(?string $createdAt): EventPrimitive
-    {
-        $this->_createdAt = $createdAt;
         return $this;
     }
 
@@ -314,27 +296,9 @@ class EventPrimitive extends Primitive
      * @param string|null $eventType
      * @return EventPrimitive
      */
-    public function setEventType(?string $eventType): EventPrimitive
+    public function setEventType(?string $eventType): AggregateMonthPrimitive
     {
         $this->_eventType = $eventType;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getEventMeta(): ?string
-    {
-        return $this->_eventMeta;
-    }
-
-    /**
-     * @param string|null $eventMeta
-     * @return EventPrimitive
-     */
-    public function setEventMeta(?string $eventMeta): EventPrimitive
-    {
-        $this->_eventMeta = $eventMeta;
         return $this;
     }
 
@@ -350,7 +314,7 @@ class EventPrimitive extends Primitive
      * @param string|null $country
      * @return EventPrimitive
      */
-    public function setCountry(?string $country): EventPrimitive
+    public function setCountry(?string $country): AggregateMonthPrimitive
     {
         $this->_country = $country;
         return $this;
@@ -368,9 +332,45 @@ class EventPrimitive extends Primitive
      * @param string|null $city
      * @return EventPrimitive
      */
-    public function setCity(?string $city): EventPrimitive
+    public function setCity(?string $city): AggregateMonthPrimitive
     {
         $this->_city = $city;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEventCount(): int
+    {
+        return $this->_eventCount;
+    }
+
+    /**
+     * @param int $eventCount
+     * @return AggregateMonthPrimitive
+     */
+    public function setEventCount(int $eventCount): AggregateMonthPrimitive
+    {
+        $this->_eventCount = $eventCount;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUniqCount(): int
+    {
+        return $this->_uniqCount;
+    }
+
+    /**
+     * @param int $uniqCount
+     * @return AggregateMonthPrimitive
+     */
+    public function setUniqCount(int $uniqCount): AggregateMonthPrimitive
+    {
+        $this->_uniqCount = $uniqCount;
         return $this;
     }
 }

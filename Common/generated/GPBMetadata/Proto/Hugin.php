@@ -16,7 +16,7 @@ class Hugin
         }
         $pool->internalAddGeneratedFile(
             '
-Ë
+Ý
 proto/hugin.protocommon"
 GetLastDayPayload"5
 GetLastDayResponse
@@ -26,7 +26,7 @@ class Hugin
 data (2.common.HuginData"
 GetLastYearPayload"6
 GetLastYearResponse
-data (2.common.HuginData"Ù
+data (2.common.HuginData"ë
 	HuginData
 datetime (	
 event_count (
@@ -43,7 +43,8 @@ uniq_count (
  (	
 language (	
 
-event_type (	2ß
+event_type (	
+hostname (	2ß
 HuginC
 
 GetLastDay.common.GetLastDayPayload.common.GetLastDayResponseI

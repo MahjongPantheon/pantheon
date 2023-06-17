@@ -60,4 +60,5 @@ message HuginData {
   string screen = 10;
   string language = 11;
   string event_type = 12;
+  string hostname = 13;
 }

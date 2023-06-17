@@ -1,6 +1,8 @@
 <?php
 namespace Hugin;
 
+use Common\HuginData;
+
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../primitives/Event.php';
 
@@ -44,7 +46,6 @@ class EventsController extends Controller
         }
 
         $newId = apcu_inc(self::CTR_ID, 1);
-        var_dump(self::EV . $newId);
         apcu_store(self::EV . $newId, [
             $_SERVER['REMOTE_ADDR'],
             $parsed['s'], $parsed['si'], $parsed['h'],
@@ -65,8 +66,6 @@ class EventsController extends Controller
                 if (!$data) {
                     continue;
                 }
-                var_dump($data);
-                var_dump(self::EV . $i);
                 $addr = array_shift($data);
                 $country = $city = '';
                 if ($addr) {
@@ -100,5 +99,124 @@ class EventsController extends Controller
         }
 
         return 'ok';
+    }
+
+    /**
+     * @return HuginData[]
+     * @throws \Exception
+     */
+    public function getLastDay(): array {
+        $events = EventPrimitive::findLastHours($this->_db);
+        $sites = [];
+        foreach ($events as $event) {
+            if (empty($sites[$event->getSiteId()])) {
+                $sites[$event->getSiteId()] = [];
+            }
+            $dt = new \DateTime($event->getCreatedAt());
+            if (empty($sites[$event->getSiteId()][$dt->format('H')])) {
+                $sites[$event->getSiteId()][$dt->format('H')] = [
+                    'created_at' => $event->getCreatedAt(),
+                    'sessions' => [],
+                    'event_count' => 0,
+                    'country' => [],
+                    'city' => [],
+                    'os' => [],
+                    'browser' => [],
+                    'device' => [],
+                    'screen' => [],
+                    'language' => [],
+                    'event_type' => [],
+                ];
+            }
+
+            $map = [
+                'getCountry' => 'country',
+                'getCity' => 'city',
+                'getOs' => 'os',
+                'getDevice' => 'device',
+                'getBrowser' => 'browser',
+                'getScreen' => 'screen',
+                'getLanguage' => 'language',
+                'getEventType' => 'event_type'
+            ];
+
+            $sites[$event->getSiteId()][$dt->format('H')]['event_count']++;
+            $sites[$event->getSiteId()][$dt->format('H')]['sessions'] []= $event->getSessionId();
+            foreach (array_keys($map) as $k) {
+                if (empty($sites[$event->getSiteId()][$dt->format('H')][$map[$k]][$event->$k()])) {
+                    $sites[$event->getSiteId()][$dt->format('H')][$map[$k]][$event->$k()] = 0;
+                }
+                $sites[$event->getSiteId()][$dt->format('H')][$map[$k]][$event->$k()]++;
+            }
+        }
+
+        $returnData = [];
+        foreach ($sites as $siteId => $data) {
+            foreach ($data as $perHour) {
+                $returnData [] = (new HuginData())
+                    ->setSiteId($siteId)
+                    ->setDatetime($perHour['created_at'])
+                    ->setCountry(json_encode($perHour['country']))
+                    ->setCity(json_encode($perHour['city']))
+                    ->setOs(json_encode($perHour['os']))
+                    ->setDevice(json_encode($perHour['device']))
+                    ->setBrowser(json_encode($perHour['browser']))
+                    ->setScreen(json_encode($perHour['screen']))
+                    ->setLanguage(json_encode($perHour['language']))
+                    ->setEventType(json_encode($perHour['event_type']))
+                    ->setEventCount($perHour['event_count'])
+                    ->setUniqCount(count(array_unique($perHour['sessions'])));
+            }
+        }
+
+        return $returnData;
+    }
+
+    /**
+     * @return HuginData[]
+     * @throws \Exception
+     */
+    public function getLastMonth(): array {
+        $days = AggregateDayPrimitive::findLastMonth($this->_db);
+        return array_map(function(AggregateDayPrimitive $item) {
+            return (new HuginData())
+                ->setDatetime($item->getDay())
+                ->setSiteId($item->getSiteId())
+                ->setEventCount($item->getEventCount())
+                ->setUniqCount($item->getUniqCount())
+                ->setHostname($item->getHostname() ?? '')
+                ->setBrowser($item->getBrowser() ?? '')
+                ->setOs($item->getOs() ?? '')
+                ->setDevice($item->getDevice() ?? '')
+                ->setScreen($item->getScreen() ?? '')
+                ->setLanguage($item->getLanguage() ?? '')
+                ->setEventType($item->getEventType())
+                ->setCountry($item->getCountry() ?? '')
+                ->setCity($item->getCity() ?? '');
+        }, $days);
+    }
+
+    /**
+     * @return HuginData[]
+     * @throws \Exception
+     */
+    public function getLastYear(): array {
+        $days = AggregateMonthPrimitive::findLastYear($this->_db);
+        return array_map(function(AggregateMonthPrimitive $item) {
+            return (new HuginData())
+                ->setDatetime($item->getMonth())
+                ->setSiteId($item->getSiteId())
+                ->setEventCount($item->getEventCount())
+                ->setUniqCount($item->getUniqCount())
+                ->setHostname($item->getHostname() ?? '')
+                ->setBrowser($item->getBrowser() ?? '')
+                ->setOs($item->getOs() ?? '')
+                ->setDevice($item->getDevice() ?? '')
+                ->setScreen($item->getScreen() ?? '')
+                ->setLanguage($item->getLanguage() ?? '')
+                ->setEventType($item->getEventType())
+                ->setCountry($item->getCountry() ?? '')
+                ->setCity($item->getCity() ?? '');
+        }, $days);
     }
 }

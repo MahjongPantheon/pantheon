@@ -4,15 +4,15 @@ namespace Hugin;
 require_once __DIR__ . '/../Primitive.php';
 
 /**
- * Class EventPrimitive
- * Primitive for arbitrary analytics event
+ * Class AggregateDayPrimitive
+ * Primitive for daily aggregated data
  *
  * Low-level model with basic CRUD operations and relations
  * @package Hugin
  */
-class EventPrimitive extends Primitive
+class AggregateDayPrimitive extends Primitive
 {
-    protected static $_table = 'event';
+    protected static $_table = 'aggregate_day';
 
     /**
      * Local id
@@ -22,11 +22,19 @@ class EventPrimitive extends Primitive
     /**
      * @var string
      */
-    protected $_siteId;
+    protected $_day;
     /**
      * @var string
      */
-    protected $_sessionId;
+    protected $_siteId;
+    /**
+     * @var int
+     */
+    protected $_eventCount;
+    /**
+     * @var int
+     */
+    protected $_uniqCount;
     /**
      * @var string|null
      */
@@ -54,15 +62,7 @@ class EventPrimitive extends Primitive
     /**
      * @var string|null
      */
-    protected $_createdAt;
-    /**
-     * @var string|null
-     */
     protected $_eventType;
-    /**
-     * @var string|null
-     */
-    protected $_eventMeta;
     /**
      * @var string|null
      */
@@ -74,17 +74,17 @@ class EventPrimitive extends Primitive
 
     protected static $_fieldsMapping = [
         'id'            => '_id',
+        'day'           => '_day',
         'site_id'       => '_siteId',
-        'session_id'    => '_sessionId',
+        'event_count'   => '_eventCount',
+        'uniq_count'    => '_uniqCount',
         'hostname'      => '_hostname',
         'browser'       => '_browser',
         'os'            => '_os',
         'device'        => '_device',
         'screen'        => '_screen',
         'language'      => '_language',
-        'created_at'    => '_createdAt',
         'event_type'    => '_eventType',
-        'event_meta'    => '_eventMeta',
         'country'       => '_country',
         'city'          => '_city',
     ];
@@ -119,13 +119,13 @@ class EventPrimitive extends Primitive
 
     /**
      * @param IDb $db
-     * @return EventPrimitive[]
+     * @return AggregateDayPrimitive[]
      * @throws \Exception
      */
-    public static function findLastHours(IDb $db)
+    public static function findLastMonth(IDb $db)
     {
         $result = $db->table(self::$_table)
-            ->whereGt('created_at', date('Y-m-d H:i:s', time() - 24 * 60 * 60))
+            ->whereGt('day', date('Y-m-d H:i:s', time() - 30 * 24 * 60 * 60))
             ->findArray();
         return array_map(function ($data) use ($db) {
             return self::_recreateInstance($db, $data);
@@ -141,6 +141,24 @@ class EventPrimitive extends Primitive
     }
 
     /**
+     * @return string|null
+     */
+    public function getDay(): ?string
+    {
+        return $this->_day;
+    }
+
+    /**
+     * @param string|null $day
+     * @return EventPrimitive
+     */
+    public function setDay(?string $day): AggregateDayPrimitive
+    {
+        $this->_day = $day;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getSiteId(): string
@@ -152,27 +170,9 @@ class EventPrimitive extends Primitive
      * @param string $siteId
      * @return EventPrimitive
      */
-    public function setSiteId(string $siteId): EventPrimitive
+    public function setSiteId(string $siteId): AggregateDayPrimitive
     {
         $this->_siteId = $siteId;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSessionId(): string
-    {
-        return $this->_sessionId;
-    }
-
-    /**
-     * @param string $sessionId
-     * @return EventPrimitive
-     */
-    public function setSessionId(string $sessionId): EventPrimitive
-    {
-        $this->_sessionId = $sessionId;
         return $this;
     }
 
@@ -188,7 +188,7 @@ class EventPrimitive extends Primitive
      * @param string|null $hostname
      * @return EventPrimitive
      */
-    public function setHostname(?string $hostname): EventPrimitive
+    public function setHostname(?string $hostname): AggregateDayPrimitive
     {
         $this->_hostname = $hostname;
         return $this;
@@ -206,7 +206,7 @@ class EventPrimitive extends Primitive
      * @param string|null $browser
      * @return EventPrimitive
      */
-    public function setBrowser(?string $browser): EventPrimitive
+    public function setBrowser(?string $browser): AggregateDayPrimitive
     {
         $this->_browser = $browser;
         return $this;
@@ -224,7 +224,7 @@ class EventPrimitive extends Primitive
      * @param string|null $os
      * @return EventPrimitive
      */
-    public function setOs(?string $os): EventPrimitive
+    public function setOs(?string $os): AggregateDayPrimitive
     {
         $this->_os = $os;
         return $this;
@@ -242,7 +242,7 @@ class EventPrimitive extends Primitive
      * @param string|null $device
      * @return EventPrimitive
      */
-    public function setDevice(?string $device): EventPrimitive
+    public function setDevice(?string $device): AggregateDayPrimitive
     {
         $this->_device = $device;
         return $this;
@@ -260,7 +260,7 @@ class EventPrimitive extends Primitive
      * @param string|null $screen
      * @return EventPrimitive
      */
-    public function setScreen(?string $screen): EventPrimitive
+    public function setScreen(?string $screen): AggregateDayPrimitive
     {
         $this->_screen = $screen;
         return $this;
@@ -278,27 +278,9 @@ class EventPrimitive extends Primitive
      * @param string|null $language
      * @return EventPrimitive
      */
-    public function setLanguage(?string $language): EventPrimitive
+    public function setLanguage(?string $language): AggregateDayPrimitive
     {
         $this->_language = $language;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCreatedAt(): ?string
-    {
-        return $this->_createdAt;
-    }
-
-    /**
-     * @param string|null $createdAt
-     * @return EventPrimitive
-     */
-    public function setCreatedAt(?string $createdAt): EventPrimitive
-    {
-        $this->_createdAt = $createdAt;
         return $this;
     }
 
@@ -314,27 +296,9 @@ class EventPrimitive extends Primitive
      * @param string|null $eventType
      * @return EventPrimitive
      */
-    public function setEventType(?string $eventType): EventPrimitive
+    public function setEventType(?string $eventType): AggregateDayPrimitive
     {
         $this->_eventType = $eventType;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getEventMeta(): ?string
-    {
-        return $this->_eventMeta;
-    }
-
-    /**
-     * @param string|null $eventMeta
-     * @return EventPrimitive
-     */
-    public function setEventMeta(?string $eventMeta): EventPrimitive
-    {
-        $this->_eventMeta = $eventMeta;
         return $this;
     }
 
@@ -350,7 +314,7 @@ class EventPrimitive extends Primitive
      * @param string|null $country
      * @return EventPrimitive
      */
-    public function setCountry(?string $country): EventPrimitive
+    public function setCountry(?string $country): AggregateDayPrimitive
     {
         $this->_country = $country;
         return $this;
@@ -368,9 +332,45 @@ class EventPrimitive extends Primitive
      * @param string|null $city
      * @return EventPrimitive
      */
-    public function setCity(?string $city): EventPrimitive
+    public function setCity(?string $city): AggregateDayPrimitive
     {
         $this->_city = $city;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEventCount(): int
+    {
+        return $this->_eventCount;
+    }
+
+    /**
+     * @param int $eventCount
+     * @return AggregateDayPrimitive
+     */
+    public function setEventCount(int $eventCount): AggregateDayPrimitive
+    {
+        $this->_eventCount = $eventCount;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUniqCount(): int
+    {
+        return $this->_uniqCount;
+    }
+
+    /**
+     * @param int $uniqCount
+     * @return AggregateDayPrimitive
+     */
+    public function setUniqCount(int $uniqCount): AggregateDayPrimitive
+    {
+        $this->_uniqCount = $uniqCount;
         return $this;
     }
 }

@@ -61,6 +61,10 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string event_type = 12;</code>
      */
     protected $event_type = '';
+    /**
+     * Generated from protobuf field <code>string hostname = 13;</code>
+     */
+    protected $hostname = '';
 
     /**
      * Constructor.
@@ -80,6 +84,7 @@ class HuginData extends \Google\Protobuf\Internal\Message
      *     @type string $screen
      *     @type string $language
      *     @type string $event_type
+     *     @type string $hostname
      * }
      */
     public function __construct($data = NULL) {
@@ -347,6 +352,28 @@ class HuginData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->event_type = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string hostname = 13;</code>
+     * @return string
+     */
+    public function getHostname()
+    {
+        return $this->hostname;
+    }
+
+    /**
+     * Generated from protobuf field <code>string hostname = 13;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setHostname($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->hostname = $var;
 
         return $this;
     }

@@ -74,8 +74,6 @@ foreach ($sites as $siteId => $data) {
     ];
 }
 
-var_dump($dataToInsert);
-
 try {
     if (!$db->upsertQuery('aggregate_month', $dataToInsert, ['month', 'site_id'])) {
         throw new \Exception('Upsert of data to aggregated months table failed');

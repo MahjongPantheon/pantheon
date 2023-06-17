@@ -46,6 +46,7 @@ export interface HuginData {
   screen: string;
   language: string;
   eventType: string;
+  hostname: string;
 }
 
 //========================================//
@@ -554,6 +555,7 @@ export const HuginData = {
       screen: "",
       language: "",
       eventType: "",
+      hostname: "",
     };
   },
 
@@ -599,6 +601,9 @@ export const HuginData = {
     }
     if (msg.eventType) {
       writer.writeString(12, msg.eventType);
+    }
+    if (msg.hostname) {
+      writer.writeString(13, msg.hostname);
     }
     return writer;
   },
@@ -656,6 +661,10 @@ export const HuginData = {
         }
         case 12: {
           msg.eventType = reader.readString();
+          break;
+        }
+        case 13: {
+          msg.hostname = reader.readString();
           break;
         }
         default: {
@@ -1010,6 +1019,7 @@ export const HuginDataJSON = {
       screen: "",
       language: "",
       eventType: "",
+      hostname: "",
     };
   },
 
@@ -1053,6 +1063,9 @@ export const HuginDataJSON = {
     }
     if (msg.eventType) {
       json["eventType"] = msg.eventType;
+    }
+    if (msg.hostname) {
+      json["hostname"] = msg.hostname;
     }
     return json;
   },
@@ -1108,6 +1121,10 @@ export const HuginDataJSON = {
     const _eventType_ = json["eventType"] ?? json["event_type"];
     if (_eventType_) {
       msg.eventType = _eventType_;
+    }
+    const _hostname_ = json["hostname"];
+    if (_hostname_) {
+      msg.hostname = _hostname_;
     }
     return msg;
   },
