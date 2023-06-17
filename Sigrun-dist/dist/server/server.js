@@ -12026,7 +12026,7 @@ function AppHeader() {
   const api2 = useApi();
   const tryAddOnline = () => {
     var _a2, _b2;
-    if (!onlineLink.match(/^https?:\/\/[^\/]+\/0\/\?log=\d+gm-\d+-\d+-[0-9a-f]+$/i)) {
+    if (!onlineLink.match(/^https?:\/\/[^\/]+\/\d\/\?log=\d+gm-\d+-\d+-[0-9a-f]+/i)) {
       setOnlineError(i18n2._t("Replay link is invalid. Please check if you copied it correctly"));
     } else {
       setOnlineError(null);
