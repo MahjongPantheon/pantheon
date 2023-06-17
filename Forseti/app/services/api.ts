@@ -73,6 +73,7 @@ import { ClientConfiguration } from 'twirpscript';
 import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
+import { GetLastDay, GetLastMonth, GetLastYear } from '../clients/proto/hugin.pb';
 
 export class ApiService {
   private _authToken: string | null = null;
@@ -83,6 +84,9 @@ export class ApiService {
     prefix: '/v2',
   };
   private readonly _clientConfFrey: ClientConfiguration = {
+    prefix: '/v2',
+  };
+  private readonly _clientConfHugin: ClientConfiguration = {
     prefix: '/v2',
   };
 
@@ -106,38 +110,45 @@ export class ApiService {
 
     this._clientConfMimir.baseURL = import.meta.env.VITE_MIMIR_URL;
     this._clientConfFrey.baseURL = import.meta.env.VITE_FREY_URL;
+    this._clientConfHugin.baseURL = import.meta.env.VITE_HUGIN_URL;
     // eslint-disable-next-line no-multi-assign
-    this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
-      Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
-      headers.set('X-Current-Event-Id', this._eventId ?? '');
-      return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
-        ...opts,
-        headers,
-      })
-        .then(handleReleaseTag)
-        .then((resp) => {
-          if (!resp.ok) {
-            return resp.json().then((err) => {
-              // Twirp server error handling
-              if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    source: 'Forseti [twirp]',
-                    requestTo: url,
-                    requestFrom: typeof window !== 'undefined' && window.location.href,
-                    details: err.meta.cause,
-                  }),
+    this._clientConfFrey.rpcTransport =
+      this._clientConfMimir.rpcTransport =
+      this._clientConfHugin.rpcTransport =
+        (url, opts) => {
+          Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
+          headers.set('X-Current-Event-Id', this._eventId ?? '');
+          return fetch(
+            url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'),
+            {
+              ...opts,
+              headers,
+            }
+          )
+            .then(handleReleaseTag)
+            .then((resp) => {
+              if (!resp.ok) {
+                return resp.json().then((err) => {
+                  // Twirp server error handling
+                  if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
+                    fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        source: 'Forseti [twirp]',
+                        requestTo: url,
+                        requestFrom: typeof window !== 'undefined' && window.location.href,
+                        details: err.meta.cause,
+                      }),
+                    });
+                    throw new Error(err.meta.cause);
+                  }
+                  return resp;
                 });
-                throw new Error(err.meta.cause);
               }
               return resp;
             });
-          }
-          return resp;
-        });
-    };
+        };
   }
 
   getAllPlayers(eventId: number) {
@@ -528,5 +539,17 @@ export class ApiService {
       { email, title, password, city, country, phone, tenhouId },
       this._clientConfFrey
     ).then((r) => r.personId);
+  }
+
+  getLastDayStats() {
+    return GetLastDay({}, this._clientConfHugin).then((r) => r.data);
+  }
+
+  getLastMonthStats() {
+    return GetLastMonth({}, this._clientConfHugin).then((r) => r.data);
+  }
+
+  getLastYearStats() {
+    return GetLastYear({}, this._clientConfHugin).then((r) => r.data);
   }
 }
