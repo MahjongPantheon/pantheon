@@ -50,8 +50,10 @@ of the `Database` container (you can get to shell using `make shell_db`). If you
 - Add this key to trusted keys in your account in Github, Gitlab or wherever your remote repository will reside.
 - Start the containers
 
-Every 15 minutes the database dump is made. You may view history of backups using `make backup_show_history` in `Database` folder. Use included pgadmin4
-container (running at 5632 port) to restore your database to previous state.
+Every 15 minutes the database dump is made. You may view history of backups using `make backup_show_history` in `Database` folder. To rollback your
+database to previous state you may use either included pgadmin4 container (running at 5632 port) or the one-liner command from the `Database` folder:
+`COMMIT=1234567 make backup_restore`, where `1234567` should be replaced with target commit hash (which can be found using `make backup_show_history` command). 
+Please note that one-liner will rollback both mimir and frey databases!
 
 Please note that backups will consume quite much disk space. To clean up some space you may consider deleting the `/var/lib/postgresql/backup/.git` directory
 and changing the `BACKUP_GIT_REMOTE` variable, followed by containers restart.

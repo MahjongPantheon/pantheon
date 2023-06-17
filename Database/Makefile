@@ -30,6 +30,19 @@ kill:
 	docker rmi `docker images | grep 'pantheon' | grep 'db' | awk '{print $$1}'`
 	docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume01' | awk '{print $$2}'`
 
+.PHONY: __restore
+__restore:
+	if [ "$(COMMIT)" != "" ]; then \
+		cd /var/lib/postgresql/backup && \
+		git checkout ${COMMIT} && \
+		cp -R mimir ../mimir-restore && \
+		cp -R frey ../frey-restore && \
+		git checkout main && \
+		pg_restore -p 5532 -d frey --clean /var/lib/postgresql/frey-restore && \
+		pg_restore -p 5532 -d mimir --clean /var/lib/postgresql/mimir-restore && \
+		rm -rf /var/lib/postgresql/mimir-restore /var/lib/postgresql/frey-restore ; \
+	fi
+
 .PHONY: backup_dump_pubkey
 backup_dump_pubkey: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
@@ -44,4 +57,12 @@ backup_show_history: get_docker_id
 		echo "${RED}Database container is not running, can't get history.${NC}"; \
 	else \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres sh -c "cd /var/lib/postgresql/backup && git log --oneline | less"' ; \
+	fi
+
+.PHONY: backup_restore
+backup_restore: get_docker_id
+	if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Database container is not running, can't rollback.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres sh -c "export COMMIT=${COMMIT} && cd /var/lib/postgresql/ && make __restore"' ; \
 	fi
