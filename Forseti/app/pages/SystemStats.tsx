@@ -21,10 +21,13 @@ import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { usePageTitle } from '../hooks/pageTitle';
 import {
+  Button,
   Container,
   Group,
   LoadingOverlay,
-  Radio,
+  Divider,
+  Select,
+  Space,
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
@@ -32,7 +35,7 @@ import {
 import { useStorage } from '../hooks/storage';
 import { HuginData } from '../clients/proto/hugin.pb';
 import LineGraph from '../helpers/LineGraph';
-import { Redirect } from 'wouter';
+import { Link, Redirect } from 'wouter';
 
 const opts = {
   type: 'line',
@@ -59,7 +62,9 @@ const opts = {
 
 type HuginKeys = Exclude<Exclude<keyof HuginData, 'uniqCount'>, 'eventCount'>;
 
-export const SystemStats: React.FC = () => {
+export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params: { period } }) => {
+  period = period ?? 'lastday';
+  const periods = ['lastday', 'lastmonth', 'lastyear'];
   const [isSuperadmin, setIsSuperadmin] = useState(false);
   const api = useApi();
   const i18n = useI18n();
@@ -108,6 +113,7 @@ export const SystemStats: React.FC = () => {
     'device',
     'language',
     'screen',
+    'eventType',
   ];
   const [selectedStats, setSelectedStats] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
@@ -124,13 +130,18 @@ export const SystemStats: React.FC = () => {
       if (!flag) {
         setIsLoading(false);
       } else {
-        api.getLastDayStats().then((st) => {
+        (period === 'lastyear'
+          ? api.getLastYearStats()
+          : period === 'lastmonth'
+          ? api.getLastMonthStats()
+          : api.getLastDayStats()
+        ).then((st) => {
           setStats(st);
           setIsLoading(false);
         });
       }
     });
-  }, [personId]);
+  }, [personId, period]);
 
   if (!isLoading && (!personId || !isSuperadmin)) {
     return <Redirect to='/' />;
@@ -143,34 +154,47 @@ export const SystemStats: React.FC = () => {
   return (
     <Container>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
-      <Radio.Group
-        value={selectedItem}
-        name='dataType'
-        label={i18n._t('Select data slice')}
-        onChange={(val) => setSelectedItem(val as HuginKeys)}
-      >
-        <Group mt='xs'>
-          {keys.map((k) => (
-            <Radio value={k} label={k} />
-          ))}
+      <Group position='apart'>
+        <Group>
+          <Link to='/stats/lastday'>
+            <Button variant='filled'>{i18n._t('Last 24h')}</Button>
+          </Link>
+          <Link to='/stats/lastmonth'>
+            <Button variant='filled'>{i18n._t('Last 30d')}</Button>
+          </Link>
+          <Link to='/stats/lastyear'>
+            <Button variant='filled'>{i18n._t('Last 12mon')}</Button>
+          </Link>
         </Group>
-      </Radio.Group>
+        <Select
+          label={i18n._t('Data slice')}
+          value={selectedItem}
+          onChange={(val) => setSelectedItem(val as HuginKeys)}
+          data={keys.map((i) => ({ value: i, label: i }))}
+        />
+      </Group>
+      <Space h='xl' />
       {selectedStats &&
         Object.entries(selectedStats).map(([site, data]) => (
-          <LineGraph
-            data={data as any}
-            options={{
-              ...opts,
-              plugins: {
-                ...opts.plugins,
-                title: { ...opts.plugins.title, text: i18n._t('Visits - %1', [site]) },
-                legend: {
-                  ...opts.plugins.legend,
-                  labels: { color: theme.colors.dark[1] },
+          <>
+            <LineGraph
+              data={data as any}
+              options={{
+                ...opts,
+                plugins: {
+                  ...opts.plugins,
+                  title: { ...opts.plugins.title, text: site },
+                  legend: {
+                    ...opts.plugins.legend,
+                    labels: { color: theme.colors.dark[1] },
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+            <Space h='xl' />
+            <Divider my='sm' />
+            <Space h='xl' />
+          </>
         ))}
     </Container>
   );

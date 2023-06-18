@@ -39,6 +39,7 @@ export const App = () => {
     <Switch>
       <Route path='/' component={OwnedEvents} />
       <Route path='/stats' component={SystemStats} />
+      <Route path='/stats/:period' component={SystemStats} />
 
       <Route path='/profile/login' component={ProfileLogin} />
       <Route path='/profile/signup' component={ProfileSignup} />

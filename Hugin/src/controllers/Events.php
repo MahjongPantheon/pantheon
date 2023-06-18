@@ -5,6 +5,8 @@ use Common\HuginData;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../primitives/Event.php';
+require_once __DIR__ . '/../primitives/AggregateDay.php';
+require_once __DIR__ . '/../primitives/AggregateMonth.php';
 
 class EventsController extends Controller
 {
