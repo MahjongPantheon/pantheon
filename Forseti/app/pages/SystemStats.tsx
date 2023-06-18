@@ -64,7 +64,6 @@ type HuginKeys = Exclude<Exclude<keyof HuginData, 'uniqCount'>, 'eventCount'>;
 
 export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params: { period } }) => {
   period = period ?? 'lastday';
-  const periods = ['lastday', 'lastmonth', 'lastyear'];
   const [isSuperadmin, setIsSuperadmin] = useState(false);
   const api = useApi();
   const i18n = useI18n();
@@ -209,7 +208,7 @@ function makeStat(stats: HuginData[] | null | undefined, field: HuginKeys, color
     const allTimes = Object.fromEntries(
       Object.entries(data).map(([site, item]) => [
         site,
-        Object.entries(item).map(([idx, [date]]) => date),
+        Object.entries(item).map(([, [date]]) => date),
       ])
     );
 
