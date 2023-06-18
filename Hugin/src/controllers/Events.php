@@ -185,7 +185,7 @@ class EventsController extends Controller
         $days = AggregateDayPrimitive::findLastMonth($this->_db);
         return array_map(function(AggregateDayPrimitive $item) {
             return (new HuginData())
-                ->setDatetime($item->getDay())
+                ->setDatetime((new \DateTime($item->getDay()))->format('d'))
                 ->setSiteId($item->getSiteId())
                 ->setEventCount($item->getEventCount())
                 ->setUniqCount($item->getUniqCount())
@@ -209,7 +209,7 @@ class EventsController extends Controller
         $days = AggregateMonthPrimitive::findLastYear($this->_db);
         return array_map(function(AggregateMonthPrimitive $item) {
             return (new HuginData())
-                ->setDatetime($item->getMonth())
+                ->setDatetime((new \DateTime($item->getMonth()))->format('m'))
                 ->setSiteId($item->getSiteId())
                 ->setEventCount($item->getEventCount())
                 ->setUniqCount($item->getUniqCount())

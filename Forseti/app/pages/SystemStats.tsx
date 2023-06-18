@@ -106,14 +106,13 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
 
   const keys: HuginKeys[] = [
     'browser',
+    'eventType',
     'country',
     'city',
-    'eventType',
     'os',
     'device',
     'language',
     'screen',
-    'eventType',
   ];
   const [selectedStats, setSelectedStats] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
