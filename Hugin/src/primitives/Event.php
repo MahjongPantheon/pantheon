@@ -52,7 +52,7 @@ class EventPrimitive extends Primitive
      */
     protected $_language;
     /**
-     * @var string|null
+     * @var string
      */
     protected $_createdAt;
     /**
@@ -286,18 +286,18 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): string
     {
         return $this->_createdAt;
     }
 
     /**
-     * @param string|null $createdAt
+     * @param string $createdAt
      * @return EventPrimitive
      */
-    public function setCreatedAt(?string $createdAt): EventPrimitive
+    public function setCreatedAt(string $createdAt): EventPrimitive
     {
         $this->_createdAt = $createdAt;
         return $this;

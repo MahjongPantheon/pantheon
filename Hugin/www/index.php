@@ -2,6 +2,7 @@
 
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
+
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/helpers/Config.php';
 require_once __DIR__ . '/../src/helpers/Db.php';
@@ -14,4 +15,4 @@ $log = new Logger('RiichiApi');
 $log->pushHandler(new ErrorLogHandler());
 $controller = new \Hugin\EventsController($db, $log, $config);
 
-echo $controller->track(file_get_contents('php://input'));
+echo $controller->track(file_get_contents('php://input') ?: '');

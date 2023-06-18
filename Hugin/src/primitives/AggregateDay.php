@@ -109,7 +109,7 @@ class AggregateDayPrimitive extends Primitive
      * @param IDb $db
      * @param int[] $ids
      *
-     * @return EventPrimitive[]
+     * @return AggregateDayPrimitive[]
      * @throws \Exception
      */
     public static function findById(IDb $db, array $ids)
@@ -141,18 +141,18 @@ class AggregateDayPrimitive extends Primitive
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getDay(): ?string
+    public function getDay(): string
     {
         return $this->_day;
     }
 
     /**
-     * @param string|null $day
-     * @return EventPrimitive
+     * @param string $day
+     * @return AggregateDayPrimitive
      */
-    public function setDay(?string $day): AggregateDayPrimitive
+    public function setDay(string $day): AggregateDayPrimitive
     {
         $this->_day = $day;
         return $this;
@@ -168,7 +168,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string $siteId
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setSiteId(string $siteId): AggregateDayPrimitive
     {
@@ -186,7 +186,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $hostname
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setHostname(?string $hostname): AggregateDayPrimitive
     {
@@ -204,7 +204,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $browser
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setBrowser(?string $browser): AggregateDayPrimitive
     {
@@ -222,7 +222,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $os
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setOs(?string $os): AggregateDayPrimitive
     {
@@ -240,7 +240,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $device
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setDevice(?string $device): AggregateDayPrimitive
     {
@@ -258,7 +258,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $screen
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setScreen(?string $screen): AggregateDayPrimitive
     {
@@ -276,7 +276,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $language
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setLanguage(?string $language): AggregateDayPrimitive
     {
@@ -294,7 +294,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $eventType
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setEventType(?string $eventType): AggregateDayPrimitive
     {
@@ -312,7 +312,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $country
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setCountry(?string $country): AggregateDayPrimitive
     {
@@ -330,7 +330,7 @@ class AggregateDayPrimitive extends Primitive
 
     /**
      * @param string|null $city
-     * @return EventPrimitive
+     * @return AggregateDayPrimitive
      */
     public function setCity(?string $city): AggregateDayPrimitive
     {

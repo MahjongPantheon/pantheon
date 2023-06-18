@@ -29,19 +29,22 @@ service Hugin {
     returns (GetLastYearResponse);
 }
 
-message GetLastDayPayload {}
+message GetLastDayPayload {
+}
 
 message GetLastDayResponse {
   repeated HuginData data = 1;
 }
 
-message GetLastMonthPayload {}
+message GetLastMonthPayload {
+}
 
 message GetLastMonthResponse {
   repeated HuginData data = 1;
 }
 
-message GetLastYearPayload {}
+message GetLastYearPayload {
+}
 
 message GetLastYearResponse {
   repeated HuginData data = 1;

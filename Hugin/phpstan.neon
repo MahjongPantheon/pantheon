@@ -5,8 +5,6 @@ parameters:
     - vendor/ctizen/idiorm
     - vendor/monolog/monolog
     - ../Common
-  bootstrapFiles:
-    - src/helpers/i18n.php
   level: 8
   paths:
     - src

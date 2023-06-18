@@ -52,6 +52,7 @@ pantheon_run:
 	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
 	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
+	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"; \
 	echo "----------------------------------------------------------------------------------"; \
 	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
 	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -68,6 +69,11 @@ pantheon_run:
 	echo "    ->     Port:     5532 "; \
 	echo "    ->     Username: frey "; \
 	echo "    ->     Password: pgpass "; \
+  echo "    -> PgAdmin4-hugin pgsql connection credentials hint: "; \
+  echo "    ->     Hostname: db "; \
+  echo "    ->     Port:     5532 "; \
+  echo "    ->     Username: hugin "; \
+  echo "    ->     Password: pgpass "; \
 	echo "----------------------------------------------------------------------------------"; \
 	echo " ${GREEN}Run 'make logs' in each subproject folder to view container logs on-line${NC} "; \
 	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \

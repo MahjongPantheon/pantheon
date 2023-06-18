@@ -60,6 +60,7 @@ class EventsController extends Controller
             require_once __DIR__ . '/../../bin/geoip2.phar';
             /** @phpstan-ignore-next-line */
             $readerCity = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-City.mmdb');
+            /** @phpstan-ignore-next-line */
             $reader = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-Country.mmdb');
 
             $lastProc = apcu_fetch(self::LAST_PROC_ID);
@@ -74,6 +75,7 @@ class EventsController extends Controller
                     try {
                         /** @phpstan-ignore-next-line */
                         $recordCity = $readerCity->city($addr);
+                        /** @phpstan-ignore-next-line */
                         $record = $reader->country($addr);
                         $country = $record->country->name;
                         $city = $recordCity->city->name;
@@ -91,7 +93,7 @@ class EventsController extends Controller
                     ->setLanguage($data[6])
                     ->setCreatedAt($data[7])
                     ->setEventType($data[8])
-                    ->setEventMeta(json_encode($data[9]))
+                    ->setEventMeta(json_encode($data[9]) ?: '')
                     ->setCountry($country)
                     ->setCity($city)
                     ->save();
@@ -107,7 +109,8 @@ class EventsController extends Controller
      * @return HuginData[]
      * @throws \Exception
      */
-    public function getLastDay(): array {
+    public function getLastDay(): array
+    {
         $events = EventPrimitive::findLastHours($this->_db);
         $sites = [];
         foreach ($events as $event) {
@@ -160,15 +163,15 @@ class EventsController extends Controller
             foreach ($data as $hour => $perHour) {
                 $returnData [] = (new HuginData())
                     ->setSiteId($siteId)
-                    ->setDatetime($hour)
-                    ->setCountry(json_encode($perHour['country']))
-                    ->setCity(json_encode($perHour['city']))
-                    ->setOs(json_encode($perHour['os']))
-                    ->setDevice(json_encode($perHour['device']))
-                    ->setBrowser(json_encode($perHour['browser']))
-                    ->setScreen(json_encode($perHour['screen']))
-                    ->setLanguage(json_encode($perHour['language']))
-                    ->setEventType(json_encode($perHour['event_type']))
+                    ->setDatetime((string)$hour)
+                    ->setCountry(json_encode($perHour['country']) ?: '')
+                    ->setCity(json_encode($perHour['city']) ?: '')
+                    ->setOs(json_encode($perHour['os']) ?: '')
+                    ->setDevice(json_encode($perHour['device']) ?: '')
+                    ->setBrowser(json_encode($perHour['browser']) ?: '')
+                    ->setScreen(json_encode($perHour['screen']) ?: '')
+                    ->setLanguage(json_encode($perHour['language']) ?: '')
+                    ->setEventType(json_encode($perHour['event_type']) ?: '')
                     ->setEventCount($perHour['event_count'])
                     ->setUniqCount(count(array_unique($perHour['sessions'])));
             }
@@ -181,9 +184,10 @@ class EventsController extends Controller
      * @return HuginData[]
      * @throws \Exception
      */
-    public function getLastMonth(): array {
+    public function getLastMonth(): array
+    {
         $days = AggregateDayPrimitive::findLastMonth($this->_db);
-        return array_map(function(AggregateDayPrimitive $item) {
+        return array_map(function (AggregateDayPrimitive $item) {
             return (new HuginData())
                 ->setDatetime((new \DateTime($item->getDay()))->format('d'))
                 ->setSiteId($item->getSiteId())
@@ -195,7 +199,7 @@ class EventsController extends Controller
                 ->setDevice($item->getDevice() ?? '')
                 ->setScreen($item->getScreen() ?? '')
                 ->setLanguage($item->getLanguage() ?? '')
-                ->setEventType($item->getEventType())
+                ->setEventType($item->getEventType() ?? '')
                 ->setCountry($item->getCountry() ?? '')
                 ->setCity($item->getCity() ?? '');
         }, $days);
@@ -205,9 +209,10 @@ class EventsController extends Controller
      * @return HuginData[]
      * @throws \Exception
      */
-    public function getLastYear(): array {
+    public function getLastYear(): array
+    {
         $days = AggregateMonthPrimitive::findLastYear($this->_db);
-        return array_map(function(AggregateMonthPrimitive $item) {
+        return array_map(function (AggregateMonthPrimitive $item) {
             return (new HuginData())
                 ->setDatetime((new \DateTime($item->getMonth()))->format('m'))
                 ->setSiteId($item->getSiteId())
@@ -219,7 +224,7 @@ class EventsController extends Controller
                 ->setDevice($item->getDevice() ?? '')
                 ->setScreen($item->getScreen() ?? '')
                 ->setLanguage($item->getLanguage() ?? '')
-                ->setEventType($item->getEventType())
+                ->setEventType($item->getEventType() ?? '')
                 ->setCountry($item->getCountry() ?? '')
                 ->setCity($item->getCity() ?? '');
         }, $days);

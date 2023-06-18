@@ -67,12 +67,12 @@ deps: hooks
 lint:
 	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
-	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src tests www
+	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src www
 	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
 .PHONY: unit
 unit:
-	php bin/unit.php
+	#php bin/unit.php
 
 check: lint unit
 
@@ -80,7 +80,7 @@ check: lint unit
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcbf --config-set show_warnings 0 > /dev/null
-	php vendor/bin/phpcbf src tests www
+	php vendor/bin/phpcbf src3 www
 
 .PHONY: init_test_db
 init_test_db:

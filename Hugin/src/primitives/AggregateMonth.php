@@ -109,7 +109,7 @@ class AggregateMonthPrimitive extends Primitive
      * @param IDb $db
      * @param int[] $ids
      *
-     * @return EventPrimitive[]
+     * @return AggregateMonthPrimitive[]
      * @throws \Exception
      */
     public static function findById(IDb $db, array $ids)
@@ -150,7 +150,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string $siteId
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setSiteId(string $siteId): AggregateMonthPrimitive
     {
@@ -168,7 +168,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string $month
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setMonth(string $month): AggregateMonthPrimitive
     {
@@ -186,7 +186,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $hostname
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setHostname(?string $hostname): AggregateMonthPrimitive
     {
@@ -204,7 +204,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $browser
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setBrowser(?string $browser): AggregateMonthPrimitive
     {
@@ -222,7 +222,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $os
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setOs(?string $os): AggregateMonthPrimitive
     {
@@ -240,7 +240,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $device
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setDevice(?string $device): AggregateMonthPrimitive
     {
@@ -258,7 +258,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $screen
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setScreen(?string $screen): AggregateMonthPrimitive
     {
@@ -276,7 +276,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $language
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setLanguage(?string $language): AggregateMonthPrimitive
     {
@@ -294,7 +294,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $eventType
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setEventType(?string $eventType): AggregateMonthPrimitive
     {
@@ -312,7 +312,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $country
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setCountry(?string $country): AggregateMonthPrimitive
     {
@@ -330,7 +330,7 @@ class AggregateMonthPrimitive extends Primitive
 
     /**
      * @param string|null $city
-     * @return EventPrimitive
+     * @return AggregateMonthPrimitive
      */
     public function setCity(?string $city): AggregateMonthPrimitive
     {
