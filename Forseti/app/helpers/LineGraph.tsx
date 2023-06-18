@@ -1,26 +1,26 @@
 import {
   Chart as ChartJS,
-  BarController,
-  BarElement,
+  LineElement,
   CategoryScale,
   PointElement,
   Tooltip,
   LinearScale,
   Title,
   Legend,
+  Filler,
 } from 'chart.js';
-import { Bar as BarGraph } from 'react-chartjs-2';
+import { Line as LineGraph } from 'react-chartjs-2';
 ChartJS.register(
   Tooltip,
-  BarElement,
-  BarController,
+  LineElement,
   CategoryScale,
   PointElement,
   LinearScale,
   Title,
-  Legend
+  Legend,
+  Filler
 );
 ChartJS.defaults.font.size = 16;
 ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
 
-export default BarGraph;
+export default LineGraph;

@@ -143,6 +143,9 @@ class EventsController extends Controller
             $sites[$event->getSiteId()][$dt->format('H')]['event_count']++;
             $sites[$event->getSiteId()][$dt->format('H')]['sessions'] []= $event->getSessionId();
             foreach (array_keys($map) as $k) {
+                if (empty($event->$k())) {
+                    continue;
+                }
                 if (empty($sites[$event->getSiteId()][$dt->format('H')][$map[$k]][$event->$k()])) {
                     $sites[$event->getSiteId()][$dt->format('H')][$map[$k]][$event->$k()] = 0;
                 }
@@ -152,10 +155,10 @@ class EventsController extends Controller
 
         $returnData = [];
         foreach ($sites as $siteId => $data) {
-            foreach ($data as $perHour) {
+            foreach ($data as $hour => $perHour) {
                 $returnData [] = (new HuginData())
                     ->setSiteId($siteId)
-                    ->setDatetime($perHour['created_at'])
+                    ->setDatetime($hour)
                     ->setCountry(json_encode($perHour['country']))
                     ->setCity(json_encode($perHour['city']))
                     ->setOs(json_encode($perHour['os']))

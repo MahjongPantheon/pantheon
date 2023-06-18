@@ -126,6 +126,7 @@ class EventPrimitive extends Primitive
     {
         $result = $db->table(self::$_table)
             ->whereGt('created_at', date('Y-m-d H:i:s', time() - 24 * 60 * 60))
+            ->orderByAsc('created_at')
             ->findArray();
         return array_map(function ($data) use ($db) {
             return self::_recreateInstance($db, $data);
