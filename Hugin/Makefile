@@ -92,6 +92,14 @@ clean_test_db:
 		PGPASSWORD=pgpass psql -hdb -p5532 -U hugin hugin_unit -c "DROP TABLE \"$$p\""; \
 	done < ./data/tablelist.txt || true
 
+.PHONY: docker_proto_gen
+docker_proto_gen: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make proto_gen' ; \
+	fi
+
 .PHONY: docker_deps
 docker_deps: get_docker_id
 		@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \

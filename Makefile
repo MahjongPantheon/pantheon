@@ -19,6 +19,7 @@ deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
 	cd Sigrun && ${MAKE} docker_deps
+	cd Hugin && ${MAKE} docker_deps
 
 .PHONY: kill
 kill:
@@ -28,6 +29,7 @@ kill:
 	cd Frey && ${MAKE} kill
 	cd Forseti && ${MAKE} kill
 	cd Sigrun && ${MAKE} kill
+	cd Hugin && ${MAKE} kill
 	cd Database && ${MAKE} kill
 	docker-compose rm -v
 
@@ -178,6 +180,7 @@ check:
 	cd Tyr && ${MAKE} docker_unit
 	cd Forseti && ${MAKE} docker_lint
 	cd Sigrun && ${MAKE} docker_lint
+	cd Hugin && ${MAKE} docker_check
 
 .PHONY: autofix
 autofix:
@@ -187,6 +190,7 @@ autofix:
 	cd Tyr && ${MAKE} docker_autofix
 	cd Forseti && ${MAKE} docker_autofix
 	cd Sigrun && ${MAKE} docker_autofix
+	cd Hugin && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -195,6 +199,7 @@ proto_gen:
 	cd Forseti && ${MAKE} docker_proto_gen
 	cd Tyr && ${MAKE} docker_proto_gen
 	cd Sigrun && ${MAKE} docker_proto_gen
+	cd Hugin && ${MAKE} docker_proto_gen
 
 # Prod related tasks & shortcuts
 
@@ -204,6 +209,7 @@ prod_deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
+	cd Hugin && ${MAKE} docker_deps
 	# sigrun should install deps after prebuild
 
 .PHONY: prod_build_tyr
