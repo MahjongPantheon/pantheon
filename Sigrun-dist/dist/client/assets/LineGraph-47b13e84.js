@@ -1,1 +1,0 @@
-import{aV as f,aM as a,aW as e,aN as t,aQ as s,aR as i,aS as l,aT as n,aU as r}from"./vendor-ad0c97cc.js";a.register(e,t,s,i,l,n,r);a.defaults.font.size=16;a.defaults.font.family='"PT Sans Narrow", Arial';export{f as default};

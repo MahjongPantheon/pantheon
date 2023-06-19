@@ -8024,14 +8024,12 @@ class ApiService {
         if (!resp.ok) {
           return resp.json().then((err) => {
             if (err.code && err.code === "internal" && err.meta && err.meta.cause) {
-              fetch(`${"https://rating.riichimahjong.org"}/servicelog`, {
+              fetch({}.VITE_HUGIN_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   source: "Sigrun [twirp]",
-                  requestTo: url,
-                  requestFrom: typeof window !== "undefined" && window.location.href,
-                  details: err.meta.cause
+                  error: `From: ${typeof window !== "undefined" && window.location.href} | To: ${url} | Details: ${err.meta.cause}`
                 })
               });
               throw new Error(err.meta.cause);
