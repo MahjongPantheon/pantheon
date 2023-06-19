@@ -11,7 +11,6 @@ require_once __DIR__ . '/ErrorHandler.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
 require_once __DIR__ . '/controllers/Events.php';
 require_once __DIR__ . '/controllers/Games.php';
-require_once __DIR__ . '/controllers/Misc.php';
 require_once __DIR__ . '/controllers/Players.php';
 require_once __DIR__ . '/controllers/Seating.php';
 
@@ -1713,17 +1712,5 @@ final class TwirpServer implements Mimir
     {
         return (new EventsGetStartingTimerResponse())
             ->setTimer($this->_eventsController->getStartingTimer($req->getEventId()));
-    }
-
-    public function AddErrorLog(array $ctx, MiscAddErrorLogPayload $req): GenericSuccessResponse
-    {
-        return (new GenericSuccessResponse())
-            ->setSuccess($this->_miscController->addErrorLog(
-                $req->getFacility(),
-                $req->getSessionHash(),
-                $req->getPlayerId(),
-                $req->getError(),
-                $req->getStack()
-            ));
     }
 }

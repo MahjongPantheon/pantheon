@@ -143,8 +143,6 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc GetStartingTimer (GenericEventPayload)
     returns (EventsGetStartingTimerResponse);
-  rpc AddErrorLog (MiscAddErrorLogPayload)
-    returns (GenericSuccessResponse);
 }
 
 message EventsGetRulesetsPayload {
@@ -530,12 +528,4 @@ message EventsUpdatePrescriptedEventConfigPayload {
 
 message EventsGetStartingTimerResponse {
   int32 timer = 1; // seconds to start
-}
-
-message MiscAddErrorLogPayload {
-  string facility = 1;
-  string session_hash = 2;
-  int32 player_id = 3;
-  string error = 4;
-  string stack = 5;
 }
