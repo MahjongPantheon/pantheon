@@ -30,6 +30,10 @@ class EventsController extends Controller
     const LAST_PROC_ID = 'hugin_last_proc';
     const EV = 'hugin_ev_';
 
+    const ERR_CTR_ID = 'hugin_ctr_err';
+    const ERR_LAST_PROC_ID = 'hugin_last_proc_err';
+    const ERR_EV = 'hugin_ev_err_';
+
     /**
      * Input: JSON-encoded data in format:
      * {
@@ -52,6 +56,59 @@ class EventsController extends Controller
     public function track($data)
     {
         $parsed = json_decode($data, true);
+        if ($parsed && !empty($parsed['error'])) {
+            return $this->_trackError((string)$parsed['error'], (string)$parsed['source']);
+        }
+
+        return $this->_trackAnalytics($parsed);
+    }
+
+    /**
+     * @param string $error
+     * @param string $source
+     * @return string
+     * @throws \Exception
+     */
+    protected function _trackError($error, $source)
+    {
+        if (!apcu_fetch(self::ERR_CTR_ID)) {
+            apcu_store(self::ERR_CTR_ID, 1);
+            apcu_store(self::ERR_LAST_PROC_ID, 0);
+        }
+
+        $newId = apcu_inc(self::ERR_CTR_ID, 1);
+        apcu_store(self::ERR_EV . $newId, [
+            $source, date('Y-m-d H:i:s'), $error
+        ]);
+
+        // Don't query DB for each error, do it once every twenty requests
+        if ($newId % 20 === 0) {
+            $lastProc = apcu_fetch(self::ERR_LAST_PROC_ID);
+            for ($i = $lastProc; $i <= $newId; $i++) {
+                $data = apcu_fetch(self::ERR_EV . $i);
+                if (!$data) {
+                    continue;
+                }
+                (new SysErrorPrimitive($this->_db))
+                    ->setSource($data[0])
+                    ->setCreatedAt($data[1])
+                    ->setError($data[2])
+                    ->save();
+                apcu_delete(self::ERR_EV . $i);
+            }
+            apcu_store(self::LAST_PROC_ID, $newId);
+        }
+
+        return 'ok';
+    }
+
+    /**
+     * @param array|false $parsed
+     * @return string
+     * @throws \Exception
+     */
+    protected function _trackAnalytics($parsed): string
+    {
         if (!$parsed || empty($parsed['s']) || empty($parsed['si']) || empty($parsed['h']) ||
             empty($parsed['o']) || empty($parsed['d']) || empty($parsed['sc']) ||
             empty($parsed['l']) || empty($parsed['t'])) {

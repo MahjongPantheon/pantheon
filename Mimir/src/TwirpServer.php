@@ -11,7 +11,6 @@ require_once __DIR__ . '/ErrorHandler.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
 require_once __DIR__ . '/controllers/Events.php';
 require_once __DIR__ . '/controllers/Games.php';
-require_once __DIR__ . '/controllers/Misc.php';
 require_once __DIR__ . '/controllers/Players.php';
 require_once __DIR__ . '/controllers/Seating.php';
 
@@ -94,7 +93,6 @@ use Common\HandValueStat;
 use Common\IntermediateResultOfSession;
 use Common\LocalIdMapping;
 use Common\Mimir;
-use Common\MiscAddErrorLogPayload;
 use Common\MultironResult;
 use Common\MultironWin;
 use Common\MyEvent;
@@ -155,7 +153,6 @@ final class TwirpServer implements Mimir
     protected GamesController $_gamesController;
     protected PlayersController $_playersController;
     protected SeatingController $_seatingController;
-    protected MiscController $_miscController;
     protected IDb $_db;
     protected IFreyClient $_frey;
     protected DataSource $_ds;
@@ -195,7 +192,6 @@ final class TwirpServer implements Mimir
         $this->_gamesController = new GamesController($this->_ds, $this->_syslog, $this->_config, $this->_meta);
         $this->_playersController = new PlayersController($this->_ds, $this->_syslog, $this->_config, $this->_meta);
         $this->_seatingController = new SeatingController($this->_ds, $this->_syslog, $this->_config, $this->_meta);
-        $this->_miscController = new MiscController($this->_ds, $this->_syslog, $this->_config, $this->_meta);
     }
 
     protected static function _toPaymentLogItem(string $key, int $value): PaymentLogItem
@@ -1713,17 +1709,5 @@ final class TwirpServer implements Mimir
     {
         return (new EventsGetStartingTimerResponse())
             ->setTimer($this->_eventsController->getStartingTimer($req->getEventId()));
-    }
-
-    public function AddErrorLog(array $ctx, MiscAddErrorLogPayload $req): GenericSuccessResponse
-    {
-        return (new GenericSuccessResponse())
-            ->setSuccess($this->_miscController->addErrorLog(
-                $req->getFacility(),
-                $req->getSessionHash(),
-                $req->getPlayerId(),
-                $req->getError(),
-                $req->getStack()
-            ));
     }
 }

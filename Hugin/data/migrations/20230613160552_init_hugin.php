@@ -13,8 +13,9 @@ class InitHugin extends AbstractMigration
 
     protected function _genEvent()
     {
-        $table = $this->table('event');
+        $table = $this->table('event', ['id' => false, 'primary_key' => 'id']);
         $table
+            ->addColumn('id', 'biginteger', ['identity' => true, 'signed' => false])
             ->addColumn('site_id', 'string', ['limit' => 255])
             ->addColumn('session_id', 'string', ['limit' => 255])
             ->addColumn('country', 'string', ['limit' => 255, 'null' => true])

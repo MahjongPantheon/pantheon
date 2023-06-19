@@ -74,14 +74,14 @@ export class RiichiApiTwirpService implements IRiichiApi {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
+                fetch(import.meta.env.VITE_HUGIN_URL, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     source: 'Tyr [twirp]',
-                    requestTo: url,
-                    requestFrom: typeof window !== 'undefined' && window.location.href,
-                    details: err.meta.cause,
+                    error: `From: ${
+                      typeof window !== 'undefined' && window.location.href
+                    } | To: ${url} | Details: ${err.meta.cause}`,
                   }),
                 });
                 throw new Error(err.meta.cause);

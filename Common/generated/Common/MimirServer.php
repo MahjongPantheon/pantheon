@@ -250,8 +250,6 @@ final class MimirServer implements RequestHandlerInterface
                 return $this->handleInitStartingTimer($ctx, $req);
             case 'GetStartingTimer':
                 return $this->handleGetStartingTimer($ctx, $req);
-            case 'AddErrorLog':
-                return $this->handleAddErrorLog($ctx, $req);
 
             default:
                 return $this->writeError($ctx, $this->noRouteError($req));
@@ -6656,113 +6654,6 @@ final class MimirServer implements RequestHandlerInterface
 
             if ($out === null) {
                 return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetStartingTimer. null responses are not supported'));
-            }
-
-            $ctx = $this->hook->responsePrepared($ctx);
-        } catch (GPBDecodeException $e) {
-            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
-        } catch (\Throwable $e) {
-            return $this->writeError($ctx, $e);
-        }
-
-        $data = $out->serializeToString();
-
-        $body = $this->streamFactory->createStream($data);
-
-        $resp = $this->responseFactory
-            ->createResponse(200)
-            ->withHeader('Content-Type', 'application/protobuf')
-            ->withBody($body);
-
-        $this->callResponseSent($ctx);
-
-        return $resp;
-    }
-    private function handleAddErrorLog(array $ctx, ServerRequestInterface $req): ResponseInterface
-    {
-        $header = $req->getHeaderLine('Content-Type');
-        $i = strpos($header, ';');
-
-        if ($i === false) {
-            $i = strlen($header);
-        }
-
-        $respHeaders = [];
-        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
-
-        switch (trim(strtolower(substr($header, 0, $i)))) {
-            case 'application/json':
-                $resp = $this->handleAddErrorLogJson($ctx, $req);
-                break;
-
-            case 'application/protobuf':
-                $resp = $this->handleAddErrorLogProtobuf($ctx, $req);
-                break;
-
-            default:
-                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
-
-                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
-        }
-
-        foreach ($respHeaders as $key => $value) {
-            $resp = $resp->withHeader($key, $value);
-        }
-
-        return $resp;
-    }
-
-    private function handleAddErrorLogJson(array $ctx, ServerRequestInterface $req): ResponseInterface
-    {
-        $ctx = Context::withMethodName($ctx, 'AddErrorLog');
-
-        try {
-            $ctx = $this->hook->requestRouted($ctx);
-
-            $in = new \Common\MiscAddErrorLogPayload();
-            $in->mergeFromJsonString((string)$req->getBody(), true);
-
-            $out = $this->svc->AddErrorLog($ctx, $in);
-
-            if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling AddErrorLog. null responses are not supported'));
-            }
-
-            $ctx = $this->hook->responsePrepared($ctx);
-        } catch (GPBDecodeException $e) {
-            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
-        } catch (\Throwable $e) {
-            return $this->writeError($ctx, $e);
-        }
-
-        $data = $out->serializeToJsonString();
-
-        $body = $this->streamFactory->createStream($data);
-
-        $resp = $this->responseFactory
-            ->createResponse(200)
-            ->withHeader('Content-Type', 'application/json')
-            ->withBody($body);
-
-        $this->callResponseSent($ctx);
-
-        return $resp;
-    }
-
-    private function handleAddErrorLogProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
-    {
-        $ctx = Context::withMethodName($ctx, 'AddErrorLog');
-
-        try {
-            $ctx = $this->hook->requestRouted($ctx);
-
-            $in = new \Common\MiscAddErrorLogPayload();
-            $in->mergeFromString((string)$req->getBody());
-
-            $out = $this->svc->AddErrorLog($ctx, $in);
-
-            if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling AddErrorLog. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

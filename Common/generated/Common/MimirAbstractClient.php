@@ -1458,29 +1458,6 @@ abstract class MimirAbstractClient
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function AddErrorLog(array $ctx, \Common\MiscAddErrorLogPayload $in): \Common\GenericSuccessResponse
-    {
-        $ctx = Context::withPackageName($ctx, 'common');
-        $ctx = Context::withServiceName($ctx, 'Mimir');
-        $ctx = Context::withMethodName($ctx, 'AddErrorLog');
-
-        $out = new \Common\GenericSuccessResponse();
-
-        $url = $this->addr;
-        if (empty($this->prefix)) {
-            $url = $url.'/common.Mimir/AddErrorLog';
-        } else {
-            $url = $url.'/'.$this->prefix.'/common.Mimir/AddErrorLog';
-        }
-
-        $this->doRequest($ctx, $url, $in, $out);
-
-        return $out;
-    }
-
-    /**
      * Common code to make a request to the remote twirp service.
      */
     abstract protected function doRequest(array $ctx, string $url, Message $in, Message $out): void;

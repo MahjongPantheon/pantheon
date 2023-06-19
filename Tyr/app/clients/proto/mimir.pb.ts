@@ -413,14 +413,6 @@ export interface EventsGetStartingTimerResponse {
   timer: number;
 }
 
-export interface MiscAddErrorLogPayload {
-  facility: string;
-  sessionHash: string;
-  playerId: number;
-  error: string;
-  stack: string;
-}
-
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -1155,18 +1147,6 @@ export async function GetStartingTimer(
     config
   );
   return EventsGetStartingTimerResponse.decode(response);
-}
-
-export async function AddErrorLog(
-  miscAddErrorLogPayload: MiscAddErrorLogPayload,
-  config?: ClientConfiguration
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/AddErrorLog",
-    MiscAddErrorLogPayload.encode(miscAddErrorLogPayload),
-    config
-  );
-  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 //========================================//
@@ -1913,18 +1893,6 @@ export async function GetStartingTimerJSON(
   return EventsGetStartingTimerResponseJSON.decode(response);
 }
 
-export async function AddErrorLogJSON(
-  miscAddErrorLogPayload: MiscAddErrorLogPayload,
-  config?: ClientConfiguration
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/AddErrorLog",
-    MiscAddErrorLogPayloadJSON.encode(miscAddErrorLogPayload),
-    config
-  );
-  return protoAtoms.GenericSuccessResponseJSON.decode(response);
-}
-
 //========================================//
 //                 Mimir                  //
 //========================================//
@@ -2236,12 +2204,6 @@ export interface Mimir<Context = unknown> {
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context
   ) => Promise<EventsGetStartingTimerResponse> | EventsGetStartingTimerResponse;
-  AddErrorLog: (
-    miscAddErrorLogPayload: MiscAddErrorLogPayload,
-    context: Context
-  ) =>
-    | Promise<protoAtoms.GenericSuccessResponse>
-    | protoAtoms.GenericSuccessResponse;
 }
 
 export function createMimir<Context>(service: Mimir<Context>) {
@@ -2963,18 +2925,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: EventsGetStartingTimerResponse,
           json: EventsGetStartingTimerResponseJSON,
-        },
-      },
-      AddErrorLog: {
-        name: "AddErrorLog",
-        handler: service.AddErrorLog,
-        input: {
-          protobuf: MiscAddErrorLogPayload,
-          json: MiscAddErrorLogPayloadJSON,
-        },
-        output: {
-          protobuf: protoAtoms.GenericSuccessResponse,
-          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
     },
@@ -8818,105 +8768,6 @@ export const EventsGetStartingTimerResponse = {
   },
 };
 
-export const MiscAddErrorLogPayload = {
-  /**
-   * Serializes MiscAddErrorLogPayload to protobuf.
-   */
-  encode: function (msg: Partial<MiscAddErrorLogPayload>): Uint8Array {
-    return MiscAddErrorLogPayload._writeMessage(
-      msg,
-      new BinaryWriter()
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes MiscAddErrorLogPayload from protobuf.
-   */
-  decode: function (bytes: ByteSource): MiscAddErrorLogPayload {
-    return MiscAddErrorLogPayload._readMessage(
-      MiscAddErrorLogPayload.initialize(),
-      new BinaryReader(bytes)
-    );
-  },
-
-  /**
-   * Initializes MiscAddErrorLogPayload with all fields set to their default value.
-   */
-  initialize: function (): MiscAddErrorLogPayload {
-    return {
-      facility: "",
-      sessionHash: "",
-      playerId: 0,
-      error: "",
-      stack: "",
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: Partial<MiscAddErrorLogPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
-    if (msg.facility) {
-      writer.writeString(1, msg.facility);
-    }
-    if (msg.sessionHash) {
-      writer.writeString(2, msg.sessionHash);
-    }
-    if (msg.playerId) {
-      writer.writeInt32(3, msg.playerId);
-    }
-    if (msg.error) {
-      writer.writeString(4, msg.error);
-    }
-    if (msg.stack) {
-      writer.writeString(5, msg.stack);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: MiscAddErrorLogPayload,
-    reader: BinaryReader
-  ): MiscAddErrorLogPayload {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.facility = reader.readString();
-          break;
-        }
-        case 2: {
-          msg.sessionHash = reader.readString();
-          break;
-        }
-        case 3: {
-          msg.playerId = reader.readInt32();
-          break;
-        }
-        case 4: {
-          msg.error = reader.readString();
-          break;
-        }
-        case 5: {
-          msg.stack = reader.readString();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -13914,93 +13765,6 @@ export const EventsGetStartingTimerResponseJSON = {
     const _timer_ = json["timer"];
     if (_timer_) {
       msg.timer = _timer_;
-    }
-    return msg;
-  },
-};
-
-export const MiscAddErrorLogPayloadJSON = {
-  /**
-   * Serializes MiscAddErrorLogPayload to JSON.
-   */
-  encode: function (msg: Partial<MiscAddErrorLogPayload>): string {
-    return JSON.stringify(MiscAddErrorLogPayloadJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes MiscAddErrorLogPayload from JSON.
-   */
-  decode: function (json: string): MiscAddErrorLogPayload {
-    return MiscAddErrorLogPayloadJSON._readMessage(
-      MiscAddErrorLogPayloadJSON.initialize(),
-      JSON.parse(json)
-    );
-  },
-
-  /**
-   * Initializes MiscAddErrorLogPayload with all fields set to their default value.
-   */
-  initialize: function (): MiscAddErrorLogPayload {
-    return {
-      facility: "",
-      sessionHash: "",
-      playerId: 0,
-      error: "",
-      stack: "",
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: Partial<MiscAddErrorLogPayload>
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.facility) {
-      json["facility"] = msg.facility;
-    }
-    if (msg.sessionHash) {
-      json["sessionHash"] = msg.sessionHash;
-    }
-    if (msg.playerId) {
-      json["playerId"] = msg.playerId;
-    }
-    if (msg.error) {
-      json["error"] = msg.error;
-    }
-    if (msg.stack) {
-      json["stack"] = msg.stack;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: MiscAddErrorLogPayload,
-    json: any
-  ): MiscAddErrorLogPayload {
-    const _facility_ = json["facility"];
-    if (_facility_) {
-      msg.facility = _facility_;
-    }
-    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
-    if (_sessionHash_) {
-      msg.sessionHash = _sessionHash_;
-    }
-    const _playerId_ = json["playerId"] ?? json["player_id"];
-    if (_playerId_) {
-      msg.playerId = _playerId_;
-    }
-    const _error_ = json["error"];
-    if (_error_) {
-      msg.error = _error_;
-    }
-    const _stack_ = json["stack"];
-    if (_stack_) {
-      msg.stack = _stack_;
     }
     return msg;
   },

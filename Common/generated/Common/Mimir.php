@@ -552,13 +552,4 @@ interface Mimir
      * @throws \Twirp\Error
      */
     public function GetStartingTimer(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetStartingTimerResponse;
-
-    /**
-     *
-     *
-     * Generated from protobuf method <code>common.Mimir/AddErrorLog</code>
-     *
-     * @throws \Twirp\Error
-     */
-    public function AddErrorLog(array $ctx, \Common\MiscAddErrorLogPayload $req): \Common\GenericSuccessResponse;
 }

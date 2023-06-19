@@ -22,14 +22,12 @@ function errHandler(
   charNumber: number | undefined,
   err: Error | undefined
 ) {
-  fetch(`${import.meta.env.VITE_SIGRUN_URL}/servicelog`, {
+  fetch(import.meta.env.VITE_HUGIN_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       source: 'Sigrun [common]',
-      requestTo: '-',
-      requestFrom: currentUrl,
-      details: errorMsg?.toString() ?? err?.message,
+      error: `From: ${currentUrl} | Details: ${errorMsg?.toString() ?? err?.message}`,
     }),
   });
 }
