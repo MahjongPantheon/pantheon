@@ -103,6 +103,22 @@ services:
     environment:
       PHINX_DB_FREY_PORT: 5532
       PHINX_DB_FREY_HOST: db
+  hugin:
+    build: ./Hugin
+    ports:
+      - "127.0.0.1:4010:80"
+    links:
+      - db:db
+    depends_on:
+      - db
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Hugin:/var/www/html/Hugin
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_HUGIN_PORT: 5532
+      PHINX_DB_HUGIN_HOST: db
   sigrun:
     build: ./Sigrun
     ports:

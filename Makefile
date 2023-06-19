@@ -19,6 +19,7 @@ deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
 	cd Sigrun && ${MAKE} docker_deps
+	cd Hugin && ${MAKE} docker_deps
 
 .PHONY: kill
 kill:
@@ -28,6 +29,7 @@ kill:
 	cd Frey && ${MAKE} kill
 	cd Forseti && ${MAKE} kill
 	cd Sigrun && ${MAKE} kill
+	cd Hugin && ${MAKE} kill
 	cd Database && ${MAKE} kill
 	docker-compose rm -v
 
@@ -50,6 +52,7 @@ pantheon_run:
 	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
 	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
+	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"; \
 	echo "----------------------------------------------------------------------------------"; \
 	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
 	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -66,6 +69,11 @@ pantheon_run:
 	echo "    ->     Port:     5532 "; \
 	echo "    ->     Username: frey "; \
 	echo "    ->     Password: pgpass "; \
+  echo "    -> PgAdmin4-hugin pgsql connection credentials hint: "; \
+  echo "    ->     Hostname: db "; \
+  echo "    ->     Port:     5532 "; \
+  echo "    ->     Username: hugin "; \
+  echo "    ->     Password: pgpass "; \
 	echo "----------------------------------------------------------------------------------"; \
 	echo " ${GREEN}Run 'make logs' in each subproject folder to view container logs on-line${NC} "; \
 	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \
@@ -178,6 +186,7 @@ check:
 	cd Tyr && ${MAKE} docker_unit
 	cd Forseti && ${MAKE} docker_lint
 	cd Sigrun && ${MAKE} docker_lint
+	cd Hugin && ${MAKE} docker_check
 
 .PHONY: autofix
 autofix:
@@ -187,6 +196,7 @@ autofix:
 	cd Tyr && ${MAKE} docker_autofix
 	cd Forseti && ${MAKE} docker_autofix
 	cd Sigrun && ${MAKE} docker_autofix
+	cd Hugin && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -195,6 +205,7 @@ proto_gen:
 	cd Forseti && ${MAKE} docker_proto_gen
 	cd Tyr && ${MAKE} docker_proto_gen
 	cd Sigrun && ${MAKE} docker_proto_gen
+	cd Hugin && ${MAKE} docker_proto_gen
 
 # Prod related tasks & shortcuts
 
@@ -204,6 +215,7 @@ prod_deps:
 	cd Frey && ${MAKE} docker_deps
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
+	cd Hugin && ${MAKE} docker_deps
 	# sigrun should install deps after prebuild
 
 .PHONY: prod_build_tyr

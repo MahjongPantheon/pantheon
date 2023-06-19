@@ -1,0 +1,67 @@
+/*  Pantheon common files
+ *  Copyright (C) 2016  o.klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+// protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
+syntax = "proto3";
+
+package common;
+
+service Hugin {
+  rpc GetLastDay (GetLastDayPayload)
+    returns (GetLastDayResponse);
+  rpc GetLastMonth (GetLastMonthPayload)
+    returns (GetLastMonthResponse);
+  rpc GetLastYear (GetLastYearPayload)
+    returns (GetLastYearResponse);
+}
+
+message GetLastDayPayload {
+}
+
+message GetLastDayResponse {
+  repeated HuginData data = 1;
+}
+
+message GetLastMonthPayload {
+}
+
+message GetLastMonthResponse {
+  repeated HuginData data = 1;
+}
+
+message GetLastYearPayload {
+}
+
+message GetLastYearResponse {
+  repeated HuginData data = 1;
+}
+
+message HuginData {
+  string datetime = 1;
+  int32 event_count = 2;
+  int32 uniq_count = 3;
+  string site_id = 4;
+  string country = 5;
+  string city = 6;
+  string browser = 7;
+  string os = 8;
+  string device = 9;
+  string screen = 10;
+  string language = 11;
+  string event_type = 12;
+  string hostname = 13;
+}

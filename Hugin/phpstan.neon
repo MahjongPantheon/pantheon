@@ -1,0 +1,11 @@
+parameters:
+  checkMissingIterableValueType: false
+  reportUnmatchedIgnoredErrors: false
+  scanDirectories:
+    - vendor/ctizen/idiorm
+    - vendor/monolog/monolog
+    - ../Common
+  level: 8
+  paths:
+    - src
+    - www

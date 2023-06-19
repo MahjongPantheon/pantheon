@@ -73,6 +73,7 @@ import { ClientConfiguration } from 'twirpscript';
 import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
+import { GetLastDay, GetLastMonth, GetLastYear } from '../clients/proto/hugin.pb';
 
 export class ApiService {
   private _authToken: string | null = null;
@@ -83,6 +84,9 @@ export class ApiService {
     prefix: '/v2',
   };
   private readonly _clientConfFrey: ClientConfiguration = {
+    prefix: '/v2',
+  };
+  private readonly _clientConfHugin: ClientConfiguration = {
     prefix: '/v2',
   };
 
@@ -106,8 +110,8 @@ export class ApiService {
 
     this._clientConfMimir.baseURL = import.meta.env.VITE_MIMIR_URL;
     this._clientConfFrey.baseURL = import.meta.env.VITE_FREY_URL;
-    // eslint-disable-next-line no-multi-assign
-    this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
+    this._clientConfHugin.baseURL = import.meta.env.VITE_HUGIN_URL;
+    this._clientConfFrey.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
       return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
@@ -138,6 +142,9 @@ export class ApiService {
           return resp;
         });
     };
+
+    this._clientConfMimir.rpcTransport = this._clientConfFrey.rpcTransport;
+    this._clientConfHugin.rpcTransport = this._clientConfFrey.rpcTransport;
   }
 
   getAllPlayers(eventId: number) {
@@ -528,5 +535,17 @@ export class ApiService {
       { email, title, password, city, country, phone, tenhouId },
       this._clientConfFrey
     ).then((r) => r.personId);
+  }
+
+  getLastDayStats() {
+    return GetLastDay({}, this._clientConfHugin).then((r) => r.data);
+  }
+
+  getLastMonthStats() {
+    return GetLastMonth({}, this._clientConfHugin).then((r) => r.data);
+  }
+
+  getLastYearStats() {
+    return GetLastYear({}, this._clientConfHugin).then((r) => r.data);
   }
 }
