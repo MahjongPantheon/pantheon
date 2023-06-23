@@ -12,6 +12,7 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
+    munin-node \
     protoc \
     postgresql13 \
     php81-apcu \

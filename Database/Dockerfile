@@ -16,6 +16,7 @@ RUN apk update && \
     curl \
     openssh \
     make \
+    munin-node \
     git \
     postgresql13 && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)

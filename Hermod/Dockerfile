@@ -9,6 +9,7 @@ RUN apk update && \
         php81-cli \
         php81-gmp \
         php81-json \
+        munin-node \
         php81-mbstring \
         php81-openssl && \
     apk add --no-cache postfix && \

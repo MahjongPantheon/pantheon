@@ -15,6 +15,7 @@ RUN apk update && \
     su-exec \
     curl \
     make \
+    munin-node \
     gettext \
     gettext-dev \
     git \

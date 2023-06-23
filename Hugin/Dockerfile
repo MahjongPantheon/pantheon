@@ -12,6 +12,7 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
+    munin \
     postgresql13 \
     php81-apcu \
     php81-fpm \

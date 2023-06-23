@@ -20,6 +20,7 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
+    munin-node \
     nodejs \
     npm \
     protoc && \
