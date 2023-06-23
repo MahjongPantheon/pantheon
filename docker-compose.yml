@@ -11,6 +11,7 @@ services:
       - ./Common/envs/${ENV_FILENAME}
     ports:
       - "5532:5532"
+      - "127.0.0.1:49498:4949"
     volumes:
       - datavolume01:/var/lib/postgresql/data
       - configvolume01:/var/lib/postgresql/.ssh
@@ -19,6 +20,7 @@ services:
     build: ./Hermod
     ports:
       - "127.0.0.1:4109:80"
+      - "127.0.0.1:49491:4949"
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     volumes:
@@ -38,6 +40,7 @@ services:
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:4103:8080"
+      - "127.0.0.1:49492:4949"
     links:
       - mimir:mimir
       - frey:frey
@@ -55,6 +58,7 @@ services:
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:4107:8080"
+      - "127.0.0.1:49493:4949"
     links:
       - mimir:mimir
       - frey:frey
@@ -71,6 +75,7 @@ services:
     build: ./Mimir
     ports:
       - "127.0.0.1:4001:80"
+      - "127.0.0.1:49494:4949"
     links:
       - frey:frey
       - db:db
@@ -89,6 +94,7 @@ services:
     build: ./Frey
     ports:
       - "127.0.0.1:4004:80"
+      - "127.0.0.1:49495:4949"
     links:
       - db:db
       - hermod:hermod
@@ -108,6 +114,7 @@ services:
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:4102:8080"
+      - "127.0.0.1:49496:4949"
     links:
       - mimir:mimir
       - frey:frey
@@ -125,6 +132,7 @@ services:
     ports:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:4011:8080"
+      - "127.0.0.1:49497:4949"
     links:
       - db:db
       - hermod:hermod

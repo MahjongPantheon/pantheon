@@ -42,8 +42,33 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php81/php-fpm.d/www.c
     sed -i "s|;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=4000|i" /etc/php81/php.ini && \
     sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php81/php.ini
 
-RUN echo "allow ^172\." >> /etc/munin/munin-node.conf
+# Munin setup
+RUN sed -i '/^allow/d' /etc/munin/munin-node.conf
+RUN echo 'allow ^.*$' >>/etc/munin/munin-node.conf
 RUN echo "host_name hermod" >> /etc/munin/munin-node.conf
+
+RUN ln -s /usr/lib/munin/plugins/cpu /etc/munin/plugins/cpu && \
+  ln -s /usr/lib/munin/plugins/df /etc/munin/plugins/df && \
+  ln -s /usr/lib/munin/plugins/df_inode /etc/munin/plugins/df_inode && \
+  ln -s /usr/lib/munin/plugins/diskstats /etc/munin/plugins/diskstats && \
+  ln -s /usr/lib/munin/plugins/forks /etc/munin/plugins/forks && \
+  ln -s /usr/lib/munin/plugins/fw_conntrack /etc/munin/plugins/fw_conntrack && \
+  ln -s /usr/lib/munin/plugins/fw_forwarded_local /etc/munin/plugins/fw_forwarded_local && \
+  ln -s /usr/lib/munin/plugins/fw_packets /etc/munin/plugins/fw_packets && \
+  ln -s /usr/lib/munin/plugins/interrupts /etc/munin/plugins/interrupts && \
+  ln -s /usr/lib/munin/plugins/iostat /etc/munin/plugins/iostat && \
+  ln -s /usr/lib/munin/plugins/load /etc/munin/plugins/load && \
+  ln -s /usr/lib/munin/plugins/memory /etc/munin/plugins/memory && \
+  ln -s /usr/lib/munin/plugins/netstat /etc/munin/plugins/netstat && \
+  ln -s /usr/lib/munin/plugins/open_files /etc/munin/plugins/open_files && \
+  ln -s /usr/lib/munin/plugins/open_inodes /etc/munin/plugins/open_inodes && \
+  ln -s /usr/lib/munin/plugins/postfix_mailqueue /etc/munin/plugins/postfix_mailqueue && \
+  ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \
+  ln -s /usr/lib/munin/plugins/proc_pri /etc/munin/plugins/proc_pri && \
+  ln -s /usr/lib/munin/plugins/swap /etc/munin/plugins/swap && \
+  ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
+  ln -s /usr/lib/munin/plugins/uptime /etc/munin/plugins/uptime && \
+  ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
 
 COPY       /configs/supervisord.conf     /etc/supervisord.conf
 COPY       /configs/rsyslog*.conf        /etc/

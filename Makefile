@@ -255,7 +255,10 @@ prod_compile:
 	echo "- ${YELLOW}Forseti${NC} is exposed on port 4107"
 	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"
 	echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"
-	echo "${RED}!!!${NC} On production server, please make sure to set up your firewall and reverse-proxy to restrict access to internal resources."
+	echo "${RED}!!!${NC} On production server, please make sure to set up your firewall"
+	echo "${RED}!!!${NC} and reverse-proxy to restrict access to internal resources."
+	echo "${RED}!!!${NC} Also it's highly recommended to have an allow-list policy in your"
+	echo "${RED}!!!${NC} firewall and allow only the required ports."
 
 .PHONY: bootstrap_admin
 bootstrap_admin:
