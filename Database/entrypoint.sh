@@ -4,6 +4,7 @@ export HOME=/home/user
 
 # -l 0 for verbosity
 crond -b -l 8 -L /tmp/cronlogs
+munin-node
 
 if [ ! -f "/var/lib/postgresql/.ssh/id_rsa.pub" ]; then
   su-exec postgres ssh-keygen -q -N "" -f /var/lib/postgresql/.ssh/id_rsa -t rsa

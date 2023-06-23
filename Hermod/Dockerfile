@@ -42,6 +42,9 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php81/php-fpm.d/www.c
     sed -i "s|;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=4000|i" /etc/php81/php.ini && \
     sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php81/php.ini
 
+RUN echo "allow ^172\." >> /etc/munin/munin-node.conf
+RUN echo "host_name hermod" >> /etc/munin/munin-node.conf
+
 COPY       /configs/supervisord.conf     /etc/supervisord.conf
 COPY       /configs/rsyslog*.conf        /etc/
 COPY       /configs/opendkim.conf        /etc/opendkim/opendkim.conf

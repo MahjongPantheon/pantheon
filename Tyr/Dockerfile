@@ -36,6 +36,9 @@ RUN echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
 RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
 RUN mkdir /home/user && chown user: /home/user
 
+RUN echo "allow ^172\." >> /etc/munin/munin-node.conf
+RUN echo "host_name tyr" >> /etc/munin/munin-node.conf
+
 # Cleaning up
 RUN mkdir /www && \
     apk del tzdata && \

@@ -105,6 +105,9 @@ RUN echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
 RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
 RUN mkdir /home/user && chown user: /home/user
 
+RUN echo "allow ^172\." >> /etc/munin/munin-node.conf
+RUN echo "host_name hugin" >> /etc/munin/munin-node.conf
+
 # Cleaning up
 RUN mkdir /www && \
     apk del tzdata && \
@@ -124,6 +127,13 @@ RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
 COPY hugin-docker.nginx.conf /etc/nginx/http.d/hugin.conf
+
+# copy munin config
+COPY etc_munin/nodes.conf /etc/munin/munin-conf.d/nodes.conf
+
+# Copy cron defs
+COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
+COPY cron/tabs/munin /var/spool/cron/crontabs/munin
 
 # Folders init
 RUN mkdir -p /run/nginx
