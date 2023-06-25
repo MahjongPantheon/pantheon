@@ -57,7 +57,9 @@ class EventsController extends Controller
     {
         $parsed = json_decode($data, true);
         if ($parsed && !empty($parsed['error'])) {
-            return $this->_trackError((string)$parsed['error'], (string)$parsed['source']);
+            if (preg_match("#(Tyr|Forseti|Sigrun) \[(twirp|common)\]#is", $parsed['source'])) {
+                return $this->_trackError((string)$parsed['error'], (string)$parsed['source']);
+            }
         }
 
         return $this->_trackAnalytics($parsed);
