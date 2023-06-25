@@ -7,6 +7,7 @@ volumes:
 services:
   db:
     build: ./Database
+    image: pantheon-database
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     ports:
@@ -18,6 +19,7 @@ services:
       - backupvolume01:/var/lib/postgresql/backup
   hermod:
     build: ./Hermod
+    image: pantheon-hermod
     ports:
       - "127.0.0.1:4109:80"
       - "127.0.0.1:49491:4949"
@@ -37,6 +39,7 @@ services:
       - pgadmindata:/var/lib/pgadmin
   tyr:
     build: ./Tyr
+    image: pantheon-tyr
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:4103:8080"
@@ -55,6 +58,7 @@ services:
       - ./Common:/var/www/html/Common
   forseti:
     build: ./Forseti
+    image: pantheon-forseti
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:4107:8080"
@@ -73,6 +77,7 @@ services:
       - ./Common:/var/www/html/Common
   mimir:
     build: ./Mimir
+    image: pantheon-mimir
     ports:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
@@ -92,6 +97,7 @@ services:
       PHINX_DB_HOST: db
   frey:
     build: ./Frey
+    image: pantheon-frey
     ports:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
@@ -111,6 +117,7 @@ services:
       PHINX_DB_FREY_HOST: db
   sigrun:
     build: ./Sigrun
+    image: pantheon-sigrun
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:4102:8080"
@@ -129,6 +136,7 @@ services:
       - ./Common:/var/www/html/Common
   hugin:
     build: ./Hugin
+    image: pantheon-hugin
     ports:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:4011:8080"
