@@ -29,6 +29,7 @@ environments:
         name: frey_unit
         user: frey
         pass: pgpass
+        port: 5432
         charset: utf8
 
     docker:
