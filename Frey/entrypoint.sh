@@ -2,6 +2,8 @@
 
 export HOME=/home/user
 
+munin-node
+
 TRAPPED_SIGNAL=false
 
 echo 'Starting NGINX';

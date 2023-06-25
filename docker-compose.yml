@@ -10,7 +10,8 @@ services:
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     ports:
-      - "5532:5532"
+      - "5532:5432"
+      - "127.0.0.1:49498:4949"
     volumes:
       - datavolume01:/var/lib/postgresql/data
       - configvolume01:/var/lib/postgresql/.ssh
@@ -19,6 +20,7 @@ services:
     build: ./Hermod
     ports:
       - "127.0.0.1:4109:80"
+      - "127.0.0.1:49491:4949"
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     volumes:
@@ -38,6 +40,7 @@ services:
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:4103:8080"
+      - "127.0.0.1:49492:4949"
     links:
       - mimir:mimir
       - frey:frey
@@ -55,6 +58,7 @@ services:
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:4107:8080"
+      - "127.0.0.1:49493:4949"
     links:
       - mimir:mimir
       - frey:frey
@@ -71,6 +75,7 @@ services:
     build: ./Mimir
     ports:
       - "127.0.0.1:4001:80"
+      - "127.0.0.1:49494:4949"
     links:
       - frey:frey
       - db:db
@@ -83,12 +88,13 @@ services:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
     environment:
-      PHINX_DB_PORT: 5532
+      PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db
   frey:
     build: ./Frey
     ports:
       - "127.0.0.1:4004:80"
+      - "127.0.0.1:49495:4949"
     links:
       - db:db
       - hermod:hermod
@@ -101,29 +107,14 @@ services:
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
     environment:
-      PHINX_DB_FREY_PORT: 5532
+      PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db
-  hugin:
-    build: ./Hugin
-    ports:
-      - "127.0.0.1:4010:80"
-    links:
-      - db:db
-    depends_on:
-      - db
-    env_file:
-      - ./Common/envs/${ENV_FILENAME}
-    volumes:
-      - ./Hugin:/var/www/html/Hugin
-      - ./Common:/var/www/html/Common
-    environment:
-      PHINX_DB_HUGIN_PORT: 5532
-      PHINX_DB_HUGIN_HOST: db
   sigrun:
     build: ./Sigrun
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:4102:8080"
+      - "127.0.0.1:49496:4949"
     links:
       - mimir:mimir
       - frey:frey
@@ -136,3 +127,33 @@ services:
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
       - ./Common:/var/www/html/Common
+  hugin:
+    build: ./Hugin
+    ports:
+      - "127.0.0.1:4010:80"
+      - "127.0.0.1:4011:8080"
+      - "127.0.0.1:49497:4949"
+    links:
+      - db:db
+      - hermod:hermod
+      - tyr:tyr
+      - forseti:forseti
+      - mimir:mimir
+      - frey:frey
+      - sigrun:sigrun
+    depends_on:
+      - db
+      - hermod
+      - tyr
+      - forseti
+      - mimir
+      - frey
+      - sigrun
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
+    volumes:
+      - ./Hugin:/var/www/html/Hugin
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_HUGIN_PORT: 5432
+      PHINX_DB_HUGIN_HOST: db

@@ -20,7 +20,7 @@
 // Should match env values in Dockerfile, otherwise results will differ.
 // See also init_test_db and clean_test_db tasks in Makefile.
 // See also phinx.yml
-$port = getenv('PHINX_DB_FREY_PORT') ?: 5532;
+$port = getenv('PHINX_DB_FREY_PORT') ?: 5432;
 $dbname = getenv('PHINX_DB_FREY_NAME_UNIT') ?: 'frey_unit';
 $user = getenv('PHINX_DB_FREY_USER') ?: 'frey';
 $pass = getenv('PHINX_DB_FREY_PASS') ?: 'pgpass';

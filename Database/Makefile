@@ -30,6 +30,33 @@ kill:
 	docker rmi `docker images | grep 'pantheon' | grep 'db' | awk '{print $$1}'`
 	docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume01' | awk '{print $$2}'`
 
+.PHONY: db_export
+db_export: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Database container is not running, can't export db.${NC}"; \
+	else \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd frey -f /var/lib/postgresql/export/frey' ; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd mimir -f /var/lib/postgresql/export/mimir'; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar czf export.tar.gz export'; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export'; \
+    docker cp $(RUNNING_DOCKER_ID):/var/lib/postgresql/export.tar.gz ./export.tar.gz ; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export.tar.gz'; \
+  fi
+
+.PHONY: db_import
+db_import: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+    echo "${RED}Database container is not running, can't import db.${NC}"; \
+	else \
+    docker cp ./export.tar.gz $(RUNNING_DOCKER_ID):/var/lib/postgresql/export.tar.gz ; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar xf export.tar.gz'; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_restore -d frey --clean /var/lib/postgresql/export/frey' ; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_restore -d mimir --clean /var/lib/postgresql/export/mimir'; \
+    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export /var/lib/postgresql/export.tar.gz'; \
+  fi
+
 .PHONY: __restore
 __restore:
 	if [ "$(COMMIT)" != "" ]; then \
@@ -38,8 +65,8 @@ __restore:
 		cp -R mimir ../mimir-restore && \
 		cp -R frey ../frey-restore && \
 		git checkout main && \
-		pg_restore -p 5532 -d frey --clean /var/lib/postgresql/frey-restore && \
-		pg_restore -p 5532 -d mimir --clean /var/lib/postgresql/mimir-restore && \
+		pg_restore -d frey --clean /var/lib/postgresql/frey-restore && \
+		pg_restore -d mimir --clean /var/lib/postgresql/mimir-restore && \
 		rm -rf /var/lib/postgresql/mimir-restore /var/lib/postgresql/frey-restore ; \
 	fi
 

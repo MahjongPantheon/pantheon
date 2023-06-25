@@ -53,6 +53,7 @@ pantheon_run:
 	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
 	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
 	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"; \
+	echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"; \
 	echo "----------------------------------------------------------------------------------"; \
 	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
 	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -61,17 +62,17 @@ pantheon_run:
 	echo "    ->     Password: password "; \
 	echo "    -> PgAdmin4-mimir pgsql connection credentials hint: "; \
 	echo "    ->     Hostname: db "; \
-	echo "    ->     Port:     5532 "; \
+	echo "    ->     Port:     5432 "; \
 	echo "    ->     Username: mimir "; \
 	echo "    ->     Password: pgpass "; \
 	echo "    -> PgAdmin4-frey pgsql connection credentials hint: "; \
 	echo "    ->     Hostname: db "; \
-	echo "    ->     Port:     5532 "; \
+	echo "    ->     Port:     5432 "; \
 	echo "    ->     Username: frey "; \
 	echo "    ->     Password: pgpass "; \
   echo "    -> PgAdmin4-hugin pgsql connection credentials hint: "; \
   echo "    ->     Hostname: db "; \
-  echo "    ->     Port:     5532 "; \
+  echo "    ->     Port:     5432 "; \
   echo "    ->     Username: hugin "; \
   echo "    ->     Password: pgpass "; \
 	echo "----------------------------------------------------------------------------------"; \
@@ -131,6 +132,10 @@ migrate:
 .PHONY: shell_tyr
 shell_tyr:
 	cd Tyr && ${MAKE} shell
+
+.PHONY: shell_hugin
+shell_hugin:
+	cd Hugin && ${MAKE} shell
 
 .PHONY: shell_mimir
 shell_mimir:
@@ -207,6 +212,16 @@ proto_gen:
 	cd Sigrun && ${MAKE} docker_proto_gen
 	cd Hugin && ${MAKE} docker_proto_gen
 
+# Db import/export
+
+.PHONY: db_export
+db_export:
+	cd Database && ${MAKE} db_export
+
+.PHONY: db_import
+db_import:
+	cd Database && ${MAKE} db_import
+
 # Prod related tasks & shortcuts
 
 .PHONY: prod_deps
@@ -243,6 +258,17 @@ prod_compile:
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
+	echo "- ${YELLOW}Mimir${NC} API is exposed on port 4001"
+	echo "- ${YELLOW}Sigrun${NC} is exposed on port 4102 with server-side rendering"
+	echo "- ${YELLOW}Tyr${NC} is exposed on port 4103"
+	echo "- ${YELLOW}Frey${NC} API is exposed on port 4004"
+	echo "- ${YELLOW}Forseti${NC} is exposed on port 4107"
+	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"
+	echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"
+	echo "${RED}!!!${NC} On production server, please make sure to set up your firewall"
+	echo "${RED}!!!${NC} and reverse-proxy to restrict access to internal resources."
+	echo "${RED}!!!${NC} Also it's highly recommended to have an allow-list policy in your"
+	echo "${RED}!!!${NC} firewall and allow only the required ports."
 
 .PHONY: bootstrap_admin
 bootstrap_admin:

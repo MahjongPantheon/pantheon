@@ -7,11 +7,14 @@ RUN apk update && \
     su-exec \
     curl \
     make \
+    font-dejavu-sans-mono-nerd \
     gettext \
+    procps \
     gettext-dev \
     git \
     icu-data-full \
     nginx \
+    munin \
     postgresql13 \
     php81-apcu \
     php81-fpm \
@@ -104,6 +107,22 @@ RUN echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
 RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
 RUN mkdir /home/user && chown user: /home/user
 
+# Munin setup
+RUN sed -i '/^allow/d' /etc/munin/munin-node.conf
+RUN echo 'allow ^.*$' >>/etc/munin/munin-node.conf
+RUN echo "host_name hugin" >> /etc/munin/munin-node.conf
+
+COPY munin_plugins/00-default /etc/munin/plugin-conf.d/00-default
+COPY munin_plugins/cpubyuser /etc/munin/plugins
+COPY munin_plugins/membyuser /etc/munin/plugins
+RUN chmod +x /etc/munin/plugins/cpubyuser
+RUN chmod +x /etc/munin/plugins/membyuser
+
+RUN ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \
+  ln -s /usr/lib/munin/plugins/proc_pri /etc/munin/plugins/proc_pri && \
+  ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
+  ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
+
 # Cleaning up
 RUN mkdir /www && \
     apk del tzdata && \
@@ -113,9 +132,6 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && ln -sf /dev/stderr /var/log/php81/error.log
 
-# Expose ports
-EXPOSE 4010
-
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
 RUN dos2unix /entrypoint.sh
@@ -123,6 +139,13 @@ RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
 COPY hugin-docker.nginx.conf /etc/nginx/http.d/hugin.conf
+
+# copy munin config
+COPY etc_munin/munin.conf /etc/munin/munin.conf
+
+# Copy cron defs
+COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
+COPY cron/tabs/munin /var/spool/cron/crontabs/munin
 
 # Folders init
 RUN mkdir -p /run/nginx

@@ -12,6 +12,7 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
+    munin-node \
     protoc \
     postgresql13 \
     php81-apcu \
@@ -36,6 +37,7 @@ RUN apk update && \
     php81-phpdbg \
     php81-simplexml \
     php81-soap \
+    procps \
     php81-tokenizer \
     php81-xdebug \
     php81-xml \
@@ -106,6 +108,22 @@ RUN echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
 RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
 RUN mkdir /home/user && chown user: /home/user
 
+# Munin setup
+RUN sed -i '/^allow/d' /etc/munin/munin-node.conf
+RUN echo 'allow ^.*$' >>/etc/munin/munin-node.conf
+RUN echo "host_name mimir" >> /etc/munin/munin-node.conf
+
+COPY munin_plugins/00-default /etc/munin/plugin-conf.d/00-default
+COPY munin_plugins/cpubyuser /etc/munin/plugins
+COPY munin_plugins/membyuser /etc/munin/plugins
+RUN chmod +x /etc/munin/plugins/cpubyuser
+RUN chmod +x /etc/munin/plugins/membyuser
+
+RUN ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \
+  ln -s /usr/lib/munin/plugins/proc_pri /etc/munin/plugins/proc_pri && \
+  ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
+  ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
+
 # Cleaning up
 RUN mkdir /www && \
     apk del tzdata && \
@@ -114,9 +132,6 @@ RUN mkdir /www && \
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && ln -sf /dev/stderr /var/log/php81/error.log
-
-# Expose ports
-EXPOSE 4001
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

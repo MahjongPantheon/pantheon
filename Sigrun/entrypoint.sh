@@ -5,6 +5,8 @@ export HOME=/home/user
 mkdir /home/user/.yarn-cache
 chown user /home/user/.yarn-cache
 
+munin-node
+
 TRAPPED_SIGNAL=false
 
 echo 'Starting NGINX';

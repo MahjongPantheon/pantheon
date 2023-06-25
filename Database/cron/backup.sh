@@ -2,8 +2,8 @@
 
 cd ~ || exit
 rm -rf ~/backup/frey ~/backup/mimir
-pg_dump -p5532 --clean -Z0 -Fd frey -f ~/backup/frey
-pg_dump -p5532 --clean -Z0 -Fd mimir -f ~/backup/mimir
+pg_dump --clean -Z0 -Fd frey -f ~/backup/frey
+pg_dump --clean -Z0 -Fd mimir -f ~/backup/mimir
 cd /var/lib/postgresql/backup || exit
 
 git add .

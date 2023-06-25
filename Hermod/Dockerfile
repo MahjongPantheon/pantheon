@@ -5,10 +5,12 @@ RUN apk update && \
     apk add --no-cache --upgrade cyrus-sasl cyrus-sasl-login && \
     apk add \
         nginx \
+        procps \
         php81-fpm \
         php81-cli \
         php81-gmp \
         php81-json \
+        munin-node \
         php81-mbstring \
         php81-openssl && \
     apk add --no-cache postfix && \
@@ -40,6 +42,23 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php81/php-fpm.d/www.c
     sed -i "s|;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=8|i" /etc/php81/php.ini && \
     sed -i "s|;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=4000|i" /etc/php81/php.ini && \
     sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php81/php.ini
+
+# Munin setup
+RUN sed -i '/^allow/d' /etc/munin/munin-node.conf
+RUN echo 'allow ^.*$' >>/etc/munin/munin-node.conf
+RUN echo "host_name hermod" >> /etc/munin/munin-node.conf
+
+COPY munin_plugins/00-default /etc/munin/plugin-conf.d/00-default
+COPY munin_plugins/cpubyuser /etc/munin/plugins
+COPY munin_plugins/membyuser /etc/munin/plugins
+RUN chmod +x /etc/munin/plugins/cpubyuser
+RUN chmod +x /etc/munin/plugins/membyuser
+
+RUN ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \
+  ln -s /usr/lib/munin/plugins/proc_pri /etc/munin/plugins/proc_pri && \
+  ln -s /usr/lib/munin/plugins/postfix_mailqueue /etc/munin/plugins/postfix_mailqueue && \
+  ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
+  ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
 
 COPY       /configs/supervisord.conf     /etc/supervisord.conf
 COPY       /configs/rsyslog*.conf        /etc/

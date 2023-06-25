@@ -4,6 +4,7 @@ export HOME=/home/user
 
 # -l 0 for verbosity
 crond -b -l 8 -L /tmp/cronlogs
+munin-node
 
 if [ ! -f "/var/lib/postgresql/.ssh/id_rsa.pub" ]; then
   su-exec postgres ssh-keygen -q -N "" -f /var/lib/postgresql/.ssh/id_rsa -t rsa
@@ -74,8 +75,10 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
     su-exec postgres pg_ctl -D "$PGDATA" -m fast -w stop
 
     { echo; echo "host all all 0.0.0.0/0 $authMethod"; } >> "$PGDATA"/pg_hba.conf
-    { echo; echo "port = 5532"; } >> "$PGDATA"/postgresql.conf
 fi
+
+sed -i '/^port =/d' "$PGDATA"/postgresql.conf
+{ echo; echo "port = 5432"; } >> "$PGDATA"/postgresql.conf
 
 echo 'Starting PostgreSQL':
 su-exec postgres postgres -D "$PGDATA" -o "-c listen_addresses='*'"
