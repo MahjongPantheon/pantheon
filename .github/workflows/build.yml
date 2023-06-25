@@ -1,32 +1,9 @@
-name: Prebuild Tyr & Forseti
+name: Build project artifacts & containers
 
 on:
   push:
 
 jobs:
-  checkPr:
-    runs-on: ubuntu-latest
-    env:
-      NO_XDEBUG: true
-    if: github.ref != 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Run container
-        run: make pantheon_run
-
-      - name: Install project deps
-        run: make deps
-
-      - name: Apply db migrations
-        run: make migrate
-
-      - name: Run all tests
-        run: make check
-
-      - name: Stop containers
-        if: always()
-        run: make stop
   build:
     runs-on: ubuntu-latest
     env:
@@ -67,3 +44,51 @@ jobs:
       - name: Stop containers
         if: always()
         run: make stop
+  buildContainers:
+    runs-on: ubuntu-latest
+    env:
+      NO_XDEBUG: true
+      ENV_FILENAME: primary.env
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta
+        id: mahjongpantheon
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ghcr.io/MahjongPantheon/pantheon
+          # Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm/v7
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.mahjongpantheon.outputs.tags }}
+          labels: ${{ steps.mahjongpantheon.outputs.labels }}

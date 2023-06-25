@@ -1,0 +1,31 @@
+name: Unit tests, static analysis, code style
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  checkPr:
+    runs-on: ubuntu-latest
+    env:
+      NO_XDEBUG: true
+    if: github.ref != 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run container
+        run: make pantheon_run
+
+      - name: Install project deps
+        run: make deps
+
+      - name: Apply db migrations
+        run: make migrate
+
+      - name: Run all tests
+        run: make check
+
+      - name: Stop containers
+        if: always()
+        run: make stop
+
