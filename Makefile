@@ -212,6 +212,16 @@ proto_gen:
 	cd Sigrun && ${MAKE} docker_proto_gen
 	cd Hugin && ${MAKE} docker_proto_gen
 
+# Db import/export
+
+.PHONY: db_export
+db_export:
+	cd Database && ${MAKE} db_export
+
+.PHONY: db_import
+db_import:
+	cd Database && ${MAKE} db_import
+
 # Prod related tasks & shortcuts
 
 .PHONY: prod_deps
