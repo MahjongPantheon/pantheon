@@ -92,11 +92,11 @@ Default ports for services are:
   - PgAdmin login: `dev@riichimahjong.org`
   - Password: `password`
   - Mimir database host: `db`
-  - Mimir database port: `5532`
+  - Mimir database port: `5432`
   - Mimir database user: `mimir`
   - Mimir database password: `pgpass`
   - Frey database host: `db`
-  - Frey database port: `5532`
+  - Frey database port: `5432`
   - Frey database user: `frey`
   - Frey database password: `pgpass`
 

@@ -10,7 +10,7 @@ services:
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     ports:
-      - "5532:5532"
+      - "5532:5432"
       - "127.0.0.1:49498:4949"
     volumes:
       - datavolume01:/var/lib/postgresql/data
@@ -88,7 +88,7 @@ services:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
     environment:
-      PHINX_DB_PORT: 5532
+      PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db
   frey:
     build: ./Frey
@@ -107,7 +107,7 @@ services:
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
     environment:
-      PHINX_DB_FREY_PORT: 5532
+      PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db
   sigrun:
     build: ./Sigrun
@@ -155,5 +155,5 @@ services:
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
     environment:
-      PHINX_DB_HUGIN_PORT: 5532
+      PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db

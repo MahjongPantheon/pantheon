@@ -38,8 +38,8 @@ __restore:
 		cp -R mimir ../mimir-restore && \
 		cp -R frey ../frey-restore && \
 		git checkout main && \
-		pg_restore -p 5532 -d frey --clean /var/lib/postgresql/frey-restore && \
-		pg_restore -p 5532 -d mimir --clean /var/lib/postgresql/mimir-restore && \
+		pg_restore -d frey --clean /var/lib/postgresql/frey-restore && \
+		pg_restore -d mimir --clean /var/lib/postgresql/mimir-restore && \
 		rm -rf /var/lib/postgresql/mimir-restore /var/lib/postgresql/frey-restore ; \
 	fi
 

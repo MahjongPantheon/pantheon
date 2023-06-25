@@ -14,6 +14,9 @@ RUN apk update && \
     apk add --update \
     su-exec \
     curl \
+    perl-dbd-pg \
+    findutils \
+    net-tools \
     procps \
     openssh \
     make \

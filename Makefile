@@ -62,17 +62,17 @@ pantheon_run:
 	echo "    ->     Password: password "; \
 	echo "    -> PgAdmin4-mimir pgsql connection credentials hint: "; \
 	echo "    ->     Hostname: db "; \
-	echo "    ->     Port:     5532 "; \
+	echo "    ->     Port:     5432 "; \
 	echo "    ->     Username: mimir "; \
 	echo "    ->     Password: pgpass "; \
 	echo "    -> PgAdmin4-frey pgsql connection credentials hint: "; \
 	echo "    ->     Hostname: db "; \
-	echo "    ->     Port:     5532 "; \
+	echo "    ->     Port:     5432 "; \
 	echo "    ->     Username: frey "; \
 	echo "    ->     Password: pgpass "; \
   echo "    -> PgAdmin4-hugin pgsql connection credentials hint: "; \
   echo "    ->     Hostname: db "; \
-  echo "    ->     Port:     5532 "; \
+  echo "    ->     Port:     5432 "; \
   echo "    ->     Username: hugin "; \
   echo "    ->     Password: pgpass "; \
 	echo "----------------------------------------------------------------------------------"; \
