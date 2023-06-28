@@ -1,0 +1,4 @@
+12 3 * * * certbotrunner /bin/bash /home/certbotrunner/letsencrypt/update_cert.sh
+12 15 * * * certbotrunner /bin/bash /home/certbotrunner/letsencrypt/update_cert.sh
+22 3 * * * root /bin/bash /etc/nginx/cert/copy_certs.sh
+22 15 * * * root /bin/bash /etc/nginx/cert/copy_certs.sh

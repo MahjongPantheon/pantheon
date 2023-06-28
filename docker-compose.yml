@@ -56,6 +56,7 @@ services:
       - ./Tyr:/var/www/html/Tyr
       - ./Tyr-dist:/var/www/html/Tyr-dist
       - ./Common:/var/www/html/Common
+      - ./bin/certbot-folders/Tyr:/var/www/html/Tyr-dist/.well-known
   forseti:
     build: ./Forseti
     image: pantheon-forseti
@@ -75,6 +76,7 @@ services:
       - ./Forseti:/var/www/html/Forseti
       - ./Forseti-dist:/var/www/html/Forseti-dist
       - ./Common:/var/www/html/Common
+      - ./bin/certbot-folders/Forseti:/var/www/html/Forseti-dist/.well-known
   mimir:
     build: ./Mimir
     image: pantheon-mimir
@@ -92,6 +94,7 @@ services:
     volumes:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
+      - ./bin/certbot-folders/Mimir:/var/www/html/Mimir/www/.well-known
     environment:
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db
@@ -112,6 +115,7 @@ services:
     volumes:
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
+      - ./bin/certbot-folders/Frey:/var/www/html/Frey/www/.well-known
     environment:
       PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db
@@ -134,6 +138,7 @@ services:
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
       - ./Common:/var/www/html/Common
+      - ./bin/certbot-folders/Sigrun:/var/www/html/Sigrun-dist/.well-known
   hugin:
     build: ./Hugin
     image: pantheon-hugin
@@ -162,6 +167,7 @@ services:
     volumes:
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
+      - ./bin/certbot-folders/Hugin:/var/www/html/Hugin/www/.well-known
     environment:
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db

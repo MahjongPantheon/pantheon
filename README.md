@@ -39,6 +39,11 @@ to `Hermod/opendkim_keys` folder. Also following setting are required:
 - Mailer root host in `ALLOWED_SENDER_DOMAINS` variable environment file in `Common/envs/` folder.
 - `mailer.mailer_addr` variable in your Frey config to set proper mailer address to send emails from.
 
+#### HTTPS
+
+You may use `bin/letsencrypt-scripts` and `nginx-reverse-proxy.example.conf` as an example and reference to set up your SSL certificates using Let's Encrypt. 
+If you're not intending to use https, please disable corresponding directives in your reverse proxy nginx config.
+
 #### Setting up database backups
 
 Pantheon provides built-in database backups using git. By default, it just stores database dump as new commits in `/var/lib/postgresql/backup` folder
