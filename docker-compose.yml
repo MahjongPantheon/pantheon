@@ -7,7 +7,7 @@ volumes:
 services:
   db:
     build: ./Database
-    image: ctizen/pantheon_db
+    image: docker.io/ctizen/pantheon_db
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     ports:
@@ -19,7 +19,7 @@ services:
       - backupvolume01:/var/lib/postgresql/backup
   hermod:
     build: ./Hermod
-    image: ctizen/pantheon_hermod
+    image: docker.io/ctizen/pantheon_hermod
     ports:
       - "127.0.0.1:4109:80"
       - "127.0.0.1:49491:4949"
@@ -29,7 +29,7 @@ services:
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
   pgadmin:
-    image: dpage/pgadmin4
+    image: docker.io/dpage/pgadmin4
     ports:
       - "127.0.0.1:5632:80"
     environment:
@@ -39,7 +39,7 @@ services:
       - pgadmindata:/var/lib/pgadmin
   tyr:
     build: ./Tyr
-    image: ctizen/pantheon_tyr
+    image: docker.io/ctizen/pantheon_tyr
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:4103:8080"
@@ -59,7 +59,7 @@ services:
       - ./bin/certbot-folders/Tyr:/var/www/html/Tyr-dist/.well-known
   forseti:
     build: ./Forseti
-    image: ctizen/pantheon_forseti
+    image: docker.io/ctizen/pantheon_forseti
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:4107:8080"
@@ -79,7 +79,7 @@ services:
       - ./bin/certbot-folders/Forseti:/var/www/html/Forseti-dist/.well-known
   mimir:
     build: ./Mimir
-    image: ctizen/pantheon_mimir
+    image: docker.io/ctizen/pantheon_mimir
     ports:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
@@ -100,7 +100,7 @@ services:
       PHINX_DB_HOST: db
   frey:
     build: ./Frey
-    image: ctizen/pantheon_frey
+    image: docker.io/ctizen/pantheon_frey
     ports:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
@@ -121,7 +121,7 @@ services:
       PHINX_DB_FREY_HOST: db
   sigrun:
     build: ./Sigrun
-    image: ctizen/pantheon_sigrun
+    image: docker.io/ctizen/pantheon_sigrun
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:4102:8080"
@@ -141,7 +141,7 @@ services:
       - ./bin/certbot-folders/Sigrun:/var/www/html/Sigrun-dist/.well-known
   hugin:
     build: ./Hugin
-    image: ctizen/pantheon_hugin
+    image: docker.io/ctizen/pantheon_hugin
     ports:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:4011:8080"
