@@ -1,4 +1,5 @@
 version: "3.9"
+name: pantheon
 volumes:
   datavolume01: {}
   backupvolume01: {}

@@ -44,6 +44,12 @@ to `Hermod/opendkim_keys` folder. Also following setting are required:
 You may use `bin/letsencrypt-scripts` and `nginx-reverse-proxy.example.conf` as an example and reference to set up your SSL certificates using Let's Encrypt. 
 If you're not intending to use https, please disable corresponding directives in your reverse proxy nginx config.
 
+#### Podman
+
+You can use `podman` and `podman-compose` to start pantheon containers.
+If you're using podman instead of docker, make sure you have `ip_tables` module inserted into your kernel.
+Also make sure to use `ENV_FILENAME=[yourenv] podman-compose pull` before running `ENV_FILENAME=[yourenv] podman-compose up` to use pre-built images. 
+
 #### Setting up database backups
 
 Pantheon provides built-in database backups using git. By default, it just stores database dump as new commits in `/var/lib/postgresql/backup` folder
