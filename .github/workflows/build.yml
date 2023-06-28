@@ -61,13 +61,11 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Login to GHCR
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push [Database]
         uses: docker/build-push-action@v2
@@ -76,8 +74,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-database:latest
-            ghcr.io/mahjongpantheon/pantheon-database:${{ github.sha }}
+            ctizen/pantheon_db:latest
+            ctizen/pantheon_db:${{ github.sha }}
 
       - name: Build and push [Forseti]
         uses: docker/build-push-action@v2
@@ -86,8 +84,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-forseti:latest
-            ghcr.io/mahjongpantheon/pantheon-forseti:${{ github.sha }}
+            ctizen/pantheon_forseti:latest
+            ctizen/pantheon_forseti:${{ github.sha }}
 
       - name: Build and push [Frey]
         uses: docker/build-push-action@v2
@@ -96,8 +94,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-frey:latest
-            ghcr.io/mahjongpantheon/pantheon-frey:${{ github.sha }}
+            ctizen/pantheon_frey:latest
+            ctizen/pantheon_frey:${{ github.sha }}
 
       - name: Build and push [Hermod]
         uses: docker/build-push-action@v2
@@ -106,8 +104,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-hermod:latest
-            ghcr.io/mahjongpantheon/pantheon-hermod:${{ github.sha }}
+            ctizen/pantheon_hermod:latest
+            ctizen/pantheon_hermod:${{ github.sha }}
 
       - name: Build and push [Hugin]
         uses: docker/build-push-action@v2
@@ -116,8 +114,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-hugin:latest
-            ghcr.io/mahjongpantheon/pantheon-hugin:${{ github.sha }}
+            ctizen/pantheon_hugin:latest
+            ctizen/pantheon_hugin:${{ github.sha }}
 
       - name: Build and push [Mimir]
         uses: docker/build-push-action@v2
@@ -126,8 +124,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-mimir:latest
-            ghcr.io/mahjongpantheon/pantheon-mimir:${{ github.sha }}
+            ctizen/pantheon_mimir:latest
+            ctizen/pantheon_mimir:${{ github.sha }}
 
       - name: Build and push [Sigrun]
         uses: docker/build-push-action@v2
@@ -136,8 +134,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-sigrun:latest
-            ghcr.io/mahjongpantheon/pantheon-sigrun:${{ github.sha }}
+            ctizen/pantheon_sigrun:latest
+            ctizen/pantheon_sigrun:${{ github.sha }}
 
       - name: Build and push [Tyr]
         uses: docker/build-push-action@v2
@@ -146,5 +144,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-tyr:latest
-            ghcr.io/mahjongpantheon/pantheon-tyr:${{ github.sha }}
+            ctizen/pantheon_tyr:latest
+            ctizen/pantheon_tyr:${{ github.sha }}
