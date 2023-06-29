@@ -23,7 +23,7 @@ deps:
 
 .PHONY: kill
 kill:
-	docker-compose down --remove-orphans
+	docker compose down --remove-orphans
 	cd Tyr && ${MAKE} kill
 	cd Mimir && ${MAKE} kill
 	cd Frey && ${MAKE} kill
@@ -31,12 +31,12 @@ kill:
 	cd Sigrun && ${MAKE} kill
 	cd Hugin && ${MAKE} kill
 	cd Database && ${MAKE} kill
-	docker-compose rm -v
+	docker compose rm -v
 
 .PHONY: container
 container:
-	docker-compose down
-	docker-compose up --build -d
+	docker compose down
+	docker compose up --build -d
 
 # Alias for conformity
 .PHONY: start
@@ -44,7 +44,7 @@ start: run
 
 .PHONY: pantheon_run
 pantheon_run:
-	docker-compose up --build -d
+	docker compose up --build -d
 	echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
@@ -86,7 +86,7 @@ pantheon_run:
 .PHONY: pantheon_stop
 pantheon_stop:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
-	docker-compose down
+	docker compose down
 
 .PHONY: run
 run: pantheon_run
@@ -252,7 +252,7 @@ prod_compile:
 		echo "${RED}Please set env file name using ENV_FILENAME environment variable. The file should be placed in Common/envs folder.${NC}"; \
 		exit 1; \
 	fi
-	docker-compose --env-file ./Common/envs/${ENV_FILENAME} up --build -d
+	docker compose --env-file ./Common/envs/${ENV_FILENAME} up --build -d
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
