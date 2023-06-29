@@ -15,7 +15,9 @@ You may use github issues for error reports and feature requests. Pull requests 
 
 To deploy pantheon on your own VPS or personal environment on production mode:
 
-1. Make sure you have Docker (with compose plugin), GNU Make and PHP8+ installed on your system.
+1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
+   - Docker with compose plugin - to run containers via docker runtime
+   - Podman-docker wrapper and podman-compose - to run containers over kubernetes setup.
 2. Create new environment config file in `Common/envs/` folder. There are examples inside. If you just want to build pantheon in production mode locally, use `prebuiltlocal.env` file.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup and use `prebuilt.reverse-proxy.env` environment config as a reference.
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
@@ -28,8 +30,8 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 6. Run the following command: `ENV_FILENAME=yourenv.env make prod_compile`. This will build and run all containers.
 7. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456).
 8. Review config files of Frey and Mimir - probably you might want to create your local configs for better manageability. You can make `config/local/` folders in each subsystem and add there local configs.
-9. Copy configuration file for Sigrun from `Sigrun/.env.production` to `Sigrun-dist/.env.production`. Note that config files whould be the same, otherwise expect side-effects.
-10. Basically, you're done :)
+9. Copy configuration file for Sigrun from `Sigrun/.env.production` to `Sigrun-dist/.env.production`. Note that config files should be the same, otherwise expect side-effects.
+10. Basically, you're done :) Start the project with `ENV_FILENAME=yourenv.env docker compose up -d` or `ENV_FILENAME=yourenv.env podman-compose up -d` and that's it.
 
 #### Email agent
 
