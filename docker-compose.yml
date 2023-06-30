@@ -10,7 +10,7 @@ services:
     build: ./Database
     image: docker.io/ctizen/pantheon_db
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     ports:
       - "5532:5432"
       - "127.0.0.1:49498:4949"
@@ -25,7 +25,7 @@ services:
       - "127.0.0.1:4109:80"
       - "127.0.0.1:49491:4949"
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     volumes:
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
@@ -52,7 +52,7 @@ services:
       - frey
       - mimir
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     volumes:
       - ./Tyr:/var/www/html/Tyr
       - ./Tyr-dist:/var/www/html/Tyr-dist
@@ -72,7 +72,7 @@ services:
       - frey
       - mimir
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     volumes:
       - ./Forseti:/var/www/html/Forseti
       - ./Forseti-dist:/var/www/html/Forseti-dist
@@ -91,7 +91,7 @@ services:
       - frey
       - db
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     volumes:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
@@ -112,7 +112,7 @@ services:
       - db
       - hermod
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     volumes:
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
@@ -134,7 +134,7 @@ services:
       - frey
       - mimir
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     volumes:
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
@@ -164,7 +164,7 @@ services:
       - frey
       - sigrun
     env_file:
-      - ./Common/envs/${ENV_FILENAME}
+      - ./${ENV_FILENAME:-.env.production}
     volumes:
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common

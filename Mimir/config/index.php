@@ -16,36 +16,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Local server deployment settings
-$locals = [];
-if (file_exists(__DIR__ . '/local/index.php')) {
-    $locals = require __DIR__ . '/local/index.php';
-} else {
-    trigger_error(
-        'Notice: using default config & DB settings. '
-        . 'It\'s fine on developer machine, but wrong on prod server. '
-        . 'You might want to create config/local/* files with production settings.'
-    );
-}
-
-return array_merge([
+return [
     // ---------- may be overridden in local settings -----------
     'admin'     => [
-        'internalQuerySecret' => 'CHANGE_ME_INTERNAL', // TODO: change this in your local config!
-        'debug_token' => 'CHANGE_ME', // TODO: change this in your local config!
+        'internalQuerySecret' => getenv('INTERNAL_QUERY_SECRET'),
+        'debug_token' => getenv('DEBUG_TOKEN'),
     ],
     'db'        => require __DIR__ . '/db.php',
-    'freyUrl'   => 'http://frey', // TODO: change this in your local config!
-    'sigrunUrl'  => getenv('SIGRUN_URL'), // TODO: change this in your local config!
-    'verbose'   => true, // TODO: change this in your local config!
+    'freyUrl'   => 'http://frey',
+    'sigrunUrl'  => getenv('SIGRUN_URL'),
+    'verbose'   => getenv('VERBOSE') === 'true',
     'verboseLog' => null,
-    'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!
+    'cookieDomain' => getenv('COOKIE_DOMAIN'),
     'serverDefaultTimezone' => 'UTC',
-    'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token
+    'trackerUrl' => getenv('TRACKER_URL') ?: null,
 
     // ---------- not intended for local override! ------------
     'api' => [
         'version_major' => '1', // do not change this! Update your setup if version mismatches.
         'version_minor' => '0'
     ]
-], $locals);
+];

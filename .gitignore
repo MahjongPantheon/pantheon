@@ -10,6 +10,8 @@
 .phpunit.result.cache
 php-errors.log
 
+.env.production
+
 .DS_Store
 Thumbs.db
 

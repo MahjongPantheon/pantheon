@@ -18,7 +18,7 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
    - Docker with compose plugin - to run containers via docker runtime
    - Podman-docker wrapper and podman-compose - to run containers over kubernetes setup.
-2. Create new environment config file in `Common/envs/` folder. There are examples inside. If you just want to build pantheon in production mode locally, use `prebuiltlocal.env` file.
+2. Create new environment config file called `.env.production`. There are examples in root folder.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup and use `prebuilt.reverse-proxy.env` environment config as a reference.
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
    1. Game API (Mimir) to port 4001 
@@ -37,8 +37,8 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 
 Pantheon provides container with pre-installed email agent (Hermod). If you want to send emails signed with DKIM, you will need to place your private keys
 to `Hermod/opendkim_keys` folder. Also following setting are required: 
-- Some unique key in `MAIL_ACTION_KEY` variable environment file in `Common/envs/` folder to prevent unauthorized access.
-- Mailer root host in `ALLOWED_SENDER_DOMAINS` variable environment file in `Common/envs/` folder.
+- Some unique key in `MAIL_ACTION_KEY` variable in your environment config.
+- Mailer root host in `ALLOWED_SENDER_DOMAINS` variable in your environment config.
 - `mailer.mailer_addr` variable in your Frey config to set proper mailer address to send emails from.
 
 #### HTTPS

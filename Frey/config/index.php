@@ -16,37 +16,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Local server deployment settings
-$locals = [];
-if (file_exists(__DIR__ . '/local/index.php')) {
-    $locals = require __DIR__ . '/local/index.php';
-} else {
-    trigger_error(
-        'Notice: using default config & DB settings. '
-        . 'It\'s fine on developer machine, but wrong on prod server. '
-        . 'You might want to create config/local/* files with production settings.'
-    );
-}
-
-return array_merge([
+return [
     // ---------- may be overridden in local settings -----------
     'admin'     => [
-        'debug_token' => 'CHANGE_ME', // TODO: change this in your local config!
-        'internalQuerySecret' => 'CHANGE_ME_INTERNAL' // TODO: change this in your local config!
+        'debug_token' => getenv('DEBUG_TOKEN'),
+        'internalQuerySecret' => getenv('INTERNAL_QUERY_SECRET')
     ],
     'db'        => require __DIR__ . '/db.php',
-    'verbose'   => true, // TODO: change this in your local config!
+    'verbose'   => getenv('VERBOSE') === 'true',
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',
     'mailer' => [
         'mode' => 'remote_api', // 'local_mta' or 'remote_api'
         'remote_url' => 'http://hermod', // if mode set to 'remote_api', this should point to API address
         'remote_action_key' => getenv('MAIL_ACTION_KEY') ?: 'CHANGE_ME', // if mode set to 'remote_api', this should point to API auth token
-        'mailer_addr' => 'noreply@riichimahjong.org', // address of mailer
+        'mailer_addr' => 'noreply@' . getenv('ALLOWED_SENDER_DOMAINS') ?: 'riichimahjong.org', // address of mailer
         'gui_url' => getenv('FORSETI_URL') // target host handling emailed links
     ],
-    'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!
-    'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token
+    'cookieDomain' => getenv('COOKIE_DOMAIN'),
+    'trackerUrl' => getenv('TRACKER_URL') ?: null,
 
     // ---------- not intended for local override! ------------
     'api' => [
@@ -54,4 +42,4 @@ return array_merge([
         'version_minor' => 0
     ],
     'testing_token' => ''
-], $locals);
+];

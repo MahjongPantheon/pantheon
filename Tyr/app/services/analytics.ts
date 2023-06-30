@@ -143,7 +143,7 @@ export class Analytics {
 
   constructor() {
     this._statDomain = import.meta.env.VITE_HUGIN_URL;
-    this._siteId = import.meta.env.VITE_STAT_SITE_ID;
+    this._siteId = 'Tyr';
     if (!this._statDomain) {
       return;
     }

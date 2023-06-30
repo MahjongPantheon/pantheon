@@ -24,10 +24,7 @@ import { storage } from './storage';
  * Marked as deprecated to avoid using this in components. Use hook instead.
  * @deprecated
  */
-export const analytics = new Analytics(
-  import.meta.env.VITE_HUGIN_URL,
-  import.meta.env.VITE_STAT_SITE_ID
-);
+export const analytics = new Analytics(import.meta.env.VITE_HUGIN_URL, 'Sigrun');
 analytics.setUserId(storage.getPersonId() ?? 0);
 analytics.setEventId(storage.getEventId() ?? 0);
 export const analyticsCtx = createContext(analytics);

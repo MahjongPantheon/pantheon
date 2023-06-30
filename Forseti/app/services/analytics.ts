@@ -144,7 +144,7 @@ export class Analytics {
 
   constructor() {
     this._statDomain = import.meta.env.VITE_HUGIN_URL;
-    this._siteId = import.meta.env.VITE_STAT_SITE_ID;
+    this._siteId = 'Forseti';
 
     this._track = debounce(
       (action: string, params: { [key: string]: any } = {}, eventId?: number) => {

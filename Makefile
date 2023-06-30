@@ -45,7 +45,11 @@ container:
 start: run
 
 .PHONY: pantheon_run
+pantheon_run: export ENV_FILENAME=.env.development
 pantheon_run:
+	cp .env.development Tyr/.env.development
+	cp .env.development Forseti/.env.development
+	cp .env.development Sigrun/.env.development
 	${COMPOSE_COMMAND} up --build -d
 	echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
@@ -250,11 +254,10 @@ prod_build_sigrun: # this is for automated builds, don't run it manually
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1
 prod_compile:
-	@if [ "$(ENV_FILENAME)" = "" ]; then \
-		echo "${RED}Please set env file name using ENV_FILENAME environment variable. The file should be placed in Common/envs folder.${NC}"; \
-		exit 1; \
-	fi
-	${COMPOSE_COMMAND} --env-file ./Common/envs/${ENV_FILENAME} up --build -d
+	${COMPOSE_COMMAND} --env-file ./.env.production up --build -d
+	cp ./.env.production Tyr/.env.production
+	cp ./.env.production Forseti/.env.production
+	cp ./.env.production Sigrun/.env.production
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
