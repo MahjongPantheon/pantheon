@@ -48,8 +48,16 @@ Tyr/typings
 Tyr/yarn-error.log
 Tyr/app/i18n/*.mo
 
+Tyr-dist/*
+!Tyr-dist/.well-known
+!Tyr-dist/.keep
+
 Forseti/app/i18n/*.mo
 Sigrun/src/i18n/*.mo
+
+Forseti-dist/*
+!Forseti-dist/.well-known
+!Forseti-dist/.keep
 
 Frey/config/local/*
 Frey/vendor/
@@ -57,7 +65,10 @@ Frey/data/verbose.log
 Frey/data/db.sqlite
 Frey/tests/data/*
 
-Sigrun-dist/.env.production
-Sigrun-dist/node_modules
+Sigrun-dist/*
+!Sigrun-dist/.well-known
+!Sigrun-dist/.keep
+!Sigrun-dist/server.js
+!Sigrun-dist/package.json
 
 Hermod/opendkim_keys/*.private
