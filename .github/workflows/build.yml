@@ -4,11 +4,10 @@ on:
   push:
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     env:
       NO_XDEBUG: true
-      ENV_FILENAME: primary.env
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
@@ -28,19 +27,6 @@ jobs:
       - name: Run all tests
         run: make check
 
-      - name: Make prod Tyr build
-        run: cp Tyr/.env.primary Tyr/.env.production && make prod_build_tyr
-
-      - name: Make prod Forseti build
-        run: cp Forseti/.env.primary Forseti/.env.production && make prod_build_forseti
-
-      - name: Make prod Sigrun build
-        run: cp Sigrun/.env.primary Sigrun/.env.production && make prod_build_sigrun
-
-      - name: Push prod builds to repo
-        if: github.repository=='MahjongPantheon/pantheon'
-        run: ./.built-dist-push.sh
-
       - name: Stop containers
         if: always()
         run: make stop
@@ -49,7 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NO_XDEBUG: true
-      ENV_FILENAME: primary.env
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2

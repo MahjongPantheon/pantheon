@@ -11,8 +11,6 @@ NC = $(shell echo -e '\033[0m') # No Color
 
 .EXPORT_ALL_VARIABLES:
 
-ENV_FILENAME ?= default.env
-
 .PHONY: deps
 deps:
 	@echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."
@@ -22,6 +20,11 @@ deps:
 	cd Forseti && ${MAKE} docker_deps
 	cd Sigrun && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
+
+.PHONY: kill_dev
+kill_dev: export ENV_FILENAME=.env.development
+kill_dev:
+	${MAKE} kill
 
 .PHONY: kill
 kill:
@@ -47,11 +50,14 @@ start: run
 .PHONY: pantheon_run
 pantheon_run: export ENV_FILENAME=.env.development
 pantheon_run:
-	cp .env.development Tyr/.env.development
-	cp .env.development Forseti/.env.development
-	cp .env.development Sigrun/.env.development
-	${COMPOSE_COMMAND} up --build -d
-	echo "----------------------------------------------------------------------------------"; \
+	@cp .env.development Tyr/.env.development
+	@cp .env.development Forseti/.env.development
+	@cp .env.development Sigrun/.env.development
+	@echo "# This file is copied from /.env.development every time container is started." >> Tyr/.env.development
+	@echo "# This file is copied from /.env.development every time container is started." >> Forseti/.env.development
+	@echo "# This file is copied from /.env.development every time container is started." >> Sigrun/.env.development
+	@${COMPOSE_COMMAND} up -d
+	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
 	echo "- ${YELLOW}Sigrun${NC} is accessible on port 4002 (http://localhost:4002) without server-side rendering"; \
@@ -64,7 +70,7 @@ pantheon_run:
 	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
 	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
 	echo "    -> Login to PgAdmin4 as: "; \
-	echo "    ->     Username: dev@riichimahjong.org "; \
+	echo "    ->     Username: devriichimahjong.org "; \
 	echo "    ->     Password: password "; \
 	echo "    -> PgAdmin4-mimir pgsql connection credentials hint: "; \
 	echo "    ->     Hostname: db "; \
@@ -86,8 +92,7 @@ pantheon_run:
 	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \
 	echo " ${YELLOW}Run 'make shell' in each subproject folder to get into each container shell.${NC} "; \
 	echo " ${YELLOW}Also you can use 'make shell_{tyr|frey|mimir|forseti|sigrun}' to get ${NC} "; \
-	echo " ${YELLOW}to specific subproject folder${NC} "; \
-
+	echo " ${YELLOW}to specific subproject folder${NC} ";
 
 .PHONY: pantheon_stop
 pantheon_stop:
@@ -254,7 +259,6 @@ prod_build_sigrun: # this is for automated builds, don't run it manually
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1
 prod_compile:
-	${COMPOSE_COMMAND} --env-file ./.env.production up --build -d
 	cp ./.env.production Tyr/.env.production
 	cp ./.env.production Forseti/.env.production
 	cp ./.env.production Sigrun/.env.production

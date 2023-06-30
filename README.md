@@ -13,25 +13,33 @@ You may use github issues for error reports and feature requests. Pull requests 
 
 ### Production build
 
+Clone the pantheon repository to your own server. Make sure repo folder is not accessible for the outer world.
+
 To deploy pantheon on your own VPS or personal environment on production mode:
 
 1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
    - Docker with compose plugin - to run containers via docker runtime
    - Podman-docker wrapper and podman-compose - to run containers over kubernetes setup.
-2. Create new environment config file called `.env.production`. There are examples in root folder.
-3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup and use `prebuilt.reverse-proxy.env` environment config as a reference.
+2. Create new environment config file called `.env.production`. There are examples in root folder. Fill the file with proper settings for your setup.
+3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
    1. Game API (Mimir) to port 4001 
    2. User API (Frey) to port 4004 
    3. Ratings service (Sigrun) to port 4002 
    4. Mobile assistant (Tyr) to port 4103 
-   5. Admin panel (Forseti) to port 4107 
-5. Modify Sigrun configuration file in `Sigrun/.env.production` to match your server settings.
-6. Run the following command: `ENV_FILENAME=yourenv.env make prod_compile`. This will build and run all containers.
-7. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456).
-8. Review config files of Frey and Mimir - probably you might want to create your local configs for better manageability. You can make `config/local/` folders in each subsystem and add there local configs.
-9. Copy configuration file for Sigrun from `Sigrun/.env.production` to `Sigrun-dist/.env.production`. Note that config files should be the same, otherwise expect side-effects.
-10. Basically, you're done :) Start the project with `ENV_FILENAME=yourenv.env docker compose up -d` or `ENV_FILENAME=yourenv.env podman-compose up -d` and that's it.
+   5. Admin panel (Forseti) to port 4107
+5. Run `docker compose pull` or `podman-compose pull` to fetch fresh containers from registry.
+6. Run `docker compose up -d` or `podman-compose up -d` to start containers
+7. Run the following command: `make prod_compile`. This will build all static files for Tyr/Forseti/Sigrun and Sigrun server.
+8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). 
+9. Basically, you're done :)
+
+To update code on production server you will need to do the following:
+
+1. (Optional) Pull new containers using `docker compose pull` or `podman-compose pull`
+2. Get new code from the repository (e.g. run `git fetch && git checkout origin/master` in repo folder)
+3. Stop containers with `docker compose restart` or `podman-compose restart`
+4. Run `make prod_compile` to build newer versions of the static code.
 
 #### Email agent
 
@@ -50,7 +58,7 @@ If you're not intending to use https, please disable corresponding directives in
 
 You can use `podman` and `podman-compose` to start pantheon containers.
 If you're using podman instead of docker, make sure you have `ip_tables` module inserted into your kernel.
-Also make sure to use `ENV_FILENAME=[yourenv] podman-compose pull` before running `ENV_FILENAME=[yourenv] podman-compose up` to use pre-built images. 
+Also make sure to use `podman-compose pull` before running `podman-compose up` to use pre-built images. 
 
 #### Setting up database backups
 
