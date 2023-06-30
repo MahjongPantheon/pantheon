@@ -11,6 +11,12 @@
 php-errors.log
 
 .env.production
+Tyr/.env.production
+Forseti/.env.production
+Sigrun/.env.production
+Tyr/.env.development
+Forseti/.env.development
+Sigrun/.env.development
 
 .DS_Store
 Thumbs.db
