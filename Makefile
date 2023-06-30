@@ -47,15 +47,21 @@ container:
 .PHONY: start
 start: run
 
+.PHONY: recreate
+recreate: export ENV_FILENAME=.env.production
+recreate:
+	@${COMPOSE_COMMAND} stop
+	@${COMPOSE_COMMAND} up --build -d
+
+.PHONY: recreate_dev
+recreate_dev: export ENV_FILENAME=.env.development
+recreate_dev:
+	@${COMPOSE_COMMAND} stop
+	@${COMPOSE_COMMAND} up --build -d
+
 .PHONY: pantheon_run
 pantheon_run: export ENV_FILENAME=.env.development
 pantheon_run:
-	@cp .env.development Tyr/.env.development
-	@cp .env.development Forseti/.env.development
-	@cp .env.development Sigrun/.env.development
-	@echo "# This file is copied from /.env.development every time container is started." >> Tyr/.env.development
-	@echo "# This file is copied from /.env.development every time container is started." >> Forseti/.env.development
-	@echo "# This file is copied from /.env.development every time container is started." >> Sigrun/.env.development
 	@${COMPOSE_COMMAND} up -d
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
@@ -245,23 +251,23 @@ prod_deps:
 	# sigrun should install deps after prebuild
 
 .PHONY: prod_build_tyr
+prod_build_tyr: export NODE_ENV=production
 prod_build_tyr: # this is for automated builds, don't run it manually
 	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
 
 .PHONY: prod_build_forseti
+prod_build_forseti: export NODE_ENV=production
 prod_build_forseti: # this is for automated builds, don't run it manually
 	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
 
 .PHONY: prod_build_sigrun
+prod_build_sigrun: export NODE_ENV=production
 prod_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
 
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1
 prod_compile:
-	cp ./.env.production Tyr/.env.production
-	cp ./.env.production Forseti/.env.production
-	cp ./.env.production Sigrun/.env.production
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr

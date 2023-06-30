@@ -38,7 +38,7 @@
   color: var(--primary-text-color);
 }
 
-.page-login-error__message. li {
+.page-login-error__message li {
   margin-bottom: 12px;
 }
 

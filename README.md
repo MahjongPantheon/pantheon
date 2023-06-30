@@ -38,8 +38,11 @@ To update code on production server you will need to do the following:
 
 1. (Optional) Pull new containers using `docker compose pull` or `podman-compose pull`
 2. Get new code from the repository (e.g. run `git fetch && git checkout origin/master` in repo folder)
-3. Stop containers with `docker compose restart` or `podman-compose restart`
+3. Recreate containers with `make recreate`
 4. Run `make prod_compile` to build newer versions of the static code.
+
+Please note: if you change environment settings, **you need to recreate containers using `make recreate`** for changes to be applied.
+If `VITE_*` variables were changed, you will also need to run `make prod_compile` again.
 
 #### Email agent
 

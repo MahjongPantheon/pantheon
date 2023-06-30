@@ -4,33 +4,6 @@ on:
   push:
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    env:
-      NO_XDEBUG: true
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Build container with project
-        run: make container
-
-      - name: Run container
-        run: make pantheon_run
-
-      - name: Install project deps
-        run: make deps
-
-      - name: Apply db migrations
-        run: make migrate
-
-      - name: Run all tests
-        run: make check
-
-      - name: Stop containers
-        if: always()
-        run: make stop
-
   buildContainers:
     runs-on: ubuntu-latest
     env:

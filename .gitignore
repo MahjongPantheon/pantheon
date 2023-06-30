@@ -11,7 +11,7 @@
 php-errors.log
 
 .env.production
-Tyr/.env.production
+.env.production
 Forseti/.env.production
 Sigrun/.env.production
 Tyr/.env.development

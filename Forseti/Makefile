@@ -52,6 +52,7 @@ autofix:
 PHONY: build
 build:
 	./node_modules/.bin/tsc
+	rm -rf ./node_modules/.vite
 	./node_modules/.bin/vite build --outDir dist
 
 PHONY: cleanup_prebuilts
