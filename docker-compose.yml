@@ -23,6 +23,7 @@ services:
   hermod:
     build: ./Hermod
     image: docker.io/ctizen/pantheon_hermod
+    hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
     ports:
       - "127.0.0.1:4109:80"
       - "127.0.0.1:49491:4949"
