@@ -70,11 +70,10 @@ Also make sure to use `podman-compose pull` before running `podman-compose up` t
 Pantheon provides built-in database backups using git. By default, it just stores database dump as new commits in `/var/lib/postgresql/backup` folder
 of the `Database` container (you can get to shell using `make shell_db`). If you want to set up some remote backups, you should do the following:
 
-- Ensure containers are not running
 - Set the `BACKUP_GIT_REMOTE` variable in your environment config to point to your backup remote repository. There is an example included in the env file.
 - Go to `Database` folder and call `make backup_dump_pubkey` command to get ssh public key.
 - Add this key to trusted keys in your account in Github, Gitlab or wherever your remote repository will reside.
-- Start the containers
+- Restart the containers with `make prod_restart`
 
 Every 15 minutes the database dump is made. You may view history of backups using `make backup_show_history` in `Database` folder. To rollback your
 database to previous state you may use either included pgadmin4 container (running at 5632 port) or the one-liner command from the `Database` folder:

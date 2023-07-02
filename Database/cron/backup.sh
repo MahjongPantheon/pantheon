@@ -12,6 +12,8 @@ git commit -m "Backup @ `date`"
 if [ -z "$BACKUP_GIT_REMOTE" ]; then
   echo "No remote backups are set up"
   exit 1
+else
+  git remote set-url origin $BACKUP_GIT_REMOTE
 fi
 
 git push origin main
