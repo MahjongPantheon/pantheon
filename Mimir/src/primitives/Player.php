@@ -78,8 +78,9 @@ class PlayerPrimitive extends Primitive
         if (count($missingIds) > 0) {
             $data = $ds->remote()->getPersonalInfo($missingIds);
             $fetchedRemote = array_reduce($data, function ($acc, $item) {
-                apcu_store('player_info_' . $item['id'], $item);
+                apcu_store('player_info_' . $item['id'], $item, 300);
                 $acc[$item['id']] = $item;
+                return $acc;
             }, []);
         }
 

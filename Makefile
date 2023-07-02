@@ -54,6 +54,9 @@ container:
 .PHONY: pantheon_run
 pantheon_run: export ENV_FILENAME=.env.development
 pantheon_run:
+	@cp Env/.env.development Tyr/.env.development
+	@cp Env/.env.development Sigrun/.env.development
+	@cp Env/.env.development Forseti/.env.development
 	@${COMPOSE_COMMAND} up -d
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
@@ -255,6 +258,9 @@ prod_build_sigrun: # this is for automated builds, don't run it manually
 prod_compile: export NO_XDEBUG=1
 prod_compile: export ENV_FILENAME=.env.production
 prod_compile:
+	@cp Env/.env.production Tyr/.env.production
+	@cp Env/.env.production Sigrun/.env.production
+	@cp Env/.env.production Forseti/.env.production
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
