@@ -27,5 +27,5 @@ jobs:
 
       - name: Stop containers
         if: always()
-        run: make stop
+        run: make pantheon_stop
 

@@ -10,13 +10,7 @@
 .phpunit.result.cache
 php-errors.log
 
-.env.production
-.env.production
-Forseti/.env.production
-Sigrun/.env.production
-Tyr/.env.development
-Forseti/.env.development
-Sigrun/.env.development
+Env/.env.production
 
 .DS_Store
 Thumbs.db

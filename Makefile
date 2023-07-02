@@ -43,22 +43,6 @@ container:
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
 
-# Alias for conformity
-.PHONY: start
-start: run
-
-.PHONY: recreate
-recreate: export ENV_FILENAME=.env.production
-recreate:
-	@${COMPOSE_COMMAND} stop
-	@${COMPOSE_COMMAND} up --build -d
-
-.PHONY: recreate_dev
-recreate_dev: export ENV_FILENAME=.env.development
-recreate_dev:
-	@${COMPOSE_COMMAND} stop
-	@${COMPOSE_COMMAND} up --build -d
-
 .PHONY: pantheon_run
 pantheon_run: export ENV_FILENAME=.env.development
 pantheon_run:
@@ -105,12 +89,6 @@ pantheon_stop:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
 	${COMPOSE_COMMAND} down
 
-.PHONY: run
-run: pantheon_run
-
-.PHONY: stop
-stop: pantheon_stop
-
 .PHONY: dev_tyr
 dev_tyr:
 	cd Tyr && ${MAKE} docker_dev
@@ -136,7 +114,7 @@ sigrun_stop:
 	cd Sigrun && ${MAKE} docker_stop
 
 .PHONY: dev
-dev: run
+dev: pantheon_run
 	${MAKE} deps
 	${MAKE} migrate
 	bash ./parallel_dev.sh
@@ -267,6 +245,7 @@ prod_build_sigrun: # this is for automated builds, don't run it manually
 
 .PHONY: prod_compile
 prod_compile: export NO_XDEBUG=1
+prod_compile: export ENV_FILENAME=.env.production
 prod_compile:
 	${MAKE} prod_deps
 	${MAKE} migrate
@@ -284,6 +263,26 @@ prod_compile:
 	echo "${RED}!!!${NC} and reverse-proxy to restrict access to internal resources."
 	echo "${RED}!!!${NC} Also it's highly recommended to have an allow-list policy in your"
 	echo "${RED}!!!${NC} firewall and allow only the required ports."
+
+.PHONY: prod_start
+prod_start: export ENV_FILENAME=.env.production
+prod_start:
+	@${COMPOSE_COMMAND} up -d
+
+.PHONY: prod_stop
+prod_stop: export ENV_FILENAME=.env.production
+prod_stop:
+	cd Database && make stop 2>/dev/null || true # gracefully stop the db
+	@${COMPOSE_COMMAND} down
+
+.PHONY: prod_restart
+prod_restart:
+	${MAKE} prod_stop
+	${MAKE} prod_start
+
+.PHONY: pull
+pull:
+	@${COMPOSE_COMMAND} pull
 
 .PHONY: bootstrap_admin
 bootstrap_admin:

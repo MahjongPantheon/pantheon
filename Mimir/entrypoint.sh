@@ -1,6 +1,8 @@
 #!/bin/sh
 
 export HOME=/home/user
+cat /env/"$ENV_FILENAME" | grep -v '# ' | grep -v  -e '^$' | awk '{ print "export " $1 }' > /etc/profile.d/external.sh
+. /etc/profile.d/external.sh
 
 # -l 0 for verbosity
 crond -b -l 8 -L /tmp/cronlogs

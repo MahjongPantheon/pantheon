@@ -20,7 +20,7 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
    - Docker with compose plugin - to run containers via docker runtime
    - Podman-docker wrapper and podman-compose - to run containers over kubernetes setup.
-2. Create new environment config file called `.env.production`. There are examples in root folder. Fill the file with proper settings for your setup.
+2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
    1. Game API (Mimir) to port 4001 
@@ -28,21 +28,24 @@ To deploy pantheon on your own VPS or personal environment on production mode:
    3. Ratings service (Sigrun) to port 4002 
    4. Mobile assistant (Tyr) to port 4103 
    5. Admin panel (Forseti) to port 4107
-5. Run `docker compose pull` or `podman-compose pull` to fetch fresh containers from registry.
-6. Run `docker compose up -d` or `podman-compose up -d` to start containers
+   6. System logger and statistics system (Hugin) to port 4010
+   7. (optional) System monitoring (Munin) to port 4011
+   8. (optional) PgAdmin4 host to port 5632
+5. Run `make pull` to fetch fresh containers from registry.
+6. Run `make prod_start` to start containers
 7. Run the following command: `make prod_compile`. This will build all static files for Tyr/Forseti/Sigrun and Sigrun server.
-8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). 
+8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). Don't do this on database that already has users!
 9. Basically, you're done :)
 
 To update code on production server you will need to do the following:
 
-1. (Optional) Pull new containers using `docker compose pull` or `podman-compose pull`
+1. (Optional) Pull new containers using `make pull`
 2. Get new code from the repository (e.g. run `git fetch && git checkout origin/master` in repo folder)
-3. Recreate containers with `make recreate`
+3. Restart containers with `make prod_restart`
 4. Run `make prod_compile` to build newer versions of the static code.
 
-Please note: if you change environment settings, **you need to recreate containers using `make recreate`** for changes to be applied.
-If `VITE_*` variables were changed, you will also need to run `make prod_compile` again.
+If you ever change the environment variables in your current `Env/.env.production` file, you should also restart the containers using `make prod_restart`. After that,
+if `VITE_*` variables have been changed, you should also run `make prod_compile` for changes to take effect.
 
 #### Email agent
 
