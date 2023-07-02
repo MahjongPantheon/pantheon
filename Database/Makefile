@@ -6,7 +6,7 @@ NC = $(shell echo -e '\033[0m') # No Color
 
 .PHONY: get_docker_id
 get_docker_id:
-	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon' | grep '_db' | awk '{print $$1}'))
+	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon' | grep '_db' | awk '{print $$3}'))
 
 .PHONY: shell
 shell: get_docker_id

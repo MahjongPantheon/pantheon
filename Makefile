@@ -35,12 +35,12 @@ kill:
 	if [ "$$answer" = "Y" ] || [ "$$answer" = "y" ]  ; then \
 		${COMPOSE_COMMAND} down --remove-orphans ; \
 		cd Tyr && ${MAKE} kill ; \
-		cd Mimir && ${MAKE} kill ; \
-		cd Frey && ${MAKE} kill ; \
-		cd Forseti && ${MAKE} kill ; \
-		cd Sigrun && ${MAKE} kill ; \
-		cd Hugin && ${MAKE} kill ; \
-		cd Database && ${MAKE} kill ; \
+		cd ../Mimir && ${MAKE} kill ; \
+		cd ../Frey && ${MAKE} kill ; \
+		cd ../Forseti && ${MAKE} kill ; \
+		cd ../Sigrun && ${MAKE} kill ; \
+		cd ../Hugin && ${MAKE} kill ; \
+		cd ../Database && ${MAKE} kill ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume01' | awk '{print $$2}'` ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'backupvolume01' | awk '{print $$2}'` ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'configvolume01' | awk '{print $$2}'` ; \
@@ -239,6 +239,11 @@ prod_deps:
 	cd Forseti && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
 	# sigrun should install deps after prebuild
+
+.PHONY: prod_build_basic_images
+prod_build_basic_images:
+	docker build -t docker.io/ctizen/pantheon_backend_common ./Common/Backend
+	docker build -t docker.io/ctizen/pantheon_frontend_common ./Common/Frontend
 
 .PHONY: prod_build_tyr
 prod_build_tyr: export NODE_ENV=production

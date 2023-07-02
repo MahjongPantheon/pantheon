@@ -1,48 +1,9 @@
-FROM alpine:3.17
+FROM docker.io/ctizen/pantheon_backend_common:latest
 
-ENV TIMEZONE            Europe/Moscow
-ENV PHP_MEMORY_LIMIT    1024M
-ENV LANG                en_US.utf8
 ENV PGDATA              /var/lib/postgresql/data
 ENV POSTGRES_PASSWORD   pgpass
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --update tzdata && \
-    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
-    echo "${TIMEZONE}" > /etc/timezone && \
-    apk add --update \
-    su-exec \
-    curl \
-    perl-dbd-pg \
-    findutils \
-    net-tools \
-    procps \
-    openssh \
-    make \
-    munin-node \
-    git \
-    postgresql13 && \
-    (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
-
-# ------------ Local user init (for make & build tasks) --------
-# Create user (workaround against too big uids)
-RUN echo "user:x:${LOCAL_USER_ID:9001}:${LOCAL_USER_ID:9001}::/home/user:" >> /etc/passwd
-## thanks for http://stackoverflow.com/a/1094354/535203 to compute the creation date
-RUN echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
-RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
-RUN mkdir /home/user && chown user: /home/user
-
-# Munin setup
-RUN sed -i '/^allow/d' /etc/munin/munin-node.conf
-RUN echo 'allow ^.*$' >>/etc/munin/munin-node.conf
 RUN echo "host_name db" >> /etc/munin/munin-node.conf
-
-COPY munin_plugins/00-default /etc/munin/plugin-conf.d/00-default
-COPY munin_plugins/cpubyuser /etc/munin/plugins
-COPY munin_plugins/membyuser /etc/munin/plugins
-RUN chmod +x /etc/munin/plugins/cpubyuser
-RUN chmod +x /etc/munin/plugins/membyuser
 
 RUN ln -s /usr/lib/munin/plugins/cpu /etc/munin/plugins/cpu && \
   ln -s /usr/lib/munin/plugins/df /etc/munin/plugins/df && \
@@ -92,11 +53,6 @@ RUN ln -s /usr/lib/munin/plugins/cpu /etc/munin/plugins/cpu && \
   ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
   ln -s /usr/lib/munin/plugins/uptime /etc/munin/plugins/uptime && \
   ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
-
-# Cleaning up
-RUN mkdir /www && \
-    apk del tzdata && \
-    rm -rf /var/cache/apk/*
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

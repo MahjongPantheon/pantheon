@@ -18,7 +18,7 @@ shell: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi `docker images | grep 'pantheon' | grep 'mimir' | awk '{print $$1}'` || exit 0
+	docker rmi `docker images | grep 'pantheon' | grep 'mimir' | awk '{print $$3}'` || exit 0
 
 .PHONY: docker_migrate
 docker_migrate: get_docker_id
