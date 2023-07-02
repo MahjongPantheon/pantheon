@@ -80,6 +80,11 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
     { echo; echo "host all all 0.0.0.0/0 $authMethod"; } >> "$PGDATA"/pg_hba.conf
 fi
 
+sed -i "s|max_connections\s*=\s*\d*|max_connections = 600|g" "$PGDATA"/postgresql.conf
+sed -i "s|shared_buffers\s*=\s*\d*MB|shared_buffers = 1024MB|g" "$PGDATA"/postgresql.conf
+sed -i "s|#work_mem|work_mem|g" "$PGDATA"/postgresql.conf
+sed -i "s|#effective_cache_size\s*=\s*\d*GB|effective_cache_size = 2GB|g" "$PGDATA"/postgresql.conf
+
 sed -i '/^port =/d' "$PGDATA"/postgresql.conf
 { echo; echo "port = 5432"; } >> "$PGDATA"/postgresql.conf
 
