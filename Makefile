@@ -28,15 +28,23 @@ kill_dev:
 
 .PHONY: kill
 kill:
-	${COMPOSE_COMMAND} down --remove-orphans
-	cd Tyr && ${MAKE} kill
-	cd Mimir && ${MAKE} kill
-	cd Frey && ${MAKE} kill
-	cd Forseti && ${MAKE} kill
-	cd Sigrun && ${MAKE} kill
-	cd Hugin && ${MAKE} kill
-	cd Database && ${MAKE} kill
-	${COMPOSE_COMMAND} rm -v
+	@printf "${RED}This will completely remove ALL data and ALL saved internal configuration.${NC}" ; \
+  printf "\n" ; \
+  printf "Are you sure you want to continue? (y/N)" ; \
+	read answer ; \
+	if [ "$$answer" = "Y" ] || [ "$$answer" = "y" ]  ; then \
+		${COMPOSE_COMMAND} down --remove-orphans ; \
+		cd Tyr && ${MAKE} kill ; \
+		cd Mimir && ${MAKE} kill ; \
+		cd Frey && ${MAKE} kill ; \
+		cd Forseti && ${MAKE} kill ; \
+		cd Sigrun && ${MAKE} kill ; \
+		cd Hugin && ${MAKE} kill ; \
+		cd Database && ${MAKE} kill ; \
+		docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume01' | awk '{print $$2}'` ; \
+		docker volume rm `docker volume ls | grep 'pantheon' | grep 'backupvolume01' | awk '{print $$2}'` ; \
+		docker volume rm `docker volume ls | grep 'pantheon' | grep 'configvolume01' | awk '{print $$2}'` ; \
+	fi
 
 .PHONY: container
 container:
