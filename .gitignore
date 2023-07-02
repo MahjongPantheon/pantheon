@@ -11,6 +11,9 @@
 php-errors.log
 
 Env/.env.production
+Tyr/.env.production
+Forseti/.env.production
+Sigrun/.env.production
 
 .DS_Store
 Thumbs.db
@@ -65,4 +68,5 @@ Sigrun-dist/*
 !Sigrun-dist/server.js
 !Sigrun-dist/package.json
 
-Hermod/opendkim_keys/*.private
+Hermod/opendkim_keys/*
+!Hermod/opendkim_keys/.keep
