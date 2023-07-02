@@ -63,7 +63,6 @@ services:
       - ./Tyr:/var/www/html/Tyr
       - ./Tyr-dist:/var/www/html/Tyr-dist
       - ./Common:/var/www/html/Common
-      - ./bin/certbot-folders/Tyr:/var/www/html/Tyr-dist/.well-known
   forseti:
     build: ./Forseti
     image: docker.io/ctizen/pantheon_forseti
@@ -85,7 +84,6 @@ services:
       - ./Forseti:/var/www/html/Forseti
       - ./Forseti-dist:/var/www/html/Forseti-dist
       - ./Common:/var/www/html/Common
-      - ./bin/certbot-folders/Forseti:/var/www/html/Forseti-dist/.well-known
   mimir:
     build: ./Mimir
     image: docker.io/ctizen/pantheon_mimir
@@ -102,7 +100,6 @@ services:
       - ./Env:/env
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
-      - ./bin/certbot-folders/Mimir:/var/www/html/Mimir/www/.well-known
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
@@ -124,7 +121,6 @@ services:
       - ./Env:/env
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
-      - ./bin/certbot-folders/Frey:/var/www/html/Frey/www/.well-known
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
@@ -151,7 +147,6 @@ services:
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
       - ./Common:/var/www/html/Common
-      - ./bin/certbot-folders/Sigrun:/var/www/html/Sigrun-dist/.well-known
   hugin:
     build: ./Hugin
     image: docker.io/ctizen/pantheon_hugin
@@ -179,7 +174,6 @@ services:
       - ./Env:/env
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
-      - ./bin/certbot-folders/Hugin:/var/www/html/Hugin/www/.well-known
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}

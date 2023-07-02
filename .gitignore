@@ -15,6 +15,10 @@ Tyr/.env.production
 Forseti/.env.production
 Sigrun/.env.production
 
+Mimir/www/.well-known
+Frey/www/.well-known
+Hugin/www/.well-known
+
 .DS_Store
 Thumbs.db
 
