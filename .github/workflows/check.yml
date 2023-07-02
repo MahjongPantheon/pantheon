@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NO_XDEBUG: true
-    if: github.ref != 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
 
