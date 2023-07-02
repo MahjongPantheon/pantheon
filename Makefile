@@ -134,6 +134,7 @@ dev: pantheon_run
 migrate:
 	cd Mimir && ${MAKE} docker_migrate
 	cd Frey && ${MAKE} docker_migrate
+	cd Hugin && ${MAKE} docker_migrate
 
 .PHONY: shell_tyr
 shell_tyr:
