@@ -16,22 +16,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Local server deployment settings
-$locals = [];
-if (file_exists(__DIR__ . '/local/index.php')) {
-    $locals = require __DIR__ . '/local/index.php';
-} else {
-    trigger_error(
-        'Notice: using default config & DB settings. '
-        . 'It\'s fine on developer machine, but wrong on prod server. '
-        . 'You might want to create config/local/* files with production settings.'
-    );
-}
-
-return array_merge([
+return [
     // ---------- may be overridden in local settings -----------
     'db'        => require __DIR__ . '/db.php',
-    'verbose'   => true, // TODO: change this in your local config!
+    'verbose'   => getenv('VERBOSE') === 'true',
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC'
-], $locals);
+];

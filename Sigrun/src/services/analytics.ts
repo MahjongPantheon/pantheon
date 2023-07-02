@@ -117,14 +117,16 @@ export class Analytics {
       return;
     }
     const payload = {
-      website: this._siteId,
-      hostname: window.location.hostname,
-      screen: `${window.innerWidth}x${window.innerHeight}`,
-      language: navigator.language,
-      cache: null,
-      url: url,
-      event_name: eventName,
-      event_data: eventData,
+      s: this._siteId,
+      si: Analytics.sessionId,
+      h: window.location.hostname,
+      o: Analytics.OSName,
+      d: Analytics.isTablet ? 'tablet' : Analytics.isMobile ? 'mobile' : 'desktop',
+      sc: `${window.innerWidth}x${window.innerHeight}`,
+      l: navigator.language,
+      t: new Date(),
+      e: eventName,
+      m: { u: url, ...eventData },
     };
     fetch(this._statDomain, {
       credentials: 'omit',
@@ -147,6 +149,11 @@ export class Analytics {
   constructor(statDomain: string, siteId: string) {
     this._statDomain = statDomain;
     this._siteId = siteId;
+
+    // TODO: fix server-side analytics
+    if (typeof window !== 'undefined') {
+      Analytics.startup();
+    }
 
     this._track = debounce(
       (action: string, params: { [key: string]: any } = {}, eventId?: number) => {
