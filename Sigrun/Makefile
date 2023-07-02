@@ -18,7 +18,7 @@ shell: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi `docker images | grep 'pantheon' | grep 'sigrun' | awk '{print $$1}'`
+	docker rmi `docker images | grep 'pantheon' | grep 'sigrun' | awk '{print $$1}'` || exit 0
 
 PHONY: deps
 deps:

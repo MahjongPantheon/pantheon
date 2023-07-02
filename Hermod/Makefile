@@ -18,7 +18,7 @@ shell: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi `docker images | grep 'pantheon' | grep 'hermod' | awk '{print $$1}'`
+	docker rmi `docker images | grep 'pantheon' | grep 'hermod' | awk '{print $$1}'` || exit 0
 
 .PHONY: docker_last_mail
 docker_last_mail: get_docker_id
