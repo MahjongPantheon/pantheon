@@ -252,17 +252,17 @@ prod_compile:
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
-	echo "- ${YELLOW}Mimir${NC} API is exposed on port 4001"
-	echo "- ${YELLOW}Sigrun${NC} is exposed on port 4102 with server-side rendering"
-	echo "- ${YELLOW}Tyr${NC} is exposed on port 4103"
-	echo "- ${YELLOW}Frey${NC} API is exposed on port 4004"
-	echo "- ${YELLOW}Forseti${NC} is exposed on port 4107"
-	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"
-	echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"
-	echo "${RED}!!!${NC} On production server, please make sure to set up your firewall"
-	echo "${RED}!!!${NC} and reverse-proxy to restrict access to internal resources."
-	echo "${RED}!!!${NC} Also it's highly recommended to have an allow-list policy in your"
-	echo "${RED}!!!${NC} firewall and allow only the required ports."
+	@echo "- ${YELLOW}Mimir${NC} API is exposed on port 4001"
+	@echo "- ${YELLOW}Sigrun${NC} is exposed on port 4102 with server-side rendering"
+	@echo "- ${YELLOW}Tyr${NC} is exposed on port 4103"
+	@echo "- ${YELLOW}Frey${NC} API is exposed on port 4004"
+	@echo "- ${YELLOW}Forseti${NC} is exposed on port 4107"
+	@echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"
+	@echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"
+	@echo "${RED}!!!${NC} On production server, please make sure to set up your firewall"
+	@echo "${RED}!!!${NC} and reverse-proxy to restrict access to internal resources."
+	@echo "${RED}!!!${NC} Also it's highly recommended to have an allow-list policy in your"
+	@echo "${RED}!!!${NC} firewall and allow only the required ports."
 
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
