@@ -10,6 +10,7 @@ services:
     build: ./Database
     image: docker.io/ctizen/pantheon_db
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     ports:
       - "5532:5432"
@@ -26,6 +27,7 @@ services:
       - "127.0.0.1:4109:80"
       - "127.0.0.1:49491:4949"
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
       - ./Env:/env
@@ -54,6 +56,7 @@ services:
       - frey
       - mimir
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
       - ./Env:/env
@@ -75,6 +78,7 @@ services:
       - frey
       - mimir
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
       - ./Env:/env
@@ -100,6 +104,7 @@ services:
       - ./Common:/var/www/html/Common
       - ./bin/certbot-folders/Mimir:/var/www/html/Mimir/www/.well-known
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db
@@ -121,6 +126,7 @@ services:
       - ./Common:/var/www/html/Common
       - ./bin/certbot-folders/Frey:/var/www/html/Frey/www/.well-known
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db
@@ -138,6 +144,7 @@ services:
       - frey
       - mimir
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
       - ./Env:/env
@@ -174,6 +181,7 @@ services:
       - ./Common:/var/www/html/Common
       - ./bin/certbot-folders/Hugin:/var/www/html/Hugin/www/.well-known
     environment:
+      ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db

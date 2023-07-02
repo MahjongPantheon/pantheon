@@ -13,7 +13,7 @@ shell: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Mimir container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Mimir container$(NC) ~> $$PS1" && cd /var/www/html/Mimir && /bin/sh' ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && /bin/sh' ; \
 	fi
 
 .PHONY: kill

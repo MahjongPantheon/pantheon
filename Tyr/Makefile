@@ -13,7 +13,7 @@ shell: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Tyr container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Tyr container$(NC) ~> $$PS1" && cd /var/www/html/Tyr && /bin/sh' ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && /bin/sh' ; \
 	fi
 
 .PHONY: kill
