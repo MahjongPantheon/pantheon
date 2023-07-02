@@ -52,8 +52,7 @@ if `VITE_*` variables have been changed, you should also run `make prod_compile`
 Pantheon provides container with pre-installed email agent (Hermod). If you want to send emails signed with DKIM, you will need to place your private keys
 to `Hermod/opendkim_keys` folder. Also following setting are required: 
 - Some unique key in `MAIL_ACTION_KEY` variable in your environment config.
-- Mailer root host in `ALLOWED_SENDER_DOMAINS` variable in your environment config.
-- `mailer.mailer_addr` variable in your Frey config to set proper mailer address to send emails from.
+- Mailer root host in `ALLOWED_SENDER_DOMAINS` variable in your environment config. Mailer address also will be set to `noreply@[allowed domain]`.
 
 #### HTTPS
 
