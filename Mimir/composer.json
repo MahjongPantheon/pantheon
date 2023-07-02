@@ -31,7 +31,8 @@
     "textalk/websocket": "^1.6",
     "php-http/discovery": "^1.15",
     "php-http/guzzle7-adapter": "^1.0",
-    "twirp/twirp": "^0.9.1"
+    "twirp/twirp": "^0.9.1",
+    "ext-apcu": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",

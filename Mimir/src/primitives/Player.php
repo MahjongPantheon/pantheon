@@ -64,14 +64,36 @@ class PlayerPrimitive extends Primitive
      */
     public static function findById(DataSource $ds, array $ids)
     {
-        $data = $ds->remote()->getPersonalInfo($ids);
+        $missingIds = [];
+        $fetchedData = [];
+        $fetchedRemote = [];
+        foreach ($ids as $id) {
+            $info = apcu_fetch('player_info_' . $id);
+            if (!$info) {
+                $missingIds []= $id;
+            } else {
+                $fetchedData[$id] = $info;
+            }
+        }
+        if (count($missingIds) > 0) {
+            $data = $ds->remote()->getPersonalInfo($missingIds);
+            $fetchedRemote = array_reduce($data, function ($acc, $item) {
+                apcu_store('player_info_' . $item['id'], $item);
+                $acc[$item['id']] = $item;
+            }, []);
+        }
+
+        $allData = [];
+        foreach ($ids as $id) {
+            $allData []= (!empty($fetchedData[$id]) ? $fetchedData[$id] : $fetchedRemote[$id]);
+        }
 
         return array_map(function ($item) use ($ds) {
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
                 ->_setId($item['id']);
-        }, $data);
+        }, $allData);
     }
 
     /**
