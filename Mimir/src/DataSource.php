@@ -89,6 +89,8 @@ class DataSource
     {
         $db = Db::__getCleanTestingInstance();
         $client = new FreyClientMock('');
-        return new self($db, $client);
+        $mc = new Memcached();
+        $mc->addServer('127.0.0.1', 11211);
+        return new self($db, $client, $mc);
     }
 }

@@ -47,10 +47,10 @@ function _n(string $entry, string $plural, float $count): string
 /**
  * With parameters substitution
  * @param string $entry
- * @param array ...$args
+ * @param array $args
  * @return string
  */
-function _p(string $entry, ...$args): string
+function _p(string $entry, $args): string
 {
     return vsprintf(gettext($entry), $args);
 }

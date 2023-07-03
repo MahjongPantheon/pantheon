@@ -86,7 +86,12 @@ class PlayerPrimitive extends Primitive
 
         $allData = [];
         foreach ($ids as $id) {
-            $allData []= (!empty($fetchedData[$id]) ? $fetchedData[$id] : $fetchedRemote[$id]);
+            if (!empty($fetchedData[$id])) {
+                $allData []= $fetchedData[$id];
+            }
+            if (!empty($fetchedRemote[$id])) {
+                $allData [] = $fetchedRemote[$id];
+            }
         }
 
         return array_map(function ($item) use ($ds) {

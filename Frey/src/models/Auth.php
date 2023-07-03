@@ -156,7 +156,7 @@ class AuthModel extends Model
             throw new EntityNotFoundException('Requested person ID is not known to auth system', 405);
         }
 
-        return Model::checkPasswordQuick($clientSideToken, $person[0]->getAuthHash());
+        return Model::checkPasswordQuick($clientSideToken, $person[0]->getAuthHash(), $this->_mc);
     }
 
     /**
@@ -177,7 +177,7 @@ class AuthModel extends Model
         }
 
         $person = $person[0];
-        if (!Model::checkPasswordQuick($clientSideToken, $person->getAuthHash())) {
+        if (!Model::checkPasswordQuick($clientSideToken, $person->getAuthHash(), $this->_mc)) {
             throw new AuthFailedException('Invalid token', 405);
         }
 
@@ -362,6 +362,6 @@ class AuthModel extends Model
     public function checkPasswordFull($password, string $authHash, string $authSalt): bool
     {
         $clientSideToken = $this->_makeClientSideToken($password, $authSalt);
-        return Model::checkPasswordQuick($clientSideToken, $authHash);
+        return Model::checkPasswordQuick($clientSideToken, $authHash, $this->_mc);
     }
 }

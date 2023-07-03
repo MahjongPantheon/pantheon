@@ -424,7 +424,7 @@ class EventModel extends Model
                     'isTeam' => !!$event['is_team'],
                     'hasSeries' => $event['series_length'] > 0,
                     'isRatingShown' => !$event['hide_results'],
-                    'withChips' => !empty($ruleset) && $ruleset['chipsValue'] > 0,
+                    'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                     'type' => $type
                 ];
@@ -475,7 +475,7 @@ class EventModel extends Model
                 'isTeam' => !!$event['is_team'],
                 'isRatingShown' => !$event['hide_results'],
                 'hasSeries' => $event['series_length'] > 0,
-                'withChips' => !empty($ruleset) && $ruleset['chipsValue'] > 0,
+                'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                 'type' => $type
             ];

@@ -76,7 +76,7 @@ class AccessManagementModel extends Model
     public function getSuperadminFlag(int $personId)
     {
         $key = $this->_getAccessCacheKey($personId, '__superadm');
-        $flag = apcu_fetch($key);
+        $flag = $this->_mc->get($key);
         if ($flag !== false) {
             return (bool)$flag;
         }
@@ -84,7 +84,7 @@ class AccessManagementModel extends Model
         $persons = PersonPrimitive::findById($this->_db, [$personId]);
         $result = !empty($persons) && $persons[0]->getIsSuperadmin();
 
-        apcu_store($key, $result, self::CACHE_TTL_SEC);
+        $this->_mc->set($key, $result, self::CACHE_TTL_SEC);
         return $result;
     }
 
@@ -650,6 +650,6 @@ class AccessManagementModel extends Model
      */
     public function clearAccessCache(int $personId, int $eventId)
     {
-        return (bool)apcu_delete(Model::_getAccessCacheKey($personId, (string)$eventId));
+        return (bool)$this->_mc->delete(Model::_getAccessCacheKey($personId, (string)$eventId));
     }
 }

@@ -107,7 +107,7 @@ If you didn't attempt to register, you can safely ignore this message.
 
 Sincerely yours,
 Pantheon support team
-", $this->_guiUrl . $regLink),
+", [$this->_guiUrl . $regLink]),
             [
                 'MIME-Version' => '1.0',
                 'List-Unsubscribe' => $this->_mailerAddress,
@@ -138,7 +138,7 @@ If you didn't attempt to recover password, you can safely ignore this message.
 
 Sincerely yours,
 Pantheon support team
-", $link);
+", [$link]);
         self::_send(
             $emailSanitized,
             _t('Pantheon: password recovery request'),

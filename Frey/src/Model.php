@@ -103,7 +103,7 @@ abstract class Model
         $persons = PersonPrimitive::findById($this->_db, [$this->_meta->getCurrentPersonId()]);
 
         if (!empty($persons)) {
-            if (self::checkPasswordQuick($this->_meta->getAuthToken(), $persons[0]->getAuthHash())) {
+            if (self::checkPasswordQuick($this->_meta->getAuthToken(), $persons[0]->getAuthHash(), $this->_mc)) {
                 return $persons[0];
             }
         }
@@ -116,17 +116,18 @@ abstract class Model
      *
      * @param string $clientSideToken
      * @param string $authHash
+     * @param Memcached $mc
      * @return bool
      */
-    public static function checkPasswordQuick(string $clientSideToken, string $authHash): bool
+    public static function checkPasswordQuick(string $clientSideToken, string $authHash, Memcached $mc): bool
     {
-        $pwd = apcu_fetch('pwcheck_' . $clientSideToken . $authHash);
+        $pwd = $mc->get('pwcheck_' . $clientSideToken . $authHash);
         if ($pwd !== false) {
             return $pwd === 1;
         }
 
         $pwd = password_verify($clientSideToken, $authHash);
-        apcu_store('pwcheck_' . $clientSideToken . $authHash, $pwd ? 1 : 0, 60 * 60 * 24 * 7);
+        $mc->set('pwcheck_' . $clientSideToken . $authHash, $pwd ? 1 : 0, 60 * 60 * 24 * 7);
         return $pwd;
     }
 
@@ -183,7 +184,7 @@ abstract class Model
      */
     protected function _getAccessRules(int $personId, int $eventId)
     {
-        $rules = apcu_fetch($this->_getAccessCacheKey($personId, (string)$eventId));
+        $rules = $this->_mc->get($this->_getAccessCacheKey($personId, (string)$eventId));
         if ($rules !== false) {
             return $rules;
         }
@@ -212,7 +213,7 @@ abstract class Model
             $resultingRules[InternalRules::IS_SUPER_ADMIN] = '1';
         }
 
-        apcu_store($this->_getAccessCacheKey($personId, (string)$eventId), $resultingRules, self::CACHE_TTL_SEC);
+        $this->_mc->set($this->_getAccessCacheKey($personId, (string)$eventId), $resultingRules, self::CACHE_TTL_SEC);
         return $resultingRules;
     }
 
@@ -227,7 +228,7 @@ abstract class Model
      */
     protected function _getSystemWideRules(int $personId)
     {
-        $rules = apcu_fetch($this->_getAccessCacheKey($personId, '__system-wide'));
+        $rules = $this->_mc->get($this->_getAccessCacheKey($personId, '__system-wide'));
         if ($rules !== false) {
             return $rules;
         }
@@ -250,7 +251,7 @@ abstract class Model
             $resultingRules[InternalRules::IS_SUPER_ADMIN] = '1';
         }
 
-        apcu_store($this->_getAccessCacheKey($personId, '__system-wide'), $resultingRules, self::CACHE_TTL_SEC);
+        $this->_mc->set($this->_getAccessCacheKey($personId, '__system-wide'), $resultingRules, self::CACHE_TTL_SEC);
         return $resultingRules;
     }
 
