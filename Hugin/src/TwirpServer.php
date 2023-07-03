@@ -43,7 +43,7 @@ final class TwirpServer implements Hugin
     protected Db $_db;
     protected Logger $_syslog;
     protected Config $_config;
-    protected Memcached $mc;
+    protected Memcached $_mc;
 
     /**
      * @param string|null $configPath
