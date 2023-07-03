@@ -58,6 +58,9 @@ pantheon_run:
 	@cp Env/.env.development Sigrun/.env.development
 	@cp Env/.env.development Forseti/.env.development
 	@${COMPOSE_COMMAND} up -d
+	@cd Mimir && ${MAKE} docker_enable_debug
+	@cd Frey && ${MAKE} docker_enable_debug
+	@cd Hugin && ${MAKE} docker_enable_debug
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \

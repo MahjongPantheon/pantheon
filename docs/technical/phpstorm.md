@@ -14,10 +14,15 @@ Debug page. Check all the checkboxes here.
 
 ![](../img/settings-mapping.png)
 
-Add new server on the Servers page, point its host to `localhost`. Port field can have 
+For each php service, add new server on the Servers page, point its host to `localhost`. Port field can have 
 any value. Make sure you check "Use path mappings" checkbox and fill the paths exactly as
 shown on the screenshot. Note that inside container all services are located inside
-`/var/www/html` folder. The folder itself should be pointed to the project root.
+`/var/www/html` folder. The folder itself should be pointed to the project root. Server names should be following:
+- pantheon_mimir
+- pantheon_frey
+- pantheon_hugin
+
+These server names are used by phpstorm to determine what server you're using.
 
 ### Step 3: press the "Listen" button
 
@@ -25,27 +30,13 @@ shown on the screenshot. Note that inside container all services are located ins
 
 Right here!
 
-
-### Step 4.1: add a breakpoint in IDE
-
-Before this you will need to append a certain parameter to the URL you're debugging:
-`http://localhost:4002/profile?XDEBUG_SESSION=start` - notice the `?XDEBUG_SESSION=start` part.
-Now you can use your IDE breakpoints functionality like shown on the screenshot below:
-
-![](../img/debug-result.png)
-
-Please note that `?XDEBUG_SESSION=start` parameter is not transferred between services, e.g.,
-setting the parameter for Sigrun URL will not automatically pass it to Frey/Mimir. To debug
-Frey/Mimir in this case, use step 4.2.
-
-Tyr sets the `?XDEBUG_SESSION=start` parameter automatically in developer build for all
-outgoing requests, so no additional configuration is required when debugging requests from Tyr.
-
-### Step 4.2: add an explicit breakpoint in code
+### Step 4: add an explicit breakpoint in code
 
 Use `xdebug_break();` instruction in the php code to trigger debugger session. This method
 can be used in every case the previous one didn't work, as it doesn't require any external 
 trigger.
+
+Also you can try to use phpstorm breakpoints, though, sometimes explicit `xdebug_break()` is required.
 
 ## Debugging unit tests
 

@@ -48,9 +48,9 @@ variables to be set, see phinx documentation and `phinx.yml` file for details.
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send 
 pull requests for missing functionality.
 
-To start developing the project, make sure you have installed postgresql server, PHP v7.1 or higher and appropriate PDO 
+To start developing the project, make sure you have installed postgresql server, PHP v8.1 or higher and appropriate PDO 
 module. Simpler way to start developing using Docker is described in parent folder, take a look at it.
-- Use `make apidoc` from current folder to regenerate api methods documentation file.
+
 - Remember to use PSR2 coding standards when adding php code.
 - The DB migrations are implemented using [Phinx](http://docs.phinx.org), see its documentation for details.
 

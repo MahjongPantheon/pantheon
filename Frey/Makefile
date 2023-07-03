@@ -20,6 +20,22 @@ shell: get_docker_id
 kill:
 	docker rmi `docker images | grep 'pantheon' | grep 'frey' | awk '{print $$3}'` || exit 0
 
+.PHONY: enable_debug
+enable_debug:
+	@echo -ne "zend_extension=xdebug.so\n \
+		xdebug.mode=debug\n \
+		xdebug.client_host=172.17.0.1\n \
+		xdebug.client_port=9001\n" > /etc/php81/conf.d/50_xdebug.ini
+	@kill -SIGUSR2 `ps ax| grep php-fpm | grep master | awk '{print $$1}'`
+
+.PHONY: docker_enable_debug
+docker_enable_debug: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running, can't enable debug.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && make enable_debug'; \
+	fi
+
 .PHONY: docker_migrate
 docker_migrate: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
