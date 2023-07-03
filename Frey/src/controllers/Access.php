@@ -432,6 +432,6 @@ class AccessController extends Controller
      */
     protected function _getModel()
     {
-        return new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        return new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
     }
 }

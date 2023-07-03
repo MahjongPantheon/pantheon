@@ -39,11 +39,11 @@ class BootstrapAccess
      * @throws \Exception
      * @return array
      */
-    public static function create(Db $db, Config $config, Meta $meta, string $adminEmail, string $adminPassword)
+    public static function create(Db $db, Config $config, Meta $meta, \Memcached $mc, string $adminEmail, string $adminPassword)
     {
-        $accountModel = new AccountModel($db, $config, $meta);
-        $groupModel = new GroupsModel($db, $config, $meta);
-        $accessModel = new AccessManagementModel($db, $config, $meta);
+        $accountModel = new AccountModel($db, $config, $meta, $mc);
+        $groupModel = new GroupsModel($db, $config, $meta, $mc);
+        $accessModel = new AccessManagementModel($db, $config, $meta, $mc);
 
         $adminId = $accountModel->createAccount($adminEmail, $adminPassword, 'Administrator', '', '', '', null, true, true);
         $adminGroupId = $groupModel->createGroup('Administrators', 'System administrators', '#990000');

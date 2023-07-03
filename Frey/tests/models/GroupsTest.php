@@ -33,6 +33,10 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     protected $_config;
     /**
+     * @var \Memcached
+     */
+    protected $_mc;
+    /**
      * @var Meta
      */
     protected $_meta;
@@ -50,6 +54,8 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
         $this->_db = Db::__getCleanTestingInstance();
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
         $this->_meta = new Meta(new \Common\Storage('localhost'), $_SERVER);
+        $this->_mc = new \Memcached();
+        $this->_mc->addServer('127.0.0.1', 11211);
         $this->_person = (new PersonPrimitive($this->_db))
             ->setTitle('testPerson')
             ->setEmail('test@email.com')
@@ -63,7 +69,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testCreateGroup()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $this->assertNotEmpty($groupId);
 
@@ -83,7 +89,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(401);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->createGroup('', '', '');
     }
 
@@ -93,7 +99,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetGroups()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $group1Id = $model->createGroup('Test group 1', 'Test group 1 description', '#123456');
         $group2Id = $model->createGroup('Test group 2', 'Test group 2 description', '#654321');
 
@@ -118,7 +124,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(403);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->getGroups([]);
     }
 
@@ -128,7 +134,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetGroupsNonexistingIds()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groups = $model->getGroups([100, 200]);
         $this->assertEmpty($groups);
     }
@@ -139,7 +145,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testUpdateGroup()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $success = $model->updateGroup($groupId, 'Updated group', 'Updated description', '#654321');
         $this->assertTrue($success);
@@ -160,7 +166,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(405);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->updateGroup(1234, 'Updated group', 'Updated description', '#654321');
     }
 
@@ -172,7 +178,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(406);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $model->updateGroup($groupId, '', '', '');
     }
@@ -183,7 +189,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testDeleteGroup()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $model->deleteGroup($groupId);
 
@@ -199,7 +205,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(408);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->deleteGroup(123);
     }
 
@@ -210,7 +216,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testAddPersonToGroup()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $success = $model->addPersonToGroup($this->_person->getId(), $groupId);
         $this->assertTrue($success);
@@ -227,7 +233,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(408);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addPersonToGroup($this->_person->getId(), 123);
     }
 
@@ -240,7 +246,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(409);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup(321, $groupId);
     }
@@ -252,7 +258,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testRemovePersonFromGroup()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $success = $model->removePersonFromGroup($this->_person->getId(), $groupId);
@@ -270,7 +276,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(411);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $model->removePersonFromGroup($this->_person->getId(), 123);
@@ -285,7 +291,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(412);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $model->removePersonFromGroup(312, $groupId);
@@ -298,7 +304,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetGroupsOfPerson()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('test', 'testdescr', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $groups = $model->getGroupsOfPerson($this->_person->getId());
@@ -318,7 +324,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(414);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->getGroupsOfPerson(1234);
     }
 
@@ -329,7 +335,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetPersonsOfGroup()
     {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $persons = $model->getPersonsOfGroup($groupId);
@@ -349,7 +355,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(416);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
+        $model = new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->getPersonsOfGroup(123);
     }
 }

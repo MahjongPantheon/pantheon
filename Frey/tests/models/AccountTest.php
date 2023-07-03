@@ -38,6 +38,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     protected $_meta;
     /**
+     * @var \Memcached
+     */
+    protected $_mc;
+    /**
      * @var PersonPrimitive
      */
     protected $_person;
@@ -90,8 +94,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $this->_db = Db::__getCleanTestingInstance();
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
         $this->_meta = new Meta(new \Common\Storage('localhost'), $_SERVER);
+        $this->_mc = new \Memcached();
+        $this->_mc->addServer('127.0.0.1', 11211);
 
-        $auth = new AuthModel($this->_db, $this->_config, $this->_meta);
+        $auth = new AuthModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $tokens = $auth->makePasswordTokens('qwerasdfqwer');
         $this->_authToken = $tokens['client_hash'];
         $this->_person = (new PersonPrimitive($this->_db))
@@ -117,7 +123,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testCreateAccount()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -139,7 +145,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(401);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->createAccount(
             '',
             'passwd',
@@ -158,7 +164,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(401);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->createAccount(
             'test@email.com',
             '',
@@ -177,7 +183,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(401);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->createAccount(
             'test@email.com',
             'passwd',
@@ -196,7 +202,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(402);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->createAccount(
             'testbademail.com',
             'passwd',
@@ -213,7 +219,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetPersonalInfo()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -240,7 +246,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     /*
     public function testGetPersonalInfoWithPrivateDataFilter()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -263,7 +269,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetPersonalInfoEmptyList()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $persons = $model->getPersonalInfo([]);
         $this->assertEmpty($persons);
     }
@@ -273,7 +279,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetPersonalInfoNonexistingIds()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $persons = $model->getPersonalInfo([123]);
         $this->assertEmpty($persons);
     }
@@ -283,7 +289,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testFindByTenhouId()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -307,7 +313,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testFindByTenhouIdEmptyList()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $persons = $model->findByTenhouId([]);
         $this->assertEmpty($persons);
     }
@@ -317,7 +323,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testFindByTenhouIdNonexistingIds()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $persons = $model->findByTenhouId([123]);
         $this->assertEmpty($persons);
     }
@@ -328,7 +334,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testUpdatePersonalInfo()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -365,7 +371,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(406);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->updatePersonalInfo(
             123,
             'test2',
@@ -385,7 +391,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(\Frey\InvalidParametersException::class);
         $this->expectExceptionCode(407);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -414,7 +420,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(408);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -443,7 +449,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(408);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -470,7 +476,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testFindByTitleFuzzy()
     {
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $personId = $model->createAccount(
             'test@email.com',
             'passwd',
@@ -499,7 +505,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectExceptionCode(409);
         $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->findByTitleFuzzy('w');
     }
 }

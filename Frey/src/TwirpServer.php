@@ -4,6 +4,7 @@ namespace Frey;
 
 use Common\Frey;
 use Exception;
+use Memcached;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 
@@ -27,6 +28,7 @@ final class TwirpServer implements Frey
     protected Logger $_syslog;
     protected Meta $_meta;
     protected Config $_config;
+    protected Memcached $_mc;
 
     /**
      * @param string|null $configPath
@@ -40,6 +42,8 @@ final class TwirpServer implements Frey
         $this->_db = new Db($this->_config);
         $storage = new \Common\Storage($this->_config->getValue('cookieDomain'));
         $this->_meta = new Meta($storage, $_SERVER);
+        $this->_mc = new Memcached();
+        $this->_mc->addServer('127.0.0.1', 11211);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
@@ -48,9 +52,9 @@ final class TwirpServer implements Frey
             (new ErrorHandler($this->_config, $this->_syslog))->register();
         }
 
-        $this->_authController = new AuthController($this->_db, $this->_syslog, $this->_config, $this->_meta);
-        $this->_personsController = new PersonsController($this->_db, $this->_syslog, $this->_config, $this->_meta);
-        $this->_accessController = new AccessController($this->_db, $this->_syslog, $this->_config, $this->_meta);
+        $this->_authController = new AuthController($this->_db, $this->_syslog, $this->_config, $this->_meta, $this->_mc);
+        $this->_personsController = new PersonsController($this->_db, $this->_syslog, $this->_config, $this->_meta, $this->_mc);
+        $this->_accessController = new AccessController($this->_db, $this->_syslog, $this->_config, $this->_meta, $this->_mc);
     }
 
     /**

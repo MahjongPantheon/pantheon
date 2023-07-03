@@ -19,6 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/helpers/i18n.php';
 
+use Memcached;
 use Monolog\Logger;
 
 abstract class Controller
@@ -44,6 +45,11 @@ abstract class Controller
     protected $_meta;
 
     /**
+     * @var Memcached
+     */
+    protected $_mc;
+
+    /**
      * Controller constructor.
      * @param IDb $db
      * @param Logger $log
@@ -51,12 +57,13 @@ abstract class Controller
      * @param Meta $meta
      * @throws \Exception
      */
-    public function __construct(IDb $db, Logger $log, Config $config, Meta $meta)
+    public function __construct(IDb $db, Logger $log, Config $config, Meta $meta, Memcached $mc)
     {
         $this->_db = $db;
         $this->_log = $log;
         $this->_config = $config;
         $this->_meta = $meta;
+        $this->_mc = $mc;
 
         $this->_meta->sendVersionHeader(
             $this->_config->getValue('api.version_major'),

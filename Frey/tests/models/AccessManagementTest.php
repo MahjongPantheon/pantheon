@@ -38,6 +38,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     protected $_meta;
     /**
+     * @var \Memcached
+     */
+    protected $_mc;
+    /**
      * @var PersonPrimitive
      */
     protected $_person;
@@ -97,8 +101,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
         $this->_db = Db::__getCleanTestingInstance();
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
         $this->_meta = new Meta(new \Common\Storage('localhost'), $_SERVER);
+        $this->_mc = new \Memcached();
+        $this->_mc->addServer('127.0.0.1', 11211);
 
-        $auth = new AuthModel($this->_db, $this->_config, $this->_meta);
+        $auth = new AuthModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $tokens = $auth->makePasswordTokens('qwerasdfqwer');
         $this->_authToken = $tokens['client_hash'];
         $this->_person = (new PersonPrimitive($this->_db))
@@ -117,7 +123,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
         $this->_group->save();
 
         $this->_eventId = mt_rand(1, 500);
-        (new AccessManagementModel($this->_db, $this->_config, $this->_meta))
+        (new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc))
             ->clearAccessCache($this->_person->getId(), $this->_eventId);
 
         $this->_loginMeta();
@@ -295,7 +301,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     protected function _testAddRuleForPerson($eventId)
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $ruleId = $model->addSystemWideRuleForPerson(
                 'test_rule',
@@ -328,7 +334,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
     protected function _testAddDuplicateRuleForPerson($eventId)
     {
         $this->expectException(\Frey\DuplicateEntityException::class);
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $model->addSystemWideRuleForPerson(
                 'test_rule',
@@ -368,7 +374,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     protected function _testUpdateRuleForPerson($eventId)
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $ruleId = $model->addSystemWideRuleForPerson(
                 'test_rule',
@@ -407,7 +413,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     protected function _testAddRuleForGroup($eventId)
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $ruleId = $model->addSystemWideRuleForGroup(
                 'test_rule',
@@ -440,7 +446,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
     protected function _testAddDuplicateRuleForGroup($eventId)
     {
         $this->expectException(\Frey\DuplicateEntityException::class);
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $model->addSystemWideRuleForGroup(
                 'test_rule',
@@ -480,7 +486,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     protected function _testUpdateRuleForGroup($eventId)
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $ruleId = $model->addSystemWideRuleForGroup(
                 'test_rule',
@@ -519,7 +525,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     protected function _testDeleteRuleForPerson($eventId)
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $ruleId = $model->addSystemWideRuleForPerson(
                 'test_rule',
@@ -553,7 +559,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     protected function _testDeleteRuleForGroup($eventId)
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         if (empty($eventId)) {
             $ruleId = $model->addSystemWideRuleForGroup(
                 'test_rule',
@@ -586,7 +592,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessRulesUnion()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForPerson(
             'test_rule1',
             'ololo1',
@@ -633,7 +639,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessRulesPersonSystemwideUnion()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForPerson(
             'test_rule1',
             'ololo1',
@@ -680,7 +686,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessRulesGroupSystemwideUnion()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForGroup(
             'test_rule1',
             'ololo1',
@@ -727,7 +733,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessRulesCollide()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForPerson(
             'test_rule_collide',
             'ololo_person',
@@ -773,7 +779,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessRulesPersonSystemwideCollide()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForPerson(
             'test_rule_collide',
             'ololo_event',
@@ -819,7 +825,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessRulesGroupSystemwideCollide()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForGroup(
             'test_rule_collide',
             'ololo_event',
@@ -865,7 +871,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessRulesPersonAndGroupSystemwideCollide()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForPerson(
             'test_rule_collide',
             'ololo_event_person',
@@ -941,7 +947,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAccessValue()
     {
-        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->addRuleForPerson(
             'test_rule_collide',
             'ololo_person',

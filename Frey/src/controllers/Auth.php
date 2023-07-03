@@ -184,7 +184,7 @@ class AuthController extends Controller
      */
     protected function _getModel()
     {
-        return new AuthModel($this->_db, $this->_config, $this->_meta);
+        return new AuthModel($this->_db, $this->_config, $this->_meta, $this->_mc);
     }
 
     /**
@@ -192,6 +192,6 @@ class AuthController extends Controller
      */
     protected function _getAccessModel()
     {
-        return new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        return new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
     }
 }

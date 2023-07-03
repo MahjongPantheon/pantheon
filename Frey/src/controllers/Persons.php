@@ -271,7 +271,7 @@ class PersonsController extends Controller
      */
     protected function _getAccountModel()
     {
-        return new AccountModel($this->_db, $this->_config, $this->_meta);
+        return new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
     }
 
     /**
@@ -279,7 +279,7 @@ class PersonsController extends Controller
      */
     protected function _getGroupsModel()
     {
-        return new GroupsModel($this->_db, $this->_config, $this->_meta);
+        return new GroupsModel($this->_db, $this->_config, $this->_meta, $this->_mc);
     }
 
     /**
@@ -287,6 +287,6 @@ class PersonsController extends Controller
      */
     protected function _getAccessModel()
     {
-        return new AccessManagementModel($this->_db, $this->_config, $this->_meta);
+        return new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
     }
 }

@@ -19,11 +19,19 @@ class BasicSeeder extends AbstractSeed
     const EVENT_ID = 1; // TODO: this should be taken from seed of mimir
 
     /**
+     * @var \Memcached
+     */
+    protected $_mc;
+
+    /**
      * @throws Exception
      * @throws \Frey\InvalidParametersException
      */
     public function run()
     {
+        $this->_mc = new \Memcached();
+        $this->_mc->addServer('127.0.0.1', 11211);
+
         // Non-phinx-based seeder to avoid rewriting seeds for every schema change
 
         $tables = file(__DIR__ . '/../tablelist.txt');
@@ -45,24 +53,25 @@ class BasicSeeder extends AbstractSeed
 
         list($adminId, $adminGroupId) = \Frey\BootstrapAccess::create($db, $config, $meta, 'admin@localhost.localdomain', '123456');
 
-        $groupIds = $this->_seedGroups($db, $config, $meta, $adminGroupId);
-        $personIds = $this->_seedPersons($db, $config, $meta, $groupIds, $adminId);
-        $this->_seedGroupAccess($db, $config, $groupIds);
-        $this->_seedPersonAccess($db, $config, $personIds);
+        $groupIds = $this->_seedGroups($db, $config, $meta, $this->_mc, $adminGroupId);
+        $personIds = $this->_seedPersons($db, $config, $meta, $this->_mc, $groupIds, $adminId);
+        $this->_seedGroupAccess($db, $config, $this->_mc, $groupIds);
+        $this->_seedPersonAccess($db, $config, $this->_mc, $personIds);
     }
 
     /**
      * @param \Frey\Db $db
      * @param \Frey\Config $config
      * @param \Frey\Meta $meta
+     * @param \Memcached $mc
      * @param $adminGroupId
      * @return array
      * @throws Exception
      * @throws \Frey\InvalidParametersException
      */
-    protected function _seedGroups(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, $adminGroupId)
+    protected function _seedGroups(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, \Memcached $mc, $adminGroupId)
     {
-        $model = new \Frey\GroupsModel($db, $config, $meta);
+        $model = new \Frey\GroupsModel($db, $config, $meta, $mc);
         $trnId = $model->createGroup('Club leaders', 'Local club leaders', '00ff00');
         $plrId = $model->createGroup('Players', 'Usual players', '0000ff');
         return [
@@ -76,6 +85,7 @@ class BasicSeeder extends AbstractSeed
      * @param \Frey\Db $db
      * @param \Frey\Config $config
      * @param \Frey\Meta $meta
+     * @param \Memcached $mc
      * @param $groupIds
      * @param $superAdminId
      * @return array
@@ -83,10 +93,10 @@ class BasicSeeder extends AbstractSeed
      * @throws \Frey\EntityNotFoundException
      * @throws \Frey\InvalidParametersException
      */
-    protected function _seedPersons(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, $groupIds, $superAdminId)
+    protected function _seedPersons(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, \Memcached $mc, $groupIds, $superAdminId)
     {
-        $model = new \Frey\AccountModel($db, $config, $meta);
-        $groupModel = new \Frey\GroupsModel($db, $config, $meta);
+        $model = new \Frey\AccountModel($db, $config, $meta, $mc);
+        $groupModel = new \Frey\GroupsModel($db, $config, $meta, $mc);
         $adminIds = [$superAdminId];
         $leadersIds = [];
         $playersIds = [];
@@ -124,15 +134,16 @@ class BasicSeeder extends AbstractSeed
     /**
      * @param \Frey\Db $db
      * @param \Frey\Config $config
+     * @param \Memcached $mc
      * @param $groupIds
      * @throws Exception
      * @throws \Frey\DuplicateEntityException
      * @throws \Frey\EntityNotFoundException
      */
-    protected function _seedGroupAccess(\Frey\Db $db, \Frey\Config $config, $groupIds)
+    protected function _seedGroupAccess(\Frey\Db $db, \Frey\Config $config, \Memcached $mc, $groupIds)
     {
         $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
-        $model = new \Frey\AccessManagementModel($db, $config, $meta);
+        $model = new \Frey\AccessManagementModel($db, $config, $meta, $mc);
 
         // admins are system-wide
         $model->addSystemWideRuleForGroup(
@@ -192,16 +203,17 @@ class BasicSeeder extends AbstractSeed
     /**
      * @param \Frey\Db $db
      * @param \Frey\Config $config
+     * @param \Memcached $mc
      * @param $personIds
      * @throws Exception
      * @throws \Frey\DuplicateEntityException
      * @throws \Frey\EntityNotFoundException
      */
-    protected function _seedPersonAccess(\Frey\Db $db, \Frey\Config $config, $personIds)
+    protected function _seedPersonAccess(\Frey\Db $db, \Frey\Config $config, \Memcached $mc, $personIds)
     {
         $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] = 'CHANGE_ME_INTERNAL';
         $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
-        $model = new \Frey\AccessManagementModel($db, $config, $meta);
+        $model = new \Frey\AccessManagementModel($db, $config, $meta, $mc);
 
         // nullify some system-wide rules for last admin
         $model->addSystemWideRuleForPerson(

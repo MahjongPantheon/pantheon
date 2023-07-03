@@ -17,6 +17,8 @@
  */
 namespace Frey;
 
+use Memcached;
+
 require_once 'exceptions/AccessDenied.php';
 
 abstract class Model
@@ -37,6 +39,11 @@ abstract class Model
     protected $_meta;
 
     /**
+     * @var Memcached
+     */
+    protected $_mc;
+
+    /**
      * @var PersonPrimitive|null
      */
     protected $_authorizedPerson = null;
@@ -51,13 +58,15 @@ abstract class Model
      * @param IDb $db
      * @param Config $config
      * @param Meta $meta
+     * @param Memcached $mc
      * @throws \Exception
      */
-    public function __construct(IDb $db, Config $config, Meta $meta)
+    public function __construct(IDb $db, Config $config, Meta $meta, Memcached $mc)
     {
         $this->_db = $db;
         $this->_config = $config;
         $this->_meta = $meta;
+        $this->_mc = $mc;
         $this->_authorizedPerson = $this->_fetchAuthorizedPerson();
 
         // for unit/integration testing purposes

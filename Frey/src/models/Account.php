@@ -57,7 +57,7 @@ class AccountModel extends Model
             throw new InvalidParametersException('Invalid email provided', 402);
         }
 
-        $auth = new AuthModel($this->_db, $this->_config, $this->_meta);
+        $auth = new AuthModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $tokens = $auth->makePasswordTokens($password);
         $person = (new PersonPrimitive($this->_db))
             ->setTitle($title)
