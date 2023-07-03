@@ -20,6 +20,7 @@ RUN apk update && \
     munin-node \
     postgresql13 \
     php81-fpm \
+    php81-bcmath \
     php81-ctype \
     php81-curl \
     php81-gettext \
