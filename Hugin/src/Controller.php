@@ -17,6 +17,7 @@
  */
 namespace Hugin;
 
+use Memcached;
 use Monolog\Logger;
 
 abstract class Controller
@@ -37,17 +38,23 @@ abstract class Controller
     protected $_config;
 
     /**
+     * @var Memcached
+     */
+    protected $_mc;
+
+    /**
      * Controller constructor.
      * @param IDb $db
      * @param Logger $log
      * @param Config $config
      * @throws \Exception
      */
-    public function __construct(IDb $db, Logger $log, Config $config)
+    public function __construct(IDb $db, Logger $log, Config $config, Memcached $mc)
     {
         $this->_db = $db;
         $this->_log = $log;
         $this->_config = $config;
+        $this->_mc = $mc;
     }
 
     protected function _logStart(string $method, array $args): void

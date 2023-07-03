@@ -26,8 +26,10 @@ require_once __DIR__ . '/../src/controllers/Events.php';
 $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
 $config = new \Hugin\Config($cfgPath);
 $db = new \Hugin\Db($config);
+$mc = new Memcached();
+$mc->addServer('127.0.0.1', 11211);
 $log = new Logger('Hugin');
 $log->pushHandler(new ErrorLogHandler());
-$controller = new \Hugin\EventsController($db, $log, $config);
+$controller = new \Hugin\EventsController($db, $log, $config, $mc);
 
 echo $controller->track(file_get_contents('php://input') ?: '');

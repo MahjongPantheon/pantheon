@@ -73,21 +73,22 @@ class EventsController extends Controller
      */
     protected function _trackError($error, $source)
     {
-        if (!apcu_fetch(self::ERR_CTR_ID)) {
-            apcu_store(self::ERR_CTR_ID, 1);
-            apcu_store(self::ERR_LAST_PROC_ID, 0);
+
+        if (!$this->_mc->get(self::ERR_CTR_ID)) {
+            $this->_mc->set(self::ERR_CTR_ID, 1);
+            $this->_mc->set(self::ERR_LAST_PROC_ID, 0);
         }
 
-        $newId = apcu_inc(self::ERR_CTR_ID, 1);
-        apcu_store(self::ERR_EV . $newId, [
+        $newId = $this->_mc->increment(self::ERR_CTR_ID, 1);
+        $this->_mc->set(self::ERR_EV . $newId, [
             $source, date('Y-m-d H:i:s'), $error
         ]);
 
         // Don't query DB for each error, do it once every twenty requests
         if ($newId % 20 === 0) {
-            $lastProc = apcu_fetch(self::ERR_LAST_PROC_ID);
+            $lastProc = $this->_mc->get(self::ERR_LAST_PROC_ID);
             for ($i = $lastProc; $i <= $newId; $i++) {
-                $data = apcu_fetch(self::ERR_EV . $i);
+                $data = $this->_mc->get(self::ERR_EV . $i);
                 if (!$data) {
                     continue;
                 }
@@ -96,9 +97,9 @@ class EventsController extends Controller
                     ->setCreatedAt($data[1])
                     ->setError($data[2])
                     ->save();
-                apcu_delete(self::ERR_EV . $i);
+                $this->_mc->delete(self::ERR_EV . $i);
             }
-            apcu_store(self::LAST_PROC_ID, $newId);
+            $this->_mc->set(self::LAST_PROC_ID, $newId);
         }
 
         return 'ok';
@@ -117,13 +118,13 @@ class EventsController extends Controller
             return 'malformed payload';
         }
 
-        if (!apcu_fetch(self::CTR_ID)) {
-            apcu_store(self::CTR_ID, 1);
-            apcu_store(self::LAST_PROC_ID, 0);
+        if (!$this->_mc->get(self::CTR_ID)) {
+            $this->_mc->set(self::CTR_ID, 1);
+            $this->_mc->set(self::LAST_PROC_ID, 0);
         }
 
-        $newId = apcu_inc(self::CTR_ID, 1);
-        apcu_store(self::EV . $newId, [
+        $newId = $this->_mc->increment(self::CTR_ID, 1);
+        $this->_mc->set(self::EV . $newId, [
             $_SERVER['REMOTE_ADDR'],
             $parsed['s'], $parsed['si'], $parsed['h'],
             $parsed['o'], $parsed['d'], $parsed['sc'],
@@ -138,9 +139,9 @@ class EventsController extends Controller
             /** @phpstan-ignore-next-line */
             $reader = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-Country.mmdb');
 
-            $lastProc = apcu_fetch(self::LAST_PROC_ID);
+            $lastProc = $this->_mc->get(self::LAST_PROC_ID);
             for ($i = $lastProc; $i <= $newId; $i++) {
-                $data = apcu_fetch(self::EV . $i);
+                $data = $this->_mc->get(self::EV . $i);
                 if (!$data) {
                     continue;
                 }
@@ -172,9 +173,9 @@ class EventsController extends Controller
                     ->setCountry($country)
                     ->setCity($city)
                     ->save();
-                apcu_delete(self::EV . $i);
+                $this->_mc->delete(self::EV . $i);
             }
-            apcu_store(self::LAST_PROC_ID, $newId);
+            $this->_mc->set(self::LAST_PROC_ID, $newId);
         }
 
         return 'ok';

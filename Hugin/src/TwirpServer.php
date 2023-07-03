@@ -25,6 +25,7 @@ use Common\GetLastYearPayload;
 use Common\GetLastYearResponse;
 use Common\Hugin;
 use Exception;
+use Memcached;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 
@@ -42,6 +43,7 @@ final class TwirpServer implements Hugin
     protected Db $_db;
     protected Logger $_syslog;
     protected Config $_config;
+    protected Memcached $mc;
 
     /**
      * @param string|null $configPath
@@ -55,13 +57,15 @@ final class TwirpServer implements Hugin
         $this->_db = new Db($this->_config);
         $this->_syslog = new Logger('Hugin');
         $this->_syslog->pushHandler(new ErrorLogHandler());
+        $this->_mc = new \Memcached();
+        $this->_mc->addServer('127.0.0.1', 11211);
 
         // + some custom handler for testing errors
         if ($this->_config->getValue('verbose')) {
             (new ErrorHandler($this->_config, $this->_syslog))->register();
         }
 
-        $this->_eventsController = new EventsController($this->_db, $this->_syslog, $this->_config);
+        $this->_eventsController = new EventsController($this->_db, $this->_syslog, $this->_config, $this->_mc);
     }
 
     /**

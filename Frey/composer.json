@@ -26,8 +26,8 @@
     "ext-xmlreader": "*",
     "ext-curl": "*",
     "ext-json": "*",
-    "ext-apcu": "*",
     "ext-gettext": "*",
+    "ext-memcached": "*",
     "php-http/discovery": "^1.15",
     "php-http/guzzle7-adapter": "^1.0",
     "twirp/twirp": "^0.9.1"

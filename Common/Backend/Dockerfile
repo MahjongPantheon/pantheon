@@ -7,6 +7,7 @@ RUN apk update && \
     su-exec \
     curl \
     make \
+    memcached \
     font-dejavu-sans-mono-nerd \
     procps \
     protoc \
@@ -18,7 +19,6 @@ RUN apk update && \
     munin \
     munin-node \
     postgresql13 \
-    php81-apcu \
     php81-fpm \
     php81-ctype \
     php81-curl \
@@ -35,6 +35,7 @@ RUN apk update && \
     php81-pdo \
     php81-pecl-ast \
     php81-pecl-protobuf \
+    php81-pecl-memcached \
     php81-pgsql \
     php81-phar \
     php81-phpdbg \
