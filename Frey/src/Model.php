@@ -185,7 +185,7 @@ abstract class Model
     protected function _getAccessRules(int $personId, int $eventId)
     {
         $rules = $this->_mc->get($this->_getAccessCacheKey($personId, (string)$eventId));
-        if ($rules !== false) {
+        if ($rules) {
             return $rules;
         }
 
@@ -229,7 +229,7 @@ abstract class Model
     protected function _getSystemWideRules(int $personId)
     {
         $rules = $this->_mc->get($this->_getAccessCacheKey($personId, '__system-wide'));
-        if ($rules !== false) {
+        if ($rules) {
             return $rules;
         }
 

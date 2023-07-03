@@ -5,6 +5,7 @@ ENV PHINX_DB_HUGIN_NAME hugin
 ENV PHINX_DB_HUGIN_NAME_UNIT hugin_unit
 ENV PHINX_DB_HUGIN_USER hugin
 ENV PHINX_DB_HUGIN_PASS pgpass
+ENV PHP_IDE_CONFIG serverName=pantheon_hugin
 
 RUN echo "host_name hugin" >> /etc/munin/munin-node.conf
 

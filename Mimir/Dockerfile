@@ -5,6 +5,7 @@ ENV PHINX_DB_NAME mimir
 ENV PHINX_DB_NAME_UNIT mimir_unit
 ENV PHINX_DB_USER mimir
 ENV PHINX_DB_PASS pgpass
+ENV PHP_IDE_CONFIG serverName=pantheon_mimir
 
 RUN echo "host_name mimir" >> /etc/munin/munin-node.conf
 

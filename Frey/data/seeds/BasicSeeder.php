@@ -51,7 +51,7 @@ class BasicSeeder extends AbstractSeed
         $_SERVER['HTTP_X_DEBUG_TOKEN'] = 'CHANGE_ME';
         $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] = 'CHANGE_ME_INTERNAL';
 
-        list($adminId, $adminGroupId) = \Frey\BootstrapAccess::create($db, $config, $meta, 'admin@localhost.localdomain', '123456');
+        list($adminId, $adminGroupId) = \Frey\BootstrapAccess::create($db, $config, $meta, $this->_mc, 'admin@localhost.localdomain', '123456');
 
         $groupIds = $this->_seedGroups($db, $config, $meta, $this->_mc, $adminGroupId);
         $personIds = $this->_seedPersons($db, $config, $meta, $this->_mc, $groupIds, $adminId);

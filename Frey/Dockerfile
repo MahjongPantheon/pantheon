@@ -6,6 +6,8 @@ ENV PHINX_DB_FREY_NAME_UNIT frey_unit
 ENV PHINX_DB_FREY_USER frey
 ENV PHINX_DB_FREY_PASS pgpass
 
+ENV PHP_IDE_CONFIG serverName=pantheon_frey
+
 RUN echo "host_name frey" >> /etc/munin/munin-node.conf
 
 RUN ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \

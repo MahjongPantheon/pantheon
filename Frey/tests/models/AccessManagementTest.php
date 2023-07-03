@@ -593,35 +593,35 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
     public function testGetAccessRulesUnion()
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta, $this->_mc);
-        $model->addRuleForPerson(
+        $this->assertNotEmpty($model->addRuleForPerson(
             'test_rule1',
             'ololo1',
             AccessPrimitive::TYPE_ENUM,
             $this->_person->getId(),
             $this->_eventId
-        );
-        $model->addRuleForPerson(
+        ));
+        $this->assertNotEmpty($model->addRuleForPerson(
             'test_rule3',
             'ololo3',
             AccessPrimitive::TYPE_ENUM,
             $this->_person->getId(),
             $this->_eventId
-        );
-        $model->addRuleForGroup(
+        ));
+        $this->assertNotEmpty($model->addRuleForGroup(
             'test_rule2',
             'ololo2',
             AccessPrimitive::TYPE_ENUM,
             $this->_group->getId(),
             $this->_eventId
-        );
-        $model->addRuleForGroup(
+        ));
+        $this->assertNotEmpty($model->addRuleForGroup(
             'test_rule4',
             'ololo4',
             AccessPrimitive::TYPE_ENUM,
             $this->_group->getId(),
             $this->_eventId
-        );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        ));
+        $this->_mc->flush();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -668,7 +668,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_person->getId(),
             null
         );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        $this->_mc->flush();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -715,7 +715,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             null
         );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        $this->_mc->flush();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -762,7 +762,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             $this->_eventId
         );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        $this->_mc->flush();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -808,7 +808,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_person->getId(),
             null
         );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        $this->_mc->flush();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -854,7 +854,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             null
         );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        $this->_mc->flush();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -928,7 +928,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             null
         );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        $this->_mc->flush();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -976,7 +976,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             $this->_eventId
         );
-        $this->_mc->deleteMulti($this->_mc->getAllKeys());
+        $this->_mc->flush();
         $this->assertEquals('ololo1', $model->getRuleValue(
             $this->_person->getId(),
             $this->_eventId,
