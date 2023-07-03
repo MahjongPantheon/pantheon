@@ -26,7 +26,9 @@ if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
 $config = new Config($configPath);
 $db = new Db($config);
 $freyClient = new FreyClientTwirp($config->getStringValue('freyUrl'));
-$ds = new DataSource($db, $freyClient);
+$mc = new \Memcached();
+$mc->addServer('127.0.0.1', 11211);
+$ds = new DataSource($db, $freyClient, $mc);
 
 $allEvents = $db->table('event')
     ->rawQuery('select id from event')

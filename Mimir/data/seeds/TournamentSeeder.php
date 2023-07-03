@@ -142,6 +142,8 @@ class TournamentSeeder extends AbstractSeed
             'X-Internal-Query-Secret' => 'CHANGE_ME_INTERNAL',
             'X-Debug-Token' => 'CHANGE_ME'
         ]);
-        return [new \Mimir\DataSource($db, $frey), $cfg];
+        $mc = new \Memcached();
+        $mc->addServer('127.0.0.1', 11211);
+        return [new \Mimir\DataSource($db, $frey, $mc), $cfg];
     }
 }

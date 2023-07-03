@@ -19,6 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/DataSource.php';
 
+use Memcached;
 use Monolog\Logger;
 use Michelf\Markdown;
 

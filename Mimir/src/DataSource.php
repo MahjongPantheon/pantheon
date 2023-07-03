@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Memcached;
+
 require_once __DIR__ . '/../src/interfaces/IDb.php';
 require_once __DIR__ . '/../src/interfaces/IFreyClient.php';
 require_once __DIR__ . '/../tests/util/FreyClientMock.php';
@@ -38,11 +40,16 @@ class DataSource
      * @var IFreyClient
      */
     protected $_freyClient;
+    /**
+     * @var Memcached
+     */
+    protected $_mc;
 
-    public function __construct(IDb $db, IFreyClient $freyClient)
+    public function __construct(IDb $db, IFreyClient $freyClient, Memcached $mc)
     {
         $this->_db = $db;
         $this->_freyClient = $freyClient;
+        $this->_mc = $mc;
     }
 
     /**
@@ -56,6 +63,11 @@ class DataSource
     public function local(): IDb
     {
         return $this->_db;
+    }
+
+    public function memcache(): Memcached
+    {
+        return $this->_mc;
     }
 
     /**

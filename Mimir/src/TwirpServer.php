@@ -143,6 +143,7 @@ use Common\TsumoResult;
 use Common\TwirpError;
 use Common\YakuStat;
 use Exception;
+use Memcached;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Twirp\ErrorCode;
@@ -160,6 +161,7 @@ final class TwirpServer implements Mimir
     protected Meta $_meta;
     protected Config $_config;
     protected Storage $_storage;
+    protected Memcached $_mc;
 
     /**
      * @param ?string $configPath
@@ -172,13 +174,15 @@ final class TwirpServer implements Mimir
         date_default_timezone_set($this->_config->getStringValue('serverDefaultTimezone') ?: 'UTC');
         $this->_storage = new \Common\Storage($this->_config->getStringValue('cookieDomain'));
         $this->_db = new Db($this->_config);
+        $this->_mc = new \Memcached();
+        $this->_mc->addServer('127.0.0.1', 11211);
         $freyUrl = $this->_config->getStringValue('freyUrl');
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
         } else {
             $this->_frey = new FreyClientTwirp($freyUrl);
         }
-        $this->_ds = new DataSource($this->_db, $this->_frey);
+        $this->_ds = new DataSource($this->_db, $this->_frey, $this->_mc);
         $this->_meta = new Meta($this->_frey, $this->_storage, $this->_config, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());

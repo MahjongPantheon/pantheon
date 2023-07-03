@@ -68,7 +68,7 @@ class PlayerPrimitive extends Primitive
         $fetchedData = [];
         $fetchedRemote = [];
         foreach ($ids as $id) {
-            $info = apcu_fetch('player_info_' . $id);
+            $info = $ds->memcache()->get('player_info_' . $id);
             if (!$info) {
                 $missingIds []= $id;
             } else {
@@ -77,8 +77,8 @@ class PlayerPrimitive extends Primitive
         }
         if (count($missingIds) > 0) {
             $data = $ds->remote()->getPersonalInfo($missingIds);
-            $fetchedRemote = array_reduce($data, function ($acc, $item) {
-                apcu_store('player_info_' . $item['id'], $item, 300);
+            $fetchedRemote = array_reduce($data, function ($acc, $item) use ($ds) {
+                $ds->memcache()->set('player_info_' . $item['id'], $item, 300);
                 $acc[$item['id']] = $item;
                 return $acc;
             }, []);
