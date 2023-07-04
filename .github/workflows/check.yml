@@ -7,8 +7,6 @@ on:
 jobs:
   checkPr:
     runs-on: ubuntu-latest
-    env:
-      NO_XDEBUG: true
     steps:
       - uses: actions/checkout@v2
 

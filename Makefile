@@ -264,7 +264,6 @@ prod_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
 
 .PHONY: prod_compile
-prod_compile: export NO_XDEBUG=1
 prod_compile: export ENV_FILENAME=.env.production
 prod_compile:
 	@cp Env/.env.production Tyr/.env.production

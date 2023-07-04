@@ -26,7 +26,7 @@ enable_debug:
 		xdebug.mode=debug\n \
 		xdebug.client_host=172.17.0.1\n \
 		xdebug.client_port=9001\n" > /etc/php81/conf.d/50_xdebug.ini
-	@kill -SIGUSR2 `ps ax| grep php-fpm | grep master | awk '{print $$1}'`
+	$(shell kill -SIGUSR2 `ps ax| grep php-fpm | grep master | awk '{print $$1}'`)
 
 .PHONY: docker_enable_debug
 docker_enable_debug: get_docker_id
