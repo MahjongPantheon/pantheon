@@ -73,7 +73,7 @@ if (!!(window as any).opera || navigator.userAgent.includes(' OPR/')) {
   browser = 'msie';
 } else if (!!(window as any).StyleMedia) {
   browser = 'edge';
-} else if (!!(window as any).chrome && !!(window as any).chrome.webstore) {
+} else if (!!(window as any).chrome) {
   browser = 'chrome';
 }
 

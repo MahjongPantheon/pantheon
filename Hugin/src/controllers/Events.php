@@ -130,7 +130,7 @@ class EventsController extends Controller
             $_SERVER['REMOTE_ADDR'],
             $parsed['s'], $parsed['si'], $parsed['h'],
             $parsed['o'], $parsed['d'], $parsed['sc'],
-            $parsed['l'], $parsed['t'], $parsed['e'] ?? 'page_view',
+            $parsed['l'], $parsed['t'], $parsed['e'] ?: 'page_view',
             $parsed['m'] ?? '', $parsed['b']
         ]);
 

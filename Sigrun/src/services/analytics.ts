@@ -95,7 +95,7 @@ export class Analytics {
       Analytics.browser = 'msie';
     } else if (!!(window as any).StyleMedia) {
       Analytics.browser = 'edge';
-    } else if (!!(window as any).chrome && !!(window as any).chrome.webstore) {
+    } else if (!!(window as any).chrome) {
       Analytics.browser = 'chrome';
     }
   }
