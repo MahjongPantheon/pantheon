@@ -37,6 +37,7 @@ export class Analytics {
   private readonly _track: typeof Analytics.prototype.track | null = null;
   private readonly _trackView: typeof Analytics.prototype.trackView | null = null;
   private static OSName = 'Unknown OS';
+  private static browser = 'unknown';
   private static sessionId: string;
   private static isTablet = false;
   private static isMobile = false;
@@ -73,6 +74,30 @@ export class Analytics {
       )
         Analytics.isMobile = true;
     })(navigator.userAgent || navigator.vendor || (window as any).opera);
+
+    if (!!(window as any).opera || navigator.userAgent.includes(' OPR/')) {
+      // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+      Analytics.browser = 'opera';
+    } else if (typeof (window as any).InstallTrigger !== 'undefined') {
+      // Firefox 1.0+
+      Analytics.browser = 'firefox';
+    } else if (
+      /constructor/i.test((window as any).HTMLElement) ||
+      (function (p) {
+        return p.toString() === '[object SafariRemoteNotification]';
+      })(!(window as any).safari || (window as any).safari.pushNotification)
+    ) {
+      // Safari 3.0+
+      Analytics.browser = 'safari';
+      // eslint-disable-next-line no-constant-binary-expression
+    } else if (/*@cc_on!@*/ false || !!(document as any).documentMode) {
+      // Internet Explorer 6-11
+      Analytics.browser = 'msie';
+    } else if (!!(window as any).StyleMedia) {
+      Analytics.browser = 'edge';
+    } else if (!!(window as any).chrome && !!(window as any).chrome.webstore) {
+      Analytics.browser = 'chrome';
+    }
   }
 
   protected _trackViewEvent(url: string) {
@@ -92,6 +117,8 @@ export class Analytics {
         t: window.document.title,
         u: url,
       },
+      e: this._eventId,
+      b: Analytics.browser,
     };
     fetch(this._statDomain, {
       credentials: 'omit',
@@ -125,8 +152,9 @@ export class Analytics {
       sc: `${window.innerWidth}x${window.innerHeight}`,
       l: navigator.language,
       t: new Date(),
-      e: eventName,
-      m: { u: url, ...eventData },
+      m: { u: url, ...eventData, eventName },
+      e: this._eventId,
+      b: Analytics.browser,
     };
     fetch(this._statDomain, {
       credentials: 'omit',

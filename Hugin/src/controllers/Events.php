@@ -21,6 +21,7 @@ use Common\HuginData;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../primitives/Event.php';
+require_once __DIR__ . '/../primitives/SysError.php';
 require_once __DIR__ . '/../primitives/AggregateDay.php';
 require_once __DIR__ . '/../primitives/AggregateMonth.php';
 
@@ -47,6 +48,7 @@ class EventsController extends Controller
      *   "t": DATE,
      *   "e": EVENT_ID, // nullable, page_view by default
      *   "m": EVENT_META // nullable
+     *   "b:" BROWSER
      * }
      *
      * @param string $data
@@ -114,7 +116,7 @@ class EventsController extends Controller
     {
         if (!$parsed || empty($parsed['s']) || empty($parsed['si']) || empty($parsed['h']) ||
             empty($parsed['o']) || empty($parsed['d']) || empty($parsed['sc']) ||
-            empty($parsed['l']) || empty($parsed['t'])) {
+            empty($parsed['l']) || empty($parsed['t']) || empty($parsed['b'])) {
             return 'malformed payload';
         }
 
@@ -128,7 +130,8 @@ class EventsController extends Controller
             $_SERVER['REMOTE_ADDR'],
             $parsed['s'], $parsed['si'], $parsed['h'],
             $parsed['o'], $parsed['d'], $parsed['sc'],
-            $parsed['l'], $parsed['t'], $parsed['e'] ?? 'page_view', $parsed['m'] ?? ''
+            $parsed['l'], $parsed['t'], $parsed['e'] ?? 'page_view',
+            $parsed['m'] ?? '', $parsed['b']
         ]);
 
         // Don't query DB and geoip for each track request, do it once every twenty requests
@@ -170,6 +173,7 @@ class EventsController extends Controller
                     ->setCreatedAt($data[7])
                     ->setEventType($data[8])
                     ->setEventMeta(json_encode($data[9]) ?: '')
+                    ->setBrowser($data[10])
                     ->setCountry($country)
                     ->setCity($city)
                     ->save();

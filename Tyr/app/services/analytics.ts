@@ -52,6 +52,31 @@ let isMobile = false;
     isMobile = true;
 })(navigator.userAgent || navigator.vendor || (window as any).opera);
 
+let browser = 'unknown';
+if (!!(window as any).opera || navigator.userAgent.includes(' OPR/')) {
+  // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+  browser = 'opera';
+} else if (typeof (window as any).InstallTrigger !== 'undefined') {
+  // Firefox 1.0+
+  browser = 'firefox';
+} else if (
+  /constructor/i.test((window as any).HTMLElement) ||
+  (function (p) {
+    return p.toString() === '[object SafariRemoteNotification]';
+  })(!(window as any).safari || (window as any).safari.pushNotification)
+) {
+  // Safari 3.0+
+  browser = 'safari';
+  // eslint-disable-next-line no-constant-binary-expression
+} else if (/*@cc_on!@*/ false || !!(document as any).documentMode) {
+  // Internet Explorer 6-11
+  browser = 'msie';
+} else if (!!(window as any).StyleMedia) {
+  browser = 'edge';
+} else if (!!(window as any).chrome && !!(window as any).chrome.webstore) {
+  browser = 'chrome';
+}
+
 export class Analytics {
   public static readonly NOT_INITIALIZED = 'not_initialized';
   public static readonly LOGOUT = 'logout';
@@ -87,6 +112,8 @@ export class Analytics {
         t: window.document.title,
         u: url,
       },
+      e: this._eventId,
+      b: browser,
     };
     fetch(this._statDomain, {
       credentials: 'omit',
@@ -120,8 +147,9 @@ export class Analytics {
       sc: `${window.innerWidth}x${window.innerHeight}`,
       l: navigator.language,
       t: new Date(),
-      e: eventName,
-      m: { u: url, ...eventData },
+      e: this._eventId,
+      m: { u: url, ...eventData, eventName },
+      b: browser,
     };
     fetch(this._statDomain, {
       credentials: 'omit',
