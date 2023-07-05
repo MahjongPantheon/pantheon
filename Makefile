@@ -289,7 +289,7 @@ prod_compile:
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
 prod_start:
-	@${COMPOSE_COMMAND} up -d
+	ALLOWED_SENDER_DOMAINS=`cat Env/.env.production | grep ALLOWED_SENDER_DOMAINS= | awk -F'=' '{print $$2}'` ${COMPOSE_COMMAND} up -d
 
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production

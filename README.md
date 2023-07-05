@@ -41,7 +41,7 @@ To update code on production server you will need to do the following:
 
 1. (Optional) Pull new containers using `make pull`
 2. Get new code from the repository (e.g. run `git fetch && git checkout origin/master` in repo folder)
-3. Restart containers with `make prod_restart`
+3. Restart containers with `make prod_restart` (please use this exact command, otherwise email service will be started with wrong environment settings)
 4. Run `make prod_compile` to build newer versions of the static code.
 
 If you ever change the environment variables in your current `Env/.env.production` file, you should also restart the containers using `make prod_restart`. After that,
