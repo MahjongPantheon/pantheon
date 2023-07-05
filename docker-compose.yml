@@ -36,13 +36,12 @@ services:
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
   pgadmin:
-    image: docker.io/dpage/pgadmin4
+    image: docker.io/dpage/pgadmin4:7.3
     ports:
       - "127.0.0.1:5632:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
       PGADMIN_DEFAULT_PASSWORD: "password"
-      PGADMIN_CONFIG_WTF_CSRF_CHECK_DEFAULT: "False"
       PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
     volumes:
       - pgadmindata:/var/lib/pgadmin
