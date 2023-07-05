@@ -20,6 +20,7 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
    - Docker with compose plugin - to run containers via docker runtime
    - Podman-docker wrapper and podman-compose - to run containers over kubernetes setup.
+     - If you're using podman, please make sure you have `ip_tables` module inserted into your kernel on the host. Otherwise, containers will fail to start.
 2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
@@ -59,12 +60,6 @@ to `Hermod/opendkim_keys` folder. Also following setting are required:
 You may use `bin/letsencrypt-scripts` and `nginx-reverse-proxy.example.conf` as an example and reference to set up your SSL certificates using Let's Encrypt. 
 If you're not intending to use https, please disable corresponding directives in your reverse proxy nginx config.
 
-#### Podman
-
-You can use `podman` and `podman-compose` to start pantheon containers.
-If you're using podman instead of docker, make sure you have `ip_tables` module inserted into your kernel.
-Also make sure to use `podman-compose pull` before running `podman-compose up` to use pre-built images. 
-
 #### Setting up database backups
 
 Pantheon provides built-in database backups using git. By default, it just stores database dump as new commits in `/var/lib/postgresql/backup` folder
@@ -101,7 +96,7 @@ to container shell, if you want to. Notice that killing php-fpm, postgres or ngi
 3. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
 
 To create an event and fill it with some data, run `make seed`, `make seed_bigevent` or `make seed_tournament` (with `sudo` if required). Note that users are
-re-seeded on each command run. 
+re-seeded on each command run.
 
 A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md) is available.
 
