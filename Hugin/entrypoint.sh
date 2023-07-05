@@ -5,6 +5,8 @@ cat /env/"$ENV_FILENAME" | grep -v '# ' | grep -v  -e '^$' | awk '{ print "expor
 echo "export PS1=\"|\033[1;31m Hugin container \033[0m~> \$PWD (\\u) \\$ \"" >> /etc/profile.d/external.sh
 . /etc/profile.d/external.sh
 
+chown -R munin /var/lib/munin/spool
+
 # -l 0 for verbosity
 crond -b -l 8 -L /tmp/cronlogs
 

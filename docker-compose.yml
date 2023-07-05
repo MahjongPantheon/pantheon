@@ -4,6 +4,7 @@ volumes:
   datavolume01: {}
   backupvolume01: {}
   configvolume01: {}
+  muninvolume01: {}
   pgadmindata:
 services:
   db:
@@ -175,6 +176,7 @@ services:
       - ./Env:/env
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
+      - muninvolume01:/var/lib/munin/spool
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
