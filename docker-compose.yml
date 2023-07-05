@@ -9,7 +9,7 @@ volumes:
 services:
   db:
     build: ./Database
-    image: docker.io/ctizen/pantheon_db
+    image: ghcr.io/mahjongpantheon/pantheon-database
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
@@ -23,7 +23,7 @@ services:
       - backupvolume01:/var/lib/postgresql/backup
   hermod:
     build: ./Hermod
-    image: docker.io/ctizen/pantheon_hermod
+    image: ghcr.io/mahjongpantheon/pantheon-hermod
     hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
     ports:
       - "127.0.0.1:4109:80"
@@ -47,7 +47,7 @@ services:
       - pgadmindata:/var/lib/pgadmin
   tyr:
     build: ./Tyr
-    image: docker.io/ctizen/pantheon_tyr
+    image: ghcr.io/mahjongpantheon/pantheon-tyr
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:4103:8080"
@@ -68,7 +68,7 @@ services:
       - ./Common:/var/www/html/Common
   forseti:
     build: ./Forseti
-    image: docker.io/ctizen/pantheon_forseti
+    image: ghcr.io/mahjongpantheon/pantheon-forseti
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:4107:8080"
@@ -89,7 +89,7 @@ services:
       - ./Common:/var/www/html/Common
   mimir:
     build: ./Mimir
-    image: docker.io/ctizen/pantheon_mimir
+    image: ghcr.io/mahjongpantheon/pantheon-mimir
     ports:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
@@ -110,7 +110,7 @@ services:
       PHINX_DB_HOST: db
   frey:
     build: ./Frey
-    image: docker.io/ctizen/pantheon_frey
+    image: ghcr.io/mahjongpantheon/pantheon-frey
     ports:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
@@ -131,7 +131,7 @@ services:
       PHINX_DB_FREY_HOST: db
   sigrun:
     build: ./Sigrun
-    image: docker.io/ctizen/pantheon_sigrun
+    image: ghcr.io/mahjongpantheon/pantheon-sigrun
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:4102:8080"
@@ -152,7 +152,7 @@ services:
       - ./Common:/var/www/html/Common
   hugin:
     build: ./Hugin
-    image: docker.io/ctizen/pantheon_hugin
+    image: ghcr.io/mahjongpantheon/pantheon-hugin
     ports:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:4011:8080"

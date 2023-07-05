@@ -1,4 +1,4 @@
-FROM docker.io/ctizen/pantheon_backend_common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common:latest
 
 # these should match auth data in dbinit.sql
 ENV PHINX_DB_NAME mimir

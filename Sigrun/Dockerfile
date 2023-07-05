@@ -1,4 +1,4 @@
-FROM docker.io/ctizen/pantheon_frontend_common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-frontend-common:latest
 
 RUN echo "host_name sigrun" >> /etc/munin/munin-node.conf
 

@@ -1,4 +1,4 @@
-FROM docker.io/ctizen/pantheon_backend_common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common:latest
 
 # these should match auth data in dbinit_hugin.sql
 ENV PHINX_DB_HUGIN_NAME hugin

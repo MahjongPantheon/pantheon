@@ -1,4 +1,4 @@
-FROM docker.io/ctizen/pantheon_backend_common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common:latest
 
 RUN echo "host_name hermod" >> /etc/munin/munin-node.conf
 

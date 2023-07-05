@@ -1,4 +1,4 @@
-FROM docker.io/ctizen/pantheon_backend_common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common:latest
 
 ENV PGDATA              /var/lib/postgresql/data
 ENV POSTGRES_PASSWORD   pgpass
