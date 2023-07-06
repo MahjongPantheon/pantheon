@@ -40,12 +40,14 @@ import { PlayerSeating } from '../clients/proto/atoms.pb';
 import sound from '../../assets/snd/5min.wav';
 import { useI18n } from '../hooks/i18n';
 import { Meta } from '../components/Meta';
+import { useMediaQuery } from '@mantine/hooks';
 
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
   const i18n = useI18n();
   const [, setSoundPlayed] = useState(false);
   const [, setCurrentTimer] = useState(0);
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
   const [timerWaiting, setTimerWaiting] = useState(false);
@@ -97,7 +99,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
         setCurrentTimer((oldT) => {
           const newT = oldT - 1;
           const showSeat = newT > hideSeatingAfter; // hideSeatingAfter contains time point on decreasing scale.
-          setFormattedTimer(formatTimer(newT <= 0, newT, showSeat));
+          setFormattedTimer(formatTimer(newT <= 0, newT, showSeat || !largeScreen));
           setShowSeating(showSeat);
           if (oldT > 0 && oldT % 60 === 0) {
             // update timer from server once a minute (auto update in case of timer reset, for example)
@@ -231,7 +233,7 @@ function formatTimer(finished: boolean, timeRemaining: number, small: boolean) {
       : '0' + (timeRemaining % 60).toString();
 
   return (
-    <Text size={small ? 120 : 240}>
+    <Text size={small ? 100 : 240}>
       {minutes}:{seconds}
     </Text>
   );
