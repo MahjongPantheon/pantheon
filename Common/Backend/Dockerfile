@@ -51,6 +51,7 @@ RUN apk update && \
     opendkim \
     net-tools \
     findutils \
+    openssh \
     ca-certificates \
     tzdata \
     supervisor \
