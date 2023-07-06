@@ -150,7 +150,7 @@ export const ProfileSignup: React.FC = () => {
             {i18n._t('show / hide')}
           </Button>
         </Group>
-        <small>Effective date: March 28, 2023</small>
+        <small>Effective date: July 07, 2023</small>
         <Collapse in={opened}>
           <p>
             Pantheon ("us", "we", or "our") operates the {import.meta.env.VITE_ROOT_HOST} domain and
@@ -240,7 +240,7 @@ export const ProfileSignup: React.FC = () => {
             <li>To notify you about changes to our Service</li>
             <li>
               To allow you to participate in interactive features of our Service when you choose to
-              do so
+              do so.
             </li>
             <li>To provide analysis or valuable information so that we can improve the Service</li>
             <li>To monitor the usage of the Service</li>
@@ -271,6 +271,14 @@ export const ProfileSignup: React.FC = () => {
                 servers inside EU. If this is impossible for some reasons, all players will be
                 notified about it not later than a month before the transfer.
               </p>
+              <p>
+                User data will also be processed with{' '}
+                <a href='https://mahjong.click' target='_blank'>
+                  Mahjong portal
+                </a>
+                . Mahjong portal service is also located in EU and obeys EU privacy laws. Please
+                refer to Mahjong portal privacy policy for details.
+              </p>
             </>
           )}
           {import.meta.env.VITE_ROOT_HOST !== 'riichimahjong.org' && (
@@ -289,6 +297,10 @@ export const ProfileSignup: React.FC = () => {
                 If you are located outside the location of the current instance and choose to
                 provide information to us, please note that we may transfer the data, including
                 Personal Data, to the country where the server is located and process it there.
+              </p>
+              <p>
+                Server administrators may choose to process user data on additional servers. Please
+                contact administrators for details.
               </p>
             </>
           )}
@@ -343,13 +355,13 @@ export const ProfileSignup: React.FC = () => {
           <ul>
             <li>
               <p>
-                <strong>Umami.js</strong>
+                <strong>Embedded analytics service</strong>
               </p>
               <p>
-                Umami.js is an open source web analytics software that tracks and reports website
-                traffic. This software is self-hosted on primary Pantheon server
-                (pl.riichimahjong.org). All the collected data is anonymous, but it can be shared
-                with developer crew to improve Pantheon service.
+                Hugin - sub-service of Pantheon - tracks and reports website traffic. All the
+                collected data is anonymous, but it can be shared with developer crew to improve
+                Pantheon service. All data is depersonalized, so the analytics service is considered
+                GDPR-compliant.
               </p>
               <p>
                 For a self-hosted Pantheon instance, the administrator may choose to disable

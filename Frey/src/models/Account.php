@@ -160,6 +160,26 @@ class AccountModel extends Model
             $persons[0]->setEmail($email);
         }
 
+        $webhook = $this->_config->getValue('userinfoHook');
+        if (!empty($webhook)) {
+            $ch = curl_init($webhook);
+            $payload = json_encode([
+                'auth_key' => $this->_meta->getAuthToken(), // ?
+                'city' => $city,
+                'email' => $persons[0]->getEmail(), // ?
+                'country' => $country,
+                'phone' => $phone, // ?
+                'title' => $title,
+                'person_id' => $persons[0]->getId(),
+                'tenhou_id' => $tenhouId,
+            ]);
+            curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+            curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            curl_exec($ch);
+            curl_close($ch);
+        }
+
         return $persons[0]->setTitle($title)
             ->setCountry($country)
             ->setCity($city)
