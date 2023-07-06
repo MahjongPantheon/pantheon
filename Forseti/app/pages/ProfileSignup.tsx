@@ -248,20 +248,50 @@ export const ProfileSignup: React.FC = () => {
           </ul>
 
           <h3>Transfer Of Data</h3>
-          <p>
-            Main instance of Pantheon is located in Finland at the moment of publishing this privacy
-            policy.
-          </p>
-          <p>
-            Your information, including Personal Data, may be transferred to — and maintained on —
-            computers located outside of your state, province, country or other governmental
-            jurisdiction where the data protection laws may differ than those from your
-            jurisdiction.
-          </p>
-          <p>
-            If you are located outside Finland and choose to provide information to us, please note
-            that we may transfer the data, including Personal Data, to Finland and process it there.
-          </p>
+          {import.meta.env.VITE_ROOT_HOST === 'riichimahjong.org' && (
+            <>
+              <p>
+                Main instance of Pantheon is located in Germany at the moment of publishing this
+                privacy policy.
+              </p>
+              <p>
+                Your information, including Personal Data, may be transferred to — and maintained on
+                — computers located outside of your state, province, country or other governmental
+                jurisdiction where the data protection laws may differ than those from your
+                jurisdiction.
+              </p>
+              <p>
+                If you are located outside Germany and choose to provide information to us, please
+                note that we may transfer the data, including Personal Data, to Germany and process
+                it there.
+              </p>
+              <p>
+                Location of primary server may be updated. The privacy policy will be updated
+                accordingly. Primary instance server administrators will do everything to keep
+                servers inside EU. If this is impossible for some reasons, all players will be
+                notified about it not later than a month before the transfer.
+              </p>
+            </>
+          )}
+          {import.meta.env.VITE_ROOT_HOST !== 'riichimahjong.org' && (
+            <>
+              <p>
+                Location of this instance of Pantheon is up to server instance administrators. Reach
+                them for more information about server location.
+              </p>
+              <p>
+                Your information, including Personal Data, may be transferred to — and maintained on
+                — computers located outside of your state, province, country or other governmental
+                jurisdiction where the data protection laws may differ than those from your
+                jurisdiction.
+              </p>
+              <p>
+                If you are located outside the location of the current instance and choose to
+                provide information to us, please note that we may transfer the data, including
+                Personal Data, to the country where the server is located and process it there.
+              </p>
+            </>
+          )}
           <p>
             Your consent to this Privacy Policy followed by your submission of such information
             represents your agreement to that transfer.
