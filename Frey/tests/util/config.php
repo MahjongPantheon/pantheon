@@ -43,6 +43,7 @@ return [
     'verboseLog' => __DIR__ . '/../../data/verbose.log',
     'cookieDomain' => 'localhost',
     'trackerUrl' => null,
+    'userinfoHook' => null,
     'api' => [
         'version_major' => 1,
         'version_minor' => 0

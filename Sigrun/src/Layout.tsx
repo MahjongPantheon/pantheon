@@ -84,6 +84,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     ratingHidden: false,
     hasSeries: false,
     withChips: false,
+    minGamesCount: 0,
   });
   const setData = (newData: Partial<Globals>) => {
     setDataInt((old) => ({ ...old, ...newData }));
