@@ -287,7 +287,7 @@ class PlayerStatModel extends Model
      */
     protected function _getPointsDeltaForRound(RoundPrimitive $r, int $playerId, bool $isTsumo, ?array $multironRiichiWinners = null)
     {
-        $sessionState = $r->getLastSessionState();
+        $sessionState = $r->getLastSessionState(true);
         $winnerId = $r->getWinnerId();
         $riichiIds = $r->getRiichiIds();
 
@@ -405,13 +405,13 @@ class PlayerStatModel extends Model
                     $mr = $r;
 
                     // for calculating avg win/loss costs
-                    $lastSessionState = $mr->getLastSessionState();
+                    $lastSessionState = $mr->getLastSessionState(true);
                     $multironRiichiWinners = PointsCalc::assignRiichiBets(
                         $mr->rounds(),
                         $mr->getLoserId(),
                         $lastSessionState->getRiichiBets(),
                         $lastSessionState->getHonba(),
-                        $mr->getSession()
+                        $mr->getSession(true)
                     );
 
                     foreach ($mr->rounds() as $round) {

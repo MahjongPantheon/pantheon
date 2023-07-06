@@ -159,15 +159,16 @@ class MultiRoundPrimitive extends RoundPrimitive
     }
 
     /**
+     * @param bool $withCache
      * @return SessionState
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    public function getLastSessionState()
+    public function getLastSessionState($withCache = false)
     {
         return SessionState::fromJson(
             $this->_rounds[0]->getEvent()->getRulesetConfig(),
-            $this->_rounds[0]->getSession()->getPlayersIds(),
+            $this->_rounds[0]->getSession($withCache)->getPlayersIds(),
             $this->_rounds[0]->_lastSessionState
         );
     }
@@ -190,7 +191,7 @@ class MultiRoundPrimitive extends RoundPrimitive
         throw new InvalidParametersException('MultiRound should not be treated as round');
     }
 
-    public function getEvent()
+    public function getEvent($withCache = false)
     {
         throw new InvalidParametersException('MultiRound should not be treated as round');
     }
@@ -315,9 +316,14 @@ class MultiRoundPrimitive extends RoundPrimitive
         return $this;
     }
 
-    public function getSession()
+    /**
+     * @param $withCache
+     * @return SessionPrimitive|null
+     * @throws EntityNotFoundException
+     */
+    public function getSession($withCache = false)
     {
-        return $this->_rounds[0]->getSession();
+        return $this->_rounds[0]->getSession($withCache);
     }
 
     public function getSessionId()
