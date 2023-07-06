@@ -39,6 +39,8 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
         delta: player.ratingDelta,
       };
     });
+
+    players.sort((p1, p2) => p2.score - p1.score);
   }
 
   const canStartGame =
