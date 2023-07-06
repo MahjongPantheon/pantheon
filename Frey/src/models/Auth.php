@@ -49,6 +49,13 @@ class AuthModel extends Model
             throw new InvalidParametersException('Password is too weak', 411);
         }
 
+        $alreadyRegistered = PersonPrimitive::findByEmail($this->_db, [$email]);
+        if (!empty($alreadyRegistered) && $sendEmail) {
+            $conf = $this->_config->getValue('mailer');
+            $mailer = new Mailer($conf['gui_url'], $conf['mode'], $conf['mailer_addr'], $conf['remote_url'], $conf['remote_action_key']);
+            return $mailer->sendAlreadyRegisteredMail($email);
+        }
+
         $pw = $this->makePasswordTokens($password);
 
         $reg = (new RegistrantPrimitive($this->_db))

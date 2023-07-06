@@ -87,6 +87,39 @@ class Mailer
 
     /**
      * @param string $signupEmail
+     * @return string
+     */
+    public function sendAlreadyRegisteredMail($signupEmail)
+    {
+        /* @phpstan-ignore-next-line */
+        self::_send(
+            $signupEmail,
+            _t('Pantheon: your email is already registered'),
+            _t("Hello!
+
+You (or someone else) had just attempted to register an email that we already have in our database.
+
+If it was you, please login to the system instead. You can use password recovery if you can't remember your password.
+
+If it wasn't you, you may safely ignore this message.
+
+Sincerely yours,
+Pantheon support team
+"),
+            [
+                'MIME-Version' => '1.0',
+                'List-Unsubscribe' => $this->_mailerAddress,
+                'X-Mailer' => 'PantheonNotifier/2.0'
+            ],
+            '-F "Pantheon mail service" -f ' . $this->_mailerAddress
+        );
+
+        return '';
+    }
+
+
+    /**
+     * @param string $signupEmail
      * @param string $regLink
      * @return string
      */
