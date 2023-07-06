@@ -36,17 +36,19 @@ class EventRatingTableModel extends Model
      * @param string $orderBy
      * @param string $order
      * @param bool $withPrefinished
+     * @param bool $onlyMinGames
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $withPrefinished = false)
+    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $withPrefinished = false, $onlyMinGames = false)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
         }
 
         $mainEvent = $eventList[0];
+        $minGamesCount = $mainEvent->getMinGamesCount();
 
         /** @var PlayerHistoryPrimitive[] $playersHistoryItemsCombined */
         $playersHistoryItemsCombined = [];
@@ -168,6 +170,12 @@ class EventRatingTableModel extends Model
                 'games_played'  => (int)$el->getGamesPlayed()
             ];
         }, $playerHistoryItemsSummed);
+
+        if ($onlyMinGames) {
+            $data = array_filter($data, function ($el) use ($minGamesCount) {
+                return $el['games_played'] >= $minGamesCount;
+            });
+        }
 
         return $data;
     }

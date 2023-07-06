@@ -60,9 +60,11 @@ export const RatingTable: React.FC<{
   params: {
     eventId: string;
     orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team';
+    minGamesSelector?: 'all' | 'min';
   };
-}> = ({ params: { eventId, orderBy } }) => {
+}> = ({ params: { eventId, orderBy, minGamesSelector } }) => {
   orderBy = orderBy ?? 'rating';
+  minGamesSelector = minGamesSelector ?? 'all';
   const order = {
     name: 'asc',
     rating: 'desc',
@@ -81,14 +83,15 @@ export const RatingTable: React.FC<{
   const globals = useContext(globalsCtx);
   const [players, , playersLoading] = useIsomorphicState(
     [],
-    'RatingTable_event_' + eventId + order + orderBy,
+    'RatingTable_event_' + eventId + order + orderBy + minGamesSelector,
     () =>
       api.getRatingTable(
         parseInt(eventId, 10),
         order ?? 'desc',
-        orderBy === 'team' ? 'rating' : orderBy ?? 'rating'
+        orderBy === 'team' ? 'rating' : orderBy ?? 'rating',
+        minGamesSelector === 'min'
       ),
-    [eventId, order, orderBy]
+    [eventId, order, orderBy, minGamesSelector]
   );
 
   if (!players || !events) {
@@ -204,9 +207,15 @@ export const RatingTable: React.FC<{
                       <IconSortDescending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${eventId}/order/rating`}
+                  href={`/event/${eventId}/order/rating${
+                    minGamesSelector === 'min' ? '/filter/min' : ''
+                  }`}
                   onClick={(e) => {
-                    navigate(`/event/${eventId}/order/rating`);
+                    navigate(
+                      `/event/${eventId}/order/rating${
+                        minGamesSelector === 'min' ? '/filter/min' : ''
+                      }`
+                    );
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -228,9 +237,15 @@ export const RatingTable: React.FC<{
                       <IconSortDescending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${eventId}/order/avg_score`}
+                  href={`/event/${eventId}/order/avg_score${
+                    minGamesSelector === 'min' ? '/filter/min' : ''
+                  }`}
                   onClick={(e) => {
-                    navigate(`/event/${eventId}/order/avg_score`);
+                    navigate(
+                      `/event/${eventId}/order/avg_score${
+                        minGamesSelector === 'min' ? '/filter/min' : ''
+                      }`
+                    );
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -250,9 +265,15 @@ export const RatingTable: React.FC<{
                       <IconSortAscending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${eventId}/order/avg_place`}
+                  href={`/event/${eventId}/order/avg_place${
+                    minGamesSelector === 'min' ? '/filter/min' : ''
+                  }`}
                   onClick={(e) => {
-                    navigate(`/event/${eventId}/order/avg_place`);
+                    navigate(
+                      `/event/${eventId}/order/avg_place${
+                        minGamesSelector === 'min' ? '/filter/min' : ''
+                      }`
+                    );
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -263,6 +284,56 @@ export const RatingTable: React.FC<{
             </DataCmp>
           </Stack>
         </DataCmp>
+        {globals.data.minGamesCount > 0 && orderBy !== 'team' && (
+          <>
+            <Space h='md' />
+            <Divider size='xs' />
+            <Space h='md' />
+            <DataCmp grow={largeScreen ? true : undefined}>
+              <Stack>
+                <DataCmp position='right' spacing='md'>
+                  <Group spacing='md' grow={!largeScreen}>
+                    <Badge
+                      size='lg'
+                      color='lime'
+                      radius='sm'
+                      variant={minGamesSelector === 'all' ? 'filled' : 'light'}
+                      component={'a'}
+                      pl={5}
+                      pr={5}
+                      href={`/event/${eventId}/order/${orderBy}`}
+                      onClick={(e) => {
+                        navigate(`/event/${eventId}/order/${orderBy}`);
+                        e.preventDefault();
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {i18n._t('All players')}
+                    </Badge>
+                    <Badge
+                      size='lg'
+                      color='orange'
+                      radius='sm'
+                      variant={minGamesSelector === 'min' ? 'filled' : 'light'}
+                      component={'a'}
+                      pl={5}
+                      pr={5}
+                      title={i18n._t('Players having a required minimum of games')}
+                      href={`/event/${eventId}/order/${orderBy}/filter/min`}
+                      onClick={(e) => {
+                        navigate(`/event/${eventId}/order/${orderBy}/filter/min`);
+                        e.preventDefault();
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {i18n._t('With min games')}
+                    </Badge>
+                  </Group>
+                </DataCmp>
+              </Stack>
+            </DataCmp>
+          </>
+        )}
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />

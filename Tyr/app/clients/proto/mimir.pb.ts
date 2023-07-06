@@ -75,6 +75,7 @@ export interface EventsGetRatingTablePayload {
    * @deprecated
    */
   withPrefinished?: boolean | null | undefined;
+  onlyMinGames?: boolean | null | undefined;
 }
 
 export interface EventsGetRatingTableResponse {
@@ -3811,6 +3812,7 @@ export const EventsGetRatingTablePayload = {
       orderBy: "",
       order: "",
       withPrefinished: undefined,
+      onlyMinGames: undefined,
     };
   },
 
@@ -3832,6 +3834,9 @@ export const EventsGetRatingTablePayload = {
     }
     if (msg.withPrefinished != undefined) {
       writer.writeBool(4, msg.withPrefinished);
+    }
+    if (msg.onlyMinGames != undefined) {
+      writer.writeBool(5, msg.onlyMinGames);
     }
     return writer;
   },
@@ -3864,6 +3869,10 @@ export const EventsGetRatingTablePayload = {
         }
         case 4: {
           msg.withPrefinished = reader.readBool();
+          break;
+        }
+        case 5: {
+          msg.onlyMinGames = reader.readBool();
           break;
         }
         default: {
@@ -9513,6 +9522,7 @@ export const EventsGetRatingTablePayloadJSON = {
       orderBy: "",
       order: "",
       withPrefinished: undefined,
+      onlyMinGames: undefined,
     };
   },
 
@@ -9534,6 +9544,9 @@ export const EventsGetRatingTablePayloadJSON = {
     }
     if (msg.withPrefinished != undefined) {
       json["withPrefinished"] = msg.withPrefinished;
+    }
+    if (msg.onlyMinGames != undefined) {
+      json["onlyMinGames"] = msg.onlyMinGames;
     }
     return json;
   },
@@ -9561,6 +9574,10 @@ export const EventsGetRatingTablePayloadJSON = {
       json["withPrefinished"] ?? json["with_prefinished"];
     if (_withPrefinished_) {
       msg.withPrefinished = _withPrefinished_;
+    }
+    const _onlyMinGames_ = json["onlyMinGames"] ?? json["only_min_games"];
+    if (_onlyMinGames_) {
+      msg.onlyMinGames = _onlyMinGames_;
     }
     return msg;
   },

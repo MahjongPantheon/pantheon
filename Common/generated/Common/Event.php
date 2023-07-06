@@ -61,6 +61,10 @@ class Event extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool with_chips = 12;</code>
      */
     protected $with_chips = false;
+    /**
+     * Generated from protobuf field <code>int32 min_games_count = 13;</code>
+     */
+    protected $min_games_count = 0;
 
     /**
      * Constructor.
@@ -80,6 +84,7 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type bool $is_team
      *     @type bool $has_series
      *     @type bool $with_chips
+     *     @type int $min_games_count
      * }
      */
     public function __construct($data = NULL) {
@@ -347,6 +352,28 @@ class Event extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->with_chips = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 min_games_count = 13;</code>
+     * @return int
+     */
+    public function getMinGamesCount()
+    {
+        return $this->min_games_count;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 min_games_count = 13;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setMinGamesCount($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->min_games_count = $var;
 
         return $this;
     }

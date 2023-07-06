@@ -389,6 +389,7 @@ class EventModel extends Model
             ->select('event.is_team', 'is_team')
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
+            ->select('event.min_games_count', 'min_games_count')
             ->select('event.series_length', 'series_length')
             ->select('event.ruleset_config', 'ruleset_config')
             ->selectExpr('count(session.id)', 'sessioncnt')
@@ -422,6 +423,7 @@ class EventModel extends Model
                     'prescripted' => !!$event['prescripted'],
                     'isListed' => !!$event['is_listed'],
                     'isTeam' => !!$event['is_team'],
+                    'minGamesCount' => $event['min_games_count'],
                     'hasSeries' => $event['series_length'] > 0,
                     'isRatingShown' => !$event['hide_results'],
                     'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
@@ -451,6 +453,7 @@ class EventModel extends Model
             ->select('event.is_prescripted', 'prescripted')
             ->select('event.is_listed', 'is_listed')
             ->select('event.is_team', 'is_team')
+            ->select('event.min_games_count', 'min_games_count')
             ->select('event.hide_results', 'hide_results')
             ->select('event.ruleset_config', 'ruleset_config')
             ->select('event.series_length', 'series_length')
@@ -472,6 +475,7 @@ class EventModel extends Model
                 'finished' => !!$event['finished'],
                 'prescripted' => !!$event['prescripted'],
                 'isListed' => !!$event['is_listed'],
+                'minGamesCount' => $event['min_games_count'],
                 'isTeam' => !!$event['is_team'],
                 'isRatingShown' => !$event['hide_results'],
                 'hasSeries' => $event['series_length'] > 0,

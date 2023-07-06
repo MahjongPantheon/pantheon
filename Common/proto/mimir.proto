@@ -204,6 +204,7 @@ message EventsGetRatingTablePayload {
   string order = 3;
   // @deprecated
   optional bool with_prefinished = 4 [deprecated = true];
+  optional bool only_min_games = 5;
 }
 
 message EventsGetRatingTableResponse {

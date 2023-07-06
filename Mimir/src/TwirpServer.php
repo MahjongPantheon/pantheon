@@ -809,6 +809,7 @@ final class TwirpServer implements Mimir
                     ->setIsTeam($ev['isTeam'])
                     ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
+                    ->setMinGamesCount($ev['minGamesCount'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setHasSeries($ev['hasSeries'])
                     ->setWithChips($ev['withChips'])
@@ -832,6 +833,7 @@ final class TwirpServer implements Mimir
                     ->setIsTeam($ev['isTeam'])
                     ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
+                    ->setMinGamesCount($ev['minGamesCount'])
                     ->setWithChips($ev['withChips'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setHasSeries($ev['hasSeries'])
@@ -915,7 +917,8 @@ final class TwirpServer implements Mimir
             }, $this->_eventsController->getRatingTable(
                 iterator_to_array($req->getEventIdList()),
                 $req->getOrderBy(),
-                $req->getOrder()
+                $req->getOrder(),
+                $req->getOnlyMinGames()
             )));
     }
 

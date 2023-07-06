@@ -611,11 +611,12 @@ class EventsController extends Controller
      * @param array $eventIdList
      * @param string $orderBy either 'name', 'rating', 'avg_place' or 'avg_score'
      * @param string $order either 'asc' or 'desc'
+     * @param bool $onlyWithMinGames output only players having a required minimum of played games
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getRatingTable($eventIdList, $orderBy, $order)
+    public function getRatingTable($eventIdList, $orderBy, $order, $onlyWithMinGames)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
@@ -636,7 +637,7 @@ class EventsController extends Controller
 
         $playerRegs = PlayerRegistrationPrimitive::fetchPlayerRegData($this->_ds, $eventIdList);
         $table = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
-            ->getRatingTable($eventList, $playerRegs, $orderBy, $order, $withPrefinished);
+            ->getRatingTable($eventList, $playerRegs, $orderBy, $order, $withPrefinished, $onlyWithMinGames);
 
         $this->_log->info('Successfully received rating table for event ids: ' . implode(", ", $eventIdList));
 

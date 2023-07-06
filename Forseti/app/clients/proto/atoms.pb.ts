@@ -156,6 +156,7 @@ export interface Event {
   isTeam: boolean;
   hasSeries: boolean;
   withChips: boolean;
+  minGamesCount: number;
 }
 
 export interface MyEvent {
@@ -1999,6 +2000,7 @@ export const Event = {
       isTeam: false,
       hasSeries: false,
       withChips: false,
+      minGamesCount: 0,
     };
   },
 
@@ -2044,6 +2046,9 @@ export const Event = {
     }
     if (msg.withChips) {
       writer.writeBool(12, msg.withChips);
+    }
+    if (msg.minGamesCount) {
+      writer.writeInt32(13, msg.minGamesCount);
     }
     return writer;
   },
@@ -2101,6 +2106,10 @@ export const Event = {
         }
         case 12: {
           msg.withChips = reader.readBool();
+          break;
+        }
+        case 13: {
+          msg.minGamesCount = reader.readInt32();
           break;
         }
         default: {
@@ -8678,6 +8687,7 @@ export const EventJSON = {
       isTeam: false,
       hasSeries: false,
       withChips: false,
+      minGamesCount: 0,
     };
   },
 
@@ -8721,6 +8731,9 @@ export const EventJSON = {
     }
     if (msg.withChips) {
       json["withChips"] = msg.withChips;
+    }
+    if (msg.minGamesCount) {
+      json["minGamesCount"] = msg.minGamesCount;
     }
     return json;
   },
@@ -8777,6 +8790,10 @@ export const EventJSON = {
     const _withChips_ = json["withChips"] ?? json["with_chips"];
     if (_withChips_) {
       msg.withChips = _withChips_;
+    }
+    const _minGamesCount_ = json["minGamesCount"] ?? json["min_games_count"];
+    if (_minGamesCount_) {
+      msg.minGamesCount = _minGamesCount_;
     }
     return msg;
   },

@@ -27,6 +27,7 @@ export type Globals = {
   ratingHidden: boolean;
   loading: boolean;
   withChips: boolean;
+  minGamesCount: number;
 };
 export const globals: { data: Globals; setData: (data: Partial<Globals>) => void } = {
   data: {
@@ -38,6 +39,7 @@ export const globals: { data: Globals; setData: (data: Partial<Globals>) => void
     ratingHidden: false,
     loading: false,
     withChips: false,
+    minGamesCount: 0,
   },
   setData: () => {},
 };

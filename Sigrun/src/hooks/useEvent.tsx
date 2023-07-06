@@ -48,6 +48,7 @@ export const useEvent = (eventIdListStr: string | null) => {
         hasSeries: false,
         withChips: false,
         loading: false,
+        minGamesCount: 0,
       });
     } else {
       if (events) {
@@ -60,6 +61,7 @@ export const useEvent = (eventIdListStr: string | null) => {
           ratingHidden: !events[0]?.isRatingShown,
           withChips: events[0]?.withChips,
           loading: false,
+          minGamesCount: events[0]?.minGamesCount,
         });
       } else {
         // data is requested but still loading
@@ -71,6 +73,7 @@ export const useEvent = (eventIdListStr: string | null) => {
           hasSeries: false,
           withChips: false,
           loading: true,
+          minGamesCount: 0,
         });
       }
     }

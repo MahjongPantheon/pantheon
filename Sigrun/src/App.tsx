@@ -35,6 +35,10 @@ export function App() {
       <Route path='/page/:page' component={EventList} />
       <Route path='/event/:eventId/info' component={EventInfo} />
       <Route path='/event/:eventId/order/:orderBy' component={RatingTable} />
+      <Route
+        path='/event/:eventId/order/:orderBy/filter/:minGamesSelector'
+        component={RatingTable}
+      />
       <Route path='/event/:eventId/player/:playerId' component={PlayerStats} />
       <Route path='/event/:eventId/games' component={RecentGames} />
       <Route path='/event/:eventId/games/page/:page' component={RecentGames} />

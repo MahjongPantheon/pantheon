@@ -32,6 +32,10 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
      * @deprecated
      */
     protected $with_prefinished = null;
+    /**
+     * Generated from protobuf field <code>optional bool only_min_games = 5;</code>
+     */
+    protected $only_min_games = null;
 
     /**
      * Constructor.
@@ -44,6 +48,7 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
      *     @type string $order
      *     @type bool $with_prefinished
      *           &#64;deprecated
+     *     @type bool $only_min_games
      * }
      */
     public function __construct($data = NULL) {
@@ -155,6 +160,38 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
         @trigger_error('with_prefinished is deprecated.', E_USER_DEPRECATED);
         GPBUtil::checkBool($var);
         $this->with_prefinished = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional bool only_min_games = 5;</code>
+     * @return bool
+     */
+    public function getOnlyMinGames()
+    {
+        return isset($this->only_min_games) ? $this->only_min_games : false;
+    }
+
+    public function hasOnlyMinGames()
+    {
+        return isset($this->only_min_games);
+    }
+
+    public function clearOnlyMinGames()
+    {
+        unset($this->only_min_games);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional bool only_min_games = 5;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setOnlyMinGames($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->only_min_games = $var;
 
         return $this;
     }
