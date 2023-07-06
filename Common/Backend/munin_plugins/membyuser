@@ -13,6 +13,8 @@
 # - use rss instead of vsz
 # - more robust username enumeration
 
+. "$MUNIN_LIBDIR/plugins/plugin.sh"
+
 USERS="$(ps ax --format uname | tail +2 | sort -u | grep -v -e '^root$')"
 
 if [ "$1" = "autoconf" ]; then

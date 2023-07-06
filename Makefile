@@ -143,6 +143,10 @@ migrate:
 shell_tyr:
 	cd Tyr && ${MAKE} shell
 
+.PHONY: shell_hermod
+shell_hermod:
+	cd Hermod && ${MAKE} shell
+
 .PHONY: shell_hugin
 shell_hugin:
 	cd Hugin && ${MAKE} shell

@@ -6,7 +6,7 @@ NC = $(shell echo -e '\033[0m') # No Color
 
 .PHONY: get_docker_id
 get_docker_id:
-	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon' | grep '_db' | awk '{print $$3}'))
+	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon' | grep '_db' | awk '{print $$1}'))
 
 .PHONY: shell
 shell: get_docker_id
@@ -26,7 +26,7 @@ stop: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi `docker images | grep 'pantheon' | grep 'db' | awk '{print $$1}'` || exit 0
+	docker rmi `docker images | grep 'pantheon' | grep 'db' | awk '{print $$3}'` || exit 0
 
 .PHONY: db_export
 db_export: get_docker_id

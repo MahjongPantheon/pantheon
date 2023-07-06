@@ -16,6 +16,8 @@ RUN apk update && \
     curl \
     make \
     procps \
+    net-tools \
+    findutils \
     gettext \
     gettext-dev \
     git \

@@ -49,6 +49,8 @@ RUN apk update && \
     php81-xmlreader \
     postfix \
     opendkim \
+    net-tools \
+    findutils \
     ca-certificates \
     tzdata \
     supervisor \
