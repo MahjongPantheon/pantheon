@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 18:24+0300\n"
+"POT-Creation-Date: 2023-07-06 23:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1609,4 +1609,24 @@ msgstr ""
 
 #: app/pages/ProfileSignup.tsx:150:14
 msgid "show / hide"
+msgstr ""
+
+#: app/pages/SystemStats.tsx:118:16
+msgid "System stats"
+msgstr ""
+
+#: app/pages/SystemStats.tsx:158:39
+msgid "Last 24h"
+msgstr ""
+
+#: app/pages/SystemStats.tsx:161:39
+msgid "Last 30d"
+msgstr ""
+
+#: app/pages/SystemStats.tsx:164:39
+msgid "Last 12mon"
+msgstr ""
+
+#: app/pages/SystemStats.tsx:168:18
+msgid "Data slice"
 msgstr ""

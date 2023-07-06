@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 09:55+0300\n"
+"POT-Creation-Date: 2023-07-06 23:55+0300\n"
 "PO-Revision-Date: 2023-04-16 21:56+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -41,7 +41,7 @@ msgstr "%1 хан, %2 фу"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/components/screens/table/TableHelper.ts:511:14
+#: app/components/screens/table/TableHelper.ts:510:14
 msgid "Abort"
 msgstr "Абортивная ничья"
 
@@ -76,7 +76,7 @@ msgstr "Чинрото"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:513:14
+#: app/components/screens/table/TableHelper.ts:512:14
 msgid "Chombo"
 msgstr "Чомбо"
 
@@ -112,7 +112,7 @@ msgstr "Дайсуши"
 msgid "Dora"
 msgstr "Дора"
 
-#: app/components/screens/table/TableHelper.ts:509:14
+#: app/components/screens/table/TableHelper.ts:508:14
 msgid "Draw"
 msgstr "Ничья"
 
@@ -124,7 +124,7 @@ msgstr "E-mail не зарегистрирован в базе данных Pant
 msgid "Email"
 msgstr "Email"
 
-#: app/components/screens/home/HomeScreen.tsx:96:55
+#: app/components/screens/home/HomeScreen.tsx:95:55
 msgid "Event title"
 msgstr "Название события"
 
@@ -227,7 +227,7 @@ msgstr "Выйти из системы"
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "Попытка входа в систему не удалась. Возможные причины:"
 
-#: app/components/screens/table/TableHelper.ts:419:22
+#: app/components/screens/table/TableHelper.ts:418:22
 msgid "Loser"
 msgstr "Проигравший"
 
@@ -239,7 +239,7 @@ msgstr "Мензенцумо"
 msgid "Multiron, from %1"
 msgstr "Мультирон с %1"
 
-#: app/components/screens/table/TableHelper.ts:515:14
+#: app/components/screens/table/TableHelper.ts:514:14
 msgid "Nagashi"
 msgstr "Нагаши манган"
 
@@ -341,7 +341,7 @@ msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
 #: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:505:14
+#: app/components/screens/table/TableHelper.ts:504:14
 msgid "Ron"
 msgstr "Рон"
 
@@ -381,11 +381,11 @@ msgstr "Выбрать другое событие"
 msgid "Select event"
 msgstr "Выбрать событие"
 
-#: app/components/screens/table/TableHelper.ts:486:16
+#: app/components/screens/table/TableHelper.ts:485:16
 msgid "Select pao"
 msgstr "Выбрать пао"
 
-#: app/components/screens/table/TableHelper.ts:491:16
+#: app/components/screens/table/TableHelper.ts:490:16
 msgid "Select tempai"
 msgstr "Выбрать темпай"
 
@@ -454,7 +454,7 @@ msgid "Toitoi"
 msgstr "Тойтой"
 
 #: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:507:14
+#: app/components/screens/table/TableHelper.ts:506:14
 msgid "Tsumo"
 msgstr "Цумо"
 
@@ -478,8 +478,8 @@ msgstr "Неожиданная ошибка сервера"
 msgid "Ura dora"
 msgstr "Урадора"
 
-#: app/components/screens/table/TableHelper.ts:416:22
-#: app/components/screens/table/TableHelper.ts:429:22
+#: app/components/screens/table/TableHelper.ts:415:22
+#: app/components/screens/table/TableHelper.ts:428:22
 msgid "Winner"
 msgstr "Победитель"
 
@@ -511,7 +511,7 @@ msgstr "Якуман"
 msgid "dora %1"
 msgstr "дора %1"
 
-#: app/components/screens/table/TableHelper.ts:407:25
+#: app/components/screens/table/TableHelper.ts:406:25
 msgid "empty outcome"
 msgstr "пустой исход"
 
@@ -536,7 +536,7 @@ msgstr "что-то пошло не так, свяжитесь с админис
 msgid "type to find someone"
 msgstr "начните вводить чтобы найти игроков"
 
-#: app/components/screens/table/TableHelper.ts:434:27
+#: app/components/screens/table/TableHelper.ts:433:27
 msgid "wrong outcome for paoSelect"
 msgstr "неверный исход для выбора пао"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 18:24+0300\n"
+"POT-Creation-Date: 2023-07-06 23:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,10 +37,10 @@ msgstr ""
 
 #: src/components/AppFooter.tsx:92:20
 #: src/pages/EventList.tsx:105:67
-#: src/pages/RatingTable.tsx:113:35
-#: src/pages/RatingTable.tsx:128:20
-#: src/pages/RatingTable.tsx:130:20
-#: src/pages/RatingTable.tsx:141:33
+#: src/pages/RatingTable.tsx:116:35
+#: src/pages/RatingTable.tsx:131:20
+#: src/pages/RatingTable.tsx:133:20
+#: src/pages/RatingTable.tsx:144:33
 msgid "Rating table"
 msgstr ""
 
@@ -182,7 +182,7 @@ msgstr ""
 msgid "Nagashi: %1"
 msgstr ""
 
-#: src/components/HandsGraph.tsx:84:21
+#: src/components/HandsGraph.tsx:85:21
 msgid "Hands value"
 msgstr ""
 
@@ -352,13 +352,13 @@ msgid "Average points lost: "
 msgstr ""
 
 #: src/components/RatingGraph.tsx:161:21
-#: src/pages/RatingTable.tsx:346:32
-#: src/pages/RatingTable.tsx:405:7
+#: src/pages/RatingTable.tsx:417:32
+#: src/pages/RatingTable.tsx:476:7
 msgid "Games played"
 msgstr ""
 
 #: src/components/RatingGraph.tsx:171:21
-#: src/pages/RatingTable.tsx:214:20
+#: src/pages/RatingTable.tsx:223:20
 msgid "Rating"
 msgstr ""
 
@@ -609,11 +609,11 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: src/Layout.tsx:123:28
+#: src/Layout.tsx:124:28
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr ""
 
-#: src/Layout.tsx:124:34
+#: src/Layout.tsx:125:34
 msgid "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list."
 msgstr ""
 
@@ -903,7 +903,7 @@ msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
 #: src/pages/EventInfo.tsx:54:18
-#: src/pages/RatingTable.tsx:130:49
+#: src/pages/RatingTable.tsx:133:49
 #: src/pages/RecentGames.tsx:82:47
 msgid "Aggregated event"
 msgstr ""
@@ -1356,54 +1356,66 @@ msgstr ""
 msgid "Close game preview"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:116:12
+#: src/pages/RatingTable.tsx:119:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:133:24
+#: src/pages/RatingTable.tsx:136:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:158:18
+#: src/pages/RatingTable.tsx:161:18
 msgid "Save as CSV"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:191:22
-#: src/pages/RatingTable.tsx:400:21
+#: src/pages/RatingTable.tsx:194:22
+#: src/pages/RatingTable.tsx:471:21
 msgid "Team"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:238:20
+#: src/pages/RatingTable.tsx:253:20
 msgid "Average score"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:260:20
-#: src/pages/RatingTable.tsx:403:7
+#: src/pages/RatingTable.tsx:281:20
+#: src/pages/RatingTable.tsx:474:7
 msgid "Average place"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:357:34
-#: src/pages/RatingTable.tsx:401:24
+#: src/pages/RatingTable.tsx:311:24
+msgid "All players"
+msgstr ""
+
+#: src/pages/RatingTable.tsx:321:30
+msgid "Players having a required minimum of games"
+msgstr ""
+
+#: src/pages/RatingTable.tsx:329:24
+msgid "With min games"
+msgstr ""
+
+#: src/pages/RatingTable.tsx:428:34
+#: src/pages/RatingTable.tsx:472:24
 msgid "Chips"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:397:7
+#: src/pages/RatingTable.tsx:468:7
 msgid "Place"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:398:7
+#: src/pages/RatingTable.tsx:469:7
 msgid "Player ID"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:399:7
+#: src/pages/RatingTable.tsx:470:7
 msgid "Player name"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:402:7
+#: src/pages/RatingTable.tsx:473:7
 msgid "Rating points"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:404:7
+#: src/pages/RatingTable.tsx:475:7
 msgid "Average points"
 msgstr ""
 
