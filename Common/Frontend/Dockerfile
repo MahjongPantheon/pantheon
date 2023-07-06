@@ -1,6 +1,6 @@
 FROM alpine:3.17
 
-ENV TIMEZONE            Europe/Moscow
+ENV TIMEZONE            Europe/Berlin
 ENV PHP_MEMORY_LIMIT    512M
 ENV LANG                en_US.utf8
 ENV YARN_CACHE_FOLDER   /home/user/.yarn-cache

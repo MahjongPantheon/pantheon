@@ -60,7 +60,7 @@ RUN apk update && \
     mailx && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-ENV TIMEZONE            Europe/Moscow
+ENV TIMEZONE            Europe/Berlin
 ENV PHP_MEMORY_LIMIT    512M
 ENV PHP_LOGFILE         /var/log/php-errors.log
 ENV MAX_UPLOAD          50M
