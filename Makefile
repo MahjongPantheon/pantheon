@@ -287,11 +287,16 @@ prod_start: export ENV_FILENAME=.env.production
 prod_start:
 	ALLOWED_SENDER_DOMAINS=`cat Env/.env.production | grep ALLOWED_SENDER_DOMAINS= | awk -F'=' '{print $$2}'` ${COMPOSE_COMMAND} up -d
 
+.PHONY: prod_stop_all
+prod_stop_all: export ENV_FILENAME=.env.production
+prod_stop_all:
+	cd Database && make stop 2>/dev/null || true # gracefully stop the db
+	@${COMPOSE_COMMAND} down
+
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
-	cd Database && make stop 2>/dev/null || true # gracefully stop the db
-	@${COMPOSE_COMMAND} down
+	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr
 
 .PHONY: prod_restart
 prod_restart:

@@ -60,6 +60,8 @@ Basically these are the same commands that are done inside `make prod_update` bu
 If you ever change the environment variables in your current `Env/.env.production` file, you should also restart the containers using `make prod_restart`. After that,
 if `VITE_*` variables have been changed, you should also run `make prod_compile` for changes to take effect.
 
+Please note that db and pgadmin containers are not restarted during `make prod_restart`. To stop these containers as well, use `make prod_stop_all`. This is rarely needed, though.
+
 #### Email agent
 
 Pantheon provides container with pre-installed email agent (Hermod). If you want to send emails signed with DKIM, you will need to place your private keys
