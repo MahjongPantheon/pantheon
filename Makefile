@@ -298,6 +298,15 @@ prod_restart:
 	${MAKE} prod_stop
 	${MAKE} prod_start
 
+.PHONY: prod_update
+prod_update:
+	git status --short | grep -v 'Sigrun-dist/server.js' | awk '{print $2}' | xargs git checkout --
+	git fetch
+	git checkout origin/master
+	${MAKE} pull
+	${MAKE} prod_restart
+	${MAKE} prod_compile
+
 .PHONY: pull
 pull:
 	@${COMPOSE_COMMAND} pull

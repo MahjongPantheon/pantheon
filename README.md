@@ -40,8 +40,20 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 
 To update code on production server you will need to do the following:
 
-1. (Optional) Pull new containers using `make pull`
-2. Get new code from the repository (e.g. run `git fetch && git checkout origin/master` in repo folder)
+**Quick way**
+
+Use `make prod_update` to fetch all changes from master branch. Please note that your setup and intentions must meet the following requirements:
+
+- You use git-based version of code (cloned repository)
+- You want to use code from master branch (please note - master is not always stable!)
+- You don't have any changes is your working copy (except `Sigrun-dist/server.js` - this file is a result of `prod_compile`). If there are any changes, they will be discarded. You can check changes in your working copy using `git status` command. Production environment config is excluded from git, so it's guaranteed to be left untouched.
+
+**Long way**
+
+Basically these are the same commands that are done inside `make prod_update` but performed one-by-one for better control.
+
+1. Get new code from the repository (e.g. run `git fetch && git checkout origin/master` in repo folder)
+2. Pull new containers using `make pull`
 3. Restart containers with `make prod_restart` (please use this exact command, otherwise email service will be started with wrong environment settings)
 4. Run `make prod_compile` to build newer versions of the static code.
 
