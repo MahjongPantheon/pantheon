@@ -30,6 +30,7 @@ import {
   Space,
   Stack,
   Text,
+  Tooltip,
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
@@ -40,7 +41,7 @@ import { PlayerIcon } from '../components/PlayerIcon';
 import { useMediaQuery } from '@mantine/hooks';
 import { PlayerStatsListing } from '../components/PlayerStatsListing';
 import { useI18n } from '../hooks/i18n';
-import { IconChevronLeft, IconChevronRight, IconX } from '@tabler/icons-react';
+import { IconChevronLeft, IconChevronRight, IconInfoCircle, IconX } from '@tabler/icons-react';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
 
@@ -96,7 +97,19 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           [player.title, events?.[0].title]
         )}
       />
-      <h2>{player.title}</h2>
+      <Group position='apart'>
+        <h2>{player.title}</h2>
+        <Tooltip
+          openDelay={500}
+          position='bottom'
+          withArrow
+          label={i18n._t('Player statistics are updated every 2 minutes')}
+        >
+          <ActionIcon size={24} color='dark' variant='light'>
+            <IconInfoCircle />
+          </ActionIcon>
+        </Tooltip>
+      </Group>
       {events?.map((event, eid) => {
         return (
           <Group key={`ev_${eid}`}>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-06 23:55+0300\n"
-"PO-Revision-Date: 2023-07-06 23:56+0300\n"
+"POT-Creation-Date: 2023-07-07 03:43+0300\n"
+"PO-Revision-Date: 2023-07-07 03:44+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -1419,30 +1419,34 @@ msgstr ""
 msgid "View game"
 msgstr "Посмотреть реплей"
 
-#: src/pages/PlayerStats.tsx:93:37
+#: src/pages/PlayerStats.tsx:94:37
 msgid "Player stats"
 msgstr "Статистика игрока"
 
-#: src/pages/PlayerStats.tsx:94:22
+#: src/pages/PlayerStats.tsx:95:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 "Статистика игрока %1 в событии \"%2\", предоставленная системой Mahjong "
 "Pantheon"
 
-#: src/pages/PlayerStats.tsx:136:16
+#: src/pages/PlayerStats.tsx:106:18
+msgid "Player statistics are updated every 2 minutes"
+msgstr "Статистика игрока обновляется раз в 2 минуты"
+
+#: src/pages/PlayerStats.tsx:149:16
 msgid "View selected game details"
 msgstr "Подробнее об игре"
 
-#: src/pages/PlayerStats.tsx:143:24
+#: src/pages/PlayerStats.tsx:156:24
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
-#: src/pages/PlayerStats.tsx:161:24
+#: src/pages/PlayerStats.tsx:174:24
 msgid "Next game"
 msgstr "Следующая игра"
 
-#: src/pages/PlayerStats.tsx:183:24
+#: src/pages/PlayerStats.tsx:196:24
 msgid "Close game preview"
 msgstr "Закрыть предпросмотр"
 
@@ -1543,15 +1547,15 @@ msgstr "Очки:"
 msgid "Last series"
 msgstr "Текущая серия"
 
-#: src/pages/Timer.tsx:120:29
+#: src/pages/Timer.tsx:122:29
 msgid "Timer is not available for aggregated events"
 msgstr "Для агрегированных событий таймер недоступен"
 
-#: src/pages/Timer.tsx:148:19
+#: src/pages/Timer.tsx:150:19
 msgid "Timer"
 msgstr "Таймер"
 
-#: src/pages/Timer.tsx:149:22
+#: src/pages/Timer.tsx:151:22
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Страница таймера в событии \"%1\", предоставленная системой Mahjong Pantheon"

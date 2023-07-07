@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-06 23:55+0300\n"
+"POT-Creation-Date: 2023-07-07 03:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1332,27 +1332,31 @@ msgstr ""
 msgid "View game"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:93:37
+#: src/pages/PlayerStats.tsx:94:37
 msgid "Player stats"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:94:22
+#: src/pages/PlayerStats.tsx:95:22
 msgid "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:136:16
+#: src/pages/PlayerStats.tsx:106:18
+msgid "Player statistics are updated every 2 minutes"
+msgstr ""
+
+#: src/pages/PlayerStats.tsx:149:16
 msgid "View selected game details"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:143:24
+#: src/pages/PlayerStats.tsx:156:24
 msgid "Previous game"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:161:24
+#: src/pages/PlayerStats.tsx:174:24
 msgid "Next game"
 msgstr ""
 
-#: src/pages/PlayerStats.tsx:183:24
+#: src/pages/PlayerStats.tsx:196:24
 msgid "Close game preview"
 msgstr ""
 
@@ -1455,14 +1459,14 @@ msgstr ""
 msgid "Last series"
 msgstr ""
 
-#: src/pages/Timer.tsx:120:29
+#: src/pages/Timer.tsx:122:29
 msgid "Timer is not available for aggregated events"
 msgstr ""
 
-#: src/pages/Timer.tsx:148:19
+#: src/pages/Timer.tsx:150:19
 msgid "Timer"
 msgstr ""
 
-#: src/pages/Timer.tsx:149:22
+#: src/pages/Timer.tsx:151:22
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
