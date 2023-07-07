@@ -58,10 +58,11 @@ foreach ($events as $ev) {
             'screen' => [],
             'language' => [],
             'event_type' => [],
+            'hostname' => [],
         ];
     }
     $sites[$siteId]['event_count']++;
-    foreach (['country', 'city', 'os', 'device', 'browser', 'screen', 'language', 'event_type'] as $k) {
+    foreach (['country', 'city', 'os', 'device', 'browser', 'screen', 'language', 'event_type', 'hostname'] as $k) {
         if (empty($sites[$siteId][$k][$ev[$k]])) {
             $sites[$siteId][$k][$ev[$k]] = 0;
         }
@@ -84,6 +85,7 @@ foreach ($sites as $siteId => $data) {
         'screen' => json_encode($data['screen']),
         'language' => json_encode($data['language']),
         'event_type' => json_encode($data['event_type']),
+        'hostname' => json_encode($data['hostname']),
     ];
 }
 
