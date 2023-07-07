@@ -127,7 +127,7 @@ class EventsController extends Controller
 
         $newId = $this->_mc->increment(self::CTR_ID, 1);
         $this->_mc->set(self::EV . $newId, [
-            $_SERVER['REMOTE_ADDR'],
+            empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['REMOTE_ADDR'] : $_SERVER['HTTP_X_FORWARDED_FOR'],
             $parsed['s'], $parsed['si'], $parsed['h'],
             $parsed['o'], $parsed['d'], $parsed['sc'],
             $parsed['l'], $parsed['t'], $parsed['e'] ?: 'page_view',
