@@ -205,7 +205,7 @@ class SessionPrimitive extends Primitive
             foreach ($data as $key => $item) {
                 $serialized[$key] = $item->toJson();
             }
-            $ds->memcache()->set('session_data_' . json_encode($ids), $serialized);
+            $ds->memcache()->set('session_data_' . json_encode($ids), $serialized, 300);
             return $data;
         }
     }
