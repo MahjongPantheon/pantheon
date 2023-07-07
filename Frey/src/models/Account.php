@@ -165,11 +165,8 @@ class AccountModel extends Model
             $ch = curl_init($webhook);
             if ($ch) {
                 $payload = json_encode([
-                    'auth_key' => $this->_meta->getAuthToken(), // ?
                     'city' => $city,
-                    'email' => $persons[0]->getEmail(), // ?
                     'country' => $country,
-                    'phone' => $phone, // ?
                     'title' => $title,
                     'person_id' => $persons[0]->getId(),
                     'tenhou_id' => $tenhouId,

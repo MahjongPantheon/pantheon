@@ -272,12 +272,14 @@ export const ProfileSignup: React.FC = () => {
                 notified about it not later than a month before the transfer.
               </p>
               <p>
-                User data will also be processed with{' '}
+                Public user data will also be processed with{' '}
                 <a href='https://mahjong.click' target='_blank'>
                   Mahjong portal
                 </a>
                 . Mahjong portal service is also located in EU and obeys EU privacy laws. Please
-                refer to Mahjong portal privacy policy for details.
+                refer to Mahjong portal privacy policy for details. No sensitive personal data (like
+                email addresses or phone numbers) is transferred to the Mahjong portal. All
+                transerred personal data is publicly accessible on Pantheon services.
               </p>
             </>
           )}
@@ -300,7 +302,9 @@ export const ProfileSignup: React.FC = () => {
               </p>
               <p>
                 Server administrators may choose to process user data on additional servers. Please
-                contact administrators for details.
+                contact administrators for details. No sensitive personal data (like email addresses
+                or phone numbers) is transferred to the external service. All transerred personal
+                data is publicly accessible on Pantheon services.
               </p>
             </>
           )}
