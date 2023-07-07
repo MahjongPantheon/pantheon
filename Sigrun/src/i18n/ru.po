@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 03:43+0300\n"
-"PO-Revision-Date: 2023-07-07 03:44+0300\n"
+"POT-Creation-Date: 2023-07-07 22:03Z\n"
+"PO-Revision-Date: 2023-07-08 01:04+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -1431,8 +1431,8 @@ msgstr ""
 "Pantheon"
 
 #: src/pages/PlayerStats.tsx:106:18
-msgid "Player statistics are updated every 2 minutes"
-msgstr "Статистика игрока обновляется раз в 2 минуты"
+msgid "Last update: %1"
+msgstr "Последнее обновление: %1"
 
 #: src/pages/PlayerStats.tsx:149:16
 msgid "View selected game details"
@@ -1559,3 +1559,6 @@ msgstr "Таймер"
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Страница таймера в событии \"%1\", предоставленная системой Mahjong Pantheon"
+
+#~ msgid "Player statistics are updated every 2 minutes"
+#~ msgstr "Статистика игрока обновляется раз в 2 минуты"

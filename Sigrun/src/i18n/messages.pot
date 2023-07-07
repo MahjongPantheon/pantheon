@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 03:43+0300\n"
+"POT-Creation-Date: 2023-07-07 22:03Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1341,7 +1341,7 @@ msgid "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon
 msgstr ""
 
 #: src/pages/PlayerStats.tsx:106:18
-msgid "Player statistics are updated every 2 minutes"
+msgid "Last update: %1"
 msgstr ""
 
 #: src/pages/PlayerStats.tsx:149:16
