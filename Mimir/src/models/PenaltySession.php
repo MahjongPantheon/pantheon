@@ -110,7 +110,7 @@ class PenaltySessionModel extends Model
             ->setEndDate(date('Y-m-d H:i:s'))
             ->setStatus(SessionPrimitive::STATUS_FINISHED)
             ->save();
-
+        $session->scheduleRecalcStats();
         return $session->getRepresentationalHash();
     }
 }

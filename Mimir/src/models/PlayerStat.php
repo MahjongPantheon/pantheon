@@ -23,14 +23,14 @@ require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/Round.php';
 require_once __DIR__ . '/../primitives/Session.php';
 require_once __DIR__ . '/../primitives/SessionResults.php';
+require_once __DIR__ . '/../primitives/PlayerStats.php';
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 
 class PlayerStatModel extends Model
 {
     /**
-     * Get stats for player in event
-     * Now it costs 6 indexed queries to DB (should be fast),
-     * but be careful about adding some other stats.
+     * Get stats for player in event.
+     * This WILL be slow on aggregated events, as there is no precalculated data for this case
      *
      * @param int[] $eventIdList
      * @param int $playerId
@@ -45,23 +45,35 @@ class PlayerStatModel extends Model
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
+        // Find precalculated stats, if any
+        if (count($eventIdList) === 1) {
+            $precalcStats = PlayerStatsPrimitive::findByEventAndPlayer($this->_ds, $eventIdList[0], $playerId);
+            if (!empty($precalcStats)) {
+                return $precalcStats[0]->getData();
+            }
+        }
+
+        return $this->calculateStat($eventIdList, $playerId);
+    }
+
+    /**
+     * This is used both in cache rebuild task and in getStats function to get data without cache.
+     *
+     * @param int[] $eventIdList
+     * @param int $playerId
+     * @return array
+     * @throws EntityNotFoundException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function calculateStat(array $eventIdList, int $playerId)
+    {
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         $mainEvent = $eventList[0];
-
-        $cacheKey = 'player_stat_' . json_encode($eventIdList) . '_' . $playerId;
-        $cacheInterval = 120; // 2 minutes for hot times
-        if ($mainEvent->getIsFinished()) {
-            $cacheInterval = 0; // For finished events we can use hard (=infinite) caching
-        }
-
-        $data = $this->_ds->memcache()->get($cacheKey);
-        if (!empty($data)) {
-            return $data;
-        }
 
         $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
@@ -70,7 +82,7 @@ class PlayerStatModel extends Model
 
         $games = [];
         foreach ($eventList as $event) {
-            /* FIXME (PNTN-237): Need to refactor this to avoid accessing DB in a loop. */
+            /* TODO: How to refactor this to avoid accessing DB in a loop? */
             /* We want to keep keys here, so we use "+" instead of array_merge. */
             $games = $games + $this->_fetchGamesHistory($event, $player[0]);
         }
@@ -92,8 +104,26 @@ class PlayerStatModel extends Model
             'yaku_summary'          => $this->_getYakuSummary($playerId, $rounds),
             'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRulesetConfig(), $playerId, $rounds),
             'dora_stat'             => $this->_getDoraStat($playerId, $rounds),
+            'last_update'           => DateHelper::getLocalDate(date('Y-m-d H:i:s'), $mainEvent->getTimezone())
         ];
-        $this->_ds->memcache()->set($cacheKey, $data, $cacheInterval);
+
+        // Save precalculated data; don't support aggregated events.
+        // TODO: how can we support aggregated events here?
+        if (count($eventIdList) === 1) {
+            $precalcStats = PlayerStatsPrimitive::findByEventAndPlayer($this->_ds, $eventIdList[0], $playerId);
+            if (!empty($precalcStats)) {
+                $precalc = $precalcStats[0];
+            } else {
+                $precalc = new PlayerStatsPrimitive($this->_ds);
+            }
+            $precalc
+                ->setPlayerId($playerId)
+                ->setEventId($eventIdList[0])
+                ->setLastUpdate(date('Y-m-d H:i:s'))
+                ->setData($data)
+                ->save();
+        }
+
         return $data;
     }
 

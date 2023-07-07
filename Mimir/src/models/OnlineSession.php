@@ -82,6 +82,7 @@ class OnlineSessionModel extends Model
             $success = $success && $round->save();
         }
 
+        $session->scheduleRecalcStats();
         $success = $success && $session->finish();
         if (!$success) {
             throw new \Exception("Wasn't able to properly save the game.");

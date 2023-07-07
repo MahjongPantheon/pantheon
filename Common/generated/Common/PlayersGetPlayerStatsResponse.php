@@ -57,6 +57,10 @@ class PlayersGetPlayerStatsResponse extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.common.DoraSummary dora_stat = 11;</code>
      */
     protected $dora_stat = null;
+    /**
+     * Generated from protobuf field <code>string last_update = 12;</code>
+     */
+    protected $last_update = '';
 
     /**
      * Constructor.
@@ -75,6 +79,7 @@ class PlayersGetPlayerStatsResponse extends \Google\Protobuf\Internal\Message
      *     @type array<\Common\YakuStat>|\Google\Protobuf\Internal\RepeatedField $yaku_summary
      *     @type \Common\RiichiSummary $riichi_summary
      *     @type \Common\DoraSummary $dora_stat
+     *     @type string $last_update
      * }
      */
     public function __construct($data = NULL) {
@@ -350,6 +355,28 @@ class PlayersGetPlayerStatsResponse extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\DoraSummary::class);
         $this->dora_stat = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 12;</code>
+     * @return string
+     */
+    public function getLastUpdate()
+    {
+        return $this->last_update;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 12;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setLastUpdate($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->last_update = $var;
 
         return $this;
     }

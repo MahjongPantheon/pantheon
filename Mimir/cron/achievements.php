@@ -1,6 +1,5 @@
 <?php
 namespace Mimir;
-use PhpParser\Node\Expr\AssignOp\Mul;
 
 ini_set('display_errors', 'On');
 ini_set('memory_limit', '1024M');

@@ -776,6 +776,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 if ($this->getCurrentState()->isFinished()) {
+                    $this->scheduleRecalcStats();
                     $success = $success && $this->prefinish();
                 }
 
@@ -796,6 +797,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 if ($this->getCurrentState()->isFinished()) {
+                    $this->scheduleRecalcStats();
                     $success = $success && $this->prefinish();
                 }
 
@@ -807,11 +809,27 @@ class SessionPrimitive extends Primitive
                 // We should finish game here for offline events, but online ones will be finished manually in model.
                 // Looks ugly :( But works as expected, so let it be until we find better solution.
                 if (!$this->getEvent()->getIsOnline() && $this->getCurrentState()->isFinished()) {
+                    $this->scheduleRecalcStats();
                     $success = $success && $this->prefinish();
                 }
         }
 
         return $success ? $this->getCurrentState()->toArray() : false;
+    }
+
+    /**
+     * Schedule rebuild player stats
+     * @return void
+     * @throws \Exception
+     */
+    public function scheduleRecalcStats()
+    {
+        foreach ($this->getPlayersIds() as $playerId) {
+            $psp = PlayerStatsPrimitive::findByEventAndPlayer($this->_ds, $this->getEventId(), $playerId);
+            if (!empty($psp)) {
+                $psp[0]->setNeedRecalc(true)->save();
+            }
+        }
     }
 
     /**

@@ -103,7 +103,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           openDelay={500}
           position='bottom'
           withArrow
-          label={i18n._t('Player statistics are updated every 2 minutes')}
+          label={i18n._t('Last update: %1', [playerStats?.lastUpdate])}
         >
           <ActionIcon size={24} color='dark' variant='light'>
             <IconInfoCircle />

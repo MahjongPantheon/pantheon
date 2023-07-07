@@ -165,6 +165,7 @@ export interface PlayersGetPlayerStatsResponse {
   yakuSummary: protoAtoms.YakuStat[];
   riichiSummary: protoAtoms.RiichiSummary;
   doraStat: protoAtoms.DoraSummary;
+  lastUpdate: string;
 }
 
 export interface GamesAddRoundPayload {
@@ -5080,6 +5081,7 @@ export const PlayersGetPlayerStatsResponse = {
       yakuSummary: [],
       riichiSummary: protoAtoms.RiichiSummary.initialize(),
       doraStat: protoAtoms.DoraSummary.initialize(),
+      lastUpdate: "",
     };
   },
 
@@ -5154,6 +5156,9 @@ export const PlayersGetPlayerStatsResponse = {
         msg.doraStat,
         protoAtoms.DoraSummary._writeMessage
       );
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(12, msg.lastUpdate);
     }
     return writer;
   },
@@ -5233,6 +5238,10 @@ export const PlayersGetPlayerStatsResponse = {
         }
         case 11: {
           reader.readMessage(msg.doraStat, protoAtoms.DoraSummary._readMessage);
+          break;
+        }
+        case 12: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -10607,6 +10616,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
       yakuSummary: [],
       riichiSummary: protoAtoms.RiichiSummaryJSON.initialize(),
       doraStat: protoAtoms.DoraSummaryJSON.initialize(),
+      lastUpdate: "",
     };
   },
 
@@ -10672,6 +10682,9 @@ export const PlayersGetPlayerStatsResponseJSON = {
       if (Object.keys(_doraStat_).length > 0) {
         json["doraStat"] = _doraStat_;
       }
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -10755,6 +10768,10 @@ export const PlayersGetPlayerStatsResponseJSON = {
       const m = protoAtoms.DoraSummary.initialize();
       protoAtoms.DoraSummaryJSON._readMessage(m, _doraStat_);
       msg.doraStat = m;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },

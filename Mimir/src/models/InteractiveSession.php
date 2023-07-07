@@ -112,6 +112,7 @@ class InteractiveSessionModel extends Model
     {
         $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
         $this->_checkAuth($session->getPlayersIds());
+        $session->scheduleRecalcStats();
         return $session->prefinish();
     }
 
@@ -189,10 +190,12 @@ class InteractiveSessionModel extends Model
         foreach ($primitives as $p) {
             $p->drop();
         }
-        return $session
+        $ret = $session
             ->setEndDate('')
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->save();
+        $session->scheduleRecalcStats();
+        return $ret;
     }
 
     /**

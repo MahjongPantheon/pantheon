@@ -294,6 +294,7 @@ message PlayersGetPlayerStatsResponse {
   repeated YakuStat yaku_summary = 9;
   RiichiSummary riichi_summary = 10;
   DoraSummary dora_stat = 11;
+  string last_update = 12;
 }
 
 message GamesAddRoundPayload {

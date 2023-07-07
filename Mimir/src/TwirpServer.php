@@ -1090,6 +1090,7 @@ final class TwirpServer implements Mimir
             iterator_to_array($req->getEventIdList())
         );
         return (new PlayersGetPlayerStatsResponse())
+            ->setLastUpdate($ret['last_update'])
             ->setRatingHistory($ret['rating_history'])
             ->setScoreHistory(array_map(function ($table) {
                 return (new SessionHistoryResultTable())

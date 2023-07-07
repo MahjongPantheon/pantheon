@@ -4,6 +4,7 @@ player_history
 session_player
 session_results
 session
+player_stats
 event_registered_players
 event_prescript
 achievements

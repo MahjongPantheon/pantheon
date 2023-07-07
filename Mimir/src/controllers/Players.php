@@ -73,11 +73,6 @@ class PlayersController extends Controller
 
         $this->_log->info('Getting stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
 
-        $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
-        if (count($eventList) != count($eventIdList)) {
-            throw new TwirpError(ErrorCode::NotFound, 'Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
-        }
-
         $stats = (new PlayerStatModel($this->_ds, $this->_config, $this->_meta))
             ->getStats($eventIdList, $playerId);
 
