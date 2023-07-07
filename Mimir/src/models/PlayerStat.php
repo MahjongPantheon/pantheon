@@ -52,6 +52,17 @@ class PlayerStatModel extends Model
 
         $mainEvent = $eventList[0];
 
+        $cacheKey = 'player_stat_' . json_encode($eventIdList) . '_' . $playerId;
+        $cacheInterval = 120; // 2 minutes for hot times
+        if ($mainEvent->getIsFinished()) {
+            $cacheInterval = 0; // For finished events we can use hard (=infinite) caching
+        }
+
+        $data = $this->_ds->memcache()->get($cacheKey);
+        if (!empty($data)) {
+            return $data;
+        }
+
         $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
             throw new EntityNotFoundException('Player id#' . $playerId . ' not found in DB');
@@ -68,9 +79,8 @@ class PlayerStatModel extends Model
 
         $rounds = $this->_fetchRounds($games);
         $playerNames = $this->_fetchPlayerNames($games);
-
         $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRulesetConfig(), $games, $playerNames);
-        return [
+        $data = [
             'rating_history'        => $this->_getRatingHistorySequence($mainEvent, $playerId, $games),
             'score_history'         => $scoresAndPlayers['scores'],
             'players_info'          => $scoresAndPlayers['players'],
@@ -83,6 +93,8 @@ class PlayerStatModel extends Model
             'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRulesetConfig(), $playerId, $rounds),
             'dora_stat'             => $this->_getDoraStat($playerId, $rounds),
         ];
+        $this->_ds->memcache()->set($cacheKey, $data, $cacheInterval);
+        return $data;
     }
 
     /**
