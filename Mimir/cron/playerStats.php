@@ -54,7 +54,13 @@ try {
     $model = new PlayerStatModel($ds, $config, $meta);
     foreach ($rowsToUpdate as $item) {
         echo "Updating stats of player {$item['player_id']} in event {$item['event_id']}..." . PHP_EOL;
-        $model->calculateStat([(int)$item['event_id']], (int)$item['player_id']);
+        try {
+            $model->calculateStat([(int)$item['event_id']], (int)$item['player_id']);
+        } catch (\Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
+            echo "Failed to update stats of player {$item['player_id']} in event {$item['event_id']}, skipping..." . PHP_EOL;
+            continue;
+        }
         sleep(STAT_SLEEP_INTERVAL);
     }
 } catch (\Exception $e) {
