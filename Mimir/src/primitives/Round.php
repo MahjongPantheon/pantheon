@@ -391,14 +391,13 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param bool $withCache
      * @return \Mimir\EventPrimitive
      * @throws EntityNotFoundException|InvalidParametersException
      */
-    public function getEvent($withCache = false)
+    public function getEvent()
     {
         if (!$this->_event) {
-            $event = $this->getSession($withCache)->getEvent();
+            $event = $this->getSession()->getEvent();
             $id = $event->getId();
             if (!$id) {
                 throw new InvalidParametersException('Attempted to assign deidented primitive');
@@ -652,15 +651,14 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param bool $withCache
-     * @return \Mimir\SessionPrimitive
-     *@throws \Exception
      * @throws EntityNotFoundException
+     * @throws \Exception
+     * @return \Mimir\SessionPrimitive
      */
-    public function getSession($withCache = false)
+    public function getSession()
     {
         if (!$this->_session) {
-            $foundSessions = SessionPrimitive::findById($this->_ds, [$this->_sessionId], !$withCache);
+            $foundSessions = SessionPrimitive::findById($this->_ds, [$this->_sessionId]);
             if (empty($foundSessions)) {
                 throw new EntityNotFoundException("Entity SessionPrimitive with id#" . $this->_sessionId . ' not found in DB');
             }
@@ -860,17 +858,16 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param bool $withCache
      * @return SessionState
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getLastSessionState($withCache = false)
+    public function getLastSessionState()
     {
         return SessionState::fromJson(
-            $this->getEvent($withCache)->getRulesetConfig(),
-            $this->getSession($withCache)->getPlayersIds(),
+            $this->getEvent()->getRulesetConfig(),
+            $this->getSession()->getPlayersIds(),
             $this->_lastSessionState
         );
     }

@@ -184,30 +184,12 @@ class SessionPrimitive extends Primitive
      *
      * @param DataSource $ds
      * @param int[] $ids
-     * @param bool $skipCache
+     * @throws \Exception
      * @return SessionPrimitive[]
-     *@throws \Exception
      */
-    public static function findById(DataSource $ds, $ids, $skipCache = true)
+    public static function findById(DataSource $ds, $ids)
     {
-        if ($skipCache) {
-            return self::_findBy($ds, 'id', $ids);
-        } else {
-            $data = $ds->memcache()->get('session_data_' . json_encode($ids));
-            foreach ($data as $key => $item) {
-                $data[$key] = SessionPrimitive::fromJson($ds, $item);
-            }
-            if (!empty($data)) {
-                return $data;
-            }
-            $data = self::_findBy($ds, 'id', $ids);
-            $serialized = [];
-            foreach ($data as $key => $item) {
-                $serialized[$key] = $item->toJson();
-            }
-            $ds->memcache()->set('session_data_' . json_encode($ids), $serialized);
-            return $data;
-        }
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
@@ -1015,61 +997,4 @@ class SessionPrimitive extends Primitive
 
         return true;
     }
-
-    /**
-     * @throws InvalidParametersException
-     * @return string|false
-     */
-    public function toJson()
-    {
-        return json_encode($this->toArray());
-    }
-
-    /**
-     * @throws InvalidParametersException
-     * @return array
-     */
-    public function toArray()
-    {
-        $arr = [];
-        foreach ($this as $key => $value) { // @phpstan-ignore-line
-            if (!is_scalar($value) && !is_array($value) && !is_null($value)) {
-                continue;
-            }
-            $arr[$key] = $value;
-        }
-        return $arr;
-    }
-
-    /**
-     * @param string $json
-     *
-     * @return SessionPrimitive
-     * @throws InvalidParametersException
-     *
-     */
-    public static function fromJson(DataSource $ds, string $json)
-    {
-        if (empty($json)) {
-            $ret = null;
-        } else {
-            $ret = json_decode($json, true);
-            if (json_last_error() !== 0) {
-                $ret = null;
-            }
-        }
-        $instance = new self($ds);
-        foreach ($instance as $key => $value) { // @phpstan-ignore-line
-            if (!is_scalar($value) && !is_array($value) && !is_null($value)) {
-                continue;
-            }
-            if ($key === '_current' || $key === '_event') {
-                continue;
-            }
-            $instance->$key = $ret[$key];
-        }
-
-        return $instance;
-    }
-
 }
