@@ -100,6 +100,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Group position='apart'>
         <h2>{player.title}</h2>
         <Tooltip
+          events={{ hover: true, focus: true, touch: true }}
           openDelay={500}
           position='bottom'
           withArrow
