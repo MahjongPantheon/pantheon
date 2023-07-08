@@ -127,7 +127,7 @@ export const PlayerStatsListing = ({
             </List.Item>
             <List.Item>
               {i18n._t('Riichi bets: ')}
-              <b>{totalRiichi}</b>
+              <b>{totalRiichi}</b> ({makePercent(totalRiichi, playerStats?.totalPlayedRounds ?? 0)})
               <List>
                 <List.Item>
                   {i18n._t('Bets won: ')}
