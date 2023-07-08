@@ -9,7 +9,7 @@ volumes:
 services:
   db:
     build: ./Database
-    image: ghcr.io/mahjongpantheon/pantheon-database
+    image: ghcr.io/mahjongpantheon/pantheon-database:latest
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
@@ -23,7 +23,7 @@ services:
       - backupvolume01:/var/lib/postgresql/backup
   hermod:
     build: ./Hermod
-    image: ghcr.io/mahjongpantheon/pantheon-hermod
+    image: ghcr.io/mahjongpantheon/pantheon-hermod:latest
     hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
     ports:
       - "127.0.0.1:4109:80"
@@ -47,7 +47,7 @@ services:
       - pgadmindata:/var/lib/pgadmin
   tyr:
     build: ./Tyr
-    image: ghcr.io/mahjongpantheon/pantheon-tyr
+    image: ghcr.io/mahjongpantheon/pantheon-tyr:latest
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:4103:8080"
@@ -68,7 +68,7 @@ services:
       - ./Common:/var/www/html/Common
   forseti:
     build: ./Forseti
-    image: ghcr.io/mahjongpantheon/pantheon-forseti
+    image: ghcr.io/mahjongpantheon/pantheon-forseti:latest
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:4107:8080"
@@ -89,7 +89,7 @@ services:
       - ./Common:/var/www/html/Common
   mimir:
     build: ./Mimir
-    image: ghcr.io/mahjongpantheon/pantheon-mimir
+    image: ghcr.io/mahjongpantheon/pantheon-mimir:latest
     ports:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
@@ -110,7 +110,7 @@ services:
       PHINX_DB_HOST: db
   frey:
     build: ./Frey
-    image: ghcr.io/mahjongpantheon/pantheon-frey
+    image: ghcr.io/mahjongpantheon/pantheon-frey:latest
     ports:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
@@ -131,7 +131,7 @@ services:
       PHINX_DB_FREY_HOST: db
   sigrun:
     build: ./Sigrun
-    image: ghcr.io/mahjongpantheon/pantheon-sigrun
+    image: ghcr.io/mahjongpantheon/pantheon-sigrun:latest
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:4102:8080"
@@ -152,7 +152,7 @@ services:
       - ./Common:/var/www/html/Common
   hugin:
     build: ./Hugin
-    image: ghcr.io/mahjongpantheon/pantheon-hugin
+    image: ghcr.io/mahjongpantheon/pantheon-hugin:latest
     ports:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:4011:8080"

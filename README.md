@@ -21,6 +21,7 @@ To deploy pantheon on your own VPS or personal environment on production mode:
    - Docker with compose plugin - to run containers via docker runtime
    - Podman-docker wrapper and podman-compose - to run containers over kubernetes setup.
      - If you're using podman, please make sure you have `ip_tables` module inserted into your kernel on the host. Otherwise, containers will fail to start.
+     - Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
 2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
@@ -104,10 +105,13 @@ installed as well, see Dockerfile for a complete list.
 _Note: on some linux distros almost every docker-related command should be run as root. If nothing happens, or error
 is displayed, try adding `sudo` before `make`._
 
-1. Run `make dev` to build and start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
-2. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
+1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process. 
+2. Run `make dev` to build and start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
+3. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
 to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
-3. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
+4. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
+
+Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
 
 To create an event and fill it with some data, run `make seed`, `make seed_bigevent` or `make seed_tournament` (with `sudo` if required). Note that users are
 re-seeded on each command run.
