@@ -336,14 +336,19 @@ final class TwirpServer implements Frey
         try {
             return (new \Common\PersonsFindByTenhouIdsResponse())
                 ->setPeople(array_map(function ($person) {
-                    return (new \Common\PersonEx())
+                    $p = (new \Common\PersonEx())
                         ->setId($person['id'])
                         ->setCity($person['city'])
-                        ->setEmail($person['email'])
-                        ->setPhone($person['phone'])
                         ->setTenhouId($person['tenhou_id'])
                         ->setGroups($person['groups'])
                         ->setTitle($person['title']);
+                    if (!empty($person['email'])) {
+                        $p->setEmail($person['email']);
+                    }
+                    if (!empty($person['phone'])) {
+                        $p->setPhone($person['phone']);
+                    }
+                    return $p;
                 }, $this->_personsController->findByTenhouIds(iterator_to_array($req->getIds()))));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
