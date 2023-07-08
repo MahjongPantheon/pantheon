@@ -44,6 +44,7 @@ return [
     'cookieDomain' => 'localhost',
     'trackerUrl' => null,
     'userinfoHook' => null,
+    'userinfoHookApiKey' => null,
     'api' => [
         'version_major' => 1,
         'version_minor' => 0

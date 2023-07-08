@@ -172,7 +172,10 @@ class AccountModel extends Model
                     'tenhou_id' => $tenhouId,
                 ]);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
+                    'X-Api-Key: ' . $this->_config->getValue('userinfoHookApiKey')
+                ]);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_exec($ch);
                 curl_close($ch);

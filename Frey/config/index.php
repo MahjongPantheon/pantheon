@@ -36,6 +36,7 @@ return [
     'cookieDomain' => getenv('COOKIE_DOMAIN'),
     'trackerUrl' => getenv('TRACKER_URL') ?: null,
     'userinfoHook' => getenv('USERINFO_HOOK') ?: null,
+    'userinfoHookApiKey' => getenv('USERINFO_HOOK_API_KEY') ?: '',
 
     // ---------- not intended for local override! ------------
     'api' => [
