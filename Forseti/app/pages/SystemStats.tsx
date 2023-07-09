@@ -74,8 +74,8 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
 
-  const shade1 = isDark ? 9 : 4;
-  const shade2 = isDark ? 8 : 2;
+  const shade1 = isDark ? 7 : 3;
+  const shade2 = isDark ? 7 : 3;
   const colors = [
     theme.colors.red[shade1],
     theme.colors.pink[shade1],
