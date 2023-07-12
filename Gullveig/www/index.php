@@ -20,8 +20,7 @@ use Monolog\Logger;
 
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/helpers/Config.php';
-require_once __DIR__ . '/../src/helpers/Db.php';
-require_once __DIR__ . '/../src/controllers/Events.php';
+require_once __DIR__ . '/../src/controllers/Avatars.php';
 
 $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
 $config = new \Gullveig\Config($cfgPath);
@@ -30,7 +29,4 @@ $mc->addServer('127.0.0.1', 11211);
 $log = new Logger('Gullveig');
 $log->pushHandler(new ErrorLogHandler());
 $controller = new \Gullveig\AvatarsController($log, $config, $mc);
-
-if (!empty($_POST['user_id'])) {
-    $controller->upload((int)$_POST['user_id'], $_FILES['user_avatar']);
-}
+$controller->upload(file_get_contents('php://input') ?: '');

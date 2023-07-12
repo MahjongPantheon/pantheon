@@ -61,6 +61,7 @@ pantheon_run:
 	@cd Mimir && ${MAKE} docker_enable_debug
 	@cd Frey && ${MAKE} docker_enable_debug
 	@cd Hugin && ${MAKE} docker_enable_debug
+	@cd Gullveig && ${MAKE} docker_enable_debug
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \

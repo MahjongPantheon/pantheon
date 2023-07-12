@@ -43,6 +43,10 @@ class PlayerPrimitive extends Primitive
      * @var string
      */
     protected $_tenhouId;
+    /**
+     * @var bool
+     */
+    protected $_hasAvatar;
 
     /**
      * PlayerPrimitive constructor.
@@ -98,6 +102,7 @@ class PlayerPrimitive extends Primitive
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
+                ->setHasAvatar($item['has_avatar'])
                 ->_setId($item['id']);
         }, $allData);
     }
@@ -119,6 +124,7 @@ class PlayerPrimitive extends Primitive
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
+                ->setHasAvatar($item['has_avatar'])
                 ->_setId($item['id']);
         }, $playersData);
 
@@ -253,6 +259,24 @@ class PlayerPrimitive extends Primitive
     public function getDisplayName()
     {
         return $this->_displayName;
+    }
+
+    /**
+     * @param bool $hasAvatar
+     * @return $this
+     */
+    public function setHasAvatar($hasAvatar)
+    {
+        $this->_hasAvatar = $hasAvatar;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->_hasAvatar;
     }
 
     /**

@@ -18,7 +18,17 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '../hooks/i18n';
-import { Box, Container, LoadingOverlay, Select, Space, TextInput } from '@mantine/core';
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  Container,
+  Group,
+  LoadingOverlay,
+  Select,
+  Space,
+  TextInput,
+} from '@mantine/core';
 import {
   IconCircleCheck,
   IconDeviceFloppy,
@@ -49,7 +59,6 @@ export const ProfileManage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
   const form = useForm({
     initialValues: {
       email: '',
@@ -58,6 +67,8 @@ export const ProfileManage: React.FC = () => {
       city: '',
       phone: '',
       tenhouId: '',
+      hasAvatar: false,
+      avatarData: '',
     },
 
     validate: {
@@ -70,6 +81,7 @@ export const ProfileManage: React.FC = () => {
           : null,
     },
   });
+  const [avatarData, setAvatarData] = useState<string | null | undefined>();
 
   const submitForm = useCallback(
     (values: {
@@ -79,6 +91,8 @@ export const ProfileManage: React.FC = () => {
       city: string;
       phone: string;
       tenhouId: string;
+      hasAvatar: boolean;
+      avatarData: string;
     }) => {
       setIsSaving(true);
       api
@@ -89,7 +103,9 @@ export const ProfileManage: React.FC = () => {
           values.city,
           '', // email can't be changed by yourself, pass just anything.
           values.phone.trim(),
-          values.tenhouId.trim()
+          values.tenhouId.trim(),
+          values.hasAvatar,
+          values.avatarData
         )
         .then((resp) => {
           setIsSaving(false);
@@ -123,11 +139,24 @@ export const ProfileManage: React.FC = () => {
         form.setFieldValue('phone', resp.phone);
         form.setFieldValue('tenhouId', resp.tenhouId);
         form.setFieldValue('country', resp.country || respCountries.preferredByIp);
+        form.setFieldValue('hasAvatar', resp.hasAvatar);
         setIsLoading(false);
         nprogress.complete();
       });
     });
   }, [personId]);
+
+  function updateAvatar() {
+    const input = document.getElementById('avatar_upload') as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.addEventListener('load', (e) => {
+        setAvatarData(e.target?.result as string);
+        form.setFieldValue('avatarData', e.target?.result as string);
+      });
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 
   if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
@@ -185,6 +214,26 @@ export const ProfileManage: React.FC = () => {
               label={i18n._t('Tenhou ID')}
               {...form.getInputProps('tenhouId')}
             />
+            <Space h='md' />
+            <Checkbox
+              label={i18n._t('Show user avatar')}
+              description={i18n._t(
+                'If checked, uploaded avatar will be shown instead of default circle with initials. If no avatar is uploaded, the default circle will be shown.'
+              )}
+              {...form.getInputProps('hasAvatar', { type: 'checkbox' })}
+            />
+            <Space h='md' />
+            {form.getTransformedValues().hasAvatar && (
+              <Group>
+                <Avatar
+                  src={
+                    avatarData ??
+                    `${import.meta.env.GULLVEIG_URL}/files/avatars/user_${personId}.jpg`
+                  }
+                ></Avatar>
+                <input type='file' id='avatar_upload' onChange={updateAvatar} />
+              </Group>
+            )}
             <TopActionButton
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
               loading={isSaving || isLoading || isSaved}

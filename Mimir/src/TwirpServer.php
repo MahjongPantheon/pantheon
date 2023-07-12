@@ -477,6 +477,7 @@ final class TwirpServer implements Mimir
                 ->setId($player['id'])
                 ->setTitle($player['title'])
                 ->setTenhouId($player['tenhou_id'])
+                ->setHasAvatar($player['has_avatar'])
                 ->setIgnoreSeating($player['ignore_seating']);
             $repl = self::_replacement($player);
             if (!empty($repl)) {

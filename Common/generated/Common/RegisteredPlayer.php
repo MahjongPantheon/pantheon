@@ -41,6 +41,10 @@ class RegisteredPlayer extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>optional .common.ReplacementPlayer replaced_by = 7;</code>
      */
     protected $replaced_by = null;
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     */
+    protected $has_avatar = false;
 
     /**
      * Constructor.
@@ -55,6 +59,7 @@ class RegisteredPlayer extends \Google\Protobuf\Internal\Message
      *     @type string $tenhou_id
      *     @type bool $ignore_seating
      *     @type \Common\ReplacementPlayer $replaced_by
+     *     @type bool $has_avatar
      * }
      */
     public function __construct($data = NULL) {
@@ -242,6 +247,28 @@ class RegisteredPlayer extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\ReplacementPlayer::class);
         $this->replaced_by = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
 
         return $this;
     }

@@ -22,7 +22,6 @@ import { useI18n } from '../../hooks/i18n';
 import { GameConfig, RegisteredPlayer, Event, EventType } from '../../clients/proto/atoms.pb';
 import {
   ActionIcon,
-  Avatar,
   Text,
   Badge,
   Container,
@@ -45,9 +44,9 @@ import {
 } from '@tabler/icons-react';
 import { PlayerSelector } from './PlayerSelector';
 import { useDisclosure } from '@mantine/hooks';
-import { makeColor, makeInitials } from '../../helpers/playersList';
 import { Filler } from '../../helpers/filler';
 import { useStorage } from '../../hooks/storage';
+import { PlayerAvatar } from '../../helpers/PlayerAvatar';
 
 export const ManagementTab: React.FC<{
   eventId: number;
@@ -215,9 +214,13 @@ export const ManagementTab: React.FC<{
               }}
             >
               <Group sx={{ flex: 1, minWidth: '300px' }}>
-                <Avatar color={makeColor(p.title)} radius='xl'>
-                  {makeInitials(p.title)}
-                </Avatar>
+                <PlayerAvatar
+                  id={p.id}
+                  title={p.title}
+                  radius='xl'
+                  size='md'
+                  hasAvatar={p.hasAvatar}
+                />
                 <Stack spacing='0'>
                   <Text>{p.title}</Text>
                   {config?.isOnline && <Text c='dimmed'>{p.tenhouId}</Text>}

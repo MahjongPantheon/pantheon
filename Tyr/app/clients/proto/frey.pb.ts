@@ -352,6 +352,7 @@ export interface PersonsUpdatePersonalInfoPayload {
   phone: string;
   tenhouId: string;
   hasAvatar: boolean;
+  avatarData: string;
 }
 
 export interface PersonsGetPersonalInfoPayload {
@@ -7021,6 +7022,7 @@ export const PersonsUpdatePersonalInfoPayload = {
       phone: "",
       tenhouId: "",
       hasAvatar: false,
+      avatarData: "",
     };
   },
 
@@ -7054,6 +7056,9 @@ export const PersonsUpdatePersonalInfoPayload = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(8, msg.hasAvatar);
+    }
+    if (msg.avatarData) {
+      writer.writeString(9, msg.avatarData);
     }
     return writer;
   },
@@ -7098,6 +7103,10 @@ export const PersonsUpdatePersonalInfoPayload = {
         }
         case 8: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 9: {
+          msg.avatarData = reader.readString();
           break;
         }
         default: {
@@ -11877,6 +11886,7 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
       phone: "",
       tenhouId: "",
       hasAvatar: false,
+      avatarData: "",
     };
   },
 
@@ -11910,6 +11920,9 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.avatarData) {
+      json["avatarData"] = msg.avatarData;
     }
     return json;
   },
@@ -11952,6 +11965,10 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _avatarData_ = json["avatarData"] ?? json["avatar_data"];
+    if (_avatarData_) {
+      msg.avatarData = _avatarData_;
     }
     return msg;
   },

@@ -319,6 +319,7 @@ class FreyClientTwirp implements IFreyClient
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar()
             ];
         }, iterator_to_array($persons));
     }
@@ -348,6 +349,7 @@ class FreyClientTwirp implements IFreyClient
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar(),
             ];
         }, iterator_to_array($persons));
     }

@@ -19,9 +19,6 @@ RUN chmod 755 /entrypoint.sh
 # copy nginx configs
 COPY gullveig-docker.nginx.conf /etc/nginx/http.d/gullveig.conf
 
-# copy munin config
-COPY etc_munin/munin.conf /etc/munin/munin.conf
-
 # Folders init
 RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Gullveig

@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-¸I
+ÍI
 proto/frey.protocommon"d
 AuthRequestRegistrationPayload
 email (	
@@ -219,7 +219,7 @@ rule_value (2.common.RuleValue
 PersonsGetGroupsOfPersonPayload
 	person_id ("A
  PersonsGetGroupsOfPersonResponse
-groups (2.common.Group"¡
+groups (2.common.Group"¶
  PersonsUpdatePersonalInfoPayload
 
 id (
@@ -230,7 +230,8 @@ rule_value (2.common.RuleValue
 phone (	
 	tenhou_id (	
 
-has_avatar (",
+has_avatar (
+avatar_data	 (	",
 PersonsGetPersonalInfoPayload
 ids ("B
 PersonsGetPersonalInfoResponse 

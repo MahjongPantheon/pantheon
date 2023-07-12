@@ -248,6 +248,7 @@ class EventModel extends Model
                             'local_id'      => empty($playerIdMap[$p->getId()]) ? null : $playerIdMap[$p->getId()],
                             'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                             'tenhou_id'     => $p->getTenhouId(),
+                            'has_avatar'    => $p->getHasAvatar(),
                             'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
                             'replaced_by'   => null // NOTE: always null here, replacement data is not fetched!
                         ];

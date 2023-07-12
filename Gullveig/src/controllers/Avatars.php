@@ -21,28 +21,48 @@ require_once __DIR__ . '/../Controller.php';
 
 class AvatarsController extends Controller
 {
-    public function upload($userId, $avatarFile)
+    public function upload($avatarData)
     {
-        $fileSize = $avatarFile['size'];
-        $fileTmp = $avatarFile['tmp_name'];
-        $fileType = $avatarFile['type'];
+        $data = json_decode($avatarData, true);
+        $userId = (int)$data['userId'];
+        list ($fileType, $file) = explode(';', $data['avatar']);
+        list (, $b64ava) = explode(',', $file);
+        $fileContents = base64_decode($b64ava);
+        $fileSize = strlen($fileContents);
 
         try {
-            $ext = match ($fileType) {
-                'image/jpeg' => 'jpg',
-                'image/png' => 'png',
-                'image/gif' => 'gif',
+            match ($fileType) {
+                'data:image/jpeg' => 'jpg',
+                'data:image/png' => 'png',
+                'data:image/gif' => 'gif',
                 default => throw new \Exception('Invalid file type')
             };
+
+            $imageOrig = imagecreatefromstring($fileContents);
+            if (!$imageOrig) {
+                throw new \Exception('Invalid image format');
+            }
 
             if ($fileSize > 1024 * 512) {
                 throw new \Exception('Max file size is 512KB');
             }
 
-            move_uploaded_file($fileTmp, "/var/storage/files/avatars/user_{$userId}.{$ext}");
+            list ($width, $height) = getimagesizefromstring($fileContents);
+            $srcX = 0;
+            $srcY = 0;
+            if ($width > $height) {
+                $srcX = ($width - $height) / 2;
+            }
+            if ($height > $width) {
+                $srcY = ($height - $width) / 2;
+            }
+            $image = imagecreatetruecolor(128, 128);
+            imagecopyresampled($image, $imageOrig, 0, 0, $srcX, $srcY, 128, 128, min($width, $height), min($width, $height));
+            imagejpeg($image, "/var/storage/files/avatars/user_{$userId}.jpg", 85);
+
+            return ['ok' => true];
         } catch (\Exception $e) {
-            unlink($fileTmp);
-            return $e->getMessage();
+            return ['error' => $e->getMessage()];
         }
     }
 }

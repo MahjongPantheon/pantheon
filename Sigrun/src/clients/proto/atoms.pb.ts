@@ -374,6 +374,7 @@ export interface RegisteredPlayer {
   tenhouId: string;
   ignoreSeating: boolean;
   replacedBy?: ReplacementPlayer | null | undefined;
+  hasAvatar: boolean;
 }
 
 export interface SessionHistoryResult {
@@ -4568,6 +4569,7 @@ export const RegisteredPlayer = {
       tenhouId: "",
       ignoreSeating: false,
       replacedBy: undefined,
+      hasAvatar: false,
     };
   },
 
@@ -4598,6 +4600,9 @@ export const RegisteredPlayer = {
     }
     if (msg.replacedBy != undefined) {
       writer.writeMessage(7, msg.replacedBy, ReplacementPlayer._writeMessage);
+    }
+    if (msg.hasAvatar) {
+      writer.writeBool(8, msg.hasAvatar);
     }
     return writer;
   },
@@ -4639,6 +4644,10 @@ export const RegisteredPlayer = {
         case 7: {
           msg.replacedBy = ReplacementPlayer.initialize();
           reader.readMessage(msg.replacedBy, ReplacementPlayer._readMessage);
+          break;
+        }
+        case 8: {
+          msg.hasAvatar = reader.readBool();
           break;
         }
         default: {
@@ -10977,6 +10986,7 @@ export const RegisteredPlayerJSON = {
       tenhouId: "",
       ignoreSeating: false,
       replacedBy: undefined,
+      hasAvatar: false,
     };
   },
 
@@ -11008,6 +11018,9 @@ export const RegisteredPlayerJSON = {
     if (msg.replacedBy != undefined) {
       const _replacedBy_ = ReplacementPlayerJSON._writeMessage(msg.replacedBy);
       json["replacedBy"] = _replacedBy_;
+    }
+    if (msg.hasAvatar) {
+      json["hasAvatar"] = msg.hasAvatar;
     }
     return json;
   },
@@ -11045,6 +11058,10 @@ export const RegisteredPlayerJSON = {
       const m = ReplacementPlayer.initialize();
       ReplacementPlayerJSON._readMessage(m, _replacedBy_);
       msg.replacedBy = m;
+    }
+    const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
+    if (_hasAvatar_) {
+      msg.hasAvatar = _hasAvatar_;
     }
     return msg;
   },

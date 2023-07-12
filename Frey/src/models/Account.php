@@ -120,6 +120,7 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar(),
             ];
         }, $persons);
     }
@@ -133,12 +134,14 @@ class AccountModel extends Model
      * @param string $city
      * @param string $email
      * @param string $phone
-     * @param string|null $tenhouId
+     * @param string $tenhouId
+     * @param bool $hasAvatar
+     * @param string $avatarData
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId = null)
+    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId, $hasAvatar, $avatarData)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
@@ -182,11 +185,27 @@ class AccountModel extends Model
             }
         }
 
+        $ch = curl_init($this->_config->getValue('gullveigUrl'));
+        if ($ch) {
+            $payload = json_encode([
+                'userId' => $id,
+                'avatar' => $avatarData
+            ]);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json'
+            ]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_exec($ch);
+            curl_close($ch);
+        }
+
         return $persons[0]->setTitle($title)
             ->setCountry($country)
             ->setCity($city)
             ->setPhone($phone)
             ->setTenhouId($tenhouId)
+            ->setHasAvatar($hasAvatar)
             ->save();
     }
 
@@ -246,6 +265,7 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar(),
             ];
         }, $persons);
     }

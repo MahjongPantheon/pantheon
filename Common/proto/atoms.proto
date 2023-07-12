@@ -367,6 +367,7 @@ message RegisteredPlayer {
   string tenhou_id = 5;
   bool ignore_seating = 6;
   optional ReplacementPlayer replaced_by = 7;
+  bool has_avatar = 8;
 }
 
 message SessionHistoryResult {

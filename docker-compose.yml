@@ -5,6 +5,7 @@ volumes:
   backupvolume01: {}
   configvolume01: {}
   muninvolume01: {}
+  gullveigstorage01: {}
   pgadmindata:
 services:
   db:
@@ -188,7 +189,7 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-gullveig:latest
     ports:
       - "127.0.0.1:4012:80"
-      - "127.0.0.1:49498:4949"
+      - "127.0.0.1:49499:4949"
     volumes:
       - ./Env:/env
       - ./Gullveig:/var/www/html/Gullveig

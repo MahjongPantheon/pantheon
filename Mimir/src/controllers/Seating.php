@@ -328,6 +328,7 @@ class SeatingController extends Controller
                 return [
                     'id'            => $playersMap[$player['id']]->getId(),
                     'title'         => $playersMap[$player['id']]->getDisplayName(),
+                    'has_avatar'    => $playersMap[$player['id']]->getHasAvatar(),
                     'local_id'      => $player['local_id'],
                     'team_name'     => empty($teamNames[$playersMap[$player['id']]->getId()])
                         ? null

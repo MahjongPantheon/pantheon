@@ -389,6 +389,7 @@ class EventsController extends Controller
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
                 'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId(),
+                'has_avatar'    => $p->getHasAvatar(),
                 'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
                 'replaced_by'   => empty($replacements[$p->getId()]) ? null : [
                     'id' => $replacements[$p->getId()]->getId(),

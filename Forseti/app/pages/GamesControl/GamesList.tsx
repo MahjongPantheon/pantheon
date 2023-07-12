@@ -26,7 +26,6 @@ import {
 } from '../../clients/proto/atoms.pb';
 import {
   ActionIcon,
-  Avatar,
   Badge,
   Box,
   Group,
@@ -36,7 +35,6 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import { makeColor, makeInitials } from '../../helpers/playersList';
 import {
   IconAlarm,
   IconArrowBackUp,
@@ -51,6 +49,7 @@ import { I18nService } from '../../services/i18n';
 import { yakuList } from '../../helpers/yaku';
 import { useI18n } from '../../hooks/i18n';
 import { Confirmation } from './Confirmation';
+import { PlayerAvatar } from '../../helpers/PlayerAvatar';
 
 type GamesListProps = {
   tablesState: TableState[];
@@ -136,9 +135,13 @@ export function GamesList({
                         >
                           {score}
                         </Badge>
-                        <Avatar color={makeColor(p.title)} radius='xl' size='sm' title={`#${p.id}`}>
-                          {makeInitials(p.title)}
-                        </Avatar>
+                        <PlayerAvatar
+                          id={p.id}
+                          title={p.title}
+                          radius='xl'
+                          size='sm'
+                          hasAvatar={p.hasAvatar}
+                        />
                         <Text
                           weight='bold'
                           style={

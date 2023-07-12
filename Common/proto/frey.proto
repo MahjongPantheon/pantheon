@@ -429,6 +429,7 @@ message PersonsUpdatePersonalInfoPayload {
   string phone = 6;
   string tenhou_id = 7;
   bool has_avatar = 8;
+  string avatar_data = 9;
 }
 
 message PersonsGetPersonalInfoPayload {
