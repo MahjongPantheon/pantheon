@@ -16,7 +16,13 @@
  */
 
 import { Menu, Group, ActionIcon, Container } from '@mantine/core';
-import { IconLanguageHiragana, IconMoonStars, IconSun } from '@tabler/icons-react';
+import {
+  IconLanguageHiragana,
+  IconMoon,
+  IconMoonStars,
+  IconSun,
+  IconSunLow,
+} from '@tabler/icons-react';
 import { FlagEn, FlagRu } from './helpers/flags';
 import { useI18n } from './hooks/i18n';
 import * as React from 'react';
@@ -25,10 +31,11 @@ import { actionButtonRef } from './hooks/actionButton';
 interface AppFooterProps {
   dark: boolean;
   toggleColorScheme: () => void;
+  toggleDimmed: () => void;
   saveLang: (lang: string) => void;
 }
 
-export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps) {
+export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: AppFooterProps) {
   const i18n = useI18n();
 
   return (
@@ -36,6 +43,14 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppFooterProps)
       <Container style={{ flex: 1 }}>
         <Group position='apart'>
           <Group>
+            <ActionIcon
+              variant='filled'
+              color={dark ? 'pink' : 'grape'}
+              onClick={() => toggleDimmed()}
+              title={i18n._t('Toggle dimmed color scheme')}
+            >
+              {dark ? <IconMoon size='1.1rem' /> : <IconSunLow size='1.1rem' />}
+            </ActionIcon>
             <ActionIcon
               variant='filled'
               color={dark ? 'grape' : 'indigo'}

@@ -46,7 +46,7 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
             color={color ?? 'red'}
             size='xs'
             loading={loading}
-            style={{ width: '230px' }}
+            style={{ width: '200px' }}
             leftIcon={icon}
             onClick={onClick}
           >

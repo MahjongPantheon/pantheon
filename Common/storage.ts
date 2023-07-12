@@ -31,6 +31,7 @@ export interface IStorage {
   getLang(): string | null;
   getTheme(): string | null;
   getSingleDeviceMode(): boolean;
+  getDimmed(): boolean;
 
   setAuthToken(token: string): IStorage;
   setPersonId(id: number): IStorage;
@@ -38,6 +39,7 @@ export interface IStorage {
   setLang(lang: string): IStorage;
   setTheme(theme: string): IStorage;
   setSingleDeviceMode(enabled: boolean): IStorage;
+  setDimmed(enabled: boolean): IStorage;
 
   deleteAuthToken(): IStorage;
   deletePersonId(): IStorage;
@@ -53,6 +55,7 @@ const PERSON_ID_KEY = "pid";
 const EVENT_ID_KEY = "eid";
 const LANG_KEY = "lng";
 const THEME_KEY = "thm";
+const DIMMED_KEY = "dim";
 const SINGLE_DEVICE_MODE_KEY = "sdm";
 
 export class Storage implements IStorage {
@@ -82,6 +85,10 @@ export class Storage implements IStorage {
     return this.get(THEME_KEY, "string") as string | null;
   }
 
+  public getDimmed(): boolean {
+    return !!this.get(DIMMED_KEY, "int");
+  }
+
   public getSingleDeviceMode(): boolean {
     return !!this.get(SINGLE_DEVICE_MODE_KEY, "int");
   }
@@ -108,6 +115,11 @@ export class Storage implements IStorage {
 
   public setTheme(theme: string): IStorage {
     this.set(THEME_KEY, "string", theme);
+    return this;
+  }
+
+  public setDimmed(dimmed: boolean): IStorage {
+    this.set(DIMMED_KEY, "int", dimmed ? 1 : 0);
     return this;
   }
 

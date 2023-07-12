@@ -45,6 +45,8 @@ import {
   IconRefreshAlert,
   IconHandStop,
   IconExternalLink,
+  IconUser,
+  IconAdjustmentsAlt,
 } from '@tabler/icons-react';
 import { useLocation, useRoute } from 'wouter';
 import { useI18n } from './hooks/i18n';
@@ -221,7 +223,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
                     leftIcon={<IconChevronDown size={20} />}
                     title={eventData?.title}
                   >
-                    {title}
+                    {largeScreen ? title : <IconAdjustmentsAlt size='md' />}
                   </Button>
                 </Menu.Target>
                 <Menu.Dropdown>
@@ -297,7 +299,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
                   leftIcon={<IconChevronDown size={20} />}
                   title={i18n._t('Your profile')}
                 >
-                  {i18n._t('Your profile')}
+                  {largeScreen ? i18n._t('Your profile') : <IconUser size='md' />}
                 </Button>
               </Menu.Target>
               <Menu.Dropdown>
