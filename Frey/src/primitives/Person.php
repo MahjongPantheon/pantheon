@@ -43,6 +43,7 @@ class PersonPrimitive extends Primitive
         'city'              => '_city',
         'tenhou_id'         => '_tenhouId',
         'disabled'          => '_disabled',
+        'has_avatar'        => '_hasAvatar',
         'is_superadmin'     => '_superadmin',
         '::group'           => '_groupIds', // external many-to-many relation
     ];
@@ -61,6 +62,7 @@ class PersonPrimitive extends Primitive
             '_city'     => $this->_stringTransform(true),
             '_tenhouId' => $this->_stringTransform(true),
             '_disabled' => $this->_integerTransform(),
+            '_hasAvatar'   => $this->_integerTransform(true),
             '_superadmin' => $this->_integerTransform(),
             '_groupIds'   => $this->_externalManyToManyTransform(
                 self::REL_GROUP,
@@ -142,6 +144,11 @@ class PersonPrimitive extends Primitive
      * @var GroupPrimitive[]|null
      */
     protected $_groups = null;
+    /**
+     * If the user has uploaded avatar
+     * @var int
+     */
+    protected $_hasAvatar = 0;
 
     /**
      * Find persons by local ids (primary key)
@@ -437,6 +444,24 @@ QRY;
     public function setIsSuperadmin(bool $superadmin): PersonPrimitive
     {
         $this->_superadmin = $superadmin ? 1 : 0;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasAvatar(): bool
+    {
+        return $this->_hasAvatar == 1;
+    }
+
+    /**
+     * @param bool $hasAvatar
+     * @return PersonPrimitive
+     */
+    public function setHasAvatar(bool $hasAvatar): PersonPrimitive
+    {
+        $this->_hasAvatar = $hasAvatar ? 1 : 0;
         return $this;
     }
 

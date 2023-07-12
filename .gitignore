@@ -37,6 +37,8 @@ Mimir/tests/data/*
 
 Hugin/vendor/
 
+Gullveig/vendor/
+
 Tyr/dist
 Tyr/tmp
 Tyr/node_modules

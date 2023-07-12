@@ -206,6 +206,7 @@ check:
 	cd Forseti && ${MAKE} docker_lint
 	cd Sigrun && ${MAKE} docker_lint
 	cd Hugin && ${MAKE} docker_check
+	cd Gullveig && ${MAKE} docker_check
 
 .PHONY: autofix
 autofix:
@@ -216,6 +217,7 @@ autofix:
 	cd Forseti && ${MAKE} docker_autofix
 	cd Sigrun && ${MAKE} docker_autofix
 	cd Hugin && ${MAKE} docker_autofix
+	cd Gullveig && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -245,6 +247,7 @@ prod_deps:
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
+	cd Gullveig && ${MAKE} docker_deps
 	# sigrun should install deps after prebuild
 
 .PHONY: prod_build_basic_images
@@ -300,7 +303,7 @@ prod_stop_all:
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
-	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr
+	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr gullveig
 
 .PHONY: prod_restart
 prod_restart:

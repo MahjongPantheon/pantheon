@@ -29,6 +29,10 @@ class Person extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string title = 4;</code>
      */
     protected $title = '';
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 5;</code>
+     */
+    protected $has_avatar = false;
 
     /**
      * Constructor.
@@ -40,6 +44,7 @@ class Person extends \Google\Protobuf\Internal\Message
      *     @type string $city
      *     @type string $tenhou_id
      *     @type string $title
+     *     @type bool $has_avatar
      * }
      */
     public function __construct($data = NULL) {
@@ -131,6 +136,28 @@ class Person extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->title = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 5;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 5;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
 
         return $this;
     }

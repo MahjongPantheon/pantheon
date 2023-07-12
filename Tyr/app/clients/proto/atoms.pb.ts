@@ -118,6 +118,7 @@ export interface Person {
   city: string;
   tenhouId: string;
   title: string;
+  hasAvatar: boolean;
 }
 
 export interface PersonEx {
@@ -129,6 +130,7 @@ export interface PersonEx {
   email: string;
   phone: string;
   groups: number[];
+  hasAvatar: boolean;
 }
 
 export interface Group {
@@ -1641,6 +1643,7 @@ export const Person = {
       city: "",
       tenhouId: "",
       title: "",
+      hasAvatar: false,
     };
   },
 
@@ -1662,6 +1665,9 @@ export const Person = {
     }
     if (msg.title) {
       writer.writeString(4, msg.title);
+    }
+    if (msg.hasAvatar) {
+      writer.writeBool(5, msg.hasAvatar);
     }
     return writer;
   },
@@ -1687,6 +1693,10 @@ export const Person = {
         }
         case 4: {
           msg.title = reader.readString();
+          break;
+        }
+        case 5: {
+          msg.hasAvatar = reader.readBool();
           break;
         }
         default: {
@@ -1730,6 +1740,7 @@ export const PersonEx = {
       email: "",
       phone: "",
       groups: [],
+      hasAvatar: false,
     };
   },
 
@@ -1763,6 +1774,9 @@ export const PersonEx = {
     }
     if (msg.groups?.length) {
       writer.writePackedInt32(8, msg.groups);
+    }
+    if (msg.hasAvatar) {
+      writer.writeBool(9, msg.hasAvatar);
     }
     return writer;
   },
@@ -1808,6 +1822,10 @@ export const PersonEx = {
           } else {
             msg.groups.push(reader.readInt32());
           }
+          break;
+        }
+        case 9: {
+          msg.hasAvatar = reader.readBool();
           break;
         }
         default: {
@@ -8376,6 +8394,7 @@ export const PersonJSON = {
       city: "",
       tenhouId: "",
       title: "",
+      hasAvatar: false,
     };
   },
 
@@ -8395,6 +8414,9 @@ export const PersonJSON = {
     }
     if (msg.title) {
       json["title"] = msg.title;
+    }
+    if (msg.hasAvatar) {
+      json["hasAvatar"] = msg.hasAvatar;
     }
     return json;
   },
@@ -8418,6 +8440,10 @@ export const PersonJSON = {
     const _title_ = json["title"];
     if (_title_) {
       msg.title = _title_;
+    }
+    const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
+    if (_hasAvatar_) {
+      msg.hasAvatar = _hasAvatar_;
     }
     return msg;
   },
@@ -8454,6 +8480,7 @@ export const PersonExJSON = {
       email: "",
       phone: "",
       groups: [],
+      hasAvatar: false,
     };
   },
 
@@ -8485,6 +8512,9 @@ export const PersonExJSON = {
     }
     if (msg.groups?.length) {
       json["groups"] = msg.groups;
+    }
+    if (msg.hasAvatar) {
+      json["hasAvatar"] = msg.hasAvatar;
     }
     return json;
   },
@@ -8524,6 +8554,10 @@ export const PersonExJSON = {
     const _groups_ = json["groups"];
     if (_groups_) {
       msg.groups = _groups_;
+    }
+    const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
+    if (_hasAvatar_) {
+      msg.hasAvatar = _hasAvatar_;
     }
     return msg;
   },

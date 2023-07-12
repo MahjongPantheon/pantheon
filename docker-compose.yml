@@ -183,3 +183,17 @@ services:
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db
+  gullveig:
+    build: ./Gullveig
+    image: ghcr.io/mahjongpantheon/pantheon-gullveig:latest
+    ports:
+      - "127.0.0.1:4012:80"
+      - "127.0.0.1:49498:4949"
+    volumes:
+      - ./Env:/env
+      - ./Gullveig:/var/www/html/Gullveig
+      - ./Common:/var/www/html/Common
+      - gullveigstorage01:/var/storage
+    environment:
+      ENV: /etc/profile
+      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
