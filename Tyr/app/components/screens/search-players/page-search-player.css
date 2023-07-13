@@ -32,6 +32,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 12px;
 }
 
 .page-search-player__name:active {

@@ -36,6 +36,29 @@
   --color-success: #0da678;
   --color-danger: #d32b2b;
   --color-link: #1979e5;
+
+  --avatar-bg-red: #E6D0D0;
+  --avatar-fg-red: #A75858;
+  --avatar-bg-orange: #EFD8C7;
+  --avatar-fg-orange: #C87237;
+  --avatar-bg-yellow: #EEE2C8;
+  --avatar-fg-yellow: #C4973B;
+  --avatar-bg-green: #D0E6DB;
+  --avatar-fg-green: #59A67E;
+  --avatar-bg-lime: #D7E6D0;
+  --avatar-fg-lime: #70A659;
+  --avatar-bg-teal: #D1E5E5;
+  --avatar-fg-teal: #5CA3A1;
+  --avatar-bg-cyan: #D3E2E4;
+  --avatar-fg-cyan: #61969E;
+  --avatar-bg-blue: #CEDCE9;
+  --avatar-fg-blue: #5081AF;
+  --avatar-bg-purple: #D9D4E2;
+  --avatar-fg-purple: #766699;
+  --avatar-bg-grape: #E2CDEA;
+  --avatar-fg-grape: #974BB4;
+  --avatar-bg-pink: #EACDDC;
+  --avatar-fg-pink: #B44B81;
 }
 
 .theme-night {
@@ -58,4 +81,27 @@
   --color-success: #43d8ab;
   --color-danger: #ff6969;
   --color-link: #1979e5;
+
+  --avatar-bg-red: #643535;
+  --avatar-fg-red: #C79494;
+  --avatar-bg-orange: #784421;
+  --avatar-fg-orange: #DCA57F;
+  --avatar-bg-yellow: #755B24;
+  --avatar-fg-yellow: #D9BC82;
+  --avatar-bg-green: #35644C;
+  --avatar-fg-green: #95C6AD;
+  --avatar-bg-lime: #436435;
+  --avatar-fg-lime: #A4C695;
+  --avatar-bg-teal: #376260;
+  --avatar-fg-teal: #97C4C3;
+  --avatar-bg-cyan: #3A5A5F;
+  --avatar-fg-cyan: #9ABCC1;
+  --avatar-bg-blue: #304D69;
+  --avatar-fg-blue: #8FAECC;
+  --avatar-bg-purple: #473D5C;
+  --avatar-fg-purple: #A79DBD;
+  --avatar-bg-grape: #5B2D6C;
+  --avatar-fg-grape: #BC8CCF;
+  --avatar-bg-pink: #6C2D4D;
+  --avatar-fg-pink: #CF8CAE;
 }

@@ -50,6 +50,7 @@ export const initialState: IAppState = {
   },
 
   currentPlayerDisplayName: undefined,
+  currentPlayerHasAvatar: false,
   currentPlayerId: undefined,
   players: undefined, // e-s-w-n,
   mapIdToPlayer: {},

@@ -15,37 +15,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.page-other-tables-list {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+export type AvatarProps = {
+  text?: string;
+  showBack?: boolean;
+  showNext?: boolean;
+  isNextDisabled?: boolean;
+  showSave?: boolean;
+  isSaveDisabled?: boolean;
+  showHome?: boolean;
+  showRefresh?: boolean;
+  showAdd?: boolean;
+  showLog?: boolean;
+} & BottomPanelPropsBase;
 
-.page-other-tables-list__content {
-  flex-grow: 1;
-  overflow-y: scroll;
-}
-
-.page-other-tables-list__empty {
-  text-align: center;
-}
-
-.page-other-tables-list__table {
-  margin: 0px 16px 20px 16px;
-}
-
-.page-other-tables-list__table:active {
-  background-color: var(--color-secondary-6);
-}
-
-.page-other-tables-list__item {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  column-gap: 12px;
-  padding: 4px 0;
-}
-
-.page-other-tables-list__wind {
-  padding-bottom: 8px;
-}
+export type BottomPanelPropsBase = {
+  isNextDisabled?: boolean;
+  isSaveDisabled?: boolean;
+  onNextClick?: () => void;
+  onBackClick?: () => void;
+  onSaveClick?: () => void;
+  onLogClick?: () => void;
+  onAddClick?: () => void;
+  onHomeClick?: () => void;
+  onRefreshClick?: () => void;
+};

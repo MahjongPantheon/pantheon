@@ -132,6 +132,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         ...state,
         currentPlayerId: action.payload.id,
         currentPlayerDisplayName: action.payload.title,
+        currentPlayerHasAvatar: action.payload.hasAvatar,
         loading: {
           ...state.loading,
           players: false,
@@ -575,6 +576,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           currentScreen: 'lastResults',
           gameConfig: state.gameConfig,
           currentPlayerDisplayName: state.currentPlayerDisplayName,
+          currentPlayerHasAvatar: state.currentPlayerHasAvatar,
           currentPlayerId: state.currentPlayerId,
           isLoggedIn: state.isLoggedIn,
           isIos: state.isIos,
