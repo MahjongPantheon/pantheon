@@ -248,6 +248,7 @@ final class TwirpServer implements Mimir
                 ->setEventId($result['event_id'])
                 ->setTitle($result['title'])
                 ->setPlayerId($result['player_id'])
+                ->setHasAvatar($result['has_avatar'])
                 ->setScore($result['score'])
                 ->setRatingDelta((float)$result['rating_delta'])
                 ->setPlace($result['place']);
@@ -462,6 +463,7 @@ final class TwirpServer implements Mimir
             return (new Player())
                 ->setId($player['id'])
                 ->setTitle($player['title'])
+                ->setHasAvatar($player['has_avatar'])
                 ->setTenhouId($player['tenhou_id']);
         }, $players);
     }
@@ -503,6 +505,7 @@ final class TwirpServer implements Mimir
             ? null
             : (new ReplacementPlayer())
                 ->setId($player['replaced_by']['id'])
+                ->setHasAvatar($player['replaced_by']['has_avatar'])
                 ->setTitle($player['replaced_by']['title']);
     }
 
@@ -907,6 +910,7 @@ final class TwirpServer implements Mimir
                 return (new PlayerInRating())
                     ->setId($player['id'])
                     ->setTitle($player['title'])
+                    ->setHasAvatar($player['has_avatar'])
                     ->setRating((float)$player['rating'])
                     ->setTenhouId($player['tenhou_id'])
                     ->setChips($player['chips'])
@@ -997,6 +1001,7 @@ final class TwirpServer implements Mimir
                             ->setId($player['id'])
                             ->setTitle($player['title'])
                             ->setScore($player['score'])
+                            ->setHasAvatar($player['has_avatar'])
                             ->setRatingDelta(0.0); // wtf?
                         $repl = self::_replacement($player);
                         if (!empty($repl)) {
@@ -1059,6 +1064,7 @@ final class TwirpServer implements Mimir
                     ->setId($player['id'])
                     ->setTitle($player['title'])
                     ->setScore($player['score'])
+                    ->setHasAvatar($player['has_avatar'])
                     ->setRatingDelta(0.0); // wtf?
                 $repl = self::_replacement($player);
                 if (!empty($repl)) {
@@ -1578,6 +1584,7 @@ final class TwirpServer implements Mimir
                     ->setRating((float)$seat['rating'])
                     ->setOrder($seat['order'])
                     ->setPlayerTitle($seat['title'])
+                    ->setHasAvatar($seat['has_avatar'])
                     ->setSessionId($seat['session_id']);
             }, $ret));
     }

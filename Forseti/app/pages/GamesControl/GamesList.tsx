@@ -135,13 +135,7 @@ export function GamesList({
                         >
                           {score}
                         </Badge>
-                        <PlayerAvatar
-                          id={p.id}
-                          title={p.title}
-                          radius='xl'
-                          size='sm'
-                          hasAvatar={p.hasAvatar}
-                        />
+                        <PlayerAvatar p={p} size='sm' />
                         <Text
                           weight='bold'
                           style={

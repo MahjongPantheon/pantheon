@@ -33,7 +33,7 @@ import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
-import { PlayerIcon } from '../components/PlayerIcon';
+import { PlayerAvatar } from '../components/PlayerAvatar';
 import { useLocation } from 'wouter';
 import { Meta } from '../components/Meta';
 
@@ -82,7 +82,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
             <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
               {idx + 1}
             </Badge>
-            <PlayerIcon p={item.player} />
+            <PlayerAvatar p={item.player} />
             <Group spacing={2}>
               <Anchor
                 href={`/event/${events[0].id}/player/${item.player.id}`}

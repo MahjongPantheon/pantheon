@@ -408,6 +408,7 @@ final class TwirpServer implements Frey
                     return (new \Common\EventAdmin())
                         ->setPersonId($rule['id'])
                         ->setPersonName($rule['name'])
+                        ->setHasAvatar($rule['has_avatar'])
                         ->setRuleId($rule['rule_id']);
                 }, $this->_accessController->getEventAdmins($req->getEventId())));
         } catch (\Exception $e) {

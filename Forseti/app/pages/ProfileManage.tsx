@@ -228,7 +228,7 @@ export const ProfileManage: React.FC = () => {
                 <Avatar
                   src={
                     avatarData ??
-                    `${import.meta.env.GULLVEIG_URL}/files/avatars/user_${personId}.jpg`
+                    `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${personId}.jpg`
                   }
                 ></Avatar>
                 <input type='file' id='avatar_upload' onChange={updateAvatar} />

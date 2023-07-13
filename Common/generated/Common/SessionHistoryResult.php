@@ -41,6 +41,10 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string title = 7;</code>
      */
     protected $title = '';
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     */
+    protected $has_avatar = false;
 
     /**
      * Constructor.
@@ -55,6 +59,7 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
      *     @type float $rating_delta
      *     @type int $place
      *     @type string $title
+     *     @type bool $has_avatar
      * }
      */
     public function __construct($data = NULL) {
@@ -212,6 +217,28 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->title = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
 
         return $this;
     }

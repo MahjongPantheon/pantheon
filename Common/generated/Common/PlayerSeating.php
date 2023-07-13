@@ -39,6 +39,10 @@ class PlayerSeating extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string player_title = 6;</code>
      */
     protected $player_title = '';
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 7;</code>
+     */
+    protected $has_avatar = false;
 
     /**
      * Constructor.
@@ -53,6 +57,7 @@ class PlayerSeating extends \Google\Protobuf\Internal\Message
      *     @type int $table_index
      *     @type float $rating
      *     @type string $player_title
+     *     @type bool $has_avatar
      * }
      */
     public function __construct($data = NULL) {
@@ -192,6 +197,28 @@ class PlayerSeating extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->player_title = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 7;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 7;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
 
         return $this;
     }

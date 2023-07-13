@@ -38,7 +38,7 @@ import {
   Box,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
-import { PlayerIcon } from '../components/PlayerIcon';
+import { PlayerAvatar } from '../components/PlayerAvatar';
 import { EventType, PlayerInRating } from '../clients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
@@ -365,7 +365,7 @@ export const RatingTable: React.FC<{
                       <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
                         {idx + 1}
                       </Badge>
-                      <PlayerIcon p={player} />
+                      <PlayerAvatar p={player} />
                       <Stack spacing={2}>
                         <Anchor
                           href={`/event/${eventId}/player/${player.id}`}

@@ -46,7 +46,7 @@ class PlayerPrimitive extends Primitive
     /**
      * @var bool
      */
-    protected $_hasAvatar;
+    protected $_hasAvatar = false;
 
     /**
      * PlayerPrimitive constructor.

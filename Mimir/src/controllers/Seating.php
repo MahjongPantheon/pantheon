@@ -317,6 +317,7 @@ class SeatingController extends Controller
             }
         }
 
+        /** @var PlayerPrimitive[] $replacementMapToPlayer */
         $replacementMapToPlayer = [];
         $replacements = PlayerPrimitive::findById($this->_ds, array_filter(array_values($replacementMap)));
         foreach ($replacements as $rep) {
@@ -340,6 +341,7 @@ class SeatingController extends Controller
                         : [
                             'id' => $replacementMapToPlayer[$player['id']]->getId(),
                             'title' => $replacementMapToPlayer[$player['id']]->getDisplayName(),
+                            'has_avatar' => $replacementMapToPlayer[$player['id']]->getHasAvatar(),
                         ],
                 ];
             }, $table);

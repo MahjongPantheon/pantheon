@@ -394,6 +394,7 @@ class EventsController extends Controller
                 'replaced_by'   => empty($replacements[$p->getId()]) ? null : [
                     'id' => $replacements[$p->getId()]->getId(),
                     'title' => $replacements[$p->getId()]->getDisplayName(),
+                    'has_avatar' => $replacements[$p->getId()]->getHasAvatar(),
                 ],
             ];
         }, $players);
@@ -441,7 +442,12 @@ class EventsController extends Controller
 
         $players = [];
         foreach (PlayerPrimitive::findById($this->_ds, $ids) as $player) {
-            $players[$player->getId()] = ['id' => $player->getId(), 'tenhou_id' => $player->getTenhouId(), 'title' => $player->getDisplayName()];
+            $players[$player->getId()] = [
+                'id' => $player->getId(),
+                'tenhou_id' => $player->getTenhouId(),
+                'title' => $player->getDisplayName(),
+                'has_avatar' => $player->getHasAvatar()
+            ];
         }
 
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))

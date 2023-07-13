@@ -17,18 +17,31 @@
 
 import { Avatar, MantineColor, MantineSize } from '@mantine/core';
 import { crc32 } from '@foxglove/crc';
+import * as React from 'react';
 
-export const PlayerIcon = ({
+export const PlayerAvatar = ({
   p,
   size,
   radius,
 }: {
   size?: MantineSize;
   radius?: MantineSize;
-  p: { title: string; id: number };
+  p: { title: string; id: number; hasAvatar?: boolean };
 }) => {
   size = size ?? 'md';
   radius = radius ?? 'xl';
+
+  if (p.hasAvatar) {
+    return (
+      <Avatar
+        radius={radius}
+        size={size}
+        title={`#${p.id}`}
+        src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg`}
+      />
+    );
+  }
+
   return (
     <Avatar color={makeColor(p.title)} radius={radius} size={size} title={`#${p.id}`}>
       {makeInitials(p.title)}

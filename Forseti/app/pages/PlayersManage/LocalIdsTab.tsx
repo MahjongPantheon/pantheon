@@ -89,7 +89,7 @@ export const LocalIdsTab: React.FC<{
               }}
             >
               <Group sx={{ flex: 1, minWidth: '300px' }}>
-                <PlayerAvatar id={p.id} title={p.title} hasAvatar={p.hasAvatar} />
+                <PlayerAvatar p={p} />
                 {p.title}
               </Group>
               <Group>

@@ -54,6 +54,7 @@ class PlayersController extends Controller
         return [
             'id'            => $player[0]->getId(),
             'title'         => $player[0]->getDisplayName(),
+            'has_avatar'    => $player[0]->getHasAvatar(),
             'tenhou_id'     => $player[0]->getTenhouId()
         ];
     }
@@ -91,6 +92,7 @@ class PlayersController extends Controller
     {
         $this->_log->info('Getting current sessions for player id #' . $playerId . ' at event id #' . $eventId);
         $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        /** @var PlayerPrimitive[][] $regData */
         $regData = PlayerPrimitive::findPlayersForEvents($this->_ds, [$eventId]);
 
         $result = array_map(function (SessionPrimitive $session) use (&$regData) {
@@ -102,12 +104,14 @@ class PlayersController extends Controller
                     return [
                         'id'            => $p->getId(),
                         'title'         => $p->getDisplayName(),
+                        'has_avatar'    => $p->getHasAvatar(),
                         'score'         => $score,
                         'replaced_by' => empty($regData['replacements'][$p->getId()])
                             ? null
                             : [
                                 'id' => $regData['replacements'][$p->getId()]->getId(),
                                 'title' => $regData['replacements'][$p->getId()]->getDisplayName(),
+                                'has_avatar' => $regData['replacements'][$p->getId()]->getHasAvatar(),
                             ],
                     ];
                 }, $session->getPlayers(), $session->getCurrentState()->getScores())
@@ -213,6 +217,7 @@ class PlayersController extends Controller
                 'player_id'     => $p->getId(),
                 'session_hash'  => $session->getRepresentationalHash(),
                 'title'         => $p->getDisplayName(),
+                'has_avatar'    => $p->getHasAvatar(),
                 'place'         => $sessionResults[$p->getId()]->getPlace(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),

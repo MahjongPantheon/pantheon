@@ -422,7 +422,8 @@ class FreyClientTwirp implements IFreyClient
             return [
                 'rule_id' => $rule->getRuleId(),
                 'id' => $rule->getPersonId(),
-                'name' => $rule->getPersonName()
+                'name' => $rule->getPersonName(),
+                'has_avatar' => $rule->getHasAvatar()
             ];
         }, iterator_to_array($rules));
     }

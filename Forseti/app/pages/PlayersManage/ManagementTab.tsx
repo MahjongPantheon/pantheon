@@ -214,13 +214,7 @@ export const ManagementTab: React.FC<{
               }}
             >
               <Group sx={{ flex: 1, minWidth: '300px' }}>
-                <PlayerAvatar
-                  id={p.id}
-                  title={p.title}
-                  radius='xl'
-                  size='md'
-                  hasAvatar={p.hasAvatar}
-                />
+                <PlayerAvatar p={p} />
                 <Stack spacing='0'>
                   <Text>{p.title}</Text>
                   {config?.isOnline && <Text c='dimmed'>{p.tenhouId}</Text>}

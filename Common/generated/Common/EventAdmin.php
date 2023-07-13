@@ -25,6 +25,10 @@ class EventAdmin extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string person_name = 3;</code>
      */
     protected $person_name = '';
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 4;</code>
+     */
+    protected $has_avatar = false;
 
     /**
      * Constructor.
@@ -35,6 +39,7 @@ class EventAdmin extends \Google\Protobuf\Internal\Message
      *     @type int $rule_id
      *     @type int $person_id
      *     @type string $person_name
+     *     @type bool $has_avatar
      * }
      */
     public function __construct($data = NULL) {
@@ -104,6 +109,28 @@ class EventAdmin extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->person_name = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 4;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 4;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
 
         return $this;
     }

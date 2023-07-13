@@ -83,6 +83,7 @@ class EventModel extends Model
             }
             if (!empty($players[$seat['player_id']])) {
                 $seat['title'] = $players[$seat['player_id']]['title'];
+                $seat['has_avatar'] = $players[$seat['player_id']]['has_avatar'];
             }
             return $seat;
         }, $seatings);
@@ -354,7 +355,8 @@ class EventModel extends Model
         foreach ($players as $player) {
             $result[$player->getId()] = [
                 'id'            => (int) $player->getId(),
-                'title'  => $player->getDisplayName(),
+                'title'         => $player->getDisplayName(),
+                'has_avatar'    => $player->getHasAvatar(),
                 'tenhou_id'     => $player->getTenhouId()
             ];
         }

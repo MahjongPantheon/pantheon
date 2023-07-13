@@ -25,6 +25,10 @@ class Player extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string tenhou_id = 3;</code>
      */
     protected $tenhou_id = '';
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 4;</code>
+     */
+    protected $has_avatar = false;
 
     /**
      * Constructor.
@@ -35,6 +39,7 @@ class Player extends \Google\Protobuf\Internal\Message
      *     @type int $id
      *     @type string $title
      *     @type string $tenhou_id
+     *     @type bool $has_avatar
      * }
      */
     public function __construct($data = NULL) {
@@ -104,6 +109,28 @@ class Player extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->tenhou_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 4;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 4;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
 
         return $this;
     }

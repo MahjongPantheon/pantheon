@@ -89,13 +89,7 @@ export const TeamNamesTab: React.FC<{
               }}
             >
               <Group sx={{ minWidth: '300px' }}>
-                <PlayerAvatar
-                  id={p.id}
-                  title={p.title}
-                  radius='xl'
-                  size='md'
-                  hasAvatar={p.hasAvatar}
-                />
+                <PlayerAvatar p={p} />
                 {p.title}
               </Group>
               <Group sx={{ flex: 1 }}>

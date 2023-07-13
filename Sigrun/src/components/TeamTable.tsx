@@ -25,7 +25,7 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import { PlayerIcon } from './PlayerIcon';
+import { PlayerAvatar } from './PlayerAvatar';
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useLocation } from 'wouter';
@@ -92,7 +92,7 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
                 {team.data.players.map((player, pidx) => (
                   <Group key={`pl_${pidx}`} position='apart'>
                     <Group>
-                      <PlayerIcon p={player} />
+                      <PlayerAvatar p={player} />
                       <Stack
                         spacing={2}
                         style={{ width: largeScreen ? 'auto' : 'calc(100vw - 245px)' }}
