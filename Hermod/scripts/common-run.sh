@@ -103,7 +103,7 @@ postfix_setup_relayhost() {
 		if [ -n "$RELAYHOST_USERNAME" ] && [ -n "$RELAYHOST_PASSWORD" ]; then
 			echo -e " using username ${emphasis}$RELAYHOST_USERNAME${reset} and password ${emphasis}(redacted)${reset}."
 			echo "$RELAYHOST $RELAYHOST_USERNAME:$RELAYHOST_PASSWORD" >> /etc/postfix/sasl_passwd
-			postmap hash:/etc/postfix/sasl_passwd
+			postmap lmdb:/etc/postfix/sasl_passwd
 			postconf -e "smtp_sasl_auth_enable=yes"
 			postconf -e "smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd"
 			postconf -e "smtp_sasl_security_options=noanonymous"
