@@ -415,6 +415,10 @@ export interface EventsGetStartingTimerResponse {
   timer: number;
 }
 
+export interface ClearStatCachePayload {
+  playerId: number;
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -1149,6 +1153,18 @@ export async function GetStartingTimer(
     config
   );
   return EventsGetStartingTimerResponse.decode(response);
+}
+
+export async function ClearStatCache(
+  clearStatCachePayload: ClearStatCachePayload,
+  config?: ClientConfiguration
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/ClearStatCache",
+    ClearStatCachePayload.encode(clearStatCachePayload),
+    config
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 //========================================//
@@ -1895,6 +1911,18 @@ export async function GetStartingTimerJSON(
   return EventsGetStartingTimerResponseJSON.decode(response);
 }
 
+export async function ClearStatCacheJSON(
+  clearStatCachePayload: ClearStatCachePayload,
+  config?: ClientConfiguration
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/ClearStatCache",
+    ClearStatCachePayloadJSON.encode(clearStatCachePayload),
+    config
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 //========================================//
 //                 Mimir                  //
 //========================================//
@@ -2206,6 +2234,12 @@ export interface Mimir<Context = unknown> {
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context
   ) => Promise<EventsGetStartingTimerResponse> | EventsGetStartingTimerResponse;
+  ClearStatCache: (
+    clearStatCachePayload: ClearStatCachePayload,
+    context: Context
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
 }
 
 export function createMimir<Context>(service: Mimir<Context>) {
@@ -2927,6 +2961,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: EventsGetStartingTimerResponse,
           json: EventsGetStartingTimerResponseJSON,
+        },
+      },
+      ClearStatCache: {
+        name: "ClearStatCache",
+        handler: service.ClearStatCache,
+        input: {
+          protobuf: ClearStatCachePayload,
+          json: ClearStatCachePayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
     },
@@ -8786,6 +8832,73 @@ export const EventsGetStartingTimerResponse = {
   },
 };
 
+export const ClearStatCachePayload = {
+  /**
+   * Serializes ClearStatCachePayload to protobuf.
+   */
+  encode: function (msg: Partial<ClearStatCachePayload>): Uint8Array {
+    return ClearStatCachePayload._writeMessage(
+      msg,
+      new BinaryWriter()
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes ClearStatCachePayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): ClearStatCachePayload {
+    return ClearStatCachePayload._readMessage(
+      ClearStatCachePayload.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes ClearStatCachePayload with all fields set to their default value.
+   */
+  initialize: function (): ClearStatCachePayload {
+    return {
+      playerId: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<ClearStatCachePayload>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.playerId) {
+      writer.writeInt32(1, msg.playerId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: ClearStatCachePayload,
+    reader: BinaryReader
+  ): ClearStatCachePayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -13799,6 +13912,61 @@ export const EventsGetStartingTimerResponseJSON = {
     const _timer_ = json["timer"];
     if (_timer_) {
       msg.timer = _timer_;
+    }
+    return msg;
+  },
+};
+
+export const ClearStatCachePayloadJSON = {
+  /**
+   * Serializes ClearStatCachePayload to JSON.
+   */
+  encode: function (msg: Partial<ClearStatCachePayload>): string {
+    return JSON.stringify(ClearStatCachePayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes ClearStatCachePayload from JSON.
+   */
+  decode: function (json: string): ClearStatCachePayload {
+    return ClearStatCachePayloadJSON._readMessage(
+      ClearStatCachePayloadJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes ClearStatCachePayload with all fields set to their default value.
+   */
+  initialize: function (): ClearStatCachePayload {
+    return {
+      playerId: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<ClearStatCachePayload>
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.playerId) {
+      json["playerId"] = msg.playerId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: ClearStatCachePayload,
+    json: any
+  ): ClearStatCachePayload {
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = _playerId_;
     }
     return msg;
   },

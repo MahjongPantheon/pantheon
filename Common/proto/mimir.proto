@@ -143,6 +143,8 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc GetStartingTimer (GenericEventPayload)
     returns (EventsGetStartingTimerResponse);
+  rpc ClearStatCache (ClearStatCachePayload)
+    returns (GenericSuccessResponse);
 }
 
 message EventsGetRulesetsPayload {
@@ -530,4 +532,8 @@ message EventsUpdatePrescriptedEventConfigPayload {
 
 message EventsGetStartingTimerResponse {
   int32 timer = 1; // seconds to start
+}
+
+message ClearStatCachePayload {
+  int32 player_id = 1;
 }

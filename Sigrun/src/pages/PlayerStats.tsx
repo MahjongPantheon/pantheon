@@ -98,7 +98,12 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
         )}
       />
       <Group position='apart'>
-        <h2>{player.title}</h2>
+        <h2>
+          <Group>
+            <PlayerAvatar p={player} />
+            {player.title}
+          </Group>
+        </h2>
         <Tooltip
           events={{ hover: true, focus: true, touch: true }}
           openDelay={500}

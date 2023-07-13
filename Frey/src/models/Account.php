@@ -200,6 +200,16 @@ class AccountModel extends Model
             curl_close($ch);
         }
 
+        // Schedule player stats cache update in mimir
+        $mimirClient = new \Common\MimirClient(
+            $this->_config->getValue('mimirUrl'),
+            null,
+            null,
+            null,
+            '/v2'
+        );
+        $mimirClient->ClearStatCache([], (new \Common\ClearStatCachePayload())->setPlayerId($id));
+
         return $persons[0]->setTitle($title)
             ->setCountry($country)
             ->setCity($city)

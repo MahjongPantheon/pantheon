@@ -1726,4 +1726,16 @@ final class TwirpServer implements Mimir
         return (new EventsGetStartingTimerResponse())
             ->setTimer($this->_eventsController->getStartingTimer($req->getEventId()));
     }
+
+    /**
+     * @param array $ctx
+     * @param \Common\ClearStatCachePayload $req
+     * @return GenericSuccessResponse
+     * @throws Exception
+     */
+    public function ClearStatCache(array $ctx, \Common\ClearStatCachePayload $req): \Common\GenericSuccessResponse
+    {
+        return (new GenericSuccessResponse())
+            ->setSuccess(PlayerStatsPrimitive::invalidateByPlayer($this->_ds, $req->getPlayerId()));
+    }
 }

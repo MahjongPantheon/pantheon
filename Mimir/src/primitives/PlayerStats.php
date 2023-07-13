@@ -118,6 +118,21 @@ class PlayerStatsPrimitive extends Primitive
     }
 
     /**
+     * Invalidate all player stats
+     *
+     * @param DataSource $ds
+     * @param int $playerId
+     * @throws \Exception
+     * @return bool
+     */
+    public static function invalidateByPlayer(DataSource $ds, $playerId)
+    {
+        return (bool)($ds->table(self::$_table)
+            ->rawQuery('UPDATE ' . self::$_table . ' SET need_recalc = 1 WHERE player_id = ' . intval($playerId))
+            ->findOne());
+    }
+
+    /**
      * @return bool|mixed
      * @throws \Exception
      */
