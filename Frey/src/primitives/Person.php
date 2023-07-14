@@ -65,7 +65,7 @@ class PersonPrimitive extends Primitive
             '_city'     => $this->_stringTransform(true),
             '_tenhouId' => $this->_stringTransform(true),
             '_disabled' => $this->_integerTransform(),
-            '_hasAvatar'   => $this->_integerTransform(true),
+            '_hasAvatar'   => $this->_integerTransform(),
             '_lastUpdate' => $this->_stringTransform(true),
             '_superadmin' => $this->_integerTransform(),
             '_groupIds'   => $this->_externalManyToManyTransform(

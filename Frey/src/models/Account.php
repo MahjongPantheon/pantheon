@@ -69,7 +69,6 @@ class AccountModel extends Model
             ->setPhone($phone)
             ->setIsSuperadmin($superadmin)
             ->setHasAvatar(false)
-            ->setLastUpdate(date('Y-m-d H:i:s'))
             ->setTenhouId($tenhouId);
         if (!$person->save()) {
             throw new \Exception('Couldn\'t save person to DB', 403);
@@ -188,30 +187,36 @@ class AccountModel extends Model
             }
         }
 
-        $ch = curl_init($this->_config->getValue('gullveigUrl'));
-        if ($ch) {
-            $payload = json_encode([
-                'userId' => $id,
-                'avatar' => $avatarData
-            ]);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json'
-            ]);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_exec($ch);
-            curl_close($ch);
+        $gullveigUrl = $this->_config->getValue('gullveigUrl');
+        if (!empty($gullveigUrl)) {
+            $ch = curl_init($gullveigUrl);
+            if ($ch) {
+                $payload = json_encode([
+                    'userId' => $id,
+                    'avatar' => $avatarData
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json'
+                ]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_exec($ch);
+                curl_close($ch);
+            }
         }
 
-        // Schedule player stats cache update in mimir
-        $mimirClient = new \Common\MimirClient(
-            $this->_config->getValue('mimirUrl'),
-            null,
-            null,
-            null,
-            '/v2'
-        );
-        $mimirClient->ClearStatCache([], (new \Common\ClearStatCachePayload())->setPlayerId($id));
+        $mimirUrl = $this->_config->getValue('mimirUrl');
+        if (!empty($mimirUrl)) {
+            // Schedule player stats cache update in mimir
+            $mimirClient = new \Common\MimirClient(
+                $mimirUrl,
+                null,
+                null,
+                null,
+                '/v2'
+            );
+            $mimirClient->ClearStatCache([], (new \Common\ClearStatCachePayload())->setPlayerId($id));
+        }
 
         return $persons[0]->setTitle($title)
             ->setCountry($country)

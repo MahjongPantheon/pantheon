@@ -351,7 +351,9 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'testcity2',
             'test2@email.com',
             '222-222-222',
-            'tid2'
+            'tid2',
+            false,
+            ''
         );
         $this->assertTrue($success);
         $data = $model->getPersonalInfo([$personId]);
@@ -379,7 +381,9 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'testcity2',
             'test2@email.com',
             '222-222-222',
-            'tid2'
+            'tid2',
+            false,
+            ''
         );
     }
 
@@ -408,7 +412,9 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'testcity2',
             'test2@email.com',
             '222-222-222',
-            'tid2'
+            'tid2',
+            false,
+            ''
         );
     }
 
@@ -437,7 +443,9 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'testcity2',
             '',
             '222-222-222',
-            'tid2'
+            'tid2',
+            false,
+            ''
         );
     }
 
@@ -466,7 +474,9 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'testcity2',
             'test2bademail.com',
             '222-222-222',
-            'tid2'
+            'tid2',
+            false,
+            ''
         );
     }
 
