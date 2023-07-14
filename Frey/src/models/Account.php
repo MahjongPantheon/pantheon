@@ -68,6 +68,8 @@ class AccountModel extends Model
             ->setEmail($email)
             ->setPhone($phone)
             ->setIsSuperadmin($superadmin)
+            ->setHasAvatar(false)
+            ->setLastUpdate(date('Y-m-d H:i:s'))
             ->setTenhouId($tenhouId);
         if (!$person->save()) {
             throw new \Exception('Couldn\'t save person to DB', 403);
