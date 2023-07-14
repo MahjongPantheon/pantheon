@@ -45,7 +45,12 @@ export const GameResultScreenView = React.memo(function (props: IProps) {
                 <div className='player-result__name'>
                   <PlayerAvatar
                     size={32}
-                    p={{ id: result.playerId, title: result.title, hasAvatar: result.hasAvatar }}
+                    p={{
+                      id: result.playerId,
+                      title: result.title,
+                      hasAvatar: result.hasAvatar,
+                      lastUpdate: result.lastUpdate,
+                    }}
                   />
                   {result.title}
                 </div>

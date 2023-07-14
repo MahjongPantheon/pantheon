@@ -83,6 +83,7 @@ export interface IAppState {
   currentOutcome?: AppOutcome;
   currentPlayerDisplayName?: string;
   currentPlayerHasAvatar?: boolean;
+  currentPlayerLastUpdate: string;
   currentPlayerId?: number;
   currentEventId?: number;
   players?: PlayerInSession[]; // e-s-w-n

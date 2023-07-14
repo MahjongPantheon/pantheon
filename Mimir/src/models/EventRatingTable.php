@@ -159,6 +159,7 @@ class EventRatingTableModel extends Model
                 'id'            => (int)$el->getPlayerId(),
                 'title'         => $playerItems[$el->getPlayerId()]->getDisplayName(),
                 'has_avatar'    => $playerItems[$el->getPlayerId()]->getHasAvatar(),
+                'last_update'    => $playerItems[$el->getPlayerId()]->getLastUpdate(),
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),

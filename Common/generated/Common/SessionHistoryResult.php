@@ -45,6 +45,10 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool has_avatar = 8;</code>
      */
     protected $has_avatar = false;
+    /**
+     * Generated from protobuf field <code>string last_update = 9;</code>
+     */
+    protected $last_update = '';
 
     /**
      * Constructor.
@@ -60,6 +64,7 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
      *     @type int $place
      *     @type string $title
      *     @type bool $has_avatar
+     *     @type string $last_update
      * }
      */
     public function __construct($data = NULL) {
@@ -239,6 +244,28 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->has_avatar = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 9;</code>
+     * @return string
+     */
+    public function getLastUpdate()
+    {
+        return $this->last_update;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 9;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setLastUpdate($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->last_update = $var;
 
         return $this;
     }

@@ -22,6 +22,7 @@ export type PlayerProps = {
   id?: number;
   name: string;
   hasAvatar?: boolean;
+  lastUpdate: string;
   rotated?: boolean;
   wind: string;
   inlineWind?: boolean;

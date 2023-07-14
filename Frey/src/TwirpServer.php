@@ -322,6 +322,7 @@ final class TwirpServer implements Frey
                         ->setTenhouId($person['tenhou_id'])
                         ->setGroups($person['groups'])
                         ->setHasAvatar($person['has_avatar'])
+                        ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title']);
                 }, $this->_personsController->getPersonalInfo(iterator_to_array($req->getIds())))
             );
@@ -345,6 +346,7 @@ final class TwirpServer implements Frey
                         ->setTenhouId($person['tenhou_id'])
                         ->setGroups($person['groups'])
                         ->setHasAvatar($person['has_avatar'])
+                        ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title']);
                     if (!empty($person['email'])) {
                         $p->setEmail($person['email']);
@@ -409,6 +411,7 @@ final class TwirpServer implements Frey
                         ->setPersonId($rule['id'])
                         ->setPersonName($rule['name'])
                         ->setHasAvatar($rule['has_avatar'])
+                        ->setLastUpdate($rule['last_update'])
                         ->setRuleId($rule['rule_id']);
                 }, $this->_accessController->getEventAdmins($req->getEventId())));
         } catch (\Exception $e) {

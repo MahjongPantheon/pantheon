@@ -34,13 +34,13 @@ type IProps = PlayerProps & {
 
 export class PlayerBase extends React.Component<IProps> {
   renderName() {
-    const { id, name, hasAvatar, wind, nameWidth, inlineWind } = this.props;
+    const { id, name, hasAvatar, lastUpdate, wind, nameWidth, inlineWind } = this.props;
 
     return (
       <div className='player__name-container'>
         <div className='player__name' style={{ width: nameWidth }}>
           {inlineWind && <span className='player__inline-wind'>{wind}</span>}
-          <PlayerAvatar p={{ id: id ?? 0, title: name, hasAvatar }} size={32} />
+          <PlayerAvatar p={{ id: id ?? 0, title: name, hasAvatar, lastUpdate }} size={32} />
           {name}
         </div>
       </div>

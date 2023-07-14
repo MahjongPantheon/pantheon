@@ -26,7 +26,7 @@ export const PlayerAvatar = ({
 }: {
   size?: MantineSize;
   radius?: MantineSize;
-  p: { title: string; id: number; hasAvatar?: boolean };
+  p: { title: string; id: number; hasAvatar?: boolean; lastUpdate: string };
 }) => {
   size = size ?? 'md';
   radius = radius ?? 'xl';
@@ -37,7 +37,7 @@ export const PlayerAvatar = ({
         radius={radius}
         size={size}
         title={`#${p.id}`}
-        src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg`}
+        src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg?${p.lastUpdate}`}
       />
     );
   }

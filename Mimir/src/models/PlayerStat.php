@@ -177,6 +177,7 @@ class PlayerStatModel extends Model
                     'event_id'      => (int) $session->getEventId(),
                     'title'         => $playerInfo[$playerId]['title'],
                     'has_avatar'    => $playerInfo[$playerId]['has_avatar'],
+                    'last_update'    => $playerInfo[$playerId]['last_update'],
                     'player_id'     => (int) $playerId,
                     'score'         => (int) $results[$playerId]->getScore(),
                     'rating_delta'  => (float) $results[$playerId]->getRatingDelta(),
@@ -218,6 +219,7 @@ class PlayerStatModel extends Model
                 'id'            => (int)$p->getId(),
                 'title'         => $p->getDisplayName(),
                 'has_avatar'    => $p->getHasAvatar(),
+                'last_update'    => $p->getLastUpdate(),
                 'tenhou_id'     => $p->getTenhouId(),
             ];
         }, PlayerPrimitive::findById($this->_ds, $playerIds));
@@ -748,7 +750,8 @@ class PlayerStatModel extends Model
         return array_reduce(PlayerPrimitive::findById($this->_ds, $playerIds), function ($acc, PlayerPrimitive $p) {
             $acc[$p->getId()] = [
                 'title' => $p->getDisplayName(),
-                'has_avatar' => $p->getHasAvatar()
+                'has_avatar' => $p->getHasAvatar(),
+                'last_update' => $p->getLastUpdate(),
             ];
             return $acc;
         }, []);

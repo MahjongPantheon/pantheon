@@ -390,11 +390,13 @@ class EventsController extends Controller
                 'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId(),
                 'has_avatar'    => $p->getHasAvatar(),
+                'last_update'   => $p->getLastUpdate(),
                 'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
                 'replaced_by'   => empty($replacements[$p->getId()]) ? null : [
                     'id' => $replacements[$p->getId()]->getId(),
                     'title' => $replacements[$p->getId()]->getDisplayName(),
                     'has_avatar' => $replacements[$p->getId()]->getHasAvatar(),
+                    'last_update' => $replacements[$p->getId()]->getLastUpdate(),
                 ],
             ];
         }, $players);
@@ -446,7 +448,8 @@ class EventsController extends Controller
                 'id' => $player->getId(),
                 'tenhou_id' => $player->getTenhouId(),
                 'title' => $player->getDisplayName(),
-                'has_avatar' => $player->getHasAvatar()
+                'has_avatar' => $player->getHasAvatar(),
+                'last_update' => $player->getLastUpdate(),
             ];
         }
 

@@ -55,6 +55,7 @@ class PlayersController extends Controller
             'id'            => $player[0]->getId(),
             'title'         => $player[0]->getDisplayName(),
             'has_avatar'    => $player[0]->getHasAvatar(),
+            'last_update'    => $player[0]->getLastUpdate(),
             'tenhou_id'     => $player[0]->getTenhouId()
         ];
     }
@@ -105,6 +106,7 @@ class PlayersController extends Controller
                         'id'            => $p->getId(),
                         'title'         => $p->getDisplayName(),
                         'has_avatar'    => $p->getHasAvatar(),
+                        'last_update'    => $p->getLastUpdate(),
                         'score'         => $score,
                         'replaced_by' => empty($regData['replacements'][$p->getId()])
                             ? null
@@ -112,6 +114,7 @@ class PlayersController extends Controller
                                 'id' => $regData['replacements'][$p->getId()]->getId(),
                                 'title' => $regData['replacements'][$p->getId()]->getDisplayName(),
                                 'has_avatar' => $regData['replacements'][$p->getId()]->getHasAvatar(),
+                                'last_update' => $regData['replacements'][$p->getId()]->getLastUpdate(),
                             ],
                     ];
                 }, $session->getPlayers(), $session->getCurrentState()->getScores())
@@ -218,6 +221,7 @@ class PlayersController extends Controller
                 'session_hash'  => $session->getRepresentationalHash(),
                 'title'         => $p->getDisplayName(),
                 'has_avatar'    => $p->getHasAvatar(),
+                'last_update'    => $p->getLastUpdate(),
                 'place'         => $sessionResults[$p->getId()]->getPlace(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),

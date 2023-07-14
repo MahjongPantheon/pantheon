@@ -104,6 +104,7 @@ export const GameListing: React.FC<GameListingProps> = ({
                       title: players[result.playerId]?.title,
                       id: result.playerId,
                       hasAvatar: players[result.playerId]?.hasAvatar,
+                      lastUpdate: players[result.playerId]?.lastUpdate,
                     }}
                   />
                 )

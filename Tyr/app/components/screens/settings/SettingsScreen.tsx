@@ -83,6 +83,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps> {
         playerName={playerName}
         playerId={state.currentPlayerId}
         playerHasAvatar={state.currentPlayerHasAvatar}
+        playerLastUpdate={state.currentPlayerLastUpdate}
         supportedLanguages={supportedLanguages}
         currentLanguage={state.settings.currentLang || 'en'}
         supportedThemes={themes}

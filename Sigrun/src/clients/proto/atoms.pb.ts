@@ -79,6 +79,7 @@ export interface EventAdmin {
   personId: number;
   personName: string;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface RuleListItem {
@@ -120,6 +121,7 @@ export interface Person {
   tenhouId: string;
   title: string;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface PersonEx {
@@ -132,6 +134,7 @@ export interface PersonEx {
   phone: string;
   groups: number[];
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface Group {
@@ -208,6 +211,7 @@ export interface PlayerInRating {
   gamesPlayed: number;
   teamName?: string | null | undefined;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface Player {
@@ -215,6 +219,7 @@ export interface Player {
   title: string;
   tenhouId: string;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface FinalResultOfSession {
@@ -353,6 +358,7 @@ export interface ReplacementPlayer {
   id: number;
   title: string;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface PlayerInSession {
@@ -362,6 +368,7 @@ export interface PlayerInSession {
   replacedBy?: ReplacementPlayer | null | undefined;
   ratingDelta: number;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface CurrentSession {
@@ -380,6 +387,7 @@ export interface RegisteredPlayer {
   ignoreSeating: boolean;
   replacedBy?: ReplacementPlayer | null | undefined;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface SessionHistoryResult {
@@ -391,6 +399,7 @@ export interface SessionHistoryResult {
   place: number;
   title: string;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface SessionHistoryResultTable {
@@ -525,6 +534,7 @@ export interface PlayerSeating {
   rating: number;
   playerTitle: string;
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface PlayerSeatingSwiss {
@@ -1174,6 +1184,7 @@ export const EventAdmin = {
       personId: 0,
       personName: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -1195,6 +1206,9 @@ export const EventAdmin = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(4, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(5, msg.lastUpdate);
     }
     return writer;
   },
@@ -1220,6 +1234,10 @@ export const EventAdmin = {
         }
         case 4: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 5: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -1660,6 +1678,7 @@ export const Person = {
       tenhouId: "",
       title: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -1684,6 +1703,9 @@ export const Person = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(5, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(6, msg.lastUpdate);
     }
     return writer;
   },
@@ -1713,6 +1735,10 @@ export const Person = {
         }
         case 5: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 6: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -1757,6 +1783,7 @@ export const PersonEx = {
       phone: "",
       groups: [],
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -1793,6 +1820,9 @@ export const PersonEx = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(9, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(10, msg.lastUpdate);
     }
     return writer;
   },
@@ -1842,6 +1872,10 @@ export const PersonEx = {
         }
         case 9: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 10: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -2520,6 +2554,7 @@ export const PlayerInRating = {
       gamesPlayed: 0,
       teamName: undefined,
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -2562,6 +2597,9 @@ export const PlayerInRating = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(11, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(12, msg.lastUpdate);
     }
     return writer;
   },
@@ -2620,6 +2658,10 @@ export const PlayerInRating = {
           msg.hasAvatar = reader.readBool();
           break;
         }
+        case 12: {
+          msg.lastUpdate = reader.readString();
+          break;
+        }
         default: {
           reader.skipField();
           break;
@@ -2654,6 +2696,7 @@ export const Player = {
       title: "",
       tenhouId: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -2675,6 +2718,9 @@ export const Player = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(4, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(5, msg.lastUpdate);
     }
     return writer;
   },
@@ -2700,6 +2746,10 @@ export const Player = {
         }
         case 4: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 5: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -4324,6 +4374,7 @@ export const ReplacementPlayer = {
       id: 0,
       title: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -4342,6 +4393,9 @@ export const ReplacementPlayer = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(3, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(4, msg.lastUpdate);
     }
     return writer;
   },
@@ -4366,6 +4420,10 @@ export const ReplacementPlayer = {
         }
         case 3: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 4: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -4410,6 +4468,7 @@ export const PlayerInSession = {
       replacedBy: undefined,
       ratingDelta: 0,
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -4437,6 +4496,9 @@ export const PlayerInSession = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(6, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(7, msg.lastUpdate);
     }
     return writer;
   },
@@ -4474,6 +4536,10 @@ export const PlayerInSession = {
         }
         case 6: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 7: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -4617,6 +4683,7 @@ export const RegisteredPlayer = {
       ignoreSeating: false,
       replacedBy: undefined,
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -4650,6 +4717,9 @@ export const RegisteredPlayer = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(8, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(9, msg.lastUpdate);
     }
     return writer;
   },
@@ -4697,6 +4767,10 @@ export const RegisteredPlayer = {
           msg.hasAvatar = reader.readBool();
           break;
         }
+        case 9: {
+          msg.lastUpdate = reader.readString();
+          break;
+        }
         default: {
           reader.skipField();
           break;
@@ -4741,6 +4815,7 @@ export const SessionHistoryResult = {
       place: 0,
       title: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -4774,6 +4849,9 @@ export const SessionHistoryResult = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(8, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(9, msg.lastUpdate);
     }
     return writer;
   },
@@ -4818,6 +4896,10 @@ export const SessionHistoryResult = {
         }
         case 8: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 9: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -6426,6 +6508,7 @@ export const PlayerSeating = {
       rating: 0,
       playerTitle: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -6456,6 +6539,9 @@ export const PlayerSeating = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(7, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(8, msg.lastUpdate);
     }
     return writer;
   },
@@ -6496,6 +6582,10 @@ export const PlayerSeating = {
         }
         case 7: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 8: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -8045,6 +8135,7 @@ export const EventAdminJSON = {
       personId: 0,
       personName: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -8064,6 +8155,9 @@ export const EventAdminJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -8087,6 +8181,10 @@ export const EventAdminJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -8475,6 +8573,7 @@ export const PersonJSON = {
       tenhouId: "",
       title: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -8497,6 +8596,9 @@ export const PersonJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -8524,6 +8626,10 @@ export const PersonJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -8561,6 +8667,7 @@ export const PersonExJSON = {
       phone: "",
       groups: [],
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -8595,6 +8702,9 @@ export const PersonExJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -8638,6 +8748,10 @@ export const PersonExJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -9262,6 +9376,7 @@ export const PlayerInRatingJSON = {
       gamesPlayed: 0,
       teamName: undefined,
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -9304,6 +9419,9 @@ export const PlayerInRatingJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -9356,6 +9474,10 @@ export const PlayerInRatingJSON = {
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
     }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
+    }
     return msg;
   },
 };
@@ -9384,6 +9506,7 @@ export const PlayerJSON = {
       title: "",
       tenhouId: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -9403,6 +9526,9 @@ export const PlayerJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -9426,6 +9552,10 @@ export const PlayerJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -10839,6 +10969,7 @@ export const ReplacementPlayerJSON = {
       id: 0,
       title: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -10857,6 +10988,9 @@ export const ReplacementPlayerJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -10879,6 +11013,10 @@ export const ReplacementPlayerJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -10913,6 +11051,7 @@ export const PlayerInSessionJSON = {
       replacedBy: undefined,
       ratingDelta: 0,
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -10941,6 +11080,9 @@ export const PlayerInSessionJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -10974,6 +11116,10 @@ export const PlayerInSessionJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -11090,6 +11236,7 @@ export const RegisteredPlayerJSON = {
       ignoreSeating: false,
       replacedBy: undefined,
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -11124,6 +11271,9 @@ export const RegisteredPlayerJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -11166,6 +11316,10 @@ export const RegisteredPlayerJSON = {
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
     }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
+    }
     return msg;
   },
 };
@@ -11201,6 +11355,7 @@ export const SessionHistoryResultJSON = {
       place: 0,
       title: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -11234,6 +11389,9 @@ export const SessionHistoryResultJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -11276,6 +11434,10 @@ export const SessionHistoryResultJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -12685,6 +12847,7 @@ export const PlayerSeatingJSON = {
       rating: 0,
       playerTitle: "",
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -12715,6 +12878,9 @@ export const PlayerSeatingJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -12750,6 +12916,10 @@ export const PlayerSeatingJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },

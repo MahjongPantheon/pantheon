@@ -47,6 +47,28 @@ class PlayerPrimitive extends Primitive
      * @var bool
      */
     protected $_hasAvatar = false;
+    /**
+     * @var string
+     */
+    protected $_lastUpdate = '';
+
+    /**
+     * @return string
+     */
+    public function getLastUpdate(): string
+    {
+        return $this->_lastUpdate ?: '';
+    }
+
+    /**
+     * @param string $lastUpdate
+     * @return PlayerPrimitive
+     */
+    public function setLastUpdate(string $lastUpdate): PlayerPrimitive
+    {
+        $this->_lastUpdate = $lastUpdate;
+        return $this;
+    }
 
     /**
      * PlayerPrimitive constructor.
@@ -103,6 +125,7 @@ class PlayerPrimitive extends Primitive
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
+                ->setLastUpdate($item['last_update'])
                 ->_setId($item['id']);
         }, $allData);
     }

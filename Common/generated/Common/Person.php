@@ -33,6 +33,10 @@ class Person extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool has_avatar = 5;</code>
      */
     protected $has_avatar = false;
+    /**
+     * Generated from protobuf field <code>string last_update = 6;</code>
+     */
+    protected $last_update = '';
 
     /**
      * Constructor.
@@ -45,6 +49,7 @@ class Person extends \Google\Protobuf\Internal\Message
      *     @type string $tenhou_id
      *     @type string $title
      *     @type bool $has_avatar
+     *     @type string $last_update
      * }
      */
     public function __construct($data = NULL) {
@@ -158,6 +163,28 @@ class Person extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->has_avatar = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 6;</code>
+     * @return string
+     */
+    public function getLastUpdate()
+    {
+        return $this->last_update;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 6;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setLastUpdate($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->last_update = $var;
 
         return $this;
     }

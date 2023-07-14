@@ -69,6 +69,7 @@ export interface AuthMeResponse {
   title: string;
   groups: number[];
   hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface AuthChangePasswordPayload {
@@ -2823,6 +2824,7 @@ export const AuthMeResponse = {
       title: "",
       groups: [],
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -2859,6 +2861,9 @@ export const AuthMeResponse = {
     }
     if (msg.hasAvatar) {
       writer.writeBool(9, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(10, msg.lastUpdate);
     }
     return writer;
   },
@@ -2911,6 +2916,10 @@ export const AuthMeResponse = {
         }
         case 9: {
           msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 10: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -8279,6 +8288,7 @@ export const AuthMeResponseJSON = {
       title: "",
       groups: [],
       hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -8315,6 +8325,9 @@ export const AuthMeResponseJSON = {
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -8358,6 +8371,10 @@ export const AuthMeResponseJSON = {
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },

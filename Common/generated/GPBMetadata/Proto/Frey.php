@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-ÕI
+‚I
 proto/frey.protocommon"d
 AuthRequestRegistrationPayload
 email (	
@@ -47,7 +47,7 @@ auth_token (	"2
 AuthMePayload
 	person_id (
 
-auth_token (	"¶
+auth_token (	"ª
 AuthMeResponse
 	person_id (
 country (	
@@ -58,7 +58,9 @@ auth_token (	"¶
 title (	
 groups (
 
-has_avatar	 ("R
+has_avatar	 (
+last_update
+ (	"R
 AuthChangePasswordPayload
 email (	
 password (	

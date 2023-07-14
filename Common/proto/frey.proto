@@ -165,6 +165,7 @@ message AuthMeResponse {
   string title = 7;
   repeated int32 groups = 8;
   bool has_avatar = 9;
+  string last_update = 10;
 }
 
 message AuthChangePasswordPayload {

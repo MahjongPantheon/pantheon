@@ -155,23 +155,23 @@ class PersonPrimitive extends Primitive
     protected $_hasAvatar = 0;
     /**
      * Last profile update date
-     * @var string|null
+     * @var string
      */
-    protected $_lastUpdate = null;
+    protected $_lastUpdate = '';
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getLastUpdate(): ?string
+    public function getLastUpdate(): string
     {
-        return $this->_lastUpdate;
+        return $this->_lastUpdate ?: '';
     }
 
     /**
-     * @param string|null $lastUpdate
+     * @param string $lastUpdate
      * @return PersonPrimitive
      */
-    public function setLastUpdate(?string $lastUpdate): PersonPrimitive
+    public function setLastUpdate(string $lastUpdate): PersonPrimitive
     {
         $this->_lastUpdate = $lastUpdate;
         return $this;

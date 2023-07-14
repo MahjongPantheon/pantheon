@@ -121,6 +121,7 @@ class AccountModel extends Model
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
+                'last_update' => $person->getLastUpdate(),
             ];
         }, $persons);
     }
@@ -276,6 +277,7 @@ class AccountModel extends Model
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
+                'last_update' => $person->getLastUpdate(),
             ];
         }, $persons);
     }

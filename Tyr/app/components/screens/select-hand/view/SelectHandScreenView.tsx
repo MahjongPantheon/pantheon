@@ -31,6 +31,7 @@ type IProps = {
   id: number;
   playerName: string;
   hasAvatar: boolean;
+  lastUpdate: string;
   yakuGroups: YakuGroup[];
   bottomPanelText: string;
   leftArrowState: ArrowState;
@@ -99,6 +100,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
       id,
       playerName,
       hasAvatar,
+      lastUpdate,
       yakuGroups,
       bottomPanelText,
       leftArrowState,
@@ -142,7 +144,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
             )}
           </div>
           <div className='page-select-hand__player-name'>
-            <PlayerAvatar p={{ id, title: playerName, hasAvatar }} size={32} />
+            <PlayerAvatar p={{ id, title: playerName, hasAvatar, lastUpdate }} size={32} />
             {playerName}
           </div>
           <div className='page-select-hand__top-panel-arrow'>

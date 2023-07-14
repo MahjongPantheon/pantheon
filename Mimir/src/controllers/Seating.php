@@ -330,6 +330,7 @@ class SeatingController extends Controller
                     'id'            => $playersMap[$player['id']]->getId(),
                     'title'         => $playersMap[$player['id']]->getDisplayName(),
                     'has_avatar'    => $playersMap[$player['id']]->getHasAvatar(),
+                    'last_update'    => $playersMap[$player['id']]->getLastUpdate(),
                     'local_id'      => $player['local_id'],
                     'team_name'     => empty($teamNames[$playersMap[$player['id']]->getId()])
                         ? null
@@ -342,6 +343,7 @@ class SeatingController extends Controller
                             'id' => $replacementMapToPlayer[$player['id']]->getId(),
                             'title' => $replacementMapToPlayer[$player['id']]->getDisplayName(),
                             'has_avatar' => $replacementMapToPlayer[$player['id']]->getHasAvatar(),
+                            'last_update' => $replacementMapToPlayer[$player['id']]->getLastUpdate(),
                         ],
                 ];
             }, $table);

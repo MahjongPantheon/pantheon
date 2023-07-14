@@ -27,7 +27,7 @@ export const PlayerAvatar = ({
 }: {
   size?: number;
   radius?: string;
-  p: { title: string; id: number; hasAvatar?: boolean };
+  p: { title: string; id: number; hasAvatar?: boolean; lastUpdate: string };
 }) => {
   size = size ?? 24;
   radius = radius ?? '24px';
@@ -57,7 +57,9 @@ export const PlayerAvatar = ({
         <img
           className='avatar__placeholder'
           alt=''
-          src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg`}
+          src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg?${
+            p.lastUpdate
+          }`}
           onError={() => setError(true)}
         />
       )}

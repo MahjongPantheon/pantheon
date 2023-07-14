@@ -29,6 +29,7 @@ interface IProps {
   playerName: string;
   playerId?: number;
   playerHasAvatar?: boolean;
+  playerLastUpdate: string;
   supportedLanguages: string[];
   currentLanguage: string;
   supportedThemes: Theme[];
@@ -48,6 +49,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
     playerName,
     playerId,
     playerHasAvatar,
+    playerLastUpdate,
     supportedLanguages,
     currentLanguage,
     supportedThemes,
@@ -69,7 +71,12 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
           {playerId && (
             <PlayerAvatar
               size={48}
-              p={{ id: playerId, title: playerName, hasAvatar: playerHasAvatar }}
+              p={{
+                id: playerId,
+                title: playerName,
+                hasAvatar: playerHasAvatar,
+                lastUpdate: playerLastUpdate,
+              }}
             />
           )}
           {playerName}

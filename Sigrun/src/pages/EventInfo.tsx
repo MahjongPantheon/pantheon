@@ -82,7 +82,12 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
             <Group key={`adm_${idx}`}>
               <PlayerAvatar
                 size='xs'
-                p={{ title: admin.personName, id: admin.personId, hasAvatar: admin.hasAvatar }}
+                p={{
+                  title: admin.personName,
+                  id: admin.personId,
+                  hasAvatar: admin.hasAvatar,
+                  lastUpdate: admin.lastUpdate,
+                }}
               />
               <Anchor
                 href={`/event/${eventId}/player/${admin.personId}`}

@@ -220,6 +220,7 @@ class AccessManagementModel extends Model
                 'id' => $rule->getPersonId(),
                 'name' => $rule->getPerson()->getTitle(),
                 'has_avatar' => $rule->getPerson()->getHasAvatar(),
+                'last_update' => $rule->getPerson()->getLastUpdate(),
             ];
         }, $admins);
     }

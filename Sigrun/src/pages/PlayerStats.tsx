@@ -240,7 +240,12 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                         {winds[idx]}
                       </Badge>
                       <PlayerAvatar
-                        p={{ title: seat.title, id: seat.playerId, hasAvatar: seat.hasAvatar }}
+                        p={{
+                          title: seat.title,
+                          id: seat.playerId,
+                          hasAvatar: seat.hasAvatar,
+                          lastUpdate: seat.lastUpdate,
+                        }}
                       />
                       {seat.playerId === player.id ? (
                         <Text weight='bold'>{seat.title}</Text>
