@@ -51,19 +51,17 @@ export const PlayerAvatar = ({
 
 export function makeColor(input: string): MantineColor {
   const colors: MantineColor[] = [
-    'gray',
     'red',
-    'pink',
-    'grape',
-    'violet',
-    'indigo',
-    'blue',
-    'cyan',
+    'orange',
+    'yellow',
     'green',
     'lime',
-    'yellow',
-    'orange',
     'teal',
+    'cyan',
+    'blue',
+    'purple',
+    'grape',
+    'pink',
   ];
   return colors[crc32(Uint8Array.from(input, (x) => x.charCodeAt(0))) % colors.length];
 }

@@ -150,6 +150,8 @@ export const ManagementTab: React.FC<{
               ? {
                   id: replacement.id,
                   title: replacement.title,
+                  hasAvatar: replacement.hasAvatar,
+                  lastUpdate: replacement.lastUpdate,
                 }
               : null,
           },

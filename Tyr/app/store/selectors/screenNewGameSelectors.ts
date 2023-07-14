@@ -26,6 +26,7 @@ export const defaultPlayer: Readonly<RegisteredPlayer> = {
   tenhouId: '',
   ignoreSeating: false,
   hasAvatar: false,
+  lastUpdate: '',
 };
 
 function _getPlayers(state: IAppState) {
