@@ -227,6 +227,7 @@ export const ProfileManage: React.FC = () => {
               <>
                 <Group>
                   <Avatar
+                    radius='xl'
                     src={
                       avatarData ??
                       `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${personId}.jpg`

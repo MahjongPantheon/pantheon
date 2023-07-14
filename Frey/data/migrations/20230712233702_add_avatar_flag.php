@@ -11,6 +11,7 @@ class AddAvatarFlag extends AbstractMigration
         $table = $this->table('person');
         $table
             ->addColumn('has_avatar', 'integer', ['default' => 0])
+            ->addColumn('last_update', 'datetime', ['null' => true])
             ->save();
         $this->getAdapter()->commitTransaction();
     }

@@ -50,6 +50,9 @@ export const PlayerAvatar = ({
 };
 
 export function makeColor(input: string): MantineColor {
+  if (input === '') {
+    return 'gray';
+  }
   const colors: MantineColor[] = [
     'gray',
     'red',
@@ -69,6 +72,9 @@ export function makeColor(input: string): MantineColor {
 }
 
 export function makeInitials(input: string): string {
+  if (input === '') {
+    return '';
+  }
   const [word1, word2] = input.trim().split(/\s+/).slice(0, 2);
   if (!word2) {
     return word1[0].toUpperCase();

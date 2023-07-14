@@ -17,6 +17,8 @@
  */
 namespace Frey;
 
+use Idiorm\ORM;
+
 require_once __DIR__ . '/../Primitive.php';
 
 /**
@@ -44,6 +46,7 @@ class PersonPrimitive extends Primitive
         'tenhou_id'         => '_tenhouId',
         'disabled'          => '_disabled',
         'has_avatar'        => '_hasAvatar',
+        'last_update'       => '_lastUpdate',
         'is_superadmin'     => '_superadmin',
         '::group'           => '_groupIds', // external many-to-many relation
     ];
@@ -63,6 +66,7 @@ class PersonPrimitive extends Primitive
             '_tenhouId' => $this->_stringTransform(true),
             '_disabled' => $this->_integerTransform(),
             '_hasAvatar'   => $this->_integerTransform(true),
+            '_lastUpdate' => $this->_stringTransform(true),
             '_superadmin' => $this->_integerTransform(),
             '_groupIds'   => $this->_externalManyToManyTransform(
                 self::REL_GROUP,
@@ -149,6 +153,29 @@ class PersonPrimitive extends Primitive
      * @var int
      */
     protected $_hasAvatar = 0;
+    /**
+     * Last profile update date
+     * @var string|null
+     */
+    protected $_lastUpdate = null;
+
+    /**
+     * @return string|null
+     */
+    public function getLastUpdate(): ?string
+    {
+        return $this->_lastUpdate;
+    }
+
+    /**
+     * @param string|null $lastUpdate
+     * @return PersonPrimitive
+     */
+    public function setLastUpdate(?string $lastUpdate): PersonPrimitive
+    {
+        $this->_lastUpdate = $lastUpdate;
+        return $this;
+    }
 
     /**
      * Find persons by local ids (primary key)
@@ -223,6 +250,12 @@ QRY;
     public static function findByEmail(IDb $db, $emails)
     {
         return self::_findBy($db, 'email', $emails);
+    }
+
+    protected function _save(ORM $instance)
+    {
+        $this->_lastUpdate = date('Y-m-d H:i:s');
+        return parent::_save($instance);
     }
 
     protected function _create()
