@@ -46,6 +46,7 @@ import { useStorage } from '../hooks/storage';
 import { TopActionButton } from '../helpers/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
+import { FileUploadButton } from '../helpers/FileUploadButton';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -146,15 +147,14 @@ export const ProfileManage: React.FC = () => {
     });
   }, [personId]);
 
-  function updateAvatar() {
-    const input = document.getElementById('avatar_upload') as HTMLInputElement;
-    if (input.files && input.files[0]) {
+  function updateAvatar(file?: File) {
+    if (file) {
       const reader = new FileReader();
       reader.addEventListener('load', (e) => {
         setAvatarData(e.target?.result as string);
         form.setFieldValue('avatarData', e.target?.result as string);
       });
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(file);
     }
   }
 
@@ -224,15 +224,30 @@ export const ProfileManage: React.FC = () => {
             />
             <Space h='md' />
             {form.getTransformedValues().hasAvatar && (
-              <Group>
-                <Avatar
-                  src={
-                    avatarData ??
-                    `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${personId}.jpg`
-                  }
-                ></Avatar>
-                <input type='file' id='avatar_upload' onChange={updateAvatar} />
-              </Group>
+              <>
+                <Group>
+                  <Avatar
+                    src={
+                      avatarData ??
+                      `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${personId}.jpg`
+                    }
+                  ></Avatar>
+                  <FileUploadButton i18n={i18n} onChange={updateAvatar} />
+                </Group>
+                <div
+                  style={{
+                    color: '#909296',
+                    fontSize: 'calc(0.875rem - 0.125rem)',
+                    lineHeight: 1.2,
+                    display: 'block',
+                    marginTop: 'calc(0.625rem / 2)',
+                  }}
+                >
+                  {i18n._t(
+                    "Avatar should be an image file. It's recommended to upload a square-sized image, otherwise it will be cropped to center square. File size should not be more than 256 KB."
+                  )}
+                </div>
+              </>
             )}
             <TopActionButton
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
