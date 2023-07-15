@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 22:03Z\n"
-"PO-Revision-Date: 2023-07-08 01:04+0300\n"
+"POT-Creation-Date: 2023-07-15 08:28Z\n"
+"PO-Revision-Date: 2023-07-15 11:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -20,49 +20,53 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: src/components/AppFooter.tsx:52:20
+#: src/components/AppFooter.tsx:55:20
 msgid "Back to top"
 msgstr "К началу"
 
-#: src/components/AppFooter.tsx:65:20
+#: src/components/AppFooter.tsx:68:20
 msgid "Description"
 msgstr "Описание"
 
-#: src/components/AppFooter.tsx:73:22
+#: src/components/AppFooter.tsx:76:22
 #: src/pages/EventRulesOverview/index.tsx:66:44
 #: src/pages/EventRulesOverview/index.tsx:73:35
 msgid "Rules overview"
 msgstr "Обзор правил"
 
-#: src/components/AppFooter.tsx:85:20
+#: src/components/AppFooter.tsx:88:20
 msgid "Recent games"
 msgstr "Последние игры"
 
-#: src/components/AppFooter.tsx:92:20 src/pages/EventList.tsx:105:67
+#: src/components/AppFooter.tsx:95:20 src/pages/EventList.tsx:105:67
 #: src/pages/RatingTable.tsx:116:35 src/pages/RatingTable.tsx:131:20
 #: src/pages/RatingTable.tsx:133:20 src/pages/RatingTable.tsx:144:33
 msgid "Rating table"
 msgstr "Рейтинг"
 
-#: src/components/AppFooter.tsx:103:20 src/pages/Achievements.tsx:769:42
+#: src/components/AppFooter.tsx:106:20 src/pages/Achievements.tsx:769:42
 #: src/pages/Achievements.tsx:776:33
 msgid "Achievements"
 msgstr "Номинации"
 
-#: src/components/AppFooter.tsx:112:20 src/pages/SeriesRating.tsx:68:42
+#: src/components/AppFooter.tsx:115:20 src/pages/SeriesRating.tsx:68:42
 #: src/pages/SeriesRating.tsx:75:31
 msgid "Series rating"
 msgstr "Рейтинг по сериям игр"
 
-#: src/components/AppFooter.tsx:124:22
+#: src/components/AppFooter.tsx:127:22
 msgid "Timer & seating"
 msgstr "Таймер и рассадка"
 
-#: src/components/AppFooter.tsx:134:22
+#: src/components/AppFooter.tsx:137:22
+msgid "Toggle dimmed color scheme"
+msgstr "Переключить приглушенную цветовую схему"
+
+#: src/components/AppFooter.tsx:145:22
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
-#: src/components/AppFooter.tsx:140:67
+#: src/components/AppFooter.tsx:151:67
 msgid "Language"
 msgstr "Язык"
 
@@ -156,23 +160,23 @@ msgstr "Онлайн-рейтинг"
 msgid "Game link"
 msgstr "Ссылка на игру"
 
-#: src/components/GameListing.tsx:154:14
+#: src/components/GameListing.tsx:159:14
 msgid "Ron: %1"
 msgstr "Рон: %1"
 
-#: src/components/GameListing.tsx:157:14
+#: src/components/GameListing.tsx:162:14
 msgid "Tsumo: %1"
 msgstr "Цумо: %1"
 
-#: src/components/GameListing.tsx:160:14
+#: src/components/GameListing.tsx:165:14
 msgid "Draw: %1"
 msgstr "Ничья: %1"
 
-#: src/components/GameListing.tsx:164:16
+#: src/components/GameListing.tsx:169:16
 msgid "Chombo: %1"
 msgstr "Чомбо: %1"
 
-#: src/components/GameListing.tsx:169:16
+#: src/components/GameListing.tsx:174:16
 msgid "Nagashi: %1"
 msgstr "Нагаши манган: %1"
 
@@ -595,11 +599,11 @@ msgstr "Тенхо"
 msgid "Chihou"
 msgstr "Чихо"
 
-#: src/Layout.tsx:124:28
+#: src/Layout.tsx:265:28
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: рейтинги и статистика в риичи-маджонге"
 
-#: src/Layout.tsx:125:34
+#: src/Layout.tsx:266:34
 msgid ""
 "Sigrun is the statistics viewer for riichi mahjong club games and "
 "tournaments powered by Mahjong Pantheon system. It provides game logs, "
@@ -1430,23 +1434,23 @@ msgstr ""
 "Статистика игрока %1 в событии \"%2\", предоставленная системой Mahjong "
 "Pantheon"
 
-#: src/pages/PlayerStats.tsx:106:18
+#: src/pages/PlayerStats.tsx:112:18
 msgid "Last update: %1"
 msgstr "Последнее обновление: %1"
 
-#: src/pages/PlayerStats.tsx:149:16
+#: src/pages/PlayerStats.tsx:155:16
 msgid "View selected game details"
 msgstr "Подробнее об игре"
 
-#: src/pages/PlayerStats.tsx:156:24
+#: src/pages/PlayerStats.tsx:162:24
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
-#: src/pages/PlayerStats.tsx:174:24
+#: src/pages/PlayerStats.tsx:180:24
 msgid "Next game"
 msgstr "Следующая игра"
 
-#: src/pages/PlayerStats.tsx:196:24
+#: src/pages/PlayerStats.tsx:202:24
 msgid "Close game preview"
 msgstr "Закрыть предпросмотр"
 

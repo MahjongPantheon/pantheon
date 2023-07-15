@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 22:03Z\n"
+"POT-Creation-Date: 2023-07-15 08:28Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "There is no events you participate in right now"
 msgstr ""
 
-#: app/components/screens/game-result/GameResultScreenView.tsx:87:56
+#: app/components/screens/game-result/GameResultScreenView.tsx:93:56
 msgid "No games found"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:512:14
+#: app/components/screens/table/TableHelper.ts:515:14
 msgid "Chombo"
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 msgid "Start game"
 msgstr ""
 
-#: app/components/screens/other-tables-list/OtherTablesListView.tsx:54:14
+#: app/components/screens/other-tables-list/OtherTablesListView.tsx:55:14
 msgid "No tables are playing right now"
 msgstr ""
 
@@ -250,31 +250,31 @@ msgstr ""
 msgid "Player name"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:71:14
+#: app/components/screens/settings/SettingsScreenView.tsx:91:14
 msgid "Go to personal area"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:75:57
+#: app/components/screens/settings/SettingsScreenView.tsx:95:57
 msgid "Language"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:91:57
+#: app/components/screens/settings/SettingsScreenView.tsx:111:57
 msgid "Theme"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:129:16
+#: app/components/screens/settings/SettingsScreenView.tsx:149:16
 msgid "Select another event"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:137:57
+#: app/components/screens/settings/SettingsScreenView.tsx:157:57
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:139:18
+#: app/components/screens/settings/SettingsScreenView.tsx:159:18
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:146:32
+#: app/components/screens/settings/SettingsScreenView.tsx:166:32
 msgid "Log out"
 msgstr ""
 
@@ -289,12 +289,12 @@ msgid "Table #%1"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:504:14
+#: app/components/screens/table/TableHelper.ts:507:14
 msgid "Ron"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:506:14
+#: app/components/screens/table/TableHelper.ts:509:14
 msgid "Tsumo"
 msgstr ""
 
@@ -319,23 +319,23 @@ msgstr ""
 msgid "wrong outcome for paoSelect"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:485:16
+#: app/components/screens/table/TableHelper.ts:488:16
 msgid "Select pao"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:490:16
+#: app/components/screens/table/TableHelper.ts:493:16
 msgid "Select tempai"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:508:14
+#: app/components/screens/table/TableHelper.ts:511:14
 msgid "Draw"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:510:14
+#: app/components/screens/table/TableHelper.ts:513:14
 msgid "Abort"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:514:14
+#: app/components/screens/table/TableHelper.ts:517:14
 msgid "Nagashi"
 msgstr ""
 

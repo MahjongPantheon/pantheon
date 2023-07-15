@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 03:43+0300\n"
-"PO-Revision-Date: 2023-07-06 23:57+0300\n"
+"POT-Creation-Date: 2023-07-15 08:27Z\n"
+"PO-Revision-Date: 2023-07-15 11:32+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -60,7 +60,7 @@ msgstr ""
 msgid "A reason for penalty is mandatory"
 msgstr "Указывать причину штрафа обязательно"
 
-#: app/pages/GamesControl/GamesList.tsx:381:12
+#: app/pages/GamesControl/GamesList.tsx:378:12
 msgid "Abortive draw, riichi: %1"
 msgstr "Абортивная ничья, риичи: %1"
 
@@ -155,6 +155,16 @@ msgstr "Подтвердить результаты"
 msgid "Atamahane"
 msgstr "Атамахане"
 
+#: app/pages/ProfileManage.tsx:247:20 app/pages/ProfileManageAdmin.tsx:306:18
+msgid ""
+"Avatar should be an image file. It's recommended to upload a square-sized "
+"image, otherwise it will be cropped to center square. File size should not "
+"be more than 256 KB."
+msgstr ""
+"Аватар должен быть файлом-картинкой. Рекомендуется загружать квадратные "
+"изображения, в ином случае аватар будет обрезан до квадрата по центру. "
+"Размер файла не должен превышать 256 КБ."
+
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:85:20
 msgid "Basic ruleset"
 msgstr "Базовый набор правил"
@@ -174,26 +184,26 @@ msgstr ""
 "Невозможно сгенерировать рассадку: число зарегистрированных игроков не "
 "делится на 4"
 
-#: app/Navigation.tsx:173:14 app/pages/OwnedEvents.tsx:189:14
+#: app/Navigation.tsx:175:14 app/pages/OwnedEvents.tsx:189:14
 msgid "Cancel"
 msgstr "Отмена"
 
-#: app/pages/GamesControl/GamesList.tsx:179:30
+#: app/pages/GamesControl/GamesList.tsx:176:30
 msgid "Cancel last played round"
 msgstr "Отменить последний сыгранный раунд"
 
-#: app/pages/GamesControl/GamesList.tsx:210:29
+#: app/pages/GamesControl/GamesList.tsx:207:29
 msgid "Cancel results"
 msgstr "Удалить результаты"
 
-#: app/pages/GamesControl/GamesList.tsx:180:29
+#: app/pages/GamesControl/GamesList.tsx:177:29
 msgid "Cancel round"
 msgstr "Отменить раздачу"
 
 #: app/pages/OwnedEventsEdit/index.tsx:270:30
-#: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
-#: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
-#: app/pages/ProfileManage.tsx:189:32 app/pages/ProfileManageAdmin.tsx:250:21
+#: app/pages/PlayersManage/LocalIdsTab.tsx:107:28
+#: app/pages/PlayersManage/TeamNamesTab.tsx:108:28
+#: app/pages/ProfileManage.tsx:254:32 app/pages/ProfileManageAdmin.tsx:316:21
 msgid "Changes saved!"
 msgstr "Изменения сохранены!"
 
@@ -225,7 +235,7 @@ msgstr "Чинрото"
 msgid "Chips value"
 msgstr "Стоимость чипа"
 
-#: app/pages/GamesControl/GamesList.tsx:370:12
+#: app/pages/GamesControl/GamesList.tsx:367:12
 msgid "Chombo, %1"
 msgstr "Чомбо, %1"
 
@@ -233,7 +243,7 @@ msgstr "Чомбо, %1"
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
 
-#: app/pages/ProfileManage.tsx:173:22
+#: app/pages/ProfileManage.tsx:202:22
 msgid "City"
 msgstr "Город"
 
@@ -260,7 +270,7 @@ msgid ""
 msgstr ""
 "Количество сессий в одной серии. Поставьте 0, чтобы отключить игровые серии."
 
-#: app/pages/ProfileManage.tsx:163:22 app/pages/ProfileManageAdmin.tsx:220:20
+#: app/pages/ProfileManage.tsx:192:22 app/pages/ProfileManageAdmin.tsx:251:20
 msgid "Country"
 msgstr "Страна"
 
@@ -268,7 +278,7 @@ msgstr "Страна"
 msgid "Create new event"
 msgstr "Создать новое событие"
 
-#: app/pages/GamesControl/GamesList.tsx:115:30
+#: app/pages/GamesControl/GamesList.tsx:114:30
 msgid "Current round"
 msgstr "Текущий раунд"
 
@@ -288,7 +298,7 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
-#: app/Navigation.tsx:264:32 app/pages/OwnedEvents.tsx:305:38
+#: app/Navigation.tsx:266:32 app/pages/OwnedEvents.tsx:305:38
 msgid "Danger zone"
 msgstr "Зона особого внимания"
 
@@ -304,7 +314,7 @@ msgstr "Выключить ренчаны"
 msgid "Do not interrupt session until it ends"
 msgstr "Не прерывать игру до тех пор, пока она не закончена"
 
-#: app/pages/GamesControl/GamesList.tsx:374:12
+#: app/pages/GamesControl/GamesList.tsx:371:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Ничья, темпай: %1, риичи: %2"
 
@@ -316,7 +326,7 @@ msgstr "Редактирование события :: %1"
 msgid "Edit event settings"
 msgstr "Настройки события"
 
-#: app/Navigation.tsx:329:27
+#: app/Navigation.tsx:331:27
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
@@ -336,7 +346,7 @@ msgstr "E-mail отправлен"
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "Включить возможность записи исхода \"Нагаши манган\""
 
-#: app/pages/ProfileManageAdmin.tsx:229:26
+#: app/pages/ProfileManageAdmin.tsx:260:26
 msgid "Enter city of the player"
 msgstr "Введите город игрока"
 
@@ -344,15 +354,15 @@ msgstr "Введите город игрока"
 msgid "Enter new strong password"
 msgstr "Введите новый сложный пароль"
 
-#: app/pages/ProfileManageAdmin.tsx:194:26
+#: app/pages/ProfileManageAdmin.tsx:225:26
 msgid "Enter player's e-mail address"
 msgstr "Введите адрес e-mail игрока"
 
-#: app/pages/ProfileManageAdmin.tsx:235:26
+#: app/pages/ProfileManageAdmin.tsx:266:26
 msgid "Enter player's phone"
 msgstr "Введите телефон игрока"
 
-#: app/pages/ProfileManageAdmin.tsx:211:30 app/pages/ProfileSignup.tsx:126:26
+#: app/pages/ProfileManageAdmin.tsx:242:30 app/pages/ProfileSignup.tsx:126:26
 msgid "Enter strong password"
 msgstr "Введите сложный пароль"
 
@@ -370,8 +380,8 @@ msgstr "Выравнивание умы"
 #: app/pages/OwnedEventsEdit/index.tsx:182:18
 #: app/pages/OwnedEventsEdit/index.tsx:213:18 app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18 app/pages/PlayersManage/index.tsx:84:18
-#: app/pages/PlayersManage/LocalIdsTab.tsx:70:18
-#: app/pages/PlayersManage/TeamNamesTab.tsx:70:18
+#: app/pages/PlayersManage/LocalIdsTab.tsx:69:18
+#: app/pages/PlayersManage/TeamNamesTab.tsx:69:18
 msgid "Error has occurred"
 msgstr "Произошла ошибка"
 
@@ -395,7 +405,7 @@ msgstr "Инструкция по заполнения скрипта расса
 msgid "Event title"
 msgstr "Название события"
 
-#: app/Navigation.tsx:202:18
+#: app/Navigation.tsx:204:18
 msgid "Events list"
 msgstr "Список событий"
 
@@ -464,7 +474,7 @@ msgstr ""
 "Не удалось восстановить ваш пароль. Возможно ссылка, по которой вы прошли, "
 "истекла или уже была использована. Попробуйте еще раз."
 
-#: app/pages/ProfileManageAdmin.tsx:115:15
+#: app/pages/ProfileManageAdmin.tsx:132:15
 msgid "Failed to register player. Is your connection stable?"
 msgstr "Не удалось зарегистрировать игрока. Проблемы со связью?"
 
@@ -498,23 +508,23 @@ msgstr "Не удалось запустить таймер"
 msgid "Failed to toggle results visibility"
 msgstr "Не удалось переключить видимость результатов"
 
-#: app/pages/ProfileManageAdmin.tsx:149:15
+#: app/pages/ProfileManageAdmin.tsx:168:15
 msgid "Failed to update player details. Is your connection stable?"
 msgstr "Не удалось обновить профиль. Проблемы со связью?"
 
-#: app/pages/ProfileManage.tsx:106:13
+#: app/pages/ProfileManage.tsx:123:13
 msgid "Failed to update profile. Is your connection stable?"
 msgstr "Не удалось обновить профиль. Проблемы со связью?"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:194:30
+#: app/pages/PlayersManage/ManagementTab.tsx:195:30
 msgid "Find and add player by name..."
 msgstr "Найти и добавить игрока по имени..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:178:24
+#: app/pages/PlayersManage/ManagementTab.tsx:179:24
 msgid "Find replacement player by name..."
 msgstr "Найти замену по имени..."
 
-#: app/Navigation.tsx:277:28 app/Navigation.tsx:288:22
+#: app/Navigation.tsx:279:28 app/Navigation.tsx:290:22
 #: app/pages/OwnedEvents.tsx:316:34 app/pages/OwnedEvents.tsx:324:28
 msgid "Finish event"
 msgstr "Завершить событие"
@@ -649,6 +659,15 @@ msgstr ""
 "подсистемы рейтингов. Если не отмечено, событие не будет видно на главной "
 "странице, но все еще будет доступно по ссылке"
 
+#: app/pages/ProfileManage.tsx:220:28 app/pages/ProfileManageAdmin.tsx:279:26
+msgid ""
+"If checked, uploaded avatar will be shown instead of default circle with "
+"initials. If no avatar is uploaded, the default circle will be shown."
+msgstr ""
+"Если отмечено, вместо цветного круга с инициалами будет показан загруженный "
+"аватар. Если галочка отмечена, но аватар не загружен, будет показан круг с "
+"инициалами."
+
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:86:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
@@ -711,12 +730,12 @@ msgid "Interval seating can't be used for first session in tournament"
 msgstr ""
 "Интервальная рассадка не может быть использована для первой сессии в турнире"
 
-#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:71:63
+#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:86:63
 #: app/pages/ProfileResetPassword.tsx:42:63 app/pages/ProfileSignup.tsx:56:63
 msgid "Invalid email"
 msgstr "Некорректный адрес email"
 
-#: app/pages/ProfileManage.tsx:64:70 app/pages/ProfileManageAdmin.tsx:72:70
+#: app/pages/ProfileManage.tsx:76:70 app/pages/ProfileManageAdmin.tsx:87:70
 #: app/pages/ProfileSignup.tsx:57:70
 msgid "Invalid title"
 msgstr "Некорректное имя"
@@ -749,7 +768,7 @@ msgstr "Кокушимусо"
 msgid "Kuitan"
 msgstr "Куитан"
 
-#: app/AppFooter.tsx:49:67
+#: app/AppFooter.tsx:64:67
 msgid "Language"
 msgstr "Язык"
 
@@ -765,7 +784,7 @@ msgstr "Последние 24ч"
 msgid "Last 30d"
 msgstr "Последние 30д"
 
-#: app/pages/PlayersManage/LocalIdsTab.tsx:99:24
+#: app/pages/PlayersManage/LocalIdsTab.tsx:96:24
 msgid "Local ID"
 msgstr "Локальный ID"
 
@@ -794,7 +813,7 @@ msgstr "Выйти"
 msgid "Manage current games"
 msgstr "Управление играми"
 
-#: app/Navigation.tsx:254:27 app/pages/OwnedEvents.tsx:283:33
+#: app/Navigation.tsx:256:27 app/pages/OwnedEvents.tsx:283:33
 msgid "Manage games"
 msgstr "Управление играми"
 
@@ -806,7 +825,7 @@ msgstr "Мои события"
 msgid "Manage penalties"
 msgstr "Штрафы"
 
-#: app/Navigation.tsx:244:27 app/pages/OwnedEvents.tsx:293:34
+#: app/Navigation.tsx:246:27 app/pages/OwnedEvents.tsx:293:34
 #: app/pages/OwnedEvents.tsx:295:33
 msgid "Manage players"
 msgstr "Управление игроками"
@@ -819,7 +838,7 @@ msgstr "Управление игроками"
 msgid "Manage predefined seating"
 msgstr "Предопределенная рассадка"
 
-#: app/pages/ProfileManage.tsx:42:16
+#: app/pages/ProfileManage.tsx:53:16
 msgid "Manage your account"
 msgstr "Управление профилем"
 
@@ -860,7 +879,7 @@ msgstr "Суммирование якуманов"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/pages/GamesControl/GamesList.tsx:387:12
+#: app/pages/GamesControl/GamesList.tsx:384:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "Нагаши манган, нагаши: %1, темпай: %2, риичи: %3"
 
@@ -889,7 +908,7 @@ msgid "Not started"
 msgstr "Не начато"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:109:25
-#: app/pages/ProfileManage.tsx:165:29 app/pages/ProfileManageAdmin.tsx:222:27
+#: app/pages/ProfileManage.tsx:194:29 app/pages/ProfileManageAdmin.tsx:253:27
 msgid "Nothing found"
 msgstr "Ничего не найдено"
 
@@ -915,7 +934,7 @@ msgstr ""
 "Только первый игрок по ходу раздачи считается победителем по рон. Если "
 "галочка не отмечена, все игроки, объявившие рон, считаются победителями."
 
-#: app/Navigation.tsx:234:27
+#: app/Navigation.tsx:236:27
 msgid "Open event in new tab"
 msgstr "Открыть в новой вкладке"
 
@@ -959,7 +978,7 @@ msgstr "Хонба по атамахане"
 msgid "Payments and scores"
 msgstr "Выплаты и очки"
 
-#: app/Navigation.tsx:249:27 app/pages/OwnedEvents.tsx:289:33
+#: app/Navigation.tsx:251:27 app/pages/OwnedEvents.tsx:289:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:25
 msgid "Penalties"
 msgstr "Штрафы"
@@ -976,7 +995,7 @@ msgstr "Штраф применен!"
 msgid "Penalty reason"
 msgstr "Причина штрафа"
 
-#: app/pages/ProfileManage.tsx:179:22
+#: app/pages/ProfileManage.tsx:208:22
 msgid "Phone number"
 msgstr "Номер телефона"
 
@@ -996,33 +1015,33 @@ msgstr "Дополнительные раунды"
 msgid "Play only east rounds"
 msgstr "Играть только восточные раунды"
 
-#: app/pages/ProfileManageAdmin.tsx:135:26
+#: app/pages/ProfileManageAdmin.tsx:154:26
 msgid "Player details were successfully saved"
 msgstr "Данные игрока были успешно сохранены"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:270:27
+#: app/pages/PlayersManage/ManagementTab.tsx:269:27
 msgid "Player is a regular user. Click to promote to event admin."
 msgstr ""
 "Игрок является обычным пользователем. Нажмите для назначения прав "
 "администратора."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:269:27
+#: app/pages/PlayersManage/ManagementTab.tsx:268:27
 msgid "Player is event administrator. Click to revoke privileges."
 msgstr "Игрок является администратором. Нажмите для отмены привилегий."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:285:27
+#: app/pages/PlayersManage/ManagementTab.tsx:284:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr "Игрок исключен из следующей рассадки. Нажмите чтобы включить"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:286:27
+#: app/pages/PlayersManage/ManagementTab.tsx:285:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr "Игрок включен в следующую рассадку. Нажмите чтобы исключить"
 
-#: app/pages/ProfileManage.tsx:154:22
+#: app/pages/ProfileManage.tsx:183:22
 msgid "Player title"
 msgstr "Имя игрока"
 
-#: app/pages/ProfileManageAdmin.tsx:103:26
+#: app/pages/ProfileManageAdmin.tsx:120:26
 msgid "Player was successfully registered"
 msgstr "Игрок был успешно зарегистрирован"
 
@@ -1068,7 +1087,7 @@ msgstr "Выберите игрока"
 msgid "Please wait unit seating is ready"
 msgstr "Пожалуйста, подождите, пока рассадка не будет готова"
 
-#: app/Navigation.tsx:260:29 app/pages/OwnedEvents.tsx:276:35
+#: app/Navigation.tsx:262:29 app/pages/OwnedEvents.tsx:276:35
 msgid "Predefined seating"
 msgstr "Предопределенная рассадка"
 
@@ -1108,7 +1127,7 @@ msgstr "Ждет подтверждения"
 msgid "Really reset timer?"
 msgstr "Действительно сбросить таймер?"
 
-#: app/Navigation.tsx:267:30 app/Navigation.tsx:273:24
+#: app/Navigation.tsx:269:30 app/Navigation.tsx:275:24
 #: app/pages/OwnedEvents.tsx:308:36 app/pages/OwnedEvents.tsx:312:30
 msgid "Rebuild scoring"
 msgstr "Перестроить скоринг"
@@ -1122,37 +1141,37 @@ msgstr "Восстановление пароля"
 msgid "Refresh data [%1]"
 msgstr "Обновить данные [%1]"
 
-#: app/pages/ProfileManageAdmin.tsx:46:18 app/pages/ProfileSignup.tsx:42:16
+#: app/pages/ProfileManageAdmin.tsx:57:18 app/pages/ProfileSignup.tsx:42:16
 #: app/pages/ProfileSignup.tsx:140:36
 msgid "Register new account"
 msgstr "Зарегистрировать новый аккаунт"
 
-#: app/Navigation.tsx:322:27 app/pages/ProfileManageAdmin.tsx:254:19
+#: app/Navigation.tsx:324:27 app/pages/ProfileManageAdmin.tsx:320:19
 msgid "Register player"
 msgstr "Зарегистрировать игрока"
 
-#: app/pages/ProfileManageAdmin.tsx:251:21
+#: app/pages/ProfileManageAdmin.tsx:317:21
 msgid "Registration done!"
 msgstr "Регистрация завершена!"
 
-#: app/pages/GamesControl/GamesList.tsx:195:29
+#: app/pages/GamesControl/GamesList.tsx:192:29
 msgid "Remove game"
 msgstr "Удалить игру"
 
-#: app/pages/GamesControl/GamesList.tsx:209:30
+#: app/pages/GamesControl/GamesList.tsx:206:30
 msgid "Remove game results"
 msgstr "Удалить результаты игры"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:299:28
+#: app/pages/PlayersManage/ManagementTab.tsx:298:28
 msgid "Remove player from event"
 msgstr "Удалить игрока из события"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:250:37
-#: app/pages/PlayersManage/ManagementTab.tsx:251:32
+#: app/pages/PlayersManage/ManagementTab.tsx:249:37
+#: app/pages/PlayersManage/ManagementTab.tsx:250:32
 msgid "Remove replacement"
 msgstr "Удалить замену"
 
-#: app/pages/GamesControl/GamesList.tsx:194:30
+#: app/pages/GamesControl/GamesList.tsx:191:30
 msgid "Remove the game as it never existed"
 msgstr "Удалить игру, как будто ее никогда не было"
 
@@ -1160,11 +1179,11 @@ msgstr "Удалить игру, как будто ее никогда не бы
 msgid "Renhou"
 msgstr "Ренхо"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:227:28
+#: app/pages/PlayersManage/ManagementTab.tsx:226:28
 msgid "Replace player with someone else"
 msgstr "Заменить игрока кем-либо еще"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:243:28
+#: app/pages/PlayersManage/ManagementTab.tsx:242:28
 msgid "Replaced by %1"
 msgstr "Замена: %1"
 
@@ -1216,8 +1235,8 @@ msgstr ""
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/pages/GamesControl/GamesList.tsx:340:12
-#: app/pages/GamesControl/GamesList.tsx:351:9
+#: app/pages/GamesControl/GamesList.tsx:337:12
+#: app/pages/GamesControl/GamesList.tsx:348:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "Рон, %1 с %2 (%3), риичи: %4"
 
@@ -1264,9 +1283,9 @@ msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
 #: app/pages/OwnedEventsEdit/index.tsx:270:58
-#: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
-#: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
-#: app/pages/ProfileManage.tsx:189:60
+#: app/pages/PlayersManage/LocalIdsTab.tsx:107:56
+#: app/pages/PlayersManage/TeamNamesTab.tsx:108:56
+#: app/pages/ProfileManage.tsx:254:60
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -1291,6 +1310,10 @@ msgstr "Рассадка готова"
 msgid "Seating..."
 msgstr "Рассадка..."
 
+#: app/helpers/FileUploadButton.tsx:29:38
+msgid "Select an avatar"
+msgstr "Выберите аватар"
+
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:58:33
 msgid "Select event type"
 msgstr "Выберите тип события"
@@ -1303,7 +1326,7 @@ msgstr "Выберите интервал"
 msgid "Select player"
 msgstr "Выберите игрока"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:173:16
+#: app/pages/PlayersManage/ManagementTab.tsx:174:16
 msgid "Select replacement player for %1"
 msgstr "Выберите замену для игрока %1"
 
@@ -1316,7 +1339,7 @@ msgstr "Тип рангового бонуса ума"
 msgid "Series length"
 msgstr "Длина серии"
 
-#: app/pages/GamesControl/GamesList.tsx:293:18
+#: app/pages/GamesControl/GamesList.tsx:290:18
 msgid "Session cancelled"
 msgstr "Сессия отменена"
 
@@ -1328,23 +1351,23 @@ msgstr "Длительность сессии в минутах"
 msgid "Session ending policy"
 msgstr "Политика окончания игры"
 
-#: app/pages/GamesControl/GamesList.tsx:281:18
+#: app/pages/GamesControl/GamesList.tsx:278:18
 msgid "Session finished"
 msgstr "Сессия завершена"
 
-#: app/pages/GamesControl/GamesList.tsx:269:18
+#: app/pages/GamesControl/GamesList.tsx:266:18
 msgid "Session finished, but not confirmed"
 msgstr "Сессия завершена, но результаты не подтверждены"
 
-#: app/pages/GamesControl/GamesList.tsx:256:20
+#: app/pages/GamesControl/GamesList.tsx:253:20
 msgid "Session in progress"
 msgstr "Игровая сессия в процессе"
 
-#: app/pages/GamesControl/GamesList.tsx:244:20
+#: app/pages/GamesControl/GamesList.tsx:241:20
 msgid "Session is ready to start"
 msgstr "Игровая сессия готова"
 
-#: app/pages/GamesControl/GamesList.tsx:305:18
+#: app/pages/GamesControl/GamesList.tsx:302:18
 msgid "Session is scheduled"
 msgstr "Сессия запланирована"
 
@@ -1352,7 +1375,7 @@ msgstr "Сессия запланирована"
 msgid "Session started"
 msgstr "Сессии начаты"
 
-#: app/Navigation.tsx:239:27 app/pages/OwnedEvents.tsx:301:33
+#: app/Navigation.tsx:241:27 app/pages/OwnedEvents.tsx:301:33
 msgid "Settings"
 msgstr "Настройки"
 
@@ -1385,15 +1408,19 @@ msgstr "Показать в глобальном списке событий"
 msgid "Show results table"
 msgstr "Показать таблицу результатов"
 
-#: app/Navigation.tsx:308:27
+#: app/pages/ProfileManage.tsx:219:22 app/pages/ProfileManageAdmin.tsx:278:20
+msgid "Show user avatar"
+msgstr "Показывать аватар пользователя"
+
+#: app/Navigation.tsx:310:27
 msgid "Sign in"
 msgstr "Войти"
 
-#: app/Navigation.tsx:336:27
+#: app/Navigation.tsx:338:27
 msgid "Sign out"
 msgstr "Выйти"
 
-#: app/Navigation.tsx:315:27
+#: app/Navigation.tsx:317:27
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
@@ -1417,16 +1444,16 @@ msgstr "Запустить игры и таймер"
 msgid "Step of arbitrary penalty scores"
 msgstr "Шаг штрафа"
 
-#: app/Navigation.tsx:183:14 app/pages/OwnedEvents.tsx:199:14
+#: app/Navigation.tsx:185:14 app/pages/OwnedEvents.tsx:199:14
 msgid "Stop event"
 msgstr "Завершить событие"
 
-#: app/Navigation.tsx:166:12 app/pages/OwnedEvents.tsx:182:12
+#: app/Navigation.tsx:168:12 app/pages/OwnedEvents.tsx:182:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr "Завершить событие \"%1\" (id #%2)? Отменить это действие невозможно!"
 
-#: app/pages/ProfileManageAdmin.tsx:102:24
-#: app/pages/ProfileManageAdmin.tsx:134:24 app/pages/ProfileSignup.tsx:99:64
+#: app/pages/ProfileManageAdmin.tsx:119:24
+#: app/pages/ProfileManageAdmin.tsx:153:24 app/pages/ProfileSignup.tsx:99:64
 msgid "Success"
 msgstr "Успешно"
 
@@ -1451,7 +1478,7 @@ msgstr ""
 msgid "System stats"
 msgstr "Системная статистика"
 
-#: app/pages/GamesControl/GamesList.tsx:102:30
+#: app/pages/GamesControl/GamesList.tsx:101:30
 msgid "Table # %1"
 msgstr "Стол № %1"
 
@@ -1475,7 +1502,7 @@ msgstr "Имена команд"
 msgid "Team tournament"
 msgstr "Командный турнир"
 
-#: app/pages/PlayersManage/TeamNamesTab.tsx:99:24
+#: app/pages/PlayersManage/TeamNamesTab.tsx:96:24
 msgid "Team:"
 msgstr "Команда:"
 
@@ -1483,7 +1510,7 @@ msgstr "Команда:"
 msgid "Tenhou"
 msgstr "Тенхо"
 
-#: app/pages/ProfileManage.tsx:185:22 app/pages/ProfileManageAdmin.tsx:242:26
+#: app/pages/ProfileManage.tsx:214:22 app/pages/ProfileManageAdmin.tsx:273:26
 msgid "Tenhou ID"
 msgstr "Tenhou ID"
 
@@ -1511,8 +1538,8 @@ msgstr ""
 "Включить отдельный исход \"Абортивная ничья\" для специальных ситуаций (4 "
 "риичи, 4 кана, одинаковый ветер в сбросе на первом круге, кюсюкюхай)."
 
-#: app/pages/GamesControl/GamesList.tsx:181:32
-#: app/pages/GamesControl/GamesList.tsx:196:32
+#: app/pages/GamesControl/GamesList.tsx:178:32
+#: app/pages/GamesControl/GamesList.tsx:193:32
 msgid "This action can't be undone. Continue?"
 msgstr "Это действие не может быть отменено. Продолжить?"
 
@@ -1520,7 +1547,7 @@ msgstr "Это действие не может быть отменено. Пр�
 msgid "This is a player to be penalized"
 msgstr "Игрок, к которому будет применен штраф"
 
-#: app/pages/ProfileManage.tsx:155:28 app/pages/ProfileSignup.tsx:119:26
+#: app/pages/ProfileManage.tsx:184:28 app/pages/ProfileSignup.tsx:119:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant, "
 "also event administrators will use this title to find you and add to the "
@@ -1532,7 +1559,7 @@ msgstr ""
 "Пожалуйста, не вводите только свое имя, поскольку оно недостаточно "
 "уникально. Используйте имя+фамилию."
 
-#: app/pages/ProfileManageAdmin.tsx:201:26
+#: app/pages/ProfileManageAdmin.tsx:232:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant. "
 "Please select some unique title, like nickname or name+surname."
@@ -1550,7 +1577,7 @@ msgstr ""
 "использована в следующей рассадке. Каждый раз, когда сессия стартует, этот "
 "индекс увеличивается автоматически."
 
-#: app/pages/GamesControl/GamesList.tsx:211:32
+#: app/pages/GamesControl/GamesList.tsx:208:32
 msgid ""
 "This will only remove the game results, but you will need to cancel last "
 "round separately. This action can't be undone. Continue?"
@@ -1571,13 +1598,17 @@ msgstr ""
 "Стартовое значение таймера. После истечения таймера, применяется политика "
 "окончания игры (см. ниже)"
 
-#: app/Navigation.tsx:200:24 app/Navigation.tsx:206:24
+#: app/Navigation.tsx:202:24 app/Navigation.tsx:208:24
 msgid "To events list"
 msgstr "К списку событий"
 
-#: app/AppFooter.tsx:43:22
+#: app/AppFooter.tsx:58:22
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
+
+#: app/AppFooter.tsx:50:22
+msgid "Toggle dimmed color scheme"
+msgstr "Переключить приглушенную цветовую схему"
 
 #: app/pages/OwnedEvents.tsx:337:28
 msgid "Toggle visibility in ratings global list"
@@ -1600,7 +1631,7 @@ msgstr "Турнир"
 msgid "Tournament settings"
 msgstr "Настройки турнира"
 
-#: app/pages/GamesControl/GamesList.tsx:362:12
+#: app/pages/GamesControl/GamesList.tsx:359:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Цумо, %1 (%2), риичи: %3"
 
@@ -1628,11 +1659,11 @@ msgstr "Ума за 4 место"
 msgid "Update password"
 msgstr "Обновить пароль"
 
-#: app/pages/ProfileManageAdmin.tsx:253:19
+#: app/pages/ProfileManageAdmin.tsx:319:19
 msgid "Update player"
 msgstr "Обновить профиль"
 
-#: app/pages/ProfileManageAdmin.tsx:44:18
+#: app/pages/ProfileManageAdmin.tsx:55:18
 msgid "Update player account"
 msgstr "Обновить данные игрока"
 
@@ -1713,7 +1744,7 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/pages/ProfileManage.tsx:67:13
+#: app/pages/ProfileManage.tsx:79:13
 msgid ""
 "You have provided your tenhou login string instead of your username. You "
 "should NEVER give anyone your login string!"
@@ -1741,12 +1772,12 @@ msgstr ""
 "Вы не сможете отменять последние раунды после того, как результаты "
 "подтверждены. Подтвердить результаты?"
 
-#: app/pages/ProfileLogin.tsx:81:24 app/pages/ProfileManage.tsx:145:22
+#: app/pages/ProfileLogin.tsx:81:24 app/pages/ProfileManage.tsx:174:22
 #: app/pages/ProfileResetPassword.tsx:79:26
 msgid "Your e-mail address"
 msgstr "Ваш адрес e-mail"
 
-#: app/pages/ProfileManage.tsx:146:28
+#: app/pages/ProfileManage.tsx:175:28
 msgid ""
 "Your e-mail will not be shared with anyone else and will not be visible "
 "anywhere. If you want to change your address, contact chief administrator."
@@ -1785,7 +1816,7 @@ msgstr ""
 msgid "Your password is too weak. Please enter stronger password."
 msgstr "Ваш пароль слишком прост. Введите более сложный пароль."
 
-#: app/Navigation.tsx:298:26 app/Navigation.tsx:300:20
+#: app/Navigation.tsx:300:26 app/Navigation.tsx:302:34
 msgid "Your profile"
 msgstr "Ваш профиль"
 

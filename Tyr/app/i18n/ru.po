@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-06 23:55+0300\n"
+"POT-Creation-Date: 2023-07-15 08:27Z\n"
 "PO-Revision-Date: 2023-04-16 21:56+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -41,7 +41,7 @@ msgstr "%1 хан, %2 фу"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/components/screens/table/TableHelper.ts:510:14
+#: app/components/screens/table/TableHelper.ts:513:14
 msgid "Abort"
 msgstr "Абортивная ничья"
 
@@ -76,7 +76,7 @@ msgstr "Чинрото"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:512:14
+#: app/components/screens/table/TableHelper.ts:515:14
 msgid "Chombo"
 msgstr "Чомбо"
 
@@ -112,7 +112,7 @@ msgstr "Дайсуши"
 msgid "Dora"
 msgstr "Дора"
 
-#: app/components/screens/table/TableHelper.ts:508:14
+#: app/components/screens/table/TableHelper.ts:511:14
 msgid "Draw"
 msgstr "Ничья"
 
@@ -146,7 +146,7 @@ msgstr "Фу"
 msgid "Game log"
 msgstr "Лог игры"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:71:14
+#: app/components/screens/settings/SettingsScreenView.tsx:91:14
 msgid "Go to personal area"
 msgstr "В личный кабинет"
 
@@ -211,7 +211,7 @@ msgstr "Джунчан"
 msgid "Kokushi musou"
 msgstr "Кокушимусо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:75:57
+#: app/components/screens/settings/SettingsScreenView.tsx:95:57
 msgid "Language"
 msgstr "Язык"
 
@@ -219,7 +219,7 @@ msgstr "Язык"
 msgid "Log in"
 msgstr "Вход"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:146:32
+#: app/components/screens/settings/SettingsScreenView.tsx:166:32
 msgid "Log out"
 msgstr "Выйти из системы"
 
@@ -239,7 +239,7 @@ msgstr "Мензенцумо"
 msgid "Multiron, from %1"
 msgstr "Мультирон с %1"
 
-#: app/components/screens/table/TableHelper.ts:514:14
+#: app/components/screens/table/TableHelper.ts:517:14
 msgid "Nagashi"
 msgstr "Нагаши манган"
 
@@ -252,7 +252,7 @@ msgstr "Нагаши манган"
 msgid "New game"
 msgstr "Новая игра"
 
-#: app/components/screens/game-result/GameResultScreenView.tsx:87:56
+#: app/components/screens/game-result/GameResultScreenView.tsx:93:56
 msgid "No games found"
 msgstr "Игры не найдены"
 
@@ -260,7 +260,7 @@ msgstr "Игры не найдены"
 msgid "No results found"
 msgstr "Результаты отсутствуют"
 
-#: app/components/screens/other-tables-list/OtherTablesListView.tsx:54:14
+#: app/components/screens/other-tables-list/OtherTablesListView.tsx:55:14
 msgid "No tables are playing right now"
 msgstr "На данный момент ни один стол не играет"
 
@@ -341,7 +341,7 @@ msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
 #: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:504:14
+#: app/components/screens/table/TableHelper.ts:507:14
 msgid "Ron"
 msgstr "Рон"
 
@@ -373,7 +373,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:129:16
+#: app/components/screens/settings/SettingsScreenView.tsx:149:16
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
@@ -381,11 +381,11 @@ msgstr "Выбрать другое событие"
 msgid "Select event"
 msgstr "Выбрать событие"
 
-#: app/components/screens/table/TableHelper.ts:485:16
+#: app/components/screens/table/TableHelper.ts:488:16
 msgid "Select pao"
 msgstr "Выбрать пао"
 
-#: app/components/screens/table/TableHelper.ts:490:16
+#: app/components/screens/table/TableHelper.ts:493:16
 msgid "Select tempai"
 msgstr "Выбрать темпай"
 
@@ -405,7 +405,7 @@ msgstr "Перемешать"
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:137:57
+#: app/components/screens/settings/SettingsScreenView.tsx:157:57
 msgid "Single device mode"
 msgstr "Режим одного устройства"
 
@@ -441,7 +441,7 @@ msgstr "Темпай: %1"
 msgid "Tenhou"
 msgstr "Тенхо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:91:57
+#: app/components/screens/settings/SettingsScreenView.tsx:111:57
 msgid "Theme"
 msgstr "Оформление"
 
@@ -454,7 +454,7 @@ msgid "Toitoi"
 msgstr "Тойтой"
 
 #: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:506:14
+#: app/components/screens/table/TableHelper.ts:509:14
 msgid "Tsumo"
 msgstr "Цумо"
 
@@ -466,7 +466,7 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:139:18
+#: app/components/screens/settings/SettingsScreenView.tsx:159:18
 msgid "Turn on if you use a single device for all players"
 msgstr "Включите, если вы используете одно устройство для всех игроков"
 
