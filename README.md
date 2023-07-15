@@ -3,13 +3,12 @@
 ![](https://img.shields.io/github/actions/workflow/status/MahjongPantheon/pantheon/build.yml?branch=master&style=for-the-badge)
 ![](https://img.shields.io/github/license/MahjongPantheon/pantheon?style=for-the-badge)
 
-Pantheon project consists of some submodules, each of those might be installed standalone (see instructions in folder 
-of each submodule). To quickly run Pantheon locally using Docker, read further.
-
 You may use github issues for error reports and feature requests. Pull requests are especially welcome :)
 
 - Support chat (EN): https://discord.gg/U5qBkexfEQ
 - Support chat (RU): https://t.me/pantheon_support
+
+Pantheon can be run in production or in development mode. Please don't use development build for your production setup.
 
 ### Production build
 
