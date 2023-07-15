@@ -95,6 +95,16 @@ jobs:
             ghcr.io/mahjongpantheon/pantheon-hugin:latest
             ghcr.io/mahjongpantheon/pantheon-hugin:${{ github.sha }}
 
+      - name: Build and push [Gullveig]
+        uses: docker/build-push-action@v2
+        with:
+          context: ./Gullveig
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ghcr.io/mahjongpantheon/pantheon-gullveig:latest
+            ghcr.io/mahjongpantheon/pantheon-gullveig:${{ github.sha }}
+
       - name: Build and push [Mimir]
         uses: docker/build-push-action@v2
         with:
