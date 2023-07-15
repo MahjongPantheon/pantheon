@@ -68,6 +68,9 @@ export const PlayerAvatar = ({
 };
 
 export function makeColors(input: string): Pick<CSSProperties, 'color' | 'backgroundColor'> {
+  if (input === '') {
+    return { color: 'var(--color-secondary-1)', backgroundColor: 'var(--color-secondary-3)' };
+  }
   const colors = [
     'red',
     'orange',
