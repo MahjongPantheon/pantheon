@@ -68,7 +68,7 @@ export const PlayerAvatar = ({
 };
 
 export function makeColors(input: string): Pick<CSSProperties, 'color' | 'backgroundColor'> {
-  if (input === '') {
+  if (!input) {
     return { color: 'var(--color-secondary-1)', backgroundColor: 'var(--color-secondary-3)' };
   }
   const colors = [
@@ -92,7 +92,7 @@ export function makeColors(input: string): Pick<CSSProperties, 'color' | 'backgr
 }
 
 export function makeInitials(input: string): string {
-  if (input.length === 0) {
+  if (!input) {
     return '??';
   }
   const [word1, word2] = input.trim().split(/\s+/).slice(0, 2);

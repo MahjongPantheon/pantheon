@@ -111,7 +111,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           withArrow
           label={i18n._t('Last update: %1', [playerStats?.lastUpdate])}
         >
-          <ActionIcon size={24} color='dark' variant='light'>
+          <ActionIcon size={24} color='gray' variant='light'>
             <IconInfoCircle />
           </ActionIcon>
         </Tooltip>
