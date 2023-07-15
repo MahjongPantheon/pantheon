@@ -222,7 +222,9 @@ export class ApiService {
     city: string,
     email: string,
     phone: string,
-    tenhouId: string
+    tenhouId: string,
+    hasAvatar: boolean,
+    avatarData: string
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePersonalInfo' });
     return UpdatePersonalInfo(
@@ -234,6 +236,8 @@ export class ApiService {
         email,
         phone,
         tenhouId,
+        hasAvatar,
+        avatarData,
       },
       this._clientConfFrey
     ).then((resp) => resp.success);

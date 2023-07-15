@@ -157,7 +157,9 @@ class EventRatingTableModel extends Model
         $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $teams, $startRating) {
             return [
                 'id'            => (int)$el->getPlayerId(),
-                'title'  => $playerItems[$el->getPlayerId()]->getDisplayName(),
+                'title'         => $playerItems[$el->getPlayerId()]->getDisplayName(),
+                'has_avatar'    => $playerItems[$el->getPlayerId()]->getHasAvatar(),
+                'last_update'    => $playerItems[$el->getPlayerId()]->getLastUpdate(),
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),

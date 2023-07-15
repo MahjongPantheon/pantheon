@@ -17,7 +17,7 @@
 
 import React, { useCallback } from 'react';
 import { IComponentProps } from '../../IComponentProps';
-import { GameResultScreenView, PlayerScore } from './GameResultScreenView';
+import { GameResultScreenView } from './GameResultScreenView';
 import { isLoading } from '../../../store/selectors/screenConfirmationSelectors';
 import { Preloader } from '../../general/preloader/Preloader';
 import { GOTO_NEXT_SCREEN, START_NEW_GAME } from '../../../store/actions/interfaces';
@@ -29,20 +29,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
     return <Preloader />;
   }
 
-  let players: PlayerScore[] = [];
-
-  if (state.lastResults) {
-    players = state.lastResults.map((player) => {
-      return {
-        name: player.title,
-        score: player.score,
-        delta: player.ratingDelta,
-      };
-    });
-
-    players.sort((p1, p2) => p2.score - p1.score);
-  }
-
+  const results = [...(state.lastResults ?? [])].sort((p1, p2) => p2.score - p1.score);
   const canStartGame =
     !state.gameConfig.autoSeating && !state.currentSessionHash && !state.gameConfig.isPrescripted;
 
@@ -61,7 +48,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
 
   return (
     <GameResultScreenView
-      players={players}
+      results={results}
       showRepeatButton={canStartGame}
       onCheckClick={onCheckClick}
       onRepeatClick={onRepeatClick}

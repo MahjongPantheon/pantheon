@@ -83,6 +83,8 @@ class EventModel extends Model
             }
             if (!empty($players[$seat['player_id']])) {
                 $seat['title'] = $players[$seat['player_id']]['title'];
+                $seat['has_avatar'] = $players[$seat['player_id']]['has_avatar'];
+                $seat['last_update'] = $players[$seat['player_id']]['last_update'];
             }
             return $seat;
         }, $seatings);
@@ -248,6 +250,8 @@ class EventModel extends Model
                             'local_id'      => empty($playerIdMap[$p->getId()]) ? null : $playerIdMap[$p->getId()],
                             'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                             'tenhou_id'     => $p->getTenhouId(),
+                            'has_avatar'    => $p->getHasAvatar(),
+                            'last_update'    => $p->getLastUpdate(),
                             'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
                             'replaced_by'   => null // NOTE: always null here, replacement data is not fetched!
                         ];
@@ -353,7 +357,9 @@ class EventModel extends Model
         foreach ($players as $player) {
             $result[$player->getId()] = [
                 'id'            => (int) $player->getId(),
-                'title'  => $player->getDisplayName(),
+                'title'         => $player->getDisplayName(),
+                'has_avatar'    => $player->getHasAvatar(),
+                'last_update'    => $player->getLastUpdate(),
                 'tenhou_id'     => $player->getTenhouId()
             ];
         }

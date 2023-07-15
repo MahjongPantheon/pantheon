@@ -37,7 +37,7 @@ import {
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { Suspense, useState } from 'react';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
-import { PlayerIcon } from '../components/PlayerIcon';
+import { PlayerAvatar } from '../components/PlayerAvatar';
 import { useMediaQuery } from '@mantine/hooks';
 import { PlayerStatsListing } from '../components/PlayerStatsListing';
 import { useI18n } from '../hooks/i18n';
@@ -98,7 +98,12 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
         )}
       />
       <Group position='apart'>
-        <h2>{player.title}</h2>
+        <h2>
+          <Group>
+            <PlayerAvatar p={player} />
+            {player.title}
+          </Group>
+        </h2>
         <Tooltip
           events={{ hover: true, focus: true, touch: true }}
           openDelay={500}
@@ -234,7 +239,14 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                       >
                         {winds[idx]}
                       </Badge>
-                      <PlayerIcon p={{ title: seat.title, id: seat.playerId }} />
+                      <PlayerAvatar
+                        p={{
+                          title: seat.title,
+                          id: seat.playerId,
+                          hasAvatar: seat.hasAvatar,
+                          lastUpdate: seat.lastUpdate,
+                        }}
+                      />
                       {seat.playerId === player.id ? (
                         <Text weight='bold'>{seat.title}</Text>
                       ) : (

@@ -90,8 +90,8 @@ class PlayerStatModel extends Model
         ksort($games);
 
         $rounds = $this->_fetchRounds($games);
-        $playerNames = $this->_fetchPlayerNames($games);
-        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRulesetConfig(), $games, $playerNames);
+        $playerInfo = $this->_fetchPlayerInfo($games);
+        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRulesetConfig(), $games, $playerInfo);
         $data = [
             'rating_history'        => $this->_getRatingHistorySequence($mainEvent, $playerId, $games),
             'score_history'         => $scoresAndPlayers['scores'],
@@ -158,24 +158,26 @@ class PlayerStatModel extends Model
      *
      * @param \Common\Ruleset $rules
      * @param array $games
-     * @param array $playerNames
-     * @throws \Exception
+     * @param array $playerInfo
      * @return array
+     *@throws \Exception
      */
-    protected function _getScoreHistoryAndPlayers($rules, array $games, array $playerNames)
+    protected function _getScoreHistoryAndPlayers($rules, array $games, array $playerInfo)
     {
         $withChips = $rules->rules()->getChipsValue() > 0;
-        $scoreHistory = array_map(function ($game) use ($withChips, &$playerNames) {
+        $scoreHistory = array_map(function ($game) use ($withChips, &$playerInfo) {
             /** @var SessionResultsPrimitive[] $results */
             $results = $game['results'];
             /** @var SessionPrimitive $session */
             $session = $game['session'];
 
-            return array_map(function ($playerId) use (&$results, &$session, $withChips, &$playerNames) {
+            return array_map(function ($playerId) use (&$results, &$session, $withChips, &$playerInfo) {
                 $result = [
                     'session_hash'  => (string) $session->getRepresentationalHash(),
                     'event_id'      => (int) $session->getEventId(),
-                    'title'         => $playerNames[$playerId],
+                    'title'         => $playerInfo[$playerId]['title'],
+                    'has_avatar'    => $playerInfo[$playerId]['has_avatar'],
+                    'last_update'    => $playerInfo[$playerId]['last_update'],
                     'player_id'     => (int) $playerId,
                     'score'         => (int) $results[$playerId]->getScore(),
                     'rating_delta'  => (float) $results[$playerId]->getRatingDelta(),
@@ -215,7 +217,9 @@ class PlayerStatModel extends Model
         $players = array_map(function (PlayerPrimitive $p) {
             return [
                 'id'            => (int)$p->getId(),
-                'title'  => $p->getDisplayName(),
+                'title'         => $p->getDisplayName(),
+                'has_avatar'    => $p->getHasAvatar(),
+                'last_update'    => $p->getLastUpdate(),
                 'tenhou_id'     => $p->getTenhouId(),
             ];
         }, PlayerPrimitive::findById($this->_ds, $playerIds));
@@ -735,7 +739,7 @@ class PlayerStatModel extends Model
      * @throws \Exception
      * @return array
      */
-    protected function _fetchPlayerNames(array $games)
+    protected function _fetchPlayerInfo(array $games)
     {
         $playerIds = array_reduce($games, function ($acc, $item) {
             /** @var SessionPrimitive $session */
@@ -744,7 +748,11 @@ class PlayerStatModel extends Model
         }, []);
 
         return array_reduce(PlayerPrimitive::findById($this->_ds, $playerIds), function ($acc, PlayerPrimitive $p) {
-            $acc[$p->getId()] = $p->getDisplayName();
+            $acc[$p->getId()] = [
+                'title' => $p->getDisplayName(),
+                'has_avatar' => $p->getHasAvatar(),
+                'last_update' => $p->getLastUpdate(),
+            ];
             return $acc;
         }, []);
     }

@@ -20,6 +20,7 @@ deps:
 	cd Forseti && ${MAKE} docker_deps
 	cd Sigrun && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
+	cd Gullveig && ${MAKE} docker_deps
 
 .PHONY: kill_dev
 kill_dev: export ENV_FILENAME=.env.development
@@ -61,6 +62,7 @@ pantheon_run:
 	@cd Mimir && ${MAKE} docker_enable_debug
 	@cd Frey && ${MAKE} docker_enable_debug
 	@cd Hugin && ${MAKE} docker_enable_debug
+	@cd Gullveig && ${MAKE} docker_enable_debug
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
@@ -171,6 +173,10 @@ shell_sigrun:
 shell_db:
 	cd Database && ${MAKE} shell
 
+.PHONY: shell_gullveig
+shell_gullveig:
+	cd Gullveig && ${MAKE} shell
+
 # Some shortcuts for common tasks
 
 .PHONY: seed
@@ -206,6 +212,7 @@ check:
 	cd Forseti && ${MAKE} docker_lint
 	cd Sigrun && ${MAKE} docker_lint
 	cd Hugin && ${MAKE} docker_check
+	cd Gullveig && ${MAKE} docker_check
 
 .PHONY: autofix
 autofix:
@@ -216,6 +223,7 @@ autofix:
 	cd Forseti && ${MAKE} docker_autofix
 	cd Sigrun && ${MAKE} docker_autofix
 	cd Hugin && ${MAKE} docker_autofix
+	cd Gullveig && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -245,6 +253,7 @@ prod_deps:
 	cd Tyr && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
+	cd Gullveig && ${MAKE} docker_deps
 	# sigrun should install deps after prebuild
 
 .PHONY: prod_build_basic_images
@@ -300,7 +309,7 @@ prod_stop_all:
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
-	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr
+	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr gullveig
 
 .PHONY: prod_restart
 prod_restart:

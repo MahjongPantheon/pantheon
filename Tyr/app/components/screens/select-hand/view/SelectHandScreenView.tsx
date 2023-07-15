@@ -25,9 +25,13 @@ import { ArrowState, SelectHandActiveTab, YakuGroup } from '../YakuTypes';
 import classNames from 'classnames';
 import { ReactComponent as ArrowLeftIcon } from '../../../../img/icons/chevron-left.svg';
 import { ReactComponent as ArrowRightIcon } from '../../../../img/icons/chevron-right.svg';
+import { PlayerAvatar } from '../../../general/avatar/Avatar';
 
 type IProps = {
+  id: number;
   playerName: string;
+  hasAvatar: boolean;
+  lastUpdate: string;
   yakuGroups: YakuGroup[];
   bottomPanelText: string;
   leftArrowState: ArrowState;
@@ -93,7 +97,10 @@ export class SelectHandScreenView extends React.Component<IProps> {
 
   render() {
     const {
+      id,
       playerName,
+      hasAvatar,
+      lastUpdate,
       yakuGroups,
       bottomPanelText,
       leftArrowState,
@@ -136,7 +143,10 @@ export class SelectHandScreenView extends React.Component<IProps> {
               </div>
             )}
           </div>
-          <div className='page-select-hand__player-name'>{playerName}</div>
+          <div className='page-select-hand__player-name'>
+            <PlayerAvatar p={{ id, title: playerName, hasAvatar, lastUpdate }} size={32} />
+            {playerName}
+          </div>
           <div className='page-select-hand__top-panel-arrow'>
             {rightArrowState !== ArrowState.UNAVAILABLE && (
               <div

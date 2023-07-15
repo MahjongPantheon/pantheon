@@ -23,7 +23,7 @@ import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
-import { PlayerIcon } from '../components/PlayerIcon';
+import { PlayerAvatar } from '../components/PlayerAvatar';
 import { useLocation } from 'wouter';
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
@@ -80,7 +80,15 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
           <Text c='dimmed'>{i18n._t('Event administrators: ')}</Text>
           {admins?.map((admin, idx) => (
             <Group key={`adm_${idx}`}>
-              <PlayerIcon size='xs' p={{ title: admin.personName, id: admin.personId }} />
+              <PlayerAvatar
+                size='xs'
+                p={{
+                  title: admin.personName,
+                  id: admin.personId,
+                  hasAvatar: admin.hasAvatar,
+                  lastUpdate: admin.lastUpdate,
+                }}
+              />
               <Anchor
                 href={`/event/${eventId}/player/${admin.personId}`}
                 onClick={(e) => {

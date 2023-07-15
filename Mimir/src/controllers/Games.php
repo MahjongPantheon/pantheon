@@ -201,6 +201,7 @@ class GamesController extends Controller
             throw new TwirpError(ErrorCode::NotFound, "Couldn't find session in DB");
         }
 
+        /** @var PlayerPrimitive[][] $playersReg */
         $playersReg = PlayerPrimitive::findPlayersForSession($this->_ds, $gameHashCode);
 
         $result = [
@@ -211,12 +212,16 @@ class GamesController extends Controller
                 return [
                     'id' => $player->getId(),
                     'title' => $player->getDisplayName(),
+                    'has_avatar' => $player->getHasAvatar(),
+                    'last_update' => $player->getLastUpdate(),
                     'score' => $session[0]->getCurrentState()->getScores()[$player->getId()],
                     'replaced_by' => empty($playersReg['replacements'][$player->getId()])
                         ? null
                         : [
                             'id' => $playersReg['replacements'][$player->getId()]->getId(),
                             'title' => $playersReg['replacements'][$player->getId()]->getDisplayName(),
+                            'has_avatar' => $playersReg['replacements'][$player->getId()]->getHasAvatar(),
+                            'last_update' => $playersReg['replacements'][$player->getId()]->getLastUpdate(),
                         ]
                 ];
             }, $playersReg['players']),

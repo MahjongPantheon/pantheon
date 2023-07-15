@@ -15,12 +15,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.page-select-hand.page-select-hand__player-name {
-  font-size: var(--font-size-secondary);
+.page-select-hand .page-select-hand__player-name {
+  font-size: var(--font-size-small-2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 16px;
 }
 
 .page-select-hand.page-select-hand__top-panel {

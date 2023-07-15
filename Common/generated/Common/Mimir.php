@@ -552,4 +552,13 @@ interface Mimir
      * @throws \Twirp\Error
      */
     public function GetStartingTimer(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetStartingTimerResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/ClearStatCache</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function ClearStatCache(array $ctx, \Common\ClearStatCachePayload $req): \Common\GenericSuccessResponse;
 }

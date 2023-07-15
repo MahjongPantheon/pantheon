@@ -144,6 +144,9 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const allWinners = getWinningUsers(state);
     const player = allWinners.find((val) => val.id === currentWinnerId);
     const playerName = player !== undefined ? player.title : '';
+    const playerId = player !== undefined ? player.id : 0;
+    const playerHasAvatar = player !== undefined ? player.hasAvatar : false;
+    const playerLastUpdate = player !== undefined ? player.lastUpdate : '';
     const bottomPanelText = getOutcomeName(loc, state.currentOutcome.selectedOutcome);
     const canGoNext = !!mayGoNextFromYakuSelect(state);
 
@@ -200,7 +203,10 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
 
     return (
       <SelectHandScreenView
+        id={playerId}
         playerName={playerName}
+        hasAvatar={playerHasAvatar}
+        lastUpdate={playerLastUpdate}
         yakuGroups={yakuGroups}
         bottomPanelText={bottomPanelText}
         leftArrowState={leftArrowState}

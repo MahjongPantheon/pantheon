@@ -41,6 +41,14 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string tenhou_id = 7;</code>
      */
     protected $tenhou_id = '';
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     */
+    protected $has_avatar = false;
+    /**
+     * Generated from protobuf field <code>string avatar_data = 9;</code>
+     */
+    protected $avatar_data = '';
 
     /**
      * Constructor.
@@ -55,6 +63,8 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
      *     @type string $email
      *     @type string $phone
      *     @type string $tenhou_id
+     *     @type bool $has_avatar
+     *     @type string $avatar_data
      * }
      */
     public function __construct($data = NULL) {
@@ -212,6 +222,50 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->tenhou_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 8;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string avatar_data = 9;</code>
+     * @return string
+     */
+    public function getAvatarData()
+    {
+        return $this->avatar_data;
+    }
+
+    /**
+     * Generated from protobuf field <code>string avatar_data = 9;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setAvatarData($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->avatar_data = $var;
 
         return $this;
     }

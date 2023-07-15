@@ -64,7 +64,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
             ->setRulesetConfig(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 
-        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4], true);
 
         $this->_session = (new SessionPrimitive($this->_ds))
             ->setEvent($this->_event)

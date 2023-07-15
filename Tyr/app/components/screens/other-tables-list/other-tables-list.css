@@ -37,3 +37,15 @@
 .page-other-tables-list__table:active {
   background-color: var(--color-secondary-6);
 }
+
+.page-other-tables-list__item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  column-gap: 12px;
+  padding: 4px 0;
+}
+
+.page-other-tables-list__wind {
+  padding-bottom: 8px;
+}

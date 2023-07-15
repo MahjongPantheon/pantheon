@@ -23,9 +23,13 @@ import classNames from 'classnames';
 import { Theme } from '../../../services/themes';
 import { useContext } from 'react';
 import { i18n } from '../../i18n';
+import { PlayerAvatar } from '../../general/avatar/Avatar';
 
 interface IProps {
   playerName: string;
+  playerId?: number;
+  playerHasAvatar?: boolean;
+  playerLastUpdate: string;
   supportedLanguages: string[];
   currentLanguage: string;
   supportedThemes: Theme[];
@@ -43,6 +47,9 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
   const loc = useContext(i18n);
   const {
     playerName,
+    playerId,
+    playerHasAvatar,
+    playerLastUpdate,
     supportedLanguages,
     currentLanguage,
     supportedThemes,
@@ -60,7 +67,20 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
     <div className='flex-container page-setting'>
       <div className='flex-container__content'>
         <TopPanel onBackClick={onBackClick} />
-        <div className='page-setting__name'>{playerName}</div>
+        <div className='page-setting__name'>
+          {playerId && (
+            <PlayerAvatar
+              size={48}
+              p={{
+                id: playerId,
+                title: playerName,
+                hasAvatar: playerHasAvatar,
+                lastUpdate: playerLastUpdate,
+              }}
+            />
+          )}
+          {playerName}
+        </div>
         <div className='page-setting__section'>
           <a
             className='flat-btn flat-btn--large'

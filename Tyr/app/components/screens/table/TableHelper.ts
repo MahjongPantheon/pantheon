@@ -451,7 +451,10 @@ function getPlayer(
   }
 
   return {
+    id: player.id,
     name: player.title,
+    hasAvatar: player.hasAvatar,
+    lastUpdate: player.lastUpdate,
     wind: wind,
     points: points,
     penaltyPoints: penaltyPoints,

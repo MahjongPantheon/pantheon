@@ -68,6 +68,7 @@ class AccountModel extends Model
             ->setEmail($email)
             ->setPhone($phone)
             ->setIsSuperadmin($superadmin)
+            ->setHasAvatar(false)
             ->setTenhouId($tenhouId);
         if (!$person->save()) {
             throw new \Exception('Couldn\'t save person to DB', 403);
@@ -120,6 +121,8 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar(),
+                'last_update' => $person->getLastUpdate(),
             ];
         }, $persons);
     }
@@ -133,12 +136,14 @@ class AccountModel extends Model
      * @param string $city
      * @param string $email
      * @param string $phone
-     * @param string|null $tenhouId
+     * @param string $tenhouId
+     * @param bool $hasAvatar
+     * @param string $avatarData
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId = null)
+    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId, $hasAvatar, $avatarData)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
@@ -182,11 +187,43 @@ class AccountModel extends Model
             }
         }
 
+        $gullveigUrl = $this->_config->getValue('gullveigUrl');
+        if (!empty($gullveigUrl)) {
+            $ch = curl_init($gullveigUrl);
+            if ($ch) {
+                $payload = json_encode([
+                    'userId' => $id,
+                    'avatar' => $avatarData
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json'
+                ]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_exec($ch);
+                curl_close($ch);
+            }
+        }
+
+        $mimirUrl = $this->_config->getValue('mimirUrl');
+        if (!empty($mimirUrl)) {
+            // Schedule player stats cache update in mimir
+            $mimirClient = new \Common\MimirClient(
+                $mimirUrl,
+                null,
+                null,
+                null,
+                '/v2'
+            );
+            $mimirClient->ClearStatCache([], (new \Common\ClearStatCachePayload())->setPlayerId($id));
+        }
+
         return $persons[0]->setTitle($title)
             ->setCountry($country)
             ->setCity($city)
             ->setPhone($phone)
             ->setTenhouId($tenhouId)
+            ->setHasAvatar($hasAvatar)
             ->save();
     }
 
@@ -246,6 +283,8 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar(),
+                'last_update' => $person->getLastUpdate(),
             ];
         }, $persons);
     }

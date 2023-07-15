@@ -33,6 +33,14 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>float rating_delta = 5;</code>
      */
     protected $rating_delta = 0.0;
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 6;</code>
+     */
+    protected $has_avatar = false;
+    /**
+     * Generated from protobuf field <code>string last_update = 7;</code>
+     */
+    protected $last_update = '';
 
     /**
      * Constructor.
@@ -45,6 +53,8 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      *     @type int $score
      *     @type \Common\ReplacementPlayer $replaced_by
      *     @type float $rating_delta
+     *     @type bool $has_avatar
+     *     @type string $last_update
      * }
      */
     public function __construct($data = NULL) {
@@ -168,6 +178,50 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkFloat($var);
         $this->rating_delta = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 6;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 6;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 7;</code>
+     * @return string
+     */
+    public function getLastUpdate()
+    {
+        return $this->last_update;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 7;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setLastUpdate($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->last_update = $var;
 
         return $this;
     }

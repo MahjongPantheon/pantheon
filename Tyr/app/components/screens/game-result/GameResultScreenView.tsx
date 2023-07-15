@@ -22,42 +22,48 @@ import { i18n } from '../../i18n';
 import { useContext } from 'react';
 import { ReactComponent as RepeatIcon } from '../../../img/icons/repeat.svg';
 import { ReactComponent as SaveIcon } from '../../../img/icons/check.svg';
+import { SessionHistoryResult } from '../../../clients/proto/atoms.pb';
+import { PlayerAvatar } from '../../general/avatar/Avatar';
 
 type IProps = {
   showRepeatButton?: boolean;
-  players: PlayerScore[];
+  results?: SessionHistoryResult[];
   onCheckClick: () => void;
   onRepeatClick: () => void;
 };
 
-export type PlayerScore = {
-  name: string;
-  score: number;
-  delta: number;
-};
-
 export const GameResultScreenView = React.memo(function (props: IProps) {
-  const { players, showRepeatButton, onCheckClick, onRepeatClick } = props;
+  const { results, showRepeatButton, onCheckClick, onRepeatClick } = props;
   const loc = useContext(i18n);
-
   return (
     <div className='page-game-result'>
-      {players.length > 0 && (
+      {results && results.length > 0 && (
         <>
           <div className='page-game-result__players'>
-            {players.map((player, i) => (
+            {results.map((result, i) => (
               <div key={i} className='player-result'>
-                <div className='player-result__name'>{player.name}</div>
+                <div className='player-result__name'>
+                  <PlayerAvatar
+                    size={32}
+                    p={{
+                      id: result.playerId,
+                      title: result.title,
+                      hasAvatar: result.hasAvatar,
+                      lastUpdate: result.lastUpdate,
+                    }}
+                  />
+                  {result.title}
+                </div>
                 <div className='player-result__score-container'>
-                  <div className='player-result__score'>{player.score}</div>
+                  <div className='player-result__score'>{result.score}</div>
                   <div
                     className={classNames(
                       'player-result__delta',
-                      { 'player-result__delta--danger': player.delta < 0 },
-                      { 'player-result__delta--success': player.delta > 0 }
+                      { 'player-result__delta--danger': result.ratingDelta < 0 },
+                      { 'player-result__delta--success': result.ratingDelta > 0 }
                     )}
                   >
-                    {player.delta <= 0 ? player.delta : `+${player.delta}`}
+                    {result.ratingDelta <= 0 ? result.ratingDelta : `+${result.ratingDelta}`}
                   </div>
                 </div>
               </div>
@@ -82,7 +88,7 @@ export const GameResultScreenView = React.memo(function (props: IProps) {
           </div>
         </>
       )}
-      {players.length === 0 && (
+      {results && results.length === 0 && (
         <>
           <div className='page-game-result__no-games'>{loc._t('No games found')}</div>
 

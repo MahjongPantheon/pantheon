@@ -18,7 +18,17 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '../hooks/i18n';
-import { Container, PasswordInput, Space, TextInput, LoadingOverlay, Select } from '@mantine/core';
+import {
+  Container,
+  PasswordInput,
+  Space,
+  TextInput,
+  LoadingOverlay,
+  Select,
+  Checkbox,
+  Group,
+  Avatar,
+} from '@mantine/core';
 import {
   IconCircleCheck,
   IconIdBadge2,
@@ -37,6 +47,7 @@ import { usePageTitle } from '../hooks/pageTitle';
 import { notifications } from '@mantine/notifications';
 import { TopActionButton } from '../helpers/TopActionButton';
 import { useStorage } from '../hooks/storage';
+import { FileUploadButton } from '../helpers/FileUploadButton';
 
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const i18n = useI18n();
@@ -55,6 +66,8 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
   const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const personId = storage.getPersonId();
+  const [avatarData, setAvatarData] = useState<string | null | undefined>();
+  const [playerEditId, setPlayerEditId] = useState(0);
   const form = useForm({
     initialValues: {
       email: '',
@@ -64,6 +77,8 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       country: '',
       phone: '',
       tenhouId: '',
+      hasAvatar: false,
+      avatarData: '',
     },
 
     validate: {
@@ -82,6 +97,8 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       country: string;
       phone: string;
       tenhouId: string;
+      hasAvatar: boolean;
+      avatarData: string;
     }) => {
       if (!id) {
         setIsSaving(true);
@@ -125,7 +142,9 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             values.city.trim(),
             values.email.trim().toLowerCase(),
             values.phone.trim(),
-            values.tenhouId.trim()
+            values.tenhouId.trim(),
+            values.hasAvatar,
+            values.avatarData
           )
           .then((resp) => {
             setIsSaving(false);
@@ -170,6 +189,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       if (id) {
         api.getPersonalInfo(parseInt(id, 10)).then((player) => {
           form.setValues(player);
+          setPlayerEditId(player.id);
           setIsLoading(false);
         });
       }
@@ -178,6 +198,17 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       setCountries(respCountries.countries.map((v) => ({ value: v.code, label: v.name })));
     });
   }, [personId]);
+
+  function updateAvatar(file?: File) {
+    if (file) {
+      const reader = new FileReader();
+      reader.addEventListener('load', (e) => {
+        setAvatarData(e.target?.result as string);
+        form.setFieldValue('avatarData', e.target?.result as string);
+      });
+      reader.readAsDataURL(file);
+    }
+  }
 
   if (!isLoading && !isSuperadmin) {
     return <Redirect to='/' />;
@@ -242,7 +273,42 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             description={i18n._t('Tenhou ID')}
             {...form.getInputProps('tenhouId')}
           />
-
+          <Space h='md' />
+          <Checkbox
+            label={i18n._t('Show user avatar')}
+            description={i18n._t(
+              'If checked, uploaded avatar will be shown instead of default circle with initials. If no avatar is uploaded, the default circle will be shown.'
+            )}
+            {...form.getInputProps('hasAvatar', { type: 'checkbox' })}
+          />
+          <Space h='md' />
+          {form.getTransformedValues().hasAvatar && (
+            <>
+              <Group>
+                <Avatar
+                  radius='xl'
+                  src={
+                    avatarData ??
+                    `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${playerEditId}.jpg`
+                  }
+                ></Avatar>
+                <FileUploadButton i18n={i18n} onChange={updateAvatar} />
+              </Group>
+              <div
+                style={{
+                  color: '#909296',
+                  fontSize: 'calc(0.875rem - 0.125rem)',
+                  lineHeight: 1.2,
+                  display: 'block',
+                  marginTop: 'calc(0.625rem / 2)',
+                }}
+              >
+                {i18n._t(
+                  "Avatar should be an image file. It's recommended to upload a square-sized image, otherwise it will be cropped to center square. File size should not be more than 256 KB."
+                )}
+              </div>
+            </>
+          )}
           <TopActionButton
             title={
               isSaved

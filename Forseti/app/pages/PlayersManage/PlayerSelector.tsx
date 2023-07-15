@@ -27,6 +27,8 @@ type ItemProps = {
   value: string; // playerID
   city: string;
   tenhouId: string;
+  hasAvatar?: boolean;
+  lastUpdate: string;
 };
 
 export const PlayerSelector: React.FC<{
@@ -63,6 +65,8 @@ export const PlayerSelector: React.FC<{
             value: person.id.toString(),
             city: person.city,
             tenhouId: person.tenhouId,
+            hasAvatar: person.hasAvatar,
+            lastUpdate: person.lastUpdate,
           }))
       );
       setUserAddLoading(false);
@@ -98,6 +102,8 @@ export const PlayerSelector: React.FC<{
       onPlayerSelect({
         id: parseInt(item.value, 10),
         title: item.title,
+        hasAvatar: item.hasAvatar ?? false,
+        lastUpdate: item.lastUpdate,
         tenhouId: '', // TODO: not required here, maybe fix type
         ignoreSeating: false,
       });

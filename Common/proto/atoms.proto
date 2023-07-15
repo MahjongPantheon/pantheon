@@ -41,6 +41,8 @@ message EventAdmin {
   int32 rule_id = 1;
   int32 person_id = 2;
   string person_name = 3;
+  bool has_avatar = 4;
+  string last_update = 5;
 }
 
 message RuleListItem {
@@ -74,6 +76,8 @@ message Person {
   string city = 2;
   string tenhou_id = 3;
   string title = 4;
+  bool has_avatar = 5;
+  string last_update = 6;
 }
 
 message PersonEx {
@@ -85,6 +89,8 @@ message PersonEx {
   string email = 6;
   string phone = 7;
   repeated int32 groups = 8;
+  bool has_avatar = 9;
+  string last_update = 10;
 }
 
 message Group {
@@ -195,12 +201,16 @@ message PlayerInRating {
   float avg_score = 8;
   int32 games_played = 9;
   optional string team_name = 10;
+  bool has_avatar = 11;
+  string last_update = 12;
 }
 
 message Player {
   int32 id = 1;
   string title = 2;
   string tenhou_id = 3;
+  bool has_avatar = 4;
+  string last_update = 5;
 }
 
 message FinalResultOfSession {
@@ -340,6 +350,8 @@ message SeriesResult {
 message ReplacementPlayer {
   int32 id = 1;
   string title = 2;
+  bool has_avatar = 3;
+  string last_update = 4;
 }
 
 message PlayerInSession {
@@ -348,6 +360,8 @@ message PlayerInSession {
   int32 score = 3;
   optional ReplacementPlayer replaced_by = 4;
   float rating_delta = 5;
+  bool has_avatar = 6;
+  string last_update = 7;
 }
 
 message CurrentSession {
@@ -365,6 +379,8 @@ message RegisteredPlayer {
   string tenhou_id = 5;
   bool ignore_seating = 6;
   optional ReplacementPlayer replaced_by = 7;
+  bool has_avatar = 8;
+  string last_update = 9;
 }
 
 message SessionHistoryResult {
@@ -375,6 +391,8 @@ message SessionHistoryResult {
   float rating_delta = 5;
   int32 place = 6;
   string title = 7;
+  bool has_avatar = 8;
+  string last_update = 9;
 }
 
 message SessionHistoryResultTable {
@@ -508,6 +526,8 @@ message PlayerSeating {
   int32 table_index = 4;
   float rating = 5;
   string player_title = 6;
+  bool has_avatar = 7;
+  string last_update = 8;
 }
 
 message PlayerSeatingSwiss {

@@ -214,11 +214,13 @@ class AccessManagementModel extends Model
         $admins = array_values(array_filter($personRules, function ($rule) {
             return $rule->getAclName() === AccessRules::ADMIN_EVENT && $rule->getEventId() !== null;
         }));
-        return array_map(function ($rule) {
+        return array_map(function (PersonAccessPrimitive $rule) {
             return [
                 'rule_id' => $rule->getId(),
                 'id' => $rule->getPersonId(),
-                'name' => $rule->getPerson()->getTitle()
+                'name' => $rule->getPerson()->getTitle(),
+                'has_avatar' => $rule->getPerson()->getHasAvatar(),
+                'last_update' => $rule->getPerson()->getLastUpdate(),
             ];
         }, $admins);
     }

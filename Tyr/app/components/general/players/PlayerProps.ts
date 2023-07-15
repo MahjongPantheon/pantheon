@@ -19,7 +19,10 @@ import { PlayerPointsMode } from '../../types/PlayerEnums';
 import { PlayerButtonProps } from '../../types/PlayerButtonProps';
 
 export type PlayerProps = {
+  id?: number;
   name: string;
+  hasAvatar?: boolean;
+  lastUpdate: string;
   rotated?: boolean;
   wind: string;
   inlineWind?: boolean;

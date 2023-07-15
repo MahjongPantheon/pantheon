@@ -96,7 +96,7 @@ check: lint unit
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcbf --config-set show_warnings 0 > /dev/null
-	php vendor/bin/phpcbf src3 www
+	php vendor/bin/phpcbf src www
 
 .PHONY: init_test_db
 init_test_db:

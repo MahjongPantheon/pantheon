@@ -15,6 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+:root {
+  --player-row-height: 32px;
+}
+
 .player__wind {
   font-size: var(--font-size-header);
 }
@@ -31,7 +35,6 @@
 }
 
 .player__inline-wind {
-  margin-right: 8px;
 }
 
 .player__penalty {
@@ -135,23 +138,23 @@
 .player--rotated.player--left .player__name-container,
 .player--rotated.player--right .player__name-container {
   height: 100%;
-  width: 24px;
+  width: var(--player-row-height);
   overflow: hidden;
   position: relative;
 }
 
 .player--rotated.player--left .player__name,
 .player--rotated.player--right .player__name {
-  height: 24px;
+  height: var(--player-row-height);
 }
 
 .player--rotated.player--left .player__name {
-  left: 24px;
+  left: var(--player-row-height);
   transform: rotate(90deg);
 }
 
 .player--rotated.player--right .player__name {
-  bottom: -24px;
+  bottom: calc(-1 * var(--player-row-height));
   left: 0;
   transform: rotate(270deg);
 }
@@ -214,6 +217,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 12px;
 }
 
 .player__score--success {

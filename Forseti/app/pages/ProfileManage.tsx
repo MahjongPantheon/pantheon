@@ -18,7 +18,17 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '../hooks/i18n';
-import { Box, Container, LoadingOverlay, Select, Space, TextInput } from '@mantine/core';
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  Container,
+  Group,
+  LoadingOverlay,
+  Select,
+  Space,
+  TextInput,
+} from '@mantine/core';
 import {
   IconCircleCheck,
   IconDeviceFloppy,
@@ -36,6 +46,7 @@ import { useStorage } from '../hooks/storage';
 import { TopActionButton } from '../helpers/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
+import { FileUploadButton } from '../helpers/FileUploadButton';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -49,7 +60,6 @@ export const ProfileManage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
   const form = useForm({
     initialValues: {
       email: '',
@@ -58,6 +68,8 @@ export const ProfileManage: React.FC = () => {
       city: '',
       phone: '',
       tenhouId: '',
+      hasAvatar: false,
+      avatarData: '',
     },
 
     validate: {
@@ -70,6 +82,7 @@ export const ProfileManage: React.FC = () => {
           : null,
     },
   });
+  const [avatarData, setAvatarData] = useState<string | null | undefined>();
 
   const submitForm = useCallback(
     (values: {
@@ -79,6 +92,8 @@ export const ProfileManage: React.FC = () => {
       city: string;
       phone: string;
       tenhouId: string;
+      hasAvatar: boolean;
+      avatarData: string;
     }) => {
       setIsSaving(true);
       api
@@ -89,7 +104,9 @@ export const ProfileManage: React.FC = () => {
           values.city,
           '', // email can't be changed by yourself, pass just anything.
           values.phone.trim(),
-          values.tenhouId.trim()
+          values.tenhouId.trim(),
+          values.hasAvatar,
+          values.avatarData
         )
         .then((resp) => {
           setIsSaving(false);
@@ -123,11 +140,23 @@ export const ProfileManage: React.FC = () => {
         form.setFieldValue('phone', resp.phone);
         form.setFieldValue('tenhouId', resp.tenhouId);
         form.setFieldValue('country', resp.country || respCountries.preferredByIp);
+        form.setFieldValue('hasAvatar', resp.hasAvatar);
         setIsLoading(false);
         nprogress.complete();
       });
     });
   }, [personId]);
+
+  function updateAvatar(file?: File) {
+    if (file) {
+      const reader = new FileReader();
+      reader.addEventListener('load', (e) => {
+        setAvatarData(e.target?.result as string);
+        form.setFieldValue('avatarData', e.target?.result as string);
+      });
+      reader.readAsDataURL(file);
+    }
+  }
 
   if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
@@ -185,6 +214,42 @@ export const ProfileManage: React.FC = () => {
               label={i18n._t('Tenhou ID')}
               {...form.getInputProps('tenhouId')}
             />
+            <Space h='md' />
+            <Checkbox
+              label={i18n._t('Show user avatar')}
+              description={i18n._t(
+                'If checked, uploaded avatar will be shown instead of default circle with initials. If no avatar is uploaded, the default circle will be shown.'
+              )}
+              {...form.getInputProps('hasAvatar', { type: 'checkbox' })}
+            />
+            <Space h='md' />
+            {form.getTransformedValues().hasAvatar && (
+              <>
+                <Group>
+                  <Avatar
+                    radius='xl'
+                    src={
+                      avatarData ??
+                      `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${personId}.jpg`
+                    }
+                  ></Avatar>
+                  <FileUploadButton i18n={i18n} onChange={updateAvatar} />
+                </Group>
+                <div
+                  style={{
+                    color: '#909296',
+                    fontSize: 'calc(0.875rem - 0.125rem)',
+                    lineHeight: 1.2,
+                    display: 'block',
+                    marginTop: 'calc(0.625rem / 2)',
+                  }}
+                >
+                  {i18n._t(
+                    "Avatar should be an image file. It's recommended to upload a square-sized image, otherwise it will be cropped to center square. File size should not be more than 256 KB."
+                  )}
+                </div>
+              </>
+            )}
             <TopActionButton
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
               loading={isSaving || isLoading || isSaved}

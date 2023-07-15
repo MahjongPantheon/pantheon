@@ -19,7 +19,7 @@ import { GameResult, Player } from '../clients/proto/atoms.pb';
 import { CSSProperties } from 'react';
 import { Anchor, Badge, Button, Group, List, rem, Stack, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { PlayerIcon } from './PlayerIcon';
+import { PlayerAvatar } from './PlayerAvatar';
 import * as React from 'react';
 import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
@@ -98,9 +98,14 @@ export const GameListing: React.FC<GameListingProps> = ({
               style={{ fontSize: '16px' }}
               rightSection={
                 players[result.playerId]?.title && (
-                  <PlayerIcon
+                  <PlayerAvatar
                     size='sm'
-                    p={{ title: players[result.playerId]?.title, id: result.playerId }}
+                    p={{
+                      title: players[result.playerId]?.title,
+                      id: result.playerId,
+                      hasAvatar: players[result.playerId]?.hasAvatar,
+                      lastUpdate: players[result.playerId]?.lastUpdate,
+                    }}
                   />
                 )
               }

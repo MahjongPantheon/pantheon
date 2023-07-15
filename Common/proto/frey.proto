@@ -164,6 +164,8 @@ message AuthMeResponse {
   string tenhou_id = 6;
   string title = 7;
   repeated int32 groups = 8;
+  bool has_avatar = 9;
+  string last_update = 10;
 }
 
 message AuthChangePasswordPayload {
@@ -427,6 +429,8 @@ message PersonsUpdatePersonalInfoPayload {
   string email = 5;
   string phone = 6;
   string tenhou_id = 7;
+  bool has_avatar = 8;
+  string avatar_data = 9;
 }
 
 message PersonsGetPersonalInfoPayload {

@@ -21,6 +21,7 @@ import { TopPanel } from '../../general/top-panel/TopPanel';
 import { useContext } from 'react';
 import { i18n } from '../../i18n';
 import { TableState } from '../../../clients/proto/atoms.pb';
+import { PlayerAvatar } from '../../general/avatar/Avatar';
 
 type IProps = {
   tables: TableState[];
@@ -60,9 +61,10 @@ export const OtherTablesListView: React.FC<IProps> = ({ onTableClick, onBackClic
             className='page-other-tables-list__table'
             onClick={() => onTableClick(table.sessionHash)}
           >
-            {roundsMap[table.currentRoundIndex]}
+            <div className='page-other-tables-list__wind'>{roundsMap[table.currentRoundIndex]}</div>
             {table.players.map((player, idx) => (
-              <div key={player.id}>
+              <div key={player.id} className='page-other-tables-list__item'>
+                <PlayerAvatar p={player} size={32} />
                 {player.title}: {table.scores[idx].score}
               </div>
             ))}

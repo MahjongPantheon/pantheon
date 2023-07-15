@@ -18,6 +18,7 @@
     "typescript": "5.0.3"
   },
   "dependencies": {
+    "@foxglove/crc": "^0.0.3",
     "@types/lodash.debounce": "^4.0.7",
     "@types/react-helmet": "^6.1.6",
     "@types/uuid": "^9.0.2",

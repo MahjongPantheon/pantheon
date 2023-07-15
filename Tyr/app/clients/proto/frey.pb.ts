@@ -68,6 +68,8 @@ export interface AuthMeResponse {
   tenhouId: string;
   title: string;
   groups: number[];
+  hasAvatar: boolean;
+  lastUpdate: string;
 }
 
 export interface AuthChangePasswordPayload {
@@ -350,6 +352,8 @@ export interface PersonsUpdatePersonalInfoPayload {
   email: string;
   phone: string;
   tenhouId: string;
+  hasAvatar: boolean;
+  avatarData: string;
 }
 
 export interface PersonsGetPersonalInfoPayload {
@@ -2819,6 +2823,8 @@ export const AuthMeResponse = {
       tenhouId: "",
       title: "",
       groups: [],
+      hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -2852,6 +2858,12 @@ export const AuthMeResponse = {
     }
     if (msg.groups?.length) {
       writer.writePackedInt32(8, msg.groups);
+    }
+    if (msg.hasAvatar) {
+      writer.writeBool(9, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(10, msg.lastUpdate);
     }
     return writer;
   },
@@ -2900,6 +2912,14 @@ export const AuthMeResponse = {
           } else {
             msg.groups.push(reader.readInt32());
           }
+          break;
+        }
+        case 9: {
+          msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 10: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -7010,6 +7030,8 @@ export const PersonsUpdatePersonalInfoPayload = {
       email: "",
       phone: "",
       tenhouId: "",
+      hasAvatar: false,
+      avatarData: "",
     };
   },
 
@@ -7040,6 +7062,12 @@ export const PersonsUpdatePersonalInfoPayload = {
     }
     if (msg.tenhouId) {
       writer.writeString(7, msg.tenhouId);
+    }
+    if (msg.hasAvatar) {
+      writer.writeBool(8, msg.hasAvatar);
+    }
+    if (msg.avatarData) {
+      writer.writeString(9, msg.avatarData);
     }
     return writer;
   },
@@ -7080,6 +7108,14 @@ export const PersonsUpdatePersonalInfoPayload = {
         }
         case 7: {
           msg.tenhouId = reader.readString();
+          break;
+        }
+        case 8: {
+          msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 9: {
+          msg.avatarData = reader.readString();
           break;
         }
         default: {
@@ -8251,6 +8287,8 @@ export const AuthMeResponseJSON = {
       tenhouId: "",
       title: "",
       groups: [],
+      hasAvatar: false,
+      lastUpdate: "",
     };
   },
 
@@ -8284,6 +8322,12 @@ export const AuthMeResponseJSON = {
     }
     if (msg.groups?.length) {
       json["groups"] = msg.groups;
+    }
+    if (msg.hasAvatar) {
+      json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -8323,6 +8367,14 @@ export const AuthMeResponseJSON = {
     const _groups_ = json["groups"];
     if (_groups_) {
       msg.groups = _groups_;
+    }
+    const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
+    if (_hasAvatar_) {
+      msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },
@@ -11850,6 +11902,8 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
       email: "",
       phone: "",
       tenhouId: "",
+      hasAvatar: false,
+      avatarData: "",
     };
   },
 
@@ -11880,6 +11934,12 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     }
     if (msg.tenhouId) {
       json["tenhouId"] = msg.tenhouId;
+    }
+    if (msg.hasAvatar) {
+      json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.avatarData) {
+      json["avatarData"] = msg.avatarData;
     }
     return json;
   },
@@ -11918,6 +11978,14 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
+    }
+    const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
+    if (_hasAvatar_) {
+      msg.hasAvatar = _hasAvatar_;
+    }
+    const _avatarData_ = json["avatarData"] ?? json["avatar_data"];
+    if (_avatarData_) {
+      msg.avatarData = _avatarData_;
     }
     return msg;
   },

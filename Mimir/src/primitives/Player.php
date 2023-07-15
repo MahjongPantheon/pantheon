@@ -43,6 +43,32 @@ class PlayerPrimitive extends Primitive
      * @var string
      */
     protected $_tenhouId;
+    /**
+     * @var bool
+     */
+    protected $_hasAvatar = false;
+    /**
+     * @var string
+     */
+    protected $_lastUpdate = '';
+
+    /**
+     * @return string
+     */
+    public function getLastUpdate(): string
+    {
+        return $this->_lastUpdate ?: '';
+    }
+
+    /**
+     * @param string $lastUpdate
+     * @return PlayerPrimitive
+     */
+    public function setLastUpdate(string $lastUpdate): PlayerPrimitive
+    {
+        $this->_lastUpdate = $lastUpdate;
+        return $this;
+    }
 
     /**
      * PlayerPrimitive constructor.
@@ -59,22 +85,29 @@ class PlayerPrimitive extends Primitive
      *
      * @param DataSource $ds
      * @param int[] $ids
+     * @param bool $skipCache
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findById(DataSource $ds, array $ids)
+    public static function findById(DataSource $ds, array $ids, $skipCache = false)
     {
         $missingIds = [];
         $fetchedData = [];
         $fetchedRemote = [];
-        foreach ($ids as $id) {
-            $info = $ds->memcache()->get('player_info_' . $id);
-            if (!$info) {
-                $missingIds []= $id;
-            } else {
-                $fetchedData[$id] = $info;
+
+        if (!$skipCache) {
+            foreach ($ids as $id) {
+                $info = $ds->memcache()->get('player_info_' . $id);
+                if (!$info) {
+                    $missingIds [] = $id;
+                } else {
+                    $fetchedData[$id] = $info;
+                }
             }
+        } else {
+            $missingIds = $ids;
         }
+
         if (count($missingIds) > 0) {
             $data = $ds->remote()->getPersonalInfo($missingIds);
             $fetchedRemote = array_reduce($data, function ($acc, $item) use ($ds) {
@@ -98,6 +131,8 @@ class PlayerPrimitive extends Primitive
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
+                ->setHasAvatar($item['has_avatar'])
+                ->setLastUpdate($item['last_update'])
                 ->_setId($item['id']);
         }, $allData);
     }
@@ -119,6 +154,7 @@ class PlayerPrimitive extends Primitive
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
+                ->setHasAvatar($item['has_avatar'])
                 ->_setId($item['id']);
         }, $playersData);
 
@@ -253,6 +289,24 @@ class PlayerPrimitive extends Primitive
     public function getDisplayName()
     {
         return $this->_displayName;
+    }
+
+    /**
+     * @param bool $hasAvatar
+     * @return $this
+     */
+    public function setHasAvatar($hasAvatar)
+    {
+        $this->_hasAvatar = $hasAvatar;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->_hasAvatar;
     }
 
     /**

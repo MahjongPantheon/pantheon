@@ -19,6 +19,7 @@ import * as React from 'react';
 import './page-search-player.css';
 import { TopPanel } from '../../general/top-panel/TopPanel';
 import { RegisteredPlayer } from '../../../clients/proto/atoms.pb';
+import { PlayerAvatar } from '../../general/avatar/Avatar';
 
 type IProps = {
   users: RegisteredPlayer[];
@@ -55,15 +56,18 @@ export class SearchPlayerView extends React.PureComponent<IProps, IState> {
           onSearchChange={this.onSearchChange.bind(this)}
         />
         <div className='page-search-player__content'>
-          {foundUsers.map((user) => (
-            <div
-              key={user.id}
-              className='page-search-player__name'
-              onClick={() => onUserClick(user)}
-            >
-              {user.title}
-            </div>
-          ))}
+          {foundUsers
+            .filter((u) => u.title !== '')
+            .map((user) => (
+              <div
+                key={user.id}
+                className='page-search-player__name'
+                onClick={() => onUserClick(user)}
+              >
+                <PlayerAvatar size={32} p={user} />
+                {user.title}
+              </div>
+            ))}
         </div>
       </div>
     );

@@ -17,18 +17,31 @@
 
 import { Avatar, MantineColor, MantineSize } from '@mantine/core';
 import { crc32 } from '@foxglove/crc';
+import * as React from 'react';
 
-export const PlayerIcon = ({
+export const PlayerAvatar = ({
   p,
   size,
   radius,
 }: {
   size?: MantineSize;
   radius?: MantineSize;
-  p: { title: string; id: number };
+  p: { title: string; id: number; hasAvatar?: boolean; lastUpdate: string };
 }) => {
   size = size ?? 'md';
   radius = radius ?? 'xl';
+
+  if (p.hasAvatar) {
+    return (
+      <Avatar
+        radius={radius}
+        size={size}
+        title={`#${p.id}`}
+        src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg?${p.lastUpdate}`}
+      />
+    );
+  }
+
   return (
     <Avatar color={makeColor(p.title)} radius={radius} size={size} title={`#${p.id}`}>
       {makeInitials(p.title)}
@@ -38,19 +51,17 @@ export const PlayerIcon = ({
 
 export function makeColor(input: string): MantineColor {
   const colors: MantineColor[] = [
-    'gray',
     'red',
-    'pink',
-    'grape',
-    'violet',
-    'indigo',
-    'blue',
-    'cyan',
+    'orange',
+    'yellow',
     'green',
     'lime',
-    'yellow',
-    'orange',
     'teal',
+    'cyan',
+    'blue',
+    'purple',
+    'grape',
+    'pink',
   ];
   return colors[crc32(Uint8Array.from(input, (x) => x.charCodeAt(0))) % colors.length];
 }

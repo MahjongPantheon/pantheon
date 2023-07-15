@@ -39,6 +39,10 @@
 
 .player-result__name {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 12px;
 }
 
 .player-result__score-container {

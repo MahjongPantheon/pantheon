@@ -45,6 +45,14 @@ class AuthMeResponse extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated int32 groups = 8;</code>
      */
     private $groups;
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 9;</code>
+     */
+    protected $has_avatar = false;
+    /**
+     * Generated from protobuf field <code>string last_update = 10;</code>
+     */
+    protected $last_update = '';
 
     /**
      * Constructor.
@@ -60,6 +68,8 @@ class AuthMeResponse extends \Google\Protobuf\Internal\Message
      *     @type string $tenhou_id
      *     @type string $title
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $groups
+     *     @type bool $has_avatar
+     *     @type string $last_update
      * }
      */
     public function __construct($data = NULL) {
@@ -239,6 +249,50 @@ class AuthMeResponse extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
         $this->groups = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 9;</code>
+     * @return bool
+     */
+    public function getHasAvatar()
+    {
+        return $this->has_avatar;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool has_avatar = 9;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHasAvatar($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->has_avatar = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 10;</code>
+     * @return string
+     */
+    public function getLastUpdate()
+    {
+        return $this->last_update;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 10;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setLastUpdate($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->last_update = $var;
 
         return $this;
     }

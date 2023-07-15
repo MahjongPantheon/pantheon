@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import { ReactComponent as RiichiBigIcon } from '../../../img/icons/riichi-big.svg';
 import { ReactComponent as WinIcon } from '../../../img/icons/thumbs-up.svg';
 import { ReactComponent as LooseIcon } from '../../../img/icons/thumbs-down.svg';
+import { PlayerAvatar } from '../avatar/Avatar';
 
 type IProps = PlayerProps & {
   mode: PlayerMode;
@@ -33,12 +34,13 @@ type IProps = PlayerProps & {
 
 export class PlayerBase extends React.Component<IProps> {
   renderName() {
-    const { name, wind, nameWidth, inlineWind } = this.props;
+    const { id, name, hasAvatar, lastUpdate, wind, nameWidth, inlineWind } = this.props;
 
     return (
       <div className='player__name-container'>
         <div className='player__name' style={{ width: nameWidth }}>
           {inlineWind && <span className='player__inline-wind'>{wind}</span>}
+          <PlayerAvatar p={{ id: id ?? 0, title: name, hasAvatar, lastUpdate }} size={32} />
           {name}
         </div>
       </div>

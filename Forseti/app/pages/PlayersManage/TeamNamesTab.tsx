@@ -20,7 +20,6 @@ import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
 import { RegisteredPlayer } from '../../clients/proto/atoms.pb';
 import {
-  Avatar,
   Text,
   Container,
   Group,
@@ -31,11 +30,11 @@ import {
   TextInput,
 } from '@mantine/core';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
-import { makeColor, makeInitials } from '../../helpers/playersList';
 import { useCallback, useState } from 'react';
 import { TopActionButton } from '../../helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { Filler } from '../../helpers/filler';
+import { PlayerAvatar } from '../../helpers/PlayerAvatar';
 
 export const TeamNamesTab: React.FC<{
   eventId: number;
@@ -90,9 +89,7 @@ export const TeamNamesTab: React.FC<{
               }}
             >
               <Group sx={{ minWidth: '300px' }}>
-                <Avatar color={makeColor(p.title)} radius='xl'>
-                  {makeInitials(p.title)}
-                </Avatar>
+                <PlayerAvatar p={p} />
                 {p.title}
               </Group>
               <Group sx={{ flex: 1 }}>
