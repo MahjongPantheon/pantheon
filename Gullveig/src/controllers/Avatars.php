@@ -21,6 +21,10 @@ require_once __DIR__ . '/../Controller.php';
 
 class AvatarsController extends Controller
 {
+    /**
+     * @param string $avatarData
+     * @return array
+     */
     public function upload($avatarData)
     {
         $data = json_decode($avatarData, true);
@@ -47,7 +51,7 @@ class AvatarsController extends Controller
                 throw new \Exception('Max file size is 512KB');
             }
 
-            list ($width, $height) = getimagesizefromstring($fileContents);
+            list ($width, $height) = (getimagesizefromstring($fileContents) ?: [0, 0]);
             $srcX = 0;
             $srcY = 0;
             if ($width > $height) {
@@ -57,8 +61,10 @@ class AvatarsController extends Controller
                 $srcY = ($height - $width) / 2;
             }
             $image = imagecreatetruecolor(128, 128);
-            imagecopyresampled($image, $imageOrig, 0, 0, $srcX, $srcY, 128, 128, min($width, $height), min($width, $height));
-            imagejpeg($image, "/var/storage/files/avatars/user_{$userId}.jpg", 85);
+            if ($image) {
+                imagecopyresampled($image, $imageOrig, 0, 0, $srcX, $srcY, 128, 128, min($width, $height), min($width, $height));
+                imagejpeg($image, "/var/storage/files/avatars/user_{$userId}.jpg", 85);
+            }
 
             return ['ok' => true];
         } catch (\Exception $e) {

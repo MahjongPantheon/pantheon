@@ -20,6 +20,7 @@ deps:
 	cd Forseti && ${MAKE} docker_deps
 	cd Sigrun && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
+	cd Gullveig && ${MAKE} docker_deps
 
 .PHONY: kill_dev
 kill_dev: export ENV_FILENAME=.env.development
@@ -171,6 +172,10 @@ shell_sigrun:
 .PHONY: shell_db
 shell_db:
 	cd Database && ${MAKE} shell
+
+.PHONY: shell_gullveig
+shell_gullveig:
+	cd Gullveig && ${MAKE} shell
 
 # Some shortcuts for common tasks
 
