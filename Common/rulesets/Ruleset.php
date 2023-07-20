@@ -33,6 +33,9 @@ class Ruleset
             $this->_rulesetCurrent = new RulesetConfig();
             $this->_rulesetCurrent->mergeFromJsonString($customizedSettings, true);
         }
+        if ($this->_rulesetCurrent->getUmaType() === UmaType::UMA_TYPE_UNSPECIFIED) {
+            $this->_rulesetCurrent->setUmaType(UmaType::UMA_TYPE_UMA_SIMPLE);
+        }
     }
 
     public function rules(): RulesetConfig
