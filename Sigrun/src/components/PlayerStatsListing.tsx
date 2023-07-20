@@ -193,7 +193,9 @@ export const PlayerStatsListing = ({
             </List.Item>
             <List.Item>
               {i18n._t('Average win score: ')}
-              <b>{((playerStats?.winSummary?.pointsWon ?? 0) / totalWon).toFixed(0)}</b>
+              <b>
+                {totalWon ? ((playerStats?.winSummary?.pointsWon ?? 0) / totalWon).toFixed(0) : '0'}
+              </b>
             </List.Item>
           </List>
         </List.Item>
@@ -256,10 +258,12 @@ export const PlayerStatsListing = ({
                 <List.Item>
                   {i18n._t('Average deal-in: ')}
                   <b>
-                    {(
-                      (playerStats?.winSummary?.pointsLostRon ?? 0) /
-                      (playerStats?.winSummary?.feed ?? 1)
-                    ).toFixed(0)}
+                    {playerStats?.winSummary?.feed
+                      ? (
+                          (playerStats?.winSummary?.pointsLostRon ?? 0) /
+                          playerStats?.winSummary?.feed
+                        ).toFixed(0)
+                      : '0'}
                   </b>
                 </List.Item>
               </List>
@@ -280,10 +284,12 @@ export const PlayerStatsListing = ({
                 <List.Item>
                   {i18n._t('Average points lost: ')}
                   <b>
-                    {(
-                      (playerStats?.winSummary?.pointsLostTsumo ?? 0) /
-                      (playerStats?.winSummary?.tsumofeed ?? 1)
-                    ).toFixed(0)}
+                    {playerStats?.winSummary?.tsumofeed
+                      ? (
+                          (playerStats?.winSummary?.pointsLostTsumo ?? 0) /
+                          playerStats?.winSummary?.tsumofeed
+                        ).toFixed(0)
+                      : '0'}
                   </b>
                 </List.Item>
               </List>
