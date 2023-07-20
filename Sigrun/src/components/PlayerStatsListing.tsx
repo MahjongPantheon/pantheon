@@ -52,11 +52,11 @@ export const PlayerStatsListing = ({
           <List>
             <List.Item>
               {i18n._t('Games played: ')}
-              <b>{playerStats?.totalPlayedGames}</b>
+              <b>{playerStats?.totalPlayedGames ?? 0}</b>
             </List.Item>
             <List.Item>
               {i18n._t('Rounds played: ')}
-              <b>{playerStats?.totalPlayedRounds}</b>
+              <b>{playerStats?.totalPlayedRounds ?? 0}</b>
             </List.Item>
           </List>
         </List.Item>
@@ -69,7 +69,10 @@ export const PlayerStatsListing = ({
                 <List.Item key={`place_${idxp}`}>
                   {placeLabels[item.place]}
                   <b>{item.count}</b> (
-                  {((100 * item.count) / playerStats?.totalPlayedGames).toFixed(2)}%)
+                  {(playerStats?.totalPlayedGames ?? 0) > 0
+                    ? ((100 * item.count) / playerStats?.totalPlayedGames).toFixed(2)
+                    : '0'}
+                  %)
                 </List.Item>
               ))}
           </List>
@@ -96,14 +99,15 @@ export const PlayerStatsListing = ({
           <List>
             <List.Item>
               {i18n._t('Draws: ')}
-              <b>{playerStats?.winSummary?.draw}</b> (
-              {makePercent(playerStats?.winSummary?.draw, playerStats?.totalPlayedRounds ?? 0)})
+              <b>{playerStats?.winSummary?.draw ?? 0}</b> (
+              {makePercent(playerStats?.winSummary?.draw ?? 0, playerStats?.totalPlayedRounds ?? 0)}
+              )
               <List>
                 <List.Item>
                   {i18n._t('With tempai: ')}
-                  <b>{playerStats?.winSummary?.drawTempai}</b> (
+                  <b>{playerStats?.winSummary?.drawTempai ?? 0}</b> (
                   {makePercent(
-                    playerStats?.winSummary?.drawTempai,
+                    playerStats?.winSummary?.drawTempai ?? 0,
                     playerStats?.winSummary?.draw ?? 0
                   )}
                   )
@@ -112,16 +116,20 @@ export const PlayerStatsListing = ({
             </List.Item>
             <List.Item>
               {i18n._t('Chombo penalties: ')}
-              <b>{playerStats?.winSummary?.chombo}</b> (
-              {makePercent(playerStats?.winSummary?.chombo, playerStats?.totalPlayedRounds ?? 0)})
+              <b>{playerStats?.winSummary?.chombo ?? 0}</b> (
+              {makePercent(
+                playerStats?.winSummary?.chombo ?? 0,
+                playerStats?.totalPlayedRounds ?? 0
+              )}
+              )
             </List.Item>
             <List.Item>
               {i18n._t('Dora collected: ')}
-              <b>{playerStats?.doraStat?.count}</b>
+              <b>{playerStats?.doraStat?.count ?? 0}</b>
               <List>
                 <List.Item>
                   {i18n._t('Average dora per hand: ')}
-                  <b>{playerStats?.doraStat?.average.toFixed(2)}</b>
+                  <b>{playerStats?.doraStat?.average?.toFixed(2) ?? 0}</b>
                 </List.Item>
               </List>
             </List.Item>
@@ -131,13 +139,13 @@ export const PlayerStatsListing = ({
               <List>
                 <List.Item>
                   {i18n._t('Bets won: ')}
-                  <b>{playerStats?.riichiSummary?.riichiWon}</b> (
-                  {makePercent(playerStats?.riichiSummary?.riichiWon, totalRiichi)})
+                  <b>{playerStats?.riichiSummary?.riichiWon ?? 0}</b> (
+                  {makePercent(playerStats?.riichiSummary?.riichiWon ?? 0, totalRiichi)})
                 </List.Item>
                 <List.Item>
                   {i18n._t('Bets lost: ')}
-                  <b>{playerStats?.riichiSummary?.riichiLost}</b> (
-                  {makePercent(playerStats?.riichiSummary?.riichiLost, totalRiichi)})
+                  <b>{playerStats?.riichiSummary?.riichiLost ?? 0}</b> (
+                  {makePercent(playerStats?.riichiSummary?.riichiLost ?? 0, totalRiichi)})
                 </List.Item>
               </List>
             </List.Item>
@@ -154,28 +162,28 @@ export const PlayerStatsListing = ({
               <List>
                 <List.Item>
                   {i18n._t('By ron: ')}
-                  <b>{playerStats?.winSummary?.ron}</b> (
-                  {makePercent(playerStats?.winSummary?.ron, totalWon)})
+                  <b>{playerStats?.winSummary?.ron ?? 0}</b> (
+                  {makePercent(playerStats?.winSummary?.ron ?? 0, totalWon)})
                 </List.Item>
                 <List.Item>
                   {i18n._t('By tsumo: ')}
-                  <b>{playerStats?.winSummary?.tsumo}</b> (
-                  {makePercent(playerStats?.winSummary?.tsumo, totalWon)})
+                  <b>{playerStats?.winSummary?.tsumo ?? 0}</b> (
+                  {makePercent(playerStats?.winSummary?.tsumo ?? 0, totalWon)})
                 </List.Item>
                 <List.Item>
                   {i18n._t('With open hand: ')}
-                  <b>{playerStats?.winSummary?.winsWithOpen}</b> (
-                  {makePercent(playerStats?.winSummary?.winsWithOpen, totalWon)})
+                  <b>{playerStats?.winSummary?.winsWithOpen ?? 0}</b> (
+                  {makePercent(playerStats?.winSummary?.winsWithOpen ?? 0, totalWon)})
                 </List.Item>
                 <List.Item>
                   {i18n._t('With riichi: ')}
-                  <b>{playerStats?.winSummary?.winsWithRiichi}</b> (
-                  {makePercent(playerStats?.winSummary?.winsWithRiichi, totalWon)})
+                  <b>{playerStats?.winSummary?.winsWithRiichi ?? 0}</b> (
+                  {makePercent(playerStats?.winSummary?.winsWithRiichi ?? 0, totalWon)})
                 </List.Item>
                 <List.Item>
                   {i18n._t('With damaten: ')}
-                  <b>{playerStats?.winSummary?.winsWithDama}</b> (
-                  {makePercent(playerStats?.winSummary?.winsWithDama, totalWon)})
+                  <b>{playerStats?.winSummary?.winsWithDama ?? 0}</b> (
+                  {makePercent(playerStats?.winSummary?.winsWithDama ?? 0, totalWon)})
                 </List.Item>
               </List>
             </List.Item>
@@ -194,14 +202,15 @@ export const PlayerStatsListing = ({
           <List>
             <List.Item>
               {i18n._t('Deal-ins to ron: ')}
-              <b>{playerStats?.winSummary?.feed}</b> (
-              {makePercent(playerStats?.winSummary?.feed, playerStats?.totalPlayedRounds ?? 0)})
+              <b>{playerStats?.winSummary?.feed ?? 0}</b> (
+              {makePercent(playerStats?.winSummary?.feed ?? 0, playerStats?.totalPlayedRounds ?? 0)}
+              )
               <List>
                 <List.Item>
                   {i18n._t('Because of riichi: ')}
-                  <b>{playerStats?.riichiSummary?.feedUnderRiichi}</b> (
+                  <b>{playerStats?.riichiSummary?.feedUnderRiichi ?? 0}</b> (
                   {makePercent(
-                    playerStats?.riichiSummary?.feedUnderRiichi,
+                    playerStats?.riichiSummary?.feedUnderRiichi ?? 0,
                     playerStats?.winSummary?.feed ?? 0
                   )}
                   ) )
@@ -213,27 +222,27 @@ export const PlayerStatsListing = ({
                   <List>
                     <List.Item>
                       {i18n._t('To open hands: ')}
-                      <b>{playerStats?.winSummary?.unforcedFeedToOpen}</b> (
+                      <b>{playerStats?.winSummary?.unforcedFeedToOpen ?? 0}</b> (
                       {makePercent(
-                        playerStats?.winSummary?.unforcedFeedToOpen,
+                        playerStats?.winSummary?.unforcedFeedToOpen ?? 0,
                         playerStats?.winSummary?.feed ?? 0
                       )}
                       )
                     </List.Item>
                     <List.Item>
                       {i18n._t('To hands with riichi: ')}
-                      <b>{playerStats?.winSummary?.unforcedFeedToRiichi}</b> (
+                      <b>{playerStats?.winSummary?.unforcedFeedToRiichi ?? 0}</b> (
                       {makePercent(
-                        playerStats?.winSummary?.unforcedFeedToRiichi,
+                        playerStats?.winSummary?.unforcedFeedToRiichi ?? 0,
                         playerStats?.winSummary?.feed ?? 0
                       )}
                       )
                     </List.Item>
                     <List.Item>
                       {i18n._t('To damaten hands: ')}
-                      <b>{playerStats?.winSummary?.unforcedFeedToDama}</b> (
+                      <b>{playerStats?.winSummary?.unforcedFeedToDama ?? 0}</b> (
                       {makePercent(
-                        playerStats?.winSummary?.unforcedFeedToDama,
+                        playerStats?.winSummary?.unforcedFeedToDama ?? 0,
                         playerStats?.winSummary?.feed ?? 0
                       )}
                       )
@@ -257,8 +266,11 @@ export const PlayerStatsListing = ({
             </List.Item>
             <List.Item>
               {i18n._t('Tsumo payments: ')}
-              <b>{playerStats?.winSummary?.tsumofeed}</b> (
-              {makePercent(playerStats?.winSummary?.tsumofeed, playerStats?.totalPlayedRounds ?? 0)}
+              <b>{playerStats?.winSummary?.tsumofeed ?? 0}</b> (
+              {makePercent(
+                playerStats?.winSummary?.tsumofeed ?? 0,
+                playerStats?.totalPlayedRounds ?? 0
+              )}
               )
               <List>
                 <List.Item>
