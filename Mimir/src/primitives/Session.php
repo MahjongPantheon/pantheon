@@ -883,6 +883,7 @@ class SessionPrimitive extends Primitive
         $success = $this
             ->setStatus(SessionPrimitive::STATUS_FINISHED)
             ->save();
+        $this->scheduleRecalcStats();
 
         return $success && $this->_finalizeGame();
     }

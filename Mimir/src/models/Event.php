@@ -80,11 +80,15 @@ class EventModel extends Model
         return array_map(function ($seat) use (&$ratings, &$players) {
             if (!empty($ratings[$seat['player_id']])) {
                 $seat['rating'] = $ratings[$seat['player_id']];
+            } else {
+                $seat['rating'] = 0;
             }
             if (!empty($players[$seat['player_id']])) {
                 $seat['title'] = $players[$seat['player_id']]['title'];
                 $seat['has_avatar'] = $players[$seat['player_id']]['has_avatar'];
                 $seat['last_update'] = $players[$seat['player_id']]['last_update'];
+            } else {
+                $seat['has_avatar'] = false;
             }
             return $seat;
         }, $seatings);
