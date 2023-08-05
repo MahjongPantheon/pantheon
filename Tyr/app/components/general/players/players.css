@@ -301,3 +301,20 @@
   color: var(--primary-text-color);
   --riichi-circle-color: var(--color-danger);
 }
+
+.player__inline-riichi-with-label {
+  height: 8.5px;
+  margin-left: 8px;
+  margin-top: 7px;
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+}
+
+.player__inline-riichi-with-label svg {
+  width: 53px;
+  height: 8.5px;
+  color: var(--primary-text-color);
+  --riichi-circle-color: var(--color-danger);
+  margin-left: 8px;
+}

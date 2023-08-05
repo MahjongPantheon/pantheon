@@ -253,6 +253,7 @@ function getPlayer(
   let riichiButton: PlayerButtonProps | undefined = undefined;
   let showDeadButton = false;
   let showInlineRiichi = false;
+  let gotRiichiFromTable = 0;
   const currentOutcome: AppOutcome | undefined = state.currentOutcome;
 
   switch (state.currentScreen) {
@@ -300,6 +301,12 @@ function getPlayer(
       const currentPlayerId = player.id;
       if (riichiPayments?.some((v) => v.from === currentPlayerId && v.to === undefined)) {
         showInlineRiichi = true;
+      }
+      const riichiFromTable = riichiPayments?.find(
+        (v) => v.from === undefined && v.to === currentPlayerId
+      );
+      if (riichiFromTable) {
+        gotRiichiFromTable = riichiFromTable.amount / 1000;
       }
       break;
     case 'playersSelect':
@@ -455,17 +462,18 @@ function getPlayer(
     name: player.title,
     hasAvatar: player.hasAvatar,
     lastUpdate: player.lastUpdate,
-    wind: wind,
-    points: points,
-    penaltyPoints: penaltyPoints,
-    pointsMode: pointsMode,
-    inlineWind: inlineWind,
-    winButton: winButton,
-    loseButton: loseButton,
-    riichiButton: riichiButton,
-    showDeadButton: showDeadButton,
+    wind,
+    points,
+    penaltyPoints,
+    pointsMode,
+    inlineWind,
+    winButton,
+    loseButton,
+    riichiButton,
+    showDeadButton,
     onDeadButtonClick: onDeadButtonClick(dispatch, player.id),
-    showInlineRiichi: showInlineRiichi,
+    showInlineRiichi,
+    gotRiichiFromTable,
     onPlayerClick: onPlayerClick(state, dispatch, player.id),
   };
 }

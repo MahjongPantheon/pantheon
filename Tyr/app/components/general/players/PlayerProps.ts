@@ -25,6 +25,7 @@ export type PlayerProps = {
   lastUpdate: string;
   rotated?: boolean;
   wind: string;
+  gotRiichiFromTable: number;
   inlineWind?: boolean;
   points?: number | string;
   pointsMode?: PlayerPointsMode;
