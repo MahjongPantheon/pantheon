@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/PlayerHistory.php';
+require_once __DIR__ . '/../../src/primitives/PlayerStats.php';
 require_once __DIR__ . '/../textlogImport/Model.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';

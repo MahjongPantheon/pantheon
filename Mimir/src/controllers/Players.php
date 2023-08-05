@@ -159,6 +159,8 @@ class PlayersController extends Controller
                 'player_id'     => $p->getId(),
                 'session_hash'  => $session->getRepresentationalHash(),
                 'title'         => $p->getDisplayName(),
+                'has_avatar'    => $p->getHasAvatar(),
+                'last_update'   => $p->getLastUpdate(),
                 'place'         => $sessionResults[$p->getId()]->getPlace(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
