@@ -54,6 +54,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useApi } from '../hooks/api';
 import { MenuItemLink } from './MenuItemLink';
+import { env } from '../env';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -180,7 +181,7 @@ export function AppHeader() {
                 </ActionIcon>
               )}
             </Anchor>
-            <Anchor href={import.meta.env.VITE_FORSETI_URL} target='_blank'>
+            <Anchor href={env.urls.forseti} target='_blank'>
               {largeScreen ? (
                 <Button
                   className={classes.link}
@@ -201,7 +202,7 @@ export function AppHeader() {
               )}
             </Anchor>
             {globals.data.eventId?.length === 1 && (
-              <Anchor href={import.meta.env.VITE_TYR_URL} target='_blank'>
+              <Anchor href={env.urls.tyr} target='_blank'>
                 {largeScreen ? (
                   <Button
                     className={classes.link}

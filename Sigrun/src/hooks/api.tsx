@@ -20,10 +20,11 @@ import { createContext, useContext } from 'react';
 import { ApiService } from '../services/api';
 import { storage } from './storage';
 import { analytics } from './analytics';
+import { env } from '../env';
 
 const api = new ApiService(
-  import.meta.env.SSR ? import.meta.env.VITE_FREY_URL_SSR : import.meta.env.VITE_FREY_URL,
-  import.meta.env.SSR ? import.meta.env.VITE_MIMIR_URL_SSR : import.meta.env.VITE_MIMIR_URL
+  import.meta.env.SSR ? import.meta.env.VITE_FREY_URL_SSR : env.urls.frey,
+  import.meta.env.SSR ? import.meta.env.VITE_MIMIR_URL_SSR : env.urls.mimir
 );
 api
   .setAnalytics(analytics)

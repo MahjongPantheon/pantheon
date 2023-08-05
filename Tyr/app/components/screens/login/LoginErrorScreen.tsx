@@ -21,6 +21,7 @@ import { IComponentProps } from '../../IComponentProps';
 import { LoginErrorView } from './LoginErrorView';
 import { useCallback } from 'react';
 import { RESET_LOGIN_ERROR } from '../../../store/actions/interfaces';
+import { env } from '../../../env';
 
 export const LoginErrorScreen: React.FC<IComponentProps> = (props) => {
   const { dispatch } = props;
@@ -32,7 +33,7 @@ export const LoginErrorScreen: React.FC<IComponentProps> = (props) => {
   return (
     <LoginErrorView
       onOkClick={onOkClick}
-      recoveryLink={`${import.meta.env.VITE_FORSETI_URL}/profile/resetPassword`}
+      recoveryLink={`${env.urls.forseti}/profile/resetPassword`}
     />
   );
 };

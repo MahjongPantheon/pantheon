@@ -27,9 +27,10 @@ import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
 import { createEmotionCache } from '@mantine/core';
 import { registerFrontErrorHandler } from './helpers/logFrontError';
+import { env } from './env';
 registerFrontErrorHandler();
 const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
-const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
+const storageStrategy = new StorageStrategyClient(env.cookieDomain);
 storage.setStrategy(storageStrategy);
 i18n.init(
   (locale) => {

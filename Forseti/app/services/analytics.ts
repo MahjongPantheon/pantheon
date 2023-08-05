@@ -17,6 +17,7 @@
 
 import debounce from 'lodash.debounce';
 import { v4 } from 'uuid';
+import { env } from '../env';
 
 let OSName = 'Unknown OS';
 if (navigator.appVersion.includes('Win')) OSName = 'Windows';
@@ -171,7 +172,7 @@ export class Analytics {
   }
 
   constructor() {
-    this._statDomain = import.meta.env.VITE_HUGIN_URL;
+    this._statDomain = env.urls.hugin;
     this._siteId = 'Forseti';
 
     this._track = debounce(

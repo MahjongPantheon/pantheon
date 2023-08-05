@@ -35,6 +35,7 @@ import { GetEventAdmins } from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
+import { env } from '../env';
 
 export class ApiService {
   private _authToken: string | null = null;
@@ -85,7 +86,7 @@ export class ApiService {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(import.meta.env.VITE_HUGIN_URL, {
+                fetch(env.urls.hugin, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({

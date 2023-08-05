@@ -19,12 +19,13 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { Analytics } from '../services/analytics';
 import { storage } from './storage';
+import { env } from '../env';
 
 /**
  * Marked as deprecated to avoid using this in components. Use hook instead.
  * @deprecated
  */
-export const analytics = new Analytics(import.meta.env.VITE_HUGIN_URL, 'Sigrun');
+export const analytics = new Analytics(env.urls.hugin, 'Sigrun');
 analytics.setUserId(storage.getPersonId() ?? 0);
 analytics.setEventId(storage.getEventId() ?? 0);
 export const analyticsCtx = createContext(analytics);

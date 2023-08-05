@@ -19,6 +19,7 @@ import * as React from 'react';
 import { crc32 } from '@foxglove/crc';
 import './avatar.css';
 import { CSSProperties, useEffect, useState } from 'react';
+import { env } from '../../../env';
 
 export const PlayerAvatar = ({
   p,
@@ -57,9 +58,7 @@ export const PlayerAvatar = ({
         <img
           className='avatar__placeholder'
           alt=''
-          src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg?${
-            p.lastUpdate
-          }`}
+          src={`${env.urls.gullveig}/files/avatars/user_${p.id}.jpg?${p.lastUpdate}`}
           onError={() => setError(true)}
         />
       )}

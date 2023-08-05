@@ -24,6 +24,7 @@ import { Theme } from '../../../services/themes';
 import { useContext } from 'react';
 import { i18n } from '../../i18n';
 import { PlayerAvatar } from '../../general/avatar/Avatar';
+import { env } from '../../../env';
 
 interface IProps {
   playerName: string;
@@ -86,7 +87,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
             className='flat-btn flat-btn--large'
             style={{ width: '100%' }}
             target='_blank'
-            href={`${import.meta.env.VITE_FORSETI_URL}/profile/manage`}
+            href={`${env.urls.forseti}/profile/manage`}
           >
             {loc._t('Go to personal area')}
           </a>
