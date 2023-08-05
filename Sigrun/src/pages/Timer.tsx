@@ -42,12 +42,13 @@ import { useI18n } from '../hooks/i18n';
 import { Meta } from '../components/Meta';
 import { useMediaQuery } from '@mantine/hooks';
 
+let largeScreen = false;
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
   const i18n = useI18n();
   const [, setSoundPlayed] = useState(false);
   const [, setCurrentTimer] = useState(0);
-  const largeScreen = useMediaQuery('(min-width: 768px)');
+  largeScreen = useMediaQuery('(min-width: 768px)');
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
   const [timerWaiting, setTimerWaiting] = useState(false);
@@ -72,7 +73,9 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     const timer = setInterval(() => {
       if (shouldUpdateTimerFromServer) {
         api.getTimerState(parseInt(eventId, 10)).then((newState) => {
-          setShowSeating(newState.timeRemaining > newState.hideSeatingAfter);
+          setShowSeating(
+            newState.timeRemaining > newState.hideSeatingAfter || newState.waitingForTimer
+          );
           setTimerWaiting(newState.waitingForTimer);
           hideSeatingAfter = newState.hideSeatingAfter;
           // If we're still watinig, we do updates every second.
