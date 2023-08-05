@@ -229,7 +229,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       <Container pos='relative'>
         <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
-          <Tabs defaultValue='basic'>
+          <Tabs keepMounted={false} defaultValue='basic'>
             <Tabs.List position='left'>
               <TabsList i18n={i18n} form={form} />
             </Tabs.List>
