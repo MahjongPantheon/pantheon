@@ -72,7 +72,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         description: '',
         timezone: '',
         duration: 75, // min // tourn
-        isTeam: false, // tourn
+        isTeam: false, // tourn/online
         isPrescripted: false, // tourn
         seriesLength: 0, // local/online
         minGames: 0, // local/online
