@@ -17,7 +17,7 @@
 
 import { I18nService } from '../../services/i18n';
 import * as React from 'react';
-import { NumberInput, Text, TextInput } from '@mantine/core';
+import { Checkbox, NumberInput, Text, TextInput } from '@mantine/core';
 import {
   IconChartHistogram,
   IconCoins,
@@ -46,6 +46,10 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         icon={<IconUsers size='1rem' />}
         label={i18n._t('Tenhou Lobby ID')}
         {...form.getInputProps('event.lobbyId')}
+      />
+      <Checkbox
+        label={i18n._t('Team tournament')}
+        {...form.getInputProps('event.isTeam', { type: 'checkbox' })}
       />
       <NumberInput
         {...form.getInputProps('ruleset.gameExpirationTime')}
