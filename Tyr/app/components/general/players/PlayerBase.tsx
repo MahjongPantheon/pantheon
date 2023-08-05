@@ -175,6 +175,7 @@ export class PlayerBase extends React.Component<IProps> {
       pointsMode,
       penaltyPoints,
       showInlineRiichi,
+      gotRiichiFromTable,
       onPlayerClick,
     } = this.props;
 
@@ -213,6 +214,14 @@ export class PlayerBase extends React.Component<IProps> {
               <p>
                 {points}
                 {showInlineRiichi && <RiichiBigIcon className='player__inline-riichi' />}
+                {!!gotRiichiFromTable && (
+                  <>
+                    <div className='player__inline-riichi-with-label'>
+                      <span>+{gotRiichiFromTable}</span>
+                      <RiichiBigIcon />
+                    </div>
+                  </>
+                )}
               </p>
               {!!penaltyPoints && (
                 <div className='player__penalty'>{`${penaltyPoints / 1000}k`}</div>
