@@ -47,6 +47,7 @@ import { TopActionButton } from '../helpers/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
 import { FileUploadButton } from '../helpers/FileUploadButton';
+import { env } from '../env';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -228,10 +229,7 @@ export const ProfileManage: React.FC = () => {
                 <Group>
                   <Avatar
                     radius='xl'
-                    src={
-                      avatarData ??
-                      `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${personId}.jpg`
-                    }
+                    src={avatarData ?? `${env.urls.gullveig}/files/avatars/user_${personId}.jpg`}
                   ></Avatar>
                   <FileUploadButton i18n={i18n} onChange={updateAvatar} />
                 </Group>

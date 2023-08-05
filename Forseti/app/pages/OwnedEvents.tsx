@@ -60,6 +60,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
 import { TopActionButton } from '../helpers/TopActionButton';
 import { MenuItemLink } from '../helpers/MenuItemLink';
+import { env } from '../env';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -253,10 +254,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  <a
-                    href={`${import.meta.env.VITE_SIGRUN_URL}/event/${event.id}/info`}
-                    target='_blank'
-                  >
+                  <a href={`${env.urls.sigrun}/event/${event.id}/info`} target='_blank'>
                     {event.title}
                   </a>
                 </Group>

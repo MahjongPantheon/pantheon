@@ -74,6 +74,7 @@ import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.p
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
 import { GetLastDay, GetLastMonth, GetLastYear } from '../clients/proto/hugin.pb';
+import { env } from '../env';
 
 export class ApiService {
   private _authToken: string | null = null;
@@ -108,9 +109,9 @@ export class ApiService {
     headers.append('X-Auth-Token', this._authToken ?? '');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConfMimir.baseURL = import.meta.env.VITE_MIMIR_URL;
-    this._clientConfFrey.baseURL = import.meta.env.VITE_FREY_URL;
-    this._clientConfHugin.baseURL = import.meta.env.VITE_HUGIN_URL;
+    this._clientConfMimir.baseURL = env.urls.mimir;
+    this._clientConfFrey.baseURL = env.urls.frey;
+    this._clientConfHugin.baseURL = env.urls.hugin;
     this._clientConfFrey.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
@@ -124,7 +125,7 @@ export class ApiService {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(import.meta.env.VITE_HUGIN_URL, {
+                fetch(env.urls.hugin, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({

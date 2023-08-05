@@ -1,5 +1,6 @@
 import favicon from '../../assets/ico/favicon.png';
 import { Helmet } from 'react-helmet';
+import { env } from '../env';
 
 type MetaProps = {
   title: string;
@@ -15,11 +16,11 @@ export const Meta = ({ title, description }: MetaProps) => {
       <meta name='title' content={title} />
       {description && <meta name='description' content={description} />}
       <meta property='og:type' content='website' />
-      <meta property='og:url' content={import.meta.env.VITE_SIGRUN_URL} />
+      <meta property='og:url' content={env.urls.sigrun} />
       <meta property='og:title' content={title} />
       {description && <meta property='og:description' content={description} />}
       <meta property='twitter:card' content='summary' />
-      <meta property='twitter:url' content={import.meta.env.VITE_SIGRUN_URL} />
+      <meta property='twitter:url' content={env.urls.sigrun} />
       <meta property='twitter:title' content={title} />
       {description && <meta property='twitter:description' content={description} />}
       <link rel='icon' type='image/png' href={favicon} />

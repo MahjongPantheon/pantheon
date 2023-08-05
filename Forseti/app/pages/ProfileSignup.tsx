@@ -36,6 +36,7 @@ import { useApi } from '../hooks/api';
 import { useDisclosure } from '@mantine/hooks';
 import { usePageTitle } from '../hooks/pageTitle';
 import { calcPasswordStrength } from '../helpers/passwordStrength';
+import { env } from '../env';
 
 export const ProfileSignup: React.FC = () => {
   const i18n = useI18n();
@@ -153,8 +154,8 @@ export const ProfileSignup: React.FC = () => {
         <small>Effective date: July 07, 2023</small>
         <Collapse in={opened}>
           <p>
-            Pantheon ("us", "we", or "our") operates the {import.meta.env.VITE_ROOT_HOST} domain and
-            subdomains (the "Service").
+            Pantheon ("us", "we", or "our") operates the {env.rootHost} domain and subdomains (the
+            "Service").
           </p>
           <p>
             This page informs you of our policies regarding the collection, use, and disclosure of
@@ -165,7 +166,7 @@ export const ProfileSignup: React.FC = () => {
             We use your data to provide and improve the Service. By using the Service, you agree to
             the collection and use of information in accordance with this policy. Unless otherwise
             defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings
-            as in our Terms and Conditions, accessible from {import.meta.env.VITE_ROOT_HOST}
+            as in our Terms and Conditions, accessible from {env.rootHost}
           </p>
 
           <h3>Information Collection And Use</h3>
@@ -248,7 +249,7 @@ export const ProfileSignup: React.FC = () => {
           </ul>
 
           <h3>Transfer Of Data</h3>
-          {import.meta.env.VITE_ROOT_HOST === 'riichimahjong.org' && (
+          {env.rootHost === 'riichimahjong.org' && (
             <>
               <p>
                 Main instance of Pantheon is located in Germany at the moment of publishing this
@@ -283,7 +284,7 @@ export const ProfileSignup: React.FC = () => {
               </p>
             </>
           )}
-          {import.meta.env.VITE_ROOT_HOST !== 'riichimahjong.org' && (
+          {env.rootHost !== 'riichimahjong.org' && (
             <>
               <p>
                 Location of this instance of Pantheon is up to server instance administrators. Reach
@@ -415,10 +416,7 @@ export const ProfileSignup: React.FC = () => {
           <p>If you have any questions about this Privacy Policy, please contact us:</p>
           <ul>
             <li>
-              By email:{' '}
-              <a href={`mailto:${import.meta.env.VITE_ADMIN_EMAIL}`}>
-                {import.meta.env.VITE_ADMIN_EMAIL}
-              </a>
+              By email: <a href={`mailto:${env.adminEmail}`}>{env.adminEmail}</a>
             </li>
           </ul>
         </Collapse>

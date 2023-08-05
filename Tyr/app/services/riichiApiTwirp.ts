@@ -39,6 +39,7 @@ import { ClientConfiguration } from 'twirpscript';
 import { SessionStatus } from '../clients/proto/atoms.pb';
 
 import { handleReleaseTag } from './releaseTags';
+import { env } from '../env';
 
 export class RiichiApiTwirpService implements IRiichiApi {
   private _authToken: string | null = null;
@@ -59,8 +60,8 @@ export class RiichiApiTwirpService implements IRiichiApi {
     headers.append('X-Twirp', 'true');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConfMimir.baseURL = import.meta.env.VITE_MIMIR_URL;
-    this._clientConfFrey.baseURL = import.meta.env.VITE_FREY_URL;
+    this._clientConfMimir.baseURL = env.urls.mimir;
+    this._clientConfFrey.baseURL = env.urls.frey;
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
@@ -74,7 +75,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(import.meta.env.VITE_HUGIN_URL, {
+                fetch(env.urls.hugin, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({

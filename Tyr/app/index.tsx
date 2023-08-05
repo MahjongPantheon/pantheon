@@ -25,8 +25,9 @@ import { observe } from './scripts/dimensionsObserver';
 import { registerFrontErrorHandler } from './scripts/logFrontError';
 import { Storage } from '../../Common/storage';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
+import { env } from './env';
 
-const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
+const storageStrategy = new StorageStrategyClient(env.cookieDomain);
 const storage = new Storage();
 storage.setStrategy(storageStrategy);
 

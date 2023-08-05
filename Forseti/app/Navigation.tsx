@@ -56,6 +56,7 @@ import { useApi } from './hooks/api';
 import { useStorage } from './hooks/storage';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { MenuItemLink } from './helpers/MenuItemLink';
+import { env } from './env';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -229,9 +230,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
                 <Menu.Dropdown>
                   <MenuItemLink
                     external={true}
-                    href={`${import.meta.env.VITE_SIGRUN_URL}/event/${
-                      (match ? params : paramsEdit)?.id
-                    }/info`}
+                    href={`${env.urls.sigrun}/event/${(match ? params : paramsEdit)?.id}/info`}
                     icon={<IconExternalLink size={18} />}
                     text={i18n._t('Open event in new tab')}
                   />

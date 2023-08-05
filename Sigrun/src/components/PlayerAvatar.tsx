@@ -18,6 +18,7 @@
 import { Avatar, MantineColor, MantineSize } from '@mantine/core';
 import { crc32 } from '@foxglove/crc';
 import * as React from 'react';
+import { env } from '../env';
 
 export const PlayerAvatar = ({
   p,
@@ -37,7 +38,7 @@ export const PlayerAvatar = ({
         radius={radius}
         size={size}
         title={`#${p.id}`}
-        src={`${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${p.id}.jpg?${p.lastUpdate}`}
+        src={`${env.urls.gullveig}/files/avatars/user_${p.id}.jpg?${p.lastUpdate}`}
       />
     );
   }

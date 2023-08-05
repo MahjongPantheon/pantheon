@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { env } from '../env';
+
 function errHandler(
   errorMsg: Event | string,
   currentUrl: string | undefined,
@@ -22,7 +24,7 @@ function errHandler(
   charNumber: number | undefined,
   err: Error | undefined
 ) {
-  fetch(import.meta.env.VITE_HUGIN_URL, {
+  fetch(env.urls.hugin, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

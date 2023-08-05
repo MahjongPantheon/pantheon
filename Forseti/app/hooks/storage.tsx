@@ -19,8 +19,9 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { Storage } from '../../../Common/storage';
 import { StorageStrategyClient } from '../../../Common/storageStrategyClient';
+import { env } from '../env';
 
-const storageStrategy = new StorageStrategyClient(import.meta.env.VITE_COOKIE_DOMAIN || null);
+const storageStrategy = new StorageStrategyClient(env.cookieDomain);
 /**
  * @deprecated Please don't use it directly. Use useStorage() instead.
  */

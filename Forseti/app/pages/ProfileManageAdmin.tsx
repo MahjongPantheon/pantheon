@@ -48,6 +48,7 @@ import { notifications } from '@mantine/notifications';
 import { TopActionButton } from '../helpers/TopActionButton';
 import { useStorage } from '../hooks/storage';
 import { FileUploadButton } from '../helpers/FileUploadButton';
+import { env } from '../env';
 
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const i18n = useI18n();
@@ -287,10 +288,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
               <Group>
                 <Avatar
                   radius='xl'
-                  src={
-                    avatarData ??
-                    `${import.meta.env.VITE_GULLVEIG_URL}/files/avatars/user_${playerEditId}.jpg`
-                  }
+                  src={avatarData ?? `${env.urls.gullveig}/files/avatars/user_${playerEditId}.jpg`}
                 ></Avatar>
                 <FileUploadButton i18n={i18n} onChange={updateAvatar} />
               </Group>
