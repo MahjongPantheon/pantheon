@@ -55,6 +55,7 @@ import { useContext } from 'react';
 import { globalsCtx } from '../hooks/globals';
 import { TeamTable } from '../components/TeamTable';
 import { Meta } from '../components/Meta';
+import { authCtx } from '../hooks/auth';
 
 export const RatingTable: React.FC<{
   params: {
@@ -78,6 +79,7 @@ export const RatingTable: React.FC<{
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
+  const auth = useContext(authCtx);
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const DataCmp = largeScreen ? Group : Stack;
   const globals = useContext(globalsCtx);
@@ -108,7 +110,13 @@ export const RatingTable: React.FC<{
     );
   }
 
-  if (events && !globals.data.loading && globals.data.ratingHidden) {
+  if (
+    events &&
+    !globals.data.loading &&
+    globals.data.ratingHidden &&
+    !auth.ownEvents.includes(events?.[0].id) &&
+    !auth.isSuperadmin
+  ) {
     return (
       <Container>
         <h2 style={{ display: 'flex', gap: '20px' }}>
