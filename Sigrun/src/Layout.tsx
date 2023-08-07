@@ -37,6 +37,7 @@ import { NavigationProgress } from '@mantine/nprogress';
 import { EmotionCache } from '@emotion/css';
 import { Meta } from './components/Meta';
 import { useIsomorphicState } from './hooks/useIsomorphicState';
+import { PersonEx } from './clients/proto/atoms.pb';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -61,7 +62,9 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   const [useDimmed, setUseDimmed] = useState<boolean>(storage.getDimmed());
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSuperadmin, setIsSuperadmin] = useState(false);
-  const [personId, setPersonId] = useState(storage.getPersonId());
+  const [userInfo, setUserInfo] = useState<PersonEx | null>(null);
+  const [ownEvents, setOwnEvents] = useState<number[]>([]);
+  const [personId] = useState(storage.getPersonId());
   const api = useApi();
 
   const analytics = useAnalytics();
@@ -74,23 +77,38 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     window.addEventListener('replaceState', track);
   }, []);
 
-  const [authVals] = useIsomorphicState(
-    [false, false],
+  const [authVals] = useIsomorphicState<
+    [boolean, boolean, PersonEx | null, number[]],
+    [boolean, boolean, PersonEx | null, number[]],
+    Error
+  >(
+    [false, false, null, []],
     'Global_auth_' + (personId ?? '').toString(),
     () => {
+      if (!personId) {
+        return Promise.resolve([false, false, null, []]);
+      }
       return Promise.allSettled([
         api.quickAuthorize(),
-        api.getSuperadminFlag(storage.getPersonId() ?? undefined),
-      ]).then(([auth, superadmin]) => [
+        api.getSuperadminFlag(personId ?? undefined),
+        api.getPersonalInfo(personId ?? undefined),
+        api.getOwnedEventIds(personId ?? undefined),
+      ]).then(([auth, superadmin, info, ownedEvents]) => [
         auth.status === 'fulfilled' ? auth.value : false,
         superadmin.status === 'fulfilled' ? superadmin.value : false,
+        info.status === 'fulfilled' ? info.value : null,
+        ownedEvents.status === 'fulfilled' ? ownedEvents.value : [],
       ]);
     },
     [personId]
   );
 
-  setIsLoggedIn(authVals?.[0] ?? false);
-  setIsSuperadmin(authVals?.[1] ?? false);
+  useEffect(() => {
+    setIsLoggedIn(authVals?.[0] ?? false);
+    setIsSuperadmin(authVals?.[1] ?? false);
+    setUserInfo(authVals?.[2] ?? null);
+    setOwnEvents(authVals?.[3] ?? []);
+  }, [authVals]);
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const newValue = value ?? (colorScheme === 'dark' ? 'light' : 'dark');
@@ -281,7 +299,18 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     >
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>
-          <authCtx.Provider value={{ isLoggedIn, setIsLoggedIn, isSuperadmin, setIsSuperadmin }}>
+          <authCtx.Provider
+            value={{
+              isLoggedIn,
+              setIsLoggedIn,
+              isSuperadmin,
+              setIsSuperadmin,
+              userInfo,
+              setUserInfo,
+              ownEvents,
+              setOwnEvents,
+            }}
+          >
             <globalsCtx.Provider value={{ data, setData }}>
               <StorageProvider>
                 <I18nProvider>
@@ -295,23 +324,25 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
                     <NavigationProgress color='green' zIndex={10100} />
                     <AppShell
                       padding='md'
-                      header={<AppHeader />}
+                      header={
+                        <AppHeader
+                          dark={dark}
+                          toggleColorScheme={toggleColorScheme}
+                          toggleDimmed={toggleDimmed}
+                          saveLang={saveLang}
+                        />
+                      }
                       footer={
                         <Footer
                           height={60}
-                          bg={theme.primaryColor}
                           style={{ position: 'static', display: 'flex', alignItems: 'center' }}
                         >
-                          <AppFooter
-                            dark={dark}
-                            toggleColorScheme={toggleColorScheme}
-                            toggleDimmed={toggleDimmed}
-                            saveLang={saveLang}
-                          />
+                          <AppFooter />
                         </Footer>
                       }
                       styles={{
                         main: {
+                          overflowX: 'hidden',
                           minHeight: 'calc(100vh - var(--mantine-footer-height, 0px))',
                           background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
                         },

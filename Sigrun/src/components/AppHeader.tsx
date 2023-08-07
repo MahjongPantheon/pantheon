@@ -20,16 +20,17 @@ import {
   Header,
   Group,
   Container,
-  rem,
   Anchor,
   Button,
   ActionIcon,
-  Menu,
   Modal,
   useMantineTheme,
   TextInput,
   Space,
   LoadingOverlay,
+  Drawer,
+  NavLink,
+  Stack,
 } from '@mantine/core';
 import {
   IconAdjustmentsAlt,
@@ -37,13 +38,15 @@ import {
   IconAward,
   IconChartBar,
   IconChartLine,
-  IconChevronDown,
   IconDeviceMobileShare,
+  IconLanguageHiragana,
   IconList,
   IconListCheck,
+  IconMoonStars,
   IconNetwork,
   IconNotes,
   IconOlympics,
+  IconSun,
 } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
 import { useContext, useState } from 'react';
@@ -53,10 +56,10 @@ import * as React from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useApi } from '../hooks/api';
-import { MenuItemLink } from './MenuItemLink';
 import { env } from '../env';
-
-const HEADER_HEIGHT = rem(60);
+import { MainMenuLink } from './MainMenuLink';
+import { FlagEn, FlagRu } from '../helpers/flags';
+import { authCtx } from '../hooks/auth';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -67,60 +70,36 @@ const useStyles = createStyles((theme) => ({
     borderBottom: 0,
     zIndex: 10000,
   },
-
   inner: {
-    height: rem(56),
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  link: {
-    display: 'block',
-    lineHeight: 1,
-    padding: `${rem(8)} ${rem(12)}`,
-    borderRadius: theme.radius.sm,
-    textDecoration: 'none',
-    color: theme.white,
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
-
-    '&:hover': {
-      backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
-        0.1
-      ),
-    },
-  },
-
-  linkLabel: {
-    marginRight: rem(5),
-  },
-
-  dropdown: {
+    height: '44px',
     position: 'absolute',
-    top: HEADER_HEIGHT,
+    top: 0,
     left: 0,
-    right: 0,
-    zIndex: 0,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
-    borderTopWidth: 0,
-    overflow: 'hidden',
-
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
+  },
+  userTitle: {
+    display: 'inline-flex',
+    color: 'white',
+    height: '100%',
+    alignItems: 'center',
   },
 }));
 
-export function AppHeader() {
+interface AppHeaderProps {
+  dark: boolean;
+  toggleColorScheme: () => void;
+  toggleDimmed: () => void;
+  saveLang: (lang: string) => void;
+}
+
+export function AppHeader({ dark, toggleColorScheme, toggleDimmed, saveLang }: AppHeaderProps) {
   const { classes } = useStyles();
   const i18n = useI18n();
-  const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const globals = useContext(globalsCtx);
+  const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
+  const largeScreen = useMediaQuery('(min-width: 640px)');
+  const auth = useContext(authCtx);
 
   // Online add replay related
   const [onlineModalOpened, { open: openOnlineModal, close: closeOnlineModal }] =
@@ -151,152 +130,198 @@ export function AppHeader() {
   };
 
   return (
-    <Header height={HEADER_HEIGHT} className={classes.header} mb={120}>
-      <Container>
-        <div className={classes.inner}>
-          <Group>
+    <Header height={44} className={classes.header} mb={120}>
+      <Drawer
+        size='sm'
+        opened={menuOpened}
+        closeOnClickOutside={true}
+        closeOnEscape={true}
+        withCloseButton={true}
+        closeButtonProps={{ size: 'lg' }}
+        lockScroll={false}
+        onClose={closeMenu}
+        title={<b>{i18n._t('Actions')}</b>}
+        overlayProps={{ opacity: 0.5, blur: 4 }}
+        transitionProps={{ transition: 'pop-top-left', duration: 150, timingFunction: 'linear' }}
+        style={{ zIndex: 10000, position: 'fixed' }}
+        styles={{ body: { height: 'calc(100% - 68px)' } }}
+      >
+        <Stack justify='space-between' style={{ height: '100%' }}>
+          <Stack spacing={0}>
             <Anchor
               href={`/`}
               onClick={(e) => {
                 navigate(`/`);
+                closeMenu();
                 e.preventDefault();
               }}
             >
-              {largeScreen ? (
-                <Button
-                  className={classes.link}
-                  leftIcon={<IconList size={20} />}
-                  title={i18n._t('To events list')}
-                >
-                  {i18n._t('Events list')}
-                </Button>
-              ) : (
-                <ActionIcon
-                  title={i18n._t('To events list')}
-                  variant='filled'
-                  color='green'
-                  size='lg'
-                >
-                  <IconList size='1.5rem' />
-                </ActionIcon>
-              )}
+              <NavLink
+                styles={{ label: { fontSize: '18px' } }}
+                icon={<IconList size={20} />}
+                label={i18n._t('To events list')}
+              />
             </Anchor>
-            <Anchor href={env.urls.forseti} target='_blank'>
-              {largeScreen ? (
-                <Button
-                  className={classes.link}
-                  leftIcon={<IconAdjustmentsAlt size={20} />}
-                  title={i18n._t('Profile & admin panel')}
-                >
-                  {i18n._t('Profile & admin panel')}
-                </Button>
-              ) : (
-                <ActionIcon
-                  title={i18n._t('Profile & admin panel')}
-                  variant='filled'
-                  color='grape'
-                  size='lg'
-                >
-                  <IconAdjustmentsAlt size='1.5rem' />
-                </ActionIcon>
-              )}
+            <Anchor href={env.urls.forseti} target='_blank' onClick={closeMenu}>
+              <NavLink
+                styles={{ label: { fontSize: '18px' } }}
+                icon={<IconAdjustmentsAlt size={20} />}
+                label={i18n._t('Profile & admin panel')}
+              />
             </Anchor>
             {globals.data.eventId?.length === 1 && (
-              <Anchor href={env.urls.tyr} target='_blank'>
-                {largeScreen ? (
-                  <Button
-                    className={classes.link}
-                    leftIcon={<IconDeviceMobileShare size={20} />}
-                    title={i18n._t('Open assistant')}
-                  >
-                    {i18n._t('Open assistant')}
-                  </Button>
-                ) : (
-                  <ActionIcon
-                    title={i18n._t('Open assistant')}
-                    variant='filled'
-                    color='orange'
-                    size='lg'
-                  >
-                    <IconDeviceMobileShare size='1.5rem' />
-                  </ActionIcon>
-                )}
+              <Anchor href={env.urls.tyr} target='_blank' onClick={closeMenu}>
+                <NavLink
+                  styles={{ label: { fontSize: '18px' } }}
+                  icon={<IconDeviceMobileShare size={20} />}
+                  label={i18n._t('Open assistant')}
+                />
               </Anchor>
             )}
+            <hr />
+            {globals.data.eventId && (
+              <>
+                <MainMenuLink
+                  href={`/event/${globals.data.eventId?.join('.')}/info`}
+                  icon={<IconNotes size={24} />}
+                  text={i18n._pt('Event menu', 'Description')}
+                  onClick={closeMenu}
+                />
+                <MainMenuLink
+                  href={`/event/${globals.data.eventId?.join('.')}/rules`}
+                  icon={<IconListCheck size={24} />}
+                  text={i18n._pt('Event menu', 'Rules overview')}
+                  onClick={closeMenu}
+                />
+                <MainMenuLink
+                  href={`/event/${globals.data.eventId?.join('.')}/games`}
+                  icon={<IconOlympics size={24} />}
+                  text={i18n._pt('Event menu', 'Recent games')}
+                  onClick={closeMenu}
+                />
+                <MainMenuLink
+                  href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
+                  icon={<IconChartBar size={24} />}
+                  text={i18n._pt('Event menu', 'Rating table')}
+                  onClick={closeMenu}
+                />
+                {globals.data.eventId?.length === 1 && (
+                  <MainMenuLink
+                    href={`/event/${globals.data.eventId?.join('.')}/achievements`}
+                    icon={<IconAward size={24} />}
+                    text={i18n._pt('Event menu', 'Achievements')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
+                  <MainMenuLink
+                    href={`/event/${globals.data.eventId?.join('.')}/seriesRating`}
+                    icon={<IconChartLine size={24} />}
+                    text={i18n._pt('Event menu', 'Series rating')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
+                  globals.data.eventId?.length === 1 && (
+                    <MainMenuLink
+                      href={`/event/${globals.data.eventId?.join('.')}/timer`}
+                      icon={<IconAlarm size={24} />}
+                      text={i18n._pt('Event menu', 'Timer & seating')}
+                      onClick={closeMenu}
+                    />
+                  )}
+                {globals.data.type === EventType.EVENT_TYPE_ONLINE &&
+                  globals.data.eventId?.length === 1 && (
+                    <NavLink
+                      styles={{ label: { fontSize: '18px' } }}
+                      icon={<IconNetwork size={24} />}
+                      label={i18n._pt('Event menu', 'Add online game')}
+                      onClick={(e) => {
+                        openOnlineModal();
+                        closeMenu();
+                        e.preventDefault();
+                      }}
+                    />
+                  )}
+              </>
+            )}
+          </Stack>
+          <Group mt={0} spacing={0}>
+            <NavLink
+              styles={{ label: { fontSize: '18px' } }}
+              icon={<IconLanguageHiragana size={20} />}
+              label={i18n._t('Language')}
+            >
+              <NavLink
+                onClick={() => {
+                  saveLang('en');
+                  closeMenu();
+                }}
+                icon={<FlagEn width={24} />}
+                label='en'
+              />
+              <NavLink
+                onClick={() => {
+                  saveLang('ru');
+                  closeMenu();
+                }}
+                icon={<FlagRu width={24} />}
+                label='ru'
+              />
+            </NavLink>
+            <NavLink
+              styles={{ label: { fontSize: '18px' } }}
+              icon={<IconSun size={20} />}
+              onClick={() => {
+                toggleDimmed();
+                closeMenu();
+              }}
+              label={i18n._t('Toggle dimmed colors')}
+            />
+            <NavLink
+              styles={{ label: { fontSize: '18px' } }}
+              icon={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
+              onClick={() => {
+                toggleColorScheme();
+                closeMenu();
+              }}
+              label={i18n._t('Toggle color scheme')}
+            />
           </Group>
-
-          {globals.data.eventId && (
-            <Group spacing={5}>
-              <Menu shadow='md'>
-                <Menu.Target>
-                  <Button
-                    className={classes.link}
-                    leftIcon={<IconChevronDown size={20} />}
-                    title={i18n._t('Event contents')}
-                  >
-                    {i18n._t('Event contents')}
-                  </Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <MenuItemLink
-                    href={`/event/${globals.data.eventId?.join('.')}/info`}
-                    icon={<IconNotes size={24} />}
-                    text={i18n._pt('Event menu', 'Description')}
-                  />
-                  <MenuItemLink
-                    href={`/event/${globals.data.eventId?.join('.')}/rules`}
-                    icon={<IconListCheck size={24} />}
-                    text={i18n._pt('Event menu', 'Rules overview')}
-                  />
-                  <MenuItemLink
-                    href={`/event/${globals.data.eventId?.join('.')}/games`}
-                    icon={<IconOlympics size={24} />}
-                    text={i18n._pt('Event menu', 'Recent games')}
-                  />
-                  <MenuItemLink
-                    href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
-                    icon={<IconChartBar size={24} />}
-                    text={i18n._pt('Event menu', 'Rating table')}
-                  />
-                  {globals.data.eventId?.length === 1 && (
-                    <MenuItemLink
-                      href={`/event/${globals.data.eventId?.join('.')}/achievements`}
-                      icon={<IconAward size={24} />}
-                      text={i18n._pt('Event menu', 'Achievements')}
-                    />
-                  )}
-                  {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
-                    <MenuItemLink
-                      href={`/event/${globals.data.eventId?.join('.')}/seriesRating`}
-                      icon={<IconChartLine size={24} />}
-                      text={i18n._pt('Event menu', 'Series rating')}
-                    />
-                  )}
-                  {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
-                    globals.data.eventId?.length === 1 && (
-                      <MenuItemLink
-                        href={`/event/${globals.data.eventId?.join('.')}/timer`}
-                        icon={<IconAlarm size={24} />}
-                        text={i18n._pt('Event menu', 'Timer & seating')}
-                      />
-                    )}
-                  {globals.data.type === EventType.EVENT_TYPE_ONLINE &&
-                    globals.data.eventId?.length === 1 && (
-                      <Menu.Item
-                        onClick={(e) => {
-                          openOnlineModal();
-                          e.preventDefault();
-                        }}
-                        icon={<IconNetwork size={24} />}
-                      >
-                        {i18n._pt('Event menu', 'Add online game')}
-                      </Menu.Item>
-                    )}
-                </Menu.Dropdown>
-              </Menu>
-            </Group>
+        </Stack>
+      </Drawer>
+      <Container h={44} pos='relative'>
+        <div className={classes.inner}>
+          {largeScreen ? (
+            <Button
+              title={i18n._t('Open menu')}
+              variant='filled'
+              color='green'
+              leftIcon={<IconList size='2rem' />}
+              size='lg'
+              style={{ height: '44px' }}
+              onClick={() => (menuOpened ? closeMenu() : openMenu())}
+            >
+              {i18n._t('Menu')}
+            </Button>
+          ) : (
+            <ActionIcon
+              title={i18n._t('Open menu')}
+              variant='filled'
+              color='green'
+              size='xl'
+              style={{ height: '44px' }}
+              onClick={() => (menuOpened ? closeMenu() : openMenu())}
+            >
+              <IconList size='2rem' />
+            </ActionIcon>
           )}
         </div>
+        {auth.userInfo && (
+          <Group position='right' h={44}>
+            <div className={classes.userTitle}>{auth.userInfo?.title}</div>
+          </Group>
+        )}
         <Modal
           opened={onlineModalOpened}
           onClose={closeOnlineModal}

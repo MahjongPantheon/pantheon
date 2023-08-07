@@ -34,6 +34,8 @@ import {
 import {
   Authorize,
   GetEventAdmins,
+  GetOwnedEventIds,
+  GetPersonalInfo,
   GetSuperadminFlag,
   QuickAuthorize,
 } from '../clients/proto/frey.pb';
@@ -202,6 +204,24 @@ export class ApiService {
       method: 'GetEventAdmins',
     });
     return GetEventAdmins({ eventId }, this._clientConfFrey).then((r) => r.admins);
+  }
+
+  getPersonalInfo(personId?: number) {
+    if (!personId) {
+      return Promise.reject();
+    }
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetPersonalInfo' });
+    return GetPersonalInfo({ ids: [personId] }, this._clientConfFrey).then(
+      (resp) => resp.people[0]
+    );
+  }
+
+  getOwnedEventIds(personId?: number) {
+    if (!personId) {
+      return Promise.reject();
+    }
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetOwnedEventIds' });
+    return GetOwnedEventIds({ personId }, this._clientConfFrey).then((r) => r.eventIds);
   }
 
   getAchievements(eventId: number, achievementsList: string[]) {

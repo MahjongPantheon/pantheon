@@ -145,6 +145,7 @@ export const EventList: React.FC<{ params: { page?: string } }> = ({ params: { p
       <Space h='md' />
       <Center>
         <Pagination
+          size={largeScreen ? 'md' : 'sm'}
           value={parseInt(page, 10)}
           onChange={(p) => {
             navigate(`/page/${p}`);
