@@ -31,7 +31,12 @@ import {
   GetRatingTable,
   GetTimerState,
 } from '../clients/proto/mimir.pb';
-import { GetEventAdmins } from '../clients/proto/frey.pb';
+import {
+  Authorize,
+  GetEventAdmins,
+  GetSuperadminFlag,
+  QuickAuthorize,
+} from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
@@ -206,5 +211,32 @@ export class ApiService {
     return GetAchievements({ eventId, achievementsList }, this._clientConfMimir).then(
       (r) => r.achievements
     );
+  }
+
+  getSuperadminFlag(personId?: number) {
+    if (!personId) {
+      return Promise.resolve(false);
+    }
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetSuperadminFlag' });
+    return GetSuperadminFlag({ personId }, this._clientConfFrey).then((r) => r.isAdmin);
+  }
+
+  quickAuthorize() {
+    if (!this._personId || !this._authToken) {
+      return Promise.reject();
+    }
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'QuickAuthorize' });
+    return QuickAuthorize(
+      {
+        personId: parseInt(this._personId, 10),
+        authToken: this._authToken,
+      },
+      this._clientConfFrey
+    ).then((v) => v.authSuccess);
+  }
+
+  authorize(email: string, password: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'Authorize' });
+    return Authorize({ email, password }, this._clientConfFrey);
   }
 }
