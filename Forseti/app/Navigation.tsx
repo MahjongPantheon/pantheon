@@ -16,23 +16,22 @@
  */
 
 import {
-  ActionIcon,
-  Anchor,
   Button,
   Container,
   createStyles,
   Header,
-  rem,
-  Menu,
   useMantineTheme,
   Group,
   Text,
   Modal,
+  Drawer,
+  Stack,
+  NavLink,
+  ActionIcon,
 } from '@mantine/core';
 import * as React from 'react';
 import {
   IconAlertOctagon,
-  IconChevronDown,
   IconFriends,
   IconList,
   IconTool,
@@ -45,8 +44,6 @@ import {
   IconRefreshAlert,
   IconHandStop,
   IconExternalLink,
-  IconUser,
-  IconAdjustmentsAlt,
 } from '@tabler/icons-react';
 import { useLocation, useRoute } from 'wouter';
 import { useI18n } from './hooks/i18n';
@@ -55,10 +52,8 @@ import { Event } from './clients/proto/atoms.pb';
 import { useApi } from './hooks/api';
 import { useStorage } from './hooks/storage';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { MenuItemLink } from './helpers/MenuItemLink';
 import { env } from './env';
-
-const HEADER_HEIGHT = rem(60);
+import { MainMenuLink } from './helpers/MainMenuLink';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -71,48 +66,24 @@ const useStyles = createStyles((theme) => ({
   },
 
   inner: {
-    height: rem(56),
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  link: {
-    display: 'block',
-    lineHeight: 1,
-    padding: `${rem(8)} ${rem(12)}`,
-    borderRadius: theme.radius.sm,
-    textDecoration: 'none',
-    color: theme.white,
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
-
-    '&:hover': {
-      backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
-        0.1
-      ),
-    },
-  },
-
-  linkLabel: {
-    marginRight: rem(5),
-  },
-
-  dropdown: {
+    height: '44px',
     position: 'absolute',
-    top: HEADER_HEIGHT,
+    top: 0,
     left: 0,
-    right: 0,
-    zIndex: 0,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
-    borderTopWidth: 0,
-    overflow: 'hidden',
+  },
 
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
+  label: {
+    margin: '16px 0',
+    fontWeight: 'bold',
+    fontSize: '18px',
+  },
+
+  eventTitle: {
+    display: 'inline-flex',
+    color: 'white',
+    height: '100%',
+    alignItems: 'center',
+    maxWidth: '200px',
   },
 }));
 
@@ -127,6 +98,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
   const id = (match ? params : paramsEdit)?.id;
   const [, navigate] = useLocation();
   const largeScreen = useMediaQuery('(min-width: 768px)');
+  const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
   const personId = storage.getPersonId();
   const [isSuperadmin, setIsSuperadmin] = useState(false);
   const [eventData, setEventData] = useState<Event | null>(null);
@@ -158,12 +130,12 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
   };
 
   const title =
-    (eventData?.title?.length ?? 0) > 13
-      ? `${eventData?.title?.slice(0, 13)}...`
+    (eventData?.title?.length ?? 0) > 32
+      ? `${eventData?.title?.slice(0, 32)}...`
       : eventData?.title;
 
   return (
-    <Header bg={theme.primaryColor} height={HEADER_HEIGHT} mb={120} pt={12}>
+    <Header bg={theme.primaryColor} height={44} mb={120} pt={0}>
       <Modal opened={stopEventModalOpened} onClose={stopEventModalClose} size='auto' centered>
         <Text>
           {i18n._t('Stop event "%1" (id #%2)? This action can\'t be undone!', [
@@ -187,160 +159,174 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
           </Button>
         </Group>
       </Modal>
-      <Container>
-        <Group position='apart'>
-          <Anchor
-            href={`/ownedEvents`}
-            onClick={(e) => {
-              navigate(`/ownedEvents`);
-              e.preventDefault();
-            }}
-          >
-            {largeScreen ? (
-              <Button
-                className={classes.link}
-                leftIcon={<IconList size={20} />}
-                title={i18n._t('To events list')}
-              >
-                {i18n._t('Events list')}
-              </Button>
-            ) : (
-              <ActionIcon
-                title={i18n._t('To events list')}
-                variant='filled'
-                color='green'
-                size='lg'
-              >
-                <IconList size='1.5rem' />
-              </ActionIcon>
+      <Drawer
+        size='sm'
+        opened={menuOpened}
+        closeOnClickOutside={true}
+        closeOnEscape={true}
+        withCloseButton={true}
+        closeButtonProps={{ size: 'lg' }}
+        lockScroll={false}
+        onClose={closeMenu}
+        title={<b>{i18n._t('Actions')}</b>}
+        overlayProps={{ opacity: 0.5, blur: 4 }}
+        transitionProps={{ transition: 'pop-top-left', duration: 150, timingFunction: 'linear' }}
+        style={{ zIndex: 10000, position: 'fixed' }}
+        styles={{ body: { height: 'calc(100% - 68px)' } }}
+      >
+        <Stack justify='space-between' style={{ height: '100%' }}>
+          <Stack spacing={0}>
+            <MainMenuLink
+              href={'/ownedEvents'}
+              icon={<IconList size={20} />}
+              text={i18n._t('My events')}
+              onClick={closeMenu}
+            />
+            {!isLoggedIn && (
+              <MainMenuLink
+                href={'/profile/login'}
+                icon={<IconLogin size={18} />}
+                text={i18n._t('Sign in')}
+                onClick={closeMenu}
+              />
             )}
-          </Anchor>
-          <Group>
+            {!isLoggedIn && (
+              <MainMenuLink
+                href='/profile/signup'
+                icon={<IconUserPlus size={18} />}
+                text={i18n._t('Sign up')}
+                onClick={closeMenu}
+              />
+            )}
+            {isSuperadmin && (
+              <MainMenuLink
+                href='/profile/signupAdmin'
+                icon={<IconUserPlus size={18} />}
+                text={i18n._t('Register player')}
+                onClick={closeMenu}
+              />
+            )}
+            {isLoggedIn && (
+              <MainMenuLink
+                href='/profile/manage'
+                icon={<IconUserCircle size={18} />}
+                text={i18n._t('Edit profile')}
+                onClick={closeMenu}
+              />
+            )}
+            {isLoggedIn && (
+              <MainMenuLink
+                href='/profile/logout'
+                icon={<IconLogout size={18} />}
+                text={i18n._t('Sign out')}
+                onClick={closeMenu}
+              />
+            )}
             {(match || matchEdit) && (
-              <Menu shadow='md'>
-                <Menu.Target>
-                  <Button
-                    className={classes.link}
-                    leftIcon={<IconChevronDown size={20} />}
-                    title={eventData?.title}
-                  >
-                    {largeScreen ? title : <IconAdjustmentsAlt size='md' />}
-                  </Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <MenuItemLink
-                    external={true}
-                    href={`${env.urls.sigrun}/event/${(match ? params : paramsEdit)?.id}/info`}
-                    icon={<IconExternalLink size={18} />}
-                    text={i18n._t('Open event in new tab')}
-                  />
-                  <MenuItemLink
-                    href={`/ownedEvents/edit/${(match ? params : paramsEdit)?.id}`}
-                    icon={<IconTool size={18} />}
-                    text={i18n._t('Settings')}
-                  />
-                  <MenuItemLink
-                    href={`/event/${(match ? params : paramsEdit)?.id}/players`}
-                    icon={<IconFriends size={18} />}
-                    text={i18n._t('Manage players')}
-                  />
-                  <MenuItemLink
-                    href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
-                    icon={<IconAlertOctagon size={18} />}
-                    text={i18n._t('Penalties')}
-                  />
-                  <MenuItemLink
-                    href={`/event/${(match ? params : paramsEdit)?.id}/games`}
-                    icon={<IconOlympics size={18} />}
-                    text={i18n._t('Manage games')}
-                  />
-                  {eventData?.isPrescripted && (
-                    <MenuItemLink
-                      href={`/event/${(match ? params : paramsEdit)?.id}/prescript`}
-                      icon={<IconScript size={18} />}
-                      text={i18n._t('Predefined seating')}
-                    />
-                  )}
-                  <Menu.Divider />
-                  <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
-                  {isSuperadmin && (
-                    <Menu.Item
-                      title={i18n._t('Rebuild scoring')}
-                      onClick={() =>
-                        rebuildScoring(parseInt((match ? params : paramsEdit)?.id ?? '', 10))
-                      }
-                      icon={<IconRefreshAlert />}
-                    >
-                      {i18n._t('Rebuild scoring')}
-                    </Menu.Item>
-                  )}
-                  <Menu.Item
-                    title={i18n._t('Finish event')}
-                    color='red'
-                    icon={<IconHandStop />}
-                    onClick={() => {
-                      setStopEventData({
-                        id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
-                        title: eventData?.title ?? '',
-                      });
-                      stopEventModalOpen();
-                    }}
-                  >
-                    {i18n._t('Finish event')}
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-            )}
-            <Menu shadow='md'>
-              <Menu.Target>
-                <Button
-                  className={classes.link}
-                  leftIcon={<IconChevronDown size={20} />}
-                  title={i18n._t('Your profile')}
-                >
-                  {largeScreen ? i18n._t('Your profile') : <IconUser size='md' />}
-                </Button>
-              </Menu.Target>
-              <Menu.Dropdown>
-                {!isLoggedIn && (
-                  <MenuItemLink
-                    href={'/profile/login'}
-                    icon={<IconLogin size={18} />}
-                    text={i18n._t('Sign in')}
+              <>
+                <div className={classes.label}>{i18n._t('Event management')}</div>
+                <MainMenuLink
+                  external={true}
+                  href={`${env.urls.sigrun}/event/${(match ? params : paramsEdit)?.id}/info`}
+                  icon={<IconExternalLink size={18} />}
+                  text={i18n._t('Open event in new tab')}
+                  onClick={closeMenu}
+                />
+                <MainMenuLink
+                  href={`/ownedEvents/edit/${(match ? params : paramsEdit)?.id}`}
+                  icon={<IconTool size={18} />}
+                  text={i18n._t('Settings')}
+                  onClick={closeMenu}
+                />
+                <MainMenuLink
+                  href={`/event/${(match ? params : paramsEdit)?.id}/players`}
+                  icon={<IconFriends size={18} />}
+                  text={i18n._t('Manage players')}
+                  onClick={closeMenu}
+                />
+                <MainMenuLink
+                  href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
+                  icon={<IconAlertOctagon size={18} />}
+                  text={i18n._t('Penalties')}
+                  onClick={closeMenu}
+                />
+                <MainMenuLink
+                  href={`/event/${(match ? params : paramsEdit)?.id}/games`}
+                  icon={<IconOlympics size={18} />}
+                  text={i18n._t('Manage games')}
+                  onClick={closeMenu}
+                />
+                {eventData?.isPrescripted && (
+                  <MainMenuLink
+                    href={`/event/${(match ? params : paramsEdit)?.id}/prescript`}
+                    icon={<IconScript size={18} />}
+                    text={i18n._t('Predefined seating')}
+                    onClick={closeMenu}
                   />
                 )}
-                {!isLoggedIn && (
-                  <MenuItemLink
-                    href='/profile/signup'
-                    icon={<IconUserPlus size={18} />}
-                    text={i18n._t('Sign up')}
-                  />
-                )}
+                <div className={classes.label}>{i18n._t('Danger zone')}</div>
                 {isSuperadmin && (
-                  <MenuItemLink
-                    href='/profile/signupAdmin'
-                    icon={<IconUserPlus size={18} />}
-                    text={i18n._t('Register player')}
+                  <NavLink
+                    label={i18n._t('Rebuild scoring')}
+                    styles={{ label: { fontSize: '18px', color: 'red' } }}
+                    onClick={() => {
+                      closeMenu();
+                      rebuildScoring(parseInt((match ? params : paramsEdit)?.id ?? '', 10));
+                    }}
+                    icon={<IconRefreshAlert />}
                   />
                 )}
-                {isLoggedIn && (
-                  <MenuItemLink
-                    href='/profile/manage'
-                    icon={<IconUserCircle size={18} />}
-                    text={i18n._t('Edit profile')}
-                  />
-                )}
-                {isLoggedIn && (
-                  <MenuItemLink
-                    href='/profile/logout'
-                    icon={<IconLogout size={18} />}
-                    text={i18n._t('Sign out')}
-                  />
-                )}
-              </Menu.Dropdown>
-            </Menu>
+                <NavLink
+                  label={i18n._t('Finish event')}
+                  styles={{ label: { fontSize: '18px', color: 'red' } }}
+                  icon={<IconHandStop />}
+                  onClick={() => {
+                    closeMenu();
+                    setStopEventData({
+                      id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                      title: eventData?.title ?? '',
+                    });
+                    stopEventModalOpen();
+                  }}
+                />
+              </>
+            )}
+          </Stack>
+        </Stack>
+      </Drawer>
+
+      <Container h={44} pos='relative'>
+        <div className={classes.inner}>
+          {largeScreen ? (
+            <Button
+              title={i18n._t('Open menu')}
+              variant='filled'
+              color='green'
+              leftIcon={<IconList size='2rem' />}
+              size='lg'
+              style={{ height: '44px' }}
+              onClick={() => (menuOpened ? closeMenu() : openMenu())}
+            >
+              {i18n._t('Menu')}
+            </Button>
+          ) : (
+            <ActionIcon
+              title={i18n._t('Open menu')}
+              variant='filled'
+              color='green'
+              size='xl'
+              style={{ height: '44px' }}
+              onClick={() => (menuOpened ? closeMenu() : openMenu())}
+            >
+              <IconList size='2rem' />
+            </ActionIcon>
+          )}
+        </div>
+        {title && (
+          <Group position='right' h={44}>
+            <div className={classes.eventTitle}>{title}</div>
           </Group>
-        </Group>
+        )}
       </Container>
     </Header>
   );
