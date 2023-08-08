@@ -78,7 +78,10 @@ export function winDisabled(state: IAppState, userData: PlayerInSession) {
     state.currentOutcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON &&
     !state.gameConfig?.rulesetConfig.withAtamahane
   ) {
-    return -1 !== getLosingUsers(state).indexOf(userData);
+    // In case of triple ron AND we have abortives enabled, disable win button if 1 or 2 winners already selected.
+    const disableTripleRon =
+      state.gameConfig?.rulesetConfig.withAbortives && getWinningUsers(state).length >= 2;
+    return -1 !== getLosingUsers(state).indexOf(userData) || disableTripleRon;
   }
 
   // for tsumo and ron without atamahane winner is only one
