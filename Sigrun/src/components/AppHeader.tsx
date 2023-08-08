@@ -140,7 +140,7 @@ export function AppHeader({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
         closeButtonProps={{ size: 'lg' }}
         lockScroll={false}
         onClose={closeMenu}
-        title={<b>{i18n._t('Actions')}</b>}
+        title={<b>{i18n._t('Ratings & stats: actions')}</b>}
         overlayProps={{ opacity: 0.5, blur: 4 }}
         transitionProps={{ transition: 'pop-top-left', duration: 150, timingFunction: 'linear' }}
         style={{ zIndex: 10000, position: 'fixed' }}

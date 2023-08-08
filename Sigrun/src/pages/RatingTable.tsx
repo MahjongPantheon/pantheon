@@ -79,9 +79,9 @@ export const RatingTable: React.FC<{
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
-  const auth = useContext(authCtx);
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const DataCmp = largeScreen ? Group : Stack;
+  const auth = useContext(authCtx);
   const globals = useContext(globalsCtx);
   const [players, , playersLoading] = useIsomorphicState(
     [],

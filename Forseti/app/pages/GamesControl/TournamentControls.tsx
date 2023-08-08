@@ -116,8 +116,8 @@ export function TournamentControls({
           <Stack>
             <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
               {eventConfig?.hideResults
-                ? i18n._t('Show results table')
-                : i18n._t('Hide results table')}
+                ? i18n._t('Show results table and achievements')
+                : i18n._t('Hide results table and achievements')}
             </Button>
             <Confirmation
               i18n={i18n}

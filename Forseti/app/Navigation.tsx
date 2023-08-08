@@ -83,7 +83,6 @@ const useStyles = createStyles((theme) => ({
     color: 'white',
     height: '100%',
     alignItems: 'center',
-    maxWidth: '200px',
   },
 }));
 
@@ -168,7 +167,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
         closeButtonProps={{ size: 'lg' }}
         lockScroll={false}
         onClose={closeMenu}
-        title={<b>{i18n._t('Actions')}</b>}
+        title={<b>{i18n._t('Admin panel: actions')}</b>}
         overlayProps={{ opacity: 0.5, blur: 4 }}
         transitionProps={{ transition: 'pop-top-left', duration: 150, timingFunction: 'linear' }}
         style={{ zIndex: 10000, position: 'fixed' }}

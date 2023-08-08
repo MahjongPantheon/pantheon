@@ -33,7 +33,7 @@ import { useEvent } from '../hooks/useEvent';
 import { useI18n } from '../hooks/i18n';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { IconAward } from '@tabler/icons-react';
+import { IconAward, IconExclamationCircle } from '@tabler/icons-react';
 import { yakuNameMap } from '../helpers/yaku';
 import bestHand from '../../assets/img/bestHand.png';
 import bestFu from '../../assets/img/bestFu.png';
@@ -56,6 +56,9 @@ import covetousKnight from '../../assets/img/covetousKnight.png';
 import ninja from '../../assets/img/ninja.png';
 import needMoreGold from '../../assets/img/needMoreGold.png';
 import { Meta } from '../components/Meta';
+import { useContext } from 'react';
+import { authCtx } from '../hooks/auth';
+import { globalsCtx } from '../hooks/globals';
 
 enum Achievement {
   BEST_HAND = 'bestHand',
@@ -108,6 +111,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
 }) => {
   const i18n = useI18n();
   const api = useApi();
+  const auth = useContext(authCtx);
+  const globals = useContext(globalsCtx);
   const events = useEvent(eventId);
   const [achievementsData] = useIsomorphicState(
     null,
@@ -754,6 +759,26 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       ),
     },
   ];
+
+  if (
+    events &&
+    !globals.data.loading &&
+    globals.data.ratingHidden &&
+    !auth.ownEvents.includes(events?.[0].id) &&
+    !auth.isSuperadmin
+  ) {
+    return (
+      <Container>
+        <h2 style={{ display: 'flex', gap: '20px' }}>
+          {events?.[0] && <EventTypeIcon event={events?.[0]} />}
+          {events?.[0]?.title} - {i18n._t('Rating table')}
+        </h2>
+        <Alert icon={<IconExclamationCircle />} color='yellow'>
+          {i18n._t('Achievements are hidden by tournament administrator')}
+        </Alert>
+      </Container>
+    );
+  }
 
   if ((events?.length ?? 0) > 1) {
     return (
