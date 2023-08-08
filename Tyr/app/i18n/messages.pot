@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 08:28Z\n"
+"POT-Creation-Date: 2023-08-08 17:59Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:515:14
+#: app/components/screens/table/TableHelper.ts:523:14
 msgid "Chombo"
 msgstr ""
 
@@ -169,40 +169,40 @@ msgid "Sign up"
 msgstr ""
 
 #: app/components/screens/login/EnterCredentialsView.tsx:81:12
-#: app/components/screens/login/LoginErrorView.tsx:48:16
+#: app/components/screens/login/LoginErrorView.tsx:50:16
 msgid "Forgot password?"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:32:39
+#: app/components/screens/login/LoginErrorView.tsx:31:83
 msgctxt "Name of registration link"
 msgid "register"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:36:49
+#: app/components/screens/login/LoginErrorView.tsx:38:49
 msgid "Pantheon"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:38:15
+#: app/components/screens/login/LoginErrorView.tsx:40:15
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:42:23
+#: app/components/screens/login/LoginErrorView.tsx:44:23
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:46:14
+#: app/components/screens/login/LoginErrorView.tsx:48:14
 msgid "Password check has failed"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:51:16
+#: app/components/screens/login/LoginErrorView.tsx:53:16
 msgid "Unexpected server error"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:54:12
+#: app/components/screens/login/LoginErrorView.tsx:56:12
 msgid "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:59:12
+#: app/components/screens/login/LoginErrorView.tsx:61:12
 msgid "OK"
 msgstr ""
 
@@ -250,31 +250,31 @@ msgstr ""
 msgid "Player name"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:91:14
+#: app/components/screens/settings/SettingsScreenView.tsx:92:14
 msgid "Go to personal area"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:95:57
+#: app/components/screens/settings/SettingsScreenView.tsx:96:57
 msgid "Language"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:111:57
+#: app/components/screens/settings/SettingsScreenView.tsx:112:57
 msgid "Theme"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:149:16
+#: app/components/screens/settings/SettingsScreenView.tsx:150:16
 msgid "Select another event"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:157:57
+#: app/components/screens/settings/SettingsScreenView.tsx:158:57
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:159:18
+#: app/components/screens/settings/SettingsScreenView.tsx:160:18
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:166:32
+#: app/components/screens/settings/SettingsScreenView.tsx:167:32
 msgid "Log out"
 msgstr ""
 
@@ -289,12 +289,12 @@ msgid "Table #%1"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:507:14
+#: app/components/screens/table/TableHelper.ts:515:14
 msgid "Ron"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:509:14
+#: app/components/screens/table/TableHelper.ts:517:14
 msgid "Tsumo"
 msgstr ""
 
@@ -302,40 +302,40 @@ msgstr ""
 msgid "Penalty"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:406:25
+#: app/components/screens/table/TableHelper.ts:413:25
 msgid "empty outcome"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:415:22
-#: app/components/screens/table/TableHelper.ts:428:22
+#: app/components/screens/table/TableHelper.ts:422:22
+#: app/components/screens/table/TableHelper.ts:435:22
 msgid "Winner"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:418:22
+#: app/components/screens/table/TableHelper.ts:425:22
 msgid "Loser"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:433:27
+#: app/components/screens/table/TableHelper.ts:440:27
 msgid "wrong outcome for paoSelect"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:488:16
+#: app/components/screens/table/TableHelper.ts:496:16
 msgid "Select pao"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:493:16
+#: app/components/screens/table/TableHelper.ts:501:16
 msgid "Select tempai"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:511:14
+#: app/components/screens/table/TableHelper.ts:519:14
 msgid "Draw"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:513:14
+#: app/components/screens/table/TableHelper.ts:521:14
 msgid "Abort"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:525:14
 msgid "Nagashi"
 msgstr ""
 

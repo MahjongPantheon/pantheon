@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 08:28Z\n"
+"POT-Creation-Date: 2023-08-08 17:59Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,136 +17,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: src/components/AppFooter.tsx:55:20
+#: src/components/AppFooter.tsx:40:20
 msgid "Back to top"
 msgstr ""
 
-#: src/components/AppFooter.tsx:68:20
+#: src/components/AppFooter.tsx:53:20
 msgid "Description"
 msgstr ""
 
-#: src/components/AppFooter.tsx:76:22
+#: src/components/AppFooter.tsx:61:22
 #: src/pages/EventRulesOverview/index.tsx:66:44
 #: src/pages/EventRulesOverview/index.tsx:73:35
 msgid "Rules overview"
 msgstr ""
 
-#: src/components/AppFooter.tsx:88:20
+#: src/components/AppFooter.tsx:73:20
 msgid "Recent games"
 msgstr ""
 
-#: src/components/AppFooter.tsx:95:20
+#: src/components/AppFooter.tsx:80:20
+#: src/pages/Achievements.tsx:774:35
 #: src/pages/EventList.tsx:105:67
-#: src/pages/RatingTable.tsx:116:35
-#: src/pages/RatingTable.tsx:131:20
-#: src/pages/RatingTable.tsx:133:20
-#: src/pages/RatingTable.tsx:144:33
+#: src/pages/RatingTable.tsx:124:35
+#: src/pages/RatingTable.tsx:139:20
+#: src/pages/RatingTable.tsx:141:20
+#: src/pages/RatingTable.tsx:152:33
 msgid "Rating table"
 msgstr ""
 
-#: src/components/AppFooter.tsx:106:20
-#: src/pages/Achievements.tsx:769:42
-#: src/pages/Achievements.tsx:776:33
+#: src/components/AppFooter.tsx:91:20
+#: src/pages/Achievements.tsx:794:42
+#: src/pages/Achievements.tsx:801:33
 msgid "Achievements"
 msgstr ""
 
-#: src/components/AppFooter.tsx:115:20
+#: src/components/AppFooter.tsx:100:20
 #: src/pages/SeriesRating.tsx:68:42
 #: src/pages/SeriesRating.tsx:75:31
 msgid "Series rating"
 msgstr ""
 
-#: src/components/AppFooter.tsx:127:22
+#: src/components/AppFooter.tsx:112:22
 msgid "Timer & seating"
 msgstr ""
 
-#: src/components/AppFooter.tsx:137:22
-msgid "Toggle dimmed color scheme"
-msgstr ""
-
-#: src/components/AppFooter.tsx:145:22
-msgid "Toggle color scheme"
-msgstr ""
-
-#: src/components/AppFooter.tsx:151:67
-msgid "Language"
-msgstr ""
-
-#: src/components/AppHeader.tsx:133:22
+#: src/components/AppHeader.tsx:113:22
 msgid "Replay link is invalid. Please check if you copied it correctly"
 msgstr ""
 
-#: src/components/AppHeader.tsx:168:26
-#: src/components/AppHeader.tsx:174:26
+#: src/components/AppHeader.tsx:143:20
+msgid "Ratings & stats: actions"
+msgstr ""
+
+#: src/components/AppHeader.tsx:162:24
 msgid "To events list"
 msgstr ""
 
-#: src/components/AppHeader.tsx:170:20
-msgid "Events list"
-msgstr ""
-
-#: src/components/AppHeader.tsx:188:26
-#: src/components/AppHeader.tsx:190:20
-#: src/components/AppHeader.tsx:194:26
+#: src/components/AppHeader.tsx:169:24
 msgid "Profile & admin panel"
 msgstr ""
 
-#: src/components/AppHeader.tsx:209:28
-#: src/components/AppHeader.tsx:211:22
-#: src/components/AppHeader.tsx:215:28
+#: src/components/AppHeader.tsx:177:26
 msgid "Open assistant"
 msgstr ""
 
-#: src/components/AppHeader.tsx:234:28
-#: src/components/AppHeader.tsx:236:22
-msgid "Event contents"
-msgstr ""
-
-#: src/components/AppHeader.tsx:243:27
+#: src/components/AppHeader.tsx:187:25
 msgctxt "Event menu"
 msgid "Description"
 msgstr ""
 
-#: src/components/AppHeader.tsx:248:27
+#: src/components/AppHeader.tsx:193:25
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr ""
 
-#: src/components/AppHeader.tsx:253:27
+#: src/components/AppHeader.tsx:199:25
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr ""
 
-#: src/components/AppHeader.tsx:258:27
+#: src/components/AppHeader.tsx:205:25
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr ""
 
-#: src/components/AppHeader.tsx:264:29
+#: src/components/AppHeader.tsx:212:27
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr ""
 
-#: src/components/AppHeader.tsx:271:29
+#: src/components/AppHeader.tsx:220:27
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr ""
 
-#: src/components/AppHeader.tsx:279:31
+#: src/components/AppHeader.tsx:229:29
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr ""
 
-#: src/components/AppHeader.tsx:291:26
+#: src/components/AppHeader.tsx:238:30
 msgctxt "Event menu"
 msgid "Add online game"
 msgstr ""
 
-#: src/components/AppHeader.tsx:307:18
+#: src/components/AppHeader.tsx:253:22
+msgid "Language"
+msgstr ""
+
+#: src/components/AppHeader.tsx:279:22
+msgid "Toggle dimmed colors"
+msgstr ""
+
+#: src/components/AppHeader.tsx:288:22
+msgid "Toggle color scheme"
+msgstr ""
+
+#: src/components/AppHeader.tsx:297:22
+#: src/components/AppHeader.tsx:309:22
+msgid "Open menu"
+msgstr ""
+
+#: src/components/AppHeader.tsx:305:16
+msgid "Menu"
+msgstr ""
+
+#: src/components/AppHeader.tsx:333:18
 msgid "Add online game"
 msgstr ""
 
-#: src/components/AppHeader.tsx:321:45
+#: src/components/AppHeader.tsx:347:45
 msgid "Add replay"
 msgstr ""
 
@@ -222,147 +222,147 @@ msgstr ""
 msgid "Places stats"
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:78:32
+#: src/components/PlayerStatsListing.tsx:81:32
 msgid "Final game score"
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:81:16
+#: src/components/PlayerStatsListing.tsx:84:16
 msgid "Minimum: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:85:16
+#: src/components/PlayerStatsListing.tsx:88:16
 msgid "Maximum: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:89:16
+#: src/components/PlayerStatsListing.tsx:92:16
 msgid "Average: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:95:32
+#: src/components/PlayerStatsListing.tsx:98:32
 msgid "Misc stats"
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:98:16
+#: src/components/PlayerStatsListing.tsx:101:16
 msgid "Draws: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:103:20
+#: src/components/PlayerStatsListing.tsx:107:20
 msgid "With tempai: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:114:16
+#: src/components/PlayerStatsListing.tsx:118:16
 msgid "Chombo penalties: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:119:16
+#: src/components/PlayerStatsListing.tsx:127:16
 msgid "Dora collected: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:123:20
+#: src/components/PlayerStatsListing.tsx:131:20
 msgid "Average dora per hand: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:129:16
+#: src/components/PlayerStatsListing.tsx:137:16
 msgid "Riichi bets: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:133:20
+#: src/components/PlayerStatsListing.tsx:141:20
 msgid "Bets won: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:138:20
+#: src/components/PlayerStatsListing.tsx:146:20
 msgid "Bets lost: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:149:15
+#: src/components/PlayerStatsListing.tsx:157:15
 msgid "Win stats"
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:152:16
+#: src/components/PlayerStatsListing.tsx:160:16
 msgid "Rounds won: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:156:20
+#: src/components/PlayerStatsListing.tsx:164:20
 msgid "By ron: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:161:20
+#: src/components/PlayerStatsListing.tsx:169:20
 msgid "By tsumo: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:166:20
+#: src/components/PlayerStatsListing.tsx:174:20
 msgid "With open hand: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:171:20
+#: src/components/PlayerStatsListing.tsx:179:20
 msgid "With riichi: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:176:20
+#: src/components/PlayerStatsListing.tsx:184:20
 msgid "With damaten: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:183:16
+#: src/components/PlayerStatsListing.tsx:191:16
 msgid "Total points gained: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:187:16
+#: src/components/PlayerStatsListing.tsx:195:16
 msgid "Average win score: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:193:15
+#: src/components/PlayerStatsListing.tsx:203:15
 msgid "Loss stats"
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:196:16
+#: src/components/PlayerStatsListing.tsx:206:16
 msgid "Deal-ins to ron: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:201:20
+#: src/components/PlayerStatsListing.tsx:212:20
 msgid "Because of riichi: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:210:20
+#: src/components/PlayerStatsListing.tsx:221:20
 msgid "Without declared riichi: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:215:24
+#: src/components/PlayerStatsListing.tsx:226:24
 msgid "To open hands: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:224:24
+#: src/components/PlayerStatsListing.tsx:235:24
 msgid "To hands with riichi: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:233:24
+#: src/components/PlayerStatsListing.tsx:244:24
 msgid "To damaten hands: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:244:20
-#: src/components/PlayerStatsListing.tsx:265:20
+#: src/components/PlayerStatsListing.tsx:255:20
+#: src/components/PlayerStatsListing.tsx:281:20
 msgid "Total points lost: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:248:20
+#: src/components/PlayerStatsListing.tsx:259:20
 msgid "Average deal-in: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:259:16
+#: src/components/PlayerStatsListing.tsx:272:16
 msgid "Tsumo payments: "
 msgstr ""
 
-#: src/components/PlayerStatsListing.tsx:269:20
+#: src/components/PlayerStatsListing.tsx:285:20
 msgid "Average points lost: "
 msgstr ""
 
 #: src/components/RatingGraph.tsx:161:21
-#: src/pages/RatingTable.tsx:417:32
-#: src/pages/RatingTable.tsx:476:7
+#: src/pages/RatingTable.tsx:425:32
+#: src/pages/RatingTable.tsx:484:7
 msgid "Games played"
 msgstr ""
 
 #: src/components/RatingGraph.tsx:171:21
-#: src/pages/RatingTable.tsx:223:20
+#: src/pages/RatingTable.tsx:231:20
 msgid "Rating"
 msgstr ""
 
@@ -613,301 +613,305 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: src/Layout.tsx:265:28
+#: src/Layout.tsx:319:30
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr ""
 
-#: src/Layout.tsx:266:34
+#: src/Layout.tsx:320:36
 msgid "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list."
 msgstr ""
 
-#: src/pages/Achievements.tsx:138:14
+#: src/pages/Achievements.tsx:143:14
 msgid "Best hand"
 msgstr ""
 
-#: src/pages/Achievements.tsx:139:20
+#: src/pages/Achievements.tsx:144:20
 msgid "Given for collecting the hand with biggest han count (independent of cost)."
 msgstr ""
 
-#: src/pages/Achievements.tsx:156:14
-#: src/pages/Achievements.tsx:423:23
+#: src/pages/Achievements.tsx:161:14
+#: src/pages/Achievements.tsx:428:23
 msgctxt "Achievements badge"
 msgid "%1 han"
 msgstr ""
 
-#: src/pages/Achievements.tsx:160:32
-#: src/pages/Achievements.tsx:186:32
-#: src/pages/Achievements.tsx:214:32
-#: src/pages/Achievements.tsx:245:32
-#: src/pages/Achievements.tsx:276:32
-#: src/pages/Achievements.tsx:307:32
-#: src/pages/Achievements.tsx:338:32
-#: src/pages/Achievements.tsx:369:32
-#: src/pages/Achievements.tsx:401:32
-#: src/pages/Achievements.tsx:437:32
-#: src/pages/Achievements.tsx:468:32
-#: src/pages/Achievements.tsx:497:32
-#: src/pages/Achievements.tsx:528:32
-#: src/pages/Achievements.tsx:559:32
-#: src/pages/Achievements.tsx:590:32
-#: src/pages/Achievements.tsx:621:32
-#: src/pages/Achievements.tsx:657:32
-#: src/pages/Achievements.tsx:691:32
-#: src/pages/Achievements.tsx:722:32
-#: src/pages/Achievements.tsx:753:32
+#: src/pages/Achievements.tsx:165:32
+#: src/pages/Achievements.tsx:191:32
+#: src/pages/Achievements.tsx:219:32
+#: src/pages/Achievements.tsx:250:32
+#: src/pages/Achievements.tsx:281:32
+#: src/pages/Achievements.tsx:312:32
+#: src/pages/Achievements.tsx:343:32
+#: src/pages/Achievements.tsx:374:32
+#: src/pages/Achievements.tsx:406:32
+#: src/pages/Achievements.tsx:442:32
+#: src/pages/Achievements.tsx:473:32
+#: src/pages/Achievements.tsx:502:32
+#: src/pages/Achievements.tsx:533:32
+#: src/pages/Achievements.tsx:564:32
+#: src/pages/Achievements.tsx:595:32
+#: src/pages/Achievements.tsx:626:32
+#: src/pages/Achievements.tsx:662:32
+#: src/pages/Achievements.tsx:696:32
+#: src/pages/Achievements.tsx:727:32
+#: src/pages/Achievements.tsx:758:32
 msgid "Couldn't get nomination details"
 msgstr ""
 
-#: src/pages/Achievements.tsx:166:14
+#: src/pages/Achievements.tsx:171:14
 msgid "Over 9000 fu"
 msgstr ""
 
-#: src/pages/Achievements.tsx:167:20
+#: src/pages/Achievements.tsx:172:20
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr ""
 
-#: src/pages/Achievements.tsx:182:14
+#: src/pages/Achievements.tsx:187:14
 msgctxt "Achievements badge"
 msgid "%1 fu"
 msgstr ""
 
-#: src/pages/Achievements.tsx:192:14
+#: src/pages/Achievements.tsx:197:14
 msgid "I saw them dancing"
 msgstr ""
 
-#: src/pages/Achievements.tsx:193:20
+#: src/pages/Achievements.tsx:198:20
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr ""
 
-#: src/pages/Achievements.tsx:208:14
+#: src/pages/Achievements.tsx:213:14
 msgctxt "Achievements badge"
 msgid "%1 tsumo"
 msgstr ""
 
-#: src/pages/Achievements.tsx:220:14
+#: src/pages/Achievements.tsx:225:14
 msgid "Die Hard"
 msgstr ""
 
-#: src/pages/Achievements.tsx:221:20
+#: src/pages/Achievements.tsx:226:20
 msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:236:14
-#: src/pages/Achievements.tsx:267:14
+#: src/pages/Achievements.tsx:241:14
+#: src/pages/Achievements.tsx:272:14
 msgctxt "Achievements badge"
 msgid "%1 feed"
 msgid_plural "%1 feeds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/pages/Achievements.tsx:251:14
+#: src/pages/Achievements.tsx:256:14
 msgid "Brave minesweeper"
 msgstr ""
 
-#: src/pages/Achievements.tsx:252:20
+#: src/pages/Achievements.tsx:257:20
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:282:14
+#: src/pages/Achievements.tsx:287:14
 msgid "Guest of honors"
 msgstr ""
 
-#: src/pages/Achievements.tsx:283:20
+#: src/pages/Achievements.tsx:288:20
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:291:20
+#: src/pages/Achievements.tsx:296:20
 msgctxt "Achievements badge"
 msgid "%1 yakuhai"
 msgid_plural "%1 yakuhais"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/pages/Achievements.tsx:313:14
+#: src/pages/Achievements.tsx:318:14
 msgid "The great dealer"
 msgstr ""
 
-#: src/pages/Achievements.tsx:314:20
+#: src/pages/Achievements.tsx:319:20
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:329:14
-#: src/pages/Achievements.tsx:706:20
+#: src/pages/Achievements.tsx:334:14
+#: src/pages/Achievements.tsx:711:20
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/pages/Achievements.tsx:344:14
+#: src/pages/Achievements.tsx:349:14
 msgid "The 1k Flash"
 msgstr ""
 
-#: src/pages/Achievements.tsx:345:20
+#: src/pages/Achievements.tsx:350:20
 msgid "Given for the most of 1/30 wins during tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:360:14
+#: src/pages/Achievements.tsx:365:14
 msgctxt "Achievements badge"
 msgid "%1 quickest hand"
 msgid_plural "%1 quickest hands"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/pages/Achievements.tsx:375:14
+#: src/pages/Achievements.tsx:380:14
 msgid "Jewelry included"
 msgstr ""
 
-#: src/pages/Achievements.tsx:376:20
+#: src/pages/Achievements.tsx:381:20
 msgid "Given for collecting a yakuman during tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:390:20
+#: src/pages/Achievements.tsx:395:20
 msgid "No yakumans have been collected"
 msgstr ""
 
-#: src/pages/Achievements.tsx:407:14
+#: src/pages/Achievements.tsx:412:14
 msgid "This can't be your wait"
 msgstr ""
 
-#: src/pages/Achievements.tsx:408:20
+#: src/pages/Achievements.tsx:413:20
 msgid "Given for feeding into largest hand during tournament (but not while in riichi)."
 msgstr ""
 
-#: src/pages/Achievements.tsx:419:23
+#: src/pages/Achievements.tsx:424:23
 msgctxt "Achievements badge"
 msgid "%1 han, %2 fu"
 msgstr ""
 
-#: src/pages/Achievements.tsx:443:14
+#: src/pages/Achievements.tsx:448:14
 msgid "Honored donor"
 msgstr ""
 
-#: src/pages/Achievements.tsx:444:20
+#: src/pages/Achievements.tsx:449:20
 msgid "Given for losing largest amount of points as riichi bets."
 msgstr ""
 
-#: src/pages/Achievements.tsx:452:20
+#: src/pages/Achievements.tsx:457:20
 msgctxt "Achievements badge"
 msgid "%1 bet"
 msgid_plural "%1 bets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/pages/Achievements.tsx:474:14
+#: src/pages/Achievements.tsx:479:14
 msgid "Just as planned"
 msgstr ""
 
-#: src/pages/Achievements.tsx:475:20
+#: src/pages/Achievements.tsx:480:20
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:483:20
+#: src/pages/Achievements.tsx:488:20
 msgctxt "Achievements badge"
 msgid "%1 ippatsu"
 msgstr ""
 
-#: src/pages/Achievements.tsx:503:14
+#: src/pages/Achievements.tsx:508:14
 msgid "Careful planning"
 msgstr ""
 
-#: src/pages/Achievements.tsx:504:20
+#: src/pages/Achievements.tsx:509:20
 msgid "Given for the smallest average cost of opponents hand that player has dealt."
 msgstr ""
 
-#: src/pages/Achievements.tsx:514:20
-#: src/pages/Achievements.tsx:607:20
-#: src/pages/Achievements.tsx:739:20
+#: src/pages/Achievements.tsx:519:20
+#: src/pages/Achievements.tsx:612:20
+#: src/pages/Achievements.tsx:744:20
 msgctxt "Achievements badge"
 msgid "%1 points"
 msgstr ""
 
-#: src/pages/Achievements.tsx:534:14
+#: src/pages/Achievements.tsx:539:14
 msgid "Dora lord"
 msgstr ""
 
-#: src/pages/Achievements.tsx:535:20
+#: src/pages/Achievements.tsx:540:20
 msgid "Given for the largest average count of dora in player's hand."
 msgstr ""
 
-#: src/pages/Achievements.tsx:543:20
+#: src/pages/Achievements.tsx:548:20
 msgctxt "Achievements badge"
 msgid "%1 dora"
 msgid_plural "%1 dora"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/pages/Achievements.tsx:565:14
+#: src/pages/Achievements.tsx:570:14
 msgid "Gotta Catch'Em All"
 msgstr ""
 
-#: src/pages/Achievements.tsx:566:20
+#: src/pages/Achievements.tsx:571:20
 msgid "Given for the largest amount of unique yaku collected during the tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:576:20
+#: src/pages/Achievements.tsx:581:20
 msgctxt "Achievements badge"
 msgid "%1 yaku"
 msgstr ""
 
-#: src/pages/Achievements.tsx:596:14
+#: src/pages/Achievements.tsx:601:14
 msgid "The favorite apprentice of ASAPIN"
 msgstr ""
 
-#: src/pages/Achievements.tsx:597:20
+#: src/pages/Achievements.tsx:602:20
 msgid "Given for the largest amount of points received as ryuukyoku (draw) payments."
 msgstr ""
 
-#: src/pages/Achievements.tsx:627:14
+#: src/pages/Achievements.tsx:632:14
 msgid "And your riichi bet, please"
 msgstr ""
 
-#: src/pages/Achievements.tsx:628:20
+#: src/pages/Achievements.tsx:633:20
 msgid "Given for collecting the largest amount of other players' riichi bets during the tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:638:20
-#: src/pages/Achievements.tsx:672:20
+#: src/pages/Achievements.tsx:643:20
+#: src/pages/Achievements.tsx:677:20
 msgctxt "Achievements badge"
 msgid "%1 riichi bet"
 msgid_plural "%1 riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/pages/Achievements.tsx:663:14
+#: src/pages/Achievements.tsx:668:14
 msgid "The Covetous Knight"
 msgstr ""
 
-#: src/pages/Achievements.tsx:664:20
+#: src/pages/Achievements.tsx:669:20
 msgid "Given for losing the smallest number of riichi bets."
 msgstr ""
 
-#: src/pages/Achievements.tsx:697:14
+#: src/pages/Achievements.tsx:702:14
 msgid "Ninja"
 msgstr ""
 
-#: src/pages/Achievements.tsx:698:20
+#: src/pages/Achievements.tsx:703:20
 msgid "Given for winning the largest number of hands with damaten."
 msgstr ""
 
-#: src/pages/Achievements.tsx:728:14
+#: src/pages/Achievements.tsx:733:14
 msgid "We need more gold"
 msgstr ""
 
-#: src/pages/Achievements.tsx:729:20
+#: src/pages/Achievements.tsx:734:20
 msgid "Given for having biggest score in the end of the session across the tournament."
 msgstr ""
 
-#: src/pages/Achievements.tsx:761:29
+#: src/pages/Achievements.tsx:777:12
+msgid "Achievements are hidden by tournament administrator"
+msgstr ""
+
+#: src/pages/Achievements.tsx:786:29
 msgid "Achievements are not available for aggregated events"
 msgstr ""
 
-#: src/pages/Achievements.tsx:770:22
+#: src/pages/Achievements.tsx:795:22
 msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
 #: src/pages/EventInfo.tsx:54:18
-#: src/pages/RatingTable.tsx:133:49
+#: src/pages/RatingTable.tsx:141:49
 #: src/pages/RecentGames.tsx:82:47
 msgid "Aggregated event"
 msgstr ""
@@ -1364,66 +1368,66 @@ msgstr ""
 msgid "Close game preview"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:119:12
+#: src/pages/RatingTable.tsx:127:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:136:24
+#: src/pages/RatingTable.tsx:144:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:161:18
+#: src/pages/RatingTable.tsx:169:18
 msgid "Save as CSV"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:194:22
-#: src/pages/RatingTable.tsx:471:21
+#: src/pages/RatingTable.tsx:202:22
+#: src/pages/RatingTable.tsx:479:21
 msgid "Team"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:253:20
+#: src/pages/RatingTable.tsx:261:20
 msgid "Average score"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:281:20
-#: src/pages/RatingTable.tsx:474:7
+#: src/pages/RatingTable.tsx:289:20
+#: src/pages/RatingTable.tsx:482:7
 msgid "Average place"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:311:24
+#: src/pages/RatingTable.tsx:319:24
 msgid "All players"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:321:30
+#: src/pages/RatingTable.tsx:329:30
 msgid "Players having a required minimum of games"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:329:24
+#: src/pages/RatingTable.tsx:337:24
 msgid "With min games"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:428:34
-#: src/pages/RatingTable.tsx:472:24
+#: src/pages/RatingTable.tsx:436:34
+#: src/pages/RatingTable.tsx:480:24
 msgid "Chips"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:468:7
+#: src/pages/RatingTable.tsx:476:7
 msgid "Place"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:469:7
+#: src/pages/RatingTable.tsx:477:7
 msgid "Player ID"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:470:7
+#: src/pages/RatingTable.tsx:478:7
 msgid "Player name"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:473:7
+#: src/pages/RatingTable.tsx:481:7
 msgid "Rating points"
 msgstr ""
 
-#: src/pages/RatingTable.tsx:475:7
+#: src/pages/RatingTable.tsx:483:7
 msgid "Average points"
 msgstr ""
 
@@ -1463,14 +1467,14 @@ msgstr ""
 msgid "Last series"
 msgstr ""
 
-#: src/pages/Timer.tsx:122:29
+#: src/pages/Timer.tsx:125:29
 msgid "Timer is not available for aggregated events"
 msgstr ""
 
-#: src/pages/Timer.tsx:150:19
+#: src/pages/Timer.tsx:153:19
 msgid "Timer"
 msgstr ""
 
-#: src/pages/Timer.tsx:151:22
+#: src/pages/Timer.tsx:154:22
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""

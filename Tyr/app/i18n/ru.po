@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 08:27Z\n"
+"POT-Creation-Date: 2023-08-08 17:59Z\n"
 "PO-Revision-Date: 2023-04-16 21:56+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -41,7 +41,7 @@ msgstr "%1 хан, %2 фу"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/components/screens/table/TableHelper.ts:513:14
+#: app/components/screens/table/TableHelper.ts:521:14
 msgid "Abort"
 msgstr "Абортивная ничья"
 
@@ -76,7 +76,7 @@ msgstr "Чинрото"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:515:14
+#: app/components/screens/table/TableHelper.ts:523:14
 msgid "Chombo"
 msgstr "Чомбо"
 
@@ -112,11 +112,11 @@ msgstr "Дайсуши"
 msgid "Dora"
 msgstr "Дора"
 
-#: app/components/screens/table/TableHelper.ts:511:14
+#: app/components/screens/table/TableHelper.ts:519:14
 msgid "Draw"
 msgstr "Ничья"
 
-#: app/components/screens/login/LoginErrorView.tsx:42:23
+#: app/components/screens/login/LoginErrorView.tsx:44:23
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr "E-mail не зарегистрирован в базе данных Pantheon (%1)"
 
@@ -134,7 +134,7 @@ msgid "Exhaustive draw"
 msgstr "Ничья"
 
 #: app/components/screens/login/EnterCredentialsView.tsx:81:12
-#: app/components/screens/login/LoginErrorView.tsx:48:16
+#: app/components/screens/login/LoginErrorView.tsx:50:16
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
@@ -146,7 +146,7 @@ msgstr "Фу"
 msgid "Game log"
 msgstr "Лог игры"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:91:14
+#: app/components/screens/settings/SettingsScreenView.tsx:92:14
 msgid "Go to personal area"
 msgstr "В личный кабинет"
 
@@ -178,7 +178,7 @@ msgstr "Хотей"
 msgid "Houtei raoyui"
 msgstr "Хотей раоюй"
 
-#: app/components/screens/login/LoginErrorView.tsx:54:12
+#: app/components/screens/login/LoginErrorView.tsx:56:12
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
 msgstr "Обратитесь к администратору турнира для дальнейших инструкций."
@@ -211,7 +211,7 @@ msgstr "Джунчан"
 msgid "Kokushi musou"
 msgstr "Кокушимусо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:95:57
+#: app/components/screens/settings/SettingsScreenView.tsx:96:57
 msgid "Language"
 msgstr "Язык"
 
@@ -219,15 +219,15 @@ msgstr "Язык"
 msgid "Log in"
 msgstr "Вход"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:166:32
+#: app/components/screens/settings/SettingsScreenView.tsx:167:32
 msgid "Log out"
 msgstr "Выйти из системы"
 
-#: app/components/screens/login/LoginErrorView.tsx:38:15
+#: app/components/screens/login/LoginErrorView.tsx:40:15
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "Попытка входа в систему не удалась. Возможные причины:"
 
-#: app/components/screens/table/TableHelper.ts:418:22
+#: app/components/screens/table/TableHelper.ts:425:22
 msgid "Loser"
 msgstr "Проигравший"
 
@@ -239,7 +239,7 @@ msgstr "Мензенцумо"
 msgid "Multiron, from %1"
 msgstr "Мультирон с %1"
 
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:525:14
 msgid "Nagashi"
 msgstr "Нагаши манган"
 
@@ -264,7 +264,7 @@ msgstr "Результаты отсутствуют"
 msgid "No tables are playing right now"
 msgstr "На данный момент ни один стол не играет"
 
-#: app/components/screens/login/LoginErrorView.tsx:59:12
+#: app/components/screens/login/LoginErrorView.tsx:61:12
 msgid "OK"
 msgstr "ОК"
 
@@ -280,7 +280,7 @@ msgstr "Открытая рука"
 msgid "Other playing tables"
 msgstr "Другие столы"
 
-#: app/components/screens/login/LoginErrorView.tsx:36:49
+#: app/components/screens/login/LoginErrorView.tsx:38:49
 msgid "Pantheon"
 msgstr "Pantheon"
 
@@ -296,7 +296,7 @@ msgstr "Пао с: %1"
 msgid "Password"
 msgstr "Пароль"
 
-#: app/components/screens/login/LoginErrorView.tsx:46:14
+#: app/components/screens/login/LoginErrorView.tsx:48:14
 msgid "Password check has failed"
 msgstr "Пароль введен некорректно"
 
@@ -341,7 +341,7 @@ msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
 #: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:507:14
+#: app/components/screens/table/TableHelper.ts:515:14
 msgid "Ron"
 msgstr "Рон"
 
@@ -373,7 +373,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:149:16
+#: app/components/screens/settings/SettingsScreenView.tsx:150:16
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
@@ -381,11 +381,11 @@ msgstr "Выбрать другое событие"
 msgid "Select event"
 msgstr "Выбрать событие"
 
-#: app/components/screens/table/TableHelper.ts:488:16
+#: app/components/screens/table/TableHelper.ts:496:16
 msgid "Select pao"
 msgstr "Выбрать пао"
 
-#: app/components/screens/table/TableHelper.ts:493:16
+#: app/components/screens/table/TableHelper.ts:501:16
 msgid "Select tempai"
 msgstr "Выбрать темпай"
 
@@ -405,7 +405,7 @@ msgstr "Перемешать"
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:157:57
+#: app/components/screens/settings/SettingsScreenView.tsx:158:57
 msgid "Single device mode"
 msgstr "Режим одного устройства"
 
@@ -441,7 +441,7 @@ msgstr "Темпай: %1"
 msgid "Tenhou"
 msgstr "Тенхо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:111:57
+#: app/components/screens/settings/SettingsScreenView.tsx:112:57
 msgid "Theme"
 msgstr "Оформление"
 
@@ -454,7 +454,7 @@ msgid "Toitoi"
 msgstr "Тойтой"
 
 #: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:509:14
+#: app/components/screens/table/TableHelper.ts:517:14
 msgid "Tsumo"
 msgstr "Цумо"
 
@@ -466,11 +466,11 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:159:18
+#: app/components/screens/settings/SettingsScreenView.tsx:160:18
 msgid "Turn on if you use a single device for all players"
 msgstr "Включите, если вы используете одно устройство для всех игроков"
 
-#: app/components/screens/login/LoginErrorView.tsx:51:16
+#: app/components/screens/login/LoginErrorView.tsx:53:16
 msgid "Unexpected server error"
 msgstr "Неожиданная ошибка сервера"
 
@@ -478,8 +478,8 @@ msgstr "Неожиданная ошибка сервера"
 msgid "Ura dora"
 msgstr "Урадора"
 
-#: app/components/screens/table/TableHelper.ts:415:22
-#: app/components/screens/table/TableHelper.ts:428:22
+#: app/components/screens/table/TableHelper.ts:422:22
+#: app/components/screens/table/TableHelper.ts:435:22
 msgid "Winner"
 msgstr "Победитель"
 
@@ -511,7 +511,7 @@ msgstr "Якуман"
 msgid "dora %1"
 msgstr "дора %1"
 
-#: app/components/screens/table/TableHelper.ts:406:25
+#: app/components/screens/table/TableHelper.ts:413:25
 msgid "empty outcome"
 msgstr "пустой исход"
 
@@ -519,7 +519,7 @@ msgstr "пустой исход"
 msgid "name"
 msgstr "имя"
 
-#: app/components/screens/login/LoginErrorView.tsx:32:39
+#: app/components/screens/login/LoginErrorView.tsx:31:83
 msgctxt "Name of registration link"
 msgid "register"
 msgstr "регистрация"
@@ -536,7 +536,7 @@ msgstr "что-то пошло не так, свяжитесь с админис
 msgid "type to find someone"
 msgstr "начните вводить чтобы найти игроков"
 
-#: app/components/screens/table/TableHelper.ts:433:27
+#: app/components/screens/table/TableHelper.ts:440:27
 msgid "wrong outcome for paoSelect"
 msgstr "неверный исход для выбора пао"
 
