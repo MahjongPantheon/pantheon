@@ -48,8 +48,9 @@ import {
   IconOlympics,
   IconScript,
   IconTimelineEventPlus,
+  IconExternalLink,
 } from '@tabler/icons-react';
-import { Redirect, useLocation } from 'wouter';
+import { Redirect, useLocation, Link } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -292,8 +293,17 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
+                  <Link to={`/ownedEvents/edit/${event.id}`}>{event.title}</Link>
                   <a href={`${env.urls.sigrun}/event/${event.id}/info`} target='_blank'>
-                    {event.title}
+                    <ActionIcon
+                      title={i18n._t('Open event page in new tab')}
+                      loading={visibilityLoading[event.id]}
+                      variant='subtle'
+                      size='sm'
+                      color='gray'
+                    >
+                      <IconExternalLink />
+                    </ActionIcon>
                   </a>
                 </Group>
                 <Group position='right' spacing='xs'>

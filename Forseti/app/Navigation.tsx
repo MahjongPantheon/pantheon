@@ -175,12 +175,14 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
       >
         <Stack justify='space-between' style={{ height: '100%' }}>
           <Stack spacing={0}>
-            <MainMenuLink
-              href={'/ownedEvents'}
-              icon={<IconList size={20} />}
-              text={i18n._t('My events')}
-              onClick={closeMenu}
-            />
+            {isLoggedIn && (
+              <MainMenuLink
+                href={'/ownedEvents'}
+                icon={<IconList size={20} />}
+                text={i18n._t('My events')}
+                onClick={closeMenu}
+              />
+            )}
             {!isLoggedIn && (
               <MainMenuLink
                 href={'/profile/login'}
