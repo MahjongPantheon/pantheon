@@ -33,6 +33,7 @@ type RulesetSettingsProps = {
   i18n: I18nService;
 };
 
+let lastChomboPaymentValue = 0;
 export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) => {
   return (
     <Stack>
@@ -192,6 +193,15 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           'Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied.'
         )}
         {...form.getInputProps('ruleset.extraChomboPayments', { type: 'checkbox' })}
+        onChange={(e) => {
+          form.setFieldValue('ruleset.extraChomboPayments', e.target.checked);
+          if (e.target.checked) {
+            lastChomboPaymentValue = form.getTransformedValues().ruleset.chomboPenalty;
+            form.setFieldValue('ruleset.chomboPenalty', 0);
+          } else {
+            form.setFieldValue('ruleset.chomboPenalty', lastChomboPaymentValue);
+          }
+        }}
       />
       {!form.getTransformedValues().ruleset.extraChomboPayments && (
         <NumberInput
