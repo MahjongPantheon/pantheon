@@ -26,8 +26,9 @@ import {
 import { AppHeader } from './components/AppHeader';
 import { AnalyticsProvider, useAnalytics } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
+import { authCtx } from './hooks/auth';
 import { I18nProvider, useI18n } from './hooks/i18n';
-import { ApiProvider } from './hooks/api';
+import { ApiProvider, useApi } from './hooks/api';
 import './App.css';
 import { useCallback, useState, ReactNode, useEffect } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
@@ -35,6 +36,8 @@ import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
 import { EmotionCache } from '@emotion/css';
 import { Meta } from './components/Meta';
+import { useIsomorphicState } from './hooks/useIsomorphicState';
+import { PersonEx } from './clients/proto/atoms.pb';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -57,6 +60,12 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   const i18n = useI18n();
   const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
   const [useDimmed, setUseDimmed] = useState<boolean>(storage.getDimmed());
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSuperadmin, setIsSuperadmin] = useState(false);
+  const [userInfo, setUserInfo] = useState<PersonEx | null>(null);
+  const [ownEvents, setOwnEvents] = useState<number[]>([]);
+  const [personId] = useState(storage.getPersonId());
+  const api = useApi();
 
   const analytics = useAnalytics();
   useEffect(() => {
@@ -67,6 +76,39 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     window.addEventListener('pushState', track);
     window.addEventListener('replaceState', track);
   }, []);
+
+  const [authVals] = useIsomorphicState<
+    [boolean, boolean, PersonEx | null, number[]],
+    [boolean, boolean, PersonEx | null, number[]],
+    Error
+  >(
+    [false, false, null, []],
+    'Global_auth_' + (personId ?? '').toString(),
+    () => {
+      if (!personId) {
+        return Promise.resolve([false, false, null, []]);
+      }
+      return Promise.allSettled([
+        api.quickAuthorize(),
+        api.getSuperadminFlag(personId ?? undefined),
+        api.getPersonalInfo(personId ?? undefined),
+        api.getOwnedEventIds(personId ?? undefined),
+      ]).then(([auth, superadmin, info, ownedEvents]) => [
+        auth.status === 'fulfilled' ? auth.value : false,
+        superadmin.status === 'fulfilled' ? superadmin.value : false,
+        info.status === 'fulfilled' ? info.value : null,
+        ownedEvents.status === 'fulfilled' ? ownedEvents.value : [],
+      ]);
+    },
+    [personId]
+  );
+
+  useEffect(() => {
+    setIsLoggedIn(authVals?.[0] ?? false);
+    setIsSuperadmin(authVals?.[1] ?? false);
+    setUserInfo(authVals?.[2] ?? null);
+    setOwnEvents(authVals?.[3] ?? []);
+  }, [authVals]);
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const newValue = value ?? (colorScheme === 'dark' ? 'light' : 'dark');
@@ -257,47 +299,62 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     >
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>
-          <globalsCtx.Provider value={{ data, setData }}>
-            <StorageProvider>
-              <I18nProvider>
-                <ApiProvider>
-                  <Meta
-                    title={i18n._t('Sigrun: riichi mahjong ratings and statistics')}
-                    description={i18n._t(
-                      'Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.'
-                    )}
-                  />
-                  <NavigationProgress color='green' zIndex={10100} />
-                  <AppShell
-                    padding='md'
-                    header={<AppHeader />}
-                    footer={
-                      <Footer
-                        height={60}
-                        bg={theme.primaryColor}
-                        style={{ position: 'static', display: 'flex', alignItems: 'center' }}
-                      >
-                        <AppFooter
+          <authCtx.Provider
+            value={{
+              isLoggedIn,
+              setIsLoggedIn,
+              isSuperadmin,
+              setIsSuperadmin,
+              userInfo,
+              setUserInfo,
+              ownEvents,
+              setOwnEvents,
+            }}
+          >
+            <globalsCtx.Provider value={{ data, setData }}>
+              <StorageProvider>
+                <I18nProvider>
+                  <ApiProvider>
+                    <Meta
+                      title={i18n._t('Sigrun: riichi mahjong ratings and statistics')}
+                      description={i18n._t(
+                        'Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.'
+                      )}
+                    />
+                    <NavigationProgress color='green' zIndex={10100} />
+                    <AppShell
+                      padding='md'
+                      header={
+                        <AppHeader
                           dark={dark}
                           toggleColorScheme={toggleColorScheme}
                           toggleDimmed={toggleDimmed}
                           saveLang={saveLang}
                         />
-                      </Footer>
-                    }
-                    styles={{
-                      main: {
-                        minHeight: 'calc(100vh - var(--mantine-footer-height, 0px))',
-                        background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
-                      },
-                    }}
-                  >
-                    {children}
-                  </AppShell>
-                </ApiProvider>
-              </I18nProvider>
-            </StorageProvider>
-          </globalsCtx.Provider>
+                      }
+                      footer={
+                        <Footer
+                          height={60}
+                          style={{ position: 'static', display: 'flex', alignItems: 'center' }}
+                        >
+                          <AppFooter />
+                        </Footer>
+                      }
+                      styles={{
+                        main: {
+                          overflowX: 'hidden',
+                          minHeight: 'calc(100vh - var(--mantine-footer-height, 0px))',
+                          background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
+                        },
+                      }}
+                    >
+                      {children}
+                    </AppShell>
+                  </ApiProvider>
+                </I18nProvider>
+              </StorageProvider>
+            </globalsCtx.Provider>
+          </authCtx.Provider>
         </AnalyticsProvider>
       </ColorSchemeProvider>
     </MantineProvider>

@@ -15,16 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Menu, Group, ActionIcon, Container, Anchor, Stack } from '@mantine/core';
-import {
-  IconArrowBarToUp,
-  IconLanguageHiragana,
-  IconMoon,
-  IconMoonStars,
-  IconSun,
-  IconSunLow,
-} from '@tabler/icons-react';
-import { FlagEn, FlagRu } from '../helpers/flags';
+import { Group, ActionIcon, Container, Anchor, Stack } from '@mantine/core';
+import { IconArrowBarToUp } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
 import * as React from 'react';
 import { useContext } from 'react';
@@ -32,14 +24,7 @@ import { globalsCtx } from '../hooks/globals';
 import { useMediaQuery } from '@mantine/hooks';
 import { EventType } from '../clients/proto/atoms.pb';
 
-interface AppFooterProps {
-  dark: boolean;
-  toggleColorScheme: () => void;
-  toggleDimmed: () => void;
-  saveLang: (lang: string) => void;
-}
-
-export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: AppFooterProps) {
+export function AppFooter() {
   const i18n = useI18n();
   const largeScreen = useMediaQuery('(min-width: 640px)');
   const globals = useContext(globalsCtx);
@@ -49,7 +34,7 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
       <Container style={{ flex: 1 }}>
         <Group position='apart'>
           <ActionIcon
-            variant='filled'
+            variant='subtle'
             color='blue'
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             title={i18n._t('Back to top')}
@@ -61,7 +46,7 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
             {globals.data.eventId && (
               <Stack spacing={0}>
                 <Anchor
-                  color='white'
+                  color='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId?.join('.')}/info`}
                 >
@@ -69,7 +54,7 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
                 </Anchor>
                 {globals.data.eventId?.length === 1 && (
                   <Anchor
-                    color='white'
+                    color='gray'
                     size='xs'
                     href={`/event/${globals.data.eventId?.join('.')}/rules`}
                   >
@@ -81,14 +66,14 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
             {globals.data.eventId && (
               <Stack spacing={0}>
                 <Anchor
-                  color='white'
+                  color='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId?.join('.')}/games`}
                 >
                   {i18n._t('Recent games')}
                 </Anchor>
                 <Anchor
-                  color='white'
+                  color='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
                 >
@@ -99,7 +84,7 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
             <Stack spacing={0}>
               {globals.data.eventId?.length === 1 && (
                 <Anchor
-                  color='white'
+                  color='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId.join('.')}/achievements`}
                 >
@@ -108,7 +93,7 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
               )}
               {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
                 <Anchor
-                  color='white'
+                  color='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId.join('.')}/seriesRating`}
                 >
@@ -120,7 +105,7 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
                 globals.data.eventId?.length === 1 && (
                   <Anchor
-                    color='white'
+                    color='gray'
                     size='xs'
                     href={`/event/${globals.data.eventId.join('.')}/timer`}
                   >
@@ -128,39 +113,6 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
                   </Anchor>
                 )}
             </Stack>
-          </Group>
-          <Group position='right' mt={0}>
-            <ActionIcon
-              variant='filled'
-              color={dark ? 'pink' : 'grape'}
-              onClick={() => toggleDimmed()}
-              title={i18n._t('Toggle dimmed color scheme')}
-            >
-              {dark ? <IconMoon size='1.1rem' /> : <IconSunLow size='1.1rem' />}
-            </ActionIcon>
-            <ActionIcon
-              variant='filled'
-              color={dark ? 'grape' : 'indigo'}
-              onClick={() => toggleColorScheme()}
-              title={i18n._t('Toggle color scheme')}
-            >
-              {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
-            </ActionIcon>
-            <Menu shadow='md' width={200}>
-              <Menu.Target>
-                <ActionIcon color='green' variant='filled' title={i18n._t('Language')}>
-                  <IconLanguageHiragana size='1.1rem' />
-                </ActionIcon>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item onClick={() => saveLang('en')} icon={<FlagEn width={24} />}>
-                  en
-                </Menu.Item>
-                <Menu.Item onClick={() => saveLang('ru')} icon={<FlagRu width={24} />}>
-                  ru
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
           </Group>
         </Group>
       </Container>

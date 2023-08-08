@@ -48,8 +48,9 @@ import {
   IconOlympics,
   IconScript,
   IconTimelineEventPlus,
+  IconExternalLink,
 } from '@tabler/icons-react';
-import { Redirect, useLocation } from 'wouter';
+import { Redirect, useLocation, Link } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -61,6 +62,7 @@ import { nprogress } from '@mantine/nprogress';
 import { TopActionButton } from '../helpers/TopActionButton';
 import { MenuItemLink } from '../helpers/MenuItemLink';
 import { env } from '../env';
+import { notifications } from '@mantine/notifications';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -81,8 +83,17 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const [totalPages, setTotalPages] = useState(0);
   const [events, setEvents] = useState<Event[]>([]);
   const [visibilityLoading, setVisibilityLoading] = useState<Record<number, boolean>>({});
+  const [resultsLoading, setResultsLoading] = useState<Record<number, boolean>>({});
   const [scoringLoading, setScoringLoading] = useState<Record<number, boolean>>({});
   usePageTitle(i18n._t('Manage my events'));
+
+  const errHandler = useCallback((err: Error) => {
+    notifications.show({
+      title: i18n._t('Error has occurred'),
+      message: err.message,
+      color: 'red',
+    });
+  }, []);
 
   const loadPageData = useCallback(
     (pageToLoad: number) => {
@@ -118,7 +129,8 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
             });
           }
         })
-        .catch(() => {
+        .catch((e) => {
+          errHandler(e);
           setIsLoading(false);
           nprogress.complete();
         });
@@ -136,17 +148,20 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
 
   const toggleVisibility = (id: number) => {
     setVisibilityLoading({ ...scoringLoading, [id]: true });
-    api.toggleListed(id).then((resp) => {
-      if (resp) {
-        const idx = events.findIndex((ev) => ev.id === id);
-        setEvents([
-          ...events.slice(0, idx),
-          { ...events[idx], isListed: !events[idx].isListed },
-          ...events.slice(idx + 1),
-        ]);
-      }
-      setVisibilityLoading({ ...scoringLoading, [id]: false });
-    });
+    api
+      .toggleListed(id)
+      .then((resp) => {
+        if (resp) {
+          const idx = events.findIndex((ev) => ev.id === id);
+          setEvents([
+            ...events.slice(0, idx),
+            { ...events[idx], isListed: !events[idx].isListed },
+            ...events.slice(idx + 1),
+          ]);
+        }
+        setVisibilityLoading({ ...scoringLoading, [id]: false });
+      })
+      .catch(errHandler);
   };
 
   const rebuildScoring = (id: number) => {
@@ -157,16 +172,40 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   };
 
   const stopEvent = (id: number) => {
-    api.finishEvent(id).then((resp) => {
-      if (resp) {
-        const idx = events.findIndex((ev) => ev.id === id);
-        setEvents([
-          ...events.slice(0, idx),
-          { ...events[idx], finished: true },
-          ...events.slice(idx + 1),
-        ]);
-      }
-    });
+    api
+      .finishEvent(id)
+      .then((resp) => {
+        if (resp) {
+          const idx = events.findIndex((ev) => ev.id === id);
+          setEvents([
+            ...events.slice(0, idx),
+            { ...events[idx], finished: true },
+            ...events.slice(idx + 1),
+          ]);
+        }
+      })
+      .catch(errHandler);
+  };
+
+  const onToggleResults = (id: number) => {
+    setResultsLoading({ ...resultsLoading, [id]: true });
+    api
+      .toggleResults(id)
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to toggle results visibility'));
+        }
+        if (r) {
+          const idx = events.findIndex((ev) => ev.id === id);
+          setEvents([
+            ...events.slice(0, idx),
+            { ...events[idx], isRatingShown: !events[idx].isRatingShown },
+            ...events.slice(idx + 1),
+          ]);
+        }
+        setResultsLoading({ ...resultsLoading, [id]: false });
+      })
+      .catch(errHandler);
   };
 
   // Initial load
@@ -217,7 +256,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       : 'transparent',
                 }}
               >
-                <Group sx={{ flex: 1 }}>
+                <Group sx={{ flex: 1, flexWrap: 'nowrap' }}>
                   {event.type === EventType.EVENT_TYPE_LOCAL && (
                     <Tooltip
                       openDelay={500}
@@ -254,11 +293,20 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
+                  <Link to={`/ownedEvents/edit/${event.id}`}>{event.title}</Link>
                   <a href={`${env.urls.sigrun}/event/${event.id}/info`} target='_blank'>
-                    {event.title}
+                    <ActionIcon
+                      title={i18n._t('Open event page in new tab')}
+                      loading={visibilityLoading[event.id]}
+                      variant='subtle'
+                      size='sm'
+                      color='gray'
+                    >
+                      <IconExternalLink />
+                    </ActionIcon>
                   </a>
                 </Group>
-                <Group position='right'>
+                <Group position='right' spacing='xs'>
                   {!event.finished && (
                     <Menu shadow='md' width={200}>
                       <Menu.Target>
@@ -340,6 +388,16 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     onClick={() => toggleVisibility(event.id)}
                   >
                     {event.isListed ? <IconEye /> : <IconEyeOff />}
+                  </ActionIcon>
+                  <ActionIcon
+                    title={i18n._t('Toggle visibility of rating and achievements')}
+                    loading={resultsLoading[event.id]}
+                    variant='filled'
+                    size='lg'
+                    color='yellow'
+                    onClick={() => onToggleResults(event.id)}
+                  >
+                    {event.isRatingShown ? <IconEye /> : <IconEyeOff />}
                   </ActionIcon>
                 </Group>
               </Group>

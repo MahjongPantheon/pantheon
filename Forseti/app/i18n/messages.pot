@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 08:28Z\n"
+"POT-Creation-Date: 2023-08-08 17:59Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -211,104 +211,110 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: app/Navigation.tsx:168:12
-#: app/pages/OwnedEvents.tsx:182:12
+#: app/Navigation.tsx:140:12
+#: app/pages/OwnedEvents.tsx:222:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 
-#: app/Navigation.tsx:175:14
-#: app/pages/OwnedEvents.tsx:189:14
+#: app/Navigation.tsx:147:14
+#: app/pages/OwnedEvents.tsx:229:14
 msgid "Cancel"
 msgstr ""
 
-#: app/Navigation.tsx:185:14
-#: app/pages/OwnedEvents.tsx:199:14
+#: app/Navigation.tsx:157:14
+#: app/pages/OwnedEvents.tsx:239:14
 msgid "Stop event"
 msgstr ""
 
-#: app/Navigation.tsx:202:24
-#: app/Navigation.tsx:208:24
-msgid "To events list"
+#: app/Navigation.tsx:170:20
+msgid "Admin panel: actions"
 msgstr ""
 
-#: app/Navigation.tsx:204:18
-msgid "Events list"
+#: app/Navigation.tsx:182:23
+msgid "My events"
 msgstr ""
 
-#: app/Navigation.tsx:236:27
+#: app/Navigation.tsx:190:23
+msgid "Sign in"
+msgstr ""
+
+#: app/Navigation.tsx:198:23
+msgid "Sign up"
+msgstr ""
+
+#: app/Navigation.tsx:206:23
+#: app/pages/ProfileManageAdmin.tsx:318:19
+msgid "Register player"
+msgstr ""
+
+#: app/Navigation.tsx:214:23
+msgid "Edit profile"
+msgstr ""
+
+#: app/Navigation.tsx:222:23
+msgid "Sign out"
+msgstr ""
+
+#: app/Navigation.tsx:228:49
+#: app/pages/OwnedEvents.tsx:316:38
+msgid "Event management"
+msgstr ""
+
+#: app/Navigation.tsx:233:25
 msgid "Open event in new tab"
 msgstr ""
 
-#: app/Navigation.tsx:241:27
-#: app/pages/OwnedEvents.tsx:301:33
+#: app/Navigation.tsx:239:25
+#: app/pages/OwnedEvents.tsx:347:33
 msgid "Settings"
 msgstr ""
 
-#: app/Navigation.tsx:246:27
-#: app/pages/OwnedEvents.tsx:293:34
-#: app/pages/OwnedEvents.tsx:295:33
+#: app/Navigation.tsx:245:25
+#: app/pages/OwnedEvents.tsx:339:34
+#: app/pages/OwnedEvents.tsx:341:33
 msgid "Manage players"
 msgstr ""
 
-#: app/Navigation.tsx:251:27
-#: app/pages/OwnedEvents.tsx:289:33
+#: app/Navigation.tsx:251:25
+#: app/pages/OwnedEvents.tsx:335:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:25
 msgid "Penalties"
 msgstr ""
 
-#: app/Navigation.tsx:256:27
-#: app/pages/OwnedEvents.tsx:283:33
+#: app/Navigation.tsx:257:25
+#: app/pages/OwnedEvents.tsx:329:33
 msgid "Manage games"
 msgstr ""
 
-#: app/Navigation.tsx:262:29
-#: app/pages/OwnedEvents.tsx:276:35
+#: app/Navigation.tsx:264:27
+#: app/pages/OwnedEvents.tsx:322:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/Navigation.tsx:266:32
-#: app/pages/OwnedEvents.tsx:305:38
+#: app/Navigation.tsx:268:49
+#: app/pages/OwnedEvents.tsx:351:38
 msgid "Danger zone"
 msgstr ""
 
-#: app/Navigation.tsx:269:30
-#: app/Navigation.tsx:275:24
-#: app/pages/OwnedEvents.tsx:308:36
-#: app/pages/OwnedEvents.tsx:312:30
+#: app/Navigation.tsx:271:28
+#: app/pages/OwnedEvents.tsx:354:36
+#: app/pages/OwnedEvents.tsx:358:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/Navigation.tsx:279:28
-#: app/Navigation.tsx:290:22
-#: app/pages/OwnedEvents.tsx:316:34
-#: app/pages/OwnedEvents.tsx:324:28
+#: app/Navigation.tsx:281:26
+#: app/pages/OwnedEvents.tsx:362:34
+#: app/pages/OwnedEvents.tsx:370:28
 msgid "Finish event"
 msgstr ""
 
-#: app/Navigation.tsx:300:26
-#: app/Navigation.tsx:302:34
-msgid "Your profile"
+#: app/Navigation.tsx:303:22
+#: app/Navigation.tsx:315:22
+msgid "Open menu"
 msgstr ""
 
-#: app/Navigation.tsx:310:27
-msgid "Sign in"
-msgstr ""
-
-#: app/Navigation.tsx:317:27
-msgid "Sign up"
-msgstr ""
-
-#: app/Navigation.tsx:324:27
-#: app/pages/ProfileManageAdmin.tsx:320:19
-msgid "Register player"
-msgstr ""
-
-#: app/Navigation.tsx:331:27
-msgid "Edit profile"
-msgstr ""
-
-#: app/Navigation.tsx:338:27
-msgid "Sign out"
+#: app/Navigation.tsx:311:16
+msgid "Menu"
 msgstr ""
 
 #: app/pages/EventPrescript.tsx:64:16
@@ -319,6 +325,7 @@ msgstr ""
 #: app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14
+#: app/pages/OwnedEvents.tsx:92:14
 #: app/pages/OwnedEventsEdit/index.tsx:182:18
 #: app/pages/OwnedEventsEdit/index.tsx:213:18
 #: app/pages/Penalties.tsx:73:18
@@ -498,6 +505,7 @@ msgid "Failed to start timer"
 msgstr ""
 
 #: app/pages/GamesControl/index.tsx:170:27
+#: app/pages/OwnedEvents.tsx:196:27
 msgid "Failed to toggle results visibility"
 msgstr ""
 
@@ -562,17 +570,11 @@ msgid "Can't generate seating: count of registered players is not divisible by 4
 msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:119:19
-#: app/pages/GamesControl/TournamentControls.tsx:185:19
-#: app/pages/GamesControl/TournamentControls.tsx:252:19
-#: app/pages/GamesControl/TournamentControls.tsx:273:19
-msgid "Show results table"
+msgid "Show results table and achievements"
 msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:120:19
-#: app/pages/GamesControl/TournamentControls.tsx:186:19
-#: app/pages/GamesControl/TournamentControls.tsx:253:19
-#: app/pages/GamesControl/TournamentControls.tsx:274:19
-msgid "Hide results table"
+msgid "Hide results table and achievements"
 msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:124:22
@@ -621,6 +623,18 @@ msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:174:24
 msgid "Use swiss seating for next session?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:185:19
+#: app/pages/GamesControl/TournamentControls.tsx:252:19
+#: app/pages/GamesControl/TournamentControls.tsx:273:19
+msgid "Show results table"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:186:19
+#: app/pages/GamesControl/TournamentControls.tsx:253:19
+#: app/pages/GamesControl/TournamentControls.tsx:274:19
+msgid "Hide results table"
 msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:190:22
@@ -691,59 +705,63 @@ msgstr ""
 msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:84:16
+#: app/pages/OwnedEvents.tsx:88:16
 msgid "Manage my events"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:225:30
+#: app/pages/OwnedEvents.tsx:265:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:237:30
+#: app/pages/OwnedEvents.tsx:277:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:249:30
+#: app/pages/OwnedEvents.tsx:289:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:267:48
+#: app/pages/OwnedEvents.tsx:299:30
+msgid "Open event page in new tab"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:313:48
 msgid "Actions"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:270:38
-msgid "Event management"
-msgstr ""
-
-#: app/pages/OwnedEvents.tsx:274:36
+#: app/pages/OwnedEvents.tsx:320:36
 msgid "Manage predefined seating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:281:34
+#: app/pages/OwnedEvents.tsx:327:34
 msgid "Manage current games"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:287:34
+#: app/pages/OwnedEvents.tsx:333:34
 #: app/pages/Penalties.tsx:52:16
 msgid "Manage penalties"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:299:34
+#: app/pages/OwnedEvents.tsx:345:34
 msgid "Edit event settings"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:332:24
+#: app/pages/OwnedEvents.tsx:378:24
 msgid "Event finished"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:337:28
+#: app/pages/OwnedEvents.tsx:383:28
 msgid "Toggle visibility in ratings global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:352:18
+#: app/pages/OwnedEvents.tsx:393:28
+msgid "Toggle visibility of rating and achievements"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:408:18
 msgid "Create new event"
 msgstr ""
 
@@ -780,8 +798,8 @@ msgid "All dates and time will be displayed according to the selected timezone."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:109:25
-#: app/pages/ProfileManage.tsx:194:29
-#: app/pages/ProfileManageAdmin.tsx:253:27
+#: app/pages/ProfileManage.tsx:195:29
+#: app/pages/ProfileManageAdmin.tsx:254:27
 msgid "Nothing found"
 msgstr ""
 
@@ -812,35 +830,35 @@ msgstr ""
 #: app/pages/OwnedEventsEdit/index.tsx:270:30
 #: app/pages/PlayersManage/LocalIdsTab.tsx:107:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:108:28
-#: app/pages/ProfileManage.tsx:254:32
-#: app/pages/ProfileManageAdmin.tsx:316:21
+#: app/pages/ProfileManage.tsx:252:32
+#: app/pages/ProfileManageAdmin.tsx:314:21
 msgid "Changes saved!"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/index.tsx:270:58
 #: app/pages/PlayersManage/LocalIdsTab.tsx:107:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:108:56
-#: app/pages/ProfileManage.tsx:254:60
+#: app/pages/ProfileManage.tsx:252:60
 msgid "Save changes"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:35:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:74:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:78:16
 msgid "Series length"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:75:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:79:22
 msgid "Count of session in game series. Set to 0 to disable series functionality."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:46:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:89:16
 msgid "Minimal games count"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:47:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:86:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:90:22
 msgid "Minimal count of games the player should play to get into the rating table."
 msgstr ""
 
@@ -852,38 +870,43 @@ msgstr ""
 msgid "Tenhou Lobby ID"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:51:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
+msgid "Team tournament"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:16
 msgid "Game expiration time (in hours)"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:54:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:58:22
 msgid "Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:63:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:67:16
 msgid "Chips value"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:64:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:68:22
 msgid "Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:96:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:100:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
 msgid "Fixed score applied to replacement player"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:97:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:101:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
 msgid "Fixed amount of result score applied for each replacement player regardless of session results."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:106:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:110:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
 msgid "Fixed uma for replacement player"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:107:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:111:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
 msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
@@ -1126,10 +1149,6 @@ msgstr ""
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand, play one more, and then interrup the session"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
-msgid "Team tournament"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:73:16
@@ -1379,9 +1398,9 @@ msgid "Login to your account"
 msgstr ""
 
 #: app/pages/ProfileLogin.tsx:46:63
-#: app/pages/ProfileManageAdmin.tsx:86:63
+#: app/pages/ProfileManageAdmin.tsx:87:63
 #: app/pages/ProfileResetPassword.tsx:42:63
-#: app/pages/ProfileSignup.tsx:56:63
+#: app/pages/ProfileSignup.tsx:57:63
 msgid "Invalid email"
 msgstr ""
 
@@ -1394,7 +1413,7 @@ msgid "Failed to authorize. Please check your email and password."
 msgstr ""
 
 #: app/pages/ProfileLogin.tsx:81:24
-#: app/pages/ProfileManage.tsx:174:22
+#: app/pages/ProfileManage.tsx:175:22
 #: app/pages/ProfileResetPassword.tsx:79:26
 msgid "Your e-mail address"
 msgstr ""
@@ -1415,128 +1434,128 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:53:16
+#: app/pages/ProfileManage.tsx:54:16
 msgid "Manage your account"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:76:70
-#: app/pages/ProfileManageAdmin.tsx:87:70
-#: app/pages/ProfileSignup.tsx:57:70
+#: app/pages/ProfileManage.tsx:77:70
+#: app/pages/ProfileManageAdmin.tsx:88:70
+#: app/pages/ProfileSignup.tsx:58:70
 msgid "Invalid title"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:79:13
+#: app/pages/ProfileManage.tsx:80:13
 msgid "You have provided your tenhou login string instead of your username. You should NEVER give anyone your login string!"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:123:13
+#: app/pages/ProfileManage.tsx:124:13
 msgid "Failed to update profile. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:175:28
+#: app/pages/ProfileManage.tsx:176:28
 msgid "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your address, contact chief administrator."
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:183:22
+#: app/pages/ProfileManage.tsx:184:22
 msgid "Player title"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:184:28
-#: app/pages/ProfileSignup.tsx:119:26
+#: app/pages/ProfileManage.tsx:185:28
+#: app/pages/ProfileSignup.tsx:120:26
 msgid "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:192:22
-#: app/pages/ProfileManageAdmin.tsx:251:20
+#: app/pages/ProfileManage.tsx:193:22
+#: app/pages/ProfileManageAdmin.tsx:252:20
 msgid "Country"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:202:22
+#: app/pages/ProfileManage.tsx:203:22
 msgid "City"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:208:22
+#: app/pages/ProfileManage.tsx:209:22
 msgid "Phone number"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:214:22
-#: app/pages/ProfileManageAdmin.tsx:273:26
+#: app/pages/ProfileManage.tsx:215:22
+#: app/pages/ProfileManageAdmin.tsx:274:26
 msgid "Tenhou ID"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:219:22
-#: app/pages/ProfileManageAdmin.tsx:278:20
+#: app/pages/ProfileManage.tsx:220:22
+#: app/pages/ProfileManageAdmin.tsx:279:20
 msgid "Show user avatar"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:220:28
-#: app/pages/ProfileManageAdmin.tsx:279:26
+#: app/pages/ProfileManage.tsx:221:28
+#: app/pages/ProfileManageAdmin.tsx:280:26
 msgid "If checked, uploaded avatar will be shown instead of default circle with initials. If no avatar is uploaded, the default circle will be shown."
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:247:20
-#: app/pages/ProfileManageAdmin.tsx:306:18
+#: app/pages/ProfileManage.tsx:245:20
+#: app/pages/ProfileManageAdmin.tsx:304:18
 msgid "Avatar should be an image file. It's recommended to upload a square-sized image, otherwise it will be cropped to center square. File size should not be more than 256 KB."
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:55:18
+#: app/pages/ProfileManageAdmin.tsx:56:18
 msgid "Update player account"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:57:18
-#: app/pages/ProfileSignup.tsx:42:16
-#: app/pages/ProfileSignup.tsx:140:36
+#: app/pages/ProfileManageAdmin.tsx:58:18
+#: app/pages/ProfileSignup.tsx:43:16
+#: app/pages/ProfileSignup.tsx:141:36
 msgid "Register new account"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:119:24
-#: app/pages/ProfileManageAdmin.tsx:153:24
-#: app/pages/ProfileSignup.tsx:99:64
+#: app/pages/ProfileManageAdmin.tsx:120:24
+#: app/pages/ProfileManageAdmin.tsx:154:24
+#: app/pages/ProfileSignup.tsx:100:64
 msgid "Success"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:120:26
+#: app/pages/ProfileManageAdmin.tsx:121:26
 msgid "Player was successfully registered"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:132:15
+#: app/pages/ProfileManageAdmin.tsx:133:15
 msgid "Failed to register player. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:154:26
+#: app/pages/ProfileManageAdmin.tsx:155:26
 msgid "Player details were successfully saved"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:168:15
+#: app/pages/ProfileManageAdmin.tsx:169:15
 msgid "Failed to update player details. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:225:26
+#: app/pages/ProfileManageAdmin.tsx:226:26
 msgid "Enter player's e-mail address"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:232:26
+#: app/pages/ProfileManageAdmin.tsx:233:26
 msgid "This is a title that will be shown in rating table and in mobile assistant. Please select some unique title, like nickname or name+surname."
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:242:30
-#: app/pages/ProfileSignup.tsx:126:26
+#: app/pages/ProfileManageAdmin.tsx:243:30
+#: app/pages/ProfileSignup.tsx:127:26
 msgid "Enter strong password"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:260:26
+#: app/pages/ProfileManageAdmin.tsx:261:26
 msgid "Enter city of the player"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:266:26
+#: app/pages/ProfileManageAdmin.tsx:267:26
 msgid "Enter player's phone"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:317:21
+#: app/pages/ProfileManageAdmin.tsx:315:21
 msgid "Registration done!"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:319:19
+#: app/pages/ProfileManageAdmin.tsx:317:19
 msgid "Update player"
 msgstr ""
 
@@ -1566,7 +1585,7 @@ msgid "Reset your password"
 msgstr ""
 
 #: app/pages/ProfileResetPasswordConfirm.tsx:132:13
-#: app/pages/ProfileSignup.tsx:61:13
+#: app/pages/ProfileSignup.tsx:62:13
 msgid "Your password is too weak. Please enter stronger password."
 msgstr ""
 
@@ -1606,31 +1625,31 @@ msgstr ""
 msgid "Your password has been successfully reset. Now you can proceed to login page."
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:63:24
+#: app/pages/ProfileSignup.tsx:64:24
 msgid "You should read and accept the Privacy Policy"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:86:13
+#: app/pages/ProfileSignup.tsx:87:13
 msgid "Failed to request registration. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:100:14
+#: app/pages/ProfileSignup.tsx:101:14
 msgid "Please check your mailbox for the verification email."
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:113:26
+#: app/pages/ProfileSignup.tsx:114:26
 msgid "Enter your e-mail address"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:133:20
+#: app/pages/ProfileSignup.tsx:134:20
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:138:42
+#: app/pages/ProfileSignup.tsx:139:42
 msgid "Already registered?"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:150:14
+#: app/pages/ProfileSignup.tsx:151:14
 msgid "show / hide"
 msgstr ""
 
