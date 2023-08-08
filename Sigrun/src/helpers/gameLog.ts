@@ -24,20 +24,32 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
   const yakuNameMap = yakuNameMapGen(i18n);
   return rounds.map((round) => {
     if (round.ron) {
-      return i18n._pt('Ron log item', '%1: <b>%2</b> - %3 (<b>%4</b>), %5. Riichi bets: %6', [
+      const loser = round.ron.paoPlayerId
+        ? i18n._pt('Ron log item partial', '<b>%1</b>, pao: <b>%2</b>', [
+            players[round.ron.loserId]?.title,
+            players[round.ron.paoPlayerId]?.title,
+          ])
+        : `<b>${players[round.ron.loserId]?.title}</b>`;
+      return i18n._pt('Ron log item', '%1: <b>%2</b> - %3 (%4), %5. Riichi bets: %6', [
         makeRound(round.ron.roundIndex),
         players[round.ron.winnerId]?.title,
         makeYaku(round.ron.yaku, round.ron.dora + round.ron.uradora, i18n, yakuNameMap),
-        players[round.ron.loserId]?.title,
+        loser,
         makeHanFu(round.ron.han, round.ron.fu, i18n),
         makeCsvPlayers(players, round.ron.riichiBets) || noRiichi,
       ]);
     }
 
     if (round.tsumo) {
-      return i18n._pt('Tsumo log item', '%1: <b>%2</b> - %3 (tsumo), %4. Riichi bets: %5', [
+      const winner = round.tsumo.paoPlayerId
+        ? i18n._pt('Tsumo item partial', '(tsumo, pao: <b>%1</b>)', [
+            players[round.tsumo.paoPlayerId]?.title,
+          ])
+        : i18n._pt('Tsumo log item partial', '(tsumo)');
+      return i18n._pt('Tsumo log item', '%1: <b>%2</b> - %3 %4, %5. Riichi bets: %6', [
         makeRound(round.tsumo.roundIndex),
         players[round.tsumo.winnerId]?.title,
+        winner,
         makeYaku(round.tsumo.yaku, round.tsumo.dora + round.tsumo.uradora, i18n, yakuNameMap),
         makeHanFu(round.tsumo.han, round.tsumo.fu, i18n),
         makeCsvPlayers(players, round.tsumo.riichiBets) || noRiichi,
@@ -81,8 +93,14 @@ export const makeLog = (rounds: Round[], players: Record<number, Player>, i18n: 
         '<ul>' +
         round.multiron.wins
           .map((win) => {
-            return i18n._pt('Multiron inner log item', '<li><b>%1</b> - %2, %3</li>', [
-              players[win.winnerId]?.title,
+            const winner = win.paoPlayerId
+              ? i18n._pt('Multiron item partial', '<b>%1</b> (pao: <b>%2</b>)', [
+                  players[win.winnerId]?.title,
+                  players[win.paoPlayerId]?.title,
+                ])
+              : `<b>${players[win.winnerId]?.title}</b>`;
+            return i18n._pt('Multiron inner log item', '<li>%1 - %2, %3</li>', [
+              winner,
               makeYaku(win.yaku, win.dora + win.uradora, i18n, yakuNameMap),
               makeHanFu(win.han, win.fu, i18n),
             ]);

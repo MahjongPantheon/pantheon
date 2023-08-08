@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 17:59Z\n"
+"POT-Creation-Date: 2023-08-08 20:53Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -379,59 +379,79 @@ msgctxt "Riichi bets count"
 msgid "none"
 msgstr ""
 
-#: src/helpers/gameLog.ts:27:14
+#: src/helpers/gameLog.ts:28:11
+msgctxt "Ron log item partial"
+msgid "<b>%1</b>, pao: <b>%2</b>"
+msgstr ""
+
+#: src/helpers/gameLog.ts:33:14
 msgctxt "Ron log item"
-msgid "%1: <b>%2</b> - %3 (<b>%4</b>), %5. Riichi bets: %6"
+msgid "%1: <b>%2</b> - %3 (%4), %5. Riichi bets: %6"
 msgstr ""
 
-#: src/helpers/gameLog.ts:38:14
+#: src/helpers/gameLog.ts:45:11
+msgctxt "Tsumo item partial"
+msgid "(tsumo, pao: <b>%1</b>)"
+msgstr ""
+
+#: src/helpers/gameLog.ts:48:11
+msgctxt "Tsumo log item partial"
+msgid "(tsumo)"
+msgstr ""
+
+#: src/helpers/gameLog.ts:49:14
 msgctxt "Tsumo log item"
-msgid "%1: <b>%2</b> - %3 (tsumo), %4. Riichi bets: %5"
+msgid "%1: <b>%2</b> - %3 %4, %5. Riichi bets: %6"
 msgstr ""
 
-#: src/helpers/gameLog.ts:48:14
+#: src/helpers/gameLog.ts:60:14
 msgctxt "Draw log item"
 msgid "%1: Exhaustive draw (tenpai: %2). Riichi bets: %3"
 msgstr ""
 
-#: src/helpers/gameLog.ts:58:14
+#: src/helpers/gameLog.ts:70:14
 msgctxt "Abortive draw log item"
 msgid "%1: Abortive draw. Riichi bets: %2"
 msgstr ""
 
-#: src/helpers/gameLog.ts:65:14
+#: src/helpers/gameLog.ts:77:14
 msgctxt "Chombo log item"
 msgid "%1: Chombo (<b>%2</b>)"
 msgstr ""
 
-#: src/helpers/gameLog.ts:72:14
+#: src/helpers/gameLog.ts:84:14
 msgctxt "Nagashi log item"
 msgid "%1: Nagashi mangan (<b>%2</b>). Riichi bets: %3"
 msgstr ""
 
-#: src/helpers/gameLog.ts:84:20
-msgctxt "Multiron inner log item"
-msgid "<li><b>%1</b> - %2, %3</li>"
+#: src/helpers/gameLog.ts:97:17
+msgctxt "Multiron item partial"
+msgid "<b>%1</b> (pao: <b>%2</b>)"
 msgstr ""
 
-#: src/helpers/gameLog.ts:93:9
+#: src/helpers/gameLog.ts:102:20
+msgctxt "Multiron inner log item"
+msgid "<li>%1 - %2, %3</li>"
+msgstr ""
+
+#: src/helpers/gameLog.ts:111:9
 msgctxt "Multiron outer log item"
 msgid "%1: Ron (<b>%2</b>). Riichi bets: %3"
 msgstr ""
 
-#: src/helpers/gameLog.ts:131:19
+#: src/helpers/gameLog.ts:149:19
 msgid "dora %1"
 msgstr ""
 
-#: src/helpers/gameLog.ts:138:12
+#: src/helpers/gameLog.ts:156:12
 msgid "yakuman!"
 msgstr ""
 
-#: src/helpers/gameLog.ts:141:12
+#: src/helpers/gameLog.ts:159:12
 msgid "%1 han"
 msgstr ""
 
-#: src/helpers/gameLog.ts:143:10
+#: src/helpers/gameLog.ts:161:10
 msgid "%1 han, %2 fu"
 msgstr ""
 

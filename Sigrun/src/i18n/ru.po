@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 17:59Z\n"
-"PO-Revision-Date: 2023-08-08 21:00+0300\n"
+"POT-Creation-Date: 2023-08-08 20:53Z\n"
+"PO-Revision-Date: 2023-08-08 23:53+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -374,59 +374,79 @@ msgctxt "Riichi bets count"
 msgid "none"
 msgstr "нет"
 
-#: src/helpers/gameLog.ts:27:14
+#: src/helpers/gameLog.ts:28:11
+msgctxt "Ron log item partial"
+msgid "<b>%1</b>, pao: <b>%2</b>"
+msgstr "<b>%1</b>, пао: <b>%2</b>"
+
+#: src/helpers/gameLog.ts:33:14
 msgctxt "Ron log item"
-msgid "%1: <b>%2</b> - %3 (<b>%4</b>), %5. Riichi bets: %6"
-msgstr "%1: <b>%2</b> - %3 (<b>%4</b>), %5. Ставки риичи: %6"
+msgid "%1: <b>%2</b> - %3 (%4), %5. Riichi bets: %6"
+msgstr "%1: <b>%2</b> - %3 (%4), %5. Ставки риичи: %6"
 
-#: src/helpers/gameLog.ts:38:14
+#: src/helpers/gameLog.ts:45:11
+msgctxt "Tsumo item partial"
+msgid "(tsumo, pao: <b>%1</b>)"
+msgstr "(цумо, пао: <b>%1</b>)"
+
+#: src/helpers/gameLog.ts:48:11
+msgctxt "Tsumo log item partial"
+msgid "(tsumo)"
+msgstr "(цумо)"
+
+#: src/helpers/gameLog.ts:49:14
 msgctxt "Tsumo log item"
-msgid "%1: <b>%2</b> - %3 (tsumo), %4. Riichi bets: %5"
-msgstr "%1: <b>%2</b> - %3 (цумо), %4. Ставки риичи: %5"
+msgid "%1: <b>%2</b> - %3 %4, %5. Riichi bets: %6"
+msgstr "%1: <b>%2</b> - %3 %4, %5. Ставки риичи: %6"
 
-#: src/helpers/gameLog.ts:48:14
+#: src/helpers/gameLog.ts:60:14
 msgctxt "Draw log item"
 msgid "%1: Exhaustive draw (tenpai: %2). Riichi bets: %3"
 msgstr "%1: Ничья (темпай: %2). Ставки риичи: %3"
 
-#: src/helpers/gameLog.ts:58:14
+#: src/helpers/gameLog.ts:70:14
 msgctxt "Abortive draw log item"
 msgid "%1: Abortive draw. Riichi bets: %2"
 msgstr "%1: Абортивная ничья. Ставки риичи: %2"
 
-#: src/helpers/gameLog.ts:65:14
+#: src/helpers/gameLog.ts:77:14
 msgctxt "Chombo log item"
 msgid "%1: Chombo (<b>%2</b>)"
 msgstr "%1: Чомбо (<b>%2</b>)"
 
-#: src/helpers/gameLog.ts:72:14
+#: src/helpers/gameLog.ts:84:14
 msgctxt "Nagashi log item"
 msgid "%1: Nagashi mangan (<b>%2</b>). Riichi bets: %3"
 msgstr "%1: Нагаши манган (<b>%2</b>). Ставки риичи: %3"
 
-#: src/helpers/gameLog.ts:84:20
-msgctxt "Multiron inner log item"
-msgid "<li><b>%1</b> - %2, %3</li>"
-msgstr "<li><b>%1</b> - %2, %3</li>"
+#: src/helpers/gameLog.ts:97:17
+msgctxt "Multiron item partial"
+msgid "<b>%1</b> (pao: <b>%2</b>)"
+msgstr "<b>%1</b> (пао: <b>%2</b>)"
 
-#: src/helpers/gameLog.ts:93:9
+#: src/helpers/gameLog.ts:102:20
+msgctxt "Multiron inner log item"
+msgid "<li>%1 - %2, %3</li>"
+msgstr "<li>%1 - %2, %3</li>"
+
+#: src/helpers/gameLog.ts:111:9
 msgctxt "Multiron outer log item"
 msgid "%1: Ron (<b>%2</b>). Riichi bets: %3"
 msgstr "%1: Рон (<b>%2</b>). Ставки риичи: %3"
 
-#: src/helpers/gameLog.ts:131:19
+#: src/helpers/gameLog.ts:149:19
 msgid "dora %1"
 msgstr "дора %1"
 
-#: src/helpers/gameLog.ts:138:12
+#: src/helpers/gameLog.ts:156:12
 msgid "yakuman!"
 msgstr "якуман!"
 
-#: src/helpers/gameLog.ts:141:12
+#: src/helpers/gameLog.ts:159:12
 msgid "%1 han"
 msgstr "%1 хан"
 
-#: src/helpers/gameLog.ts:143:10
+#: src/helpers/gameLog.ts:161:10
 msgid "%1 han, %2 fu"
 msgstr "%1 хан, %2 фу"
 
@@ -1570,12 +1590,3 @@ msgstr "Таймер"
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Страница таймера в событии \"%1\", предоставленная системой Mahjong Pantheon"
-
-#~ msgid "Event contents"
-#~ msgstr "Данные события"
-
-#~ msgid "Events list"
-#~ msgstr "Список событий"
-
-#~ msgid "Player statistics are updated every 2 minutes"
-#~ msgstr "Статистика игрока обновляется раз в 2 минуты"
