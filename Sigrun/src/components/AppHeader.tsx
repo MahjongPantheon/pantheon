@@ -109,7 +109,7 @@ export function AppHeader({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
   const [onlineError, setOnlineError] = useState<string | null>(null);
   const api = useApi();
   const tryAddOnline = () => {
-    if (!onlineLink.match(/^https?:\/\/[^\/]+\/\d\/\?log=\d+gm-\d+-\d+-[0-9a-f]+/i)) {
+    if (!onlineLink.match(/^https?:\/\/[^\/]+\/\d\/\?log=\d+gm-[0-9a-f]+-\d+-[0-9a-f]+/i)) {
       setOnlineError(i18n._t('Replay link is invalid. Please check if you copied it correctly'));
     } else {
       setOnlineError(null);
