@@ -1,4 +1,4 @@
-import { Anchor, NavLink } from '@mantine/core';
+import { Anchor, MantineColor, NavLink } from '@mantine/core';
 import * as React from 'react';
 import { useLocation } from 'wouter';
 
@@ -9,6 +9,7 @@ export const MainMenuLink = ({
   text,
   onClick,
   external,
+  bgcolor,
 }: {
   href: string;
   icon: React.ReactNode;
@@ -16,10 +17,12 @@ export const MainMenuLink = ({
   text: string;
   onClick?: () => void;
   external?: boolean;
+  bgcolor?: MantineColor;
 }) => {
   const [, navigate] = useLocation();
   return (
     <Anchor
+      bg={bgcolor}
       href={href}
       onClick={
         external

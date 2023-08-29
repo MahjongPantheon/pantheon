@@ -162,6 +162,21 @@ export function AppHeader({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
                 label={i18n._t('To events list')}
               />
             </Anchor>
+            {globals.data.eventId?.length === 1 &&
+              (auth.ownEvents.includes(globals.data.eventId?.[0]) || auth.isSuperadmin) && (
+                <Anchor
+                  href={`${env.urls.forseti}/ownedEvents/edit/${globals.data.eventId?.[0]}`}
+                  target='_blank'
+                  onClick={closeMenu}
+                >
+                  <NavLink
+                    bg={dark ? '#784421' : theme.colors.orange[3]}
+                    styles={{ label: { fontSize: '18px' } }}
+                    icon={<IconAdjustmentsAlt size={20} />}
+                    label={i18n._t('Edit event in admin panel')}
+                  />
+                </Anchor>
+              )}
             <Anchor href={env.urls.forseti} target='_blank' onClick={closeMenu}>
               <NavLink
                 styles={{ label: { fontSize: '18px' } }}

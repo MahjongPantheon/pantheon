@@ -86,7 +86,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+export const Navigation: React.FC<{ isLoggedIn: boolean; dark: boolean }> = ({
+  isLoggedIn,
+  dark,
+}) => {
   const { classes } = useStyles();
   const i18n = useI18n();
   const api = useApi();
@@ -134,7 +137,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
       : eventData?.title;
 
   return (
-    <Header bg={theme.primaryColor} height={44} mb={120} pt={0}>
+    <Header bg={dark ? theme.colors.orange[8] : theme.colors.orange[3]} height={44} mb={120} pt={0}>
       <Modal opened={stopEventModalOpened} onClose={stopEventModalClose} size='auto' centered>
         <Text>
           {i18n._t('Stop event "%1" (id #%2)? This action can\'t be undone!', [
@@ -175,62 +178,14 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
       >
         <Stack justify='space-between' style={{ height: '100%' }}>
           <Stack spacing={0}>
-            {isLoggedIn && (
-              <MainMenuLink
-                href={'/ownedEvents'}
-                icon={<IconList size={20} />}
-                text={i18n._t('My events')}
-                onClick={closeMenu}
-              />
-            )}
-            {!isLoggedIn && (
-              <MainMenuLink
-                href={'/profile/login'}
-                icon={<IconLogin size={18} />}
-                text={i18n._t('Sign in')}
-                onClick={closeMenu}
-              />
-            )}
-            {!isLoggedIn && (
-              <MainMenuLink
-                href='/profile/signup'
-                icon={<IconUserPlus size={18} />}
-                text={i18n._t('Sign up')}
-                onClick={closeMenu}
-              />
-            )}
-            {isSuperadmin && (
-              <MainMenuLink
-                href='/profile/signupAdmin'
-                icon={<IconUserPlus size={18} />}
-                text={i18n._t('Register player')}
-                onClick={closeMenu}
-              />
-            )}
-            {isLoggedIn && (
-              <MainMenuLink
-                href='/profile/manage'
-                icon={<IconUserCircle size={18} />}
-                text={i18n._t('Edit profile')}
-                onClick={closeMenu}
-              />
-            )}
-            {isLoggedIn && (
-              <MainMenuLink
-                href='/profile/logout'
-                icon={<IconLogout size={18} />}
-                text={i18n._t('Sign out')}
-                onClick={closeMenu}
-              />
-            )}
             {(match || matchEdit) && (
               <>
-                <div className={classes.label}>{i18n._t('Event management')}</div>
                 <MainMenuLink
+                  bgcolor={dark ? theme.primaryColor : '#a8c5ff'}
                   external={true}
                   href={`${env.urls.sigrun}/event/${(match ? params : paramsEdit)?.id}/info`}
                   icon={<IconExternalLink size={18} />}
-                  text={i18n._t('Open event in new tab')}
+                  text={i18n._t('Open event page')}
                   onClick={closeMenu}
                 />
                 <MainMenuLink
@@ -290,6 +245,54 @@ export const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =>
                     stopEventModalOpen();
                   }}
                 />
+                {isLoggedIn && (
+                  <MainMenuLink
+                    href={'/ownedEvents'}
+                    icon={<IconList size={20} />}
+                    text={i18n._t('My events')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {!isLoggedIn && (
+                  <MainMenuLink
+                    href={'/profile/login'}
+                    icon={<IconLogin size={18} />}
+                    text={i18n._t('Sign in')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {!isLoggedIn && (
+                  <MainMenuLink
+                    href='/profile/signup'
+                    icon={<IconUserPlus size={18} />}
+                    text={i18n._t('Sign up')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {isSuperadmin && (
+                  <MainMenuLink
+                    href='/profile/signupAdmin'
+                    icon={<IconUserPlus size={18} />}
+                    text={i18n._t('Register player')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {isLoggedIn && (
+                  <MainMenuLink
+                    href='/profile/manage'
+                    icon={<IconUserCircle size={18} />}
+                    text={i18n._t('Edit profile')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {isLoggedIn && (
+                  <MainMenuLink
+                    href='/profile/logout'
+                    icon={<IconLogout size={18} />}
+                    text={i18n._t('Sign out')}
+                    onClick={closeMenu}
+                  />
+                )}
               </>
             )}
           </Stack>

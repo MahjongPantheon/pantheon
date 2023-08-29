@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 20:53Z\n"
+"POT-Creation-Date: 2023-08-29 22:24Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,80 +73,84 @@ msgstr ""
 msgid "To events list"
 msgstr ""
 
-#: src/components/AppHeader.tsx:169:24
+#: src/components/AppHeader.tsx:176:28
+msgid "Edit event in admin panel"
+msgstr ""
+
+#: src/components/AppHeader.tsx:184:24
 msgid "Profile & admin panel"
 msgstr ""
 
-#: src/components/AppHeader.tsx:177:26
+#: src/components/AppHeader.tsx:192:26
 msgid "Open assistant"
 msgstr ""
 
-#: src/components/AppHeader.tsx:187:25
+#: src/components/AppHeader.tsx:202:25
 msgctxt "Event menu"
 msgid "Description"
 msgstr ""
 
-#: src/components/AppHeader.tsx:193:25
+#: src/components/AppHeader.tsx:208:25
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr ""
 
-#: src/components/AppHeader.tsx:199:25
+#: src/components/AppHeader.tsx:214:25
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr ""
 
-#: src/components/AppHeader.tsx:205:25
+#: src/components/AppHeader.tsx:220:25
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr ""
 
-#: src/components/AppHeader.tsx:212:27
+#: src/components/AppHeader.tsx:227:27
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr ""
 
-#: src/components/AppHeader.tsx:220:27
+#: src/components/AppHeader.tsx:235:27
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr ""
 
-#: src/components/AppHeader.tsx:229:29
+#: src/components/AppHeader.tsx:244:29
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr ""
 
-#: src/components/AppHeader.tsx:238:30
+#: src/components/AppHeader.tsx:253:30
 msgctxt "Event menu"
 msgid "Add online game"
 msgstr ""
 
-#: src/components/AppHeader.tsx:253:22
+#: src/components/AppHeader.tsx:268:22
 msgid "Language"
 msgstr ""
 
-#: src/components/AppHeader.tsx:279:22
+#: src/components/AppHeader.tsx:294:22
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: src/components/AppHeader.tsx:288:22
+#: src/components/AppHeader.tsx:303:22
 msgid "Toggle color scheme"
 msgstr ""
 
-#: src/components/AppHeader.tsx:297:22
-#: src/components/AppHeader.tsx:309:22
+#: src/components/AppHeader.tsx:312:22
+#: src/components/AppHeader.tsx:324:22
 msgid "Open menu"
 msgstr ""
 
-#: src/components/AppHeader.tsx:305:16
+#: src/components/AppHeader.tsx:320:16
 msgid "Menu"
 msgstr ""
 
-#: src/components/AppHeader.tsx:333:18
+#: src/components/AppHeader.tsx:348:18
 msgid "Add online game"
 msgstr ""
 
-#: src/components/AppHeader.tsx:347:45
+#: src/components/AppHeader.tsx:362:45
 msgid "Add replay"
 msgstr ""
 

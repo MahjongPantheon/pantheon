@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Menu, Group, ActionIcon, Container } from '@mantine/core';
+import { Menu, Group, ActionIcon, Container, Footer, useMantineTheme } from '@mantine/core';
 import {
   IconLanguageHiragana,
   IconMoon,
@@ -37,9 +37,14 @@ interface AppFooterProps {
 
 export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: AppFooterProps) {
   const i18n = useI18n();
+  const theme = useMantineTheme();
 
   return (
-    <>
+    <Footer
+      height={60}
+      bg={dark ? theme.colors.orange[8] : theme.colors.orange[3]}
+      style={{ display: 'flex', alignItems: 'center' }}
+    >
       <Container style={{ flex: 1 }}>
         <Group position='apart'>
           <Group>
@@ -85,6 +90,6 @@ export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
           </Group>
         </Group>
       </Container>
-    </>
+    </Footer>
   );
 }

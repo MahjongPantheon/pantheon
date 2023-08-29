@@ -23,7 +23,6 @@ import {
   ColorScheme,
   ColorSchemeProvider,
   Container,
-  Footer,
   MantineProvider,
   Space,
   Title,
@@ -280,20 +279,14 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                   background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
                 },
               }}
-              header={<Navigation isLoggedIn={isLoggedIn} />}
+              header={<Navigation dark={dark} isLoggedIn={isLoggedIn} />}
               footer={
-                <Footer
-                  height={60}
-                  bg={theme.primaryColor}
-                  style={{ display: 'flex', alignItems: 'center' }}
-                >
-                  <AppFooter
-                    dark={dark}
-                    toggleColorScheme={toggleColorScheme}
-                    toggleDimmed={toggleDimmed}
-                    saveLang={saveLang}
-                  />
-                </Footer>
+                <AppFooter
+                  dark={dark}
+                  toggleColorScheme={toggleColorScheme}
+                  toggleDimmed={toggleDimmed}
+                  saveLang={saveLang}
+                />
               }
             >
               <Container>

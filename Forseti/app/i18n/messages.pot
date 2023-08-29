@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 20:52Z\n"
+"POT-Creation-Date: 2023-08-29 22:24Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/AppFooter.tsx:50:22
+#: app/AppFooter.tsx:55:22
 msgid "Toggle dimmed color scheme"
 msgstr ""
 
-#: app/AppFooter.tsx:58:22
+#: app/AppFooter.tsx:63:22
 msgid "Toggle color scheme"
 msgstr ""
 
-#: app/AppFooter.tsx:64:67
+#: app/AppFooter.tsx:69:67
 msgid "Language"
 msgstr ""
 
@@ -211,109 +211,104 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: app/Navigation.tsx:140:12
+#: app/Navigation.tsx:143:12
 #: app/pages/OwnedEvents.tsx:222:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 
-#: app/Navigation.tsx:147:14
+#: app/Navigation.tsx:150:14
 #: app/pages/OwnedEvents.tsx:229:14
 msgid "Cancel"
 msgstr ""
 
-#: app/Navigation.tsx:157:14
+#: app/Navigation.tsx:160:14
 #: app/pages/OwnedEvents.tsx:239:14
 msgid "Stop event"
 msgstr ""
 
-#: app/Navigation.tsx:170:20
+#: app/Navigation.tsx:173:20
 msgid "Admin panel: actions"
 msgstr ""
 
-#: app/Navigation.tsx:182:23
-msgid "My events"
+#: app/Navigation.tsx:188:25
+msgid "Open event page"
 msgstr ""
 
-#: app/Navigation.tsx:190:23
-msgid "Sign in"
-msgstr ""
-
-#: app/Navigation.tsx:198:23
-msgid "Sign up"
-msgstr ""
-
-#: app/Navigation.tsx:206:23
-#: app/pages/ProfileManageAdmin.tsx:318:19
-msgid "Register player"
-msgstr ""
-
-#: app/Navigation.tsx:214:23
-msgid "Edit profile"
-msgstr ""
-
-#: app/Navigation.tsx:222:23
-msgid "Sign out"
-msgstr ""
-
-#: app/Navigation.tsx:228:49
-#: app/pages/OwnedEvents.tsx:316:38
-msgid "Event management"
-msgstr ""
-
-#: app/Navigation.tsx:233:25
-msgid "Open event in new tab"
-msgstr ""
-
-#: app/Navigation.tsx:239:25
+#: app/Navigation.tsx:194:25
 #: app/pages/OwnedEvents.tsx:347:33
 msgid "Settings"
 msgstr ""
 
-#: app/Navigation.tsx:245:25
+#: app/Navigation.tsx:200:25
 #: app/pages/OwnedEvents.tsx:339:34
 #: app/pages/OwnedEvents.tsx:341:33
 msgid "Manage players"
 msgstr ""
 
-#: app/Navigation.tsx:251:25
+#: app/Navigation.tsx:206:25
 #: app/pages/OwnedEvents.tsx:335:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr ""
 
-#: app/Navigation.tsx:257:25
+#: app/Navigation.tsx:212:25
 #: app/pages/OwnedEvents.tsx:329:33
 msgid "Manage games"
 msgstr ""
 
-#: app/Navigation.tsx:264:27
+#: app/Navigation.tsx:219:27
 #: app/pages/OwnedEvents.tsx:322:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/Navigation.tsx:268:49
+#: app/Navigation.tsx:223:49
 #: app/pages/OwnedEvents.tsx:351:38
 msgid "Danger zone"
 msgstr ""
 
-#: app/Navigation.tsx:271:28
+#: app/Navigation.tsx:226:28
 #: app/pages/OwnedEvents.tsx:354:36
 #: app/pages/OwnedEvents.tsx:358:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/Navigation.tsx:281:26
+#: app/Navigation.tsx:236:26
 #: app/pages/OwnedEvents.tsx:362:34
 #: app/pages/OwnedEvents.tsx:370:28
 msgid "Finish event"
 msgstr ""
 
-#: app/Navigation.tsx:303:22
-#: app/Navigation.tsx:315:22
+#: app/Navigation.tsx:252:27
+msgid "My events"
+msgstr ""
+
+#: app/Navigation.tsx:260:27
+msgid "Sign in"
+msgstr ""
+
+#: app/Navigation.tsx:268:27
+msgid "Sign up"
+msgstr ""
+
+#: app/Navigation.tsx:276:27
+#: app/pages/ProfileManageAdmin.tsx:318:19
+msgid "Register player"
+msgstr ""
+
+#: app/Navigation.tsx:284:27
+msgid "Edit profile"
+msgstr ""
+
+#: app/Navigation.tsx:292:27
+msgid "Sign out"
+msgstr ""
+
+#: app/Navigation.tsx:306:22
+#: app/Navigation.tsx:318:22
 msgid "Open menu"
 msgstr ""
 
-#: app/Navigation.tsx:311:16
+#: app/Navigation.tsx:314:16
 msgid "Menu"
 msgstr ""
 
@@ -730,6 +725,10 @@ msgstr ""
 
 #: app/pages/OwnedEvents.tsx:313:48
 msgid "Actions"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:316:38
+msgid "Event management"
 msgstr ""
 
 #: app/pages/OwnedEvents.tsx:320:36
