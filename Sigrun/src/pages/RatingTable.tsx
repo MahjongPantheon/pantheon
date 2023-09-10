@@ -83,12 +83,13 @@ export const RatingTable: React.FC<{
   const DataCmp = largeScreen ? Group : Stack;
   const auth = useContext(authCtx);
   const globals = useContext(globalsCtx);
+  const eventIds = eventId.split('.').map((x) => parseInt(x));
   const [players, , playersLoading] = useIsomorphicState(
     [],
     'RatingTable_event_' + eventId + order + orderBy + minGamesSelector,
     () =>
       api.getRatingTable(
-        parseInt(eventId, 10),
+        eventIds,
         order ?? 'desc',
         orderBy === 'team' ? 'rating' : orderBy ?? 'rating',
         minGamesSelector === 'min'
