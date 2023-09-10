@@ -327,12 +327,12 @@ class EventsController extends Controller
      */
     public function getEventsById($ids)
     {
-        $this->_log->info('Listing events by id [' . implode($ids) . ']');
+        $this->_log->info('Listing events by ids [' . implode(", ", $ids) . ']');
         $data = [];
         if (!empty($ids)) {
             $data = (new EventModel($this->_ds, $this->_config, $this->_meta))->getEventsById($ids);
         }
-        $this->_log->info('Successfully listed events by id [' . implode($ids) . ']');
+        $this->_log->info('Successfully listed events by ids [' . implode(", ", $ids) . ']');
         return $data;
     }
 

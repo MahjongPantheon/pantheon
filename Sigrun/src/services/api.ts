@@ -130,7 +130,7 @@ export class ApiService {
   }
 
   getRatingTable(
-    eventId: number,
+    eventIds: number[],
     order: 'asc' | 'desc',
     orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score',
     onlyMinGames: boolean
@@ -139,7 +139,7 @@ export class ApiService {
       method: 'GetRatingTable',
     });
     return GetRatingTable(
-      { eventIdList: [eventId], order, orderBy, onlyMinGames },
+      { eventIdList: eventIds, order, orderBy, onlyMinGames },
       this._clientConfMimir
     ).then((r) => r.list);
   }
