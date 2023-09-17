@@ -16,44 +16,48 @@
  */
 
 import {
+  ActionIcon,
   Button,
   Container,
   createStyles,
-  Header,
-  useMantineTheme,
-  Group,
-  Text,
-  Modal,
+  Divider,
   Drawer,
-  Stack,
+  Group,
+  Header,
+  Modal,
   NavLink,
-  ActionIcon,
+  Stack,
+  Text,
 } from '@mantine/core';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import {
   IconAlertOctagon,
+  IconExternalLink,
   IconFriends,
+  IconHandStop,
+  IconLanguageHiragana,
   IconList,
-  IconTool,
   IconLogin,
   IconLogout,
+  IconMoonStars,
   IconOlympics,
+  IconRefreshAlert,
   IconScript,
+  IconSun,
+  IconTool,
   IconUserCircle,
   IconUserPlus,
-  IconRefreshAlert,
-  IconHandStop,
-  IconExternalLink,
 } from '@tabler/icons-react';
 import { useLocation, useRoute } from 'wouter';
 import { useI18n } from './hooks/i18n';
-import { useEffect, useState } from 'react';
 import { Event } from './clients/proto/atoms.pb';
 import { useApi } from './hooks/api';
 import { useStorage } from './hooks/storage';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { env } from './env';
-import { MainMenuLink } from './helpers/MainMenuLink';
+import { ExternalTarget, MainMenuLink } from './helpers/MainMenuLink';
+import { FlagEn, FlagRu } from './helpers/flags';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -72,12 +76,6 @@ const useStyles = createStyles((theme) => ({
     left: 0,
   },
 
-  label: {
-    margin: '16px 0',
-    fontWeight: 'bold',
-    fontSize: '18px',
-  },
-
   eventTitle: {
     display: 'inline-flex',
     color: 'white',
@@ -86,15 +84,17 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const Navigation: React.FC<{ isLoggedIn: boolean; dark: boolean }> = ({
-  isLoggedIn,
-  dark,
-}) => {
+export const Navigation: React.FC<{
+  isLoggedIn: boolean;
+  dark: boolean;
+  toggleColorScheme: () => void;
+  toggleDimmed: () => void;
+  saveLang: (lang: string) => void;
+}> = ({ isLoggedIn, dark, toggleColorScheme, toggleDimmed, saveLang }) => {
   const { classes } = useStyles();
   const i18n = useI18n();
   const api = useApi();
   const storage = useStorage();
-  const theme = useMantineTheme();
   const [match, params] = useRoute('/event/:id/:subpath');
   const [matchEdit, paramsEdit] = useRoute('/ownedEvents/edit/:id');
   const id = (match ? params : paramsEdit)?.id;
@@ -137,7 +137,7 @@ export const Navigation: React.FC<{ isLoggedIn: boolean; dark: boolean }> = ({
       : eventData?.title;
 
   return (
-    <Header bg={dark ? theme.colors.orange[8] : theme.colors.orange[3]} height={44} mb={120} pt={0}>
+    <Header bg={dark ? '#784421' : '#DCA57F'} height={44} mb={120} pt={0}>
       <Modal opened={stopEventModalOpened} onClose={stopEventModalClose} size='auto' centered>
         <Text>
           {i18n._t('Stop event "%1" (id #%2)? This action can\'t be undone!', [
@@ -166,23 +166,32 @@ export const Navigation: React.FC<{ isLoggedIn: boolean; dark: boolean }> = ({
         opened={menuOpened}
         closeOnClickOutside={true}
         closeOnEscape={true}
-        withCloseButton={true}
-        closeButtonProps={{ size: 'lg' }}
+        withCloseButton={false}
         lockScroll={false}
         onClose={closeMenu}
-        title={<b>{i18n._t('Admin panel: actions')}</b>}
         overlayProps={{ opacity: 0.5, blur: 4 }}
         transitionProps={{ transition: 'pop-top-left', duration: 150, timingFunction: 'linear' }}
         style={{ zIndex: 10000, position: 'fixed' }}
-        styles={{ body: { height: 'calc(100% - 68px)' } }}
+        styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
       >
+        <Drawer.CloseButton
+          size='xl'
+          pos='absolute'
+          style={{ right: 0, backgroundColor: dark ? '#1a1b1e' : '#fff' }}
+        />
         <Stack justify='space-between' style={{ height: '100%' }}>
           <Stack spacing={0}>
             {(match || matchEdit) && (
               <>
+                <Divider
+                  size='xs'
+                  mt={10}
+                  mb={10}
+                  label={i18n._t('Event: %1', [title])}
+                  labelPosition='center'
+                />
                 <MainMenuLink
-                  bgcolor={dark ? theme.primaryColor : '#a8c5ff'}
-                  external={true}
+                  external={ExternalTarget.SIGRUN}
                   href={`${env.urls.sigrun}/event/${(match ? params : paramsEdit)?.id}/info`}
                   icon={<IconExternalLink size={18} />}
                   text={i18n._t('Open event page')}
@@ -220,7 +229,13 @@ export const Navigation: React.FC<{ isLoggedIn: boolean; dark: boolean }> = ({
                     onClick={closeMenu}
                   />
                 )}
-                <div className={classes.label}>{i18n._t('Danger zone')}</div>
+                <Divider
+                  size='xs'
+                  mt={10}
+                  mb={10}
+                  label={i18n._t('Danger zone')}
+                  labelPosition='center'
+                />
                 {isSuperadmin && (
                   <NavLink
                     label={i18n._t('Rebuild scoring')}
@@ -245,57 +260,113 @@ export const Navigation: React.FC<{ isLoggedIn: boolean; dark: boolean }> = ({
                     stopEventModalOpen();
                   }}
                 />
-                {isLoggedIn && (
-                  <MainMenuLink
-                    href={'/ownedEvents'}
-                    icon={<IconList size={20} />}
-                    text={i18n._t('My events')}
-                    onClick={closeMenu}
-                  />
-                )}
-                {!isLoggedIn && (
-                  <MainMenuLink
-                    href={'/profile/login'}
-                    icon={<IconLogin size={18} />}
-                    text={i18n._t('Sign in')}
-                    onClick={closeMenu}
-                  />
-                )}
-                {!isLoggedIn && (
-                  <MainMenuLink
-                    href='/profile/signup'
-                    icon={<IconUserPlus size={18} />}
-                    text={i18n._t('Sign up')}
-                    onClick={closeMenu}
-                  />
-                )}
-                {isSuperadmin && (
-                  <MainMenuLink
-                    href='/profile/signupAdmin'
-                    icon={<IconUserPlus size={18} />}
-                    text={i18n._t('Register player')}
-                    onClick={closeMenu}
-                  />
-                )}
-                {isLoggedIn && (
-                  <MainMenuLink
-                    href='/profile/manage'
-                    icon={<IconUserCircle size={18} />}
-                    text={i18n._t('Edit profile')}
-                    onClick={closeMenu}
-                  />
-                )}
-                {isLoggedIn && (
-                  <MainMenuLink
-                    href='/profile/logout'
-                    icon={<IconLogout size={18} />}
-                    text={i18n._t('Sign out')}
-                    onClick={closeMenu}
-                  />
-                )}
               </>
             )}
+            <Divider
+              size='xs'
+              mt={10}
+              mb={10}
+              label={i18n._t('Common actions')}
+              labelPosition='center'
+            />
+            <MainMenuLink
+              external={ExternalTarget.SIGRUN}
+              href={`${env.urls.sigrun}`}
+              icon={<IconExternalLink size={18} />}
+              text={i18n._t('All events')}
+              onClick={closeMenu}
+            />
+            {isLoggedIn && (
+              <MainMenuLink
+                href={'/ownedEvents'}
+                icon={<IconList size={20} />}
+                text={i18n._t('My events')}
+                onClick={closeMenu}
+              />
+            )}
+            {!isLoggedIn && (
+              <MainMenuLink
+                href={'/profile/login'}
+                icon={<IconLogin size={18} />}
+                text={i18n._t('Sign in')}
+                onClick={closeMenu}
+              />
+            )}
+            {!isLoggedIn && (
+              <MainMenuLink
+                href='/profile/signup'
+                icon={<IconUserPlus size={18} />}
+                text={i18n._t('Sign up')}
+                onClick={closeMenu}
+              />
+            )}
+            {isSuperadmin && (
+              <MainMenuLink
+                href='/profile/signupAdmin'
+                icon={<IconUserPlus size={18} />}
+                text={i18n._t('Register player')}
+                onClick={closeMenu}
+              />
+            )}
+            {isLoggedIn && (
+              <MainMenuLink
+                href='/profile/manage'
+                icon={<IconUserCircle size={18} />}
+                text={i18n._t('Edit profile')}
+                onClick={closeMenu}
+              />
+            )}
+            {isLoggedIn && (
+              <MainMenuLink
+                href='/profile/logout'
+                icon={<IconLogout size={18} />}
+                text={i18n._t('Sign out')}
+                onClick={closeMenu}
+              />
+            )}
           </Stack>
+          <Group mt={0} spacing={0}>
+            <NavLink
+              styles={{ label: { fontSize: '18px' } }}
+              icon={<IconLanguageHiragana size={20} />}
+              label={i18n._t('Language')}
+            >
+              <NavLink
+                onClick={() => {
+                  saveLang('en');
+                  closeMenu();
+                }}
+                icon={<FlagEn width={24} />}
+                label='en'
+              />
+              <NavLink
+                onClick={() => {
+                  saveLang('ru');
+                  closeMenu();
+                }}
+                icon={<FlagRu width={24} />}
+                label='ru'
+              />
+            </NavLink>
+            <NavLink
+              styles={{ label: { fontSize: '18px' } }}
+              icon={<IconSun size={20} />}
+              onClick={() => {
+                toggleDimmed();
+                closeMenu();
+              }}
+              label={i18n._t('Toggle dimmed colors')}
+            />
+            <NavLink
+              styles={{ label: { fontSize: '18px' } }}
+              icon={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
+              onClick={() => {
+                toggleColorScheme();
+                closeMenu();
+              }}
+              label={i18n._t('Toggle color scheme')}
+            />
+          </Group>
         </Stack>
       </Drawer>
 

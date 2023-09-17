@@ -26,12 +26,13 @@ const api = new ApiService(
   import.meta.env.SSR ? import.meta.env.VITE_FREY_URL_SSR : env.urls.frey,
   import.meta.env.SSR ? import.meta.env.VITE_MIMIR_URL_SSR : env.urls.mimir
 );
-api
-  .setAnalytics(analytics)
-  .setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
+
 export const apiCtx = createContext(api);
 
 export const useApi = () => {
+  api
+    .setAnalytics(analytics)
+    .setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
   return useContext(apiCtx);
 };
 

@@ -327,6 +327,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
                       header={
                         <AppHeader
                           dark={dark}
+                          isLoggedIn={isLoggedIn}
                           toggleColorScheme={toggleColorScheme}
                           toggleDimmed={toggleDimmed}
                           saveLang={saveLang}

@@ -279,15 +279,16 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                   background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
                 },
               }}
-              header={<Navigation dark={dark} isLoggedIn={isLoggedIn} />}
-              footer={
-                <AppFooter
+              header={
+                <Navigation
                   dark={dark}
+                  isLoggedIn={isLoggedIn}
                   toggleColorScheme={toggleColorScheme}
                   toggleDimmed={toggleDimmed}
                   saveLang={saveLang}
                 />
               }
+              footer={<AppFooter dark={dark} />}
             >
               <Container>
                 <Title order={4}>{pageTitle}</Title>
