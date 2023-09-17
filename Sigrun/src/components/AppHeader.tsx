@@ -16,21 +16,22 @@
  */
 
 import {
-  createStyles,
-  Header,
-  Group,
-  Container,
+  ActionIcon,
   Anchor,
   Button,
-  ActionIcon,
-  Modal,
-  useMantineTheme,
-  TextInput,
-  Space,
-  LoadingOverlay,
+  Container,
+  createStyles,
+  Divider,
   Drawer,
+  Group,
+  Header,
+  LoadingOverlay,
+  Modal,
   NavLink,
+  Space,
   Stack,
+  TextInput,
+  useMantineTheme,
 } from '@mantine/core';
 import {
   IconAdjustmentsAlt,
@@ -42,31 +43,30 @@ import {
   IconLanguageHiragana,
   IconList,
   IconListCheck,
+  IconLogin,
   IconMoonStars,
   IconNetwork,
   IconNotes,
   IconOlympics,
   IconSun,
+  IconUserPlus,
 } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
+import * as React from 'react';
 import { useContext, useState } from 'react';
 import { useLocation } from 'wouter';
 import { globalsCtx } from '../hooks/globals';
-import * as React from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { EventType } from '../clients/proto/atoms.pb';
 import { useApi } from '../hooks/api';
 import { env } from '../env';
-import { MainMenuLink } from './MainMenuLink';
+import { ExternalTarget, MainMenuLink } from './MainMenuLink';
 import { FlagEn, FlagRu } from '../helpers/flags';
 import { authCtx } from '../hooks/auth';
 
 const useStyles = createStyles((theme) => ({
   header: {
-    backgroundColor: theme.fn.variant({
-      variant: 'filled',
-      color: theme.primaryColor,
-    }).background,
+    backgroundColor: '#617193',
     borderBottom: 0,
     zIndex: 10000,
   },
@@ -86,12 +86,19 @@ const useStyles = createStyles((theme) => ({
 
 interface AppHeaderProps {
   dark: boolean;
+  isLoggedIn: boolean;
   toggleColorScheme: () => void;
   toggleDimmed: () => void;
   saveLang: (lang: string) => void;
 }
 
-export function AppHeader({ dark, toggleColorScheme, toggleDimmed, saveLang }: AppHeaderProps) {
+export function AppHeader({
+  dark,
+  isLoggedIn,
+  toggleColorScheme,
+  toggleDimmed,
+  saveLang,
+}: AppHeaderProps) {
   const { classes } = useStyles();
   const i18n = useI18n();
   const [, navigate] = useLocation();
@@ -136,66 +143,36 @@ export function AppHeader({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
         opened={menuOpened}
         closeOnClickOutside={true}
         closeOnEscape={true}
-        withCloseButton={true}
+        withCloseButton={false}
         closeButtonProps={{ size: 'lg' }}
         lockScroll={false}
         onClose={closeMenu}
-        title={<b>{i18n._t('Ratings & stats: actions')}</b>}
         overlayProps={{ opacity: 0.5, blur: 4 }}
         transitionProps={{ transition: 'pop-top-left', duration: 150, timingFunction: 'linear' }}
         style={{ zIndex: 10000, position: 'fixed' }}
-        styles={{ body: { height: 'calc(100% - 68px)' } }}
+        styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
       >
         <Stack justify='space-between' style={{ height: '100%' }}>
           <Stack spacing={0}>
-            <Anchor
-              href={`/`}
-              onClick={(e) => {
-                navigate(`/`);
-                closeMenu();
-                e.preventDefault();
-              }}
-            >
-              <NavLink
-                styles={{ label: { fontSize: '18px' } }}
-                icon={<IconList size={20} />}
-                label={i18n._t('To events list')}
-              />
-            </Anchor>
-            {globals.data.eventId?.length === 1 &&
-              (auth.ownEvents.includes(globals.data.eventId?.[0]) || auth.isSuperadmin) && (
-                <Anchor
-                  href={`${env.urls.forseti}/ownedEvents/edit/${globals.data.eventId?.[0]}`}
-                  target='_blank'
-                  onClick={closeMenu}
-                >
-                  <NavLink
-                    bg={dark ? '#784421' : theme.colors.orange[3]}
-                    styles={{ label: { fontSize: '18px' } }}
-                    icon={<IconAdjustmentsAlt size={20} />}
-                    label={i18n._t('Edit event in admin panel')}
-                  />
-                </Anchor>
-              )}
-            <Anchor href={env.urls.forseti} target='_blank' onClick={closeMenu}>
-              <NavLink
-                styles={{ label: { fontSize: '18px' } }}
-                icon={<IconAdjustmentsAlt size={20} />}
-                label={i18n._t('Profile & admin panel')}
-              />
-            </Anchor>
-            {globals.data.eventId?.length === 1 && (
-              <Anchor href={env.urls.tyr} target='_blank' onClick={closeMenu}>
-                <NavLink
-                  styles={{ label: { fontSize: '18px' } }}
-                  icon={<IconDeviceMobileShare size={20} />}
-                  label={i18n._t('Open assistant')}
-                />
-              </Anchor>
-            )}
-            <hr />
             {globals.data.eventId && (
               <>
+                <Divider
+                  size='xs'
+                  mt={10}
+                  mb={10}
+                  label={i18n._t('Current event')}
+                  labelPosition='center'
+                />
+                {globals.data.eventId?.length === 1 &&
+                  (auth.ownEvents.includes(globals.data.eventId?.[0]) || auth.isSuperadmin) && (
+                    <MainMenuLink
+                      external={ExternalTarget.FORSETI}
+                      href={`${env.urls.forseti}/ownedEvents/edit/${globals.data.eventId?.[0]}`}
+                      icon={<IconAdjustmentsAlt size={20} />}
+                      text={i18n._t('Edit event in admin panel')}
+                      onClick={closeMenu}
+                    />
+                  )}
                 <MainMenuLink
                   href={`/event/${globals.data.eventId?.join('.')}/info`}
                   icon={<IconNotes size={24} />}
@@ -259,6 +236,55 @@ export function AppHeader({ dark, toggleColorScheme, toggleDimmed, saveLang }: A
                     />
                   )}
               </>
+            )}
+            <Divider
+              size='xs'
+              mt={10}
+              mb={10}
+              label={i18n._t('Common actions')}
+              labelPosition='center'
+            />
+            <MainMenuLink
+              href='/'
+              icon={<IconList size={20} />}
+              text={i18n._t('To events list')}
+              onClick={closeMenu}
+            />
+            {isLoggedIn && (
+              <MainMenuLink
+                external={ExternalTarget.FORSETI}
+                href={`${env.urls.forseti}/profile/manage`}
+                icon={<IconAdjustmentsAlt size={20} />}
+                text={i18n._t('Edit my profile')}
+                onClick={closeMenu}
+              />
+            )}
+            {!isLoggedIn && (
+              <MainMenuLink
+                external={ExternalTarget.FORSETI}
+                href={`${env.urls.forseti}/profile/login`}
+                icon={<IconLogin size={20} />}
+                text={i18n._t('Sign in')}
+                onClick={closeMenu}
+              />
+            )}
+            {!isLoggedIn && (
+              <MainMenuLink
+                external={ExternalTarget.FORSETI}
+                href={`${env.urls.forseti}/profile/signup`}
+                icon={<IconUserPlus size={20} />}
+                text={i18n._t('Sign up')}
+                onClick={closeMenu}
+              />
+            )}
+            {globals.data.eventId?.length === 1 && (
+              <MainMenuLink
+                external={ExternalTarget.TYR}
+                href={env.urls.tyr}
+                icon={<IconDeviceMobileShare size={20} />}
+                text={i18n._t('Open assistant')}
+                onClick={closeMenu}
+              />
             )}
           </Stack>
           <Group mt={0} spacing={0}>
