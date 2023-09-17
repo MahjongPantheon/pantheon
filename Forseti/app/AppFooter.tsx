@@ -15,30 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Menu, Group, ActionIcon, Container, Footer, useMantineTheme } from '@mantine/core';
-import {
-  IconLanguageHiragana,
-  IconMoon,
-  IconMoonStars,
-  IconSun,
-  IconSunLow,
-} from '@tabler/icons-react';
-import { FlagEn, FlagRu } from './helpers/flags';
-import { useI18n } from './hooks/i18n';
+import { Group, Container, Footer } from '@mantine/core';
 import * as React from 'react';
 import { actionButtonRef } from './hooks/actionButton';
 
 interface AppFooterProps {
   dark: boolean;
-  toggleColorScheme: () => void;
-  toggleDimmed: () => void;
-  saveLang: (lang: string) => void;
 }
 
-export function AppFooter({ dark, toggleColorScheme, toggleDimmed, saveLang }: AppFooterProps) {
-  const i18n = useI18n();
-  const theme = useMantineTheme();
-
+export function AppFooter({ dark }: AppFooterProps) {
   return (
     <Footer
       height={60}

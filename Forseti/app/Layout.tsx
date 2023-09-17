@@ -288,14 +288,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                   saveLang={saveLang}
                 />
               }
-              footer={
-                <AppFooter
-                  dark={dark}
-                  toggleColorScheme={toggleColorScheme}
-                  toggleDimmed={toggleDimmed}
-                  saveLang={saveLang}
-                />
-              }
+              footer={<AppFooter dark={dark} />}
             >
               <Container>
                 <Title order={4}>{pageTitle}</Title>
