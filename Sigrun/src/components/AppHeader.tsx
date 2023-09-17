@@ -17,7 +17,6 @@
 
 import {
   ActionIcon,
-  Anchor,
   Button,
   Container,
   createStyles,
@@ -54,7 +53,6 @@ import {
 import { useI18n } from '../hooks/i18n';
 import * as React from 'react';
 import { useContext, useState } from 'react';
-import { useLocation } from 'wouter';
 import { globalsCtx } from '../hooks/globals';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { EventType } from '../clients/proto/atoms.pb';
@@ -64,7 +62,7 @@ import { ExternalTarget, MainMenuLink } from './MainMenuLink';
 import { FlagEn, FlagRu } from '../helpers/flags';
 import { authCtx } from '../hooks/auth';
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   header: {
     backgroundColor: '#617193',
     borderBottom: 0,
@@ -101,7 +99,6 @@ export function AppHeader({
 }: AppHeaderProps) {
   const { classes } = useStyles();
   const i18n = useI18n();
-  const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const globals = useContext(globalsCtx);
   const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
@@ -144,7 +141,6 @@ export function AppHeader({
         closeOnClickOutside={true}
         closeOnEscape={true}
         withCloseButton={false}
-        closeButtonProps={{ size: 'lg' }}
         lockScroll={false}
         onClose={closeMenu}
         overlayProps={{ opacity: 0.5, blur: 4 }}
@@ -152,6 +148,11 @@ export function AppHeader({
         style={{ zIndex: 10000, position: 'fixed' }}
         styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
       >
+        <Drawer.CloseButton
+          size='xl'
+          pos='absolute'
+          style={{ right: 0, backgroundColor: dark ? '#1a1b1e' : '#fff' }}
+        />
         <Stack justify='space-between' style={{ height: '100%' }}>
           <Stack spacing={0}>
             {globals.data.eventId && (

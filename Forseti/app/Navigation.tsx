@@ -28,7 +28,6 @@ import {
   NavLink,
   Stack,
   Text,
-  useMantineTheme,
 } from '@mantine/core';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -96,7 +95,6 @@ export const Navigation: React.FC<{
   const i18n = useI18n();
   const api = useApi();
   const storage = useStorage();
-  const theme = useMantineTheme();
   const [match, params] = useRoute('/event/:id/:subpath');
   const [matchEdit, paramsEdit] = useRoute('/ownedEvents/edit/:id');
   const id = (match ? params : paramsEdit)?.id;
@@ -176,6 +174,11 @@ export const Navigation: React.FC<{
         style={{ zIndex: 10000, position: 'fixed' }}
         styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
       >
+        <Drawer.CloseButton
+          size='xl'
+          pos='absolute'
+          style={{ right: 0, backgroundColor: dark ? '#1a1b1e' : '#fff' }}
+        />
         <Stack justify='space-between' style={{ height: '100%' }}>
           <Stack spacing={0}>
             {(match || matchEdit) && (
