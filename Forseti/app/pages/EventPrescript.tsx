@@ -56,7 +56,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
-  const [nextSessionIndex, setNextSessionIndex] = useState<number | ''>(1);
+  const [nextSessionIndex, setNextSessionIndex] = useState<number | string>(1);
   const [script, setScript] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
   const i18n = useI18n();
@@ -94,7 +94,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
     setIsSaving(true);
     setIsSaved(false);
     api
-      .updatePrescriptedEventConfig(eventId, nextSessionIndex || 1, script)
+      .updatePrescriptedEventConfig(eventId, parseInt(nextSessionIndex.toString(), 10) || 1, script)
       .then((r) => {
         if (r) {
           setIsSaved(true);
@@ -124,11 +124,11 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
 
   return (
     <Container>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      <LoadingOverlay visible={isLoading} opacity={1} />
       <Modal
         opened={opened}
         onClose={close}
-        title={<Text weight='bold'>{i18n._t('Event script filling instruction')}</Text>}
+        title={<Text fw='bold'>{i18n._t('Event script filling instruction')}</Text>}
         centered
       >
         {i18n._t(
@@ -158,7 +158,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
           placeholder={i18n._t('Please enter event script here')}
           label={
             <Group>
-              <Text weight='bold'>{i18n._t('Event script')}</Text>{' '}
+              <Text fw='bold'>{i18n._t('Event script')}</Text>{' '}
               <Button variant='subtle' onClick={open}>
                 {i18n._t('Instructions')}
               </Button>
@@ -170,7 +170,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
           onChange={(event) => setScript(event.currentTarget.value)}
         />
         <Box>
-          <Text weight='bold'>
+          <Text fw='bold'>
             {errors.length > 0 &&
               i18n._nt(['Found %1 error', 'Found %1 errors'], errors.length, [errors.length])}
             {errors.length === 0 && i18n._t('No errors found')}

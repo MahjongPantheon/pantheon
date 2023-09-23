@@ -240,8 +240,8 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
           </Button>
         </Group>
       </Modal>
-      <Container pos='relative' sx={{ minHeight: '400px' }}>
-        <Stack justify='flex-start' spacing='0'>
+      <Container pos='relative' style={{ minHeight: '400px' }}>
+        <Stack justify='flex-start' gap='0'>
           {events.map((event, idx) => {
             return (
               <Group
@@ -256,7 +256,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       : 'transparent',
                 }}
               >
-                <Group sx={{ flex: 1, flexWrap: 'nowrap' }}>
+                <Group style={{ flex: 1, flexWrap: 'nowrap' }}>
                   {event.type === EventType.EVENT_TYPE_LOCAL && (
                     <Tooltip
                       openDelay={500}
@@ -306,7 +306,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </ActionIcon>
                   </a>
                 </Group>
-                <Group position='right' spacing='xs'>
+                <Group justify='right' gap='xs'>
                   {!event.finished && (
                     <Menu shadow='md' width={200}>
                       <Menu.Target>
@@ -353,7 +353,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                           <Menu.Item
                             title={i18n._t('Rebuild scoring')}
                             onClick={() => rebuildScoring(event.id)}
-                            icon={<IconRefreshAlert />}
+                            leftSection={<IconRefreshAlert />}
                           >
                             {i18n._t('Rebuild scoring')}
                           </Menu.Item>
@@ -361,7 +361,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                         <Menu.Item
                           title={i18n._t('Finish event')}
                           color='red'
-                          icon={<IconHandStop />}
+                          leftSection={<IconHandStop />}
                           onClick={() => {
                             setStopEventData({ id: event.id, title: event.title });
                             stopEventModalOpen();

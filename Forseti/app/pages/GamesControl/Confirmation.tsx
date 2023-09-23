@@ -54,7 +54,7 @@ export function Confirmation({
       <Popover.Target>
         <Button
           disabled={!!disabled}
-          leftIcon={icon}
+          leftSection={icon}
           title={title}
           color={color}
           onClick={() => setOpened((o) => !o)}

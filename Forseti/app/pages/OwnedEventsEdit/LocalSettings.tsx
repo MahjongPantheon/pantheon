@@ -31,7 +31,7 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ form, i18n }) => {
     <>
       <NumberInput
         {...form.getInputProps('event.seriesLength')}
-        icon={<IconChartHistogram size='1rem' />}
+        leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t(
           'Count of session in game series. Set to 0 to disable series functionality.'
@@ -42,7 +42,7 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ form, i18n }) => {
       />
       <NumberInput
         {...form.getInputProps('event.minGames')}
-        icon={<IconNumbers size='1rem' />}
+        leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(
           'Minimal count of games the player should play to get into the rating table.'

@@ -151,8 +151,8 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
 
   return (
     <Container>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
-      <Group position='apart'>
+      <LoadingOverlay visible={isLoading} opacity={1} />
+      <Group justify='apart'>
         <Group>
           <Link to='/stats/lastday'>
             <Button variant='filled'>{i18n._t('Last 24h')}</Button>

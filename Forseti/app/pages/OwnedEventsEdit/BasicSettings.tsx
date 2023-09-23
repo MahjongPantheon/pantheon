@@ -68,7 +68,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
         )}
         <TextInput
           withAsterisk
-          icon={<IconAbc size='1rem' />}
+          leftSection={<IconAbc size='1rem' />}
           label={i18n._t('Event title')}
           {...form.getInputProps('event.title')}
         />
@@ -81,7 +81,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
         />
         {newEvent && (
           <Select
-            icon={<IconChecklist size='1rem' />}
+            leftSection={<IconChecklist size='1rem' />}
             label={i18n._t('Basic ruleset')}
             description={i18n._t(
               'Ruleset to be used as a template for the event. Fine tuning is available in adjacent tabs. Please note that all ruleset settings will be reset when you select another ruleset here.'
@@ -100,13 +100,13 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           />
         )}
         <Select
-          icon={<IconMap2 size='1rem' />}
+          leftSection={<IconMap2 size='1rem' />}
           label={i18n._t('Primary timezone for event')}
           description={i18n._t(
             'All dates and time will be displayed according to the selected timezone.'
           )}
           searchable
-          nothingFound={i18n._t('Nothing found')}
+          nothingFoundMessage={i18n._t('Nothing found')}
           maxDropdownHeight={280}
           data={timezones}
           {...form.getInputProps('event.timezone')}

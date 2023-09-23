@@ -92,7 +92,7 @@ export function TournamentControls({
 
   return (
     <>
-      <Text weight='bold'>{i18n._t('Current status')}</Text>
+      <Text fw='bold'>{i18n._t('Current status')}</Text>
       <Group align='flex-start'>
         <SegmentedControl
           color='blue'

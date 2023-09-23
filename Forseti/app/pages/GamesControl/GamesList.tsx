@@ -120,7 +120,7 @@ export function GamesList({
                     </ActionIcon>
                   )}
                 </Stack>
-                <Stack spacing='0'>
+                <Stack gap='0'>
                   {t.players.map((p) => {
                     const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
                     return (
@@ -140,7 +140,7 @@ export function GamesList({
                         </Badge>
                         <PlayerAvatar p={p} size='sm' />
                         <Text
-                          weight='bold'
+                          fw='bold'
                           style={
                             matches
                               ? {
@@ -169,7 +169,7 @@ export function GamesList({
                   </Text>
                 </Box>
               </Group>
-              <Group position='right'>
+              <Group justify='right'>
                 {(t.status === SessionStatus.SESSION_STATUS_INPROGRESS ||
                   (eventConfig?.syncStart &&
                     t.status === SessionStatus.SESSION_STATUS_PREFINISHED)) &&

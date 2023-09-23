@@ -43,7 +43,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       </Text>
       <TextInput
         withAsterisk
-        icon={<IconUsers size='1rem' />}
+        leftSection={<IconUsers size='1rem' />}
         label={i18n._t('Tenhou Lobby ID')}
         {...form.getInputProps('event.lobbyId')}
       />
@@ -53,7 +53,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       />
       <NumberInput
         {...form.getInputProps('ruleset.gameExpirationTime')}
-        icon={<IconHourglass size='1rem' />}
+        leftSection={<IconHourglass size='1rem' />}
         label={i18n._t('Game expiration time (in hours)')}
         description={i18n._t(
           'Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration.'
@@ -63,7 +63,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       />
       <NumberInput
         {...form.getInputProps('ruleset.chipsValue')}
-        icon={<IconCoins size='1rem' />}
+        leftSection={<IconCoins size='1rem' />}
         label={i18n._t('Chips value')}
         description={i18n._t(
           'Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips.'
@@ -74,7 +74,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       />
       <NumberInput
         {...form.getInputProps('event.seriesLength')}
-        icon={<IconChartHistogram size='1rem' />}
+        leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t(
           'Count of session in game series. Set to 0 to disable series functionality.'
@@ -85,7 +85,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       />
       <NumberInput
         {...form.getInputProps('event.minGames')}
-        icon={<IconNumbers size='1rem' />}
+        leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(
           'Minimal count of games the player should play to get into the rating table.'
@@ -95,7 +95,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         min={0}
       />
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
@@ -105,7 +105,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         max={0}
       />
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(

@@ -1,0 +1,19 @@
+.header {
+  background-color: var(--mantine-primary-color-filled);
+  border-bottom: 0;
+  z-index: 10000;
+}
+
+.inner {
+  height: 44px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.eventTitle {
+  display: inline-flex;
+  color: white;
+  height: 100%;
+  align-items: center;
+}

@@ -52,7 +52,7 @@ export const ProfileConfirm: React.FC<{ params: { code: string } }> = ({ params:
 
   return (
     <Container>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      <LoadingOverlay visible={isLoading} opacity={1} />
       {isSuccess ? <SuccessAlert i18n={i18n} /> : <ErrorAlert i18n={i18n} />}
     </Container>
   );
@@ -71,7 +71,7 @@ function ErrorAlert({ i18n }: { i18n: I18nService }) {
         )}
       </Alert>
       <Space h='xl' />
-      <Group position='right'>
+      <Group justify='right'>
         <Link to='/profile/signup'>
           <Button variant='filled'>{i18n._t('Go to Signup page')}</Button>
         </Link>
@@ -87,7 +87,7 @@ function SuccessAlert({ i18n }: { i18n: I18nService }) {
         {i18n._t('Your email has been successfully confirmed. Now you can proceed to login page.')}
       </Alert>
       <Space h='xl' />
-      <Group position='right'>
+      <Group justify='right'>
         <Link to='/profile/login'>
           <Button variant='filled'>{i18n._t('Go to Login page')}</Button>
         </Link>

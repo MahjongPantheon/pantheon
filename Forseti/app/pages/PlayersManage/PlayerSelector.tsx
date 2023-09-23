@@ -14,16 +14,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import * as React from 'react';
-import { Autocomplete, Group, Loader, Text } from '@mantine/core';
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCombobox, Combobox, TextInput, Loader } from '@mantine/core';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
-import { useApi } from '../../hooks/api';
-import { IconSearch } from '@tabler/icons-react';
 import { RegisteredPlayer } from '../../clients/proto/atoms.pb';
+import { useApi } from '../../hooks/api';
+
 type ItemProps = {
-  title: string;
+  label: string;
   value: string; // playerID
   city: string;
   tenhouId: string;
@@ -31,37 +29,52 @@ type ItemProps = {
   lastUpdate: string;
 };
 
-export const PlayerSelector: React.FC<{
+type Props = {
   eventId: number;
   onPlayerSelect: (player: RegisteredPlayer) => void;
   placeholder: string;
   excludePlayers: number[];
-}> = ({ eventId, onPlayerSelect, placeholder, excludePlayers }) => {
-  const api = useApi();
-  const [userAddLoading, setUserAddLoading] = useState(false);
-  const [userAddValue, setUserAddValue] = useState('');
-  const [userAddData, setUserAddData] = useState<ItemProps[]>([]);
+};
 
-  const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
-    ({ title, value, city, tenhouId, ...others }: ItemProps, ref) => (
-      <div ref={ref} {...others}>
-        <Group noWrap>
-          <Text>
-            {title} [#{value}, {city}
-            {!!tenhouId && `, Tenhou ID: ${tenhouId}`}]
-          </Text>
-        </Group>
-      </div>
-    )
+export function PlayerSelector({ eventId, onPlayerSelect, placeholder, excludePlayers }: Props) {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<ItemProps[]>([]);
+  const [value, setValue] = useState('');
+  const [empty, setEmpty] = useState(false);
+  const abortController = useRef<AbortController>();
+  const api = useApi();
+
+  const handlePlayerAdd = useCallback(
+    (itemLabel: string) => {
+      const item = data.find((v) => v.label === itemLabel);
+      setValue('');
+      setData([]);
+      if (item) {
+        onPlayerSelect({
+          id: parseInt(item.value, 10),
+          title: item.label,
+          hasAvatar: item.hasAvatar ?? false,
+          lastUpdate: item.lastUpdate,
+          tenhouId: '', // TODO: not required here, maybe fix type
+          ignoreSeating: false,
+        });
+      }
+    },
+    [api, eventId, excludePlayers]
   );
 
   const fetchData = (query: string) => {
     api.findByTitle(query).then((persons) => {
-      setUserAddData(
+      setEmpty(persons.length === 0);
+      setData(
         persons
           .filter((p) => !excludePlayers.includes(p.id))
           .map((person) => ({
-            title: person.title,
+            label: person.title,
             value: person.id.toString(),
             city: person.city,
             tenhouId: person.tenhouId,
@@ -69,7 +82,7 @@ export const PlayerSelector: React.FC<{
             lastUpdate: person.lastUpdate,
           }))
       );
-      setUserAddLoading(false);
+      setLoading(false);
     });
   };
 
@@ -81,48 +94,65 @@ export const PlayerSelector: React.FC<{
     };
   }, []);
 
-  const handleChange = useCallback(
-    (query: string) => {
-      setUserAddValue(query);
-      setUserAddData([]);
-      if (query.trim().length === 0) {
-        setUserAddLoading(false);
-      } else {
-        setUserAddLoading(true);
-        fetchDataD(query);
-      }
-    },
-    [api, excludePlayers]
-  );
+  const fetchOptions = (query: string) => {
+    abortController.current?.abort();
+    abortController.current = new AbortController();
+    setLoading(true);
+    fetchDataD(query);
+  };
 
-  const handlePlayerAdd = useCallback(
-    (item: ItemProps) => {
-      setUserAddValue('');
-      setUserAddData([]);
-      onPlayerSelect({
-        id: parseInt(item.value, 10),
-        title: item.title,
-        hasAvatar: item.hasAvatar ?? false,
-        lastUpdate: item.lastUpdate,
-        tenhouId: '', // TODO: not required here, maybe fix type
-        ignoreSeating: false,
-      });
-    },
-    [api, eventId, excludePlayers]
-  );
+  const splittedSearch = value.toLowerCase().trim().split(' ');
+  const options = (data ?? [])
+    .filter((v) => {
+      const words = v.label.toLowerCase().trim().split(' ');
+      return splittedSearch.every((searchWord) =>
+        words.some((word: string) => word.includes(searchWord))
+      );
+    })
+    .map((item) => (
+      <Combobox.Option value={item.value} key={item.label}>
+        {item.label} [#{item.value}, {item.city}
+        {!!item.tenhouId && `, Tenhou ID: ${item.tenhouId}`}]
+      </Combobox.Option>
+    ));
 
   return (
-    <Autocomplete
-      value={userAddValue}
-      data={userAddData}
-      onChange={handleChange}
-      onItemSubmit={handlePlayerAdd}
-      itemComponent={AutoCompleteItem}
-      filter={(value, item) => item.title.toLowerCase().includes(value.toLowerCase().trim())}
-      rightSection={
-        userAddLoading ? <Loader variant='dots' size='1rem' /> : <IconSearch color='#bbb' />
-      }
-      placeholder={placeholder}
-    />
+    <Combobox
+      onOptionSubmit={(optionValue) => {
+        handlePlayerAdd(optionValue);
+        combobox.closeDropdown();
+      }}
+      withinPortal={false}
+      store={combobox}
+    >
+      <Combobox.Target>
+        <TextInput
+          placeholder={placeholder}
+          value={value}
+          onChange={(event) => {
+            setValue(event.currentTarget.value);
+            fetchOptions(event.currentTarget.value);
+            combobox.resetSelectedOption();
+            combobox.openDropdown();
+          }}
+          onClick={() => combobox.openDropdown()}
+          onFocus={() => {
+            combobox.openDropdown();
+            if (data === null) {
+              fetchOptions(value);
+            }
+          }}
+          onBlur={() => combobox.closeDropdown()}
+          rightSection={loading && <Loader size={18} />}
+        />
+      </Combobox.Target>
+
+      <Combobox.Dropdown hidden={data === null}>
+        <Combobox.Options>
+          {options}
+          {empty && <Combobox.Empty>No results found</Combobox.Empty>}
+        </Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
   );
-};
+}

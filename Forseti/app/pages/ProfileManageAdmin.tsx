@@ -218,18 +218,18 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
   return (
     <>
       <Container>
-        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+        <LoadingOverlay visible={isLoading} opacity={1} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <TextInput
             withAsterisk
-            icon={<IconMailQuestion size='1rem' />}
+            leftSection={<IconMailQuestion size='1rem' />}
             description={i18n._t("Enter player's e-mail address")}
             {...form.getInputProps('email')}
           />
           <Space h='md' />
           <TextInput
             withAsterisk
-            icon={<IconSignature size='1rem' />}
+            leftSection={<IconSignature size='1rem' />}
             description={i18n._t(
               'This is a title that will be shown in rating table and in mobile assistant. Please select some unique title, like nickname or name+surname.'
             )}
@@ -241,17 +241,17 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
               <PasswordInput
                 withAsterisk
                 description={i18n._t('Enter strong password')}
-                icon={<IconLock size='1rem' />}
+                leftSection={<IconLock size='1rem' />}
                 {...form.getInputProps('password')}
               />
             </>
           )}
           <Space h='md' />
           <Select
-            icon={<IconMap2 size='1rem' />}
+            leftSection={<IconMap2 size='1rem' />}
             label={i18n._t('Country')}
             searchable
-            nothingFound={i18n._t('Nothing found')}
+            nothingFoundMessage={i18n._t('Nothing found')}
             maxDropdownHeight={280}
             data={countries}
             {...form.getInputProps('country')}
@@ -259,18 +259,18 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
           <Space h='md' />
           <TextInput
             description={i18n._t('Enter city of the player')}
-            icon={<IconMapPin size='1rem' />}
+            leftSection={<IconMapPin size='1rem' />}
             {...form.getInputProps('city')}
           />
           <Space h='md' />
           <TextInput
             description={i18n._t("Enter player's phone")}
-            icon={<IconPhoneCall size='1rem' />}
+            leftSection={<IconPhoneCall size='1rem' />}
             {...form.getInputProps('phone')}
           />
           <Space h='md' />
           <TextInput
-            icon={<IconIdBadge2 size='1rem' />}
+            leftSection={<IconIdBadge2 size='1rem' />}
             description={i18n._t('Tenhou ID')}
             {...form.getInputProps('tenhouId')}
           />

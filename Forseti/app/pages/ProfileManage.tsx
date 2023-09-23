@@ -167,12 +167,12 @@ export const ProfileManage: React.FC = () => {
   return (
     <>
       <Container>
-        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+        <LoadingOverlay visible={isLoading} opacity={1} />
         <Box pos='relative'>
           <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
             <TextInput
               disabled={true}
-              icon={<IconMail size='1rem' />}
+              leftSection={<IconMail size='1rem' />}
               label={i18n._t('Your e-mail address')}
               description={i18n._t(
                 'Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your address, contact chief administrator.'
@@ -181,7 +181,7 @@ export const ProfileManage: React.FC = () => {
             />
             <Space h='md' />
             <TextInput
-              icon={<IconId size='1rem' />}
+              leftSection={<IconId size='1rem' />}
               label={i18n._t('Player title')}
               description={i18n._t(
                 "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
@@ -190,36 +190,36 @@ export const ProfileManage: React.FC = () => {
             />
             <TextInput
               disabled={true}
-              icon={<IconNumber size='1rem' />}
+              leftSection={<IconNumber size='1rem' />}
               label={i18n._t('System ID')}
               description={i18n._t('Numerical identifier of your user profile.')}
               value={personId}
             />
             <Space h='md' />
             <Select
-              icon={<IconMap2 size='1rem' />}
+              leftSection={<IconMap2 size='1rem' />}
               label={i18n._t('Country')}
               searchable
-              nothingFound={i18n._t('Nothing found')}
+              nothingFoundMessage={i18n._t('Nothing found')}
               maxDropdownHeight={280}
               data={countries}
               {...form.getInputProps('country')}
             />
             <Space h='md' />
             <TextInput
-              icon={<IconMapPin size='1rem' />}
+              leftSection={<IconMapPin size='1rem' />}
               label={i18n._t('City')}
               {...form.getInputProps('city')}
             />
             <Space h='md' />
             <TextInput
-              icon={<IconPhoneCall size='1rem' />}
+              leftSection={<IconPhoneCall size='1rem' />}
               label={i18n._t('Phone number')}
               {...form.getInputProps('phone')}
             />
             <Space h='md' />
             <TextInput
-              icon={<IconIdBadge2 size='1rem' />}
+              leftSection={<IconIdBadge2 size='1rem' />}
               label={i18n._t('Tenhou ID')}
               {...form.getInputProps('tenhouId')}
             />

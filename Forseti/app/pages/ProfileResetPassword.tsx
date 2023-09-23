@@ -75,11 +75,11 @@ export const ProfileResetPassword: React.FC = () => {
       <form onSubmit={form.onSubmit(submitForm)}>
         <Container>
           <TextInput
-            icon={<IconLogin size='1rem' />}
+            leftSection={<IconLogin size='1rem' />}
             placeholder={i18n._t('Your e-mail address')}
             {...form.getInputProps('email')}
           />
-          <Group position='right' mt='md'>
+          <Group justify='right' mt='md'>
             <Button disabled={isLoading} type='submit'>
               {i18n._t('Request password reset')}
             </Button>

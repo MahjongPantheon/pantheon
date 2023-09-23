@@ -39,7 +39,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
     <Stack>
       <NumberInput
         {...form.getInputProps('ruleset.startRating')}
-        icon={<IconArrowBadgeDownFilled size='1rem' />}
+        leftSection={<IconArrowBadgeDownFilled size='1rem' />}
         label={i18n._t('Initial rating')}
         description={i18n._t('Score given to all players in the beginning of the rating')}
         defaultValue={0}
@@ -47,7 +47,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       />
       <NumberInput
         {...form.getInputProps('ruleset.startPoints')}
-        icon={<IconCash size='1rem' />}
+        leftSection={<IconCash size='1rem' />}
         label={i18n._t('Initial points')}
         description={i18n._t(
           'Amount of points given to every player in the beginning of every session'
@@ -91,7 +91,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       />
       {!!form.getTransformedValues().ruleset.playAdditionalRounds && (
         <NumberInput
-          icon={<IconTargetArrow size='1rem' />}
+          leftSection={<IconTargetArrow size='1rem' />}
           label={i18n._t('Goal score')}
           description={i18n._t('Amount of score player should get to end the game.')}
           defaultValue={30000}
@@ -153,7 +153,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         {...form.getInputProps('ruleset.withKiriageMangan', { type: 'checkbox' })}
       />
       <NumberInput
-        icon={<IconMountain size='1rem' />}
+        leftSection={<IconMountain size='1rem' />}
         label={i18n._t('Oka bonus')}
         description={i18n._t('Amount of points given to player at 1st place')}
         defaultValue={20000}
@@ -205,7 +205,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       />
       {!form.getTransformedValues().ruleset.extraChomboPayments && (
         <NumberInput
-          icon={<IconHandStop size='1rem' />}
+          leftSection={<IconHandStop size='1rem' />}
           label={i18n._t('Amount of chombo penalty')}
           description={i18n._t(
             'Amount of penalty applied in the end of the session after uma bonus.'

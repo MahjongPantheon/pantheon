@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Group, Container, Footer } from '@mantine/core';
+import { Group, Container, AppShell } from '@mantine/core';
 import * as React from 'react';
 import { actionButtonRef } from './hooks/actionButton';
 
@@ -25,13 +25,12 @@ interface AppFooterProps {
 
 export function AppFooter({ dark }: AppFooterProps) {
   return (
-    <Footer
-      height={60}
+    <AppShell.Footer
       bg={dark ? '#784421' : '#DCA57F'}
       style={{ display: 'flex', alignItems: 'center' }}
     >
       <Container style={{ flex: 1 }}>
-        <Group position='right' mt={0}>
+        <Group justify='right' mt={0}>
           <div
             style={{
               marginTop: '5px',
@@ -40,6 +39,6 @@ export function AppFooter({ dark }: AppFooterProps) {
           />
         </Group>
       </Container>
-    </Footer>
+    </AppShell.Footer>
   );
 }

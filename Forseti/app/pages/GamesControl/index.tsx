@@ -294,7 +294,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
 
   return (
     <Container>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      <LoadingOverlay visible={isLoading} opacity={1} />
       {eventConfig?.syncStart && (
         <TournamentControls
           seatingLoading={seatingLoading}

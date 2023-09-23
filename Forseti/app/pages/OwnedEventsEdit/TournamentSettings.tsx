@@ -31,7 +31,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
   return (
     <>
       <NumberInput
-        icon={<IconClockPlay size='1rem' />}
+        leftSection={<IconClockPlay size='1rem' />}
         {...form.getInputProps('event.duration')}
         label={i18n._t('Session duration in minutes')}
         description={i18n._t(
@@ -47,7 +47,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         {...form.getInputProps('ruleset.endingPolicy')}
       >
         <Space h='md' />
-        <Stack spacing='xs'>
+        <Stack gap='xs'>
           <Radio
             value={EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED}
             label={i18n._t('Do not interrupt session until it ends')}
@@ -77,7 +77,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         {...form.getInputProps('event.isPrescripted', { type: 'checkbox' })}
       />
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
@@ -87,7 +87,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         max={0}
       />
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(

@@ -17,13 +17,12 @@
 
 import {
   ActionIcon,
+  AppShell,
   Button,
   Container,
-  createStyles,
   Divider,
   Drawer,
   Group,
-  Header,
   Modal,
   NavLink,
   Stack,
@@ -58,31 +57,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { env } from './env';
 import { ExternalTarget, MainMenuLink } from './helpers/MainMenuLink';
 import { FlagEn, FlagRu } from './helpers/flags';
-
-const useStyles = createStyles((theme) => ({
-  header: {
-    backgroundColor: theme.fn.variant({
-      variant: 'filled',
-      color: theme.primaryColor,
-    }).background,
-    borderBottom: 0,
-    zIndex: 10000,
-  },
-
-  inner: {
-    height: '44px',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-
-  eventTitle: {
-    display: 'inline-flex',
-    color: 'white',
-    height: '100%',
-    alignItems: 'center',
-  },
-}));
+import styles from './Navigation.module.css';
 
 export const Navigation: React.FC<{
   isLoggedIn: boolean;
@@ -91,7 +66,6 @@ export const Navigation: React.FC<{
   toggleDimmed: () => void;
   saveLang: (lang: string) => void;
 }> = ({ isLoggedIn, dark, toggleColorScheme, toggleDimmed, saveLang }) => {
-  const { classes } = useStyles();
   const i18n = useI18n();
   const api = useApi();
   const storage = useStorage();
@@ -137,7 +111,7 @@ export const Navigation: React.FC<{
       : eventData?.title;
 
   return (
-    <Header bg={dark ? '#784421' : '#DCA57F'} height={44} mb={120} pt={0}>
+    <AppShell.Header bg={dark ? '#784421' : '#DCA57F'} mb={120} pt={0}>
       <Modal opened={stopEventModalOpened} onClose={stopEventModalClose} size='auto' centered>
         <Text>
           {i18n._t('Stop event "%1" (id #%2)? This action can\'t be undone!', [
@@ -180,7 +154,7 @@ export const Navigation: React.FC<{
           style={{ right: 0, backgroundColor: dark ? '#1a1b1e' : '#fff' }}
         />
         <Stack justify='space-between' style={{ height: '100%' }}>
-          <Stack spacing={0}>
+          <Stack gap={0}>
             {(match || matchEdit) && (
               <>
                 <Divider
@@ -244,13 +218,13 @@ export const Navigation: React.FC<{
                       closeMenu();
                       rebuildScoring(parseInt((match ? params : paramsEdit)?.id ?? '', 10));
                     }}
-                    icon={<IconRefreshAlert />}
+                    leftSection={<IconRefreshAlert />}
                   />
                 )}
                 <NavLink
                   label={i18n._t('Finish event')}
                   styles={{ label: { fontSize: '18px', color: 'red' } }}
-                  icon={<IconHandStop />}
+                  leftSection={<IconHandStop />}
                   onClick={() => {
                     closeMenu();
                     setStopEventData({
@@ -325,10 +299,10 @@ export const Navigation: React.FC<{
               />
             )}
           </Stack>
-          <Group mt={0} spacing={0}>
+          <Group mt={0} gap={0}>
             <NavLink
               styles={{ label: { fontSize: '18px' } }}
-              icon={<IconLanguageHiragana size={20} />}
+              leftSection={<IconLanguageHiragana size={20} />}
               label={i18n._t('Language')}
             >
               <NavLink
@@ -336,7 +310,7 @@ export const Navigation: React.FC<{
                   saveLang('en');
                   closeMenu();
                 }}
-                icon={<FlagEn width={24} />}
+                leftSection={<FlagEn width={24} />}
                 label='en'
               />
               <NavLink
@@ -344,13 +318,13 @@ export const Navigation: React.FC<{
                   saveLang('ru');
                   closeMenu();
                 }}
-                icon={<FlagRu width={24} />}
+                leftSection={<FlagRu width={24} />}
                 label='ru'
               />
             </NavLink>
             <NavLink
               styles={{ label: { fontSize: '18px' } }}
-              icon={<IconSun size={20} />}
+              leftSection={<IconSun size={20} />}
               onClick={() => {
                 toggleDimmed();
                 closeMenu();
@@ -359,7 +333,7 @@ export const Navigation: React.FC<{
             />
             <NavLink
               styles={{ label: { fontSize: '18px' } }}
-              icon={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
+              leftSection={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
               onClick={() => {
                 toggleColorScheme();
                 closeMenu();
@@ -371,13 +345,13 @@ export const Navigation: React.FC<{
       </Drawer>
 
       <Container h={44} pos='relative'>
-        <div className={classes.inner}>
+        <div className={styles.inner}>
           {largeScreen ? (
             <Button
               title={i18n._t('Open menu')}
               variant='filled'
               color='green'
-              leftIcon={<IconList size='2rem' />}
+              leftSection={<IconList size='2rem' />}
               size='lg'
               style={{ height: '44px' }}
               onClick={() => (menuOpened ? closeMenu() : openMenu())}
@@ -398,11 +372,11 @@ export const Navigation: React.FC<{
           )}
         </div>
         {title && (
-          <Group position='right' h={44}>
-            <div className={classes.eventTitle}>{title}</div>
+          <Group justify='right' h={44}>
+            <div className={styles.eventTitle}>{title}</div>
           </Group>
         )}
       </Container>
-    </Header>
+    </AppShell.Header>
   );
 };

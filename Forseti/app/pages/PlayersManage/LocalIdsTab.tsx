@@ -79,9 +79,9 @@ export const LocalIdsTab: React.FC<{
 
   return (
     <>
-      <Container pos='relative' sx={{ minHeight: '400px' }}>
+      <Container pos='relative' style={{ minHeight: '400px' }}>
         <Space h='xl' />
-        <Stack justify='flex-start' spacing='0'>
+        <Stack justify='flex-start' gap='0'>
           {players.map((p, idx) => (
             <Group
               key={`ev_${p.id}`}
@@ -91,7 +91,7 @@ export const LocalIdsTab: React.FC<{
                   idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
               }}
             >
-              <Group sx={{ flex: 1, minWidth: '300px' }}>
+              <Group style={{ flex: 1, minWidth: '300px' }}>
                 <PlayerAvatar p={p} />
                 {p.title}
               </Group>
@@ -99,7 +99,9 @@ export const LocalIdsTab: React.FC<{
                 <Text>{i18n._t('Local ID')}</Text>
                 <NumberInput
                   value={localIds[p.id]}
-                  onChange={(v) => setLocalIds({ ...localIds, [p.id]: v || 0 })}
+                  onChange={(v) =>
+                    setLocalIds({ ...localIds, [p.id]: parseInt(v.toString(), 10) || 0 })
+                  }
                 />
               </Group>
             </Group>

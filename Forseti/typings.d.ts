@@ -21,11 +21,3 @@ declare module '*.svg?svgr' {
   // eslint-disable-next-line import/no-default-export
   export default SVG;
 }
-
-declare module '*.css' {
-  interface IClassNames {
-    [className: string]: string;
-  }
-  const classNames: IClassNames;
-  export = classNames;
-}

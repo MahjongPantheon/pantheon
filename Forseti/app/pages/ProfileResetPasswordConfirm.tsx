@@ -165,10 +165,10 @@ function ResetForm({
       <form onSubmit={form.onSubmit(submitForm)}>
         <PasswordInput
           placeholder={i18n._t('Enter new strong password')}
-          icon={<IconLock size='1rem' />}
+          leftSection={<IconLock size='1rem' />}
           {...form.getInputProps('password')}
         />
-        <Group position='right' mt='md'>
+        <Group justify='right' mt='md'>
           <Button type='submit'>{i18n._t('Update password')}</Button>
         </Group>
       </form>
@@ -189,7 +189,7 @@ function ErrorAlert({ i18n }: { i18n: I18nService }) {
         )}
       </Alert>
       <Space h='xl' />
-      <Group position='right'>
+      <Group justify='right'>
         <Link to='/profile/resetPassword'>
           <Button variant='filled'>{i18n._t('Recover password')}</Button>
         </Link>
@@ -209,7 +209,7 @@ function SuccessAlert({ i18n }: { i18n: I18nService }) {
         {i18n._t('Your password has been successfully reset. Now you can proceed to login page.')}
       </Alert>
       <Space h='xl' />
-      <Group position='right'>
+      <Group justify='right'>
         <Link to='/profile/login'>
           <Button variant='filled'>{i18n._t('Go to Login page')}</Button>
         </Link>

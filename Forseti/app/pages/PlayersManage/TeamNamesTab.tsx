@@ -79,9 +79,9 @@ export const TeamNamesTab: React.FC<{
 
   return (
     <>
-      <Container pos='relative' sx={{ minHeight: '400px' }}>
+      <Container pos='relative' style={{ minHeight: '400px' }}>
         <Space h='xl' />
-        <Stack justify='flex-start' spacing='0'>
+        <Stack justify='flex-start' gap='0'>
           {players.map((p, idx) => (
             <Group
               key={`ev_${p.id}`}
@@ -91,14 +91,14 @@ export const TeamNamesTab: React.FC<{
                   idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
               }}
             >
-              <Group sx={{ minWidth: '300px' }}>
+              <Group style={{ minWidth: '300px' }}>
                 <PlayerAvatar p={p} />
                 {p.title}
               </Group>
-              <Group sx={{ flex: 1 }}>
+              <Group style={{ flex: 1 }}>
                 <Text>{i18n._t('Team:')}</Text>
                 <TextInput
-                  sx={{ flex: 1 }}
+                  style={{ flex: 1 }}
                   value={teamNames[p.id]}
                   onChange={(v) => setTeamNames({ ...teamNames, [p.id]: v.currentTarget.value })}
                 />

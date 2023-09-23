@@ -133,10 +133,10 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
   return (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
       <Container>
-        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+        <LoadingOverlay visible={isLoading} opacity={1} />
         <Select
           withAsterisk
-          icon={<IconUserExclamation size='1rem' />}
+          leftSection={<IconUserExclamation size='1rem' />}
           label={i18n._t('Select player')}
           searchable
           description={i18n._t('This is a player to be penalized')}
@@ -147,7 +147,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         <NumberInput
           withAsterisk
           {...form.getInputProps('amount')}
-          icon={<IconAlertOctagon size='1rem' />}
+          leftSection={<IconAlertOctagon size='1rem' />}
           label={i18n._t('Penalty amount')}
           description={i18n._t(
             'The points you enter here will be subtracted from player score after uma is applied when session ends. Please note: the penalty can be only applied during the session. If session is already ended, apply penalty in the next session.'
@@ -160,7 +160,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         <Space h='lg' />
         <TextInput
           withAsterisk
-          icon={<IconSignature size='1rem' />}
+          leftSection={<IconSignature size='1rem' />}
           label={i18n._t('Penalty reason')}
           {...form.getInputProps('reason')}
         />
