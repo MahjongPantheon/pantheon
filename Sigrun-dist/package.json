@@ -46,7 +46,7 @@
     "react-router-dom": "^6.11.1",
     "serve-static": "^1.15.0",
     "strip-markdown": "^5.0.0",
-    "twirpscript": "^0.0.66",
+    "twirpscript": "^0.0.68",
     "uuid": "^9.0.0",
     "wouter": "https://github.com/ctizen/wouter"
   },
