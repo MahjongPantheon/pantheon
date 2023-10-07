@@ -70,7 +70,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
   useEvent(null); // this resets global state
   const [events] = useIsomorphicState(
     [],
-    'EventList_events_' + page,
+    `EventList_events_${page}_${filter}`,
     () => api.getEvents(PERPAGE, (parseInt(page ?? '1', 10) - 1) * PERPAGE, filter ?? '', true),
     [page, filter]
   );
