@@ -178,6 +178,7 @@ message EventsGetEventsPayload {
   int32 limit = 1;
   int32 offset = 2;
   bool filter_unlisted = 3;
+  string filter = 4;
 }
 
 message EventsGetEventsResponse {

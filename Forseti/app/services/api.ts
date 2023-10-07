@@ -256,7 +256,7 @@ export class ApiService {
 
   getEvents(limit: number, offset: number, filterUnlisted: boolean) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEvents' });
-    return GetEvents({ limit, offset, filterUnlisted }, this._clientConfMimir);
+    return GetEvents({ limit, offset, filter: '', filterUnlisted }, this._clientConfMimir);
   }
 
   getEventsById(ids: number[]) {

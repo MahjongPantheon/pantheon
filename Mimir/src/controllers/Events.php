@@ -303,16 +303,17 @@ class EventsController extends Controller
      *
      * @param int $limit
      * @param int $offset
+     * @param string $filter
      * @param bool $filterUnlisted
      * @return array
      *@throws \Exception
      */
-    public function getEvents($limit, $offset, $filterUnlisted = false)
+    public function getEvents($limit, $offset, $filter, $filterUnlisted = false)
     {
         $this->_log->info('Listing all events with limit/offset [' . $limit . '/' . $offset . ']');
 
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))
-            ->getAllEvents($limit, $offset, $filterUnlisted);
+            ->getAllEvents($limit, $offset, $filter, $filterUnlisted);
 
         $this->_log->info('Successfully listed all events with limit/offset [' . $limit . '/' . $offset . ']');
         return $data;

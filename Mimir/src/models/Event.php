@@ -376,11 +376,12 @@ class EventModel extends Model
      *
      * @param int $limit
      * @param int $offset
+     * @param string $filter
      * @param bool $filterUnlisted
      * @return array
      * @throws \Exception
      */
-    public function getAllEvents(int $limit, int $offset, bool $filterUnlisted)
+    public function getAllEvents(int $limit, int $offset, string $filter, bool $filterUnlisted)
     {
         if ($limit > 100) {
             $limit = 100;
@@ -406,6 +407,12 @@ class EventModel extends Model
             ->leftOuterJoin('session', 'session.event_id = event.id')
             ->groupBy('event.id')
             ->orderByDesc('event.id');
+
+        if (!empty($filter)) {
+            $filter = rawurldecode($filter);
+            $data = $data->whereRaw('event.title ILIKE ?', ['%' . $filter . '%']);
+            $count = $count->whereRaw('event.title ILIKE ?', ['%' . $filter . '%']);
+        }
 
         if ($filterUnlisted) {
             $data = $data->where('event.is_listed', 1);
