@@ -804,7 +804,7 @@ final class TwirpServer implements Mimir
      */
     public function GetEvents(array $ctx, EventsGetEventsPayload $req): EventsGetEventsResponse
     {
-        $ret = $this->_eventsController->getEvents($req->getLimit(), $req->getOffset(), $req->getFilterUnlisted());
+        $ret = $this->_eventsController->getEvents($req->getLimit(), $req->getOffset(), $req->getFilter(), $req->getFilterUnlisted());
         return (new EventsGetEventsResponse())
             ->setTotal($ret['total'])
             ->setEvents(array_map(function ($ev) {

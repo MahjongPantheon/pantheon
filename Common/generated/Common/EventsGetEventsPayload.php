@@ -25,6 +25,10 @@ class EventsGetEventsPayload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool filter_unlisted = 3;</code>
      */
     protected $filter_unlisted = false;
+    /**
+     * Generated from protobuf field <code>string filter = 4;</code>
+     */
+    protected $filter = '';
 
     /**
      * Constructor.
@@ -35,6 +39,7 @@ class EventsGetEventsPayload extends \Google\Protobuf\Internal\Message
      *     @type int $limit
      *     @type int $offset
      *     @type bool $filter_unlisted
+     *     @type string $filter
      * }
      */
     public function __construct($data = NULL) {
@@ -104,6 +109,28 @@ class EventsGetEventsPayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->filter_unlisted = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string filter = 4;</code>
+     * @return string
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * Generated from protobuf field <code>string filter = 4;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setFilter($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->filter = $var;
 
         return $this;
     }

@@ -32,7 +32,9 @@ export function App() {
   return (
     <Switch>
       <Route path='/' component={EventList} />
+      <Route path='/filter/:filter' component={EventList} />
       <Route path='/page/:page' component={EventList} />
+      <Route path='/filter/:filter/page/:page' component={EventList} />
       <Route path='/event/:eventId/info' component={EventInfo} />
       <Route path='/event/:eventId/order/:orderBy' component={RatingTable} />
       <Route

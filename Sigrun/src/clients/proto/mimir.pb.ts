@@ -46,6 +46,7 @@ export interface EventsGetEventsPayload {
   limit: number;
   offset: number;
   filterUnlisted: boolean;
+  filter: string;
 }
 
 export interface EventsGetEventsResponse {
@@ -3434,6 +3435,7 @@ export const EventsGetEventsPayload = {
       limit: 0,
       offset: 0,
       filterUnlisted: false,
+      filter: "",
     };
   },
 
@@ -3452,6 +3454,9 @@ export const EventsGetEventsPayload = {
     }
     if (msg.filterUnlisted) {
       writer.writeBool(3, msg.filterUnlisted);
+    }
+    if (msg.filter) {
+      writer.writeString(4, msg.filter);
     }
     return writer;
   },
@@ -3476,6 +3481,10 @@ export const EventsGetEventsPayload = {
         }
         case 3: {
           msg.filterUnlisted = reader.readBool();
+          break;
+        }
+        case 4: {
+          msg.filter = reader.readString();
           break;
         }
         default: {
@@ -9290,6 +9299,7 @@ export const EventsGetEventsPayloadJSON = {
       limit: 0,
       offset: 0,
       filterUnlisted: false,
+      filter: "",
     };
   },
 
@@ -9308,6 +9318,9 @@ export const EventsGetEventsPayloadJSON = {
     }
     if (msg.filterUnlisted) {
       json["filterUnlisted"] = msg.filterUnlisted;
+    }
+    if (msg.filter) {
+      json["filter"] = msg.filter;
     }
     return json;
   },
@@ -9330,6 +9343,10 @@ export const EventsGetEventsPayloadJSON = {
     const _filterUnlisted_ = json["filterUnlisted"] ?? json["filter_unlisted"];
     if (_filterUnlisted_) {
       msg.filterUnlisted = _filterUnlisted_;
+    }
+    const _filter_ = json["filter"];
+    if (_filter_) {
+      msg.filter = _filter_;
     }
     return msg;
   },
