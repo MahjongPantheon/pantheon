@@ -38,6 +38,7 @@ import {
   IconMap2,
   IconMapPin,
   IconPhoneCall,
+  IconNumber,
 } from '@tabler/icons-react';
 import { createRef, useCallback, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
@@ -186,6 +187,13 @@ export const ProfileManage: React.FC = () => {
                 "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
               )}
               {...form.getInputProps('title')}
+            />
+            <TextInput
+              disabled={true}
+              icon={<IconNumber size='1rem' />}
+              label={i18n._t('System ID')}
+              description={i18n._t('Numerical identifier of your user profile.')}
+              value={personId}
             />
             <Space h='md' />
             <Select
