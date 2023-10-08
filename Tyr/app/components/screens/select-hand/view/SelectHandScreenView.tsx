@@ -23,8 +23,8 @@ import { Tab } from '../../../general/tab/Tab';
 import { BottomPanel } from '../../../general/bottom-panel/BottomPanel';
 import { ArrowState, SelectHandActiveTab, YakuGroup } from '../YakuTypes';
 import classNames from 'classnames';
-import { ReactComponent as ArrowLeftIcon } from '../../../../img/icons/chevron-left.svg';
-import { ReactComponent as ArrowRightIcon } from '../../../../img/icons/chevron-right.svg';
+import ArrowLeftIcon from '../../../../img/icons/chevron-left.svg?react';
+import ArrowRightIcon from '../../../../img/icons/chevron-right.svg?react';
 import { PlayerAvatar } from '../../../general/avatar/Avatar';
 
 type IProps = {

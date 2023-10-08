@@ -125,14 +125,17 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     return null;
   }
 
-  const achDataByKey = achievementsData.reduce((acc, val) => {
-    try {
-      acc[val.achievementId] = JSON.parse(val.achievementData);
-    } catch (e) {
-      acc[val.achievementId] = null;
-    }
-    return acc;
-  }, {} as Record<string, any>);
+  const achDataByKey = achievementsData.reduce(
+    (acc, val) => {
+      try {
+        acc[val.achievementId] = JSON.parse(val.achievementData);
+      } catch (e) {
+        acc[val.achievementId] = null;
+      }
+      return acc;
+    },
+    {} as Record<string, any>
+  );
 
   const yMap = yakuNameMap(i18n);
 

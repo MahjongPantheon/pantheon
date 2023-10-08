@@ -74,10 +74,13 @@ export function GamesList({
   return (
     <Stack>
       {tablesState.map((t, idx) => {
-        const players = t.players.reduce((acc, p) => {
-          acc[p.id] = p;
-          return acc;
-        }, {} as Record<number, RegisteredPlayer>);
+        const players = t.players.reduce(
+          (acc, p) => {
+            acc[p.id] = p;
+            return acc;
+          },
+          {} as Record<number, RegisteredPlayer>
+        );
         return (
           <Group
             grow

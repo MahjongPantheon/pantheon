@@ -20,8 +20,8 @@ import './page-game-result.css';
 import classNames from 'classnames';
 import { i18n } from '../../i18n';
 import { useContext } from 'react';
-import { ReactComponent as RepeatIcon } from '../../../img/icons/repeat.svg';
-import { ReactComponent as SaveIcon } from '../../../img/icons/check.svg';
+import RepeatIcon from '../../../img/icons/repeat.svg?react';
+import SaveIcon from '../../../img/icons/check.svg?react';
 import { SessionHistoryResult } from '../../../clients/proto/atoms.pb';
 import { PlayerAvatar } from '../../general/avatar/Avatar';
 

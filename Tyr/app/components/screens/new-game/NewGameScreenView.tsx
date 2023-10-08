@@ -21,9 +21,9 @@ import { TopPanel } from '../../general/top-panel/TopPanel';
 import { PlayerDropdown } from '../../general/dropdown/PlayerDropdown';
 import classNames from 'classnames';
 import { i18n } from '../../i18n';
-import { ReactComponent as CloseIcon } from '../../../img/icons/close.svg';
-import { ReactComponent as ShuffleIcon } from '../../../img/icons/shuffle.svg';
-import { ReactComponent as SaveIcon } from '../../../img/icons/check.svg';
+import CloseIcon from '../../../img/icons/close.svg?react';
+import ShuffleIcon from '../../../img/icons/shuffle.svg?react';
+import SaveIcon from '../../../img/icons/check.svg?react';
 
 type IProps = {
   east?: string;

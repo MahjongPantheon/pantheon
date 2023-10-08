@@ -240,7 +240,7 @@ function updateCurrentGames(
   const promises: [
     Promise<CurrentSession[]>,
     Promise<GameConfig>,
-    Promise<EventsGetTimerStateResponse>
+    Promise<EventsGetTimerStateResponse>,
   ] = [
     api.getCurrentGames(currentPersonId, eventId),
     api.getGameConfig(eventId),

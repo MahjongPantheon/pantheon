@@ -20,11 +20,11 @@ import './page-home.css';
 import classNames from 'classnames';
 import { ReactNode, useContext } from 'react';
 import { i18n } from '../../i18n';
-import { ReactComponent as RefreshIcon } from '../../../img/icons/refresh.svg';
-import { ReactComponent as SettingsIcon } from '../../../img/icons/settings.svg';
-import { ReactComponent as DonateIcon } from '../../../img/donate.svg';
-import { ReactComponent as PlusIcon } from '../../../img/icons/plus.svg';
-import { ReactComponent as LinkIcon } from '../../../img/icons/link.svg';
+import RefreshIcon from '../../../img/icons/refresh.svg?react';
+import SettingsIcon from '../../../img/icons/settings.svg?react';
+import DonateIcon from '../../../img/donate.svg?react';
+import PlusIcon from '../../../img/icons/plus.svg?react';
+import LinkIcon from '../../../img/icons/link.svg?react';
 
 type IButtonProps = {
   caption: string;

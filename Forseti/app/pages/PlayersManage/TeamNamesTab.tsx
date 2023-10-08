@@ -47,10 +47,13 @@ export const TeamNamesTab: React.FC<{
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [teamNames, setTeamNames] = useState<Record<number, string>>(
-    players.reduce((acc, val) => {
-      acc[val.id] = val.teamName ?? '';
-      return acc;
-    }, {} as Record<number, string>)
+    players.reduce(
+      (acc, val) => {
+        acc[val.id] = val.teamName ?? '';
+        return acc;
+      },
+      {} as Record<number, string>
+    )
   );
 
   const updateLocalIds = useCallback(() => {

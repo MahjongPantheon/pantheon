@@ -73,10 +73,13 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
         setPlayers(playersList);
         setLocalIdsWarn(playersList.some((p) => !p.localId));
         setEventAdmins(
-          admins.reduce((acc, row) => {
-            acc[row.personId] = row.ruleId;
-            return acc;
-          }, {} as Record<number, number>)
+          admins.reduce(
+            (acc, row) => {
+              acc[row.personId] = row.ruleId;
+              return acc;
+            },
+            {} as Record<number, number>
+          )
         );
       })
       .catch((err: Error) => {

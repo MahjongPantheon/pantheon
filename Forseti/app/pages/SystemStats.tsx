@@ -200,10 +200,13 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
 
 function makeStat(stats: HuginData[] | null | undefined, field: HuginKeys, colors: string[]) {
   if (stats) {
-    const data = stats.reduce((acc, item) => {
-      acc[item.siteId] = [...(acc[item.siteId] ?? []), [item.datetime, JSON.parse(item[field])]];
-      return acc;
-    }, {} as Record<string, [string, any][]>);
+    const data = stats.reduce(
+      (acc, item) => {
+        acc[item.siteId] = [...(acc[item.siteId] ?? []), [item.datetime, JSON.parse(item[field])]];
+        return acc;
+      },
+      {} as Record<string, [string, any][]>
+    );
 
     const allTimes = Object.fromEntries(
       Object.entries(data).map(([site, item]) => [
