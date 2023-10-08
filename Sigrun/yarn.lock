@@ -760,14 +760,14 @@
   resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
   integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
 
-"@mantine/core@^6.0.10":
-  version "6.0.10"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-6.0.10.tgz#51657b15fea8d0201033e1a182d636eaf35db3fd"
-  integrity sha512-Q8HdRTBkQDs6LEtklpYm6efz2WaV6T5rvgjUOfXq0z44G/XYM+P1B1BSFnHvUDkeWYLcGkK6aPI5Uxc0GEN04w==
+"@mantine/core@^6.0.20":
+  version "6.0.21"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-6.0.21.tgz#6e3a1b8d0f6869518a644d5f5e3d55a5db7e1e51"
+  integrity sha512-Kx4RrRfv0I+cOCIcsq/UA2aWcYLyXgW3aluAuW870OdXnbII6qg7RW28D+r9D76SHPxWFKwIKwmcucAG08Divg==
   dependencies:
     "@floating-ui/react" "^0.19.1"
-    "@mantine/styles" "6.0.10"
-    "@mantine/utils" "6.0.10"
+    "@mantine/styles" "6.0.21"
+    "@mantine/utils" "6.0.21"
     "@radix-ui/react-scroll-area" "1.0.2"
     react-remove-scroll "^2.5.5"
     react-textarea-autosize "8.3.4"
@@ -792,14 +792,6 @@
     "@mantine/styles" "6.0.11"
     html-react-parser "1.4.12"
 
-"@mantine/styles@6.0.10":
-  version "6.0.10"
-  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-6.0.10.tgz#49118fb732320141584f7d09cdca9d69e1b9468a"
-  integrity sha512-TVyo4xNBO7PhP2jubu2OI1YK2DEULrVgdsP0+1wfwj/bhSTnTLYmh2aOb1FyTiFvFn1dfq4If428z/ZuGiLtdQ==
-  dependencies:
-    clsx "1.1.1"
-    csstype "3.0.9"
-
 "@mantine/styles@6.0.11":
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-6.0.11.tgz#1cc06978083fa9bc9db92dc4ffc5111e98a442f2"
@@ -808,15 +800,23 @@
     clsx "1.1.1"
     csstype "3.0.9"
 
-"@mantine/utils@6.0.10":
-  version "6.0.10"
-  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.10.tgz#a7e99d4d7368912696f40fe56e444ef4f5befeae"
-  integrity sha512-Lo4VUn3+/kqhdjSoPzUFbxXEjMxj5vS4pqRjKRGtJsTwHiMFNcm8u4cIESzMBAEsoaBrI1dGE4WttwOJhjUaSw==
+"@mantine/styles@6.0.21":
+  version "6.0.21"
+  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-6.0.21.tgz#8ea097fc76cbb3ed55f5cfd719d2f910aff5031b"
+  integrity sha512-PVtL7XHUiD/B5/kZ/QvZOZZQQOj12QcRs3Q6nPoqaoPcOX5+S7bMZLMH0iLtcGq5OODYk0uxlvuJkOZGoPj8Mg==
+  dependencies:
+    clsx "1.1.1"
+    csstype "3.0.9"
 
 "@mantine/utils@6.0.11":
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.11.tgz#03237be9bda3f671c7f9043a23d058d4e64cb72f"
   integrity sha512-ijkEAaKEhZCw7HSWsGMQZsvfmQKmJXmPoQ1LeEwcH3vjZalPk9pQjSPPfUdTeX9ZAv095XWmfVMiNV8+xvM0OQ==
+
+"@mantine/utils@6.0.21":
+  version "6.0.21"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.21.tgz#6185506e91cba3e308aaa8ea9ababc8e767995d6"
+  integrity sha512-33RVDRop5jiWFao3HKd3Yp7A9mEq4HAJxJPTuYm1NkdqX6aTKOQK7wT8v8itVodBp+sb4cJK6ZVdD1UurK/txQ==
 
 "@mapbox/hast-util-table-cell-style@^0.2.0":
   version "0.2.0"
