@@ -48,14 +48,18 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   const locHook = staticLocationHook(url);
   (global as any).JSDOM = JSDOM;
 
+  const helmetContext: { helmet?: { title: any; meta: any; link: any } } = {};
+
   // First pass to collect effects
   ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <Router hook={locHook}>
-        <Layout cache={cache}>
-          <App />
-        </Layout>
-      </Router>
+      <HelmetProvider context={helmetContext}>
+        <Router hook={locHook}>
+          <Layout cache={cache}>
+            <App />
+          </Layout>
+        </Router>
+      </HelmetProvider>
     </Isomorphic.Provider>
   );
 
@@ -63,8 +67,6 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     await Promise.all(isomorphicCtxValue.requests);
     delete isomorphicCtxValue.requests;
   }
-
-  const helmetContext: { helmet?: { title: any; meta: any; link: any } } = {};
 
   const appHtml = ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
