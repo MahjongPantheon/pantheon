@@ -47,10 +47,13 @@ export const Game: React.FC<{
   if (game === undefined || !events) {
     return null;
   }
-  const players = game?.players?.reduce((acc, p) => {
-    acc[p.id] = p;
-    return acc;
-  }, {} as Record<number, Player>);
+  const players = game?.players?.reduce(
+    (acc, p) => {
+      acc[p.id] = p;
+      return acc;
+    },
+    {} as Record<number, Player>
+  );
 
   return (
     game?.game &&

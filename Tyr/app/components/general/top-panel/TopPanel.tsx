@@ -18,7 +18,7 @@
 import * as React from 'react';
 import './top-panel.css';
 import { SearchInput } from '../search-input/SearchInput';
-import { ReactComponent as BackIcon } from '../../../img/icons/arrow-left.svg';
+import BackIcon from '../../../img/icons/arrow-left.svg?react';
 
 type IProps = {
   onBackClick?: () => void;

@@ -35,7 +35,7 @@ import { IAppState } from '../interfaces';
 export function commonReducer(state: IAppState, action: AppActionTypes): IAppState {
   switch (action.type) {
     case INIT_STATE:
-      return deepclone(initialState);
+      return deepclone<any, any>(initialState) as IAppState;
     case SET_CREDENTIALS:
       return {
         ...state,

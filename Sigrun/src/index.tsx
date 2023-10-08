@@ -28,6 +28,7 @@ import { i18n } from './hooks/i18n';
 import { createEmotionCache } from '@mantine/core';
 import { registerFrontErrorHandler } from './helpers/logFrontError';
 import { env } from './env';
+import { HelmetProvider } from 'react-helmet-async';
 registerFrontErrorHandler();
 const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
 const storageStrategy = new StorageStrategyClient(env.cookieDomain);
@@ -54,26 +55,30 @@ window.addEventListener('error', (event) => {
 if (import.meta.env.MODE === 'development') {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
-      <Isomorphic.Provider value={isomorphicCtxValue}>
-        <Router hook={useLocation}>
-          <Layout cache={cache}>
-            <App />
-          </Layout>
-        </Router>
-      </Isomorphic.Provider>
+      <HelmetProvider>
+        <Isomorphic.Provider value={isomorphicCtxValue}>
+          <Router hook={useLocation}>
+            <Layout cache={cache}>
+              <App />
+            </Layout>
+          </Router>
+        </Isomorphic.Provider>
+      </HelmetProvider>
     </React.StrictMode>
   );
 } else {
   ReactDOM.hydrateRoot(
     document.getElementById('root') as HTMLElement,
     <React.StrictMode>
-      <Isomorphic.Provider value={isomorphicCtxValue}>
-        <Router hook={useLocation}>
-          <Layout cache={cache}>
-            <App />
-          </Layout>
-        </Router>
-      </Isomorphic.Provider>
+      <HelmetProvider>
+        <Isomorphic.Provider value={isomorphicCtxValue}>
+          <Router hook={useLocation}>
+            <Layout cache={cache}>
+              <App />
+            </Layout>
+          </Router>
+        </Isomorphic.Provider>
+      </HelmetProvider>
     </React.StrictMode>
   );
 }

@@ -26,8 +26,8 @@ import { useI18n } from '../hooks/i18n';
 import { PlayerAvatar } from '../components/PlayerAvatar';
 import { useLocation } from 'wouter';
 import { Fragment } from 'react';
-import { Helmet } from 'react-helmet';
 import { Meta } from '../components/Meta';
+import { Helmet } from 'react-helmet-async';
 
 export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);

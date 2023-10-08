@@ -1,5 +1,5 @@
 import favicon from '../../assets/ico/favicon.png';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { env } from '../env';
 
 type MetaProps = {

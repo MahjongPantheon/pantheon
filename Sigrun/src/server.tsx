@@ -23,7 +23,7 @@ import { Isomorphic } from './hooks/isomorphic';
 import staticLocationHook from 'wouter/static-location';
 import { Layout } from './Layout';
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { HelmetProvider } from 'react-helmet-async';
 import { JSDOM } from 'jsdom';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
@@ -64,23 +64,27 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     delete isomorphicCtxValue.requests;
   }
 
+  const helmetContext: { helmet?: { title: any; meta: any; link: any } } = {};
+
   const appHtml = ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <Router hook={locHook}>
-        <Layout cache={cache}>
-          <App />
-        </Layout>
-      </Router>
+      <HelmetProvider context={helmetContext}>
+        <Router hook={locHook}>
+          <Layout cache={cache}>
+            <App />
+          </Layout>
+        </Router>
+      </HelmetProvider>
     </Isomorphic.Provider>
   );
 
-  const helmet = Helmet.renderStatic();
+  const { helmet } = helmetContext;
   return {
     appHtml,
     helmet: [
-      helmet.title.toString(),
-      helmet.meta.toString(),
-      helmet.link.toString(),
+      helmet?.title.toString(),
+      helmet?.meta.toString(),
+      helmet?.link.toString(),
       `<style>${stylesServer.extractCritical(appHtml).css}</style>`,
     ].join('\n'),
     cookies: storageStrategy.getCookies(),

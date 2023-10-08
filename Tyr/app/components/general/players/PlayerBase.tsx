@@ -20,9 +20,9 @@ import './players.css';
 import { PlayerButtonMode, PlayerMode, PlayerPointsMode } from '../../types/PlayerEnums';
 import { PlayerProps } from './PlayerProps';
 import classNames from 'classnames';
-import { ReactComponent as RiichiBigIcon } from '../../../img/icons/riichi-big.svg';
-import { ReactComponent as WinIcon } from '../../../img/icons/thumbs-up.svg';
-import { ReactComponent as LooseIcon } from '../../../img/icons/thumbs-down.svg';
+import RiichiBigIcon from '../../../img/icons/riichi-big.svg?react';
+import WinIcon from '../../../img/icons/thumbs-up.svg?react';
+import LooseIcon from '../../../img/icons/thumbs-down.svg?react';
 import { PlayerAvatar } from '../avatar/Avatar';
 
 type IProps = PlayerProps & {

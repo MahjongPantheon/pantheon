@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 import useDebounce from '../../../components/general/search-input/UseDebounce';
 import { i18n } from '../../i18n';
 import { I18nService } from '../../../services/i18n';
-import { ReactComponent as CloseIcon } from '../../../img/icons/close.svg';
+import CloseIcon from '../../../img/icons/close.svg?react';
 
 type IProps = {
   onChange: (value: string) => void;

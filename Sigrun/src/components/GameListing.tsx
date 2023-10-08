@@ -50,11 +50,11 @@ export const GameListing: React.FC<GameListingProps> = ({
 
   const outcomes = { ron: 0, tsumo: 0, draw: 0, chombo: 0, nagashi: 0 };
   game.rounds.forEach((r) => {
-    if (r.ron || r.multiron) {
+    if (r.ron ?? r.multiron) {
       outcomes.ron++;
     } else if (r.tsumo) {
       outcomes.tsumo++;
-    } else if (r.draw || r.abort) {
+    } else if (r.draw ?? r.abort) {
       outcomes.draw++;
     } else if (r.chombo) {
       outcomes.chombo++;

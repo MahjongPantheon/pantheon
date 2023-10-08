@@ -569,7 +569,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       };
     case ADD_ROUND_SUCCESS:
       if (action.payload.isFinished) {
-        const cleanState = deepclone(initialState);
+        const cleanState = deepclone<any, any>(initialState) as IAppState;
         return {
           ...cleanState,
           eventsList: state.eventsList,
