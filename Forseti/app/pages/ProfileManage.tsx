@@ -21,12 +21,16 @@ import { useI18n } from '../hooks/i18n';
 import {
   Avatar,
   Box,
+  Button,
   Checkbox,
   Container,
+  Divider,
   Group,
   LoadingOverlay,
+  Modal,
   Select,
   Space,
+  Text,
   TextInput,
 } from '@mantine/core';
 import {
@@ -39,6 +43,7 @@ import {
   IconMapPin,
   IconPhoneCall,
   IconNumber,
+  IconUserX,
 } from '@tabler/icons-react';
 import { createRef, useCallback, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
@@ -49,6 +54,7 @@ import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
 import { FileUploadButton } from '../helpers/FileUploadButton';
 import { env } from '../env';
+import { useDisclosure } from '@mantine/hooks';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -62,6 +68,13 @@ export const ProfileManage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [removeTitle, setRemoveTitle] = useState('');
+  const [userTitle, setUserTitle] = useState('');
+
+  useEffect(() => {
+    api.getPersonalInfo(personId).then((v) => setUserTitle(v.title));
+  }, [personId]);
+
   const form = useForm({
     initialValues: {
       email: '',
@@ -85,6 +98,18 @@ export const ProfileManage: React.FC = () => {
     },
   });
   const [avatarData, setAvatarData] = useState<string | null | undefined>();
+
+  const [
+    removeConfirmationShown,
+    { open: setRemoveConfirmationShown, close: hideRemoveConfirmation },
+  ] = useDisclosure();
+
+  const confirmRemoval = () => {
+    api.depersonalizeAccount().then(() => {
+      storage.clear();
+      window.location.href = '/';
+    });
+  };
 
   const submitForm = useCallback(
     (values: {
@@ -256,6 +281,12 @@ export const ProfileManage: React.FC = () => {
                 </div>
               </>
             )}
+            <Space h='md' />
+            <Divider label={i18n._t('Danger zone')} labelPosition='center' color='red' />
+            <Space h='md' />
+            <Button color='red' onClick={setRemoveConfirmationShown}>
+              {i18n._t('Remove my account')}
+            </Button>
             <TopActionButton
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
               loading={isSaving || isLoading || isSaved}
@@ -266,6 +297,55 @@ export const ProfileManage: React.FC = () => {
             />
           </form>
         </Box>
+        <Modal
+          opened={removeConfirmationShown}
+          onClose={hideRemoveConfirmation}
+          title={i18n._t('Please confirm account removal')}
+          centered
+        >
+          <Text color='red' weight='bold'>
+            {i18n._t(
+              'You are about to delete your account data from the system. Please confirm the action. You can close the window to cancel.'
+            )}
+          </Text>
+          <Space h='md' />
+          <Text>{i18n._t('What will be deleted:')}</Text>
+          <ul>
+            <li>
+              {i18n._t(
+                'All your personal data including e-mail address, tenhou ID, name and surname'
+              )}
+            </li>
+            <li>{i18n._t("Your login credentials. YOU WON'T BE ABLE TO LOG IN AGAIN")}</li>
+            <li>
+              {i18n._t(
+                'Server administrator will also be unable to restore your access to your removed account.'
+              )}
+            </li>
+          </ul>
+          <Text>{i18n._t('What will NOT be deleted:')}</Text>
+          <ul>
+            <li>{i18n._t('All your played games and events')}</li>
+            <li>{i18n._t('All player stats and achievements')}</li>
+          </ul>
+          <Text>
+            {i18n._t('The player name will be replaced with [Deleted account ####] everywhere.')}
+          </Text>
+          <Space h='md' />
+          <TextInput
+            icon={<IconUserX size='1rem' />}
+            label={i18n._t('Please type in your title to proceed with removal')}
+            onChange={(e) => setRemoveTitle(e.currentTarget.value)}
+          />
+          <Space h='md' />
+          <Button
+            color='red'
+            onClick={confirmRemoval}
+            disabled={removeTitle !== userTitle || !userTitle}
+          >
+            {i18n._t('Remove my account')}
+          </Button>
+        </Modal>
       </Container>
     </>
   );

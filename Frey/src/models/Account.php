@@ -143,7 +143,7 @@ class AccountModel extends Model
 
         $city = '';
         $country = '';
-        $title = '[Deleted user #' . $this->_authorizedPerson->getId() . ']';
+        $title = '[Deleted account #' . $this->_authorizedPerson->getId() . ']';
         $tenhouId = '';
         $hasAvatar = false;
         $phone = '';
@@ -207,6 +207,8 @@ class AccountModel extends Model
             ->setPhone($phone)
             ->setTenhouId($tenhouId)
             ->setHasAvatar($hasAvatar)
+            ->setAuthHash(sha1(time() . mt_rand(0, 9999999)))
+            ->setAuthResetToken(sha1(time() . mt_rand(0, 9999999)))
             ->save();
     }
 
