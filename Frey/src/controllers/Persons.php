@@ -49,6 +49,17 @@ class PersonsController extends Controller
     }
 
     /**
+     * @return bool success
+     */
+    public function depersonalizeMyAccount()
+    {
+        $this->_logStart(__METHOD__, []);
+        $success = $this->_getAccountModel()->depersonalizeMyAccount();
+        $this->_logSuccess(__METHOD__, []);
+        return $success;
+    }
+
+    /**
      * Get personal info by id list.
      * May or may not include private data (depending on admin rights of requesting user).
      *

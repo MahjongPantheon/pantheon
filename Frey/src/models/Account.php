@@ -127,6 +127,90 @@ class AccountModel extends Model
         }, $persons);
     }
 
+
+    /**
+     * Depersonalize current account
+     *
+     * @return bool
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function depersonalizeMyAccount()
+    {
+        if (empty($this->_authorizedPerson)) {
+            throw new InvalidParametersException('Should be logged in to depersonalize', 401);
+        }
+
+        $city = '';
+        $country = '';
+        $title = '[Deleted user #' . $this->_authorizedPerson->getId() . ']';
+        $tenhouId = '';
+        $hasAvatar = false;
+        $phone = '';
+
+        $webhook = $this->_config->getValue('userinfoHook');
+        if (!empty($webhook)) {
+            $ch = curl_init($webhook);
+            if ($ch) {
+                $payload = json_encode([
+                    'city' => $city,
+                    'country' => $country,
+                    'title' => $title,
+                    'person_id' => $this->_authorizedPerson->getId(),
+                    'tenhou_id' => $tenhouId,
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
+                    'X-Api-Key: ' . $this->_config->getValue('userinfoHookApiKey')
+                ]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_exec($ch);
+                curl_close($ch);
+            }
+        }
+
+        $gullveigUrl = $this->_config->getValue('gullveigUrl');
+        if (!empty($gullveigUrl)) {
+            $ch = curl_init($gullveigUrl);
+            if ($ch) {
+                $payload = json_encode([
+                    'userId' => $this->_authorizedPerson->getId(),
+                    'avatar' => 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' // empty image
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json'
+                ]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_exec($ch);
+                curl_close($ch);
+            }
+        }
+
+        $mimirUrl = $this->_config->getValue('mimirUrl');
+        if (!empty($mimirUrl)) {
+            // Schedule player stats cache update in mimir
+            $mimirClient = new \Common\MimirClient(
+                $mimirUrl,
+                null,
+                null,
+                null,
+                '/v2'
+            );
+            $mimirClient->ClearStatCache([], (new \Common\ClearStatCachePayload())->setPlayerId($this->_authorizedPerson->getId()));
+        }
+
+        return $this->_authorizedPerson->setTitle($title)
+            ->setCountry($country)
+            ->setCity($city)
+            ->setPhone($phone)
+            ->setTenhouId($tenhouId)
+            ->setHasAvatar($hasAvatar)
+            ->save();
+    }
+
+
     /**
      * Update personal info of selected account
      *

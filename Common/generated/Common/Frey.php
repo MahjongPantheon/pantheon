@@ -61,6 +61,15 @@ interface Frey
     /**
      *
      *
+     * Generated from protobuf method <code>common.Frey/DepersonalizeAccount</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function DepersonalizeAccount(array $ctx, \Common\DepersonalizePayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
      * Generated from protobuf method <code>common.Frey/ChangePassword</code>
      *
      * @throws \Twirp\Error

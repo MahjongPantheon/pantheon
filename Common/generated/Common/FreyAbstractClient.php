@@ -195,6 +195,29 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function DepersonalizeAccount(array $ctx, \Common\DepersonalizePayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Frey');
+        $ctx = Context::withMethodName($ctx, 'DepersonalizeAccount');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Frey/DepersonalizeAccount';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Frey/DepersonalizeAccount';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function ChangePassword(array $ctx, \Common\AuthChangePasswordPayload $in): \Common\AuthChangePasswordResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
