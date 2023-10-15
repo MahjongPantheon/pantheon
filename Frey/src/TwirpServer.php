@@ -886,4 +886,15 @@ final class TwirpServer implements Frey
             throw $e;
         }
     }
+
+    public function DepersonalizeAccount(array $ctx, \Common\DepersonalizePayload $req): \Common\GenericSuccessResponse
+    {
+        try {
+            return (new \Common\GenericSuccessResponse())
+                ->setSuccess($this->_personsController->depersonalizeMyAccount());
+        } catch (\Exception $e) {
+            $this->_syslog->error($e);
+            throw $e;
+        }
+    }
 }

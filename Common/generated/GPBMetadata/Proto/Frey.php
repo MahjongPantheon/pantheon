@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-‚I
+–J
 proto/frey.protocommon"d
 AuthRequestRegistrationPayload
 email (	
@@ -249,13 +249,15 @@ has_avatar (
 PersonsGetGroupsPayload
 ids ("9
 PersonsGetGroupsResponse
-groups (2.common.Group2Ã
+groups (2.common.Group"
+DepersonalizePayload2¢
 Freyf
 RequestRegistration&.common.AuthRequestRegistrationPayload\'.common.AuthRequestRegistrationResponsef
 ApproveRegistration&.common.AuthApproveRegistrationPayload\'.common.AuthApproveRegistrationResponseH
 	Authorize.common.AuthAuthorizePayload.common.AuthAuthorizeResponseW
 QuickAuthorize!.common.AuthQuickAuthorizePayload".common.AuthQuickAuthorizeResponse3
-Me.common.AuthMePayload.common.AuthMeResponseW
+Me.common.AuthMePayload.common.AuthMeResponseT
+DepersonalizeAccount.common.DepersonalizePayload.common.GenericSuccessResponseW
 ChangePassword!.common.AuthChangePasswordPayload".common.AuthChangePasswordResponsei
 RequestResetPassword\'.common.AuthRequestResetPasswordPayload(.common.AuthRequestResetPasswordResponsei
 ApproveResetPassword\'.common.AuthApproveResetPasswordPayload(.common.AuthApproveResetPasswordResponse[

@@ -59,6 +59,7 @@ import {
   ChangePassword,
   CreateAccount,
   DeleteRuleForPerson,
+  DepersonalizeAccount,
   FindByTitle,
   GetEventAdmins,
   GetOwnedEventIds,
@@ -214,6 +215,11 @@ export class ApiService {
     return GetPersonalInfo({ ids: [personId] }, this._clientConfFrey).then(
       (resp) => resp.people[0]
     );
+  }
+
+  depersonalizeAccount() {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'DepersonalizeMyAccount' });
+    return DepersonalizeAccount({}, this._clientConfFrey);
   }
 
   updatePersonalInfo(

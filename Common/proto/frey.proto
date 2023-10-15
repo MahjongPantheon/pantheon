@@ -33,6 +33,8 @@ service Frey {
     returns (AuthQuickAuthorizeResponse);
   rpc Me(AuthMePayload)
     returns (AuthMeResponse);
+  rpc DepersonalizeAccount(DepersonalizePayload)
+    returns (GenericSuccessResponse);
   rpc ChangePassword(AuthChangePasswordPayload)
     returns (AuthChangePasswordResponse);
   rpc RequestResetPassword(AuthRequestResetPasswordPayload)
@@ -463,4 +465,7 @@ message PersonsGetGroupsPayload {
 
 message PersonsGetGroupsResponse {
   repeated Group groups = 1;
+}
+
+message DepersonalizePayload {
 }

@@ -71,7 +71,7 @@ export function makeColor(input: string): MantineColor {
 }
 
 export function makeInitials(input: string): string {
-  if (!input) {
+  if (!input || input.startsWith('[Deleted account')) {
     return '';
   }
   const [word1, word2] = input.trim().split(/\s+/).slice(0, 2);
