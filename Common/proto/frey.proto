@@ -467,4 +467,5 @@ message PersonsGetGroupsResponse {
   repeated Group groups = 1;
 }
 
-message DepersonalizePayload {}
+message DepersonalizePayload {
+}

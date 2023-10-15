@@ -141,9 +141,15 @@ class AccountModel extends Model
             throw new InvalidParametersException('Should be logged in to depersonalize', 401);
         }
 
+        $id = $this->_authorizedPerson->getId();
+
+        if (empty($id)) {
+            throw new InvalidParametersException('Should be logged in to depersonalize', 401);
+        }
+
         $city = '';
         $country = '';
-        $title = '[Deleted account #' . $this->_authorizedPerson->getId() . ']';
+        $title = '[Deleted account #' . $id . ']';
         $tenhouId = '';
         $hasAvatar = false;
         $phone = '';
@@ -156,7 +162,7 @@ class AccountModel extends Model
                     'city' => $city,
                     'country' => $country,
                     'title' => $title,
-                    'person_id' => $this->_authorizedPerson->getId(),
+                    'person_id' => $id,
                     'tenhou_id' => $tenhouId,
                 ]);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
@@ -175,7 +181,7 @@ class AccountModel extends Model
             $ch = curl_init($gullveigUrl);
             if ($ch) {
                 $payload = json_encode([
-                    'userId' => $this->_authorizedPerson->getId(),
+                    'userId' => $id,
                     'avatar' => 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' // empty image
                 ]);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
@@ -198,7 +204,7 @@ class AccountModel extends Model
                 null,
                 '/v2'
             );
-            $mimirClient->ClearStatCache([], (new \Common\ClearStatCachePayload())->setPlayerId($this->_authorizedPerson->getId()));
+            $mimirClient->ClearStatCache([], (new \Common\ClearStatCachePayload())->setPlayerId($id));
         }
 
         return $this->_authorizedPerson->setTitle($title)
