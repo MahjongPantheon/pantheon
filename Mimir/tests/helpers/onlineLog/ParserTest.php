@@ -20,6 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../../src/Db.php';
 require_once __DIR__ . '/../../../src/helpers/onlineLog/Parser.php';
 require_once __DIR__ . '/../../../src/primitives/PlayerRegistration.php';
+require_once __DIR__ . '/../../../src/primitives/PlayerStats.php';
 
 /**
  * Replay parser integration test suite
