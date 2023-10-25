@@ -205,8 +205,8 @@ class YakuMap
      */
     public static function fromTenhou($yList, $ymanList)
     {
-        $yakuList = self::_toArray($yList);
-        $yakumanList = self::_toArray($ymanList);
+        $yakuList = is_array($yList) ? $yList : self::_toArray($yList);
+        $yakumanList = is_array($ymanList) ? $ymanList : self::_toArray($ymanList);
         $tenhouYakuMap = [
             0 => Y_MENZENTSUMO,
             1 => Y_RIICHI,

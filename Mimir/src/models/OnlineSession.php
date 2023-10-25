@@ -65,6 +65,7 @@ class OnlineSessionModel extends Model
             $gameContent = $replay['content'];
         }
 
+        //todo inject XML or JSON parser.
         $parser = new OnlineParser($this->_ds);
         $session = (new SessionPrimitive($this->_ds))
             ->setEvent($event)
