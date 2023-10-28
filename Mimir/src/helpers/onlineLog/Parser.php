@@ -311,14 +311,18 @@ class OnlineParser
             ? array_keys($this->_players)[(int)$reader->getAttribute('paoWho')]
             : null;
 
-        $winnerAnkanCount = count($this->_ankan_cache[$who]);
-        $mValues = explode(",", $reader->getAttribute('m'));
-
-        if ($winnerAnkanCount > 0) {
-           $openHand = $winnerAnkanCount === count($mValues) ? 0 : 1;
-        } else {
-            $openHand = $reader->getAttribute('m') ? 1 : 0;
+        $openHand = 0;
+        $mAttribute = $reader->getAttribute('m');
+        if (isset($mAttribute)) {
+            $winnerAnkanCount = count($this->_ankan_cache[$who]);
+            $mValues = explode(",", $mAttribute);
+            if ($winnerAnkanCount > 0) {
+                $openHand = $winnerAnkanCount === count($mValues) ? 0 : 1;
+            } else {
+                $openHand = 1;
+            }
         }
+
         $outcomeType = ($winner == $loser ? 'tsumo' : 'ron');
 
         list($fu) = explode(',', (string)$reader->getAttribute('ten'));
