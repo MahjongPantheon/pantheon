@@ -315,9 +315,7 @@ class OnlineParser
         $mValues = explode(",", $reader->getAttribute('m'));
 
         if ($winnerAnkanCount > 0) {
-            if ($winnerAnkanCount === count($mValues)) {
-                $openHand = 0;
-            }
+           $openHand = $winnerAnkanCount === count($mValues) ? 0 : 1;
         } else {
             $openHand = $reader->getAttribute('m') ? 1 : 0;
         }
