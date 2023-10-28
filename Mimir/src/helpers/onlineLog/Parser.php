@@ -311,7 +311,7 @@ class OnlineParser
             ? array_keys($this->_players)[(int)$reader->getAttribute('paoWho')]
             : null;
 
-        $winnerAnkanCount = intval($this->_ankan_cache[$who]);
+        $winnerAnkanCount = count($this->_ankan_cache[$who]);
         $mValues = explode(",", $reader->getAttribute('m'));
 
         if ($winnerAnkanCount > 0) {
