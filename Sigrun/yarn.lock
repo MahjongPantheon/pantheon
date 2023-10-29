@@ -7167,9 +7167,10 @@ wouter@*:
   dependencies:
     use-sync-external-store "^1.0.0"
 
-"wouter@https://github.com/ctizen/wouter":
-  version "2.11.0"
-  resolved "https://github.com/ctizen/wouter#f1c1b6185f96dc35ecea1af6661016343295f932"
+wouter@2.12.0:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/wouter/-/wouter-2.12.0.tgz#a118fbd874552b111e2e600638257d8dcb5407e3"
+  integrity sha512-7TA/6p6UFIXH+IEC/IpsG1WFjy7AP4sxGKIMFiUXVKt3Zfzuj62IcKpXWVzcMwPXqxU4VKPNel66Zs2krOvLXg==
   dependencies:
     use-sync-external-store "^1.0.0"
 
