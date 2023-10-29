@@ -50,7 +50,10 @@ class OnlineParser
      */
     protected $_lastTokenIsAgari = false;
 
-    protected $_ankan_cache = [];
+    /**
+     * @var array[] $_ankanCache
+     */
+    protected $_ankanCache = [];
 
     public function __construct(DataSource $ds)
     {
@@ -70,11 +73,7 @@ class OnlineParser
         $reader->XML($content);
 
         $kanNakiCache = null;
-        $this->_ankan_cache = array(
-            0 => array(),
-            1 => array(),
-            2 => array(),
-            3 => array());
+        $this->_ankanCache = [[], [], [], []];
 
         while ($reader->read()) {
             if ($reader->nodeType != \XMLReader::ELEMENT) {
@@ -84,17 +83,16 @@ class OnlineParser
             if ($reader->localName === 'N') {
                 $meld = $reader->getAttribute('m');
                 $nakiWho = $reader->getAttribute('who');
-                $kanNakiCache = array('m' => $meld, 'who' => $nakiWho);
-            }
-            else if ($reader->localName !== 'DORA') {
+                $kanNakiCache = ['m' => $meld, 'who' => $nakiWho];
+            } else if ($reader->localName !== 'DORA') {
                 $kanNakiCache = null;
             }
 
             if ($reader->localName === 'DORA') {
                 if (isset($kanNakiCache)) {
-                    $ankanArrays = $this->_ankan_cache[$kanNakiCache['who']];
+                    $ankanArrays = $this->_ankanCache[$kanNakiCache['who']];
                     array_push($ankanArrays, $kanNakiCache['m']);
-                    $this->_ankan_cache[$kanNakiCache['who']] = $ankanArrays;
+                    $this->_ankanCache[$kanNakiCache['who']] = $ankanArrays;
                 }
             }
 
@@ -312,14 +310,17 @@ class OnlineParser
             : null;
 
         $openHand = 0;
-        $mAttribute = $reader->getAttribute('m');
-        if (isset($mAttribute)) {
-            $winnerAnkanCount = count($this->_ankan_cache[$who]);
-            $mValues = explode(",", $mAttribute);
-            if ($winnerAnkanCount > 0) {
-                $openHand = $winnerAnkanCount === count($mValues) ? 0 : 1;
-            } else {
-                $openHand = 1;
+        if (!in_array($this->_players[$winner]->getId(), $this->_riichi)) {
+            $mAttribute = $reader->getAttribute('m');
+            //check damaten agari with ankan
+            if (isset($mAttribute)) {
+                $winnerAnkanCount = count($this->_ankanCache[$who]);
+                $mValues = explode(",", $mAttribute);
+                if ($winnerAnkanCount > 0) {
+                    $openHand = $winnerAnkanCount === count($mValues) ? 0 : 1;
+                } else {
+                    $openHand = 1;
+                }
             }
         }
 
@@ -404,11 +405,7 @@ class OnlineParser
     // round start, reset all needed things
     protected function _tokenINIT(): void
     {
-        $this->_ankan_cache = array(
-            0 => array(),
-            1 => array(),
-            2 => array(),
-            3 => array());
+        $this->_ankanCache = [[], [], [], []];
         $this->_lastTokenIsAgari = false; // resets double/triple ron sequence
     }
 
