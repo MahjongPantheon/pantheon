@@ -174,4 +174,27 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
             $this->_session->getCurrentState()->getScores()
         );
     }
+
+    public function testParseRegressUsualGame()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/openhand_bug.xml');
+        list($success, $results, $rounds) = (new OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+
+        $openHands = 0;
+        foreach ($rounds as $round) {
+            if ($round->getOpenHand()) {
+                $openHands++;
+            }
+        }
+
+        $this->assertEquals(9, count($rounds));
+        $this->assertEquals(3, $openHands);
+    }
 }
