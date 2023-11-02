@@ -199,8 +199,8 @@ class YakuMap
     }
 
     /**
-     * @param string $yList csv: 'yaku,han,yaku2,han...'
-     * @param string $ymanList csv: 'yakuman,yakuman2...'
+     * @param string|array $yList csv: 'yaku,han,yaku2,han...'
+     * @param string|array $ymanList csv: 'yakuman,yakuman2...'
      * @return array ['yaku' => [...], 'dora' => int, 'han' => int, 'yakuman' => int]
      */
     public static function fromTenhou($yList, $ymanList)
