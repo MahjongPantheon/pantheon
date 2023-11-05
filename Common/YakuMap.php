@@ -199,14 +199,14 @@ class YakuMap
     }
 
     /**
-     * @param string $yList csv: 'yaku,han,yaku2,han...'
-     * @param string $ymanList csv: 'yakuman,yakuman2...'
+     * @param string|array $yList csv: 'yaku,han,yaku2,han...'
+     * @param string|array $ymanList csv: 'yakuman,yakuman2...'
      * @return array ['yaku' => [...], 'dora' => int, 'han' => int, 'yakuman' => int]
      */
     public static function fromTenhou($yList, $ymanList)
     {
-        $yakuList = self::_toArray($yList);
-        $yakumanList = self::_toArray($ymanList);
+        $yakuList = is_array($yList) ? $yList : self::_toArray($yList);
+        $yakumanList = is_array($ymanList) ? $ymanList : self::_toArray($ymanList);
         $tenhouYakuMap = [
             0 => Y_MENZENTSUMO,
             1 => Y_RIICHI,

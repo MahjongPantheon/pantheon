@@ -5,9 +5,16 @@ require_once __DIR__ . '/../../src/interfaces/IFreyClient.php';
 
 class FreyClientMock implements IFreyClient
 {
+
+    /**
+     * @var array $_mockPlayerNameMap
+     */
+    private $_mockPlayerNameMap;
+
     /* @phpstan-ignore-next-line */
-    public function __construct(string $apiUrl)
+    public function __construct(string $apiUrl, $mockPlayerNameMap = array())
     {
+        $this->_mockPlayerNameMap = $mockPlayerNameMap;
     }
 
     /**
@@ -110,8 +117,21 @@ class FreyClientMock implements IFreyClient
             return $id < 1000;
         });
         return array_map(function ($id) {
-            return ['id' => $id, 'title' => 'player' . $id, 'tenhou_id' => 'player' . $id, 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
+            return ['id' => $id, 'title' => 'player' . $id, 'tenhou_id' => $this->resolvePlayerName($id), 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
         }, $ids);
+    }
+
+    /**
+     * @param int $id
+     * @return string return player name
+     */
+    private function resolvePlayerName($id): string
+    {
+        if (array_key_exists($id, $this->_mockPlayerNameMap)) {
+            return $this->_mockPlayerNameMap[$id];
+        } else {
+            return 'player' . $id;
+        }
     }
 
     // Expect 'playerN' ids here
@@ -121,11 +141,28 @@ class FreyClientMock implements IFreyClient
             if ($id === 'NoName') {
                 return ['id' => 100, 'title' => 'NoName', 'tenhou_id' => 'NoName'];
             }
-            if (strpos($id, 'player') !== 0) {
+
+            if (!empty($this->_mockPlayerNameMap)) {
+                if (!in_array($id, $this->_mockPlayerNameMap)) {
+                    return null;
+                }
+            } else if (strpos($id, 'player') !== 0) {
                 return null;
             }
-            return ['id' => intval(str_replace('player', '', $id)), 'title' => $id, 'tenhou_id' => $id, 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
+            return ['id' => $this->resolvePlayerId($id), 'title' => $id, 'tenhou_id' => $id, 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
         }, $ids));
+    }
+
+    /**
+     * @param int $tenhouId
+     * @return int return player id
+     */
+    private function resolvePlayerId($tenhouId): int
+    {
+        if (!empty($this->_mockPlayerNameMap)) {
+            return intval(array_keys($this->_mockPlayerNameMap, $tenhouId)[0]);
+        }
+        return intval(str_replace('player', '', strval($tenhouId)));
     }
 
     public function findByTitle(string $query): array

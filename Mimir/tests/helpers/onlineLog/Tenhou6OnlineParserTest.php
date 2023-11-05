@@ -16,20 +16,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mimir;
+namespace helpers\onlineLog;
+
+use Mimir\DataSource;
+use Mimir\EventPrimitive;
+use Mimir\PlayerPrimitive;
+use Mimir\PlayerRegistrationPrimitive;
+use Mimir\SessionPrimitive;
+use Mimir\Tenhou6OnlineParser;
 
 require_once __DIR__ . '/../../../src/Db.php';
-require_once __DIR__ . '/../../../src/helpers/onlineLog/Parser.php';
+require_once __DIR__ . '/../../../src/helpers/onlineLog/Tenhou6OnlineParser.php';
 require_once __DIR__ . '/../../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../../src/primitives/PlayerStats.php';
 
 /**
- * Replay parser integration test suite
+ * Replay tenhou format6 parser integration test suite
  *
- * Class OnlinelogParserTest
+ * Class Tenhou6OnlineParserTest
  * @package Mimir
+ * @Author Steven Vch. <unstatik@staremax.com>
  */
-class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
+class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DataSource
@@ -50,7 +58,12 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_ds = DataSource::__getCleanTestingInstance();
+        $mockPlayerNameMap = [];
+        $mockPlayerNameMap[1] = 'Halfs';
+        $mockPlayerNameMap[2] = '鳳南のぶたさん';
+        $mockPlayerNameMap[3] = '帰りたい。';
+        $mockPlayerNameMap[4] = 'はいてんぼー';
+        $this->_ds = DataSource::__getCleanTestingInstance($mockPlayerNameMap);
 
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
@@ -77,109 +90,9 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testParseUsualGame()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/usual.xml');
-        list($success, $results, $rounds) = (new OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
-
-        $this->assertTrue($success);
-        $this->assertEquals(
-            $results,
-            $this->_session->getCurrentState()->getScores()
-        );
-
-        $openHands = 0;
-        foreach ($rounds as $round) {
-            if ($round->getOpenHand()) {
-                $openHands++;
-            }
-        }
-
-        $this->assertEquals(16, count($rounds));
-        $this->assertEquals(7, $openHands);
-    }
-
-    public function testParseYakumanDoubleRon()
-    {
-        $content = file_get_contents(__DIR__ . '/testdata/doubleron.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
-
-        $this->assertTrue($success);
-        $this->assertEquals(
-            $results,
-            $this->_session->getCurrentState()->getScores()
-        );
-    }
-
-    public function testParseTripleYakuman()
-    {
-        $content = file_get_contents(__DIR__ . '/testdata/tripleyakuman.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
-
-        $this->assertTrue($success);
-        $this->assertEquals(
-            $results,
-            $this->_session->getCurrentState()->getScores()
-        );
-    }
-
-    public function testParseDoubleRonAndRiichiBets()
-    {
-        $content = file_get_contents(__DIR__ . '/testdata/doubleron_and_riichi.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
-
-        $this->assertTrue($success);
-        $this->assertEquals(
-            $results,
-            $this->_session->getCurrentState()->getScores()
-        );
-    }
-
-    public function testParseDoubleRonAndHonbaBets()
-    {
-        $content = file_get_contents(__DIR__ . '/testdata/doubleron_and_honba.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
-
-        $this->assertTrue($success);
-        $this->assertEquals(
-            $results,
-            $this->_session->getCurrentState()->getScores()
-        );
-    }
-
-    public function testParseNagashiMangan()
-    {
-        $content = file_get_contents(__DIR__ . '/testdata/nagashi.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
-
-        $this->assertTrue($success);
-        $this->assertEquals(
-            $results,
-            $this->_session->getCurrentState()->getScores()
-        );
-    }
-
-    public function testHanchanWithWestRound()
-    {
-        $content = file_get_contents(__DIR__ . '/testdata/west.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
-
-        $this->assertTrue($success);
-        $this->assertEquals(
-            $results,
-            $this->_session->getCurrentState()->getScores()
-        );
-    }
-
-    public function testParseRegressUsualGame()
-    {
-        $content = file_get_contents(__DIR__ . '/testdata/openhand_bug.xml');
-        list($success, $results, $rounds) = (new OnlineParser($this->_ds))
+        //same with testdata/openhand_bug.xml
+        $content = file_get_contents(__DIR__ . '/testdata/format6/usual.json');
+        list($success, $results, $rounds) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -199,10 +112,117 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(3, $openHands);
     }
 
+    public function testParseTensoulGame()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/tensoul_usual.json');
+        list($success, $results, $rounds) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+
+        $openHands = 0;
+        $riichiCount = 0;
+        $tempaiCount = 0;
+        foreach ($rounds as $round) {
+            $tempaiCount = $tempaiCount + count($round->getTempaiIds());
+            $riichiCount = $riichiCount + count($round->getRiichiIds());
+            if ($round->getOpenHand()) {
+                $openHands++;
+            }
+        }
+
+        $this->assertEquals(8, count($rounds));
+        $this->assertEquals(5, $openHands);
+        $this->assertEquals(4, $riichiCount);
+        $this->assertEquals(3, $tempaiCount);
+    }
+
+    public function testParseYakumanDoubleRon()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/doubleron.json');
+        list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+    }
+
+    public function testParseDoubleRonAndHonbaBets()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/doubleron_and_honba.json');
+        list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+    }
+
+    public function testParseDoubleRonAndRiichiBets()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/doubleron_and_riichi.json');
+        list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+    }
+
+    public function testParseNagashiMangan()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/nagashi_usual.json');
+        list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+    }
+
+    public function testParseTripleYakuman()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/tripleyakuman.json');
+        list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+    }
+
+    public function testHanchanWithWestRound()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/west.json');
+        list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+    }
+
     public function testRonWithPao()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/pao_ron.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/pao_ron.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -215,8 +235,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testTsumoWithPao()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/pao_tsumo.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/pao_tsumo.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -229,8 +249,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testYakumanTsumoNoDealerWithoutPao()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/suuankou_no_dealer_tsumo_no_pao.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/suuankou_no_dealer_tsumo_no_pao.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $paoApplyCount = 0;
@@ -250,8 +270,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testYakumanTsumoDealerWithoutPao()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/suukantsu_dealer_tsumo_no_pao.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/suukantsu_dealer_tsumo_no_pao.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $paoApplyCount = 0;
@@ -271,8 +291,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testYakumanRonWithoutPao()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/yakuman_ron_no_pao.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/yakuman_ron_no_pao.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $paoApplyCount = 0;
@@ -292,8 +312,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testTripleRonDraw()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/triple_ron_draw.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/triple_ron_draw.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -307,8 +327,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testFourKanDraw()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/four_kan_draw.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/four_kan_draw.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -322,8 +342,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testNineTerminalDraw()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/nine_terminal_draw.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/nine_terminal_draw.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -337,8 +357,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testFourWindDraw()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/four_wind_draw.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/four_wind_draw.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -352,8 +372,8 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function testFourRiichiDraw()
     {
-        $content = file_get_contents(__DIR__ . '/testdata/four_riichi_draw.xml');
-        list($success, $results, $rounds /*, $debug*/) = (new OnlineParser($this->_ds))
+        $content = file_get_contents(__DIR__ . '/testdata/format6/four_riichi_draw.json');
+        list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
