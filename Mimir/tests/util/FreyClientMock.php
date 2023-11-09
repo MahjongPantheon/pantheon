@@ -339,4 +339,23 @@ class FreyClientMock implements IFreyClient
         // TODO: Implement me() method.
         return [];
     }
+
+    public function findByMajsoulAccountId(array $playersMapping): array
+    {
+        return array_filter(array_map(function ($item) {
+            $id = $item['player_name'];
+            if ($id === 'NoName') {
+                return ['id' => 100, 'title' => 'NoName', 'tenhou_id' => 'NoName'];
+            }
+
+            if (!empty($this->_mockPlayerNameMap)) {
+                if (!in_array($id, $this->_mockPlayerNameMap)) {
+                    return null;
+                }
+            } else if (strpos($id, 'player') !== 0) {
+                return null;
+            }
+            return ['id' => $this->resolvePlayerId($id), 'title' => $id, 'tenhou_id' => $id, 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
+        }, $playersMapping));
+    }
 }

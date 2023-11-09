@@ -158,6 +158,8 @@ interface IFreyClient
     */
     public function findByTenhouIds(array $ids): array;
 
+    public function findByMajsoulAccountId(array $playersMapping): array;
+
     /**
      *  Fuzzy search by title.
      *  Query should 3 or more characters long.

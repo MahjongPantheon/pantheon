@@ -362,6 +362,33 @@ final class TwirpServer implements Frey
         }
     }
 
+    public function FindByMajsoulAccountId(array $ctx, \Common\PersonsFindByMajsoulIdsPayload $req): \Common\PersonsFindByTenhouIdsResponse
+    {
+        try {
+            return (new \Common\PersonsFindByTenhouIdsResponse())
+                ->setPeople(array_map(function ($person) {
+                    $p = (new \Common\PersonEx())
+                        ->setId($person['id'])
+                        ->setCity($person['city'])
+                        ->setTenhouId($person['tenhou_id'])
+                        ->setGroups($person['groups'])
+                        ->setHasAvatar($person['has_avatar'])
+                        ->setLastUpdate($person['last_update'])
+                        ->setTitle($person['title']);
+                    if (!empty($person['email'])) {
+                        $p->setEmail($person['email']);
+                    }
+                    if (!empty($person['phone'])) {
+                        $p->setPhone($person['phone']);
+                    }
+                    return $p;
+                }, $this->_personsController->findByMajsoulIds(iterator_to_array($req->getIds()))));
+        } catch (\Exception $e) {
+            $this->_syslog->error($e);
+            throw $e;
+        }
+    }
+
     /**
      * @throws InvalidParametersException
      */

@@ -142,6 +142,15 @@ interface Frey
     /**
      *
      *
+     * Generated from protobuf method <code>common.Frey/FindByMajsoulAccountId</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function FindByMajsoulAccountId(array $ctx, \Common\PersonsFindByMajsoulIdsPayload $req): \Common\PersonsFindByTenhouIdsResponse;
+
+    /**
+     *
+     *
      * Generated from protobuf method <code>common.Frey/FindByTitle</code>
      *
      * @throws \Twirp\Error

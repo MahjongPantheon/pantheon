@@ -93,6 +93,7 @@ class RegressParsersTest extends \PHPUnit\Framework\TestCase
 
         $this->setUp();
         $contentJson = file_get_contents(__DIR__ . '/testdata/regress/hanchan.json');
+        $this->_session->setReplayHash("2023100200gm-0029-0000-bbdb64ce");
         list($successJsonParser, $resultsJsonParser, $roundsJsonParser) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $contentJson);
 

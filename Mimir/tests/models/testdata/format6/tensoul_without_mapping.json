@@ -1643,7 +1643,7 @@
     "aka52": 1,
     "aka51": 1
   },
-  "lobby": 0,
+  "lobby": 1111,
   "dan": [
     "初心★3",
     "初心★2",
@@ -1681,11 +1681,5 @@
   "title": [
     "銅の間東喰赤",
     "Sat, 14 Oct 2023 14:54:59 GMT"
-  ],
-  "playerMapping" : [
-    {"nickname" : "Halfs", "account_id" : 1},
-    {"nickname" : "鳳南のぶたさん", "account_id" : 11},
-    {"nickname" : "帰りたい。", "account_id" : 22},
-    {"nickname" : "はいてんぼー", "account_id" : 33}
   ]
 }

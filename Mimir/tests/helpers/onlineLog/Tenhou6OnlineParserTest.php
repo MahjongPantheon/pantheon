@@ -20,6 +20,7 @@ namespace helpers\onlineLog;
 
 use Mimir\DataSource;
 use Mimir\EventPrimitive;
+use Mimir\PlatformTypeId;
 use Mimir\PlayerPrimitive;
 use Mimir\PlayerRegistrationPrimitive;
 use Mimir\SessionPrimitive;
@@ -92,6 +93,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     {
         //same with testdata/openhand_bug.xml
         $content = file_get_contents(__DIR__ . '/testdata/format6/usual.json');
+        $this->_session->setReplayHash("2023101214gm-00a9-0000-8cb902d4");
         list($success, $results, $rounds) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -115,8 +117,9 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testParseTensoulGame()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/tensoul_usual.json');
+        $this->_session->setReplayHash("231014-84c11a6f-b3f7-4363-966e-25f37886cfbf");
         list($success, $results, $rounds) = (new Tenhou6OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content);
+            ->parseToSession($this->_session, $content, false, PlatformTypeId::Majsoul->value);
 
         $this->assertTrue($success);
         $this->assertEquals(
@@ -144,6 +147,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testParseYakumanDoubleRon()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/doubleron.json');
+        $this->_session->setReplayHash("2009120221gm-0001-0000-8f264f66");
         list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -157,6 +161,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testParseDoubleRonAndHonbaBets()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/doubleron_and_honba.json');
+        $this->_session->setReplayHash("2018020420gm-0001-14423-3290b527");
         list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -170,6 +175,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testParseDoubleRonAndRiichiBets()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/doubleron_and_riichi.json');
+        $this->_session->setReplayHash("2009120221gm-0001-0000-8f264f66");
         list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -183,6 +189,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testParseNagashiMangan()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/nagashi_usual.json');
+        $this->_session->setReplayHash("2019020814gm-0061-0000-c1b0958b");
         list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -196,6 +203,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testParseTripleYakuman()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/tripleyakuman.json');
+        $this->_session->setReplayHash("2009100819gm-0049-0000-13bf5b23");
         list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -209,6 +217,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testHanchanWithWestRound()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/west.json');
+        $this->_session->setReplayHash("2017030413gm-0009-3821-485c5dae");
         list($success, $results/*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -222,6 +231,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testRonWithPao()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/pao_ron.json');
+        $this->_session->setReplayHash("2012050716gm-0009-0000-85fac029");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -236,6 +246,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testTsumoWithPao()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/pao_tsumo.json');
+        $this->_session->setReplayHash("2015010313gm-0009-0000-21763319");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -250,6 +261,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testYakumanTsumoNoDealerWithoutPao()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/suuankou_no_dealer_tsumo_no_pao.json');
+        $this->_session->setReplayHash("2023100200gm-0029-0000-bbdb64ce");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -271,6 +283,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testYakumanTsumoDealerWithoutPao()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/suukantsu_dealer_tsumo_no_pao.json');
+        $this->_session->setReplayHash("2015012609gm-0089-0000-1956db78");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -292,6 +305,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testYakumanRonWithoutPao()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/yakuman_ron_no_pao.json');
+        $this->_session->setReplayHash("2023101322gm-0029-0000-01f88e5d");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -313,6 +327,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testTripleRonDraw()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/triple_ron_draw.json');
+        $this->_session->setReplayHash("2020020506gm-0009-7994-344ceb83");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -328,6 +343,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testFourKanDraw()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/four_kan_draw.json');
+        $this->_session->setReplayHash("2014021417gm-0009-7447-00d6d80f");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -343,6 +359,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testNineTerminalDraw()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/nine_terminal_draw.json');
+        $this->_session->setReplayHash("2014011202gm-0089-0000-c5a5f508");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -358,6 +375,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testFourWindDraw()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/four_wind_draw.json');
+        $this->_session->setReplayHash("2015090309gm-0009-7447-fa717ec6");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
@@ -373,6 +391,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     public function testFourRiichiDraw()
     {
         $content = file_get_contents(__DIR__ . '/testdata/format6/four_riichi_draw.json');
+        $this->_session->setReplayHash("2014081419gm-0009-7447-b66ad799");
         list($success, $results, $rounds /*, $debug*/) = (new Tenhou6OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 

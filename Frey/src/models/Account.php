@@ -380,4 +380,31 @@ class AccountModel extends Model
             ];
         }, $persons);
     }
+
+    public function findById($ids)
+    {
+        $filterPrivateData = false;
+        try {
+            $this->_checkAccessRights(InternalRules::GET_PERSONAL_INFO_WITH_PRIVATE_DATA);
+        } catch (AccessDeniedException $e) {
+            // No access, filter out private data
+            $filterPrivateData = true;
+        }
+
+        $persons = PersonPrimitive::findById($this->_db, $ids);
+        $authPersonId = empty($this->_authorizedPerson) ? 0 : $this->_authorizedPerson->getId();
+        return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
+            return [
+                'id' => $person->getId(),
+                'city' => $person->getCity(),
+                'email' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getEmail(),
+                'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
+                'tenhou_id' => $person->getTenhouId(),
+                'groups' => $person->getGroupIds(),
+                'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar(),
+                'last_update' => $person->getLastUpdate(),
+            ];
+        }, $persons);
+    }
 }

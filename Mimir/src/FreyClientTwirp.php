@@ -356,6 +356,38 @@ class FreyClientTwirp implements IFreyClient
         }, iterator_to_array($persons));
     }
 
+    public function findByMajsoulAccountId(array $playersMapping): array
+    {
+        $ids = [];
+        foreach ($playersMapping as $playerItem) {
+            $mjsSearchItem = new \Common\MajsoulSearchEx();
+            $mjsSearchItem->setNickname($playerItem['player_name']);
+            $mjsSearchItem->setAccountId($playerItem['account_id']);
+            array_push($ids, $mjsSearchItem);
+        }
+
+        $persons = $this->_client->FindByMajsoulAccountId(
+            $this->_ctx,
+            (new \Common\PersonsFindByMajsoulIdsPayload())
+                ->setIds($ids)
+        )->getPeople()->getIterator();
+
+        return array_map(function (\Common\PersonEx $person) {
+            return [
+                'id' => $person->getId(),
+                'country' => $person->getCountry(),
+                'city' => $person->getCity(),
+                'email' => $person->getEmail(),
+                'phone' => $person->getPhone(),
+                'tenhou_id' => $person->getTenhouId(),
+                'groups' => $person->getGroups(),
+                'title' => $person->getTitle(),
+                'has_avatar' => $person->getHasAvatar(),
+                'last_update' => $person->getLastUpdate(),
+            ];
+        }, iterator_to_array($persons));
+    }
+
     /**
      *  Fuzzy search by title.
      *  Query should 3 or more characters long.

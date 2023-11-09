@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-ÐJ
+»L
 proto/frey.protocommon"d
 AuthRequestRegistrationPayload
 email (	
@@ -239,7 +239,13 @@ has_avatar (
 PersonsGetPersonalInfoResponse 
 people (2.common.PersonEx",
 PersonsFindByTenhouIdsPayload
-ids (	"B
+ids (	"F
+PersonsFindByMajsoulIdsPayload$
+ids (2.common.MajsoulSearchEx"7
+MajsoulSearchEx
+nickname (	
+
+account_id (	"B
 PersonsFindByTenhouIdsResponse 
 people (2.common.PersonEx"*
 PersonsFindByTitlePayload
@@ -250,7 +256,7 @@ has_avatar (
 ids ("9
 PersonsGetGroupsResponse
 groups (2.common.Group"
-DepersonalizePayload2¢
+DepersonalizePayload2Œ 
 Freyf
 RequestRegistration&.common.AuthRequestRegistrationPayload\'.common.AuthRequestRegistrationResponsef
 ApproveRegistration&.common.AuthApproveRegistrationPayload\'.common.AuthApproveRegistrationResponseH
@@ -265,7 +271,8 @@ has_avatar (
 GetRuleValue!.common.AccessGetRuleValuePayload".common.AccessGetRuleValueResponse^
 UpdatePersonalInfo(.common.PersonsUpdatePersonalInfoPayload.common.GenericSuccessResponse`
 GetPersonalInfo%.common.PersonsGetPersonalInfoPayload&.common.PersonsGetPersonalInfoResponse`
-FindByTenhouIds%.common.PersonsFindByTenhouIdsPayload&.common.PersonsFindByTenhouIdsResponseT
+FindByTenhouIds%.common.PersonsFindByTenhouIdsPayload&.common.PersonsFindByTenhouIdsResponseh
+FindByMajsoulAccountId&.common.PersonsFindByMajsoulIdsPayload&.common.PersonsFindByTenhouIdsResponseT
 FindByTitle!.common.PersonsFindByTitlePayload".common.PersonsFindByTitleResponseN
 	GetGroups.common.PersonsGetGroupsPayload .common.PersonsGetGroupsResponse[
 GetEventAdmins#.common.AccessGetEventAdminsPayload$.common.AccessGetEventAdminsResponsed

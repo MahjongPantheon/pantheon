@@ -24,6 +24,11 @@ namespace Mimir;
 class Tenhou6Model
 {
     /**
+     * @var int $_platformId
+     */
+    private int $_platformId;
+
+    /**
      * array names ['name1', 'name2', 'name3', 'name4']
      */
     /**
@@ -45,6 +50,11 @@ class Tenhou6Model
      * @var array $_rounds
      */
     private array $_rounds = [];
+
+    /**
+     * @var string $_replayHash
+     */
+    private string $_replayHash;
 
     /**
      * @var string $AGARI
@@ -416,8 +426,9 @@ class Tenhou6Model
      */
     private array $_RUNES = [];
 
-    public function __construct(string $tenhou6JsonContent)
+    public function __construct(string $tenhou6JsonContent, int $platformId)
     {
+        $this->_platformId = $platformId;
         $this->initRunes();
         $parsedContent = json_decode($tenhou6JsonContent);
         $this->parseToModel($parsedContent);
@@ -505,7 +516,15 @@ class Tenhou6Model
      */
     private function parseToModel(\stdClass $parsedContent): void
     {
-        $this->setTokenUN($parsedContent->name);
+        $this->_replayHash = $parsedContent->ref;
+        $playerMappings = null;
+        if ($this->getPlatformId() == PlatformTypeId::Majsoul->value) {
+            if (!property_exists($parsedContent, 'playerMapping')) {
+                throw new ParseException('Tensoul replay format not allowed without player mappings');
+            }
+            $playerMappings = $parsedContent->playerMapping;
+        }
+        $this->setTokenUN($parsedContent->name, $playerMappings);
         $this->setTokenGO(['lobby' => $this->getLobbyOrDefaultZero($parsedContent)]);
         $this->setOwari($parsedContent->sc);
 
@@ -1163,11 +1182,25 @@ class Tenhou6Model
 
     /**
      * @param array $tokenUN
+     * @param \stdClass[] $playerMapping player name mapping
      * @return void
      */
-    public function setTokenUN($tokenUN): void
+    public function setTokenUN($tokenUN, $playerMapping): void
     {
-        $this->_tokenUN = $tokenUN;
+        if ($this->getPlatformId() === PlatformTypeId::Majsoul->value) {
+            $this->_tokenUN = [];
+            foreach ($playerMapping as $playerItem) {
+                array_push($this->_tokenUN, [
+                    'player_name' => $this->rawDecode($playerItem->nickname),
+                    'account_id' => $playerItem->account_id
+                ]);
+            }
+        } else {
+            $this->_tokenUN = [];
+            foreach ($tokenUN as $playerName) {
+                array_push($this->_tokenUN, ['player_name' => $this->rawDecode($playerName)]);
+            }
+        }
     }
 
     /**
@@ -1184,5 +1217,21 @@ class Tenhou6Model
     public function getRounds(): array
     {
         return $this->_rounds;
+    }
+
+    /**
+     * @return int return platform id
+     */
+    public function getPlatformId(): int
+    {
+        return $this->_platformId;
+    }
+
+    /**
+     * @return string return replay hash
+     */
+    public function getReplayHash(): string
+    {
+        return $this->_replayHash;
     }
 }

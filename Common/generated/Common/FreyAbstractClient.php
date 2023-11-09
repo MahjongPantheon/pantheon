@@ -402,6 +402,29 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function FindByMajsoulAccountId(array $ctx, \Common\PersonsFindByMajsoulIdsPayload $in): \Common\PersonsFindByTenhouIdsResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Frey');
+        $ctx = Context::withMethodName($ctx, 'FindByMajsoulAccountId');
+
+        $out = new \Common\PersonsFindByTenhouIdsResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Frey/FindByMajsoulAccountId';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Frey/FindByMajsoulAccountId';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function FindByTitle(array $ctx, \Common\PersonsFindByTitlePayload $in): \Common\PersonsFindByTitleResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
