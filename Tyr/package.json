@@ -28,7 +28,7 @@
     "@vitest/ui": "^0.34.7",
     "classnames": "^2.3.2",
     "dotenv": "^16.3.1",
-    "eslint": "8.51.0",
+    "eslint": "8.52.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-unused-imports": "3.0.0",
