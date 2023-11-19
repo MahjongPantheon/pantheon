@@ -47,7 +47,7 @@
     "strip-markdown": "^5.0.1",
     "twirpscript": "^0.0.68",
     "uuid": "^9.0.1",
-    "wouter": "2.12.0"
+    "wouter": "2.12.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.2",
