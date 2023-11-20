@@ -323,7 +323,9 @@ final class TwirpServer implements Frey
                         ->setGroups($person['groups'])
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
-                        ->setTitle($person['title']);
+                        ->setTitle($person['title'])
+                        ->setMsNickname($person['ms_nickname'])
+                        ->setMsAccountId($person['ms_account_id']);
                 }, $this->_personsController->getPersonalInfo(iterator_to_array($req->getIds())))
             );
         } catch (\Exception $e) {
@@ -347,7 +349,9 @@ final class TwirpServer implements Frey
                         ->setGroups($person['groups'])
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
-                        ->setTitle($person['title']);
+                        ->setTitle($person['title'])
+                        ->setMsNickname($person['ms_nickname'])
+                        ->setMsAccountId($person['ms_account_id']);
                     if (!empty($person['email'])) {
                         $p->setEmail($person['email']);
                     }
@@ -382,7 +386,7 @@ final class TwirpServer implements Frey
                         $p->setPhone($person['phone']);
                     }
                     return $p;
-                }, $this->_personsController->findByMajsoulIds(iterator_to_array($req->getIds()))));
+                }, $this->_personsController->findMajsoulAccounts(iterator_to_array($req->getIds()))));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;

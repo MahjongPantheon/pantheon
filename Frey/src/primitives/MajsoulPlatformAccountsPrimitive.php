@@ -34,6 +34,7 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
     protected static $_table = 'majsoul_platform_accounts';
 
     protected static $_fieldsMapping = [
+        'id'                => '_id',
         'nickname'          => '_nickname',
         'person_id'         => '_personId',
         'friend_id'         => '_friendId',
@@ -41,11 +42,31 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
     ];
 
     /**
+     * @param int $friendId
+     * @return MajsoulPlatformAccountsPrimitive
+     */
+    public function setFriendId(int $friendId): MajsoulPlatformAccountsPrimitive
+    {
+        $this->_friendId = $friendId;
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getFriendId(): int
     {
         return $this->_friendId;
+    }
+
+    /**
+     * @param int $accountId
+     * @return MajsoulPlatformAccountsPrimitive
+     */
+    public function setAccountId(int $accountId): MajsoulPlatformAccountsPrimitive
+    {
+        $this->_accountId = $accountId;
+        return $this;
     }
 
     /**
@@ -57,11 +78,31 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
     }
 
     /**
+     * @param int $personId
+     * @return MajsoulPlatformAccountsPrimitive
+     */
+    public function setPersonId(int $personId): MajsoulPlatformAccountsPrimitive
+    {
+        $this->_personId = $personId;
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getPersonId(): int
     {
         return $this->_personId;
+    }
+
+    /**
+     * @param string $nickname
+     * @return MajsoulPlatformAccountsPrimitive
+     */
+    public function setNickname(string $nickname): MajsoulPlatformAccountsPrimitive
+    {
+        $this->_nickname = $nickname;
+        return $this;
     }
 
     /**
@@ -75,10 +116,11 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
     protected function _getFieldsTransforms()
     {
         return [
+            '_id'       => $this->_integerTransform(true),
             '_nickname'  => $this->_stringTransform(),
-            '_personId'  => $this->_integerTransform(false),
-            '_friendId'  => $this->_integerTransform(false),
-            '_accountId' => $this->_integerTransform(false)
+            '_personId'  => $this->_integerTransform(),
+            '_friendId'  => $this->_integerTransform(),
+            '_accountId' => $this->_integerTransform()
         ];
     }
 
@@ -107,23 +149,21 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
     protected $_accountId;
 
     /**
+     * Local id
+     * @var int
+     */
+    protected $_id;
+
+    /**
      * @param IDb $db
-     * @param string $query
+     * @param array $nicknames
      * @return MajsoulPlatformAccountsPrimitive[]|null
      */
-    public static function findByAccountIdAndNickname(IDb $db, string $nickname, int $accountId)
+    public static function findByMajsoulNicknames(IDb $db, array $nicknames)
     {
-        $q = <<<QRY
-            SELECT * FROM "majsoul_platform_accounts"
-            WHERE account_id = :accountId and nickname = :nickname;
-        QRY;
-
-        $result = $db->table('majsoul_platform_accounts')
-            ->rawQuery($q, [
-                    ':accountId' => $accountId,
-                    ':nickname' => $nickname,
-                ])
-            ->findArray();
+        $result = self::_findBySeveral($db, [
+            'nickname' => $nicknames
+        ]);
 
         if (empty($result)) {
             return [];
@@ -134,19 +174,36 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
         }, $result);
     }
 
+    /**
+     * @param IDb $db
+     * @param array $personIds
+     * @return MajsoulPlatformAccountsPrimitive[]|null
+     */
+    public static function findByPersonIds(IDb $db, array $personIds)
+    {
+        return !empty($personIds) ? self::_findBySeveral($db, [
+            'person_id' => $personIds
+        ]) : [];
+    }
 
     protected function _create()
     {
-        // TODO: Implement _create() method.
+        $majsoulAccount = $this->_db->table(self::$_table)->create();
+        $success = $this->_save($majsoulAccount);
+        if ($success) {
+            $this->_id = $this->_db->lastInsertId();
+        }
+
+        return $success;
     }
 
     public function getId()
     {
-        // TODO: Implement getId() method.
+        return $this->_id;
     }
 
     protected function _deident()
     {
-        // TODO: Implement _deident() method.
+        $this->_id = null;
     }
 }

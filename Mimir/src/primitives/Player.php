@@ -183,7 +183,7 @@ class PlayerPrimitive extends Primitive
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findByMajsoulAccountId(DataSource $ds, $playersMapping)
+    public static function findMajsoulAccounts(DataSource $ds, $playersMapping)
     {
         $playersData = $ds->remote()->findByMajsoulAccountId($playersMapping);
         /** @var PlayerPrimitive[] $players */

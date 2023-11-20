@@ -21,6 +21,7 @@ require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/InternalRules.php';
 require_once __DIR__ . '/../models/Auth.php';
 require_once __DIR__ . '/../primitives/Person.php';
+require_once __DIR__ . '/../primitives/MajsoulPlatformAccountsPrimitive.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../exceptions/AccessDenied.php';
 
@@ -110,8 +111,19 @@ class AccountModel extends Model
         }
 
         $persons = PersonPrimitive::findById($this->_db, $ids);
+        $personMap = [];
+        foreach ($persons as $person) {
+            $personMap[$person->getId()] = '';
+        }
+        $majsoulAccounts = MajsoulPlatformAccountsPrimitive::findByPersonIds($this->_db, array_keys($personMap));
+
+        $personMap = [];
+        foreach ($majsoulAccounts as $majsoulAccount) {
+            $personMap[$majsoulAccount->getPersonId()] = $majsoulAccount;
+        }
+
         $authPersonId = empty($this->_authorizedPerson) ? 0 : $this->_authorizedPerson->getId();
-        return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
+        return array_map(function (PersonPrimitive $person) use ($personMap, $filterPrivateData, $authPersonId) {
             return [
                 'id' => $person->getId(),
                 'country' => $person->getCountry(),
@@ -123,6 +135,8 @@ class AccountModel extends Model
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
+                'ms_account_id' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
+                'ms_nickname' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
         }, $persons);
     }
@@ -365,8 +379,19 @@ class AccountModel extends Model
         }
 
         $persons = PersonPrimitive::findByTenhouId($this->_db, $ids);
+        $personMap = [];
+        foreach ($persons as $person) {
+            $personMap[$person->getId()] = '';
+        }
+        $majsoulAccounts = MajsoulPlatformAccountsPrimitive::findByPersonIds($this->_db, array_keys($personMap));
+
+        $personMap = [];
+        foreach ($majsoulAccounts as $majsoulAccount) {
+            $personMap[$majsoulAccount->getPersonId()] = $majsoulAccount;
+        }
+
         $authPersonId = empty($this->_authorizedPerson) ? 0 : $this->_authorizedPerson->getId();
-        return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
+        return array_map(function (PersonPrimitive $person) use ($personMap, $filterPrivateData, $authPersonId) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
@@ -377,6 +402,8 @@ class AccountModel extends Model
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
+                'ms_account_id' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
+                'ms_nickname' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
         }, $persons);
     }

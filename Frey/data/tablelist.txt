@@ -1,5 +1,4 @@
 phinxlog
-tenhou_platform_accounts
 majsoul_platform_accounts
 person_group
 registrant

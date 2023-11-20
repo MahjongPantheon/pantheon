@@ -15,6 +15,7 @@ class AddGamePlatforms extends AbstractMigration
     {
         $table = $this->table('game_platforms', ['id' => false, 'primary_key' => 'platform_id']);
         $table
+            ->addColumn('id', 'integer', ['identity' => true])
             ->addColumn('platform_id', 'integer')
             ->addColumn('platform_name', 'string', ['limit' => 255, 'null' => false])
             ->addIndex('platform_id', ['name' => 'game_platform_id_idx'])

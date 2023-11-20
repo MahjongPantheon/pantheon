@@ -290,7 +290,7 @@ class Tenhou6OnlineParser
         }
 
         if ($tenhou6Model->getPlatformId() === PlatformTypeId::Majsoul->value) {
-            return PlayerPrimitive::findByMajsoulAccountId($this->_ds, $tenhou6Model->getTokenUN());
+            return PlayerPrimitive::findMajsoulAccounts($this->_ds, $tenhou6Model->getTokenUN());
         }
 
         return [];

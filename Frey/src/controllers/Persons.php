@@ -104,7 +104,7 @@ class PersonsController extends Controller
      * @return array
      * @throws \Exception
      */
-    public function findByMajsoulIds($ids)
+    public function findMajsoulAccounts($ids)
     {
         $this->_logStart(__METHOD__, [implode(',', array_map(function (MajsoulSearchEx $item) {
             return [
@@ -113,17 +113,24 @@ class PersonsController extends Controller
             ];
         }, $ids))]);
 
-        $majsoulAccounts = [];
+        $majsoulNicknames = [];
+        $majsoulSearchMap = [];
         foreach ($ids as $majsoulSearchEx) {
-            $majsoulAccounts = array_merge($majsoulAccounts, MajsoulPlatformAccountsPrimitive::findByAccountIdAndNickname(
-                $this->_db,
-                $majsoulSearchEx->getNickname(),
-                $majsoulSearchEx->getAccountId()
-            ));
+            array_push($majsoulNicknames, $majsoulSearchEx->getNickname());
+            $majsoulSearchMap[intval($majsoulSearchEx->getAccountId())] = $majsoulSearchEx->getNickname();
         }
 
+        $majsoulAccounts = MajsoulPlatformAccountsPrimitive::findByMajsoulNicknames(
+            $this->_db,
+            $majsoulNicknames
+        );
+
+        $filteredAccounts = array_values(array_filter($majsoulAccounts, function ($item) use ($majsoulSearchMap) {
+            return key_exists($item->getAccountId(), $majsoulSearchMap) && $majsoulSearchMap[$item->getAccountId()] === $item->getNickname();
+        }));
+
         $personIds = [];
-        foreach ($majsoulAccounts as $majsoulAccount) {
+        foreach ($filteredAccounts as $majsoulAccount) {
             $personIds[$majsoulAccount->getPersonId()] = $majsoulAccount;
         }
 
@@ -132,6 +139,7 @@ class PersonsController extends Controller
         foreach ($personalInfo as $person) {
             $key = intval($person['id']);
             if (key_exists($key, $personIds)) {
+                //replace tenhou_id by majsoul nickname
                 $person['tenhou_id'] = $personIds[$key]->getNickname();
                 array_push($majsoulPersonalInfo, $person);
             }
