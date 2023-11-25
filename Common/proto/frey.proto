@@ -455,7 +455,7 @@ message PersonsFindByMajsoulIdsPayload {
 
 message MajsoulSearchEx {
   string nickname= 1;
-  string account_id = 2;
+  int32 account_id = 2;
 }
 
 message PersonsFindByTenhouIdsResponse {
