@@ -150,14 +150,14 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
 
     /**
      * @param IDb $db
      * @param array $nicknames
-     * @return MajsoulPlatformAccountsPrimitive[]|null
+     * @return MajsoulPlatformAccountsPrimitive[]
      */
     public static function findByMajsoulNicknames(IDb $db, array $nicknames)
     {
@@ -169,21 +169,29 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
-        }, $result);
+        if (!is_array($result)) {
+            return [$result];
+        }
+
+        return $result;
     }
 
     /**
      * @param IDb $db
      * @param array $personIds
-     * @return MajsoulPlatformAccountsPrimitive[]|null
+     * @return MajsoulPlatformAccountsPrimitive[]
      */
     public static function findByPersonIds(IDb $db, array $personIds)
     {
-        return !empty($personIds) ? self::_findBySeveral($db, [
+        $result = !empty($personIds) ? self::_findBySeveral($db, [
             'person_id' => $personIds
         ]) : [];
+
+        if (!is_array($result)) {
+            return [$result];
+        }
+
+        return $result;
     }
 
     protected function _create()
