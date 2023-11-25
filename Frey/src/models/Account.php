@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Frey;
 
 require_once __DIR__ . '/../Model.php';
@@ -135,12 +136,11 @@ class AccountModel extends Model
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
-                'ms_account_id' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
-                'ms_nickname' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
+                'ms_account_id' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
+                'ms_nickname' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
         }, $persons);
     }
-
 
     /**
      * Depersonalize current account
@@ -402,13 +402,20 @@ class AccountModel extends Model
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
-                'ms_account_id' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
-                'ms_nickname' => key_exists($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
+                'ms_account_id' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
+                'ms_nickname' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
         }, $persons);
     }
 
-    public function findById($ids)
+    /**
+     * Find accounts by id list.
+     *
+     * @param int[] $ids
+     * @return array
+     * @throws \Frey\AccessDeniedException
+     */
+    public function findById($ids): array
     {
         $filterPrivateData = false;
         try {

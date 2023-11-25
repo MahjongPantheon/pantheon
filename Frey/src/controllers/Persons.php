@@ -107,10 +107,7 @@ class PersonsController extends Controller
     public function findMajsoulAccounts($ids)
     {
         $this->_logStart(__METHOD__, [implode(',', array_map(function (MajsoulSearchEx $item) {
-            return [
-                'nickname' => $item->getNickname(),
-                'account_id' => $item->getAccountId()
-            ];
+            return 'nickname=' . $item->getNickname() . ', account_id=' . $item->getAccountId();
         }, $ids))]);
 
         $majsoulNicknames = [];
@@ -125,9 +122,12 @@ class PersonsController extends Controller
             $majsoulNicknames
         );
 
-        $filteredAccounts = array_values(array_filter($majsoulAccounts, function ($item) use ($majsoulSearchMap) {
-            return key_exists($item->getAccountId(), $majsoulSearchMap) && $majsoulSearchMap[$item->getAccountId()] === $item->getNickname();
-        }));
+        $filteredAccounts = [];
+        if (!empty($majsoulAccounts)) {
+            $filteredAccounts = array_values(array_filter($majsoulAccounts, function ($item) use ($majsoulSearchMap) {
+                return key_exists($item->getAccountId(), $majsoulSearchMap) && $majsoulSearchMap[$item->getAccountId()] === $item->getNickname();
+            }));
+        }
 
         $personIds = [];
         foreach ($filteredAccounts as $majsoulAccount) {

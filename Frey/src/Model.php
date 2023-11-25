@@ -344,6 +344,21 @@ abstract class Model
     }
 
     /**
+     * Safe check key exist in map
+     *
+     * @param int|string|null $key
+     * @param array $checkedMap
+     * @return bool
+     */
+    protected function _safeExistsKey($key, $checkedMap): bool
+    {
+        if (is_null($key)) {
+            return false;
+        }
+        return key_exists($key, $checkedMap);
+    }
+
+    /**
      * @param string $key
      * @param int|null $eventId
      *
