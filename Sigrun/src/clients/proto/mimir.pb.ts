@@ -2,7 +2,7 @@
 // Source: proto/mimir.proto
 /* eslint-disable */
 
-import type { ByteSource, PartialDeep } from "protoscript";
+import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 import { JSONrequest, PBrequest } from "twirpscript";
 // This is the minimum version supported by the current runtime.
@@ -420,752 +420,773 @@ export interface ClearStatCachePayload {
   playerId: number;
 }
 
+export interface TypedGamesAddOnlineReplayPayload {
+  eventId: number;
+  platformId: number;
+  contentType: number;
+  logTimestamp: number;
+  replayHash: string;
+  content: string;
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
 
 export async function GetRulesets(
   eventsGetRulesetsPayload: EventsGetRulesetsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetRulesetsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetRulesets",
     EventsGetRulesetsPayload.encode(eventsGetRulesetsPayload),
-    config,
+    config
   );
   return EventsGetRulesetsResponse.decode(response);
 }
 
 export async function GetTimezones(
   eventsGetTimezonesPayload: EventsGetTimezonesPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetTimezonesResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetTimezones",
     EventsGetTimezonesPayload.encode(eventsGetTimezonesPayload),
-    config,
+    config
   );
   return EventsGetTimezonesResponse.decode(response);
 }
 
 export async function GetCountries(
   eventsGetCountriesPayload: EventsGetCountriesPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetCountriesResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetCountries",
     EventsGetCountriesPayload.encode(eventsGetCountriesPayload),
-    config,
+    config
   );
   return EventsGetCountriesResponse.decode(response);
 }
 
 export async function GetEvents(
   eventsGetEventsPayload: EventsGetEventsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetEventsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetEvents",
     EventsGetEventsPayload.encode(eventsGetEventsPayload),
-    config,
+    config
   );
   return EventsGetEventsResponse.decode(response);
 }
 
 export async function GetEventsById(
   eventsGetEventsByIdPayload: EventsGetEventsByIdPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetEventsByIdResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetEventsById",
     EventsGetEventsByIdPayload.encode(eventsGetEventsByIdPayload),
-    config,
+    config
   );
   return EventsGetEventsByIdResponse.decode(response);
 }
 
 export async function GetMyEvents(
   playersGetMyEventsPayload: PlayersGetMyEventsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetMyEventsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetMyEvents",
     PlayersGetMyEventsPayload.encode(playersGetMyEventsPayload),
-    config,
+    config
   );
   return PlayersGetMyEventsResponse.decode(response);
 }
 
 export async function GetGameConfig(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GameConfig> {
   const response = await PBrequest(
     "/common.Mimir/GetGameConfig",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GameConfig.decode(response);
 }
 
 export async function GetRatingTable(
   eventsGetRatingTablePayload: EventsGetRatingTablePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetRatingTableResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetRatingTable",
     EventsGetRatingTablePayload.encode(eventsGetRatingTablePayload),
-    config,
+    config
   );
   return EventsGetRatingTableResponse.decode(response);
 }
 
 export async function GetLastGames(
   eventsGetLastGamesPayload: EventsGetLastGamesPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetLastGamesResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetLastGames",
     EventsGetLastGamesPayload.encode(eventsGetLastGamesPayload),
-    config,
+    config
   );
   return EventsGetLastGamesResponse.decode(response);
 }
 
 export async function GetGame(
   eventsGetGamePayload: EventsGetGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetGameResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetGame",
     EventsGetGamePayload.encode(eventsGetGamePayload),
-    config,
+    config
   );
   return EventsGetGameResponse.decode(response);
 }
 
 export async function GetGamesSeries(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetGamesSeriesResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetGamesSeries",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetGamesSeriesResponse.decode(response);
 }
 
 export async function GetCurrentSessions(
   playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetCurrentSessionsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetCurrentSessions",
     PlayersGetCurrentSessionsPayload.encode(playersGetCurrentSessionsPayload),
-    config,
+    config
   );
   return PlayersGetCurrentSessionsResponse.decode(response);
 }
 
 export async function GetAllRegisteredPlayers(
   eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetAllRegisteredPlayersResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetAllRegisteredPlayers",
     EventsGetAllRegisteredPlayersPayload.encode(
-      eventsGetAllRegisteredPlayersPayload,
+      eventsGetAllRegisteredPlayersPayload
     ),
-    config,
+    config
   );
   return EventsGetAllRegisteredPlayersResponse.decode(response);
 }
 
 export async function GetTimerState(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetTimerStateResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetTimerState",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetTimerStateResponse.decode(response);
 }
 
 export async function GetSessionOverview(
   gamesGetSessionOverviewPayload: GamesGetSessionOverviewPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesGetSessionOverviewResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetSessionOverview",
     GamesGetSessionOverviewPayload.encode(gamesGetSessionOverviewPayload),
-    config,
+    config
   );
   return GamesGetSessionOverviewResponse.decode(response);
 }
 
 export async function GetPlayerStats(
   playersGetPlayerStatsPayload: PlayersGetPlayerStatsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetPlayerStatsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetPlayerStats",
     PlayersGetPlayerStatsPayload.encode(playersGetPlayerStatsPayload),
-    config,
+    config
   );
   return PlayersGetPlayerStatsResponse.decode(response);
 }
 
 export async function AddRound(
   gamesAddRoundPayload: GamesAddRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesAddRoundResponse> {
   const response = await PBrequest(
     "/common.Mimir/AddRound",
     GamesAddRoundPayload.encode(gamesAddRoundPayload),
-    config,
+    config
   );
   return GamesAddRoundResponse.decode(response);
 }
 
 export async function PreviewRound(
   gamesPreviewRoundPayload: GamesPreviewRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesPreviewRoundResponse> {
   const response = await PBrequest(
     "/common.Mimir/PreviewRound",
     GamesPreviewRoundPayload.encode(gamesPreviewRoundPayload),
-    config,
+    config
   );
   return GamesPreviewRoundResponse.decode(response);
 }
 
 export async function AddOnlineReplay(
   gamesAddOnlineReplayPayload: GamesAddOnlineReplayPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesAddOnlineReplayResponse> {
   const response = await PBrequest(
     "/common.Mimir/AddOnlineReplay",
     GamesAddOnlineReplayPayload.encode(gamesAddOnlineReplayPayload),
-    config,
+    config
   );
   return GamesAddOnlineReplayResponse.decode(response);
 }
 
 export async function GetLastResults(
   playersGetLastResultsPayload: PlayersGetLastResultsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetLastResultsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetLastResults",
     PlayersGetLastResultsPayload.encode(playersGetLastResultsPayload),
-    config,
+    config
   );
   return PlayersGetLastResultsResponse.decode(response);
 }
 
 export async function GetLastRound(
   playersGetLastRoundPayload: PlayersGetLastRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetLastRoundResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetLastRound",
     PlayersGetLastRoundPayload.encode(playersGetLastRoundPayload),
-    config,
+    config
   );
   return PlayersGetLastRoundResponse.decode(response);
 }
 
 export async function GetAllRounds(
   playersGetAllRoundsPayload: PlayersGetAllRoundsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetAllRoundsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetAllRounds",
     PlayersGetAllRoundsPayload.encode(playersGetAllRoundsPayload),
-    config,
+    config
   );
   return PlayersGetAllRoundsResponse.decode(response);
 }
 
 export async function GetLastRoundByHash(
   playersGetLastRoundByHashPayload: PlayersGetLastRoundByHashPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetLastRoundByHashResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetLastRoundByHash",
     PlayersGetLastRoundByHashPayload.encode(playersGetLastRoundByHashPayload),
-    config,
+    config
   );
   return PlayersGetLastRoundByHashResponse.decode(response);
 }
 
 export async function GetEventForEdit(
   eventsGetEventForEditPayload: EventsGetEventForEditPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetEventForEditResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetEventForEdit",
     EventsGetEventForEditPayload.encode(eventsGetEventForEditPayload),
-    config,
+    config
   );
   return EventsGetEventForEditResponse.decode(response);
 }
 
 export async function RebuildScoring(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/RebuildScoring",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function CreateEvent(
   eventData: protoAtoms.EventData,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericEventPayload> {
   const response = await PBrequest(
     "/common.Mimir/CreateEvent",
     protoAtoms.EventData.encode(eventData),
-    config,
+    config
   );
   return protoAtoms.GenericEventPayload.decode(response);
 }
 
 export async function UpdateEvent(
   eventsUpdateEventPayload: EventsUpdateEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/UpdateEvent",
     EventsUpdateEventPayload.encode(eventsUpdateEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function FinishEvent(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/FinishEvent",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function ToggleListed(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/ToggleListed",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetTablesState(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetTablesStateResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetTablesState",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetTablesStateResponse.decode(response);
 }
 
 export async function StartTimer(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/StartTimer",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function RegisterPlayer(
   eventsRegisterPlayerPayload: EventsRegisterPlayerPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/RegisterPlayer",
     EventsRegisterPlayerPayload.encode(eventsRegisterPlayerPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function UnregisterPlayer(
   eventsUnregisterPlayerPayload: EventsUnregisterPlayerPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/UnregisterPlayer",
     EventsUnregisterPlayerPayload.encode(eventsUnregisterPlayerPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function UpdatePlayerSeatingFlag(
   eventsUpdatePlayerSeatingFlagPayload: EventsUpdatePlayerSeatingFlagPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/UpdatePlayerSeatingFlag",
     EventsUpdatePlayerSeatingFlagPayload.encode(
-      eventsUpdatePlayerSeatingFlagPayload,
+      eventsUpdatePlayerSeatingFlagPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetAchievements(
   eventsGetAchievementsPayload: EventsGetAchievementsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetAchievementsResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetAchievements",
     EventsGetAchievementsPayload.encode(eventsGetAchievementsPayload),
-    config,
+    config
   );
   return EventsGetAchievementsResponse.decode(response);
 }
 
 export async function ToggleHideResults(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/ToggleHideResults",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function UpdatePlayersLocalIds(
   eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/UpdatePlayersLocalIds",
     EventsUpdatePlayersLocalIdsPayload.encode(
-      eventsUpdatePlayersLocalIdsPayload,
+      eventsUpdatePlayersLocalIdsPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function UpdatePlayerReplacement(
   eventsUpdatePlayerReplacementPayload: EventsUpdatePlayerReplacementPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/UpdatePlayerReplacement",
     EventsUpdatePlayerReplacementPayload.encode(
-      eventsUpdatePlayerReplacementPayload,
+      eventsUpdatePlayerReplacementPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function UpdatePlayersTeams(
   eventsUpdatePlayersTeamsPayload: EventsUpdatePlayersTeamsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/UpdatePlayersTeams",
     EventsUpdatePlayersTeamsPayload.encode(eventsUpdatePlayersTeamsPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function StartGame(
   gamesStartGamePayload: GamesStartGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesStartGameResponse> {
   const response = await PBrequest(
     "/common.Mimir/StartGame",
     GamesStartGamePayload.encode(gamesStartGamePayload),
-    config,
+    config
   );
   return GamesStartGameResponse.decode(response);
 }
 
 export async function EndGame(
   gamesEndGamePayload: GamesEndGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/EndGame",
     GamesEndGamePayload.encode(gamesEndGamePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function CancelGame(
   gamesCancelGamePayload: GamesCancelGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/CancelGame",
     GamesCancelGamePayload.encode(gamesCancelGamePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function FinalizeSession(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/FinalizeSession",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DropLastRound(
   gamesDropLastRoundPayload: GamesDropLastRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/DropLastRound",
     GamesDropLastRoundPayload.encode(gamesDropLastRoundPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DefinalizeGame(
   gamesDefinalizeGamePayload: GamesDefinalizeGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/DefinalizeGame",
     GamesDefinalizeGamePayload.encode(gamesDefinalizeGamePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function AddPenalty(
   gamesAddPenaltyPayload: GamesAddPenaltyPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/AddPenalty",
     GamesAddPenaltyPayload.encode(gamesAddPenaltyPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function AddPenaltyGame(
   gamesAddPenaltyGamePayload: GamesAddPenaltyGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesAddPenaltyGameResponse> {
   const response = await PBrequest(
     "/common.Mimir/AddPenaltyGame",
     GamesAddPenaltyGamePayload.encode(gamesAddPenaltyGamePayload),
-    config,
+    config
   );
   return GamesAddPenaltyGameResponse.decode(response);
 }
 
 export async function GetPlayer(
   playersGetPlayerPayload: PlayersGetPlayerPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetPlayerResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetPlayer",
     PlayersGetPlayerPayload.encode(playersGetPlayerPayload),
-    config,
+    config
   );
   return PlayersGetPlayerResponse.decode(response);
 }
 
 export async function GetCurrentSeating(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetCurrentSeatingResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetCurrentSeating",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetCurrentSeatingResponse.decode(response);
 }
 
 export async function MakeShuffledSeating(
   seatingMakeShuffledSeatingPayload: SeatingMakeShuffledSeatingPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/MakeShuffledSeating",
     SeatingMakeShuffledSeatingPayload.encode(seatingMakeShuffledSeatingPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function MakeSwissSeating(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/MakeSwissSeating",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function ResetSeating(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/ResetSeating",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GenerateSwissSeating(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<SeatingGenerateSwissSeatingResponse> {
   const response = await PBrequest(
     "/common.Mimir/GenerateSwissSeating",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return SeatingGenerateSwissSeatingResponse.decode(response);
 }
 
 export async function MakeIntervalSeating(
   seatingMakeIntervalSeatingPayload: SeatingMakeIntervalSeatingPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/MakeIntervalSeating",
     SeatingMakeIntervalSeatingPayload.encode(seatingMakeIntervalSeatingPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function MakePrescriptedSeating(
   seatingMakePrescriptedSeatingPayload: SeatingMakePrescriptedSeatingPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/MakePrescriptedSeating",
     SeatingMakePrescriptedSeatingPayload.encode(
-      seatingMakePrescriptedSeatingPayload,
+      seatingMakePrescriptedSeatingPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetNextPrescriptedSeating(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<SeatingGetNextPrescriptedSeatingResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetNextPrescriptedSeating",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return SeatingGetNextPrescriptedSeatingResponse.decode(response);
 }
 
 export async function GetPrescriptedEventConfig(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetPrescriptedEventConfigResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetPrescriptedEventConfig",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetPrescriptedEventConfigResponse.decode(response);
 }
 
 export async function UpdatePrescriptedEventConfig(
   eventsUpdatePrescriptedEventConfigPayload: EventsUpdatePrescriptedEventConfigPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/UpdatePrescriptedEventConfig",
     EventsUpdatePrescriptedEventConfigPayload.encode(
-      eventsUpdatePrescriptedEventConfigPayload,
+      eventsUpdatePrescriptedEventConfigPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function InitStartingTimer(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/InitStartingTimer",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetStartingTimer(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetStartingTimerResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetStartingTimer",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetStartingTimerResponse.decode(response);
 }
 
 export async function ClearStatCache(
   clearStatCachePayload: ClearStatCachePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/ClearStatCache",
     ClearStatCachePayload.encode(clearStatCachePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function AddTypedOnlineReplay(
+  typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
+  config?: ClientConfiguration
+): Promise<GamesAddOnlineReplayResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/AddTypedOnlineReplay",
+    TypedGamesAddOnlineReplayPayload.encode(typedGamesAddOnlineReplayPayload),
+    config
+  );
+  return GamesAddOnlineReplayResponse.decode(response);
 }
 
 //========================================//
@@ -1174,754 +1195,768 @@ export async function ClearStatCache(
 
 export async function GetRulesetsJSON(
   eventsGetRulesetsPayload: EventsGetRulesetsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetRulesetsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetRulesets",
     EventsGetRulesetsPayloadJSON.encode(eventsGetRulesetsPayload),
-    config,
+    config
   );
   return EventsGetRulesetsResponseJSON.decode(response);
 }
 
 export async function GetTimezonesJSON(
   eventsGetTimezonesPayload: EventsGetTimezonesPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetTimezonesResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetTimezones",
     EventsGetTimezonesPayloadJSON.encode(eventsGetTimezonesPayload),
-    config,
+    config
   );
   return EventsGetTimezonesResponseJSON.decode(response);
 }
 
 export async function GetCountriesJSON(
   eventsGetCountriesPayload: EventsGetCountriesPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetCountriesResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetCountries",
     EventsGetCountriesPayloadJSON.encode(eventsGetCountriesPayload),
-    config,
+    config
   );
   return EventsGetCountriesResponseJSON.decode(response);
 }
 
 export async function GetEventsJSON(
   eventsGetEventsPayload: EventsGetEventsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetEventsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetEvents",
     EventsGetEventsPayloadJSON.encode(eventsGetEventsPayload),
-    config,
+    config
   );
   return EventsGetEventsResponseJSON.decode(response);
 }
 
 export async function GetEventsByIdJSON(
   eventsGetEventsByIdPayload: EventsGetEventsByIdPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetEventsByIdResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetEventsById",
     EventsGetEventsByIdPayloadJSON.encode(eventsGetEventsByIdPayload),
-    config,
+    config
   );
   return EventsGetEventsByIdResponseJSON.decode(response);
 }
 
 export async function GetMyEventsJSON(
   playersGetMyEventsPayload: PlayersGetMyEventsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetMyEventsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetMyEvents",
     PlayersGetMyEventsPayloadJSON.encode(playersGetMyEventsPayload),
-    config,
+    config
   );
   return PlayersGetMyEventsResponseJSON.decode(response);
 }
 
 export async function GetGameConfigJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GameConfig> {
   const response = await JSONrequest(
     "/common.Mimir/GetGameConfig",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GameConfigJSON.decode(response);
 }
 
 export async function GetRatingTableJSON(
   eventsGetRatingTablePayload: EventsGetRatingTablePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetRatingTableResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetRatingTable",
     EventsGetRatingTablePayloadJSON.encode(eventsGetRatingTablePayload),
-    config,
+    config
   );
   return EventsGetRatingTableResponseJSON.decode(response);
 }
 
 export async function GetLastGamesJSON(
   eventsGetLastGamesPayload: EventsGetLastGamesPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetLastGamesResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetLastGames",
     EventsGetLastGamesPayloadJSON.encode(eventsGetLastGamesPayload),
-    config,
+    config
   );
   return EventsGetLastGamesResponseJSON.decode(response);
 }
 
 export async function GetGameJSON(
   eventsGetGamePayload: EventsGetGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetGameResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetGame",
     EventsGetGamePayloadJSON.encode(eventsGetGamePayload),
-    config,
+    config
   );
   return EventsGetGameResponseJSON.decode(response);
 }
 
 export async function GetGamesSeriesJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetGamesSeriesResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetGamesSeries",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetGamesSeriesResponseJSON.decode(response);
 }
 
 export async function GetCurrentSessionsJSON(
   playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetCurrentSessionsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetCurrentSessions",
     PlayersGetCurrentSessionsPayloadJSON.encode(
-      playersGetCurrentSessionsPayload,
+      playersGetCurrentSessionsPayload
     ),
-    config,
+    config
   );
   return PlayersGetCurrentSessionsResponseJSON.decode(response);
 }
 
 export async function GetAllRegisteredPlayersJSON(
   eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetAllRegisteredPlayersResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetAllRegisteredPlayers",
     EventsGetAllRegisteredPlayersPayloadJSON.encode(
-      eventsGetAllRegisteredPlayersPayload,
+      eventsGetAllRegisteredPlayersPayload
     ),
-    config,
+    config
   );
   return EventsGetAllRegisteredPlayersResponseJSON.decode(response);
 }
 
 export async function GetTimerStateJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetTimerStateResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetTimerState",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetTimerStateResponseJSON.decode(response);
 }
 
 export async function GetSessionOverviewJSON(
   gamesGetSessionOverviewPayload: GamesGetSessionOverviewPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesGetSessionOverviewResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetSessionOverview",
     GamesGetSessionOverviewPayloadJSON.encode(gamesGetSessionOverviewPayload),
-    config,
+    config
   );
   return GamesGetSessionOverviewResponseJSON.decode(response);
 }
 
 export async function GetPlayerStatsJSON(
   playersGetPlayerStatsPayload: PlayersGetPlayerStatsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetPlayerStatsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetPlayerStats",
     PlayersGetPlayerStatsPayloadJSON.encode(playersGetPlayerStatsPayload),
-    config,
+    config
   );
   return PlayersGetPlayerStatsResponseJSON.decode(response);
 }
 
 export async function AddRoundJSON(
   gamesAddRoundPayload: GamesAddRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesAddRoundResponse> {
   const response = await JSONrequest(
     "/common.Mimir/AddRound",
     GamesAddRoundPayloadJSON.encode(gamesAddRoundPayload),
-    config,
+    config
   );
   return GamesAddRoundResponseJSON.decode(response);
 }
 
 export async function PreviewRoundJSON(
   gamesPreviewRoundPayload: GamesPreviewRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesPreviewRoundResponse> {
   const response = await JSONrequest(
     "/common.Mimir/PreviewRound",
     GamesPreviewRoundPayloadJSON.encode(gamesPreviewRoundPayload),
-    config,
+    config
   );
   return GamesPreviewRoundResponseJSON.decode(response);
 }
 
 export async function AddOnlineReplayJSON(
   gamesAddOnlineReplayPayload: GamesAddOnlineReplayPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesAddOnlineReplayResponse> {
   const response = await JSONrequest(
     "/common.Mimir/AddOnlineReplay",
     GamesAddOnlineReplayPayloadJSON.encode(gamesAddOnlineReplayPayload),
-    config,
+    config
   );
   return GamesAddOnlineReplayResponseJSON.decode(response);
 }
 
 export async function GetLastResultsJSON(
   playersGetLastResultsPayload: PlayersGetLastResultsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetLastResultsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetLastResults",
     PlayersGetLastResultsPayloadJSON.encode(playersGetLastResultsPayload),
-    config,
+    config
   );
   return PlayersGetLastResultsResponseJSON.decode(response);
 }
 
 export async function GetLastRoundJSON(
   playersGetLastRoundPayload: PlayersGetLastRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetLastRoundResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetLastRound",
     PlayersGetLastRoundPayloadJSON.encode(playersGetLastRoundPayload),
-    config,
+    config
   );
   return PlayersGetLastRoundResponseJSON.decode(response);
 }
 
 export async function GetAllRoundsJSON(
   playersGetAllRoundsPayload: PlayersGetAllRoundsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetAllRoundsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetAllRounds",
     PlayersGetAllRoundsPayloadJSON.encode(playersGetAllRoundsPayload),
-    config,
+    config
   );
   return PlayersGetAllRoundsResponseJSON.decode(response);
 }
 
 export async function GetLastRoundByHashJSON(
   playersGetLastRoundByHashPayload: PlayersGetLastRoundByHashPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetLastRoundByHashResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetLastRoundByHash",
     PlayersGetLastRoundByHashPayloadJSON.encode(
-      playersGetLastRoundByHashPayload,
+      playersGetLastRoundByHashPayload
     ),
-    config,
+    config
   );
   return PlayersGetLastRoundByHashResponseJSON.decode(response);
 }
 
 export async function GetEventForEditJSON(
   eventsGetEventForEditPayload: EventsGetEventForEditPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetEventForEditResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetEventForEdit",
     EventsGetEventForEditPayloadJSON.encode(eventsGetEventForEditPayload),
-    config,
+    config
   );
   return EventsGetEventForEditResponseJSON.decode(response);
 }
 
 export async function RebuildScoringJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/RebuildScoring",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function CreateEventJSON(
   eventData: protoAtoms.EventData,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericEventPayload> {
   const response = await JSONrequest(
     "/common.Mimir/CreateEvent",
     protoAtoms.EventDataJSON.encode(eventData),
-    config,
+    config
   );
   return protoAtoms.GenericEventPayloadJSON.decode(response);
 }
 
 export async function UpdateEventJSON(
   eventsUpdateEventPayload: EventsUpdateEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/UpdateEvent",
     EventsUpdateEventPayloadJSON.encode(eventsUpdateEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function FinishEventJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/FinishEvent",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function ToggleListedJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/ToggleListed",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetTablesStateJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetTablesStateResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetTablesState",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetTablesStateResponseJSON.decode(response);
 }
 
 export async function StartTimerJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/StartTimer",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function RegisterPlayerJSON(
   eventsRegisterPlayerPayload: EventsRegisterPlayerPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/RegisterPlayer",
     EventsRegisterPlayerPayloadJSON.encode(eventsRegisterPlayerPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function UnregisterPlayerJSON(
   eventsUnregisterPlayerPayload: EventsUnregisterPlayerPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/UnregisterPlayer",
     EventsUnregisterPlayerPayloadJSON.encode(eventsUnregisterPlayerPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function UpdatePlayerSeatingFlagJSON(
   eventsUpdatePlayerSeatingFlagPayload: EventsUpdatePlayerSeatingFlagPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/UpdatePlayerSeatingFlag",
     EventsUpdatePlayerSeatingFlagPayloadJSON.encode(
-      eventsUpdatePlayerSeatingFlagPayload,
+      eventsUpdatePlayerSeatingFlagPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetAchievementsJSON(
   eventsGetAchievementsPayload: EventsGetAchievementsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetAchievementsResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetAchievements",
     EventsGetAchievementsPayloadJSON.encode(eventsGetAchievementsPayload),
-    config,
+    config
   );
   return EventsGetAchievementsResponseJSON.decode(response);
 }
 
 export async function ToggleHideResultsJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/ToggleHideResults",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function UpdatePlayersLocalIdsJSON(
   eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/UpdatePlayersLocalIds",
     EventsUpdatePlayersLocalIdsPayloadJSON.encode(
-      eventsUpdatePlayersLocalIdsPayload,
+      eventsUpdatePlayersLocalIdsPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function UpdatePlayerReplacementJSON(
   eventsUpdatePlayerReplacementPayload: EventsUpdatePlayerReplacementPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/UpdatePlayerReplacement",
     EventsUpdatePlayerReplacementPayloadJSON.encode(
-      eventsUpdatePlayerReplacementPayload,
+      eventsUpdatePlayerReplacementPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function UpdatePlayersTeamsJSON(
   eventsUpdatePlayersTeamsPayload: EventsUpdatePlayersTeamsPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/UpdatePlayersTeams",
     EventsUpdatePlayersTeamsPayloadJSON.encode(eventsUpdatePlayersTeamsPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function StartGameJSON(
   gamesStartGamePayload: GamesStartGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesStartGameResponse> {
   const response = await JSONrequest(
     "/common.Mimir/StartGame",
     GamesStartGamePayloadJSON.encode(gamesStartGamePayload),
-    config,
+    config
   );
   return GamesStartGameResponseJSON.decode(response);
 }
 
 export async function EndGameJSON(
   gamesEndGamePayload: GamesEndGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/EndGame",
     GamesEndGamePayloadJSON.encode(gamesEndGamePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function CancelGameJSON(
   gamesCancelGamePayload: GamesCancelGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/CancelGame",
     GamesCancelGamePayloadJSON.encode(gamesCancelGamePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function FinalizeSessionJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/FinalizeSession",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DropLastRoundJSON(
   gamesDropLastRoundPayload: GamesDropLastRoundPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/DropLastRound",
     GamesDropLastRoundPayloadJSON.encode(gamesDropLastRoundPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DefinalizeGameJSON(
   gamesDefinalizeGamePayload: GamesDefinalizeGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/DefinalizeGame",
     GamesDefinalizeGamePayloadJSON.encode(gamesDefinalizeGamePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function AddPenaltyJSON(
   gamesAddPenaltyPayload: GamesAddPenaltyPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/AddPenalty",
     GamesAddPenaltyPayloadJSON.encode(gamesAddPenaltyPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function AddPenaltyGameJSON(
   gamesAddPenaltyGamePayload: GamesAddPenaltyGamePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<GamesAddPenaltyGameResponse> {
   const response = await JSONrequest(
     "/common.Mimir/AddPenaltyGame",
     GamesAddPenaltyGamePayloadJSON.encode(gamesAddPenaltyGamePayload),
-    config,
+    config
   );
   return GamesAddPenaltyGameResponseJSON.decode(response);
 }
 
 export async function GetPlayerJSON(
   playersGetPlayerPayload: PlayersGetPlayerPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<PlayersGetPlayerResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetPlayer",
     PlayersGetPlayerPayloadJSON.encode(playersGetPlayerPayload),
-    config,
+    config
   );
   return PlayersGetPlayerResponseJSON.decode(response);
 }
 
 export async function GetCurrentSeatingJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetCurrentSeatingResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetCurrentSeating",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetCurrentSeatingResponseJSON.decode(response);
 }
 
 export async function MakeShuffledSeatingJSON(
   seatingMakeShuffledSeatingPayload: SeatingMakeShuffledSeatingPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/MakeShuffledSeating",
     SeatingMakeShuffledSeatingPayloadJSON.encode(
-      seatingMakeShuffledSeatingPayload,
+      seatingMakeShuffledSeatingPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function MakeSwissSeatingJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/MakeSwissSeating",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function ResetSeatingJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/ResetSeating",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GenerateSwissSeatingJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<SeatingGenerateSwissSeatingResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GenerateSwissSeating",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return SeatingGenerateSwissSeatingResponseJSON.decode(response);
 }
 
 export async function MakeIntervalSeatingJSON(
   seatingMakeIntervalSeatingPayload: SeatingMakeIntervalSeatingPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/MakeIntervalSeating",
     SeatingMakeIntervalSeatingPayloadJSON.encode(
-      seatingMakeIntervalSeatingPayload,
+      seatingMakeIntervalSeatingPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function MakePrescriptedSeatingJSON(
   seatingMakePrescriptedSeatingPayload: SeatingMakePrescriptedSeatingPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/MakePrescriptedSeating",
     SeatingMakePrescriptedSeatingPayloadJSON.encode(
-      seatingMakePrescriptedSeatingPayload,
+      seatingMakePrescriptedSeatingPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetNextPrescriptedSeatingJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<SeatingGetNextPrescriptedSeatingResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetNextPrescriptedSeating",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return SeatingGetNextPrescriptedSeatingResponseJSON.decode(response);
 }
 
 export async function GetPrescriptedEventConfigJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetPrescriptedEventConfigResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetPrescriptedEventConfig",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetPrescriptedEventConfigResponseJSON.decode(response);
 }
 
 export async function UpdatePrescriptedEventConfigJSON(
   eventsUpdatePrescriptedEventConfigPayload: EventsUpdatePrescriptedEventConfigPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/UpdatePrescriptedEventConfig",
     EventsUpdatePrescriptedEventConfigPayloadJSON.encode(
-      eventsUpdatePrescriptedEventConfigPayload,
+      eventsUpdatePrescriptedEventConfigPayload
     ),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function InitStartingTimerJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/InitStartingTimer",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetStartingTimerJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<EventsGetStartingTimerResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetStartingTimer",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
+    config
   );
   return EventsGetStartingTimerResponseJSON.decode(response);
 }
 
 export async function ClearStatCacheJSON(
   clearStatCachePayload: ClearStatCachePayload,
-  config?: ClientConfiguration,
+  config?: ClientConfiguration
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/ClearStatCache",
     ClearStatCachePayloadJSON.encode(clearStatCachePayload),
-    config,
+    config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
+export async function AddTypedOnlineReplayJSON(
+  typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
+  config?: ClientConfiguration
+): Promise<GamesAddOnlineReplayResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/AddTypedOnlineReplay",
+    TypedGamesAddOnlineReplayPayloadJSON.encode(
+      typedGamesAddOnlineReplayPayload
+    ),
+    config
+  );
+  return GamesAddOnlineReplayResponseJSON.decode(response);
 }
 
 //========================================//
@@ -1931,316 +1966,320 @@ export async function ClearStatCacheJSON(
 export interface Mimir<Context = unknown> {
   GetRulesets: (
     eventsGetRulesetsPayload: EventsGetRulesetsPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetRulesetsResponse> | EventsGetRulesetsResponse;
   GetTimezones: (
     eventsGetTimezonesPayload: EventsGetTimezonesPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetTimezonesResponse> | EventsGetTimezonesResponse;
   GetCountries: (
     eventsGetCountriesPayload: EventsGetCountriesPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetCountriesResponse> | EventsGetCountriesResponse;
   GetEvents: (
     eventsGetEventsPayload: EventsGetEventsPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetEventsResponse> | EventsGetEventsResponse;
   GetEventsById: (
     eventsGetEventsByIdPayload: EventsGetEventsByIdPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetEventsByIdResponse> | EventsGetEventsByIdResponse;
   GetMyEvents: (
     playersGetMyEventsPayload: PlayersGetMyEventsPayload,
-    context: Context,
+    context: Context
   ) => Promise<PlayersGetMyEventsResponse> | PlayersGetMyEventsResponse;
   GetGameConfig: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) => Promise<protoAtoms.GameConfig> | protoAtoms.GameConfig;
   GetRatingTable: (
     eventsGetRatingTablePayload: EventsGetRatingTablePayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetRatingTableResponse> | EventsGetRatingTableResponse;
   GetLastGames: (
     eventsGetLastGamesPayload: EventsGetLastGamesPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetLastGamesResponse> | EventsGetLastGamesResponse;
   GetGame: (
     eventsGetGamePayload: EventsGetGamePayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetGameResponse> | EventsGetGameResponse;
   GetGamesSeries: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetGamesSeriesResponse> | EventsGetGamesSeriesResponse;
   GetCurrentSessions: (
     playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<PlayersGetCurrentSessionsResponse>
     | PlayersGetCurrentSessionsResponse;
   GetAllRegisteredPlayers: (
     eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<EventsGetAllRegisteredPlayersResponse>
     | EventsGetAllRegisteredPlayersResponse;
   GetTimerState: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetTimerStateResponse> | EventsGetTimerStateResponse;
   GetSessionOverview: (
     gamesGetSessionOverviewPayload: GamesGetSessionOverviewPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<GamesGetSessionOverviewResponse>
     | GamesGetSessionOverviewResponse;
   GetPlayerStats: (
     playersGetPlayerStatsPayload: PlayersGetPlayerStatsPayload,
-    context: Context,
+    context: Context
   ) => Promise<PlayersGetPlayerStatsResponse> | PlayersGetPlayerStatsResponse;
   AddRound: (
     gamesAddRoundPayload: GamesAddRoundPayload,
-    context: Context,
+    context: Context
   ) => Promise<GamesAddRoundResponse> | GamesAddRoundResponse;
   PreviewRound: (
     gamesPreviewRoundPayload: GamesPreviewRoundPayload,
-    context: Context,
+    context: Context
   ) => Promise<GamesPreviewRoundResponse> | GamesPreviewRoundResponse;
   AddOnlineReplay: (
     gamesAddOnlineReplayPayload: GamesAddOnlineReplayPayload,
-    context: Context,
+    context: Context
   ) => Promise<GamesAddOnlineReplayResponse> | GamesAddOnlineReplayResponse;
   GetLastResults: (
     playersGetLastResultsPayload: PlayersGetLastResultsPayload,
-    context: Context,
+    context: Context
   ) => Promise<PlayersGetLastResultsResponse> | PlayersGetLastResultsResponse;
   GetLastRound: (
     playersGetLastRoundPayload: PlayersGetLastRoundPayload,
-    context: Context,
+    context: Context
   ) => Promise<PlayersGetLastRoundResponse> | PlayersGetLastRoundResponse;
   GetAllRounds: (
     playersGetAllRoundsPayload: PlayersGetAllRoundsPayload,
-    context: Context,
+    context: Context
   ) => Promise<PlayersGetAllRoundsResponse> | PlayersGetAllRoundsResponse;
   GetLastRoundByHash: (
     playersGetLastRoundByHashPayload: PlayersGetLastRoundByHashPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<PlayersGetLastRoundByHashResponse>
     | PlayersGetLastRoundByHashResponse;
   GetEventForEdit: (
     eventsGetEventForEditPayload: EventsGetEventForEditPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetEventForEditResponse> | EventsGetEventForEditResponse;
   RebuildScoring: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   CreateEvent: (
     eventData: protoAtoms.EventData,
-    context: Context,
+    context: Context
   ) => Promise<protoAtoms.GenericEventPayload> | protoAtoms.GenericEventPayload;
   UpdateEvent: (
     eventsUpdateEventPayload: EventsUpdateEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   FinishEvent: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   ToggleListed: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GetTablesState: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetTablesStateResponse> | EventsGetTablesStateResponse;
   StartTimer: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   RegisterPlayer: (
     eventsRegisterPlayerPayload: EventsRegisterPlayerPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   UnregisterPlayer: (
     eventsUnregisterPlayerPayload: EventsUnregisterPlayerPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   UpdatePlayerSeatingFlag: (
     eventsUpdatePlayerSeatingFlagPayload: EventsUpdatePlayerSeatingFlagPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GetAchievements: (
     eventsGetAchievementsPayload: EventsGetAchievementsPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetAchievementsResponse> | EventsGetAchievementsResponse;
   ToggleHideResults: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   UpdatePlayersLocalIds: (
     eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   UpdatePlayerReplacement: (
     eventsUpdatePlayerReplacementPayload: EventsUpdatePlayerReplacementPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   UpdatePlayersTeams: (
     eventsUpdatePlayersTeamsPayload: EventsUpdatePlayersTeamsPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   StartGame: (
     gamesStartGamePayload: GamesStartGamePayload,
-    context: Context,
+    context: Context
   ) => Promise<GamesStartGameResponse> | GamesStartGameResponse;
   EndGame: (
     gamesEndGamePayload: GamesEndGamePayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   CancelGame: (
     gamesCancelGamePayload: GamesCancelGamePayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   FinalizeSession: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   DropLastRound: (
     gamesDropLastRoundPayload: GamesDropLastRoundPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   DefinalizeGame: (
     gamesDefinalizeGamePayload: GamesDefinalizeGamePayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   AddPenalty: (
     gamesAddPenaltyPayload: GamesAddPenaltyPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   AddPenaltyGame: (
     gamesAddPenaltyGamePayload: GamesAddPenaltyGamePayload,
-    context: Context,
+    context: Context
   ) => Promise<GamesAddPenaltyGameResponse> | GamesAddPenaltyGameResponse;
   GetPlayer: (
     playersGetPlayerPayload: PlayersGetPlayerPayload,
-    context: Context,
+    context: Context
   ) => Promise<PlayersGetPlayerResponse> | PlayersGetPlayerResponse;
   GetCurrentSeating: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<EventsGetCurrentSeatingResponse>
     | EventsGetCurrentSeatingResponse;
   MakeShuffledSeating: (
     seatingMakeShuffledSeatingPayload: SeatingMakeShuffledSeatingPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   MakeSwissSeating: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   ResetSeating: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GenerateSwissSeating: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<SeatingGenerateSwissSeatingResponse>
     | SeatingGenerateSwissSeatingResponse;
   MakeIntervalSeating: (
     seatingMakeIntervalSeatingPayload: SeatingMakeIntervalSeatingPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   MakePrescriptedSeating: (
     seatingMakePrescriptedSeatingPayload: SeatingMakePrescriptedSeatingPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GetNextPrescriptedSeating: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<SeatingGetNextPrescriptedSeatingResponse>
     | SeatingGetNextPrescriptedSeatingResponse;
   GetPrescriptedEventConfig: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<EventsGetPrescriptedEventConfigResponse>
     | EventsGetPrescriptedEventConfigResponse;
   UpdatePrescriptedEventConfig: (
     eventsUpdatePrescriptedEventConfigPayload: EventsUpdatePrescriptedEventConfigPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   InitStartingTimer: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GetStartingTimer: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
+    context: Context
   ) => Promise<EventsGetStartingTimerResponse> | EventsGetStartingTimerResponse;
   ClearStatCache: (
     clearStatCachePayload: ClearStatCachePayload,
-    context: Context,
+    context: Context
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
+  AddTypedOnlineReplay: (
+    typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
+    context: Context
+  ) => Promise<GamesAddOnlineReplayResponse> | GamesAddOnlineReplayResponse;
 }
 
 export function createMimir<Context>(service: Mimir<Context>) {
@@ -2976,6 +3015,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
           json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
+      AddTypedOnlineReplay: {
+        name: "AddTypedOnlineReplay",
+        handler: service.AddTypedOnlineReplay,
+        input: {
+          protobuf: TypedGamesAddOnlineReplayPayload,
+          json: TypedGamesAddOnlineReplayPayloadJSON,
+        },
+        output: {
+          protobuf: GamesAddOnlineReplayResponse,
+          json: GamesAddOnlineReplayResponseJSON,
+        },
+      },
     },
   } as const;
 }
@@ -2988,7 +3039,7 @@ export const EventsGetRulesetsPayload = {
   /**
    * Serializes EventsGetRulesetsPayload to protobuf.
    */
-  encode: function (_msg?: PartialDeep<EventsGetRulesetsPayload>): Uint8Array {
+  encode: function (_msg?: Partial<EventsGetRulesetsPayload>): Uint8Array {
     return new Uint8Array();
   },
 
@@ -3010,8 +3061,8 @@ export const EventsGetRulesetsPayload = {
    * @private
    */
   _writeMessage: function (
-    _msg: PartialDeep<EventsGetRulesetsPayload>,
-    writer: BinaryWriter,
+    _msg: Partial<EventsGetRulesetsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     return writer;
   },
@@ -3021,7 +3072,7 @@ export const EventsGetRulesetsPayload = {
    */
   _readMessage: function (
     _msg: EventsGetRulesetsPayload,
-    _reader: BinaryReader,
+    _reader: BinaryReader
   ): EventsGetRulesetsPayload {
     return _msg;
   },
@@ -3031,10 +3082,10 @@ export const EventsGetRulesetsResponse = {
   /**
    * Serializes EventsGetRulesetsResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetRulesetsResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetRulesetsResponse>): Uint8Array {
     return EventsGetRulesetsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3044,7 +3095,7 @@ export const EventsGetRulesetsResponse = {
   decode: function (bytes: ByteSource): EventsGetRulesetsResponse {
     return EventsGetRulesetsResponse._readMessage(
       EventsGetRulesetsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3063,14 +3114,14 @@ export const EventsGetRulesetsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetRulesetsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetRulesetsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rulesets?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.rulesets as any,
-        protoAtoms.RulesetConfig._writeMessage,
+        protoAtoms.RulesetConfig._writeMessage
       );
     }
     if (msg.rulesetIds?.length) {
@@ -3087,7 +3138,7 @@ export const EventsGetRulesetsResponse = {
    */
   _readMessage: function (
     msg: EventsGetRulesetsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetRulesetsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3120,10 +3171,10 @@ export const EventsGetTimezonesPayload = {
   /**
    * Serializes EventsGetTimezonesPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetTimezonesPayload>): Uint8Array {
+  encode: function (msg: Partial<EventsGetTimezonesPayload>): Uint8Array {
     return EventsGetTimezonesPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3133,7 +3184,7 @@ export const EventsGetTimezonesPayload = {
   decode: function (bytes: ByteSource): EventsGetTimezonesPayload {
     return EventsGetTimezonesPayload._readMessage(
       EventsGetTimezonesPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3150,8 +3201,8 @@ export const EventsGetTimezonesPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetTimezonesPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.addr) {
       writer.writeString(1, msg.addr);
@@ -3164,7 +3215,7 @@ export const EventsGetTimezonesPayload = {
    */
   _readMessage: function (
     msg: EventsGetTimezonesPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetTimezonesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3187,10 +3238,10 @@ export const EventsGetTimezonesResponse = {
   /**
    * Serializes EventsGetTimezonesResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetTimezonesResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetTimezonesResponse>): Uint8Array {
     return EventsGetTimezonesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3200,7 +3251,7 @@ export const EventsGetTimezonesResponse = {
   decode: function (bytes: ByteSource): EventsGetTimezonesResponse {
     return EventsGetTimezonesResponse._readMessage(
       EventsGetTimezonesResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3218,8 +3269,8 @@ export const EventsGetTimezonesResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetTimezonesResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.preferredByIp) {
       writer.writeString(1, msg.preferredByIp);
@@ -3235,7 +3286,7 @@ export const EventsGetTimezonesResponse = {
    */
   _readMessage: function (
     msg: EventsGetTimezonesResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetTimezonesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3262,10 +3313,10 @@ export const EventsGetCountriesPayload = {
   /**
    * Serializes EventsGetCountriesPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetCountriesPayload>): Uint8Array {
+  encode: function (msg: Partial<EventsGetCountriesPayload>): Uint8Array {
     return EventsGetCountriesPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3275,7 +3326,7 @@ export const EventsGetCountriesPayload = {
   decode: function (bytes: ByteSource): EventsGetCountriesPayload {
     return EventsGetCountriesPayload._readMessage(
       EventsGetCountriesPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3292,8 +3343,8 @@ export const EventsGetCountriesPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetCountriesPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.addr) {
       writer.writeString(1, msg.addr);
@@ -3306,7 +3357,7 @@ export const EventsGetCountriesPayload = {
    */
   _readMessage: function (
     msg: EventsGetCountriesPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetCountriesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3329,10 +3380,10 @@ export const EventsGetCountriesResponse = {
   /**
    * Serializes EventsGetCountriesResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetCountriesResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetCountriesResponse>): Uint8Array {
     return EventsGetCountriesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3342,7 +3393,7 @@ export const EventsGetCountriesResponse = {
   decode: function (bytes: ByteSource): EventsGetCountriesResponse {
     return EventsGetCountriesResponse._readMessage(
       EventsGetCountriesResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3360,8 +3411,8 @@ export const EventsGetCountriesResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetCountriesResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.preferredByIp) {
       writer.writeString(1, msg.preferredByIp);
@@ -3370,7 +3421,7 @@ export const EventsGetCountriesResponse = {
       writer.writeRepeatedMessage(
         2,
         msg.countries as any,
-        protoAtoms.Country._writeMessage,
+        protoAtoms.Country._writeMessage
       );
     }
     return writer;
@@ -3381,7 +3432,7 @@ export const EventsGetCountriesResponse = {
    */
   _readMessage: function (
     msg: EventsGetCountriesResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetCountriesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3410,10 +3461,10 @@ export const EventsGetEventsPayload = {
   /**
    * Serializes EventsGetEventsPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsPayload>): Uint8Array {
+  encode: function (msg: Partial<EventsGetEventsPayload>): Uint8Array {
     return EventsGetEventsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3423,7 +3474,7 @@ export const EventsGetEventsPayload = {
   decode: function (bytes: ByteSource): EventsGetEventsPayload {
     return EventsGetEventsPayload._readMessage(
       EventsGetEventsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3443,8 +3494,8 @@ export const EventsGetEventsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetEventsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.limit) {
       writer.writeInt32(1, msg.limit);
@@ -3466,7 +3517,7 @@ export const EventsGetEventsPayload = {
    */
   _readMessage: function (
     msg: EventsGetEventsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetEventsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3501,10 +3552,10 @@ export const EventsGetEventsResponse = {
   /**
    * Serializes EventsGetEventsResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetEventsResponse>): Uint8Array {
     return EventsGetEventsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3514,7 +3565,7 @@ export const EventsGetEventsResponse = {
   decode: function (bytes: ByteSource): EventsGetEventsResponse {
     return EventsGetEventsResponse._readMessage(
       EventsGetEventsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3532,8 +3583,8 @@ export const EventsGetEventsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetEventsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.total) {
       writer.writeInt32(1, msg.total);
@@ -3542,7 +3593,7 @@ export const EventsGetEventsResponse = {
       writer.writeRepeatedMessage(
         2,
         msg.events as any,
-        protoAtoms.Event._writeMessage,
+        protoAtoms.Event._writeMessage
       );
     }
     return writer;
@@ -3553,7 +3604,7 @@ export const EventsGetEventsResponse = {
    */
   _readMessage: function (
     msg: EventsGetEventsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetEventsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3582,10 +3633,10 @@ export const EventsGetEventsByIdPayload = {
   /**
    * Serializes EventsGetEventsByIdPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsByIdPayload>): Uint8Array {
+  encode: function (msg: Partial<EventsGetEventsByIdPayload>): Uint8Array {
     return EventsGetEventsByIdPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3595,7 +3646,7 @@ export const EventsGetEventsByIdPayload = {
   decode: function (bytes: ByteSource): EventsGetEventsByIdPayload {
     return EventsGetEventsByIdPayload._readMessage(
       EventsGetEventsByIdPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3612,8 +3663,8 @@ export const EventsGetEventsByIdPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsByIdPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetEventsByIdPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ids?.length) {
       writer.writePackedInt32(1, msg.ids);
@@ -3626,7 +3677,7 @@ export const EventsGetEventsByIdPayload = {
    */
   _readMessage: function (
     msg: EventsGetEventsByIdPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetEventsByIdPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3653,10 +3704,10 @@ export const EventsGetEventsByIdResponse = {
   /**
    * Serializes EventsGetEventsByIdResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsByIdResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetEventsByIdResponse>): Uint8Array {
     return EventsGetEventsByIdResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3666,7 +3717,7 @@ export const EventsGetEventsByIdResponse = {
   decode: function (bytes: ByteSource): EventsGetEventsByIdResponse {
     return EventsGetEventsByIdResponse._readMessage(
       EventsGetEventsByIdResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3683,14 +3734,14 @@ export const EventsGetEventsByIdResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsByIdResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetEventsByIdResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.events?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.events as any,
-        protoAtoms.Event._writeMessage,
+        protoAtoms.Event._writeMessage
       );
     }
     return writer;
@@ -3701,7 +3752,7 @@ export const EventsGetEventsByIdResponse = {
    */
   _readMessage: function (
     msg: EventsGetEventsByIdResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetEventsByIdResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3726,7 +3777,7 @@ export const PlayersGetMyEventsPayload = {
   /**
    * Serializes PlayersGetMyEventsPayload to protobuf.
    */
-  encode: function (_msg?: PartialDeep<PlayersGetMyEventsPayload>): Uint8Array {
+  encode: function (_msg?: Partial<PlayersGetMyEventsPayload>): Uint8Array {
     return new Uint8Array();
   },
 
@@ -3748,8 +3799,8 @@ export const PlayersGetMyEventsPayload = {
    * @private
    */
   _writeMessage: function (
-    _msg: PartialDeep<PlayersGetMyEventsPayload>,
-    writer: BinaryWriter,
+    _msg: Partial<PlayersGetMyEventsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     return writer;
   },
@@ -3759,7 +3810,7 @@ export const PlayersGetMyEventsPayload = {
    */
   _readMessage: function (
     _msg: PlayersGetMyEventsPayload,
-    _reader: BinaryReader,
+    _reader: BinaryReader
   ): PlayersGetMyEventsPayload {
     return _msg;
   },
@@ -3769,10 +3820,10 @@ export const PlayersGetMyEventsResponse = {
   /**
    * Serializes PlayersGetMyEventsResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayersGetMyEventsResponse>): Uint8Array {
+  encode: function (msg: Partial<PlayersGetMyEventsResponse>): Uint8Array {
     return PlayersGetMyEventsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3782,7 +3833,7 @@ export const PlayersGetMyEventsResponse = {
   decode: function (bytes: ByteSource): PlayersGetMyEventsResponse {
     return PlayersGetMyEventsResponse._readMessage(
       PlayersGetMyEventsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3799,14 +3850,14 @@ export const PlayersGetMyEventsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetMyEventsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetMyEventsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.events?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.events as any,
-        protoAtoms.MyEvent._writeMessage,
+        protoAtoms.MyEvent._writeMessage
       );
     }
     return writer;
@@ -3817,7 +3868,7 @@ export const PlayersGetMyEventsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetMyEventsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetMyEventsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3842,10 +3893,10 @@ export const EventsGetRatingTablePayload = {
   /**
    * Serializes EventsGetRatingTablePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetRatingTablePayload>): Uint8Array {
+  encode: function (msg: Partial<EventsGetRatingTablePayload>): Uint8Array {
     return EventsGetRatingTablePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3855,7 +3906,7 @@ export const EventsGetRatingTablePayload = {
   decode: function (bytes: ByteSource): EventsGetRatingTablePayload {
     return EventsGetRatingTablePayload._readMessage(
       EventsGetRatingTablePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3876,8 +3927,8 @@ export const EventsGetRatingTablePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetRatingTablePayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetRatingTablePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventIdList?.length) {
       writer.writePackedInt32(1, msg.eventIdList);
@@ -3902,7 +3953,7 @@ export const EventsGetRatingTablePayload = {
    */
   _readMessage: function (
     msg: EventsGetRatingTablePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetRatingTablePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3945,12 +3996,10 @@ export const EventsGetRatingTableResponse = {
   /**
    * Serializes EventsGetRatingTableResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetRatingTableResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetRatingTableResponse>): Uint8Array {
     return EventsGetRatingTableResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3960,7 +4009,7 @@ export const EventsGetRatingTableResponse = {
   decode: function (bytes: ByteSource): EventsGetRatingTableResponse {
     return EventsGetRatingTableResponse._readMessage(
       EventsGetRatingTableResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3977,14 +4026,14 @@ export const EventsGetRatingTableResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetRatingTableResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetRatingTableResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.list?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.list as any,
-        protoAtoms.PlayerInRating._writeMessage,
+        protoAtoms.PlayerInRating._writeMessage
       );
     }
     return writer;
@@ -3995,7 +4044,7 @@ export const EventsGetRatingTableResponse = {
    */
   _readMessage: function (
     msg: EventsGetRatingTableResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetRatingTableResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4020,10 +4069,10 @@ export const EventsGetLastGamesPayload = {
   /**
    * Serializes EventsGetLastGamesPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetLastGamesPayload>): Uint8Array {
+  encode: function (msg: Partial<EventsGetLastGamesPayload>): Uint8Array {
     return EventsGetLastGamesPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4033,7 +4082,7 @@ export const EventsGetLastGamesPayload = {
   decode: function (bytes: ByteSource): EventsGetLastGamesPayload {
     return EventsGetLastGamesPayload._readMessage(
       EventsGetLastGamesPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4054,8 +4103,8 @@ export const EventsGetLastGamesPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetLastGamesPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetLastGamesPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventIdList?.length) {
       writer.writePackedInt32(1, msg.eventIdList);
@@ -4080,7 +4129,7 @@ export const EventsGetLastGamesPayload = {
    */
   _readMessage: function (
     msg: EventsGetLastGamesPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetLastGamesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4123,10 +4172,10 @@ export const EventsGetLastGamesResponse = {
   /**
    * Serializes EventsGetLastGamesResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetLastGamesResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetLastGamesResponse>): Uint8Array {
     return EventsGetLastGamesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4136,7 +4185,7 @@ export const EventsGetLastGamesResponse = {
   decode: function (bytes: ByteSource): EventsGetLastGamesResponse {
     return EventsGetLastGamesResponse._readMessage(
       EventsGetLastGamesResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4155,21 +4204,21 @@ export const EventsGetLastGamesResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetLastGamesResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetLastGamesResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.games?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.games as any,
-        protoAtoms.GameResult._writeMessage,
+        protoAtoms.GameResult._writeMessage
       );
     }
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         2,
         msg.players as any,
-        protoAtoms.Player._writeMessage,
+        protoAtoms.Player._writeMessage
       );
     }
     if (msg.totalGames) {
@@ -4183,7 +4232,7 @@ export const EventsGetLastGamesResponse = {
    */
   _readMessage: function (
     msg: EventsGetLastGamesResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetLastGamesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4218,10 +4267,10 @@ export const EventsGetGamePayload = {
   /**
    * Serializes EventsGetGamePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetGamePayload>): Uint8Array {
+  encode: function (msg: Partial<EventsGetGamePayload>): Uint8Array {
     return EventsGetGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4231,7 +4280,7 @@ export const EventsGetGamePayload = {
   decode: function (bytes: ByteSource): EventsGetGamePayload {
     return EventsGetGamePayload._readMessage(
       EventsGetGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4248,8 +4297,8 @@ export const EventsGetGamePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetGamePayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetGamePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -4262,7 +4311,7 @@ export const EventsGetGamePayload = {
    */
   _readMessage: function (
     msg: EventsGetGamePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4285,10 +4334,10 @@ export const EventsGetGameResponse = {
   /**
    * Serializes EventsGetGameResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetGameResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetGameResponse>): Uint8Array {
     return EventsGetGameResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4298,7 +4347,7 @@ export const EventsGetGameResponse = {
   decode: function (bytes: ByteSource): EventsGetGameResponse {
     return EventsGetGameResponse._readMessage(
       EventsGetGameResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4316,8 +4365,8 @@ export const EventsGetGameResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetGameResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetGameResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.game) {
       writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
@@ -4326,7 +4375,7 @@ export const EventsGetGameResponse = {
       writer.writeRepeatedMessage(
         2,
         msg.players as any,
-        protoAtoms.Player._writeMessage,
+        protoAtoms.Player._writeMessage
       );
     }
     return writer;
@@ -4337,7 +4386,7 @@ export const EventsGetGameResponse = {
    */
   _readMessage: function (
     msg: EventsGetGameResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetGameResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4366,12 +4415,10 @@ export const EventsGetGamesSeriesResponse = {
   /**
    * Serializes EventsGetGamesSeriesResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetGamesSeriesResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetGamesSeriesResponse>): Uint8Array {
     return EventsGetGamesSeriesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4381,7 +4428,7 @@ export const EventsGetGamesSeriesResponse = {
   decode: function (bytes: ByteSource): EventsGetGamesSeriesResponse {
     return EventsGetGamesSeriesResponse._readMessage(
       EventsGetGamesSeriesResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4398,14 +4445,14 @@ export const EventsGetGamesSeriesResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetGamesSeriesResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetGamesSeriesResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.results?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.results as any,
-        protoAtoms.SeriesResult._writeMessage,
+        protoAtoms.SeriesResult._writeMessage
       );
     }
     return writer;
@@ -4416,7 +4463,7 @@ export const EventsGetGamesSeriesResponse = {
    */
   _readMessage: function (
     msg: EventsGetGamesSeriesResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetGamesSeriesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4442,11 +4489,11 @@ export const PlayersGetCurrentSessionsPayload = {
    * Serializes PlayersGetCurrentSessionsPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsPayload>,
+    msg: Partial<PlayersGetCurrentSessionsPayload>
   ): Uint8Array {
     return PlayersGetCurrentSessionsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4456,7 +4503,7 @@ export const PlayersGetCurrentSessionsPayload = {
   decode: function (bytes: ByteSource): PlayersGetCurrentSessionsPayload {
     return PlayersGetCurrentSessionsPayload._readMessage(
       PlayersGetCurrentSessionsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4474,8 +4521,8 @@ export const PlayersGetCurrentSessionsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetCurrentSessionsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -4491,7 +4538,7 @@ export const PlayersGetCurrentSessionsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetCurrentSessionsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetCurrentSessionsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4519,11 +4566,11 @@ export const PlayersGetCurrentSessionsResponse = {
    * Serializes PlayersGetCurrentSessionsResponse to protobuf.
    */
   encode: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsResponse>,
+    msg: Partial<PlayersGetCurrentSessionsResponse>
   ): Uint8Array {
     return PlayersGetCurrentSessionsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4533,7 +4580,7 @@ export const PlayersGetCurrentSessionsResponse = {
   decode: function (bytes: ByteSource): PlayersGetCurrentSessionsResponse {
     return PlayersGetCurrentSessionsResponse._readMessage(
       PlayersGetCurrentSessionsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4550,14 +4597,14 @@ export const PlayersGetCurrentSessionsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetCurrentSessionsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessions?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.sessions as any,
-        protoAtoms.CurrentSession._writeMessage,
+        protoAtoms.CurrentSession._writeMessage
       );
     }
     return writer;
@@ -4568,7 +4615,7 @@ export const PlayersGetCurrentSessionsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetCurrentSessionsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetCurrentSessionsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4594,11 +4641,11 @@ export const EventsGetAllRegisteredPlayersPayload = {
    * Serializes EventsGetAllRegisteredPlayersPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersPayload>,
+    msg: Partial<EventsGetAllRegisteredPlayersPayload>
   ): Uint8Array {
     return EventsGetAllRegisteredPlayersPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4608,7 +4655,7 @@ export const EventsGetAllRegisteredPlayersPayload = {
   decode: function (bytes: ByteSource): EventsGetAllRegisteredPlayersPayload {
     return EventsGetAllRegisteredPlayersPayload._readMessage(
       EventsGetAllRegisteredPlayersPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4625,8 +4672,8 @@ export const EventsGetAllRegisteredPlayersPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetAllRegisteredPlayersPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventIds?.length) {
       writer.writePackedInt32(1, msg.eventIds);
@@ -4639,7 +4686,7 @@ export const EventsGetAllRegisteredPlayersPayload = {
    */
   _readMessage: function (
     msg: EventsGetAllRegisteredPlayersPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetAllRegisteredPlayersPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4667,11 +4714,11 @@ export const EventsGetAllRegisteredPlayersResponse = {
    * Serializes EventsGetAllRegisteredPlayersResponse to protobuf.
    */
   encode: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersResponse>,
+    msg: Partial<EventsGetAllRegisteredPlayersResponse>
   ): Uint8Array {
     return EventsGetAllRegisteredPlayersResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4681,7 +4728,7 @@ export const EventsGetAllRegisteredPlayersResponse = {
   decode: function (bytes: ByteSource): EventsGetAllRegisteredPlayersResponse {
     return EventsGetAllRegisteredPlayersResponse._readMessage(
       EventsGetAllRegisteredPlayersResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4698,14 +4745,14 @@ export const EventsGetAllRegisteredPlayersResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetAllRegisteredPlayersResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.players as any,
-        protoAtoms.RegisteredPlayer._writeMessage,
+        protoAtoms.RegisteredPlayer._writeMessage
       );
     }
     return writer;
@@ -4716,7 +4763,7 @@ export const EventsGetAllRegisteredPlayersResponse = {
    */
   _readMessage: function (
     msg: EventsGetAllRegisteredPlayersResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetAllRegisteredPlayersResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4741,10 +4788,10 @@ export const EventsGetTimerStateResponse = {
   /**
    * Serializes EventsGetTimerStateResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsGetTimerStateResponse>): Uint8Array {
+  encode: function (msg: Partial<EventsGetTimerStateResponse>): Uint8Array {
     return EventsGetTimerStateResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4754,7 +4801,7 @@ export const EventsGetTimerStateResponse = {
   decode: function (bytes: ByteSource): EventsGetTimerStateResponse {
     return EventsGetTimerStateResponse._readMessage(
       EventsGetTimerStateResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4777,8 +4824,8 @@ export const EventsGetTimerStateResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTimerStateResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetTimerStateResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.started) {
       writer.writeBool(1, msg.started);
@@ -4809,7 +4856,7 @@ export const EventsGetTimerStateResponse = {
    */
   _readMessage: function (
     msg: EventsGetTimerStateResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetTimerStateResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4856,12 +4903,10 @@ export const GamesGetSessionOverviewPayload = {
   /**
    * Serializes GamesGetSessionOverviewPayload to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<GamesGetSessionOverviewPayload>,
-  ): Uint8Array {
+  encode: function (msg: Partial<GamesGetSessionOverviewPayload>): Uint8Array {
     return GamesGetSessionOverviewPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4871,7 +4916,7 @@ export const GamesGetSessionOverviewPayload = {
   decode: function (bytes: ByteSource): GamesGetSessionOverviewPayload {
     return GamesGetSessionOverviewPayload._readMessage(
       GamesGetSessionOverviewPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4888,8 +4933,8 @@ export const GamesGetSessionOverviewPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesGetSessionOverviewPayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesGetSessionOverviewPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -4902,7 +4947,7 @@ export const GamesGetSessionOverviewPayload = {
    */
   _readMessage: function (
     msg: GamesGetSessionOverviewPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesGetSessionOverviewPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4925,12 +4970,10 @@ export const GamesGetSessionOverviewResponse = {
   /**
    * Serializes GamesGetSessionOverviewResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<GamesGetSessionOverviewResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<GamesGetSessionOverviewResponse>): Uint8Array {
     return GamesGetSessionOverviewResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4940,7 +4983,7 @@ export const GamesGetSessionOverviewResponse = {
   decode: function (bytes: ByteSource): GamesGetSessionOverviewResponse {
     return GamesGetSessionOverviewResponse._readMessage(
       GamesGetSessionOverviewResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4961,8 +5004,8 @@ export const GamesGetSessionOverviewResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesGetSessionOverviewResponse>,
-    writer: BinaryWriter,
+    msg: Partial<GamesGetSessionOverviewResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -4977,7 +5020,7 @@ export const GamesGetSessionOverviewResponse = {
       writer.writeRepeatedMessage(
         4,
         msg.players as any,
-        protoAtoms.PlayerInSession._writeMessage,
+        protoAtoms.PlayerInSession._writeMessage
       );
     }
     if (msg.state) {
@@ -4991,7 +5034,7 @@ export const GamesGetSessionOverviewResponse = {
    */
   _readMessage: function (
     msg: GamesGetSessionOverviewResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesGetSessionOverviewResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5032,12 +5075,10 @@ export const PlayersGetPlayerStatsPayload = {
   /**
    * Serializes PlayersGetPlayerStatsPayload to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetPlayerStatsPayload>,
-  ): Uint8Array {
+  encode: function (msg: Partial<PlayersGetPlayerStatsPayload>): Uint8Array {
     return PlayersGetPlayerStatsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5047,7 +5088,7 @@ export const PlayersGetPlayerStatsPayload = {
   decode: function (bytes: ByteSource): PlayersGetPlayerStatsPayload {
     return PlayersGetPlayerStatsPayload._readMessage(
       PlayersGetPlayerStatsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5065,8 +5106,8 @@ export const PlayersGetPlayerStatsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerStatsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetPlayerStatsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -5082,7 +5123,7 @@ export const PlayersGetPlayerStatsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerStatsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetPlayerStatsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5113,12 +5154,10 @@ export const PlayersGetPlayerStatsResponse = {
   /**
    * Serializes PlayersGetPlayerStatsResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetPlayerStatsResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<PlayersGetPlayerStatsResponse>): Uint8Array {
     return PlayersGetPlayerStatsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5128,7 +5167,7 @@ export const PlayersGetPlayerStatsResponse = {
   decode: function (bytes: ByteSource): PlayersGetPlayerStatsResponse {
     return PlayersGetPlayerStatsResponse._readMessage(
       PlayersGetPlayerStatsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5156,8 +5195,8 @@ export const PlayersGetPlayerStatsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerStatsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetPlayerStatsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ratingHistory?.length) {
       writer.writePackedInt32(1, msg.ratingHistory);
@@ -5166,21 +5205,21 @@ export const PlayersGetPlayerStatsResponse = {
       writer.writeRepeatedMessage(
         2,
         msg.scoreHistory as any,
-        protoAtoms.SessionHistoryResultTable._writeMessage,
+        protoAtoms.SessionHistoryResultTable._writeMessage
       );
     }
     if (msg.playersInfo?.length) {
       writer.writeRepeatedMessage(
         3,
         msg.playersInfo as any,
-        protoAtoms.Player._writeMessage,
+        protoAtoms.Player._writeMessage
       );
     }
     if (msg.placesSummary?.length) {
       writer.writeRepeatedMessage(
         4,
         msg.placesSummary as any,
-        protoAtoms.PlacesSummaryItem._writeMessage,
+        protoAtoms.PlacesSummaryItem._writeMessage
       );
     }
     if (msg.totalPlayedGames) {
@@ -5193,35 +5232,35 @@ export const PlayersGetPlayerStatsResponse = {
       writer.writeMessage(
         7,
         msg.winSummary,
-        protoAtoms.PlayerWinSummary._writeMessage,
+        protoAtoms.PlayerWinSummary._writeMessage
       );
     }
     if (msg.handsValueSummary?.length) {
       writer.writeRepeatedMessage(
         8,
         msg.handsValueSummary as any,
-        protoAtoms.HandValueStat._writeMessage,
+        protoAtoms.HandValueStat._writeMessage
       );
     }
     if (msg.yakuSummary?.length) {
       writer.writeRepeatedMessage(
         9,
         msg.yakuSummary as any,
-        protoAtoms.YakuStat._writeMessage,
+        protoAtoms.YakuStat._writeMessage
       );
     }
     if (msg.riichiSummary) {
       writer.writeMessage(
         10,
         msg.riichiSummary,
-        protoAtoms.RiichiSummary._writeMessage,
+        protoAtoms.RiichiSummary._writeMessage
       );
     }
     if (msg.doraStat) {
       writer.writeMessage(
         11,
         msg.doraStat,
-        protoAtoms.DoraSummary._writeMessage,
+        protoAtoms.DoraSummary._writeMessage
       );
     }
     if (msg.lastUpdate) {
@@ -5235,7 +5274,7 @@ export const PlayersGetPlayerStatsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerStatsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetPlayerStatsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5252,7 +5291,7 @@ export const PlayersGetPlayerStatsResponse = {
           const m = protoAtoms.SessionHistoryResultTable.initialize();
           reader.readMessage(
             m,
-            protoAtoms.SessionHistoryResultTable._readMessage,
+            protoAtoms.SessionHistoryResultTable._readMessage
           );
           msg.scoreHistory.push(m);
           break;
@@ -5280,7 +5319,7 @@ export const PlayersGetPlayerStatsResponse = {
         case 7: {
           reader.readMessage(
             msg.winSummary,
-            protoAtoms.PlayerWinSummary._readMessage,
+            protoAtoms.PlayerWinSummary._readMessage
           );
           break;
         }
@@ -5299,7 +5338,7 @@ export const PlayersGetPlayerStatsResponse = {
         case 10: {
           reader.readMessage(
             msg.riichiSummary,
-            protoAtoms.RiichiSummary._readMessage,
+            protoAtoms.RiichiSummary._readMessage
           );
           break;
         }
@@ -5325,10 +5364,10 @@ export const GamesAddRoundPayload = {
   /**
    * Serializes GamesAddRoundPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesAddRoundPayload>): Uint8Array {
+  encode: function (msg: Partial<GamesAddRoundPayload>): Uint8Array {
     return GamesAddRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5338,7 +5377,7 @@ export const GamesAddRoundPayload = {
   decode: function (bytes: ByteSource): GamesAddRoundPayload {
     return GamesAddRoundPayload._readMessage(
       GamesAddRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5356,8 +5395,8 @@ export const GamesAddRoundPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddRoundPayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesAddRoundPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -5373,7 +5412,7 @@ export const GamesAddRoundPayload = {
    */
   _readMessage: function (
     msg: GamesAddRoundPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesAddRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5400,10 +5439,10 @@ export const GamesAddRoundResponse = {
   /**
    * Serializes GamesAddRoundResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesAddRoundResponse>): Uint8Array {
+  encode: function (msg: Partial<GamesAddRoundResponse>): Uint8Array {
     return GamesAddRoundResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5413,7 +5452,7 @@ export const GamesAddRoundResponse = {
   decode: function (bytes: ByteSource): GamesAddRoundResponse {
     return GamesAddRoundResponse._readMessage(
       GamesAddRoundResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5439,21 +5478,21 @@ export const GamesAddRoundResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddRoundResponse>,
-    writer: BinaryWriter,
+    msg: Partial<GamesAddRoundResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.scores?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.scores as any,
-        protoAtoms.IntermediateResultOfSession._writeMessage,
+        protoAtoms.IntermediateResultOfSession._writeMessage
       );
     }
     if (msg.extraPenaltyLogs?.length) {
       writer.writeRepeatedMessage(
         2,
         msg.extraPenaltyLogs as any,
-        protoAtoms.Penalty._writeMessage,
+        protoAtoms.Penalty._writeMessage
       );
     }
     if (msg.round) {
@@ -5488,7 +5527,7 @@ export const GamesAddRoundResponse = {
    */
   _readMessage: function (
     msg: GamesAddRoundResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesAddRoundResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5497,7 +5536,7 @@ export const GamesAddRoundResponse = {
           const m = protoAtoms.IntermediateResultOfSession.initialize();
           reader.readMessage(
             m,
-            protoAtoms.IntermediateResultOfSession._readMessage,
+            protoAtoms.IntermediateResultOfSession._readMessage
           );
           msg.scores.push(m);
           break;
@@ -5554,10 +5593,10 @@ export const GamesPreviewRoundPayload = {
   /**
    * Serializes GamesPreviewRoundPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesPreviewRoundPayload>): Uint8Array {
+  encode: function (msg: Partial<GamesPreviewRoundPayload>): Uint8Array {
     return GamesPreviewRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5567,7 +5606,7 @@ export const GamesPreviewRoundPayload = {
   decode: function (bytes: ByteSource): GamesPreviewRoundPayload {
     return GamesPreviewRoundPayload._readMessage(
       GamesPreviewRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5585,8 +5624,8 @@ export const GamesPreviewRoundPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesPreviewRoundPayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesPreviewRoundPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -5602,7 +5641,7 @@ export const GamesPreviewRoundPayload = {
    */
   _readMessage: function (
     msg: GamesPreviewRoundPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesPreviewRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5629,10 +5668,10 @@ export const GamesPreviewRoundResponse = {
   /**
    * Serializes GamesPreviewRoundResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesPreviewRoundResponse>): Uint8Array {
+  encode: function (msg: Partial<GamesPreviewRoundResponse>): Uint8Array {
     return GamesPreviewRoundResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5642,7 +5681,7 @@ export const GamesPreviewRoundResponse = {
   decode: function (bytes: ByteSource): GamesPreviewRoundResponse {
     return GamesPreviewRoundResponse._readMessage(
       GamesPreviewRoundResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5659,8 +5698,8 @@ export const GamesPreviewRoundResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesPreviewRoundResponse>,
-    writer: BinaryWriter,
+    msg: Partial<GamesPreviewRoundResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.state) {
       writer.writeMessage(1, msg.state, protoAtoms.RoundState._writeMessage);
@@ -5673,7 +5712,7 @@ export const GamesPreviewRoundResponse = {
    */
   _readMessage: function (
     msg: GamesPreviewRoundResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesPreviewRoundResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5696,10 +5735,10 @@ export const GamesAddOnlineReplayPayload = {
   /**
    * Serializes GamesAddOnlineReplayPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesAddOnlineReplayPayload>): Uint8Array {
+  encode: function (msg: Partial<GamesAddOnlineReplayPayload>): Uint8Array {
     return GamesAddOnlineReplayPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5709,7 +5748,7 @@ export const GamesAddOnlineReplayPayload = {
   decode: function (bytes: ByteSource): GamesAddOnlineReplayPayload {
     return GamesAddOnlineReplayPayload._readMessage(
       GamesAddOnlineReplayPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5727,8 +5766,8 @@ export const GamesAddOnlineReplayPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddOnlineReplayPayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesAddOnlineReplayPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -5744,7 +5783,7 @@ export const GamesAddOnlineReplayPayload = {
    */
   _readMessage: function (
     msg: GamesAddOnlineReplayPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesAddOnlineReplayPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5771,12 +5810,10 @@ export const GamesAddOnlineReplayResponse = {
   /**
    * Serializes GamesAddOnlineReplayResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<GamesAddOnlineReplayResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<GamesAddOnlineReplayResponse>): Uint8Array {
     return GamesAddOnlineReplayResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5786,7 +5823,7 @@ export const GamesAddOnlineReplayResponse = {
   decode: function (bytes: ByteSource): GamesAddOnlineReplayResponse {
     return GamesAddOnlineReplayResponse._readMessage(
       GamesAddOnlineReplayResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5804,8 +5841,8 @@ export const GamesAddOnlineReplayResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddOnlineReplayResponse>,
-    writer: BinaryWriter,
+    msg: Partial<GamesAddOnlineReplayResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.game) {
       writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
@@ -5814,7 +5851,7 @@ export const GamesAddOnlineReplayResponse = {
       writer.writeRepeatedMessage(
         2,
         msg.players as any,
-        protoAtoms.Player._writeMessage,
+        protoAtoms.Player._writeMessage
       );
     }
     return writer;
@@ -5825,7 +5862,7 @@ export const GamesAddOnlineReplayResponse = {
    */
   _readMessage: function (
     msg: GamesAddOnlineReplayResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesAddOnlineReplayResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5854,12 +5891,10 @@ export const PlayersGetLastResultsPayload = {
   /**
    * Serializes PlayersGetLastResultsPayload to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetLastResultsPayload>,
-  ): Uint8Array {
+  encode: function (msg: Partial<PlayersGetLastResultsPayload>): Uint8Array {
     return PlayersGetLastResultsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5869,7 +5904,7 @@ export const PlayersGetLastResultsPayload = {
   decode: function (bytes: ByteSource): PlayersGetLastResultsPayload {
     return PlayersGetLastResultsPayload._readMessage(
       PlayersGetLastResultsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5887,8 +5922,8 @@ export const PlayersGetLastResultsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastResultsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetLastResultsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -5904,7 +5939,7 @@ export const PlayersGetLastResultsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetLastResultsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetLastResultsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5931,12 +5966,10 @@ export const PlayersGetLastResultsResponse = {
   /**
    * Serializes PlayersGetLastResultsResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetLastResultsResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<PlayersGetLastResultsResponse>): Uint8Array {
     return PlayersGetLastResultsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5946,7 +5979,7 @@ export const PlayersGetLastResultsResponse = {
   decode: function (bytes: ByteSource): PlayersGetLastResultsResponse {
     return PlayersGetLastResultsResponse._readMessage(
       PlayersGetLastResultsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5963,14 +5996,14 @@ export const PlayersGetLastResultsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastResultsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetLastResultsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.results?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.results as any,
-        protoAtoms.SessionHistoryResult._writeMessage,
+        protoAtoms.SessionHistoryResult._writeMessage
       );
     }
     return writer;
@@ -5981,7 +6014,7 @@ export const PlayersGetLastResultsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetLastResultsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetLastResultsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6006,10 +6039,10 @@ export const PlayersGetLastRoundPayload = {
   /**
    * Serializes PlayersGetLastRoundPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayersGetLastRoundPayload>): Uint8Array {
+  encode: function (msg: Partial<PlayersGetLastRoundPayload>): Uint8Array {
     return PlayersGetLastRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6019,7 +6052,7 @@ export const PlayersGetLastRoundPayload = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundPayload {
     return PlayersGetLastRoundPayload._readMessage(
       PlayersGetLastRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6037,8 +6070,8 @@ export const PlayersGetLastRoundPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundPayload>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetLastRoundPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -6054,7 +6087,7 @@ export const PlayersGetLastRoundPayload = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetLastRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6081,10 +6114,10 @@ export const PlayersGetLastRoundResponse = {
   /**
    * Serializes PlayersGetLastRoundResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayersGetLastRoundResponse>): Uint8Array {
+  encode: function (msg: Partial<PlayersGetLastRoundResponse>): Uint8Array {
     return PlayersGetLastRoundResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6094,7 +6127,7 @@ export const PlayersGetLastRoundResponse = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundResponse {
     return PlayersGetLastRoundResponse._readMessage(
       PlayersGetLastRoundResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6111,8 +6144,8 @@ export const PlayersGetLastRoundResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetLastRoundResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.round) {
       writer.writeMessage(1, msg.round, protoAtoms.RoundState._writeMessage);
@@ -6125,7 +6158,7 @@ export const PlayersGetLastRoundResponse = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetLastRoundResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6148,10 +6181,10 @@ export const PlayersGetAllRoundsPayload = {
   /**
    * Serializes PlayersGetAllRoundsPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayersGetAllRoundsPayload>): Uint8Array {
+  encode: function (msg: Partial<PlayersGetAllRoundsPayload>): Uint8Array {
     return PlayersGetAllRoundsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6161,7 +6194,7 @@ export const PlayersGetAllRoundsPayload = {
   decode: function (bytes: ByteSource): PlayersGetAllRoundsPayload {
     return PlayersGetAllRoundsPayload._readMessage(
       PlayersGetAllRoundsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6178,8 +6211,8 @@ export const PlayersGetAllRoundsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetAllRoundsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetAllRoundsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -6192,7 +6225,7 @@ export const PlayersGetAllRoundsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetAllRoundsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetAllRoundsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6215,10 +6248,10 @@ export const PlayersGetAllRoundsResponse = {
   /**
    * Serializes PlayersGetAllRoundsResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayersGetAllRoundsResponse>): Uint8Array {
+  encode: function (msg: Partial<PlayersGetAllRoundsResponse>): Uint8Array {
     return PlayersGetAllRoundsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6228,7 +6261,7 @@ export const PlayersGetAllRoundsResponse = {
   decode: function (bytes: ByteSource): PlayersGetAllRoundsResponse {
     return PlayersGetAllRoundsResponse._readMessage(
       PlayersGetAllRoundsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6245,14 +6278,14 @@ export const PlayersGetAllRoundsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetAllRoundsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetAllRoundsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rounds?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.rounds as any,
-        protoAtoms.RoundState._writeMessage,
+        protoAtoms.RoundState._writeMessage
       );
     }
     return writer;
@@ -6263,7 +6296,7 @@ export const PlayersGetAllRoundsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetAllRoundsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetAllRoundsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6289,11 +6322,11 @@ export const PlayersGetLastRoundByHashPayload = {
    * Serializes PlayersGetLastRoundByHashPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashPayload>,
+    msg: Partial<PlayersGetLastRoundByHashPayload>
   ): Uint8Array {
     return PlayersGetLastRoundByHashPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6303,7 +6336,7 @@ export const PlayersGetLastRoundByHashPayload = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundByHashPayload {
     return PlayersGetLastRoundByHashPayload._readMessage(
       PlayersGetLastRoundByHashPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6320,8 +6353,8 @@ export const PlayersGetLastRoundByHashPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashPayload>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetLastRoundByHashPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -6334,7 +6367,7 @@ export const PlayersGetLastRoundByHashPayload = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundByHashPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetLastRoundByHashPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6358,11 +6391,11 @@ export const PlayersGetLastRoundByHashResponse = {
    * Serializes PlayersGetLastRoundByHashResponse to protobuf.
    */
   encode: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashResponse>,
+    msg: Partial<PlayersGetLastRoundByHashResponse>
   ): Uint8Array {
     return PlayersGetLastRoundByHashResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6372,7 +6405,7 @@ export const PlayersGetLastRoundByHashResponse = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundByHashResponse {
     return PlayersGetLastRoundByHashResponse._readMessage(
       PlayersGetLastRoundByHashResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6389,8 +6422,8 @@ export const PlayersGetLastRoundByHashResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetLastRoundByHashResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.round) {
       writer.writeMessage(1, msg.round, protoAtoms.RoundState._writeMessage);
@@ -6403,7 +6436,7 @@ export const PlayersGetLastRoundByHashResponse = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundByHashResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetLastRoundByHashResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6426,12 +6459,10 @@ export const EventsGetEventForEditPayload = {
   /**
    * Serializes EventsGetEventForEditPayload to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetEventForEditPayload>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetEventForEditPayload>): Uint8Array {
     return EventsGetEventForEditPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6441,7 +6472,7 @@ export const EventsGetEventForEditPayload = {
   decode: function (bytes: ByteSource): EventsGetEventForEditPayload {
     return EventsGetEventForEditPayload._readMessage(
       EventsGetEventForEditPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6458,8 +6489,8 @@ export const EventsGetEventForEditPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventForEditPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetEventForEditPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -6472,7 +6503,7 @@ export const EventsGetEventForEditPayload = {
    */
   _readMessage: function (
     msg: EventsGetEventForEditPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetEventForEditPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6495,12 +6526,10 @@ export const EventsGetEventForEditResponse = {
   /**
    * Serializes EventsGetEventForEditResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetEventForEditResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetEventForEditResponse>): Uint8Array {
     return EventsGetEventForEditResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6510,7 +6539,7 @@ export const EventsGetEventForEditResponse = {
   decode: function (bytes: ByteSource): EventsGetEventForEditResponse {
     return EventsGetEventForEditResponse._readMessage(
       EventsGetEventForEditResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6528,8 +6557,8 @@ export const EventsGetEventForEditResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventForEditResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetEventForEditResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -6545,7 +6574,7 @@ export const EventsGetEventForEditResponse = {
    */
   _readMessage: function (
     msg: EventsGetEventForEditResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetEventForEditResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6572,10 +6601,10 @@ export const EventsUpdateEventPayload = {
   /**
    * Serializes EventsUpdateEventPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsUpdateEventPayload>): Uint8Array {
+  encode: function (msg: Partial<EventsUpdateEventPayload>): Uint8Array {
     return EventsUpdateEventPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6585,7 +6614,7 @@ export const EventsUpdateEventPayload = {
   decode: function (bytes: ByteSource): EventsUpdateEventPayload {
     return EventsUpdateEventPayload._readMessage(
       EventsUpdateEventPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6603,8 +6632,8 @@ export const EventsUpdateEventPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdateEventPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsUpdateEventPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -6620,7 +6649,7 @@ export const EventsUpdateEventPayload = {
    */
   _readMessage: function (
     msg: EventsUpdateEventPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsUpdateEventPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6647,12 +6676,10 @@ export const EventsGetTablesStateResponse = {
   /**
    * Serializes EventsGetTablesStateResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetTablesStateResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetTablesStateResponse>): Uint8Array {
     return EventsGetTablesStateResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6662,7 +6689,7 @@ export const EventsGetTablesStateResponse = {
   decode: function (bytes: ByteSource): EventsGetTablesStateResponse {
     return EventsGetTablesStateResponse._readMessage(
       EventsGetTablesStateResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6679,14 +6706,14 @@ export const EventsGetTablesStateResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTablesStateResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetTablesStateResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.tables as any,
-        protoAtoms.TableState._writeMessage,
+        protoAtoms.TableState._writeMessage
       );
     }
     return writer;
@@ -6697,7 +6724,7 @@ export const EventsGetTablesStateResponse = {
    */
   _readMessage: function (
     msg: EventsGetTablesStateResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetTablesStateResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6722,10 +6749,10 @@ export const EventsRegisterPlayerPayload = {
   /**
    * Serializes EventsRegisterPlayerPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<EventsRegisterPlayerPayload>): Uint8Array {
+  encode: function (msg: Partial<EventsRegisterPlayerPayload>): Uint8Array {
     return EventsRegisterPlayerPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6735,7 +6762,7 @@ export const EventsRegisterPlayerPayload = {
   decode: function (bytes: ByteSource): EventsRegisterPlayerPayload {
     return EventsRegisterPlayerPayload._readMessage(
       EventsRegisterPlayerPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6753,8 +6780,8 @@ export const EventsRegisterPlayerPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsRegisterPlayerPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsRegisterPlayerPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -6770,7 +6797,7 @@ export const EventsRegisterPlayerPayload = {
    */
   _readMessage: function (
     msg: EventsRegisterPlayerPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsRegisterPlayerPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6797,12 +6824,10 @@ export const EventsUnregisterPlayerPayload = {
   /**
    * Serializes EventsUnregisterPlayerPayload to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsUnregisterPlayerPayload>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsUnregisterPlayerPayload>): Uint8Array {
     return EventsUnregisterPlayerPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6812,7 +6837,7 @@ export const EventsUnregisterPlayerPayload = {
   decode: function (bytes: ByteSource): EventsUnregisterPlayerPayload {
     return EventsUnregisterPlayerPayload._readMessage(
       EventsUnregisterPlayerPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6830,8 +6855,8 @@ export const EventsUnregisterPlayerPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUnregisterPlayerPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsUnregisterPlayerPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -6847,7 +6872,7 @@ export const EventsUnregisterPlayerPayload = {
    */
   _readMessage: function (
     msg: EventsUnregisterPlayerPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsUnregisterPlayerPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6875,11 +6900,11 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
    * Serializes EventsUpdatePlayerSeatingFlagPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<EventsUpdatePlayerSeatingFlagPayload>,
+    msg: Partial<EventsUpdatePlayerSeatingFlagPayload>
   ): Uint8Array {
     return EventsUpdatePlayerSeatingFlagPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6889,7 +6914,7 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayerSeatingFlagPayload {
     return EventsUpdatePlayerSeatingFlagPayload._readMessage(
       EventsUpdatePlayerSeatingFlagPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6908,8 +6933,8 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayerSeatingFlagPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsUpdatePlayerSeatingFlagPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -6928,7 +6953,7 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayerSeatingFlagPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsUpdatePlayerSeatingFlagPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6959,12 +6984,10 @@ export const EventsGetAchievementsPayload = {
   /**
    * Serializes EventsGetAchievementsPayload to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetAchievementsPayload>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetAchievementsPayload>): Uint8Array {
     return EventsGetAchievementsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6974,7 +6997,7 @@ export const EventsGetAchievementsPayload = {
   decode: function (bytes: ByteSource): EventsGetAchievementsPayload {
     return EventsGetAchievementsPayload._readMessage(
       EventsGetAchievementsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6992,8 +7015,8 @@ export const EventsGetAchievementsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAchievementsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetAchievementsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.achievementsList?.length) {
       writer.writeRepeatedString(2, msg.achievementsList);
@@ -7009,7 +7032,7 @@ export const EventsGetAchievementsPayload = {
    */
   _readMessage: function (
     msg: EventsGetAchievementsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetAchievementsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7036,12 +7059,10 @@ export const EventsGetAchievementsResponse = {
   /**
    * Serializes EventsGetAchievementsResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetAchievementsResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetAchievementsResponse>): Uint8Array {
     return EventsGetAchievementsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7051,7 +7072,7 @@ export const EventsGetAchievementsResponse = {
   decode: function (bytes: ByteSource): EventsGetAchievementsResponse {
     return EventsGetAchievementsResponse._readMessage(
       EventsGetAchievementsResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7068,14 +7089,14 @@ export const EventsGetAchievementsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAchievementsResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetAchievementsResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.achievements?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.achievements as any,
-        protoAtoms.Achievement._writeMessage,
+        protoAtoms.Achievement._writeMessage
       );
     }
     return writer;
@@ -7086,7 +7107,7 @@ export const EventsGetAchievementsResponse = {
    */
   _readMessage: function (
     msg: EventsGetAchievementsResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetAchievementsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7112,11 +7133,11 @@ export const EventsUpdatePlayersLocalIdsPayload = {
    * Serializes EventsUpdatePlayersLocalIdsPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<EventsUpdatePlayersLocalIdsPayload>,
+    msg: Partial<EventsUpdatePlayersLocalIdsPayload>
   ): Uint8Array {
     return EventsUpdatePlayersLocalIdsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7126,7 +7147,7 @@ export const EventsUpdatePlayersLocalIdsPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayersLocalIdsPayload {
     return EventsUpdatePlayersLocalIdsPayload._readMessage(
       EventsUpdatePlayersLocalIdsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7144,8 +7165,8 @@ export const EventsUpdatePlayersLocalIdsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayersLocalIdsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsUpdatePlayersLocalIdsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -7154,7 +7175,7 @@ export const EventsUpdatePlayersLocalIdsPayload = {
       writer.writeRepeatedMessage(
         2,
         msg.idsToLocalIds as any,
-        protoAtoms.LocalIdMapping._writeMessage,
+        protoAtoms.LocalIdMapping._writeMessage
       );
     }
     return writer;
@@ -7165,7 +7186,7 @@ export const EventsUpdatePlayersLocalIdsPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayersLocalIdsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsUpdatePlayersLocalIdsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7195,11 +7216,11 @@ export const EventsUpdatePlayerReplacementPayload = {
    * Serializes EventsUpdatePlayerReplacementPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<EventsUpdatePlayerReplacementPayload>,
+    msg: Partial<EventsUpdatePlayerReplacementPayload>
   ): Uint8Array {
     return EventsUpdatePlayerReplacementPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7209,7 +7230,7 @@ export const EventsUpdatePlayerReplacementPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayerReplacementPayload {
     return EventsUpdatePlayerReplacementPayload._readMessage(
       EventsUpdatePlayerReplacementPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7228,8 +7249,8 @@ export const EventsUpdatePlayerReplacementPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayerReplacementPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsUpdatePlayerReplacementPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -7248,7 +7269,7 @@ export const EventsUpdatePlayerReplacementPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayerReplacementPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsUpdatePlayerReplacementPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7279,12 +7300,10 @@ export const EventsUpdatePlayersTeamsPayload = {
   /**
    * Serializes EventsUpdatePlayersTeamsPayload to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsUpdatePlayersTeamsPayload>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsUpdatePlayersTeamsPayload>): Uint8Array {
     return EventsUpdatePlayersTeamsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7294,7 +7313,7 @@ export const EventsUpdatePlayersTeamsPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayersTeamsPayload {
     return EventsUpdatePlayersTeamsPayload._readMessage(
       EventsUpdatePlayersTeamsPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7312,8 +7331,8 @@ export const EventsUpdatePlayersTeamsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayersTeamsPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsUpdatePlayersTeamsPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -7322,7 +7341,7 @@ export const EventsUpdatePlayersTeamsPayload = {
       writer.writeRepeatedMessage(
         2,
         msg.idsToTeamNames as any,
-        protoAtoms.TeamMapping._writeMessage,
+        protoAtoms.TeamMapping._writeMessage
       );
     }
     return writer;
@@ -7333,7 +7352,7 @@ export const EventsUpdatePlayersTeamsPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayersTeamsPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsUpdatePlayersTeamsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7362,10 +7381,10 @@ export const GamesStartGamePayload = {
   /**
    * Serializes GamesStartGamePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesStartGamePayload>): Uint8Array {
+  encode: function (msg: Partial<GamesStartGamePayload>): Uint8Array {
     return GamesStartGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7375,7 +7394,7 @@ export const GamesStartGamePayload = {
   decode: function (bytes: ByteSource): GamesStartGamePayload {
     return GamesStartGamePayload._readMessage(
       GamesStartGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7393,8 +7412,8 @@ export const GamesStartGamePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesStartGamePayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesStartGamePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -7410,7 +7429,7 @@ export const GamesStartGamePayload = {
    */
   _readMessage: function (
     msg: GamesStartGamePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesStartGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7441,10 +7460,10 @@ export const GamesStartGameResponse = {
   /**
    * Serializes GamesStartGameResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesStartGameResponse>): Uint8Array {
+  encode: function (msg: Partial<GamesStartGameResponse>): Uint8Array {
     return GamesStartGameResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7454,7 +7473,7 @@ export const GamesStartGameResponse = {
   decode: function (bytes: ByteSource): GamesStartGameResponse {
     return GamesStartGameResponse._readMessage(
       GamesStartGameResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7471,8 +7490,8 @@ export const GamesStartGameResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesStartGameResponse>,
-    writer: BinaryWriter,
+    msg: Partial<GamesStartGameResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -7485,7 +7504,7 @@ export const GamesStartGameResponse = {
    */
   _readMessage: function (
     msg: GamesStartGameResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesStartGameResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7508,10 +7527,10 @@ export const GamesEndGamePayload = {
   /**
    * Serializes GamesEndGamePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesEndGamePayload>): Uint8Array {
+  encode: function (msg: Partial<GamesEndGamePayload>): Uint8Array {
     return GamesEndGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7521,7 +7540,7 @@ export const GamesEndGamePayload = {
   decode: function (bytes: ByteSource): GamesEndGamePayload {
     return GamesEndGamePayload._readMessage(
       GamesEndGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7538,8 +7557,8 @@ export const GamesEndGamePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesEndGamePayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesEndGamePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -7552,7 +7571,7 @@ export const GamesEndGamePayload = {
    */
   _readMessage: function (
     msg: GamesEndGamePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesEndGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7575,10 +7594,10 @@ export const GamesCancelGamePayload = {
   /**
    * Serializes GamesCancelGamePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesCancelGamePayload>): Uint8Array {
+  encode: function (msg: Partial<GamesCancelGamePayload>): Uint8Array {
     return GamesCancelGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7588,7 +7607,7 @@ export const GamesCancelGamePayload = {
   decode: function (bytes: ByteSource): GamesCancelGamePayload {
     return GamesCancelGamePayload._readMessage(
       GamesCancelGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7605,8 +7624,8 @@ export const GamesCancelGamePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesCancelGamePayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesCancelGamePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -7619,7 +7638,7 @@ export const GamesCancelGamePayload = {
    */
   _readMessage: function (
     msg: GamesCancelGamePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesCancelGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7642,10 +7661,10 @@ export const GamesDropLastRoundPayload = {
   /**
    * Serializes GamesDropLastRoundPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesDropLastRoundPayload>): Uint8Array {
+  encode: function (msg: Partial<GamesDropLastRoundPayload>): Uint8Array {
     return GamesDropLastRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7655,7 +7674,7 @@ export const GamesDropLastRoundPayload = {
   decode: function (bytes: ByteSource): GamesDropLastRoundPayload {
     return GamesDropLastRoundPayload._readMessage(
       GamesDropLastRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7673,8 +7692,8 @@ export const GamesDropLastRoundPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesDropLastRoundPayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesDropLastRoundPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -7683,7 +7702,7 @@ export const GamesDropLastRoundPayload = {
       writer.writeRepeatedMessage(
         2,
         msg.intermediateResults as any,
-        protoAtoms.IntermediateResultOfSession._writeMessage,
+        protoAtoms.IntermediateResultOfSession._writeMessage
       );
     }
     return writer;
@@ -7694,7 +7713,7 @@ export const GamesDropLastRoundPayload = {
    */
   _readMessage: function (
     msg: GamesDropLastRoundPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesDropLastRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7707,7 +7726,7 @@ export const GamesDropLastRoundPayload = {
           const m = protoAtoms.IntermediateResultOfSession.initialize();
           reader.readMessage(
             m,
-            protoAtoms.IntermediateResultOfSession._readMessage,
+            protoAtoms.IntermediateResultOfSession._readMessage
           );
           msg.intermediateResults.push(m);
           break;
@@ -7726,10 +7745,10 @@ export const GamesDefinalizeGamePayload = {
   /**
    * Serializes GamesDefinalizeGamePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesDefinalizeGamePayload>): Uint8Array {
+  encode: function (msg: Partial<GamesDefinalizeGamePayload>): Uint8Array {
     return GamesDefinalizeGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7739,7 +7758,7 @@ export const GamesDefinalizeGamePayload = {
   decode: function (bytes: ByteSource): GamesDefinalizeGamePayload {
     return GamesDefinalizeGamePayload._readMessage(
       GamesDefinalizeGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7756,8 +7775,8 @@ export const GamesDefinalizeGamePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesDefinalizeGamePayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesDefinalizeGamePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -7770,7 +7789,7 @@ export const GamesDefinalizeGamePayload = {
    */
   _readMessage: function (
     msg: GamesDefinalizeGamePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesDefinalizeGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7793,10 +7812,10 @@ export const GamesAddPenaltyPayload = {
   /**
    * Serializes GamesAddPenaltyPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesAddPenaltyPayload>): Uint8Array {
+  encode: function (msg: Partial<GamesAddPenaltyPayload>): Uint8Array {
     return GamesAddPenaltyPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7806,7 +7825,7 @@ export const GamesAddPenaltyPayload = {
   decode: function (bytes: ByteSource): GamesAddPenaltyPayload {
     return GamesAddPenaltyPayload._readMessage(
       GamesAddPenaltyPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7826,8 +7845,8 @@ export const GamesAddPenaltyPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddPenaltyPayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesAddPenaltyPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -7849,7 +7868,7 @@ export const GamesAddPenaltyPayload = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesAddPenaltyPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7884,10 +7903,10 @@ export const GamesAddPenaltyGamePayload = {
   /**
    * Serializes GamesAddPenaltyGamePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesAddPenaltyGamePayload>): Uint8Array {
+  encode: function (msg: Partial<GamesAddPenaltyGamePayload>): Uint8Array {
     return GamesAddPenaltyGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7897,7 +7916,7 @@ export const GamesAddPenaltyGamePayload = {
   decode: function (bytes: ByteSource): GamesAddPenaltyGamePayload {
     return GamesAddPenaltyGamePayload._readMessage(
       GamesAddPenaltyGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7915,8 +7934,8 @@ export const GamesAddPenaltyGamePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddPenaltyGamePayload>,
-    writer: BinaryWriter,
+    msg: Partial<GamesAddPenaltyGamePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -7932,7 +7951,7 @@ export const GamesAddPenaltyGamePayload = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyGamePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesAddPenaltyGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7963,10 +7982,10 @@ export const GamesAddPenaltyGameResponse = {
   /**
    * Serializes GamesAddPenaltyGameResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<GamesAddPenaltyGameResponse>): Uint8Array {
+  encode: function (msg: Partial<GamesAddPenaltyGameResponse>): Uint8Array {
     return GamesAddPenaltyGameResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7976,7 +7995,7 @@ export const GamesAddPenaltyGameResponse = {
   decode: function (bytes: ByteSource): GamesAddPenaltyGameResponse {
     return GamesAddPenaltyGameResponse._readMessage(
       GamesAddPenaltyGameResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7993,8 +8012,8 @@ export const GamesAddPenaltyGameResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddPenaltyGameResponse>,
-    writer: BinaryWriter,
+    msg: Partial<GamesAddPenaltyGameResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.hash) {
       writer.writeString(1, msg.hash);
@@ -8007,7 +8026,7 @@ export const GamesAddPenaltyGameResponse = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyGameResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GamesAddPenaltyGameResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8030,10 +8049,10 @@ export const PlayersGetPlayerPayload = {
   /**
    * Serializes PlayersGetPlayerPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayersGetPlayerPayload>): Uint8Array {
+  encode: function (msg: Partial<PlayersGetPlayerPayload>): Uint8Array {
     return PlayersGetPlayerPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8043,7 +8062,7 @@ export const PlayersGetPlayerPayload = {
   decode: function (bytes: ByteSource): PlayersGetPlayerPayload {
     return PlayersGetPlayerPayload._readMessage(
       PlayersGetPlayerPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8060,8 +8079,8 @@ export const PlayersGetPlayerPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerPayload>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetPlayerPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -8074,7 +8093,7 @@ export const PlayersGetPlayerPayload = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetPlayerPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8097,10 +8116,10 @@ export const PlayersGetPlayerResponse = {
   /**
    * Serializes PlayersGetPlayerResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayersGetPlayerResponse>): Uint8Array {
+  encode: function (msg: Partial<PlayersGetPlayerResponse>): Uint8Array {
     return PlayersGetPlayerResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8110,7 +8129,7 @@ export const PlayersGetPlayerResponse = {
   decode: function (bytes: ByteSource): PlayersGetPlayerResponse {
     return PlayersGetPlayerResponse._readMessage(
       PlayersGetPlayerResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8127,8 +8146,8 @@ export const PlayersGetPlayerResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerResponse>,
-    writer: BinaryWriter,
+    msg: Partial<PlayersGetPlayerResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.players) {
       writer.writeMessage(1, msg.players, protoAtoms.Player._writeMessage);
@@ -8141,7 +8160,7 @@ export const PlayersGetPlayerResponse = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayersGetPlayerResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8164,12 +8183,10 @@ export const EventsGetCurrentSeatingResponse = {
   /**
    * Serializes EventsGetCurrentSeatingResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetCurrentSeatingResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetCurrentSeatingResponse>): Uint8Array {
     return EventsGetCurrentSeatingResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8179,7 +8196,7 @@ export const EventsGetCurrentSeatingResponse = {
   decode: function (bytes: ByteSource): EventsGetCurrentSeatingResponse {
     return EventsGetCurrentSeatingResponse._readMessage(
       EventsGetCurrentSeatingResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8196,14 +8213,14 @@ export const EventsGetCurrentSeatingResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetCurrentSeatingResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetCurrentSeatingResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.seating?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.seating as any,
-        protoAtoms.PlayerSeating._writeMessage,
+        protoAtoms.PlayerSeating._writeMessage
       );
     }
     return writer;
@@ -8214,7 +8231,7 @@ export const EventsGetCurrentSeatingResponse = {
    */
   _readMessage: function (
     msg: EventsGetCurrentSeatingResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetCurrentSeatingResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8240,11 +8257,11 @@ export const SeatingMakeShuffledSeatingPayload = {
    * Serializes SeatingMakeShuffledSeatingPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<SeatingMakeShuffledSeatingPayload>,
+    msg: Partial<SeatingMakeShuffledSeatingPayload>
   ): Uint8Array {
     return SeatingMakeShuffledSeatingPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8254,7 +8271,7 @@ export const SeatingMakeShuffledSeatingPayload = {
   decode: function (bytes: ByteSource): SeatingMakeShuffledSeatingPayload {
     return SeatingMakeShuffledSeatingPayload._readMessage(
       SeatingMakeShuffledSeatingPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8273,8 +8290,8 @@ export const SeatingMakeShuffledSeatingPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingMakeShuffledSeatingPayload>,
-    writer: BinaryWriter,
+    msg: Partial<SeatingMakeShuffledSeatingPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -8293,7 +8310,7 @@ export const SeatingMakeShuffledSeatingPayload = {
    */
   _readMessage: function (
     msg: SeatingMakeShuffledSeatingPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SeatingMakeShuffledSeatingPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8325,11 +8342,11 @@ export const SeatingGenerateSwissSeatingResponse = {
    * Serializes SeatingGenerateSwissSeatingResponse to protobuf.
    */
   encode: function (
-    msg: PartialDeep<SeatingGenerateSwissSeatingResponse>,
+    msg: Partial<SeatingGenerateSwissSeatingResponse>
   ): Uint8Array {
     return SeatingGenerateSwissSeatingResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8339,7 +8356,7 @@ export const SeatingGenerateSwissSeatingResponse = {
   decode: function (bytes: ByteSource): SeatingGenerateSwissSeatingResponse {
     return SeatingGenerateSwissSeatingResponse._readMessage(
       SeatingGenerateSwissSeatingResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8356,14 +8373,14 @@ export const SeatingGenerateSwissSeatingResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingGenerateSwissSeatingResponse>,
-    writer: BinaryWriter,
+    msg: Partial<SeatingGenerateSwissSeatingResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.tables as any,
-        protoAtoms.TableItemSwiss._writeMessage,
+        protoAtoms.TableItemSwiss._writeMessage
       );
     }
     return writer;
@@ -8374,7 +8391,7 @@ export const SeatingGenerateSwissSeatingResponse = {
    */
   _readMessage: function (
     msg: SeatingGenerateSwissSeatingResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SeatingGenerateSwissSeatingResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8400,11 +8417,11 @@ export const SeatingMakeIntervalSeatingPayload = {
    * Serializes SeatingMakeIntervalSeatingPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<SeatingMakeIntervalSeatingPayload>,
+    msg: Partial<SeatingMakeIntervalSeatingPayload>
   ): Uint8Array {
     return SeatingMakeIntervalSeatingPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8414,7 +8431,7 @@ export const SeatingMakeIntervalSeatingPayload = {
   decode: function (bytes: ByteSource): SeatingMakeIntervalSeatingPayload {
     return SeatingMakeIntervalSeatingPayload._readMessage(
       SeatingMakeIntervalSeatingPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8432,8 +8449,8 @@ export const SeatingMakeIntervalSeatingPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingMakeIntervalSeatingPayload>,
-    writer: BinaryWriter,
+    msg: Partial<SeatingMakeIntervalSeatingPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -8449,7 +8466,7 @@ export const SeatingMakeIntervalSeatingPayload = {
    */
   _readMessage: function (
     msg: SeatingMakeIntervalSeatingPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SeatingMakeIntervalSeatingPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8477,11 +8494,11 @@ export const SeatingMakePrescriptedSeatingPayload = {
    * Serializes SeatingMakePrescriptedSeatingPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<SeatingMakePrescriptedSeatingPayload>,
+    msg: Partial<SeatingMakePrescriptedSeatingPayload>
   ): Uint8Array {
     return SeatingMakePrescriptedSeatingPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8491,7 +8508,7 @@ export const SeatingMakePrescriptedSeatingPayload = {
   decode: function (bytes: ByteSource): SeatingMakePrescriptedSeatingPayload {
     return SeatingMakePrescriptedSeatingPayload._readMessage(
       SeatingMakePrescriptedSeatingPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8509,8 +8526,8 @@ export const SeatingMakePrescriptedSeatingPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingMakePrescriptedSeatingPayload>,
-    writer: BinaryWriter,
+    msg: Partial<SeatingMakePrescriptedSeatingPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -8526,7 +8543,7 @@ export const SeatingMakePrescriptedSeatingPayload = {
    */
   _readMessage: function (
     msg: SeatingMakePrescriptedSeatingPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SeatingMakePrescriptedSeatingPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8554,11 +8571,11 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
    * Serializes SeatingGetNextPrescriptedSeatingResponse to protobuf.
    */
   encode: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
+    msg: Partial<SeatingGetNextPrescriptedSeatingResponse>
   ): Uint8Array {
     return SeatingGetNextPrescriptedSeatingResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8566,11 +8583,11 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
    * Deserializes SeatingGetNextPrescriptedSeatingResponse from protobuf.
    */
   decode: function (
-    bytes: ByteSource,
+    bytes: ByteSource
   ): SeatingGetNextPrescriptedSeatingResponse {
     return SeatingGetNextPrescriptedSeatingResponse._readMessage(
       SeatingGetNextPrescriptedSeatingResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8587,14 +8604,14 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-    writer: BinaryWriter,
+    msg: Partial<SeatingGetNextPrescriptedSeatingResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.tables as any,
-        protoAtoms.PrescriptedTable._writeMessage,
+        protoAtoms.PrescriptedTable._writeMessage
       );
     }
     return writer;
@@ -8605,7 +8622,7 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
    */
   _readMessage: function (
     msg: SeatingGetNextPrescriptedSeatingResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SeatingGetNextPrescriptedSeatingResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8631,11 +8648,11 @@ export const EventsGetPrescriptedEventConfigResponse = {
    * Serializes EventsGetPrescriptedEventConfigResponse to protobuf.
    */
   encode: function (
-    msg: PartialDeep<EventsGetPrescriptedEventConfigResponse>,
+    msg: Partial<EventsGetPrescriptedEventConfigResponse>
   ): Uint8Array {
     return EventsGetPrescriptedEventConfigResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8643,11 +8660,11 @@ export const EventsGetPrescriptedEventConfigResponse = {
    * Deserializes EventsGetPrescriptedEventConfigResponse from protobuf.
    */
   decode: function (
-    bytes: ByteSource,
+    bytes: ByteSource
   ): EventsGetPrescriptedEventConfigResponse {
     return EventsGetPrescriptedEventConfigResponse._readMessage(
       EventsGetPrescriptedEventConfigResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8667,8 +8684,8 @@ export const EventsGetPrescriptedEventConfigResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetPrescriptedEventConfigResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetPrescriptedEventConfigResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -8690,7 +8707,7 @@ export const EventsGetPrescriptedEventConfigResponse = {
    */
   _readMessage: function (
     msg: EventsGetPrescriptedEventConfigResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetPrescriptedEventConfigResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8726,11 +8743,11 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
    * Serializes EventsUpdatePrescriptedEventConfigPayload to protobuf.
    */
   encode: function (
-    msg: PartialDeep<EventsUpdatePrescriptedEventConfigPayload>,
+    msg: Partial<EventsUpdatePrescriptedEventConfigPayload>
   ): Uint8Array {
     return EventsUpdatePrescriptedEventConfigPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8738,11 +8755,11 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
    * Deserializes EventsUpdatePrescriptedEventConfigPayload from protobuf.
    */
   decode: function (
-    bytes: ByteSource,
+    bytes: ByteSource
   ): EventsUpdatePrescriptedEventConfigPayload {
     return EventsUpdatePrescriptedEventConfigPayload._readMessage(
       EventsUpdatePrescriptedEventConfigPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8761,8 +8778,8 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePrescriptedEventConfigPayload>,
-    writer: BinaryWriter,
+    msg: Partial<EventsUpdatePrescriptedEventConfigPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -8781,7 +8798,7 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePrescriptedEventConfigPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsUpdatePrescriptedEventConfigPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8812,12 +8829,10 @@ export const EventsGetStartingTimerResponse = {
   /**
    * Serializes EventsGetStartingTimerResponse to protobuf.
    */
-  encode: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-  ): Uint8Array {
+  encode: function (msg: Partial<EventsGetStartingTimerResponse>): Uint8Array {
     return EventsGetStartingTimerResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8827,7 +8842,7 @@ export const EventsGetStartingTimerResponse = {
   decode: function (bytes: ByteSource): EventsGetStartingTimerResponse {
     return EventsGetStartingTimerResponse._readMessage(
       EventsGetStartingTimerResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8844,8 +8859,8 @@ export const EventsGetStartingTimerResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-    writer: BinaryWriter,
+    msg: Partial<EventsGetStartingTimerResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.timer) {
       writer.writeInt32(1, msg.timer);
@@ -8858,7 +8873,7 @@ export const EventsGetStartingTimerResponse = {
    */
   _readMessage: function (
     msg: EventsGetStartingTimerResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventsGetStartingTimerResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8881,10 +8896,10 @@ export const ClearStatCachePayload = {
   /**
    * Serializes ClearStatCachePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<ClearStatCachePayload>): Uint8Array {
+  encode: function (msg: Partial<ClearStatCachePayload>): Uint8Array {
     return ClearStatCachePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -8894,7 +8909,7 @@ export const ClearStatCachePayload = {
   decode: function (bytes: ByteSource): ClearStatCachePayload {
     return ClearStatCachePayload._readMessage(
       ClearStatCachePayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -8911,8 +8926,8 @@ export const ClearStatCachePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<ClearStatCachePayload>,
-    writer: BinaryWriter,
+    msg: Partial<ClearStatCachePayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -8925,13 +8940,122 @@ export const ClearStatCachePayload = {
    */
   _readMessage: function (
     msg: ClearStatCachePayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): ClearStatCachePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
           msg.playerId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const TypedGamesAddOnlineReplayPayload = {
+  /**
+   * Serializes TypedGamesAddOnlineReplayPayload to protobuf.
+   */
+  encode: function (
+    msg: Partial<TypedGamesAddOnlineReplayPayload>
+  ): Uint8Array {
+    return TypedGamesAddOnlineReplayPayload._writeMessage(
+      msg,
+      new BinaryWriter()
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes TypedGamesAddOnlineReplayPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): TypedGamesAddOnlineReplayPayload {
+    return TypedGamesAddOnlineReplayPayload._readMessage(
+      TypedGamesAddOnlineReplayPayload.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes TypedGamesAddOnlineReplayPayload with all fields set to their default value.
+   */
+  initialize: function (): TypedGamesAddOnlineReplayPayload {
+    return {
+      eventId: 0,
+      platformId: 0,
+      contentType: 0,
+      logTimestamp: 0,
+      replayHash: "",
+      content: "",
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<TypedGamesAddOnlineReplayPayload>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.platformId) {
+      writer.writeInt32(2, msg.platformId);
+    }
+    if (msg.contentType) {
+      writer.writeInt32(3, msg.contentType);
+    }
+    if (msg.logTimestamp) {
+      writer.writeInt32(4, msg.logTimestamp);
+    }
+    if (msg.replayHash) {
+      writer.writeString(5, msg.replayHash);
+    }
+    if (msg.content) {
+      writer.writeString(6, msg.content);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: TypedGamesAddOnlineReplayPayload,
+    reader: BinaryReader
+  ): TypedGamesAddOnlineReplayPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.platformId = reader.readInt32();
+          break;
+        }
+        case 3: {
+          msg.contentType = reader.readInt32();
+          break;
+        }
+        case 4: {
+          msg.logTimestamp = reader.readInt32();
+          break;
+        }
+        case 5: {
+          msg.replayHash = reader.readString();
+          break;
+        }
+        case 6: {
+          msg.content = reader.readString();
           break;
         }
         default: {
@@ -8952,7 +9076,7 @@ export const EventsGetRulesetsPayloadJSON = {
   /**
    * Serializes EventsGetRulesetsPayload to JSON.
    */
-  encode: function (_msg?: PartialDeep<EventsGetRulesetsPayload>): string {
+  encode: function (_msg?: Partial<EventsGetRulesetsPayload>): string {
     return "{}";
   },
 
@@ -8974,7 +9098,7 @@ export const EventsGetRulesetsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    _msg: PartialDeep<EventsGetRulesetsPayload>,
+    _msg: Partial<EventsGetRulesetsPayload>
   ): Record<string, unknown> {
     return {};
   },
@@ -8984,7 +9108,7 @@ export const EventsGetRulesetsPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetRulesetsPayload,
-    _json: any,
+    _json: any
   ): EventsGetRulesetsPayload {
     return msg;
   },
@@ -8994,7 +9118,7 @@ export const EventsGetRulesetsResponseJSON = {
   /**
    * Serializes EventsGetRulesetsResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetRulesetsResponse>): string {
+  encode: function (msg: Partial<EventsGetRulesetsResponse>): string {
     return JSON.stringify(EventsGetRulesetsResponseJSON._writeMessage(msg));
   },
 
@@ -9004,7 +9128,7 @@ export const EventsGetRulesetsResponseJSON = {
   decode: function (json: string): EventsGetRulesetsResponse {
     return EventsGetRulesetsResponseJSON._readMessage(
       EventsGetRulesetsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9023,12 +9147,12 @@ export const EventsGetRulesetsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetRulesetsResponse>,
+    msg: Partial<EventsGetRulesetsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rulesets?.length) {
       json["rulesets"] = msg.rulesets.map(
-        protoAtoms.RulesetConfigJSON._writeMessage,
+        protoAtoms.RulesetConfigJSON._writeMessage
       );
     }
     if (msg.rulesetIds?.length) {
@@ -9045,12 +9169,12 @@ export const EventsGetRulesetsResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetRulesetsResponse,
-    json: any,
+    json: any
   ): EventsGetRulesetsResponse {
     const _rulesets_ = json["rulesets"];
     if (_rulesets_) {
       for (const item of _rulesets_) {
-        const m = protoAtoms.RulesetConfigJSON.initialize();
+        const m = protoAtoms.RulesetConfig.initialize();
         protoAtoms.RulesetConfigJSON._readMessage(m, item);
         msg.rulesets.push(m);
       }
@@ -9071,7 +9195,7 @@ export const EventsGetTimezonesPayloadJSON = {
   /**
    * Serializes EventsGetTimezonesPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetTimezonesPayload>): string {
+  encode: function (msg: Partial<EventsGetTimezonesPayload>): string {
     return JSON.stringify(EventsGetTimezonesPayloadJSON._writeMessage(msg));
   },
 
@@ -9081,7 +9205,7 @@ export const EventsGetTimezonesPayloadJSON = {
   decode: function (json: string): EventsGetTimezonesPayload {
     return EventsGetTimezonesPayloadJSON._readMessage(
       EventsGetTimezonesPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9098,7 +9222,7 @@ export const EventsGetTimezonesPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesPayload>,
+    msg: Partial<EventsGetTimezonesPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.addr) {
@@ -9112,7 +9236,7 @@ export const EventsGetTimezonesPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetTimezonesPayload,
-    json: any,
+    json: any
   ): EventsGetTimezonesPayload {
     const _addr_ = json["addr"];
     if (_addr_) {
@@ -9126,7 +9250,7 @@ export const EventsGetTimezonesResponseJSON = {
   /**
    * Serializes EventsGetTimezonesResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetTimezonesResponse>): string {
+  encode: function (msg: Partial<EventsGetTimezonesResponse>): string {
     return JSON.stringify(EventsGetTimezonesResponseJSON._writeMessage(msg));
   },
 
@@ -9136,7 +9260,7 @@ export const EventsGetTimezonesResponseJSON = {
   decode: function (json: string): EventsGetTimezonesResponse {
     return EventsGetTimezonesResponseJSON._readMessage(
       EventsGetTimezonesResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9154,7 +9278,7 @@ export const EventsGetTimezonesResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesResponse>,
+    msg: Partial<EventsGetTimezonesResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.preferredByIp) {
@@ -9171,7 +9295,7 @@ export const EventsGetTimezonesResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetTimezonesResponse,
-    json: any,
+    json: any
   ): EventsGetTimezonesResponse {
     const _preferredByIp_ = json["preferredByIp"] ?? json["preferred_by_ip"];
     if (_preferredByIp_) {
@@ -9189,7 +9313,7 @@ export const EventsGetCountriesPayloadJSON = {
   /**
    * Serializes EventsGetCountriesPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetCountriesPayload>): string {
+  encode: function (msg: Partial<EventsGetCountriesPayload>): string {
     return JSON.stringify(EventsGetCountriesPayloadJSON._writeMessage(msg));
   },
 
@@ -9199,7 +9323,7 @@ export const EventsGetCountriesPayloadJSON = {
   decode: function (json: string): EventsGetCountriesPayload {
     return EventsGetCountriesPayloadJSON._readMessage(
       EventsGetCountriesPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9216,7 +9340,7 @@ export const EventsGetCountriesPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesPayload>,
+    msg: Partial<EventsGetCountriesPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.addr) {
@@ -9230,7 +9354,7 @@ export const EventsGetCountriesPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetCountriesPayload,
-    json: any,
+    json: any
   ): EventsGetCountriesPayload {
     const _addr_ = json["addr"];
     if (_addr_) {
@@ -9244,7 +9368,7 @@ export const EventsGetCountriesResponseJSON = {
   /**
    * Serializes EventsGetCountriesResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetCountriesResponse>): string {
+  encode: function (msg: Partial<EventsGetCountriesResponse>): string {
     return JSON.stringify(EventsGetCountriesResponseJSON._writeMessage(msg));
   },
 
@@ -9254,7 +9378,7 @@ export const EventsGetCountriesResponseJSON = {
   decode: function (json: string): EventsGetCountriesResponse {
     return EventsGetCountriesResponseJSON._readMessage(
       EventsGetCountriesResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9272,7 +9396,7 @@ export const EventsGetCountriesResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesResponse>,
+    msg: Partial<EventsGetCountriesResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.preferredByIp) {
@@ -9280,7 +9404,7 @@ export const EventsGetCountriesResponseJSON = {
     }
     if (msg.countries?.length) {
       json["countries"] = msg.countries.map(
-        protoAtoms.CountryJSON._writeMessage,
+        protoAtoms.CountryJSON._writeMessage
       );
     }
     return json;
@@ -9291,7 +9415,7 @@ export const EventsGetCountriesResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetCountriesResponse,
-    json: any,
+    json: any
   ): EventsGetCountriesResponse {
     const _preferredByIp_ = json["preferredByIp"] ?? json["preferred_by_ip"];
     if (_preferredByIp_) {
@@ -9300,7 +9424,7 @@ export const EventsGetCountriesResponseJSON = {
     const _countries_ = json["countries"];
     if (_countries_) {
       for (const item of _countries_) {
-        const m = protoAtoms.CountryJSON.initialize();
+        const m = protoAtoms.Country.initialize();
         protoAtoms.CountryJSON._readMessage(m, item);
         msg.countries.push(m);
       }
@@ -9313,7 +9437,7 @@ export const EventsGetEventsPayloadJSON = {
   /**
    * Serializes EventsGetEventsPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsPayload>): string {
+  encode: function (msg: Partial<EventsGetEventsPayload>): string {
     return JSON.stringify(EventsGetEventsPayloadJSON._writeMessage(msg));
   },
 
@@ -9323,7 +9447,7 @@ export const EventsGetEventsPayloadJSON = {
   decode: function (json: string): EventsGetEventsPayload {
     return EventsGetEventsPayloadJSON._readMessage(
       EventsGetEventsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9343,7 +9467,7 @@ export const EventsGetEventsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsPayload>,
+    msg: Partial<EventsGetEventsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.limit) {
@@ -9366,7 +9490,7 @@ export const EventsGetEventsPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetEventsPayload,
-    json: any,
+    json: any
   ): EventsGetEventsPayload {
     const _limit_ = json["limit"];
     if (_limit_) {
@@ -9392,7 +9516,7 @@ export const EventsGetEventsResponseJSON = {
   /**
    * Serializes EventsGetEventsResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsResponse>): string {
+  encode: function (msg: Partial<EventsGetEventsResponse>): string {
     return JSON.stringify(EventsGetEventsResponseJSON._writeMessage(msg));
   },
 
@@ -9402,7 +9526,7 @@ export const EventsGetEventsResponseJSON = {
   decode: function (json: string): EventsGetEventsResponse {
     return EventsGetEventsResponseJSON._readMessage(
       EventsGetEventsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9420,7 +9544,7 @@ export const EventsGetEventsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsResponse>,
+    msg: Partial<EventsGetEventsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.total) {
@@ -9437,7 +9561,7 @@ export const EventsGetEventsResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetEventsResponse,
-    json: any,
+    json: any
   ): EventsGetEventsResponse {
     const _total_ = json["total"];
     if (_total_) {
@@ -9446,7 +9570,7 @@ export const EventsGetEventsResponseJSON = {
     const _events_ = json["events"];
     if (_events_) {
       for (const item of _events_) {
-        const m = protoAtoms.EventJSON.initialize();
+        const m = protoAtoms.Event.initialize();
         protoAtoms.EventJSON._readMessage(m, item);
         msg.events.push(m);
       }
@@ -9459,7 +9583,7 @@ export const EventsGetEventsByIdPayloadJSON = {
   /**
    * Serializes EventsGetEventsByIdPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsByIdPayload>): string {
+  encode: function (msg: Partial<EventsGetEventsByIdPayload>): string {
     return JSON.stringify(EventsGetEventsByIdPayloadJSON._writeMessage(msg));
   },
 
@@ -9469,7 +9593,7 @@ export const EventsGetEventsByIdPayloadJSON = {
   decode: function (json: string): EventsGetEventsByIdPayload {
     return EventsGetEventsByIdPayloadJSON._readMessage(
       EventsGetEventsByIdPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9486,7 +9610,7 @@ export const EventsGetEventsByIdPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsByIdPayload>,
+    msg: Partial<EventsGetEventsByIdPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -9500,7 +9624,7 @@ export const EventsGetEventsByIdPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetEventsByIdPayload,
-    json: any,
+    json: any
   ): EventsGetEventsByIdPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
@@ -9514,7 +9638,7 @@ export const EventsGetEventsByIdResponseJSON = {
   /**
    * Serializes EventsGetEventsByIdResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetEventsByIdResponse>): string {
+  encode: function (msg: Partial<EventsGetEventsByIdResponse>): string {
     return JSON.stringify(EventsGetEventsByIdResponseJSON._writeMessage(msg));
   },
 
@@ -9524,7 +9648,7 @@ export const EventsGetEventsByIdResponseJSON = {
   decode: function (json: string): EventsGetEventsByIdResponse {
     return EventsGetEventsByIdResponseJSON._readMessage(
       EventsGetEventsByIdResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9541,7 +9665,7 @@ export const EventsGetEventsByIdResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventsByIdResponse>,
+    msg: Partial<EventsGetEventsByIdResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.events?.length) {
@@ -9555,12 +9679,12 @@ export const EventsGetEventsByIdResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetEventsByIdResponse,
-    json: any,
+    json: any
   ): EventsGetEventsByIdResponse {
     const _events_ = json["events"];
     if (_events_) {
       for (const item of _events_) {
-        const m = protoAtoms.EventJSON.initialize();
+        const m = protoAtoms.Event.initialize();
         protoAtoms.EventJSON._readMessage(m, item);
         msg.events.push(m);
       }
@@ -9573,7 +9697,7 @@ export const PlayersGetMyEventsPayloadJSON = {
   /**
    * Serializes PlayersGetMyEventsPayload to JSON.
    */
-  encode: function (_msg?: PartialDeep<PlayersGetMyEventsPayload>): string {
+  encode: function (_msg?: Partial<PlayersGetMyEventsPayload>): string {
     return "{}";
   },
 
@@ -9595,7 +9719,7 @@ export const PlayersGetMyEventsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    _msg: PartialDeep<PlayersGetMyEventsPayload>,
+    _msg: Partial<PlayersGetMyEventsPayload>
   ): Record<string, unknown> {
     return {};
   },
@@ -9605,7 +9729,7 @@ export const PlayersGetMyEventsPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetMyEventsPayload,
-    _json: any,
+    _json: any
   ): PlayersGetMyEventsPayload {
     return msg;
   },
@@ -9615,7 +9739,7 @@ export const PlayersGetMyEventsResponseJSON = {
   /**
    * Serializes PlayersGetMyEventsResponse to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetMyEventsResponse>): string {
+  encode: function (msg: Partial<PlayersGetMyEventsResponse>): string {
     return JSON.stringify(PlayersGetMyEventsResponseJSON._writeMessage(msg));
   },
 
@@ -9625,7 +9749,7 @@ export const PlayersGetMyEventsResponseJSON = {
   decode: function (json: string): PlayersGetMyEventsResponse {
     return PlayersGetMyEventsResponseJSON._readMessage(
       PlayersGetMyEventsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9642,7 +9766,7 @@ export const PlayersGetMyEventsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetMyEventsResponse>,
+    msg: Partial<PlayersGetMyEventsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.events?.length) {
@@ -9656,12 +9780,12 @@ export const PlayersGetMyEventsResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetMyEventsResponse,
-    json: any,
+    json: any
   ): PlayersGetMyEventsResponse {
     const _events_ = json["events"];
     if (_events_) {
       for (const item of _events_) {
-        const m = protoAtoms.MyEventJSON.initialize();
+        const m = protoAtoms.MyEvent.initialize();
         protoAtoms.MyEventJSON._readMessage(m, item);
         msg.events.push(m);
       }
@@ -9674,7 +9798,7 @@ export const EventsGetRatingTablePayloadJSON = {
   /**
    * Serializes EventsGetRatingTablePayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetRatingTablePayload>): string {
+  encode: function (msg: Partial<EventsGetRatingTablePayload>): string {
     return JSON.stringify(EventsGetRatingTablePayloadJSON._writeMessage(msg));
   },
 
@@ -9684,7 +9808,7 @@ export const EventsGetRatingTablePayloadJSON = {
   decode: function (json: string): EventsGetRatingTablePayload {
     return EventsGetRatingTablePayloadJSON._readMessage(
       EventsGetRatingTablePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9705,7 +9829,7 @@ export const EventsGetRatingTablePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetRatingTablePayload>,
+    msg: Partial<EventsGetRatingTablePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventIdList?.length) {
@@ -9731,7 +9855,7 @@ export const EventsGetRatingTablePayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetRatingTablePayload,
-    json: any,
+    json: any
   ): EventsGetRatingTablePayload {
     const _eventIdList_ = json["eventIdList"] ?? json["event_id_list"];
     if (_eventIdList_) {
@@ -9762,7 +9886,7 @@ export const EventsGetRatingTableResponseJSON = {
   /**
    * Serializes EventsGetRatingTableResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetRatingTableResponse>): string {
+  encode: function (msg: Partial<EventsGetRatingTableResponse>): string {
     return JSON.stringify(EventsGetRatingTableResponseJSON._writeMessage(msg));
   },
 
@@ -9772,7 +9896,7 @@ export const EventsGetRatingTableResponseJSON = {
   decode: function (json: string): EventsGetRatingTableResponse {
     return EventsGetRatingTableResponseJSON._readMessage(
       EventsGetRatingTableResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9789,7 +9913,7 @@ export const EventsGetRatingTableResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetRatingTableResponse>,
+    msg: Partial<EventsGetRatingTableResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.list?.length) {
@@ -9803,12 +9927,12 @@ export const EventsGetRatingTableResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetRatingTableResponse,
-    json: any,
+    json: any
   ): EventsGetRatingTableResponse {
     const _list_ = json["list"];
     if (_list_) {
       for (const item of _list_) {
-        const m = protoAtoms.PlayerInRatingJSON.initialize();
+        const m = protoAtoms.PlayerInRating.initialize();
         protoAtoms.PlayerInRatingJSON._readMessage(m, item);
         msg.list.push(m);
       }
@@ -9821,7 +9945,7 @@ export const EventsGetLastGamesPayloadJSON = {
   /**
    * Serializes EventsGetLastGamesPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetLastGamesPayload>): string {
+  encode: function (msg: Partial<EventsGetLastGamesPayload>): string {
     return JSON.stringify(EventsGetLastGamesPayloadJSON._writeMessage(msg));
   },
 
@@ -9831,7 +9955,7 @@ export const EventsGetLastGamesPayloadJSON = {
   decode: function (json: string): EventsGetLastGamesPayload {
     return EventsGetLastGamesPayloadJSON._readMessage(
       EventsGetLastGamesPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9852,7 +9976,7 @@ export const EventsGetLastGamesPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetLastGamesPayload>,
+    msg: Partial<EventsGetLastGamesPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventIdList?.length) {
@@ -9878,7 +10002,7 @@ export const EventsGetLastGamesPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetLastGamesPayload,
-    json: any,
+    json: any
   ): EventsGetLastGamesPayload {
     const _eventIdList_ = json["eventIdList"] ?? json["event_id_list"];
     if (_eventIdList_) {
@@ -9908,7 +10032,7 @@ export const EventsGetLastGamesResponseJSON = {
   /**
    * Serializes EventsGetLastGamesResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetLastGamesResponse>): string {
+  encode: function (msg: Partial<EventsGetLastGamesResponse>): string {
     return JSON.stringify(EventsGetLastGamesResponseJSON._writeMessage(msg));
   },
 
@@ -9918,7 +10042,7 @@ export const EventsGetLastGamesResponseJSON = {
   decode: function (json: string): EventsGetLastGamesResponse {
     return EventsGetLastGamesResponseJSON._readMessage(
       EventsGetLastGamesResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9937,7 +10061,7 @@ export const EventsGetLastGamesResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetLastGamesResponse>,
+    msg: Partial<EventsGetLastGamesResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.games?.length) {
@@ -9957,12 +10081,12 @@ export const EventsGetLastGamesResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetLastGamesResponse,
-    json: any,
+    json: any
   ): EventsGetLastGamesResponse {
     const _games_ = json["games"];
     if (_games_) {
       for (const item of _games_) {
-        const m = protoAtoms.GameResultJSON.initialize();
+        const m = protoAtoms.GameResult.initialize();
         protoAtoms.GameResultJSON._readMessage(m, item);
         msg.games.push(m);
       }
@@ -9970,7 +10094,7 @@ export const EventsGetLastGamesResponseJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = protoAtoms.PlayerJSON.initialize();
+        const m = protoAtoms.Player.initialize();
         protoAtoms.PlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -9987,7 +10111,7 @@ export const EventsGetGamePayloadJSON = {
   /**
    * Serializes EventsGetGamePayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetGamePayload>): string {
+  encode: function (msg: Partial<EventsGetGamePayload>): string {
     return JSON.stringify(EventsGetGamePayloadJSON._writeMessage(msg));
   },
 
@@ -9997,7 +10121,7 @@ export const EventsGetGamePayloadJSON = {
   decode: function (json: string): EventsGetGamePayload {
     return EventsGetGamePayloadJSON._readMessage(
       EventsGetGamePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10014,7 +10138,7 @@ export const EventsGetGamePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetGamePayload>,
+    msg: Partial<EventsGetGamePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -10028,7 +10152,7 @@ export const EventsGetGamePayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetGamePayload,
-    json: any,
+    json: any
   ): EventsGetGamePayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -10042,7 +10166,7 @@ export const EventsGetGameResponseJSON = {
   /**
    * Serializes EventsGetGameResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetGameResponse>): string {
+  encode: function (msg: Partial<EventsGetGameResponse>): string {
     return JSON.stringify(EventsGetGameResponseJSON._writeMessage(msg));
   },
 
@@ -10052,7 +10176,7 @@ export const EventsGetGameResponseJSON = {
   decode: function (json: string): EventsGetGameResponse {
     return EventsGetGameResponseJSON._readMessage(
       EventsGetGameResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10070,7 +10194,7 @@ export const EventsGetGameResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetGameResponse>,
+    msg: Partial<EventsGetGameResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.game) {
@@ -10090,16 +10214,18 @@ export const EventsGetGameResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetGameResponse,
-    json: any,
+    json: any
   ): EventsGetGameResponse {
     const _game_ = json["game"];
     if (_game_) {
-      protoAtoms.GameResultJSON._readMessage(msg.game, _game_);
+      const m = protoAtoms.GameResult.initialize();
+      protoAtoms.GameResultJSON._readMessage(m, _game_);
+      msg.game = m;
     }
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = protoAtoms.PlayerJSON.initialize();
+        const m = protoAtoms.Player.initialize();
         protoAtoms.PlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -10112,7 +10238,7 @@ export const EventsGetGamesSeriesResponseJSON = {
   /**
    * Serializes EventsGetGamesSeriesResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetGamesSeriesResponse>): string {
+  encode: function (msg: Partial<EventsGetGamesSeriesResponse>): string {
     return JSON.stringify(EventsGetGamesSeriesResponseJSON._writeMessage(msg));
   },
 
@@ -10122,7 +10248,7 @@ export const EventsGetGamesSeriesResponseJSON = {
   decode: function (json: string): EventsGetGamesSeriesResponse {
     return EventsGetGamesSeriesResponseJSON._readMessage(
       EventsGetGamesSeriesResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10139,12 +10265,12 @@ export const EventsGetGamesSeriesResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetGamesSeriesResponse>,
+    msg: Partial<EventsGetGamesSeriesResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.results?.length) {
       json["results"] = msg.results.map(
-        protoAtoms.SeriesResultJSON._writeMessage,
+        protoAtoms.SeriesResultJSON._writeMessage
       );
     }
     return json;
@@ -10155,12 +10281,12 @@ export const EventsGetGamesSeriesResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetGamesSeriesResponse,
-    json: any,
+    json: any
   ): EventsGetGamesSeriesResponse {
     const _results_ = json["results"];
     if (_results_) {
       for (const item of _results_) {
-        const m = protoAtoms.SeriesResultJSON.initialize();
+        const m = protoAtoms.SeriesResult.initialize();
         protoAtoms.SeriesResultJSON._readMessage(m, item);
         msg.results.push(m);
       }
@@ -10173,11 +10299,9 @@ export const PlayersGetCurrentSessionsPayloadJSON = {
   /**
    * Serializes PlayersGetCurrentSessionsPayload to JSON.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsPayload>,
-  ): string {
+  encode: function (msg: Partial<PlayersGetCurrentSessionsPayload>): string {
     return JSON.stringify(
-      PlayersGetCurrentSessionsPayloadJSON._writeMessage(msg),
+      PlayersGetCurrentSessionsPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -10187,7 +10311,7 @@ export const PlayersGetCurrentSessionsPayloadJSON = {
   decode: function (json: string): PlayersGetCurrentSessionsPayload {
     return PlayersGetCurrentSessionsPayloadJSON._readMessage(
       PlayersGetCurrentSessionsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10205,7 +10329,7 @@ export const PlayersGetCurrentSessionsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsPayload>,
+    msg: Partial<PlayersGetCurrentSessionsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -10222,7 +10346,7 @@ export const PlayersGetCurrentSessionsPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetCurrentSessionsPayload,
-    json: any,
+    json: any
   ): PlayersGetCurrentSessionsPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -10240,11 +10364,9 @@ export const PlayersGetCurrentSessionsResponseJSON = {
   /**
    * Serializes PlayersGetCurrentSessionsResponse to JSON.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsResponse>,
-  ): string {
+  encode: function (msg: Partial<PlayersGetCurrentSessionsResponse>): string {
     return JSON.stringify(
-      PlayersGetCurrentSessionsResponseJSON._writeMessage(msg),
+      PlayersGetCurrentSessionsResponseJSON._writeMessage(msg)
     );
   },
 
@@ -10254,7 +10376,7 @@ export const PlayersGetCurrentSessionsResponseJSON = {
   decode: function (json: string): PlayersGetCurrentSessionsResponse {
     return PlayersGetCurrentSessionsResponseJSON._readMessage(
       PlayersGetCurrentSessionsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10271,12 +10393,12 @@ export const PlayersGetCurrentSessionsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetCurrentSessionsResponse>,
+    msg: Partial<PlayersGetCurrentSessionsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessions?.length) {
       json["sessions"] = msg.sessions.map(
-        protoAtoms.CurrentSessionJSON._writeMessage,
+        protoAtoms.CurrentSessionJSON._writeMessage
       );
     }
     return json;
@@ -10287,12 +10409,12 @@ export const PlayersGetCurrentSessionsResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetCurrentSessionsResponse,
-    json: any,
+    json: any
   ): PlayersGetCurrentSessionsResponse {
     const _sessions_ = json["sessions"];
     if (_sessions_) {
       for (const item of _sessions_) {
-        const m = protoAtoms.CurrentSessionJSON.initialize();
+        const m = protoAtoms.CurrentSession.initialize();
         protoAtoms.CurrentSessionJSON._readMessage(m, item);
         msg.sessions.push(m);
       }
@@ -10306,10 +10428,10 @@ export const EventsGetAllRegisteredPlayersPayloadJSON = {
    * Serializes EventsGetAllRegisteredPlayersPayload to JSON.
    */
   encode: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersPayload>,
+    msg: Partial<EventsGetAllRegisteredPlayersPayload>
   ): string {
     return JSON.stringify(
-      EventsGetAllRegisteredPlayersPayloadJSON._writeMessage(msg),
+      EventsGetAllRegisteredPlayersPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -10319,7 +10441,7 @@ export const EventsGetAllRegisteredPlayersPayloadJSON = {
   decode: function (json: string): EventsGetAllRegisteredPlayersPayload {
     return EventsGetAllRegisteredPlayersPayloadJSON._readMessage(
       EventsGetAllRegisteredPlayersPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10336,7 +10458,7 @@ export const EventsGetAllRegisteredPlayersPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersPayload>,
+    msg: Partial<EventsGetAllRegisteredPlayersPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventIds?.length) {
@@ -10350,7 +10472,7 @@ export const EventsGetAllRegisteredPlayersPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetAllRegisteredPlayersPayload,
-    json: any,
+    json: any
   ): EventsGetAllRegisteredPlayersPayload {
     const _eventIds_ = json["eventIds"] ?? json["event_ids"];
     if (_eventIds_) {
@@ -10365,10 +10487,10 @@ export const EventsGetAllRegisteredPlayersResponseJSON = {
    * Serializes EventsGetAllRegisteredPlayersResponse to JSON.
    */
   encode: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersResponse>,
+    msg: Partial<EventsGetAllRegisteredPlayersResponse>
   ): string {
     return JSON.stringify(
-      EventsGetAllRegisteredPlayersResponseJSON._writeMessage(msg),
+      EventsGetAllRegisteredPlayersResponseJSON._writeMessage(msg)
     );
   },
 
@@ -10378,7 +10500,7 @@ export const EventsGetAllRegisteredPlayersResponseJSON = {
   decode: function (json: string): EventsGetAllRegisteredPlayersResponse {
     return EventsGetAllRegisteredPlayersResponseJSON._readMessage(
       EventsGetAllRegisteredPlayersResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10395,12 +10517,12 @@ export const EventsGetAllRegisteredPlayersResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAllRegisteredPlayersResponse>,
+    msg: Partial<EventsGetAllRegisteredPlayersResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.players?.length) {
       json["players"] = msg.players.map(
-        protoAtoms.RegisteredPlayerJSON._writeMessage,
+        protoAtoms.RegisteredPlayerJSON._writeMessage
       );
     }
     return json;
@@ -10411,12 +10533,12 @@ export const EventsGetAllRegisteredPlayersResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetAllRegisteredPlayersResponse,
-    json: any,
+    json: any
   ): EventsGetAllRegisteredPlayersResponse {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = protoAtoms.RegisteredPlayerJSON.initialize();
+        const m = protoAtoms.RegisteredPlayer.initialize();
         protoAtoms.RegisteredPlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -10429,7 +10551,7 @@ export const EventsGetTimerStateResponseJSON = {
   /**
    * Serializes EventsGetTimerStateResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetTimerStateResponse>): string {
+  encode: function (msg: Partial<EventsGetTimerStateResponse>): string {
     return JSON.stringify(EventsGetTimerStateResponseJSON._writeMessage(msg));
   },
 
@@ -10439,7 +10561,7 @@ export const EventsGetTimerStateResponseJSON = {
   decode: function (json: string): EventsGetTimerStateResponse {
     return EventsGetTimerStateResponseJSON._readMessage(
       EventsGetTimerStateResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10462,7 +10584,7 @@ export const EventsGetTimerStateResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTimerStateResponse>,
+    msg: Partial<EventsGetTimerStateResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.started) {
@@ -10494,7 +10616,7 @@ export const EventsGetTimerStateResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetTimerStateResponse,
-    json: any,
+    json: any
   ): EventsGetTimerStateResponse {
     const _started_ = json["started"];
     if (_started_) {
@@ -10534,9 +10656,9 @@ export const GamesGetSessionOverviewPayloadJSON = {
   /**
    * Serializes GamesGetSessionOverviewPayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesGetSessionOverviewPayload>): string {
+  encode: function (msg: Partial<GamesGetSessionOverviewPayload>): string {
     return JSON.stringify(
-      GamesGetSessionOverviewPayloadJSON._writeMessage(msg),
+      GamesGetSessionOverviewPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -10546,7 +10668,7 @@ export const GamesGetSessionOverviewPayloadJSON = {
   decode: function (json: string): GamesGetSessionOverviewPayload {
     return GamesGetSessionOverviewPayloadJSON._readMessage(
       GamesGetSessionOverviewPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10563,7 +10685,7 @@ export const GamesGetSessionOverviewPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesGetSessionOverviewPayload>,
+    msg: Partial<GamesGetSessionOverviewPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -10577,7 +10699,7 @@ export const GamesGetSessionOverviewPayloadJSON = {
    */
   _readMessage: function (
     msg: GamesGetSessionOverviewPayload,
-    json: any,
+    json: any
   ): GamesGetSessionOverviewPayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -10591,9 +10713,9 @@ export const GamesGetSessionOverviewResponseJSON = {
   /**
    * Serializes GamesGetSessionOverviewResponse to JSON.
    */
-  encode: function (msg: PartialDeep<GamesGetSessionOverviewResponse>): string {
+  encode: function (msg: Partial<GamesGetSessionOverviewResponse>): string {
     return JSON.stringify(
-      GamesGetSessionOverviewResponseJSON._writeMessage(msg),
+      GamesGetSessionOverviewResponseJSON._writeMessage(msg)
     );
   },
 
@@ -10603,7 +10725,7 @@ export const GamesGetSessionOverviewResponseJSON = {
   decode: function (json: string): GamesGetSessionOverviewResponse {
     return GamesGetSessionOverviewResponseJSON._readMessage(
       GamesGetSessionOverviewResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10624,7 +10746,7 @@ export const GamesGetSessionOverviewResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesGetSessionOverviewResponse>,
+    msg: Partial<GamesGetSessionOverviewResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -10638,7 +10760,7 @@ export const GamesGetSessionOverviewResponseJSON = {
     }
     if (msg.players?.length) {
       json["players"] = msg.players.map(
-        protoAtoms.PlayerInSessionJSON._writeMessage,
+        protoAtoms.PlayerInSessionJSON._writeMessage
       );
     }
     if (msg.state) {
@@ -10655,7 +10777,7 @@ export const GamesGetSessionOverviewResponseJSON = {
    */
   _readMessage: function (
     msg: GamesGetSessionOverviewResponse,
-    json: any,
+    json: any
   ): GamesGetSessionOverviewResponse {
     const _id_ = json["id"];
     if (_id_) {
@@ -10672,14 +10794,16 @@ export const GamesGetSessionOverviewResponseJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = protoAtoms.PlayerInSessionJSON.initialize();
+        const m = protoAtoms.PlayerInSession.initialize();
         protoAtoms.PlayerInSessionJSON._readMessage(m, item);
         msg.players.push(m);
       }
     }
     const _state_ = json["state"];
     if (_state_) {
-      protoAtoms.SessionStateJSON._readMessage(msg.state, _state_);
+      const m = protoAtoms.SessionState.initialize();
+      protoAtoms.SessionStateJSON._readMessage(m, _state_);
+      msg.state = m;
     }
     return msg;
   },
@@ -10689,7 +10813,7 @@ export const PlayersGetPlayerStatsPayloadJSON = {
   /**
    * Serializes PlayersGetPlayerStatsPayload to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetPlayerStatsPayload>): string {
+  encode: function (msg: Partial<PlayersGetPlayerStatsPayload>): string {
     return JSON.stringify(PlayersGetPlayerStatsPayloadJSON._writeMessage(msg));
   },
 
@@ -10699,7 +10823,7 @@ export const PlayersGetPlayerStatsPayloadJSON = {
   decode: function (json: string): PlayersGetPlayerStatsPayload {
     return PlayersGetPlayerStatsPayloadJSON._readMessage(
       PlayersGetPlayerStatsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10717,7 +10841,7 @@ export const PlayersGetPlayerStatsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerStatsPayload>,
+    msg: Partial<PlayersGetPlayerStatsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -10734,7 +10858,7 @@ export const PlayersGetPlayerStatsPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerStatsPayload,
-    json: any,
+    json: any
   ): PlayersGetPlayerStatsPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -10752,7 +10876,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
   /**
    * Serializes PlayersGetPlayerStatsResponse to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetPlayerStatsResponse>): string {
+  encode: function (msg: Partial<PlayersGetPlayerStatsResponse>): string {
     return JSON.stringify(PlayersGetPlayerStatsResponseJSON._writeMessage(msg));
   },
 
@@ -10762,7 +10886,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
   decode: function (json: string): PlayersGetPlayerStatsResponse {
     return PlayersGetPlayerStatsResponseJSON._readMessage(
       PlayersGetPlayerStatsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10790,7 +10914,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerStatsResponse>,
+    msg: Partial<PlayersGetPlayerStatsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ratingHistory?.length) {
@@ -10798,17 +10922,17 @@ export const PlayersGetPlayerStatsResponseJSON = {
     }
     if (msg.scoreHistory?.length) {
       json["scoreHistory"] = msg.scoreHistory.map(
-        protoAtoms.SessionHistoryResultTableJSON._writeMessage,
+        protoAtoms.SessionHistoryResultTableJSON._writeMessage
       );
     }
     if (msg.playersInfo?.length) {
       json["playersInfo"] = msg.playersInfo.map(
-        protoAtoms.PlayerJSON._writeMessage,
+        protoAtoms.PlayerJSON._writeMessage
       );
     }
     if (msg.placesSummary?.length) {
       json["placesSummary"] = msg.placesSummary.map(
-        protoAtoms.PlacesSummaryItemJSON._writeMessage,
+        protoAtoms.PlacesSummaryItemJSON._writeMessage
       );
     }
     if (msg.totalPlayedGames) {
@@ -10819,7 +10943,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
     }
     if (msg.winSummary) {
       const _winSummary_ = protoAtoms.PlayerWinSummaryJSON._writeMessage(
-        msg.winSummary,
+        msg.winSummary
       );
       if (Object.keys(_winSummary_).length > 0) {
         json["winSummary"] = _winSummary_;
@@ -10827,17 +10951,17 @@ export const PlayersGetPlayerStatsResponseJSON = {
     }
     if (msg.handsValueSummary?.length) {
       json["handsValueSummary"] = msg.handsValueSummary.map(
-        protoAtoms.HandValueStatJSON._writeMessage,
+        protoAtoms.HandValueStatJSON._writeMessage
       );
     }
     if (msg.yakuSummary?.length) {
       json["yakuSummary"] = msg.yakuSummary.map(
-        protoAtoms.YakuStatJSON._writeMessage,
+        protoAtoms.YakuStatJSON._writeMessage
       );
     }
     if (msg.riichiSummary) {
       const _riichiSummary_ = protoAtoms.RiichiSummaryJSON._writeMessage(
-        msg.riichiSummary,
+        msg.riichiSummary
       );
       if (Object.keys(_riichiSummary_).length > 0) {
         json["riichiSummary"] = _riichiSummary_;
@@ -10860,7 +10984,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerStatsResponse,
-    json: any,
+    json: any
   ): PlayersGetPlayerStatsResponse {
     const _ratingHistory_ = json["ratingHistory"] ?? json["rating_history"];
     if (_ratingHistory_) {
@@ -10869,7 +10993,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
     const _scoreHistory_ = json["scoreHistory"] ?? json["score_history"];
     if (_scoreHistory_) {
       for (const item of _scoreHistory_) {
-        const m = protoAtoms.SessionHistoryResultTableJSON.initialize();
+        const m = protoAtoms.SessionHistoryResultTable.initialize();
         protoAtoms.SessionHistoryResultTableJSON._readMessage(m, item);
         msg.scoreHistory.push(m);
       }
@@ -10877,7 +11001,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
     const _playersInfo_ = json["playersInfo"] ?? json["players_info"];
     if (_playersInfo_) {
       for (const item of _playersInfo_) {
-        const m = protoAtoms.PlayerJSON.initialize();
+        const m = protoAtoms.Player.initialize();
         protoAtoms.PlayerJSON._readMessage(m, item);
         msg.playersInfo.push(m);
       }
@@ -10885,7 +11009,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
     const _placesSummary_ = json["placesSummary"] ?? json["places_summary"];
     if (_placesSummary_) {
       for (const item of _placesSummary_) {
-        const m = protoAtoms.PlacesSummaryItemJSON.initialize();
+        const m = protoAtoms.PlacesSummaryItem.initialize();
         protoAtoms.PlacesSummaryItemJSON._readMessage(m, item);
         msg.placesSummary.push(m);
       }
@@ -10902,16 +11026,15 @@ export const PlayersGetPlayerStatsResponseJSON = {
     }
     const _winSummary_ = json["winSummary"] ?? json["win_summary"];
     if (_winSummary_) {
-      protoAtoms.PlayerWinSummaryJSON._readMessage(
-        msg.winSummary,
-        _winSummary_,
-      );
+      const m = protoAtoms.PlayerWinSummary.initialize();
+      protoAtoms.PlayerWinSummaryJSON._readMessage(m, _winSummary_);
+      msg.winSummary = m;
     }
     const _handsValueSummary_ =
       json["handsValueSummary"] ?? json["hands_value_summary"];
     if (_handsValueSummary_) {
       for (const item of _handsValueSummary_) {
-        const m = protoAtoms.HandValueStatJSON.initialize();
+        const m = protoAtoms.HandValueStat.initialize();
         protoAtoms.HandValueStatJSON._readMessage(m, item);
         msg.handsValueSummary.push(m);
       }
@@ -10919,21 +11042,22 @@ export const PlayersGetPlayerStatsResponseJSON = {
     const _yakuSummary_ = json["yakuSummary"] ?? json["yaku_summary"];
     if (_yakuSummary_) {
       for (const item of _yakuSummary_) {
-        const m = protoAtoms.YakuStatJSON.initialize();
+        const m = protoAtoms.YakuStat.initialize();
         protoAtoms.YakuStatJSON._readMessage(m, item);
         msg.yakuSummary.push(m);
       }
     }
     const _riichiSummary_ = json["riichiSummary"] ?? json["riichi_summary"];
     if (_riichiSummary_) {
-      protoAtoms.RiichiSummaryJSON._readMessage(
-        msg.riichiSummary,
-        _riichiSummary_,
-      );
+      const m = protoAtoms.RiichiSummary.initialize();
+      protoAtoms.RiichiSummaryJSON._readMessage(m, _riichiSummary_);
+      msg.riichiSummary = m;
     }
     const _doraStat_ = json["doraStat"] ?? json["dora_stat"];
     if (_doraStat_) {
-      protoAtoms.DoraSummaryJSON._readMessage(msg.doraStat, _doraStat_);
+      const m = protoAtoms.DoraSummary.initialize();
+      protoAtoms.DoraSummaryJSON._readMessage(m, _doraStat_);
+      msg.doraStat = m;
     }
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
@@ -10947,7 +11071,7 @@ export const GamesAddRoundPayloadJSON = {
   /**
    * Serializes GamesAddRoundPayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesAddRoundPayload>): string {
+  encode: function (msg: Partial<GamesAddRoundPayload>): string {
     return JSON.stringify(GamesAddRoundPayloadJSON._writeMessage(msg));
   },
 
@@ -10957,7 +11081,7 @@ export const GamesAddRoundPayloadJSON = {
   decode: function (json: string): GamesAddRoundPayload {
     return GamesAddRoundPayloadJSON._readMessage(
       GamesAddRoundPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10975,7 +11099,7 @@ export const GamesAddRoundPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddRoundPayload>,
+    msg: Partial<GamesAddRoundPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -10995,7 +11119,7 @@ export const GamesAddRoundPayloadJSON = {
    */
   _readMessage: function (
     msg: GamesAddRoundPayload,
-    json: any,
+    json: any
   ): GamesAddRoundPayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -11003,7 +11127,9 @@ export const GamesAddRoundPayloadJSON = {
     }
     const _roundData_ = json["roundData"] ?? json["round_data"];
     if (_roundData_) {
-      protoAtoms.RoundJSON._readMessage(msg.roundData, _roundData_);
+      const m = protoAtoms.Round.initialize();
+      protoAtoms.RoundJSON._readMessage(m, _roundData_);
+      msg.roundData = m;
     }
     return msg;
   },
@@ -11013,7 +11139,7 @@ export const GamesAddRoundResponseJSON = {
   /**
    * Serializes GamesAddRoundResponse to JSON.
    */
-  encode: function (msg: PartialDeep<GamesAddRoundResponse>): string {
+  encode: function (msg: Partial<GamesAddRoundResponse>): string {
     return JSON.stringify(GamesAddRoundResponseJSON._writeMessage(msg));
   },
 
@@ -11023,7 +11149,7 @@ export const GamesAddRoundResponseJSON = {
   decode: function (json: string): GamesAddRoundResponse {
     return GamesAddRoundResponseJSON._readMessage(
       GamesAddRoundResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11049,17 +11175,17 @@ export const GamesAddRoundResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddRoundResponse>,
+    msg: Partial<GamesAddRoundResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
-        protoAtoms.IntermediateResultOfSessionJSON._writeMessage,
+        protoAtoms.IntermediateResultOfSessionJSON._writeMessage
       );
     }
     if (msg.extraPenaltyLogs?.length) {
       json["extraPenaltyLogs"] = msg.extraPenaltyLogs.map(
-        protoAtoms.PenaltyJSON._writeMessage,
+        protoAtoms.PenaltyJSON._writeMessage
       );
     }
     if (msg.round) {
@@ -11094,12 +11220,12 @@ export const GamesAddRoundResponseJSON = {
    */
   _readMessage: function (
     msg: GamesAddRoundResponse,
-    json: any,
+    json: any
   ): GamesAddRoundResponse {
     const _scores_ = json["scores"];
     if (_scores_) {
       for (const item of _scores_) {
-        const m = protoAtoms.IntermediateResultOfSessionJSON.initialize();
+        const m = protoAtoms.IntermediateResultOfSession.initialize();
         protoAtoms.IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
       }
@@ -11108,7 +11234,7 @@ export const GamesAddRoundResponseJSON = {
       json["extraPenaltyLogs"] ?? json["extra_penalty_logs"];
     if (_extraPenaltyLogs_) {
       for (const item of _extraPenaltyLogs_) {
-        const m = protoAtoms.PenaltyJSON.initialize();
+        const m = protoAtoms.Penalty.initialize();
         protoAtoms.PenaltyJSON._readMessage(m, item);
         msg.extraPenaltyLogs.push(m);
       }
@@ -11156,7 +11282,7 @@ export const GamesPreviewRoundPayloadJSON = {
   /**
    * Serializes GamesPreviewRoundPayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesPreviewRoundPayload>): string {
+  encode: function (msg: Partial<GamesPreviewRoundPayload>): string {
     return JSON.stringify(GamesPreviewRoundPayloadJSON._writeMessage(msg));
   },
 
@@ -11166,7 +11292,7 @@ export const GamesPreviewRoundPayloadJSON = {
   decode: function (json: string): GamesPreviewRoundPayload {
     return GamesPreviewRoundPayloadJSON._readMessage(
       GamesPreviewRoundPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11184,7 +11310,7 @@ export const GamesPreviewRoundPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesPreviewRoundPayload>,
+    msg: Partial<GamesPreviewRoundPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -11204,7 +11330,7 @@ export const GamesPreviewRoundPayloadJSON = {
    */
   _readMessage: function (
     msg: GamesPreviewRoundPayload,
-    json: any,
+    json: any
   ): GamesPreviewRoundPayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -11212,7 +11338,9 @@ export const GamesPreviewRoundPayloadJSON = {
     }
     const _roundData_ = json["roundData"] ?? json["round_data"];
     if (_roundData_) {
-      protoAtoms.RoundJSON._readMessage(msg.roundData, _roundData_);
+      const m = protoAtoms.Round.initialize();
+      protoAtoms.RoundJSON._readMessage(m, _roundData_);
+      msg.roundData = m;
     }
     return msg;
   },
@@ -11222,7 +11350,7 @@ export const GamesPreviewRoundResponseJSON = {
   /**
    * Serializes GamesPreviewRoundResponse to JSON.
    */
-  encode: function (msg: PartialDeep<GamesPreviewRoundResponse>): string {
+  encode: function (msg: Partial<GamesPreviewRoundResponse>): string {
     return JSON.stringify(GamesPreviewRoundResponseJSON._writeMessage(msg));
   },
 
@@ -11232,7 +11360,7 @@ export const GamesPreviewRoundResponseJSON = {
   decode: function (json: string): GamesPreviewRoundResponse {
     return GamesPreviewRoundResponseJSON._readMessage(
       GamesPreviewRoundResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11249,7 +11377,7 @@ export const GamesPreviewRoundResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesPreviewRoundResponse>,
+    msg: Partial<GamesPreviewRoundResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.state) {
@@ -11266,11 +11394,13 @@ export const GamesPreviewRoundResponseJSON = {
    */
   _readMessage: function (
     msg: GamesPreviewRoundResponse,
-    json: any,
+    json: any
   ): GamesPreviewRoundResponse {
     const _state_ = json["state"];
     if (_state_) {
-      protoAtoms.RoundStateJSON._readMessage(msg.state, _state_);
+      const m = protoAtoms.RoundState.initialize();
+      protoAtoms.RoundStateJSON._readMessage(m, _state_);
+      msg.state = m;
     }
     return msg;
   },
@@ -11280,7 +11410,7 @@ export const GamesAddOnlineReplayPayloadJSON = {
   /**
    * Serializes GamesAddOnlineReplayPayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesAddOnlineReplayPayload>): string {
+  encode: function (msg: Partial<GamesAddOnlineReplayPayload>): string {
     return JSON.stringify(GamesAddOnlineReplayPayloadJSON._writeMessage(msg));
   },
 
@@ -11290,7 +11420,7 @@ export const GamesAddOnlineReplayPayloadJSON = {
   decode: function (json: string): GamesAddOnlineReplayPayload {
     return GamesAddOnlineReplayPayloadJSON._readMessage(
       GamesAddOnlineReplayPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11308,7 +11438,7 @@ export const GamesAddOnlineReplayPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddOnlineReplayPayload>,
+    msg: Partial<GamesAddOnlineReplayPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -11325,7 +11455,7 @@ export const GamesAddOnlineReplayPayloadJSON = {
    */
   _readMessage: function (
     msg: GamesAddOnlineReplayPayload,
-    json: any,
+    json: any
   ): GamesAddOnlineReplayPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -11343,7 +11473,7 @@ export const GamesAddOnlineReplayResponseJSON = {
   /**
    * Serializes GamesAddOnlineReplayResponse to JSON.
    */
-  encode: function (msg: PartialDeep<GamesAddOnlineReplayResponse>): string {
+  encode: function (msg: Partial<GamesAddOnlineReplayResponse>): string {
     return JSON.stringify(GamesAddOnlineReplayResponseJSON._writeMessage(msg));
   },
 
@@ -11353,7 +11483,7 @@ export const GamesAddOnlineReplayResponseJSON = {
   decode: function (json: string): GamesAddOnlineReplayResponse {
     return GamesAddOnlineReplayResponseJSON._readMessage(
       GamesAddOnlineReplayResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11371,7 +11501,7 @@ export const GamesAddOnlineReplayResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddOnlineReplayResponse>,
+    msg: Partial<GamesAddOnlineReplayResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.game) {
@@ -11391,16 +11521,18 @@ export const GamesAddOnlineReplayResponseJSON = {
    */
   _readMessage: function (
     msg: GamesAddOnlineReplayResponse,
-    json: any,
+    json: any
   ): GamesAddOnlineReplayResponse {
     const _game_ = json["game"];
     if (_game_) {
-      protoAtoms.GameResultJSON._readMessage(msg.game, _game_);
+      const m = protoAtoms.GameResult.initialize();
+      protoAtoms.GameResultJSON._readMessage(m, _game_);
+      msg.game = m;
     }
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = protoAtoms.PlayerJSON.initialize();
+        const m = protoAtoms.Player.initialize();
         protoAtoms.PlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -11413,7 +11545,7 @@ export const PlayersGetLastResultsPayloadJSON = {
   /**
    * Serializes PlayersGetLastResultsPayload to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetLastResultsPayload>): string {
+  encode: function (msg: Partial<PlayersGetLastResultsPayload>): string {
     return JSON.stringify(PlayersGetLastResultsPayloadJSON._writeMessage(msg));
   },
 
@@ -11423,7 +11555,7 @@ export const PlayersGetLastResultsPayloadJSON = {
   decode: function (json: string): PlayersGetLastResultsPayload {
     return PlayersGetLastResultsPayloadJSON._readMessage(
       PlayersGetLastResultsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11441,7 +11573,7 @@ export const PlayersGetLastResultsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastResultsPayload>,
+    msg: Partial<PlayersGetLastResultsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -11458,7 +11590,7 @@ export const PlayersGetLastResultsPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetLastResultsPayload,
-    json: any,
+    json: any
   ): PlayersGetLastResultsPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -11476,7 +11608,7 @@ export const PlayersGetLastResultsResponseJSON = {
   /**
    * Serializes PlayersGetLastResultsResponse to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetLastResultsResponse>): string {
+  encode: function (msg: Partial<PlayersGetLastResultsResponse>): string {
     return JSON.stringify(PlayersGetLastResultsResponseJSON._writeMessage(msg));
   },
 
@@ -11486,7 +11618,7 @@ export const PlayersGetLastResultsResponseJSON = {
   decode: function (json: string): PlayersGetLastResultsResponse {
     return PlayersGetLastResultsResponseJSON._readMessage(
       PlayersGetLastResultsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11503,12 +11635,12 @@ export const PlayersGetLastResultsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastResultsResponse>,
+    msg: Partial<PlayersGetLastResultsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.results?.length) {
       json["results"] = msg.results.map(
-        protoAtoms.SessionHistoryResultJSON._writeMessage,
+        protoAtoms.SessionHistoryResultJSON._writeMessage
       );
     }
     return json;
@@ -11519,12 +11651,12 @@ export const PlayersGetLastResultsResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetLastResultsResponse,
-    json: any,
+    json: any
   ): PlayersGetLastResultsResponse {
     const _results_ = json["results"];
     if (_results_) {
       for (const item of _results_) {
-        const m = protoAtoms.SessionHistoryResultJSON.initialize();
+        const m = protoAtoms.SessionHistoryResult.initialize();
         protoAtoms.SessionHistoryResultJSON._readMessage(m, item);
         msg.results.push(m);
       }
@@ -11537,7 +11669,7 @@ export const PlayersGetLastRoundPayloadJSON = {
   /**
    * Serializes PlayersGetLastRoundPayload to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetLastRoundPayload>): string {
+  encode: function (msg: Partial<PlayersGetLastRoundPayload>): string {
     return JSON.stringify(PlayersGetLastRoundPayloadJSON._writeMessage(msg));
   },
 
@@ -11547,7 +11679,7 @@ export const PlayersGetLastRoundPayloadJSON = {
   decode: function (json: string): PlayersGetLastRoundPayload {
     return PlayersGetLastRoundPayloadJSON._readMessage(
       PlayersGetLastRoundPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11565,7 +11697,7 @@ export const PlayersGetLastRoundPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundPayload>,
+    msg: Partial<PlayersGetLastRoundPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -11582,7 +11714,7 @@ export const PlayersGetLastRoundPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundPayload,
-    json: any,
+    json: any
   ): PlayersGetLastRoundPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -11600,7 +11732,7 @@ export const PlayersGetLastRoundResponseJSON = {
   /**
    * Serializes PlayersGetLastRoundResponse to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetLastRoundResponse>): string {
+  encode: function (msg: Partial<PlayersGetLastRoundResponse>): string {
     return JSON.stringify(PlayersGetLastRoundResponseJSON._writeMessage(msg));
   },
 
@@ -11610,7 +11742,7 @@ export const PlayersGetLastRoundResponseJSON = {
   decode: function (json: string): PlayersGetLastRoundResponse {
     return PlayersGetLastRoundResponseJSON._readMessage(
       PlayersGetLastRoundResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11627,7 +11759,7 @@ export const PlayersGetLastRoundResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundResponse>,
+    msg: Partial<PlayersGetLastRoundResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.round) {
@@ -11644,11 +11776,13 @@ export const PlayersGetLastRoundResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundResponse,
-    json: any,
+    json: any
   ): PlayersGetLastRoundResponse {
     const _round_ = json["round"];
     if (_round_) {
-      protoAtoms.RoundStateJSON._readMessage(msg.round, _round_);
+      const m = protoAtoms.RoundState.initialize();
+      protoAtoms.RoundStateJSON._readMessage(m, _round_);
+      msg.round = m;
     }
     return msg;
   },
@@ -11658,7 +11792,7 @@ export const PlayersGetAllRoundsPayloadJSON = {
   /**
    * Serializes PlayersGetAllRoundsPayload to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetAllRoundsPayload>): string {
+  encode: function (msg: Partial<PlayersGetAllRoundsPayload>): string {
     return JSON.stringify(PlayersGetAllRoundsPayloadJSON._writeMessage(msg));
   },
 
@@ -11668,7 +11802,7 @@ export const PlayersGetAllRoundsPayloadJSON = {
   decode: function (json: string): PlayersGetAllRoundsPayload {
     return PlayersGetAllRoundsPayloadJSON._readMessage(
       PlayersGetAllRoundsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11685,7 +11819,7 @@ export const PlayersGetAllRoundsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetAllRoundsPayload>,
+    msg: Partial<PlayersGetAllRoundsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -11699,7 +11833,7 @@ export const PlayersGetAllRoundsPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetAllRoundsPayload,
-    json: any,
+    json: any
   ): PlayersGetAllRoundsPayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -11713,7 +11847,7 @@ export const PlayersGetAllRoundsResponseJSON = {
   /**
    * Serializes PlayersGetAllRoundsResponse to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetAllRoundsResponse>): string {
+  encode: function (msg: Partial<PlayersGetAllRoundsResponse>): string {
     return JSON.stringify(PlayersGetAllRoundsResponseJSON._writeMessage(msg));
   },
 
@@ -11723,7 +11857,7 @@ export const PlayersGetAllRoundsResponseJSON = {
   decode: function (json: string): PlayersGetAllRoundsResponse {
     return PlayersGetAllRoundsResponseJSON._readMessage(
       PlayersGetAllRoundsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11740,7 +11874,7 @@ export const PlayersGetAllRoundsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetAllRoundsResponse>,
+    msg: Partial<PlayersGetAllRoundsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rounds?.length) {
@@ -11754,12 +11888,12 @@ export const PlayersGetAllRoundsResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetAllRoundsResponse,
-    json: any,
+    json: any
   ): PlayersGetAllRoundsResponse {
     const _rounds_ = json["rounds"];
     if (_rounds_) {
       for (const item of _rounds_) {
-        const m = protoAtoms.RoundStateJSON.initialize();
+        const m = protoAtoms.RoundState.initialize();
         protoAtoms.RoundStateJSON._readMessage(m, item);
         msg.rounds.push(m);
       }
@@ -11772,11 +11906,9 @@ export const PlayersGetLastRoundByHashPayloadJSON = {
   /**
    * Serializes PlayersGetLastRoundByHashPayload to JSON.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashPayload>,
-  ): string {
+  encode: function (msg: Partial<PlayersGetLastRoundByHashPayload>): string {
     return JSON.stringify(
-      PlayersGetLastRoundByHashPayloadJSON._writeMessage(msg),
+      PlayersGetLastRoundByHashPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -11786,7 +11918,7 @@ export const PlayersGetLastRoundByHashPayloadJSON = {
   decode: function (json: string): PlayersGetLastRoundByHashPayload {
     return PlayersGetLastRoundByHashPayloadJSON._readMessage(
       PlayersGetLastRoundByHashPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11803,7 +11935,7 @@ export const PlayersGetLastRoundByHashPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashPayload>,
+    msg: Partial<PlayersGetLastRoundByHashPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -11817,7 +11949,7 @@ export const PlayersGetLastRoundByHashPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundByHashPayload,
-    json: any,
+    json: any
   ): PlayersGetLastRoundByHashPayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -11831,11 +11963,9 @@ export const PlayersGetLastRoundByHashResponseJSON = {
   /**
    * Serializes PlayersGetLastRoundByHashResponse to JSON.
    */
-  encode: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashResponse>,
-  ): string {
+  encode: function (msg: Partial<PlayersGetLastRoundByHashResponse>): string {
     return JSON.stringify(
-      PlayersGetLastRoundByHashResponseJSON._writeMessage(msg),
+      PlayersGetLastRoundByHashResponseJSON._writeMessage(msg)
     );
   },
 
@@ -11845,7 +11975,7 @@ export const PlayersGetLastRoundByHashResponseJSON = {
   decode: function (json: string): PlayersGetLastRoundByHashResponse {
     return PlayersGetLastRoundByHashResponseJSON._readMessage(
       PlayersGetLastRoundByHashResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11862,7 +11992,7 @@ export const PlayersGetLastRoundByHashResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetLastRoundByHashResponse>,
+    msg: Partial<PlayersGetLastRoundByHashResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.round) {
@@ -11879,11 +12009,13 @@ export const PlayersGetLastRoundByHashResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundByHashResponse,
-    json: any,
+    json: any
   ): PlayersGetLastRoundByHashResponse {
     const _round_ = json["round"];
     if (_round_) {
-      protoAtoms.RoundStateJSON._readMessage(msg.round, _round_);
+      const m = protoAtoms.RoundState.initialize();
+      protoAtoms.RoundStateJSON._readMessage(m, _round_);
+      msg.round = m;
     }
     return msg;
   },
@@ -11893,7 +12025,7 @@ export const EventsGetEventForEditPayloadJSON = {
   /**
    * Serializes EventsGetEventForEditPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetEventForEditPayload>): string {
+  encode: function (msg: Partial<EventsGetEventForEditPayload>): string {
     return JSON.stringify(EventsGetEventForEditPayloadJSON._writeMessage(msg));
   },
 
@@ -11903,7 +12035,7 @@ export const EventsGetEventForEditPayloadJSON = {
   decode: function (json: string): EventsGetEventForEditPayload {
     return EventsGetEventForEditPayloadJSON._readMessage(
       EventsGetEventForEditPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11920,7 +12052,7 @@ export const EventsGetEventForEditPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventForEditPayload>,
+    msg: Partial<EventsGetEventForEditPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11934,7 +12066,7 @@ export const EventsGetEventForEditPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetEventForEditPayload,
-    json: any,
+    json: any
   ): EventsGetEventForEditPayload {
     const _id_ = json["id"];
     if (_id_) {
@@ -11948,7 +12080,7 @@ export const EventsGetEventForEditResponseJSON = {
   /**
    * Serializes EventsGetEventForEditResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetEventForEditResponse>): string {
+  encode: function (msg: Partial<EventsGetEventForEditResponse>): string {
     return JSON.stringify(EventsGetEventForEditResponseJSON._writeMessage(msg));
   },
 
@@ -11958,7 +12090,7 @@ export const EventsGetEventForEditResponseJSON = {
   decode: function (json: string): EventsGetEventForEditResponse {
     return EventsGetEventForEditResponseJSON._readMessage(
       EventsGetEventForEditResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11976,7 +12108,7 @@ export const EventsGetEventForEditResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetEventForEditResponse>,
+    msg: Partial<EventsGetEventForEditResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11996,7 +12128,7 @@ export const EventsGetEventForEditResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetEventForEditResponse,
-    json: any,
+    json: any
   ): EventsGetEventForEditResponse {
     const _id_ = json["id"];
     if (_id_) {
@@ -12004,7 +12136,9 @@ export const EventsGetEventForEditResponseJSON = {
     }
     const _event_ = json["event"];
     if (_event_) {
-      protoAtoms.EventDataJSON._readMessage(msg.event, _event_);
+      const m = protoAtoms.EventData.initialize();
+      protoAtoms.EventDataJSON._readMessage(m, _event_);
+      msg.event = m;
     }
     return msg;
   },
@@ -12014,7 +12148,7 @@ export const EventsUpdateEventPayloadJSON = {
   /**
    * Serializes EventsUpdateEventPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsUpdateEventPayload>): string {
+  encode: function (msg: Partial<EventsUpdateEventPayload>): string {
     return JSON.stringify(EventsUpdateEventPayloadJSON._writeMessage(msg));
   },
 
@@ -12024,7 +12158,7 @@ export const EventsUpdateEventPayloadJSON = {
   decode: function (json: string): EventsUpdateEventPayload {
     return EventsUpdateEventPayloadJSON._readMessage(
       EventsUpdateEventPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12042,7 +12176,7 @@ export const EventsUpdateEventPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdateEventPayload>,
+    msg: Partial<EventsUpdateEventPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -12062,7 +12196,7 @@ export const EventsUpdateEventPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsUpdateEventPayload,
-    json: any,
+    json: any
   ): EventsUpdateEventPayload {
     const _id_ = json["id"];
     if (_id_) {
@@ -12070,7 +12204,9 @@ export const EventsUpdateEventPayloadJSON = {
     }
     const _event_ = json["event"];
     if (_event_) {
-      protoAtoms.EventDataJSON._readMessage(msg.event, _event_);
+      const m = protoAtoms.EventData.initialize();
+      protoAtoms.EventDataJSON._readMessage(m, _event_);
+      msg.event = m;
     }
     return msg;
   },
@@ -12080,7 +12216,7 @@ export const EventsGetTablesStateResponseJSON = {
   /**
    * Serializes EventsGetTablesStateResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetTablesStateResponse>): string {
+  encode: function (msg: Partial<EventsGetTablesStateResponse>): string {
     return JSON.stringify(EventsGetTablesStateResponseJSON._writeMessage(msg));
   },
 
@@ -12090,7 +12226,7 @@ export const EventsGetTablesStateResponseJSON = {
   decode: function (json: string): EventsGetTablesStateResponse {
     return EventsGetTablesStateResponseJSON._readMessage(
       EventsGetTablesStateResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12107,7 +12243,7 @@ export const EventsGetTablesStateResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetTablesStateResponse>,
+    msg: Partial<EventsGetTablesStateResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.tables?.length) {
@@ -12121,12 +12257,12 @@ export const EventsGetTablesStateResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetTablesStateResponse,
-    json: any,
+    json: any
   ): EventsGetTablesStateResponse {
     const _tables_ = json["tables"];
     if (_tables_) {
       for (const item of _tables_) {
-        const m = protoAtoms.TableStateJSON.initialize();
+        const m = protoAtoms.TableState.initialize();
         protoAtoms.TableStateJSON._readMessage(m, item);
         msg.tables.push(m);
       }
@@ -12139,7 +12275,7 @@ export const EventsRegisterPlayerPayloadJSON = {
   /**
    * Serializes EventsRegisterPlayerPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsRegisterPlayerPayload>): string {
+  encode: function (msg: Partial<EventsRegisterPlayerPayload>): string {
     return JSON.stringify(EventsRegisterPlayerPayloadJSON._writeMessage(msg));
   },
 
@@ -12149,7 +12285,7 @@ export const EventsRegisterPlayerPayloadJSON = {
   decode: function (json: string): EventsRegisterPlayerPayload {
     return EventsRegisterPlayerPayloadJSON._readMessage(
       EventsRegisterPlayerPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12167,7 +12303,7 @@ export const EventsRegisterPlayerPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsRegisterPlayerPayload>,
+    msg: Partial<EventsRegisterPlayerPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12184,7 +12320,7 @@ export const EventsRegisterPlayerPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsRegisterPlayerPayload,
-    json: any,
+    json: any
   ): EventsRegisterPlayerPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -12202,7 +12338,7 @@ export const EventsUnregisterPlayerPayloadJSON = {
   /**
    * Serializes EventsUnregisterPlayerPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsUnregisterPlayerPayload>): string {
+  encode: function (msg: Partial<EventsUnregisterPlayerPayload>): string {
     return JSON.stringify(EventsUnregisterPlayerPayloadJSON._writeMessage(msg));
   },
 
@@ -12212,7 +12348,7 @@ export const EventsUnregisterPlayerPayloadJSON = {
   decode: function (json: string): EventsUnregisterPlayerPayload {
     return EventsUnregisterPlayerPayloadJSON._readMessage(
       EventsUnregisterPlayerPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12230,7 +12366,7 @@ export const EventsUnregisterPlayerPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUnregisterPlayerPayload>,
+    msg: Partial<EventsUnregisterPlayerPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12247,7 +12383,7 @@ export const EventsUnregisterPlayerPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsUnregisterPlayerPayload,
-    json: any,
+    json: any
   ): EventsUnregisterPlayerPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -12266,10 +12402,10 @@ export const EventsUpdatePlayerSeatingFlagPayloadJSON = {
    * Serializes EventsUpdatePlayerSeatingFlagPayload to JSON.
    */
   encode: function (
-    msg: PartialDeep<EventsUpdatePlayerSeatingFlagPayload>,
+    msg: Partial<EventsUpdatePlayerSeatingFlagPayload>
   ): string {
     return JSON.stringify(
-      EventsUpdatePlayerSeatingFlagPayloadJSON._writeMessage(msg),
+      EventsUpdatePlayerSeatingFlagPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -12279,7 +12415,7 @@ export const EventsUpdatePlayerSeatingFlagPayloadJSON = {
   decode: function (json: string): EventsUpdatePlayerSeatingFlagPayload {
     return EventsUpdatePlayerSeatingFlagPayloadJSON._readMessage(
       EventsUpdatePlayerSeatingFlagPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12298,7 +12434,7 @@ export const EventsUpdatePlayerSeatingFlagPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayerSeatingFlagPayload>,
+    msg: Partial<EventsUpdatePlayerSeatingFlagPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12318,7 +12454,7 @@ export const EventsUpdatePlayerSeatingFlagPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayerSeatingFlagPayload,
-    json: any,
+    json: any
   ): EventsUpdatePlayerSeatingFlagPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -12340,7 +12476,7 @@ export const EventsGetAchievementsPayloadJSON = {
   /**
    * Serializes EventsGetAchievementsPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetAchievementsPayload>): string {
+  encode: function (msg: Partial<EventsGetAchievementsPayload>): string {
     return JSON.stringify(EventsGetAchievementsPayloadJSON._writeMessage(msg));
   },
 
@@ -12350,7 +12486,7 @@ export const EventsGetAchievementsPayloadJSON = {
   decode: function (json: string): EventsGetAchievementsPayload {
     return EventsGetAchievementsPayloadJSON._readMessage(
       EventsGetAchievementsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12368,7 +12504,7 @@ export const EventsGetAchievementsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAchievementsPayload>,
+    msg: Partial<EventsGetAchievementsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.achievementsList?.length) {
@@ -12385,7 +12521,7 @@ export const EventsGetAchievementsPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsGetAchievementsPayload,
-    json: any,
+    json: any
   ): EventsGetAchievementsPayload {
     const _achievementsList_ =
       json["achievementsList"] ?? json["achievements_list"];
@@ -12404,7 +12540,7 @@ export const EventsGetAchievementsResponseJSON = {
   /**
    * Serializes EventsGetAchievementsResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetAchievementsResponse>): string {
+  encode: function (msg: Partial<EventsGetAchievementsResponse>): string {
     return JSON.stringify(EventsGetAchievementsResponseJSON._writeMessage(msg));
   },
 
@@ -12414,7 +12550,7 @@ export const EventsGetAchievementsResponseJSON = {
   decode: function (json: string): EventsGetAchievementsResponse {
     return EventsGetAchievementsResponseJSON._readMessage(
       EventsGetAchievementsResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12431,12 +12567,12 @@ export const EventsGetAchievementsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetAchievementsResponse>,
+    msg: Partial<EventsGetAchievementsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.achievements?.length) {
       json["achievements"] = msg.achievements.map(
-        protoAtoms.AchievementJSON._writeMessage,
+        protoAtoms.AchievementJSON._writeMessage
       );
     }
     return json;
@@ -12447,12 +12583,12 @@ export const EventsGetAchievementsResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetAchievementsResponse,
-    json: any,
+    json: any
   ): EventsGetAchievementsResponse {
     const _achievements_ = json["achievements"];
     if (_achievements_) {
       for (const item of _achievements_) {
-        const m = protoAtoms.AchievementJSON.initialize();
+        const m = protoAtoms.Achievement.initialize();
         protoAtoms.AchievementJSON._readMessage(m, item);
         msg.achievements.push(m);
       }
@@ -12465,11 +12601,9 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
   /**
    * Serializes EventsUpdatePlayersLocalIdsPayload to JSON.
    */
-  encode: function (
-    msg: PartialDeep<EventsUpdatePlayersLocalIdsPayload>,
-  ): string {
+  encode: function (msg: Partial<EventsUpdatePlayersLocalIdsPayload>): string {
     return JSON.stringify(
-      EventsUpdatePlayersLocalIdsPayloadJSON._writeMessage(msg),
+      EventsUpdatePlayersLocalIdsPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -12479,7 +12613,7 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
   decode: function (json: string): EventsUpdatePlayersLocalIdsPayload {
     return EventsUpdatePlayersLocalIdsPayloadJSON._readMessage(
       EventsUpdatePlayersLocalIdsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12497,7 +12631,7 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayersLocalIdsPayload>,
+    msg: Partial<EventsUpdatePlayersLocalIdsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -12505,7 +12639,7 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
     }
     if (msg.idsToLocalIds?.length) {
       json["idsToLocalIds"] = msg.idsToLocalIds.map(
-        protoAtoms.LocalIdMappingJSON._writeMessage,
+        protoAtoms.LocalIdMappingJSON._writeMessage
       );
     }
     return json;
@@ -12516,7 +12650,7 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayersLocalIdsPayload,
-    json: any,
+    json: any
   ): EventsUpdatePlayersLocalIdsPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -12525,7 +12659,7 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
     const _idsToLocalIds_ = json["idsToLocalIds"] ?? json["ids_to_local_ids"];
     if (_idsToLocalIds_) {
       for (const item of _idsToLocalIds_) {
-        const m = protoAtoms.LocalIdMappingJSON.initialize();
+        const m = protoAtoms.LocalIdMapping.initialize();
         protoAtoms.LocalIdMappingJSON._readMessage(m, item);
         msg.idsToLocalIds.push(m);
       }
@@ -12539,10 +12673,10 @@ export const EventsUpdatePlayerReplacementPayloadJSON = {
    * Serializes EventsUpdatePlayerReplacementPayload to JSON.
    */
   encode: function (
-    msg: PartialDeep<EventsUpdatePlayerReplacementPayload>,
+    msg: Partial<EventsUpdatePlayerReplacementPayload>
   ): string {
     return JSON.stringify(
-      EventsUpdatePlayerReplacementPayloadJSON._writeMessage(msg),
+      EventsUpdatePlayerReplacementPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -12552,7 +12686,7 @@ export const EventsUpdatePlayerReplacementPayloadJSON = {
   decode: function (json: string): EventsUpdatePlayerReplacementPayload {
     return EventsUpdatePlayerReplacementPayloadJSON._readMessage(
       EventsUpdatePlayerReplacementPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12571,7 +12705,7 @@ export const EventsUpdatePlayerReplacementPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayerReplacementPayload>,
+    msg: Partial<EventsUpdatePlayerReplacementPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12591,7 +12725,7 @@ export const EventsUpdatePlayerReplacementPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayerReplacementPayload,
-    json: any,
+    json: any
   ): EventsUpdatePlayerReplacementPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -12613,9 +12747,9 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
   /**
    * Serializes EventsUpdatePlayersTeamsPayload to JSON.
    */
-  encode: function (msg: PartialDeep<EventsUpdatePlayersTeamsPayload>): string {
+  encode: function (msg: Partial<EventsUpdatePlayersTeamsPayload>): string {
     return JSON.stringify(
-      EventsUpdatePlayersTeamsPayloadJSON._writeMessage(msg),
+      EventsUpdatePlayersTeamsPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -12625,7 +12759,7 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
   decode: function (json: string): EventsUpdatePlayersTeamsPayload {
     return EventsUpdatePlayersTeamsPayloadJSON._readMessage(
       EventsUpdatePlayersTeamsPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12643,7 +12777,7 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePlayersTeamsPayload>,
+    msg: Partial<EventsUpdatePlayersTeamsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -12651,7 +12785,7 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
     }
     if (msg.idsToTeamNames?.length) {
       json["idsToTeamNames"] = msg.idsToTeamNames.map(
-        protoAtoms.TeamMappingJSON._writeMessage,
+        protoAtoms.TeamMappingJSON._writeMessage
       );
     }
     return json;
@@ -12662,7 +12796,7 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayersTeamsPayload,
-    json: any,
+    json: any
   ): EventsUpdatePlayersTeamsPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -12672,7 +12806,7 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
       json["idsToTeamNames"] ?? json["ids_to_team_names"];
     if (_idsToTeamNames_) {
       for (const item of _idsToTeamNames_) {
-        const m = protoAtoms.TeamMappingJSON.initialize();
+        const m = protoAtoms.TeamMapping.initialize();
         protoAtoms.TeamMappingJSON._readMessage(m, item);
         msg.idsToTeamNames.push(m);
       }
@@ -12685,7 +12819,7 @@ export const GamesStartGamePayloadJSON = {
   /**
    * Serializes GamesStartGamePayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesStartGamePayload>): string {
+  encode: function (msg: Partial<GamesStartGamePayload>): string {
     return JSON.stringify(GamesStartGamePayloadJSON._writeMessage(msg));
   },
 
@@ -12695,7 +12829,7 @@ export const GamesStartGamePayloadJSON = {
   decode: function (json: string): GamesStartGamePayload {
     return GamesStartGamePayloadJSON._readMessage(
       GamesStartGamePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12713,7 +12847,7 @@ export const GamesStartGamePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesStartGamePayload>,
+    msg: Partial<GamesStartGamePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -12730,7 +12864,7 @@ export const GamesStartGamePayloadJSON = {
    */
   _readMessage: function (
     msg: GamesStartGamePayload,
-    json: any,
+    json: any
   ): GamesStartGamePayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -12748,7 +12882,7 @@ export const GamesStartGameResponseJSON = {
   /**
    * Serializes GamesStartGameResponse to JSON.
    */
-  encode: function (msg: PartialDeep<GamesStartGameResponse>): string {
+  encode: function (msg: Partial<GamesStartGameResponse>): string {
     return JSON.stringify(GamesStartGameResponseJSON._writeMessage(msg));
   },
 
@@ -12758,7 +12892,7 @@ export const GamesStartGameResponseJSON = {
   decode: function (json: string): GamesStartGameResponse {
     return GamesStartGameResponseJSON._readMessage(
       GamesStartGameResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12775,7 +12909,7 @@ export const GamesStartGameResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesStartGameResponse>,
+    msg: Partial<GamesStartGameResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -12789,7 +12923,7 @@ export const GamesStartGameResponseJSON = {
    */
   _readMessage: function (
     msg: GamesStartGameResponse,
-    json: any,
+    json: any
   ): GamesStartGameResponse {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -12803,7 +12937,7 @@ export const GamesEndGamePayloadJSON = {
   /**
    * Serializes GamesEndGamePayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesEndGamePayload>): string {
+  encode: function (msg: Partial<GamesEndGamePayload>): string {
     return JSON.stringify(GamesEndGamePayloadJSON._writeMessage(msg));
   },
 
@@ -12813,7 +12947,7 @@ export const GamesEndGamePayloadJSON = {
   decode: function (json: string): GamesEndGamePayload {
     return GamesEndGamePayloadJSON._readMessage(
       GamesEndGamePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12830,7 +12964,7 @@ export const GamesEndGamePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesEndGamePayload>,
+    msg: Partial<GamesEndGamePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -12844,7 +12978,7 @@ export const GamesEndGamePayloadJSON = {
    */
   _readMessage: function (
     msg: GamesEndGamePayload,
-    json: any,
+    json: any
   ): GamesEndGamePayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -12858,7 +12992,7 @@ export const GamesCancelGamePayloadJSON = {
   /**
    * Serializes GamesCancelGamePayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesCancelGamePayload>): string {
+  encode: function (msg: Partial<GamesCancelGamePayload>): string {
     return JSON.stringify(GamesCancelGamePayloadJSON._writeMessage(msg));
   },
 
@@ -12868,7 +13002,7 @@ export const GamesCancelGamePayloadJSON = {
   decode: function (json: string): GamesCancelGamePayload {
     return GamesCancelGamePayloadJSON._readMessage(
       GamesCancelGamePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12885,7 +13019,7 @@ export const GamesCancelGamePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesCancelGamePayload>,
+    msg: Partial<GamesCancelGamePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -12899,7 +13033,7 @@ export const GamesCancelGamePayloadJSON = {
    */
   _readMessage: function (
     msg: GamesCancelGamePayload,
-    json: any,
+    json: any
   ): GamesCancelGamePayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -12913,7 +13047,7 @@ export const GamesDropLastRoundPayloadJSON = {
   /**
    * Serializes GamesDropLastRoundPayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesDropLastRoundPayload>): string {
+  encode: function (msg: Partial<GamesDropLastRoundPayload>): string {
     return JSON.stringify(GamesDropLastRoundPayloadJSON._writeMessage(msg));
   },
 
@@ -12923,7 +13057,7 @@ export const GamesDropLastRoundPayloadJSON = {
   decode: function (json: string): GamesDropLastRoundPayload {
     return GamesDropLastRoundPayloadJSON._readMessage(
       GamesDropLastRoundPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12941,7 +13075,7 @@ export const GamesDropLastRoundPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesDropLastRoundPayload>,
+    msg: Partial<GamesDropLastRoundPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -12949,7 +13083,7 @@ export const GamesDropLastRoundPayloadJSON = {
     }
     if (msg.intermediateResults?.length) {
       json["intermediateResults"] = msg.intermediateResults.map(
-        protoAtoms.IntermediateResultOfSessionJSON._writeMessage,
+        protoAtoms.IntermediateResultOfSessionJSON._writeMessage
       );
     }
     return json;
@@ -12960,7 +13094,7 @@ export const GamesDropLastRoundPayloadJSON = {
    */
   _readMessage: function (
     msg: GamesDropLastRoundPayload,
-    json: any,
+    json: any
   ): GamesDropLastRoundPayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -12970,7 +13104,7 @@ export const GamesDropLastRoundPayloadJSON = {
       json["intermediateResults"] ?? json["intermediate_results"];
     if (_intermediateResults_) {
       for (const item of _intermediateResults_) {
-        const m = protoAtoms.IntermediateResultOfSessionJSON.initialize();
+        const m = protoAtoms.IntermediateResultOfSession.initialize();
         protoAtoms.IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.intermediateResults.push(m);
       }
@@ -12983,7 +13117,7 @@ export const GamesDefinalizeGamePayloadJSON = {
   /**
    * Serializes GamesDefinalizeGamePayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesDefinalizeGamePayload>): string {
+  encode: function (msg: Partial<GamesDefinalizeGamePayload>): string {
     return JSON.stringify(GamesDefinalizeGamePayloadJSON._writeMessage(msg));
   },
 
@@ -12993,7 +13127,7 @@ export const GamesDefinalizeGamePayloadJSON = {
   decode: function (json: string): GamesDefinalizeGamePayload {
     return GamesDefinalizeGamePayloadJSON._readMessage(
       GamesDefinalizeGamePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13010,7 +13144,7 @@ export const GamesDefinalizeGamePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesDefinalizeGamePayload>,
+    msg: Partial<GamesDefinalizeGamePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -13024,7 +13158,7 @@ export const GamesDefinalizeGamePayloadJSON = {
    */
   _readMessage: function (
     msg: GamesDefinalizeGamePayload,
-    json: any,
+    json: any
   ): GamesDefinalizeGamePayload {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -13038,7 +13172,7 @@ export const GamesAddPenaltyPayloadJSON = {
   /**
    * Serializes GamesAddPenaltyPayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesAddPenaltyPayload>): string {
+  encode: function (msg: Partial<GamesAddPenaltyPayload>): string {
     return JSON.stringify(GamesAddPenaltyPayloadJSON._writeMessage(msg));
   },
 
@@ -13048,7 +13182,7 @@ export const GamesAddPenaltyPayloadJSON = {
   decode: function (json: string): GamesAddPenaltyPayload {
     return GamesAddPenaltyPayloadJSON._readMessage(
       GamesAddPenaltyPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13068,7 +13202,7 @@ export const GamesAddPenaltyPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddPenaltyPayload>,
+    msg: Partial<GamesAddPenaltyPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13091,7 +13225,7 @@ export const GamesAddPenaltyPayloadJSON = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyPayload,
-    json: any,
+    json: any
   ): GamesAddPenaltyPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -13117,7 +13251,7 @@ export const GamesAddPenaltyGamePayloadJSON = {
   /**
    * Serializes GamesAddPenaltyGamePayload to JSON.
    */
-  encode: function (msg: PartialDeep<GamesAddPenaltyGamePayload>): string {
+  encode: function (msg: Partial<GamesAddPenaltyGamePayload>): string {
     return JSON.stringify(GamesAddPenaltyGamePayloadJSON._writeMessage(msg));
   },
 
@@ -13127,7 +13261,7 @@ export const GamesAddPenaltyGamePayloadJSON = {
   decode: function (json: string): GamesAddPenaltyGamePayload {
     return GamesAddPenaltyGamePayloadJSON._readMessage(
       GamesAddPenaltyGamePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13145,7 +13279,7 @@ export const GamesAddPenaltyGamePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddPenaltyGamePayload>,
+    msg: Partial<GamesAddPenaltyGamePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13162,7 +13296,7 @@ export const GamesAddPenaltyGamePayloadJSON = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyGamePayload,
-    json: any,
+    json: any
   ): GamesAddPenaltyGamePayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -13180,7 +13314,7 @@ export const GamesAddPenaltyGameResponseJSON = {
   /**
    * Serializes GamesAddPenaltyGameResponse to JSON.
    */
-  encode: function (msg: PartialDeep<GamesAddPenaltyGameResponse>): string {
+  encode: function (msg: Partial<GamesAddPenaltyGameResponse>): string {
     return JSON.stringify(GamesAddPenaltyGameResponseJSON._writeMessage(msg));
   },
 
@@ -13190,7 +13324,7 @@ export const GamesAddPenaltyGameResponseJSON = {
   decode: function (json: string): GamesAddPenaltyGameResponse {
     return GamesAddPenaltyGameResponseJSON._readMessage(
       GamesAddPenaltyGameResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13207,7 +13341,7 @@ export const GamesAddPenaltyGameResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GamesAddPenaltyGameResponse>,
+    msg: Partial<GamesAddPenaltyGameResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.hash) {
@@ -13221,7 +13355,7 @@ export const GamesAddPenaltyGameResponseJSON = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyGameResponse,
-    json: any,
+    json: any
   ): GamesAddPenaltyGameResponse {
     const _hash_ = json["hash"];
     if (_hash_) {
@@ -13235,7 +13369,7 @@ export const PlayersGetPlayerPayloadJSON = {
   /**
    * Serializes PlayersGetPlayerPayload to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetPlayerPayload>): string {
+  encode: function (msg: Partial<PlayersGetPlayerPayload>): string {
     return JSON.stringify(PlayersGetPlayerPayloadJSON._writeMessage(msg));
   },
 
@@ -13245,7 +13379,7 @@ export const PlayersGetPlayerPayloadJSON = {
   decode: function (json: string): PlayersGetPlayerPayload {
     return PlayersGetPlayerPayloadJSON._readMessage(
       PlayersGetPlayerPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13262,7 +13396,7 @@ export const PlayersGetPlayerPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerPayload>,
+    msg: Partial<PlayersGetPlayerPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -13276,7 +13410,7 @@ export const PlayersGetPlayerPayloadJSON = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerPayload,
-    json: any,
+    json: any
   ): PlayersGetPlayerPayload {
     const _id_ = json["id"];
     if (_id_) {
@@ -13290,7 +13424,7 @@ export const PlayersGetPlayerResponseJSON = {
   /**
    * Serializes PlayersGetPlayerResponse to JSON.
    */
-  encode: function (msg: PartialDeep<PlayersGetPlayerResponse>): string {
+  encode: function (msg: Partial<PlayersGetPlayerResponse>): string {
     return JSON.stringify(PlayersGetPlayerResponseJSON._writeMessage(msg));
   },
 
@@ -13300,7 +13434,7 @@ export const PlayersGetPlayerResponseJSON = {
   decode: function (json: string): PlayersGetPlayerResponse {
     return PlayersGetPlayerResponseJSON._readMessage(
       PlayersGetPlayerResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13317,7 +13451,7 @@ export const PlayersGetPlayerResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayersGetPlayerResponse>,
+    msg: Partial<PlayersGetPlayerResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.players) {
@@ -13334,11 +13468,13 @@ export const PlayersGetPlayerResponseJSON = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerResponse,
-    json: any,
+    json: any
   ): PlayersGetPlayerResponse {
     const _players_ = json["players"];
     if (_players_) {
-      protoAtoms.PlayerJSON._readMessage(msg.players, _players_);
+      const m = protoAtoms.Player.initialize();
+      protoAtoms.PlayerJSON._readMessage(m, _players_);
+      msg.players = m;
     }
     return msg;
   },
@@ -13348,9 +13484,9 @@ export const EventsGetCurrentSeatingResponseJSON = {
   /**
    * Serializes EventsGetCurrentSeatingResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetCurrentSeatingResponse>): string {
+  encode: function (msg: Partial<EventsGetCurrentSeatingResponse>): string {
     return JSON.stringify(
-      EventsGetCurrentSeatingResponseJSON._writeMessage(msg),
+      EventsGetCurrentSeatingResponseJSON._writeMessage(msg)
     );
   },
 
@@ -13360,7 +13496,7 @@ export const EventsGetCurrentSeatingResponseJSON = {
   decode: function (json: string): EventsGetCurrentSeatingResponse {
     return EventsGetCurrentSeatingResponseJSON._readMessage(
       EventsGetCurrentSeatingResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13377,12 +13513,12 @@ export const EventsGetCurrentSeatingResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetCurrentSeatingResponse>,
+    msg: Partial<EventsGetCurrentSeatingResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.seating?.length) {
       json["seating"] = msg.seating.map(
-        protoAtoms.PlayerSeatingJSON._writeMessage,
+        protoAtoms.PlayerSeatingJSON._writeMessage
       );
     }
     return json;
@@ -13393,12 +13529,12 @@ export const EventsGetCurrentSeatingResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetCurrentSeatingResponse,
-    json: any,
+    json: any
   ): EventsGetCurrentSeatingResponse {
     const _seating_ = json["seating"];
     if (_seating_) {
       for (const item of _seating_) {
-        const m = protoAtoms.PlayerSeatingJSON.initialize();
+        const m = protoAtoms.PlayerSeating.initialize();
         protoAtoms.PlayerSeatingJSON._readMessage(m, item);
         msg.seating.push(m);
       }
@@ -13411,11 +13547,9 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
   /**
    * Serializes SeatingMakeShuffledSeatingPayload to JSON.
    */
-  encode: function (
-    msg: PartialDeep<SeatingMakeShuffledSeatingPayload>,
-  ): string {
+  encode: function (msg: Partial<SeatingMakeShuffledSeatingPayload>): string {
     return JSON.stringify(
-      SeatingMakeShuffledSeatingPayloadJSON._writeMessage(msg),
+      SeatingMakeShuffledSeatingPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -13425,7 +13559,7 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
   decode: function (json: string): SeatingMakeShuffledSeatingPayload {
     return SeatingMakeShuffledSeatingPayloadJSON._readMessage(
       SeatingMakeShuffledSeatingPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13444,7 +13578,7 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingMakeShuffledSeatingPayload>,
+    msg: Partial<SeatingMakeShuffledSeatingPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13464,7 +13598,7 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
    */
   _readMessage: function (
     msg: SeatingMakeShuffledSeatingPayload,
-    json: any,
+    json: any
   ): SeatingMakeShuffledSeatingPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -13486,11 +13620,9 @@ export const SeatingGenerateSwissSeatingResponseJSON = {
   /**
    * Serializes SeatingGenerateSwissSeatingResponse to JSON.
    */
-  encode: function (
-    msg: PartialDeep<SeatingGenerateSwissSeatingResponse>,
-  ): string {
+  encode: function (msg: Partial<SeatingGenerateSwissSeatingResponse>): string {
     return JSON.stringify(
-      SeatingGenerateSwissSeatingResponseJSON._writeMessage(msg),
+      SeatingGenerateSwissSeatingResponseJSON._writeMessage(msg)
     );
   },
 
@@ -13500,7 +13632,7 @@ export const SeatingGenerateSwissSeatingResponseJSON = {
   decode: function (json: string): SeatingGenerateSwissSeatingResponse {
     return SeatingGenerateSwissSeatingResponseJSON._readMessage(
       SeatingGenerateSwissSeatingResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13517,12 +13649,12 @@ export const SeatingGenerateSwissSeatingResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingGenerateSwissSeatingResponse>,
+    msg: Partial<SeatingGenerateSwissSeatingResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.tables?.length) {
       json["tables"] = msg.tables.map(
-        protoAtoms.TableItemSwissJSON._writeMessage,
+        protoAtoms.TableItemSwissJSON._writeMessage
       );
     }
     return json;
@@ -13533,12 +13665,12 @@ export const SeatingGenerateSwissSeatingResponseJSON = {
    */
   _readMessage: function (
     msg: SeatingGenerateSwissSeatingResponse,
-    json: any,
+    json: any
   ): SeatingGenerateSwissSeatingResponse {
     const _tables_ = json["tables"];
     if (_tables_) {
       for (const item of _tables_) {
-        const m = protoAtoms.TableItemSwissJSON.initialize();
+        const m = protoAtoms.TableItemSwiss.initialize();
         protoAtoms.TableItemSwissJSON._readMessage(m, item);
         msg.tables.push(m);
       }
@@ -13551,11 +13683,9 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
   /**
    * Serializes SeatingMakeIntervalSeatingPayload to JSON.
    */
-  encode: function (
-    msg: PartialDeep<SeatingMakeIntervalSeatingPayload>,
-  ): string {
+  encode: function (msg: Partial<SeatingMakeIntervalSeatingPayload>): string {
     return JSON.stringify(
-      SeatingMakeIntervalSeatingPayloadJSON._writeMessage(msg),
+      SeatingMakeIntervalSeatingPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -13565,7 +13695,7 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
   decode: function (json: string): SeatingMakeIntervalSeatingPayload {
     return SeatingMakeIntervalSeatingPayloadJSON._readMessage(
       SeatingMakeIntervalSeatingPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13583,7 +13713,7 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingMakeIntervalSeatingPayload>,
+    msg: Partial<SeatingMakeIntervalSeatingPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13600,7 +13730,7 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
    */
   _readMessage: function (
     msg: SeatingMakeIntervalSeatingPayload,
-    json: any,
+    json: any
   ): SeatingMakeIntervalSeatingPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -13619,10 +13749,10 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
    * Serializes SeatingMakePrescriptedSeatingPayload to JSON.
    */
   encode: function (
-    msg: PartialDeep<SeatingMakePrescriptedSeatingPayload>,
+    msg: Partial<SeatingMakePrescriptedSeatingPayload>
   ): string {
     return JSON.stringify(
-      SeatingMakePrescriptedSeatingPayloadJSON._writeMessage(msg),
+      SeatingMakePrescriptedSeatingPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -13632,7 +13762,7 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
   decode: function (json: string): SeatingMakePrescriptedSeatingPayload {
     return SeatingMakePrescriptedSeatingPayloadJSON._readMessage(
       SeatingMakePrescriptedSeatingPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13650,7 +13780,7 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingMakePrescriptedSeatingPayload>,
+    msg: Partial<SeatingMakePrescriptedSeatingPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13667,7 +13797,7 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
    */
   _readMessage: function (
     msg: SeatingMakePrescriptedSeatingPayload,
-    json: any,
+    json: any
   ): SeatingMakePrescriptedSeatingPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -13687,10 +13817,10 @@ export const SeatingGetNextPrescriptedSeatingResponseJSON = {
    * Serializes SeatingGetNextPrescriptedSeatingResponse to JSON.
    */
   encode: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
+    msg: Partial<SeatingGetNextPrescriptedSeatingResponse>
   ): string {
     return JSON.stringify(
-      SeatingGetNextPrescriptedSeatingResponseJSON._writeMessage(msg),
+      SeatingGetNextPrescriptedSeatingResponseJSON._writeMessage(msg)
     );
   },
 
@@ -13700,7 +13830,7 @@ export const SeatingGetNextPrescriptedSeatingResponseJSON = {
   decode: function (json: string): SeatingGetNextPrescriptedSeatingResponse {
     return SeatingGetNextPrescriptedSeatingResponseJSON._readMessage(
       SeatingGetNextPrescriptedSeatingResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13717,12 +13847,12 @@ export const SeatingGetNextPrescriptedSeatingResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
+    msg: Partial<SeatingGetNextPrescriptedSeatingResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.tables?.length) {
       json["tables"] = msg.tables.map(
-        protoAtoms.PrescriptedTableJSON._writeMessage,
+        protoAtoms.PrescriptedTableJSON._writeMessage
       );
     }
     return json;
@@ -13733,12 +13863,12 @@ export const SeatingGetNextPrescriptedSeatingResponseJSON = {
    */
   _readMessage: function (
     msg: SeatingGetNextPrescriptedSeatingResponse,
-    json: any,
+    json: any
   ): SeatingGetNextPrescriptedSeatingResponse {
     const _tables_ = json["tables"];
     if (_tables_) {
       for (const item of _tables_) {
-        const m = protoAtoms.PrescriptedTableJSON.initialize();
+        const m = protoAtoms.PrescriptedTable.initialize();
         protoAtoms.PrescriptedTableJSON._readMessage(m, item);
         msg.tables.push(m);
       }
@@ -13752,10 +13882,10 @@ export const EventsGetPrescriptedEventConfigResponseJSON = {
    * Serializes EventsGetPrescriptedEventConfigResponse to JSON.
    */
   encode: function (
-    msg: PartialDeep<EventsGetPrescriptedEventConfigResponse>,
+    msg: Partial<EventsGetPrescriptedEventConfigResponse>
   ): string {
     return JSON.stringify(
-      EventsGetPrescriptedEventConfigResponseJSON._writeMessage(msg),
+      EventsGetPrescriptedEventConfigResponseJSON._writeMessage(msg)
     );
   },
 
@@ -13765,7 +13895,7 @@ export const EventsGetPrescriptedEventConfigResponseJSON = {
   decode: function (json: string): EventsGetPrescriptedEventConfigResponse {
     return EventsGetPrescriptedEventConfigResponseJSON._readMessage(
       EventsGetPrescriptedEventConfigResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13785,7 +13915,7 @@ export const EventsGetPrescriptedEventConfigResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetPrescriptedEventConfigResponse>,
+    msg: Partial<EventsGetPrescriptedEventConfigResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13808,7 +13938,7 @@ export const EventsGetPrescriptedEventConfigResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetPrescriptedEventConfigResponse,
-    json: any,
+    json: any
   ): EventsGetPrescriptedEventConfigResponse {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -13836,10 +13966,10 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
    * Serializes EventsUpdatePrescriptedEventConfigPayload to JSON.
    */
   encode: function (
-    msg: PartialDeep<EventsUpdatePrescriptedEventConfigPayload>,
+    msg: Partial<EventsUpdatePrescriptedEventConfigPayload>
   ): string {
     return JSON.stringify(
-      EventsUpdatePrescriptedEventConfigPayloadJSON._writeMessage(msg),
+      EventsUpdatePrescriptedEventConfigPayloadJSON._writeMessage(msg)
     );
   },
 
@@ -13849,7 +13979,7 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
   decode: function (json: string): EventsUpdatePrescriptedEventConfigPayload {
     return EventsUpdatePrescriptedEventConfigPayloadJSON._readMessage(
       EventsUpdatePrescriptedEventConfigPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13868,7 +13998,7 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsUpdatePrescriptedEventConfigPayload>,
+    msg: Partial<EventsUpdatePrescriptedEventConfigPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13888,7 +14018,7 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
    */
   _readMessage: function (
     msg: EventsUpdatePrescriptedEventConfigPayload,
-    json: any,
+    json: any
   ): EventsUpdatePrescriptedEventConfigPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
@@ -13911,9 +14041,9 @@ export const EventsGetStartingTimerResponseJSON = {
   /**
    * Serializes EventsGetStartingTimerResponse to JSON.
    */
-  encode: function (msg: PartialDeep<EventsGetStartingTimerResponse>): string {
+  encode: function (msg: Partial<EventsGetStartingTimerResponse>): string {
     return JSON.stringify(
-      EventsGetStartingTimerResponseJSON._writeMessage(msg),
+      EventsGetStartingTimerResponseJSON._writeMessage(msg)
     );
   },
 
@@ -13923,7 +14053,7 @@ export const EventsGetStartingTimerResponseJSON = {
   decode: function (json: string): EventsGetStartingTimerResponse {
     return EventsGetStartingTimerResponseJSON._readMessage(
       EventsGetStartingTimerResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13940,7 +14070,7 @@ export const EventsGetStartingTimerResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
+    msg: Partial<EventsGetStartingTimerResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.timer) {
@@ -13954,7 +14084,7 @@ export const EventsGetStartingTimerResponseJSON = {
    */
   _readMessage: function (
     msg: EventsGetStartingTimerResponse,
-    json: any,
+    json: any
   ): EventsGetStartingTimerResponse {
     const _timer_ = json["timer"];
     if (_timer_) {
@@ -13968,7 +14098,7 @@ export const ClearStatCachePayloadJSON = {
   /**
    * Serializes ClearStatCachePayload to JSON.
    */
-  encode: function (msg: PartialDeep<ClearStatCachePayload>): string {
+  encode: function (msg: Partial<ClearStatCachePayload>): string {
     return JSON.stringify(ClearStatCachePayloadJSON._writeMessage(msg));
   },
 
@@ -13978,7 +14108,7 @@ export const ClearStatCachePayloadJSON = {
   decode: function (json: string): ClearStatCachePayload {
     return ClearStatCachePayloadJSON._readMessage(
       ClearStatCachePayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13995,7 +14125,7 @@ export const ClearStatCachePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<ClearStatCachePayload>,
+    msg: Partial<ClearStatCachePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -14009,11 +14139,108 @@ export const ClearStatCachePayloadJSON = {
    */
   _readMessage: function (
     msg: ClearStatCachePayload,
-    json: any,
+    json: any
   ): ClearStatCachePayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
+    }
+    return msg;
+  },
+};
+
+export const TypedGamesAddOnlineReplayPayloadJSON = {
+  /**
+   * Serializes TypedGamesAddOnlineReplayPayload to JSON.
+   */
+  encode: function (msg: Partial<TypedGamesAddOnlineReplayPayload>): string {
+    return JSON.stringify(
+      TypedGamesAddOnlineReplayPayloadJSON._writeMessage(msg)
+    );
+  },
+
+  /**
+   * Deserializes TypedGamesAddOnlineReplayPayload from JSON.
+   */
+  decode: function (json: string): TypedGamesAddOnlineReplayPayload {
+    return TypedGamesAddOnlineReplayPayloadJSON._readMessage(
+      TypedGamesAddOnlineReplayPayloadJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes TypedGamesAddOnlineReplayPayload with all fields set to their default value.
+   */
+  initialize: function (): TypedGamesAddOnlineReplayPayload {
+    return {
+      eventId: 0,
+      platformId: 0,
+      contentType: 0,
+      logTimestamp: 0,
+      replayHash: "",
+      content: "",
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<TypedGamesAddOnlineReplayPayload>
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.platformId) {
+      json["platformId"] = msg.platformId;
+    }
+    if (msg.contentType) {
+      json["contentType"] = msg.contentType;
+    }
+    if (msg.logTimestamp) {
+      json["logTimestamp"] = msg.logTimestamp;
+    }
+    if (msg.replayHash) {
+      json["replayHash"] = msg.replayHash;
+    }
+    if (msg.content) {
+      json["content"] = msg.content;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: TypedGamesAddOnlineReplayPayload,
+    json: any
+  ): TypedGamesAddOnlineReplayPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = _eventId_;
+    }
+    const _platformId_ = json["platformId"] ?? json["platform_id"];
+    if (_platformId_) {
+      msg.platformId = _platformId_;
+    }
+    const _contentType_ = json["contentType"] ?? json["content_type"];
+    if (_contentType_) {
+      msg.contentType = _contentType_;
+    }
+    const _logTimestamp_ = json["logTimestamp"] ?? json["log_timestamp"];
+    if (_logTimestamp_) {
+      msg.logTimestamp = _logTimestamp_;
+    }
+    const _replayHash_ = json["replayHash"] ?? json["replay_hash"];
+    if (_replayHash_) {
+      msg.replayHash = _replayHash_;
+    }
+    const _content_ = json["content"];
+    if (_content_) {
+      msg.content = _content_;
     }
     return msg;
   },

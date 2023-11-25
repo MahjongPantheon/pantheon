@@ -368,6 +368,15 @@ export interface PersonsFindByTenhouIdsPayload {
   ids: string[];
 }
 
+export interface PersonsFindByMajsoulIdsPayload {
+  ids: MajsoulSearchEx[];
+}
+
+export interface MajsoulSearchEx {
+  nickname: string;
+  accountId: number;
+}
+
 export interface PersonsFindByTenhouIdsResponse {
   people: protoAtoms.PersonEx[];
 }
@@ -557,6 +566,18 @@ export async function FindByTenhouIds(
   const response = await PBrequest(
     "/common.Frey/FindByTenhouIds",
     PersonsFindByTenhouIdsPayload.encode(personsFindByTenhouIdsPayload),
+    config,
+  );
+  return PersonsFindByTenhouIdsResponse.decode(response);
+}
+
+export async function FindByMajsoulAccountId(
+  personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
+  config?: ClientConfiguration,
+): Promise<PersonsFindByTenhouIdsResponse> {
+  const response = await PBrequest(
+    "/common.Frey/FindByMajsoulAccountId",
+    PersonsFindByMajsoulIdsPayload.encode(personsFindByMajsoulIdsPayload),
     config,
   );
   return PersonsFindByTenhouIdsResponse.decode(response);
@@ -1085,6 +1106,18 @@ export async function FindByTenhouIdsJSON(
   return PersonsFindByTenhouIdsResponseJSON.decode(response);
 }
 
+export async function FindByMajsoulAccountIdJSON(
+  personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
+  config?: ClientConfiguration,
+): Promise<PersonsFindByTenhouIdsResponse> {
+  const response = await JSONrequest(
+    "/common.Frey/FindByMajsoulAccountId",
+    PersonsFindByMajsoulIdsPayloadJSON.encode(personsFindByMajsoulIdsPayload),
+    config,
+  );
+  return PersonsFindByTenhouIdsResponseJSON.decode(response);
+}
+
 export async function FindByTitleJSON(
   personsFindByTitlePayload: PersonsFindByTitlePayload,
   config?: ClientConfiguration,
@@ -1511,6 +1544,10 @@ export interface Frey<Context = unknown> {
     personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
     context: Context,
   ) => Promise<PersonsFindByTenhouIdsResponse> | PersonsFindByTenhouIdsResponse;
+  FindByMajsoulAccountId: (
+    personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
+    context: Context,
+  ) => Promise<PersonsFindByTenhouIdsResponse> | PersonsFindByTenhouIdsResponse;
   FindByTitle: (
     personsFindByTitlePayload: PersonsFindByTitlePayload,
     context: Context,
@@ -1824,6 +1861,18 @@ export function createFrey<Context>(service: Frey<Context>) {
         input: {
           protobuf: PersonsFindByTenhouIdsPayload,
           json: PersonsFindByTenhouIdsPayloadJSON,
+        },
+        output: {
+          protobuf: PersonsFindByTenhouIdsResponse,
+          json: PersonsFindByTenhouIdsResponseJSON,
+        },
+      },
+      FindByMajsoulAccountId: {
+        name: "FindByMajsoulAccountId",
+        handler: service.FindByMajsoulAccountId,
+        input: {
+          protobuf: PersonsFindByMajsoulIdsPayload,
+          json: PersonsFindByMajsoulIdsPayloadJSON,
         },
         output: {
           protobuf: PersonsFindByTenhouIdsResponse,
@@ -7451,6 +7500,156 @@ export const PersonsFindByTenhouIdsPayload = {
   },
 };
 
+export const PersonsFindByMajsoulIdsPayload = {
+  /**
+   * Serializes PersonsFindByMajsoulIdsPayload to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<PersonsFindByMajsoulIdsPayload>,
+  ): Uint8Array {
+    return PersonsFindByMajsoulIdsPayload._writeMessage(
+      msg,
+      new BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes PersonsFindByMajsoulIdsPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): PersonsFindByMajsoulIdsPayload {
+    return PersonsFindByMajsoulIdsPayload._readMessage(
+      PersonsFindByMajsoulIdsPayload.initialize(),
+      new BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes PersonsFindByMajsoulIdsPayload with all fields set to their default value.
+   */
+  initialize: function (): PersonsFindByMajsoulIdsPayload {
+    return {
+      ids: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsFindByMajsoulIdsPayload>,
+    writer: BinaryWriter,
+  ): BinaryWriter {
+    if (msg.ids?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.ids as any,
+        MajsoulSearchEx._writeMessage,
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsFindByMajsoulIdsPayload,
+    reader: BinaryReader,
+  ): PersonsFindByMajsoulIdsPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = MajsoulSearchEx.initialize();
+          reader.readMessage(m, MajsoulSearchEx._readMessage);
+          msg.ids.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const MajsoulSearchEx = {
+  /**
+   * Serializes MajsoulSearchEx to protobuf.
+   */
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): Uint8Array {
+    return MajsoulSearchEx._writeMessage(
+      msg,
+      new BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes MajsoulSearchEx from protobuf.
+   */
+  decode: function (bytes: ByteSource): MajsoulSearchEx {
+    return MajsoulSearchEx._readMessage(
+      MajsoulSearchEx.initialize(),
+      new BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes MajsoulSearchEx with all fields set to their default value.
+   */
+  initialize: function (): MajsoulSearchEx {
+    return {
+      nickname: "",
+      accountId: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulSearchEx>,
+    writer: BinaryWriter,
+  ): BinaryWriter {
+    if (msg.nickname) {
+      writer.writeString(1, msg.nickname);
+    }
+    if (msg.accountId) {
+      writer.writeInt32(2, msg.accountId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: MajsoulSearchEx,
+    reader: BinaryReader,
+  ): MajsoulSearchEx {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.nickname = reader.readString();
+          break;
+        }
+        case 2: {
+          msg.accountId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const PersonsFindByTenhouIdsResponse = {
   /**
    * Serializes PersonsFindByTenhouIdsResponse to protobuf.
@@ -12308,6 +12507,127 @@ export const PersonsFindByTenhouIdsPayloadJSON = {
     const _ids_ = json["ids"];
     if (_ids_) {
       msg.ids = _ids_;
+    }
+    return msg;
+  },
+};
+
+export const PersonsFindByMajsoulIdsPayloadJSON = {
+  /**
+   * Serializes PersonsFindByMajsoulIdsPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<PersonsFindByMajsoulIdsPayload>): string {
+    return JSON.stringify(
+      PersonsFindByMajsoulIdsPayloadJSON._writeMessage(msg),
+    );
+  },
+
+  /**
+   * Deserializes PersonsFindByMajsoulIdsPayload from JSON.
+   */
+  decode: function (json: string): PersonsFindByMajsoulIdsPayload {
+    return PersonsFindByMajsoulIdsPayloadJSON._readMessage(
+      PersonsFindByMajsoulIdsPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes PersonsFindByMajsoulIdsPayload with all fields set to their default value.
+   */
+  initialize: function (): PersonsFindByMajsoulIdsPayload {
+    return {
+      ids: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsFindByMajsoulIdsPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.ids?.length) {
+      json["ids"] = msg.ids.map(MajsoulSearchExJSON._writeMessage);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsFindByMajsoulIdsPayload,
+    json: any,
+  ): PersonsFindByMajsoulIdsPayload {
+    const _ids_ = json["ids"];
+    if (_ids_) {
+      for (const item of _ids_) {
+        const m = MajsoulSearchExJSON.initialize();
+        MajsoulSearchExJSON._readMessage(m, item);
+        msg.ids.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
+export const MajsoulSearchExJSON = {
+  /**
+   * Serializes MajsoulSearchEx to JSON.
+   */
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): string {
+    return JSON.stringify(MajsoulSearchExJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes MajsoulSearchEx from JSON.
+   */
+  decode: function (json: string): MajsoulSearchEx {
+    return MajsoulSearchExJSON._readMessage(
+      MajsoulSearchExJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes MajsoulSearchEx with all fields set to their default value.
+   */
+  initialize: function (): MajsoulSearchEx {
+    return {
+      nickname: "",
+      accountId: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulSearchEx>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.nickname) {
+      json["nickname"] = msg.nickname;
+    }
+    if (msg.accountId) {
+      json["accountId"] = msg.accountId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: MajsoulSearchEx, json: any): MajsoulSearchEx {
+    const _nickname_ = json["nickname"];
+    if (_nickname_) {
+      msg.nickname = _nickname_;
+    }
+    const _accountId_ = json["accountId"] ?? json["account_id"];
+    if (_accountId_) {
+      msg.accountId = _accountId_;
     }
     return msg;
   },
