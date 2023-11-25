@@ -381,7 +381,7 @@ class AccountModel extends Model
         $persons = PersonPrimitive::findByTenhouId($this->_db, $ids);
         $personMap = [];
         foreach ($persons as $person) {
-            $personMap[$person->getId()] = '';
+            $personMap[$person->getId()] = null;
         }
         $majsoulAccounts = MajsoulPlatformAccountsPrimitive::findByPersonIds($this->_db, array_keys($personMap));
 

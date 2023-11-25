@@ -324,8 +324,8 @@ final class TwirpServer implements Frey
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
-                        ->setMsNickname($person['ms_nickname'])
-                        ->setMsAccountId($person['ms_account_id']);
+                        ->setMsNickname($person['ms_nickname'] ?? '')
+                        ->setMsAccountId($person['ms_account_id'] ?? -1);
                 }, $this->_personsController->getPersonalInfo(iterator_to_array($req->getIds())))
             );
         } catch (\Exception $e) {
@@ -350,8 +350,8 @@ final class TwirpServer implements Frey
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
-                        ->setMsNickname($person['ms_nickname'])
-                        ->setMsAccountId($person['ms_account_id']);
+                        ->setMsNickname($person['ms_nickname'] ?? '')
+                        ->setMsAccountId($person['ms_account_id'] ?? -1);
                     if (!empty($person['email'])) {
                         $p->setEmail($person['email']);
                     }
@@ -378,7 +378,9 @@ final class TwirpServer implements Frey
                         ->setGroups($person['groups'])
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
-                        ->setTitle($person['title']);
+                        ->setTitle($person['title'])
+                        ->setMsNickname($person['ms_nickname'] ?? '')
+                        ->setMsAccountId($person['ms_account_id'] ?? -1);
                     if (!empty($person['email'])) {
                         $p->setEmail($person['email']);
                     }

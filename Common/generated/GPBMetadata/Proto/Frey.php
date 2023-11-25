@@ -245,7 +245,7 @@ has_avatar (
 MajsoulSearchEx
 nickname (	
 
-account_id (	"B
+account_id ("B
 PersonsFindByTenhouIdsResponse 
 people (2.common.PersonEx"*
 PersonsFindByTitlePayload

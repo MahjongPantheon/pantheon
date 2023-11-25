@@ -18,9 +18,9 @@ class MajsoulSearchEx extends \Google\Protobuf\Internal\Message
      */
     protected $nickname = '';
     /**
-     * Generated from protobuf field <code>string account_id = 2;</code>
+     * Generated from protobuf field <code>int32 account_id = 2;</code>
      */
-    protected $account_id = '';
+    protected $account_id = 0;
 
     /**
      * Constructor.
@@ -29,7 +29,7 @@ class MajsoulSearchEx extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $nickname
-     *     @type string $account_id
+     *     @type int $account_id
      * }
      */
     public function __construct($data = NULL) {
@@ -60,8 +60,8 @@ class MajsoulSearchEx extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string account_id = 2;</code>
-     * @return string
+     * Generated from protobuf field <code>int32 account_id = 2;</code>
+     * @return int
      */
     public function getAccountId()
     {
@@ -69,13 +69,13 @@ class MajsoulSearchEx extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string account_id = 2;</code>
-     * @param string $var
+     * Generated from protobuf field <code>int32 account_id = 2;</code>
+     * @param int $var
      * @return $this
      */
     public function setAccountId($var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkInt32($var);
         $this->account_id = $var;
 
         return $this;

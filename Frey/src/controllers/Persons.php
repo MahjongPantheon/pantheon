@@ -139,8 +139,8 @@ class PersonsController extends Controller
         foreach ($personalInfo as $person) {
             $key = intval($person['id']);
             if (key_exists($key, $personIds)) {
-                //replace tenhou_id by majsoul nickname
-                $person['tenhou_id'] = $personIds[$key]->getNickname();
+                $person['ms_nickname'] = $personIds[$key]->getNickname();
+                $person['ms_account_id'] = $personIds[$key]->getAccountId();
                 array_push($majsoulPersonalInfo, $person);
             }
         }
