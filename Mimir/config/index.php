@@ -22,6 +22,9 @@ return [
         'internalQuerySecret' => getenv('INTERNAL_QUERY_SECRET'),
         'debug_token' => getenv('DEBUG_TOKEN'),
     ],
+    'external' => [
+        'externalQuerySecret' => getenv('EXTERNAL_QUERY_SECRET')
+    ],
     'db'        => require __DIR__ . '/db.php',
     'freyUrl'   => 'http://frey',
     'sigrunUrl'  => getenv('SIGRUN_URL'),

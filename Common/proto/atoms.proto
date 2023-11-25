@@ -91,6 +91,8 @@ message PersonEx {
   repeated int32 groups = 8;
   bool has_avatar = 9;
   string last_update = 10;
+  string ms_nickname = 11;
+  int32 ms_account_id = 12;
 }
 
 message Group {

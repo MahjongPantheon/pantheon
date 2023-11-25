@@ -15,11 +15,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Frey;
+
+use Common\MajsoulSearchEx;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../models/Account.php';
 require_once __DIR__ . '/../models/Groups.php';
+require_once __DIR__ . '/../primitives/MajsoulPlatformAccountsPrimitive.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 
@@ -40,11 +44,11 @@ class PersonsController extends Controller
      */
     public function createAccount($email, $password, $title, $city, $country, $phone, $tenhouId)
     {
-        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/ '******', $title, $city, /*$phone*/ '******', $tenhouId]);
         $personId = $this->_getAccountModel()
             ->createAccount($email, $password, $title, $city, $country, $phone, $tenhouId);
         $this->_getAccessModel()->addRuleForPerson(InternalRules::CREATE_EVENT, true, 'bool', $personId, null);
-        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/ '******', $title, $city, /*$phone*/ '******', $tenhouId]);
         return $personId;
     }
 
@@ -91,6 +95,60 @@ class PersonsController extends Controller
         return $personalInfo;
     }
 
+
+    /**
+     * Get personal info by tenhou id list.
+     * May or may not include private data (depending on admin rights of requesting user).
+     *
+     * @param MajsoulSearchEx[] $ids
+     * @return array
+     * @throws \Exception
+     */
+    public function findMajsoulAccounts($ids)
+    {
+        $this->_logStart(__METHOD__, [implode(',', array_map(function (MajsoulSearchEx $item) {
+            return [
+                'nickname' => $item->getNickname(),
+                'account_id' => $item->getAccountId()
+            ];
+        }, $ids))]);
+
+        $majsoulNicknames = [];
+        $majsoulSearchMap = [];
+        foreach ($ids as $majsoulSearchEx) {
+            array_push($majsoulNicknames, $majsoulSearchEx->getNickname());
+            $majsoulSearchMap[intval($majsoulSearchEx->getAccountId())] = $majsoulSearchEx->getNickname();
+        }
+
+        $majsoulAccounts = MajsoulPlatformAccountsPrimitive::findByMajsoulNicknames(
+            $this->_db,
+            $majsoulNicknames
+        );
+
+        $filteredAccounts = array_values(array_filter($majsoulAccounts, function ($item) use ($majsoulSearchMap) {
+            return key_exists($item->getAccountId(), $majsoulSearchMap) && $majsoulSearchMap[$item->getAccountId()] === $item->getNickname();
+        }));
+
+        $personIds = [];
+        foreach ($filteredAccounts as $majsoulAccount) {
+            $personIds[$majsoulAccount->getPersonId()] = $majsoulAccount;
+        }
+
+        $personalInfo = $this->_getAccountModel()->findById(array_keys($personIds));
+        $majsoulPersonalInfo = [];
+        foreach ($personalInfo as $person) {
+            $key = intval($person['id']);
+            if (key_exists($key, $personIds)) {
+                //replace tenhou_id by majsoul nickname
+                $person['tenhou_id'] = $personIds[$key]->getNickname();
+                array_push($majsoulPersonalInfo, $person);
+            }
+        }
+
+        $this->_logSuccess(__METHOD__, [implode(',', $majsoulPersonalInfo)]);
+        return $majsoulPersonalInfo;
+    }
+
     /**
      * @param int $id
      * @param string $title
@@ -107,9 +165,9 @@ class PersonsController extends Controller
      */
     public function updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId, $hasAvatar, $avatarData)
     {
-        $this->_logStart(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
+        $this->_logStart(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/ '******', $tenhouId]);
         $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId, $hasAvatar, $avatarData);
-        $this->_logSuccess(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
+        $this->_logSuccess(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/ '******', $tenhouId]);
         return $success;
     }
 

@@ -10,3 +10,4 @@ event_prescript
 achievements
 yaku
 event
+game_platforms

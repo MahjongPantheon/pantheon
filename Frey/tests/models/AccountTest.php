@@ -21,6 +21,7 @@ require_once __DIR__ . '/../../src/exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../../src/models/Account.php';
 require_once __DIR__ . '/../../src/models/Auth.php';
 require_once __DIR__ . '/../../src/primitives/Person.php';
+require_once __DIR__ . '/../../src/primitives/MajsoulPlatformAccountsPrimitive.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
 require_once __DIR__ . '/../../src/helpers/Db.php';
 require_once __DIR__ . '/../../src/helpers/Config.php';
@@ -517,5 +518,41 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
         $model->findByTitleFuzzy('w');
+    }
+
+    /**
+     * @throws InvalidParametersException
+     */
+    public function testPopulateMajsoulFields()
+    {
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta, $this->_mc);
+        $model->createAccount(
+            'test_tid@email.com',
+            'passwd',
+            'easyfindableperson',
+            'testcity',
+            '',
+            '111-111-111',
+            'tid'
+        );
+
+        $majsoulAccount = (new MajsoulPlatformAccountsPrimitive($this->_db))
+            ->setAccountId(11)
+            ->setFriendId(22)
+            ->setNickname('MsTid')
+            ->setPersonId(3);
+        $majsoulAccount->save();
+
+        $results = $model->findByTenhouId(['tid']);
+        $this->assertNotEmpty($results);
+        $this->assertEquals($majsoulAccount->getAccountId(), $results[0]['ms_account_id']);
+        $this->assertEquals($majsoulAccount->getNickname(), $results[0]['ms_nickname']);
+
+        $results = $model->getPersonalInfo([2,3]);
+        $this->assertNotEmpty($results);
+        $this->assertNull($results[0]['ms_account_id']);
+        $this->assertNull($results[0]['ms_nickname']);
+        $this->assertEquals($majsoulAccount->getAccountId(), $results[1]['ms_account_id']);
+        $this->assertEquals($majsoulAccount->getNickname(), $results[1]['ms_nickname']);
     }
 }

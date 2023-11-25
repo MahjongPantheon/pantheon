@@ -30,10 +30,14 @@ class Formatters
      */
     public static function formatGameResults(SessionPrimitive $session, array $sessionResults, array $rounds)
     {
+        $currentPlatformId = $session->getEvent()->getPlatformId();
+        if (is_null($currentPlatformId) || $currentPlatformId === 0) {
+            $currentPlatformId = PlatformTypeId::Tenhou->value;
+        }
         return [
             'hash' => $session->getRepresentationalHash(),
             'date' => $session->getEndDate(),
-            'replay_link' => $session->getReplayLink(),
+            'replay_link' => $session->getReplayLink($currentPlatformId),
             'players' => array_map('intval', $session->getPlayersIds()),
             'final_results' => self::_arrayMapPreserveKeys(function (SessionResultsPrimitive $el) {
                 return [

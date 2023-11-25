@@ -175,6 +175,43 @@ class PlayerPrimitive extends Primitive
     }
 
     /**
+     * Find players by majsoul account_id and nickname
+     * Method should maintain sorting of items according to ids order.
+     *
+     * @param DataSource $ds
+     * @param array $playersMapping
+     * @throws \Exception
+     * @return PlayerPrimitive[]
+     */
+    public static function findMajsoulAccounts(DataSource $ds, $playersMapping)
+    {
+        $playersData = $ds->remote()->findByMajsoulAccountId($playersMapping);
+        /** @var PlayerPrimitive[] $players */
+        $players = array_map(function ($item) use ($ds) {
+            return (new PlayerPrimitive($ds))
+                ->setTenhouId($item['tenhou_id'])
+                ->setDisplayName($item['title'])
+                ->setHasAvatar($item['has_avatar'])
+                ->_setId($item['id']);
+        }, $playersData);
+
+        $playersMap = array_combine(
+            array_map(function (PlayerPrimitive $player) {
+                return $player->getTenhouId();
+            }, $players),
+            $players
+        );
+
+        if (!$playersMap) {
+            throw new InvalidParametersException('Cant combine inequal arrays');
+        }
+
+        return array_filter(array_map(function ($id) use ($playersMap) {
+            return empty($playersMap[$id['player_name']]) ? null : $playersMap[$id['player_name']];
+        }, $playersMapping));
+    }
+
+    /**
      * @param DataSource $ds
      * @param array $eventIdList
      * @return array ['players' => PlayerPrimitive[], 'replacements' => [id => PlayerPrimitive, ...]]

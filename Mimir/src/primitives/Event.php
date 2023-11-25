@@ -63,6 +63,7 @@ class EventPrimitive extends Primitive
         'next_game_start_time' => '_nextGameStartTime',
         'time_to_start'     => '_timeToStart',
         'is_listed'         => '_isListed',
+        'platform_id'       => '_platformId',
     ];
 
     protected function _getFieldsTransforms()
@@ -102,6 +103,7 @@ class EventPrimitive extends Primitive
                     return new \Common\Ruleset($rulesId);
                 }
             ],
+            '_platformId'         => $this->_integerTransform(true),
         ];
     }
 
@@ -258,6 +260,12 @@ class EventPrimitive extends Primitive
     protected $_gamesStatus = null;
     const GS_SEATING_READY = 'seating_ready';
     const GS_STARTED = 'started';
+
+    /**
+     * Local id
+     * @var int|null
+     */
+    protected $_platformId;
 
     /**
      * EventPrimitive constructor.
@@ -855,6 +863,24 @@ class EventPrimitive extends Primitive
     public function setIsListed($isListed)
     {
         $this->_isListed = $isListed;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPlatformId()
+    {
+        return $this->_platformId;
+    }
+
+    /**
+     * @param int $platformId
+     * @return EventPrimitive
+     */
+    public function setPlatformId($platformId)
+    {
+        $this->_platformId = $platformId;
         return $this;
     }
 }

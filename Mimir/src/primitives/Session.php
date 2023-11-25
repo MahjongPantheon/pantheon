@@ -22,6 +22,7 @@ use Common\EndingPolicy;
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../Primitive.php';
+require_once __DIR__ . '/../primitives/PlayerStats.php';
 require_once __DIR__ . '/../helpers/SessionState.php';
 require_once __DIR__ . '/../helpers/Date.php';
 require_once __DIR__ . '/SessionResults.php';
@@ -654,14 +655,25 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @param int $platformId
      * @return string
      */
-    public function getReplayLink()
+    public function getReplayLink($platformId = 1): string
     {
+        $defaultReplayLink = '';
         if (empty($this->_replayHash)) {
-            return '';
+            return $defaultReplayLink;
         }
-        return base64_decode('aHR0cDovL3RlbmhvdS5uZXQv') . '0/?log=' . $this->_replayHash;
+
+        if ($platformId === PlatformTypeId::Tenhou->value) {
+            return base64_decode('aHR0cDovL3RlbmhvdS5uZXQv') . '0/?log=' . $this->_replayHash;
+        }
+
+        if ($platformId === PlatformTypeId::Majsoul->value) {
+            return base64_decode('aHR0cHM6Ly9tYWhqb25nc291bC5nYW1lLnlvLXN0YXIuY29t') . '/?paipu=' . $this->_replayHash;
+        }
+
+        return $defaultReplayLink;
     }
 
     /**

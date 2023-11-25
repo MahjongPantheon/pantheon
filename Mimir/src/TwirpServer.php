@@ -13,6 +13,7 @@ require_once __DIR__ . '/controllers/Events.php';
 require_once __DIR__ . '/controllers/Games.php';
 require_once __DIR__ . '/controllers/Players.php';
 require_once __DIR__ . '/controllers/Seating.php';
+require_once __DIR__ . '/exceptions/AccessDenied.php';
 
 use Common\AbortResult;
 use Common\Achievement;
@@ -71,6 +72,7 @@ use Common\FinalResultOfSession;
 use Common\GameConfig;
 use Common\GameResult;
 use Common\GamesAddOnlineReplayPayload;
+use Common\TypedGamesAddOnlineReplayPayload;
 use Common\GamesAddOnlineReplayResponse;
 use Common\GamesAddPenaltyPayload;
 use Common\GamesAddPenaltyGamePayload;
@@ -768,9 +770,15 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_eventsController->getRulesets();
         return (new EventsGetRulesetsResponse())
-            ->setRulesetIds(array_map(function ($r) { return $r['id']; },  $ret))
-            ->setRulesetTitles(array_map(function ($r) { return $r['description']; },  $ret))
-            ->setRulesets(array_map(function ($r) { return $r['originalRules']; },  $ret));
+            ->setRulesetIds(array_map(function ($r) {
+                return $r['id'];
+            }, $ret))
+            ->setRulesetTitles(array_map(function ($r) {
+                return $r['description'];
+            }, $ret))
+            ->setRulesets(array_map(function ($r) {
+                return $r['originalRules'];
+            }, $ret));
     }
 
     /**
@@ -1745,5 +1753,43 @@ final class TwirpServer implements Mimir
     {
         return (new GenericSuccessResponse())
             ->setSuccess(PlayerStatsPrimitive::invalidateByPlayer($this->_ds, $req->getPlayerId()));
+    }
+
+    /**
+     * @throws InvalidParametersException
+     * @throws TwirpError
+     * @throws ParseException
+     */
+    public function AddTypedOnlineReplay(array $ctx, TypedGamesAddOnlineReplayPayload $req): GamesAddOnlineReplayResponse
+    {
+        $this->_checkAccessRightsWithExternalService(getallheaders()["Http-X-External-Query-Secret"]);
+
+        $ret = $this->_gamesController->addTypedOnlineReplay(
+            $req->getEventId(),
+            $req->getReplayHash(),
+            $req->getPlatformId(),
+            $req->getLogTimestamp(),
+            $req->getContentType(),
+            $req->getContent()
+        );
+        return (new GamesAddOnlineReplayResponse())
+            ->setPlayers(self::_toPlayers($ret['players']))
+            ->setGame(self::_formatGames($ret['games'])[0]);
+    }
+
+    /**
+     * Check of rights for access by external service.
+     *
+     * @param string $token
+     * @return $this
+     * @throws AccessDeniedException
+     */
+    private function _checkAccessRightsWithExternalService(string $token)
+    {
+        if (!empty($token) && $token === $this->_config->getValue('external.externalQuerySecret')) {
+            return $this;
+        }
+
+        throw new AccessDeniedException('This action is not allowed for you');
     }
 }

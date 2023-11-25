@@ -51,6 +51,8 @@ service Frey {
     returns (PersonsGetPersonalInfoResponse);
   rpc FindByTenhouIds(PersonsFindByTenhouIdsPayload)
     returns (PersonsFindByTenhouIdsResponse);
+  rpc FindByMajsoulAccountId(PersonsFindByMajsoulIdsPayload)
+    returns (PersonsFindByTenhouIdsResponse);
   rpc FindByTitle(PersonsFindByTitlePayload)
     returns (PersonsFindByTitleResponse);
   rpc GetGroups(PersonsGetGroupsPayload)
@@ -445,6 +447,15 @@ message PersonsGetPersonalInfoResponse {
 
 message PersonsFindByTenhouIdsPayload {
   repeated string ids = 1;
+}
+
+message PersonsFindByMajsoulIdsPayload {
+  repeated MajsoulSearchEx ids = 1;
+}
+
+message MajsoulSearchEx {
+  string nickname= 1;
+  string account_id = 2;
 }
 
 message PersonsFindByTenhouIdsResponse {

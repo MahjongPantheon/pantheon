@@ -1,4 +1,5 @@
 phinxlog
+majsoul_platform_accounts
 person_group
 registrant
 person_access

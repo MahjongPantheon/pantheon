@@ -23,6 +23,7 @@ require_once __DIR__ . '/../../helpers/YakuMap.php';
 require_once __DIR__ . '/../../primitives/Round.php';
 require_once __DIR__ . '/../../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../../models/Tenhou6Model.php';
+require_once __DIR__ . '/../../models/PlatformTypeId.php';
 
 /**
  * @Author Steven Vch. <unstatik@staremax.com>
@@ -64,12 +65,14 @@ class Tenhou6OnlineParser
      * @param SessionPrimitive $session
      * @param string $content game log xml string
      * @param bool $withChips
+     * @param int $platformId
      * @return array parsed score
      * @throws \Exception
      */
-    public function parseToSession(SessionPrimitive $session, string $content, $withChips = false)
+    public function parseToSession(SessionPrimitive $session, string $content, $withChips = false, $platformId = 1)
     {
-        $tenhou6Model = new Tenhou6Model($content);
+        $tenhou6Model = new Tenhou6Model($content, $platformId);
+        $this->validateModel($session, $tenhou6Model);
 
         $this->_tokenUN($tenhou6Model, $session);
         $this->_tokenGO($tenhou6Model->getTokenGO(), $session);
@@ -143,6 +146,22 @@ class Tenhou6OnlineParser
     }
 
     /**
+     * Validate tenhou6 model.
+     *
+     * @param SessionPrimitive $session
+     * @param Tenhou6Model $tenhou6Model
+     *
+     * @return void
+     * @throws ParseException
+     */
+    private function validateModel(SessionPrimitive $session, Tenhou6Model $tenhou6Model)
+    {
+        if ($session->getReplayHash() !== $tenhou6Model->getReplayHash()) {
+            throw new ParseException('Replay hash not equals with session hash');
+        }
+    }
+
+    /**
      * Much simpler to get final scores by regex :)
      *
      * @param array $owari
@@ -203,24 +222,23 @@ class Tenhou6OnlineParser
      *
      * @return void
      * @throws \Exception
-     *
      * @throws ParseException
      */
     protected function _tokenUN(Tenhou6Model $tenhou6Model, SessionPrimitive $session): void
     {
         if (count($this->_players) == 0) {
             $parsedPlayers = [
-                rawurldecode((string)$tenhou6Model->getTokenUN()[0]) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[1]) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[2]) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[3]) => 1
+                rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']) => 1,
+                rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']) => 1,
+                rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']) => 1,
+                rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']) => 1
             ];
 
             if (!empty($parsedPlayers['NoName'])) {
                 throw new ParseException('"NoName" players are not allowed in replays');
             }
 
-            $players = PlayerPrimitive::findByTenhouId($this->_ds, array_keys($parsedPlayers));
+            $players = $this->loadPlayers($tenhou6Model, $parsedPlayers);
 
             if (count($players) !== count($parsedPlayers)) {
                 $registeredPlayers = array_map(function (PlayerPrimitive $p) {
@@ -228,7 +246,11 @@ class Tenhou6OnlineParser
                 }, $players);
                 $missedPlayers = array_diff(array_keys($parsedPlayers), $registeredPlayers);
                 $missedPlayers = join(', ', $missedPlayers);
-                throw new ParseException('Not all tenhou nicknames were registered in the system: ' . $missedPlayers);
+                $platformName = PlatformTypeId::tryFrom($tenhou6Model->getPlatformId());
+                if (is_null($platformName)) {
+                    $platformName = PlatformTypeId::Tenhou;
+                }
+                throw new ParseException('Not all ' . $platformName->name . ' nicknames were registered in the system: ' . $missedPlayers);
             }
 
             if ($session->getEvent()->getAllowPlayerAppend()) {
@@ -251,6 +273,27 @@ class Tenhou6OnlineParser
                 $this->_players = $p;
             }
         }
+    }
+
+    /**
+     * Load array of PlayerPrimitive.
+     *
+     * @param Tenhou6Model $tenhou6Model
+     * @param array $parsedPlayers
+     *
+     * @return PlayerPrimitive[]
+     */
+    private function loadPlayers(Tenhou6Model $tenhou6Model, $parsedPlayers): array
+    {
+        if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+            return PlayerPrimitive::findByTenhouId($this->_ds, array_keys($parsedPlayers));
+        }
+
+        if ($tenhou6Model->getPlatformId() === PlatformTypeId::Majsoul->value) {
+            return PlayerPrimitive::findMajsoulAccounts($this->_ds, $tenhou6Model->getTokenUN());
+        }
+
+        return [];
     }
 
     /**
@@ -468,7 +511,7 @@ class Tenhou6OnlineParser
     {
         $eventLobby = $session->getEvent()->getLobbyId();
 
-        $lobby = $tokenGO['lobby'];
+        $lobby = intval($tokenGO['lobby']);
         if ($eventLobby != $lobby) {
             throw new ParseException('Provided replay doesn\'t belong to the event lobby ' . $eventLobby);
         }

@@ -64,10 +64,11 @@ class OnlineParser
      * @param SessionPrimitive $session
      * @param string $content game log xml string
      * @param bool $withChips
-     * @throws \Exception
+     * @param int $platformId added field for compatibility, always 1 == Tenhou
      * @return array parsed score
+     *@throws \Exception
      */
-    public function parseToSession(SessionPrimitive $session, string $content, $withChips = false)
+    public function parseToSession(SessionPrimitive $session, string $content, $withChips = false, $platformId = 1)
     {
         $reader = new \XMLReader();
         $reader->XML($content);
@@ -499,7 +500,7 @@ class OnlineParser
     {
         $eventLobby = $session->getEvent()->getLobbyId();
 
-        $lobby = $reader->getAttribute('lobby');
+        $lobby = intval($reader->getAttribute('lobby'));
         if ($eventLobby != $lobby) {
             throw new ParseException('Provided replay doesn\'t belong to the event lobby ' . $eventLobby);
         }

@@ -19,14 +19,40 @@ namespace Mimir;
 
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/onlineLog/Parser.php';
+require_once __DIR__ . '/../helpers/onlineLog/Tenhou6OnlineParser.php';
 require_once __DIR__ . '/../helpers/onlineLog/Downloader.php';
 require_once __DIR__ . '/../primitives/Event.php';
 require_once __DIR__ . '/../primitives/Session.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../exceptions/Parser.php';
+require_once __DIR__ . '/../helpers/ReplayContentTypeUtils.php';
+require_once __DIR__ . '/../models/ReplayContentType.php';
 
 class OnlineSessionModel extends Model
 {
+
+    /**
+     * @param int $eventId
+     * @param string $replayHash
+     * @param int $logTimestamp
+     * @param string $gameContent
+     * @param int $platformId
+     * @param int $contentType
+     * @return SessionPrimitive
+     * @throws InvalidParametersException
+     * @throws \Exception
+     * @throws ParseException
+     */
+    public function addTypedGame(int $eventId, $replayHash, $logTimestamp, $gameContent, $platformId, $contentType)
+    {
+        $event = $this->checkAndGetEvent($eventId);
+
+        $this->_checkGameTimestampExpired($logTimestamp, $event->getRulesetConfig());
+        $this->checkReplayHash($eventId, $replayHash);
+
+        return $this->addGameContent($event, $replayHash, $gameContent, $contentType, $platformId);
+    }
+
     /**
      * @param int $eventId
      * @param string $logUrl
@@ -36,28 +62,19 @@ class OnlineSessionModel extends Model
      * @throws \Exception
      * @throws ParseException
      */
-    public function addGame(int $eventId, string $logUrl, $gameContent = '')
+    public function addGame(int $eventId, string $logUrl = '', $gameContent = '')
     {
-        $event = EventPrimitive::findById($this->_ds, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
-        }
-        $event = $event[0];
+        $event = $this->checkAndGetEvent($eventId);
 
-        if (!$event->getIsOnline()) {
-            throw new InvalidParametersException('Unable to add online game to event that is not online.');
-        }
-
+        $replayHash = '';
         $downloader = new Downloader();
-        $downloader->validateUrl($logUrl);
-        $replayHash = $downloader->getReplayHash($logUrl);
+        if (!empty($logUrl)) {
+            $downloader->validateUrl($logUrl);
+            $replayHash = $downloader->getReplayHash($logUrl);
+        }
 
         $this->_checkGameExpired($logUrl, $event->getRulesetConfig());
-
-        $addedSession = SessionPrimitive::findByReplayHashAndEvent($this->_ds, $eventId, $replayHash);
-        if (!empty($addedSession)) {
-            throw new InvalidParametersException('This game is already added to the system');
-        }
+        $this->checkReplayHash($eventId, $replayHash);
 
         // if game log wasn't set, let's download it from the server
         if ($gameContent == '') {
@@ -65,8 +82,30 @@ class OnlineSessionModel extends Model
             $gameContent = $replay['content'];
         }
 
-        //todo inject XML or JSON parser.
-        $parser = new OnlineParser($this->_ds);
+        return $this->addGameContent($event, $replayHash, $gameContent);
+    }
+
+    /**
+     * @param EventPrimitive $event
+     * @param string $replayHash
+     * @param string $gameContent
+     * @param int $contentType
+     * @param int $platformId
+     * @return SessionPrimitive
+     * @throws InvalidParametersException
+     * @throws \Exception
+     * @throws ParseException
+     */
+    private function addGameContent(EventPrimitive $event, string $replayHash, $gameContent, $contentType = 1, $platformId = 1)
+    {
+        $replayContentType = ReplayContentTypeUtils::getContentType($contentType);
+        $parser = null;
+        if ($replayContentType === ReplayContentType::Xml) {
+            $parser = new OnlineParser($this->_ds);
+        } else if ($replayContentType === ReplayContentType::Json) {
+            $parser = new Tenhou6OnlineParser($this->_ds);
+        }
+
         $session = (new SessionPrimitive($this->_ds))
             ->setEvent($event)
             ->setReplayHash($replayHash)
@@ -74,7 +113,11 @@ class OnlineSessionModel extends Model
 
         $withChips = $event->getRulesetConfig()->rules()->getChipsValue() > 0;
 
-        list($success, $originalScore, $rounds, $debug) = $parser->parseToSession($session, $gameContent, $withChips);
+        if (is_null($parser)) {
+            return $session;
+        }
+
+        list($success, $originalScore, $rounds, $debug) = $parser->parseToSession($session, $gameContent, $withChips, $platformId);
         $success = $success && $session->save();
 
         /** @var MultiRoundPrimitive|RoundPrimitive $round */
@@ -99,6 +142,76 @@ class OnlineSessionModel extends Model
 //        }
 
         return $session;
+    }
+
+    /**
+     * @param EventPrimitive $event
+     * @return void
+     * @throws InvalidParametersException
+     */
+    private function validateEvent($event)
+    {
+        if (!$event->getIsOnline()) {
+            throw new InvalidParametersException('Unable to add online game to event that is not online.');
+        }
+
+        if ($event->getIsFinished() > 0) {
+            throw new InvalidParametersException('Unable to add online game to event that is already finished.');
+        }
+    }
+
+    /**
+     * @param int $eventId
+     * @return EventPrimitive
+     * @throws InvalidParametersException
+     */
+    private function checkAndGetEvent($eventId): EventPrimitive
+    {
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $currentEvent = $event[0];
+        $this->validateEvent($currentEvent);
+        return $currentEvent;
+    }
+
+    /**
+     * @param int $eventId
+     * @param string $replayHash
+     * @return void
+     * @throws InvalidParametersException
+     */
+    private function checkReplayHash($eventId, $replayHash = ''): void
+    {
+        $addedSession = SessionPrimitive::findByReplayHashAndEvent($this->_ds, $eventId, $replayHash);
+        if (!empty($addedSession)) {
+            throw new InvalidParametersException('This game is already added to the system');
+        }
+    }
+
+    /**
+     * Check if game is not older than some amount of time defined in ruleset
+     *
+     * @param int $logTimestamp
+     * @param \Common\Ruleset $rules
+     *
+     * @throws ParseException
+     *
+     * @return void
+     */
+    protected function _checkGameTimestampExpired(int $logTimestamp, \Common\Ruleset $rules): void
+    {
+        if (!$rules->rules()->getGameExpirationTime()) {
+            return;
+        }
+
+        if (time() - $logTimestamp < $rules->rules()->getGameExpirationTime() * 60 * 60) {
+            return;
+        }
+
+        throw new ParseException('Replay is older than ' . $rules->rules()->getGameExpirationTime() . ' hours (within JST timezone), so it can\'t be accepted.');
     }
 
     /**

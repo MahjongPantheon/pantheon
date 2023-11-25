@@ -561,4 +561,13 @@ interface Mimir
      * @throws \Twirp\Error
      */
     public function ClearStatCache(array $ctx, \Common\ClearStatCachePayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/AddTypedOnlineReplay</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function AddTypedOnlineReplay(array $ctx, \Common\TypedGamesAddOnlineReplayPayload $req): \Common\GamesAddOnlineReplayResponse;
 }

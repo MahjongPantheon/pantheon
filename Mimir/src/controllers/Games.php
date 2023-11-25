@@ -264,6 +264,30 @@ class GamesController extends Controller
     }
 
     /**
+     * Add typed online replay
+     *
+     * @param int $eventId
+     * @param string $replayHash
+     * @param int $platformId
+     * @param int $logTimestamp
+     * @param int $contentType
+     * @param string $content
+     * @return array
+     * @throws InvalidParametersException
+     * @throws \Exception
+     * @throws ParseException
+     */
+    public function addTypedOnlineReplay($eventId, $replayHash, $platformId, $logTimestamp, $contentType, $content)
+    {
+        $this->_log->info('Saving new online game for event id# ' . $eventId . ' @ platform id ' . $platformId);
+        $session = (new OnlineSessionModel($this->_ds, $this->_config, $this->_meta))
+            ->addTypedGame($eventId, $replayHash, $logTimestamp, $content, $platformId, $contentType);
+        $result = (new EventFinishedGamesModel($this->_ds, $this->_config, $this->_meta))->getFinishedGame($session);
+        $this->_log->info('Successfully saved online game for event id# ' . $eventId . ' @ platform id ' . $platformId);
+        return $result;
+    }
+
+    /**
      * Add game with penalty for all players.
      * It was added for online tournament needs. Use it on your own risk.
      *
