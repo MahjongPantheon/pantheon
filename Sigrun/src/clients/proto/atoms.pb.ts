@@ -2,7 +2,7 @@
 // Source: proto/atoms.proto
 /* eslint-disable */
 
-import type { ByteSource, PartialDeep } from "protoscript";
+import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//
@@ -135,6 +135,8 @@ export interface PersonEx {
   groups: number[];
   hasAvatar: boolean;
   lastUpdate: string;
+  msNickname: string;
+  msAccountId: number;
 }
 
 export interface Group {
@@ -968,7 +970,7 @@ export const AccessRules = {
   /**
    * Serializes AccessRules to protobuf.
    */
-  encode: function (msg: PartialDeep<AccessRules>): Uint8Array {
+  encode: function (msg: Partial<AccessRules>): Uint8Array {
     return AccessRules._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -978,7 +980,7 @@ export const AccessRules = {
   decode: function (bytes: ByteSource): AccessRules {
     return AccessRules._readMessage(
       AccessRules.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -995,8 +997,8 @@ export const AccessRules = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<AccessRules>,
-    writer: BinaryWriter,
+    msg: Partial<AccessRules>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rules) {
       writer.writeRepeatedMessage(
@@ -1005,7 +1007,7 @@ export const AccessRules = {
           key: key as any,
           value: value as any,
         })) as any,
-        AccessRules.Rules._writeMessage,
+        AccessRules.Rules._writeMessage
       );
     }
     return writer;
@@ -1038,8 +1040,8 @@ export const AccessRules = {
      * @private
      */
     _writeMessage: function (
-      msg: PartialDeep<AccessRules.Rules>,
-      writer: BinaryWriter,
+      msg: Partial<AccessRules.Rules>,
+      writer: BinaryWriter
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -1055,7 +1057,7 @@ export const AccessRules = {
      */
     _readMessage: function (
       msg: AccessRules.Rules,
-      reader: BinaryReader,
+      reader: BinaryReader
     ): AccessRules.Rules {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -1084,7 +1086,7 @@ export const RuleValue = {
   /**
    * Serializes RuleValue to protobuf.
    */
-  encode: function (msg: PartialDeep<RuleValue>): Uint8Array {
+  encode: function (msg: Partial<RuleValue>): Uint8Array {
     return RuleValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -1094,7 +1096,7 @@ export const RuleValue = {
   decode: function (bytes: ByteSource): RuleValue {
     return RuleValue._readMessage(
       RuleValue.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -1113,8 +1115,8 @@ export const RuleValue = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RuleValue>,
-    writer: BinaryWriter,
+    msg: Partial<RuleValue>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.numberValue != undefined) {
       writer.writeInt32(2, msg.numberValue);
@@ -1161,7 +1163,7 @@ export const EventAdmin = {
   /**
    * Serializes EventAdmin to protobuf.
    */
-  encode: function (msg: PartialDeep<EventAdmin>): Uint8Array {
+  encode: function (msg: Partial<EventAdmin>): Uint8Array {
     return EventAdmin._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -1171,7 +1173,7 @@ export const EventAdmin = {
   decode: function (bytes: ByteSource): EventAdmin {
     return EventAdmin._readMessage(
       EventAdmin.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -1192,8 +1194,8 @@ export const EventAdmin = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventAdmin>,
-    writer: BinaryWriter,
+    msg: Partial<EventAdmin>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
@@ -1254,10 +1256,10 @@ export const RuleListItem = {
   /**
    * Serializes RuleListItem to protobuf.
    */
-  encode: function (msg: PartialDeep<RuleListItem>): Uint8Array {
+  encode: function (msg: Partial<RuleListItem>): Uint8Array {
     return RuleListItem._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -1267,7 +1269,7 @@ export const RuleListItem = {
   decode: function (bytes: ByteSource): RuleListItem {
     return RuleListItem._readMessage(
       RuleListItem.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -1286,8 +1288,8 @@ export const RuleListItem = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RuleListItem>,
-    writer: BinaryWriter,
+    msg: Partial<RuleListItem>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.default) {
       writer.writeString(1, msg.default);
@@ -1306,7 +1308,7 @@ export const RuleListItem = {
    */
   _readMessage: function (
     msg: RuleListItem,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): RuleListItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1337,10 +1339,10 @@ export const EventRuleListItem = {
   /**
    * Serializes EventRuleListItem to protobuf.
    */
-  encode: function (msg: PartialDeep<EventRuleListItem>): Uint8Array {
+  encode: function (msg: Partial<EventRuleListItem>): Uint8Array {
     return EventRuleListItem._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -1350,7 +1352,7 @@ export const EventRuleListItem = {
   decode: function (bytes: ByteSource): EventRuleListItem {
     return EventRuleListItem._readMessage(
       EventRuleListItem.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -1372,8 +1374,8 @@ export const EventRuleListItem = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventRuleListItem>,
-    writer: BinaryWriter,
+    msg: Partial<EventRuleListItem>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.isGlobal) {
       writer.writeBool(1, msg.isGlobal);
@@ -1401,7 +1403,7 @@ export const EventRuleListItem = {
    */
   _readMessage: function (
     msg: EventRuleListItem,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): EventRuleListItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1444,10 +1446,10 @@ export const RuleListItemEx = {
   /**
    * Serializes RuleListItemEx to protobuf.
    */
-  encode: function (msg: PartialDeep<RuleListItemEx>): Uint8Array {
+  encode: function (msg: Partial<RuleListItemEx>): Uint8Array {
     return RuleListItemEx._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -1457,7 +1459,7 @@ export const RuleListItemEx = {
   decode: function (bytes: ByteSource): RuleListItemEx {
     return RuleListItemEx._readMessage(
       RuleListItemEx.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -1477,8 +1479,8 @@ export const RuleListItemEx = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RuleListItemEx>,
-    writer: BinaryWriter,
+    msg: Partial<RuleListItemEx>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -1500,7 +1502,7 @@ export const RuleListItemEx = {
    */
   _readMessage: function (
     msg: RuleListItemEx,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): RuleListItemEx {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1535,10 +1537,10 @@ export const RuleListItemExMap = {
   /**
    * Serializes RuleListItemExMap to protobuf.
    */
-  encode: function (msg: PartialDeep<RuleListItemExMap>): Uint8Array {
+  encode: function (msg: Partial<RuleListItemExMap>): Uint8Array {
     return RuleListItemExMap._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -1548,7 +1550,7 @@ export const RuleListItemExMap = {
   decode: function (bytes: ByteSource): RuleListItemExMap {
     return RuleListItemExMap._readMessage(
       RuleListItemExMap.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -1565,8 +1567,8 @@ export const RuleListItemExMap = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RuleListItemExMap>,
-    writer: BinaryWriter,
+    msg: Partial<RuleListItemExMap>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rules) {
       writer.writeRepeatedMessage(
@@ -1575,7 +1577,7 @@ export const RuleListItemExMap = {
           key: key as any,
           value: value as any,
         })) as any,
-        RuleListItemExMap.Rules._writeMessage,
+        RuleListItemExMap.Rules._writeMessage
       );
     }
     return writer;
@@ -1586,7 +1588,7 @@ export const RuleListItemExMap = {
    */
   _readMessage: function (
     msg: RuleListItemExMap,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): RuleListItemExMap {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1611,8 +1613,8 @@ export const RuleListItemExMap = {
      * @private
      */
     _writeMessage: function (
-      msg: PartialDeep<RuleListItemExMap.Rules>,
-      writer: BinaryWriter,
+      msg: Partial<RuleListItemExMap.Rules>,
+      writer: BinaryWriter
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -1628,7 +1630,7 @@ export const RuleListItemExMap = {
      */
     _readMessage: function (
       msg: RuleListItemExMap.Rules,
-      reader: BinaryReader,
+      reader: BinaryReader
     ): RuleListItemExMap.Rules {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -1657,7 +1659,7 @@ export const Person = {
   /**
    * Serializes Person to protobuf.
    */
-  encode: function (msg: PartialDeep<Person>): Uint8Array {
+  encode: function (msg: Partial<Person>): Uint8Array {
     return Person._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -1686,8 +1688,8 @@ export const Person = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Person>,
-    writer: BinaryWriter,
+    msg: Partial<Person>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -1755,7 +1757,7 @@ export const PersonEx = {
   /**
    * Serializes PersonEx to protobuf.
    */
-  encode: function (msg: PartialDeep<PersonEx>): Uint8Array {
+  encode: function (msg: Partial<PersonEx>): Uint8Array {
     return PersonEx._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -1765,7 +1767,7 @@ export const PersonEx = {
   decode: function (bytes: ByteSource): PersonEx {
     return PersonEx._readMessage(
       PersonEx.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -1784,6 +1786,8 @@ export const PersonEx = {
       groups: [],
       hasAvatar: false,
       lastUpdate: "",
+      msNickname: "",
+      msAccountId: 0,
     };
   },
 
@@ -1791,8 +1795,8 @@ export const PersonEx = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PersonEx>,
-    writer: BinaryWriter,
+    msg: Partial<PersonEx>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -1823,6 +1827,12 @@ export const PersonEx = {
     }
     if (msg.lastUpdate) {
       writer.writeString(10, msg.lastUpdate);
+    }
+    if (msg.msNickname) {
+      writer.writeString(11, msg.msNickname);
+    }
+    if (msg.msAccountId) {
+      writer.writeInt32(12, msg.msAccountId);
     }
     return writer;
   },
@@ -1878,6 +1888,14 @@ export const PersonEx = {
           msg.lastUpdate = reader.readString();
           break;
         }
+        case 11: {
+          msg.msNickname = reader.readString();
+          break;
+        }
+        case 12: {
+          msg.msAccountId = reader.readInt32();
+          break;
+        }
         default: {
           reader.skipField();
           break;
@@ -1892,7 +1910,7 @@ export const Group = {
   /**
    * Serializes Group to protobuf.
    */
-  encode: function (msg: PartialDeep<Group>): Uint8Array {
+  encode: function (msg: Partial<Group>): Uint8Array {
     return Group._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -1919,8 +1937,8 @@ export const Group = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Group>,
-    writer: BinaryWriter,
+    msg: Partial<Group>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -1974,7 +1992,7 @@ export const Country = {
   /**
    * Serializes Country to protobuf.
    */
-  encode: function (msg: PartialDeep<Country>): Uint8Array {
+  encode: function (msg: Partial<Country>): Uint8Array {
     return Country._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -1999,8 +2017,8 @@ export const Country = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Country>,
-    writer: BinaryWriter,
+    msg: Partial<Country>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.code) {
       writer.writeString(1, msg.code);
@@ -2040,7 +2058,7 @@ export const Event = {
   /**
    * Serializes Event to protobuf.
    */
-  encode: function (msg: PartialDeep<Event>): Uint8Array {
+  encode: function (msg: Partial<Event>): Uint8Array {
     return Event._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -2076,8 +2094,8 @@ export const Event = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Event>,
-    writer: BinaryWriter,
+    msg: Partial<Event>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -2194,7 +2212,7 @@ export const MyEvent = {
   /**
    * Serializes MyEvent to protobuf.
    */
-  encode: function (msg: PartialDeep<MyEvent>): Uint8Array {
+  encode: function (msg: Partial<MyEvent>): Uint8Array {
     return MyEvent._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -2221,8 +2239,8 @@ export const MyEvent = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<MyEvent>,
-    writer: BinaryWriter,
+    msg: Partial<MyEvent>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -2276,7 +2294,7 @@ export const GameConfig = {
   /**
    * Serializes GameConfig to protobuf.
    */
-  encode: function (msg: PartialDeep<GameConfig>): Uint8Array {
+  encode: function (msg: Partial<GameConfig>): Uint8Array {
     return GameConfig._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -2286,7 +2304,7 @@ export const GameConfig = {
   decode: function (bytes: ByteSource): GameConfig {
     return GameConfig._readMessage(
       GameConfig.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -2326,8 +2344,8 @@ export const GameConfig = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GameConfig>,
-    writer: BinaryWriter,
+    msg: Partial<GameConfig>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rulesetTitle) {
       writer.writeString(10, msg.rulesetTitle);
@@ -2521,10 +2539,10 @@ export const PlayerInRating = {
   /**
    * Serializes PlayerInRating to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayerInRating>): Uint8Array {
+  encode: function (msg: Partial<PlayerInRating>): Uint8Array {
     return PlayerInRating._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -2534,7 +2552,7 @@ export const PlayerInRating = {
   decode: function (bytes: ByteSource): PlayerInRating {
     return PlayerInRating._readMessage(
       PlayerInRating.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -2562,8 +2580,8 @@ export const PlayerInRating = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerInRating>,
-    writer: BinaryWriter,
+    msg: Partial<PlayerInRating>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -2609,7 +2627,7 @@ export const PlayerInRating = {
    */
   _readMessage: function (
     msg: PlayerInRating,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayerInRating {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2676,7 +2694,7 @@ export const Player = {
   /**
    * Serializes Player to protobuf.
    */
-  encode: function (msg: PartialDeep<Player>): Uint8Array {
+  encode: function (msg: Partial<Player>): Uint8Array {
     return Player._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -2704,8 +2722,8 @@ export const Player = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Player>,
-    writer: BinaryWriter,
+    msg: Partial<Player>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -2766,10 +2784,10 @@ export const FinalResultOfSession = {
   /**
    * Serializes FinalResultOfSession to protobuf.
    */
-  encode: function (msg: PartialDeep<FinalResultOfSession>): Uint8Array {
+  encode: function (msg: Partial<FinalResultOfSession>): Uint8Array {
     return FinalResultOfSession._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -2779,7 +2797,7 @@ export const FinalResultOfSession = {
   decode: function (bytes: ByteSource): FinalResultOfSession {
     return FinalResultOfSession._readMessage(
       FinalResultOfSession.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -2799,8 +2817,8 @@ export const FinalResultOfSession = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<FinalResultOfSession>,
-    writer: BinaryWriter,
+    msg: Partial<FinalResultOfSession>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -2822,7 +2840,7 @@ export const FinalResultOfSession = {
    */
   _readMessage: function (
     msg: FinalResultOfSession,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): FinalResultOfSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2857,7 +2875,7 @@ export const Penalty = {
   /**
    * Serializes Penalty to protobuf.
    */
-  encode: function (msg: PartialDeep<Penalty>): Uint8Array {
+  encode: function (msg: Partial<Penalty>): Uint8Array {
     return Penalty._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -2883,8 +2901,8 @@ export const Penalty = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Penalty>,
-    writer: BinaryWriter,
+    msg: Partial<Penalty>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.who) {
       writer.writeInt32(1, msg.who);
@@ -2931,7 +2949,7 @@ export const RonResult = {
   /**
    * Serializes RonResult to protobuf.
    */
-  encode: function (msg: PartialDeep<RonResult>): Uint8Array {
+  encode: function (msg: Partial<RonResult>): Uint8Array {
     return RonResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -2941,7 +2959,7 @@ export const RonResult = {
   decode: function (bytes: ByteSource): RonResult {
     return RonResult._readMessage(
       RonResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -2971,8 +2989,8 @@ export const RonResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RonResult>,
-    writer: BinaryWriter,
+    msg: Partial<RonResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
@@ -3104,7 +3122,7 @@ export const MultironWin = {
   /**
    * Serializes MultironWin to protobuf.
    */
-  encode: function (msg: PartialDeep<MultironWin>): Uint8Array {
+  encode: function (msg: Partial<MultironWin>): Uint8Array {
     return MultironWin._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -3114,7 +3132,7 @@ export const MultironWin = {
   decode: function (bytes: ByteSource): MultironWin {
     return MultironWin._readMessage(
       MultironWin.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3140,8 +3158,8 @@ export const MultironWin = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<MultironWin>,
-    writer: BinaryWriter,
+    msg: Partial<MultironWin>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.winnerId) {
       writer.writeInt32(1, msg.winnerId);
@@ -3241,10 +3259,10 @@ export const MultironResult = {
   /**
    * Serializes MultironResult to protobuf.
    */
-  encode: function (msg: PartialDeep<MultironResult>): Uint8Array {
+  encode: function (msg: Partial<MultironResult>): Uint8Array {
     return MultironResult._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3254,7 +3272,7 @@ export const MultironResult = {
   decode: function (bytes: ByteSource): MultironResult {
     return MultironResult._readMessage(
       MultironResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3276,8 +3294,8 @@ export const MultironResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<MultironResult>,
-    writer: BinaryWriter,
+    msg: Partial<MultironResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
@@ -3295,7 +3313,7 @@ export const MultironResult = {
       writer.writeRepeatedMessage(
         5,
         msg.wins as any,
-        MultironWin._writeMessage,
+        MultironWin._writeMessage
       );
     }
     if (msg.riichiBets?.length) {
@@ -3309,7 +3327,7 @@ export const MultironResult = {
    */
   _readMessage: function (
     msg: MultironResult,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): MultironResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3358,7 +3376,7 @@ export const TsumoResult = {
   /**
    * Serializes TsumoResult to protobuf.
    */
-  encode: function (msg: PartialDeep<TsumoResult>): Uint8Array {
+  encode: function (msg: Partial<TsumoResult>): Uint8Array {
     return TsumoResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -3368,7 +3386,7 @@ export const TsumoResult = {
   decode: function (bytes: ByteSource): TsumoResult {
     return TsumoResult._readMessage(
       TsumoResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3397,8 +3415,8 @@ export const TsumoResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<TsumoResult>,
-    writer: BinaryWriter,
+    msg: Partial<TsumoResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
@@ -3523,7 +3541,7 @@ export const DrawResult = {
   /**
    * Serializes DrawResult to protobuf.
    */
-  encode: function (msg: PartialDeep<DrawResult>): Uint8Array {
+  encode: function (msg: Partial<DrawResult>): Uint8Array {
     return DrawResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -3533,7 +3551,7 @@ export const DrawResult = {
   decode: function (bytes: ByteSource): DrawResult {
     return DrawResult._readMessage(
       DrawResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3553,8 +3571,8 @@ export const DrawResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<DrawResult>,
-    writer: BinaryWriter,
+    msg: Partial<DrawResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
@@ -3616,7 +3634,7 @@ export const AbortResult = {
   /**
    * Serializes AbortResult to protobuf.
    */
-  encode: function (msg: PartialDeep<AbortResult>): Uint8Array {
+  encode: function (msg: Partial<AbortResult>): Uint8Array {
     return AbortResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -3626,7 +3644,7 @@ export const AbortResult = {
   decode: function (bytes: ByteSource): AbortResult {
     return AbortResult._readMessage(
       AbortResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3645,8 +3663,8 @@ export const AbortResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<AbortResult>,
-    writer: BinaryWriter,
+    msg: Partial<AbortResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
@@ -3697,10 +3715,10 @@ export const ChomboResult = {
   /**
    * Serializes ChomboResult to protobuf.
    */
-  encode: function (msg: PartialDeep<ChomboResult>): Uint8Array {
+  encode: function (msg: Partial<ChomboResult>): Uint8Array {
     return ChomboResult._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3710,7 +3728,7 @@ export const ChomboResult = {
   decode: function (bytes: ByteSource): ChomboResult {
     return ChomboResult._readMessage(
       ChomboResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3729,8 +3747,8 @@ export const ChomboResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<ChomboResult>,
-    writer: BinaryWriter,
+    msg: Partial<ChomboResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
@@ -3749,7 +3767,7 @@ export const ChomboResult = {
    */
   _readMessage: function (
     msg: ChomboResult,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): ChomboResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3780,10 +3798,10 @@ export const NagashiResult = {
   /**
    * Serializes NagashiResult to protobuf.
    */
-  encode: function (msg: PartialDeep<NagashiResult>): Uint8Array {
+  encode: function (msg: Partial<NagashiResult>): Uint8Array {
     return NagashiResult._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -3793,7 +3811,7 @@ export const NagashiResult = {
   decode: function (bytes: ByteSource): NagashiResult {
     return NagashiResult._readMessage(
       NagashiResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -3814,8 +3832,8 @@ export const NagashiResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<NagashiResult>,
-    writer: BinaryWriter,
+    msg: Partial<NagashiResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
@@ -3840,7 +3858,7 @@ export const NagashiResult = {
    */
   _readMessage: function (
     msg: NagashiResult,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): NagashiResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3891,7 +3909,7 @@ export const Round = {
   /**
    * Serializes Round to protobuf.
    */
-  encode: function (msg: PartialDeep<Round>): Uint8Array {
+  encode: function (msg: Partial<Round>): Uint8Array {
     return Round._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -3921,8 +3939,8 @@ export const Round = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Round>,
-    writer: BinaryWriter,
+    msg: Partial<Round>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ron != undefined) {
       writer.writeMessage(1, msg.ron, RonResult._writeMessage);
@@ -4004,7 +4022,7 @@ export const GameResult = {
   /**
    * Serializes GameResult to protobuf.
    */
-  encode: function (msg: PartialDeep<GameResult>): Uint8Array {
+  encode: function (msg: Partial<GameResult>): Uint8Array {
     return GameResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -4014,7 +4032,7 @@ export const GameResult = {
   decode: function (bytes: ByteSource): GameResult {
     return GameResult._readMessage(
       GameResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4037,8 +4055,8 @@ export const GameResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GameResult>,
-    writer: BinaryWriter,
+    msg: Partial<GameResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -4056,14 +4074,14 @@ export const GameResult = {
       writer.writeRepeatedMessage(
         5,
         msg.finalResults as any,
-        FinalResultOfSession._writeMessage,
+        FinalResultOfSession._writeMessage
       );
     }
     if (msg.penaltyLogs?.length) {
       writer.writeRepeatedMessage(
         6,
         msg.penaltyLogs as any,
-        Penalty._writeMessage,
+        Penalty._writeMessage
       );
     }
     if (msg.rounds?.length) {
@@ -4131,10 +4149,10 @@ export const PlayerPlaceInSeries = {
   /**
    * Serializes PlayerPlaceInSeries to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayerPlaceInSeries>): Uint8Array {
+  encode: function (msg: Partial<PlayerPlaceInSeries>): Uint8Array {
     return PlayerPlaceInSeries._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4144,7 +4162,7 @@ export const PlayerPlaceInSeries = {
   decode: function (bytes: ByteSource): PlayerPlaceInSeries {
     return PlayerPlaceInSeries._readMessage(
       PlayerPlaceInSeries.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4162,8 +4180,8 @@ export const PlayerPlaceInSeries = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerPlaceInSeries>,
-    writer: BinaryWriter,
+    msg: Partial<PlayerPlaceInSeries>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -4179,7 +4197,7 @@ export const PlayerPlaceInSeries = {
    */
   _readMessage: function (
     msg: PlayerPlaceInSeries,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayerPlaceInSeries {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4206,10 +4224,10 @@ export const SeriesResult = {
   /**
    * Serializes SeriesResult to protobuf.
    */
-  encode: function (msg: PartialDeep<SeriesResult>): Uint8Array {
+  encode: function (msg: Partial<SeriesResult>): Uint8Array {
     return SeriesResult._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4219,7 +4237,7 @@ export const SeriesResult = {
   decode: function (bytes: ByteSource): SeriesResult {
     return SeriesResult._readMessage(
       SeriesResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4244,8 +4262,8 @@ export const SeriesResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeriesResult>,
-    writer: BinaryWriter,
+    msg: Partial<SeriesResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.player) {
       writer.writeMessage(1, msg.player, Player._writeMessage);
@@ -4254,7 +4272,7 @@ export const SeriesResult = {
       writer.writeRepeatedMessage(
         2,
         msg.bestSeries as any,
-        PlayerPlaceInSeries._writeMessage,
+        PlayerPlaceInSeries._writeMessage
       );
     }
     if (msg.bestSeriesScores) {
@@ -4270,7 +4288,7 @@ export const SeriesResult = {
       writer.writeRepeatedMessage(
         6,
         msg.currentSeries as any,
-        PlayerPlaceInSeries._writeMessage,
+        PlayerPlaceInSeries._writeMessage
       );
     }
     if (msg.currentSeriesScores) {
@@ -4290,7 +4308,7 @@ export const SeriesResult = {
    */
   _readMessage: function (
     msg: SeriesResult,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SeriesResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4349,10 +4367,10 @@ export const ReplacementPlayer = {
   /**
    * Serializes ReplacementPlayer to protobuf.
    */
-  encode: function (msg: PartialDeep<ReplacementPlayer>): Uint8Array {
+  encode: function (msg: Partial<ReplacementPlayer>): Uint8Array {
     return ReplacementPlayer._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4362,7 +4380,7 @@ export const ReplacementPlayer = {
   decode: function (bytes: ByteSource): ReplacementPlayer {
     return ReplacementPlayer._readMessage(
       ReplacementPlayer.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4382,8 +4400,8 @@ export const ReplacementPlayer = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<ReplacementPlayer>,
-    writer: BinaryWriter,
+    msg: Partial<ReplacementPlayer>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -4405,7 +4423,7 @@ export const ReplacementPlayer = {
    */
   _readMessage: function (
     msg: ReplacementPlayer,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): ReplacementPlayer {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4440,10 +4458,10 @@ export const PlayerInSession = {
   /**
    * Serializes PlayerInSession to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayerInSession>): Uint8Array {
+  encode: function (msg: Partial<PlayerInSession>): Uint8Array {
     return PlayerInSession._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4453,7 +4471,7 @@ export const PlayerInSession = {
   decode: function (bytes: ByteSource): PlayerInSession {
     return PlayerInSession._readMessage(
       PlayerInSession.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4476,8 +4494,8 @@ export const PlayerInSession = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerInSession>,
-    writer: BinaryWriter,
+    msg: Partial<PlayerInSession>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -4508,7 +4526,7 @@ export const PlayerInSession = {
    */
   _readMessage: function (
     msg: PlayerInSession,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayerInSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4556,10 +4574,10 @@ export const CurrentSession = {
   /**
    * Serializes CurrentSession to protobuf.
    */
-  encode: function (msg: PartialDeep<CurrentSession>): Uint8Array {
+  encode: function (msg: Partial<CurrentSession>): Uint8Array {
     return CurrentSession._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4569,7 +4587,7 @@ export const CurrentSession = {
   decode: function (bytes: ByteSource): CurrentSession {
     return CurrentSession._readMessage(
       CurrentSession.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4589,8 +4607,8 @@ export const CurrentSession = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<CurrentSession>,
-    writer: BinaryWriter,
+    msg: Partial<CurrentSession>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -4605,7 +4623,7 @@ export const CurrentSession = {
       writer.writeRepeatedMessage(
         4,
         msg.players as any,
-        PlayerInSession._writeMessage,
+        PlayerInSession._writeMessage
       );
     }
     return writer;
@@ -4616,7 +4634,7 @@ export const CurrentSession = {
    */
   _readMessage: function (
     msg: CurrentSession,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): CurrentSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4653,10 +4671,10 @@ export const RegisteredPlayer = {
   /**
    * Serializes RegisteredPlayer to protobuf.
    */
-  encode: function (msg: PartialDeep<RegisteredPlayer>): Uint8Array {
+  encode: function (msg: Partial<RegisteredPlayer>): Uint8Array {
     return RegisteredPlayer._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4666,7 +4684,7 @@ export const RegisteredPlayer = {
   decode: function (bytes: ByteSource): RegisteredPlayer {
     return RegisteredPlayer._readMessage(
       RegisteredPlayer.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4691,8 +4709,8 @@ export const RegisteredPlayer = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RegisteredPlayer>,
-    writer: BinaryWriter,
+    msg: Partial<RegisteredPlayer>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
@@ -4729,7 +4747,7 @@ export const RegisteredPlayer = {
    */
   _readMessage: function (
     msg: RegisteredPlayer,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): RegisteredPlayer {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4785,10 +4803,10 @@ export const SessionHistoryResult = {
   /**
    * Serializes SessionHistoryResult to protobuf.
    */
-  encode: function (msg: PartialDeep<SessionHistoryResult>): Uint8Array {
+  encode: function (msg: Partial<SessionHistoryResult>): Uint8Array {
     return SessionHistoryResult._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4798,7 +4816,7 @@ export const SessionHistoryResult = {
   decode: function (bytes: ByteSource): SessionHistoryResult {
     return SessionHistoryResult._readMessage(
       SessionHistoryResult.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4823,8 +4841,8 @@ export const SessionHistoryResult = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SessionHistoryResult>,
-    writer: BinaryWriter,
+    msg: Partial<SessionHistoryResult>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -4861,7 +4879,7 @@ export const SessionHistoryResult = {
    */
   _readMessage: function (
     msg: SessionHistoryResult,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SessionHistoryResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4916,10 +4934,10 @@ export const SessionHistoryResultTable = {
   /**
    * Serializes SessionHistoryResultTable to protobuf.
    */
-  encode: function (msg: PartialDeep<SessionHistoryResultTable>): Uint8Array {
+  encode: function (msg: Partial<SessionHistoryResultTable>): Uint8Array {
     return SessionHistoryResultTable._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -4929,7 +4947,7 @@ export const SessionHistoryResultTable = {
   decode: function (bytes: ByteSource): SessionHistoryResultTable {
     return SessionHistoryResultTable._readMessage(
       SessionHistoryResultTable.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -4946,14 +4964,14 @@ export const SessionHistoryResultTable = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SessionHistoryResultTable>,
-    writer: BinaryWriter,
+    msg: Partial<SessionHistoryResultTable>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.tables as any,
-        SessionHistoryResult._writeMessage,
+        SessionHistoryResult._writeMessage
       );
     }
     return writer;
@@ -4964,7 +4982,7 @@ export const SessionHistoryResultTable = {
    */
   _readMessage: function (
     msg: SessionHistoryResultTable,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SessionHistoryResultTable {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4989,10 +5007,10 @@ export const PlacesSummaryItem = {
   /**
    * Serializes PlacesSummaryItem to protobuf.
    */
-  encode: function (msg: PartialDeep<PlacesSummaryItem>): Uint8Array {
+  encode: function (msg: Partial<PlacesSummaryItem>): Uint8Array {
     return PlacesSummaryItem._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5002,7 +5020,7 @@ export const PlacesSummaryItem = {
   decode: function (bytes: ByteSource): PlacesSummaryItem {
     return PlacesSummaryItem._readMessage(
       PlacesSummaryItem.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5020,8 +5038,8 @@ export const PlacesSummaryItem = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlacesSummaryItem>,
-    writer: BinaryWriter,
+    msg: Partial<PlacesSummaryItem>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.place) {
       writer.writeInt32(1, msg.place);
@@ -5037,7 +5055,7 @@ export const PlacesSummaryItem = {
    */
   _readMessage: function (
     msg: PlacesSummaryItem,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlacesSummaryItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5064,10 +5082,10 @@ export const PlayerWinSummary = {
   /**
    * Serializes PlayerWinSummary to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayerWinSummary>): Uint8Array {
+  encode: function (msg: Partial<PlayerWinSummary>): Uint8Array {
     return PlayerWinSummary._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5077,7 +5095,7 @@ export const PlayerWinSummary = {
   decode: function (bytes: ByteSource): PlayerWinSummary {
     return PlayerWinSummary._readMessage(
       PlayerWinSummary.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5109,8 +5127,8 @@ export const PlayerWinSummary = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerWinSummary>,
-    writer: BinaryWriter,
+    msg: Partial<PlayerWinSummary>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ron) {
       writer.writeInt32(1, msg.ron);
@@ -5168,7 +5186,7 @@ export const PlayerWinSummary = {
    */
   _readMessage: function (
     msg: PlayerWinSummary,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayerWinSummary {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5251,10 +5269,10 @@ export const HandValueStat = {
   /**
    * Serializes HandValueStat to protobuf.
    */
-  encode: function (msg: PartialDeep<HandValueStat>): Uint8Array {
+  encode: function (msg: Partial<HandValueStat>): Uint8Array {
     return HandValueStat._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5264,7 +5282,7 @@ export const HandValueStat = {
   decode: function (bytes: ByteSource): HandValueStat {
     return HandValueStat._readMessage(
       HandValueStat.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5282,8 +5300,8 @@ export const HandValueStat = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<HandValueStat>,
-    writer: BinaryWriter,
+    msg: Partial<HandValueStat>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.hanCount) {
       writer.writeInt32(1, msg.hanCount);
@@ -5299,7 +5317,7 @@ export const HandValueStat = {
    */
   _readMessage: function (
     msg: HandValueStat,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): HandValueStat {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5326,7 +5344,7 @@ export const YakuStat = {
   /**
    * Serializes YakuStat to protobuf.
    */
-  encode: function (msg: PartialDeep<YakuStat>): Uint8Array {
+  encode: function (msg: Partial<YakuStat>): Uint8Array {
     return YakuStat._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -5336,7 +5354,7 @@ export const YakuStat = {
   decode: function (bytes: ByteSource): YakuStat {
     return YakuStat._readMessage(
       YakuStat.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5354,8 +5372,8 @@ export const YakuStat = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<YakuStat>,
-    writer: BinaryWriter,
+    msg: Partial<YakuStat>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.yakuId) {
       writer.writeInt32(1, msg.yakuId);
@@ -5395,10 +5413,10 @@ export const RiichiSummary = {
   /**
    * Serializes RiichiSummary to protobuf.
    */
-  encode: function (msg: PartialDeep<RiichiSummary>): Uint8Array {
+  encode: function (msg: Partial<RiichiSummary>): Uint8Array {
     return RiichiSummary._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5408,7 +5426,7 @@ export const RiichiSummary = {
   decode: function (bytes: ByteSource): RiichiSummary {
     return RiichiSummary._readMessage(
       RiichiSummary.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5427,8 +5445,8 @@ export const RiichiSummary = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RiichiSummary>,
-    writer: BinaryWriter,
+    msg: Partial<RiichiSummary>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.riichiWon) {
       writer.writeInt32(1, msg.riichiWon);
@@ -5447,7 +5465,7 @@ export const RiichiSummary = {
    */
   _readMessage: function (
     msg: RiichiSummary,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): RiichiSummary {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5478,7 +5496,7 @@ export const DoraSummary = {
   /**
    * Serializes DoraSummary to protobuf.
    */
-  encode: function (msg: PartialDeep<DoraSummary>): Uint8Array {
+  encode: function (msg: Partial<DoraSummary>): Uint8Array {
     return DoraSummary._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -5488,7 +5506,7 @@ export const DoraSummary = {
   decode: function (bytes: ByteSource): DoraSummary {
     return DoraSummary._readMessage(
       DoraSummary.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5506,8 +5524,8 @@ export const DoraSummary = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<DoraSummary>,
-    writer: BinaryWriter,
+    msg: Partial<DoraSummary>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.count) {
       writer.writeInt32(1, msg.count);
@@ -5547,10 +5565,10 @@ export const IntermediateResultOfSession = {
   /**
    * Serializes IntermediateResultOfSession to protobuf.
    */
-  encode: function (msg: PartialDeep<IntermediateResultOfSession>): Uint8Array {
+  encode: function (msg: Partial<IntermediateResultOfSession>): Uint8Array {
     return IntermediateResultOfSession._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5560,7 +5578,7 @@ export const IntermediateResultOfSession = {
   decode: function (bytes: ByteSource): IntermediateResultOfSession {
     return IntermediateResultOfSession._readMessage(
       IntermediateResultOfSession.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5579,8 +5597,8 @@ export const IntermediateResultOfSession = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<IntermediateResultOfSession>,
-    writer: BinaryWriter,
+    msg: Partial<IntermediateResultOfSession>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -5599,7 +5617,7 @@ export const IntermediateResultOfSession = {
    */
   _readMessage: function (
     msg: IntermediateResultOfSession,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): IntermediateResultOfSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5630,10 +5648,10 @@ export const PaymentLogItem = {
   /**
    * Serializes PaymentLogItem to protobuf.
    */
-  encode: function (msg: PartialDeep<PaymentLogItem>): Uint8Array {
+  encode: function (msg: Partial<PaymentLogItem>): Uint8Array {
     return PaymentLogItem._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -5643,7 +5661,7 @@ export const PaymentLogItem = {
   decode: function (bytes: ByteSource): PaymentLogItem {
     return PaymentLogItem._readMessage(
       PaymentLogItem.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5662,8 +5680,8 @@ export const PaymentLogItem = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PaymentLogItem>,
-    writer: BinaryWriter,
+    msg: Partial<PaymentLogItem>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.from != undefined) {
       writer.writeInt32(1, msg.from);
@@ -5682,7 +5700,7 @@ export const PaymentLogItem = {
    */
   _readMessage: function (
     msg: PaymentLogItem,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PaymentLogItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5713,7 +5731,7 @@ export const PaymentLog = {
   /**
    * Serializes PaymentLog to protobuf.
    */
-  encode: function (msg: PartialDeep<PaymentLog>): Uint8Array {
+  encode: function (msg: Partial<PaymentLog>): Uint8Array {
     return PaymentLog._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -5723,7 +5741,7 @@ export const PaymentLog = {
   decode: function (bytes: ByteSource): PaymentLog {
     return PaymentLog._readMessage(
       PaymentLog.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5742,28 +5760,28 @@ export const PaymentLog = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PaymentLog>,
-    writer: BinaryWriter,
+    msg: Partial<PaymentLog>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.direct?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.direct as any,
-        PaymentLogItem._writeMessage,
+        PaymentLogItem._writeMessage
       );
     }
     if (msg.riichi?.length) {
       writer.writeRepeatedMessage(
         2,
         msg.riichi as any,
-        PaymentLogItem._writeMessage,
+        PaymentLogItem._writeMessage
       );
     }
     if (msg.honba?.length) {
       writer.writeRepeatedMessage(
         3,
         msg.honba as any,
-        PaymentLogItem._writeMessage,
+        PaymentLogItem._writeMessage
       );
     }
     return writer;
@@ -5808,7 +5826,7 @@ export const RoundState = {
   /**
    * Serializes RoundState to protobuf.
    */
-  encode: function (msg: PartialDeep<RoundState>): Uint8Array {
+  encode: function (msg: Partial<RoundState>): Uint8Array {
     return RoundState._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -5818,7 +5836,7 @@ export const RoundState = {
   decode: function (bytes: ByteSource): RoundState {
     return RoundState._readMessage(
       RoundState.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -5845,8 +5863,8 @@ export const RoundState = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RoundState>,
-    writer: BinaryWriter,
+    msg: Partial<RoundState>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
@@ -5870,14 +5888,14 @@ export const RoundState = {
       writer.writeRepeatedMessage(
         7,
         msg.scores as any,
-        IntermediateResultOfSession._writeMessage,
+        IntermediateResultOfSession._writeMessage
       );
     }
     if (msg.scoresDelta?.length) {
       writer.writeRepeatedMessage(
         8,
         msg.scoresDelta as any,
-        IntermediateResultOfSession._writeMessage,
+        IntermediateResultOfSession._writeMessage
       );
     }
     if (msg.payments) {
@@ -5965,7 +5983,7 @@ export const EventData = {
   /**
    * Serializes EventData to protobuf.
    */
-  encode: function (msg: PartialDeep<EventData>): Uint8Array {
+  encode: function (msg: Partial<EventData>): Uint8Array {
     return EventData._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -5975,7 +5993,7 @@ export const EventData = {
   decode: function (bytes: ByteSource): EventData {
     return EventData._readMessage(
       EventData.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6004,8 +6022,8 @@ export const EventData = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventData>,
-    writer: BinaryWriter,
+    msg: Partial<EventData>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.type != undefined) {
       writer.writeEnum(1, EventType._toInt(msg.type));
@@ -6122,7 +6140,7 @@ export const TableState = {
   /**
    * Serializes TableState to protobuf.
    */
-  encode: function (msg: PartialDeep<TableState>): Uint8Array {
+  encode: function (msg: Partial<TableState>): Uint8Array {
     return TableState._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -6132,7 +6150,7 @@ export const TableState = {
   decode: function (bytes: ByteSource): TableState {
     return TableState._readMessage(
       TableState.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6157,8 +6175,8 @@ export const TableState = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<TableState>,
-    writer: BinaryWriter,
+    msg: Partial<TableState>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.status && SessionStatus._toInt(msg.status)) {
       writer.writeEnum(1, SessionStatus._toInt(msg.status));
@@ -6173,7 +6191,7 @@ export const TableState = {
       writer.writeRepeatedMessage(
         4,
         msg.penaltyLogs as any,
-        Penalty._writeMessage,
+        Penalty._writeMessage
       );
     }
     if (msg.tableIndex != undefined) {
@@ -6189,14 +6207,14 @@ export const TableState = {
       writer.writeRepeatedMessage(
         8,
         msg.scores as any,
-        IntermediateResultOfSession._writeMessage,
+        IntermediateResultOfSession._writeMessage
       );
     }
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         9,
         msg.players as any,
-        RegisteredPlayer._writeMessage,
+        RegisteredPlayer._writeMessage
       );
     }
     return writer;
@@ -6266,7 +6284,7 @@ export const Achievement = {
   /**
    * Serializes Achievement to protobuf.
    */
-  encode: function (msg: PartialDeep<Achievement>): Uint8Array {
+  encode: function (msg: Partial<Achievement>): Uint8Array {
     return Achievement._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -6276,7 +6294,7 @@ export const Achievement = {
   decode: function (bytes: ByteSource): Achievement {
     return Achievement._readMessage(
       Achievement.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6294,8 +6312,8 @@ export const Achievement = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Achievement>,
-    writer: BinaryWriter,
+    msg: Partial<Achievement>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.achievementId) {
       writer.writeString(1, msg.achievementId);
@@ -6335,10 +6353,10 @@ export const LocalIdMapping = {
   /**
    * Serializes LocalIdMapping to protobuf.
    */
-  encode: function (msg: PartialDeep<LocalIdMapping>): Uint8Array {
+  encode: function (msg: Partial<LocalIdMapping>): Uint8Array {
     return LocalIdMapping._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6348,7 +6366,7 @@ export const LocalIdMapping = {
   decode: function (bytes: ByteSource): LocalIdMapping {
     return LocalIdMapping._readMessage(
       LocalIdMapping.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6366,8 +6384,8 @@ export const LocalIdMapping = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<LocalIdMapping>,
-    writer: BinaryWriter,
+    msg: Partial<LocalIdMapping>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -6383,7 +6401,7 @@ export const LocalIdMapping = {
    */
   _readMessage: function (
     msg: LocalIdMapping,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): LocalIdMapping {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6410,7 +6428,7 @@ export const TeamMapping = {
   /**
    * Serializes TeamMapping to protobuf.
    */
-  encode: function (msg: PartialDeep<TeamMapping>): Uint8Array {
+  encode: function (msg: Partial<TeamMapping>): Uint8Array {
     return TeamMapping._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -6420,7 +6438,7 @@ export const TeamMapping = {
   decode: function (bytes: ByteSource): TeamMapping {
     return TeamMapping._readMessage(
       TeamMapping.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6438,8 +6456,8 @@ export const TeamMapping = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<TeamMapping>,
-    writer: BinaryWriter,
+    msg: Partial<TeamMapping>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -6479,10 +6497,10 @@ export const PlayerSeating = {
   /**
    * Serializes PlayerSeating to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayerSeating>): Uint8Array {
+  encode: function (msg: Partial<PlayerSeating>): Uint8Array {
     return PlayerSeating._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6492,7 +6510,7 @@ export const PlayerSeating = {
   decode: function (bytes: ByteSource): PlayerSeating {
     return PlayerSeating._readMessage(
       PlayerSeating.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6516,8 +6534,8 @@ export const PlayerSeating = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerSeating>,
-    writer: BinaryWriter,
+    msg: Partial<PlayerSeating>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.order) {
       writer.writeInt32(1, msg.order);
@@ -6551,7 +6569,7 @@ export const PlayerSeating = {
    */
   _readMessage: function (
     msg: PlayerSeating,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayerSeating {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6602,10 +6620,10 @@ export const PlayerSeatingSwiss = {
   /**
    * Serializes PlayerSeatingSwiss to protobuf.
    */
-  encode: function (msg: PartialDeep<PlayerSeatingSwiss>): Uint8Array {
+  encode: function (msg: Partial<PlayerSeatingSwiss>): Uint8Array {
     return PlayerSeatingSwiss._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6615,7 +6633,7 @@ export const PlayerSeatingSwiss = {
   decode: function (bytes: ByteSource): PlayerSeatingSwiss {
     return PlayerSeatingSwiss._readMessage(
       PlayerSeatingSwiss.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6633,8 +6651,8 @@ export const PlayerSeatingSwiss = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerSeatingSwiss>,
-    writer: BinaryWriter,
+    msg: Partial<PlayerSeatingSwiss>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
@@ -6650,7 +6668,7 @@ export const PlayerSeatingSwiss = {
    */
   _readMessage: function (
     msg: PlayerSeatingSwiss,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PlayerSeatingSwiss {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6677,10 +6695,10 @@ export const TableItemSwiss = {
   /**
    * Serializes TableItemSwiss to protobuf.
    */
-  encode: function (msg: PartialDeep<TableItemSwiss>): Uint8Array {
+  encode: function (msg: Partial<TableItemSwiss>): Uint8Array {
     return TableItemSwiss._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6690,7 +6708,7 @@ export const TableItemSwiss = {
   decode: function (bytes: ByteSource): TableItemSwiss {
     return TableItemSwiss._readMessage(
       TableItemSwiss.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6707,14 +6725,14 @@ export const TableItemSwiss = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<TableItemSwiss>,
-    writer: BinaryWriter,
+    msg: Partial<TableItemSwiss>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.players as any,
-        PlayerSeatingSwiss._writeMessage,
+        PlayerSeatingSwiss._writeMessage
       );
     }
     return writer;
@@ -6725,7 +6743,7 @@ export const TableItemSwiss = {
    */
   _readMessage: function (
     msg: TableItemSwiss,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): TableItemSwiss {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6750,10 +6768,10 @@ export const PrescriptedTable = {
   /**
    * Serializes PrescriptedTable to protobuf.
    */
-  encode: function (msg: PartialDeep<PrescriptedTable>): Uint8Array {
+  encode: function (msg: Partial<PrescriptedTable>): Uint8Array {
     return PrescriptedTable._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6763,7 +6781,7 @@ export const PrescriptedTable = {
   decode: function (bytes: ByteSource): PrescriptedTable {
     return PrescriptedTable._readMessage(
       PrescriptedTable.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6780,14 +6798,14 @@ export const PrescriptedTable = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PrescriptedTable>,
-    writer: BinaryWriter,
+    msg: Partial<PrescriptedTable>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.players as any,
-        RegisteredPlayer._writeMessage,
+        RegisteredPlayer._writeMessage
       );
     }
     return writer;
@@ -6798,7 +6816,7 @@ export const PrescriptedTable = {
    */
   _readMessage: function (
     msg: PrescriptedTable,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): PrescriptedTable {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6823,10 +6841,10 @@ export const SessionState = {
   /**
    * Serializes SessionState to protobuf.
    */
-  encode: function (msg: PartialDeep<SessionState>): Uint8Array {
+  encode: function (msg: Partial<SessionState>): Uint8Array {
     return SessionState._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -6836,7 +6854,7 @@ export const SessionState = {
   decode: function (bytes: ByteSource): SessionState {
     return SessionState._readMessage(
       SessionState.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -6860,8 +6878,8 @@ export const SessionState = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SessionState>,
-    writer: BinaryWriter,
+    msg: Partial<SessionState>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.dealer) {
       writer.writeInt32(1, msg.dealer);
@@ -6879,7 +6897,7 @@ export const SessionState = {
       writer.writeRepeatedMessage(
         5,
         msg.scores as any,
-        IntermediateResultOfSession._writeMessage,
+        IntermediateResultOfSession._writeMessage
       );
     }
     if (msg.finished) {
@@ -6889,7 +6907,7 @@ export const SessionState = {
       writer.writeRepeatedMessage(
         7,
         msg.penalties as any,
-        Penalty._writeMessage,
+        Penalty._writeMessage
       );
     }
     if (msg.lastHandStarted) {
@@ -6903,7 +6921,7 @@ export const SessionState = {
    */
   _readMessage: function (
     msg: SessionState,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): SessionState {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6958,7 +6976,7 @@ export const Uma = {
   /**
    * Serializes Uma to protobuf.
    */
-  encode: function (msg: PartialDeep<Uma>): Uint8Array {
+  encode: function (msg: Partial<Uma>): Uint8Array {
     return Uma._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -6985,8 +7003,8 @@ export const Uma = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<Uma>,
-    writer: BinaryWriter,
+    msg: Partial<Uma>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.place1) {
       writer.writeInt32(1, msg.place1);
@@ -7040,7 +7058,7 @@ export const ComplexUma = {
   /**
    * Serializes ComplexUma to protobuf.
    */
-  encode: function (msg: PartialDeep<ComplexUma>): Uint8Array {
+  encode: function (msg: Partial<ComplexUma>): Uint8Array {
     return ComplexUma._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -7050,7 +7068,7 @@ export const ComplexUma = {
   decode: function (bytes: ByteSource): ComplexUma {
     return ComplexUma._readMessage(
       ComplexUma.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7069,8 +7087,8 @@ export const ComplexUma = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<ComplexUma>,
-    writer: BinaryWriter,
+    msg: Partial<ComplexUma>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.neg1) {
       writer.writeMessage(1, msg.neg1, Uma._writeMessage);
@@ -7117,10 +7135,10 @@ export const RulesetConfig = {
   /**
    * Serializes RulesetConfig to protobuf.
    */
-  encode: function (msg: PartialDeep<RulesetConfig>): Uint8Array {
+  encode: function (msg: Partial<RulesetConfig>): Uint8Array {
     return RulesetConfig._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7130,7 +7148,7 @@ export const RulesetConfig = {
   decode: function (bytes: ByteSource): RulesetConfig {
     return RulesetConfig._readMessage(
       RulesetConfig.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7181,8 +7199,8 @@ export const RulesetConfig = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RulesetConfig>,
-    writer: BinaryWriter,
+    msg: Partial<RulesetConfig>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.complexUma) {
       writer.writeMessage(1, msg.complexUma, ComplexUma._writeMessage);
@@ -7297,7 +7315,7 @@ export const RulesetConfig = {
    */
   _readMessage: function (
     msg: RulesetConfig,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): RulesetConfig {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7464,10 +7482,10 @@ export const GenericSuccessResponse = {
   /**
    * Serializes GenericSuccessResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<GenericSuccessResponse>): Uint8Array {
+  encode: function (msg: Partial<GenericSuccessResponse>): Uint8Array {
     return GenericSuccessResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7477,7 +7495,7 @@ export const GenericSuccessResponse = {
   decode: function (bytes: ByteSource): GenericSuccessResponse {
     return GenericSuccessResponse._readMessage(
       GenericSuccessResponse.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7494,8 +7512,8 @@ export const GenericSuccessResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GenericSuccessResponse>,
-    writer: BinaryWriter,
+    msg: Partial<GenericSuccessResponse>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.success) {
       writer.writeBool(1, msg.success);
@@ -7508,7 +7526,7 @@ export const GenericSuccessResponse = {
    */
   _readMessage: function (
     msg: GenericSuccessResponse,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GenericSuccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7531,10 +7549,10 @@ export const GenericEventPayload = {
   /**
    * Serializes GenericEventPayload to protobuf.
    */
-  encode: function (msg: PartialDeep<GenericEventPayload>): Uint8Array {
+  encode: function (msg: Partial<GenericEventPayload>): Uint8Array {
     return GenericEventPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new BinaryWriter()
     ).getResultBuffer();
   },
 
@@ -7544,7 +7562,7 @@ export const GenericEventPayload = {
   decode: function (bytes: ByteSource): GenericEventPayload {
     return GenericEventPayload._readMessage(
       GenericEventPayload.initialize(),
-      new BinaryReader(bytes),
+      new BinaryReader(bytes)
     );
   },
 
@@ -7561,8 +7579,8 @@ export const GenericEventPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GenericEventPayload>,
-    writer: BinaryWriter,
+    msg: Partial<GenericEventPayload>,
+    writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
@@ -7575,7 +7593,7 @@ export const GenericEventPayload = {
    */
   _readMessage: function (
     msg: GenericEventPayload,
-    reader: BinaryReader,
+    reader: BinaryReader
   ): GenericEventPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7942,7 +7960,7 @@ export const AccessRulesJSON = {
   /**
    * Serializes AccessRules to JSON.
    */
-  encode: function (msg: PartialDeep<AccessRules>): string {
+  encode: function (msg: Partial<AccessRules>): string {
     return JSON.stringify(AccessRulesJSON._writeMessage(msg));
   },
 
@@ -7952,7 +7970,7 @@ export const AccessRulesJSON = {
   decode: function (json: string): AccessRules {
     return AccessRulesJSON._readMessage(
       AccessRulesJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -7968,16 +7986,14 @@ export const AccessRulesJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<AccessRules>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<AccessRules>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
       const _rules_ = Object.fromEntries(
         Object.entries(msg.rules)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessRulesJSON.Rules._writeMessage)
-          .map(({ key, value }) => [key, value]),
+          .map(({ key, value }) => [key, value])
       );
       if (Object.keys(_rules_).length > 0) {
         json["rules"] = _rules_;
@@ -7996,7 +8012,7 @@ export const AccessRulesJSON = {
         Object.entries(_rules_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessRulesJSON.Rules._readMessage)
-          .map(({ key, value }) => [key, value]),
+          .map(({ key, value }) => [key, value])
       );
     }
     return msg;
@@ -8007,7 +8023,7 @@ export const AccessRulesJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: PartialDeep<AccessRules.Rules>,
+      msg: Partial<AccessRules.Rules>
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -8027,7 +8043,7 @@ export const AccessRulesJSON = {
      */
     _readMessage: function (
       msg: AccessRules.Rules,
-      json: any,
+      json: any
     ): AccessRules.Rules {
       const _key_ = json["key"];
       if (_key_) {
@@ -8035,7 +8051,9 @@ export const AccessRulesJSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        RuleValueJSON._readMessage(msg.value, _value_);
+        const m = RuleValue.initialize();
+        RuleValueJSON._readMessage(m, _value_);
+        msg.value = m;
       }
       return msg;
     },
@@ -8046,7 +8064,7 @@ export const RuleValueJSON = {
   /**
    * Serializes RuleValue to JSON.
    */
-  encode: function (msg: PartialDeep<RuleValue>): string {
+  encode: function (msg: Partial<RuleValue>): string {
     return JSON.stringify(RuleValueJSON._writeMessage(msg));
   },
 
@@ -8056,7 +8074,7 @@ export const RuleValueJSON = {
   decode: function (json: string): RuleValue {
     return RuleValueJSON._readMessage(
       RuleValueJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -8074,9 +8092,7 @@ export const RuleValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<RuleValue>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<RuleValue>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.numberValue != undefined) {
       json["numberValue"] = msg.numberValue;
@@ -8114,7 +8130,7 @@ export const EventAdminJSON = {
   /**
    * Serializes EventAdmin to JSON.
    */
-  encode: function (msg: PartialDeep<EventAdmin>): string {
+  encode: function (msg: Partial<EventAdmin>): string {
     return JSON.stringify(EventAdminJSON._writeMessage(msg));
   },
 
@@ -8124,7 +8140,7 @@ export const EventAdminJSON = {
   decode: function (json: string): EventAdmin {
     return EventAdminJSON._readMessage(
       EventAdminJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -8144,9 +8160,7 @@ export const EventAdminJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<EventAdmin>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<EventAdmin>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
       json["ruleId"] = msg.ruleId;
@@ -8198,7 +8212,7 @@ export const RuleListItemJSON = {
   /**
    * Serializes RuleListItem to JSON.
    */
-  encode: function (msg: PartialDeep<RuleListItem>): string {
+  encode: function (msg: Partial<RuleListItem>): string {
     return JSON.stringify(RuleListItemJSON._writeMessage(msg));
   },
 
@@ -8208,7 +8222,7 @@ export const RuleListItemJSON = {
   decode: function (json: string): RuleListItem {
     return RuleListItemJSON._readMessage(
       RuleListItemJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -8227,7 +8241,7 @@ export const RuleListItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RuleListItem>,
+    msg: Partial<RuleListItem>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.default) {
@@ -8266,7 +8280,7 @@ export const EventRuleListItemJSON = {
   /**
    * Serializes EventRuleListItem to JSON.
    */
-  encode: function (msg: PartialDeep<EventRuleListItem>): string {
+  encode: function (msg: Partial<EventRuleListItem>): string {
     return JSON.stringify(EventRuleListItemJSON._writeMessage(msg));
   },
 
@@ -8276,7 +8290,7 @@ export const EventRuleListItemJSON = {
   decode: function (json: string): EventRuleListItem {
     return EventRuleListItemJSON._readMessage(
       EventRuleListItemJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -8298,7 +8312,7 @@ export const EventRuleListItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<EventRuleListItem>,
+    msg: Partial<EventRuleListItem>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.isGlobal) {
@@ -8330,7 +8344,7 @@ export const EventRuleListItemJSON = {
    */
   _readMessage: function (
     msg: EventRuleListItem,
-    json: any,
+    json: any
   ): EventRuleListItem {
     const _isGlobal_ = json["isGlobal"] ?? json["is_global"];
     if (_isGlobal_) {
@@ -8342,7 +8356,9 @@ export const EventRuleListItemJSON = {
     }
     const _value_ = json["value"];
     if (_value_) {
-      RuleValueJSON._readMessage(msg.value, _value_);
+      const m = RuleValue.initialize();
+      RuleValueJSON._readMessage(m, _value_);
+      msg.value = m;
     }
     const _name_ = json["name"];
     if (_name_) {
@@ -8364,7 +8380,7 @@ export const RuleListItemExJSON = {
   /**
    * Serializes RuleListItemEx to JSON.
    */
-  encode: function (msg: PartialDeep<RuleListItemEx>): string {
+  encode: function (msg: Partial<RuleListItemEx>): string {
     return JSON.stringify(RuleListItemExJSON._writeMessage(msg));
   },
 
@@ -8374,7 +8390,7 @@ export const RuleListItemExJSON = {
   decode: function (json: string): RuleListItemEx {
     return RuleListItemExJSON._readMessage(
       RuleListItemExJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -8394,7 +8410,7 @@ export const RuleListItemExJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RuleListItemEx>,
+    msg: Partial<RuleListItemEx>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -8429,7 +8445,9 @@ export const RuleListItemExJSON = {
     }
     const _value_ = json["value"];
     if (_value_) {
-      RuleValueJSON._readMessage(msg.value, _value_);
+      const m = RuleValue.initialize();
+      RuleValueJSON._readMessage(m, _value_);
+      msg.value = m;
     }
     const _allowedValues_ = json["allowedValues"] ?? json["allowed_values"];
     if (_allowedValues_) {
@@ -8443,7 +8461,7 @@ export const RuleListItemExMapJSON = {
   /**
    * Serializes RuleListItemExMap to JSON.
    */
-  encode: function (msg: PartialDeep<RuleListItemExMap>): string {
+  encode: function (msg: Partial<RuleListItemExMap>): string {
     return JSON.stringify(RuleListItemExMapJSON._writeMessage(msg));
   },
 
@@ -8453,7 +8471,7 @@ export const RuleListItemExMapJSON = {
   decode: function (json: string): RuleListItemExMap {
     return RuleListItemExMapJSON._readMessage(
       RuleListItemExMapJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -8470,7 +8488,7 @@ export const RuleListItemExMapJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RuleListItemExMap>,
+    msg: Partial<RuleListItemExMap>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -8478,7 +8496,7 @@ export const RuleListItemExMapJSON = {
         Object.entries(msg.rules)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(RuleListItemExMapJSON.Rules._writeMessage)
-          .map(({ key, value }) => [key, value]),
+          .map(({ key, value }) => [key, value])
       );
       if (Object.keys(_rules_).length > 0) {
         json["rules"] = _rules_;
@@ -8492,7 +8510,7 @@ export const RuleListItemExMapJSON = {
    */
   _readMessage: function (
     msg: RuleListItemExMap,
-    json: any,
+    json: any
   ): RuleListItemExMap {
     const _rules_ = json["rules"];
     if (_rules_) {
@@ -8500,7 +8518,7 @@ export const RuleListItemExMapJSON = {
         Object.entries(_rules_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(RuleListItemExMapJSON.Rules._readMessage)
-          .map(({ key, value }) => [key, value]),
+          .map(({ key, value }) => [key, value])
       );
     }
     return msg;
@@ -8511,7 +8529,7 @@ export const RuleListItemExMapJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: PartialDeep<RuleListItemExMap.Rules>,
+      msg: Partial<RuleListItemExMap.Rules>
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -8531,7 +8549,7 @@ export const RuleListItemExMapJSON = {
      */
     _readMessage: function (
       msg: RuleListItemExMap.Rules,
-      json: any,
+      json: any
     ): RuleListItemExMap.Rules {
       const _key_ = json["key"];
       if (_key_) {
@@ -8539,7 +8557,9 @@ export const RuleListItemExMapJSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        RuleListItemExJSON._readMessage(msg.value, _value_);
+        const m = RuleListItemEx.initialize();
+        RuleListItemExJSON._readMessage(m, _value_);
+        msg.value = m;
       }
       return msg;
     },
@@ -8550,7 +8570,7 @@ export const PersonJSON = {
   /**
    * Serializes Person to JSON.
    */
-  encode: function (msg: PartialDeep<Person>): string {
+  encode: function (msg: Partial<Person>): string {
     return JSON.stringify(PersonJSON._writeMessage(msg));
   },
 
@@ -8578,7 +8598,7 @@ export const PersonJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Person>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Person>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -8637,7 +8657,7 @@ export const PersonExJSON = {
   /**
    * Serializes PersonEx to JSON.
    */
-  encode: function (msg: PartialDeep<PersonEx>): string {
+  encode: function (msg: Partial<PersonEx>): string {
     return JSON.stringify(PersonExJSON._writeMessage(msg));
   },
 
@@ -8647,7 +8667,7 @@ export const PersonExJSON = {
   decode: function (json: string): PersonEx {
     return PersonExJSON._readMessage(
       PersonExJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -8666,15 +8686,15 @@ export const PersonExJSON = {
       groups: [],
       hasAvatar: false,
       lastUpdate: "",
+      msNickname: "",
+      msAccountId: 0,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<PersonEx>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<PersonEx>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -8705,6 +8725,12 @@ export const PersonExJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.msNickname) {
+      json["msNickname"] = msg.msNickname;
+    }
+    if (msg.msAccountId) {
+      json["msAccountId"] = msg.msAccountId;
     }
     return json;
   },
@@ -8753,6 +8779,14 @@ export const PersonExJSON = {
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
     }
+    const _msNickname_ = json["msNickname"] ?? json["ms_nickname"];
+    if (_msNickname_) {
+      msg.msNickname = _msNickname_;
+    }
+    const _msAccountId_ = json["msAccountId"] ?? json["ms_account_id"];
+    if (_msAccountId_) {
+      msg.msAccountId = _msAccountId_;
+    }
     return msg;
   },
 };
@@ -8761,7 +8795,7 @@ export const GroupJSON = {
   /**
    * Serializes Group to JSON.
    */
-  encode: function (msg: PartialDeep<Group>): string {
+  encode: function (msg: Partial<Group>): string {
     return JSON.stringify(GroupJSON._writeMessage(msg));
   },
 
@@ -8787,7 +8821,7 @@ export const GroupJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Group>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Group>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -8832,7 +8866,7 @@ export const CountryJSON = {
   /**
    * Serializes Country to JSON.
    */
-  encode: function (msg: PartialDeep<Country>): string {
+  encode: function (msg: Partial<Country>): string {
     return JSON.stringify(CountryJSON._writeMessage(msg));
   },
 
@@ -8856,7 +8890,7 @@ export const CountryJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Country>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Country>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.code) {
       json["code"] = msg.code;
@@ -8887,7 +8921,7 @@ export const EventJSON = {
   /**
    * Serializes Event to JSON.
    */
-  encode: function (msg: PartialDeep<Event>): string {
+  encode: function (msg: Partial<Event>): string {
     return JSON.stringify(EventJSON._writeMessage(msg));
   },
 
@@ -8922,7 +8956,7 @@ export const EventJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Event>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Event>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -9031,7 +9065,7 @@ export const MyEventJSON = {
   /**
    * Serializes MyEvent to JSON.
    */
-  encode: function (msg: PartialDeep<MyEvent>): string {
+  encode: function (msg: Partial<MyEvent>): string {
     return JSON.stringify(MyEventJSON._writeMessage(msg));
   },
 
@@ -9057,7 +9091,7 @@ export const MyEventJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<MyEvent>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<MyEvent>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -9102,7 +9136,7 @@ export const GameConfigJSON = {
   /**
    * Serializes GameConfig to JSON.
    */
-  encode: function (msg: PartialDeep<GameConfig>): string {
+  encode: function (msg: Partial<GameConfig>): string {
     return JSON.stringify(GameConfigJSON._writeMessage(msg));
   },
 
@@ -9112,7 +9146,7 @@ export const GameConfigJSON = {
   decode: function (json: string): GameConfig {
     return GameConfigJSON._readMessage(
       GameConfigJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9151,9 +9185,7 @@ export const GameConfigJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<GameConfig>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<GameConfig>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rulesetTitle) {
       json["rulesetTitle"] = msg.rulesetTitle;
@@ -9223,7 +9255,7 @@ export const GameConfigJSON = {
     }
     if (msg.rulesetConfig) {
       const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
-        msg.rulesetConfig,
+        msg.rulesetConfig
       );
       if (Object.keys(_rulesetConfig_).length > 0) {
         json["rulesetConfig"] = _rulesetConfig_;
@@ -9332,7 +9364,9 @@ export const GameConfigJSON = {
     }
     const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {
-      RulesetConfigJSON._readMessage(msg.rulesetConfig, _rulesetConfig_);
+      const m = RulesetConfig.initialize();
+      RulesetConfigJSON._readMessage(m, _rulesetConfig_);
+      msg.rulesetConfig = m;
     }
     const _lobbyId_ = json["lobbyId"] ?? json["lobby_id"];
     if (_lobbyId_) {
@@ -9346,7 +9380,7 @@ export const PlayerInRatingJSON = {
   /**
    * Serializes PlayerInRating to JSON.
    */
-  encode: function (msg: PartialDeep<PlayerInRating>): string {
+  encode: function (msg: Partial<PlayerInRating>): string {
     return JSON.stringify(PlayerInRatingJSON._writeMessage(msg));
   },
 
@@ -9356,7 +9390,7 @@ export const PlayerInRatingJSON = {
   decode: function (json: string): PlayerInRating {
     return PlayerInRatingJSON._readMessage(
       PlayerInRatingJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9384,7 +9418,7 @@ export const PlayerInRatingJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerInRating>,
+    msg: Partial<PlayerInRating>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -9486,7 +9520,7 @@ export const PlayerJSON = {
   /**
    * Serializes Player to JSON.
    */
-  encode: function (msg: PartialDeep<Player>): string {
+  encode: function (msg: Partial<Player>): string {
     return JSON.stringify(PlayerJSON._writeMessage(msg));
   },
 
@@ -9513,7 +9547,7 @@ export const PlayerJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Player>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Player>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -9565,7 +9599,7 @@ export const FinalResultOfSessionJSON = {
   /**
    * Serializes FinalResultOfSession to JSON.
    */
-  encode: function (msg: PartialDeep<FinalResultOfSession>): string {
+  encode: function (msg: Partial<FinalResultOfSession>): string {
     return JSON.stringify(FinalResultOfSessionJSON._writeMessage(msg));
   },
 
@@ -9575,7 +9609,7 @@ export const FinalResultOfSessionJSON = {
   decode: function (json: string): FinalResultOfSession {
     return FinalResultOfSessionJSON._readMessage(
       FinalResultOfSessionJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9595,7 +9629,7 @@ export const FinalResultOfSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<FinalResultOfSession>,
+    msg: Partial<FinalResultOfSession>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -9618,7 +9652,7 @@ export const FinalResultOfSessionJSON = {
    */
   _readMessage: function (
     msg: FinalResultOfSession,
-    json: any,
+    json: any
   ): FinalResultOfSession {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -9644,7 +9678,7 @@ export const PenaltyJSON = {
   /**
    * Serializes Penalty to JSON.
    */
-  encode: function (msg: PartialDeep<Penalty>): string {
+  encode: function (msg: Partial<Penalty>): string {
     return JSON.stringify(PenaltyJSON._writeMessage(msg));
   },
 
@@ -9669,7 +9703,7 @@ export const PenaltyJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Penalty>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Penalty>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.who) {
       json["who"] = msg.who;
@@ -9707,7 +9741,7 @@ export const RonResultJSON = {
   /**
    * Serializes RonResult to JSON.
    */
-  encode: function (msg: PartialDeep<RonResult>): string {
+  encode: function (msg: Partial<RonResult>): string {
     return JSON.stringify(RonResultJSON._writeMessage(msg));
   },
 
@@ -9717,7 +9751,7 @@ export const RonResultJSON = {
   decode: function (json: string): RonResult {
     return RonResultJSON._readMessage(
       RonResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9746,9 +9780,7 @@ export const RonResultJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<RonResult>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<RonResult>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -9863,7 +9895,7 @@ export const MultironWinJSON = {
   /**
    * Serializes MultironWin to JSON.
    */
-  encode: function (msg: PartialDeep<MultironWin>): string {
+  encode: function (msg: Partial<MultironWin>): string {
     return JSON.stringify(MultironWinJSON._writeMessage(msg));
   },
 
@@ -9873,7 +9905,7 @@ export const MultironWinJSON = {
   decode: function (json: string): MultironWin {
     return MultironWinJSON._readMessage(
       MultironWinJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -9898,9 +9930,7 @@ export const MultironWinJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<MultironWin>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<MultironWin>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.winnerId) {
       json["winnerId"] = msg.winnerId;
@@ -9987,7 +10017,7 @@ export const MultironResultJSON = {
   /**
    * Serializes MultironResult to JSON.
    */
-  encode: function (msg: PartialDeep<MultironResult>): string {
+  encode: function (msg: Partial<MultironResult>): string {
     return JSON.stringify(MultironResultJSON._writeMessage(msg));
   },
 
@@ -9997,7 +10027,7 @@ export const MultironResultJSON = {
   decode: function (json: string): MultironResult {
     return MultironResultJSON._readMessage(
       MultironResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10019,7 +10049,7 @@ export const MultironResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<MultironResult>,
+    msg: Partial<MultironResult>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
@@ -10066,7 +10096,7 @@ export const MultironResultJSON = {
     const _wins_ = json["wins"];
     if (_wins_) {
       for (const item of _wins_) {
-        const m = MultironWinJSON.initialize();
+        const m = MultironWin.initialize();
         MultironWinJSON._readMessage(m, item);
         msg.wins.push(m);
       }
@@ -10083,7 +10113,7 @@ export const TsumoResultJSON = {
   /**
    * Serializes TsumoResult to JSON.
    */
-  encode: function (msg: PartialDeep<TsumoResult>): string {
+  encode: function (msg: Partial<TsumoResult>): string {
     return JSON.stringify(TsumoResultJSON._writeMessage(msg));
   },
 
@@ -10093,7 +10123,7 @@ export const TsumoResultJSON = {
   decode: function (json: string): TsumoResult {
     return TsumoResultJSON._readMessage(
       TsumoResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10121,9 +10151,7 @@ export const TsumoResultJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<TsumoResult>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<TsumoResult>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -10231,7 +10259,7 @@ export const DrawResultJSON = {
   /**
    * Serializes DrawResult to JSON.
    */
-  encode: function (msg: PartialDeep<DrawResult>): string {
+  encode: function (msg: Partial<DrawResult>): string {
     return JSON.stringify(DrawResultJSON._writeMessage(msg));
   },
 
@@ -10241,7 +10269,7 @@ export const DrawResultJSON = {
   decode: function (json: string): DrawResult {
     return DrawResultJSON._readMessage(
       DrawResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10260,9 +10288,7 @@ export const DrawResultJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<DrawResult>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<DrawResult>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -10307,7 +10333,7 @@ export const AbortResultJSON = {
   /**
    * Serializes AbortResult to JSON.
    */
-  encode: function (msg: PartialDeep<AbortResult>): string {
+  encode: function (msg: Partial<AbortResult>): string {
     return JSON.stringify(AbortResultJSON._writeMessage(msg));
   },
 
@@ -10317,7 +10343,7 @@ export const AbortResultJSON = {
   decode: function (json: string): AbortResult {
     return AbortResultJSON._readMessage(
       AbortResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10335,9 +10361,7 @@ export const AbortResultJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<AbortResult>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<AbortResult>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -10375,7 +10399,7 @@ export const ChomboResultJSON = {
   /**
    * Serializes ChomboResult to JSON.
    */
-  encode: function (msg: PartialDeep<ChomboResult>): string {
+  encode: function (msg: Partial<ChomboResult>): string {
     return JSON.stringify(ChomboResultJSON._writeMessage(msg));
   },
 
@@ -10385,7 +10409,7 @@ export const ChomboResultJSON = {
   decode: function (json: string): ChomboResult {
     return ChomboResultJSON._readMessage(
       ChomboResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10404,7 +10428,7 @@ export const ChomboResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<ChomboResult>,
+    msg: Partial<ChomboResult>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
@@ -10443,7 +10467,7 @@ export const NagashiResultJSON = {
   /**
    * Serializes NagashiResult to JSON.
    */
-  encode: function (msg: PartialDeep<NagashiResult>): string {
+  encode: function (msg: Partial<NagashiResult>): string {
     return JSON.stringify(NagashiResultJSON._writeMessage(msg));
   },
 
@@ -10453,7 +10477,7 @@ export const NagashiResultJSON = {
   decode: function (json: string): NagashiResult {
     return NagashiResultJSON._readMessage(
       NagashiResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10474,7 +10498,7 @@ export const NagashiResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<NagashiResult>,
+    msg: Partial<NagashiResult>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
@@ -10527,7 +10551,7 @@ export const RoundJSON = {
   /**
    * Serializes Round to JSON.
    */
-  encode: function (msg: PartialDeep<Round>): string {
+  encode: function (msg: Partial<Round>): string {
     return JSON.stringify(RoundJSON._writeMessage(msg));
   },
 
@@ -10556,7 +10580,7 @@ export const RoundJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Round>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Round>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ron != undefined) {
       const _ron_ = RonResultJSON._writeMessage(msg.ron);
@@ -10595,38 +10619,45 @@ export const RoundJSON = {
   _readMessage: function (msg: Round, json: any): Round {
     const _ron_ = json["ron"];
     if (_ron_) {
-      msg.ron = RonResultJSON.initialize();
-      RonResultJSON._readMessage(msg.ron, _ron_);
+      const m = RonResult.initialize();
+      RonResultJSON._readMessage(m, _ron_);
+      msg.ron = m;
     }
     const _tsumo_ = json["tsumo"];
     if (_tsumo_) {
-      msg.tsumo = TsumoResultJSON.initialize();
-      TsumoResultJSON._readMessage(msg.tsumo, _tsumo_);
+      const m = TsumoResult.initialize();
+      TsumoResultJSON._readMessage(m, _tsumo_);
+      msg.tsumo = m;
     }
     const _multiron_ = json["multiron"];
     if (_multiron_) {
-      msg.multiron = MultironResultJSON.initialize();
-      MultironResultJSON._readMessage(msg.multiron, _multiron_);
+      const m = MultironResult.initialize();
+      MultironResultJSON._readMessage(m, _multiron_);
+      msg.multiron = m;
     }
     const _draw_ = json["draw"];
     if (_draw_) {
-      msg.draw = DrawResultJSON.initialize();
-      DrawResultJSON._readMessage(msg.draw, _draw_);
+      const m = DrawResult.initialize();
+      DrawResultJSON._readMessage(m, _draw_);
+      msg.draw = m;
     }
     const _abort_ = json["abort"];
     if (_abort_) {
-      msg.abort = AbortResultJSON.initialize();
-      AbortResultJSON._readMessage(msg.abort, _abort_);
+      const m = AbortResult.initialize();
+      AbortResultJSON._readMessage(m, _abort_);
+      msg.abort = m;
     }
     const _chombo_ = json["chombo"];
     if (_chombo_) {
-      msg.chombo = ChomboResultJSON.initialize();
-      ChomboResultJSON._readMessage(msg.chombo, _chombo_);
+      const m = ChomboResult.initialize();
+      ChomboResultJSON._readMessage(m, _chombo_);
+      msg.chombo = m;
     }
     const _nagashi_ = json["nagashi"];
     if (_nagashi_) {
-      msg.nagashi = NagashiResultJSON.initialize();
-      NagashiResultJSON._readMessage(msg.nagashi, _nagashi_);
+      const m = NagashiResult.initialize();
+      NagashiResultJSON._readMessage(m, _nagashi_);
+      msg.nagashi = m;
     }
     return msg;
   },
@@ -10636,7 +10667,7 @@ export const GameResultJSON = {
   /**
    * Serializes GameResult to JSON.
    */
-  encode: function (msg: PartialDeep<GameResult>): string {
+  encode: function (msg: Partial<GameResult>): string {
     return JSON.stringify(GameResultJSON._writeMessage(msg));
   },
 
@@ -10646,7 +10677,7 @@ export const GameResultJSON = {
   decode: function (json: string): GameResult {
     return GameResultJSON._readMessage(
       GameResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10668,9 +10699,7 @@ export const GameResultJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<GameResult>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<GameResult>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
@@ -10686,7 +10715,7 @@ export const GameResultJSON = {
     }
     if (msg.finalResults?.length) {
       json["finalResults"] = msg.finalResults.map(
-        FinalResultOfSessionJSON._writeMessage,
+        FinalResultOfSessionJSON._writeMessage
       );
     }
     if (msg.penaltyLogs?.length) {
@@ -10721,7 +10750,7 @@ export const GameResultJSON = {
     const _finalResults_ = json["finalResults"] ?? json["final_results"];
     if (_finalResults_) {
       for (const item of _finalResults_) {
-        const m = FinalResultOfSessionJSON.initialize();
+        const m = FinalResultOfSession.initialize();
         FinalResultOfSessionJSON._readMessage(m, item);
         msg.finalResults.push(m);
       }
@@ -10729,7 +10758,7 @@ export const GameResultJSON = {
     const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
     if (_penaltyLogs_) {
       for (const item of _penaltyLogs_) {
-        const m = PenaltyJSON.initialize();
+        const m = Penalty.initialize();
         PenaltyJSON._readMessage(m, item);
         msg.penaltyLogs.push(m);
       }
@@ -10737,7 +10766,7 @@ export const GameResultJSON = {
     const _rounds_ = json["rounds"];
     if (_rounds_) {
       for (const item of _rounds_) {
-        const m = RoundJSON.initialize();
+        const m = Round.initialize();
         RoundJSON._readMessage(m, item);
         msg.rounds.push(m);
       }
@@ -10750,7 +10779,7 @@ export const PlayerPlaceInSeriesJSON = {
   /**
    * Serializes PlayerPlaceInSeries to JSON.
    */
-  encode: function (msg: PartialDeep<PlayerPlaceInSeries>): string {
+  encode: function (msg: Partial<PlayerPlaceInSeries>): string {
     return JSON.stringify(PlayerPlaceInSeriesJSON._writeMessage(msg));
   },
 
@@ -10760,7 +10789,7 @@ export const PlayerPlaceInSeriesJSON = {
   decode: function (json: string): PlayerPlaceInSeries {
     return PlayerPlaceInSeriesJSON._readMessage(
       PlayerPlaceInSeriesJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10778,7 +10807,7 @@ export const PlayerPlaceInSeriesJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerPlaceInSeries>,
+    msg: Partial<PlayerPlaceInSeries>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -10795,7 +10824,7 @@ export const PlayerPlaceInSeriesJSON = {
    */
   _readMessage: function (
     msg: PlayerPlaceInSeries,
-    json: any,
+    json: any
   ): PlayerPlaceInSeries {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -10813,7 +10842,7 @@ export const SeriesResultJSON = {
   /**
    * Serializes SeriesResult to JSON.
    */
-  encode: function (msg: PartialDeep<SeriesResult>): string {
+  encode: function (msg: Partial<SeriesResult>): string {
     return JSON.stringify(SeriesResultJSON._writeMessage(msg));
   },
 
@@ -10823,7 +10852,7 @@ export const SeriesResultJSON = {
   decode: function (json: string): SeriesResult {
     return SeriesResultJSON._readMessage(
       SeriesResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10848,7 +10877,7 @@ export const SeriesResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SeriesResult>,
+    msg: Partial<SeriesResult>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.player) {
@@ -10859,7 +10888,7 @@ export const SeriesResultJSON = {
     }
     if (msg.bestSeries?.length) {
       json["bestSeries"] = msg.bestSeries.map(
-        PlayerPlaceInSeriesJSON._writeMessage,
+        PlayerPlaceInSeriesJSON._writeMessage
       );
     }
     if (msg.bestSeriesScores) {
@@ -10873,7 +10902,7 @@ export const SeriesResultJSON = {
     }
     if (msg.currentSeries?.length) {
       json["currentSeries"] = msg.currentSeries.map(
-        PlayerPlaceInSeriesJSON._writeMessage,
+        PlayerPlaceInSeriesJSON._writeMessage
       );
     }
     if (msg.currentSeriesScores) {
@@ -10894,12 +10923,14 @@ export const SeriesResultJSON = {
   _readMessage: function (msg: SeriesResult, json: any): SeriesResult {
     const _player_ = json["player"];
     if (_player_) {
-      PlayerJSON._readMessage(msg.player, _player_);
+      const m = Player.initialize();
+      PlayerJSON._readMessage(m, _player_);
+      msg.player = m;
     }
     const _bestSeries_ = json["bestSeries"] ?? json["best_series"];
     if (_bestSeries_) {
       for (const item of _bestSeries_) {
-        const m = PlayerPlaceInSeriesJSON.initialize();
+        const m = PlayerPlaceInSeries.initialize();
         PlayerPlaceInSeriesJSON._readMessage(m, item);
         msg.bestSeries.push(m);
       }
@@ -10922,7 +10953,7 @@ export const SeriesResultJSON = {
     const _currentSeries_ = json["currentSeries"] ?? json["current_series"];
     if (_currentSeries_) {
       for (const item of _currentSeries_) {
-        const m = PlayerPlaceInSeriesJSON.initialize();
+        const m = PlayerPlaceInSeries.initialize();
         PlayerPlaceInSeriesJSON._readMessage(m, item);
         msg.currentSeries.push(m);
       }
@@ -10950,7 +10981,7 @@ export const ReplacementPlayerJSON = {
   /**
    * Serializes ReplacementPlayer to JSON.
    */
-  encode: function (msg: PartialDeep<ReplacementPlayer>): string {
+  encode: function (msg: Partial<ReplacementPlayer>): string {
     return JSON.stringify(ReplacementPlayerJSON._writeMessage(msg));
   },
 
@@ -10960,7 +10991,7 @@ export const ReplacementPlayerJSON = {
   decode: function (json: string): ReplacementPlayer {
     return ReplacementPlayerJSON._readMessage(
       ReplacementPlayerJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -10980,7 +11011,7 @@ export const ReplacementPlayerJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<ReplacementPlayer>,
+    msg: Partial<ReplacementPlayer>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11003,7 +11034,7 @@ export const ReplacementPlayerJSON = {
    */
   _readMessage: function (
     msg: ReplacementPlayer,
-    json: any,
+    json: any
   ): ReplacementPlayer {
     const _id_ = json["id"];
     if (_id_) {
@@ -11029,7 +11060,7 @@ export const PlayerInSessionJSON = {
   /**
    * Serializes PlayerInSession to JSON.
    */
-  encode: function (msg: PartialDeep<PlayerInSession>): string {
+  encode: function (msg: Partial<PlayerInSession>): string {
     return JSON.stringify(PlayerInSessionJSON._writeMessage(msg));
   },
 
@@ -11039,7 +11070,7 @@ export const PlayerInSessionJSON = {
   decode: function (json: string): PlayerInSession {
     return PlayerInSessionJSON._readMessage(
       PlayerInSessionJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11062,7 +11093,7 @@ export const PlayerInSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerInSession>,
+    msg: Partial<PlayerInSession>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11108,8 +11139,9 @@ export const PlayerInSessionJSON = {
     }
     const _replacedBy_ = json["replacedBy"] ?? json["replaced_by"];
     if (_replacedBy_) {
-      msg.replacedBy = ReplacementPlayerJSON.initialize();
-      ReplacementPlayerJSON._readMessage(msg.replacedBy, _replacedBy_);
+      const m = ReplacementPlayer.initialize();
+      ReplacementPlayerJSON._readMessage(m, _replacedBy_);
+      msg.replacedBy = m;
     }
     const _ratingDelta_ = json["ratingDelta"] ?? json["rating_delta"];
     if (_ratingDelta_) {
@@ -11131,7 +11163,7 @@ export const CurrentSessionJSON = {
   /**
    * Serializes CurrentSession to JSON.
    */
-  encode: function (msg: PartialDeep<CurrentSession>): string {
+  encode: function (msg: Partial<CurrentSession>): string {
     return JSON.stringify(CurrentSessionJSON._writeMessage(msg));
   },
 
@@ -11141,7 +11173,7 @@ export const CurrentSessionJSON = {
   decode: function (json: string): CurrentSession {
     return CurrentSessionJSON._readMessage(
       CurrentSessionJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11161,7 +11193,7 @@ export const CurrentSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<CurrentSession>,
+    msg: Partial<CurrentSession>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -11198,7 +11230,7 @@ export const CurrentSessionJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = PlayerInSessionJSON.initialize();
+        const m = PlayerInSession.initialize();
         PlayerInSessionJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -11211,7 +11243,7 @@ export const RegisteredPlayerJSON = {
   /**
    * Serializes RegisteredPlayer to JSON.
    */
-  encode: function (msg: PartialDeep<RegisteredPlayer>): string {
+  encode: function (msg: Partial<RegisteredPlayer>): string {
     return JSON.stringify(RegisteredPlayerJSON._writeMessage(msg));
   },
 
@@ -11221,7 +11253,7 @@ export const RegisteredPlayerJSON = {
   decode: function (json: string): RegisteredPlayer {
     return RegisteredPlayerJSON._readMessage(
       RegisteredPlayerJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11246,7 +11278,7 @@ export const RegisteredPlayerJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RegisteredPlayer>,
+    msg: Partial<RegisteredPlayer>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11310,8 +11342,9 @@ export const RegisteredPlayerJSON = {
     }
     const _replacedBy_ = json["replacedBy"] ?? json["replaced_by"];
     if (_replacedBy_) {
-      msg.replacedBy = ReplacementPlayerJSON.initialize();
-      ReplacementPlayerJSON._readMessage(msg.replacedBy, _replacedBy_);
+      const m = ReplacementPlayer.initialize();
+      ReplacementPlayerJSON._readMessage(m, _replacedBy_);
+      msg.replacedBy = m;
     }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
@@ -11329,7 +11362,7 @@ export const SessionHistoryResultJSON = {
   /**
    * Serializes SessionHistoryResult to JSON.
    */
-  encode: function (msg: PartialDeep<SessionHistoryResult>): string {
+  encode: function (msg: Partial<SessionHistoryResult>): string {
     return JSON.stringify(SessionHistoryResultJSON._writeMessage(msg));
   },
 
@@ -11339,7 +11372,7 @@ export const SessionHistoryResultJSON = {
   decode: function (json: string): SessionHistoryResult {
     return SessionHistoryResultJSON._readMessage(
       SessionHistoryResultJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11364,7 +11397,7 @@ export const SessionHistoryResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SessionHistoryResult>,
+    msg: Partial<SessionHistoryResult>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -11402,7 +11435,7 @@ export const SessionHistoryResultJSON = {
    */
   _readMessage: function (
     msg: SessionHistoryResult,
-    json: any,
+    json: any
   ): SessionHistoryResult {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -11448,7 +11481,7 @@ export const SessionHistoryResultTableJSON = {
   /**
    * Serializes SessionHistoryResultTable to JSON.
    */
-  encode: function (msg: PartialDeep<SessionHistoryResultTable>): string {
+  encode: function (msg: Partial<SessionHistoryResultTable>): string {
     return JSON.stringify(SessionHistoryResultTableJSON._writeMessage(msg));
   },
 
@@ -11458,7 +11491,7 @@ export const SessionHistoryResultTableJSON = {
   decode: function (json: string): SessionHistoryResultTable {
     return SessionHistoryResultTableJSON._readMessage(
       SessionHistoryResultTableJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11475,7 +11508,7 @@ export const SessionHistoryResultTableJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SessionHistoryResultTable>,
+    msg: Partial<SessionHistoryResultTable>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.tables?.length) {
@@ -11489,12 +11522,12 @@ export const SessionHistoryResultTableJSON = {
    */
   _readMessage: function (
     msg: SessionHistoryResultTable,
-    json: any,
+    json: any
   ): SessionHistoryResultTable {
     const _tables_ = json["tables"];
     if (_tables_) {
       for (const item of _tables_) {
-        const m = SessionHistoryResultJSON.initialize();
+        const m = SessionHistoryResult.initialize();
         SessionHistoryResultJSON._readMessage(m, item);
         msg.tables.push(m);
       }
@@ -11507,7 +11540,7 @@ export const PlacesSummaryItemJSON = {
   /**
    * Serializes PlacesSummaryItem to JSON.
    */
-  encode: function (msg: PartialDeep<PlacesSummaryItem>): string {
+  encode: function (msg: Partial<PlacesSummaryItem>): string {
     return JSON.stringify(PlacesSummaryItemJSON._writeMessage(msg));
   },
 
@@ -11517,7 +11550,7 @@ export const PlacesSummaryItemJSON = {
   decode: function (json: string): PlacesSummaryItem {
     return PlacesSummaryItemJSON._readMessage(
       PlacesSummaryItemJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11535,7 +11568,7 @@ export const PlacesSummaryItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlacesSummaryItem>,
+    msg: Partial<PlacesSummaryItem>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.place) {
@@ -11552,7 +11585,7 @@ export const PlacesSummaryItemJSON = {
    */
   _readMessage: function (
     msg: PlacesSummaryItem,
-    json: any,
+    json: any
   ): PlacesSummaryItem {
     const _place_ = json["place"];
     if (_place_) {
@@ -11570,7 +11603,7 @@ export const PlayerWinSummaryJSON = {
   /**
    * Serializes PlayerWinSummary to JSON.
    */
-  encode: function (msg: PartialDeep<PlayerWinSummary>): string {
+  encode: function (msg: Partial<PlayerWinSummary>): string {
     return JSON.stringify(PlayerWinSummaryJSON._writeMessage(msg));
   },
 
@@ -11580,7 +11613,7 @@ export const PlayerWinSummaryJSON = {
   decode: function (json: string): PlayerWinSummary {
     return PlayerWinSummaryJSON._readMessage(
       PlayerWinSummaryJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11612,7 +11645,7 @@ export const PlayerWinSummaryJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerWinSummary>,
+    msg: Partial<PlayerWinSummary>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ron) {
@@ -11746,7 +11779,7 @@ export const HandValueStatJSON = {
   /**
    * Serializes HandValueStat to JSON.
    */
-  encode: function (msg: PartialDeep<HandValueStat>): string {
+  encode: function (msg: Partial<HandValueStat>): string {
     return JSON.stringify(HandValueStatJSON._writeMessage(msg));
   },
 
@@ -11756,7 +11789,7 @@ export const HandValueStatJSON = {
   decode: function (json: string): HandValueStat {
     return HandValueStatJSON._readMessage(
       HandValueStatJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11774,7 +11807,7 @@ export const HandValueStatJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<HandValueStat>,
+    msg: Partial<HandValueStat>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.hanCount) {
@@ -11806,7 +11839,7 @@ export const YakuStatJSON = {
   /**
    * Serializes YakuStat to JSON.
    */
-  encode: function (msg: PartialDeep<YakuStat>): string {
+  encode: function (msg: Partial<YakuStat>): string {
     return JSON.stringify(YakuStatJSON._writeMessage(msg));
   },
 
@@ -11816,7 +11849,7 @@ export const YakuStatJSON = {
   decode: function (json: string): YakuStat {
     return YakuStatJSON._readMessage(
       YakuStatJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11833,9 +11866,7 @@ export const YakuStatJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<YakuStat>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<YakuStat>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.yakuId) {
       json["yakuId"] = msg.yakuId;
@@ -11866,7 +11897,7 @@ export const RiichiSummaryJSON = {
   /**
    * Serializes RiichiSummary to JSON.
    */
-  encode: function (msg: PartialDeep<RiichiSummary>): string {
+  encode: function (msg: Partial<RiichiSummary>): string {
     return JSON.stringify(RiichiSummaryJSON._writeMessage(msg));
   },
 
@@ -11876,7 +11907,7 @@ export const RiichiSummaryJSON = {
   decode: function (json: string): RiichiSummary {
     return RiichiSummaryJSON._readMessage(
       RiichiSummaryJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11895,7 +11926,7 @@ export const RiichiSummaryJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RiichiSummary>,
+    msg: Partial<RiichiSummary>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.riichiWon) {
@@ -11935,7 +11966,7 @@ export const DoraSummaryJSON = {
   /**
    * Serializes DoraSummary to JSON.
    */
-  encode: function (msg: PartialDeep<DoraSummary>): string {
+  encode: function (msg: Partial<DoraSummary>): string {
     return JSON.stringify(DoraSummaryJSON._writeMessage(msg));
   },
 
@@ -11945,7 +11976,7 @@ export const DoraSummaryJSON = {
   decode: function (json: string): DoraSummary {
     return DoraSummaryJSON._readMessage(
       DoraSummaryJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -11962,9 +11993,7 @@ export const DoraSummaryJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<DoraSummary>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<DoraSummary>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.count) {
       json["count"] = msg.count;
@@ -11995,7 +12024,7 @@ export const IntermediateResultOfSessionJSON = {
   /**
    * Serializes IntermediateResultOfSession to JSON.
    */
-  encode: function (msg: PartialDeep<IntermediateResultOfSession>): string {
+  encode: function (msg: Partial<IntermediateResultOfSession>): string {
     return JSON.stringify(IntermediateResultOfSessionJSON._writeMessage(msg));
   },
 
@@ -12005,7 +12034,7 @@ export const IntermediateResultOfSessionJSON = {
   decode: function (json: string): IntermediateResultOfSession {
     return IntermediateResultOfSessionJSON._readMessage(
       IntermediateResultOfSessionJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12024,7 +12053,7 @@ export const IntermediateResultOfSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<IntermediateResultOfSession>,
+    msg: Partial<IntermediateResultOfSession>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12044,7 +12073,7 @@ export const IntermediateResultOfSessionJSON = {
    */
   _readMessage: function (
     msg: IntermediateResultOfSession,
-    json: any,
+    json: any
   ): IntermediateResultOfSession {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -12066,7 +12095,7 @@ export const PaymentLogItemJSON = {
   /**
    * Serializes PaymentLogItem to JSON.
    */
-  encode: function (msg: PartialDeep<PaymentLogItem>): string {
+  encode: function (msg: Partial<PaymentLogItem>): string {
     return JSON.stringify(PaymentLogItemJSON._writeMessage(msg));
   },
 
@@ -12076,7 +12105,7 @@ export const PaymentLogItemJSON = {
   decode: function (json: string): PaymentLogItem {
     return PaymentLogItemJSON._readMessage(
       PaymentLogItemJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12095,7 +12124,7 @@ export const PaymentLogItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PaymentLogItem>,
+    msg: Partial<PaymentLogItem>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.from != undefined) {
@@ -12134,7 +12163,7 @@ export const PaymentLogJSON = {
   /**
    * Serializes PaymentLog to JSON.
    */
-  encode: function (msg: PartialDeep<PaymentLog>): string {
+  encode: function (msg: Partial<PaymentLog>): string {
     return JSON.stringify(PaymentLogJSON._writeMessage(msg));
   },
 
@@ -12144,7 +12173,7 @@ export const PaymentLogJSON = {
   decode: function (json: string): PaymentLog {
     return PaymentLogJSON._readMessage(
       PaymentLogJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12162,9 +12191,7 @@ export const PaymentLogJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<PaymentLog>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<PaymentLog>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.direct?.length) {
       json["direct"] = msg.direct.map(PaymentLogItemJSON._writeMessage);
@@ -12185,7 +12212,7 @@ export const PaymentLogJSON = {
     const _direct_ = json["direct"];
     if (_direct_) {
       for (const item of _direct_) {
-        const m = PaymentLogItemJSON.initialize();
+        const m = PaymentLogItem.initialize();
         PaymentLogItemJSON._readMessage(m, item);
         msg.direct.push(m);
       }
@@ -12193,7 +12220,7 @@ export const PaymentLogJSON = {
     const _riichi_ = json["riichi"];
     if (_riichi_) {
       for (const item of _riichi_) {
-        const m = PaymentLogItemJSON.initialize();
+        const m = PaymentLogItem.initialize();
         PaymentLogItemJSON._readMessage(m, item);
         msg.riichi.push(m);
       }
@@ -12201,7 +12228,7 @@ export const PaymentLogJSON = {
     const _honba_ = json["honba"];
     if (_honba_) {
       for (const item of _honba_) {
-        const m = PaymentLogItemJSON.initialize();
+        const m = PaymentLogItem.initialize();
         PaymentLogItemJSON._readMessage(m, item);
         msg.honba.push(m);
       }
@@ -12214,7 +12241,7 @@ export const RoundStateJSON = {
   /**
    * Serializes RoundState to JSON.
    */
-  encode: function (msg: PartialDeep<RoundState>): string {
+  encode: function (msg: Partial<RoundState>): string {
     return JSON.stringify(RoundStateJSON._writeMessage(msg));
   },
 
@@ -12224,7 +12251,7 @@ export const RoundStateJSON = {
   decode: function (json: string): RoundState {
     return RoundStateJSON._readMessage(
       RoundStateJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12250,9 +12277,7 @@ export const RoundStateJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<RoundState>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<RoundState>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
@@ -12274,12 +12299,12 @@ export const RoundStateJSON = {
     }
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
-        IntermediateResultOfSessionJSON._writeMessage,
+        IntermediateResultOfSessionJSON._writeMessage
       );
     }
     if (msg.scoresDelta?.length) {
       json["scoresDelta"] = msg.scoresDelta.map(
-        IntermediateResultOfSessionJSON._writeMessage,
+        IntermediateResultOfSessionJSON._writeMessage
       );
     }
     if (msg.payments) {
@@ -12331,7 +12356,7 @@ export const RoundStateJSON = {
     const _scores_ = json["scores"];
     if (_scores_) {
       for (const item of _scores_) {
-        const m = IntermediateResultOfSessionJSON.initialize();
+        const m = IntermediateResultOfSession.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
       }
@@ -12339,18 +12364,22 @@ export const RoundStateJSON = {
     const _scoresDelta_ = json["scoresDelta"] ?? json["scores_delta"];
     if (_scoresDelta_) {
       for (const item of _scoresDelta_) {
-        const m = IntermediateResultOfSessionJSON.initialize();
+        const m = IntermediateResultOfSession.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scoresDelta.push(m);
       }
     }
     const _payments_ = json["payments"];
     if (_payments_) {
-      PaymentLogJSON._readMessage(msg.payments, _payments_);
+      const m = PaymentLog.initialize();
+      PaymentLogJSON._readMessage(m, _payments_);
+      msg.payments = m;
     }
     const _round_ = json["round"];
     if (_round_) {
-      RoundJSON._readMessage(msg.round, _round_);
+      const m = Round.initialize();
+      RoundJSON._readMessage(m, _round_);
+      msg.round = m;
     }
     const _outcome_ = json["outcome"];
     if (_outcome_) {
@@ -12364,7 +12393,7 @@ export const EventDataJSON = {
   /**
    * Serializes EventData to JSON.
    */
-  encode: function (msg: PartialDeep<EventData>): string {
+  encode: function (msg: Partial<EventData>): string {
     return JSON.stringify(EventDataJSON._writeMessage(msg));
   },
 
@@ -12374,7 +12403,7 @@ export const EventDataJSON = {
   decode: function (json: string): EventData {
     return EventDataJSON._readMessage(
       EventDataJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12402,9 +12431,7 @@ export const EventDataJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<EventData>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<EventData>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.type != undefined) {
       json["type"] = msg.type;
@@ -12441,7 +12468,7 @@ export const EventDataJSON = {
     }
     if (msg.rulesetConfig) {
       const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
-        msg.rulesetConfig,
+        msg.rulesetConfig
       );
       if (Object.keys(_rulesetConfig_).length > 0) {
         json["rulesetConfig"] = _rulesetConfig_;
@@ -12503,7 +12530,9 @@ export const EventDataJSON = {
     }
     const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {
-      RulesetConfigJSON._readMessage(msg.rulesetConfig, _rulesetConfig_);
+      const m = RulesetConfig.initialize();
+      RulesetConfigJSON._readMessage(m, _rulesetConfig_);
+      msg.rulesetConfig = m;
     }
     const _isListed_ = json["isListed"] ?? json["is_listed"];
     if (_isListed_) {
@@ -12517,7 +12546,7 @@ export const TableStateJSON = {
   /**
    * Serializes TableState to JSON.
    */
-  encode: function (msg: PartialDeep<TableState>): string {
+  encode: function (msg: Partial<TableState>): string {
     return JSON.stringify(TableStateJSON._writeMessage(msg));
   },
 
@@ -12527,7 +12556,7 @@ export const TableStateJSON = {
   decode: function (json: string): TableState {
     return TableStateJSON._readMessage(
       TableStateJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12551,9 +12580,7 @@ export const TableStateJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<TableState>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<TableState>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.status && SessionStatusJSON._toInt(msg.status)) {
       json["status"] = msg.status;
@@ -12579,7 +12606,7 @@ export const TableStateJSON = {
     }
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
-        IntermediateResultOfSessionJSON._writeMessage,
+        IntermediateResultOfSessionJSON._writeMessage
       );
     }
     if (msg.players?.length) {
@@ -12607,7 +12634,7 @@ export const TableStateJSON = {
     const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
     if (_penaltyLogs_) {
       for (const item of _penaltyLogs_) {
-        const m = PenaltyJSON.initialize();
+        const m = Penalty.initialize();
         PenaltyJSON._readMessage(m, item);
         msg.penaltyLogs.push(m);
       }
@@ -12618,8 +12645,9 @@ export const TableStateJSON = {
     }
     const _lastRound_ = json["lastRound"] ?? json["last_round"];
     if (_lastRound_) {
-      msg.lastRound = RoundJSON.initialize();
-      RoundJSON._readMessage(msg.lastRound, _lastRound_);
+      const m = Round.initialize();
+      RoundJSON._readMessage(m, _lastRound_);
+      msg.lastRound = m;
     }
     const _currentRoundIndex_ =
       json["currentRoundIndex"] ?? json["current_round_index"];
@@ -12629,7 +12657,7 @@ export const TableStateJSON = {
     const _scores_ = json["scores"];
     if (_scores_) {
       for (const item of _scores_) {
-        const m = IntermediateResultOfSessionJSON.initialize();
+        const m = IntermediateResultOfSession.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
       }
@@ -12637,7 +12665,7 @@ export const TableStateJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = RegisteredPlayerJSON.initialize();
+        const m = RegisteredPlayer.initialize();
         RegisteredPlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -12650,7 +12678,7 @@ export const AchievementJSON = {
   /**
    * Serializes Achievement to JSON.
    */
-  encode: function (msg: PartialDeep<Achievement>): string {
+  encode: function (msg: Partial<Achievement>): string {
     return JSON.stringify(AchievementJSON._writeMessage(msg));
   },
 
@@ -12660,7 +12688,7 @@ export const AchievementJSON = {
   decode: function (json: string): Achievement {
     return AchievementJSON._readMessage(
       AchievementJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12677,9 +12705,7 @@ export const AchievementJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<Achievement>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Achievement>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.achievementId) {
       json["achievementId"] = msg.achievementId;
@@ -12711,7 +12737,7 @@ export const LocalIdMappingJSON = {
   /**
    * Serializes LocalIdMapping to JSON.
    */
-  encode: function (msg: PartialDeep<LocalIdMapping>): string {
+  encode: function (msg: Partial<LocalIdMapping>): string {
     return JSON.stringify(LocalIdMappingJSON._writeMessage(msg));
   },
 
@@ -12721,7 +12747,7 @@ export const LocalIdMappingJSON = {
   decode: function (json: string): LocalIdMapping {
     return LocalIdMappingJSON._readMessage(
       LocalIdMappingJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12739,7 +12765,7 @@ export const LocalIdMappingJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<LocalIdMapping>,
+    msg: Partial<LocalIdMapping>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12771,7 +12797,7 @@ export const TeamMappingJSON = {
   /**
    * Serializes TeamMapping to JSON.
    */
-  encode: function (msg: PartialDeep<TeamMapping>): string {
+  encode: function (msg: Partial<TeamMapping>): string {
     return JSON.stringify(TeamMappingJSON._writeMessage(msg));
   },
 
@@ -12781,7 +12807,7 @@ export const TeamMappingJSON = {
   decode: function (json: string): TeamMapping {
     return TeamMappingJSON._readMessage(
       TeamMappingJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12798,9 +12824,7 @@ export const TeamMappingJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<TeamMapping>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<TeamMapping>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
       json["playerId"] = msg.playerId;
@@ -12831,7 +12855,7 @@ export const PlayerSeatingJSON = {
   /**
    * Serializes PlayerSeating to JSON.
    */
-  encode: function (msg: PartialDeep<PlayerSeating>): string {
+  encode: function (msg: Partial<PlayerSeating>): string {
     return JSON.stringify(PlayerSeatingJSON._writeMessage(msg));
   },
 
@@ -12841,7 +12865,7 @@ export const PlayerSeatingJSON = {
   decode: function (json: string): PlayerSeating {
     return PlayerSeatingJSON._readMessage(
       PlayerSeatingJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12865,7 +12889,7 @@ export const PlayerSeatingJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerSeating>,
+    msg: Partial<PlayerSeating>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.order) {
@@ -12939,7 +12963,7 @@ export const PlayerSeatingSwissJSON = {
   /**
    * Serializes PlayerSeatingSwiss to JSON.
    */
-  encode: function (msg: PartialDeep<PlayerSeatingSwiss>): string {
+  encode: function (msg: Partial<PlayerSeatingSwiss>): string {
     return JSON.stringify(PlayerSeatingSwissJSON._writeMessage(msg));
   },
 
@@ -12949,7 +12973,7 @@ export const PlayerSeatingSwissJSON = {
   decode: function (json: string): PlayerSeatingSwiss {
     return PlayerSeatingSwissJSON._readMessage(
       PlayerSeatingSwissJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -12967,7 +12991,7 @@ export const PlayerSeatingSwissJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PlayerSeatingSwiss>,
+    msg: Partial<PlayerSeatingSwiss>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12984,7 +13008,7 @@ export const PlayerSeatingSwissJSON = {
    */
   _readMessage: function (
     msg: PlayerSeatingSwiss,
-    json: any,
+    json: any
   ): PlayerSeatingSwiss {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
@@ -13002,7 +13026,7 @@ export const TableItemSwissJSON = {
   /**
    * Serializes TableItemSwiss to JSON.
    */
-  encode: function (msg: PartialDeep<TableItemSwiss>): string {
+  encode: function (msg: Partial<TableItemSwiss>): string {
     return JSON.stringify(TableItemSwissJSON._writeMessage(msg));
   },
 
@@ -13012,7 +13036,7 @@ export const TableItemSwissJSON = {
   decode: function (json: string): TableItemSwiss {
     return TableItemSwissJSON._readMessage(
       TableItemSwissJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13029,7 +13053,7 @@ export const TableItemSwissJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<TableItemSwiss>,
+    msg: Partial<TableItemSwiss>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.players?.length) {
@@ -13045,7 +13069,7 @@ export const TableItemSwissJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = PlayerSeatingSwissJSON.initialize();
+        const m = PlayerSeatingSwiss.initialize();
         PlayerSeatingSwissJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -13058,7 +13082,7 @@ export const PrescriptedTableJSON = {
   /**
    * Serializes PrescriptedTable to JSON.
    */
-  encode: function (msg: PartialDeep<PrescriptedTable>): string {
+  encode: function (msg: Partial<PrescriptedTable>): string {
     return JSON.stringify(PrescriptedTableJSON._writeMessage(msg));
   },
 
@@ -13068,7 +13092,7 @@ export const PrescriptedTableJSON = {
   decode: function (json: string): PrescriptedTable {
     return PrescriptedTableJSON._readMessage(
       PrescriptedTableJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13085,7 +13109,7 @@ export const PrescriptedTableJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<PrescriptedTable>,
+    msg: Partial<PrescriptedTable>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.players?.length) {
@@ -13101,7 +13125,7 @@ export const PrescriptedTableJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = RegisteredPlayerJSON.initialize();
+        const m = RegisteredPlayer.initialize();
         RegisteredPlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -13114,7 +13138,7 @@ export const SessionStateJSON = {
   /**
    * Serializes SessionState to JSON.
    */
-  encode: function (msg: PartialDeep<SessionState>): string {
+  encode: function (msg: Partial<SessionState>): string {
     return JSON.stringify(SessionStateJSON._writeMessage(msg));
   },
 
@@ -13124,7 +13148,7 @@ export const SessionStateJSON = {
   decode: function (json: string): SessionState {
     return SessionStateJSON._readMessage(
       SessionStateJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13148,7 +13172,7 @@ export const SessionStateJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<SessionState>,
+    msg: Partial<SessionState>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.dealer) {
@@ -13165,7 +13189,7 @@ export const SessionStateJSON = {
     }
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
-        IntermediateResultOfSessionJSON._writeMessage,
+        IntermediateResultOfSessionJSON._writeMessage
       );
     }
     if (msg.finished) {
@@ -13203,7 +13227,7 @@ export const SessionStateJSON = {
     const _scores_ = json["scores"];
     if (_scores_) {
       for (const item of _scores_) {
-        const m = IntermediateResultOfSessionJSON.initialize();
+        const m = IntermediateResultOfSession.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
       }
@@ -13215,7 +13239,7 @@ export const SessionStateJSON = {
     const _penalties_ = json["penalties"];
     if (_penalties_) {
       for (const item of _penalties_) {
-        const m = PenaltyJSON.initialize();
+        const m = Penalty.initialize();
         PenaltyJSON._readMessage(m, item);
         msg.penalties.push(m);
       }
@@ -13233,7 +13257,7 @@ export const UmaJSON = {
   /**
    * Serializes Uma to JSON.
    */
-  encode: function (msg: PartialDeep<Uma>): string {
+  encode: function (msg: Partial<Uma>): string {
     return JSON.stringify(UmaJSON._writeMessage(msg));
   },
 
@@ -13259,7 +13283,7 @@ export const UmaJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: PartialDeep<Uma>): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<Uma>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.place1) {
       json["place1"] = msg.place1;
@@ -13304,7 +13328,7 @@ export const ComplexUmaJSON = {
   /**
    * Serializes ComplexUma to JSON.
    */
-  encode: function (msg: PartialDeep<ComplexUma>): string {
+  encode: function (msg: Partial<ComplexUma>): string {
     return JSON.stringify(ComplexUmaJSON._writeMessage(msg));
   },
 
@@ -13314,7 +13338,7 @@ export const ComplexUmaJSON = {
   decode: function (json: string): ComplexUma {
     return ComplexUmaJSON._readMessage(
       ComplexUmaJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13332,9 +13356,7 @@ export const ComplexUmaJSON = {
   /**
    * @private
    */
-  _writeMessage: function (
-    msg: PartialDeep<ComplexUma>,
-  ): Record<string, unknown> {
+  _writeMessage: function (msg: Partial<ComplexUma>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.neg1) {
       const _neg1_ = UmaJSON._writeMessage(msg.neg1);
@@ -13363,15 +13385,21 @@ export const ComplexUmaJSON = {
   _readMessage: function (msg: ComplexUma, json: any): ComplexUma {
     const _neg1_ = json["neg1"];
     if (_neg1_) {
-      UmaJSON._readMessage(msg.neg1, _neg1_);
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _neg1_);
+      msg.neg1 = m;
     }
     const _neg3_ = json["neg3"];
     if (_neg3_) {
-      UmaJSON._readMessage(msg.neg3, _neg3_);
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _neg3_);
+      msg.neg3 = m;
     }
     const _otherwise_ = json["otherwise"];
     if (_otherwise_) {
-      UmaJSON._readMessage(msg.otherwise, _otherwise_);
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _otherwise_);
+      msg.otherwise = m;
     }
     return msg;
   },
@@ -13381,7 +13409,7 @@ export const RulesetConfigJSON = {
   /**
    * Serializes RulesetConfig to JSON.
    */
-  encode: function (msg: PartialDeep<RulesetConfig>): string {
+  encode: function (msg: Partial<RulesetConfig>): string {
     return JSON.stringify(RulesetConfigJSON._writeMessage(msg));
   },
 
@@ -13391,7 +13419,7 @@ export const RulesetConfigJSON = {
   decode: function (json: string): RulesetConfig {
     return RulesetConfigJSON._readMessage(
       RulesetConfigJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13442,7 +13470,7 @@ export const RulesetConfigJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RulesetConfig>,
+    msg: Partial<RulesetConfig>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.complexUma) {
@@ -13565,7 +13593,9 @@ export const RulesetConfigJSON = {
   _readMessage: function (msg: RulesetConfig, json: any): RulesetConfig {
     const _complexUma_ = json["complexUma"] ?? json["complex_uma"];
     if (_complexUma_) {
-      ComplexUmaJSON._readMessage(msg.complexUma, _complexUma_);
+      const m = ComplexUma.initialize();
+      ComplexUmaJSON._readMessage(m, _complexUma_);
+      msg.complexUma = m;
     }
     const _endingPolicy_ = json["endingPolicy"] ?? json["ending_policy"];
     if (_endingPolicy_) {
@@ -13573,7 +13603,9 @@ export const RulesetConfigJSON = {
     }
     const _uma_ = json["uma"];
     if (_uma_) {
-      UmaJSON._readMessage(msg.uma, _uma_);
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _uma_);
+      msg.uma = m;
     }
     const _umaType_ = json["umaType"] ?? json["uma_type"];
     if (_umaType_) {
@@ -13728,7 +13760,7 @@ export const GenericSuccessResponseJSON = {
   /**
    * Serializes GenericSuccessResponse to JSON.
    */
-  encode: function (msg: PartialDeep<GenericSuccessResponse>): string {
+  encode: function (msg: Partial<GenericSuccessResponse>): string {
     return JSON.stringify(GenericSuccessResponseJSON._writeMessage(msg));
   },
 
@@ -13738,7 +13770,7 @@ export const GenericSuccessResponseJSON = {
   decode: function (json: string): GenericSuccessResponse {
     return GenericSuccessResponseJSON._readMessage(
       GenericSuccessResponseJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13755,7 +13787,7 @@ export const GenericSuccessResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GenericSuccessResponse>,
+    msg: Partial<GenericSuccessResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.success) {
@@ -13769,7 +13801,7 @@ export const GenericSuccessResponseJSON = {
    */
   _readMessage: function (
     msg: GenericSuccessResponse,
-    json: any,
+    json: any
   ): GenericSuccessResponse {
     const _success_ = json["success"];
     if (_success_) {
@@ -13783,7 +13815,7 @@ export const GenericEventPayloadJSON = {
   /**
    * Serializes GenericEventPayload to JSON.
    */
-  encode: function (msg: PartialDeep<GenericEventPayload>): string {
+  encode: function (msg: Partial<GenericEventPayload>): string {
     return JSON.stringify(GenericEventPayloadJSON._writeMessage(msg));
   },
 
@@ -13793,7 +13825,7 @@ export const GenericEventPayloadJSON = {
   decode: function (json: string): GenericEventPayload {
     return GenericEventPayloadJSON._readMessage(
       GenericEventPayloadJSON.initialize(),
-      JSON.parse(json),
+      JSON.parse(json)
     );
   },
 
@@ -13810,7 +13842,7 @@ export const GenericEventPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<GenericEventPayload>,
+    msg: Partial<GenericEventPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13824,7 +13856,7 @@ export const GenericEventPayloadJSON = {
    */
   _readMessage: function (
     msg: GenericEventPayload,
-    json: any,
+    json: any
   ): GenericEventPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {

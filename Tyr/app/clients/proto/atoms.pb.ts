@@ -135,6 +135,8 @@ export interface PersonEx {
   groups: number[];
   hasAvatar: boolean;
   lastUpdate: string;
+  msNickname: string;
+  msAccountId: number;
 }
 
 export interface Group {
@@ -1784,6 +1786,8 @@ export const PersonEx = {
       groups: [],
       hasAvatar: false,
       lastUpdate: "",
+      msNickname: "",
+      msAccountId: 0,
     };
   },
 
@@ -1823,6 +1827,12 @@ export const PersonEx = {
     }
     if (msg.lastUpdate) {
       writer.writeString(10, msg.lastUpdate);
+    }
+    if (msg.msNickname) {
+      writer.writeString(11, msg.msNickname);
+    }
+    if (msg.msAccountId) {
+      writer.writeInt32(12, msg.msAccountId);
     }
     return writer;
   },
@@ -1876,6 +1886,14 @@ export const PersonEx = {
         }
         case 10: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 11: {
+          msg.msNickname = reader.readString();
+          break;
+        }
+        case 12: {
+          msg.msAccountId = reader.readInt32();
           break;
         }
         default: {
@@ -8666,6 +8684,8 @@ export const PersonExJSON = {
       groups: [],
       hasAvatar: false,
       lastUpdate: "",
+      msNickname: "",
+      msAccountId: 0,
     };
   },
 
@@ -8705,6 +8725,12 @@ export const PersonExJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.msNickname) {
+      json["msNickname"] = msg.msNickname;
+    }
+    if (msg.msAccountId) {
+      json["msAccountId"] = msg.msAccountId;
     }
     return json;
   },
@@ -8752,6 +8778,14 @@ export const PersonExJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _msNickname_ = json["msNickname"] ?? json["ms_nickname"];
+    if (_msNickname_) {
+      msg.msNickname = _msNickname_;
+    }
+    const _msAccountId_ = json["msAccountId"] ?? json["ms_account_id"];
+    if (_msAccountId_) {
+      msg.msAccountId = _msAccountId_;
     }
     return msg;
   },

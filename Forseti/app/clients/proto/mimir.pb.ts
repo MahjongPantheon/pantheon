@@ -420,6 +420,15 @@ export interface ClearStatCachePayload {
   playerId: number;
 }
 
+export interface TypedGamesAddOnlineReplayPayload {
+  eventId: number;
+  platformId: number;
+  contentType: number;
+  logTimestamp: number;
+  replayHash: string;
+  content: string;
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -1166,6 +1175,18 @@ export async function ClearStatCache(
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function AddTypedOnlineReplay(
+  typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
+  config?: ClientConfiguration,
+): Promise<GamesAddOnlineReplayResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/AddTypedOnlineReplay",
+    TypedGamesAddOnlineReplayPayload.encode(typedGamesAddOnlineReplayPayload),
+    config,
+  );
+  return GamesAddOnlineReplayResponse.decode(response);
 }
 
 //========================================//
@@ -1924,6 +1945,20 @@ export async function ClearStatCacheJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+export async function AddTypedOnlineReplayJSON(
+  typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
+  config?: ClientConfiguration,
+): Promise<GamesAddOnlineReplayResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/AddTypedOnlineReplay",
+    TypedGamesAddOnlineReplayPayloadJSON.encode(
+      typedGamesAddOnlineReplayPayload,
+    ),
+    config,
+  );
+  return GamesAddOnlineReplayResponseJSON.decode(response);
+}
+
 //========================================//
 //                 Mimir                  //
 //========================================//
@@ -2241,6 +2276,10 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
+  AddTypedOnlineReplay: (
+    typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
+    context: Context,
+  ) => Promise<GamesAddOnlineReplayResponse> | GamesAddOnlineReplayResponse;
 }
 
 export function createMimir<Context>(service: Mimir<Context>) {
@@ -2974,6 +3013,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      AddTypedOnlineReplay: {
+        name: "AddTypedOnlineReplay",
+        handler: service.AddTypedOnlineReplay,
+        input: {
+          protobuf: TypedGamesAddOnlineReplayPayload,
+          json: TypedGamesAddOnlineReplayPayloadJSON,
+        },
+        output: {
+          protobuf: GamesAddOnlineReplayResponse,
+          json: GamesAddOnlineReplayResponseJSON,
         },
       },
     },
@@ -8944,6 +8995,115 @@ export const ClearStatCachePayload = {
   },
 };
 
+export const TypedGamesAddOnlineReplayPayload = {
+  /**
+   * Serializes TypedGamesAddOnlineReplayPayload to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<TypedGamesAddOnlineReplayPayload>,
+  ): Uint8Array {
+    return TypedGamesAddOnlineReplayPayload._writeMessage(
+      msg,
+      new BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes TypedGamesAddOnlineReplayPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): TypedGamesAddOnlineReplayPayload {
+    return TypedGamesAddOnlineReplayPayload._readMessage(
+      TypedGamesAddOnlineReplayPayload.initialize(),
+      new BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes TypedGamesAddOnlineReplayPayload with all fields set to their default value.
+   */
+  initialize: function (): TypedGamesAddOnlineReplayPayload {
+    return {
+      eventId: 0,
+      platformId: 0,
+      contentType: 0,
+      logTimestamp: 0,
+      replayHash: "",
+      content: "",
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<TypedGamesAddOnlineReplayPayload>,
+    writer: BinaryWriter,
+  ): BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.platformId) {
+      writer.writeInt32(2, msg.platformId);
+    }
+    if (msg.contentType) {
+      writer.writeInt32(3, msg.contentType);
+    }
+    if (msg.logTimestamp) {
+      writer.writeInt32(4, msg.logTimestamp);
+    }
+    if (msg.replayHash) {
+      writer.writeString(5, msg.replayHash);
+    }
+    if (msg.content) {
+      writer.writeString(6, msg.content);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: TypedGamesAddOnlineReplayPayload,
+    reader: BinaryReader,
+  ): TypedGamesAddOnlineReplayPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.platformId = reader.readInt32();
+          break;
+        }
+        case 3: {
+          msg.contentType = reader.readInt32();
+          break;
+        }
+        case 4: {
+          msg.logTimestamp = reader.readInt32();
+          break;
+        }
+        case 5: {
+          msg.replayHash = reader.readString();
+          break;
+        }
+        case 6: {
+          msg.content = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -14014,6 +14174,105 @@ export const ClearStatCachePayloadJSON = {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
+    }
+    return msg;
+  },
+};
+
+export const TypedGamesAddOnlineReplayPayloadJSON = {
+  /**
+   * Serializes TypedGamesAddOnlineReplayPayload to JSON.
+   */
+  encode: function (
+    msg: PartialDeep<TypedGamesAddOnlineReplayPayload>,
+  ): string {
+    return JSON.stringify(
+      TypedGamesAddOnlineReplayPayloadJSON._writeMessage(msg),
+    );
+  },
+
+  /**
+   * Deserializes TypedGamesAddOnlineReplayPayload from JSON.
+   */
+  decode: function (json: string): TypedGamesAddOnlineReplayPayload {
+    return TypedGamesAddOnlineReplayPayloadJSON._readMessage(
+      TypedGamesAddOnlineReplayPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes TypedGamesAddOnlineReplayPayload with all fields set to their default value.
+   */
+  initialize: function (): TypedGamesAddOnlineReplayPayload {
+    return {
+      eventId: 0,
+      platformId: 0,
+      contentType: 0,
+      logTimestamp: 0,
+      replayHash: "",
+      content: "",
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<TypedGamesAddOnlineReplayPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.platformId) {
+      json["platformId"] = msg.platformId;
+    }
+    if (msg.contentType) {
+      json["contentType"] = msg.contentType;
+    }
+    if (msg.logTimestamp) {
+      json["logTimestamp"] = msg.logTimestamp;
+    }
+    if (msg.replayHash) {
+      json["replayHash"] = msg.replayHash;
+    }
+    if (msg.content) {
+      json["content"] = msg.content;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: TypedGamesAddOnlineReplayPayload,
+    json: any,
+  ): TypedGamesAddOnlineReplayPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = _eventId_;
+    }
+    const _platformId_ = json["platformId"] ?? json["platform_id"];
+    if (_platformId_) {
+      msg.platformId = _platformId_;
+    }
+    const _contentType_ = json["contentType"] ?? json["content_type"];
+    if (_contentType_) {
+      msg.contentType = _contentType_;
+    }
+    const _logTimestamp_ = json["logTimestamp"] ?? json["log_timestamp"];
+    if (_logTimestamp_) {
+      msg.logTimestamp = _logTimestamp_;
+    }
+    const _replayHash_ = json["replayHash"] ?? json["replay_hash"];
+    if (_replayHash_) {
+      msg.replayHash = _replayHash_;
+    }
+    const _content_ = json["content"];
+    if (_content_) {
+      msg.content = _content_;
     }
     return msg;
   },
