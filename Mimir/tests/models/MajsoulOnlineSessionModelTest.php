@@ -96,10 +96,10 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
 
         $mockPlayerNameMap = [];
-        $mockPlayerNameMap[1] = 'Halfs';
-        $mockPlayerNameMap[2] = '鳳南のぶたさん';
-        $mockPlayerNameMap[3] = '帰りたい。';
-        $mockPlayerNameMap[4] = 'はいてんぼー';
+        $mockPlayerNameMap[1] = 'TPlayer1';
+        $mockPlayerNameMap[2] = 'プレーヤー2';
+        $mockPlayerNameMap[3] = 'プレーヤー3';
+        $mockPlayerNameMap[4] = 'プレーヤー4';
         $this->_ds = DataSource::__getCleanTestingInstance($mockPlayerNameMap);
         $this->_meta = new Meta($this->_ds->remote(), new \Common\Storage('localhost'), $this->_config, $_SERVER);
         $this->_event = (new EventPrimitive($this->_ds))
@@ -132,7 +132,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddTypedOnlineGame()
     {
-        $this->playersRegistration(['Halfs', '鳳南のぶたさん', '帰りたい。', 'はいてんぼー']);
+        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $result = $session->addTypedGame(
@@ -180,7 +180,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\Mimir\ParseException::class);
         $this->_gameId = '231014-84c11a6f-b3f7-4363-966e-25f37886cfbf';
 
-        $this->playersRegistration(['Halfs', '鳳南のぶたさん', '帰りたい。', 'はいてんぼー']);
+        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addTypedGame(
@@ -200,7 +200,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_without_mapping.json');
         $this->_gameId = '231014-84c11a6f-b3f7-4363-966e-25f37886cfbf';
 
-        $this->playersRegistration(['Halfs', '鳳南のぶたさん', '帰りたい。', 'はいてんぼー']);
+        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addTypedGame(
@@ -220,7 +220,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_usual.json');
         $this->_gameId = '966e-25f37886cfbf';
 
-        $this->playersRegistration(['Halfs', '鳳南のぶたさん', '帰りたい。', 'はいてんぼー']);
+        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addTypedGame(

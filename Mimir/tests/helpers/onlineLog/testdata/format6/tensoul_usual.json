@@ -1663,10 +1663,10 @@
     "C"
   ],
   "name": [
-    "Halfs",
-    "鳳南のぶたさん",
-    "帰りたい。",
-    "はいてんぼー"
+    "TPlayer1",
+    "プレーヤー2",
+    "プレーヤー3",
+    "プレーヤー4"
   ],
   "sc": [
     43600,
@@ -1683,9 +1683,9 @@
     "Sat, 14 Oct 2023 14:54:59 GMT"
   ],
   "playerMapping" : [
-    {"nickname" : "Halfs", "account_id" : 1},
-    {"nickname" : "鳳南のぶたさん", "account_id" : 11},
-    {"nickname" : "帰りたい。", "account_id" : 22},
-    {"nickname" : "はいてんぼー", "account_id" : 33}
+    {"nickname" : "TPlayer1", "account_id" : 1},
+    {"nickname" : "プレーヤー2", "account_id" : 11},
+    {"nickname" : "プレーヤー3", "account_id" : 22},
+    {"nickname" : "プレーヤー4", "account_id" : 33}
   ]
 }

@@ -60,10 +60,10 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $mockPlayerNameMap = [];
-        $mockPlayerNameMap[1] = 'Halfs';
-        $mockPlayerNameMap[2] = '鳳南のぶたさん';
-        $mockPlayerNameMap[3] = '帰りたい。';
-        $mockPlayerNameMap[4] = 'はいてんぼー';
+        $mockPlayerNameMap[1] = 'TPlayer1';
+        $mockPlayerNameMap[2] = 'プレーヤー2';
+        $mockPlayerNameMap[3] = 'プレーヤー3';
+        $mockPlayerNameMap[4] = 'プレーヤー4';
         $this->_ds = DataSource::__getCleanTestingInstance($mockPlayerNameMap);
 
         $this->_event = (new EventPrimitive($this->_ds))
