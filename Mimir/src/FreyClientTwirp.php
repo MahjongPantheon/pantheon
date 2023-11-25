@@ -321,6 +321,8 @@ class FreyClientTwirp implements IFreyClient
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
+                'ms_nickname' => $person->getMsNickname(),
+                'ms_account_id' => $person->getMsAccountId()
             ];
         }, iterator_to_array($persons));
     }
@@ -352,6 +354,8 @@ class FreyClientTwirp implements IFreyClient
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
+                'ms_nickname' => $person->getMsNickname(),
+                'ms_account_id' => $person->getMsAccountId()
             ];
         }, iterator_to_array($persons));
     }
