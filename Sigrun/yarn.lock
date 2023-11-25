@@ -5380,7 +5380,7 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==
 
-prettier@^3.0.0, prettier@^3.0.3:
+prettier@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.3.tgz#432a51f7ba422d1469096c0fdc28e235db8f9643"
   integrity sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==
@@ -5431,13 +5431,13 @@ property-information@^5.3.0:
   dependencies:
     xtend "^4.0.0"
 
-protoscript@0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/protoscript/-/protoscript-0.0.18.tgz#b8073065530c2b03b7b7006c07c96a401d02ce6a"
-  integrity sha512-VQGYcyjHwbCWK/p8PE3or1bAWovRPzGlS6ueYSZ5PsK3mXEmA5e6gcT5R1+aMsiCn+4/Wo8CC+yL/meub4DqsA==
+protoscript@0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/protoscript/-/protoscript-0.0.20.tgz#2db26be5ecd92a23c390bd9a661a254b4bc83df5"
+  integrity sha512-NuXZgSko5o5o/ngA4/lccAHE7dY2C2ySaRTl+k45ehsjXitoQRXZ4fDAr5yIUadTAV9pZi6jQ0Ao5VQ9SBt0Ew==
   dependencies:
     google-protobuf "^3.21.2"
-    prettier "^3.0.0"
+    prettier "^3.0.3"
 
 proxy-addr@~2.0.7:
   version "2.0.7"
@@ -6572,12 +6572,12 @@ tv4@^1.3.0:
   resolved "https://registry.yarnpkg.com/tv4/-/tv4-1.3.0.tgz#d020c846fadd50c855abb25ebaecc68fc10f7963"
   integrity sha512-afizzfpJgvPr+eDkREK4MxJ/+r8nEEHcmitwgnPUqpaP+FpwQyadnxNoSACbgc/b1LsZYtODGoPiFxQrgJgjvw==
 
-twirpscript@^0.0.68:
-  version "0.0.68"
-  resolved "https://registry.yarnpkg.com/twirpscript/-/twirpscript-0.0.68.tgz#c24c82bfb14a0b50a0798972a3736c9ff2dd8f7e"
-  integrity sha512-HB/1B+03JQvHfLSP61pKO21dwghlR/qtR1IjijBPwv1/7IK6TkXw0RHM3zQH94ZdfRIsRBMxB0/8BgR6B7CgnQ==
+twirpscript@^0.0.69:
+  version "0.0.69"
+  resolved "https://registry.yarnpkg.com/twirpscript/-/twirpscript-0.0.69.tgz#d4cd0feb8e1ab8bb42cff86189adc28751c982da"
+  integrity sha512-BZL6hky+OpGU5fozsw0CupJMbz69nvaRQL6OerCxDnZnk7AAjnB0s8qSQk6hVHb7OXrHOZBf/L2G4ttOUTqMyQ==
   dependencies:
-    protoscript "0.0.18"
+    protoscript "0.0.20"
 
 tx2@~1.0.4:
   version "1.0.5"

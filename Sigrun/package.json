@@ -45,7 +45,7 @@
     "react-router-dom": "^6.17.0",
     "serve-static": "^1.15.0",
     "strip-markdown": "^5.0.1",
-    "twirpscript": "^0.0.68",
+    "twirpscript": "^0.0.69",
     "uuid": "^9.0.1",
     "wouter": "2.12.1"
   },
