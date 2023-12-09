@@ -867,11 +867,11 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getPlatformId()
     {
-        return $this->_platformId;
+        return $this->_platformId ?: -1;
     }
 
     /**

@@ -404,4 +404,18 @@ abstract class Model
 
         return $this->_checkAccessRights($key, $eventId);
     }
+
+    /**
+     * Check if number is empty ot stubed.
+     *
+     * @param int $number
+     * @return bool
+     */
+    public function _isEmptyNumber($number)
+    {
+        if (!empty($number)) {
+            return $number === -1;
+        }
+        return true;
+    }
 }

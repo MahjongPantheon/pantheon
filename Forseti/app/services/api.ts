@@ -231,7 +231,10 @@ export class ApiService {
     phone: string,
     tenhouId: string,
     hasAvatar: boolean,
-    avatarData: string
+    avatarData: string,
+    msNickname: string,
+    msFriendId: number,
+    msAccountId: number
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePersonalInfo' });
     return UpdatePersonalInfo(
@@ -245,6 +248,9 @@ export class ApiService {
         tenhouId,
         hasAvatar,
         avatarData,
+        msNickname,
+        msFriendId,
+        msAccountId,
       },
       this._clientConfFrey
     ).then((resp) => resp.success);

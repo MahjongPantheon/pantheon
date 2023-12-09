@@ -59,6 +59,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     protected $_ds;
 
     const CURRENT_PERSON = 1; // Used as Administrator ID in FreyClientMock
+    const NOT_EXIST_PLATFORM_ID = -1;
 
     /**
      * @throws \Exception
@@ -90,6 +91,21 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             ->setDescription('test')
             ->setUseTimer(1)
             ->setAllowPlayerAppend(0)
+            ->setGameDuration(1);
+        $evt->save();
+        return $evt;
+    }
+
+    protected function _createEventWithPlatformId($platformId): EventPrimitive
+    {
+        $evt = (new EventPrimitive($this->_ds))
+            ->setRulesetConfig(\Common\Ruleset::instance('ema'))
+            ->setTimezone('UTC')
+            ->setTitle('test')
+            ->setDescription('test')
+            ->setUseTimer(1)
+            ->setAllowPlayerAppend(0)
+            ->setPlatformId($platformId)
             ->setGameDuration(1);
         $evt->save();
         return $evt;
@@ -206,6 +222,33 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         }
     }
 
+    public function testGetEventsWithPlatformId()
+    {
+        $platformId = 1;
+        $response = $this->_client->GetEvents([], (new EventsGetEventsPayload())->setLimit(10)->setOffset(0));
+        $this->assertEmpty(iterator_to_array($response->getEvents()));
+        $this->assertEquals(0, $response->getTotal());
+
+        /** @var EventPrimitive[] $events */
+        $events = array_reduce([1, 2], function ($acc, $i) use ($platformId) {
+            $ev = $this->_createEventWithPlatformId($platformId);
+            $ev->setIsListed(1)->save();
+            $acc []= $ev;
+            return $acc;
+        }, []);
+
+        $response = $this->_client->GetEvents([], (new EventsGetEventsPayload())->setLimit(10)->setOffset(0));
+        $resultEvents = iterator_to_array($response->getEvents());
+        $this->assertNotEmpty($resultEvents);
+        $this->assertEquals($platformId, $resultEvents[0]->getPlatformId());
+        $this->assertEquals($platformId, $resultEvents[1]->getPlatformId());
+
+        // cleanup
+        foreach ($events as $e) {
+            $e->drop();
+        }
+    }
+
     public function testGetEventsById()
     {
         /** @var EventPrimitive[] $events */
@@ -222,6 +265,33 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($response);
         $this->assertEquals(2, count($response));
         $this->assertInstanceOf(Event::class, $response[0]);
+        $this->assertEquals(self::NOT_EXIST_PLATFORM_ID, $response[0]->getPlatformId());
+        $this->assertEquals(self::NOT_EXIST_PLATFORM_ID, $response[1]->getPlatformId());
+
+        // cleanup
+        foreach ($events as $e) {
+            $e->drop();
+        }
+    }
+
+    public function testGetEventsByIdWithPlatformId()
+    {
+        $platformId = 2;
+        /** @var EventPrimitive[] $events */
+        $events = array_reduce([1], function ($acc, $i) use ($platformId) {
+            $ev = $this->_createEventWithPlatformId($platformId);
+            $acc []= $ev;
+            return $acc;
+        }, []);
+
+        $response = iterator_to_array($this->_client->GetEventsById([], (new EventsGetEventsByIdPayload())
+            ->setIds([$events[0]->getId()]))
+            ->getEvents());
+
+        $this->assertNotEmpty($response);
+        $this->assertEquals(1, count($response));
+        $this->assertInstanceOf(Event::class, $response[0]);
+        $this->assertEquals($platformId, $response[0]->getPlatformId());
 
         // cleanup
         foreach ($events as $e) {

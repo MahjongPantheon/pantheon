@@ -133,7 +133,10 @@ export const ProfileManage: React.FC = () => {
           values.phone.trim(),
           values.tenhouId.trim(),
           values.hasAvatar,
-          values.avatarData
+          values.avatarData,
+          '',
+          -1,
+          -1
         )
         .then((resp) => {
           setIsSaving(false);

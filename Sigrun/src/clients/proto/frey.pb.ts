@@ -2,8 +2,8 @@
 // Source: proto/frey.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
+import * as protoscript from "protoscript";
 import { JSONrequest, PBrequest } from "twirpscript";
 // This is the minimum version supported by the current runtime.
 // If this line fails typechecking, breaking changes have been introduced and this
@@ -354,6 +354,9 @@ export interface PersonsUpdatePersonalInfoPayload {
   tenhouId: string;
   hasAvatar: boolean;
   avatarData: string;
+  msNickname: string;
+  msFriendId: number;
+  msAccountId: number;
 }
 
 export interface PersonsGetPersonalInfoPayload {
@@ -405,216 +408,216 @@ export interface DepersonalizePayload {}
 
 export async function RequestRegistration(
   authRequestRegistrationPayload: AuthRequestRegistrationPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthRequestRegistrationResponse> {
   const response = await PBrequest(
     "/common.Frey/RequestRegistration",
     AuthRequestRegistrationPayload.encode(authRequestRegistrationPayload),
-    config
+    config,
   );
   return AuthRequestRegistrationResponse.decode(response);
 }
 
 export async function ApproveRegistration(
   authApproveRegistrationPayload: AuthApproveRegistrationPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthApproveRegistrationResponse> {
   const response = await PBrequest(
     "/common.Frey/ApproveRegistration",
     AuthApproveRegistrationPayload.encode(authApproveRegistrationPayload),
-    config
+    config,
   );
   return AuthApproveRegistrationResponse.decode(response);
 }
 
 export async function Authorize(
   authAuthorizePayload: AuthAuthorizePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthAuthorizeResponse> {
   const response = await PBrequest(
     "/common.Frey/Authorize",
     AuthAuthorizePayload.encode(authAuthorizePayload),
-    config
+    config,
   );
   return AuthAuthorizeResponse.decode(response);
 }
 
 export async function QuickAuthorize(
   authQuickAuthorizePayload: AuthQuickAuthorizePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthQuickAuthorizeResponse> {
   const response = await PBrequest(
     "/common.Frey/QuickAuthorize",
     AuthQuickAuthorizePayload.encode(authQuickAuthorizePayload),
-    config
+    config,
   );
   return AuthQuickAuthorizeResponse.decode(response);
 }
 
 export async function Me(
   authMePayload: AuthMePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthMeResponse> {
   const response = await PBrequest(
     "/common.Frey/Me",
     AuthMePayload.encode(authMePayload),
-    config
+    config,
   );
   return AuthMeResponse.decode(response);
 }
 
 export async function DepersonalizeAccount(
   depersonalizePayload: DepersonalizePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/DepersonalizeAccount",
     DepersonalizePayload.encode(depersonalizePayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function ChangePassword(
   authChangePasswordPayload: AuthChangePasswordPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthChangePasswordResponse> {
   const response = await PBrequest(
     "/common.Frey/ChangePassword",
     AuthChangePasswordPayload.encode(authChangePasswordPayload),
-    config
+    config,
   );
   return AuthChangePasswordResponse.decode(response);
 }
 
 export async function RequestResetPassword(
   authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthRequestResetPasswordResponse> {
   const response = await PBrequest(
     "/common.Frey/RequestResetPassword",
     AuthRequestResetPasswordPayload.encode(authRequestResetPasswordPayload),
-    config
+    config,
   );
   return AuthRequestResetPasswordResponse.decode(response);
 }
 
 export async function ApproveResetPassword(
   authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthApproveResetPasswordResponse> {
   const response = await PBrequest(
     "/common.Frey/ApproveResetPassword",
     AuthApproveResetPasswordPayload.encode(authApproveResetPasswordPayload),
-    config
+    config,
   );
   return AuthApproveResetPasswordResponse.decode(response);
 }
 
 export async function GetAccessRules(
   accessGetAccessRulesPayload: AccessGetAccessRulesPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAccessRulesResponse> {
   const response = await PBrequest(
     "/common.Frey/GetAccessRules",
     AccessGetAccessRulesPayload.encode(accessGetAccessRulesPayload),
-    config
+    config,
   );
   return AccessGetAccessRulesResponse.decode(response);
 }
 
 export async function GetRuleValue(
   accessGetRuleValuePayload: AccessGetRuleValuePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetRuleValueResponse> {
   const response = await PBrequest(
     "/common.Frey/GetRuleValue",
     AccessGetRuleValuePayload.encode(accessGetRuleValuePayload),
-    config
+    config,
   );
   return AccessGetRuleValueResponse.decode(response);
 }
 
 export async function UpdatePersonalInfo(
   personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/UpdatePersonalInfo",
     PersonsUpdatePersonalInfoPayload.encode(personsUpdatePersonalInfoPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetPersonalInfo(
   personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetPersonalInfoResponse> {
   const response = await PBrequest(
     "/common.Frey/GetPersonalInfo",
     PersonsGetPersonalInfoPayload.encode(personsGetPersonalInfoPayload),
-    config
+    config,
   );
   return PersonsGetPersonalInfoResponse.decode(response);
 }
 
 export async function FindByTenhouIds(
   personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsFindByTenhouIdsResponse> {
   const response = await PBrequest(
     "/common.Frey/FindByTenhouIds",
     PersonsFindByTenhouIdsPayload.encode(personsFindByTenhouIdsPayload),
-    config
+    config,
   );
   return PersonsFindByTenhouIdsResponse.decode(response);
 }
 
 export async function FindByMajsoulAccountId(
   personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsFindByTenhouIdsResponse> {
   const response = await PBrequest(
     "/common.Frey/FindByMajsoulAccountId",
     PersonsFindByMajsoulIdsPayload.encode(personsFindByMajsoulIdsPayload),
-    config
+    config,
   );
   return PersonsFindByTenhouIdsResponse.decode(response);
 }
 
 export async function FindByTitle(
   personsFindByTitlePayload: PersonsFindByTitlePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsFindByTitleResponse> {
   const response = await PBrequest(
     "/common.Frey/FindByTitle",
     PersonsFindByTitlePayload.encode(personsFindByTitlePayload),
-    config
+    config,
   );
   return PersonsFindByTitleResponse.decode(response);
 }
 
 export async function GetGroups(
   personsGetGroupsPayload: PersonsGetGroupsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetGroupsResponse> {
   const response = await PBrequest(
     "/common.Frey/GetGroups",
     PersonsGetGroupsPayload.encode(personsGetGroupsPayload),
-    config
+    config,
   );
   return PersonsGetGroupsResponse.decode(response);
 }
 
 export async function GetEventAdmins(
   accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetEventAdminsResponse> {
   const response = await PBrequest(
     "/common.Frey/GetEventAdmins",
     AccessGetEventAdminsPayload.encode(accessGetEventAdminsPayload),
-    config
+    config,
   );
   return AccessGetEventAdminsResponse.decode(response);
 }
@@ -624,278 +627,278 @@ export async function GetEventAdmins(
  */
 export async function GetSuperadminFlag(
   accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetSuperadminFlagResponse> {
   const response = await PBrequest(
     "/common.Frey/GetSuperadminFlag",
     AccessGetSuperadminFlagPayload.encode(accessGetSuperadminFlagPayload),
-    config
+    config,
   );
   return AccessGetSuperadminFlagResponse.decode(response);
 }
 
 export async function GetOwnedEventIds(
   accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetOwnedEventIdsResponse> {
   const response = await PBrequest(
     "/common.Frey/GetOwnedEventIds",
     AccessGetOwnedEventIdsPayload.encode(accessGetOwnedEventIdsPayload),
-    config
+    config,
   );
   return AccessGetOwnedEventIdsResponse.decode(response);
 }
 
 export async function GetRulesList(
   accessGetRulesListPayload: AccessGetRulesListPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetRulesListResponse> {
   const response = await PBrequest(
     "/common.Frey/GetRulesList",
     AccessGetRulesListPayload.encode(accessGetRulesListPayload),
-    config
+    config,
   );
   return AccessGetRulesListResponse.decode(response);
 }
 
 export async function GetAllEventRules(
   accessGetAllEventRulesPayload: AccessGetAllEventRulesPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAllEventRulesResponse> {
   const response = await PBrequest(
     "/common.Frey/GetAllEventRules",
     AccessGetAllEventRulesPayload.encode(accessGetAllEventRulesPayload),
-    config
+    config,
   );
   return AccessGetAllEventRulesResponse.decode(response);
 }
 
 export async function GetPersonAccess(
   accessGetPersonAccessPayload: AccessGetPersonAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetPersonAccessResponse> {
   const response = await PBrequest(
     "/common.Frey/GetPersonAccess",
     AccessGetPersonAccessPayload.encode(accessGetPersonAccessPayload),
-    config
+    config,
   );
   return AccessGetPersonAccessResponse.decode(response);
 }
 
 export async function GetGroupAccess(
   accessGetGroupAccessPayload: AccessGetGroupAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetGroupAccessResponse> {
   const response = await PBrequest(
     "/common.Frey/GetGroupAccess",
     AccessGetGroupAccessPayload.encode(accessGetGroupAccessPayload),
-    config
+    config,
   );
   return AccessGetGroupAccessResponse.decode(response);
 }
 
 export async function GetAllPersonAccess(
   accessGetAllPersonAccessPayload: AccessGetAllPersonAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAllPersonAccessResponse> {
   const response = await PBrequest(
     "/common.Frey/GetAllPersonAccess",
     AccessGetAllPersonAccessPayload.encode(accessGetAllPersonAccessPayload),
-    config
+    config,
   );
   return AccessGetAllPersonAccessResponse.decode(response);
 }
 
 export async function GetAllGroupAccess(
   accessGetAllGroupAccessPayload: AccessGetAllGroupAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAllGroupAccessResponse> {
   const response = await PBrequest(
     "/common.Frey/GetAllGroupAccess",
     AccessGetAllGroupAccessPayload.encode(accessGetAllGroupAccessPayload),
-    config
+    config,
   );
   return AccessGetAllGroupAccessResponse.decode(response);
 }
 
 export async function AddRuleForPerson(
   accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddRuleForPersonResponse> {
   const response = await PBrequest(
     "/common.Frey/AddRuleForPerson",
     AccessAddRuleForPersonPayload.encode(accessAddRuleForPersonPayload),
-    config
+    config,
   );
   return AccessAddRuleForPersonResponse.decode(response);
 }
 
 export async function AddRuleForGroup(
   accessAddRuleForGroupPayload: AccessAddRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddRuleForGroupResponse> {
   const response = await PBrequest(
     "/common.Frey/AddRuleForGroup",
     AccessAddRuleForGroupPayload.encode(accessAddRuleForGroupPayload),
-    config
+    config,
   );
   return AccessAddRuleForGroupResponse.decode(response);
 }
 
 export async function UpdateRuleForPerson(
   accessUpdateRuleForPersonPayload: AccessUpdateRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/UpdateRuleForPerson",
     AccessUpdateRuleForPersonPayload.encode(accessUpdateRuleForPersonPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function UpdateRuleForGroup(
   accessUpdateRuleForGroupPayload: AccessUpdateRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/UpdateRuleForGroup",
     AccessUpdateRuleForGroupPayload.encode(accessUpdateRuleForGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DeleteRuleForPerson(
   accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/DeleteRuleForPerson",
     AccessDeleteRuleForPersonPayload.encode(accessDeleteRuleForPersonPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DeleteRuleForGroup(
   accessDeleteRuleForGroupPayload: AccessDeleteRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/DeleteRuleForGroup",
     AccessDeleteRuleForGroupPayload.encode(accessDeleteRuleForGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function ClearAccessCache(
   accessClearAccessCachePayload: AccessClearAccessCachePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/ClearAccessCache",
     AccessClearAccessCachePayload.encode(accessClearAccessCachePayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function CreateAccount(
   personsCreateAccountPayload: PersonsCreateAccountPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsCreateAccountResponse> {
   const response = await PBrequest(
     "/common.Frey/CreateAccount",
     PersonsCreateAccountPayload.encode(personsCreateAccountPayload),
-    config
+    config,
   );
   return PersonsCreateAccountResponse.decode(response);
 }
 
 export async function CreateGroup(
   personsCreateGroupPayload: PersonsCreateGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsCreateGroupResponse> {
   const response = await PBrequest(
     "/common.Frey/CreateGroup",
     PersonsCreateGroupPayload.encode(personsCreateGroupPayload),
-    config
+    config,
   );
   return PersonsCreateGroupResponse.decode(response);
 }
 
 export async function UpdateGroup(
   personsUpdateGroupPayload: PersonsUpdateGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/UpdateGroup",
     PersonsUpdateGroupPayload.encode(personsUpdateGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DeleteGroup(
   personsDeleteGroupPayload: PersonsDeleteGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/DeleteGroup",
     PersonsDeleteGroupPayload.encode(personsDeleteGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function AddPersonToGroup(
   personsAddPersonToGroupPayload: PersonsAddPersonToGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/AddPersonToGroup",
     PersonsAddPersonToGroupPayload.encode(personsAddPersonToGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function RemovePersonFromGroup(
   personsRemovePersonFromGroupPayload: PersonsRemovePersonFromGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Frey/RemovePersonFromGroup",
     PersonsRemovePersonFromGroupPayload.encode(
-      personsRemovePersonFromGroupPayload
+      personsRemovePersonFromGroupPayload,
     ),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetPersonsOfGroup(
   personsGetPersonsOfGroupPayload: PersonsGetPersonsOfGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetPersonsOfGroupResponse> {
   const response = await PBrequest(
     "/common.Frey/GetPersonsOfGroup",
     PersonsGetPersonsOfGroupPayload.encode(personsGetPersonsOfGroupPayload),
-    config
+    config,
   );
   return PersonsGetPersonsOfGroupResponse.decode(response);
 }
 
 export async function GetGroupsOfPerson(
   personsGetGroupsOfPersonPayload: PersonsGetGroupsOfPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetGroupsOfPersonResponse> {
   const response = await PBrequest(
     "/common.Frey/GetGroupsOfPerson",
     PersonsGetGroupsOfPersonPayload.encode(personsGetGroupsOfPersonPayload),
-    config
+    config,
   );
   return PersonsGetGroupsOfPersonResponse.decode(response);
 }
@@ -906,28 +909,28 @@ export async function GetGroupsOfPerson(
  */
 export async function AddSystemWideRuleForPerson(
   accessAddSystemWideRuleForPersonPayload: AccessAddSystemWideRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddSystemWideRuleForPersonResponse> {
   const response = await PBrequest(
     "/common.Frey/AddSystemWideRuleForPerson",
     AccessAddSystemWideRuleForPersonPayload.encode(
-      accessAddSystemWideRuleForPersonPayload
+      accessAddSystemWideRuleForPersonPayload,
     ),
-    config
+    config,
   );
   return AccessAddSystemWideRuleForPersonResponse.decode(response);
 }
 
 export async function AddSystemWideRuleForGroup(
   accessAddSystemWideRuleForGroupPayload: AccessAddSystemWideRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddSystemWideRuleForGroupResponse> {
   const response = await PBrequest(
     "/common.Frey/AddSystemWideRuleForGroup",
     AccessAddSystemWideRuleForGroupPayload.encode(
-      accessAddSystemWideRuleForGroupPayload
+      accessAddSystemWideRuleForGroupPayload,
     ),
-    config
+    config,
   );
   return AccessAddSystemWideRuleForGroupResponse.decode(response);
 }
@@ -938,218 +941,218 @@ export async function AddSystemWideRuleForGroup(
 
 export async function RequestRegistrationJSON(
   authRequestRegistrationPayload: AuthRequestRegistrationPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthRequestRegistrationResponse> {
   const response = await JSONrequest(
     "/common.Frey/RequestRegistration",
     AuthRequestRegistrationPayloadJSON.encode(authRequestRegistrationPayload),
-    config
+    config,
   );
   return AuthRequestRegistrationResponseJSON.decode(response);
 }
 
 export async function ApproveRegistrationJSON(
   authApproveRegistrationPayload: AuthApproveRegistrationPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthApproveRegistrationResponse> {
   const response = await JSONrequest(
     "/common.Frey/ApproveRegistration",
     AuthApproveRegistrationPayloadJSON.encode(authApproveRegistrationPayload),
-    config
+    config,
   );
   return AuthApproveRegistrationResponseJSON.decode(response);
 }
 
 export async function AuthorizeJSON(
   authAuthorizePayload: AuthAuthorizePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthAuthorizeResponse> {
   const response = await JSONrequest(
     "/common.Frey/Authorize",
     AuthAuthorizePayloadJSON.encode(authAuthorizePayload),
-    config
+    config,
   );
   return AuthAuthorizeResponseJSON.decode(response);
 }
 
 export async function QuickAuthorizeJSON(
   authQuickAuthorizePayload: AuthQuickAuthorizePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthQuickAuthorizeResponse> {
   const response = await JSONrequest(
     "/common.Frey/QuickAuthorize",
     AuthQuickAuthorizePayloadJSON.encode(authQuickAuthorizePayload),
-    config
+    config,
   );
   return AuthQuickAuthorizeResponseJSON.decode(response);
 }
 
 export async function MeJSON(
   authMePayload: AuthMePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthMeResponse> {
   const response = await JSONrequest(
     "/common.Frey/Me",
     AuthMePayloadJSON.encode(authMePayload),
-    config
+    config,
   );
   return AuthMeResponseJSON.decode(response);
 }
 
 export async function DepersonalizeAccountJSON(
   depersonalizePayload: DepersonalizePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/DepersonalizeAccount",
     DepersonalizePayloadJSON.encode(depersonalizePayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function ChangePasswordJSON(
   authChangePasswordPayload: AuthChangePasswordPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthChangePasswordResponse> {
   const response = await JSONrequest(
     "/common.Frey/ChangePassword",
     AuthChangePasswordPayloadJSON.encode(authChangePasswordPayload),
-    config
+    config,
   );
   return AuthChangePasswordResponseJSON.decode(response);
 }
 
 export async function RequestResetPasswordJSON(
   authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthRequestResetPasswordResponse> {
   const response = await JSONrequest(
     "/common.Frey/RequestResetPassword",
     AuthRequestResetPasswordPayloadJSON.encode(authRequestResetPasswordPayload),
-    config
+    config,
   );
   return AuthRequestResetPasswordResponseJSON.decode(response);
 }
 
 export async function ApproveResetPasswordJSON(
   authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AuthApproveResetPasswordResponse> {
   const response = await JSONrequest(
     "/common.Frey/ApproveResetPassword",
     AuthApproveResetPasswordPayloadJSON.encode(authApproveResetPasswordPayload),
-    config
+    config,
   );
   return AuthApproveResetPasswordResponseJSON.decode(response);
 }
 
 export async function GetAccessRulesJSON(
   accessGetAccessRulesPayload: AccessGetAccessRulesPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAccessRulesResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetAccessRules",
     AccessGetAccessRulesPayloadJSON.encode(accessGetAccessRulesPayload),
-    config
+    config,
   );
   return AccessGetAccessRulesResponseJSON.decode(response);
 }
 
 export async function GetRuleValueJSON(
   accessGetRuleValuePayload: AccessGetRuleValuePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetRuleValueResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetRuleValue",
     AccessGetRuleValuePayloadJSON.encode(accessGetRuleValuePayload),
-    config
+    config,
   );
   return AccessGetRuleValueResponseJSON.decode(response);
 }
 
 export async function UpdatePersonalInfoJSON(
   personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/UpdatePersonalInfo",
     PersonsUpdatePersonalInfoPayloadJSON.encode(
-      personsUpdatePersonalInfoPayload
+      personsUpdatePersonalInfoPayload,
     ),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetPersonalInfoJSON(
   personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetPersonalInfoResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetPersonalInfo",
     PersonsGetPersonalInfoPayloadJSON.encode(personsGetPersonalInfoPayload),
-    config
+    config,
   );
   return PersonsGetPersonalInfoResponseJSON.decode(response);
 }
 
 export async function FindByTenhouIdsJSON(
   personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsFindByTenhouIdsResponse> {
   const response = await JSONrequest(
     "/common.Frey/FindByTenhouIds",
     PersonsFindByTenhouIdsPayloadJSON.encode(personsFindByTenhouIdsPayload),
-    config
+    config,
   );
   return PersonsFindByTenhouIdsResponseJSON.decode(response);
 }
 
 export async function FindByMajsoulAccountIdJSON(
   personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsFindByTenhouIdsResponse> {
   const response = await JSONrequest(
     "/common.Frey/FindByMajsoulAccountId",
     PersonsFindByMajsoulIdsPayloadJSON.encode(personsFindByMajsoulIdsPayload),
-    config
+    config,
   );
   return PersonsFindByTenhouIdsResponseJSON.decode(response);
 }
 
 export async function FindByTitleJSON(
   personsFindByTitlePayload: PersonsFindByTitlePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsFindByTitleResponse> {
   const response = await JSONrequest(
     "/common.Frey/FindByTitle",
     PersonsFindByTitlePayloadJSON.encode(personsFindByTitlePayload),
-    config
+    config,
   );
   return PersonsFindByTitleResponseJSON.decode(response);
 }
 
 export async function GetGroupsJSON(
   personsGetGroupsPayload: PersonsGetGroupsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetGroupsResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetGroups",
     PersonsGetGroupsPayloadJSON.encode(personsGetGroupsPayload),
-    config
+    config,
   );
   return PersonsGetGroupsResponseJSON.decode(response);
 }
 
 export async function GetEventAdminsJSON(
   accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetEventAdminsResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetEventAdmins",
     AccessGetEventAdminsPayloadJSON.encode(accessGetEventAdminsPayload),
-    config
+    config,
   );
   return AccessGetEventAdminsResponseJSON.decode(response);
 }
@@ -1159,282 +1162,282 @@ export async function GetEventAdminsJSON(
  */
 export async function GetSuperadminFlagJSON(
   accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetSuperadminFlagResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetSuperadminFlag",
     AccessGetSuperadminFlagPayloadJSON.encode(accessGetSuperadminFlagPayload),
-    config
+    config,
   );
   return AccessGetSuperadminFlagResponseJSON.decode(response);
 }
 
 export async function GetOwnedEventIdsJSON(
   accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetOwnedEventIdsResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetOwnedEventIds",
     AccessGetOwnedEventIdsPayloadJSON.encode(accessGetOwnedEventIdsPayload),
-    config
+    config,
   );
   return AccessGetOwnedEventIdsResponseJSON.decode(response);
 }
 
 export async function GetRulesListJSON(
   accessGetRulesListPayload: AccessGetRulesListPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetRulesListResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetRulesList",
     AccessGetRulesListPayloadJSON.encode(accessGetRulesListPayload),
-    config
+    config,
   );
   return AccessGetRulesListResponseJSON.decode(response);
 }
 
 export async function GetAllEventRulesJSON(
   accessGetAllEventRulesPayload: AccessGetAllEventRulesPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAllEventRulesResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetAllEventRules",
     AccessGetAllEventRulesPayloadJSON.encode(accessGetAllEventRulesPayload),
-    config
+    config,
   );
   return AccessGetAllEventRulesResponseJSON.decode(response);
 }
 
 export async function GetPersonAccessJSON(
   accessGetPersonAccessPayload: AccessGetPersonAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetPersonAccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetPersonAccess",
     AccessGetPersonAccessPayloadJSON.encode(accessGetPersonAccessPayload),
-    config
+    config,
   );
   return AccessGetPersonAccessResponseJSON.decode(response);
 }
 
 export async function GetGroupAccessJSON(
   accessGetGroupAccessPayload: AccessGetGroupAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetGroupAccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetGroupAccess",
     AccessGetGroupAccessPayloadJSON.encode(accessGetGroupAccessPayload),
-    config
+    config,
   );
   return AccessGetGroupAccessResponseJSON.decode(response);
 }
 
 export async function GetAllPersonAccessJSON(
   accessGetAllPersonAccessPayload: AccessGetAllPersonAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAllPersonAccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetAllPersonAccess",
     AccessGetAllPersonAccessPayloadJSON.encode(accessGetAllPersonAccessPayload),
-    config
+    config,
   );
   return AccessGetAllPersonAccessResponseJSON.decode(response);
 }
 
 export async function GetAllGroupAccessJSON(
   accessGetAllGroupAccessPayload: AccessGetAllGroupAccessPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessGetAllGroupAccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetAllGroupAccess",
     AccessGetAllGroupAccessPayloadJSON.encode(accessGetAllGroupAccessPayload),
-    config
+    config,
   );
   return AccessGetAllGroupAccessResponseJSON.decode(response);
 }
 
 export async function AddRuleForPersonJSON(
   accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddRuleForPersonResponse> {
   const response = await JSONrequest(
     "/common.Frey/AddRuleForPerson",
     AccessAddRuleForPersonPayloadJSON.encode(accessAddRuleForPersonPayload),
-    config
+    config,
   );
   return AccessAddRuleForPersonResponseJSON.decode(response);
 }
 
 export async function AddRuleForGroupJSON(
   accessAddRuleForGroupPayload: AccessAddRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddRuleForGroupResponse> {
   const response = await JSONrequest(
     "/common.Frey/AddRuleForGroup",
     AccessAddRuleForGroupPayloadJSON.encode(accessAddRuleForGroupPayload),
-    config
+    config,
   );
   return AccessAddRuleForGroupResponseJSON.decode(response);
 }
 
 export async function UpdateRuleForPersonJSON(
   accessUpdateRuleForPersonPayload: AccessUpdateRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/UpdateRuleForPerson",
     AccessUpdateRuleForPersonPayloadJSON.encode(
-      accessUpdateRuleForPersonPayload
+      accessUpdateRuleForPersonPayload,
     ),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function UpdateRuleForGroupJSON(
   accessUpdateRuleForGroupPayload: AccessUpdateRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/UpdateRuleForGroup",
     AccessUpdateRuleForGroupPayloadJSON.encode(accessUpdateRuleForGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DeleteRuleForPersonJSON(
   accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/DeleteRuleForPerson",
     AccessDeleteRuleForPersonPayloadJSON.encode(
-      accessDeleteRuleForPersonPayload
+      accessDeleteRuleForPersonPayload,
     ),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DeleteRuleForGroupJSON(
   accessDeleteRuleForGroupPayload: AccessDeleteRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/DeleteRuleForGroup",
     AccessDeleteRuleForGroupPayloadJSON.encode(accessDeleteRuleForGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function ClearAccessCacheJSON(
   accessClearAccessCachePayload: AccessClearAccessCachePayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/ClearAccessCache",
     AccessClearAccessCachePayloadJSON.encode(accessClearAccessCachePayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function CreateAccountJSON(
   personsCreateAccountPayload: PersonsCreateAccountPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsCreateAccountResponse> {
   const response = await JSONrequest(
     "/common.Frey/CreateAccount",
     PersonsCreateAccountPayloadJSON.encode(personsCreateAccountPayload),
-    config
+    config,
   );
   return PersonsCreateAccountResponseJSON.decode(response);
 }
 
 export async function CreateGroupJSON(
   personsCreateGroupPayload: PersonsCreateGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsCreateGroupResponse> {
   const response = await JSONrequest(
     "/common.Frey/CreateGroup",
     PersonsCreateGroupPayloadJSON.encode(personsCreateGroupPayload),
-    config
+    config,
   );
   return PersonsCreateGroupResponseJSON.decode(response);
 }
 
 export async function UpdateGroupJSON(
   personsUpdateGroupPayload: PersonsUpdateGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/UpdateGroup",
     PersonsUpdateGroupPayloadJSON.encode(personsUpdateGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DeleteGroupJSON(
   personsDeleteGroupPayload: PersonsDeleteGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/DeleteGroup",
     PersonsDeleteGroupPayloadJSON.encode(personsDeleteGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function AddPersonToGroupJSON(
   personsAddPersonToGroupPayload: PersonsAddPersonToGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/AddPersonToGroup",
     PersonsAddPersonToGroupPayloadJSON.encode(personsAddPersonToGroupPayload),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function RemovePersonFromGroupJSON(
   personsRemovePersonFromGroupPayload: PersonsRemovePersonFromGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Frey/RemovePersonFromGroup",
     PersonsRemovePersonFromGroupPayloadJSON.encode(
-      personsRemovePersonFromGroupPayload
+      personsRemovePersonFromGroupPayload,
     ),
-    config
+    config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetPersonsOfGroupJSON(
   personsGetPersonsOfGroupPayload: PersonsGetPersonsOfGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetPersonsOfGroupResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetPersonsOfGroup",
     PersonsGetPersonsOfGroupPayloadJSON.encode(personsGetPersonsOfGroupPayload),
-    config
+    config,
   );
   return PersonsGetPersonsOfGroupResponseJSON.decode(response);
 }
 
 export async function GetGroupsOfPersonJSON(
   personsGetGroupsOfPersonPayload: PersonsGetGroupsOfPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<PersonsGetGroupsOfPersonResponse> {
   const response = await JSONrequest(
     "/common.Frey/GetGroupsOfPerson",
     PersonsGetGroupsOfPersonPayloadJSON.encode(personsGetGroupsOfPersonPayload),
-    config
+    config,
   );
   return PersonsGetGroupsOfPersonResponseJSON.decode(response);
 }
@@ -1445,28 +1448,28 @@ export async function GetGroupsOfPersonJSON(
  */
 export async function AddSystemWideRuleForPersonJSON(
   accessAddSystemWideRuleForPersonPayload: AccessAddSystemWideRuleForPersonPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddSystemWideRuleForPersonResponse> {
   const response = await JSONrequest(
     "/common.Frey/AddSystemWideRuleForPerson",
     AccessAddSystemWideRuleForPersonPayloadJSON.encode(
-      accessAddSystemWideRuleForPersonPayload
+      accessAddSystemWideRuleForPersonPayload,
     ),
-    config
+    config,
   );
   return AccessAddSystemWideRuleForPersonResponseJSON.decode(response);
 }
 
 export async function AddSystemWideRuleForGroupJSON(
   accessAddSystemWideRuleForGroupPayload: AccessAddSystemWideRuleForGroupPayload,
-  config?: ClientConfiguration
+  config?: ClientConfiguration,
 ): Promise<AccessAddSystemWideRuleForGroupResponse> {
   const response = await JSONrequest(
     "/common.Frey/AddSystemWideRuleForGroup",
     AccessAddSystemWideRuleForGroupPayloadJSON.encode(
-      accessAddSystemWideRuleForGroupPayload
+      accessAddSystemWideRuleForGroupPayload,
     ),
-    config
+    config,
   );
   return AccessAddSystemWideRuleForGroupResponseJSON.decode(response);
 }
@@ -1478,208 +1481,208 @@ export async function AddSystemWideRuleForGroupJSON(
 export interface Frey<Context = unknown> {
   RequestRegistration: (
     authRequestRegistrationPayload: AuthRequestRegistrationPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AuthRequestRegistrationResponse>
     | AuthRequestRegistrationResponse;
   ApproveRegistration: (
     authApproveRegistrationPayload: AuthApproveRegistrationPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AuthApproveRegistrationResponse>
     | AuthApproveRegistrationResponse;
   Authorize: (
     authAuthorizePayload: AuthAuthorizePayload,
-    context: Context
+    context: Context,
   ) => Promise<AuthAuthorizeResponse> | AuthAuthorizeResponse;
   QuickAuthorize: (
     authQuickAuthorizePayload: AuthQuickAuthorizePayload,
-    context: Context
+    context: Context,
   ) => Promise<AuthQuickAuthorizeResponse> | AuthQuickAuthorizeResponse;
   Me: (
     authMePayload: AuthMePayload,
-    context: Context
+    context: Context,
   ) => Promise<AuthMeResponse> | AuthMeResponse;
   DepersonalizeAccount: (
     depersonalizePayload: DepersonalizePayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   ChangePassword: (
     authChangePasswordPayload: AuthChangePasswordPayload,
-    context: Context
+    context: Context,
   ) => Promise<AuthChangePasswordResponse> | AuthChangePasswordResponse;
   RequestResetPassword: (
     authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AuthRequestResetPasswordResponse>
     | AuthRequestResetPasswordResponse;
   ApproveResetPassword: (
     authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AuthApproveResetPasswordResponse>
     | AuthApproveResetPasswordResponse;
   GetAccessRules: (
     accessGetAccessRulesPayload: AccessGetAccessRulesPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetAccessRulesResponse> | AccessGetAccessRulesResponse;
   GetRuleValue: (
     accessGetRuleValuePayload: AccessGetRuleValuePayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetRuleValueResponse> | AccessGetRuleValueResponse;
   UpdatePersonalInfo: (
     personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GetPersonalInfo: (
     personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
-    context: Context
+    context: Context,
   ) => Promise<PersonsGetPersonalInfoResponse> | PersonsGetPersonalInfoResponse;
   FindByTenhouIds: (
     personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
-    context: Context
+    context: Context,
   ) => Promise<PersonsFindByTenhouIdsResponse> | PersonsFindByTenhouIdsResponse;
   FindByMajsoulAccountId: (
     personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
-    context: Context
+    context: Context,
   ) => Promise<PersonsFindByTenhouIdsResponse> | PersonsFindByTenhouIdsResponse;
   FindByTitle: (
     personsFindByTitlePayload: PersonsFindByTitlePayload,
-    context: Context
+    context: Context,
   ) => Promise<PersonsFindByTitleResponse> | PersonsFindByTitleResponse;
   GetGroups: (
     personsGetGroupsPayload: PersonsGetGroupsPayload,
-    context: Context
+    context: Context,
   ) => Promise<PersonsGetGroupsResponse> | PersonsGetGroupsResponse;
   GetEventAdmins: (
     accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetEventAdminsResponse> | AccessGetEventAdminsResponse;
   /**
    * admin
    */
   GetSuperadminFlag: (
     accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AccessGetSuperadminFlagResponse>
     | AccessGetSuperadminFlagResponse;
   GetOwnedEventIds: (
     accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetOwnedEventIdsResponse> | AccessGetOwnedEventIdsResponse;
   GetRulesList: (
     accessGetRulesListPayload: AccessGetRulesListPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetRulesListResponse> | AccessGetRulesListResponse;
   GetAllEventRules: (
     accessGetAllEventRulesPayload: AccessGetAllEventRulesPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetAllEventRulesResponse> | AccessGetAllEventRulesResponse;
   GetPersonAccess: (
     accessGetPersonAccessPayload: AccessGetPersonAccessPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetPersonAccessResponse> | AccessGetPersonAccessResponse;
   GetGroupAccess: (
     accessGetGroupAccessPayload: AccessGetGroupAccessPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessGetGroupAccessResponse> | AccessGetGroupAccessResponse;
   GetAllPersonAccess: (
     accessGetAllPersonAccessPayload: AccessGetAllPersonAccessPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AccessGetAllPersonAccessResponse>
     | AccessGetAllPersonAccessResponse;
   GetAllGroupAccess: (
     accessGetAllGroupAccessPayload: AccessGetAllGroupAccessPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AccessGetAllGroupAccessResponse>
     | AccessGetAllGroupAccessResponse;
   AddRuleForPerson: (
     accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessAddRuleForPersonResponse> | AccessAddRuleForPersonResponse;
   AddRuleForGroup: (
     accessAddRuleForGroupPayload: AccessAddRuleForGroupPayload,
-    context: Context
+    context: Context,
   ) => Promise<AccessAddRuleForGroupResponse> | AccessAddRuleForGroupResponse;
   UpdateRuleForPerson: (
     accessUpdateRuleForPersonPayload: AccessUpdateRuleForPersonPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   UpdateRuleForGroup: (
     accessUpdateRuleForGroupPayload: AccessUpdateRuleForGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   DeleteRuleForPerson: (
     accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   DeleteRuleForGroup: (
     accessDeleteRuleForGroupPayload: AccessDeleteRuleForGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   ClearAccessCache: (
     accessClearAccessCachePayload: AccessClearAccessCachePayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   CreateAccount: (
     personsCreateAccountPayload: PersonsCreateAccountPayload,
-    context: Context
+    context: Context,
   ) => Promise<PersonsCreateAccountResponse> | PersonsCreateAccountResponse;
   CreateGroup: (
     personsCreateGroupPayload: PersonsCreateGroupPayload,
-    context: Context
+    context: Context,
   ) => Promise<PersonsCreateGroupResponse> | PersonsCreateGroupResponse;
   UpdateGroup: (
     personsUpdateGroupPayload: PersonsUpdateGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   DeleteGroup: (
     personsDeleteGroupPayload: PersonsDeleteGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   AddPersonToGroup: (
     personsAddPersonToGroupPayload: PersonsAddPersonToGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   RemovePersonFromGroup: (
     personsRemovePersonFromGroupPayload: PersonsRemovePersonFromGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GetPersonsOfGroup: (
     personsGetPersonsOfGroupPayload: PersonsGetPersonsOfGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<PersonsGetPersonsOfGroupResponse>
     | PersonsGetPersonsOfGroupResponse;
   GetGroupsOfPerson: (
     personsGetGroupsOfPersonPayload: PersonsGetGroupsOfPersonPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<PersonsGetGroupsOfPersonResponse>
     | PersonsGetGroupsOfPersonResponse;
@@ -1689,13 +1692,13 @@ export interface Frey<Context = unknown> {
    */
   AddSystemWideRuleForPerson: (
     accessAddSystemWideRuleForPersonPayload: AccessAddSystemWideRuleForPersonPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AccessAddSystemWideRuleForPersonResponse>
     | AccessAddSystemWideRuleForPersonResponse;
   AddSystemWideRuleForGroup: (
     accessAddSystemWideRuleForGroupPayload: AccessAddSystemWideRuleForGroupPayload,
-    context: Context
+    context: Context,
   ) =>
     | Promise<AccessAddSystemWideRuleForGroupResponse>
     | AccessAddSystemWideRuleForGroupResponse;
@@ -2227,10 +2230,12 @@ export const AuthRequestRegistrationPayload = {
   /**
    * Serializes AuthRequestRegistrationPayload to protobuf.
    */
-  encode: function (msg: Partial<AuthRequestRegistrationPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AuthRequestRegistrationPayload>,
+  ): Uint8Array {
     return AuthRequestRegistrationPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2240,19 +2245,22 @@ export const AuthRequestRegistrationPayload = {
   decode: function (bytes: ByteSource): AuthRequestRegistrationPayload {
     return AuthRequestRegistrationPayload._readMessage(
       AuthRequestRegistrationPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthRequestRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): AuthRequestRegistrationPayload {
+  initialize: function (
+    msg?: Partial<AuthRequestRegistrationPayload>,
+  ): AuthRequestRegistrationPayload {
     return {
       email: "",
       title: "",
       password: "",
       sendEmail: false,
+      ...msg,
     };
   },
 
@@ -2260,9 +2268,9 @@ export const AuthRequestRegistrationPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestRegistrationPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthRequestRegistrationPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
     }
@@ -2283,7 +2291,7 @@ export const AuthRequestRegistrationPayload = {
    */
   _readMessage: function (
     msg: AuthRequestRegistrationPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthRequestRegistrationPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2318,10 +2326,12 @@ export const AuthRequestRegistrationResponse = {
   /**
    * Serializes AuthRequestRegistrationResponse to protobuf.
    */
-  encode: function (msg: Partial<AuthRequestRegistrationResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AuthRequestRegistrationResponse>,
+  ): Uint8Array {
     return AuthRequestRegistrationResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2331,16 +2341,19 @@ export const AuthRequestRegistrationResponse = {
   decode: function (bytes: ByteSource): AuthRequestRegistrationResponse {
     return AuthRequestRegistrationResponse._readMessage(
       AuthRequestRegistrationResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthRequestRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): AuthRequestRegistrationResponse {
+  initialize: function (
+    msg?: Partial<AuthRequestRegistrationResponse>,
+  ): AuthRequestRegistrationResponse {
     return {
       approvalCode: "",
+      ...msg,
     };
   },
 
@@ -2348,9 +2361,9 @@ export const AuthRequestRegistrationResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestRegistrationResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthRequestRegistrationResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.approvalCode) {
       writer.writeString(1, msg.approvalCode);
     }
@@ -2362,7 +2375,7 @@ export const AuthRequestRegistrationResponse = {
    */
   _readMessage: function (
     msg: AuthRequestRegistrationResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthRequestRegistrationResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2385,10 +2398,12 @@ export const AuthApproveRegistrationPayload = {
   /**
    * Serializes AuthApproveRegistrationPayload to protobuf.
    */
-  encode: function (msg: Partial<AuthApproveRegistrationPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AuthApproveRegistrationPayload>,
+  ): Uint8Array {
     return AuthApproveRegistrationPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2398,16 +2413,19 @@ export const AuthApproveRegistrationPayload = {
   decode: function (bytes: ByteSource): AuthApproveRegistrationPayload {
     return AuthApproveRegistrationPayload._readMessage(
       AuthApproveRegistrationPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthApproveRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): AuthApproveRegistrationPayload {
+  initialize: function (
+    msg?: Partial<AuthApproveRegistrationPayload>,
+  ): AuthApproveRegistrationPayload {
     return {
       approvalCode: "",
+      ...msg,
     };
   },
 
@@ -2415,9 +2433,9 @@ export const AuthApproveRegistrationPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveRegistrationPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthApproveRegistrationPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.approvalCode) {
       writer.writeString(1, msg.approvalCode);
     }
@@ -2429,7 +2447,7 @@ export const AuthApproveRegistrationPayload = {
    */
   _readMessage: function (
     msg: AuthApproveRegistrationPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthApproveRegistrationPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2452,10 +2470,12 @@ export const AuthApproveRegistrationResponse = {
   /**
    * Serializes AuthApproveRegistrationResponse to protobuf.
    */
-  encode: function (msg: Partial<AuthApproveRegistrationResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AuthApproveRegistrationResponse>,
+  ): Uint8Array {
     return AuthApproveRegistrationResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2465,16 +2485,19 @@ export const AuthApproveRegistrationResponse = {
   decode: function (bytes: ByteSource): AuthApproveRegistrationResponse {
     return AuthApproveRegistrationResponse._readMessage(
       AuthApproveRegistrationResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthApproveRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): AuthApproveRegistrationResponse {
+  initialize: function (
+    msg?: Partial<AuthApproveRegistrationResponse>,
+  ): AuthApproveRegistrationResponse {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -2482,9 +2505,9 @@ export const AuthApproveRegistrationResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveRegistrationResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthApproveRegistrationResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -2496,7 +2519,7 @@ export const AuthApproveRegistrationResponse = {
    */
   _readMessage: function (
     msg: AuthApproveRegistrationResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthApproveRegistrationResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2519,10 +2542,10 @@ export const AuthAuthorizePayload = {
   /**
    * Serializes AuthAuthorizePayload to protobuf.
    */
-  encode: function (msg: Partial<AuthAuthorizePayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthAuthorizePayload>): Uint8Array {
     return AuthAuthorizePayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2532,17 +2555,20 @@ export const AuthAuthorizePayload = {
   decode: function (bytes: ByteSource): AuthAuthorizePayload {
     return AuthAuthorizePayload._readMessage(
       AuthAuthorizePayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): AuthAuthorizePayload {
+  initialize: function (
+    msg?: Partial<AuthAuthorizePayload>,
+  ): AuthAuthorizePayload {
     return {
       email: "",
       password: "",
+      ...msg,
     };
   },
 
@@ -2550,9 +2576,9 @@ export const AuthAuthorizePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthAuthorizePayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthAuthorizePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
     }
@@ -2567,7 +2593,7 @@ export const AuthAuthorizePayload = {
    */
   _readMessage: function (
     msg: AuthAuthorizePayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthAuthorizePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2594,10 +2620,10 @@ export const AuthAuthorizeResponse = {
   /**
    * Serializes AuthAuthorizeResponse to protobuf.
    */
-  encode: function (msg: Partial<AuthAuthorizeResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthAuthorizeResponse>): Uint8Array {
     return AuthAuthorizeResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2607,17 +2633,20 @@ export const AuthAuthorizeResponse = {
   decode: function (bytes: ByteSource): AuthAuthorizeResponse {
     return AuthAuthorizeResponse._readMessage(
       AuthAuthorizeResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): AuthAuthorizeResponse {
+  initialize: function (
+    msg?: Partial<AuthAuthorizeResponse>,
+  ): AuthAuthorizeResponse {
     return {
       personId: 0,
       authToken: "",
+      ...msg,
     };
   },
 
@@ -2625,9 +2654,9 @@ export const AuthAuthorizeResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthAuthorizeResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthAuthorizeResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -2642,7 +2671,7 @@ export const AuthAuthorizeResponse = {
    */
   _readMessage: function (
     msg: AuthAuthorizeResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthAuthorizeResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2669,10 +2698,10 @@ export const AuthQuickAuthorizePayload = {
   /**
    * Serializes AuthQuickAuthorizePayload to protobuf.
    */
-  encode: function (msg: Partial<AuthQuickAuthorizePayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthQuickAuthorizePayload>): Uint8Array {
     return AuthQuickAuthorizePayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2682,17 +2711,20 @@ export const AuthQuickAuthorizePayload = {
   decode: function (bytes: ByteSource): AuthQuickAuthorizePayload {
     return AuthQuickAuthorizePayload._readMessage(
       AuthQuickAuthorizePayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthQuickAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): AuthQuickAuthorizePayload {
+  initialize: function (
+    msg?: Partial<AuthQuickAuthorizePayload>,
+  ): AuthQuickAuthorizePayload {
     return {
       personId: 0,
       authToken: "",
+      ...msg,
     };
   },
 
@@ -2700,9 +2732,9 @@ export const AuthQuickAuthorizePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthQuickAuthorizePayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthQuickAuthorizePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -2717,7 +2749,7 @@ export const AuthQuickAuthorizePayload = {
    */
   _readMessage: function (
     msg: AuthQuickAuthorizePayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthQuickAuthorizePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2744,10 +2776,10 @@ export const AuthQuickAuthorizeResponse = {
   /**
    * Serializes AuthQuickAuthorizeResponse to protobuf.
    */
-  encode: function (msg: Partial<AuthQuickAuthorizeResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthQuickAuthorizeResponse>): Uint8Array {
     return AuthQuickAuthorizeResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2757,16 +2789,19 @@ export const AuthQuickAuthorizeResponse = {
   decode: function (bytes: ByteSource): AuthQuickAuthorizeResponse {
     return AuthQuickAuthorizeResponse._readMessage(
       AuthQuickAuthorizeResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthQuickAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): AuthQuickAuthorizeResponse {
+  initialize: function (
+    msg?: Partial<AuthQuickAuthorizeResponse>,
+  ): AuthQuickAuthorizeResponse {
     return {
       authSuccess: false,
+      ...msg,
     };
   },
 
@@ -2774,9 +2809,9 @@ export const AuthQuickAuthorizeResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthQuickAuthorizeResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthQuickAuthorizeResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.authSuccess) {
       writer.writeBool(1, msg.authSuccess);
     }
@@ -2788,7 +2823,7 @@ export const AuthQuickAuthorizeResponse = {
    */
   _readMessage: function (
     msg: AuthQuickAuthorizeResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthQuickAuthorizeResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2811,10 +2846,10 @@ export const AuthMePayload = {
   /**
    * Serializes AuthMePayload to protobuf.
    */
-  encode: function (msg: Partial<AuthMePayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthMePayload>): Uint8Array {
     return AuthMePayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2824,17 +2859,18 @@ export const AuthMePayload = {
   decode: function (bytes: ByteSource): AuthMePayload {
     return AuthMePayload._readMessage(
       AuthMePayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthMePayload with all fields set to their default value.
    */
-  initialize: function (): AuthMePayload {
+  initialize: function (msg?: Partial<AuthMePayload>): AuthMePayload {
     return {
       personId: 0,
       authToken: "",
+      ...msg,
     };
   },
 
@@ -2842,9 +2878,9 @@ export const AuthMePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthMePayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthMePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -2859,7 +2895,7 @@ export const AuthMePayload = {
    */
   _readMessage: function (
     msg: AuthMePayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthMePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2886,10 +2922,10 @@ export const AuthMeResponse = {
   /**
    * Serializes AuthMeResponse to protobuf.
    */
-  encode: function (msg: Partial<AuthMeResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthMeResponse>): Uint8Array {
     return AuthMeResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2899,14 +2935,14 @@ export const AuthMeResponse = {
   decode: function (bytes: ByteSource): AuthMeResponse {
     return AuthMeResponse._readMessage(
       AuthMeResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthMeResponse with all fields set to their default value.
    */
-  initialize: function (): AuthMeResponse {
+  initialize: function (msg?: Partial<AuthMeResponse>): AuthMeResponse {
     return {
       personId: 0,
       country: "",
@@ -2918,6 +2954,7 @@ export const AuthMeResponse = {
       groups: [],
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -2925,9 +2962,9 @@ export const AuthMeResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthMeResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthMeResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -2966,7 +3003,7 @@ export const AuthMeResponse = {
    */
   _readMessage: function (
     msg: AuthMeResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthMeResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3029,10 +3066,10 @@ export const AuthChangePasswordPayload = {
   /**
    * Serializes AuthChangePasswordPayload to protobuf.
    */
-  encode: function (msg: Partial<AuthChangePasswordPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthChangePasswordPayload>): Uint8Array {
     return AuthChangePasswordPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3042,18 +3079,21 @@ export const AuthChangePasswordPayload = {
   decode: function (bytes: ByteSource): AuthChangePasswordPayload {
     return AuthChangePasswordPayload._readMessage(
       AuthChangePasswordPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthChangePasswordPayload with all fields set to their default value.
    */
-  initialize: function (): AuthChangePasswordPayload {
+  initialize: function (
+    msg?: Partial<AuthChangePasswordPayload>,
+  ): AuthChangePasswordPayload {
     return {
       email: "",
       password: "",
       newPassword: "",
+      ...msg,
     };
   },
 
@@ -3061,9 +3101,9 @@ export const AuthChangePasswordPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthChangePasswordPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthChangePasswordPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
     }
@@ -3081,7 +3121,7 @@ export const AuthChangePasswordPayload = {
    */
   _readMessage: function (
     msg: AuthChangePasswordPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthChangePasswordPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3112,10 +3152,10 @@ export const AuthChangePasswordResponse = {
   /**
    * Serializes AuthChangePasswordResponse to protobuf.
    */
-  encode: function (msg: Partial<AuthChangePasswordResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<AuthChangePasswordResponse>): Uint8Array {
     return AuthChangePasswordResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3125,16 +3165,19 @@ export const AuthChangePasswordResponse = {
   decode: function (bytes: ByteSource): AuthChangePasswordResponse {
     return AuthChangePasswordResponse._readMessage(
       AuthChangePasswordResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthChangePasswordResponse with all fields set to their default value.
    */
-  initialize: function (): AuthChangePasswordResponse {
+  initialize: function (
+    msg?: Partial<AuthChangePasswordResponse>,
+  ): AuthChangePasswordResponse {
     return {
       authToken: "",
+      ...msg,
     };
   },
 
@@ -3142,9 +3185,9 @@ export const AuthChangePasswordResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthChangePasswordResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthChangePasswordResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.authToken) {
       writer.writeString(1, msg.authToken);
     }
@@ -3156,7 +3199,7 @@ export const AuthChangePasswordResponse = {
    */
   _readMessage: function (
     msg: AuthChangePasswordResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthChangePasswordResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3179,10 +3222,12 @@ export const AuthRequestResetPasswordPayload = {
   /**
    * Serializes AuthRequestResetPasswordPayload to protobuf.
    */
-  encode: function (msg: Partial<AuthRequestResetPasswordPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AuthRequestResetPasswordPayload>,
+  ): Uint8Array {
     return AuthRequestResetPasswordPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3192,17 +3237,20 @@ export const AuthRequestResetPasswordPayload = {
   decode: function (bytes: ByteSource): AuthRequestResetPasswordPayload {
     return AuthRequestResetPasswordPayload._readMessage(
       AuthRequestResetPasswordPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthRequestResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): AuthRequestResetPasswordPayload {
+  initialize: function (
+    msg?: Partial<AuthRequestResetPasswordPayload>,
+  ): AuthRequestResetPasswordPayload {
     return {
       email: "",
       sendEmail: false,
+      ...msg,
     };
   },
 
@@ -3210,9 +3258,9 @@ export const AuthRequestResetPasswordPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestResetPasswordPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthRequestResetPasswordPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
     }
@@ -3227,7 +3275,7 @@ export const AuthRequestResetPasswordPayload = {
    */
   _readMessage: function (
     msg: AuthRequestResetPasswordPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthRequestResetPasswordPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3255,11 +3303,11 @@ export const AuthRequestResetPasswordResponse = {
    * Serializes AuthRequestResetPasswordResponse to protobuf.
    */
   encode: function (
-    msg: Partial<AuthRequestResetPasswordResponse>
+    msg: PartialDeep<AuthRequestResetPasswordResponse>,
   ): Uint8Array {
     return AuthRequestResetPasswordResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3269,16 +3317,19 @@ export const AuthRequestResetPasswordResponse = {
   decode: function (bytes: ByteSource): AuthRequestResetPasswordResponse {
     return AuthRequestResetPasswordResponse._readMessage(
       AuthRequestResetPasswordResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthRequestResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): AuthRequestResetPasswordResponse {
+  initialize: function (
+    msg?: Partial<AuthRequestResetPasswordResponse>,
+  ): AuthRequestResetPasswordResponse {
     return {
       resetToken: "",
+      ...msg,
     };
   },
 
@@ -3286,9 +3337,9 @@ export const AuthRequestResetPasswordResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestResetPasswordResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthRequestResetPasswordResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.resetToken) {
       writer.writeString(1, msg.resetToken);
     }
@@ -3300,7 +3351,7 @@ export const AuthRequestResetPasswordResponse = {
    */
   _readMessage: function (
     msg: AuthRequestResetPasswordResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthRequestResetPasswordResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3323,10 +3374,12 @@ export const AuthApproveResetPasswordPayload = {
   /**
    * Serializes AuthApproveResetPasswordPayload to protobuf.
    */
-  encode: function (msg: Partial<AuthApproveResetPasswordPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AuthApproveResetPasswordPayload>,
+  ): Uint8Array {
     return AuthApproveResetPasswordPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3336,17 +3389,20 @@ export const AuthApproveResetPasswordPayload = {
   decode: function (bytes: ByteSource): AuthApproveResetPasswordPayload {
     return AuthApproveResetPasswordPayload._readMessage(
       AuthApproveResetPasswordPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthApproveResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): AuthApproveResetPasswordPayload {
+  initialize: function (
+    msg?: Partial<AuthApproveResetPasswordPayload>,
+  ): AuthApproveResetPasswordPayload {
     return {
       email: "",
       resetToken: "",
+      ...msg,
     };
   },
 
@@ -3354,9 +3410,9 @@ export const AuthApproveResetPasswordPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveResetPasswordPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthApproveResetPasswordPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
     }
@@ -3371,7 +3427,7 @@ export const AuthApproveResetPasswordPayload = {
    */
   _readMessage: function (
     msg: AuthApproveResetPasswordPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthApproveResetPasswordPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3399,11 +3455,11 @@ export const AuthApproveResetPasswordResponse = {
    * Serializes AuthApproveResetPasswordResponse to protobuf.
    */
   encode: function (
-    msg: Partial<AuthApproveResetPasswordResponse>
+    msg: PartialDeep<AuthApproveResetPasswordResponse>,
   ): Uint8Array {
     return AuthApproveResetPasswordResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3413,16 +3469,19 @@ export const AuthApproveResetPasswordResponse = {
   decode: function (bytes: ByteSource): AuthApproveResetPasswordResponse {
     return AuthApproveResetPasswordResponse._readMessage(
       AuthApproveResetPasswordResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AuthApproveResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): AuthApproveResetPasswordResponse {
+  initialize: function (
+    msg?: Partial<AuthApproveResetPasswordResponse>,
+  ): AuthApproveResetPasswordResponse {
     return {
       newTmpPassword: "",
+      ...msg,
     };
   },
 
@@ -3430,9 +3489,9 @@ export const AuthApproveResetPasswordResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveResetPasswordResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AuthApproveResetPasswordResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.newTmpPassword) {
       writer.writeString(1, msg.newTmpPassword);
     }
@@ -3444,7 +3503,7 @@ export const AuthApproveResetPasswordResponse = {
    */
   _readMessage: function (
     msg: AuthApproveResetPasswordResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AuthApproveResetPasswordResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3467,10 +3526,10 @@ export const AccessGetAccessRulesPayload = {
   /**
    * Serializes AccessGetAccessRulesPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetAccessRulesPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AccessGetAccessRulesPayload>): Uint8Array {
     return AccessGetAccessRulesPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3480,17 +3539,20 @@ export const AccessGetAccessRulesPayload = {
   decode: function (bytes: ByteSource): AccessGetAccessRulesPayload {
     return AccessGetAccessRulesPayload._readMessage(
       AccessGetAccessRulesPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAccessRulesPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAccessRulesPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAccessRulesPayload>,
+  ): AccessGetAccessRulesPayload {
     return {
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -3498,9 +3560,9 @@ export const AccessGetAccessRulesPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAccessRulesPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAccessRulesPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -3515,7 +3577,7 @@ export const AccessGetAccessRulesPayload = {
    */
   _readMessage: function (
     msg: AccessGetAccessRulesPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAccessRulesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3542,10 +3604,12 @@ export const AccessGetAccessRulesResponse = {
   /**
    * Serializes AccessGetAccessRulesResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetAccessRulesResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetAccessRulesResponse>,
+  ): Uint8Array {
     return AccessGetAccessRulesResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3555,16 +3619,19 @@ export const AccessGetAccessRulesResponse = {
   decode: function (bytes: ByteSource): AccessGetAccessRulesResponse {
     return AccessGetAccessRulesResponse._readMessage(
       AccessGetAccessRulesResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAccessRulesResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAccessRulesResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAccessRulesResponse>,
+  ): AccessGetAccessRulesResponse {
     return {
       rules: protoAtoms.AccessRules.initialize(),
+      ...msg,
     };
   },
 
@@ -3572,9 +3639,9 @@ export const AccessGetAccessRulesResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAccessRulesResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAccessRulesResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rules) {
       writer.writeMessage(1, msg.rules, protoAtoms.AccessRules._writeMessage);
     }
@@ -3586,7 +3653,7 @@ export const AccessGetAccessRulesResponse = {
    */
   _readMessage: function (
     msg: AccessGetAccessRulesResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAccessRulesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3609,10 +3676,10 @@ export const AccessGetRuleValuePayload = {
   /**
    * Serializes AccessGetRuleValuePayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetRuleValuePayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AccessGetRuleValuePayload>): Uint8Array {
     return AccessGetRuleValuePayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3622,18 +3689,21 @@ export const AccessGetRuleValuePayload = {
   decode: function (bytes: ByteSource): AccessGetRuleValuePayload {
     return AccessGetRuleValuePayload._readMessage(
       AccessGetRuleValuePayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetRuleValuePayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetRuleValuePayload {
+  initialize: function (
+    msg?: Partial<AccessGetRuleValuePayload>,
+  ): AccessGetRuleValuePayload {
     return {
       personId: 0,
       eventId: 0,
       ruleName: "",
+      ...msg,
     };
   },
 
@@ -3641,9 +3711,9 @@ export const AccessGetRuleValuePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetRuleValuePayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetRuleValuePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -3661,7 +3731,7 @@ export const AccessGetRuleValuePayload = {
    */
   _readMessage: function (
     msg: AccessGetRuleValuePayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetRuleValuePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3692,10 +3762,10 @@ export const AccessGetRuleValueResponse = {
   /**
    * Serializes AccessGetRuleValueResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetRuleValueResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<AccessGetRuleValueResponse>): Uint8Array {
     return AccessGetRuleValueResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3705,16 +3775,19 @@ export const AccessGetRuleValueResponse = {
   decode: function (bytes: ByteSource): AccessGetRuleValueResponse {
     return AccessGetRuleValueResponse._readMessage(
       AccessGetRuleValueResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetRuleValueResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetRuleValueResponse {
+  initialize: function (
+    msg?: Partial<AccessGetRuleValueResponse>,
+  ): AccessGetRuleValueResponse {
     return {
       value: protoAtoms.RuleValue.initialize(),
+      ...msg,
     };
   },
 
@@ -3722,9 +3795,9 @@ export const AccessGetRuleValueResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetRuleValueResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetRuleValueResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeMessage(1, msg.value, protoAtoms.RuleValue._writeMessage);
     }
@@ -3736,7 +3809,7 @@ export const AccessGetRuleValueResponse = {
    */
   _readMessage: function (
     msg: AccessGetRuleValueResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetRuleValueResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3759,10 +3832,10 @@ export const AccessGetEventAdminsPayload = {
   /**
    * Serializes AccessGetEventAdminsPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetEventAdminsPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AccessGetEventAdminsPayload>): Uint8Array {
     return AccessGetEventAdminsPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3772,16 +3845,19 @@ export const AccessGetEventAdminsPayload = {
   decode: function (bytes: ByteSource): AccessGetEventAdminsPayload {
     return AccessGetEventAdminsPayload._readMessage(
       AccessGetEventAdminsPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetEventAdminsPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetEventAdminsPayload {
+  initialize: function (
+    msg?: Partial<AccessGetEventAdminsPayload>,
+  ): AccessGetEventAdminsPayload {
     return {
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -3789,9 +3865,9 @@ export const AccessGetEventAdminsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetEventAdminsPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetEventAdminsPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -3803,7 +3879,7 @@ export const AccessGetEventAdminsPayload = {
    */
   _readMessage: function (
     msg: AccessGetEventAdminsPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetEventAdminsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3826,10 +3902,12 @@ export const AccessGetEventAdminsResponse = {
   /**
    * Serializes AccessGetEventAdminsResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetEventAdminsResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetEventAdminsResponse>,
+  ): Uint8Array {
     return AccessGetEventAdminsResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3839,16 +3917,19 @@ export const AccessGetEventAdminsResponse = {
   decode: function (bytes: ByteSource): AccessGetEventAdminsResponse {
     return AccessGetEventAdminsResponse._readMessage(
       AccessGetEventAdminsResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetEventAdminsResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetEventAdminsResponse {
+  initialize: function (
+    msg?: Partial<AccessGetEventAdminsResponse>,
+  ): AccessGetEventAdminsResponse {
     return {
       admins: [],
+      ...msg,
     };
   },
 
@@ -3856,14 +3937,14 @@ export const AccessGetEventAdminsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetEventAdminsResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetEventAdminsResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.admins?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.admins as any,
-        protoAtoms.EventAdmin._writeMessage
+        protoAtoms.EventAdmin._writeMessage,
       );
     }
     return writer;
@@ -3874,7 +3955,7 @@ export const AccessGetEventAdminsResponse = {
    */
   _readMessage: function (
     msg: AccessGetEventAdminsResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetEventAdminsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3899,10 +3980,12 @@ export const AccessGetSuperadminFlagPayload = {
   /**
    * Serializes AccessGetSuperadminFlagPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetSuperadminFlagPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetSuperadminFlagPayload>,
+  ): Uint8Array {
     return AccessGetSuperadminFlagPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3912,16 +3995,19 @@ export const AccessGetSuperadminFlagPayload = {
   decode: function (bytes: ByteSource): AccessGetSuperadminFlagPayload {
     return AccessGetSuperadminFlagPayload._readMessage(
       AccessGetSuperadminFlagPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetSuperadminFlagPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetSuperadminFlagPayload {
+  initialize: function (
+    msg?: Partial<AccessGetSuperadminFlagPayload>,
+  ): AccessGetSuperadminFlagPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -3929,9 +4015,9 @@ export const AccessGetSuperadminFlagPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetSuperadminFlagPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetSuperadminFlagPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -3943,7 +4029,7 @@ export const AccessGetSuperadminFlagPayload = {
    */
   _readMessage: function (
     msg: AccessGetSuperadminFlagPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetSuperadminFlagPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3966,10 +4052,12 @@ export const AccessGetSuperadminFlagResponse = {
   /**
    * Serializes AccessGetSuperadminFlagResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetSuperadminFlagResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetSuperadminFlagResponse>,
+  ): Uint8Array {
     return AccessGetSuperadminFlagResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3979,16 +4067,19 @@ export const AccessGetSuperadminFlagResponse = {
   decode: function (bytes: ByteSource): AccessGetSuperadminFlagResponse {
     return AccessGetSuperadminFlagResponse._readMessage(
       AccessGetSuperadminFlagResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetSuperadminFlagResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetSuperadminFlagResponse {
+  initialize: function (
+    msg?: Partial<AccessGetSuperadminFlagResponse>,
+  ): AccessGetSuperadminFlagResponse {
     return {
       isAdmin: false,
+      ...msg,
     };
   },
 
@@ -3996,9 +4087,9 @@ export const AccessGetSuperadminFlagResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetSuperadminFlagResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetSuperadminFlagResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.isAdmin) {
       writer.writeBool(1, msg.isAdmin);
     }
@@ -4010,7 +4101,7 @@ export const AccessGetSuperadminFlagResponse = {
    */
   _readMessage: function (
     msg: AccessGetSuperadminFlagResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetSuperadminFlagResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4033,10 +4124,12 @@ export const AccessGetOwnedEventIdsPayload = {
   /**
    * Serializes AccessGetOwnedEventIdsPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetOwnedEventIdsPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetOwnedEventIdsPayload>,
+  ): Uint8Array {
     return AccessGetOwnedEventIdsPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4046,16 +4139,19 @@ export const AccessGetOwnedEventIdsPayload = {
   decode: function (bytes: ByteSource): AccessGetOwnedEventIdsPayload {
     return AccessGetOwnedEventIdsPayload._readMessage(
       AccessGetOwnedEventIdsPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetOwnedEventIdsPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetOwnedEventIdsPayload {
+  initialize: function (
+    msg?: Partial<AccessGetOwnedEventIdsPayload>,
+  ): AccessGetOwnedEventIdsPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -4063,9 +4159,9 @@ export const AccessGetOwnedEventIdsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetOwnedEventIdsPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetOwnedEventIdsPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -4077,7 +4173,7 @@ export const AccessGetOwnedEventIdsPayload = {
    */
   _readMessage: function (
     msg: AccessGetOwnedEventIdsPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetOwnedEventIdsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4100,10 +4196,12 @@ export const AccessGetOwnedEventIdsResponse = {
   /**
    * Serializes AccessGetOwnedEventIdsResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetOwnedEventIdsResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetOwnedEventIdsResponse>,
+  ): Uint8Array {
     return AccessGetOwnedEventIdsResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4113,16 +4211,19 @@ export const AccessGetOwnedEventIdsResponse = {
   decode: function (bytes: ByteSource): AccessGetOwnedEventIdsResponse {
     return AccessGetOwnedEventIdsResponse._readMessage(
       AccessGetOwnedEventIdsResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetOwnedEventIdsResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetOwnedEventIdsResponse {
+  initialize: function (
+    msg?: Partial<AccessGetOwnedEventIdsResponse>,
+  ): AccessGetOwnedEventIdsResponse {
     return {
       eventIds: [],
+      ...msg,
     };
   },
 
@@ -4130,9 +4231,9 @@ export const AccessGetOwnedEventIdsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetOwnedEventIdsResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetOwnedEventIdsResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventIds?.length) {
       writer.writePackedInt32(1, msg.eventIds);
     }
@@ -4144,7 +4245,7 @@ export const AccessGetOwnedEventIdsResponse = {
    */
   _readMessage: function (
     msg: AccessGetOwnedEventIdsResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetOwnedEventIdsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4171,7 +4272,7 @@ export const AccessGetRulesListPayload = {
   /**
    * Serializes AccessGetRulesListPayload to protobuf.
    */
-  encode: function (_msg?: Partial<AccessGetRulesListPayload>): Uint8Array {
+  encode: function (_msg?: PartialDeep<AccessGetRulesListPayload>): Uint8Array {
     return new Uint8Array();
   },
 
@@ -4185,17 +4286,21 @@ export const AccessGetRulesListPayload = {
   /**
    * Initializes AccessGetRulesListPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetRulesListPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<AccessGetRulesListPayload>,
+  ): AccessGetRulesListPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<AccessGetRulesListPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    _msg: PartialDeep<AccessGetRulesListPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
@@ -4204,7 +4309,7 @@ export const AccessGetRulesListPayload = {
    */
   _readMessage: function (
     _msg: AccessGetRulesListPayload,
-    _reader: BinaryReader
+    _reader: protoscript.BinaryReader,
   ): AccessGetRulesListPayload {
     return _msg;
   },
@@ -4214,10 +4319,10 @@ export const AccessGetRulesListResponse = {
   /**
    * Serializes AccessGetRulesListResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetRulesListResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<AccessGetRulesListResponse>): Uint8Array {
     return AccessGetRulesListResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4227,16 +4332,19 @@ export const AccessGetRulesListResponse = {
   decode: function (bytes: ByteSource): AccessGetRulesListResponse {
     return AccessGetRulesListResponse._readMessage(
       AccessGetRulesListResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetRulesListResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetRulesListResponse {
+  initialize: function (
+    msg?: Partial<AccessGetRulesListResponse>,
+  ): AccessGetRulesListResponse {
     return {
       items: [],
+      ...msg,
     };
   },
 
@@ -4244,14 +4352,14 @@ export const AccessGetRulesListResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetRulesListResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetRulesListResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.items?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.items as any,
-        protoAtoms.RuleListItem._writeMessage
+        protoAtoms.RuleListItem._writeMessage,
       );
     }
     return writer;
@@ -4262,7 +4370,7 @@ export const AccessGetRulesListResponse = {
    */
   _readMessage: function (
     msg: AccessGetRulesListResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetRulesListResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4287,10 +4395,12 @@ export const AccessGetAllEventRulesPayload = {
   /**
    * Serializes AccessGetAllEventRulesPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetAllEventRulesPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetAllEventRulesPayload>,
+  ): Uint8Array {
     return AccessGetAllEventRulesPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4300,16 +4410,19 @@ export const AccessGetAllEventRulesPayload = {
   decode: function (bytes: ByteSource): AccessGetAllEventRulesPayload {
     return AccessGetAllEventRulesPayload._readMessage(
       AccessGetAllEventRulesPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAllEventRulesPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllEventRulesPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAllEventRulesPayload>,
+  ): AccessGetAllEventRulesPayload {
     return {
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -4317,9 +4430,9 @@ export const AccessGetAllEventRulesPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllEventRulesPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAllEventRulesPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -4331,7 +4444,7 @@ export const AccessGetAllEventRulesPayload = {
    */
   _readMessage: function (
     msg: AccessGetAllEventRulesPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAllEventRulesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4354,10 +4467,12 @@ export const AccessGetAllEventRulesResponse = {
   /**
    * Serializes AccessGetAllEventRulesResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetAllEventRulesResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetAllEventRulesResponse>,
+  ): Uint8Array {
     return AccessGetAllEventRulesResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4367,17 +4482,20 @@ export const AccessGetAllEventRulesResponse = {
   decode: function (bytes: ByteSource): AccessGetAllEventRulesResponse {
     return AccessGetAllEventRulesResponse._readMessage(
       AccessGetAllEventRulesResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAllEventRulesResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllEventRulesResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAllEventRulesResponse>,
+  ): AccessGetAllEventRulesResponse {
     return {
       personRules: [],
       groupRules: [],
+      ...msg,
     };
   },
 
@@ -4385,21 +4503,21 @@ export const AccessGetAllEventRulesResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllEventRulesResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAllEventRulesResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personRules?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.personRules as any,
-        protoAtoms.EventRuleListItem._writeMessage
+        protoAtoms.EventRuleListItem._writeMessage,
       );
     }
     if (msg.groupRules?.length) {
       writer.writeRepeatedMessage(
         2,
         msg.groupRules as any,
-        protoAtoms.EventRuleListItem._writeMessage
+        protoAtoms.EventRuleListItem._writeMessage,
       );
     }
     return writer;
@@ -4410,7 +4528,7 @@ export const AccessGetAllEventRulesResponse = {
    */
   _readMessage: function (
     msg: AccessGetAllEventRulesResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAllEventRulesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4441,10 +4559,12 @@ export const AccessGetPersonAccessPayload = {
   /**
    * Serializes AccessGetPersonAccessPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetPersonAccessPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetPersonAccessPayload>,
+  ): Uint8Array {
     return AccessGetPersonAccessPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4454,17 +4574,20 @@ export const AccessGetPersonAccessPayload = {
   decode: function (bytes: ByteSource): AccessGetPersonAccessPayload {
     return AccessGetPersonAccessPayload._readMessage(
       AccessGetPersonAccessPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetPersonAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetPersonAccessPayload>,
+  ): AccessGetPersonAccessPayload {
     return {
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -4472,9 +4595,9 @@ export const AccessGetPersonAccessPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetPersonAccessPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetPersonAccessPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -4489,7 +4612,7 @@ export const AccessGetPersonAccessPayload = {
    */
   _readMessage: function (
     msg: AccessGetPersonAccessPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetPersonAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4516,10 +4639,12 @@ export const AccessGetPersonAccessResponse = {
   /**
    * Serializes AccessGetPersonAccessResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetPersonAccessResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetPersonAccessResponse>,
+  ): Uint8Array {
     return AccessGetPersonAccessResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4529,16 +4654,19 @@ export const AccessGetPersonAccessResponse = {
   decode: function (bytes: ByteSource): AccessGetPersonAccessResponse {
     return AccessGetPersonAccessResponse._readMessage(
       AccessGetPersonAccessResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetPersonAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetPersonAccessResponse>,
+  ): AccessGetPersonAccessResponse {
     return {
       rules: protoAtoms.AccessRules.initialize(),
+      ...msg,
     };
   },
 
@@ -4546,9 +4674,9 @@ export const AccessGetPersonAccessResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetPersonAccessResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetPersonAccessResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rules) {
       writer.writeMessage(1, msg.rules, protoAtoms.AccessRules._writeMessage);
     }
@@ -4560,7 +4688,7 @@ export const AccessGetPersonAccessResponse = {
    */
   _readMessage: function (
     msg: AccessGetPersonAccessResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetPersonAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4583,10 +4711,10 @@ export const AccessGetGroupAccessPayload = {
   /**
    * Serializes AccessGetGroupAccessPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetGroupAccessPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<AccessGetGroupAccessPayload>): Uint8Array {
     return AccessGetGroupAccessPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4596,17 +4724,20 @@ export const AccessGetGroupAccessPayload = {
   decode: function (bytes: ByteSource): AccessGetGroupAccessPayload {
     return AccessGetGroupAccessPayload._readMessage(
       AccessGetGroupAccessPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetGroupAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetGroupAccessPayload>,
+  ): AccessGetGroupAccessPayload {
     return {
       groupId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -4614,9 +4745,9 @@ export const AccessGetGroupAccessPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetGroupAccessPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetGroupAccessPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groupId) {
       writer.writeInt32(1, msg.groupId);
     }
@@ -4631,7 +4762,7 @@ export const AccessGetGroupAccessPayload = {
    */
   _readMessage: function (
     msg: AccessGetGroupAccessPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetGroupAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4658,10 +4789,12 @@ export const AccessGetGroupAccessResponse = {
   /**
    * Serializes AccessGetGroupAccessResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetGroupAccessResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetGroupAccessResponse>,
+  ): Uint8Array {
     return AccessGetGroupAccessResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4671,16 +4804,19 @@ export const AccessGetGroupAccessResponse = {
   decode: function (bytes: ByteSource): AccessGetGroupAccessResponse {
     return AccessGetGroupAccessResponse._readMessage(
       AccessGetGroupAccessResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetGroupAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetGroupAccessResponse>,
+  ): AccessGetGroupAccessResponse {
     return {
       rules: protoAtoms.AccessRules.initialize(),
+      ...msg,
     };
   },
 
@@ -4688,9 +4824,9 @@ export const AccessGetGroupAccessResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetGroupAccessResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetGroupAccessResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rules) {
       writer.writeMessage(1, msg.rules, protoAtoms.AccessRules._writeMessage);
     }
@@ -4702,7 +4838,7 @@ export const AccessGetGroupAccessResponse = {
    */
   _readMessage: function (
     msg: AccessGetGroupAccessResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetGroupAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4725,10 +4861,12 @@ export const AccessGetAllPersonAccessPayload = {
   /**
    * Serializes AccessGetAllPersonAccessPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetAllPersonAccessPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetAllPersonAccessPayload>,
+  ): Uint8Array {
     return AccessGetAllPersonAccessPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4738,16 +4876,19 @@ export const AccessGetAllPersonAccessPayload = {
   decode: function (bytes: ByteSource): AccessGetAllPersonAccessPayload {
     return AccessGetAllPersonAccessPayload._readMessage(
       AccessGetAllPersonAccessPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAllPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllPersonAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAllPersonAccessPayload>,
+  ): AccessGetAllPersonAccessPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -4755,9 +4896,9 @@ export const AccessGetAllPersonAccessPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllPersonAccessPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAllPersonAccessPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -4769,7 +4910,7 @@ export const AccessGetAllPersonAccessPayload = {
    */
   _readMessage: function (
     msg: AccessGetAllPersonAccessPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAllPersonAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4793,11 +4934,11 @@ export const AccessGetAllPersonAccessResponse = {
    * Serializes AccessGetAllPersonAccessResponse to protobuf.
    */
   encode: function (
-    msg: Partial<AccessGetAllPersonAccessResponse>
+    msg: PartialDeep<AccessGetAllPersonAccessResponse>,
   ): Uint8Array {
     return AccessGetAllPersonAccessResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4807,16 +4948,19 @@ export const AccessGetAllPersonAccessResponse = {
   decode: function (bytes: ByteSource): AccessGetAllPersonAccessResponse {
     return AccessGetAllPersonAccessResponse._readMessage(
       AccessGetAllPersonAccessResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAllPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllPersonAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAllPersonAccessResponse>,
+  ): AccessGetAllPersonAccessResponse {
     return {
       rulesByEvent: {},
+      ...msg,
     };
   },
 
@@ -4824,9 +4968,9 @@ export const AccessGetAllPersonAccessResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllPersonAccessResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAllPersonAccessResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rulesByEvent) {
       writer.writeRepeatedMessage(
         1,
@@ -4834,7 +4978,7 @@ export const AccessGetAllPersonAccessResponse = {
           key: key as any,
           value: value as any,
         })) as any,
-        AccessGetAllPersonAccessResponse.RulesByEvent._writeMessage
+        AccessGetAllPersonAccessResponse.RulesByEvent._writeMessage,
       );
     }
     return writer;
@@ -4845,7 +4989,7 @@ export const AccessGetAllPersonAccessResponse = {
    */
   _readMessage: function (
     msg: AccessGetAllPersonAccessResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAllPersonAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4854,7 +4998,7 @@ export const AccessGetAllPersonAccessResponse = {
           const map = {} as AccessGetAllPersonAccessResponse.RulesByEvent;
           reader.readMessage(
             map,
-            AccessGetAllPersonAccessResponse.RulesByEvent._readMessage
+            AccessGetAllPersonAccessResponse.RulesByEvent._readMessage,
           );
           msg.rulesByEvent[map.key.toString()] = map.value;
           break;
@@ -4873,9 +5017,9 @@ export const AccessGetAllPersonAccessResponse = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<AccessGetAllPersonAccessResponse.RulesByEvent>,
-      writer: BinaryWriter
-    ): BinaryWriter {
+      msg: PartialDeep<AccessGetAllPersonAccessResponse.RulesByEvent>,
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeInt32(1, msg.key);
       }
@@ -4883,7 +5027,7 @@ export const AccessGetAllPersonAccessResponse = {
         writer.writeMessage(
           2,
           msg.value,
-          protoAtoms.RuleListItemExMap._writeMessage
+          protoAtoms.RuleListItemExMap._writeMessage,
         );
       }
       return writer;
@@ -4894,7 +5038,7 @@ export const AccessGetAllPersonAccessResponse = {
      */
     _readMessage: function (
       msg: AccessGetAllPersonAccessResponse.RulesByEvent,
-      reader: BinaryReader
+      reader: protoscript.BinaryReader,
     ): AccessGetAllPersonAccessResponse.RulesByEvent {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -4907,7 +5051,7 @@ export const AccessGetAllPersonAccessResponse = {
             msg.value = protoAtoms.RuleListItemExMap.initialize();
             reader.readMessage(
               msg.value,
-              protoAtoms.RuleListItemExMap._readMessage
+              protoAtoms.RuleListItemExMap._readMessage,
             );
             break;
           }
@@ -4926,10 +5070,12 @@ export const AccessGetAllGroupAccessPayload = {
   /**
    * Serializes AccessGetAllGroupAccessPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessGetAllGroupAccessPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetAllGroupAccessPayload>,
+  ): Uint8Array {
     return AccessGetAllGroupAccessPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4939,16 +5085,19 @@ export const AccessGetAllGroupAccessPayload = {
   decode: function (bytes: ByteSource): AccessGetAllGroupAccessPayload {
     return AccessGetAllGroupAccessPayload._readMessage(
       AccessGetAllGroupAccessPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAllGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllGroupAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAllGroupAccessPayload>,
+  ): AccessGetAllGroupAccessPayload {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -4956,9 +5105,9 @@ export const AccessGetAllGroupAccessPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllGroupAccessPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAllGroupAccessPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groupId) {
       writer.writeInt32(1, msg.groupId);
     }
@@ -4970,7 +5119,7 @@ export const AccessGetAllGroupAccessPayload = {
    */
   _readMessage: function (
     msg: AccessGetAllGroupAccessPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAllGroupAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4993,10 +5142,12 @@ export const AccessGetAllGroupAccessResponse = {
   /**
    * Serializes AccessGetAllGroupAccessResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessGetAllGroupAccessResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessGetAllGroupAccessResponse>,
+  ): Uint8Array {
     return AccessGetAllGroupAccessResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5006,16 +5157,19 @@ export const AccessGetAllGroupAccessResponse = {
   decode: function (bytes: ByteSource): AccessGetAllGroupAccessResponse {
     return AccessGetAllGroupAccessResponse._readMessage(
       AccessGetAllGroupAccessResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessGetAllGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllGroupAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAllGroupAccessResponse>,
+  ): AccessGetAllGroupAccessResponse {
     return {
       rulesByEvent: {},
+      ...msg,
     };
   },
 
@@ -5023,9 +5177,9 @@ export const AccessGetAllGroupAccessResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllGroupAccessResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessGetAllGroupAccessResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rulesByEvent) {
       writer.writeRepeatedMessage(
         1,
@@ -5033,7 +5187,7 @@ export const AccessGetAllGroupAccessResponse = {
           key: key as any,
           value: value as any,
         })) as any,
-        AccessGetAllGroupAccessResponse.RulesByEvent._writeMessage
+        AccessGetAllGroupAccessResponse.RulesByEvent._writeMessage,
       );
     }
     return writer;
@@ -5044,7 +5198,7 @@ export const AccessGetAllGroupAccessResponse = {
    */
   _readMessage: function (
     msg: AccessGetAllGroupAccessResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessGetAllGroupAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5053,7 +5207,7 @@ export const AccessGetAllGroupAccessResponse = {
           const map = {} as AccessGetAllGroupAccessResponse.RulesByEvent;
           reader.readMessage(
             map,
-            AccessGetAllGroupAccessResponse.RulesByEvent._readMessage
+            AccessGetAllGroupAccessResponse.RulesByEvent._readMessage,
           );
           msg.rulesByEvent[map.key.toString()] = map.value;
           break;
@@ -5072,9 +5226,9 @@ export const AccessGetAllGroupAccessResponse = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<AccessGetAllGroupAccessResponse.RulesByEvent>,
-      writer: BinaryWriter
-    ): BinaryWriter {
+      msg: PartialDeep<AccessGetAllGroupAccessResponse.RulesByEvent>,
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeInt32(1, msg.key);
       }
@@ -5082,7 +5236,7 @@ export const AccessGetAllGroupAccessResponse = {
         writer.writeMessage(
           2,
           msg.value,
-          protoAtoms.RuleListItemExMap._writeMessage
+          protoAtoms.RuleListItemExMap._writeMessage,
         );
       }
       return writer;
@@ -5093,7 +5247,7 @@ export const AccessGetAllGroupAccessResponse = {
      */
     _readMessage: function (
       msg: AccessGetAllGroupAccessResponse.RulesByEvent,
-      reader: BinaryReader
+      reader: protoscript.BinaryReader,
     ): AccessGetAllGroupAccessResponse.RulesByEvent {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -5106,7 +5260,7 @@ export const AccessGetAllGroupAccessResponse = {
             msg.value = protoAtoms.RuleListItemExMap.initialize();
             reader.readMessage(
               msg.value,
-              protoAtoms.RuleListItemExMap._readMessage
+              protoAtoms.RuleListItemExMap._readMessage,
             );
             break;
           }
@@ -5125,10 +5279,12 @@ export const AccessAddRuleForPersonPayload = {
   /**
    * Serializes AccessAddRuleForPersonPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessAddRuleForPersonPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessAddRuleForPersonPayload>,
+  ): Uint8Array {
     return AccessAddRuleForPersonPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5138,20 +5294,23 @@ export const AccessAddRuleForPersonPayload = {
   decode: function (bytes: ByteSource): AccessAddRuleForPersonPayload {
     return AccessAddRuleForPersonPayload._readMessage(
       AccessAddRuleForPersonPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForPersonPayload>,
+  ): AccessAddRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
       ruleType: "",
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -5159,9 +5318,9 @@ export const AccessAddRuleForPersonPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForPersonPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddRuleForPersonPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleName) {
       writer.writeString(1, msg.ruleName);
     }
@@ -5185,7 +5344,7 @@ export const AccessAddRuleForPersonPayload = {
    */
   _readMessage: function (
     msg: AccessAddRuleForPersonPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5224,10 +5383,12 @@ export const AccessAddRuleForPersonResponse = {
   /**
    * Serializes AccessAddRuleForPersonResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessAddRuleForPersonResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessAddRuleForPersonResponse>,
+  ): Uint8Array {
     return AccessAddRuleForPersonResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5237,16 +5398,19 @@ export const AccessAddRuleForPersonResponse = {
   decode: function (bytes: ByteSource): AccessAddRuleForPersonResponse {
     return AccessAddRuleForPersonResponse._readMessage(
       AccessAddRuleForPersonResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForPersonResponse {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForPersonResponse>,
+  ): AccessAddRuleForPersonResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -5254,9 +5418,9 @@ export const AccessAddRuleForPersonResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForPersonResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddRuleForPersonResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -5268,7 +5432,7 @@ export const AccessAddRuleForPersonResponse = {
    */
   _readMessage: function (
     msg: AccessAddRuleForPersonResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddRuleForPersonResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5291,10 +5455,12 @@ export const AccessAddRuleForGroupPayload = {
   /**
    * Serializes AccessAddRuleForGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessAddRuleForGroupPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessAddRuleForGroupPayload>,
+  ): Uint8Array {
     return AccessAddRuleForGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5304,20 +5470,23 @@ export const AccessAddRuleForGroupPayload = {
   decode: function (bytes: ByteSource): AccessAddRuleForGroupPayload {
     return AccessAddRuleForGroupPayload._readMessage(
       AccessAddRuleForGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForGroupPayload>,
+  ): AccessAddRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
       ruleType: "",
       groupId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -5325,9 +5494,9 @@ export const AccessAddRuleForGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddRuleForGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleName) {
       writer.writeString(1, msg.ruleName);
     }
@@ -5351,7 +5520,7 @@ export const AccessAddRuleForGroupPayload = {
    */
   _readMessage: function (
     msg: AccessAddRuleForGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5390,10 +5559,12 @@ export const AccessAddRuleForGroupResponse = {
   /**
    * Serializes AccessAddRuleForGroupResponse to protobuf.
    */
-  encode: function (msg: Partial<AccessAddRuleForGroupResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessAddRuleForGroupResponse>,
+  ): Uint8Array {
     return AccessAddRuleForGroupResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5403,16 +5574,19 @@ export const AccessAddRuleForGroupResponse = {
   decode: function (bytes: ByteSource): AccessAddRuleForGroupResponse {
     return AccessAddRuleForGroupResponse._readMessage(
       AccessAddRuleForGroupResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForGroupResponse {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForGroupResponse>,
+  ): AccessAddRuleForGroupResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -5420,9 +5594,9 @@ export const AccessAddRuleForGroupResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForGroupResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddRuleForGroupResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -5434,7 +5608,7 @@ export const AccessAddRuleForGroupResponse = {
    */
   _readMessage: function (
     msg: AccessAddRuleForGroupResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddRuleForGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5458,11 +5632,11 @@ export const AccessUpdateRuleForPersonPayload = {
    * Serializes AccessUpdateRuleForPersonPayload to protobuf.
    */
   encode: function (
-    msg: Partial<AccessUpdateRuleForPersonPayload>
+    msg: PartialDeep<AccessUpdateRuleForPersonPayload>,
   ): Uint8Array {
     return AccessUpdateRuleForPersonPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5472,18 +5646,21 @@ export const AccessUpdateRuleForPersonPayload = {
   decode: function (bytes: ByteSource): AccessUpdateRuleForPersonPayload {
     return AccessUpdateRuleForPersonPayload._readMessage(
       AccessUpdateRuleForPersonPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessUpdateRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessUpdateRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessUpdateRuleForPersonPayload>,
+  ): AccessUpdateRuleForPersonPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValue.initialize(),
       ruleType: "",
+      ...msg,
     };
   },
 
@@ -5491,9 +5668,9 @@ export const AccessUpdateRuleForPersonPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessUpdateRuleForPersonPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessUpdateRuleForPersonPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -5511,7 +5688,7 @@ export const AccessUpdateRuleForPersonPayload = {
    */
   _readMessage: function (
     msg: AccessUpdateRuleForPersonPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessUpdateRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5542,10 +5719,12 @@ export const AccessUpdateRuleForGroupPayload = {
   /**
    * Serializes AccessUpdateRuleForGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessUpdateRuleForGroupPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessUpdateRuleForGroupPayload>,
+  ): Uint8Array {
     return AccessUpdateRuleForGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5555,18 +5734,21 @@ export const AccessUpdateRuleForGroupPayload = {
   decode: function (bytes: ByteSource): AccessUpdateRuleForGroupPayload {
     return AccessUpdateRuleForGroupPayload._readMessage(
       AccessUpdateRuleForGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessUpdateRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessUpdateRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessUpdateRuleForGroupPayload>,
+  ): AccessUpdateRuleForGroupPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValue.initialize(),
       ruleType: "",
+      ...msg,
     };
   },
 
@@ -5574,9 +5756,9 @@ export const AccessUpdateRuleForGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessUpdateRuleForGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessUpdateRuleForGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -5594,7 +5776,7 @@ export const AccessUpdateRuleForGroupPayload = {
    */
   _readMessage: function (
     msg: AccessUpdateRuleForGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessUpdateRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5626,11 +5808,11 @@ export const AccessDeleteRuleForPersonPayload = {
    * Serializes AccessDeleteRuleForPersonPayload to protobuf.
    */
   encode: function (
-    msg: Partial<AccessDeleteRuleForPersonPayload>
+    msg: PartialDeep<AccessDeleteRuleForPersonPayload>,
   ): Uint8Array {
     return AccessDeleteRuleForPersonPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5640,16 +5822,19 @@ export const AccessDeleteRuleForPersonPayload = {
   decode: function (bytes: ByteSource): AccessDeleteRuleForPersonPayload {
     return AccessDeleteRuleForPersonPayload._readMessage(
       AccessDeleteRuleForPersonPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessDeleteRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessDeleteRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessDeleteRuleForPersonPayload>,
+  ): AccessDeleteRuleForPersonPayload {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -5657,9 +5842,9 @@ export const AccessDeleteRuleForPersonPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessDeleteRuleForPersonPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessDeleteRuleForPersonPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -5671,7 +5856,7 @@ export const AccessDeleteRuleForPersonPayload = {
    */
   _readMessage: function (
     msg: AccessDeleteRuleForPersonPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessDeleteRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5694,10 +5879,12 @@ export const AccessDeleteRuleForGroupPayload = {
   /**
    * Serializes AccessDeleteRuleForGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<AccessDeleteRuleForGroupPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessDeleteRuleForGroupPayload>,
+  ): Uint8Array {
     return AccessDeleteRuleForGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5707,16 +5894,19 @@ export const AccessDeleteRuleForGroupPayload = {
   decode: function (bytes: ByteSource): AccessDeleteRuleForGroupPayload {
     return AccessDeleteRuleForGroupPayload._readMessage(
       AccessDeleteRuleForGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessDeleteRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessDeleteRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessDeleteRuleForGroupPayload>,
+  ): AccessDeleteRuleForGroupPayload {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -5724,9 +5914,9 @@ export const AccessDeleteRuleForGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessDeleteRuleForGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessDeleteRuleForGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -5738,7 +5928,7 @@ export const AccessDeleteRuleForGroupPayload = {
    */
   _readMessage: function (
     msg: AccessDeleteRuleForGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessDeleteRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5761,10 +5951,12 @@ export const AccessClearAccessCachePayload = {
   /**
    * Serializes AccessClearAccessCachePayload to protobuf.
    */
-  encode: function (msg: Partial<AccessClearAccessCachePayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<AccessClearAccessCachePayload>,
+  ): Uint8Array {
     return AccessClearAccessCachePayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5774,17 +5966,20 @@ export const AccessClearAccessCachePayload = {
   decode: function (bytes: ByteSource): AccessClearAccessCachePayload {
     return AccessClearAccessCachePayload._readMessage(
       AccessClearAccessCachePayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessClearAccessCachePayload with all fields set to their default value.
    */
-  initialize: function (): AccessClearAccessCachePayload {
+  initialize: function (
+    msg?: Partial<AccessClearAccessCachePayload>,
+  ): AccessClearAccessCachePayload {
     return {
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -5792,9 +5987,9 @@ export const AccessClearAccessCachePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessClearAccessCachePayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessClearAccessCachePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -5809,7 +6004,7 @@ export const AccessClearAccessCachePayload = {
    */
   _readMessage: function (
     msg: AccessClearAccessCachePayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessClearAccessCachePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5837,11 +6032,11 @@ export const AccessAddSystemWideRuleForPersonPayload = {
    * Serializes AccessAddSystemWideRuleForPersonPayload to protobuf.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonPayload>
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonPayload>,
   ): Uint8Array {
     return AccessAddSystemWideRuleForPersonPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5849,23 +6044,26 @@ export const AccessAddSystemWideRuleForPersonPayload = {
    * Deserializes AccessAddSystemWideRuleForPersonPayload from protobuf.
    */
   decode: function (
-    bytes: ByteSource
+    bytes: ByteSource,
   ): AccessAddSystemWideRuleForPersonPayload {
     return AccessAddSystemWideRuleForPersonPayload._readMessage(
       AccessAddSystemWideRuleForPersonPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForPersonPayload>,
+  ): AccessAddSystemWideRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
       ruleType: "",
       personId: 0,
+      ...msg,
     };
   },
 
@@ -5873,9 +6071,9 @@ export const AccessAddSystemWideRuleForPersonPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleName) {
       writer.writeString(1, msg.ruleName);
     }
@@ -5896,7 +6094,7 @@ export const AccessAddSystemWideRuleForPersonPayload = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForPersonPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddSystemWideRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5932,11 +6130,11 @@ export const AccessAddSystemWideRuleForPersonResponse = {
    * Serializes AccessAddSystemWideRuleForPersonResponse to protobuf.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonResponse>
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonResponse>,
   ): Uint8Array {
     return AccessAddSystemWideRuleForPersonResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5944,20 +6142,23 @@ export const AccessAddSystemWideRuleForPersonResponse = {
    * Deserializes AccessAddSystemWideRuleForPersonResponse from protobuf.
    */
   decode: function (
-    bytes: ByteSource
+    bytes: ByteSource,
   ): AccessAddSystemWideRuleForPersonResponse {
     return AccessAddSystemWideRuleForPersonResponse._readMessage(
       AccessAddSystemWideRuleForPersonResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForPersonResponse {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForPersonResponse>,
+  ): AccessAddSystemWideRuleForPersonResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -5965,9 +6166,9 @@ export const AccessAddSystemWideRuleForPersonResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -5979,7 +6180,7 @@ export const AccessAddSystemWideRuleForPersonResponse = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForPersonResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddSystemWideRuleForPersonResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6003,11 +6204,11 @@ export const AccessAddSystemWideRuleForGroupPayload = {
    * Serializes AccessAddSystemWideRuleForGroupPayload to protobuf.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupPayload>
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupPayload>,
   ): Uint8Array {
     return AccessAddSystemWideRuleForGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6017,19 +6218,22 @@ export const AccessAddSystemWideRuleForGroupPayload = {
   decode: function (bytes: ByteSource): AccessAddSystemWideRuleForGroupPayload {
     return AccessAddSystemWideRuleForGroupPayload._readMessage(
       AccessAddSystemWideRuleForGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForGroupPayload>,
+  ): AccessAddSystemWideRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
       ruleType: "",
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -6037,9 +6241,9 @@ export const AccessAddSystemWideRuleForGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleName) {
       writer.writeString(1, msg.ruleName);
     }
@@ -6060,7 +6264,7 @@ export const AccessAddSystemWideRuleForGroupPayload = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddSystemWideRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6096,11 +6300,11 @@ export const AccessAddSystemWideRuleForGroupResponse = {
    * Serializes AccessAddSystemWideRuleForGroupResponse to protobuf.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupResponse>
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupResponse>,
   ): Uint8Array {
     return AccessAddSystemWideRuleForGroupResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6108,20 +6312,23 @@ export const AccessAddSystemWideRuleForGroupResponse = {
    * Deserializes AccessAddSystemWideRuleForGroupResponse from protobuf.
    */
   decode: function (
-    bytes: ByteSource
+    bytes: ByteSource,
   ): AccessAddSystemWideRuleForGroupResponse {
     return AccessAddSystemWideRuleForGroupResponse._readMessage(
       AccessAddSystemWideRuleForGroupResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForGroupResponse {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForGroupResponse>,
+  ): AccessAddSystemWideRuleForGroupResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -6129,9 +6336,9 @@ export const AccessAddSystemWideRuleForGroupResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -6143,7 +6350,7 @@ export const AccessAddSystemWideRuleForGroupResponse = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForGroupResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): AccessAddSystemWideRuleForGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6166,10 +6373,10 @@ export const PersonsCreateAccountPayload = {
   /**
    * Serializes PersonsCreateAccountPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsCreateAccountPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsCreateAccountPayload>): Uint8Array {
     return PersonsCreateAccountPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6179,14 +6386,16 @@ export const PersonsCreateAccountPayload = {
   decode: function (bytes: ByteSource): PersonsCreateAccountPayload {
     return PersonsCreateAccountPayload._readMessage(
       PersonsCreateAccountPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsCreateAccountPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateAccountPayload {
+  initialize: function (
+    msg?: Partial<PersonsCreateAccountPayload>,
+  ): PersonsCreateAccountPayload {
     return {
       email: "",
       password: "",
@@ -6195,6 +6404,7 @@ export const PersonsCreateAccountPayload = {
       phone: "",
       tenhouId: "",
       country: "",
+      ...msg,
     };
   },
 
@@ -6202,9 +6412,9 @@ export const PersonsCreateAccountPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateAccountPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsCreateAccountPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
     }
@@ -6234,7 +6444,7 @@ export const PersonsCreateAccountPayload = {
    */
   _readMessage: function (
     msg: PersonsCreateAccountPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsCreateAccountPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6281,10 +6491,12 @@ export const PersonsCreateAccountResponse = {
   /**
    * Serializes PersonsCreateAccountResponse to protobuf.
    */
-  encode: function (msg: Partial<PersonsCreateAccountResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsCreateAccountResponse>,
+  ): Uint8Array {
     return PersonsCreateAccountResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6294,16 +6506,19 @@ export const PersonsCreateAccountResponse = {
   decode: function (bytes: ByteSource): PersonsCreateAccountResponse {
     return PersonsCreateAccountResponse._readMessage(
       PersonsCreateAccountResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsCreateAccountResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateAccountResponse {
+  initialize: function (
+    msg?: Partial<PersonsCreateAccountResponse>,
+  ): PersonsCreateAccountResponse {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -6311,9 +6526,9 @@ export const PersonsCreateAccountResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateAccountResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsCreateAccountResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -6325,7 +6540,7 @@ export const PersonsCreateAccountResponse = {
    */
   _readMessage: function (
     msg: PersonsCreateAccountResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsCreateAccountResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6348,10 +6563,10 @@ export const PersonsCreateGroupPayload = {
   /**
    * Serializes PersonsCreateGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsCreateGroupPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsCreateGroupPayload>): Uint8Array {
     return PersonsCreateGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6361,18 +6576,21 @@ export const PersonsCreateGroupPayload = {
   decode: function (bytes: ByteSource): PersonsCreateGroupPayload {
     return PersonsCreateGroupPayload._readMessage(
       PersonsCreateGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsCreateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsCreateGroupPayload>,
+  ): PersonsCreateGroupPayload {
     return {
       title: "",
       description: "",
       color: "",
+      ...msg,
     };
   },
 
@@ -6380,9 +6598,9 @@ export const PersonsCreateGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsCreateGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.title) {
       writer.writeString(1, msg.title);
     }
@@ -6400,7 +6618,7 @@ export const PersonsCreateGroupPayload = {
    */
   _readMessage: function (
     msg: PersonsCreateGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsCreateGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6431,10 +6649,10 @@ export const PersonsCreateGroupResponse = {
   /**
    * Serializes PersonsCreateGroupResponse to protobuf.
    */
-  encode: function (msg: Partial<PersonsCreateGroupResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsCreateGroupResponse>): Uint8Array {
     return PersonsCreateGroupResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6444,16 +6662,19 @@ export const PersonsCreateGroupResponse = {
   decode: function (bytes: ByteSource): PersonsCreateGroupResponse {
     return PersonsCreateGroupResponse._readMessage(
       PersonsCreateGroupResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsCreateGroupResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateGroupResponse {
+  initialize: function (
+    msg?: Partial<PersonsCreateGroupResponse>,
+  ): PersonsCreateGroupResponse {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -6461,9 +6682,9 @@ export const PersonsCreateGroupResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateGroupResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsCreateGroupResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groupId) {
       writer.writeInt32(1, msg.groupId);
     }
@@ -6475,7 +6696,7 @@ export const PersonsCreateGroupResponse = {
    */
   _readMessage: function (
     msg: PersonsCreateGroupResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsCreateGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6498,10 +6719,10 @@ export const PersonsUpdateGroupPayload = {
   /**
    * Serializes PersonsUpdateGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsUpdateGroupPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsUpdateGroupPayload>): Uint8Array {
     return PersonsUpdateGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6511,19 +6732,22 @@ export const PersonsUpdateGroupPayload = {
   decode: function (bytes: ByteSource): PersonsUpdateGroupPayload {
     return PersonsUpdateGroupPayload._readMessage(
       PersonsUpdateGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsUpdateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsUpdateGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsUpdateGroupPayload>,
+  ): PersonsUpdateGroupPayload {
     return {
       groupId: 0,
       title: "",
       description: "",
       color: "",
+      ...msg,
     };
   },
 
@@ -6531,9 +6755,9 @@ export const PersonsUpdateGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsUpdateGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsUpdateGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groupId) {
       writer.writeInt32(1, msg.groupId);
     }
@@ -6554,7 +6778,7 @@ export const PersonsUpdateGroupPayload = {
    */
   _readMessage: function (
     msg: PersonsUpdateGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsUpdateGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6589,10 +6813,10 @@ export const PersonsDeleteGroupPayload = {
   /**
    * Serializes PersonsDeleteGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsDeleteGroupPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsDeleteGroupPayload>): Uint8Array {
     return PersonsDeleteGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6602,16 +6826,19 @@ export const PersonsDeleteGroupPayload = {
   decode: function (bytes: ByteSource): PersonsDeleteGroupPayload {
     return PersonsDeleteGroupPayload._readMessage(
       PersonsDeleteGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsDeleteGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsDeleteGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsDeleteGroupPayload>,
+  ): PersonsDeleteGroupPayload {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -6619,9 +6846,9 @@ export const PersonsDeleteGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsDeleteGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsDeleteGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groupId) {
       writer.writeInt32(1, msg.groupId);
     }
@@ -6633,7 +6860,7 @@ export const PersonsDeleteGroupPayload = {
    */
   _readMessage: function (
     msg: PersonsDeleteGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsDeleteGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6656,10 +6883,12 @@ export const PersonsAddPersonToGroupPayload = {
   /**
    * Serializes PersonsAddPersonToGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsAddPersonToGroupPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsAddPersonToGroupPayload>,
+  ): Uint8Array {
     return PersonsAddPersonToGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6669,17 +6898,20 @@ export const PersonsAddPersonToGroupPayload = {
   decode: function (bytes: ByteSource): PersonsAddPersonToGroupPayload {
     return PersonsAddPersonToGroupPayload._readMessage(
       PersonsAddPersonToGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsAddPersonToGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsAddPersonToGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsAddPersonToGroupPayload>,
+  ): PersonsAddPersonToGroupPayload {
     return {
       personId: 0,
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -6687,9 +6919,9 @@ export const PersonsAddPersonToGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsAddPersonToGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsAddPersonToGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -6704,7 +6936,7 @@ export const PersonsAddPersonToGroupPayload = {
    */
   _readMessage: function (
     msg: PersonsAddPersonToGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsAddPersonToGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6732,11 +6964,11 @@ export const PersonsRemovePersonFromGroupPayload = {
    * Serializes PersonsRemovePersonFromGroupPayload to protobuf.
    */
   encode: function (
-    msg: Partial<PersonsRemovePersonFromGroupPayload>
+    msg: PartialDeep<PersonsRemovePersonFromGroupPayload>,
   ): Uint8Array {
     return PersonsRemovePersonFromGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6746,17 +6978,20 @@ export const PersonsRemovePersonFromGroupPayload = {
   decode: function (bytes: ByteSource): PersonsRemovePersonFromGroupPayload {
     return PersonsRemovePersonFromGroupPayload._readMessage(
       PersonsRemovePersonFromGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsRemovePersonFromGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsRemovePersonFromGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsRemovePersonFromGroupPayload>,
+  ): PersonsRemovePersonFromGroupPayload {
     return {
       personId: 0,
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -6764,9 +6999,9 @@ export const PersonsRemovePersonFromGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsRemovePersonFromGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsRemovePersonFromGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -6781,7 +7016,7 @@ export const PersonsRemovePersonFromGroupPayload = {
    */
   _readMessage: function (
     msg: PersonsRemovePersonFromGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsRemovePersonFromGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6808,10 +7043,12 @@ export const PersonsGetPersonsOfGroupPayload = {
   /**
    * Serializes PersonsGetPersonsOfGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsGetPersonsOfGroupPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsGetPersonsOfGroupPayload>,
+  ): Uint8Array {
     return PersonsGetPersonsOfGroupPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6821,16 +7058,19 @@ export const PersonsGetPersonsOfGroupPayload = {
   decode: function (bytes: ByteSource): PersonsGetPersonsOfGroupPayload {
     return PersonsGetPersonsOfGroupPayload._readMessage(
       PersonsGetPersonsOfGroupPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetPersonsOfGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonsOfGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonsOfGroupPayload>,
+  ): PersonsGetPersonsOfGroupPayload {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -6838,9 +7078,9 @@ export const PersonsGetPersonsOfGroupPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonsOfGroupPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetPersonsOfGroupPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groupId) {
       writer.writeInt32(1, msg.groupId);
     }
@@ -6852,7 +7092,7 @@ export const PersonsGetPersonsOfGroupPayload = {
    */
   _readMessage: function (
     msg: PersonsGetPersonsOfGroupPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetPersonsOfGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6876,11 +7116,11 @@ export const PersonsGetPersonsOfGroupResponse = {
    * Serializes PersonsGetPersonsOfGroupResponse to protobuf.
    */
   encode: function (
-    msg: Partial<PersonsGetPersonsOfGroupResponse>
+    msg: PartialDeep<PersonsGetPersonsOfGroupResponse>,
   ): Uint8Array {
     return PersonsGetPersonsOfGroupResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6890,16 +7130,19 @@ export const PersonsGetPersonsOfGroupResponse = {
   decode: function (bytes: ByteSource): PersonsGetPersonsOfGroupResponse {
     return PersonsGetPersonsOfGroupResponse._readMessage(
       PersonsGetPersonsOfGroupResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetPersonsOfGroupResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonsOfGroupResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonsOfGroupResponse>,
+  ): PersonsGetPersonsOfGroupResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -6907,14 +7150,14 @@ export const PersonsGetPersonsOfGroupResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonsOfGroupResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetPersonsOfGroupResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.people as any,
-        protoAtoms.Person._writeMessage
+        protoAtoms.Person._writeMessage,
       );
     }
     return writer;
@@ -6925,7 +7168,7 @@ export const PersonsGetPersonsOfGroupResponse = {
    */
   _readMessage: function (
     msg: PersonsGetPersonsOfGroupResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetPersonsOfGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6950,10 +7193,12 @@ export const PersonsGetGroupsOfPersonPayload = {
   /**
    * Serializes PersonsGetGroupsOfPersonPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsGetGroupsOfPersonPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsGetGroupsOfPersonPayload>,
+  ): Uint8Array {
     return PersonsGetGroupsOfPersonPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6963,16 +7208,19 @@ export const PersonsGetGroupsOfPersonPayload = {
   decode: function (bytes: ByteSource): PersonsGetGroupsOfPersonPayload {
     return PersonsGetGroupsOfPersonPayload._readMessage(
       PersonsGetGroupsOfPersonPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsOfPersonPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsOfPersonPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsOfPersonPayload>,
+  ): PersonsGetGroupsOfPersonPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -6980,9 +7228,9 @@ export const PersonsGetGroupsOfPersonPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsOfPersonPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetGroupsOfPersonPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.personId) {
       writer.writeInt32(1, msg.personId);
     }
@@ -6994,7 +7242,7 @@ export const PersonsGetGroupsOfPersonPayload = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsOfPersonPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetGroupsOfPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7018,11 +7266,11 @@ export const PersonsGetGroupsOfPersonResponse = {
    * Serializes PersonsGetGroupsOfPersonResponse to protobuf.
    */
   encode: function (
-    msg: Partial<PersonsGetGroupsOfPersonResponse>
+    msg: PartialDeep<PersonsGetGroupsOfPersonResponse>,
   ): Uint8Array {
     return PersonsGetGroupsOfPersonResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7032,16 +7280,19 @@ export const PersonsGetGroupsOfPersonResponse = {
   decode: function (bytes: ByteSource): PersonsGetGroupsOfPersonResponse {
     return PersonsGetGroupsOfPersonResponse._readMessage(
       PersonsGetGroupsOfPersonResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsOfPersonResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsOfPersonResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsOfPersonResponse>,
+  ): PersonsGetGroupsOfPersonResponse {
     return {
       groups: [],
+      ...msg,
     };
   },
 
@@ -7049,14 +7300,14 @@ export const PersonsGetGroupsOfPersonResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsOfPersonResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetGroupsOfPersonResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groups?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.groups as any,
-        protoAtoms.Group._writeMessage
+        protoAtoms.Group._writeMessage,
       );
     }
     return writer;
@@ -7067,7 +7318,7 @@ export const PersonsGetGroupsOfPersonResponse = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsOfPersonResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetGroupsOfPersonResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7093,11 +7344,11 @@ export const PersonsUpdatePersonalInfoPayload = {
    * Serializes PersonsUpdatePersonalInfoPayload to protobuf.
    */
   encode: function (
-    msg: Partial<PersonsUpdatePersonalInfoPayload>
+    msg: PartialDeep<PersonsUpdatePersonalInfoPayload>,
   ): Uint8Array {
     return PersonsUpdatePersonalInfoPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7107,14 +7358,16 @@ export const PersonsUpdatePersonalInfoPayload = {
   decode: function (bytes: ByteSource): PersonsUpdatePersonalInfoPayload {
     return PersonsUpdatePersonalInfoPayload._readMessage(
       PersonsUpdatePersonalInfoPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsUpdatePersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsUpdatePersonalInfoPayload {
+  initialize: function (
+    msg?: Partial<PersonsUpdatePersonalInfoPayload>,
+  ): PersonsUpdatePersonalInfoPayload {
     return {
       id: 0,
       title: "",
@@ -7125,6 +7378,10 @@ export const PersonsUpdatePersonalInfoPayload = {
       tenhouId: "",
       hasAvatar: false,
       avatarData: "",
+      msNickname: "",
+      msFriendId: 0,
+      msAccountId: 0,
+      ...msg,
     };
   },
 
@@ -7132,9 +7389,9 @@ export const PersonsUpdatePersonalInfoPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsUpdatePersonalInfoPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsUpdatePersonalInfoPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -7162,6 +7419,15 @@ export const PersonsUpdatePersonalInfoPayload = {
     if (msg.avatarData) {
       writer.writeString(9, msg.avatarData);
     }
+    if (msg.msNickname) {
+      writer.writeString(10, msg.msNickname);
+    }
+    if (msg.msFriendId) {
+      writer.writeInt32(11, msg.msFriendId);
+    }
+    if (msg.msAccountId) {
+      writer.writeInt32(12, msg.msAccountId);
+    }
     return writer;
   },
 
@@ -7170,7 +7436,7 @@ export const PersonsUpdatePersonalInfoPayload = {
    */
   _readMessage: function (
     msg: PersonsUpdatePersonalInfoPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsUpdatePersonalInfoPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7211,6 +7477,18 @@ export const PersonsUpdatePersonalInfoPayload = {
           msg.avatarData = reader.readString();
           break;
         }
+        case 10: {
+          msg.msNickname = reader.readString();
+          break;
+        }
+        case 11: {
+          msg.msFriendId = reader.readInt32();
+          break;
+        }
+        case 12: {
+          msg.msAccountId = reader.readInt32();
+          break;
+        }
         default: {
           reader.skipField();
           break;
@@ -7225,10 +7503,12 @@ export const PersonsGetPersonalInfoPayload = {
   /**
    * Serializes PersonsGetPersonalInfoPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsGetPersonalInfoPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsGetPersonalInfoPayload>,
+  ): Uint8Array {
     return PersonsGetPersonalInfoPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7238,16 +7518,19 @@ export const PersonsGetPersonalInfoPayload = {
   decode: function (bytes: ByteSource): PersonsGetPersonalInfoPayload {
     return PersonsGetPersonalInfoPayload._readMessage(
       PersonsGetPersonalInfoPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetPersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonalInfoPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonalInfoPayload>,
+  ): PersonsGetPersonalInfoPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -7255,9 +7538,9 @@ export const PersonsGetPersonalInfoPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonalInfoPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetPersonalInfoPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ids?.length) {
       writer.writePackedInt32(1, msg.ids);
     }
@@ -7269,7 +7552,7 @@ export const PersonsGetPersonalInfoPayload = {
    */
   _readMessage: function (
     msg: PersonsGetPersonalInfoPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetPersonalInfoPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7296,10 +7579,12 @@ export const PersonsGetPersonalInfoResponse = {
   /**
    * Serializes PersonsGetPersonalInfoResponse to protobuf.
    */
-  encode: function (msg: Partial<PersonsGetPersonalInfoResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsGetPersonalInfoResponse>,
+  ): Uint8Array {
     return PersonsGetPersonalInfoResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7309,16 +7594,19 @@ export const PersonsGetPersonalInfoResponse = {
   decode: function (bytes: ByteSource): PersonsGetPersonalInfoResponse {
     return PersonsGetPersonalInfoResponse._readMessage(
       PersonsGetPersonalInfoResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetPersonalInfoResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonalInfoResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonalInfoResponse>,
+  ): PersonsGetPersonalInfoResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -7326,14 +7614,14 @@ export const PersonsGetPersonalInfoResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonalInfoResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetPersonalInfoResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.people as any,
-        protoAtoms.PersonEx._writeMessage
+        protoAtoms.PersonEx._writeMessage,
       );
     }
     return writer;
@@ -7344,7 +7632,7 @@ export const PersonsGetPersonalInfoResponse = {
    */
   _readMessage: function (
     msg: PersonsGetPersonalInfoResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetPersonalInfoResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7369,10 +7657,12 @@ export const PersonsFindByTenhouIdsPayload = {
   /**
    * Serializes PersonsFindByTenhouIdsPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsFindByTenhouIdsPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsFindByTenhouIdsPayload>,
+  ): Uint8Array {
     return PersonsFindByTenhouIdsPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7382,16 +7672,19 @@ export const PersonsFindByTenhouIdsPayload = {
   decode: function (bytes: ByteSource): PersonsFindByTenhouIdsPayload {
     return PersonsFindByTenhouIdsPayload._readMessage(
       PersonsFindByTenhouIdsPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsFindByTenhouIdsPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTenhouIdsPayload {
+  initialize: function (
+    msg?: Partial<PersonsFindByTenhouIdsPayload>,
+  ): PersonsFindByTenhouIdsPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -7399,9 +7692,9 @@ export const PersonsFindByTenhouIdsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTenhouIdsPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsFindByTenhouIdsPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ids?.length) {
       writer.writeRepeatedString(1, msg.ids);
     }
@@ -7413,7 +7706,7 @@ export const PersonsFindByTenhouIdsPayload = {
    */
   _readMessage: function (
     msg: PersonsFindByTenhouIdsPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsFindByTenhouIdsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7436,10 +7729,12 @@ export const PersonsFindByMajsoulIdsPayload = {
   /**
    * Serializes PersonsFindByMajsoulIdsPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsFindByMajsoulIdsPayload>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsFindByMajsoulIdsPayload>,
+  ): Uint8Array {
     return PersonsFindByMajsoulIdsPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7449,16 +7744,19 @@ export const PersonsFindByMajsoulIdsPayload = {
   decode: function (bytes: ByteSource): PersonsFindByMajsoulIdsPayload {
     return PersonsFindByMajsoulIdsPayload._readMessage(
       PersonsFindByMajsoulIdsPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsFindByMajsoulIdsPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByMajsoulIdsPayload {
+  initialize: function (
+    msg?: Partial<PersonsFindByMajsoulIdsPayload>,
+  ): PersonsFindByMajsoulIdsPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -7466,14 +7764,14 @@ export const PersonsFindByMajsoulIdsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByMajsoulIdsPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsFindByMajsoulIdsPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ids?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.ids as any,
-        MajsoulSearchEx._writeMessage
+        MajsoulSearchEx._writeMessage,
       );
     }
     return writer;
@@ -7484,7 +7782,7 @@ export const PersonsFindByMajsoulIdsPayload = {
    */
   _readMessage: function (
     msg: PersonsFindByMajsoulIdsPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsFindByMajsoulIdsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7509,10 +7807,10 @@ export const MajsoulSearchEx = {
   /**
    * Serializes MajsoulSearchEx to protobuf.
    */
-  encode: function (msg: Partial<MajsoulSearchEx>): Uint8Array {
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): Uint8Array {
     return MajsoulSearchEx._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7522,17 +7820,18 @@ export const MajsoulSearchEx = {
   decode: function (bytes: ByteSource): MajsoulSearchEx {
     return MajsoulSearchEx._readMessage(
       MajsoulSearchEx.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes MajsoulSearchEx with all fields set to their default value.
    */
-  initialize: function (): MajsoulSearchEx {
+  initialize: function (msg?: Partial<MajsoulSearchEx>): MajsoulSearchEx {
     return {
       nickname: "",
       accountId: 0,
+      ...msg,
     };
   },
 
@@ -7540,9 +7839,9 @@ export const MajsoulSearchEx = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<MajsoulSearchEx>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<MajsoulSearchEx>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.nickname) {
       writer.writeString(1, msg.nickname);
     }
@@ -7557,7 +7856,7 @@ export const MajsoulSearchEx = {
    */
   _readMessage: function (
     msg: MajsoulSearchEx,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): MajsoulSearchEx {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7584,10 +7883,12 @@ export const PersonsFindByTenhouIdsResponse = {
   /**
    * Serializes PersonsFindByTenhouIdsResponse to protobuf.
    */
-  encode: function (msg: Partial<PersonsFindByTenhouIdsResponse>): Uint8Array {
+  encode: function (
+    msg: PartialDeep<PersonsFindByTenhouIdsResponse>,
+  ): Uint8Array {
     return PersonsFindByTenhouIdsResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7597,16 +7898,19 @@ export const PersonsFindByTenhouIdsResponse = {
   decode: function (bytes: ByteSource): PersonsFindByTenhouIdsResponse {
     return PersonsFindByTenhouIdsResponse._readMessage(
       PersonsFindByTenhouIdsResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsFindByTenhouIdsResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTenhouIdsResponse {
+  initialize: function (
+    msg?: Partial<PersonsFindByTenhouIdsResponse>,
+  ): PersonsFindByTenhouIdsResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -7614,14 +7918,14 @@ export const PersonsFindByTenhouIdsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTenhouIdsResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsFindByTenhouIdsResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.people as any,
-        protoAtoms.PersonEx._writeMessage
+        protoAtoms.PersonEx._writeMessage,
       );
     }
     return writer;
@@ -7632,7 +7936,7 @@ export const PersonsFindByTenhouIdsResponse = {
    */
   _readMessage: function (
     msg: PersonsFindByTenhouIdsResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsFindByTenhouIdsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7657,10 +7961,10 @@ export const PersonsFindByTitlePayload = {
   /**
    * Serializes PersonsFindByTitlePayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsFindByTitlePayload>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsFindByTitlePayload>): Uint8Array {
     return PersonsFindByTitlePayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7670,16 +7974,19 @@ export const PersonsFindByTitlePayload = {
   decode: function (bytes: ByteSource): PersonsFindByTitlePayload {
     return PersonsFindByTitlePayload._readMessage(
       PersonsFindByTitlePayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsFindByTitlePayload with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTitlePayload {
+  initialize: function (
+    msg?: Partial<PersonsFindByTitlePayload>,
+  ): PersonsFindByTitlePayload {
     return {
       query: "",
+      ...msg,
     };
   },
 
@@ -7687,9 +7994,9 @@ export const PersonsFindByTitlePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTitlePayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsFindByTitlePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.query) {
       writer.writeString(1, msg.query);
     }
@@ -7701,7 +8008,7 @@ export const PersonsFindByTitlePayload = {
    */
   _readMessage: function (
     msg: PersonsFindByTitlePayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsFindByTitlePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7724,10 +8031,10 @@ export const PersonsFindByTitleResponse = {
   /**
    * Serializes PersonsFindByTitleResponse to protobuf.
    */
-  encode: function (msg: Partial<PersonsFindByTitleResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsFindByTitleResponse>): Uint8Array {
     return PersonsFindByTitleResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7737,16 +8044,19 @@ export const PersonsFindByTitleResponse = {
   decode: function (bytes: ByteSource): PersonsFindByTitleResponse {
     return PersonsFindByTitleResponse._readMessage(
       PersonsFindByTitleResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsFindByTitleResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTitleResponse {
+  initialize: function (
+    msg?: Partial<PersonsFindByTitleResponse>,
+  ): PersonsFindByTitleResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -7754,14 +8064,14 @@ export const PersonsFindByTitleResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTitleResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsFindByTitleResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.people as any,
-        protoAtoms.Person._writeMessage
+        protoAtoms.Person._writeMessage,
       );
     }
     return writer;
@@ -7772,7 +8082,7 @@ export const PersonsFindByTitleResponse = {
    */
   _readMessage: function (
     msg: PersonsFindByTitleResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsFindByTitleResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7797,10 +8107,10 @@ export const PersonsGetGroupsPayload = {
   /**
    * Serializes PersonsGetGroupsPayload to protobuf.
    */
-  encode: function (msg: Partial<PersonsGetGroupsPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsGetGroupsPayload>): Uint8Array {
     return PersonsGetGroupsPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7810,16 +8120,19 @@ export const PersonsGetGroupsPayload = {
   decode: function (bytes: ByteSource): PersonsGetGroupsPayload {
     return PersonsGetGroupsPayload._readMessage(
       PersonsGetGroupsPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsPayload>,
+  ): PersonsGetGroupsPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -7827,9 +8140,9 @@ export const PersonsGetGroupsPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetGroupsPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ids?.length) {
       writer.writePackedInt32(1, msg.ids);
     }
@@ -7841,7 +8154,7 @@ export const PersonsGetGroupsPayload = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetGroupsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7868,10 +8181,10 @@ export const PersonsGetGroupsResponse = {
   /**
    * Serializes PersonsGetGroupsResponse to protobuf.
    */
-  encode: function (msg: Partial<PersonsGetGroupsResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<PersonsGetGroupsResponse>): Uint8Array {
     return PersonsGetGroupsResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7881,16 +8194,19 @@ export const PersonsGetGroupsResponse = {
   decode: function (bytes: ByteSource): PersonsGetGroupsResponse {
     return PersonsGetGroupsResponse._readMessage(
       PersonsGetGroupsResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsResponse>,
+  ): PersonsGetGroupsResponse {
     return {
       groups: [],
+      ...msg,
     };
   },
 
@@ -7898,14 +8214,14 @@ export const PersonsGetGroupsResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonsGetGroupsResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.groups?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.groups as any,
-        protoAtoms.Group._writeMessage
+        protoAtoms.Group._writeMessage,
       );
     }
     return writer;
@@ -7916,7 +8232,7 @@ export const PersonsGetGroupsResponse = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PersonsGetGroupsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7941,7 +8257,7 @@ export const DepersonalizePayload = {
   /**
    * Serializes DepersonalizePayload to protobuf.
    */
-  encode: function (_msg?: Partial<DepersonalizePayload>): Uint8Array {
+  encode: function (_msg?: PartialDeep<DepersonalizePayload>): Uint8Array {
     return new Uint8Array();
   },
 
@@ -7955,17 +8271,21 @@ export const DepersonalizePayload = {
   /**
    * Initializes DepersonalizePayload with all fields set to their default value.
    */
-  initialize: function (): DepersonalizePayload {
-    return {};
+  initialize: function (
+    msg?: Partial<DepersonalizePayload>,
+  ): DepersonalizePayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<DepersonalizePayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    _msg: PartialDeep<DepersonalizePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
@@ -7974,7 +8294,7 @@ export const DepersonalizePayload = {
    */
   _readMessage: function (
     _msg: DepersonalizePayload,
-    _reader: BinaryReader
+    _reader: protoscript.BinaryReader,
   ): DepersonalizePayload {
     return _msg;
   },
@@ -7988,9 +8308,9 @@ export const AuthRequestRegistrationPayloadJSON = {
   /**
    * Serializes AuthRequestRegistrationPayload to JSON.
    */
-  encode: function (msg: Partial<AuthRequestRegistrationPayload>): string {
+  encode: function (msg: PartialDeep<AuthRequestRegistrationPayload>): string {
     return JSON.stringify(
-      AuthRequestRegistrationPayloadJSON._writeMessage(msg)
+      AuthRequestRegistrationPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -8000,19 +8320,22 @@ export const AuthRequestRegistrationPayloadJSON = {
   decode: function (json: string): AuthRequestRegistrationPayload {
     return AuthRequestRegistrationPayloadJSON._readMessage(
       AuthRequestRegistrationPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthRequestRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): AuthRequestRegistrationPayload {
+  initialize: function (
+    msg?: Partial<AuthRequestRegistrationPayload>,
+  ): AuthRequestRegistrationPayload {
     return {
       email: "",
       title: "",
       password: "",
       sendEmail: false,
+      ...msg,
     };
   },
 
@@ -8020,7 +8343,7 @@ export const AuthRequestRegistrationPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestRegistrationPayload>
+    msg: PartialDeep<AuthRequestRegistrationPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8043,7 +8366,7 @@ export const AuthRequestRegistrationPayloadJSON = {
    */
   _readMessage: function (
     msg: AuthRequestRegistrationPayload,
-    json: any
+    json: any,
   ): AuthRequestRegistrationPayload {
     const _email_ = json["email"];
     if (_email_) {
@@ -8069,9 +8392,9 @@ export const AuthRequestRegistrationResponseJSON = {
   /**
    * Serializes AuthRequestRegistrationResponse to JSON.
    */
-  encode: function (msg: Partial<AuthRequestRegistrationResponse>): string {
+  encode: function (msg: PartialDeep<AuthRequestRegistrationResponse>): string {
     return JSON.stringify(
-      AuthRequestRegistrationResponseJSON._writeMessage(msg)
+      AuthRequestRegistrationResponseJSON._writeMessage(msg),
     );
   },
 
@@ -8081,16 +8404,19 @@ export const AuthRequestRegistrationResponseJSON = {
   decode: function (json: string): AuthRequestRegistrationResponse {
     return AuthRequestRegistrationResponseJSON._readMessage(
       AuthRequestRegistrationResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthRequestRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): AuthRequestRegistrationResponse {
+  initialize: function (
+    msg?: Partial<AuthRequestRegistrationResponse>,
+  ): AuthRequestRegistrationResponse {
     return {
       approvalCode: "",
+      ...msg,
     };
   },
 
@@ -8098,7 +8424,7 @@ export const AuthRequestRegistrationResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestRegistrationResponse>
+    msg: PartialDeep<AuthRequestRegistrationResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.approvalCode) {
@@ -8112,7 +8438,7 @@ export const AuthRequestRegistrationResponseJSON = {
    */
   _readMessage: function (
     msg: AuthRequestRegistrationResponse,
-    json: any
+    json: any,
   ): AuthRequestRegistrationResponse {
     const _approvalCode_ = json["approvalCode"] ?? json["approval_code"];
     if (_approvalCode_) {
@@ -8126,9 +8452,9 @@ export const AuthApproveRegistrationPayloadJSON = {
   /**
    * Serializes AuthApproveRegistrationPayload to JSON.
    */
-  encode: function (msg: Partial<AuthApproveRegistrationPayload>): string {
+  encode: function (msg: PartialDeep<AuthApproveRegistrationPayload>): string {
     return JSON.stringify(
-      AuthApproveRegistrationPayloadJSON._writeMessage(msg)
+      AuthApproveRegistrationPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -8138,16 +8464,19 @@ export const AuthApproveRegistrationPayloadJSON = {
   decode: function (json: string): AuthApproveRegistrationPayload {
     return AuthApproveRegistrationPayloadJSON._readMessage(
       AuthApproveRegistrationPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthApproveRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): AuthApproveRegistrationPayload {
+  initialize: function (
+    msg?: Partial<AuthApproveRegistrationPayload>,
+  ): AuthApproveRegistrationPayload {
     return {
       approvalCode: "",
+      ...msg,
     };
   },
 
@@ -8155,7 +8484,7 @@ export const AuthApproveRegistrationPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveRegistrationPayload>
+    msg: PartialDeep<AuthApproveRegistrationPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.approvalCode) {
@@ -8169,7 +8498,7 @@ export const AuthApproveRegistrationPayloadJSON = {
    */
   _readMessage: function (
     msg: AuthApproveRegistrationPayload,
-    json: any
+    json: any,
   ): AuthApproveRegistrationPayload {
     const _approvalCode_ = json["approvalCode"] ?? json["approval_code"];
     if (_approvalCode_) {
@@ -8183,9 +8512,9 @@ export const AuthApproveRegistrationResponseJSON = {
   /**
    * Serializes AuthApproveRegistrationResponse to JSON.
    */
-  encode: function (msg: Partial<AuthApproveRegistrationResponse>): string {
+  encode: function (msg: PartialDeep<AuthApproveRegistrationResponse>): string {
     return JSON.stringify(
-      AuthApproveRegistrationResponseJSON._writeMessage(msg)
+      AuthApproveRegistrationResponseJSON._writeMessage(msg),
     );
   },
 
@@ -8195,16 +8524,19 @@ export const AuthApproveRegistrationResponseJSON = {
   decode: function (json: string): AuthApproveRegistrationResponse {
     return AuthApproveRegistrationResponseJSON._readMessage(
       AuthApproveRegistrationResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthApproveRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): AuthApproveRegistrationResponse {
+  initialize: function (
+    msg?: Partial<AuthApproveRegistrationResponse>,
+  ): AuthApproveRegistrationResponse {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -8212,7 +8544,7 @@ export const AuthApproveRegistrationResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveRegistrationResponse>
+    msg: PartialDeep<AuthApproveRegistrationResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8226,11 +8558,11 @@ export const AuthApproveRegistrationResponseJSON = {
    */
   _readMessage: function (
     msg: AuthApproveRegistrationResponse,
-    json: any
+    json: any,
   ): AuthApproveRegistrationResponse {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     return msg;
   },
@@ -8240,7 +8572,7 @@ export const AuthAuthorizePayloadJSON = {
   /**
    * Serializes AuthAuthorizePayload to JSON.
    */
-  encode: function (msg: Partial<AuthAuthorizePayload>): string {
+  encode: function (msg: PartialDeep<AuthAuthorizePayload>): string {
     return JSON.stringify(AuthAuthorizePayloadJSON._writeMessage(msg));
   },
 
@@ -8250,17 +8582,20 @@ export const AuthAuthorizePayloadJSON = {
   decode: function (json: string): AuthAuthorizePayload {
     return AuthAuthorizePayloadJSON._readMessage(
       AuthAuthorizePayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): AuthAuthorizePayload {
+  initialize: function (
+    msg?: Partial<AuthAuthorizePayload>,
+  ): AuthAuthorizePayload {
     return {
       email: "",
       password: "",
+      ...msg,
     };
   },
 
@@ -8268,7 +8603,7 @@ export const AuthAuthorizePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthAuthorizePayload>
+    msg: PartialDeep<AuthAuthorizePayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8285,7 +8620,7 @@ export const AuthAuthorizePayloadJSON = {
    */
   _readMessage: function (
     msg: AuthAuthorizePayload,
-    json: any
+    json: any,
   ): AuthAuthorizePayload {
     const _email_ = json["email"];
     if (_email_) {
@@ -8303,7 +8638,7 @@ export const AuthAuthorizeResponseJSON = {
   /**
    * Serializes AuthAuthorizeResponse to JSON.
    */
-  encode: function (msg: Partial<AuthAuthorizeResponse>): string {
+  encode: function (msg: PartialDeep<AuthAuthorizeResponse>): string {
     return JSON.stringify(AuthAuthorizeResponseJSON._writeMessage(msg));
   },
 
@@ -8313,17 +8648,20 @@ export const AuthAuthorizeResponseJSON = {
   decode: function (json: string): AuthAuthorizeResponse {
     return AuthAuthorizeResponseJSON._readMessage(
       AuthAuthorizeResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): AuthAuthorizeResponse {
+  initialize: function (
+    msg?: Partial<AuthAuthorizeResponse>,
+  ): AuthAuthorizeResponse {
     return {
       personId: 0,
       authToken: "",
+      ...msg,
     };
   },
 
@@ -8331,7 +8669,7 @@ export const AuthAuthorizeResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthAuthorizeResponse>
+    msg: PartialDeep<AuthAuthorizeResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8348,11 +8686,11 @@ export const AuthAuthorizeResponseJSON = {
    */
   _readMessage: function (
     msg: AuthAuthorizeResponse,
-    json: any
+    json: any,
   ): AuthAuthorizeResponse {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
@@ -8366,7 +8704,7 @@ export const AuthQuickAuthorizePayloadJSON = {
   /**
    * Serializes AuthQuickAuthorizePayload to JSON.
    */
-  encode: function (msg: Partial<AuthQuickAuthorizePayload>): string {
+  encode: function (msg: PartialDeep<AuthQuickAuthorizePayload>): string {
     return JSON.stringify(AuthQuickAuthorizePayloadJSON._writeMessage(msg));
   },
 
@@ -8376,17 +8714,20 @@ export const AuthQuickAuthorizePayloadJSON = {
   decode: function (json: string): AuthQuickAuthorizePayload {
     return AuthQuickAuthorizePayloadJSON._readMessage(
       AuthQuickAuthorizePayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthQuickAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): AuthQuickAuthorizePayload {
+  initialize: function (
+    msg?: Partial<AuthQuickAuthorizePayload>,
+  ): AuthQuickAuthorizePayload {
     return {
       personId: 0,
       authToken: "",
+      ...msg,
     };
   },
 
@@ -8394,7 +8735,7 @@ export const AuthQuickAuthorizePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthQuickAuthorizePayload>
+    msg: PartialDeep<AuthQuickAuthorizePayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8411,11 +8752,11 @@ export const AuthQuickAuthorizePayloadJSON = {
    */
   _readMessage: function (
     msg: AuthQuickAuthorizePayload,
-    json: any
+    json: any,
   ): AuthQuickAuthorizePayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
@@ -8429,7 +8770,7 @@ export const AuthQuickAuthorizeResponseJSON = {
   /**
    * Serializes AuthQuickAuthorizeResponse to JSON.
    */
-  encode: function (msg: Partial<AuthQuickAuthorizeResponse>): string {
+  encode: function (msg: PartialDeep<AuthQuickAuthorizeResponse>): string {
     return JSON.stringify(AuthQuickAuthorizeResponseJSON._writeMessage(msg));
   },
 
@@ -8439,16 +8780,19 @@ export const AuthQuickAuthorizeResponseJSON = {
   decode: function (json: string): AuthQuickAuthorizeResponse {
     return AuthQuickAuthorizeResponseJSON._readMessage(
       AuthQuickAuthorizeResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthQuickAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): AuthQuickAuthorizeResponse {
+  initialize: function (
+    msg?: Partial<AuthQuickAuthorizeResponse>,
+  ): AuthQuickAuthorizeResponse {
     return {
       authSuccess: false,
+      ...msg,
     };
   },
 
@@ -8456,7 +8800,7 @@ export const AuthQuickAuthorizeResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthQuickAuthorizeResponse>
+    msg: PartialDeep<AuthQuickAuthorizeResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.authSuccess) {
@@ -8470,7 +8814,7 @@ export const AuthQuickAuthorizeResponseJSON = {
    */
   _readMessage: function (
     msg: AuthQuickAuthorizeResponse,
-    json: any
+    json: any,
   ): AuthQuickAuthorizeResponse {
     const _authSuccess_ = json["authSuccess"] ?? json["auth_success"];
     if (_authSuccess_) {
@@ -8484,7 +8828,7 @@ export const AuthMePayloadJSON = {
   /**
    * Serializes AuthMePayload to JSON.
    */
-  encode: function (msg: Partial<AuthMePayload>): string {
+  encode: function (msg: PartialDeep<AuthMePayload>): string {
     return JSON.stringify(AuthMePayloadJSON._writeMessage(msg));
   },
 
@@ -8494,17 +8838,18 @@ export const AuthMePayloadJSON = {
   decode: function (json: string): AuthMePayload {
     return AuthMePayloadJSON._readMessage(
       AuthMePayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthMePayload with all fields set to their default value.
    */
-  initialize: function (): AuthMePayload {
+  initialize: function (msg?: Partial<AuthMePayload>): AuthMePayload {
     return {
       personId: 0,
       authToken: "",
+      ...msg,
     };
   },
 
@@ -8512,7 +8857,7 @@ export const AuthMePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthMePayload>
+    msg: PartialDeep<AuthMePayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8530,7 +8875,7 @@ export const AuthMePayloadJSON = {
   _readMessage: function (msg: AuthMePayload, json: any): AuthMePayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
@@ -8544,7 +8889,7 @@ export const AuthMeResponseJSON = {
   /**
    * Serializes AuthMeResponse to JSON.
    */
-  encode: function (msg: Partial<AuthMeResponse>): string {
+  encode: function (msg: PartialDeep<AuthMeResponse>): string {
     return JSON.stringify(AuthMeResponseJSON._writeMessage(msg));
   },
 
@@ -8554,14 +8899,14 @@ export const AuthMeResponseJSON = {
   decode: function (json: string): AuthMeResponse {
     return AuthMeResponseJSON._readMessage(
       AuthMeResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthMeResponse with all fields set to their default value.
    */
-  initialize: function (): AuthMeResponse {
+  initialize: function (msg?: Partial<AuthMeResponse>): AuthMeResponse {
     return {
       personId: 0,
       country: "",
@@ -8573,6 +8918,7 @@ export const AuthMeResponseJSON = {
       groups: [],
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -8580,7 +8926,7 @@ export const AuthMeResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthMeResponse>
+    msg: PartialDeep<AuthMeResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8622,7 +8968,7 @@ export const AuthMeResponseJSON = {
   _readMessage: function (msg: AuthMeResponse, json: any): AuthMeResponse {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _country_ = json["country"];
     if (_country_) {
@@ -8650,7 +8996,7 @@ export const AuthMeResponseJSON = {
     }
     const _groups_ = json["groups"];
     if (_groups_) {
-      msg.groups = _groups_;
+      msg.groups = _groups_.map(protoscript.parseNumber);
     }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
@@ -8668,7 +9014,7 @@ export const AuthChangePasswordPayloadJSON = {
   /**
    * Serializes AuthChangePasswordPayload to JSON.
    */
-  encode: function (msg: Partial<AuthChangePasswordPayload>): string {
+  encode: function (msg: PartialDeep<AuthChangePasswordPayload>): string {
     return JSON.stringify(AuthChangePasswordPayloadJSON._writeMessage(msg));
   },
 
@@ -8678,18 +9024,21 @@ export const AuthChangePasswordPayloadJSON = {
   decode: function (json: string): AuthChangePasswordPayload {
     return AuthChangePasswordPayloadJSON._readMessage(
       AuthChangePasswordPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthChangePasswordPayload with all fields set to their default value.
    */
-  initialize: function (): AuthChangePasswordPayload {
+  initialize: function (
+    msg?: Partial<AuthChangePasswordPayload>,
+  ): AuthChangePasswordPayload {
     return {
       email: "",
       password: "",
       newPassword: "",
+      ...msg,
     };
   },
 
@@ -8697,7 +9046,7 @@ export const AuthChangePasswordPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthChangePasswordPayload>
+    msg: PartialDeep<AuthChangePasswordPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8717,7 +9066,7 @@ export const AuthChangePasswordPayloadJSON = {
    */
   _readMessage: function (
     msg: AuthChangePasswordPayload,
-    json: any
+    json: any,
   ): AuthChangePasswordPayload {
     const _email_ = json["email"];
     if (_email_) {
@@ -8739,7 +9088,7 @@ export const AuthChangePasswordResponseJSON = {
   /**
    * Serializes AuthChangePasswordResponse to JSON.
    */
-  encode: function (msg: Partial<AuthChangePasswordResponse>): string {
+  encode: function (msg: PartialDeep<AuthChangePasswordResponse>): string {
     return JSON.stringify(AuthChangePasswordResponseJSON._writeMessage(msg));
   },
 
@@ -8749,16 +9098,19 @@ export const AuthChangePasswordResponseJSON = {
   decode: function (json: string): AuthChangePasswordResponse {
     return AuthChangePasswordResponseJSON._readMessage(
       AuthChangePasswordResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthChangePasswordResponse with all fields set to their default value.
    */
-  initialize: function (): AuthChangePasswordResponse {
+  initialize: function (
+    msg?: Partial<AuthChangePasswordResponse>,
+  ): AuthChangePasswordResponse {
     return {
       authToken: "",
+      ...msg,
     };
   },
 
@@ -8766,7 +9118,7 @@ export const AuthChangePasswordResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthChangePasswordResponse>
+    msg: PartialDeep<AuthChangePasswordResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.authToken) {
@@ -8780,7 +9132,7 @@ export const AuthChangePasswordResponseJSON = {
    */
   _readMessage: function (
     msg: AuthChangePasswordResponse,
-    json: any
+    json: any,
   ): AuthChangePasswordResponse {
     const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
@@ -8794,9 +9146,9 @@ export const AuthRequestResetPasswordPayloadJSON = {
   /**
    * Serializes AuthRequestResetPasswordPayload to JSON.
    */
-  encode: function (msg: Partial<AuthRequestResetPasswordPayload>): string {
+  encode: function (msg: PartialDeep<AuthRequestResetPasswordPayload>): string {
     return JSON.stringify(
-      AuthRequestResetPasswordPayloadJSON._writeMessage(msg)
+      AuthRequestResetPasswordPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -8806,17 +9158,20 @@ export const AuthRequestResetPasswordPayloadJSON = {
   decode: function (json: string): AuthRequestResetPasswordPayload {
     return AuthRequestResetPasswordPayloadJSON._readMessage(
       AuthRequestResetPasswordPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthRequestResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): AuthRequestResetPasswordPayload {
+  initialize: function (
+    msg?: Partial<AuthRequestResetPasswordPayload>,
+  ): AuthRequestResetPasswordPayload {
     return {
       email: "",
       sendEmail: false,
+      ...msg,
     };
   },
 
@@ -8824,7 +9179,7 @@ export const AuthRequestResetPasswordPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestResetPasswordPayload>
+    msg: PartialDeep<AuthRequestResetPasswordPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8841,7 +9196,7 @@ export const AuthRequestResetPasswordPayloadJSON = {
    */
   _readMessage: function (
     msg: AuthRequestResetPasswordPayload,
-    json: any
+    json: any,
   ): AuthRequestResetPasswordPayload {
     const _email_ = json["email"];
     if (_email_) {
@@ -8859,9 +9214,11 @@ export const AuthRequestResetPasswordResponseJSON = {
   /**
    * Serializes AuthRequestResetPasswordResponse to JSON.
    */
-  encode: function (msg: Partial<AuthRequestResetPasswordResponse>): string {
+  encode: function (
+    msg: PartialDeep<AuthRequestResetPasswordResponse>,
+  ): string {
     return JSON.stringify(
-      AuthRequestResetPasswordResponseJSON._writeMessage(msg)
+      AuthRequestResetPasswordResponseJSON._writeMessage(msg),
     );
   },
 
@@ -8871,16 +9228,19 @@ export const AuthRequestResetPasswordResponseJSON = {
   decode: function (json: string): AuthRequestResetPasswordResponse {
     return AuthRequestResetPasswordResponseJSON._readMessage(
       AuthRequestResetPasswordResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthRequestResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): AuthRequestResetPasswordResponse {
+  initialize: function (
+    msg?: Partial<AuthRequestResetPasswordResponse>,
+  ): AuthRequestResetPasswordResponse {
     return {
       resetToken: "",
+      ...msg,
     };
   },
 
@@ -8888,7 +9248,7 @@ export const AuthRequestResetPasswordResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthRequestResetPasswordResponse>
+    msg: PartialDeep<AuthRequestResetPasswordResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.resetToken) {
@@ -8902,7 +9262,7 @@ export const AuthRequestResetPasswordResponseJSON = {
    */
   _readMessage: function (
     msg: AuthRequestResetPasswordResponse,
-    json: any
+    json: any,
   ): AuthRequestResetPasswordResponse {
     const _resetToken_ = json["resetToken"] ?? json["reset_token"];
     if (_resetToken_) {
@@ -8916,9 +9276,9 @@ export const AuthApproveResetPasswordPayloadJSON = {
   /**
    * Serializes AuthApproveResetPasswordPayload to JSON.
    */
-  encode: function (msg: Partial<AuthApproveResetPasswordPayload>): string {
+  encode: function (msg: PartialDeep<AuthApproveResetPasswordPayload>): string {
     return JSON.stringify(
-      AuthApproveResetPasswordPayloadJSON._writeMessage(msg)
+      AuthApproveResetPasswordPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -8928,17 +9288,20 @@ export const AuthApproveResetPasswordPayloadJSON = {
   decode: function (json: string): AuthApproveResetPasswordPayload {
     return AuthApproveResetPasswordPayloadJSON._readMessage(
       AuthApproveResetPasswordPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthApproveResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): AuthApproveResetPasswordPayload {
+  initialize: function (
+    msg?: Partial<AuthApproveResetPasswordPayload>,
+  ): AuthApproveResetPasswordPayload {
     return {
       email: "",
       resetToken: "",
+      ...msg,
     };
   },
 
@@ -8946,7 +9309,7 @@ export const AuthApproveResetPasswordPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveResetPasswordPayload>
+    msg: PartialDeep<AuthApproveResetPasswordPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8963,7 +9326,7 @@ export const AuthApproveResetPasswordPayloadJSON = {
    */
   _readMessage: function (
     msg: AuthApproveResetPasswordPayload,
-    json: any
+    json: any,
   ): AuthApproveResetPasswordPayload {
     const _email_ = json["email"];
     if (_email_) {
@@ -8981,9 +9344,11 @@ export const AuthApproveResetPasswordResponseJSON = {
   /**
    * Serializes AuthApproveResetPasswordResponse to JSON.
    */
-  encode: function (msg: Partial<AuthApproveResetPasswordResponse>): string {
+  encode: function (
+    msg: PartialDeep<AuthApproveResetPasswordResponse>,
+  ): string {
     return JSON.stringify(
-      AuthApproveResetPasswordResponseJSON._writeMessage(msg)
+      AuthApproveResetPasswordResponseJSON._writeMessage(msg),
     );
   },
 
@@ -8993,16 +9358,19 @@ export const AuthApproveResetPasswordResponseJSON = {
   decode: function (json: string): AuthApproveResetPasswordResponse {
     return AuthApproveResetPasswordResponseJSON._readMessage(
       AuthApproveResetPasswordResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AuthApproveResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): AuthApproveResetPasswordResponse {
+  initialize: function (
+    msg?: Partial<AuthApproveResetPasswordResponse>,
+  ): AuthApproveResetPasswordResponse {
     return {
       newTmpPassword: "",
+      ...msg,
     };
   },
 
@@ -9010,7 +9378,7 @@ export const AuthApproveResetPasswordResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AuthApproveResetPasswordResponse>
+    msg: PartialDeep<AuthApproveResetPasswordResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.newTmpPassword) {
@@ -9024,7 +9392,7 @@ export const AuthApproveResetPasswordResponseJSON = {
    */
   _readMessage: function (
     msg: AuthApproveResetPasswordResponse,
-    json: any
+    json: any,
   ): AuthApproveResetPasswordResponse {
     const _newTmpPassword_ = json["newTmpPassword"] ?? json["new_tmp_password"];
     if (_newTmpPassword_) {
@@ -9038,7 +9406,7 @@ export const AccessGetAccessRulesPayloadJSON = {
   /**
    * Serializes AccessGetAccessRulesPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetAccessRulesPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetAccessRulesPayload>): string {
     return JSON.stringify(AccessGetAccessRulesPayloadJSON._writeMessage(msg));
   },
 
@@ -9048,17 +9416,20 @@ export const AccessGetAccessRulesPayloadJSON = {
   decode: function (json: string): AccessGetAccessRulesPayload {
     return AccessGetAccessRulesPayloadJSON._readMessage(
       AccessGetAccessRulesPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAccessRulesPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAccessRulesPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAccessRulesPayload>,
+  ): AccessGetAccessRulesPayload {
     return {
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -9066,7 +9437,7 @@ export const AccessGetAccessRulesPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAccessRulesPayload>
+    msg: PartialDeep<AccessGetAccessRulesPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9083,15 +9454,15 @@ export const AccessGetAccessRulesPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetAccessRulesPayload,
-    json: any
+    json: any,
   ): AccessGetAccessRulesPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -9101,7 +9472,7 @@ export const AccessGetAccessRulesResponseJSON = {
   /**
    * Serializes AccessGetAccessRulesResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetAccessRulesResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetAccessRulesResponse>): string {
     return JSON.stringify(AccessGetAccessRulesResponseJSON._writeMessage(msg));
   },
 
@@ -9111,16 +9482,19 @@ export const AccessGetAccessRulesResponseJSON = {
   decode: function (json: string): AccessGetAccessRulesResponse {
     return AccessGetAccessRulesResponseJSON._readMessage(
       AccessGetAccessRulesResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAccessRulesResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAccessRulesResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAccessRulesResponse>,
+  ): AccessGetAccessRulesResponse {
     return {
       rules: protoAtoms.AccessRulesJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -9128,7 +9502,7 @@ export const AccessGetAccessRulesResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAccessRulesResponse>
+    msg: PartialDeep<AccessGetAccessRulesResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -9145,13 +9519,11 @@ export const AccessGetAccessRulesResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetAccessRulesResponse,
-    json: any
+    json: any,
   ): AccessGetAccessRulesResponse {
     const _rules_ = json["rules"];
     if (_rules_) {
-      const m = protoAtoms.AccessRules.initialize();
-      protoAtoms.AccessRulesJSON._readMessage(m, _rules_);
-      msg.rules = m;
+      protoAtoms.AccessRulesJSON._readMessage(msg.rules, _rules_);
     }
     return msg;
   },
@@ -9161,7 +9533,7 @@ export const AccessGetRuleValuePayloadJSON = {
   /**
    * Serializes AccessGetRuleValuePayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetRuleValuePayload>): string {
+  encode: function (msg: PartialDeep<AccessGetRuleValuePayload>): string {
     return JSON.stringify(AccessGetRuleValuePayloadJSON._writeMessage(msg));
   },
 
@@ -9171,18 +9543,21 @@ export const AccessGetRuleValuePayloadJSON = {
   decode: function (json: string): AccessGetRuleValuePayload {
     return AccessGetRuleValuePayloadJSON._readMessage(
       AccessGetRuleValuePayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetRuleValuePayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetRuleValuePayload {
+  initialize: function (
+    msg?: Partial<AccessGetRuleValuePayload>,
+  ): AccessGetRuleValuePayload {
     return {
       personId: 0,
       eventId: 0,
       ruleName: "",
+      ...msg,
     };
   },
 
@@ -9190,7 +9565,7 @@ export const AccessGetRuleValuePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetRuleValuePayload>
+    msg: PartialDeep<AccessGetRuleValuePayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9210,15 +9585,15 @@ export const AccessGetRuleValuePayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetRuleValuePayload,
-    json: any
+    json: any,
   ): AccessGetRuleValuePayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
@@ -9232,7 +9607,7 @@ export const AccessGetRuleValueResponseJSON = {
   /**
    * Serializes AccessGetRuleValueResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetRuleValueResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetRuleValueResponse>): string {
     return JSON.stringify(AccessGetRuleValueResponseJSON._writeMessage(msg));
   },
 
@@ -9242,16 +9617,19 @@ export const AccessGetRuleValueResponseJSON = {
   decode: function (json: string): AccessGetRuleValueResponse {
     return AccessGetRuleValueResponseJSON._readMessage(
       AccessGetRuleValueResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetRuleValueResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetRuleValueResponse {
+  initialize: function (
+    msg?: Partial<AccessGetRuleValueResponse>,
+  ): AccessGetRuleValueResponse {
     return {
       value: protoAtoms.RuleValueJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -9259,7 +9637,7 @@ export const AccessGetRuleValueResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetRuleValueResponse>
+    msg: PartialDeep<AccessGetRuleValueResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
@@ -9276,13 +9654,11 @@ export const AccessGetRuleValueResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetRuleValueResponse,
-    json: any
+    json: any,
   ): AccessGetRuleValueResponse {
     const _value_ = json["value"];
     if (_value_) {
-      const m = protoAtoms.RuleValue.initialize();
-      protoAtoms.RuleValueJSON._readMessage(m, _value_);
-      msg.value = m;
+      protoAtoms.RuleValueJSON._readMessage(msg.value, _value_);
     }
     return msg;
   },
@@ -9292,7 +9668,7 @@ export const AccessGetEventAdminsPayloadJSON = {
   /**
    * Serializes AccessGetEventAdminsPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetEventAdminsPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetEventAdminsPayload>): string {
     return JSON.stringify(AccessGetEventAdminsPayloadJSON._writeMessage(msg));
   },
 
@@ -9302,16 +9678,19 @@ export const AccessGetEventAdminsPayloadJSON = {
   decode: function (json: string): AccessGetEventAdminsPayload {
     return AccessGetEventAdminsPayloadJSON._readMessage(
       AccessGetEventAdminsPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetEventAdminsPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetEventAdminsPayload {
+  initialize: function (
+    msg?: Partial<AccessGetEventAdminsPayload>,
+  ): AccessGetEventAdminsPayload {
     return {
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -9319,7 +9698,7 @@ export const AccessGetEventAdminsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetEventAdminsPayload>
+    msg: PartialDeep<AccessGetEventAdminsPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -9333,11 +9712,11 @@ export const AccessGetEventAdminsPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetEventAdminsPayload,
-    json: any
+    json: any,
   ): AccessGetEventAdminsPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -9347,7 +9726,7 @@ export const AccessGetEventAdminsResponseJSON = {
   /**
    * Serializes AccessGetEventAdminsResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetEventAdminsResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetEventAdminsResponse>): string {
     return JSON.stringify(AccessGetEventAdminsResponseJSON._writeMessage(msg));
   },
 
@@ -9357,16 +9736,19 @@ export const AccessGetEventAdminsResponseJSON = {
   decode: function (json: string): AccessGetEventAdminsResponse {
     return AccessGetEventAdminsResponseJSON._readMessage(
       AccessGetEventAdminsResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetEventAdminsResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetEventAdminsResponse {
+  initialize: function (
+    msg?: Partial<AccessGetEventAdminsResponse>,
+  ): AccessGetEventAdminsResponse {
     return {
       admins: [],
+      ...msg,
     };
   },
 
@@ -9374,7 +9756,7 @@ export const AccessGetEventAdminsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetEventAdminsResponse>
+    msg: PartialDeep<AccessGetEventAdminsResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.admins?.length) {
@@ -9388,12 +9770,12 @@ export const AccessGetEventAdminsResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetEventAdminsResponse,
-    json: any
+    json: any,
   ): AccessGetEventAdminsResponse {
     const _admins_ = json["admins"];
     if (_admins_) {
       for (const item of _admins_) {
-        const m = protoAtoms.EventAdmin.initialize();
+        const m = protoAtoms.EventAdminJSON.initialize();
         protoAtoms.EventAdminJSON._readMessage(m, item);
         msg.admins.push(m);
       }
@@ -9406,9 +9788,9 @@ export const AccessGetSuperadminFlagPayloadJSON = {
   /**
    * Serializes AccessGetSuperadminFlagPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetSuperadminFlagPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetSuperadminFlagPayload>): string {
     return JSON.stringify(
-      AccessGetSuperadminFlagPayloadJSON._writeMessage(msg)
+      AccessGetSuperadminFlagPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -9418,16 +9800,19 @@ export const AccessGetSuperadminFlagPayloadJSON = {
   decode: function (json: string): AccessGetSuperadminFlagPayload {
     return AccessGetSuperadminFlagPayloadJSON._readMessage(
       AccessGetSuperadminFlagPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetSuperadminFlagPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetSuperadminFlagPayload {
+  initialize: function (
+    msg?: Partial<AccessGetSuperadminFlagPayload>,
+  ): AccessGetSuperadminFlagPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -9435,7 +9820,7 @@ export const AccessGetSuperadminFlagPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetSuperadminFlagPayload>
+    msg: PartialDeep<AccessGetSuperadminFlagPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9449,11 +9834,11 @@ export const AccessGetSuperadminFlagPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetSuperadminFlagPayload,
-    json: any
+    json: any,
   ): AccessGetSuperadminFlagPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     return msg;
   },
@@ -9463,9 +9848,9 @@ export const AccessGetSuperadminFlagResponseJSON = {
   /**
    * Serializes AccessGetSuperadminFlagResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetSuperadminFlagResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetSuperadminFlagResponse>): string {
     return JSON.stringify(
-      AccessGetSuperadminFlagResponseJSON._writeMessage(msg)
+      AccessGetSuperadminFlagResponseJSON._writeMessage(msg),
     );
   },
 
@@ -9475,16 +9860,19 @@ export const AccessGetSuperadminFlagResponseJSON = {
   decode: function (json: string): AccessGetSuperadminFlagResponse {
     return AccessGetSuperadminFlagResponseJSON._readMessage(
       AccessGetSuperadminFlagResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetSuperadminFlagResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetSuperadminFlagResponse {
+  initialize: function (
+    msg?: Partial<AccessGetSuperadminFlagResponse>,
+  ): AccessGetSuperadminFlagResponse {
     return {
       isAdmin: false,
+      ...msg,
     };
   },
 
@@ -9492,7 +9880,7 @@ export const AccessGetSuperadminFlagResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetSuperadminFlagResponse>
+    msg: PartialDeep<AccessGetSuperadminFlagResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.isAdmin) {
@@ -9506,7 +9894,7 @@ export const AccessGetSuperadminFlagResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetSuperadminFlagResponse,
-    json: any
+    json: any,
   ): AccessGetSuperadminFlagResponse {
     const _isAdmin_ = json["isAdmin"] ?? json["is_admin"];
     if (_isAdmin_) {
@@ -9520,7 +9908,7 @@ export const AccessGetOwnedEventIdsPayloadJSON = {
   /**
    * Serializes AccessGetOwnedEventIdsPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetOwnedEventIdsPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetOwnedEventIdsPayload>): string {
     return JSON.stringify(AccessGetOwnedEventIdsPayloadJSON._writeMessage(msg));
   },
 
@@ -9530,16 +9918,19 @@ export const AccessGetOwnedEventIdsPayloadJSON = {
   decode: function (json: string): AccessGetOwnedEventIdsPayload {
     return AccessGetOwnedEventIdsPayloadJSON._readMessage(
       AccessGetOwnedEventIdsPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetOwnedEventIdsPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetOwnedEventIdsPayload {
+  initialize: function (
+    msg?: Partial<AccessGetOwnedEventIdsPayload>,
+  ): AccessGetOwnedEventIdsPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -9547,7 +9938,7 @@ export const AccessGetOwnedEventIdsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetOwnedEventIdsPayload>
+    msg: PartialDeep<AccessGetOwnedEventIdsPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9561,11 +9952,11 @@ export const AccessGetOwnedEventIdsPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetOwnedEventIdsPayload,
-    json: any
+    json: any,
   ): AccessGetOwnedEventIdsPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     return msg;
   },
@@ -9575,9 +9966,9 @@ export const AccessGetOwnedEventIdsResponseJSON = {
   /**
    * Serializes AccessGetOwnedEventIdsResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetOwnedEventIdsResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetOwnedEventIdsResponse>): string {
     return JSON.stringify(
-      AccessGetOwnedEventIdsResponseJSON._writeMessage(msg)
+      AccessGetOwnedEventIdsResponseJSON._writeMessage(msg),
     );
   },
 
@@ -9587,16 +9978,19 @@ export const AccessGetOwnedEventIdsResponseJSON = {
   decode: function (json: string): AccessGetOwnedEventIdsResponse {
     return AccessGetOwnedEventIdsResponseJSON._readMessage(
       AccessGetOwnedEventIdsResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetOwnedEventIdsResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetOwnedEventIdsResponse {
+  initialize: function (
+    msg?: Partial<AccessGetOwnedEventIdsResponse>,
+  ): AccessGetOwnedEventIdsResponse {
     return {
       eventIds: [],
+      ...msg,
     };
   },
 
@@ -9604,7 +9998,7 @@ export const AccessGetOwnedEventIdsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetOwnedEventIdsResponse>
+    msg: PartialDeep<AccessGetOwnedEventIdsResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventIds?.length) {
@@ -9618,11 +10012,11 @@ export const AccessGetOwnedEventIdsResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetOwnedEventIdsResponse,
-    json: any
+    json: any,
   ): AccessGetOwnedEventIdsResponse {
     const _eventIds_ = json["eventIds"] ?? json["event_ids"];
     if (_eventIds_) {
-      msg.eventIds = _eventIds_;
+      msg.eventIds = _eventIds_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -9632,7 +10026,7 @@ export const AccessGetRulesListPayloadJSON = {
   /**
    * Serializes AccessGetRulesListPayload to JSON.
    */
-  encode: function (_msg?: Partial<AccessGetRulesListPayload>): string {
+  encode: function (_msg?: PartialDeep<AccessGetRulesListPayload>): string {
     return "{}";
   },
 
@@ -9646,15 +10040,19 @@ export const AccessGetRulesListPayloadJSON = {
   /**
    * Initializes AccessGetRulesListPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetRulesListPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<AccessGetRulesListPayload>,
+  ): AccessGetRulesListPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<AccessGetRulesListPayload>
+    _msg: PartialDeep<AccessGetRulesListPayload>,
   ): Record<string, unknown> {
     return {};
   },
@@ -9664,7 +10062,7 @@ export const AccessGetRulesListPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetRulesListPayload,
-    _json: any
+    _json: any,
   ): AccessGetRulesListPayload {
     return msg;
   },
@@ -9674,7 +10072,7 @@ export const AccessGetRulesListResponseJSON = {
   /**
    * Serializes AccessGetRulesListResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetRulesListResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetRulesListResponse>): string {
     return JSON.stringify(AccessGetRulesListResponseJSON._writeMessage(msg));
   },
 
@@ -9684,16 +10082,19 @@ export const AccessGetRulesListResponseJSON = {
   decode: function (json: string): AccessGetRulesListResponse {
     return AccessGetRulesListResponseJSON._readMessage(
       AccessGetRulesListResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetRulesListResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetRulesListResponse {
+  initialize: function (
+    msg?: Partial<AccessGetRulesListResponse>,
+  ): AccessGetRulesListResponse {
     return {
       items: [],
+      ...msg,
     };
   },
 
@@ -9701,7 +10102,7 @@ export const AccessGetRulesListResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetRulesListResponse>
+    msg: PartialDeep<AccessGetRulesListResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.items?.length) {
@@ -9715,12 +10116,12 @@ export const AccessGetRulesListResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetRulesListResponse,
-    json: any
+    json: any,
   ): AccessGetRulesListResponse {
     const _items_ = json["items"];
     if (_items_) {
       for (const item of _items_) {
-        const m = protoAtoms.RuleListItem.initialize();
+        const m = protoAtoms.RuleListItemJSON.initialize();
         protoAtoms.RuleListItemJSON._readMessage(m, item);
         msg.items.push(m);
       }
@@ -9733,7 +10134,7 @@ export const AccessGetAllEventRulesPayloadJSON = {
   /**
    * Serializes AccessGetAllEventRulesPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetAllEventRulesPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetAllEventRulesPayload>): string {
     return JSON.stringify(AccessGetAllEventRulesPayloadJSON._writeMessage(msg));
   },
 
@@ -9743,16 +10144,19 @@ export const AccessGetAllEventRulesPayloadJSON = {
   decode: function (json: string): AccessGetAllEventRulesPayload {
     return AccessGetAllEventRulesPayloadJSON._readMessage(
       AccessGetAllEventRulesPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAllEventRulesPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllEventRulesPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAllEventRulesPayload>,
+  ): AccessGetAllEventRulesPayload {
     return {
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -9760,7 +10164,7 @@ export const AccessGetAllEventRulesPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllEventRulesPayload>
+    msg: PartialDeep<AccessGetAllEventRulesPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -9774,11 +10178,11 @@ export const AccessGetAllEventRulesPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetAllEventRulesPayload,
-    json: any
+    json: any,
   ): AccessGetAllEventRulesPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -9788,9 +10192,9 @@ export const AccessGetAllEventRulesResponseJSON = {
   /**
    * Serializes AccessGetAllEventRulesResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetAllEventRulesResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetAllEventRulesResponse>): string {
     return JSON.stringify(
-      AccessGetAllEventRulesResponseJSON._writeMessage(msg)
+      AccessGetAllEventRulesResponseJSON._writeMessage(msg),
     );
   },
 
@@ -9800,17 +10204,20 @@ export const AccessGetAllEventRulesResponseJSON = {
   decode: function (json: string): AccessGetAllEventRulesResponse {
     return AccessGetAllEventRulesResponseJSON._readMessage(
       AccessGetAllEventRulesResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAllEventRulesResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllEventRulesResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAllEventRulesResponse>,
+  ): AccessGetAllEventRulesResponse {
     return {
       personRules: [],
       groupRules: [],
+      ...msg,
     };
   },
 
@@ -9818,17 +10225,17 @@ export const AccessGetAllEventRulesResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllEventRulesResponse>
+    msg: PartialDeep<AccessGetAllEventRulesResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personRules?.length) {
       json["personRules"] = msg.personRules.map(
-        protoAtoms.EventRuleListItemJSON._writeMessage
+        protoAtoms.EventRuleListItemJSON._writeMessage,
       );
     }
     if (msg.groupRules?.length) {
       json["groupRules"] = msg.groupRules.map(
-        protoAtoms.EventRuleListItemJSON._writeMessage
+        protoAtoms.EventRuleListItemJSON._writeMessage,
       );
     }
     return json;
@@ -9839,12 +10246,12 @@ export const AccessGetAllEventRulesResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetAllEventRulesResponse,
-    json: any
+    json: any,
   ): AccessGetAllEventRulesResponse {
     const _personRules_ = json["personRules"] ?? json["person_rules"];
     if (_personRules_) {
       for (const item of _personRules_) {
-        const m = protoAtoms.EventRuleListItem.initialize();
+        const m = protoAtoms.EventRuleListItemJSON.initialize();
         protoAtoms.EventRuleListItemJSON._readMessage(m, item);
         msg.personRules.push(m);
       }
@@ -9852,7 +10259,7 @@ export const AccessGetAllEventRulesResponseJSON = {
     const _groupRules_ = json["groupRules"] ?? json["group_rules"];
     if (_groupRules_) {
       for (const item of _groupRules_) {
-        const m = protoAtoms.EventRuleListItem.initialize();
+        const m = protoAtoms.EventRuleListItemJSON.initialize();
         protoAtoms.EventRuleListItemJSON._readMessage(m, item);
         msg.groupRules.push(m);
       }
@@ -9865,7 +10272,7 @@ export const AccessGetPersonAccessPayloadJSON = {
   /**
    * Serializes AccessGetPersonAccessPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetPersonAccessPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetPersonAccessPayload>): string {
     return JSON.stringify(AccessGetPersonAccessPayloadJSON._writeMessage(msg));
   },
 
@@ -9875,17 +10282,20 @@ export const AccessGetPersonAccessPayloadJSON = {
   decode: function (json: string): AccessGetPersonAccessPayload {
     return AccessGetPersonAccessPayloadJSON._readMessage(
       AccessGetPersonAccessPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetPersonAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetPersonAccessPayload>,
+  ): AccessGetPersonAccessPayload {
     return {
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -9893,7 +10303,7 @@ export const AccessGetPersonAccessPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetPersonAccessPayload>
+    msg: PartialDeep<AccessGetPersonAccessPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9910,15 +10320,15 @@ export const AccessGetPersonAccessPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetPersonAccessPayload,
-    json: any
+    json: any,
   ): AccessGetPersonAccessPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -9928,7 +10338,7 @@ export const AccessGetPersonAccessResponseJSON = {
   /**
    * Serializes AccessGetPersonAccessResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetPersonAccessResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetPersonAccessResponse>): string {
     return JSON.stringify(AccessGetPersonAccessResponseJSON._writeMessage(msg));
   },
 
@@ -9938,16 +10348,19 @@ export const AccessGetPersonAccessResponseJSON = {
   decode: function (json: string): AccessGetPersonAccessResponse {
     return AccessGetPersonAccessResponseJSON._readMessage(
       AccessGetPersonAccessResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetPersonAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetPersonAccessResponse>,
+  ): AccessGetPersonAccessResponse {
     return {
       rules: protoAtoms.AccessRulesJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -9955,7 +10368,7 @@ export const AccessGetPersonAccessResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetPersonAccessResponse>
+    msg: PartialDeep<AccessGetPersonAccessResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -9972,13 +10385,11 @@ export const AccessGetPersonAccessResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetPersonAccessResponse,
-    json: any
+    json: any,
   ): AccessGetPersonAccessResponse {
     const _rules_ = json["rules"];
     if (_rules_) {
-      const m = protoAtoms.AccessRules.initialize();
-      protoAtoms.AccessRulesJSON._readMessage(m, _rules_);
-      msg.rules = m;
+      protoAtoms.AccessRulesJSON._readMessage(msg.rules, _rules_);
     }
     return msg;
   },
@@ -9988,7 +10399,7 @@ export const AccessGetGroupAccessPayloadJSON = {
   /**
    * Serializes AccessGetGroupAccessPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetGroupAccessPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetGroupAccessPayload>): string {
     return JSON.stringify(AccessGetGroupAccessPayloadJSON._writeMessage(msg));
   },
 
@@ -9998,17 +10409,20 @@ export const AccessGetGroupAccessPayloadJSON = {
   decode: function (json: string): AccessGetGroupAccessPayload {
     return AccessGetGroupAccessPayloadJSON._readMessage(
       AccessGetGroupAccessPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetGroupAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetGroupAccessPayload>,
+  ): AccessGetGroupAccessPayload {
     return {
       groupId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -10016,7 +10430,7 @@ export const AccessGetGroupAccessPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetGroupAccessPayload>
+    msg: PartialDeep<AccessGetGroupAccessPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -10033,15 +10447,15 @@ export const AccessGetGroupAccessPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetGroupAccessPayload,
-    json: any
+    json: any,
   ): AccessGetGroupAccessPayload {
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -10051,7 +10465,7 @@ export const AccessGetGroupAccessResponseJSON = {
   /**
    * Serializes AccessGetGroupAccessResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetGroupAccessResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetGroupAccessResponse>): string {
     return JSON.stringify(AccessGetGroupAccessResponseJSON._writeMessage(msg));
   },
 
@@ -10061,16 +10475,19 @@ export const AccessGetGroupAccessResponseJSON = {
   decode: function (json: string): AccessGetGroupAccessResponse {
     return AccessGetGroupAccessResponseJSON._readMessage(
       AccessGetGroupAccessResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetGroupAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetGroupAccessResponse>,
+  ): AccessGetGroupAccessResponse {
     return {
       rules: protoAtoms.AccessRulesJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -10078,7 +10495,7 @@ export const AccessGetGroupAccessResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetGroupAccessResponse>
+    msg: PartialDeep<AccessGetGroupAccessResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -10095,13 +10512,11 @@ export const AccessGetGroupAccessResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetGroupAccessResponse,
-    json: any
+    json: any,
   ): AccessGetGroupAccessResponse {
     const _rules_ = json["rules"];
     if (_rules_) {
-      const m = protoAtoms.AccessRules.initialize();
-      protoAtoms.AccessRulesJSON._readMessage(m, _rules_);
-      msg.rules = m;
+      protoAtoms.AccessRulesJSON._readMessage(msg.rules, _rules_);
     }
     return msg;
   },
@@ -10111,9 +10526,9 @@ export const AccessGetAllPersonAccessPayloadJSON = {
   /**
    * Serializes AccessGetAllPersonAccessPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetAllPersonAccessPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetAllPersonAccessPayload>): string {
     return JSON.stringify(
-      AccessGetAllPersonAccessPayloadJSON._writeMessage(msg)
+      AccessGetAllPersonAccessPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -10123,16 +10538,19 @@ export const AccessGetAllPersonAccessPayloadJSON = {
   decode: function (json: string): AccessGetAllPersonAccessPayload {
     return AccessGetAllPersonAccessPayloadJSON._readMessage(
       AccessGetAllPersonAccessPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAllPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllPersonAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAllPersonAccessPayload>,
+  ): AccessGetAllPersonAccessPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -10140,7 +10558,7 @@ export const AccessGetAllPersonAccessPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllPersonAccessPayload>
+    msg: PartialDeep<AccessGetAllPersonAccessPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -10154,11 +10572,11 @@ export const AccessGetAllPersonAccessPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetAllPersonAccessPayload,
-    json: any
+    json: any,
   ): AccessGetAllPersonAccessPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     return msg;
   },
@@ -10168,9 +10586,11 @@ export const AccessGetAllPersonAccessResponseJSON = {
   /**
    * Serializes AccessGetAllPersonAccessResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetAllPersonAccessResponse>): string {
+  encode: function (
+    msg: PartialDeep<AccessGetAllPersonAccessResponse>,
+  ): string {
     return JSON.stringify(
-      AccessGetAllPersonAccessResponseJSON._writeMessage(msg)
+      AccessGetAllPersonAccessResponseJSON._writeMessage(msg),
     );
   },
 
@@ -10180,16 +10600,19 @@ export const AccessGetAllPersonAccessResponseJSON = {
   decode: function (json: string): AccessGetAllPersonAccessResponse {
     return AccessGetAllPersonAccessResponseJSON._readMessage(
       AccessGetAllPersonAccessResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAllPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllPersonAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAllPersonAccessResponse>,
+  ): AccessGetAllPersonAccessResponse {
     return {
       rulesByEvent: {},
+      ...msg,
     };
   },
 
@@ -10197,7 +10620,7 @@ export const AccessGetAllPersonAccessResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllPersonAccessResponse>
+    msg: PartialDeep<AccessGetAllPersonAccessResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rulesByEvent) {
@@ -10205,7 +10628,7 @@ export const AccessGetAllPersonAccessResponseJSON = {
         Object.entries(msg.rulesByEvent)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessGetAllPersonAccessResponseJSON.RulesByEvent._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_rulesByEvent_).length > 0) {
         json["rulesByEvent"] = _rulesByEvent_;
@@ -10219,7 +10642,7 @@ export const AccessGetAllPersonAccessResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetAllPersonAccessResponse,
-    json: any
+    json: any,
   ): AccessGetAllPersonAccessResponse {
     const _rulesByEvent_ = json["rulesByEvent"] ?? json["rules_by_event"];
     if (_rulesByEvent_) {
@@ -10227,7 +10650,7 @@ export const AccessGetAllPersonAccessResponseJSON = {
         Object.entries(_rulesByEvent_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessGetAllPersonAccessResponseJSON.RulesByEvent._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     return msg;
@@ -10238,7 +10661,7 @@ export const AccessGetAllPersonAccessResponseJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<AccessGetAllPersonAccessResponse.RulesByEvent>
+      msg: PartialDeep<AccessGetAllPersonAccessResponse.RulesByEvent>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -10246,7 +10669,7 @@ export const AccessGetAllPersonAccessResponseJSON = {
       }
       if (msg.value) {
         const _value_ = protoAtoms.RuleListItemExMapJSON._writeMessage(
-          msg.value
+          msg.value,
         );
         if (Object.keys(_value_).length > 0) {
           json["value"] = _value_;
@@ -10260,17 +10683,15 @@ export const AccessGetAllPersonAccessResponseJSON = {
      */
     _readMessage: function (
       msg: AccessGetAllPersonAccessResponse.RulesByEvent,
-      json: any
+      json: any,
     ): AccessGetAllPersonAccessResponse.RulesByEvent {
       const _key_ = json["key"];
       if (_key_) {
-        msg.key = _key_;
+        msg.key = protoscript.parseNumber(_key_);
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = protoAtoms.RuleListItemExMap.initialize();
-        protoAtoms.RuleListItemExMapJSON._readMessage(m, _value_);
-        msg.value = m;
+        protoAtoms.RuleListItemExMapJSON._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -10281,9 +10702,9 @@ export const AccessGetAllGroupAccessPayloadJSON = {
   /**
    * Serializes AccessGetAllGroupAccessPayload to JSON.
    */
-  encode: function (msg: Partial<AccessGetAllGroupAccessPayload>): string {
+  encode: function (msg: PartialDeep<AccessGetAllGroupAccessPayload>): string {
     return JSON.stringify(
-      AccessGetAllGroupAccessPayloadJSON._writeMessage(msg)
+      AccessGetAllGroupAccessPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -10293,16 +10714,19 @@ export const AccessGetAllGroupAccessPayloadJSON = {
   decode: function (json: string): AccessGetAllGroupAccessPayload {
     return AccessGetAllGroupAccessPayloadJSON._readMessage(
       AccessGetAllGroupAccessPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAllGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllGroupAccessPayload {
+  initialize: function (
+    msg?: Partial<AccessGetAllGroupAccessPayload>,
+  ): AccessGetAllGroupAccessPayload {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -10310,7 +10734,7 @@ export const AccessGetAllGroupAccessPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllGroupAccessPayload>
+    msg: PartialDeep<AccessGetAllGroupAccessPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -10324,11 +10748,11 @@ export const AccessGetAllGroupAccessPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessGetAllGroupAccessPayload,
-    json: any
+    json: any,
   ): AccessGetAllGroupAccessPayload {
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     return msg;
   },
@@ -10338,9 +10762,9 @@ export const AccessGetAllGroupAccessResponseJSON = {
   /**
    * Serializes AccessGetAllGroupAccessResponse to JSON.
    */
-  encode: function (msg: Partial<AccessGetAllGroupAccessResponse>): string {
+  encode: function (msg: PartialDeep<AccessGetAllGroupAccessResponse>): string {
     return JSON.stringify(
-      AccessGetAllGroupAccessResponseJSON._writeMessage(msg)
+      AccessGetAllGroupAccessResponseJSON._writeMessage(msg),
     );
   },
 
@@ -10350,16 +10774,19 @@ export const AccessGetAllGroupAccessResponseJSON = {
   decode: function (json: string): AccessGetAllGroupAccessResponse {
     return AccessGetAllGroupAccessResponseJSON._readMessage(
       AccessGetAllGroupAccessResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessGetAllGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): AccessGetAllGroupAccessResponse {
+  initialize: function (
+    msg?: Partial<AccessGetAllGroupAccessResponse>,
+  ): AccessGetAllGroupAccessResponse {
     return {
       rulesByEvent: {},
+      ...msg,
     };
   },
 
@@ -10367,7 +10794,7 @@ export const AccessGetAllGroupAccessResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessGetAllGroupAccessResponse>
+    msg: PartialDeep<AccessGetAllGroupAccessResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rulesByEvent) {
@@ -10375,7 +10802,7 @@ export const AccessGetAllGroupAccessResponseJSON = {
         Object.entries(msg.rulesByEvent)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessGetAllGroupAccessResponseJSON.RulesByEvent._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_rulesByEvent_).length > 0) {
         json["rulesByEvent"] = _rulesByEvent_;
@@ -10389,7 +10816,7 @@ export const AccessGetAllGroupAccessResponseJSON = {
    */
   _readMessage: function (
     msg: AccessGetAllGroupAccessResponse,
-    json: any
+    json: any,
   ): AccessGetAllGroupAccessResponse {
     const _rulesByEvent_ = json["rulesByEvent"] ?? json["rules_by_event"];
     if (_rulesByEvent_) {
@@ -10397,7 +10824,7 @@ export const AccessGetAllGroupAccessResponseJSON = {
         Object.entries(_rulesByEvent_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessGetAllGroupAccessResponseJSON.RulesByEvent._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     return msg;
@@ -10408,7 +10835,7 @@ export const AccessGetAllGroupAccessResponseJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<AccessGetAllGroupAccessResponse.RulesByEvent>
+      msg: PartialDeep<AccessGetAllGroupAccessResponse.RulesByEvent>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -10416,7 +10843,7 @@ export const AccessGetAllGroupAccessResponseJSON = {
       }
       if (msg.value) {
         const _value_ = protoAtoms.RuleListItemExMapJSON._writeMessage(
-          msg.value
+          msg.value,
         );
         if (Object.keys(_value_).length > 0) {
           json["value"] = _value_;
@@ -10430,17 +10857,15 @@ export const AccessGetAllGroupAccessResponseJSON = {
      */
     _readMessage: function (
       msg: AccessGetAllGroupAccessResponse.RulesByEvent,
-      json: any
+      json: any,
     ): AccessGetAllGroupAccessResponse.RulesByEvent {
       const _key_ = json["key"];
       if (_key_) {
-        msg.key = _key_;
+        msg.key = protoscript.parseNumber(_key_);
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = protoAtoms.RuleListItemExMap.initialize();
-        protoAtoms.RuleListItemExMapJSON._readMessage(m, _value_);
-        msg.value = m;
+        protoAtoms.RuleListItemExMapJSON._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -10451,7 +10876,7 @@ export const AccessAddRuleForPersonPayloadJSON = {
   /**
    * Serializes AccessAddRuleForPersonPayload to JSON.
    */
-  encode: function (msg: Partial<AccessAddRuleForPersonPayload>): string {
+  encode: function (msg: PartialDeep<AccessAddRuleForPersonPayload>): string {
     return JSON.stringify(AccessAddRuleForPersonPayloadJSON._writeMessage(msg));
   },
 
@@ -10461,20 +10886,23 @@ export const AccessAddRuleForPersonPayloadJSON = {
   decode: function (json: string): AccessAddRuleForPersonPayload {
     return AccessAddRuleForPersonPayloadJSON._readMessage(
       AccessAddRuleForPersonPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForPersonPayload>,
+  ): AccessAddRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
       ruleType: "",
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -10482,7 +10910,7 @@ export const AccessAddRuleForPersonPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForPersonPayload>
+    msg: PartialDeep<AccessAddRuleForPersonPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -10511,7 +10939,7 @@ export const AccessAddRuleForPersonPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessAddRuleForPersonPayload,
-    json: any
+    json: any,
   ): AccessAddRuleForPersonPayload {
     const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
@@ -10519,9 +10947,7 @@ export const AccessAddRuleForPersonPayloadJSON = {
     }
     const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
-      const m = protoAtoms.RuleValue.initialize();
-      protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
-      msg.ruleValue = m;
+      protoAtoms.RuleValueJSON._readMessage(msg.ruleValue, _ruleValue_);
     }
     const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
@@ -10529,11 +10955,11 @@ export const AccessAddRuleForPersonPayloadJSON = {
     }
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -10543,9 +10969,9 @@ export const AccessAddRuleForPersonResponseJSON = {
   /**
    * Serializes AccessAddRuleForPersonResponse to JSON.
    */
-  encode: function (msg: Partial<AccessAddRuleForPersonResponse>): string {
+  encode: function (msg: PartialDeep<AccessAddRuleForPersonResponse>): string {
     return JSON.stringify(
-      AccessAddRuleForPersonResponseJSON._writeMessage(msg)
+      AccessAddRuleForPersonResponseJSON._writeMessage(msg),
     );
   },
 
@@ -10555,16 +10981,19 @@ export const AccessAddRuleForPersonResponseJSON = {
   decode: function (json: string): AccessAddRuleForPersonResponse {
     return AccessAddRuleForPersonResponseJSON._readMessage(
       AccessAddRuleForPersonResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForPersonResponse {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForPersonResponse>,
+  ): AccessAddRuleForPersonResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -10572,7 +11001,7 @@ export const AccessAddRuleForPersonResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForPersonResponse>
+    msg: PartialDeep<AccessAddRuleForPersonResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10586,11 +11015,11 @@ export const AccessAddRuleForPersonResponseJSON = {
    */
   _readMessage: function (
     msg: AccessAddRuleForPersonResponse,
-    json: any
+    json: any,
   ): AccessAddRuleForPersonResponse {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     return msg;
   },
@@ -10600,7 +11029,7 @@ export const AccessAddRuleForGroupPayloadJSON = {
   /**
    * Serializes AccessAddRuleForGroupPayload to JSON.
    */
-  encode: function (msg: Partial<AccessAddRuleForGroupPayload>): string {
+  encode: function (msg: PartialDeep<AccessAddRuleForGroupPayload>): string {
     return JSON.stringify(AccessAddRuleForGroupPayloadJSON._writeMessage(msg));
   },
 
@@ -10610,20 +11039,23 @@ export const AccessAddRuleForGroupPayloadJSON = {
   decode: function (json: string): AccessAddRuleForGroupPayload {
     return AccessAddRuleForGroupPayloadJSON._readMessage(
       AccessAddRuleForGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForGroupPayload>,
+  ): AccessAddRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
       ruleType: "",
       groupId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -10631,7 +11063,7 @@ export const AccessAddRuleForGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForGroupPayload>
+    msg: PartialDeep<AccessAddRuleForGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -10660,7 +11092,7 @@ export const AccessAddRuleForGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessAddRuleForGroupPayload,
-    json: any
+    json: any,
   ): AccessAddRuleForGroupPayload {
     const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
@@ -10668,9 +11100,7 @@ export const AccessAddRuleForGroupPayloadJSON = {
     }
     const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
-      const m = protoAtoms.RuleValue.initialize();
-      protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
-      msg.ruleValue = m;
+      protoAtoms.RuleValueJSON._readMessage(msg.ruleValue, _ruleValue_);
     }
     const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
@@ -10678,11 +11108,11 @@ export const AccessAddRuleForGroupPayloadJSON = {
     }
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -10692,7 +11122,7 @@ export const AccessAddRuleForGroupResponseJSON = {
   /**
    * Serializes AccessAddRuleForGroupResponse to JSON.
    */
-  encode: function (msg: Partial<AccessAddRuleForGroupResponse>): string {
+  encode: function (msg: PartialDeep<AccessAddRuleForGroupResponse>): string {
     return JSON.stringify(AccessAddRuleForGroupResponseJSON._writeMessage(msg));
   },
 
@@ -10702,16 +11132,19 @@ export const AccessAddRuleForGroupResponseJSON = {
   decode: function (json: string): AccessAddRuleForGroupResponse {
     return AccessAddRuleForGroupResponseJSON._readMessage(
       AccessAddRuleForGroupResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddRuleForGroupResponse {
+  initialize: function (
+    msg?: Partial<AccessAddRuleForGroupResponse>,
+  ): AccessAddRuleForGroupResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -10719,7 +11152,7 @@ export const AccessAddRuleForGroupResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddRuleForGroupResponse>
+    msg: PartialDeep<AccessAddRuleForGroupResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10733,11 +11166,11 @@ export const AccessAddRuleForGroupResponseJSON = {
    */
   _readMessage: function (
     msg: AccessAddRuleForGroupResponse,
-    json: any
+    json: any,
   ): AccessAddRuleForGroupResponse {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     return msg;
   },
@@ -10747,9 +11180,11 @@ export const AccessUpdateRuleForPersonPayloadJSON = {
   /**
    * Serializes AccessUpdateRuleForPersonPayload to JSON.
    */
-  encode: function (msg: Partial<AccessUpdateRuleForPersonPayload>): string {
+  encode: function (
+    msg: PartialDeep<AccessUpdateRuleForPersonPayload>,
+  ): string {
     return JSON.stringify(
-      AccessUpdateRuleForPersonPayloadJSON._writeMessage(msg)
+      AccessUpdateRuleForPersonPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -10759,18 +11194,21 @@ export const AccessUpdateRuleForPersonPayloadJSON = {
   decode: function (json: string): AccessUpdateRuleForPersonPayload {
     return AccessUpdateRuleForPersonPayloadJSON._readMessage(
       AccessUpdateRuleForPersonPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessUpdateRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessUpdateRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessUpdateRuleForPersonPayload>,
+  ): AccessUpdateRuleForPersonPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
       ruleType: "",
+      ...msg,
     };
   },
 
@@ -10778,7 +11216,7 @@ export const AccessUpdateRuleForPersonPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessUpdateRuleForPersonPayload>
+    msg: PartialDeep<AccessUpdateRuleForPersonPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10801,17 +11239,15 @@ export const AccessUpdateRuleForPersonPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessUpdateRuleForPersonPayload,
-    json: any
+    json: any,
   ): AccessUpdateRuleForPersonPayload {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
-      const m = protoAtoms.RuleValue.initialize();
-      protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
-      msg.ruleValue = m;
+      protoAtoms.RuleValueJSON._readMessage(msg.ruleValue, _ruleValue_);
     }
     const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
@@ -10825,9 +11261,9 @@ export const AccessUpdateRuleForGroupPayloadJSON = {
   /**
    * Serializes AccessUpdateRuleForGroupPayload to JSON.
    */
-  encode: function (msg: Partial<AccessUpdateRuleForGroupPayload>): string {
+  encode: function (msg: PartialDeep<AccessUpdateRuleForGroupPayload>): string {
     return JSON.stringify(
-      AccessUpdateRuleForGroupPayloadJSON._writeMessage(msg)
+      AccessUpdateRuleForGroupPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -10837,18 +11273,21 @@ export const AccessUpdateRuleForGroupPayloadJSON = {
   decode: function (json: string): AccessUpdateRuleForGroupPayload {
     return AccessUpdateRuleForGroupPayloadJSON._readMessage(
       AccessUpdateRuleForGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessUpdateRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessUpdateRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessUpdateRuleForGroupPayload>,
+  ): AccessUpdateRuleForGroupPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
       ruleType: "",
+      ...msg,
     };
   },
 
@@ -10856,7 +11295,7 @@ export const AccessUpdateRuleForGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessUpdateRuleForGroupPayload>
+    msg: PartialDeep<AccessUpdateRuleForGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10879,17 +11318,15 @@ export const AccessUpdateRuleForGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessUpdateRuleForGroupPayload,
-    json: any
+    json: any,
   ): AccessUpdateRuleForGroupPayload {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
-      const m = protoAtoms.RuleValue.initialize();
-      protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
-      msg.ruleValue = m;
+      protoAtoms.RuleValueJSON._readMessage(msg.ruleValue, _ruleValue_);
     }
     const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
@@ -10903,9 +11340,11 @@ export const AccessDeleteRuleForPersonPayloadJSON = {
   /**
    * Serializes AccessDeleteRuleForPersonPayload to JSON.
    */
-  encode: function (msg: Partial<AccessDeleteRuleForPersonPayload>): string {
+  encode: function (
+    msg: PartialDeep<AccessDeleteRuleForPersonPayload>,
+  ): string {
     return JSON.stringify(
-      AccessDeleteRuleForPersonPayloadJSON._writeMessage(msg)
+      AccessDeleteRuleForPersonPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -10915,16 +11354,19 @@ export const AccessDeleteRuleForPersonPayloadJSON = {
   decode: function (json: string): AccessDeleteRuleForPersonPayload {
     return AccessDeleteRuleForPersonPayloadJSON._readMessage(
       AccessDeleteRuleForPersonPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessDeleteRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessDeleteRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessDeleteRuleForPersonPayload>,
+  ): AccessDeleteRuleForPersonPayload {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -10932,7 +11374,7 @@ export const AccessDeleteRuleForPersonPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessDeleteRuleForPersonPayload>
+    msg: PartialDeep<AccessDeleteRuleForPersonPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10946,11 +11388,11 @@ export const AccessDeleteRuleForPersonPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessDeleteRuleForPersonPayload,
-    json: any
+    json: any,
   ): AccessDeleteRuleForPersonPayload {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     return msg;
   },
@@ -10960,9 +11402,9 @@ export const AccessDeleteRuleForGroupPayloadJSON = {
   /**
    * Serializes AccessDeleteRuleForGroupPayload to JSON.
    */
-  encode: function (msg: Partial<AccessDeleteRuleForGroupPayload>): string {
+  encode: function (msg: PartialDeep<AccessDeleteRuleForGroupPayload>): string {
     return JSON.stringify(
-      AccessDeleteRuleForGroupPayloadJSON._writeMessage(msg)
+      AccessDeleteRuleForGroupPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -10972,16 +11414,19 @@ export const AccessDeleteRuleForGroupPayloadJSON = {
   decode: function (json: string): AccessDeleteRuleForGroupPayload {
     return AccessDeleteRuleForGroupPayloadJSON._readMessage(
       AccessDeleteRuleForGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessDeleteRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessDeleteRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessDeleteRuleForGroupPayload>,
+  ): AccessDeleteRuleForGroupPayload {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -10989,7 +11434,7 @@ export const AccessDeleteRuleForGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessDeleteRuleForGroupPayload>
+    msg: PartialDeep<AccessDeleteRuleForGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -11003,11 +11448,11 @@ export const AccessDeleteRuleForGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessDeleteRuleForGroupPayload,
-    json: any
+    json: any,
   ): AccessDeleteRuleForGroupPayload {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     return msg;
   },
@@ -11017,7 +11462,7 @@ export const AccessClearAccessCachePayloadJSON = {
   /**
    * Serializes AccessClearAccessCachePayload to JSON.
    */
-  encode: function (msg: Partial<AccessClearAccessCachePayload>): string {
+  encode: function (msg: PartialDeep<AccessClearAccessCachePayload>): string {
     return JSON.stringify(AccessClearAccessCachePayloadJSON._writeMessage(msg));
   },
 
@@ -11027,17 +11472,20 @@ export const AccessClearAccessCachePayloadJSON = {
   decode: function (json: string): AccessClearAccessCachePayload {
     return AccessClearAccessCachePayloadJSON._readMessage(
       AccessClearAccessCachePayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessClearAccessCachePayload with all fields set to their default value.
    */
-  initialize: function (): AccessClearAccessCachePayload {
+  initialize: function (
+    msg?: Partial<AccessClearAccessCachePayload>,
+  ): AccessClearAccessCachePayload {
     return {
       personId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -11045,7 +11493,7 @@ export const AccessClearAccessCachePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessClearAccessCachePayload>
+    msg: PartialDeep<AccessClearAccessCachePayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11062,15 +11510,15 @@ export const AccessClearAccessCachePayloadJSON = {
    */
   _readMessage: function (
     msg: AccessClearAccessCachePayload,
-    json: any
+    json: any,
   ): AccessClearAccessCachePayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -11081,10 +11529,10 @@ export const AccessAddSystemWideRuleForPersonPayloadJSON = {
    * Serializes AccessAddSystemWideRuleForPersonPayload to JSON.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonPayload>
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonPayload>,
   ): string {
     return JSON.stringify(
-      AccessAddSystemWideRuleForPersonPayloadJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForPersonPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -11094,19 +11542,22 @@ export const AccessAddSystemWideRuleForPersonPayloadJSON = {
   decode: function (json: string): AccessAddSystemWideRuleForPersonPayload {
     return AccessAddSystemWideRuleForPersonPayloadJSON._readMessage(
       AccessAddSystemWideRuleForPersonPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForPersonPayload {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForPersonPayload>,
+  ): AccessAddSystemWideRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
       ruleType: "",
       personId: 0,
+      ...msg,
     };
   },
 
@@ -11114,7 +11565,7 @@ export const AccessAddSystemWideRuleForPersonPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonPayload>
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -11140,7 +11591,7 @@ export const AccessAddSystemWideRuleForPersonPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForPersonPayload,
-    json: any
+    json: any,
   ): AccessAddSystemWideRuleForPersonPayload {
     const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
@@ -11148,9 +11599,7 @@ export const AccessAddSystemWideRuleForPersonPayloadJSON = {
     }
     const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
-      const m = protoAtoms.RuleValue.initialize();
-      protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
-      msg.ruleValue = m;
+      protoAtoms.RuleValueJSON._readMessage(msg.ruleValue, _ruleValue_);
     }
     const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
@@ -11158,7 +11607,7 @@ export const AccessAddSystemWideRuleForPersonPayloadJSON = {
     }
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     return msg;
   },
@@ -11169,10 +11618,10 @@ export const AccessAddSystemWideRuleForPersonResponseJSON = {
    * Serializes AccessAddSystemWideRuleForPersonResponse to JSON.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonResponse>
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonResponse>,
   ): string {
     return JSON.stringify(
-      AccessAddSystemWideRuleForPersonResponseJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForPersonResponseJSON._writeMessage(msg),
     );
   },
 
@@ -11182,16 +11631,19 @@ export const AccessAddSystemWideRuleForPersonResponseJSON = {
   decode: function (json: string): AccessAddSystemWideRuleForPersonResponse {
     return AccessAddSystemWideRuleForPersonResponseJSON._readMessage(
       AccessAddSystemWideRuleForPersonResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForPersonResponse {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForPersonResponse>,
+  ): AccessAddSystemWideRuleForPersonResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -11199,7 +11651,7 @@ export const AccessAddSystemWideRuleForPersonResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForPersonResponse>
+    msg: PartialDeep<AccessAddSystemWideRuleForPersonResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -11213,11 +11665,11 @@ export const AccessAddSystemWideRuleForPersonResponseJSON = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForPersonResponse,
-    json: any
+    json: any,
   ): AccessAddSystemWideRuleForPersonResponse {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     return msg;
   },
@@ -11228,10 +11680,10 @@ export const AccessAddSystemWideRuleForGroupPayloadJSON = {
    * Serializes AccessAddSystemWideRuleForGroupPayload to JSON.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupPayload>
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupPayload>,
   ): string {
     return JSON.stringify(
-      AccessAddSystemWideRuleForGroupPayloadJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForGroupPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -11241,19 +11693,22 @@ export const AccessAddSystemWideRuleForGroupPayloadJSON = {
   decode: function (json: string): AccessAddSystemWideRuleForGroupPayload {
     return AccessAddSystemWideRuleForGroupPayloadJSON._readMessage(
       AccessAddSystemWideRuleForGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForGroupPayload {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForGroupPayload>,
+  ): AccessAddSystemWideRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
       ruleType: "",
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -11261,7 +11716,7 @@ export const AccessAddSystemWideRuleForGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupPayload>
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -11287,7 +11742,7 @@ export const AccessAddSystemWideRuleForGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForGroupPayload,
-    json: any
+    json: any,
   ): AccessAddSystemWideRuleForGroupPayload {
     const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
@@ -11295,9 +11750,7 @@ export const AccessAddSystemWideRuleForGroupPayloadJSON = {
     }
     const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
-      const m = protoAtoms.RuleValue.initialize();
-      protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
-      msg.ruleValue = m;
+      protoAtoms.RuleValueJSON._readMessage(msg.ruleValue, _ruleValue_);
     }
     const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
@@ -11305,7 +11758,7 @@ export const AccessAddSystemWideRuleForGroupPayloadJSON = {
     }
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     return msg;
   },
@@ -11316,10 +11769,10 @@ export const AccessAddSystemWideRuleForGroupResponseJSON = {
    * Serializes AccessAddSystemWideRuleForGroupResponse to JSON.
    */
   encode: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupResponse>
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupResponse>,
   ): string {
     return JSON.stringify(
-      AccessAddSystemWideRuleForGroupResponseJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForGroupResponseJSON._writeMessage(msg),
     );
   },
 
@@ -11329,16 +11782,19 @@ export const AccessAddSystemWideRuleForGroupResponseJSON = {
   decode: function (json: string): AccessAddSystemWideRuleForGroupResponse {
     return AccessAddSystemWideRuleForGroupResponseJSON._readMessage(
       AccessAddSystemWideRuleForGroupResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessAddSystemWideRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): AccessAddSystemWideRuleForGroupResponse {
+  initialize: function (
+    msg?: Partial<AccessAddSystemWideRuleForGroupResponse>,
+  ): AccessAddSystemWideRuleForGroupResponse {
     return {
       ruleId: 0,
+      ...msg,
     };
   },
 
@@ -11346,7 +11802,7 @@ export const AccessAddSystemWideRuleForGroupResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessAddSystemWideRuleForGroupResponse>
+    msg: PartialDeep<AccessAddSystemWideRuleForGroupResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -11360,11 +11816,11 @@ export const AccessAddSystemWideRuleForGroupResponseJSON = {
    */
   _readMessage: function (
     msg: AccessAddSystemWideRuleForGroupResponse,
-    json: any
+    json: any,
   ): AccessAddSystemWideRuleForGroupResponse {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     return msg;
   },
@@ -11374,7 +11830,7 @@ export const PersonsCreateAccountPayloadJSON = {
   /**
    * Serializes PersonsCreateAccountPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsCreateAccountPayload>): string {
+  encode: function (msg: PartialDeep<PersonsCreateAccountPayload>): string {
     return JSON.stringify(PersonsCreateAccountPayloadJSON._writeMessage(msg));
   },
 
@@ -11384,14 +11840,16 @@ export const PersonsCreateAccountPayloadJSON = {
   decode: function (json: string): PersonsCreateAccountPayload {
     return PersonsCreateAccountPayloadJSON._readMessage(
       PersonsCreateAccountPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsCreateAccountPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateAccountPayload {
+  initialize: function (
+    msg?: Partial<PersonsCreateAccountPayload>,
+  ): PersonsCreateAccountPayload {
     return {
       email: "",
       password: "",
@@ -11400,6 +11858,7 @@ export const PersonsCreateAccountPayloadJSON = {
       phone: "",
       tenhouId: "",
       country: "",
+      ...msg,
     };
   },
 
@@ -11407,7 +11866,7 @@ export const PersonsCreateAccountPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateAccountPayload>
+    msg: PartialDeep<PersonsCreateAccountPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -11439,7 +11898,7 @@ export const PersonsCreateAccountPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsCreateAccountPayload,
-    json: any
+    json: any,
   ): PersonsCreateAccountPayload {
     const _email_ = json["email"];
     if (_email_) {
@@ -11477,7 +11936,7 @@ export const PersonsCreateAccountResponseJSON = {
   /**
    * Serializes PersonsCreateAccountResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsCreateAccountResponse>): string {
+  encode: function (msg: PartialDeep<PersonsCreateAccountResponse>): string {
     return JSON.stringify(PersonsCreateAccountResponseJSON._writeMessage(msg));
   },
 
@@ -11487,16 +11946,19 @@ export const PersonsCreateAccountResponseJSON = {
   decode: function (json: string): PersonsCreateAccountResponse {
     return PersonsCreateAccountResponseJSON._readMessage(
       PersonsCreateAccountResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsCreateAccountResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateAccountResponse {
+  initialize: function (
+    msg?: Partial<PersonsCreateAccountResponse>,
+  ): PersonsCreateAccountResponse {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -11504,7 +11966,7 @@ export const PersonsCreateAccountResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateAccountResponse>
+    msg: PartialDeep<PersonsCreateAccountResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11518,11 +11980,11 @@ export const PersonsCreateAccountResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsCreateAccountResponse,
-    json: any
+    json: any,
   ): PersonsCreateAccountResponse {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     return msg;
   },
@@ -11532,7 +11994,7 @@ export const PersonsCreateGroupPayloadJSON = {
   /**
    * Serializes PersonsCreateGroupPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsCreateGroupPayload>): string {
+  encode: function (msg: PartialDeep<PersonsCreateGroupPayload>): string {
     return JSON.stringify(PersonsCreateGroupPayloadJSON._writeMessage(msg));
   },
 
@@ -11542,18 +12004,21 @@ export const PersonsCreateGroupPayloadJSON = {
   decode: function (json: string): PersonsCreateGroupPayload {
     return PersonsCreateGroupPayloadJSON._readMessage(
       PersonsCreateGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsCreateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsCreateGroupPayload>,
+  ): PersonsCreateGroupPayload {
     return {
       title: "",
       description: "",
       color: "",
+      ...msg,
     };
   },
 
@@ -11561,7 +12026,7 @@ export const PersonsCreateGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateGroupPayload>
+    msg: PartialDeep<PersonsCreateGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.title) {
@@ -11581,7 +12046,7 @@ export const PersonsCreateGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsCreateGroupPayload,
-    json: any
+    json: any,
   ): PersonsCreateGroupPayload {
     const _title_ = json["title"];
     if (_title_) {
@@ -11603,7 +12068,7 @@ export const PersonsCreateGroupResponseJSON = {
   /**
    * Serializes PersonsCreateGroupResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsCreateGroupResponse>): string {
+  encode: function (msg: PartialDeep<PersonsCreateGroupResponse>): string {
     return JSON.stringify(PersonsCreateGroupResponseJSON._writeMessage(msg));
   },
 
@@ -11613,16 +12078,19 @@ export const PersonsCreateGroupResponseJSON = {
   decode: function (json: string): PersonsCreateGroupResponse {
     return PersonsCreateGroupResponseJSON._readMessage(
       PersonsCreateGroupResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsCreateGroupResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsCreateGroupResponse {
+  initialize: function (
+    msg?: Partial<PersonsCreateGroupResponse>,
+  ): PersonsCreateGroupResponse {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -11630,7 +12098,7 @@ export const PersonsCreateGroupResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsCreateGroupResponse>
+    msg: PartialDeep<PersonsCreateGroupResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11644,11 +12112,11 @@ export const PersonsCreateGroupResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsCreateGroupResponse,
-    json: any
+    json: any,
   ): PersonsCreateGroupResponse {
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     return msg;
   },
@@ -11658,7 +12126,7 @@ export const PersonsUpdateGroupPayloadJSON = {
   /**
    * Serializes PersonsUpdateGroupPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsUpdateGroupPayload>): string {
+  encode: function (msg: PartialDeep<PersonsUpdateGroupPayload>): string {
     return JSON.stringify(PersonsUpdateGroupPayloadJSON._writeMessage(msg));
   },
 
@@ -11668,19 +12136,22 @@ export const PersonsUpdateGroupPayloadJSON = {
   decode: function (json: string): PersonsUpdateGroupPayload {
     return PersonsUpdateGroupPayloadJSON._readMessage(
       PersonsUpdateGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsUpdateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsUpdateGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsUpdateGroupPayload>,
+  ): PersonsUpdateGroupPayload {
     return {
       groupId: 0,
       title: "",
       description: "",
       color: "",
+      ...msg,
     };
   },
 
@@ -11688,7 +12159,7 @@ export const PersonsUpdateGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsUpdateGroupPayload>
+    msg: PartialDeep<PersonsUpdateGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11711,11 +12182,11 @@ export const PersonsUpdateGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsUpdateGroupPayload,
-    json: any
+    json: any,
   ): PersonsUpdateGroupPayload {
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -11737,7 +12208,7 @@ export const PersonsDeleteGroupPayloadJSON = {
   /**
    * Serializes PersonsDeleteGroupPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsDeleteGroupPayload>): string {
+  encode: function (msg: PartialDeep<PersonsDeleteGroupPayload>): string {
     return JSON.stringify(PersonsDeleteGroupPayloadJSON._writeMessage(msg));
   },
 
@@ -11747,16 +12218,19 @@ export const PersonsDeleteGroupPayloadJSON = {
   decode: function (json: string): PersonsDeleteGroupPayload {
     return PersonsDeleteGroupPayloadJSON._readMessage(
       PersonsDeleteGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsDeleteGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsDeleteGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsDeleteGroupPayload>,
+  ): PersonsDeleteGroupPayload {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -11764,7 +12238,7 @@ export const PersonsDeleteGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsDeleteGroupPayload>
+    msg: PartialDeep<PersonsDeleteGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11778,11 +12252,11 @@ export const PersonsDeleteGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsDeleteGroupPayload,
-    json: any
+    json: any,
   ): PersonsDeleteGroupPayload {
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     return msg;
   },
@@ -11792,9 +12266,9 @@ export const PersonsAddPersonToGroupPayloadJSON = {
   /**
    * Serializes PersonsAddPersonToGroupPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsAddPersonToGroupPayload>): string {
+  encode: function (msg: PartialDeep<PersonsAddPersonToGroupPayload>): string {
     return JSON.stringify(
-      PersonsAddPersonToGroupPayloadJSON._writeMessage(msg)
+      PersonsAddPersonToGroupPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -11804,17 +12278,20 @@ export const PersonsAddPersonToGroupPayloadJSON = {
   decode: function (json: string): PersonsAddPersonToGroupPayload {
     return PersonsAddPersonToGroupPayloadJSON._readMessage(
       PersonsAddPersonToGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsAddPersonToGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsAddPersonToGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsAddPersonToGroupPayload>,
+  ): PersonsAddPersonToGroupPayload {
     return {
       personId: 0,
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -11822,7 +12299,7 @@ export const PersonsAddPersonToGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsAddPersonToGroupPayload>
+    msg: PartialDeep<PersonsAddPersonToGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11839,15 +12316,15 @@ export const PersonsAddPersonToGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsAddPersonToGroupPayload,
-    json: any
+    json: any,
   ): PersonsAddPersonToGroupPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     return msg;
   },
@@ -11857,9 +12334,11 @@ export const PersonsRemovePersonFromGroupPayloadJSON = {
   /**
    * Serializes PersonsRemovePersonFromGroupPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsRemovePersonFromGroupPayload>): string {
+  encode: function (
+    msg: PartialDeep<PersonsRemovePersonFromGroupPayload>,
+  ): string {
     return JSON.stringify(
-      PersonsRemovePersonFromGroupPayloadJSON._writeMessage(msg)
+      PersonsRemovePersonFromGroupPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -11869,17 +12348,20 @@ export const PersonsRemovePersonFromGroupPayloadJSON = {
   decode: function (json: string): PersonsRemovePersonFromGroupPayload {
     return PersonsRemovePersonFromGroupPayloadJSON._readMessage(
       PersonsRemovePersonFromGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsRemovePersonFromGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsRemovePersonFromGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsRemovePersonFromGroupPayload>,
+  ): PersonsRemovePersonFromGroupPayload {
     return {
       personId: 0,
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -11887,7 +12369,7 @@ export const PersonsRemovePersonFromGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsRemovePersonFromGroupPayload>
+    msg: PartialDeep<PersonsRemovePersonFromGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11904,15 +12386,15 @@ export const PersonsRemovePersonFromGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsRemovePersonFromGroupPayload,
-    json: any
+    json: any,
   ): PersonsRemovePersonFromGroupPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     return msg;
   },
@@ -11922,9 +12404,9 @@ export const PersonsGetPersonsOfGroupPayloadJSON = {
   /**
    * Serializes PersonsGetPersonsOfGroupPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsGetPersonsOfGroupPayload>): string {
+  encode: function (msg: PartialDeep<PersonsGetPersonsOfGroupPayload>): string {
     return JSON.stringify(
-      PersonsGetPersonsOfGroupPayloadJSON._writeMessage(msg)
+      PersonsGetPersonsOfGroupPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -11934,16 +12416,19 @@ export const PersonsGetPersonsOfGroupPayloadJSON = {
   decode: function (json: string): PersonsGetPersonsOfGroupPayload {
     return PersonsGetPersonsOfGroupPayloadJSON._readMessage(
       PersonsGetPersonsOfGroupPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetPersonsOfGroupPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonsOfGroupPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonsOfGroupPayload>,
+  ): PersonsGetPersonsOfGroupPayload {
     return {
       groupId: 0,
+      ...msg,
     };
   },
 
@@ -11951,7 +12436,7 @@ export const PersonsGetPersonsOfGroupPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonsOfGroupPayload>
+    msg: PartialDeep<PersonsGetPersonsOfGroupPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11965,11 +12450,11 @@ export const PersonsGetPersonsOfGroupPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsGetPersonsOfGroupPayload,
-    json: any
+    json: any,
   ): PersonsGetPersonsOfGroupPayload {
     const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
-      msg.groupId = _groupId_;
+      msg.groupId = protoscript.parseNumber(_groupId_);
     }
     return msg;
   },
@@ -11979,9 +12464,11 @@ export const PersonsGetPersonsOfGroupResponseJSON = {
   /**
    * Serializes PersonsGetPersonsOfGroupResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsGetPersonsOfGroupResponse>): string {
+  encode: function (
+    msg: PartialDeep<PersonsGetPersonsOfGroupResponse>,
+  ): string {
     return JSON.stringify(
-      PersonsGetPersonsOfGroupResponseJSON._writeMessage(msg)
+      PersonsGetPersonsOfGroupResponseJSON._writeMessage(msg),
     );
   },
 
@@ -11991,16 +12478,19 @@ export const PersonsGetPersonsOfGroupResponseJSON = {
   decode: function (json: string): PersonsGetPersonsOfGroupResponse {
     return PersonsGetPersonsOfGroupResponseJSON._readMessage(
       PersonsGetPersonsOfGroupResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetPersonsOfGroupResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonsOfGroupResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonsOfGroupResponse>,
+  ): PersonsGetPersonsOfGroupResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -12008,7 +12498,7 @@ export const PersonsGetPersonsOfGroupResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonsOfGroupResponse>
+    msg: PartialDeep<PersonsGetPersonsOfGroupResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.people?.length) {
@@ -12022,12 +12512,12 @@ export const PersonsGetPersonsOfGroupResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsGetPersonsOfGroupResponse,
-    json: any
+    json: any,
   ): PersonsGetPersonsOfGroupResponse {
     const _people_ = json["people"];
     if (_people_) {
       for (const item of _people_) {
-        const m = protoAtoms.Person.initialize();
+        const m = protoAtoms.PersonJSON.initialize();
         protoAtoms.PersonJSON._readMessage(m, item);
         msg.people.push(m);
       }
@@ -12040,9 +12530,9 @@ export const PersonsGetGroupsOfPersonPayloadJSON = {
   /**
    * Serializes PersonsGetGroupsOfPersonPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsGetGroupsOfPersonPayload>): string {
+  encode: function (msg: PartialDeep<PersonsGetGroupsOfPersonPayload>): string {
     return JSON.stringify(
-      PersonsGetGroupsOfPersonPayloadJSON._writeMessage(msg)
+      PersonsGetGroupsOfPersonPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -12052,16 +12542,19 @@ export const PersonsGetGroupsOfPersonPayloadJSON = {
   decode: function (json: string): PersonsGetGroupsOfPersonPayload {
     return PersonsGetGroupsOfPersonPayloadJSON._readMessage(
       PersonsGetGroupsOfPersonPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsOfPersonPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsOfPersonPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsOfPersonPayload>,
+  ): PersonsGetGroupsOfPersonPayload {
     return {
       personId: 0,
+      ...msg,
     };
   },
 
@@ -12069,7 +12562,7 @@ export const PersonsGetGroupsOfPersonPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsOfPersonPayload>
+    msg: PartialDeep<PersonsGetGroupsOfPersonPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -12083,11 +12576,11 @@ export const PersonsGetGroupsOfPersonPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsOfPersonPayload,
-    json: any
+    json: any,
   ): PersonsGetGroupsOfPersonPayload {
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     return msg;
   },
@@ -12097,9 +12590,11 @@ export const PersonsGetGroupsOfPersonResponseJSON = {
   /**
    * Serializes PersonsGetGroupsOfPersonResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsGetGroupsOfPersonResponse>): string {
+  encode: function (
+    msg: PartialDeep<PersonsGetGroupsOfPersonResponse>,
+  ): string {
     return JSON.stringify(
-      PersonsGetGroupsOfPersonResponseJSON._writeMessage(msg)
+      PersonsGetGroupsOfPersonResponseJSON._writeMessage(msg),
     );
   },
 
@@ -12109,16 +12604,19 @@ export const PersonsGetGroupsOfPersonResponseJSON = {
   decode: function (json: string): PersonsGetGroupsOfPersonResponse {
     return PersonsGetGroupsOfPersonResponseJSON._readMessage(
       PersonsGetGroupsOfPersonResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsOfPersonResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsOfPersonResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsOfPersonResponse>,
+  ): PersonsGetGroupsOfPersonResponse {
     return {
       groups: [],
+      ...msg,
     };
   },
 
@@ -12126,7 +12624,7 @@ export const PersonsGetGroupsOfPersonResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsOfPersonResponse>
+    msg: PartialDeep<PersonsGetGroupsOfPersonResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groups?.length) {
@@ -12140,12 +12638,12 @@ export const PersonsGetGroupsOfPersonResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsOfPersonResponse,
-    json: any
+    json: any,
   ): PersonsGetGroupsOfPersonResponse {
     const _groups_ = json["groups"];
     if (_groups_) {
       for (const item of _groups_) {
-        const m = protoAtoms.Group.initialize();
+        const m = protoAtoms.GroupJSON.initialize();
         protoAtoms.GroupJSON._readMessage(m, item);
         msg.groups.push(m);
       }
@@ -12158,9 +12656,11 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
   /**
    * Serializes PersonsUpdatePersonalInfoPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsUpdatePersonalInfoPayload>): string {
+  encode: function (
+    msg: PartialDeep<PersonsUpdatePersonalInfoPayload>,
+  ): string {
     return JSON.stringify(
-      PersonsUpdatePersonalInfoPayloadJSON._writeMessage(msg)
+      PersonsUpdatePersonalInfoPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -12170,14 +12670,16 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
   decode: function (json: string): PersonsUpdatePersonalInfoPayload {
     return PersonsUpdatePersonalInfoPayloadJSON._readMessage(
       PersonsUpdatePersonalInfoPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsUpdatePersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsUpdatePersonalInfoPayload {
+  initialize: function (
+    msg?: Partial<PersonsUpdatePersonalInfoPayload>,
+  ): PersonsUpdatePersonalInfoPayload {
     return {
       id: 0,
       title: "",
@@ -12188,6 +12690,10 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
       tenhouId: "",
       hasAvatar: false,
       avatarData: "",
+      msNickname: "",
+      msFriendId: 0,
+      msAccountId: 0,
+      ...msg,
     };
   },
 
@@ -12195,7 +12701,7 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsUpdatePersonalInfoPayload>
+    msg: PartialDeep<PersonsUpdatePersonalInfoPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -12225,6 +12731,15 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     if (msg.avatarData) {
       json["avatarData"] = msg.avatarData;
     }
+    if (msg.msNickname) {
+      json["msNickname"] = msg.msNickname;
+    }
+    if (msg.msFriendId) {
+      json["msFriendId"] = msg.msFriendId;
+    }
+    if (msg.msAccountId) {
+      json["msAccountId"] = msg.msAccountId;
+    }
     return json;
   },
 
@@ -12233,11 +12748,11 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsUpdatePersonalInfoPayload,
-    json: any
+    json: any,
   ): PersonsUpdatePersonalInfoPayload {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -12271,6 +12786,18 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     if (_avatarData_) {
       msg.avatarData = _avatarData_;
     }
+    const _msNickname_ = json["msNickname"] ?? json["ms_nickname"];
+    if (_msNickname_) {
+      msg.msNickname = _msNickname_;
+    }
+    const _msFriendId_ = json["msFriendId"] ?? json["ms_friend_id"];
+    if (_msFriendId_) {
+      msg.msFriendId = protoscript.parseNumber(_msFriendId_);
+    }
+    const _msAccountId_ = json["msAccountId"] ?? json["ms_account_id"];
+    if (_msAccountId_) {
+      msg.msAccountId = protoscript.parseNumber(_msAccountId_);
+    }
     return msg;
   },
 };
@@ -12279,7 +12806,7 @@ export const PersonsGetPersonalInfoPayloadJSON = {
   /**
    * Serializes PersonsGetPersonalInfoPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsGetPersonalInfoPayload>): string {
+  encode: function (msg: PartialDeep<PersonsGetPersonalInfoPayload>): string {
     return JSON.stringify(PersonsGetPersonalInfoPayloadJSON._writeMessage(msg));
   },
 
@@ -12289,16 +12816,19 @@ export const PersonsGetPersonalInfoPayloadJSON = {
   decode: function (json: string): PersonsGetPersonalInfoPayload {
     return PersonsGetPersonalInfoPayloadJSON._readMessage(
       PersonsGetPersonalInfoPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetPersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonalInfoPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonalInfoPayload>,
+  ): PersonsGetPersonalInfoPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -12306,7 +12836,7 @@ export const PersonsGetPersonalInfoPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonalInfoPayload>
+    msg: PartialDeep<PersonsGetPersonalInfoPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -12320,11 +12850,11 @@ export const PersonsGetPersonalInfoPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsGetPersonalInfoPayload,
-    json: any
+    json: any,
   ): PersonsGetPersonalInfoPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
-      msg.ids = _ids_;
+      msg.ids = _ids_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -12334,9 +12864,9 @@ export const PersonsGetPersonalInfoResponseJSON = {
   /**
    * Serializes PersonsGetPersonalInfoResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsGetPersonalInfoResponse>): string {
+  encode: function (msg: PartialDeep<PersonsGetPersonalInfoResponse>): string {
     return JSON.stringify(
-      PersonsGetPersonalInfoResponseJSON._writeMessage(msg)
+      PersonsGetPersonalInfoResponseJSON._writeMessage(msg),
     );
   },
 
@@ -12346,16 +12876,19 @@ export const PersonsGetPersonalInfoResponseJSON = {
   decode: function (json: string): PersonsGetPersonalInfoResponse {
     return PersonsGetPersonalInfoResponseJSON._readMessage(
       PersonsGetPersonalInfoResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetPersonalInfoResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetPersonalInfoResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetPersonalInfoResponse>,
+  ): PersonsGetPersonalInfoResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -12363,7 +12896,7 @@ export const PersonsGetPersonalInfoResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetPersonalInfoResponse>
+    msg: PartialDeep<PersonsGetPersonalInfoResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.people?.length) {
@@ -12377,12 +12910,12 @@ export const PersonsGetPersonalInfoResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsGetPersonalInfoResponse,
-    json: any
+    json: any,
   ): PersonsGetPersonalInfoResponse {
     const _people_ = json["people"];
     if (_people_) {
       for (const item of _people_) {
-        const m = protoAtoms.PersonEx.initialize();
+        const m = protoAtoms.PersonExJSON.initialize();
         protoAtoms.PersonExJSON._readMessage(m, item);
         msg.people.push(m);
       }
@@ -12395,7 +12928,7 @@ export const PersonsFindByTenhouIdsPayloadJSON = {
   /**
    * Serializes PersonsFindByTenhouIdsPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsFindByTenhouIdsPayload>): string {
+  encode: function (msg: PartialDeep<PersonsFindByTenhouIdsPayload>): string {
     return JSON.stringify(PersonsFindByTenhouIdsPayloadJSON._writeMessage(msg));
   },
 
@@ -12405,16 +12938,19 @@ export const PersonsFindByTenhouIdsPayloadJSON = {
   decode: function (json: string): PersonsFindByTenhouIdsPayload {
     return PersonsFindByTenhouIdsPayloadJSON._readMessage(
       PersonsFindByTenhouIdsPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsFindByTenhouIdsPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTenhouIdsPayload {
+  initialize: function (
+    msg?: Partial<PersonsFindByTenhouIdsPayload>,
+  ): PersonsFindByTenhouIdsPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -12422,7 +12958,7 @@ export const PersonsFindByTenhouIdsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTenhouIdsPayload>
+    msg: PartialDeep<PersonsFindByTenhouIdsPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -12436,7 +12972,7 @@ export const PersonsFindByTenhouIdsPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsFindByTenhouIdsPayload,
-    json: any
+    json: any,
   ): PersonsFindByTenhouIdsPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
@@ -12450,9 +12986,9 @@ export const PersonsFindByMajsoulIdsPayloadJSON = {
   /**
    * Serializes PersonsFindByMajsoulIdsPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsFindByMajsoulIdsPayload>): string {
+  encode: function (msg: PartialDeep<PersonsFindByMajsoulIdsPayload>): string {
     return JSON.stringify(
-      PersonsFindByMajsoulIdsPayloadJSON._writeMessage(msg)
+      PersonsFindByMajsoulIdsPayloadJSON._writeMessage(msg),
     );
   },
 
@@ -12462,16 +12998,19 @@ export const PersonsFindByMajsoulIdsPayloadJSON = {
   decode: function (json: string): PersonsFindByMajsoulIdsPayload {
     return PersonsFindByMajsoulIdsPayloadJSON._readMessage(
       PersonsFindByMajsoulIdsPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsFindByMajsoulIdsPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByMajsoulIdsPayload {
+  initialize: function (
+    msg?: Partial<PersonsFindByMajsoulIdsPayload>,
+  ): PersonsFindByMajsoulIdsPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -12479,7 +13018,7 @@ export const PersonsFindByMajsoulIdsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByMajsoulIdsPayload>
+    msg: PartialDeep<PersonsFindByMajsoulIdsPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -12493,12 +13032,12 @@ export const PersonsFindByMajsoulIdsPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsFindByMajsoulIdsPayload,
-    json: any
+    json: any,
   ): PersonsFindByMajsoulIdsPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
       for (const item of _ids_) {
-        const m = MajsoulSearchEx.initialize();
+        const m = MajsoulSearchExJSON.initialize();
         MajsoulSearchExJSON._readMessage(m, item);
         msg.ids.push(m);
       }
@@ -12511,7 +13050,7 @@ export const MajsoulSearchExJSON = {
   /**
    * Serializes MajsoulSearchEx to JSON.
    */
-  encode: function (msg: Partial<MajsoulSearchEx>): string {
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): string {
     return JSON.stringify(MajsoulSearchExJSON._writeMessage(msg));
   },
 
@@ -12521,17 +13060,18 @@ export const MajsoulSearchExJSON = {
   decode: function (json: string): MajsoulSearchEx {
     return MajsoulSearchExJSON._readMessage(
       MajsoulSearchExJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes MajsoulSearchEx with all fields set to their default value.
    */
-  initialize: function (): MajsoulSearchEx {
+  initialize: function (msg?: Partial<MajsoulSearchEx>): MajsoulSearchEx {
     return {
       nickname: "",
       accountId: 0,
+      ...msg,
     };
   },
 
@@ -12539,7 +13079,7 @@ export const MajsoulSearchExJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<MajsoulSearchEx>
+    msg: PartialDeep<MajsoulSearchEx>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.nickname) {
@@ -12561,7 +13101,7 @@ export const MajsoulSearchExJSON = {
     }
     const _accountId_ = json["accountId"] ?? json["account_id"];
     if (_accountId_) {
-      msg.accountId = _accountId_;
+      msg.accountId = protoscript.parseNumber(_accountId_);
     }
     return msg;
   },
@@ -12571,9 +13111,9 @@ export const PersonsFindByTenhouIdsResponseJSON = {
   /**
    * Serializes PersonsFindByTenhouIdsResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsFindByTenhouIdsResponse>): string {
+  encode: function (msg: PartialDeep<PersonsFindByTenhouIdsResponse>): string {
     return JSON.stringify(
-      PersonsFindByTenhouIdsResponseJSON._writeMessage(msg)
+      PersonsFindByTenhouIdsResponseJSON._writeMessage(msg),
     );
   },
 
@@ -12583,16 +13123,19 @@ export const PersonsFindByTenhouIdsResponseJSON = {
   decode: function (json: string): PersonsFindByTenhouIdsResponse {
     return PersonsFindByTenhouIdsResponseJSON._readMessage(
       PersonsFindByTenhouIdsResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsFindByTenhouIdsResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTenhouIdsResponse {
+  initialize: function (
+    msg?: Partial<PersonsFindByTenhouIdsResponse>,
+  ): PersonsFindByTenhouIdsResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -12600,7 +13143,7 @@ export const PersonsFindByTenhouIdsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTenhouIdsResponse>
+    msg: PartialDeep<PersonsFindByTenhouIdsResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.people?.length) {
@@ -12614,12 +13157,12 @@ export const PersonsFindByTenhouIdsResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsFindByTenhouIdsResponse,
-    json: any
+    json: any,
   ): PersonsFindByTenhouIdsResponse {
     const _people_ = json["people"];
     if (_people_) {
       for (const item of _people_) {
-        const m = protoAtoms.PersonEx.initialize();
+        const m = protoAtoms.PersonExJSON.initialize();
         protoAtoms.PersonExJSON._readMessage(m, item);
         msg.people.push(m);
       }
@@ -12632,7 +13175,7 @@ export const PersonsFindByTitlePayloadJSON = {
   /**
    * Serializes PersonsFindByTitlePayload to JSON.
    */
-  encode: function (msg: Partial<PersonsFindByTitlePayload>): string {
+  encode: function (msg: PartialDeep<PersonsFindByTitlePayload>): string {
     return JSON.stringify(PersonsFindByTitlePayloadJSON._writeMessage(msg));
   },
 
@@ -12642,16 +13185,19 @@ export const PersonsFindByTitlePayloadJSON = {
   decode: function (json: string): PersonsFindByTitlePayload {
     return PersonsFindByTitlePayloadJSON._readMessage(
       PersonsFindByTitlePayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsFindByTitlePayload with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTitlePayload {
+  initialize: function (
+    msg?: Partial<PersonsFindByTitlePayload>,
+  ): PersonsFindByTitlePayload {
     return {
       query: "",
+      ...msg,
     };
   },
 
@@ -12659,7 +13205,7 @@ export const PersonsFindByTitlePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTitlePayload>
+    msg: PartialDeep<PersonsFindByTitlePayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.query) {
@@ -12673,7 +13219,7 @@ export const PersonsFindByTitlePayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsFindByTitlePayload,
-    json: any
+    json: any,
   ): PersonsFindByTitlePayload {
     const _query_ = json["query"];
     if (_query_) {
@@ -12687,7 +13233,7 @@ export const PersonsFindByTitleResponseJSON = {
   /**
    * Serializes PersonsFindByTitleResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsFindByTitleResponse>): string {
+  encode: function (msg: PartialDeep<PersonsFindByTitleResponse>): string {
     return JSON.stringify(PersonsFindByTitleResponseJSON._writeMessage(msg));
   },
 
@@ -12697,16 +13243,19 @@ export const PersonsFindByTitleResponseJSON = {
   decode: function (json: string): PersonsFindByTitleResponse {
     return PersonsFindByTitleResponseJSON._readMessage(
       PersonsFindByTitleResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsFindByTitleResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsFindByTitleResponse {
+  initialize: function (
+    msg?: Partial<PersonsFindByTitleResponse>,
+  ): PersonsFindByTitleResponse {
     return {
       people: [],
+      ...msg,
     };
   },
 
@@ -12714,7 +13263,7 @@ export const PersonsFindByTitleResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsFindByTitleResponse>
+    msg: PartialDeep<PersonsFindByTitleResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.people?.length) {
@@ -12728,12 +13277,12 @@ export const PersonsFindByTitleResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsFindByTitleResponse,
-    json: any
+    json: any,
   ): PersonsFindByTitleResponse {
     const _people_ = json["people"];
     if (_people_) {
       for (const item of _people_) {
-        const m = protoAtoms.Person.initialize();
+        const m = protoAtoms.PersonJSON.initialize();
         protoAtoms.PersonJSON._readMessage(m, item);
         msg.people.push(m);
       }
@@ -12746,7 +13295,7 @@ export const PersonsGetGroupsPayloadJSON = {
   /**
    * Serializes PersonsGetGroupsPayload to JSON.
    */
-  encode: function (msg: Partial<PersonsGetGroupsPayload>): string {
+  encode: function (msg: PartialDeep<PersonsGetGroupsPayload>): string {
     return JSON.stringify(PersonsGetGroupsPayloadJSON._writeMessage(msg));
   },
 
@@ -12756,16 +13305,19 @@ export const PersonsGetGroupsPayloadJSON = {
   decode: function (json: string): PersonsGetGroupsPayload {
     return PersonsGetGroupsPayloadJSON._readMessage(
       PersonsGetGroupsPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsPayload with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsPayload {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsPayload>,
+  ): PersonsGetGroupsPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -12773,7 +13325,7 @@ export const PersonsGetGroupsPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsPayload>
+    msg: PartialDeep<PersonsGetGroupsPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -12787,11 +13339,11 @@ export const PersonsGetGroupsPayloadJSON = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsPayload,
-    json: any
+    json: any,
   ): PersonsGetGroupsPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
-      msg.ids = _ids_;
+      msg.ids = _ids_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -12801,7 +13353,7 @@ export const PersonsGetGroupsResponseJSON = {
   /**
    * Serializes PersonsGetGroupsResponse to JSON.
    */
-  encode: function (msg: Partial<PersonsGetGroupsResponse>): string {
+  encode: function (msg: PartialDeep<PersonsGetGroupsResponse>): string {
     return JSON.stringify(PersonsGetGroupsResponseJSON._writeMessage(msg));
   },
 
@@ -12811,16 +13363,19 @@ export const PersonsGetGroupsResponseJSON = {
   decode: function (json: string): PersonsGetGroupsResponse {
     return PersonsGetGroupsResponseJSON._readMessage(
       PersonsGetGroupsResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonsGetGroupsResponse with all fields set to their default value.
    */
-  initialize: function (): PersonsGetGroupsResponse {
+  initialize: function (
+    msg?: Partial<PersonsGetGroupsResponse>,
+  ): PersonsGetGroupsResponse {
     return {
       groups: [],
+      ...msg,
     };
   },
 
@@ -12828,7 +13383,7 @@ export const PersonsGetGroupsResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonsGetGroupsResponse>
+    msg: PartialDeep<PersonsGetGroupsResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groups?.length) {
@@ -12842,12 +13397,12 @@ export const PersonsGetGroupsResponseJSON = {
    */
   _readMessage: function (
     msg: PersonsGetGroupsResponse,
-    json: any
+    json: any,
   ): PersonsGetGroupsResponse {
     const _groups_ = json["groups"];
     if (_groups_) {
       for (const item of _groups_) {
-        const m = protoAtoms.Group.initialize();
+        const m = protoAtoms.GroupJSON.initialize();
         protoAtoms.GroupJSON._readMessage(m, item);
         msg.groups.push(m);
       }
@@ -12860,7 +13415,7 @@ export const DepersonalizePayloadJSON = {
   /**
    * Serializes DepersonalizePayload to JSON.
    */
-  encode: function (_msg?: Partial<DepersonalizePayload>): string {
+  encode: function (_msg?: PartialDeep<DepersonalizePayload>): string {
     return "{}";
   },
 
@@ -12874,15 +13429,19 @@ export const DepersonalizePayloadJSON = {
   /**
    * Initializes DepersonalizePayload with all fields set to their default value.
    */
-  initialize: function (): DepersonalizePayload {
-    return {};
+  initialize: function (
+    msg?: Partial<DepersonalizePayload>,
+  ): DepersonalizePayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<DepersonalizePayload>
+    _msg: PartialDeep<DepersonalizePayload>,
   ): Record<string, unknown> {
     return {};
   },
@@ -12892,7 +13451,7 @@ export const DepersonalizePayloadJSON = {
    */
   _readMessage: function (
     msg: DepersonalizePayload,
-    _json: any
+    _json: any,
   ): DepersonalizePayload {
     return msg;
   },

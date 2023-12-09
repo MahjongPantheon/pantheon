@@ -165,6 +165,7 @@ export interface Event {
   hasSeries: boolean;
   withChips: boolean;
   minGamesCount: number;
+  platformId: number;
 }
 
 export interface MyEvent {
@@ -2087,6 +2088,7 @@ export const Event = {
       hasSeries: false,
       withChips: false,
       minGamesCount: 0,
+      platformId: 0,
     };
   },
 
@@ -2135,6 +2137,9 @@ export const Event = {
     }
     if (msg.minGamesCount) {
       writer.writeInt32(13, msg.minGamesCount);
+    }
+    if (msg.platformId) {
+      writer.writeInt32(14, msg.platformId);
     }
     return writer;
   },
@@ -2196,6 +2201,10 @@ export const Event = {
         }
         case 13: {
           msg.minGamesCount = reader.readInt32();
+          break;
+        }
+        case 14: {
+          msg.platformId = reader.readInt32();
           break;
         }
         default: {
@@ -8950,6 +8959,7 @@ export const EventJSON = {
       hasSeries: false,
       withChips: false,
       minGamesCount: 0,
+      platformId: 0,
     };
   },
 
@@ -8996,6 +9006,9 @@ export const EventJSON = {
     }
     if (msg.minGamesCount) {
       json["minGamesCount"] = msg.minGamesCount;
+    }
+    if (msg.platformId) {
+      json["platformId"] = msg.platformId;
     }
     return json;
   },
@@ -9056,6 +9069,10 @@ export const EventJSON = {
     const _minGamesCount_ = json["minGamesCount"] ?? json["min_games_count"];
     if (_minGamesCount_) {
       msg.minGamesCount = _minGamesCount_;
+    }
+    const _platformId_ = json["platformId"] ?? json["platform_id"];
+    if (_platformId_) {
+      msg.platformId = _platformId_;
     }
     return msg;
   },

@@ -49,6 +49,18 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string avatar_data = 9;</code>
      */
     protected $avatar_data = '';
+    /**
+     * Generated from protobuf field <code>string ms_nickname = 10;</code>
+     */
+    protected $ms_nickname = '';
+    /**
+     * Generated from protobuf field <code>int32 ms_friend_id = 11;</code>
+     */
+    protected $ms_friend_id = 0;
+    /**
+     * Generated from protobuf field <code>int32 ms_account_id = 12;</code>
+     */
+    protected $ms_account_id = 0;
 
     /**
      * Constructor.
@@ -65,6 +77,9 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
      *     @type string $tenhou_id
      *     @type bool $has_avatar
      *     @type string $avatar_data
+     *     @type string $ms_nickname
+     *     @type int $ms_friend_id
+     *     @type int $ms_account_id
      * }
      */
     public function __construct($data = NULL) {
@@ -266,6 +281,72 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->avatar_data = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string ms_nickname = 10;</code>
+     * @return string
+     */
+    public function getMsNickname()
+    {
+        return $this->ms_nickname;
+    }
+
+    /**
+     * Generated from protobuf field <code>string ms_nickname = 10;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setMsNickname($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->ms_nickname = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 ms_friend_id = 11;</code>
+     * @return int
+     */
+    public function getMsFriendId()
+    {
+        return $this->ms_friend_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 ms_friend_id = 11;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setMsFriendId($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->ms_friend_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 ms_account_id = 12;</code>
+     * @return int
+     */
+    public function getMsAccountId()
+    {
+        return $this->ms_account_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 ms_account_id = 12;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setMsAccountId($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->ms_account_id = $var;
 
         return $this;
     }

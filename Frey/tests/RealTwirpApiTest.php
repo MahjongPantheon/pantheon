@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Frey;
 
 require_once __DIR__ . '/../src/helpers/Db.php';
@@ -35,6 +36,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     protected $_db;
 
     const CURRENT_EVENT_ID = 124;
+    const NOT_EXIST_MS_ACCOUNT_ID = -1;
 
     /**
      * @throws \Exception
@@ -260,7 +262,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
                 ->setPassword($password)
         );
 
-        $resetToken =  $this->_client->RequestResetPassword(
+        $resetToken = $this->_client->RequestResetPassword(
             [],
             (new \Common\AuthRequestResetPasswordPayload())
                 ->setEmail($email)
@@ -333,6 +335,67 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($tenhouId, $user[0]->getTenhouId());
     }
 
+    public function testUpdatePersonalInfoWithMajsoulDataOnly()
+    {
+        $email = 'test@test.com';
+        $password = '1234test!5678';
+        $title = 'test testov';
+        $approvalCode = $this->_client->RequestRegistration(
+            [],
+            (new \Common\AuthRequestRegistrationPayload())
+                ->setEmail($email)
+                ->setTitle($title)
+                ->setPassword($password)
+        )->getApprovalCode();
+        $userId = $this->_client->ApproveRegistration(
+            [],
+            (new \Common\AuthApproveRegistrationPayload())
+                ->setApprovalCode($approvalCode)
+        )->getPersonId();
+
+        $msNickname = 'test_ms_player';
+        $msAccountId = 1;
+        $msFriendId = 11;
+
+        $this->_client->UpdatePersonalInfo(
+            [],
+            (new \Common\PersonsUpdatePersonalInfoPayload())
+                ->setId($userId)
+                ->setTitle($title)
+                ->setEmail($email)
+                ->setMsNickname($msNickname)
+                ->setMsAccountId($msAccountId)
+                ->setMsFriendId($msFriendId)
+        )->getSuccess();
+
+        $response = $this->_client->FindByMajsoulAccountId(
+            [],
+            (new \Common\PersonsFindByMajsoulIdsPayload())
+                ->setIds([(new \Common\MajsoulSearchEx())
+                    ->setNickname($msNickname)
+                    ->setAccountId($msAccountId)])
+        )->getPeople();
+
+        $this->assertNotEmpty($response);
+        $this->assertNotEmpty($response[0]);
+        $person = $response[0];
+        $this->assertInstanceOf(\Common\PersonEx::class, $person);
+        $this->assertEquals($userId, $person->getId());
+        $this->assertIsInt($person->getId());
+        $this->assertEquals($email, $person->getEmail());
+        $this->assertIsString($person->getEmail());
+        $this->assertEquals($title, $person->getTitle());
+        $this->assertIsString($person->getTitle());
+        $this->assertEquals('', $person->getCity());
+        $this->assertIsString($person->getCity());
+        $this->assertEquals('', $person->getPhone());
+        $this->assertIsString($person->getPhone());
+        $this->assertEquals('', $person->getTenhouId());
+        $this->assertIsString($person->getTenhouId());
+        $this->assertEquals($msAccountId, $person->getMsAccountId());
+        $this->assertEquals($msNickname, $person->getMsNickname());
+    }
+
     public function testGetPersonalInfo()
     {
         $email = 'test@test.com';
@@ -391,6 +454,8 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertIsString($person->getPhone());
         $this->assertEquals($tenhouId, $person->getTenhouId());
         $this->assertIsString($person->getTenhouId());
+        $this->assertEquals(self::NOT_EXIST_MS_ACCOUNT_ID, $person->getMsAccountId());
+        $this->assertEmpty($person->getMsNickname());
     }
 
     // TODO: testGetPersonalInfo with no admin rights should not output any personal data
@@ -449,6 +514,201 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertIsString($person->getCity());
         $this->assertEquals($tenhouId, $person->getTenhouId());
         $this->assertIsString($person->getTenhouId());
+    }
+
+    public function testFindByTenhouIds()
+    {
+        $email = 'test@test.com';
+        $title = 'test testov';
+        $password = '1234test!5678';
+        $approvalCode = $this->_client->RequestRegistration(
+            [],
+            (new \Common\AuthRequestRegistrationPayload())
+                ->setEmail($email)
+                ->setTitle($title)
+                ->setPassword($password)
+        )->getApprovalCode();
+        $userId = $this->_client->ApproveRegistration(
+            [],
+            (new \Common\AuthApproveRegistrationPayload())
+                ->setApprovalCode($approvalCode)
+        )->getPersonId();
+
+        $title = 'newtestuser';
+        $city = 'testcity';
+        $country = 'testcountry';
+        $phone = '123-456-7890';
+        $tenhouId = 'testid';
+
+        $this->_client->UpdatePersonalInfo(
+            [],
+            (new \Common\PersonsUpdatePersonalInfoPayload())
+                ->setId($userId)
+                ->setTitle($title)
+                ->setCountry($country)
+                ->setCity($city)
+                ->setEmail($email)
+                ->setPhone($phone)
+                ->setTenhouId($tenhouId)
+        )->getSuccess();
+
+        $response = $this->_client->FindByTenhouIds(
+            [],
+            (new \Common\PersonsFindByTenhouIdsPayload())
+                ->setIds([$tenhouId])
+        )->getPeople();
+
+        $this->assertNotEmpty($response);
+        $this->assertNotEmpty($response[0]);
+        $person = $response[0];
+        $this->assertInstanceOf(\Common\PersonEx::class, $person);
+        $this->assertEquals($userId, $person->getId());
+        $this->assertIsInt($person->getId());
+        $this->assertEquals($title, $person->getTitle());
+        $this->assertIsString($person->getTitle());
+        $this->assertEquals($city, $person->getCity());
+        $this->assertIsString($person->getCity());
+        $this->assertEquals($tenhouId, $person->getTenhouId());
+        $this->assertIsString($person->getTenhouId());
+        $this->assertEquals(self::NOT_EXIST_MS_ACCOUNT_ID, $person->getMsAccountId());
+        $this->assertEmpty($person->getMsNickname());
+    }
+
+    public function testFindByMajsoulAccountId()
+    {
+        $email = 'test@test.com';
+        $password = '1234test!5678';
+        $title = 'test testov';
+        $approvalCode = $this->_client->RequestRegistration(
+            [],
+            (new \Common\AuthRequestRegistrationPayload())
+                ->setEmail($email)
+                ->setTitle($title)
+                ->setPassword($password)
+        )->getApprovalCode();
+        $userId = $this->_client->ApproveRegistration(
+            [],
+            (new \Common\AuthApproveRegistrationPayload())
+                ->setApprovalCode($approvalCode)
+        )->getPersonId();
+
+        $title = 'testuser';
+        $city = 'testcity';
+        $country = 'testcountry';
+        $phone = '123-456-7890';
+        $tenhouId = 'testid';
+        $msNickname = 'test_ms_player';
+        $msAccountId = 1;
+        $msFriendId = 11;
+
+        $this->_client->UpdatePersonalInfo(
+            [],
+            (new \Common\PersonsUpdatePersonalInfoPayload())
+                ->setId($userId)
+                ->setTitle($title)
+                ->setCountry($country)
+                ->setCity($city)
+                ->setEmail($email)
+                ->setPhone($phone)
+                ->setTenhouId($tenhouId)
+                ->setMsNickname($msNickname)
+                ->setMsAccountId($msAccountId)
+                ->setMsFriendId($msFriendId)
+        )->getSuccess();
+
+        $response = $this->_client->FindByMajsoulAccountId(
+            [],
+            (new \Common\PersonsFindByMajsoulIdsPayload())
+                ->setIds([(new \Common\MajsoulSearchEx())
+                    ->setNickname($msNickname)
+                    ->setAccountId($msAccountId)])
+        )->getPeople();
+
+        $this->assertNotEmpty($response);
+        $this->assertNotEmpty($response[0]);
+        $person = $response[0];
+        $this->assertInstanceOf(\Common\PersonEx::class, $person);
+        $this->assertEquals($userId, $person->getId());
+        $this->assertIsInt($person->getId());
+        $this->assertEquals($email, $person->getEmail());
+        $this->assertIsString($person->getEmail());
+        $this->assertEquals($title, $person->getTitle());
+        $this->assertIsString($person->getTitle());
+        $this->assertEquals($city, $person->getCity());
+        $this->assertIsString($person->getCity());
+        $this->assertEquals($phone, $person->getPhone());
+        $this->assertIsString($person->getPhone());
+        $this->assertEquals($tenhouId, $person->getTenhouId());
+        $this->assertIsString($person->getTenhouId());
+        $this->assertEquals($msAccountId, $person->getMsAccountId());
+        $this->assertEquals($msNickname, $person->getMsNickname());
+    }
+
+    public function testFindByMajsoulAccountIdOnly()
+    {
+        $email = 'test@test.com';
+        $password = '1234test!5678';
+        $title = 'test testov';
+        $approvalCode = $this->_client->RequestRegistration(
+            [],
+            (new \Common\AuthRequestRegistrationPayload())
+                ->setEmail($email)
+                ->setTitle($title)
+                ->setPassword($password)
+        )->getApprovalCode();
+        $userId = $this->_client->ApproveRegistration(
+            [],
+            (new \Common\AuthApproveRegistrationPayload())
+                ->setApprovalCode($approvalCode)
+        )->getPersonId();
+
+        $title = 'testuser';
+        $city = 'testcity';
+        $country = 'testcountry';
+        $phone = '123-456-7890';
+        $msNickname = 'test_ms_player';
+        $msAccountId = 1;
+        $msFriendId = 11;
+
+        $this->_client->UpdatePersonalInfo(
+            [],
+            (new \Common\PersonsUpdatePersonalInfoPayload())
+                ->setId($userId)
+                ->setTitle($title)
+                ->setCountry($country)
+                ->setCity($city)
+                ->setEmail($email)
+                ->setPhone($phone)
+                ->setMsNickname($msNickname)
+                ->setMsAccountId($msAccountId)
+                ->setMsFriendId($msFriendId)
+        )->getSuccess();
+
+        $response = $this->_client->FindByMajsoulAccountId(
+            [],
+            (new \Common\PersonsFindByMajsoulIdsPayload())
+                ->setIds([(new \Common\MajsoulSearchEx())
+                    ->setNickname($msNickname)
+                    ->setAccountId($msAccountId)])
+        )->getPeople();
+
+        $this->assertNotEmpty($response);
+        $this->assertNotEmpty($response[0]);
+        $person = $response[0];
+        $this->assertInstanceOf(\Common\PersonEx::class, $person);
+        $this->assertEquals($userId, $person->getId());
+        $this->assertIsInt($person->getId());
+        $this->assertEquals($email, $person->getEmail());
+        $this->assertIsString($person->getEmail());
+        $this->assertEquals($title, $person->getTitle());
+        $this->assertIsString($person->getTitle());
+        $this->assertEquals($city, $person->getCity());
+        $this->assertIsString($person->getCity());
+        $this->assertEquals($phone, $person->getPhone());
+        $this->assertIsString($person->getPhone());
+        $this->assertEmpty($person->getTenhouId());
+        $this->assertEquals($msAccountId, $person->getMsAccountId());
+        $this->assertEquals($msNickname, $person->getMsNickname());
     }
 
     /**

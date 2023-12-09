@@ -31,7 +31,7 @@ class Formatters
     public static function formatGameResults(SessionPrimitive $session, array $sessionResults, array $rounds)
     {
         $currentPlatformId = $session->getEvent()->getPlatformId();
-        if (is_null($currentPlatformId) || $currentPlatformId === 0) {
+        if ($currentPlatformId === -1 || $currentPlatformId === 0) {
             $currentPlatformId = PlatformTypeId::Tenhou->value;
         }
         return [

@@ -403,6 +403,7 @@ class EventModel extends Model
             ->select('event.min_games_count', 'min_games_count')
             ->select('event.series_length', 'series_length')
             ->select('event.ruleset_config', 'ruleset_config')
+            ->select('event.platform_id', 'platform_id')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
             ->groupBy('event.id')
@@ -445,7 +446,8 @@ class EventModel extends Model
                     'isRatingShown' => !$event['hide_results'],
                     'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
-                    'type' => $type
+                    'type' => $type,
+                    'platformId' => $event['platform_id']
                 ];
             }, $data)
         ];
@@ -474,6 +476,7 @@ class EventModel extends Model
             ->select('event.hide_results', 'hide_results')
             ->select('event.ruleset_config', 'ruleset_config')
             ->select('event.series_length', 'series_length')
+            ->select('event.platform_id', 'platform_id')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
             ->whereIn('event.id', $idList)
@@ -498,7 +501,8 @@ class EventModel extends Model
                 'hasSeries' => $event['series_length'] > 0,
                 'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
-                'type' => $type
+                'type' => $type,
+                'platformId' => $event['platform_id']
             ];
         }, $data);
     }

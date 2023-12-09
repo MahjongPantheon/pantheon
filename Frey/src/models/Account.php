@@ -245,11 +245,14 @@ class AccountModel extends Model
      * @param string $tenhouId
      * @param bool $hasAvatar
      * @param string $avatarData
+     * @param string $msNickname
+     * @param int $msAccountId
+     * @param int $msFriendId
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId, $hasAvatar, $avatarData)
+    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId, $hasAvatar, $avatarData, $msNickname, $msAccountId, $msFriendId)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
@@ -269,6 +272,46 @@ class AccountModel extends Model
                 throw new InvalidParametersException('Invalid email provided', 408);
             }
             $persons[0]->setEmail($email);
+        }
+
+        if (!empty($msNickname) || !$this->_isEmptyNumber($msAccountId) || !$this->_isEmptyNumber($msFriendId)) {
+            $currentPersonId = $persons[0]->getId();
+            if (!is_null($currentPersonId)) {
+                $msAccounts = MajsoulPlatformAccountsPrimitive::findByPersonIds($this->_db, [$currentPersonId]);
+                if (empty($msAccounts)) {
+                    if (!empty($msNickname) && !$this->_isEmptyNumber($msAccountId) && !$this->_isEmptyNumber($msFriendId)) {
+                        $newMsAccount = (new MajsoulPlatformAccountsPrimitive($this->_db))
+                            ->setPersonId($currentPersonId)
+                            ->setNickname($msNickname)
+                            ->setAccountId($msAccountId)
+                            ->setFriendId($msFriendId);
+                        if (!$newMsAccount->save()) {
+                            throw new \Exception('Couldn\'t save MS account to DB', 403);
+                        }
+                    }
+                } else {
+                    $currentMsAccount = $msAccounts[0];
+                    $needUpdate = false;
+                    if (!empty($msNickname)) {
+                        $currentMsAccount->setNickname($msNickname);
+                        $needUpdate = true;
+                    }
+                    if (!$this->_isEmptyNumber($msAccountId)) {
+                        $currentMsAccount->setAccountId($msAccountId);
+                        $needUpdate = true;
+                    }
+                    if (!$this->_isEmptyNumber($msFriendId)) {
+                        $currentMsAccount->setFriendId($msFriendId);
+                        $needUpdate = true;
+                    }
+
+                    if ($needUpdate) {
+                        if (!$currentMsAccount->save()) {
+                            throw new \Exception('Couldn\'t update MS account to DB', 403);
+                        }
+                    }
+                }
+            }
         }
 
         $webhook = $this->_config->getValue('userinfoHook');

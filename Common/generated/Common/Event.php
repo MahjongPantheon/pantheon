@@ -65,6 +65,10 @@ class Event extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 min_games_count = 13;</code>
      */
     protected $min_games_count = 0;
+    /**
+     * Generated from protobuf field <code>int32 platform_id = 14;</code>
+     */
+    protected $platform_id = 0;
 
     /**
      * Constructor.
@@ -85,6 +89,7 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type bool $has_series
      *     @type bool $with_chips
      *     @type int $min_games_count
+     *     @type int $platform_id
      * }
      */
     public function __construct($data = NULL) {
@@ -374,6 +379,28 @@ class Event extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->min_games_count = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 platform_id = 14;</code>
+     * @return int
+     */
+    public function getPlatformId()
+    {
+        return $this->platform_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 platform_id = 14;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setPlatformId($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->platform_id = $var;
 
         return $this;
     }
