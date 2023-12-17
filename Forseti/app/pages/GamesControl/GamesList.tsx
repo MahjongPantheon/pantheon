@@ -132,8 +132,8 @@ export function GamesList({
                             score === eventConfig?.rulesetConfig.startPoints
                               ? 'blue'
                               : score > (eventConfig?.rulesetConfig.startPoints ?? 0)
-                              ? 'green'
-                              : 'red'
+                                ? 'green'
+                                : 'red'
                           }
                         >
                           {score}

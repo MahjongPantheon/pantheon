@@ -29,13 +29,13 @@ export const MainMenuLink = ({
     ? external === ExternalTarget.SIGRUN
       ? '#7e95c4'
       : external === ExternalTarget.TYR
-      ? '#4f724c'
-      : '#784421'
+        ? '#4f724c'
+        : '#784421'
     : external === ExternalTarget.SIGRUN
-    ? '#7e95c4'
-    : external === ExternalTarget.TYR
-    ? '#b1ffa8'
-    : '#DCA57F';
+      ? '#7e95c4'
+      : external === ExternalTarget.TYR
+        ? '#b1ffa8'
+        : '#DCA57F';
   return (
     <Anchor
       style={{ borderLeft: '10px solid ' + color, marginBottom: '2px', textDecoration: 'none' }}
