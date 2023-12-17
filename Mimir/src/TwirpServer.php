@@ -1647,11 +1647,11 @@ final class TwirpServer implements Mimir
         return (new SeatingGenerateSwissSeatingResponse())
             ->setTables(array_map(function ($table) {
                 return (new TableItemSwiss())
-                    ->setPlayers(array_map(function ($player, $rating) {
+                    ->setPlayers(array_map(function ($player) {
                         return (new PlayerSeatingSwiss())
                             ->setPlayerId((int)$player)
-                            ->setRating((float)$rating);
-                    }, array_keys($table), array_values($table)));
+                            ->setRating(0.);
+                    }, $table));
             }, $this->_seatingController->generateSwissSeating($req->getEventId())));
     }
 

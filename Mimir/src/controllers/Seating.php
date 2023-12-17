@@ -111,7 +111,7 @@ class SeatingController extends Controller
      * @throws AuthFailedException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @return array a multidimensional numerically indexed array
+     * @return array [[id, id, id, id], ... ]
      */
     public function generateSwissSeating($eventId)
     {
