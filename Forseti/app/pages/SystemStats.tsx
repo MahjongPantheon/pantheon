@@ -131,8 +131,8 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
         (period === 'lastyear'
           ? api.getLastYearStats()
           : period === 'lastmonth'
-          ? api.getLastMonthStats()
-          : api.getLastDayStats()
+            ? api.getLastMonthStats()
+            : api.getLastDayStats()
         ).then((st) => {
           setStats(st);
           setIsLoading(false);
