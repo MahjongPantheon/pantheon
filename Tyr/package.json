@@ -42,7 +42,7 @@
     "react-dom": "18.2.0",
     "react-helmet": "^6.1.0",
     "uuid": "^9.0.1",
-    "vite": "^4.4.11",
+    "vite": "^4.4.12",
     "vite-plugin-svgr": "^4.1.0",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.6"
