@@ -139,8 +139,8 @@ export const RatingTable: React.FC<{
             events?.length === 1
               ? `${i18n._t('Rating table')} - ${events?.[0].title} - Sigrun`
               : (events?.length ?? 0) > 1
-              ? `${i18n._t('Rating table')} - ${i18n._t('Aggregated event')} - Sigrun`
-              : `Sigrun`
+                ? `${i18n._t('Rating table')} - ${i18n._t('Aggregated event')} - Sigrun`
+                : `Sigrun`
           }
           description={i18n._t('Rating table of the event "%1" provided by Mahjong Pantheon', [
             events?.[0].title,

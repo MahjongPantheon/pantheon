@@ -51,8 +51,8 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
           events?.length === 1
             ? `${events?.[0].title} - Sigrun`
             : (events?.length ?? 0) > 1
-            ? `${i18n._t('Aggregated event')} - Sigrun`
-            : `Sigrun`
+              ? `${i18n._t('Aggregated event')} - Sigrun`
+              : `Sigrun`
         }
         description={i18n._t('Description of the event "%1" provided by Mahjong Pantheon', [
           events?.[0].title,

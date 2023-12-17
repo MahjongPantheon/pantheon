@@ -58,8 +58,8 @@ export function memoize<T extends Function>(fn: T, o?: any): T {
         t === 'number' || t === 'boolean' || a == null
           ? a
           : t === 'string'
-          ? JSON.stringify(a)
-          : srlz(a);
+            ? JSON.stringify(a)
+            : srlz(a);
       // @ts-expect-error
       return s[key] || (!c || c(key, s), (s[key] = fn.call(this, a)));
       // @ts-expect-error
