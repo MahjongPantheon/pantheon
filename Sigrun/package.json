@@ -18,7 +18,7 @@
     "@mantine/hooks": "^6.0.21",
     "@mantine/nprogress": "^6.0.21",
     "@mantine/ssr": "^6.0.21",
-    "@tabler/icons-react": "^2.39.0",
+    "@tabler/icons-react": "^2.42.0",
     "@types/uuid": "^9.0.6",
     "@types/jsdom": "^21.1.4",
     "@types/wouter": "^2.2.0",
