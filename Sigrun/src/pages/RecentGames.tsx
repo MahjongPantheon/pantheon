@@ -82,8 +82,8 @@ export const RecentGames: React.FC<{
             events?.length === 1
               ? `${i18n._t('Last games')} - ${events?.[0].title} - Sigrun`
               : (events?.length ?? 0) > 1
-              ? `${i18n._t('Last games')} - ${i18n._t('Aggregated event')} - Sigrun`
-              : `Sigrun`
+                ? `${i18n._t('Last games')} - ${i18n._t('Aggregated event')} - Sigrun`
+                : `Sigrun`
           }
           description={i18n._t(
             'Last games of the event "%1", page %2, provided by Mahjong Pantheon',
