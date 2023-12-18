@@ -74,7 +74,7 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
      */
     public function getAccountId(): int
     {
-        return $this->_accountId;
+        return $this->_accountId ?: -1;
     }
 
     /**
@@ -110,7 +110,7 @@ class MajsoulPlatformAccountsPrimitive extends Primitive
      */
     public function getNickname(): string
     {
-        return $this->_nickname;
+        return $this->_nickname ?: '';
     }
 
     protected function _getFieldsTransforms()

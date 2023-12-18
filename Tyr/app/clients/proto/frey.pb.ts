@@ -354,6 +354,9 @@ export interface PersonsUpdatePersonalInfoPayload {
   tenhouId: string;
   hasAvatar: boolean;
   avatarData: string;
+  msNickname: string;
+  msFriendId: number;
+  msAccountId: number;
 }
 
 export interface PersonsGetPersonalInfoPayload {
@@ -7187,6 +7190,9 @@ export const PersonsUpdatePersonalInfoPayload = {
       tenhouId: "",
       hasAvatar: false,
       avatarData: "",
+      msNickname: "",
+      msFriendId: 0,
+      msAccountId: 0,
     };
   },
 
@@ -7223,6 +7229,15 @@ export const PersonsUpdatePersonalInfoPayload = {
     }
     if (msg.avatarData) {
       writer.writeString(9, msg.avatarData);
+    }
+    if (msg.msNickname) {
+      writer.writeString(10, msg.msNickname);
+    }
+    if (msg.msFriendId) {
+      writer.writeInt32(11, msg.msFriendId);
+    }
+    if (msg.msAccountId) {
+      writer.writeInt32(12, msg.msAccountId);
     }
     return writer;
   },
@@ -7271,6 +7286,18 @@ export const PersonsUpdatePersonalInfoPayload = {
         }
         case 9: {
           msg.avatarData = reader.readString();
+          break;
+        }
+        case 10: {
+          msg.msNickname = reader.readString();
+          break;
+        }
+        case 11: {
+          msg.msFriendId = reader.readInt32();
+          break;
+        }
+        case 12: {
+          msg.msAccountId = reader.readInt32();
           break;
         }
         default: {
@@ -12254,6 +12281,9 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
       tenhouId: "",
       hasAvatar: false,
       avatarData: "",
+      msNickname: "",
+      msFriendId: 0,
+      msAccountId: 0,
     };
   },
 
@@ -12290,6 +12320,15 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     }
     if (msg.avatarData) {
       json["avatarData"] = msg.avatarData;
+    }
+    if (msg.msNickname) {
+      json["msNickname"] = msg.msNickname;
+    }
+    if (msg.msFriendId) {
+      json["msFriendId"] = msg.msFriendId;
+    }
+    if (msg.msAccountId) {
+      json["msAccountId"] = msg.msAccountId;
     }
     return json;
   },
@@ -12336,6 +12375,18 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     const _avatarData_ = json["avatarData"] ?? json["avatar_data"];
     if (_avatarData_) {
       msg.avatarData = _avatarData_;
+    }
+    const _msNickname_ = json["msNickname"] ?? json["ms_nickname"];
+    if (_msNickname_) {
+      msg.msNickname = _msNickname_;
+    }
+    const _msFriendId_ = json["msFriendId"] ?? json["ms_friend_id"];
+    if (_msFriendId_) {
+      msg.msFriendId = _msFriendId_;
+    }
+    const _msAccountId_ = json["msAccountId"] ?? json["ms_account_id"];
+    if (_msAccountId_) {
+      msg.msAccountId = _msAccountId_;
     }
     return msg;
   },

@@ -296,7 +296,10 @@ final class TwirpServer implements Frey
                     $req->getPhone(),
                     $req->getTenhouId(),
                     $req->getHasAvatar(),
-                    $req->getAvatarData()
+                    $req->getAvatarData(),
+                    $req->getMsNickname(),
+                    $req->getMsAccountId(),
+                    $req->getMsFriendId()
                 )
             );
         } catch (\Exception $e) {

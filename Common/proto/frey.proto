@@ -435,6 +435,9 @@ message PersonsUpdatePersonalInfoPayload {
   string tenhou_id = 7;
   bool has_avatar = 8;
   string avatar_data = 9;
+  string ms_nickname = 10;
+  int32 ms_friend_id  = 11;
+  int32 ms_account_id = 12;
 }
 
 message PersonsGetPersonalInfoPayload {

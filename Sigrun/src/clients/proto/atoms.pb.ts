@@ -2,8 +2,8 @@
 // Source: proto/atoms.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -165,6 +165,7 @@ export interface Event {
   hasSeries: boolean;
   withChips: boolean;
   minGamesCount: number;
+  platformId: number;
 }
 
 export interface MyEvent {
@@ -970,8 +971,11 @@ export const AccessRules = {
   /**
    * Serializes AccessRules to protobuf.
    */
-  encode: function (msg: Partial<AccessRules>): Uint8Array {
-    return AccessRules._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<AccessRules>): Uint8Array {
+    return AccessRules._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -980,16 +984,17 @@ export const AccessRules = {
   decode: function (bytes: ByteSource): AccessRules {
     return AccessRules._readMessage(
       AccessRules.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AccessRules with all fields set to their default value.
    */
-  initialize: function (): AccessRules {
+  initialize: function (msg?: Partial<AccessRules>): AccessRules {
     return {
       rules: {},
+      ...msg,
     };
   },
 
@@ -997,9 +1002,9 @@ export const AccessRules = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AccessRules>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AccessRules>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rules) {
       writer.writeRepeatedMessage(
         1,
@@ -1007,7 +1012,7 @@ export const AccessRules = {
           key: key as any,
           value: value as any,
         })) as any,
-        AccessRules.Rules._writeMessage
+        AccessRules.Rules._writeMessage,
       );
     }
     return writer;
@@ -1016,7 +1021,10 @@ export const AccessRules = {
   /**
    * @private
    */
-  _readMessage: function (msg: AccessRules, reader: BinaryReader): AccessRules {
+  _readMessage: function (
+    msg: AccessRules,
+    reader: protoscript.BinaryReader,
+  ): AccessRules {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -1040,9 +1048,9 @@ export const AccessRules = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<AccessRules.Rules>,
-      writer: BinaryWriter
-    ): BinaryWriter {
+      msg: PartialDeep<AccessRules.Rules>,
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
       }
@@ -1057,7 +1065,7 @@ export const AccessRules = {
      */
     _readMessage: function (
       msg: AccessRules.Rules,
-      reader: BinaryReader
+      reader: protoscript.BinaryReader,
     ): AccessRules.Rules {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -1086,8 +1094,11 @@ export const RuleValue = {
   /**
    * Serializes RuleValue to protobuf.
    */
-  encode: function (msg: Partial<RuleValue>): Uint8Array {
-    return RuleValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<RuleValue>): Uint8Array {
+    return RuleValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -1096,18 +1107,19 @@ export const RuleValue = {
   decode: function (bytes: ByteSource): RuleValue {
     return RuleValue._readMessage(
       RuleValue.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RuleValue with all fields set to their default value.
    */
-  initialize: function (): RuleValue {
+  initialize: function (msg?: Partial<RuleValue>): RuleValue {
     return {
       numberValue: undefined,
       stringValue: undefined,
       boolValue: undefined,
+      ...msg,
     };
   },
 
@@ -1115,9 +1127,9 @@ export const RuleValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RuleValue>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RuleValue>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.numberValue != undefined) {
       writer.writeInt32(2, msg.numberValue);
     }
@@ -1133,7 +1145,10 @@ export const RuleValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: RuleValue, reader: BinaryReader): RuleValue {
+  _readMessage: function (
+    msg: RuleValue,
+    reader: protoscript.BinaryReader,
+  ): RuleValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -1163,8 +1178,11 @@ export const EventAdmin = {
   /**
    * Serializes EventAdmin to protobuf.
    */
-  encode: function (msg: Partial<EventAdmin>): Uint8Array {
-    return EventAdmin._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<EventAdmin>): Uint8Array {
+    return EventAdmin._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -1173,20 +1191,21 @@ export const EventAdmin = {
   decode: function (bytes: ByteSource): EventAdmin {
     return EventAdmin._readMessage(
       EventAdmin.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventAdmin with all fields set to their default value.
    */
-  initialize: function (): EventAdmin {
+  initialize: function (msg?: Partial<EventAdmin>): EventAdmin {
     return {
       ruleId: 0,
       personId: 0,
       personName: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -1194,9 +1213,9 @@ export const EventAdmin = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<EventAdmin>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<EventAdmin>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ruleId) {
       writer.writeInt32(1, msg.ruleId);
     }
@@ -1218,7 +1237,10 @@ export const EventAdmin = {
   /**
    * @private
    */
-  _readMessage: function (msg: EventAdmin, reader: BinaryReader): EventAdmin {
+  _readMessage: function (
+    msg: EventAdmin,
+    reader: protoscript.BinaryReader,
+  ): EventAdmin {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -1256,10 +1278,10 @@ export const RuleListItem = {
   /**
    * Serializes RuleListItem to protobuf.
    */
-  encode: function (msg: Partial<RuleListItem>): Uint8Array {
+  encode: function (msg: PartialDeep<RuleListItem>): Uint8Array {
     return RuleListItem._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -1269,18 +1291,19 @@ export const RuleListItem = {
   decode: function (bytes: ByteSource): RuleListItem {
     return RuleListItem._readMessage(
       RuleListItem.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RuleListItem with all fields set to their default value.
    */
-  initialize: function (): RuleListItem {
+  initialize: function (msg?: Partial<RuleListItem>): RuleListItem {
     return {
       default: "",
       type: "",
       title: "",
+      ...msg,
     };
   },
 
@@ -1288,9 +1311,9 @@ export const RuleListItem = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RuleListItem>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RuleListItem>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.default) {
       writer.writeString(1, msg.default);
     }
@@ -1308,7 +1331,7 @@ export const RuleListItem = {
    */
   _readMessage: function (
     msg: RuleListItem,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): RuleListItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1339,10 +1362,10 @@ export const EventRuleListItem = {
   /**
    * Serializes EventRuleListItem to protobuf.
    */
-  encode: function (msg: Partial<EventRuleListItem>): Uint8Array {
+  encode: function (msg: PartialDeep<EventRuleListItem>): Uint8Array {
     return EventRuleListItem._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -1352,14 +1375,14 @@ export const EventRuleListItem = {
   decode: function (bytes: ByteSource): EventRuleListItem {
     return EventRuleListItem._readMessage(
       EventRuleListItem.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventRuleListItem with all fields set to their default value.
    */
-  initialize: function (): EventRuleListItem {
+  initialize: function (msg?: Partial<EventRuleListItem>): EventRuleListItem {
     return {
       isGlobal: false,
       id: 0,
@@ -1367,6 +1390,7 @@ export const EventRuleListItem = {
       name: "",
       ownerTitle: "",
       allowedValues: [],
+      ...msg,
     };
   },
 
@@ -1374,9 +1398,9 @@ export const EventRuleListItem = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<EventRuleListItem>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<EventRuleListItem>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.isGlobal) {
       writer.writeBool(1, msg.isGlobal);
     }
@@ -1403,7 +1427,7 @@ export const EventRuleListItem = {
    */
   _readMessage: function (
     msg: EventRuleListItem,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): EventRuleListItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1446,10 +1470,10 @@ export const RuleListItemEx = {
   /**
    * Serializes RuleListItemEx to protobuf.
    */
-  encode: function (msg: Partial<RuleListItemEx>): Uint8Array {
+  encode: function (msg: PartialDeep<RuleListItemEx>): Uint8Array {
     return RuleListItemEx._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -1459,19 +1483,20 @@ export const RuleListItemEx = {
   decode: function (bytes: ByteSource): RuleListItemEx {
     return RuleListItemEx._readMessage(
       RuleListItemEx.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RuleListItemEx with all fields set to their default value.
    */
-  initialize: function (): RuleListItemEx {
+  initialize: function (msg?: Partial<RuleListItemEx>): RuleListItemEx {
     return {
       id: 0,
       type: "",
       value: RuleValue.initialize(),
       allowedValues: [],
+      ...msg,
     };
   },
 
@@ -1479,9 +1504,9 @@ export const RuleListItemEx = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RuleListItemEx>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RuleListItemEx>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -1502,7 +1527,7 @@ export const RuleListItemEx = {
    */
   _readMessage: function (
     msg: RuleListItemEx,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): RuleListItemEx {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1537,10 +1562,10 @@ export const RuleListItemExMap = {
   /**
    * Serializes RuleListItemExMap to protobuf.
    */
-  encode: function (msg: Partial<RuleListItemExMap>): Uint8Array {
+  encode: function (msg: PartialDeep<RuleListItemExMap>): Uint8Array {
     return RuleListItemExMap._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -1550,16 +1575,17 @@ export const RuleListItemExMap = {
   decode: function (bytes: ByteSource): RuleListItemExMap {
     return RuleListItemExMap._readMessage(
       RuleListItemExMap.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RuleListItemExMap with all fields set to their default value.
    */
-  initialize: function (): RuleListItemExMap {
+  initialize: function (msg?: Partial<RuleListItemExMap>): RuleListItemExMap {
     return {
       rules: {},
+      ...msg,
     };
   },
 
@@ -1567,9 +1593,9 @@ export const RuleListItemExMap = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RuleListItemExMap>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RuleListItemExMap>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rules) {
       writer.writeRepeatedMessage(
         1,
@@ -1577,7 +1603,7 @@ export const RuleListItemExMap = {
           key: key as any,
           value: value as any,
         })) as any,
-        RuleListItemExMap.Rules._writeMessage
+        RuleListItemExMap.Rules._writeMessage,
       );
     }
     return writer;
@@ -1588,7 +1614,7 @@ export const RuleListItemExMap = {
    */
   _readMessage: function (
     msg: RuleListItemExMap,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): RuleListItemExMap {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1613,9 +1639,9 @@ export const RuleListItemExMap = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<RuleListItemExMap.Rules>,
-      writer: BinaryWriter
-    ): BinaryWriter {
+      msg: PartialDeep<RuleListItemExMap.Rules>,
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
       }
@@ -1630,7 +1656,7 @@ export const RuleListItemExMap = {
      */
     _readMessage: function (
       msg: RuleListItemExMap.Rules,
-      reader: BinaryReader
+      reader: protoscript.BinaryReader,
     ): RuleListItemExMap.Rules {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -1659,21 +1685,27 @@ export const Person = {
   /**
    * Serializes Person to protobuf.
    */
-  encode: function (msg: Partial<Person>): Uint8Array {
-    return Person._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Person>): Uint8Array {
+    return Person._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Person from protobuf.
    */
   decode: function (bytes: ByteSource): Person {
-    return Person._readMessage(Person.initialize(), new BinaryReader(bytes));
+    return Person._readMessage(
+      Person.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Person with all fields set to their default value.
    */
-  initialize: function (): Person {
+  initialize: function (msg?: Partial<Person>): Person {
     return {
       id: 0,
       city: "",
@@ -1681,6 +1713,7 @@ export const Person = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -1688,9 +1721,9 @@ export const Person = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Person>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Person>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -1715,7 +1748,10 @@ export const Person = {
   /**
    * @private
    */
-  _readMessage: function (msg: Person, reader: BinaryReader): Person {
+  _readMessage: function (
+    msg: Person,
+    reader: protoscript.BinaryReader,
+  ): Person {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -1757,8 +1793,11 @@ export const PersonEx = {
   /**
    * Serializes PersonEx to protobuf.
    */
-  encode: function (msg: Partial<PersonEx>): Uint8Array {
-    return PersonEx._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<PersonEx>): Uint8Array {
+    return PersonEx._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -1767,14 +1806,14 @@ export const PersonEx = {
   decode: function (bytes: ByteSource): PersonEx {
     return PersonEx._readMessage(
       PersonEx.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PersonEx with all fields set to their default value.
    */
-  initialize: function (): PersonEx {
+  initialize: function (msg?: Partial<PersonEx>): PersonEx {
     return {
       id: 0,
       city: "",
@@ -1788,6 +1827,7 @@ export const PersonEx = {
       lastUpdate: "",
       msNickname: "",
       msAccountId: 0,
+      ...msg,
     };
   },
 
@@ -1795,9 +1835,9 @@ export const PersonEx = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PersonEx>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PersonEx>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -1840,7 +1880,10 @@ export const PersonEx = {
   /**
    * @private
    */
-  _readMessage: function (msg: PersonEx, reader: BinaryReader): PersonEx {
+  _readMessage: function (
+    msg: PersonEx,
+    reader: protoscript.BinaryReader,
+  ): PersonEx {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -1910,26 +1953,33 @@ export const Group = {
   /**
    * Serializes Group to protobuf.
    */
-  encode: function (msg: Partial<Group>): Uint8Array {
-    return Group._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Group>): Uint8Array {
+    return Group._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Group from protobuf.
    */
   decode: function (bytes: ByteSource): Group {
-    return Group._readMessage(Group.initialize(), new BinaryReader(bytes));
+    return Group._readMessage(
+      Group.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Group with all fields set to their default value.
    */
-  initialize: function (): Group {
+  initialize: function (msg?: Partial<Group>): Group {
     return {
       id: 0,
       title: "",
       color: "",
       description: "",
+      ...msg,
     };
   },
 
@@ -1937,9 +1987,9 @@ export const Group = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Group>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Group>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -1958,7 +2008,7 @@ export const Group = {
   /**
    * @private
    */
-  _readMessage: function (msg: Group, reader: BinaryReader): Group {
+  _readMessage: function (msg: Group, reader: protoscript.BinaryReader): Group {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -1992,24 +2042,31 @@ export const Country = {
   /**
    * Serializes Country to protobuf.
    */
-  encode: function (msg: Partial<Country>): Uint8Array {
-    return Country._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Country>): Uint8Array {
+    return Country._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Country from protobuf.
    */
   decode: function (bytes: ByteSource): Country {
-    return Country._readMessage(Country.initialize(), new BinaryReader(bytes));
+    return Country._readMessage(
+      Country.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Country with all fields set to their default value.
    */
-  initialize: function (): Country {
+  initialize: function (msg?: Partial<Country>): Country {
     return {
       code: "",
       name: "",
+      ...msg,
     };
   },
 
@@ -2017,9 +2074,9 @@ export const Country = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Country>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Country>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.code) {
       writer.writeString(1, msg.code);
     }
@@ -2032,7 +2089,10 @@ export const Country = {
   /**
    * @private
    */
-  _readMessage: function (msg: Country, reader: BinaryReader): Country {
+  _readMessage: function (
+    msg: Country,
+    reader: protoscript.BinaryReader,
+  ): Country {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2058,21 +2118,27 @@ export const Event = {
   /**
    * Serializes Event to protobuf.
    */
-  encode: function (msg: Partial<Event>): Uint8Array {
-    return Event._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Event>): Uint8Array {
+    return Event._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Event from protobuf.
    */
   decode: function (bytes: ByteSource): Event {
-    return Event._readMessage(Event.initialize(), new BinaryReader(bytes));
+    return Event._readMessage(
+      Event.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Event with all fields set to their default value.
    */
-  initialize: function (): Event {
+  initialize: function (msg?: Partial<Event>): Event {
     return {
       id: 0,
       title: "",
@@ -2087,6 +2153,8 @@ export const Event = {
       hasSeries: false,
       withChips: false,
       minGamesCount: 0,
+      platformId: 0,
+      ...msg,
     };
   },
 
@@ -2094,9 +2162,9 @@ export const Event = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Event>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Event>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -2136,13 +2204,16 @@ export const Event = {
     if (msg.minGamesCount) {
       writer.writeInt32(13, msg.minGamesCount);
     }
+    if (msg.platformId) {
+      writer.writeInt32(14, msg.platformId);
+    }
     return writer;
   },
 
   /**
    * @private
    */
-  _readMessage: function (msg: Event, reader: BinaryReader): Event {
+  _readMessage: function (msg: Event, reader: protoscript.BinaryReader): Event {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2198,6 +2269,10 @@ export const Event = {
           msg.minGamesCount = reader.readInt32();
           break;
         }
+        case 14: {
+          msg.platformId = reader.readInt32();
+          break;
+        }
         default: {
           reader.skipField();
           break;
@@ -2212,26 +2287,33 @@ export const MyEvent = {
   /**
    * Serializes MyEvent to protobuf.
    */
-  encode: function (msg: Partial<MyEvent>): Uint8Array {
-    return MyEvent._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<MyEvent>): Uint8Array {
+    return MyEvent._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes MyEvent from protobuf.
    */
   decode: function (bytes: ByteSource): MyEvent {
-    return MyEvent._readMessage(MyEvent.initialize(), new BinaryReader(bytes));
+    return MyEvent._readMessage(
+      MyEvent.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes MyEvent with all fields set to their default value.
    */
-  initialize: function (): MyEvent {
+  initialize: function (msg?: Partial<MyEvent>): MyEvent {
     return {
       id: 0,
       title: "",
       description: "",
       isOnline: false,
+      ...msg,
     };
   },
 
@@ -2239,9 +2321,9 @@ export const MyEvent = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<MyEvent>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<MyEvent>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -2260,7 +2342,10 @@ export const MyEvent = {
   /**
    * @private
    */
-  _readMessage: function (msg: MyEvent, reader: BinaryReader): MyEvent {
+  _readMessage: function (
+    msg: MyEvent,
+    reader: protoscript.BinaryReader,
+  ): MyEvent {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2294,8 +2379,11 @@ export const GameConfig = {
   /**
    * Serializes GameConfig to protobuf.
    */
-  encode: function (msg: Partial<GameConfig>): Uint8Array {
-    return GameConfig._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<GameConfig>): Uint8Array {
+    return GameConfig._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -2304,14 +2392,14 @@ export const GameConfig = {
   decode: function (bytes: ByteSource): GameConfig {
     return GameConfig._readMessage(
       GameConfig.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GameConfig with all fields set to their default value.
    */
-  initialize: function (): GameConfig {
+  initialize: function (msg?: Partial<GameConfig>): GameConfig {
     return {
       rulesetTitle: "",
       eventTitle: "",
@@ -2337,6 +2425,7 @@ export const GameConfig = {
       isFinished: false,
       rulesetConfig: RulesetConfig.initialize(),
       lobbyId: 0,
+      ...msg,
     };
   },
 
@@ -2344,9 +2433,9 @@ export const GameConfig = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<GameConfig>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<GameConfig>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rulesetTitle) {
       writer.writeString(10, msg.rulesetTitle);
     }
@@ -2425,7 +2514,10 @@ export const GameConfig = {
   /**
    * @private
    */
-  _readMessage: function (msg: GameConfig, reader: BinaryReader): GameConfig {
+  _readMessage: function (
+    msg: GameConfig,
+    reader: protoscript.BinaryReader,
+  ): GameConfig {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2539,10 +2631,10 @@ export const PlayerInRating = {
   /**
    * Serializes PlayerInRating to protobuf.
    */
-  encode: function (msg: Partial<PlayerInRating>): Uint8Array {
+  encode: function (msg: PartialDeep<PlayerInRating>): Uint8Array {
     return PlayerInRating._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2552,14 +2644,14 @@ export const PlayerInRating = {
   decode: function (bytes: ByteSource): PlayerInRating {
     return PlayerInRating._readMessage(
       PlayerInRating.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayerInRating with all fields set to their default value.
    */
-  initialize: function (): PlayerInRating {
+  initialize: function (msg?: Partial<PlayerInRating>): PlayerInRating {
     return {
       id: 0,
       title: "",
@@ -2573,6 +2665,7 @@ export const PlayerInRating = {
       teamName: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -2580,9 +2673,9 @@ export const PlayerInRating = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerInRating>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PlayerInRating>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -2627,7 +2720,7 @@ export const PlayerInRating = {
    */
   _readMessage: function (
     msg: PlayerInRating,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PlayerInRating {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2694,27 +2787,34 @@ export const Player = {
   /**
    * Serializes Player to protobuf.
    */
-  encode: function (msg: Partial<Player>): Uint8Array {
-    return Player._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Player>): Uint8Array {
+    return Player._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Player from protobuf.
    */
   decode: function (bytes: ByteSource): Player {
-    return Player._readMessage(Player.initialize(), new BinaryReader(bytes));
+    return Player._readMessage(
+      Player.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Player with all fields set to their default value.
    */
-  initialize: function (): Player {
+  initialize: function (msg?: Partial<Player>): Player {
     return {
       id: 0,
       title: "",
       tenhouId: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -2722,9 +2822,9 @@ export const Player = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Player>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Player>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -2746,7 +2846,10 @@ export const Player = {
   /**
    * @private
    */
-  _readMessage: function (msg: Player, reader: BinaryReader): Player {
+  _readMessage: function (
+    msg: Player,
+    reader: protoscript.BinaryReader,
+  ): Player {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2784,10 +2887,10 @@ export const FinalResultOfSession = {
   /**
    * Serializes FinalResultOfSession to protobuf.
    */
-  encode: function (msg: Partial<FinalResultOfSession>): Uint8Array {
+  encode: function (msg: PartialDeep<FinalResultOfSession>): Uint8Array {
     return FinalResultOfSession._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -2797,19 +2900,22 @@ export const FinalResultOfSession = {
   decode: function (bytes: ByteSource): FinalResultOfSession {
     return FinalResultOfSession._readMessage(
       FinalResultOfSession.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes FinalResultOfSession with all fields set to their default value.
    */
-  initialize: function (): FinalResultOfSession {
+  initialize: function (
+    msg?: Partial<FinalResultOfSession>,
+  ): FinalResultOfSession {
     return {
       playerId: 0,
       score: 0,
       ratingDelta: 0,
       place: 0,
+      ...msg,
     };
   },
 
@@ -2817,9 +2923,9 @@ export const FinalResultOfSession = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<FinalResultOfSession>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<FinalResultOfSession>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -2840,7 +2946,7 @@ export const FinalResultOfSession = {
    */
   _readMessage: function (
     msg: FinalResultOfSession,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): FinalResultOfSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -2875,25 +2981,32 @@ export const Penalty = {
   /**
    * Serializes Penalty to protobuf.
    */
-  encode: function (msg: Partial<Penalty>): Uint8Array {
-    return Penalty._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Penalty>): Uint8Array {
+    return Penalty._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Penalty from protobuf.
    */
   decode: function (bytes: ByteSource): Penalty {
-    return Penalty._readMessage(Penalty.initialize(), new BinaryReader(bytes));
+    return Penalty._readMessage(
+      Penalty.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Penalty with all fields set to their default value.
    */
-  initialize: function (): Penalty {
+  initialize: function (msg?: Partial<Penalty>): Penalty {
     return {
       who: 0,
       amount: 0,
       reason: undefined,
+      ...msg,
     };
   },
 
@@ -2901,9 +3014,9 @@ export const Penalty = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Penalty>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Penalty>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.who) {
       writer.writeInt32(1, msg.who);
     }
@@ -2919,7 +3032,10 @@ export const Penalty = {
   /**
    * @private
    */
-  _readMessage: function (msg: Penalty, reader: BinaryReader): Penalty {
+  _readMessage: function (
+    msg: Penalty,
+    reader: protoscript.BinaryReader,
+  ): Penalty {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2949,8 +3065,11 @@ export const RonResult = {
   /**
    * Serializes RonResult to protobuf.
    */
-  encode: function (msg: Partial<RonResult>): Uint8Array {
-    return RonResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<RonResult>): Uint8Array {
+    return RonResult._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -2959,14 +3078,14 @@ export const RonResult = {
   decode: function (bytes: ByteSource): RonResult {
     return RonResult._readMessage(
       RonResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RonResult with all fields set to their default value.
    */
-  initialize: function (): RonResult {
+  initialize: function (msg?: Partial<RonResult>): RonResult {
     return {
       roundIndex: 0,
       honba: 0,
@@ -2982,6 +3101,7 @@ export const RonResult = {
       kandora: 0,
       kanuradora: 0,
       openHand: false,
+      ...msg,
     };
   },
 
@@ -2989,9 +3109,9 @@ export const RonResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RonResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RonResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
     }
@@ -3040,7 +3160,10 @@ export const RonResult = {
   /**
    * @private
    */
-  _readMessage: function (msg: RonResult, reader: BinaryReader): RonResult {
+  _readMessage: function (
+    msg: RonResult,
+    reader: protoscript.BinaryReader,
+  ): RonResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3122,8 +3245,11 @@ export const MultironWin = {
   /**
    * Serializes MultironWin to protobuf.
    */
-  encode: function (msg: Partial<MultironWin>): Uint8Array {
-    return MultironWin._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<MultironWin>): Uint8Array {
+    return MultironWin._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -3132,14 +3258,14 @@ export const MultironWin = {
   decode: function (bytes: ByteSource): MultironWin {
     return MultironWin._readMessage(
       MultironWin.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes MultironWin with all fields set to their default value.
    */
-  initialize: function (): MultironWin {
+  initialize: function (msg?: Partial<MultironWin>): MultironWin {
     return {
       winnerId: 0,
       paoPlayerId: 0,
@@ -3151,6 +3277,7 @@ export const MultironWin = {
       kandora: 0,
       kanuradora: 0,
       openHand: false,
+      ...msg,
     };
   },
 
@@ -3158,9 +3285,9 @@ export const MultironWin = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<MultironWin>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<MultironWin>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.winnerId) {
       writer.writeInt32(1, msg.winnerId);
     }
@@ -3197,7 +3324,10 @@ export const MultironWin = {
   /**
    * @private
    */
-  _readMessage: function (msg: MultironWin, reader: BinaryReader): MultironWin {
+  _readMessage: function (
+    msg: MultironWin,
+    reader: protoscript.BinaryReader,
+  ): MultironWin {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3259,10 +3389,10 @@ export const MultironResult = {
   /**
    * Serializes MultironResult to protobuf.
    */
-  encode: function (msg: Partial<MultironResult>): Uint8Array {
+  encode: function (msg: PartialDeep<MultironResult>): Uint8Array {
     return MultironResult._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3272,14 +3402,14 @@ export const MultironResult = {
   decode: function (bytes: ByteSource): MultironResult {
     return MultironResult._readMessage(
       MultironResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes MultironResult with all fields set to their default value.
    */
-  initialize: function (): MultironResult {
+  initialize: function (msg?: Partial<MultironResult>): MultironResult {
     return {
       roundIndex: 0,
       honba: 0,
@@ -3287,6 +3417,7 @@ export const MultironResult = {
       multiRon: 0,
       wins: [],
       riichiBets: [],
+      ...msg,
     };
   },
 
@@ -3294,9 +3425,9 @@ export const MultironResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<MultironResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<MultironResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
     }
@@ -3313,7 +3444,7 @@ export const MultironResult = {
       writer.writeRepeatedMessage(
         5,
         msg.wins as any,
-        MultironWin._writeMessage
+        MultironWin._writeMessage,
       );
     }
     if (msg.riichiBets?.length) {
@@ -3327,7 +3458,7 @@ export const MultironResult = {
    */
   _readMessage: function (
     msg: MultironResult,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): MultironResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3376,8 +3507,11 @@ export const TsumoResult = {
   /**
    * Serializes TsumoResult to protobuf.
    */
-  encode: function (msg: Partial<TsumoResult>): Uint8Array {
-    return TsumoResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<TsumoResult>): Uint8Array {
+    return TsumoResult._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -3386,14 +3520,14 @@ export const TsumoResult = {
   decode: function (bytes: ByteSource): TsumoResult {
     return TsumoResult._readMessage(
       TsumoResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes TsumoResult with all fields set to their default value.
    */
-  initialize: function (): TsumoResult {
+  initialize: function (msg?: Partial<TsumoResult>): TsumoResult {
     return {
       roundIndex: 0,
       honba: 0,
@@ -3408,6 +3542,7 @@ export const TsumoResult = {
       kandora: 0,
       kanuradora: 0,
       openHand: false,
+      ...msg,
     };
   },
 
@@ -3415,9 +3550,9 @@ export const TsumoResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TsumoResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<TsumoResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
     }
@@ -3463,7 +3598,10 @@ export const TsumoResult = {
   /**
    * @private
    */
-  _readMessage: function (msg: TsumoResult, reader: BinaryReader): TsumoResult {
+  _readMessage: function (
+    msg: TsumoResult,
+    reader: protoscript.BinaryReader,
+  ): TsumoResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3541,8 +3679,11 @@ export const DrawResult = {
   /**
    * Serializes DrawResult to protobuf.
    */
-  encode: function (msg: Partial<DrawResult>): Uint8Array {
-    return DrawResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<DrawResult>): Uint8Array {
+    return DrawResult._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -3551,19 +3692,20 @@ export const DrawResult = {
   decode: function (bytes: ByteSource): DrawResult {
     return DrawResult._readMessage(
       DrawResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes DrawResult with all fields set to their default value.
    */
-  initialize: function (): DrawResult {
+  initialize: function (msg?: Partial<DrawResult>): DrawResult {
     return {
       roundIndex: 0,
       honba: 0,
       riichiBets: [],
       tempai: [],
+      ...msg,
     };
   },
 
@@ -3571,9 +3713,9 @@ export const DrawResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<DrawResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<DrawResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
     }
@@ -3592,7 +3734,10 @@ export const DrawResult = {
   /**
    * @private
    */
-  _readMessage: function (msg: DrawResult, reader: BinaryReader): DrawResult {
+  _readMessage: function (
+    msg: DrawResult,
+    reader: protoscript.BinaryReader,
+  ): DrawResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3634,8 +3779,11 @@ export const AbortResult = {
   /**
    * Serializes AbortResult to protobuf.
    */
-  encode: function (msg: Partial<AbortResult>): Uint8Array {
-    return AbortResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<AbortResult>): Uint8Array {
+    return AbortResult._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -3644,18 +3792,19 @@ export const AbortResult = {
   decode: function (bytes: ByteSource): AbortResult {
     return AbortResult._readMessage(
       AbortResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes AbortResult with all fields set to their default value.
    */
-  initialize: function (): AbortResult {
+  initialize: function (msg?: Partial<AbortResult>): AbortResult {
     return {
       roundIndex: 0,
       honba: 0,
       riichiBets: [],
+      ...msg,
     };
   },
 
@@ -3663,9 +3812,9 @@ export const AbortResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<AbortResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<AbortResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
     }
@@ -3681,7 +3830,10 @@ export const AbortResult = {
   /**
    * @private
    */
-  _readMessage: function (msg: AbortResult, reader: BinaryReader): AbortResult {
+  _readMessage: function (
+    msg: AbortResult,
+    reader: protoscript.BinaryReader,
+  ): AbortResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3715,10 +3867,10 @@ export const ChomboResult = {
   /**
    * Serializes ChomboResult to protobuf.
    */
-  encode: function (msg: Partial<ChomboResult>): Uint8Array {
+  encode: function (msg: PartialDeep<ChomboResult>): Uint8Array {
     return ChomboResult._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3728,18 +3880,19 @@ export const ChomboResult = {
   decode: function (bytes: ByteSource): ChomboResult {
     return ChomboResult._readMessage(
       ChomboResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes ChomboResult with all fields set to their default value.
    */
-  initialize: function (): ChomboResult {
+  initialize: function (msg?: Partial<ChomboResult>): ChomboResult {
     return {
       roundIndex: 0,
       honba: 0,
       loserId: 0,
+      ...msg,
     };
   },
 
@@ -3747,9 +3900,9 @@ export const ChomboResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ChomboResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<ChomboResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
     }
@@ -3767,7 +3920,7 @@ export const ChomboResult = {
    */
   _readMessage: function (
     msg: ChomboResult,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): ChomboResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3798,10 +3951,10 @@ export const NagashiResult = {
   /**
    * Serializes NagashiResult to protobuf.
    */
-  encode: function (msg: Partial<NagashiResult>): Uint8Array {
+  encode: function (msg: PartialDeep<NagashiResult>): Uint8Array {
     return NagashiResult._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3811,20 +3964,21 @@ export const NagashiResult = {
   decode: function (bytes: ByteSource): NagashiResult {
     return NagashiResult._readMessage(
       NagashiResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes NagashiResult with all fields set to their default value.
    */
-  initialize: function (): NagashiResult {
+  initialize: function (msg?: Partial<NagashiResult>): NagashiResult {
     return {
       roundIndex: 0,
       honba: 0,
       riichiBets: [],
       tempai: [],
       nagashi: [],
+      ...msg,
     };
   },
 
@@ -3832,9 +3986,9 @@ export const NagashiResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<NagashiResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<NagashiResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
     }
@@ -3858,7 +4012,7 @@ export const NagashiResult = {
    */
   _readMessage: function (
     msg: NagashiResult,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): NagashiResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3909,21 +4063,27 @@ export const Round = {
   /**
    * Serializes Round to protobuf.
    */
-  encode: function (msg: Partial<Round>): Uint8Array {
-    return Round._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Round>): Uint8Array {
+    return Round._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Round from protobuf.
    */
   decode: function (bytes: ByteSource): Round {
-    return Round._readMessage(Round.initialize(), new BinaryReader(bytes));
+    return Round._readMessage(
+      Round.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Round with all fields set to their default value.
    */
-  initialize: function (): Round {
+  initialize: function (msg?: Partial<Round>): Round {
     return {
       ron: undefined,
       tsumo: undefined,
@@ -3932,6 +4092,7 @@ export const Round = {
       abort: undefined,
       chombo: undefined,
       nagashi: undefined,
+      ...msg,
     };
   },
 
@@ -3939,9 +4100,9 @@ export const Round = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Round>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Round>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ron != undefined) {
       writer.writeMessage(1, msg.ron, RonResult._writeMessage);
     }
@@ -3969,7 +4130,7 @@ export const Round = {
   /**
    * @private
    */
-  _readMessage: function (msg: Round, reader: BinaryReader): Round {
+  _readMessage: function (msg: Round, reader: protoscript.BinaryReader): Round {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4022,8 +4183,11 @@ export const GameResult = {
   /**
    * Serializes GameResult to protobuf.
    */
-  encode: function (msg: Partial<GameResult>): Uint8Array {
-    return GameResult._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<GameResult>): Uint8Array {
+    return GameResult._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -4032,14 +4196,14 @@ export const GameResult = {
   decode: function (bytes: ByteSource): GameResult {
     return GameResult._readMessage(
       GameResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GameResult with all fields set to their default value.
    */
-  initialize: function (): GameResult {
+  initialize: function (msg?: Partial<GameResult>): GameResult {
     return {
       sessionHash: "",
       date: undefined,
@@ -4048,6 +4212,7 @@ export const GameResult = {
       finalResults: [],
       penaltyLogs: [],
       rounds: [],
+      ...msg,
     };
   },
 
@@ -4055,9 +4220,9 @@ export const GameResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<GameResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<GameResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -4074,14 +4239,14 @@ export const GameResult = {
       writer.writeRepeatedMessage(
         5,
         msg.finalResults as any,
-        FinalResultOfSession._writeMessage
+        FinalResultOfSession._writeMessage,
       );
     }
     if (msg.penaltyLogs?.length) {
       writer.writeRepeatedMessage(
         6,
         msg.penaltyLogs as any,
-        Penalty._writeMessage
+        Penalty._writeMessage,
       );
     }
     if (msg.rounds?.length) {
@@ -4093,7 +4258,10 @@ export const GameResult = {
   /**
    * @private
    */
-  _readMessage: function (msg: GameResult, reader: BinaryReader): GameResult {
+  _readMessage: function (
+    msg: GameResult,
+    reader: protoscript.BinaryReader,
+  ): GameResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4149,10 +4317,10 @@ export const PlayerPlaceInSeries = {
   /**
    * Serializes PlayerPlaceInSeries to protobuf.
    */
-  encode: function (msg: Partial<PlayerPlaceInSeries>): Uint8Array {
+  encode: function (msg: PartialDeep<PlayerPlaceInSeries>): Uint8Array {
     return PlayerPlaceInSeries._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4162,17 +4330,20 @@ export const PlayerPlaceInSeries = {
   decode: function (bytes: ByteSource): PlayerPlaceInSeries {
     return PlayerPlaceInSeries._readMessage(
       PlayerPlaceInSeries.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayerPlaceInSeries with all fields set to their default value.
    */
-  initialize: function (): PlayerPlaceInSeries {
+  initialize: function (
+    msg?: Partial<PlayerPlaceInSeries>,
+  ): PlayerPlaceInSeries {
     return {
       sessionHash: "",
       place: 0,
+      ...msg,
     };
   },
 
@@ -4180,9 +4351,9 @@ export const PlayerPlaceInSeries = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerPlaceInSeries>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PlayerPlaceInSeries>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -4197,7 +4368,7 @@ export const PlayerPlaceInSeries = {
    */
   _readMessage: function (
     msg: PlayerPlaceInSeries,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PlayerPlaceInSeries {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4224,10 +4395,10 @@ export const SeriesResult = {
   /**
    * Serializes SeriesResult to protobuf.
    */
-  encode: function (msg: Partial<SeriesResult>): Uint8Array {
+  encode: function (msg: PartialDeep<SeriesResult>): Uint8Array {
     return SeriesResult._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4237,14 +4408,14 @@ export const SeriesResult = {
   decode: function (bytes: ByteSource): SeriesResult {
     return SeriesResult._readMessage(
       SeriesResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SeriesResult with all fields set to their default value.
    */
-  initialize: function (): SeriesResult {
+  initialize: function (msg?: Partial<SeriesResult>): SeriesResult {
     return {
       player: Player.initialize(),
       bestSeries: [],
@@ -4255,6 +4426,7 @@ export const SeriesResult = {
       currentSeriesScores: 0,
       currentSeriesPlaces: 0,
       currentSeriesAvgPlace: "",
+      ...msg,
     };
   },
 
@@ -4262,9 +4434,9 @@ export const SeriesResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SeriesResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<SeriesResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.player) {
       writer.writeMessage(1, msg.player, Player._writeMessage);
     }
@@ -4272,7 +4444,7 @@ export const SeriesResult = {
       writer.writeRepeatedMessage(
         2,
         msg.bestSeries as any,
-        PlayerPlaceInSeries._writeMessage
+        PlayerPlaceInSeries._writeMessage,
       );
     }
     if (msg.bestSeriesScores) {
@@ -4288,7 +4460,7 @@ export const SeriesResult = {
       writer.writeRepeatedMessage(
         6,
         msg.currentSeries as any,
-        PlayerPlaceInSeries._writeMessage
+        PlayerPlaceInSeries._writeMessage,
       );
     }
     if (msg.currentSeriesScores) {
@@ -4308,7 +4480,7 @@ export const SeriesResult = {
    */
   _readMessage: function (
     msg: SeriesResult,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): SeriesResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4367,10 +4539,10 @@ export const ReplacementPlayer = {
   /**
    * Serializes ReplacementPlayer to protobuf.
    */
-  encode: function (msg: Partial<ReplacementPlayer>): Uint8Array {
+  encode: function (msg: PartialDeep<ReplacementPlayer>): Uint8Array {
     return ReplacementPlayer._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4380,19 +4552,20 @@ export const ReplacementPlayer = {
   decode: function (bytes: ByteSource): ReplacementPlayer {
     return ReplacementPlayer._readMessage(
       ReplacementPlayer.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes ReplacementPlayer with all fields set to their default value.
    */
-  initialize: function (): ReplacementPlayer {
+  initialize: function (msg?: Partial<ReplacementPlayer>): ReplacementPlayer {
     return {
       id: 0,
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -4400,9 +4573,9 @@ export const ReplacementPlayer = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ReplacementPlayer>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<ReplacementPlayer>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -4423,7 +4596,7 @@ export const ReplacementPlayer = {
    */
   _readMessage: function (
     msg: ReplacementPlayer,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): ReplacementPlayer {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4458,10 +4631,10 @@ export const PlayerInSession = {
   /**
    * Serializes PlayerInSession to protobuf.
    */
-  encode: function (msg: Partial<PlayerInSession>): Uint8Array {
+  encode: function (msg: PartialDeep<PlayerInSession>): Uint8Array {
     return PlayerInSession._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4471,14 +4644,14 @@ export const PlayerInSession = {
   decode: function (bytes: ByteSource): PlayerInSession {
     return PlayerInSession._readMessage(
       PlayerInSession.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayerInSession with all fields set to their default value.
    */
-  initialize: function (): PlayerInSession {
+  initialize: function (msg?: Partial<PlayerInSession>): PlayerInSession {
     return {
       id: 0,
       title: "",
@@ -4487,6 +4660,7 @@ export const PlayerInSession = {
       ratingDelta: 0,
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -4494,9 +4668,9 @@ export const PlayerInSession = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerInSession>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PlayerInSession>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -4526,7 +4700,7 @@ export const PlayerInSession = {
    */
   _readMessage: function (
     msg: PlayerInSession,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PlayerInSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4574,10 +4748,10 @@ export const CurrentSession = {
   /**
    * Serializes CurrentSession to protobuf.
    */
-  encode: function (msg: Partial<CurrentSession>): Uint8Array {
+  encode: function (msg: PartialDeep<CurrentSession>): Uint8Array {
     return CurrentSession._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4587,19 +4761,20 @@ export const CurrentSession = {
   decode: function (bytes: ByteSource): CurrentSession {
     return CurrentSession._readMessage(
       CurrentSession.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes CurrentSession with all fields set to their default value.
    */
-  initialize: function (): CurrentSession {
+  initialize: function (msg?: Partial<CurrentSession>): CurrentSession {
     return {
       sessionHash: "",
       status: "",
       tableIndex: undefined,
       players: [],
+      ...msg,
     };
   },
 
@@ -4607,9 +4782,9 @@ export const CurrentSession = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<CurrentSession>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<CurrentSession>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -4623,7 +4798,7 @@ export const CurrentSession = {
       writer.writeRepeatedMessage(
         4,
         msg.players as any,
-        PlayerInSession._writeMessage
+        PlayerInSession._writeMessage,
       );
     }
     return writer;
@@ -4634,7 +4809,7 @@ export const CurrentSession = {
    */
   _readMessage: function (
     msg: CurrentSession,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): CurrentSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4671,10 +4846,10 @@ export const RegisteredPlayer = {
   /**
    * Serializes RegisteredPlayer to protobuf.
    */
-  encode: function (msg: Partial<RegisteredPlayer>): Uint8Array {
+  encode: function (msg: PartialDeep<RegisteredPlayer>): Uint8Array {
     return RegisteredPlayer._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4684,14 +4859,14 @@ export const RegisteredPlayer = {
   decode: function (bytes: ByteSource): RegisteredPlayer {
     return RegisteredPlayer._readMessage(
       RegisteredPlayer.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RegisteredPlayer with all fields set to their default value.
    */
-  initialize: function (): RegisteredPlayer {
+  initialize: function (msg?: Partial<RegisteredPlayer>): RegisteredPlayer {
     return {
       id: 0,
       title: "",
@@ -4702,6 +4877,7 @@ export const RegisteredPlayer = {
       replacedBy: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -4709,9 +4885,9 @@ export const RegisteredPlayer = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RegisteredPlayer>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RegisteredPlayer>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -4747,7 +4923,7 @@ export const RegisteredPlayer = {
    */
   _readMessage: function (
     msg: RegisteredPlayer,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): RegisteredPlayer {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4803,10 +4979,10 @@ export const SessionHistoryResult = {
   /**
    * Serializes SessionHistoryResult to protobuf.
    */
-  encode: function (msg: Partial<SessionHistoryResult>): Uint8Array {
+  encode: function (msg: PartialDeep<SessionHistoryResult>): Uint8Array {
     return SessionHistoryResult._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4816,14 +4992,16 @@ export const SessionHistoryResult = {
   decode: function (bytes: ByteSource): SessionHistoryResult {
     return SessionHistoryResult._readMessage(
       SessionHistoryResult.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SessionHistoryResult with all fields set to their default value.
    */
-  initialize: function (): SessionHistoryResult {
+  initialize: function (
+    msg?: Partial<SessionHistoryResult>,
+  ): SessionHistoryResult {
     return {
       sessionHash: "",
       eventId: 0,
@@ -4834,6 +5012,7 @@ export const SessionHistoryResult = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -4841,9 +5020,9 @@ export const SessionHistoryResult = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SessionHistoryResult>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<SessionHistoryResult>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -4879,7 +5058,7 @@ export const SessionHistoryResult = {
    */
   _readMessage: function (
     msg: SessionHistoryResult,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): SessionHistoryResult {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4934,10 +5113,10 @@ export const SessionHistoryResultTable = {
   /**
    * Serializes SessionHistoryResultTable to protobuf.
    */
-  encode: function (msg: Partial<SessionHistoryResultTable>): Uint8Array {
+  encode: function (msg: PartialDeep<SessionHistoryResultTable>): Uint8Array {
     return SessionHistoryResultTable._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4947,16 +5126,19 @@ export const SessionHistoryResultTable = {
   decode: function (bytes: ByteSource): SessionHistoryResultTable {
     return SessionHistoryResultTable._readMessage(
       SessionHistoryResultTable.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SessionHistoryResultTable with all fields set to their default value.
    */
-  initialize: function (): SessionHistoryResultTable {
+  initialize: function (
+    msg?: Partial<SessionHistoryResultTable>,
+  ): SessionHistoryResultTable {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -4964,14 +5146,14 @@ export const SessionHistoryResultTable = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SessionHistoryResultTable>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<SessionHistoryResultTable>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.tables as any,
-        SessionHistoryResult._writeMessage
+        SessionHistoryResult._writeMessage,
       );
     }
     return writer;
@@ -4982,7 +5164,7 @@ export const SessionHistoryResultTable = {
    */
   _readMessage: function (
     msg: SessionHistoryResultTable,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): SessionHistoryResultTable {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5007,10 +5189,10 @@ export const PlacesSummaryItem = {
   /**
    * Serializes PlacesSummaryItem to protobuf.
    */
-  encode: function (msg: Partial<PlacesSummaryItem>): Uint8Array {
+  encode: function (msg: PartialDeep<PlacesSummaryItem>): Uint8Array {
     return PlacesSummaryItem._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5020,17 +5202,18 @@ export const PlacesSummaryItem = {
   decode: function (bytes: ByteSource): PlacesSummaryItem {
     return PlacesSummaryItem._readMessage(
       PlacesSummaryItem.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlacesSummaryItem with all fields set to their default value.
    */
-  initialize: function (): PlacesSummaryItem {
+  initialize: function (msg?: Partial<PlacesSummaryItem>): PlacesSummaryItem {
     return {
       place: 0,
       count: 0,
+      ...msg,
     };
   },
 
@@ -5038,9 +5221,9 @@ export const PlacesSummaryItem = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlacesSummaryItem>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PlacesSummaryItem>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.place) {
       writer.writeInt32(1, msg.place);
     }
@@ -5055,7 +5238,7 @@ export const PlacesSummaryItem = {
    */
   _readMessage: function (
     msg: PlacesSummaryItem,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PlacesSummaryItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5082,10 +5265,10 @@ export const PlayerWinSummary = {
   /**
    * Serializes PlayerWinSummary to protobuf.
    */
-  encode: function (msg: Partial<PlayerWinSummary>): Uint8Array {
+  encode: function (msg: PartialDeep<PlayerWinSummary>): Uint8Array {
     return PlayerWinSummary._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5095,14 +5278,14 @@ export const PlayerWinSummary = {
   decode: function (bytes: ByteSource): PlayerWinSummary {
     return PlayerWinSummary._readMessage(
       PlayerWinSummary.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayerWinSummary with all fields set to their default value.
    */
-  initialize: function (): PlayerWinSummary {
+  initialize: function (msg?: Partial<PlayerWinSummary>): PlayerWinSummary {
     return {
       ron: 0,
       tsumo: 0,
@@ -5120,6 +5303,7 @@ export const PlayerWinSummary = {
       pointsWon: 0,
       pointsLostRon: 0,
       pointsLostTsumo: 0,
+      ...msg,
     };
   },
 
@@ -5127,9 +5311,9 @@ export const PlayerWinSummary = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerWinSummary>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PlayerWinSummary>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ron) {
       writer.writeInt32(1, msg.ron);
     }
@@ -5186,7 +5370,7 @@ export const PlayerWinSummary = {
    */
   _readMessage: function (
     msg: PlayerWinSummary,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PlayerWinSummary {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5269,10 +5453,10 @@ export const HandValueStat = {
   /**
    * Serializes HandValueStat to protobuf.
    */
-  encode: function (msg: Partial<HandValueStat>): Uint8Array {
+  encode: function (msg: PartialDeep<HandValueStat>): Uint8Array {
     return HandValueStat._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5282,17 +5466,18 @@ export const HandValueStat = {
   decode: function (bytes: ByteSource): HandValueStat {
     return HandValueStat._readMessage(
       HandValueStat.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes HandValueStat with all fields set to their default value.
    */
-  initialize: function (): HandValueStat {
+  initialize: function (msg?: Partial<HandValueStat>): HandValueStat {
     return {
       hanCount: 0,
       count: 0,
+      ...msg,
     };
   },
 
@@ -5300,9 +5485,9 @@ export const HandValueStat = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<HandValueStat>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<HandValueStat>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.hanCount) {
       writer.writeInt32(1, msg.hanCount);
     }
@@ -5317,7 +5502,7 @@ export const HandValueStat = {
    */
   _readMessage: function (
     msg: HandValueStat,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): HandValueStat {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5344,8 +5529,11 @@ export const YakuStat = {
   /**
    * Serializes YakuStat to protobuf.
    */
-  encode: function (msg: Partial<YakuStat>): Uint8Array {
-    return YakuStat._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<YakuStat>): Uint8Array {
+    return YakuStat._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -5354,17 +5542,18 @@ export const YakuStat = {
   decode: function (bytes: ByteSource): YakuStat {
     return YakuStat._readMessage(
       YakuStat.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes YakuStat with all fields set to their default value.
    */
-  initialize: function (): YakuStat {
+  initialize: function (msg?: Partial<YakuStat>): YakuStat {
     return {
       yakuId: 0,
       count: 0,
+      ...msg,
     };
   },
 
@@ -5372,9 +5561,9 @@ export const YakuStat = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<YakuStat>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<YakuStat>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.yakuId) {
       writer.writeInt32(1, msg.yakuId);
     }
@@ -5387,7 +5576,10 @@ export const YakuStat = {
   /**
    * @private
    */
-  _readMessage: function (msg: YakuStat, reader: BinaryReader): YakuStat {
+  _readMessage: function (
+    msg: YakuStat,
+    reader: protoscript.BinaryReader,
+  ): YakuStat {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5413,10 +5605,10 @@ export const RiichiSummary = {
   /**
    * Serializes RiichiSummary to protobuf.
    */
-  encode: function (msg: Partial<RiichiSummary>): Uint8Array {
+  encode: function (msg: PartialDeep<RiichiSummary>): Uint8Array {
     return RiichiSummary._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5426,18 +5618,19 @@ export const RiichiSummary = {
   decode: function (bytes: ByteSource): RiichiSummary {
     return RiichiSummary._readMessage(
       RiichiSummary.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RiichiSummary with all fields set to their default value.
    */
-  initialize: function (): RiichiSummary {
+  initialize: function (msg?: Partial<RiichiSummary>): RiichiSummary {
     return {
       riichiWon: 0,
       riichiLost: 0,
       feedUnderRiichi: 0,
+      ...msg,
     };
   },
 
@@ -5445,9 +5638,9 @@ export const RiichiSummary = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RiichiSummary>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RiichiSummary>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.riichiWon) {
       writer.writeInt32(1, msg.riichiWon);
     }
@@ -5465,7 +5658,7 @@ export const RiichiSummary = {
    */
   _readMessage: function (
     msg: RiichiSummary,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): RiichiSummary {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5496,8 +5689,11 @@ export const DoraSummary = {
   /**
    * Serializes DoraSummary to protobuf.
    */
-  encode: function (msg: Partial<DoraSummary>): Uint8Array {
-    return DoraSummary._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<DoraSummary>): Uint8Array {
+    return DoraSummary._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -5506,17 +5702,18 @@ export const DoraSummary = {
   decode: function (bytes: ByteSource): DoraSummary {
     return DoraSummary._readMessage(
       DoraSummary.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes DoraSummary with all fields set to their default value.
    */
-  initialize: function (): DoraSummary {
+  initialize: function (msg?: Partial<DoraSummary>): DoraSummary {
     return {
       count: 0,
       average: 0,
+      ...msg,
     };
   },
 
@@ -5524,9 +5721,9 @@ export const DoraSummary = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<DoraSummary>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<DoraSummary>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.count) {
       writer.writeInt32(1, msg.count);
     }
@@ -5539,7 +5736,10 @@ export const DoraSummary = {
   /**
    * @private
    */
-  _readMessage: function (msg: DoraSummary, reader: BinaryReader): DoraSummary {
+  _readMessage: function (
+    msg: DoraSummary,
+    reader: protoscript.BinaryReader,
+  ): DoraSummary {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5565,10 +5765,10 @@ export const IntermediateResultOfSession = {
   /**
    * Serializes IntermediateResultOfSession to protobuf.
    */
-  encode: function (msg: Partial<IntermediateResultOfSession>): Uint8Array {
+  encode: function (msg: PartialDeep<IntermediateResultOfSession>): Uint8Array {
     return IntermediateResultOfSession._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5578,18 +5778,21 @@ export const IntermediateResultOfSession = {
   decode: function (bytes: ByteSource): IntermediateResultOfSession {
     return IntermediateResultOfSession._readMessage(
       IntermediateResultOfSession.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes IntermediateResultOfSession with all fields set to their default value.
    */
-  initialize: function (): IntermediateResultOfSession {
+  initialize: function (
+    msg?: Partial<IntermediateResultOfSession>,
+  ): IntermediateResultOfSession {
     return {
       playerId: 0,
       score: 0,
       penaltyScore: undefined,
+      ...msg,
     };
   },
 
@@ -5597,9 +5800,9 @@ export const IntermediateResultOfSession = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<IntermediateResultOfSession>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<IntermediateResultOfSession>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -5617,7 +5820,7 @@ export const IntermediateResultOfSession = {
    */
   _readMessage: function (
     msg: IntermediateResultOfSession,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): IntermediateResultOfSession {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5648,10 +5851,10 @@ export const PaymentLogItem = {
   /**
    * Serializes PaymentLogItem to protobuf.
    */
-  encode: function (msg: Partial<PaymentLogItem>): Uint8Array {
+  encode: function (msg: PartialDeep<PaymentLogItem>): Uint8Array {
     return PaymentLogItem._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5661,18 +5864,19 @@ export const PaymentLogItem = {
   decode: function (bytes: ByteSource): PaymentLogItem {
     return PaymentLogItem._readMessage(
       PaymentLogItem.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PaymentLogItem with all fields set to their default value.
    */
-  initialize: function (): PaymentLogItem {
+  initialize: function (msg?: Partial<PaymentLogItem>): PaymentLogItem {
     return {
       from: undefined,
       to: undefined,
       amount: 0,
+      ...msg,
     };
   },
 
@@ -5680,9 +5884,9 @@ export const PaymentLogItem = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PaymentLogItem>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PaymentLogItem>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.from != undefined) {
       writer.writeInt32(1, msg.from);
     }
@@ -5700,7 +5904,7 @@ export const PaymentLogItem = {
    */
   _readMessage: function (
     msg: PaymentLogItem,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PaymentLogItem {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5731,8 +5935,11 @@ export const PaymentLog = {
   /**
    * Serializes PaymentLog to protobuf.
    */
-  encode: function (msg: Partial<PaymentLog>): Uint8Array {
-    return PaymentLog._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<PaymentLog>): Uint8Array {
+    return PaymentLog._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -5741,18 +5948,19 @@ export const PaymentLog = {
   decode: function (bytes: ByteSource): PaymentLog {
     return PaymentLog._readMessage(
       PaymentLog.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PaymentLog with all fields set to their default value.
    */
-  initialize: function (): PaymentLog {
+  initialize: function (msg?: Partial<PaymentLog>): PaymentLog {
     return {
       direct: [],
       riichi: [],
       honba: [],
+      ...msg,
     };
   },
 
@@ -5760,28 +5968,28 @@ export const PaymentLog = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PaymentLog>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PaymentLog>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.direct?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.direct as any,
-        PaymentLogItem._writeMessage
+        PaymentLogItem._writeMessage,
       );
     }
     if (msg.riichi?.length) {
       writer.writeRepeatedMessage(
         2,
         msg.riichi as any,
-        PaymentLogItem._writeMessage
+        PaymentLogItem._writeMessage,
       );
     }
     if (msg.honba?.length) {
       writer.writeRepeatedMessage(
         3,
         msg.honba as any,
-        PaymentLogItem._writeMessage
+        PaymentLogItem._writeMessage,
       );
     }
     return writer;
@@ -5790,7 +5998,10 @@ export const PaymentLog = {
   /**
    * @private
    */
-  _readMessage: function (msg: PaymentLog, reader: BinaryReader): PaymentLog {
+  _readMessage: function (
+    msg: PaymentLog,
+    reader: protoscript.BinaryReader,
+  ): PaymentLog {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5826,8 +6037,11 @@ export const RoundState = {
   /**
    * Serializes RoundState to protobuf.
    */
-  encode: function (msg: Partial<RoundState>): Uint8Array {
-    return RoundState._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<RoundState>): Uint8Array {
+    return RoundState._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -5836,14 +6050,14 @@ export const RoundState = {
   decode: function (bytes: ByteSource): RoundState {
     return RoundState._readMessage(
       RoundState.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RoundState with all fields set to their default value.
    */
-  initialize: function (): RoundState {
+  initialize: function (msg?: Partial<RoundState>): RoundState {
     return {
       sessionHash: "",
       dealer: 0,
@@ -5856,6 +6070,7 @@ export const RoundState = {
       payments: PaymentLog.initialize(),
       round: Round.initialize(),
       outcome: RoundOutcome._fromInt(0),
+      ...msg,
     };
   },
 
@@ -5863,9 +6078,9 @@ export const RoundState = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RoundState>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RoundState>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -5888,14 +6103,14 @@ export const RoundState = {
       writer.writeRepeatedMessage(
         7,
         msg.scores as any,
-        IntermediateResultOfSession._writeMessage
+        IntermediateResultOfSession._writeMessage,
       );
     }
     if (msg.scoresDelta?.length) {
       writer.writeRepeatedMessage(
         8,
         msg.scoresDelta as any,
-        IntermediateResultOfSession._writeMessage
+        IntermediateResultOfSession._writeMessage,
       );
     }
     if (msg.payments) {
@@ -5913,7 +6128,10 @@ export const RoundState = {
   /**
    * @private
    */
-  _readMessage: function (msg: RoundState, reader: BinaryReader): RoundState {
+  _readMessage: function (
+    msg: RoundState,
+    reader: protoscript.BinaryReader,
+  ): RoundState {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5983,8 +6201,11 @@ export const EventData = {
   /**
    * Serializes EventData to protobuf.
    */
-  encode: function (msg: Partial<EventData>): Uint8Array {
-    return EventData._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<EventData>): Uint8Array {
+    return EventData._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -5993,14 +6214,14 @@ export const EventData = {
   decode: function (bytes: ByteSource): EventData {
     return EventData._readMessage(
       EventData.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventData with all fields set to their default value.
    */
-  initialize: function (): EventData {
+  initialize: function (msg?: Partial<EventData>): EventData {
     return {
       type: undefined,
       title: "",
@@ -6015,6 +6236,7 @@ export const EventData = {
       autostart: 0,
       rulesetConfig: RulesetConfig.initialize(),
       isListed: false,
+      ...msg,
     };
   },
 
@@ -6022,9 +6244,9 @@ export const EventData = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<EventData>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<EventData>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.type != undefined) {
       writer.writeEnum(1, EventType._toInt(msg.type));
     }
@@ -6070,7 +6292,10 @@ export const EventData = {
   /**
    * @private
    */
-  _readMessage: function (msg: EventData, reader: BinaryReader): EventData {
+  _readMessage: function (
+    msg: EventData,
+    reader: protoscript.BinaryReader,
+  ): EventData {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6140,8 +6365,11 @@ export const TableState = {
   /**
    * Serializes TableState to protobuf.
    */
-  encode: function (msg: Partial<TableState>): Uint8Array {
-    return TableState._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<TableState>): Uint8Array {
+    return TableState._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -6150,14 +6378,14 @@ export const TableState = {
   decode: function (bytes: ByteSource): TableState {
     return TableState._readMessage(
       TableState.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes TableState with all fields set to their default value.
    */
-  initialize: function (): TableState {
+  initialize: function (msg?: Partial<TableState>): TableState {
     return {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
@@ -6168,6 +6396,7 @@ export const TableState = {
       currentRoundIndex: 0,
       scores: [],
       players: [],
+      ...msg,
     };
   },
 
@@ -6175,9 +6404,9 @@ export const TableState = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TableState>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<TableState>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.status && SessionStatus._toInt(msg.status)) {
       writer.writeEnum(1, SessionStatus._toInt(msg.status));
     }
@@ -6191,7 +6420,7 @@ export const TableState = {
       writer.writeRepeatedMessage(
         4,
         msg.penaltyLogs as any,
-        Penalty._writeMessage
+        Penalty._writeMessage,
       );
     }
     if (msg.tableIndex != undefined) {
@@ -6207,14 +6436,14 @@ export const TableState = {
       writer.writeRepeatedMessage(
         8,
         msg.scores as any,
-        IntermediateResultOfSession._writeMessage
+        IntermediateResultOfSession._writeMessage,
       );
     }
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         9,
         msg.players as any,
-        RegisteredPlayer._writeMessage
+        RegisteredPlayer._writeMessage,
       );
     }
     return writer;
@@ -6223,7 +6452,10 @@ export const TableState = {
   /**
    * @private
    */
-  _readMessage: function (msg: TableState, reader: BinaryReader): TableState {
+  _readMessage: function (
+    msg: TableState,
+    reader: protoscript.BinaryReader,
+  ): TableState {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6284,8 +6516,11 @@ export const Achievement = {
   /**
    * Serializes Achievement to protobuf.
    */
-  encode: function (msg: Partial<Achievement>): Uint8Array {
-    return Achievement._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Achievement>): Uint8Array {
+    return Achievement._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -6294,17 +6529,18 @@ export const Achievement = {
   decode: function (bytes: ByteSource): Achievement {
     return Achievement._readMessage(
       Achievement.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes Achievement with all fields set to their default value.
    */
-  initialize: function (): Achievement {
+  initialize: function (msg?: Partial<Achievement>): Achievement {
     return {
       achievementId: "",
       achievementData: "",
+      ...msg,
     };
   },
 
@@ -6312,9 +6548,9 @@ export const Achievement = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Achievement>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Achievement>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.achievementId) {
       writer.writeString(1, msg.achievementId);
     }
@@ -6327,7 +6563,10 @@ export const Achievement = {
   /**
    * @private
    */
-  _readMessage: function (msg: Achievement, reader: BinaryReader): Achievement {
+  _readMessage: function (
+    msg: Achievement,
+    reader: protoscript.BinaryReader,
+  ): Achievement {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6353,10 +6592,10 @@ export const LocalIdMapping = {
   /**
    * Serializes LocalIdMapping to protobuf.
    */
-  encode: function (msg: Partial<LocalIdMapping>): Uint8Array {
+  encode: function (msg: PartialDeep<LocalIdMapping>): Uint8Array {
     return LocalIdMapping._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6366,17 +6605,18 @@ export const LocalIdMapping = {
   decode: function (bytes: ByteSource): LocalIdMapping {
     return LocalIdMapping._readMessage(
       LocalIdMapping.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes LocalIdMapping with all fields set to their default value.
    */
-  initialize: function (): LocalIdMapping {
+  initialize: function (msg?: Partial<LocalIdMapping>): LocalIdMapping {
     return {
       playerId: 0,
       localId: 0,
+      ...msg,
     };
   },
 
@@ -6384,9 +6624,9 @@ export const LocalIdMapping = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<LocalIdMapping>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<LocalIdMapping>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -6401,7 +6641,7 @@ export const LocalIdMapping = {
    */
   _readMessage: function (
     msg: LocalIdMapping,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): LocalIdMapping {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6428,8 +6668,11 @@ export const TeamMapping = {
   /**
    * Serializes TeamMapping to protobuf.
    */
-  encode: function (msg: Partial<TeamMapping>): Uint8Array {
-    return TeamMapping._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<TeamMapping>): Uint8Array {
+    return TeamMapping._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -6438,17 +6681,18 @@ export const TeamMapping = {
   decode: function (bytes: ByteSource): TeamMapping {
     return TeamMapping._readMessage(
       TeamMapping.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes TeamMapping with all fields set to their default value.
    */
-  initialize: function (): TeamMapping {
+  initialize: function (msg?: Partial<TeamMapping>): TeamMapping {
     return {
       playerId: 0,
       teamName: "",
+      ...msg,
     };
   },
 
@@ -6456,9 +6700,9 @@ export const TeamMapping = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TeamMapping>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<TeamMapping>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -6471,7 +6715,10 @@ export const TeamMapping = {
   /**
    * @private
    */
-  _readMessage: function (msg: TeamMapping, reader: BinaryReader): TeamMapping {
+  _readMessage: function (
+    msg: TeamMapping,
+    reader: protoscript.BinaryReader,
+  ): TeamMapping {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6497,10 +6744,10 @@ export const PlayerSeating = {
   /**
    * Serializes PlayerSeating to protobuf.
    */
-  encode: function (msg: Partial<PlayerSeating>): Uint8Array {
+  encode: function (msg: PartialDeep<PlayerSeating>): Uint8Array {
     return PlayerSeating._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6510,14 +6757,14 @@ export const PlayerSeating = {
   decode: function (bytes: ByteSource): PlayerSeating {
     return PlayerSeating._readMessage(
       PlayerSeating.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayerSeating with all fields set to their default value.
    */
-  initialize: function (): PlayerSeating {
+  initialize: function (msg?: Partial<PlayerSeating>): PlayerSeating {
     return {
       order: 0,
       playerId: 0,
@@ -6527,6 +6774,7 @@ export const PlayerSeating = {
       playerTitle: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -6534,9 +6782,9 @@ export const PlayerSeating = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerSeating>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PlayerSeating>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.order) {
       writer.writeInt32(1, msg.order);
     }
@@ -6569,7 +6817,7 @@ export const PlayerSeating = {
    */
   _readMessage: function (
     msg: PlayerSeating,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PlayerSeating {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6620,10 +6868,10 @@ export const PlayerSeatingSwiss = {
   /**
    * Serializes PlayerSeatingSwiss to protobuf.
    */
-  encode: function (msg: Partial<PlayerSeatingSwiss>): Uint8Array {
+  encode: function (msg: PartialDeep<PlayerSeatingSwiss>): Uint8Array {
     return PlayerSeatingSwiss._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6633,17 +6881,18 @@ export const PlayerSeatingSwiss = {
   decode: function (bytes: ByteSource): PlayerSeatingSwiss {
     return PlayerSeatingSwiss._readMessage(
       PlayerSeatingSwiss.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayerSeatingSwiss with all fields set to their default value.
    */
-  initialize: function (): PlayerSeatingSwiss {
+  initialize: function (msg?: Partial<PlayerSeatingSwiss>): PlayerSeatingSwiss {
     return {
       playerId: 0,
       rating: 0,
+      ...msg,
     };
   },
 
@@ -6651,9 +6900,9 @@ export const PlayerSeatingSwiss = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerSeatingSwiss>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PlayerSeatingSwiss>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -6668,7 +6917,7 @@ export const PlayerSeatingSwiss = {
    */
   _readMessage: function (
     msg: PlayerSeatingSwiss,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PlayerSeatingSwiss {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6695,10 +6944,10 @@ export const TableItemSwiss = {
   /**
    * Serializes TableItemSwiss to protobuf.
    */
-  encode: function (msg: Partial<TableItemSwiss>): Uint8Array {
+  encode: function (msg: PartialDeep<TableItemSwiss>): Uint8Array {
     return TableItemSwiss._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6708,16 +6957,17 @@ export const TableItemSwiss = {
   decode: function (bytes: ByteSource): TableItemSwiss {
     return TableItemSwiss._readMessage(
       TableItemSwiss.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes TableItemSwiss with all fields set to their default value.
    */
-  initialize: function (): TableItemSwiss {
+  initialize: function (msg?: Partial<TableItemSwiss>): TableItemSwiss {
     return {
       players: [],
+      ...msg,
     };
   },
 
@@ -6725,14 +6975,14 @@ export const TableItemSwiss = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TableItemSwiss>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<TableItemSwiss>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.players as any,
-        PlayerSeatingSwiss._writeMessage
+        PlayerSeatingSwiss._writeMessage,
       );
     }
     return writer;
@@ -6743,7 +6993,7 @@ export const TableItemSwiss = {
    */
   _readMessage: function (
     msg: TableItemSwiss,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): TableItemSwiss {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6768,10 +7018,10 @@ export const PrescriptedTable = {
   /**
    * Serializes PrescriptedTable to protobuf.
    */
-  encode: function (msg: Partial<PrescriptedTable>): Uint8Array {
+  encode: function (msg: PartialDeep<PrescriptedTable>): Uint8Array {
     return PrescriptedTable._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6781,16 +7031,17 @@ export const PrescriptedTable = {
   decode: function (bytes: ByteSource): PrescriptedTable {
     return PrescriptedTable._readMessage(
       PrescriptedTable.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PrescriptedTable with all fields set to their default value.
    */
-  initialize: function (): PrescriptedTable {
+  initialize: function (msg?: Partial<PrescriptedTable>): PrescriptedTable {
     return {
       players: [],
+      ...msg,
     };
   },
 
@@ -6798,14 +7049,14 @@ export const PrescriptedTable = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PrescriptedTable>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<PrescriptedTable>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         1,
         msg.players as any,
-        RegisteredPlayer._writeMessage
+        RegisteredPlayer._writeMessage,
       );
     }
     return writer;
@@ -6816,7 +7067,7 @@ export const PrescriptedTable = {
    */
   _readMessage: function (
     msg: PrescriptedTable,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): PrescriptedTable {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6841,10 +7092,10 @@ export const SessionState = {
   /**
    * Serializes SessionState to protobuf.
    */
-  encode: function (msg: Partial<SessionState>): Uint8Array {
+  encode: function (msg: PartialDeep<SessionState>): Uint8Array {
     return SessionState._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6854,14 +7105,14 @@ export const SessionState = {
   decode: function (bytes: ByteSource): SessionState {
     return SessionState._readMessage(
       SessionState.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SessionState with all fields set to their default value.
    */
-  initialize: function (): SessionState {
+  initialize: function (msg?: Partial<SessionState>): SessionState {
     return {
       dealer: 0,
       roundIndex: 0,
@@ -6871,6 +7122,7 @@ export const SessionState = {
       finished: false,
       penalties: [],
       lastHandStarted: false,
+      ...msg,
     };
   },
 
@@ -6878,9 +7130,9 @@ export const SessionState = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SessionState>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<SessionState>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.dealer) {
       writer.writeInt32(1, msg.dealer);
     }
@@ -6897,7 +7149,7 @@ export const SessionState = {
       writer.writeRepeatedMessage(
         5,
         msg.scores as any,
-        IntermediateResultOfSession._writeMessage
+        IntermediateResultOfSession._writeMessage,
       );
     }
     if (msg.finished) {
@@ -6907,7 +7159,7 @@ export const SessionState = {
       writer.writeRepeatedMessage(
         7,
         msg.penalties as any,
-        Penalty._writeMessage
+        Penalty._writeMessage,
       );
     }
     if (msg.lastHandStarted) {
@@ -6921,7 +7173,7 @@ export const SessionState = {
    */
   _readMessage: function (
     msg: SessionState,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): SessionState {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6976,26 +7228,33 @@ export const Uma = {
   /**
    * Serializes Uma to protobuf.
    */
-  encode: function (msg: Partial<Uma>): Uint8Array {
-    return Uma._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<Uma>): Uint8Array {
+    return Uma._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Uma from protobuf.
    */
   decode: function (bytes: ByteSource): Uma {
-    return Uma._readMessage(Uma.initialize(), new BinaryReader(bytes));
+    return Uma._readMessage(
+      Uma.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
    * Initializes Uma with all fields set to their default value.
    */
-  initialize: function (): Uma {
+  initialize: function (msg?: Partial<Uma>): Uma {
     return {
       place1: 0,
       place2: 0,
       place3: 0,
       place4: 0,
+      ...msg,
     };
   },
 
@@ -7003,9 +7262,9 @@ export const Uma = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Uma>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<Uma>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.place1) {
       writer.writeInt32(1, msg.place1);
     }
@@ -7024,7 +7283,7 @@ export const Uma = {
   /**
    * @private
    */
-  _readMessage: function (msg: Uma, reader: BinaryReader): Uma {
+  _readMessage: function (msg: Uma, reader: protoscript.BinaryReader): Uma {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7058,8 +7317,11 @@ export const ComplexUma = {
   /**
    * Serializes ComplexUma to protobuf.
    */
-  encode: function (msg: Partial<ComplexUma>): Uint8Array {
-    return ComplexUma._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  encode: function (msg: PartialDeep<ComplexUma>): Uint8Array {
+    return ComplexUma._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -7068,18 +7330,19 @@ export const ComplexUma = {
   decode: function (bytes: ByteSource): ComplexUma {
     return ComplexUma._readMessage(
       ComplexUma.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes ComplexUma with all fields set to their default value.
    */
-  initialize: function (): ComplexUma {
+  initialize: function (msg?: Partial<ComplexUma>): ComplexUma {
     return {
       neg1: Uma.initialize(),
       neg3: Uma.initialize(),
       otherwise: Uma.initialize(),
+      ...msg,
     };
   },
 
@@ -7087,9 +7350,9 @@ export const ComplexUma = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ComplexUma>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<ComplexUma>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.neg1) {
       writer.writeMessage(1, msg.neg1, Uma._writeMessage);
     }
@@ -7105,7 +7368,10 @@ export const ComplexUma = {
   /**
    * @private
    */
-  _readMessage: function (msg: ComplexUma, reader: BinaryReader): ComplexUma {
+  _readMessage: function (
+    msg: ComplexUma,
+    reader: protoscript.BinaryReader,
+  ): ComplexUma {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7135,10 +7401,10 @@ export const RulesetConfig = {
   /**
    * Serializes RulesetConfig to protobuf.
    */
-  encode: function (msg: Partial<RulesetConfig>): Uint8Array {
+  encode: function (msg: PartialDeep<RulesetConfig>): Uint8Array {
     return RulesetConfig._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7148,14 +7414,14 @@ export const RulesetConfig = {
   decode: function (bytes: ByteSource): RulesetConfig {
     return RulesetConfig._readMessage(
       RulesetConfig.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes RulesetConfig with all fields set to their default value.
    */
-  initialize: function (): RulesetConfig {
+  initialize: function (msg?: Partial<RulesetConfig>): RulesetConfig {
     return {
       complexUma: ComplexUma.initialize(),
       endingPolicy: EndingPolicy._fromInt(0),
@@ -7192,6 +7458,7 @@ export const RulesetConfig = {
       startRating: 0,
       allowedYaku: [],
       yakuWithPao: [],
+      ...msg,
     };
   },
 
@@ -7199,9 +7466,9 @@ export const RulesetConfig = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RulesetConfig>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<RulesetConfig>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.complexUma) {
       writer.writeMessage(1, msg.complexUma, ComplexUma._writeMessage);
     }
@@ -7315,7 +7582,7 @@ export const RulesetConfig = {
    */
   _readMessage: function (
     msg: RulesetConfig,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): RulesetConfig {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7482,10 +7749,10 @@ export const GenericSuccessResponse = {
   /**
    * Serializes GenericSuccessResponse to protobuf.
    */
-  encode: function (msg: Partial<GenericSuccessResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<GenericSuccessResponse>): Uint8Array {
     return GenericSuccessResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7495,16 +7762,19 @@ export const GenericSuccessResponse = {
   decode: function (bytes: ByteSource): GenericSuccessResponse {
     return GenericSuccessResponse._readMessage(
       GenericSuccessResponse.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GenericSuccessResponse with all fields set to their default value.
    */
-  initialize: function (): GenericSuccessResponse {
+  initialize: function (
+    msg?: Partial<GenericSuccessResponse>,
+  ): GenericSuccessResponse {
     return {
       success: false,
+      ...msg,
     };
   },
 
@@ -7512,9 +7782,9 @@ export const GenericSuccessResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<GenericSuccessResponse>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<GenericSuccessResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.success) {
       writer.writeBool(1, msg.success);
     }
@@ -7526,7 +7796,7 @@ export const GenericSuccessResponse = {
    */
   _readMessage: function (
     msg: GenericSuccessResponse,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): GenericSuccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7549,10 +7819,10 @@ export const GenericEventPayload = {
   /**
    * Serializes GenericEventPayload to protobuf.
    */
-  encode: function (msg: Partial<GenericEventPayload>): Uint8Array {
+  encode: function (msg: PartialDeep<GenericEventPayload>): Uint8Array {
     return GenericEventPayload._writeMessage(
       msg,
-      new BinaryWriter()
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7562,16 +7832,19 @@ export const GenericEventPayload = {
   decode: function (bytes: ByteSource): GenericEventPayload {
     return GenericEventPayload._readMessage(
       GenericEventPayload.initialize(),
-      new BinaryReader(bytes)
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GenericEventPayload with all fields set to their default value.
    */
-  initialize: function (): GenericEventPayload {
+  initialize: function (
+    msg?: Partial<GenericEventPayload>,
+  ): GenericEventPayload {
     return {
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -7579,9 +7852,9 @@ export const GenericEventPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<GenericEventPayload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
+    msg: PartialDeep<GenericEventPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -7593,7 +7866,7 @@ export const GenericEventPayload = {
    */
   _readMessage: function (
     msg: GenericEventPayload,
-    reader: BinaryReader
+    reader: protoscript.BinaryReader,
   ): GenericEventPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7960,7 +8233,7 @@ export const AccessRulesJSON = {
   /**
    * Serializes AccessRules to JSON.
    */
-  encode: function (msg: Partial<AccessRules>): string {
+  encode: function (msg: PartialDeep<AccessRules>): string {
     return JSON.stringify(AccessRulesJSON._writeMessage(msg));
   },
 
@@ -7970,30 +8243,33 @@ export const AccessRulesJSON = {
   decode: function (json: string): AccessRules {
     return AccessRulesJSON._readMessage(
       AccessRulesJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AccessRules with all fields set to their default value.
    */
-  initialize: function (): AccessRules {
+  initialize: function (msg?: Partial<AccessRules>): AccessRules {
     return {
       rules: {},
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<AccessRules>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<AccessRules>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
       const _rules_ = Object.fromEntries(
         Object.entries(msg.rules)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessRulesJSON.Rules._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_rules_).length > 0) {
         json["rules"] = _rules_;
@@ -8012,7 +8288,7 @@ export const AccessRulesJSON = {
         Object.entries(_rules_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(AccessRulesJSON.Rules._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     return msg;
@@ -8023,7 +8299,7 @@ export const AccessRulesJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<AccessRules.Rules>
+      msg: PartialDeep<AccessRules.Rules>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -8043,7 +8319,7 @@ export const AccessRulesJSON = {
      */
     _readMessage: function (
       msg: AccessRules.Rules,
-      json: any
+      json: any,
     ): AccessRules.Rules {
       const _key_ = json["key"];
       if (_key_) {
@@ -8051,9 +8327,7 @@ export const AccessRulesJSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = RuleValue.initialize();
-        RuleValueJSON._readMessage(m, _value_);
-        msg.value = m;
+        RuleValueJSON._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -8064,7 +8338,7 @@ export const RuleValueJSON = {
   /**
    * Serializes RuleValue to JSON.
    */
-  encode: function (msg: Partial<RuleValue>): string {
+  encode: function (msg: PartialDeep<RuleValue>): string {
     return JSON.stringify(RuleValueJSON._writeMessage(msg));
   },
 
@@ -8074,25 +8348,28 @@ export const RuleValueJSON = {
   decode: function (json: string): RuleValue {
     return RuleValueJSON._readMessage(
       RuleValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RuleValue with all fields set to their default value.
    */
-  initialize: function (): RuleValue {
+  initialize: function (msg?: Partial<RuleValue>): RuleValue {
     return {
       numberValue: undefined,
       stringValue: undefined,
       boolValue: undefined,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<RuleValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<RuleValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.numberValue != undefined) {
       json["numberValue"] = msg.numberValue;
@@ -8112,7 +8389,7 @@ export const RuleValueJSON = {
   _readMessage: function (msg: RuleValue, json: any): RuleValue {
     const _numberValue_ = json["numberValue"] ?? json["number_value"];
     if (_numberValue_) {
-      msg.numberValue = _numberValue_;
+      msg.numberValue = protoscript.parseNumber(_numberValue_);
     }
     const _stringValue_ = json["stringValue"] ?? json["string_value"];
     if (_stringValue_) {
@@ -8130,7 +8407,7 @@ export const EventAdminJSON = {
   /**
    * Serializes EventAdmin to JSON.
    */
-  encode: function (msg: Partial<EventAdmin>): string {
+  encode: function (msg: PartialDeep<EventAdmin>): string {
     return JSON.stringify(EventAdminJSON._writeMessage(msg));
   },
 
@@ -8140,27 +8417,30 @@ export const EventAdminJSON = {
   decode: function (json: string): EventAdmin {
     return EventAdminJSON._readMessage(
       EventAdminJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes EventAdmin with all fields set to their default value.
    */
-  initialize: function (): EventAdmin {
+  initialize: function (msg?: Partial<EventAdmin>): EventAdmin {
     return {
       ruleId: 0,
       personId: 0,
       personName: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<EventAdmin>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<EventAdmin>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
       json["ruleId"] = msg.ruleId;
@@ -8186,11 +8466,11 @@ export const EventAdminJSON = {
   _readMessage: function (msg: EventAdmin, json: any): EventAdmin {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
-      msg.ruleId = _ruleId_;
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
     }
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
-      msg.personId = _personId_;
+      msg.personId = protoscript.parseNumber(_personId_);
     }
     const _personName_ = json["personName"] ?? json["person_name"];
     if (_personName_) {
@@ -8212,7 +8492,7 @@ export const RuleListItemJSON = {
   /**
    * Serializes RuleListItem to JSON.
    */
-  encode: function (msg: Partial<RuleListItem>): string {
+  encode: function (msg: PartialDeep<RuleListItem>): string {
     return JSON.stringify(RuleListItemJSON._writeMessage(msg));
   },
 
@@ -8222,18 +8502,19 @@ export const RuleListItemJSON = {
   decode: function (json: string): RuleListItem {
     return RuleListItemJSON._readMessage(
       RuleListItemJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RuleListItem with all fields set to their default value.
    */
-  initialize: function (): RuleListItem {
+  initialize: function (msg?: Partial<RuleListItem>): RuleListItem {
     return {
       default: "",
       type: "",
       title: "",
+      ...msg,
     };
   },
 
@@ -8241,7 +8522,7 @@ export const RuleListItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RuleListItem>
+    msg: PartialDeep<RuleListItem>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.default) {
@@ -8280,7 +8561,7 @@ export const EventRuleListItemJSON = {
   /**
    * Serializes EventRuleListItem to JSON.
    */
-  encode: function (msg: Partial<EventRuleListItem>): string {
+  encode: function (msg: PartialDeep<EventRuleListItem>): string {
     return JSON.stringify(EventRuleListItemJSON._writeMessage(msg));
   },
 
@@ -8290,14 +8571,14 @@ export const EventRuleListItemJSON = {
   decode: function (json: string): EventRuleListItem {
     return EventRuleListItemJSON._readMessage(
       EventRuleListItemJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes EventRuleListItem with all fields set to their default value.
    */
-  initialize: function (): EventRuleListItem {
+  initialize: function (msg?: Partial<EventRuleListItem>): EventRuleListItem {
     return {
       isGlobal: false,
       id: 0,
@@ -8305,6 +8586,7 @@ export const EventRuleListItemJSON = {
       name: "",
       ownerTitle: "",
       allowedValues: [],
+      ...msg,
     };
   },
 
@@ -8312,7 +8594,7 @@ export const EventRuleListItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<EventRuleListItem>
+    msg: PartialDeep<EventRuleListItem>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.isGlobal) {
@@ -8344,7 +8626,7 @@ export const EventRuleListItemJSON = {
    */
   _readMessage: function (
     msg: EventRuleListItem,
-    json: any
+    json: any,
   ): EventRuleListItem {
     const _isGlobal_ = json["isGlobal"] ?? json["is_global"];
     if (_isGlobal_) {
@@ -8352,13 +8634,11 @@ export const EventRuleListItemJSON = {
     }
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _value_ = json["value"];
     if (_value_) {
-      const m = RuleValue.initialize();
-      RuleValueJSON._readMessage(m, _value_);
-      msg.value = m;
+      RuleValueJSON._readMessage(msg.value, _value_);
     }
     const _name_ = json["name"];
     if (_name_) {
@@ -8380,7 +8660,7 @@ export const RuleListItemExJSON = {
   /**
    * Serializes RuleListItemEx to JSON.
    */
-  encode: function (msg: Partial<RuleListItemEx>): string {
+  encode: function (msg: PartialDeep<RuleListItemEx>): string {
     return JSON.stringify(RuleListItemExJSON._writeMessage(msg));
   },
 
@@ -8390,19 +8670,20 @@ export const RuleListItemExJSON = {
   decode: function (json: string): RuleListItemEx {
     return RuleListItemExJSON._readMessage(
       RuleListItemExJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RuleListItemEx with all fields set to their default value.
    */
-  initialize: function (): RuleListItemEx {
+  initialize: function (msg?: Partial<RuleListItemEx>): RuleListItemEx {
     return {
       id: 0,
       type: "",
       value: RuleValueJSON.initialize(),
       allowedValues: [],
+      ...msg,
     };
   },
 
@@ -8410,7 +8691,7 @@ export const RuleListItemExJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RuleListItemEx>
+    msg: PartialDeep<RuleListItemEx>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -8437,7 +8718,7 @@ export const RuleListItemExJSON = {
   _readMessage: function (msg: RuleListItemEx, json: any): RuleListItemEx {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _type_ = json["type"];
     if (_type_) {
@@ -8445,9 +8726,7 @@ export const RuleListItemExJSON = {
     }
     const _value_ = json["value"];
     if (_value_) {
-      const m = RuleValue.initialize();
-      RuleValueJSON._readMessage(m, _value_);
-      msg.value = m;
+      RuleValueJSON._readMessage(msg.value, _value_);
     }
     const _allowedValues_ = json["allowedValues"] ?? json["allowed_values"];
     if (_allowedValues_) {
@@ -8461,7 +8740,7 @@ export const RuleListItemExMapJSON = {
   /**
    * Serializes RuleListItemExMap to JSON.
    */
-  encode: function (msg: Partial<RuleListItemExMap>): string {
+  encode: function (msg: PartialDeep<RuleListItemExMap>): string {
     return JSON.stringify(RuleListItemExMapJSON._writeMessage(msg));
   },
 
@@ -8471,16 +8750,17 @@ export const RuleListItemExMapJSON = {
   decode: function (json: string): RuleListItemExMap {
     return RuleListItemExMapJSON._readMessage(
       RuleListItemExMapJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RuleListItemExMap with all fields set to their default value.
    */
-  initialize: function (): RuleListItemExMap {
+  initialize: function (msg?: Partial<RuleListItemExMap>): RuleListItemExMap {
     return {
       rules: {},
+      ...msg,
     };
   },
 
@@ -8488,7 +8768,7 @@ export const RuleListItemExMapJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RuleListItemExMap>
+    msg: PartialDeep<RuleListItemExMap>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -8496,7 +8776,7 @@ export const RuleListItemExMapJSON = {
         Object.entries(msg.rules)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(RuleListItemExMapJSON.Rules._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_rules_).length > 0) {
         json["rules"] = _rules_;
@@ -8510,7 +8790,7 @@ export const RuleListItemExMapJSON = {
    */
   _readMessage: function (
     msg: RuleListItemExMap,
-    json: any
+    json: any,
   ): RuleListItemExMap {
     const _rules_ = json["rules"];
     if (_rules_) {
@@ -8518,7 +8798,7 @@ export const RuleListItemExMapJSON = {
         Object.entries(_rules_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(RuleListItemExMapJSON.Rules._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     return msg;
@@ -8529,7 +8809,7 @@ export const RuleListItemExMapJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<RuleListItemExMap.Rules>
+      msg: PartialDeep<RuleListItemExMap.Rules>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -8549,7 +8829,7 @@ export const RuleListItemExMapJSON = {
      */
     _readMessage: function (
       msg: RuleListItemExMap.Rules,
-      json: any
+      json: any,
     ): RuleListItemExMap.Rules {
       const _key_ = json["key"];
       if (_key_) {
@@ -8557,9 +8837,7 @@ export const RuleListItemExMapJSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = RuleListItemEx.initialize();
-        RuleListItemExJSON._readMessage(m, _value_);
-        msg.value = m;
+        RuleListItemExJSON._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -8570,7 +8848,7 @@ export const PersonJSON = {
   /**
    * Serializes Person to JSON.
    */
-  encode: function (msg: Partial<Person>): string {
+  encode: function (msg: PartialDeep<Person>): string {
     return JSON.stringify(PersonJSON._writeMessage(msg));
   },
 
@@ -8584,7 +8862,7 @@ export const PersonJSON = {
   /**
    * Initializes Person with all fields set to their default value.
    */
-  initialize: function (): Person {
+  initialize: function (msg?: Partial<Person>): Person {
     return {
       id: 0,
       city: "",
@@ -8592,13 +8870,14 @@ export const PersonJSON = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Person>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Person>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -8627,7 +8906,7 @@ export const PersonJSON = {
   _readMessage: function (msg: Person, json: any): Person {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _city_ = json["city"];
     if (_city_) {
@@ -8657,7 +8936,7 @@ export const PersonExJSON = {
   /**
    * Serializes PersonEx to JSON.
    */
-  encode: function (msg: Partial<PersonEx>): string {
+  encode: function (msg: PartialDeep<PersonEx>): string {
     return JSON.stringify(PersonExJSON._writeMessage(msg));
   },
 
@@ -8667,14 +8946,14 @@ export const PersonExJSON = {
   decode: function (json: string): PersonEx {
     return PersonExJSON._readMessage(
       PersonExJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PersonEx with all fields set to their default value.
    */
-  initialize: function (): PersonEx {
+  initialize: function (msg?: Partial<PersonEx>): PersonEx {
     return {
       id: 0,
       city: "",
@@ -8688,13 +8967,16 @@ export const PersonExJSON = {
       lastUpdate: "",
       msNickname: "",
       msAccountId: 0,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<PersonEx>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<PersonEx>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -8741,7 +9023,7 @@ export const PersonExJSON = {
   _readMessage: function (msg: PersonEx, json: any): PersonEx {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _city_ = json["city"];
     if (_city_) {
@@ -8769,7 +9051,7 @@ export const PersonExJSON = {
     }
     const _groups_ = json["groups"];
     if (_groups_) {
-      msg.groups = _groups_;
+      msg.groups = _groups_.map(protoscript.parseNumber);
     }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
@@ -8785,7 +9067,7 @@ export const PersonExJSON = {
     }
     const _msAccountId_ = json["msAccountId"] ?? json["ms_account_id"];
     if (_msAccountId_) {
-      msg.msAccountId = _msAccountId_;
+      msg.msAccountId = protoscript.parseNumber(_msAccountId_);
     }
     return msg;
   },
@@ -8795,7 +9077,7 @@ export const GroupJSON = {
   /**
    * Serializes Group to JSON.
    */
-  encode: function (msg: Partial<Group>): string {
+  encode: function (msg: PartialDeep<Group>): string {
     return JSON.stringify(GroupJSON._writeMessage(msg));
   },
 
@@ -8809,19 +9091,20 @@ export const GroupJSON = {
   /**
    * Initializes Group with all fields set to their default value.
    */
-  initialize: function (): Group {
+  initialize: function (msg?: Partial<Group>): Group {
     return {
       id: 0,
       title: "",
       color: "",
       description: "",
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Group>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Group>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -8844,7 +9127,7 @@ export const GroupJSON = {
   _readMessage: function (msg: Group, json: any): Group {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -8866,7 +9149,7 @@ export const CountryJSON = {
   /**
    * Serializes Country to JSON.
    */
-  encode: function (msg: Partial<Country>): string {
+  encode: function (msg: PartialDeep<Country>): string {
     return JSON.stringify(CountryJSON._writeMessage(msg));
   },
 
@@ -8880,17 +9163,18 @@ export const CountryJSON = {
   /**
    * Initializes Country with all fields set to their default value.
    */
-  initialize: function (): Country {
+  initialize: function (msg?: Partial<Country>): Country {
     return {
       code: "",
       name: "",
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Country>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Country>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.code) {
       json["code"] = msg.code;
@@ -8921,7 +9205,7 @@ export const EventJSON = {
   /**
    * Serializes Event to JSON.
    */
-  encode: function (msg: Partial<Event>): string {
+  encode: function (msg: PartialDeep<Event>): string {
     return JSON.stringify(EventJSON._writeMessage(msg));
   },
 
@@ -8935,7 +9219,7 @@ export const EventJSON = {
   /**
    * Initializes Event with all fields set to their default value.
    */
-  initialize: function (): Event {
+  initialize: function (msg?: Partial<Event>): Event {
     return {
       id: 0,
       title: "",
@@ -8950,13 +9234,15 @@ export const EventJSON = {
       hasSeries: false,
       withChips: false,
       minGamesCount: 0,
+      platformId: 0,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Event>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Event>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -8997,6 +9283,9 @@ export const EventJSON = {
     if (msg.minGamesCount) {
       json["minGamesCount"] = msg.minGamesCount;
     }
+    if (msg.platformId) {
+      json["platformId"] = msg.platformId;
+    }
     return json;
   },
 
@@ -9006,7 +9295,7 @@ export const EventJSON = {
   _readMessage: function (msg: Event, json: any): Event {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -9035,7 +9324,7 @@ export const EventJSON = {
     }
     const _type_ = json["type"];
     if (_type_) {
-      msg.type = _type_;
+      msg.type = EventType._fromInt(_type_);
     }
     const _isPrescripted_ = json["isPrescripted"] ?? json["is_prescripted"];
     if (_isPrescripted_) {
@@ -9055,7 +9344,11 @@ export const EventJSON = {
     }
     const _minGamesCount_ = json["minGamesCount"] ?? json["min_games_count"];
     if (_minGamesCount_) {
-      msg.minGamesCount = _minGamesCount_;
+      msg.minGamesCount = protoscript.parseNumber(_minGamesCount_);
+    }
+    const _platformId_ = json["platformId"] ?? json["platform_id"];
+    if (_platformId_) {
+      msg.platformId = protoscript.parseNumber(_platformId_);
     }
     return msg;
   },
@@ -9065,7 +9358,7 @@ export const MyEventJSON = {
   /**
    * Serializes MyEvent to JSON.
    */
-  encode: function (msg: Partial<MyEvent>): string {
+  encode: function (msg: PartialDeep<MyEvent>): string {
     return JSON.stringify(MyEventJSON._writeMessage(msg));
   },
 
@@ -9079,19 +9372,20 @@ export const MyEventJSON = {
   /**
    * Initializes MyEvent with all fields set to their default value.
    */
-  initialize: function (): MyEvent {
+  initialize: function (msg?: Partial<MyEvent>): MyEvent {
     return {
       id: 0,
       title: "",
       description: "",
       isOnline: false,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<MyEvent>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<MyEvent>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -9114,7 +9408,7 @@ export const MyEventJSON = {
   _readMessage: function (msg: MyEvent, json: any): MyEvent {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -9136,7 +9430,7 @@ export const GameConfigJSON = {
   /**
    * Serializes GameConfig to JSON.
    */
-  encode: function (msg: Partial<GameConfig>): string {
+  encode: function (msg: PartialDeep<GameConfig>): string {
     return JSON.stringify(GameConfigJSON._writeMessage(msg));
   },
 
@@ -9146,14 +9440,14 @@ export const GameConfigJSON = {
   decode: function (json: string): GameConfig {
     return GameConfigJSON._readMessage(
       GameConfigJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes GameConfig with all fields set to their default value.
    */
-  initialize: function (): GameConfig {
+  initialize: function (msg?: Partial<GameConfig>): GameConfig {
     return {
       rulesetTitle: "",
       eventTitle: "",
@@ -9179,13 +9473,16 @@ export const GameConfigJSON = {
       isFinished: false,
       rulesetConfig: RulesetConfigJSON.initialize(),
       lobbyId: 0,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<GameConfig>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<GameConfig>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rulesetTitle) {
       json["rulesetTitle"] = msg.rulesetTitle;
@@ -9255,7 +9552,7 @@ export const GameConfigJSON = {
     }
     if (msg.rulesetConfig) {
       const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
-        msg.rulesetConfig
+        msg.rulesetConfig,
       );
       if (Object.keys(_rulesetConfig_).length > 0) {
         json["rulesetConfig"] = _rulesetConfig_;
@@ -9298,7 +9595,7 @@ export const GameConfigJSON = {
     }
     const _gameDuration_ = json["gameDuration"] ?? json["game_duration"];
     if (_gameDuration_) {
-      msg.gameDuration = _gameDuration_;
+      msg.gameDuration = protoscript.parseNumber(_gameDuration_);
     }
     const _timezone_ = json["timezone"];
     if (_timezone_) {
@@ -9335,15 +9632,15 @@ export const GameConfigJSON = {
     }
     const _seriesLength_ = json["seriesLength"] ?? json["series_length"];
     if (_seriesLength_) {
-      msg.seriesLength = _seriesLength_;
+      msg.seriesLength = protoscript.parseNumber(_seriesLength_);
     }
     const _minGamesCount_ = json["minGamesCount"] ?? json["min_games_count"];
     if (_minGamesCount_) {
-      msg.minGamesCount = _minGamesCount_;
+      msg.minGamesCount = protoscript.parseNumber(_minGamesCount_);
     }
     const _gamesStatus_ = json["gamesStatus"] ?? json["games_status"];
     if (_gamesStatus_) {
-      msg.gamesStatus = _gamesStatus_;
+      msg.gamesStatus = TournamentGamesStatus._fromInt(_gamesStatus_);
     }
     const _hideResults_ = json["hideResults"] ?? json["hide_results"];
     if (_hideResults_) {
@@ -9364,13 +9661,11 @@ export const GameConfigJSON = {
     }
     const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {
-      const m = RulesetConfig.initialize();
-      RulesetConfigJSON._readMessage(m, _rulesetConfig_);
-      msg.rulesetConfig = m;
+      RulesetConfigJSON._readMessage(msg.rulesetConfig, _rulesetConfig_);
     }
     const _lobbyId_ = json["lobbyId"] ?? json["lobby_id"];
     if (_lobbyId_) {
-      msg.lobbyId = _lobbyId_;
+      msg.lobbyId = protoscript.parseNumber(_lobbyId_);
     }
     return msg;
   },
@@ -9380,7 +9675,7 @@ export const PlayerInRatingJSON = {
   /**
    * Serializes PlayerInRating to JSON.
    */
-  encode: function (msg: Partial<PlayerInRating>): string {
+  encode: function (msg: PartialDeep<PlayerInRating>): string {
     return JSON.stringify(PlayerInRatingJSON._writeMessage(msg));
   },
 
@@ -9390,14 +9685,14 @@ export const PlayerInRatingJSON = {
   decode: function (json: string): PlayerInRating {
     return PlayerInRatingJSON._readMessage(
       PlayerInRatingJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PlayerInRating with all fields set to their default value.
    */
-  initialize: function (): PlayerInRating {
+  initialize: function (msg?: Partial<PlayerInRating>): PlayerInRating {
     return {
       id: 0,
       title: "",
@@ -9411,6 +9706,7 @@ export const PlayerInRatingJSON = {
       teamName: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -9418,7 +9714,7 @@ export const PlayerInRatingJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerInRating>
+    msg: PartialDeep<PlayerInRating>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -9466,7 +9762,7 @@ export const PlayerInRatingJSON = {
   _readMessage: function (msg: PlayerInRating, json: any): PlayerInRating {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -9478,11 +9774,11 @@ export const PlayerInRatingJSON = {
     }
     const _rating_ = json["rating"];
     if (_rating_) {
-      msg.rating = _rating_;
+      msg.rating = protoscript.parseDouble(_rating_);
     }
     const _chips_ = json["chips"];
     if (_chips_) {
-      msg.chips = _chips_;
+      msg.chips = protoscript.parseNumber(_chips_);
     }
     const _winnerZone_ = json["winnerZone"] ?? json["winner_zone"];
     if (_winnerZone_) {
@@ -9490,15 +9786,15 @@ export const PlayerInRatingJSON = {
     }
     const _avgPlace_ = json["avgPlace"] ?? json["avg_place"];
     if (_avgPlace_) {
-      msg.avgPlace = _avgPlace_;
+      msg.avgPlace = protoscript.parseDouble(_avgPlace_);
     }
     const _avgScore_ = json["avgScore"] ?? json["avg_score"];
     if (_avgScore_) {
-      msg.avgScore = _avgScore_;
+      msg.avgScore = protoscript.parseDouble(_avgScore_);
     }
     const _gamesPlayed_ = json["gamesPlayed"] ?? json["games_played"];
     if (_gamesPlayed_) {
-      msg.gamesPlayed = _gamesPlayed_;
+      msg.gamesPlayed = protoscript.parseNumber(_gamesPlayed_);
     }
     const _teamName_ = json["teamName"] ?? json["team_name"];
     if (_teamName_) {
@@ -9520,7 +9816,7 @@ export const PlayerJSON = {
   /**
    * Serializes Player to JSON.
    */
-  encode: function (msg: Partial<Player>): string {
+  encode: function (msg: PartialDeep<Player>): string {
     return JSON.stringify(PlayerJSON._writeMessage(msg));
   },
 
@@ -9534,20 +9830,21 @@ export const PlayerJSON = {
   /**
    * Initializes Player with all fields set to their default value.
    */
-  initialize: function (): Player {
+  initialize: function (msg?: Partial<Player>): Player {
     return {
       id: 0,
       title: "",
       tenhouId: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Player>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Player>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
       json["id"] = msg.id;
@@ -9573,7 +9870,7 @@ export const PlayerJSON = {
   _readMessage: function (msg: Player, json: any): Player {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -9599,7 +9896,7 @@ export const FinalResultOfSessionJSON = {
   /**
    * Serializes FinalResultOfSession to JSON.
    */
-  encode: function (msg: Partial<FinalResultOfSession>): string {
+  encode: function (msg: PartialDeep<FinalResultOfSession>): string {
     return JSON.stringify(FinalResultOfSessionJSON._writeMessage(msg));
   },
 
@@ -9609,19 +9906,22 @@ export const FinalResultOfSessionJSON = {
   decode: function (json: string): FinalResultOfSession {
     return FinalResultOfSessionJSON._readMessage(
       FinalResultOfSessionJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes FinalResultOfSession with all fields set to their default value.
    */
-  initialize: function (): FinalResultOfSession {
+  initialize: function (
+    msg?: Partial<FinalResultOfSession>,
+  ): FinalResultOfSession {
     return {
       playerId: 0,
       score: 0,
       ratingDelta: 0,
       place: 0,
+      ...msg,
     };
   },
 
@@ -9629,7 +9929,7 @@ export const FinalResultOfSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<FinalResultOfSession>
+    msg: PartialDeep<FinalResultOfSession>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -9652,23 +9952,23 @@ export const FinalResultOfSessionJSON = {
    */
   _readMessage: function (
     msg: FinalResultOfSession,
-    json: any
+    json: any,
   ): FinalResultOfSession {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _score_ = json["score"];
     if (_score_) {
-      msg.score = _score_;
+      msg.score = protoscript.parseNumber(_score_);
     }
     const _ratingDelta_ = json["ratingDelta"] ?? json["rating_delta"];
     if (_ratingDelta_) {
-      msg.ratingDelta = _ratingDelta_;
+      msg.ratingDelta = protoscript.parseDouble(_ratingDelta_);
     }
     const _place_ = json["place"];
     if (_place_) {
-      msg.place = _place_;
+      msg.place = protoscript.parseNumber(_place_);
     }
     return msg;
   },
@@ -9678,7 +9978,7 @@ export const PenaltyJSON = {
   /**
    * Serializes Penalty to JSON.
    */
-  encode: function (msg: Partial<Penalty>): string {
+  encode: function (msg: PartialDeep<Penalty>): string {
     return JSON.stringify(PenaltyJSON._writeMessage(msg));
   },
 
@@ -9692,18 +9992,19 @@ export const PenaltyJSON = {
   /**
    * Initializes Penalty with all fields set to their default value.
    */
-  initialize: function (): Penalty {
+  initialize: function (msg?: Partial<Penalty>): Penalty {
     return {
       who: 0,
       amount: 0,
       reason: undefined,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Penalty>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Penalty>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.who) {
       json["who"] = msg.who;
@@ -9723,11 +10024,11 @@ export const PenaltyJSON = {
   _readMessage: function (msg: Penalty, json: any): Penalty {
     const _who_ = json["who"];
     if (_who_) {
-      msg.who = _who_;
+      msg.who = protoscript.parseNumber(_who_);
     }
     const _amount_ = json["amount"];
     if (_amount_) {
-      msg.amount = _amount_;
+      msg.amount = protoscript.parseNumber(_amount_);
     }
     const _reason_ = json["reason"];
     if (_reason_) {
@@ -9741,7 +10042,7 @@ export const RonResultJSON = {
   /**
    * Serializes RonResult to JSON.
    */
-  encode: function (msg: Partial<RonResult>): string {
+  encode: function (msg: PartialDeep<RonResult>): string {
     return JSON.stringify(RonResultJSON._writeMessage(msg));
   },
 
@@ -9751,14 +10052,14 @@ export const RonResultJSON = {
   decode: function (json: string): RonResult {
     return RonResultJSON._readMessage(
       RonResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RonResult with all fields set to their default value.
    */
-  initialize: function (): RonResult {
+  initialize: function (msg?: Partial<RonResult>): RonResult {
     return {
       roundIndex: 0,
       honba: 0,
@@ -9774,13 +10075,16 @@ export const RonResultJSON = {
       kandora: 0,
       kanuradora: 0,
       openHand: false,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<RonResult>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<RonResult>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -9833,55 +10137,55 @@ export const RonResultJSON = {
   _readMessage: function (msg: RonResult, json: any): RonResult {
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _winnerId_ = json["winnerId"] ?? json["winner_id"];
     if (_winnerId_) {
-      msg.winnerId = _winnerId_;
+      msg.winnerId = protoscript.parseNumber(_winnerId_);
     }
     const _loserId_ = json["loserId"] ?? json["loser_id"];
     if (_loserId_) {
-      msg.loserId = _loserId_;
+      msg.loserId = protoscript.parseNumber(_loserId_);
     }
     const _paoPlayerId_ = json["paoPlayerId"] ?? json["pao_player_id"];
     if (_paoPlayerId_) {
-      msg.paoPlayerId = _paoPlayerId_;
+      msg.paoPlayerId = protoscript.parseNumber(_paoPlayerId_);
     }
     const _han_ = json["han"];
     if (_han_) {
-      msg.han = _han_;
+      msg.han = protoscript.parseNumber(_han_);
     }
     const _fu_ = json["fu"];
     if (_fu_) {
-      msg.fu = _fu_;
+      msg.fu = protoscript.parseNumber(_fu_);
     }
     const _yaku_ = json["yaku"];
     if (_yaku_) {
-      msg.yaku = _yaku_;
+      msg.yaku = _yaku_.map(protoscript.parseNumber);
     }
     const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
-      msg.riichiBets = _riichiBets_;
+      msg.riichiBets = _riichiBets_.map(protoscript.parseNumber);
     }
     const _dora_ = json["dora"];
     if (_dora_) {
-      msg.dora = _dora_;
+      msg.dora = protoscript.parseNumber(_dora_);
     }
     const _uradora_ = json["uradora"];
     if (_uradora_) {
-      msg.uradora = _uradora_;
+      msg.uradora = protoscript.parseNumber(_uradora_);
     }
     const _kandora_ = json["kandora"];
     if (_kandora_) {
-      msg.kandora = _kandora_;
+      msg.kandora = protoscript.parseNumber(_kandora_);
     }
     const _kanuradora_ = json["kanuradora"];
     if (_kanuradora_) {
-      msg.kanuradora = _kanuradora_;
+      msg.kanuradora = protoscript.parseNumber(_kanuradora_);
     }
     const _openHand_ = json["openHand"] ?? json["open_hand"];
     if (_openHand_) {
@@ -9895,7 +10199,7 @@ export const MultironWinJSON = {
   /**
    * Serializes MultironWin to JSON.
    */
-  encode: function (msg: Partial<MultironWin>): string {
+  encode: function (msg: PartialDeep<MultironWin>): string {
     return JSON.stringify(MultironWinJSON._writeMessage(msg));
   },
 
@@ -9905,14 +10209,14 @@ export const MultironWinJSON = {
   decode: function (json: string): MultironWin {
     return MultironWinJSON._readMessage(
       MultironWinJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes MultironWin with all fields set to their default value.
    */
-  initialize: function (): MultironWin {
+  initialize: function (msg?: Partial<MultironWin>): MultironWin {
     return {
       winnerId: 0,
       paoPlayerId: 0,
@@ -9924,13 +10228,16 @@ export const MultironWinJSON = {
       kandora: 0,
       kanuradora: 0,
       openHand: false,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<MultironWin>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<MultironWin>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.winnerId) {
       json["winnerId"] = msg.winnerId;
@@ -9971,39 +10278,39 @@ export const MultironWinJSON = {
   _readMessage: function (msg: MultironWin, json: any): MultironWin {
     const _winnerId_ = json["winnerId"] ?? json["winner_id"];
     if (_winnerId_) {
-      msg.winnerId = _winnerId_;
+      msg.winnerId = protoscript.parseNumber(_winnerId_);
     }
     const _paoPlayerId_ = json["paoPlayerId"] ?? json["pao_player_id"];
     if (_paoPlayerId_) {
-      msg.paoPlayerId = _paoPlayerId_;
+      msg.paoPlayerId = protoscript.parseNumber(_paoPlayerId_);
     }
     const _han_ = json["han"];
     if (_han_) {
-      msg.han = _han_;
+      msg.han = protoscript.parseNumber(_han_);
     }
     const _fu_ = json["fu"];
     if (_fu_) {
-      msg.fu = _fu_;
+      msg.fu = protoscript.parseNumber(_fu_);
     }
     const _yaku_ = json["yaku"];
     if (_yaku_) {
-      msg.yaku = _yaku_;
+      msg.yaku = _yaku_.map(protoscript.parseNumber);
     }
     const _dora_ = json["dora"];
     if (_dora_) {
-      msg.dora = _dora_;
+      msg.dora = protoscript.parseNumber(_dora_);
     }
     const _uradora_ = json["uradora"];
     if (_uradora_) {
-      msg.uradora = _uradora_;
+      msg.uradora = protoscript.parseNumber(_uradora_);
     }
     const _kandora_ = json["kandora"];
     if (_kandora_) {
-      msg.kandora = _kandora_;
+      msg.kandora = protoscript.parseNumber(_kandora_);
     }
     const _kanuradora_ = json["kanuradora"];
     if (_kanuradora_) {
-      msg.kanuradora = _kanuradora_;
+      msg.kanuradora = protoscript.parseNumber(_kanuradora_);
     }
     const _openHand_ = json["openHand"] ?? json["open_hand"];
     if (_openHand_) {
@@ -10017,7 +10324,7 @@ export const MultironResultJSON = {
   /**
    * Serializes MultironResult to JSON.
    */
-  encode: function (msg: Partial<MultironResult>): string {
+  encode: function (msg: PartialDeep<MultironResult>): string {
     return JSON.stringify(MultironResultJSON._writeMessage(msg));
   },
 
@@ -10027,14 +10334,14 @@ export const MultironResultJSON = {
   decode: function (json: string): MultironResult {
     return MultironResultJSON._readMessage(
       MultironResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes MultironResult with all fields set to their default value.
    */
-  initialize: function (): MultironResult {
+  initialize: function (msg?: Partial<MultironResult>): MultironResult {
     return {
       roundIndex: 0,
       honba: 0,
@@ -10042,6 +10349,7 @@ export const MultironResultJSON = {
       multiRon: 0,
       wins: [],
       riichiBets: [],
+      ...msg,
     };
   },
 
@@ -10049,7 +10357,7 @@ export const MultironResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<MultironResult>
+    msg: PartialDeep<MultironResult>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
@@ -10079,31 +10387,31 @@ export const MultironResultJSON = {
   _readMessage: function (msg: MultironResult, json: any): MultironResult {
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _loserId_ = json["loserId"] ?? json["loser_id"];
     if (_loserId_) {
-      msg.loserId = _loserId_;
+      msg.loserId = protoscript.parseNumber(_loserId_);
     }
     const _multiRon_ = json["multiRon"] ?? json["multi_ron"];
     if (_multiRon_) {
-      msg.multiRon = _multiRon_;
+      msg.multiRon = protoscript.parseNumber(_multiRon_);
     }
     const _wins_ = json["wins"];
     if (_wins_) {
       for (const item of _wins_) {
-        const m = MultironWin.initialize();
+        const m = MultironWinJSON.initialize();
         MultironWinJSON._readMessage(m, item);
         msg.wins.push(m);
       }
     }
     const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
-      msg.riichiBets = _riichiBets_;
+      msg.riichiBets = _riichiBets_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -10113,7 +10421,7 @@ export const TsumoResultJSON = {
   /**
    * Serializes TsumoResult to JSON.
    */
-  encode: function (msg: Partial<TsumoResult>): string {
+  encode: function (msg: PartialDeep<TsumoResult>): string {
     return JSON.stringify(TsumoResultJSON._writeMessage(msg));
   },
 
@@ -10123,14 +10431,14 @@ export const TsumoResultJSON = {
   decode: function (json: string): TsumoResult {
     return TsumoResultJSON._readMessage(
       TsumoResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes TsumoResult with all fields set to their default value.
    */
-  initialize: function (): TsumoResult {
+  initialize: function (msg?: Partial<TsumoResult>): TsumoResult {
     return {
       roundIndex: 0,
       honba: 0,
@@ -10145,13 +10453,16 @@ export const TsumoResultJSON = {
       kandora: 0,
       kanuradora: 0,
       openHand: false,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<TsumoResult>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<TsumoResult>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -10201,51 +10512,51 @@ export const TsumoResultJSON = {
   _readMessage: function (msg: TsumoResult, json: any): TsumoResult {
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _winnerId_ = json["winnerId"] ?? json["winner_id"];
     if (_winnerId_) {
-      msg.winnerId = _winnerId_;
+      msg.winnerId = protoscript.parseNumber(_winnerId_);
     }
     const _paoPlayerId_ = json["paoPlayerId"] ?? json["pao_player_id"];
     if (_paoPlayerId_) {
-      msg.paoPlayerId = _paoPlayerId_;
+      msg.paoPlayerId = protoscript.parseNumber(_paoPlayerId_);
     }
     const _han_ = json["han"];
     if (_han_) {
-      msg.han = _han_;
+      msg.han = protoscript.parseNumber(_han_);
     }
     const _fu_ = json["fu"];
     if (_fu_) {
-      msg.fu = _fu_;
+      msg.fu = protoscript.parseNumber(_fu_);
     }
     const _yaku_ = json["yaku"];
     if (_yaku_) {
-      msg.yaku = _yaku_;
+      msg.yaku = _yaku_.map(protoscript.parseNumber);
     }
     const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
-      msg.riichiBets = _riichiBets_;
+      msg.riichiBets = _riichiBets_.map(protoscript.parseNumber);
     }
     const _dora_ = json["dora"];
     if (_dora_) {
-      msg.dora = _dora_;
+      msg.dora = protoscript.parseNumber(_dora_);
     }
     const _uradora_ = json["uradora"];
     if (_uradora_) {
-      msg.uradora = _uradora_;
+      msg.uradora = protoscript.parseNumber(_uradora_);
     }
     const _kandora_ = json["kandora"];
     if (_kandora_) {
-      msg.kandora = _kandora_;
+      msg.kandora = protoscript.parseNumber(_kandora_);
     }
     const _kanuradora_ = json["kanuradora"];
     if (_kanuradora_) {
-      msg.kanuradora = _kanuradora_;
+      msg.kanuradora = protoscript.parseNumber(_kanuradora_);
     }
     const _openHand_ = json["openHand"] ?? json["open_hand"];
     if (_openHand_) {
@@ -10259,7 +10570,7 @@ export const DrawResultJSON = {
   /**
    * Serializes DrawResult to JSON.
    */
-  encode: function (msg: Partial<DrawResult>): string {
+  encode: function (msg: PartialDeep<DrawResult>): string {
     return JSON.stringify(DrawResultJSON._writeMessage(msg));
   },
 
@@ -10269,26 +10580,29 @@ export const DrawResultJSON = {
   decode: function (json: string): DrawResult {
     return DrawResultJSON._readMessage(
       DrawResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes DrawResult with all fields set to their default value.
    */
-  initialize: function (): DrawResult {
+  initialize: function (msg?: Partial<DrawResult>): DrawResult {
     return {
       roundIndex: 0,
       honba: 0,
       riichiBets: [],
       tempai: [],
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<DrawResult>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<DrawResult>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -10311,19 +10625,19 @@ export const DrawResultJSON = {
   _readMessage: function (msg: DrawResult, json: any): DrawResult {
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
-      msg.riichiBets = _riichiBets_;
+      msg.riichiBets = _riichiBets_.map(protoscript.parseNumber);
     }
     const _tempai_ = json["tempai"];
     if (_tempai_) {
-      msg.tempai = _tempai_;
+      msg.tempai = _tempai_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -10333,7 +10647,7 @@ export const AbortResultJSON = {
   /**
    * Serializes AbortResult to JSON.
    */
-  encode: function (msg: Partial<AbortResult>): string {
+  encode: function (msg: PartialDeep<AbortResult>): string {
     return JSON.stringify(AbortResultJSON._writeMessage(msg));
   },
 
@@ -10343,25 +10657,28 @@ export const AbortResultJSON = {
   decode: function (json: string): AbortResult {
     return AbortResultJSON._readMessage(
       AbortResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes AbortResult with all fields set to their default value.
    */
-  initialize: function (): AbortResult {
+  initialize: function (msg?: Partial<AbortResult>): AbortResult {
     return {
       roundIndex: 0,
       honba: 0,
       riichiBets: [],
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<AbortResult>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<AbortResult>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
@@ -10381,15 +10698,15 @@ export const AbortResultJSON = {
   _readMessage: function (msg: AbortResult, json: any): AbortResult {
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
-      msg.riichiBets = _riichiBets_;
+      msg.riichiBets = _riichiBets_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -10399,7 +10716,7 @@ export const ChomboResultJSON = {
   /**
    * Serializes ChomboResult to JSON.
    */
-  encode: function (msg: Partial<ChomboResult>): string {
+  encode: function (msg: PartialDeep<ChomboResult>): string {
     return JSON.stringify(ChomboResultJSON._writeMessage(msg));
   },
 
@@ -10409,18 +10726,19 @@ export const ChomboResultJSON = {
   decode: function (json: string): ChomboResult {
     return ChomboResultJSON._readMessage(
       ChomboResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes ChomboResult with all fields set to their default value.
    */
-  initialize: function (): ChomboResult {
+  initialize: function (msg?: Partial<ChomboResult>): ChomboResult {
     return {
       roundIndex: 0,
       honba: 0,
       loserId: 0,
+      ...msg,
     };
   },
 
@@ -10428,7 +10746,7 @@ export const ChomboResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ChomboResult>
+    msg: PartialDeep<ChomboResult>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
@@ -10449,15 +10767,15 @@ export const ChomboResultJSON = {
   _readMessage: function (msg: ChomboResult, json: any): ChomboResult {
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _loserId_ = json["loserId"] ?? json["loser_id"];
     if (_loserId_) {
-      msg.loserId = _loserId_;
+      msg.loserId = protoscript.parseNumber(_loserId_);
     }
     return msg;
   },
@@ -10467,7 +10785,7 @@ export const NagashiResultJSON = {
   /**
    * Serializes NagashiResult to JSON.
    */
-  encode: function (msg: Partial<NagashiResult>): string {
+  encode: function (msg: PartialDeep<NagashiResult>): string {
     return JSON.stringify(NagashiResultJSON._writeMessage(msg));
   },
 
@@ -10477,20 +10795,21 @@ export const NagashiResultJSON = {
   decode: function (json: string): NagashiResult {
     return NagashiResultJSON._readMessage(
       NagashiResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes NagashiResult with all fields set to their default value.
    */
-  initialize: function (): NagashiResult {
+  initialize: function (msg?: Partial<NagashiResult>): NagashiResult {
     return {
       roundIndex: 0,
       honba: 0,
       riichiBets: [],
       tempai: [],
       nagashi: [],
+      ...msg,
     };
   },
 
@@ -10498,7 +10817,7 @@ export const NagashiResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<NagashiResult>
+    msg: PartialDeep<NagashiResult>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
@@ -10525,23 +10844,23 @@ export const NagashiResultJSON = {
   _readMessage: function (msg: NagashiResult, json: any): NagashiResult {
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
-      msg.riichiBets = _riichiBets_;
+      msg.riichiBets = _riichiBets_.map(protoscript.parseNumber);
     }
     const _tempai_ = json["tempai"];
     if (_tempai_) {
-      msg.tempai = _tempai_;
+      msg.tempai = _tempai_.map(protoscript.parseNumber);
     }
     const _nagashi_ = json["nagashi"];
     if (_nagashi_) {
-      msg.nagashi = _nagashi_;
+      msg.nagashi = _nagashi_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -10551,7 +10870,7 @@ export const RoundJSON = {
   /**
    * Serializes Round to JSON.
    */
-  encode: function (msg: Partial<Round>): string {
+  encode: function (msg: PartialDeep<Round>): string {
     return JSON.stringify(RoundJSON._writeMessage(msg));
   },
 
@@ -10565,7 +10884,7 @@ export const RoundJSON = {
   /**
    * Initializes Round with all fields set to their default value.
    */
-  initialize: function (): Round {
+  initialize: function (msg?: Partial<Round>): Round {
     return {
       ron: undefined,
       tsumo: undefined,
@@ -10574,13 +10893,14 @@ export const RoundJSON = {
       abort: undefined,
       chombo: undefined,
       nagashi: undefined,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Round>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Round>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ron != undefined) {
       const _ron_ = RonResultJSON._writeMessage(msg.ron);
@@ -10619,45 +10939,38 @@ export const RoundJSON = {
   _readMessage: function (msg: Round, json: any): Round {
     const _ron_ = json["ron"];
     if (_ron_) {
-      const m = RonResult.initialize();
-      RonResultJSON._readMessage(m, _ron_);
-      msg.ron = m;
+      msg.ron = RonResultJSON.initialize();
+      RonResultJSON._readMessage(msg.ron, _ron_);
     }
     const _tsumo_ = json["tsumo"];
     if (_tsumo_) {
-      const m = TsumoResult.initialize();
-      TsumoResultJSON._readMessage(m, _tsumo_);
-      msg.tsumo = m;
+      msg.tsumo = TsumoResultJSON.initialize();
+      TsumoResultJSON._readMessage(msg.tsumo, _tsumo_);
     }
     const _multiron_ = json["multiron"];
     if (_multiron_) {
-      const m = MultironResult.initialize();
-      MultironResultJSON._readMessage(m, _multiron_);
-      msg.multiron = m;
+      msg.multiron = MultironResultJSON.initialize();
+      MultironResultJSON._readMessage(msg.multiron, _multiron_);
     }
     const _draw_ = json["draw"];
     if (_draw_) {
-      const m = DrawResult.initialize();
-      DrawResultJSON._readMessage(m, _draw_);
-      msg.draw = m;
+      msg.draw = DrawResultJSON.initialize();
+      DrawResultJSON._readMessage(msg.draw, _draw_);
     }
     const _abort_ = json["abort"];
     if (_abort_) {
-      const m = AbortResult.initialize();
-      AbortResultJSON._readMessage(m, _abort_);
-      msg.abort = m;
+      msg.abort = AbortResultJSON.initialize();
+      AbortResultJSON._readMessage(msg.abort, _abort_);
     }
     const _chombo_ = json["chombo"];
     if (_chombo_) {
-      const m = ChomboResult.initialize();
-      ChomboResultJSON._readMessage(m, _chombo_);
-      msg.chombo = m;
+      msg.chombo = ChomboResultJSON.initialize();
+      ChomboResultJSON._readMessage(msg.chombo, _chombo_);
     }
     const _nagashi_ = json["nagashi"];
     if (_nagashi_) {
-      const m = NagashiResult.initialize();
-      NagashiResultJSON._readMessage(m, _nagashi_);
-      msg.nagashi = m;
+      msg.nagashi = NagashiResultJSON.initialize();
+      NagashiResultJSON._readMessage(msg.nagashi, _nagashi_);
     }
     return msg;
   },
@@ -10667,7 +10980,7 @@ export const GameResultJSON = {
   /**
    * Serializes GameResult to JSON.
    */
-  encode: function (msg: Partial<GameResult>): string {
+  encode: function (msg: PartialDeep<GameResult>): string {
     return JSON.stringify(GameResultJSON._writeMessage(msg));
   },
 
@@ -10677,14 +10990,14 @@ export const GameResultJSON = {
   decode: function (json: string): GameResult {
     return GameResultJSON._readMessage(
       GameResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes GameResult with all fields set to their default value.
    */
-  initialize: function (): GameResult {
+  initialize: function (msg?: Partial<GameResult>): GameResult {
     return {
       sessionHash: "",
       date: undefined,
@@ -10693,13 +11006,16 @@ export const GameResultJSON = {
       finalResults: [],
       penaltyLogs: [],
       rounds: [],
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<GameResult>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<GameResult>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
@@ -10715,7 +11031,7 @@ export const GameResultJSON = {
     }
     if (msg.finalResults?.length) {
       json["finalResults"] = msg.finalResults.map(
-        FinalResultOfSessionJSON._writeMessage
+        FinalResultOfSessionJSON._writeMessage,
       );
     }
     if (msg.penaltyLogs?.length) {
@@ -10745,12 +11061,12 @@ export const GameResultJSON = {
     }
     const _players_ = json["players"];
     if (_players_) {
-      msg.players = _players_;
+      msg.players = _players_.map(protoscript.parseNumber);
     }
     const _finalResults_ = json["finalResults"] ?? json["final_results"];
     if (_finalResults_) {
       for (const item of _finalResults_) {
-        const m = FinalResultOfSession.initialize();
+        const m = FinalResultOfSessionJSON.initialize();
         FinalResultOfSessionJSON._readMessage(m, item);
         msg.finalResults.push(m);
       }
@@ -10758,7 +11074,7 @@ export const GameResultJSON = {
     const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
     if (_penaltyLogs_) {
       for (const item of _penaltyLogs_) {
-        const m = Penalty.initialize();
+        const m = PenaltyJSON.initialize();
         PenaltyJSON._readMessage(m, item);
         msg.penaltyLogs.push(m);
       }
@@ -10766,7 +11082,7 @@ export const GameResultJSON = {
     const _rounds_ = json["rounds"];
     if (_rounds_) {
       for (const item of _rounds_) {
-        const m = Round.initialize();
+        const m = RoundJSON.initialize();
         RoundJSON._readMessage(m, item);
         msg.rounds.push(m);
       }
@@ -10779,7 +11095,7 @@ export const PlayerPlaceInSeriesJSON = {
   /**
    * Serializes PlayerPlaceInSeries to JSON.
    */
-  encode: function (msg: Partial<PlayerPlaceInSeries>): string {
+  encode: function (msg: PartialDeep<PlayerPlaceInSeries>): string {
     return JSON.stringify(PlayerPlaceInSeriesJSON._writeMessage(msg));
   },
 
@@ -10789,17 +11105,20 @@ export const PlayerPlaceInSeriesJSON = {
   decode: function (json: string): PlayerPlaceInSeries {
     return PlayerPlaceInSeriesJSON._readMessage(
       PlayerPlaceInSeriesJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PlayerPlaceInSeries with all fields set to their default value.
    */
-  initialize: function (): PlayerPlaceInSeries {
+  initialize: function (
+    msg?: Partial<PlayerPlaceInSeries>,
+  ): PlayerPlaceInSeries {
     return {
       sessionHash: "",
       place: 0,
+      ...msg,
     };
   },
 
@@ -10807,7 +11126,7 @@ export const PlayerPlaceInSeriesJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerPlaceInSeries>
+    msg: PartialDeep<PlayerPlaceInSeries>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -10824,7 +11143,7 @@ export const PlayerPlaceInSeriesJSON = {
    */
   _readMessage: function (
     msg: PlayerPlaceInSeries,
-    json: any
+    json: any,
   ): PlayerPlaceInSeries {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -10832,7 +11151,7 @@ export const PlayerPlaceInSeriesJSON = {
     }
     const _place_ = json["place"];
     if (_place_) {
-      msg.place = _place_;
+      msg.place = protoscript.parseNumber(_place_);
     }
     return msg;
   },
@@ -10842,7 +11161,7 @@ export const SeriesResultJSON = {
   /**
    * Serializes SeriesResult to JSON.
    */
-  encode: function (msg: Partial<SeriesResult>): string {
+  encode: function (msg: PartialDeep<SeriesResult>): string {
     return JSON.stringify(SeriesResultJSON._writeMessage(msg));
   },
 
@@ -10852,14 +11171,14 @@ export const SeriesResultJSON = {
   decode: function (json: string): SeriesResult {
     return SeriesResultJSON._readMessage(
       SeriesResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes SeriesResult with all fields set to their default value.
    */
-  initialize: function (): SeriesResult {
+  initialize: function (msg?: Partial<SeriesResult>): SeriesResult {
     return {
       player: PlayerJSON.initialize(),
       bestSeries: [],
@@ -10870,6 +11189,7 @@ export const SeriesResultJSON = {
       currentSeriesScores: 0,
       currentSeriesPlaces: 0,
       currentSeriesAvgPlace: "",
+      ...msg,
     };
   },
 
@@ -10877,7 +11197,7 @@ export const SeriesResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SeriesResult>
+    msg: PartialDeep<SeriesResult>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.player) {
@@ -10888,7 +11208,7 @@ export const SeriesResultJSON = {
     }
     if (msg.bestSeries?.length) {
       json["bestSeries"] = msg.bestSeries.map(
-        PlayerPlaceInSeriesJSON._writeMessage
+        PlayerPlaceInSeriesJSON._writeMessage,
       );
     }
     if (msg.bestSeriesScores) {
@@ -10902,7 +11222,7 @@ export const SeriesResultJSON = {
     }
     if (msg.currentSeries?.length) {
       json["currentSeries"] = msg.currentSeries.map(
-        PlayerPlaceInSeriesJSON._writeMessage
+        PlayerPlaceInSeriesJSON._writeMessage,
       );
     }
     if (msg.currentSeriesScores) {
@@ -10923,14 +11243,12 @@ export const SeriesResultJSON = {
   _readMessage: function (msg: SeriesResult, json: any): SeriesResult {
     const _player_ = json["player"];
     if (_player_) {
-      const m = Player.initialize();
-      PlayerJSON._readMessage(m, _player_);
-      msg.player = m;
+      PlayerJSON._readMessage(msg.player, _player_);
     }
     const _bestSeries_ = json["bestSeries"] ?? json["best_series"];
     if (_bestSeries_) {
       for (const item of _bestSeries_) {
-        const m = PlayerPlaceInSeries.initialize();
+        const m = PlayerPlaceInSeriesJSON.initialize();
         PlayerPlaceInSeriesJSON._readMessage(m, item);
         msg.bestSeries.push(m);
       }
@@ -10938,12 +11256,12 @@ export const SeriesResultJSON = {
     const _bestSeriesScores_ =
       json["bestSeriesScores"] ?? json["best_series_scores"];
     if (_bestSeriesScores_) {
-      msg.bestSeriesScores = _bestSeriesScores_;
+      msg.bestSeriesScores = protoscript.parseDouble(_bestSeriesScores_);
     }
     const _bestSeriesPlaces_ =
       json["bestSeriesPlaces"] ?? json["best_series_places"];
     if (_bestSeriesPlaces_) {
-      msg.bestSeriesPlaces = _bestSeriesPlaces_;
+      msg.bestSeriesPlaces = protoscript.parseNumber(_bestSeriesPlaces_);
     }
     const _bestSeriesAvgPlace_ =
       json["bestSeriesAvgPlace"] ?? json["best_series_avg_place"];
@@ -10953,7 +11271,7 @@ export const SeriesResultJSON = {
     const _currentSeries_ = json["currentSeries"] ?? json["current_series"];
     if (_currentSeries_) {
       for (const item of _currentSeries_) {
-        const m = PlayerPlaceInSeries.initialize();
+        const m = PlayerPlaceInSeriesJSON.initialize();
         PlayerPlaceInSeriesJSON._readMessage(m, item);
         msg.currentSeries.push(m);
       }
@@ -10961,12 +11279,12 @@ export const SeriesResultJSON = {
     const _currentSeriesScores_ =
       json["currentSeriesScores"] ?? json["current_series_scores"];
     if (_currentSeriesScores_) {
-      msg.currentSeriesScores = _currentSeriesScores_;
+      msg.currentSeriesScores = protoscript.parseDouble(_currentSeriesScores_);
     }
     const _currentSeriesPlaces_ =
       json["currentSeriesPlaces"] ?? json["current_series_places"];
     if (_currentSeriesPlaces_) {
-      msg.currentSeriesPlaces = _currentSeriesPlaces_;
+      msg.currentSeriesPlaces = protoscript.parseNumber(_currentSeriesPlaces_);
     }
     const _currentSeriesAvgPlace_ =
       json["currentSeriesAvgPlace"] ?? json["current_series_avg_place"];
@@ -10981,7 +11299,7 @@ export const ReplacementPlayerJSON = {
   /**
    * Serializes ReplacementPlayer to JSON.
    */
-  encode: function (msg: Partial<ReplacementPlayer>): string {
+  encode: function (msg: PartialDeep<ReplacementPlayer>): string {
     return JSON.stringify(ReplacementPlayerJSON._writeMessage(msg));
   },
 
@@ -10991,19 +11309,20 @@ export const ReplacementPlayerJSON = {
   decode: function (json: string): ReplacementPlayer {
     return ReplacementPlayerJSON._readMessage(
       ReplacementPlayerJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes ReplacementPlayer with all fields set to their default value.
    */
-  initialize: function (): ReplacementPlayer {
+  initialize: function (msg?: Partial<ReplacementPlayer>): ReplacementPlayer {
     return {
       id: 0,
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -11011,7 +11330,7 @@ export const ReplacementPlayerJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ReplacementPlayer>
+    msg: PartialDeep<ReplacementPlayer>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11034,11 +11353,11 @@ export const ReplacementPlayerJSON = {
    */
   _readMessage: function (
     msg: ReplacementPlayer,
-    json: any
+    json: any,
   ): ReplacementPlayer {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -11060,7 +11379,7 @@ export const PlayerInSessionJSON = {
   /**
    * Serializes PlayerInSession to JSON.
    */
-  encode: function (msg: Partial<PlayerInSession>): string {
+  encode: function (msg: PartialDeep<PlayerInSession>): string {
     return JSON.stringify(PlayerInSessionJSON._writeMessage(msg));
   },
 
@@ -11070,14 +11389,14 @@ export const PlayerInSessionJSON = {
   decode: function (json: string): PlayerInSession {
     return PlayerInSessionJSON._readMessage(
       PlayerInSessionJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PlayerInSession with all fields set to their default value.
    */
-  initialize: function (): PlayerInSession {
+  initialize: function (msg?: Partial<PlayerInSession>): PlayerInSession {
     return {
       id: 0,
       title: "",
@@ -11086,6 +11405,7 @@ export const PlayerInSessionJSON = {
       ratingDelta: 0,
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -11093,7 +11413,7 @@ export const PlayerInSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerInSession>
+    msg: PartialDeep<PlayerInSession>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11127,7 +11447,7 @@ export const PlayerInSessionJSON = {
   _readMessage: function (msg: PlayerInSession, json: any): PlayerInSession {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -11135,17 +11455,16 @@ export const PlayerInSessionJSON = {
     }
     const _score_ = json["score"];
     if (_score_) {
-      msg.score = _score_;
+      msg.score = protoscript.parseNumber(_score_);
     }
     const _replacedBy_ = json["replacedBy"] ?? json["replaced_by"];
     if (_replacedBy_) {
-      const m = ReplacementPlayer.initialize();
-      ReplacementPlayerJSON._readMessage(m, _replacedBy_);
-      msg.replacedBy = m;
+      msg.replacedBy = ReplacementPlayerJSON.initialize();
+      ReplacementPlayerJSON._readMessage(msg.replacedBy, _replacedBy_);
     }
     const _ratingDelta_ = json["ratingDelta"] ?? json["rating_delta"];
     if (_ratingDelta_) {
-      msg.ratingDelta = _ratingDelta_;
+      msg.ratingDelta = protoscript.parseDouble(_ratingDelta_);
     }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
@@ -11163,7 +11482,7 @@ export const CurrentSessionJSON = {
   /**
    * Serializes CurrentSession to JSON.
    */
-  encode: function (msg: Partial<CurrentSession>): string {
+  encode: function (msg: PartialDeep<CurrentSession>): string {
     return JSON.stringify(CurrentSessionJSON._writeMessage(msg));
   },
 
@@ -11173,19 +11492,20 @@ export const CurrentSessionJSON = {
   decode: function (json: string): CurrentSession {
     return CurrentSessionJSON._readMessage(
       CurrentSessionJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes CurrentSession with all fields set to their default value.
    */
-  initialize: function (): CurrentSession {
+  initialize: function (msg?: Partial<CurrentSession>): CurrentSession {
     return {
       sessionHash: "",
       status: "",
       tableIndex: undefined,
       players: [],
+      ...msg,
     };
   },
 
@@ -11193,7 +11513,7 @@ export const CurrentSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<CurrentSession>
+    msg: PartialDeep<CurrentSession>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -11225,12 +11545,12 @@ export const CurrentSessionJSON = {
     }
     const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
-      msg.tableIndex = _tableIndex_;
+      msg.tableIndex = protoscript.parseNumber(_tableIndex_);
     }
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = PlayerInSession.initialize();
+        const m = PlayerInSessionJSON.initialize();
         PlayerInSessionJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -11243,7 +11563,7 @@ export const RegisteredPlayerJSON = {
   /**
    * Serializes RegisteredPlayer to JSON.
    */
-  encode: function (msg: Partial<RegisteredPlayer>): string {
+  encode: function (msg: PartialDeep<RegisteredPlayer>): string {
     return JSON.stringify(RegisteredPlayerJSON._writeMessage(msg));
   },
 
@@ -11253,14 +11573,14 @@ export const RegisteredPlayerJSON = {
   decode: function (json: string): RegisteredPlayer {
     return RegisteredPlayerJSON._readMessage(
       RegisteredPlayerJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RegisteredPlayer with all fields set to their default value.
    */
-  initialize: function (): RegisteredPlayer {
+  initialize: function (msg?: Partial<RegisteredPlayer>): RegisteredPlayer {
     return {
       id: 0,
       title: "",
@@ -11271,6 +11591,7 @@ export const RegisteredPlayerJSON = {
       replacedBy: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -11278,7 +11599,7 @@ export const RegisteredPlayerJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RegisteredPlayer>
+    msg: PartialDeep<RegisteredPlayer>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -11318,7 +11639,7 @@ export const RegisteredPlayerJSON = {
   _readMessage: function (msg: RegisteredPlayer, json: any): RegisteredPlayer {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -11326,7 +11647,7 @@ export const RegisteredPlayerJSON = {
     }
     const _localId_ = json["localId"] ?? json["local_id"];
     if (_localId_) {
-      msg.localId = _localId_;
+      msg.localId = protoscript.parseNumber(_localId_);
     }
     const _teamName_ = json["teamName"] ?? json["team_name"];
     if (_teamName_) {
@@ -11342,9 +11663,8 @@ export const RegisteredPlayerJSON = {
     }
     const _replacedBy_ = json["replacedBy"] ?? json["replaced_by"];
     if (_replacedBy_) {
-      const m = ReplacementPlayer.initialize();
-      ReplacementPlayerJSON._readMessage(m, _replacedBy_);
-      msg.replacedBy = m;
+      msg.replacedBy = ReplacementPlayerJSON.initialize();
+      ReplacementPlayerJSON._readMessage(msg.replacedBy, _replacedBy_);
     }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
@@ -11362,7 +11682,7 @@ export const SessionHistoryResultJSON = {
   /**
    * Serializes SessionHistoryResult to JSON.
    */
-  encode: function (msg: Partial<SessionHistoryResult>): string {
+  encode: function (msg: PartialDeep<SessionHistoryResult>): string {
     return JSON.stringify(SessionHistoryResultJSON._writeMessage(msg));
   },
 
@@ -11372,14 +11692,16 @@ export const SessionHistoryResultJSON = {
   decode: function (json: string): SessionHistoryResult {
     return SessionHistoryResultJSON._readMessage(
       SessionHistoryResultJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes SessionHistoryResult with all fields set to their default value.
    */
-  initialize: function (): SessionHistoryResult {
+  initialize: function (
+    msg?: Partial<SessionHistoryResult>,
+  ): SessionHistoryResult {
     return {
       sessionHash: "",
       eventId: 0,
@@ -11390,6 +11712,7 @@ export const SessionHistoryResultJSON = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -11397,7 +11720,7 @@ export const SessionHistoryResultJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SessionHistoryResult>
+    msg: PartialDeep<SessionHistoryResult>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
@@ -11435,7 +11758,7 @@ export const SessionHistoryResultJSON = {
    */
   _readMessage: function (
     msg: SessionHistoryResult,
-    json: any
+    json: any,
   ): SessionHistoryResult {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
@@ -11443,23 +11766,23 @@ export const SessionHistoryResultJSON = {
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _score_ = json["score"];
     if (_score_) {
-      msg.score = _score_;
+      msg.score = protoscript.parseNumber(_score_);
     }
     const _ratingDelta_ = json["ratingDelta"] ?? json["rating_delta"];
     if (_ratingDelta_) {
-      msg.ratingDelta = _ratingDelta_;
+      msg.ratingDelta = protoscript.parseDouble(_ratingDelta_);
     }
     const _place_ = json["place"];
     if (_place_) {
-      msg.place = _place_;
+      msg.place = protoscript.parseNumber(_place_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -11481,7 +11804,7 @@ export const SessionHistoryResultTableJSON = {
   /**
    * Serializes SessionHistoryResultTable to JSON.
    */
-  encode: function (msg: Partial<SessionHistoryResultTable>): string {
+  encode: function (msg: PartialDeep<SessionHistoryResultTable>): string {
     return JSON.stringify(SessionHistoryResultTableJSON._writeMessage(msg));
   },
 
@@ -11491,16 +11814,19 @@ export const SessionHistoryResultTableJSON = {
   decode: function (json: string): SessionHistoryResultTable {
     return SessionHistoryResultTableJSON._readMessage(
       SessionHistoryResultTableJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes SessionHistoryResultTable with all fields set to their default value.
    */
-  initialize: function (): SessionHistoryResultTable {
+  initialize: function (
+    msg?: Partial<SessionHistoryResultTable>,
+  ): SessionHistoryResultTable {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -11508,7 +11834,7 @@ export const SessionHistoryResultTableJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SessionHistoryResultTable>
+    msg: PartialDeep<SessionHistoryResultTable>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.tables?.length) {
@@ -11522,12 +11848,12 @@ export const SessionHistoryResultTableJSON = {
    */
   _readMessage: function (
     msg: SessionHistoryResultTable,
-    json: any
+    json: any,
   ): SessionHistoryResultTable {
     const _tables_ = json["tables"];
     if (_tables_) {
       for (const item of _tables_) {
-        const m = SessionHistoryResult.initialize();
+        const m = SessionHistoryResultJSON.initialize();
         SessionHistoryResultJSON._readMessage(m, item);
         msg.tables.push(m);
       }
@@ -11540,7 +11866,7 @@ export const PlacesSummaryItemJSON = {
   /**
    * Serializes PlacesSummaryItem to JSON.
    */
-  encode: function (msg: Partial<PlacesSummaryItem>): string {
+  encode: function (msg: PartialDeep<PlacesSummaryItem>): string {
     return JSON.stringify(PlacesSummaryItemJSON._writeMessage(msg));
   },
 
@@ -11550,17 +11876,18 @@ export const PlacesSummaryItemJSON = {
   decode: function (json: string): PlacesSummaryItem {
     return PlacesSummaryItemJSON._readMessage(
       PlacesSummaryItemJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PlacesSummaryItem with all fields set to their default value.
    */
-  initialize: function (): PlacesSummaryItem {
+  initialize: function (msg?: Partial<PlacesSummaryItem>): PlacesSummaryItem {
     return {
       place: 0,
       count: 0,
+      ...msg,
     };
   },
 
@@ -11568,7 +11895,7 @@ export const PlacesSummaryItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlacesSummaryItem>
+    msg: PartialDeep<PlacesSummaryItem>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.place) {
@@ -11585,15 +11912,15 @@ export const PlacesSummaryItemJSON = {
    */
   _readMessage: function (
     msg: PlacesSummaryItem,
-    json: any
+    json: any,
   ): PlacesSummaryItem {
     const _place_ = json["place"];
     if (_place_) {
-      msg.place = _place_;
+      msg.place = protoscript.parseNumber(_place_);
     }
     const _count_ = json["count"];
     if (_count_) {
-      msg.count = _count_;
+      msg.count = protoscript.parseNumber(_count_);
     }
     return msg;
   },
@@ -11603,7 +11930,7 @@ export const PlayerWinSummaryJSON = {
   /**
    * Serializes PlayerWinSummary to JSON.
    */
-  encode: function (msg: Partial<PlayerWinSummary>): string {
+  encode: function (msg: PartialDeep<PlayerWinSummary>): string {
     return JSON.stringify(PlayerWinSummaryJSON._writeMessage(msg));
   },
 
@@ -11613,14 +11940,14 @@ export const PlayerWinSummaryJSON = {
   decode: function (json: string): PlayerWinSummary {
     return PlayerWinSummaryJSON._readMessage(
       PlayerWinSummaryJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PlayerWinSummary with all fields set to their default value.
    */
-  initialize: function (): PlayerWinSummary {
+  initialize: function (msg?: Partial<PlayerWinSummary>): PlayerWinSummary {
     return {
       ron: 0,
       tsumo: 0,
@@ -11638,6 +11965,7 @@ export const PlayerWinSummaryJSON = {
       pointsWon: 0,
       pointsLostRon: 0,
       pointsLostTsumo: 0,
+      ...msg,
     };
   },
 
@@ -11645,7 +11973,7 @@ export const PlayerWinSummaryJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerWinSummary>
+    msg: PartialDeep<PlayerWinSummary>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ron) {
@@ -11705,71 +12033,73 @@ export const PlayerWinSummaryJSON = {
   _readMessage: function (msg: PlayerWinSummary, json: any): PlayerWinSummary {
     const _ron_ = json["ron"];
     if (_ron_) {
-      msg.ron = _ron_;
+      msg.ron = protoscript.parseNumber(_ron_);
     }
     const _tsumo_ = json["tsumo"];
     if (_tsumo_) {
-      msg.tsumo = _tsumo_;
+      msg.tsumo = protoscript.parseNumber(_tsumo_);
     }
     const _chombo_ = json["chombo"];
     if (_chombo_) {
-      msg.chombo = _chombo_;
+      msg.chombo = protoscript.parseNumber(_chombo_);
     }
     const _feed_ = json["feed"];
     if (_feed_) {
-      msg.feed = _feed_;
+      msg.feed = protoscript.parseNumber(_feed_);
     }
     const _tsumofeed_ = json["tsumofeed"];
     if (_tsumofeed_) {
-      msg.tsumofeed = _tsumofeed_;
+      msg.tsumofeed = protoscript.parseNumber(_tsumofeed_);
     }
     const _winsWithOpen_ = json["winsWithOpen"] ?? json["wins_with_open"];
     if (_winsWithOpen_) {
-      msg.winsWithOpen = _winsWithOpen_;
+      msg.winsWithOpen = protoscript.parseNumber(_winsWithOpen_);
     }
     const _winsWithRiichi_ = json["winsWithRiichi"] ?? json["wins_with_riichi"];
     if (_winsWithRiichi_) {
-      msg.winsWithRiichi = _winsWithRiichi_;
+      msg.winsWithRiichi = protoscript.parseNumber(_winsWithRiichi_);
     }
     const _winsWithDama_ = json["winsWithDama"] ?? json["wins_with_dama"];
     if (_winsWithDama_) {
-      msg.winsWithDama = _winsWithDama_;
+      msg.winsWithDama = protoscript.parseNumber(_winsWithDama_);
     }
     const _unforcedFeedToOpen_ =
       json["unforcedFeedToOpen"] ?? json["unforced_feed_to_open"];
     if (_unforcedFeedToOpen_) {
-      msg.unforcedFeedToOpen = _unforcedFeedToOpen_;
+      msg.unforcedFeedToOpen = protoscript.parseNumber(_unforcedFeedToOpen_);
     }
     const _unforcedFeedToRiichi_ =
       json["unforcedFeedToRiichi"] ?? json["unforced_feed_to_riichi"];
     if (_unforcedFeedToRiichi_) {
-      msg.unforcedFeedToRiichi = _unforcedFeedToRiichi_;
+      msg.unforcedFeedToRiichi = protoscript.parseNumber(
+        _unforcedFeedToRiichi_,
+      );
     }
     const _unforcedFeedToDama_ =
       json["unforcedFeedToDama"] ?? json["unforced_feed_to_dama"];
     if (_unforcedFeedToDama_) {
-      msg.unforcedFeedToDama = _unforcedFeedToDama_;
+      msg.unforcedFeedToDama = protoscript.parseNumber(_unforcedFeedToDama_);
     }
     const _draw_ = json["draw"];
     if (_draw_) {
-      msg.draw = _draw_;
+      msg.draw = protoscript.parseNumber(_draw_);
     }
     const _drawTempai_ = json["drawTempai"] ?? json["draw_tempai"];
     if (_drawTempai_) {
-      msg.drawTempai = _drawTempai_;
+      msg.drawTempai = protoscript.parseNumber(_drawTempai_);
     }
     const _pointsWon_ = json["pointsWon"] ?? json["points_won"];
     if (_pointsWon_) {
-      msg.pointsWon = _pointsWon_;
+      msg.pointsWon = protoscript.parseNumber(_pointsWon_);
     }
     const _pointsLostRon_ = json["pointsLostRon"] ?? json["points_lost_ron"];
     if (_pointsLostRon_) {
-      msg.pointsLostRon = _pointsLostRon_;
+      msg.pointsLostRon = protoscript.parseNumber(_pointsLostRon_);
     }
     const _pointsLostTsumo_ =
       json["pointsLostTsumo"] ?? json["points_lost_tsumo"];
     if (_pointsLostTsumo_) {
-      msg.pointsLostTsumo = _pointsLostTsumo_;
+      msg.pointsLostTsumo = protoscript.parseNumber(_pointsLostTsumo_);
     }
     return msg;
   },
@@ -11779,7 +12109,7 @@ export const HandValueStatJSON = {
   /**
    * Serializes HandValueStat to JSON.
    */
-  encode: function (msg: Partial<HandValueStat>): string {
+  encode: function (msg: PartialDeep<HandValueStat>): string {
     return JSON.stringify(HandValueStatJSON._writeMessage(msg));
   },
 
@@ -11789,17 +12119,18 @@ export const HandValueStatJSON = {
   decode: function (json: string): HandValueStat {
     return HandValueStatJSON._readMessage(
       HandValueStatJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes HandValueStat with all fields set to their default value.
    */
-  initialize: function (): HandValueStat {
+  initialize: function (msg?: Partial<HandValueStat>): HandValueStat {
     return {
       hanCount: 0,
       count: 0,
+      ...msg,
     };
   },
 
@@ -11807,7 +12138,7 @@ export const HandValueStatJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<HandValueStat>
+    msg: PartialDeep<HandValueStat>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.hanCount) {
@@ -11825,11 +12156,11 @@ export const HandValueStatJSON = {
   _readMessage: function (msg: HandValueStat, json: any): HandValueStat {
     const _hanCount_ = json["hanCount"] ?? json["han_count"];
     if (_hanCount_) {
-      msg.hanCount = _hanCount_;
+      msg.hanCount = protoscript.parseNumber(_hanCount_);
     }
     const _count_ = json["count"];
     if (_count_) {
-      msg.count = _count_;
+      msg.count = protoscript.parseNumber(_count_);
     }
     return msg;
   },
@@ -11839,7 +12170,7 @@ export const YakuStatJSON = {
   /**
    * Serializes YakuStat to JSON.
    */
-  encode: function (msg: Partial<YakuStat>): string {
+  encode: function (msg: PartialDeep<YakuStat>): string {
     return JSON.stringify(YakuStatJSON._writeMessage(msg));
   },
 
@@ -11849,24 +12180,27 @@ export const YakuStatJSON = {
   decode: function (json: string): YakuStat {
     return YakuStatJSON._readMessage(
       YakuStatJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes YakuStat with all fields set to their default value.
    */
-  initialize: function (): YakuStat {
+  initialize: function (msg?: Partial<YakuStat>): YakuStat {
     return {
       yakuId: 0,
       count: 0,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<YakuStat>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<YakuStat>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.yakuId) {
       json["yakuId"] = msg.yakuId;
@@ -11883,11 +12217,11 @@ export const YakuStatJSON = {
   _readMessage: function (msg: YakuStat, json: any): YakuStat {
     const _yakuId_ = json["yakuId"] ?? json["yaku_id"];
     if (_yakuId_) {
-      msg.yakuId = _yakuId_;
+      msg.yakuId = protoscript.parseNumber(_yakuId_);
     }
     const _count_ = json["count"];
     if (_count_) {
-      msg.count = _count_;
+      msg.count = protoscript.parseNumber(_count_);
     }
     return msg;
   },
@@ -11897,7 +12231,7 @@ export const RiichiSummaryJSON = {
   /**
    * Serializes RiichiSummary to JSON.
    */
-  encode: function (msg: Partial<RiichiSummary>): string {
+  encode: function (msg: PartialDeep<RiichiSummary>): string {
     return JSON.stringify(RiichiSummaryJSON._writeMessage(msg));
   },
 
@@ -11907,18 +12241,19 @@ export const RiichiSummaryJSON = {
   decode: function (json: string): RiichiSummary {
     return RiichiSummaryJSON._readMessage(
       RiichiSummaryJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RiichiSummary with all fields set to their default value.
    */
-  initialize: function (): RiichiSummary {
+  initialize: function (msg?: Partial<RiichiSummary>): RiichiSummary {
     return {
       riichiWon: 0,
       riichiLost: 0,
       feedUnderRiichi: 0,
+      ...msg,
     };
   },
 
@@ -11926,7 +12261,7 @@ export const RiichiSummaryJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RiichiSummary>
+    msg: PartialDeep<RiichiSummary>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.riichiWon) {
@@ -11947,16 +12282,16 @@ export const RiichiSummaryJSON = {
   _readMessage: function (msg: RiichiSummary, json: any): RiichiSummary {
     const _riichiWon_ = json["riichiWon"] ?? json["riichi_won"];
     if (_riichiWon_) {
-      msg.riichiWon = _riichiWon_;
+      msg.riichiWon = protoscript.parseNumber(_riichiWon_);
     }
     const _riichiLost_ = json["riichiLost"] ?? json["riichi_lost"];
     if (_riichiLost_) {
-      msg.riichiLost = _riichiLost_;
+      msg.riichiLost = protoscript.parseNumber(_riichiLost_);
     }
     const _feedUnderRiichi_ =
       json["feedUnderRiichi"] ?? json["feed_under_riichi"];
     if (_feedUnderRiichi_) {
-      msg.feedUnderRiichi = _feedUnderRiichi_;
+      msg.feedUnderRiichi = protoscript.parseNumber(_feedUnderRiichi_);
     }
     return msg;
   },
@@ -11966,7 +12301,7 @@ export const DoraSummaryJSON = {
   /**
    * Serializes DoraSummary to JSON.
    */
-  encode: function (msg: Partial<DoraSummary>): string {
+  encode: function (msg: PartialDeep<DoraSummary>): string {
     return JSON.stringify(DoraSummaryJSON._writeMessage(msg));
   },
 
@@ -11976,24 +12311,27 @@ export const DoraSummaryJSON = {
   decode: function (json: string): DoraSummary {
     return DoraSummaryJSON._readMessage(
       DoraSummaryJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes DoraSummary with all fields set to their default value.
    */
-  initialize: function (): DoraSummary {
+  initialize: function (msg?: Partial<DoraSummary>): DoraSummary {
     return {
       count: 0,
       average: 0,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<DoraSummary>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<DoraSummary>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.count) {
       json["count"] = msg.count;
@@ -12010,11 +12348,11 @@ export const DoraSummaryJSON = {
   _readMessage: function (msg: DoraSummary, json: any): DoraSummary {
     const _count_ = json["count"];
     if (_count_) {
-      msg.count = _count_;
+      msg.count = protoscript.parseNumber(_count_);
     }
     const _average_ = json["average"];
     if (_average_) {
-      msg.average = _average_;
+      msg.average = protoscript.parseDouble(_average_);
     }
     return msg;
   },
@@ -12024,7 +12362,7 @@ export const IntermediateResultOfSessionJSON = {
   /**
    * Serializes IntermediateResultOfSession to JSON.
    */
-  encode: function (msg: Partial<IntermediateResultOfSession>): string {
+  encode: function (msg: PartialDeep<IntermediateResultOfSession>): string {
     return JSON.stringify(IntermediateResultOfSessionJSON._writeMessage(msg));
   },
 
@@ -12034,18 +12372,21 @@ export const IntermediateResultOfSessionJSON = {
   decode: function (json: string): IntermediateResultOfSession {
     return IntermediateResultOfSessionJSON._readMessage(
       IntermediateResultOfSessionJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes IntermediateResultOfSession with all fields set to their default value.
    */
-  initialize: function (): IntermediateResultOfSession {
+  initialize: function (
+    msg?: Partial<IntermediateResultOfSession>,
+  ): IntermediateResultOfSession {
     return {
       playerId: 0,
       score: 0,
       penaltyScore: undefined,
+      ...msg,
     };
   },
 
@@ -12053,7 +12394,7 @@ export const IntermediateResultOfSessionJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<IntermediateResultOfSession>
+    msg: PartialDeep<IntermediateResultOfSession>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12073,19 +12414,19 @@ export const IntermediateResultOfSessionJSON = {
    */
   _readMessage: function (
     msg: IntermediateResultOfSession,
-    json: any
+    json: any,
   ): IntermediateResultOfSession {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _score_ = json["score"];
     if (_score_) {
-      msg.score = _score_;
+      msg.score = protoscript.parseNumber(_score_);
     }
     const _penaltyScore_ = json["penaltyScore"] ?? json["penalty_score"];
     if (_penaltyScore_) {
-      msg.penaltyScore = _penaltyScore_;
+      msg.penaltyScore = protoscript.parseNumber(_penaltyScore_);
     }
     return msg;
   },
@@ -12095,7 +12436,7 @@ export const PaymentLogItemJSON = {
   /**
    * Serializes PaymentLogItem to JSON.
    */
-  encode: function (msg: Partial<PaymentLogItem>): string {
+  encode: function (msg: PartialDeep<PaymentLogItem>): string {
     return JSON.stringify(PaymentLogItemJSON._writeMessage(msg));
   },
 
@@ -12105,18 +12446,19 @@ export const PaymentLogItemJSON = {
   decode: function (json: string): PaymentLogItem {
     return PaymentLogItemJSON._readMessage(
       PaymentLogItemJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PaymentLogItem with all fields set to their default value.
    */
-  initialize: function (): PaymentLogItem {
+  initialize: function (msg?: Partial<PaymentLogItem>): PaymentLogItem {
     return {
       from: undefined,
       to: undefined,
       amount: 0,
+      ...msg,
     };
   },
 
@@ -12124,7 +12466,7 @@ export const PaymentLogItemJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PaymentLogItem>
+    msg: PartialDeep<PaymentLogItem>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.from != undefined) {
@@ -12145,15 +12487,15 @@ export const PaymentLogItemJSON = {
   _readMessage: function (msg: PaymentLogItem, json: any): PaymentLogItem {
     const _from_ = json["from"];
     if (_from_) {
-      msg.from = _from_;
+      msg.from = protoscript.parseNumber(_from_);
     }
     const _to_ = json["to"];
     if (_to_) {
-      msg.to = _to_;
+      msg.to = protoscript.parseNumber(_to_);
     }
     const _amount_ = json["amount"];
     if (_amount_) {
-      msg.amount = _amount_;
+      msg.amount = protoscript.parseNumber(_amount_);
     }
     return msg;
   },
@@ -12163,7 +12505,7 @@ export const PaymentLogJSON = {
   /**
    * Serializes PaymentLog to JSON.
    */
-  encode: function (msg: Partial<PaymentLog>): string {
+  encode: function (msg: PartialDeep<PaymentLog>): string {
     return JSON.stringify(PaymentLogJSON._writeMessage(msg));
   },
 
@@ -12173,25 +12515,28 @@ export const PaymentLogJSON = {
   decode: function (json: string): PaymentLog {
     return PaymentLogJSON._readMessage(
       PaymentLogJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PaymentLog with all fields set to their default value.
    */
-  initialize: function (): PaymentLog {
+  initialize: function (msg?: Partial<PaymentLog>): PaymentLog {
     return {
       direct: [],
       riichi: [],
       honba: [],
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<PaymentLog>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<PaymentLog>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.direct?.length) {
       json["direct"] = msg.direct.map(PaymentLogItemJSON._writeMessage);
@@ -12212,7 +12557,7 @@ export const PaymentLogJSON = {
     const _direct_ = json["direct"];
     if (_direct_) {
       for (const item of _direct_) {
-        const m = PaymentLogItem.initialize();
+        const m = PaymentLogItemJSON.initialize();
         PaymentLogItemJSON._readMessage(m, item);
         msg.direct.push(m);
       }
@@ -12220,7 +12565,7 @@ export const PaymentLogJSON = {
     const _riichi_ = json["riichi"];
     if (_riichi_) {
       for (const item of _riichi_) {
-        const m = PaymentLogItem.initialize();
+        const m = PaymentLogItemJSON.initialize();
         PaymentLogItemJSON._readMessage(m, item);
         msg.riichi.push(m);
       }
@@ -12228,7 +12573,7 @@ export const PaymentLogJSON = {
     const _honba_ = json["honba"];
     if (_honba_) {
       for (const item of _honba_) {
-        const m = PaymentLogItem.initialize();
+        const m = PaymentLogItemJSON.initialize();
         PaymentLogItemJSON._readMessage(m, item);
         msg.honba.push(m);
       }
@@ -12241,7 +12586,7 @@ export const RoundStateJSON = {
   /**
    * Serializes RoundState to JSON.
    */
-  encode: function (msg: Partial<RoundState>): string {
+  encode: function (msg: PartialDeep<RoundState>): string {
     return JSON.stringify(RoundStateJSON._writeMessage(msg));
   },
 
@@ -12251,14 +12596,14 @@ export const RoundStateJSON = {
   decode: function (json: string): RoundState {
     return RoundStateJSON._readMessage(
       RoundStateJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RoundState with all fields set to their default value.
    */
-  initialize: function (): RoundState {
+  initialize: function (msg?: Partial<RoundState>): RoundState {
     return {
       sessionHash: "",
       dealer: 0,
@@ -12271,13 +12616,16 @@ export const RoundStateJSON = {
       payments: PaymentLogJSON.initialize(),
       round: RoundJSON.initialize(),
       outcome: RoundOutcome._fromInt(0),
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<RoundState>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<RoundState>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
@@ -12299,12 +12647,12 @@ export const RoundStateJSON = {
     }
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
-        IntermediateResultOfSessionJSON._writeMessage
+        IntermediateResultOfSessionJSON._writeMessage,
       );
     }
     if (msg.scoresDelta?.length) {
       json["scoresDelta"] = msg.scoresDelta.map(
-        IntermediateResultOfSessionJSON._writeMessage
+        IntermediateResultOfSessionJSON._writeMessage,
       );
     }
     if (msg.payments) {
@@ -12335,28 +12683,28 @@ export const RoundStateJSON = {
     }
     const _dealer_ = json["dealer"];
     if (_dealer_) {
-      msg.dealer = _dealer_;
+      msg.dealer = protoscript.parseNumber(_dealer_);
     }
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _riichi_ = json["riichi"];
     if (_riichi_) {
-      msg.riichi = _riichi_;
+      msg.riichi = protoscript.parseNumber(_riichi_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _riichiIds_ = json["riichiIds"] ?? json["riichi_ids"];
     if (_riichiIds_) {
-      msg.riichiIds = _riichiIds_;
+      msg.riichiIds = _riichiIds_.map(protoscript.parseNumber);
     }
     const _scores_ = json["scores"];
     if (_scores_) {
       for (const item of _scores_) {
-        const m = IntermediateResultOfSession.initialize();
+        const m = IntermediateResultOfSessionJSON.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
       }
@@ -12364,26 +12712,22 @@ export const RoundStateJSON = {
     const _scoresDelta_ = json["scoresDelta"] ?? json["scores_delta"];
     if (_scoresDelta_) {
       for (const item of _scoresDelta_) {
-        const m = IntermediateResultOfSession.initialize();
+        const m = IntermediateResultOfSessionJSON.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scoresDelta.push(m);
       }
     }
     const _payments_ = json["payments"];
     if (_payments_) {
-      const m = PaymentLog.initialize();
-      PaymentLogJSON._readMessage(m, _payments_);
-      msg.payments = m;
+      PaymentLogJSON._readMessage(msg.payments, _payments_);
     }
     const _round_ = json["round"];
     if (_round_) {
-      const m = Round.initialize();
-      RoundJSON._readMessage(m, _round_);
-      msg.round = m;
+      RoundJSON._readMessage(msg.round, _round_);
     }
     const _outcome_ = json["outcome"];
     if (_outcome_) {
-      msg.outcome = _outcome_;
+      msg.outcome = RoundOutcome._fromInt(_outcome_);
     }
     return msg;
   },
@@ -12393,7 +12737,7 @@ export const EventDataJSON = {
   /**
    * Serializes EventData to JSON.
    */
-  encode: function (msg: Partial<EventData>): string {
+  encode: function (msg: PartialDeep<EventData>): string {
     return JSON.stringify(EventDataJSON._writeMessage(msg));
   },
 
@@ -12403,14 +12747,14 @@ export const EventDataJSON = {
   decode: function (json: string): EventData {
     return EventDataJSON._readMessage(
       EventDataJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes EventData with all fields set to their default value.
    */
-  initialize: function (): EventData {
+  initialize: function (msg?: Partial<EventData>): EventData {
     return {
       type: undefined,
       title: "",
@@ -12425,13 +12769,16 @@ export const EventDataJSON = {
       autostart: 0,
       rulesetConfig: RulesetConfigJSON.initialize(),
       isListed: false,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<EventData>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<EventData>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.type != undefined) {
       json["type"] = msg.type;
@@ -12468,7 +12815,7 @@ export const EventDataJSON = {
     }
     if (msg.rulesetConfig) {
       const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
-        msg.rulesetConfig
+        msg.rulesetConfig,
       );
       if (Object.keys(_rulesetConfig_).length > 0) {
         json["rulesetConfig"] = _rulesetConfig_;
@@ -12486,7 +12833,7 @@ export const EventDataJSON = {
   _readMessage: function (msg: EventData, json: any): EventData {
     const _type_ = json["type"];
     if (_type_) {
-      msg.type = _type_;
+      msg.type = EventType._fromInt(_type_);
     }
     const _title_ = json["title"];
     if (_title_) {
@@ -12498,7 +12845,7 @@ export const EventDataJSON = {
     }
     const _duration_ = json["duration"];
     if (_duration_) {
-      msg.duration = _duration_;
+      msg.duration = protoscript.parseNumber(_duration_);
     }
     const _timezone_ = json["timezone"];
     if (_timezone_) {
@@ -12506,15 +12853,15 @@ export const EventDataJSON = {
     }
     const _lobbyId_ = json["lobbyId"] ?? json["lobby_id"];
     if (_lobbyId_) {
-      msg.lobbyId = _lobbyId_;
+      msg.lobbyId = protoscript.parseNumber(_lobbyId_);
     }
     const _seriesLength_ = json["seriesLength"] ?? json["series_length"];
     if (_seriesLength_) {
-      msg.seriesLength = _seriesLength_;
+      msg.seriesLength = protoscript.parseNumber(_seriesLength_);
     }
     const _minGames_ = json["minGames"] ?? json["min_games"];
     if (_minGames_) {
-      msg.minGames = _minGames_;
+      msg.minGames = protoscript.parseNumber(_minGames_);
     }
     const _isTeam_ = json["isTeam"] ?? json["is_team"];
     if (_isTeam_) {
@@ -12526,13 +12873,11 @@ export const EventDataJSON = {
     }
     const _autostart_ = json["autostart"];
     if (_autostart_) {
-      msg.autostart = _autostart_;
+      msg.autostart = protoscript.parseNumber(_autostart_);
     }
     const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {
-      const m = RulesetConfig.initialize();
-      RulesetConfigJSON._readMessage(m, _rulesetConfig_);
-      msg.rulesetConfig = m;
+      RulesetConfigJSON._readMessage(msg.rulesetConfig, _rulesetConfig_);
     }
     const _isListed_ = json["isListed"] ?? json["is_listed"];
     if (_isListed_) {
@@ -12546,7 +12891,7 @@ export const TableStateJSON = {
   /**
    * Serializes TableState to JSON.
    */
-  encode: function (msg: Partial<TableState>): string {
+  encode: function (msg: PartialDeep<TableState>): string {
     return JSON.stringify(TableStateJSON._writeMessage(msg));
   },
 
@@ -12556,14 +12901,14 @@ export const TableStateJSON = {
   decode: function (json: string): TableState {
     return TableStateJSON._readMessage(
       TableStateJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes TableState with all fields set to their default value.
    */
-  initialize: function (): TableState {
+  initialize: function (msg?: Partial<TableState>): TableState {
     return {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
@@ -12574,13 +12919,16 @@ export const TableStateJSON = {
       currentRoundIndex: 0,
       scores: [],
       players: [],
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<TableState>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<TableState>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.status && SessionStatusJSON._toInt(msg.status)) {
       json["status"] = msg.status;
@@ -12606,7 +12954,7 @@ export const TableStateJSON = {
     }
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
-        IntermediateResultOfSessionJSON._writeMessage
+        IntermediateResultOfSessionJSON._writeMessage,
       );
     }
     if (msg.players?.length) {
@@ -12621,7 +12969,7 @@ export const TableStateJSON = {
   _readMessage: function (msg: TableState, json: any): TableState {
     const _status_ = json["status"];
     if (_status_) {
-      msg.status = _status_;
+      msg.status = SessionStatus._fromInt(_status_);
     }
     const _mayDefinalize_ = json["mayDefinalize"] ?? json["may_definalize"];
     if (_mayDefinalize_) {
@@ -12634,30 +12982,29 @@ export const TableStateJSON = {
     const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
     if (_penaltyLogs_) {
       for (const item of _penaltyLogs_) {
-        const m = Penalty.initialize();
+        const m = PenaltyJSON.initialize();
         PenaltyJSON._readMessage(m, item);
         msg.penaltyLogs.push(m);
       }
     }
     const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
-      msg.tableIndex = _tableIndex_;
+      msg.tableIndex = protoscript.parseNumber(_tableIndex_);
     }
     const _lastRound_ = json["lastRound"] ?? json["last_round"];
     if (_lastRound_) {
-      const m = Round.initialize();
-      RoundJSON._readMessage(m, _lastRound_);
-      msg.lastRound = m;
+      msg.lastRound = RoundJSON.initialize();
+      RoundJSON._readMessage(msg.lastRound, _lastRound_);
     }
     const _currentRoundIndex_ =
       json["currentRoundIndex"] ?? json["current_round_index"];
     if (_currentRoundIndex_) {
-      msg.currentRoundIndex = _currentRoundIndex_;
+      msg.currentRoundIndex = protoscript.parseNumber(_currentRoundIndex_);
     }
     const _scores_ = json["scores"];
     if (_scores_) {
       for (const item of _scores_) {
-        const m = IntermediateResultOfSession.initialize();
+        const m = IntermediateResultOfSessionJSON.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
       }
@@ -12665,7 +13012,7 @@ export const TableStateJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = RegisteredPlayer.initialize();
+        const m = RegisteredPlayerJSON.initialize();
         RegisteredPlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -12678,7 +13025,7 @@ export const AchievementJSON = {
   /**
    * Serializes Achievement to JSON.
    */
-  encode: function (msg: Partial<Achievement>): string {
+  encode: function (msg: PartialDeep<Achievement>): string {
     return JSON.stringify(AchievementJSON._writeMessage(msg));
   },
 
@@ -12688,24 +13035,27 @@ export const AchievementJSON = {
   decode: function (json: string): Achievement {
     return AchievementJSON._readMessage(
       AchievementJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes Achievement with all fields set to their default value.
    */
-  initialize: function (): Achievement {
+  initialize: function (msg?: Partial<Achievement>): Achievement {
     return {
       achievementId: "",
       achievementData: "",
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Achievement>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<Achievement>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.achievementId) {
       json["achievementId"] = msg.achievementId;
@@ -12737,7 +13087,7 @@ export const LocalIdMappingJSON = {
   /**
    * Serializes LocalIdMapping to JSON.
    */
-  encode: function (msg: Partial<LocalIdMapping>): string {
+  encode: function (msg: PartialDeep<LocalIdMapping>): string {
     return JSON.stringify(LocalIdMappingJSON._writeMessage(msg));
   },
 
@@ -12747,17 +13097,18 @@ export const LocalIdMappingJSON = {
   decode: function (json: string): LocalIdMapping {
     return LocalIdMappingJSON._readMessage(
       LocalIdMappingJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes LocalIdMapping with all fields set to their default value.
    */
-  initialize: function (): LocalIdMapping {
+  initialize: function (msg?: Partial<LocalIdMapping>): LocalIdMapping {
     return {
       playerId: 0,
       localId: 0,
+      ...msg,
     };
   },
 
@@ -12765,7 +13116,7 @@ export const LocalIdMappingJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<LocalIdMapping>
+    msg: PartialDeep<LocalIdMapping>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -12783,11 +13134,11 @@ export const LocalIdMappingJSON = {
   _readMessage: function (msg: LocalIdMapping, json: any): LocalIdMapping {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _localId_ = json["localId"] ?? json["local_id"];
     if (_localId_) {
-      msg.localId = _localId_;
+      msg.localId = protoscript.parseNumber(_localId_);
     }
     return msg;
   },
@@ -12797,7 +13148,7 @@ export const TeamMappingJSON = {
   /**
    * Serializes TeamMapping to JSON.
    */
-  encode: function (msg: Partial<TeamMapping>): string {
+  encode: function (msg: PartialDeep<TeamMapping>): string {
     return JSON.stringify(TeamMappingJSON._writeMessage(msg));
   },
 
@@ -12807,24 +13158,27 @@ export const TeamMappingJSON = {
   decode: function (json: string): TeamMapping {
     return TeamMappingJSON._readMessage(
       TeamMappingJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes TeamMapping with all fields set to their default value.
    */
-  initialize: function (): TeamMapping {
+  initialize: function (msg?: Partial<TeamMapping>): TeamMapping {
     return {
       playerId: 0,
       teamName: "",
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<TeamMapping>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<TeamMapping>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
       json["playerId"] = msg.playerId;
@@ -12841,7 +13195,7 @@ export const TeamMappingJSON = {
   _readMessage: function (msg: TeamMapping, json: any): TeamMapping {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _teamName_ = json["teamName"] ?? json["team_name"];
     if (_teamName_) {
@@ -12855,7 +13209,7 @@ export const PlayerSeatingJSON = {
   /**
    * Serializes PlayerSeating to JSON.
    */
-  encode: function (msg: Partial<PlayerSeating>): string {
+  encode: function (msg: PartialDeep<PlayerSeating>): string {
     return JSON.stringify(PlayerSeatingJSON._writeMessage(msg));
   },
 
@@ -12865,14 +13219,14 @@ export const PlayerSeatingJSON = {
   decode: function (json: string): PlayerSeating {
     return PlayerSeatingJSON._readMessage(
       PlayerSeatingJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PlayerSeating with all fields set to their default value.
    */
-  initialize: function (): PlayerSeating {
+  initialize: function (msg?: Partial<PlayerSeating>): PlayerSeating {
     return {
       order: 0,
       playerId: 0,
@@ -12882,6 +13236,7 @@ export const PlayerSeatingJSON = {
       playerTitle: "",
       hasAvatar: false,
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -12889,7 +13244,7 @@ export const PlayerSeatingJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerSeating>
+    msg: PartialDeep<PlayerSeating>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.order) {
@@ -12925,23 +13280,23 @@ export const PlayerSeatingJSON = {
   _readMessage: function (msg: PlayerSeating, json: any): PlayerSeating {
     const _order_ = json["order"];
     if (_order_) {
-      msg.order = _order_;
+      msg.order = protoscript.parseNumber(_order_);
     }
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _sessionId_ = json["sessionId"] ?? json["session_id"];
     if (_sessionId_) {
-      msg.sessionId = _sessionId_;
+      msg.sessionId = protoscript.parseNumber(_sessionId_);
     }
     const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
-      msg.tableIndex = _tableIndex_;
+      msg.tableIndex = protoscript.parseNumber(_tableIndex_);
     }
     const _rating_ = json["rating"];
     if (_rating_) {
-      msg.rating = _rating_;
+      msg.rating = protoscript.parseDouble(_rating_);
     }
     const _playerTitle_ = json["playerTitle"] ?? json["player_title"];
     if (_playerTitle_) {
@@ -12963,7 +13318,7 @@ export const PlayerSeatingSwissJSON = {
   /**
    * Serializes PlayerSeatingSwiss to JSON.
    */
-  encode: function (msg: Partial<PlayerSeatingSwiss>): string {
+  encode: function (msg: PartialDeep<PlayerSeatingSwiss>): string {
     return JSON.stringify(PlayerSeatingSwissJSON._writeMessage(msg));
   },
 
@@ -12973,17 +13328,18 @@ export const PlayerSeatingSwissJSON = {
   decode: function (json: string): PlayerSeatingSwiss {
     return PlayerSeatingSwissJSON._readMessage(
       PlayerSeatingSwissJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PlayerSeatingSwiss with all fields set to their default value.
    */
-  initialize: function (): PlayerSeatingSwiss {
+  initialize: function (msg?: Partial<PlayerSeatingSwiss>): PlayerSeatingSwiss {
     return {
       playerId: 0,
       rating: 0,
+      ...msg,
     };
   },
 
@@ -12991,7 +13347,7 @@ export const PlayerSeatingSwissJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PlayerSeatingSwiss>
+    msg: PartialDeep<PlayerSeatingSwiss>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.playerId) {
@@ -13008,15 +13364,15 @@ export const PlayerSeatingSwissJSON = {
    */
   _readMessage: function (
     msg: PlayerSeatingSwiss,
-    json: any
+    json: any,
   ): PlayerSeatingSwiss {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _rating_ = json["rating"];
     if (_rating_) {
-      msg.rating = _rating_;
+      msg.rating = protoscript.parseDouble(_rating_);
     }
     return msg;
   },
@@ -13026,7 +13382,7 @@ export const TableItemSwissJSON = {
   /**
    * Serializes TableItemSwiss to JSON.
    */
-  encode: function (msg: Partial<TableItemSwiss>): string {
+  encode: function (msg: PartialDeep<TableItemSwiss>): string {
     return JSON.stringify(TableItemSwissJSON._writeMessage(msg));
   },
 
@@ -13036,16 +13392,17 @@ export const TableItemSwissJSON = {
   decode: function (json: string): TableItemSwiss {
     return TableItemSwissJSON._readMessage(
       TableItemSwissJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes TableItemSwiss with all fields set to their default value.
    */
-  initialize: function (): TableItemSwiss {
+  initialize: function (msg?: Partial<TableItemSwiss>): TableItemSwiss {
     return {
       players: [],
+      ...msg,
     };
   },
 
@@ -13053,7 +13410,7 @@ export const TableItemSwissJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TableItemSwiss>
+    msg: PartialDeep<TableItemSwiss>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.players?.length) {
@@ -13069,7 +13426,7 @@ export const TableItemSwissJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = PlayerSeatingSwiss.initialize();
+        const m = PlayerSeatingSwissJSON.initialize();
         PlayerSeatingSwissJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -13082,7 +13439,7 @@ export const PrescriptedTableJSON = {
   /**
    * Serializes PrescriptedTable to JSON.
    */
-  encode: function (msg: Partial<PrescriptedTable>): string {
+  encode: function (msg: PartialDeep<PrescriptedTable>): string {
     return JSON.stringify(PrescriptedTableJSON._writeMessage(msg));
   },
 
@@ -13092,16 +13449,17 @@ export const PrescriptedTableJSON = {
   decode: function (json: string): PrescriptedTable {
     return PrescriptedTableJSON._readMessage(
       PrescriptedTableJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes PrescriptedTable with all fields set to their default value.
    */
-  initialize: function (): PrescriptedTable {
+  initialize: function (msg?: Partial<PrescriptedTable>): PrescriptedTable {
     return {
       players: [],
+      ...msg,
     };
   },
 
@@ -13109,7 +13467,7 @@ export const PrescriptedTableJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<PrescriptedTable>
+    msg: PartialDeep<PrescriptedTable>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.players?.length) {
@@ -13125,7 +13483,7 @@ export const PrescriptedTableJSON = {
     const _players_ = json["players"];
     if (_players_) {
       for (const item of _players_) {
-        const m = RegisteredPlayer.initialize();
+        const m = RegisteredPlayerJSON.initialize();
         RegisteredPlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
@@ -13138,7 +13496,7 @@ export const SessionStateJSON = {
   /**
    * Serializes SessionState to JSON.
    */
-  encode: function (msg: Partial<SessionState>): string {
+  encode: function (msg: PartialDeep<SessionState>): string {
     return JSON.stringify(SessionStateJSON._writeMessage(msg));
   },
 
@@ -13148,14 +13506,14 @@ export const SessionStateJSON = {
   decode: function (json: string): SessionState {
     return SessionStateJSON._readMessage(
       SessionStateJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes SessionState with all fields set to their default value.
    */
-  initialize: function (): SessionState {
+  initialize: function (msg?: Partial<SessionState>): SessionState {
     return {
       dealer: 0,
       roundIndex: 0,
@@ -13165,6 +13523,7 @@ export const SessionStateJSON = {
       finished: false,
       penalties: [],
       lastHandStarted: false,
+      ...msg,
     };
   },
 
@@ -13172,7 +13531,7 @@ export const SessionStateJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SessionState>
+    msg: PartialDeep<SessionState>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.dealer) {
@@ -13189,7 +13548,7 @@ export const SessionStateJSON = {
     }
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
-        IntermediateResultOfSessionJSON._writeMessage
+        IntermediateResultOfSessionJSON._writeMessage,
       );
     }
     if (msg.finished) {
@@ -13210,24 +13569,24 @@ export const SessionStateJSON = {
   _readMessage: function (msg: SessionState, json: any): SessionState {
     const _dealer_ = json["dealer"];
     if (_dealer_) {
-      msg.dealer = _dealer_;
+      msg.dealer = protoscript.parseNumber(_dealer_);
     }
     const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
-      msg.roundIndex = _roundIndex_;
+      msg.roundIndex = protoscript.parseNumber(_roundIndex_);
     }
     const _riichiCount_ = json["riichiCount"] ?? json["riichi_count"];
     if (_riichiCount_) {
-      msg.riichiCount = _riichiCount_;
+      msg.riichiCount = protoscript.parseNumber(_riichiCount_);
     }
     const _honbaCount_ = json["honbaCount"] ?? json["honba_count"];
     if (_honbaCount_) {
-      msg.honbaCount = _honbaCount_;
+      msg.honbaCount = protoscript.parseNumber(_honbaCount_);
     }
     const _scores_ = json["scores"];
     if (_scores_) {
       for (const item of _scores_) {
-        const m = IntermediateResultOfSession.initialize();
+        const m = IntermediateResultOfSessionJSON.initialize();
         IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
       }
@@ -13239,7 +13598,7 @@ export const SessionStateJSON = {
     const _penalties_ = json["penalties"];
     if (_penalties_) {
       for (const item of _penalties_) {
-        const m = Penalty.initialize();
+        const m = PenaltyJSON.initialize();
         PenaltyJSON._readMessage(m, item);
         msg.penalties.push(m);
       }
@@ -13257,7 +13616,7 @@ export const UmaJSON = {
   /**
    * Serializes Uma to JSON.
    */
-  encode: function (msg: Partial<Uma>): string {
+  encode: function (msg: PartialDeep<Uma>): string {
     return JSON.stringify(UmaJSON._writeMessage(msg));
   },
 
@@ -13271,19 +13630,20 @@ export const UmaJSON = {
   /**
    * Initializes Uma with all fields set to their default value.
    */
-  initialize: function (): Uma {
+  initialize: function (msg?: Partial<Uma>): Uma {
     return {
       place1: 0,
       place2: 0,
       place3: 0,
       place4: 0,
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Uma>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Uma>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.place1) {
       json["place1"] = msg.place1;
@@ -13306,19 +13666,19 @@ export const UmaJSON = {
   _readMessage: function (msg: Uma, json: any): Uma {
     const _place1_ = json["place1"];
     if (_place1_) {
-      msg.place1 = _place1_;
+      msg.place1 = protoscript.parseNumber(_place1_);
     }
     const _place2_ = json["place2"];
     if (_place2_) {
-      msg.place2 = _place2_;
+      msg.place2 = protoscript.parseNumber(_place2_);
     }
     const _place3_ = json["place3"];
     if (_place3_) {
-      msg.place3 = _place3_;
+      msg.place3 = protoscript.parseNumber(_place3_);
     }
     const _place4_ = json["place4"];
     if (_place4_) {
-      msg.place4 = _place4_;
+      msg.place4 = protoscript.parseNumber(_place4_);
     }
     return msg;
   },
@@ -13328,7 +13688,7 @@ export const ComplexUmaJSON = {
   /**
    * Serializes ComplexUma to JSON.
    */
-  encode: function (msg: Partial<ComplexUma>): string {
+  encode: function (msg: PartialDeep<ComplexUma>): string {
     return JSON.stringify(ComplexUmaJSON._writeMessage(msg));
   },
 
@@ -13338,25 +13698,28 @@ export const ComplexUmaJSON = {
   decode: function (json: string): ComplexUma {
     return ComplexUmaJSON._readMessage(
       ComplexUmaJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes ComplexUma with all fields set to their default value.
    */
-  initialize: function (): ComplexUma {
+  initialize: function (msg?: Partial<ComplexUma>): ComplexUma {
     return {
       neg1: UmaJSON.initialize(),
       neg3: UmaJSON.initialize(),
       otherwise: UmaJSON.initialize(),
+      ...msg,
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<ComplexUma>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<ComplexUma>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.neg1) {
       const _neg1_ = UmaJSON._writeMessage(msg.neg1);
@@ -13385,21 +13748,15 @@ export const ComplexUmaJSON = {
   _readMessage: function (msg: ComplexUma, json: any): ComplexUma {
     const _neg1_ = json["neg1"];
     if (_neg1_) {
-      const m = Uma.initialize();
-      UmaJSON._readMessage(m, _neg1_);
-      msg.neg1 = m;
+      UmaJSON._readMessage(msg.neg1, _neg1_);
     }
     const _neg3_ = json["neg3"];
     if (_neg3_) {
-      const m = Uma.initialize();
-      UmaJSON._readMessage(m, _neg3_);
-      msg.neg3 = m;
+      UmaJSON._readMessage(msg.neg3, _neg3_);
     }
     const _otherwise_ = json["otherwise"];
     if (_otherwise_) {
-      const m = Uma.initialize();
-      UmaJSON._readMessage(m, _otherwise_);
-      msg.otherwise = m;
+      UmaJSON._readMessage(msg.otherwise, _otherwise_);
     }
     return msg;
   },
@@ -13409,7 +13766,7 @@ export const RulesetConfigJSON = {
   /**
    * Serializes RulesetConfig to JSON.
    */
-  encode: function (msg: Partial<RulesetConfig>): string {
+  encode: function (msg: PartialDeep<RulesetConfig>): string {
     return JSON.stringify(RulesetConfigJSON._writeMessage(msg));
   },
 
@@ -13419,14 +13776,14 @@ export const RulesetConfigJSON = {
   decode: function (json: string): RulesetConfig {
     return RulesetConfigJSON._readMessage(
       RulesetConfigJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes RulesetConfig with all fields set to their default value.
    */
-  initialize: function (): RulesetConfig {
+  initialize: function (msg?: Partial<RulesetConfig>): RulesetConfig {
     return {
       complexUma: ComplexUmaJSON.initialize(),
       endingPolicy: EndingPolicy._fromInt(0),
@@ -13463,6 +13820,7 @@ export const RulesetConfigJSON = {
       startRating: 0,
       allowedYaku: [],
       yakuWithPao: [],
+      ...msg,
     };
   },
 
@@ -13470,7 +13828,7 @@ export const RulesetConfigJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<RulesetConfig>
+    msg: PartialDeep<RulesetConfig>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.complexUma) {
@@ -13593,23 +13951,19 @@ export const RulesetConfigJSON = {
   _readMessage: function (msg: RulesetConfig, json: any): RulesetConfig {
     const _complexUma_ = json["complexUma"] ?? json["complex_uma"];
     if (_complexUma_) {
-      const m = ComplexUma.initialize();
-      ComplexUmaJSON._readMessage(m, _complexUma_);
-      msg.complexUma = m;
+      ComplexUmaJSON._readMessage(msg.complexUma, _complexUma_);
     }
     const _endingPolicy_ = json["endingPolicy"] ?? json["ending_policy"];
     if (_endingPolicy_) {
-      msg.endingPolicy = _endingPolicy_;
+      msg.endingPolicy = EndingPolicy._fromInt(_endingPolicy_);
     }
     const _uma_ = json["uma"];
     if (_uma_) {
-      const m = Uma.initialize();
-      UmaJSON._readMessage(m, _uma_);
-      msg.uma = m;
+      UmaJSON._readMessage(msg.uma, _uma_);
     }
     const _umaType_ = json["umaType"] ?? json["uma_type"];
     if (_umaType_) {
-      msg.umaType = _umaType_;
+      msg.umaType = UmaType._fromInt(_umaType_);
     }
     const _doubleronHonbaAtamahane_ =
       json["doubleronHonbaAtamahane"] ?? json["doubleron_honba_atamahane"];
@@ -13693,64 +14047,68 @@ export const RulesetConfigJSON = {
     }
     const _chipsValue_ = json["chipsValue"] ?? json["chips_value"];
     if (_chipsValue_) {
-      msg.chipsValue = _chipsValue_;
+      msg.chipsValue = protoscript.parseNumber(_chipsValue_);
     }
     const _chomboPenalty_ = json["chomboPenalty"] ?? json["chombo_penalty"];
     if (_chomboPenalty_) {
-      msg.chomboPenalty = _chomboPenalty_;
+      msg.chomboPenalty = protoscript.parseNumber(_chomboPenalty_);
     }
     const _gameExpirationTime_ =
       json["gameExpirationTime"] ?? json["game_expiration_time"];
     if (_gameExpirationTime_) {
-      msg.gameExpirationTime = _gameExpirationTime_;
+      msg.gameExpirationTime = protoscript.parseNumber(_gameExpirationTime_);
     }
     const _goalPoints_ = json["goalPoints"] ?? json["goal_points"];
     if (_goalPoints_) {
-      msg.goalPoints = _goalPoints_;
+      msg.goalPoints = protoscript.parseNumber(_goalPoints_);
     }
     const _maxPenalty_ = json["maxPenalty"] ?? json["max_penalty"];
     if (_maxPenalty_) {
-      msg.maxPenalty = _maxPenalty_;
+      msg.maxPenalty = protoscript.parseNumber(_maxPenalty_);
     }
     const _minPenalty_ = json["minPenalty"] ?? json["min_penalty"];
     if (_minPenalty_) {
-      msg.minPenalty = _minPenalty_;
+      msg.minPenalty = protoscript.parseNumber(_minPenalty_);
     }
     const _oka_ = json["oka"];
     if (_oka_) {
-      msg.oka = _oka_;
+      msg.oka = protoscript.parseNumber(_oka_);
     }
     const _penaltyStep_ = json["penaltyStep"] ?? json["penalty_step"];
     if (_penaltyStep_) {
-      msg.penaltyStep = _penaltyStep_;
+      msg.penaltyStep = protoscript.parseNumber(_penaltyStep_);
     }
     const _replacementPlayerFixedPoints_ =
       json["replacementPlayerFixedPoints"] ??
       json["replacement_player_fixed_points"];
     if (_replacementPlayerFixedPoints_) {
-      msg.replacementPlayerFixedPoints = _replacementPlayerFixedPoints_;
+      msg.replacementPlayerFixedPoints = protoscript.parseNumber(
+        _replacementPlayerFixedPoints_,
+      );
     }
     const _replacementPlayerOverrideUma_ =
       json["replacementPlayerOverrideUma"] ??
       json["replacement_player_override_uma"];
     if (_replacementPlayerOverrideUma_) {
-      msg.replacementPlayerOverrideUma = _replacementPlayerOverrideUma_;
+      msg.replacementPlayerOverrideUma = protoscript.parseNumber(
+        _replacementPlayerOverrideUma_,
+      );
     }
     const _startPoints_ = json["startPoints"] ?? json["start_points"];
     if (_startPoints_) {
-      msg.startPoints = _startPoints_;
+      msg.startPoints = protoscript.parseNumber(_startPoints_);
     }
     const _startRating_ = json["startRating"] ?? json["start_rating"];
     if (_startRating_) {
-      msg.startRating = _startRating_;
+      msg.startRating = protoscript.parseNumber(_startRating_);
     }
     const _allowedYaku_ = json["allowedYaku"] ?? json["allowed_yaku"];
     if (_allowedYaku_) {
-      msg.allowedYaku = _allowedYaku_;
+      msg.allowedYaku = _allowedYaku_.map(protoscript.parseNumber);
     }
     const _yakuWithPao_ = json["yakuWithPao"] ?? json["yaku_with_pao"];
     if (_yakuWithPao_) {
-      msg.yakuWithPao = _yakuWithPao_;
+      msg.yakuWithPao = _yakuWithPao_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -13760,7 +14118,7 @@ export const GenericSuccessResponseJSON = {
   /**
    * Serializes GenericSuccessResponse to JSON.
    */
-  encode: function (msg: Partial<GenericSuccessResponse>): string {
+  encode: function (msg: PartialDeep<GenericSuccessResponse>): string {
     return JSON.stringify(GenericSuccessResponseJSON._writeMessage(msg));
   },
 
@@ -13770,16 +14128,19 @@ export const GenericSuccessResponseJSON = {
   decode: function (json: string): GenericSuccessResponse {
     return GenericSuccessResponseJSON._readMessage(
       GenericSuccessResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes GenericSuccessResponse with all fields set to their default value.
    */
-  initialize: function (): GenericSuccessResponse {
+  initialize: function (
+    msg?: Partial<GenericSuccessResponse>,
+  ): GenericSuccessResponse {
     return {
       success: false,
+      ...msg,
     };
   },
 
@@ -13787,7 +14148,7 @@ export const GenericSuccessResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<GenericSuccessResponse>
+    msg: PartialDeep<GenericSuccessResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.success) {
@@ -13801,7 +14162,7 @@ export const GenericSuccessResponseJSON = {
    */
   _readMessage: function (
     msg: GenericSuccessResponse,
-    json: any
+    json: any,
   ): GenericSuccessResponse {
     const _success_ = json["success"];
     if (_success_) {
@@ -13815,7 +14176,7 @@ export const GenericEventPayloadJSON = {
   /**
    * Serializes GenericEventPayload to JSON.
    */
-  encode: function (msg: Partial<GenericEventPayload>): string {
+  encode: function (msg: PartialDeep<GenericEventPayload>): string {
     return JSON.stringify(GenericEventPayloadJSON._writeMessage(msg));
   },
 
@@ -13825,16 +14186,19 @@ export const GenericEventPayloadJSON = {
   decode: function (json: string): GenericEventPayload {
     return GenericEventPayloadJSON._readMessage(
       GenericEventPayloadJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
   /**
    * Initializes GenericEventPayload with all fields set to their default value.
    */
-  initialize: function (): GenericEventPayload {
+  initialize: function (
+    msg?: Partial<GenericEventPayload>,
+  ): GenericEventPayload {
     return {
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -13842,7 +14206,7 @@ export const GenericEventPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<GenericEventPayload>
+    msg: PartialDeep<GenericEventPayload>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13856,11 +14220,11 @@ export const GenericEventPayloadJSON = {
    */
   _readMessage: function (
     msg: GenericEventPayload,
-    json: any
+    json: any,
   ): GenericEventPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },

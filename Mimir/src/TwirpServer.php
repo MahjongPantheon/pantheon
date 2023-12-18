@@ -829,7 +829,8 @@ final class TwirpServer implements Mimir
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setHasSeries($ev['hasSeries'])
                     ->setWithChips($ev['withChips'])
-                    ->setTournamentStarted($ev['tournamentStarted']);
+                    ->setTournamentStarted($ev['tournamentStarted'])
+                    ->setPlatformId($ev['platformId'] ?: -1);
             }, $ret['events']));
     }
 
@@ -853,7 +854,8 @@ final class TwirpServer implements Mimir
                     ->setWithChips($ev['withChips'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setHasSeries($ev['hasSeries'])
-                    ->setTournamentStarted($ev['tournamentStarted']);
+                    ->setTournamentStarted($ev['tournamentStarted'])
+                    ->setPlatformId($ev['platformId'] ?: -1);
             }, $this->_eventsController->getEventsById(iterator_to_array($req->getIds()))));
     }
 

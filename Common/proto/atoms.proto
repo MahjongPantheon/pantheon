@@ -156,6 +156,7 @@ message Event {
   bool has_series = 11;
   bool with_chips = 12;
   int32 min_games_count = 13;
+  int32 platform_id = 14;
 }
 
 message MyEvent {

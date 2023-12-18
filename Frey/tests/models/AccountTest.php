@@ -354,7 +354,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             '222-222-222',
             'tid2',
             false,
-            ''
+            '',
+            '',
+            null,
+            null
         );
         $this->assertTrue($success);
         $data = $model->getPersonalInfo([$personId]);
@@ -384,7 +387,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             '222-222-222',
             'tid2',
             false,
-            ''
+            '',
+            null,
+            null,
+            null
         );
     }
 
@@ -415,7 +421,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             '222-222-222',
             'tid2',
             false,
-            ''
+            '',
+            null,
+            null,
+            null
         );
     }
 
@@ -446,7 +455,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             '222-222-222',
             'tid2',
             false,
-            ''
+            '',
+            null,
+            null,
+            null
         );
     }
 
@@ -477,7 +489,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             '222-222-222',
             'tid2',
             false,
-            ''
+            '',
+            null,
+            null,
+            null
         );
     }
 

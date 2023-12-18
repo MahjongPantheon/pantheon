@@ -145,7 +145,10 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             values.phone.trim(),
             values.tenhouId.trim(),
             values.hasAvatar,
-            values.avatarData
+            values.avatarData,
+            '',
+            -1,
+            -1
           )
           .then((resp) => {
             setIsSaving(false);
