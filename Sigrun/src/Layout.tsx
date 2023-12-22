@@ -55,6 +55,11 @@ const themeFromLocal: (theme?: ColorScheme | null) => string = (theme) => {
   );
 };
 
+const curDate = new Date();
+const haveNySpecs =
+  (curDate.getMonth() === 11 && curDate.getDate() > 20) ||
+  (curDate.getMonth() === 0 && curDate.getDate() < 10);
+
 export function Layout({ children, cache }: { children: ReactNode; cache: EmotionCache }) {
   const storage = useStorage();
   const i18n = useI18n();
@@ -341,6 +346,9 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
                           <AppFooter />
                         </Footer>
                       }
+                      classNames={{
+                        main: haveNySpecs ? 'newyear' : '',
+                      }}
                       styles={{
                         main: {
                           overflowX: 'hidden',

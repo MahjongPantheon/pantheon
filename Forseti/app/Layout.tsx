@@ -56,6 +56,10 @@ const themeFromLocal: (theme?: ColorScheme | null) => string = (theme) => {
     }[theme ?? 'light'] ?? 'day'
   );
 };
+const curDate = new Date();
+const haveNySpecs =
+  (curDate.getMonth() === 11 && curDate.getDate() > 20) ||
+  (curDate.getMonth() === 0 && curDate.getDate() < 10);
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
@@ -289,6 +293,9 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                     saveLang={saveLang}
                   />
                 }
+                classNames={{
+                  main: haveNySpecs ? 'newyear' : '',
+                }}
                 footer={<AppFooter dark={dark} />}
               >
                 <Container>

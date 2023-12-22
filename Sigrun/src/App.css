@@ -46,3 +46,23 @@ body {
     serif;
   font-size: var(--font-size-primary);
 }
+
+.newyear {
+  background-image: url(/assets/img/snow.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.newyear::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 48px;
+  z-index: 10000;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  background-image: url(/assets/img/ny.gif);
+  background-size: auto 16px;
+  background-repeat: repeat-x;
+}
