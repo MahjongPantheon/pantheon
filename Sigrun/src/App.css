@@ -49,8 +49,7 @@ body {
 
 .newyear {
   background-image: url(/assets/img/snow.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 
 .newyear::after {
