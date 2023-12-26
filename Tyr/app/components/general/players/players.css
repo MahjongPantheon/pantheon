@@ -318,3 +318,11 @@
   --riichi-circle-color: var(--color-danger);
   margin-left: 8px;
 }
+
+.player__button--win {
+  box-shadow: inset 0 0 6px 0 var(--color-success);
+}
+
+.player__button--lose {
+  box-shadow: inset 0 0 6px 0 var(--color-danger);
+}
