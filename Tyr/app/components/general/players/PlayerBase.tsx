@@ -121,6 +121,7 @@ export class PlayerBase extends React.Component<IProps> {
                   { 'flat-btn--v-large': oneButton && verticalButtons },
                   { 'flat-btn--large': oneButton && !verticalButtons },
                   { 'flat-btn--disabled': winButton.mode === PlayerButtonMode.DISABLE },
+                  { 'player__button--win': winButton.mode !== PlayerButtonMode.DISABLE },
                   { 'flat-btn--success': winButton.mode === PlayerButtonMode.PRESSED }
                 )}
               >
@@ -137,6 +138,7 @@ export class PlayerBase extends React.Component<IProps> {
                   { 'flat-btn--v-large': oneButton && verticalButtons },
                   { 'flat-btn--large': oneButton && !verticalButtons },
                   { 'flat-btn--disabled': loseButton.mode === PlayerButtonMode.DISABLE },
+                  { 'player__button--lose': loseButton.mode !== PlayerButtonMode.DISABLE },
                   { 'flat-btn--danger': loseButton.mode === PlayerButtonMode.PRESSED }
                 )}
               >
