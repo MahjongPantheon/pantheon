@@ -303,6 +303,8 @@ final class TwirpServer implements Mimir
             ->setMinGames($ret['minGames'])
             ->setIsTeam($ret['isTeam'])
             ->setIsListed($ret['isListed'])
+            ->setIsRatingShown($ret['isRatingShown'])
+            ->setAchievementsShown($ret['achievementsShown'])
             ->setIsPrescripted($ret['isPrescripted'])
             ->setAutostart($ret['autostart'])
             ->setRulesetConfig($ret['ruleset']);
@@ -827,6 +829,7 @@ final class TwirpServer implements Mimir
                     ->setIsListed($ev['isListed'])
                     ->setMinGamesCount($ev['minGamesCount'])
                     ->setIsRatingShown($ev['isRatingShown'])
+                    ->setAchievementsShown($ev['achievementsShown'])
                     ->setHasSeries($ev['hasSeries'])
                     ->setWithChips($ev['withChips'])
                     ->setTournamentStarted($ev['tournamentStarted'])
@@ -853,6 +856,7 @@ final class TwirpServer implements Mimir
                     ->setMinGamesCount($ev['minGamesCount'])
                     ->setWithChips($ev['withChips'])
                     ->setIsRatingShown($ev['isRatingShown'])
+                    ->setAchievementsShown($ev['achievementsShown'])
                     ->setHasSeries($ev['hasSeries'])
                     ->setTournamentStarted($ev['tournamentStarted'])
                     ->setPlatformId($ev['platformId'] ?: -1);
@@ -1297,6 +1301,8 @@ final class TwirpServer implements Mimir
                 $req->getIsPrescripted(),
                 $req->getAutostart(),
                 $req->getIsListed(),
+                $req->getIsRatingShown(),
+                $req->getAchievementsShown(),
                 $req->getRulesetConfig(),
             ));
     }
@@ -1325,6 +1331,8 @@ final class TwirpServer implements Mimir
                 $ev->getIsPrescripted(),
                 $ev->getAutostart(),
                 $ev->getIsListed(),
+                $ev->getIsRatingShown(),
+                $ev->getAchievementsShown(),
                 $ev->getRulesetConfig(),
             ));
     }
@@ -1345,6 +1353,15 @@ final class TwirpServer implements Mimir
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->toggleListed($req->getEventId()));
+    }
+
+    /**
+     * @throws InvalidParametersException
+     */
+    public function ToggleHideAchievements(array $ctx, GenericEventPayload $req): GenericSuccessResponse
+    {
+        return (new GenericSuccessResponse())
+            ->setSuccess($this->_eventsController->toggleHideAchievements($req->getEventId()));
     }
 
     /**

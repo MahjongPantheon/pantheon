@@ -95,6 +95,8 @@ service Mimir {
     returns (EventsGetAchievementsResponse);
   rpc ToggleHideResults (GenericEventPayload)
     returns (GenericSuccessResponse);
+  rpc ToggleHideAchievements (GenericEventPayload)
+    returns (GenericSuccessResponse);
   rpc UpdatePlayersLocalIds (EventsUpdatePlayersLocalIdsPayload)
     returns (GenericSuccessResponse);
   rpc UpdatePlayerReplacement (EventsUpdatePlayerReplacementPayload)

@@ -400,6 +400,7 @@ class EventModel extends Model
             ->select('event.is_team', 'is_team')
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
+            ->select('event.hide_achievements', 'hide_achievements')
             ->select('event.min_games_count', 'min_games_count')
             ->select('event.series_length', 'series_length')
             ->select('event.ruleset_config', 'ruleset_config')
@@ -444,6 +445,7 @@ class EventModel extends Model
                     'minGamesCount' => $event['min_games_count'],
                     'hasSeries' => $event['series_length'] > 0,
                     'isRatingShown' => !$event['hide_results'],
+                    'achievementsShown' => !$event['hide_achievements'],
                     'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                     'type' => $type,
@@ -474,6 +476,7 @@ class EventModel extends Model
             ->select('event.is_team', 'is_team')
             ->select('event.min_games_count', 'min_games_count')
             ->select('event.hide_results', 'hide_results')
+            ->select('event.hide_achievements', 'hide_achievements')
             ->select('event.ruleset_config', 'ruleset_config')
             ->select('event.series_length', 'series_length')
             ->select('event.platform_id', 'platform_id')
@@ -498,6 +501,7 @@ class EventModel extends Model
                 'minGamesCount' => $event['min_games_count'],
                 'isTeam' => !!$event['is_team'],
                 'isRatingShown' => !$event['hide_results'],
+                'achievementsShown' => !$event['hide_achievements'],
                 'hasSeries' => $event['series_length'] > 0,
                 'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,

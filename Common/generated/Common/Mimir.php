@@ -340,6 +340,15 @@ interface Mimir
     /**
      *
      *
+     * Generated from protobuf method <code>common.Mimir/ToggleHideAchievements</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function ToggleHideAchievements(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
      * Generated from protobuf method <code>common.Mimir/UpdatePlayersLocalIds</code>
      *
      * @throws \Twirp\Error

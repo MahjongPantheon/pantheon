@@ -908,6 +908,29 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function ToggleHideAchievements(array $ctx, \Common\GenericEventPayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'ToggleHideAchievements');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/ToggleHideAchievements';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/ToggleHideAchievements';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function UpdatePlayersLocalIds(array $ctx, \Common\EventsUpdatePlayersLocalIdsPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');

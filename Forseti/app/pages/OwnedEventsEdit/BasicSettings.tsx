@@ -77,6 +77,20 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           description={i18n._t(
             'If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link'
           )}
+          {...form.getInputProps('event.isRatingShown', { type: 'checkbox' })}
+        />
+        <Checkbox
+          label={i18n._t('Show rating table for everyone')}
+          description={i18n._t(
+            'If checked, the rating table will be shown for everyone, otherwise only for event administrators'
+          )}
+          {...form.getInputProps('event.achievementsShown', { type: 'checkbox' })}
+        />
+        <Checkbox
+          label={i18n._t('Show achievements for everyone')}
+          description={i18n._t(
+            'If checked, achievements will be shown for everyone, otherwise only for event administrators'
+          )}
           {...form.getInputProps('event.isListed', { type: 'checkbox' })}
         />
         {newEvent && (

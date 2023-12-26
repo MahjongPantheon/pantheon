@@ -41,6 +41,7 @@ import {
   RegisterPlayer,
   ResetSeating,
   StartTimer,
+  ToggleHideAchievements,
   ToggleHideResults,
   ToggleListed,
   UnregisterPlayer,
@@ -454,6 +455,11 @@ export class ApiService {
   toggleResults(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ToggleHideResults' });
     return ToggleHideResults({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  toggleAchievements(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ToggleHideAchievements' });
+    return ToggleHideAchievements({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   approveResults(eventId: number) {

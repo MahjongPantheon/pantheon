@@ -766,7 +766,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   if (
     events &&
     !globals.data.loading &&
-    globals.data.ratingHidden &&
+    globals.data.achievementsHidden &&
     !auth.ownEvents.includes(events?.[0].id) &&
     !auth.isSuperadmin
   ) {

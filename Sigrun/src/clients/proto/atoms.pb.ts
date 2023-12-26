@@ -166,6 +166,7 @@ export interface Event {
   withChips: boolean;
   minGamesCount: number;
   platformId: number;
+  achievementsShown: boolean;
 }
 
 export interface MyEvent {
@@ -500,6 +501,8 @@ export interface EventData {
   autostart: number;
   rulesetConfig: RulesetConfig;
   isListed: boolean;
+  isRatingShown: boolean;
+  achievementsShown: boolean;
 }
 
 export interface TableState {
@@ -2154,6 +2157,7 @@ export const Event = {
       withChips: false,
       minGamesCount: 0,
       platformId: 0,
+      achievementsShown: false,
       ...msg,
     };
   },
@@ -2206,6 +2210,9 @@ export const Event = {
     }
     if (msg.platformId) {
       writer.writeInt32(14, msg.platformId);
+    }
+    if (msg.achievementsShown) {
+      writer.writeBool(15, msg.achievementsShown);
     }
     return writer;
   },
@@ -2271,6 +2278,10 @@ export const Event = {
         }
         case 14: {
           msg.platformId = reader.readInt32();
+          break;
+        }
+        case 15: {
+          msg.achievementsShown = reader.readBool();
           break;
         }
         default: {
@@ -6236,6 +6247,8 @@ export const EventData = {
       autostart: 0,
       rulesetConfig: RulesetConfig.initialize(),
       isListed: false,
+      isRatingShown: false,
+      achievementsShown: false,
       ...msg,
     };
   },
@@ -6285,6 +6298,12 @@ export const EventData = {
     }
     if (msg.isListed) {
       writer.writeBool(15, msg.isListed);
+    }
+    if (msg.isRatingShown) {
+      writer.writeBool(16, msg.isRatingShown);
+    }
+    if (msg.achievementsShown) {
+      writer.writeBool(17, msg.achievementsShown);
     }
     return writer;
   },
@@ -6349,6 +6368,14 @@ export const EventData = {
         }
         case 15: {
           msg.isListed = reader.readBool();
+          break;
+        }
+        case 16: {
+          msg.isRatingShown = reader.readBool();
+          break;
+        }
+        case 17: {
+          msg.achievementsShown = reader.readBool();
           break;
         }
         default: {
@@ -9235,6 +9262,7 @@ export const EventJSON = {
       withChips: false,
       minGamesCount: 0,
       platformId: 0,
+      achievementsShown: false,
       ...msg,
     };
   },
@@ -9285,6 +9313,9 @@ export const EventJSON = {
     }
     if (msg.platformId) {
       json["platformId"] = msg.platformId;
+    }
+    if (msg.achievementsShown) {
+      json["achievementsShown"] = msg.achievementsShown;
     }
     return json;
   },
@@ -9349,6 +9380,11 @@ export const EventJSON = {
     const _platformId_ = json["platformId"] ?? json["platform_id"];
     if (_platformId_) {
       msg.platformId = protoscript.parseNumber(_platformId_);
+    }
+    const _achievementsShown_ =
+      json["achievementsShown"] ?? json["achievements_shown"];
+    if (_achievementsShown_) {
+      msg.achievementsShown = _achievementsShown_;
     }
     return msg;
   },
@@ -12769,6 +12805,8 @@ export const EventDataJSON = {
       autostart: 0,
       rulesetConfig: RulesetConfigJSON.initialize(),
       isListed: false,
+      isRatingShown: false,
+      achievementsShown: false,
       ...msg,
     };
   },
@@ -12823,6 +12861,12 @@ export const EventDataJSON = {
     }
     if (msg.isListed) {
       json["isListed"] = msg.isListed;
+    }
+    if (msg.isRatingShown) {
+      json["isRatingShown"] = msg.isRatingShown;
+    }
+    if (msg.achievementsShown) {
+      json["achievementsShown"] = msg.achievementsShown;
     }
     return json;
   },
@@ -12882,6 +12926,15 @@ export const EventDataJSON = {
     const _isListed_ = json["isListed"] ?? json["is_listed"];
     if (_isListed_) {
       msg.isListed = _isListed_;
+    }
+    const _isRatingShown_ = json["isRatingShown"] ?? json["is_rating_shown"];
+    if (_isRatingShown_) {
+      msg.isRatingShown = _isRatingShown_;
+    }
+    const _achievementsShown_ =
+      json["achievementsShown"] ?? json["achievements_shown"];
+    if (_achievementsShown_) {
+      msg.achievementsShown = _achievementsShown_;
     }
     return msg;
   },

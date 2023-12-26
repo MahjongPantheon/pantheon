@@ -67,6 +67,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     initialValues: {
       event: {
         isListed: true,
+        isRatingShown: true,
+        achievementsShown: true,
         type: EventType.EVENT_TYPE_LOCAL,
         title: '',
         description: '',
