@@ -134,6 +134,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     isPrescripted: false,
     loading: false,
     ratingHidden: false,
+    achievementsHidden: false,
     hasSeries: false,
     withChips: false,
     minGamesCount: 0,
