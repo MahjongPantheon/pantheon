@@ -2,6 +2,7 @@ import { I18nService } from '../services/i18n';
 import * as React from 'react';
 import { ChangeEvent } from 'react';
 import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 
 export const FileUploadButton = ({
   i18n,
@@ -22,7 +23,15 @@ export const FileUploadButton = ({
   // to handle the user-selected file
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const fileUploaded = event.target.files?.[0];
-    onChange(fileUploaded);
+    if ((fileUploaded?.size ?? 0) > 256 * 1024) {
+      notifications.show({
+        title: i18n._t('File is too big'),
+        message: i18n._t('Selected file is too big. Please select a file not bigger than 256KB'),
+        color: 'red',
+      });
+    } else {
+      onChange(fileUploaded);
+    }
   };
   return (
     <>
