@@ -84,6 +84,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const [events, setEvents] = useState<Event[]>([]);
   const [visibilityLoading, setVisibilityLoading] = useState<Record<number, boolean>>({});
   const [resultsLoading, setResultsLoading] = useState<Record<number, boolean>>({});
+  const [achievementsLoading, setAchievementsLoading] = useState<Record<number, boolean>>({});
   const [scoringLoading, setScoringLoading] = useState<Record<number, boolean>>({});
   usePageTitle(i18n._t('Manage my events'));
 
@@ -204,6 +205,27 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
           ]);
         }
         setResultsLoading({ ...resultsLoading, [id]: false });
+      })
+      .catch(errHandler);
+  };
+
+  const onToggleAchievements = (id: number) => {
+    setAchievementsLoading({ ...achievementsLoading, [id]: true });
+    api
+      .toggleAchievements(id)
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to toggle achievements visibility'));
+        }
+        if (r) {
+          const idx = events.findIndex((ev) => ev.id === id);
+          setEvents([
+            ...events.slice(0, idx),
+            { ...events[idx], achievementsShown: !events[idx].achievementsShown },
+            ...events.slice(idx + 1),
+          ]);
+        }
+        setAchievementsLoading({ ...resultsLoading, [id]: false });
       })
       .catch(errHandler);
   };
@@ -390,7 +412,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     {event.isListed ? <IconEye /> : <IconEyeOff />}
                   </ActionIcon>
                   <ActionIcon
-                    title={i18n._t('Toggle visibility of rating and achievements')}
+                    title={i18n._t('Toggle visibility of rating table')}
                     loading={resultsLoading[event.id]}
                     variant='filled'
                     size='lg'
@@ -398,6 +420,16 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     onClick={() => onToggleResults(event.id)}
                   >
                     {event.isRatingShown ? <IconEye /> : <IconEyeOff />}
+                  </ActionIcon>
+                  <ActionIcon
+                    title={i18n._t('Toggle visibility of achievements')}
+                    loading={achievementsLoading[event.id]}
+                    variant='filled'
+                    size='lg'
+                    color='yellow'
+                    onClick={() => onToggleAchievements(event.id)}
+                  >
+                    {event.achievementsShown ? <IconEye /> : <IconEyeOff />}
                   </ActionIcon>
                 </Group>
               </Group>

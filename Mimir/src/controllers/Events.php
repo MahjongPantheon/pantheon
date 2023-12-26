@@ -46,6 +46,8 @@ class EventsController extends Controller
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games autostart
      * @param bool $isListed If event is shown on main page
+     * @param bool $isRatingShown If event rating table is publicly accessible
+     * @param bool $achievementsShown If event achievements page is publicly accessible
      * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -65,6 +67,8 @@ class EventsController extends Controller
         $isPrescripted,
         $autostartTimer,
         $isListed,
+        $isRatingShown,
+        $achievementsShown,
         $rulesetConfig
     ) {
         $this->_log->info('Creating new event...');
@@ -90,6 +94,8 @@ class EventsController extends Controller
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
             ->setIsListed($isListed ? 1 : 0)
+            ->setHideResults($isRatingShown ? 0 : 1)
+            ->setHideAchievements($achievementsShown ? 0 : 1)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
@@ -179,6 +185,8 @@ class EventsController extends Controller
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games are started automatically
      * @param bool $isListed If event is shown on main page
+     * @param bool $isRatingShown If event rating table is publicly accessible
+     * @param bool $achievementsShown If event achievements page is publicly accessible
      * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -198,6 +206,8 @@ class EventsController extends Controller
         $isPrescripted,
         $autostartTimer,
         $isListed,
+        $isRatingShown,
+        $achievementsShown,
         $rulesetConfig
     ) {
         $this->_log->info('Updating event with id #' . $id);
@@ -222,6 +232,8 @@ class EventsController extends Controller
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
             ->setIsListed($isListed ? 1 : 0)
+            ->setHideResults($isRatingShown ? 0 : 1)
+            ->setHideAchievements($achievementsShown ? 0 : 1)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRulesetConfig(new Ruleset($rulesetConfig))
@@ -292,6 +304,8 @@ class EventsController extends Controller
             'autostart' => $event->getTimeToStart(),
             'ruleset' => $event->getRulesetConfig()->rules(),
             'isListed' => $event->getIsListed(),
+            'isRatingShown' => !$event->getHideResults(),
+            'achievementsShown' => !$event->getHideAchievements(),
         ];
 
         $this->_log->info('Successfully got event settings for event #' . $id);
@@ -880,6 +894,33 @@ class EventsController extends Controller
 
         $success = $event[0]->setHideResults($event[0]->getHideResults() == 1 ? 0 : 1)->save();
         $this->_log->info('Successfully toggle hide results flag for event id#' . $eventId);
+        return $success;
+    }
+
+    /**
+     * Toggle hide achievements page flag
+     *
+     * @param int $eventId
+     * @throws InvalidParametersException
+     * @throws \Exception
+     * @return bool
+     */
+    public function toggleHideAchievements($eventId)
+    {
+        $this->_log->info('Toggle hide achievements flag for event id#' . $eventId);
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
+        }
+
+        // Check we have rights to hide achievements for this event
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to hide achievements for this event");
+        }
+
+        $success = $event[0]->setHideAchievements($event[0]->getHideAchievements() == 1 ? 0 : 1)->save();
+        $this->_log->info('Successfully toggle hide achievements flag for event id#' . $eventId);
         return $success;
     }
 

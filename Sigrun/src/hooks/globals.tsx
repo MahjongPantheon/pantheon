@@ -25,6 +25,7 @@ export type Globals = {
   isPrescripted: boolean;
   hasSeries: boolean;
   ratingHidden: boolean;
+  achievementsHidden: boolean;
   loading: boolean;
   withChips: boolean;
   minGamesCount: number;
@@ -37,6 +38,7 @@ export const globals: { data: Globals; setData: (data: Partial<Globals>) => void
     isTeam: false,
     hasSeries: false,
     ratingHidden: false,
+    achievementsHidden: false,
     loading: false,
     withChips: false,
     minGamesCount: 0,

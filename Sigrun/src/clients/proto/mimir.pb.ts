@@ -869,6 +869,18 @@ export async function ToggleHideResults(
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
+export async function ToggleHideAchievements(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/ToggleHideAchievements",
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
 export async function UpdatePlayersLocalIds(
   eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
   config?: ClientConfiguration,
@@ -1633,6 +1645,18 @@ export async function ToggleHideResultsJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+export async function ToggleHideAchievementsJSON(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/ToggleHideAchievements",
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 export async function UpdatePlayersLocalIdsJSON(
   eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
   config?: ClientConfiguration,
@@ -2129,6 +2153,12 @@ export interface Mimir<Context = unknown> {
     context: Context,
   ) => Promise<EventsGetAchievementsResponse> | EventsGetAchievementsResponse;
   ToggleHideResults: (
+    genericEventPayload: protoAtoms.GenericEventPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  ToggleHideAchievements: (
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
   ) =>
@@ -2709,6 +2739,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
       ToggleHideResults: {
         name: "ToggleHideResults",
         handler: service.ToggleHideResults,
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      ToggleHideAchievements: {
+        name: "ToggleHideAchievements",
+        handler: service.ToggleHideAchievements,
         input: {
           protobuf: protoAtoms.GenericEventPayload,
           json: protoAtoms.GenericEventPayloadJSON,

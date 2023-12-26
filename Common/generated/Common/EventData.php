@@ -71,6 +71,14 @@ class EventData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool is_listed = 15;</code>
      */
     protected $is_listed = false;
+    /**
+     * Generated from protobuf field <code>bool is_rating_shown = 16;</code>
+     */
+    protected $is_rating_shown = false;
+    /**
+     * Generated from protobuf field <code>bool achievements_shown = 17;</code>
+     */
+    protected $achievements_shown = false;
 
     /**
      * Constructor.
@@ -94,6 +102,8 @@ class EventData extends \Google\Protobuf\Internal\Message
      *           time until game autostart
      *     @type \Common\RulesetConfig $ruleset_config
      *     @type bool $is_listed
+     *     @type bool $is_rating_shown
+     *     @type bool $achievements_shown
      * }
      */
     public function __construct($data = NULL) {
@@ -415,6 +425,50 @@ class EventData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->is_listed = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool is_rating_shown = 16;</code>
+     * @return bool
+     */
+    public function getIsRatingShown()
+    {
+        return $this->is_rating_shown;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool is_rating_shown = 16;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsRatingShown($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->is_rating_shown = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool achievements_shown = 17;</code>
+     * @return bool
+     */
+    public function getAchievementsShown()
+    {
+        return $this->achievements_shown;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool achievements_shown = 17;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setAchievementsShown($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->achievements_shown = $var;
 
         return $this;
     }

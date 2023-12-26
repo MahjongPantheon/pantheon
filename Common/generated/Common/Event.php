@@ -69,6 +69,10 @@ class Event extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 platform_id = 14;</code>
      */
     protected $platform_id = 0;
+    /**
+     * Generated from protobuf field <code>bool achievements_shown = 15;</code>
+     */
+    protected $achievements_shown = false;
 
     /**
      * Constructor.
@@ -90,6 +94,7 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type bool $with_chips
      *     @type int $min_games_count
      *     @type int $platform_id
+     *     @type bool $achievements_shown
      * }
      */
     public function __construct($data = NULL) {
@@ -401,6 +406,28 @@ class Event extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->platform_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool achievements_shown = 15;</code>
+     * @return bool
+     */
+    public function getAchievementsShown()
+    {
+        return $this->achievements_shown;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool achievements_shown = 15;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setAchievementsShown($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->achievements_shown = $var;
 
         return $this;
     }

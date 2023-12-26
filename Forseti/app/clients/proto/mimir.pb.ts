@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 import { JSONrequest, PBrequest } from "twirpscript";
 // This is the minimum version supported by the current runtime.
 // If this line fails typechecking, breaking changes have been introduced and this
@@ -869,6 +869,18 @@ export async function ToggleHideResults(
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
+export async function ToggleHideAchievements(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/ToggleHideAchievements",
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
 export async function UpdatePlayersLocalIds(
   eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
   config?: ClientConfiguration,
@@ -1633,6 +1645,18 @@ export async function ToggleHideResultsJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+export async function ToggleHideAchievementsJSON(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/ToggleHideAchievements",
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 export async function UpdatePlayersLocalIdsJSON(
   eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
   config?: ClientConfiguration,
@@ -2129,6 +2153,12 @@ export interface Mimir<Context = unknown> {
     context: Context,
   ) => Promise<EventsGetAchievementsResponse> | EventsGetAchievementsResponse;
   ToggleHideResults: (
+    genericEventPayload: protoAtoms.GenericEventPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  ToggleHideAchievements: (
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
   ) =>
@@ -2718,6 +2748,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
           json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
+      ToggleHideAchievements: {
+        name: "ToggleHideAchievements",
+        handler: service.ToggleHideAchievements,
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
       UpdatePlayersLocalIds: {
         name: "UpdatePlayersLocalIds",
         handler: service.UpdatePlayersLocalIds,
@@ -3053,8 +3095,12 @@ export const EventsGetRulesetsPayload = {
   /**
    * Initializes EventsGetRulesetsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetRulesetsPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<EventsGetRulesetsPayload>,
+  ): EventsGetRulesetsPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -3062,8 +3108,8 @@ export const EventsGetRulesetsPayload = {
    */
   _writeMessage: function (
     _msg: PartialDeep<EventsGetRulesetsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
@@ -3072,7 +3118,7 @@ export const EventsGetRulesetsPayload = {
    */
   _readMessage: function (
     _msg: EventsGetRulesetsPayload,
-    _reader: BinaryReader,
+    _reader: protoscript.BinaryReader,
   ): EventsGetRulesetsPayload {
     return _msg;
   },
@@ -3085,7 +3131,7 @@ export const EventsGetRulesetsResponse = {
   encode: function (msg: PartialDeep<EventsGetRulesetsResponse>): Uint8Array {
     return EventsGetRulesetsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3095,18 +3141,21 @@ export const EventsGetRulesetsResponse = {
   decode: function (bytes: ByteSource): EventsGetRulesetsResponse {
     return EventsGetRulesetsResponse._readMessage(
       EventsGetRulesetsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetRulesetsResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetRulesetsResponse {
+  initialize: function (
+    msg?: Partial<EventsGetRulesetsResponse>,
+  ): EventsGetRulesetsResponse {
     return {
       rulesets: [],
       rulesetIds: [],
       rulesetTitles: [],
+      ...msg,
     };
   },
 
@@ -3115,8 +3164,8 @@ export const EventsGetRulesetsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetRulesetsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rulesets?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -3138,7 +3187,7 @@ export const EventsGetRulesetsResponse = {
    */
   _readMessage: function (
     msg: EventsGetRulesetsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetRulesetsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3174,7 +3223,7 @@ export const EventsGetTimezonesPayload = {
   encode: function (msg: PartialDeep<EventsGetTimezonesPayload>): Uint8Array {
     return EventsGetTimezonesPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3184,16 +3233,19 @@ export const EventsGetTimezonesPayload = {
   decode: function (bytes: ByteSource): EventsGetTimezonesPayload {
     return EventsGetTimezonesPayload._readMessage(
       EventsGetTimezonesPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetTimezonesPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetTimezonesPayload {
+  initialize: function (
+    msg?: Partial<EventsGetTimezonesPayload>,
+  ): EventsGetTimezonesPayload {
     return {
       addr: "",
+      ...msg,
     };
   },
 
@@ -3202,8 +3254,8 @@ export const EventsGetTimezonesPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetTimezonesPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.addr) {
       writer.writeString(1, msg.addr);
     }
@@ -3215,7 +3267,7 @@ export const EventsGetTimezonesPayload = {
    */
   _readMessage: function (
     msg: EventsGetTimezonesPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetTimezonesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3241,7 +3293,7 @@ export const EventsGetTimezonesResponse = {
   encode: function (msg: PartialDeep<EventsGetTimezonesResponse>): Uint8Array {
     return EventsGetTimezonesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3251,17 +3303,20 @@ export const EventsGetTimezonesResponse = {
   decode: function (bytes: ByteSource): EventsGetTimezonesResponse {
     return EventsGetTimezonesResponse._readMessage(
       EventsGetTimezonesResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetTimezonesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetTimezonesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetTimezonesResponse>,
+  ): EventsGetTimezonesResponse {
     return {
       preferredByIp: "",
       timezones: [],
+      ...msg,
     };
   },
 
@@ -3270,8 +3325,8 @@ export const EventsGetTimezonesResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetTimezonesResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.preferredByIp) {
       writer.writeString(1, msg.preferredByIp);
     }
@@ -3286,7 +3341,7 @@ export const EventsGetTimezonesResponse = {
    */
   _readMessage: function (
     msg: EventsGetTimezonesResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetTimezonesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3316,7 +3371,7 @@ export const EventsGetCountriesPayload = {
   encode: function (msg: PartialDeep<EventsGetCountriesPayload>): Uint8Array {
     return EventsGetCountriesPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3326,16 +3381,19 @@ export const EventsGetCountriesPayload = {
   decode: function (bytes: ByteSource): EventsGetCountriesPayload {
     return EventsGetCountriesPayload._readMessage(
       EventsGetCountriesPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetCountriesPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetCountriesPayload {
+  initialize: function (
+    msg?: Partial<EventsGetCountriesPayload>,
+  ): EventsGetCountriesPayload {
     return {
       addr: "",
+      ...msg,
     };
   },
 
@@ -3344,8 +3402,8 @@ export const EventsGetCountriesPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetCountriesPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.addr) {
       writer.writeString(1, msg.addr);
     }
@@ -3357,7 +3415,7 @@ export const EventsGetCountriesPayload = {
    */
   _readMessage: function (
     msg: EventsGetCountriesPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetCountriesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3383,7 +3441,7 @@ export const EventsGetCountriesResponse = {
   encode: function (msg: PartialDeep<EventsGetCountriesResponse>): Uint8Array {
     return EventsGetCountriesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3393,17 +3451,20 @@ export const EventsGetCountriesResponse = {
   decode: function (bytes: ByteSource): EventsGetCountriesResponse {
     return EventsGetCountriesResponse._readMessage(
       EventsGetCountriesResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetCountriesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetCountriesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetCountriesResponse>,
+  ): EventsGetCountriesResponse {
     return {
       preferredByIp: "",
       countries: [],
+      ...msg,
     };
   },
 
@@ -3412,8 +3473,8 @@ export const EventsGetCountriesResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetCountriesResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.preferredByIp) {
       writer.writeString(1, msg.preferredByIp);
     }
@@ -3432,7 +3493,7 @@ export const EventsGetCountriesResponse = {
    */
   _readMessage: function (
     msg: EventsGetCountriesResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetCountriesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3464,7 +3525,7 @@ export const EventsGetEventsPayload = {
   encode: function (msg: PartialDeep<EventsGetEventsPayload>): Uint8Array {
     return EventsGetEventsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3474,19 +3535,22 @@ export const EventsGetEventsPayload = {
   decode: function (bytes: ByteSource): EventsGetEventsPayload {
     return EventsGetEventsPayload._readMessage(
       EventsGetEventsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetEventsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsPayload {
+  initialize: function (
+    msg?: Partial<EventsGetEventsPayload>,
+  ): EventsGetEventsPayload {
     return {
       limit: 0,
       offset: 0,
       filterUnlisted: false,
       filter: "",
+      ...msg,
     };
   },
 
@@ -3495,8 +3559,8 @@ export const EventsGetEventsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetEventsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.limit) {
       writer.writeInt32(1, msg.limit);
     }
@@ -3517,7 +3581,7 @@ export const EventsGetEventsPayload = {
    */
   _readMessage: function (
     msg: EventsGetEventsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetEventsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3555,7 +3619,7 @@ export const EventsGetEventsResponse = {
   encode: function (msg: PartialDeep<EventsGetEventsResponse>): Uint8Array {
     return EventsGetEventsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3565,17 +3629,20 @@ export const EventsGetEventsResponse = {
   decode: function (bytes: ByteSource): EventsGetEventsResponse {
     return EventsGetEventsResponse._readMessage(
       EventsGetEventsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetEventsResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsResponse {
+  initialize: function (
+    msg?: Partial<EventsGetEventsResponse>,
+  ): EventsGetEventsResponse {
     return {
       total: 0,
       events: [],
+      ...msg,
     };
   },
 
@@ -3584,8 +3651,8 @@ export const EventsGetEventsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetEventsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.total) {
       writer.writeInt32(1, msg.total);
     }
@@ -3604,7 +3671,7 @@ export const EventsGetEventsResponse = {
    */
   _readMessage: function (
     msg: EventsGetEventsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetEventsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3636,7 +3703,7 @@ export const EventsGetEventsByIdPayload = {
   encode: function (msg: PartialDeep<EventsGetEventsByIdPayload>): Uint8Array {
     return EventsGetEventsByIdPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3646,16 +3713,19 @@ export const EventsGetEventsByIdPayload = {
   decode: function (bytes: ByteSource): EventsGetEventsByIdPayload {
     return EventsGetEventsByIdPayload._readMessage(
       EventsGetEventsByIdPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetEventsByIdPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsByIdPayload {
+  initialize: function (
+    msg?: Partial<EventsGetEventsByIdPayload>,
+  ): EventsGetEventsByIdPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -3664,8 +3734,8 @@ export const EventsGetEventsByIdPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetEventsByIdPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ids?.length) {
       writer.writePackedInt32(1, msg.ids);
     }
@@ -3677,7 +3747,7 @@ export const EventsGetEventsByIdPayload = {
    */
   _readMessage: function (
     msg: EventsGetEventsByIdPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetEventsByIdPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3707,7 +3777,7 @@ export const EventsGetEventsByIdResponse = {
   encode: function (msg: PartialDeep<EventsGetEventsByIdResponse>): Uint8Array {
     return EventsGetEventsByIdResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3717,16 +3787,19 @@ export const EventsGetEventsByIdResponse = {
   decode: function (bytes: ByteSource): EventsGetEventsByIdResponse {
     return EventsGetEventsByIdResponse._readMessage(
       EventsGetEventsByIdResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetEventsByIdResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsByIdResponse {
+  initialize: function (
+    msg?: Partial<EventsGetEventsByIdResponse>,
+  ): EventsGetEventsByIdResponse {
     return {
       events: [],
+      ...msg,
     };
   },
 
@@ -3735,8 +3808,8 @@ export const EventsGetEventsByIdResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetEventsByIdResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.events?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -3752,7 +3825,7 @@ export const EventsGetEventsByIdResponse = {
    */
   _readMessage: function (
     msg: EventsGetEventsByIdResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetEventsByIdResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3791,8 +3864,12 @@ export const PlayersGetMyEventsPayload = {
   /**
    * Initializes PlayersGetMyEventsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetMyEventsPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<PlayersGetMyEventsPayload>,
+  ): PlayersGetMyEventsPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -3800,8 +3877,8 @@ export const PlayersGetMyEventsPayload = {
    */
   _writeMessage: function (
     _msg: PartialDeep<PlayersGetMyEventsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
@@ -3810,7 +3887,7 @@ export const PlayersGetMyEventsPayload = {
    */
   _readMessage: function (
     _msg: PlayersGetMyEventsPayload,
-    _reader: BinaryReader,
+    _reader: protoscript.BinaryReader,
   ): PlayersGetMyEventsPayload {
     return _msg;
   },
@@ -3823,7 +3900,7 @@ export const PlayersGetMyEventsResponse = {
   encode: function (msg: PartialDeep<PlayersGetMyEventsResponse>): Uint8Array {
     return PlayersGetMyEventsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3833,16 +3910,19 @@ export const PlayersGetMyEventsResponse = {
   decode: function (bytes: ByteSource): PlayersGetMyEventsResponse {
     return PlayersGetMyEventsResponse._readMessage(
       PlayersGetMyEventsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetMyEventsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetMyEventsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetMyEventsResponse>,
+  ): PlayersGetMyEventsResponse {
     return {
       events: [],
+      ...msg,
     };
   },
 
@@ -3851,8 +3931,8 @@ export const PlayersGetMyEventsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetMyEventsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.events?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -3868,7 +3948,7 @@ export const PlayersGetMyEventsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetMyEventsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetMyEventsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3896,7 +3976,7 @@ export const EventsGetRatingTablePayload = {
   encode: function (msg: PartialDeep<EventsGetRatingTablePayload>): Uint8Array {
     return EventsGetRatingTablePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3906,20 +3986,23 @@ export const EventsGetRatingTablePayload = {
   decode: function (bytes: ByteSource): EventsGetRatingTablePayload {
     return EventsGetRatingTablePayload._readMessage(
       EventsGetRatingTablePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetRatingTablePayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetRatingTablePayload {
+  initialize: function (
+    msg?: Partial<EventsGetRatingTablePayload>,
+  ): EventsGetRatingTablePayload {
     return {
       eventIdList: [],
       orderBy: "",
       order: "",
       withPrefinished: undefined,
       onlyMinGames: undefined,
+      ...msg,
     };
   },
 
@@ -3928,8 +4011,8 @@ export const EventsGetRatingTablePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetRatingTablePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventIdList?.length) {
       writer.writePackedInt32(1, msg.eventIdList);
     }
@@ -3953,7 +4036,7 @@ export const EventsGetRatingTablePayload = {
    */
   _readMessage: function (
     msg: EventsGetRatingTablePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetRatingTablePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4001,7 +4084,7 @@ export const EventsGetRatingTableResponse = {
   ): Uint8Array {
     return EventsGetRatingTableResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4011,16 +4094,19 @@ export const EventsGetRatingTableResponse = {
   decode: function (bytes: ByteSource): EventsGetRatingTableResponse {
     return EventsGetRatingTableResponse._readMessage(
       EventsGetRatingTableResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetRatingTableResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetRatingTableResponse {
+  initialize: function (
+    msg?: Partial<EventsGetRatingTableResponse>,
+  ): EventsGetRatingTableResponse {
     return {
       list: [],
+      ...msg,
     };
   },
 
@@ -4029,8 +4115,8 @@ export const EventsGetRatingTableResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetRatingTableResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.list?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -4046,7 +4132,7 @@ export const EventsGetRatingTableResponse = {
    */
   _readMessage: function (
     msg: EventsGetRatingTableResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetRatingTableResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4074,7 +4160,7 @@ export const EventsGetLastGamesPayload = {
   encode: function (msg: PartialDeep<EventsGetLastGamesPayload>): Uint8Array {
     return EventsGetLastGamesPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4084,20 +4170,23 @@ export const EventsGetLastGamesPayload = {
   decode: function (bytes: ByteSource): EventsGetLastGamesPayload {
     return EventsGetLastGamesPayload._readMessage(
       EventsGetLastGamesPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetLastGamesPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetLastGamesPayload {
+  initialize: function (
+    msg?: Partial<EventsGetLastGamesPayload>,
+  ): EventsGetLastGamesPayload {
     return {
       eventIdList: [],
       limit: 0,
       offset: 0,
       orderBy: undefined,
       order: undefined,
+      ...msg,
     };
   },
 
@@ -4106,8 +4195,8 @@ export const EventsGetLastGamesPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetLastGamesPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventIdList?.length) {
       writer.writePackedInt32(1, msg.eventIdList);
     }
@@ -4131,7 +4220,7 @@ export const EventsGetLastGamesPayload = {
    */
   _readMessage: function (
     msg: EventsGetLastGamesPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetLastGamesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4177,7 +4266,7 @@ export const EventsGetLastGamesResponse = {
   encode: function (msg: PartialDeep<EventsGetLastGamesResponse>): Uint8Array {
     return EventsGetLastGamesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4187,18 +4276,21 @@ export const EventsGetLastGamesResponse = {
   decode: function (bytes: ByteSource): EventsGetLastGamesResponse {
     return EventsGetLastGamesResponse._readMessage(
       EventsGetLastGamesResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetLastGamesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetLastGamesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetLastGamesResponse>,
+  ): EventsGetLastGamesResponse {
     return {
       games: [],
       players: [],
       totalGames: 0,
+      ...msg,
     };
   },
 
@@ -4207,8 +4299,8 @@ export const EventsGetLastGamesResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetLastGamesResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.games?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -4234,7 +4326,7 @@ export const EventsGetLastGamesResponse = {
    */
   _readMessage: function (
     msg: EventsGetLastGamesResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetLastGamesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4272,7 +4364,7 @@ export const EventsGetGamePayload = {
   encode: function (msg: PartialDeep<EventsGetGamePayload>): Uint8Array {
     return EventsGetGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4282,16 +4374,19 @@ export const EventsGetGamePayload = {
   decode: function (bytes: ByteSource): EventsGetGamePayload {
     return EventsGetGamePayload._readMessage(
       EventsGetGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetGamePayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetGamePayload {
+  initialize: function (
+    msg?: Partial<EventsGetGamePayload>,
+  ): EventsGetGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -4300,8 +4395,8 @@ export const EventsGetGamePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetGamePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -4313,7 +4408,7 @@ export const EventsGetGamePayload = {
    */
   _readMessage: function (
     msg: EventsGetGamePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4339,7 +4434,7 @@ export const EventsGetGameResponse = {
   encode: function (msg: PartialDeep<EventsGetGameResponse>): Uint8Array {
     return EventsGetGameResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4349,17 +4444,20 @@ export const EventsGetGameResponse = {
   decode: function (bytes: ByteSource): EventsGetGameResponse {
     return EventsGetGameResponse._readMessage(
       EventsGetGameResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetGameResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetGameResponse {
+  initialize: function (
+    msg?: Partial<EventsGetGameResponse>,
+  ): EventsGetGameResponse {
     return {
       game: protoAtoms.GameResult.initialize(),
       players: [],
+      ...msg,
     };
   },
 
@@ -4368,8 +4466,8 @@ export const EventsGetGameResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetGameResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.game) {
       writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
     }
@@ -4388,7 +4486,7 @@ export const EventsGetGameResponse = {
    */
   _readMessage: function (
     msg: EventsGetGameResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetGameResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4422,7 +4520,7 @@ export const EventsGetGamesSeriesResponse = {
   ): Uint8Array {
     return EventsGetGamesSeriesResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4432,16 +4530,19 @@ export const EventsGetGamesSeriesResponse = {
   decode: function (bytes: ByteSource): EventsGetGamesSeriesResponse {
     return EventsGetGamesSeriesResponse._readMessage(
       EventsGetGamesSeriesResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetGamesSeriesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetGamesSeriesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetGamesSeriesResponse>,
+  ): EventsGetGamesSeriesResponse {
     return {
       results: [],
+      ...msg,
     };
   },
 
@@ -4450,8 +4551,8 @@ export const EventsGetGamesSeriesResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetGamesSeriesResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.results?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -4467,7 +4568,7 @@ export const EventsGetGamesSeriesResponse = {
    */
   _readMessage: function (
     msg: EventsGetGamesSeriesResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetGamesSeriesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4497,7 +4598,7 @@ export const PlayersGetCurrentSessionsPayload = {
   ): Uint8Array {
     return PlayersGetCurrentSessionsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4507,17 +4608,20 @@ export const PlayersGetCurrentSessionsPayload = {
   decode: function (bytes: ByteSource): PlayersGetCurrentSessionsPayload {
     return PlayersGetCurrentSessionsPayload._readMessage(
       PlayersGetCurrentSessionsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetCurrentSessionsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetCurrentSessionsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetCurrentSessionsPayload>,
+  ): PlayersGetCurrentSessionsPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -4526,8 +4630,8 @@ export const PlayersGetCurrentSessionsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetCurrentSessionsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -4542,7 +4646,7 @@ export const PlayersGetCurrentSessionsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetCurrentSessionsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetCurrentSessionsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4574,7 +4678,7 @@ export const PlayersGetCurrentSessionsResponse = {
   ): Uint8Array {
     return PlayersGetCurrentSessionsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4584,16 +4688,19 @@ export const PlayersGetCurrentSessionsResponse = {
   decode: function (bytes: ByteSource): PlayersGetCurrentSessionsResponse {
     return PlayersGetCurrentSessionsResponse._readMessage(
       PlayersGetCurrentSessionsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetCurrentSessionsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetCurrentSessionsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetCurrentSessionsResponse>,
+  ): PlayersGetCurrentSessionsResponse {
     return {
       sessions: [],
+      ...msg,
     };
   },
 
@@ -4602,8 +4709,8 @@ export const PlayersGetCurrentSessionsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetCurrentSessionsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessions?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -4619,7 +4726,7 @@ export const PlayersGetCurrentSessionsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetCurrentSessionsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetCurrentSessionsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4649,7 +4756,7 @@ export const EventsGetAllRegisteredPlayersPayload = {
   ): Uint8Array {
     return EventsGetAllRegisteredPlayersPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4659,16 +4766,19 @@ export const EventsGetAllRegisteredPlayersPayload = {
   decode: function (bytes: ByteSource): EventsGetAllRegisteredPlayersPayload {
     return EventsGetAllRegisteredPlayersPayload._readMessage(
       EventsGetAllRegisteredPlayersPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetAllRegisteredPlayersPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetAllRegisteredPlayersPayload {
+  initialize: function (
+    msg?: Partial<EventsGetAllRegisteredPlayersPayload>,
+  ): EventsGetAllRegisteredPlayersPayload {
     return {
       eventIds: [],
+      ...msg,
     };
   },
 
@@ -4677,8 +4787,8 @@ export const EventsGetAllRegisteredPlayersPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetAllRegisteredPlayersPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventIds?.length) {
       writer.writePackedInt32(1, msg.eventIds);
     }
@@ -4690,7 +4800,7 @@ export const EventsGetAllRegisteredPlayersPayload = {
    */
   _readMessage: function (
     msg: EventsGetAllRegisteredPlayersPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetAllRegisteredPlayersPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4722,7 +4832,7 @@ export const EventsGetAllRegisteredPlayersResponse = {
   ): Uint8Array {
     return EventsGetAllRegisteredPlayersResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4732,16 +4842,19 @@ export const EventsGetAllRegisteredPlayersResponse = {
   decode: function (bytes: ByteSource): EventsGetAllRegisteredPlayersResponse {
     return EventsGetAllRegisteredPlayersResponse._readMessage(
       EventsGetAllRegisteredPlayersResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetAllRegisteredPlayersResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetAllRegisteredPlayersResponse {
+  initialize: function (
+    msg?: Partial<EventsGetAllRegisteredPlayersResponse>,
+  ): EventsGetAllRegisteredPlayersResponse {
     return {
       players: [],
+      ...msg,
     };
   },
 
@@ -4750,8 +4863,8 @@ export const EventsGetAllRegisteredPlayersResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetAllRegisteredPlayersResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.players?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -4767,7 +4880,7 @@ export const EventsGetAllRegisteredPlayersResponse = {
    */
   _readMessage: function (
     msg: EventsGetAllRegisteredPlayersResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetAllRegisteredPlayersResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4795,7 +4908,7 @@ export const EventsGetTimerStateResponse = {
   encode: function (msg: PartialDeep<EventsGetTimerStateResponse>): Uint8Array {
     return EventsGetTimerStateResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4805,14 +4918,16 @@ export const EventsGetTimerStateResponse = {
   decode: function (bytes: ByteSource): EventsGetTimerStateResponse {
     return EventsGetTimerStateResponse._readMessage(
       EventsGetTimerStateResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetTimerStateResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetTimerStateResponse {
+  initialize: function (
+    msg?: Partial<EventsGetTimerStateResponse>,
+  ): EventsGetTimerStateResponse {
     return {
       started: false,
       finished: false,
@@ -4821,6 +4936,7 @@ export const EventsGetTimerStateResponse = {
       haveAutostart: false,
       autostartTimer: false,
       hideSeatingAfter: 0,
+      ...msg,
     };
   },
 
@@ -4829,8 +4945,8 @@ export const EventsGetTimerStateResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetTimerStateResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.started) {
       writer.writeBool(1, msg.started);
     }
@@ -4860,7 +4976,7 @@ export const EventsGetTimerStateResponse = {
    */
   _readMessage: function (
     msg: EventsGetTimerStateResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetTimerStateResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4912,7 +5028,7 @@ export const GamesGetSessionOverviewPayload = {
   ): Uint8Array {
     return GamesGetSessionOverviewPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4922,16 +5038,19 @@ export const GamesGetSessionOverviewPayload = {
   decode: function (bytes: ByteSource): GamesGetSessionOverviewPayload {
     return GamesGetSessionOverviewPayload._readMessage(
       GamesGetSessionOverviewPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesGetSessionOverviewPayload with all fields set to their default value.
    */
-  initialize: function (): GamesGetSessionOverviewPayload {
+  initialize: function (
+    msg?: Partial<GamesGetSessionOverviewPayload>,
+  ): GamesGetSessionOverviewPayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -4940,8 +5059,8 @@ export const GamesGetSessionOverviewPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesGetSessionOverviewPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -4953,7 +5072,7 @@ export const GamesGetSessionOverviewPayload = {
    */
   _readMessage: function (
     msg: GamesGetSessionOverviewPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesGetSessionOverviewPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -4981,7 +5100,7 @@ export const GamesGetSessionOverviewResponse = {
   ): Uint8Array {
     return GamesGetSessionOverviewResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -4991,20 +5110,23 @@ export const GamesGetSessionOverviewResponse = {
   decode: function (bytes: ByteSource): GamesGetSessionOverviewResponse {
     return GamesGetSessionOverviewResponse._readMessage(
       GamesGetSessionOverviewResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesGetSessionOverviewResponse with all fields set to their default value.
    */
-  initialize: function (): GamesGetSessionOverviewResponse {
+  initialize: function (
+    msg?: Partial<GamesGetSessionOverviewResponse>,
+  ): GamesGetSessionOverviewResponse {
     return {
       id: 0,
       eventId: 0,
       tableIndex: undefined,
       players: [],
       state: protoAtoms.SessionState.initialize(),
+      ...msg,
     };
   },
 
@@ -5013,8 +5135,8 @@ export const GamesGetSessionOverviewResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesGetSessionOverviewResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -5042,7 +5164,7 @@ export const GamesGetSessionOverviewResponse = {
    */
   _readMessage: function (
     msg: GamesGetSessionOverviewResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesGetSessionOverviewResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5088,7 +5210,7 @@ export const PlayersGetPlayerStatsPayload = {
   ): Uint8Array {
     return PlayersGetPlayerStatsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5098,17 +5220,20 @@ export const PlayersGetPlayerStatsPayload = {
   decode: function (bytes: ByteSource): PlayersGetPlayerStatsPayload {
     return PlayersGetPlayerStatsPayload._readMessage(
       PlayersGetPlayerStatsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetPlayerStatsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerStatsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerStatsPayload>,
+  ): PlayersGetPlayerStatsPayload {
     return {
       playerId: 0,
       eventIdList: [],
+      ...msg,
     };
   },
 
@@ -5117,8 +5242,8 @@ export const PlayersGetPlayerStatsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetPlayerStatsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -5133,7 +5258,7 @@ export const PlayersGetPlayerStatsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerStatsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetPlayerStatsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5169,7 +5294,7 @@ export const PlayersGetPlayerStatsResponse = {
   ): Uint8Array {
     return PlayersGetPlayerStatsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5179,14 +5304,16 @@ export const PlayersGetPlayerStatsResponse = {
   decode: function (bytes: ByteSource): PlayersGetPlayerStatsResponse {
     return PlayersGetPlayerStatsResponse._readMessage(
       PlayersGetPlayerStatsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetPlayerStatsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerStatsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerStatsResponse>,
+  ): PlayersGetPlayerStatsResponse {
     return {
       ratingHistory: [],
       scoreHistory: [],
@@ -5200,6 +5327,7 @@ export const PlayersGetPlayerStatsResponse = {
       riichiSummary: protoAtoms.RiichiSummary.initialize(),
       doraStat: protoAtoms.DoraSummary.initialize(),
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -5208,8 +5336,8 @@ export const PlayersGetPlayerStatsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetPlayerStatsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.ratingHistory?.length) {
       writer.writePackedInt32(1, msg.ratingHistory);
     }
@@ -5286,7 +5414,7 @@ export const PlayersGetPlayerStatsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerStatsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetPlayerStatsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5379,7 +5507,7 @@ export const GamesAddRoundPayload = {
   encode: function (msg: PartialDeep<GamesAddRoundPayload>): Uint8Array {
     return GamesAddRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5389,17 +5517,20 @@ export const GamesAddRoundPayload = {
   decode: function (bytes: ByteSource): GamesAddRoundPayload {
     return GamesAddRoundPayload._readMessage(
       GamesAddRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesAddRoundPayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddRoundPayload {
+  initialize: function (
+    msg?: Partial<GamesAddRoundPayload>,
+  ): GamesAddRoundPayload {
     return {
       sessionHash: "",
       roundData: protoAtoms.Round.initialize(),
+      ...msg,
     };
   },
 
@@ -5408,8 +5539,8 @@ export const GamesAddRoundPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesAddRoundPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -5424,7 +5555,7 @@ export const GamesAddRoundPayload = {
    */
   _readMessage: function (
     msg: GamesAddRoundPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesAddRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5454,7 +5585,7 @@ export const GamesAddRoundResponse = {
   encode: function (msg: PartialDeep<GamesAddRoundResponse>): Uint8Array {
     return GamesAddRoundResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5464,14 +5595,16 @@ export const GamesAddRoundResponse = {
   decode: function (bytes: ByteSource): GamesAddRoundResponse {
     return GamesAddRoundResponse._readMessage(
       GamesAddRoundResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesAddRoundResponse with all fields set to their default value.
    */
-  initialize: function (): GamesAddRoundResponse {
+  initialize: function (
+    msg?: Partial<GamesAddRoundResponse>,
+  ): GamesAddRoundResponse {
     return {
       scores: [],
       extraPenaltyLogs: [],
@@ -5483,6 +5616,7 @@ export const GamesAddRoundResponse = {
       isFinished: false,
       lastHandStarted: false,
       lastOutcome: undefined,
+      ...msg,
     };
   },
 
@@ -5491,8 +5625,8 @@ export const GamesAddRoundResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesAddRoundResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.scores?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -5539,7 +5673,7 @@ export const GamesAddRoundResponse = {
    */
   _readMessage: function (
     msg: GamesAddRoundResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesAddRoundResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5608,7 +5742,7 @@ export const GamesPreviewRoundPayload = {
   encode: function (msg: PartialDeep<GamesPreviewRoundPayload>): Uint8Array {
     return GamesPreviewRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5618,17 +5752,20 @@ export const GamesPreviewRoundPayload = {
   decode: function (bytes: ByteSource): GamesPreviewRoundPayload {
     return GamesPreviewRoundPayload._readMessage(
       GamesPreviewRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesPreviewRoundPayload with all fields set to their default value.
    */
-  initialize: function (): GamesPreviewRoundPayload {
+  initialize: function (
+    msg?: Partial<GamesPreviewRoundPayload>,
+  ): GamesPreviewRoundPayload {
     return {
       sessionHash: "",
       roundData: protoAtoms.Round.initialize(),
+      ...msg,
     };
   },
 
@@ -5637,8 +5774,8 @@ export const GamesPreviewRoundPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesPreviewRoundPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -5653,7 +5790,7 @@ export const GamesPreviewRoundPayload = {
    */
   _readMessage: function (
     msg: GamesPreviewRoundPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesPreviewRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5683,7 +5820,7 @@ export const GamesPreviewRoundResponse = {
   encode: function (msg: PartialDeep<GamesPreviewRoundResponse>): Uint8Array {
     return GamesPreviewRoundResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5693,16 +5830,19 @@ export const GamesPreviewRoundResponse = {
   decode: function (bytes: ByteSource): GamesPreviewRoundResponse {
     return GamesPreviewRoundResponse._readMessage(
       GamesPreviewRoundResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesPreviewRoundResponse with all fields set to their default value.
    */
-  initialize: function (): GamesPreviewRoundResponse {
+  initialize: function (
+    msg?: Partial<GamesPreviewRoundResponse>,
+  ): GamesPreviewRoundResponse {
     return {
       state: protoAtoms.RoundState.initialize(),
+      ...msg,
     };
   },
 
@@ -5711,8 +5851,8 @@ export const GamesPreviewRoundResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesPreviewRoundResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.state) {
       writer.writeMessage(1, msg.state, protoAtoms.RoundState._writeMessage);
     }
@@ -5724,7 +5864,7 @@ export const GamesPreviewRoundResponse = {
    */
   _readMessage: function (
     msg: GamesPreviewRoundResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesPreviewRoundResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5750,7 +5890,7 @@ export const GamesAddOnlineReplayPayload = {
   encode: function (msg: PartialDeep<GamesAddOnlineReplayPayload>): Uint8Array {
     return GamesAddOnlineReplayPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5760,17 +5900,20 @@ export const GamesAddOnlineReplayPayload = {
   decode: function (bytes: ByteSource): GamesAddOnlineReplayPayload {
     return GamesAddOnlineReplayPayload._readMessage(
       GamesAddOnlineReplayPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesAddOnlineReplayPayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddOnlineReplayPayload {
+  initialize: function (
+    msg?: Partial<GamesAddOnlineReplayPayload>,
+  ): GamesAddOnlineReplayPayload {
     return {
       eventId: 0,
       link: "",
+      ...msg,
     };
   },
 
@@ -5779,8 +5922,8 @@ export const GamesAddOnlineReplayPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesAddOnlineReplayPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -5795,7 +5938,7 @@ export const GamesAddOnlineReplayPayload = {
    */
   _readMessage: function (
     msg: GamesAddOnlineReplayPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesAddOnlineReplayPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5827,7 +5970,7 @@ export const GamesAddOnlineReplayResponse = {
   ): Uint8Array {
     return GamesAddOnlineReplayResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5837,17 +5980,20 @@ export const GamesAddOnlineReplayResponse = {
   decode: function (bytes: ByteSource): GamesAddOnlineReplayResponse {
     return GamesAddOnlineReplayResponse._readMessage(
       GamesAddOnlineReplayResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesAddOnlineReplayResponse with all fields set to their default value.
    */
-  initialize: function (): GamesAddOnlineReplayResponse {
+  initialize: function (
+    msg?: Partial<GamesAddOnlineReplayResponse>,
+  ): GamesAddOnlineReplayResponse {
     return {
       game: protoAtoms.GameResult.initialize(),
       players: [],
+      ...msg,
     };
   },
 
@@ -5856,8 +6002,8 @@ export const GamesAddOnlineReplayResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesAddOnlineReplayResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.game) {
       writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
     }
@@ -5876,7 +6022,7 @@ export const GamesAddOnlineReplayResponse = {
    */
   _readMessage: function (
     msg: GamesAddOnlineReplayResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesAddOnlineReplayResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5910,7 +6056,7 @@ export const PlayersGetLastResultsPayload = {
   ): Uint8Array {
     return PlayersGetLastResultsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5920,17 +6066,20 @@ export const PlayersGetLastResultsPayload = {
   decode: function (bytes: ByteSource): PlayersGetLastResultsPayload {
     return PlayersGetLastResultsPayload._readMessage(
       PlayersGetLastResultsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetLastResultsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastResultsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetLastResultsPayload>,
+  ): PlayersGetLastResultsPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -5939,8 +6088,8 @@ export const PlayersGetLastResultsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetLastResultsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -5955,7 +6104,7 @@ export const PlayersGetLastResultsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetLastResultsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetLastResultsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -5987,7 +6136,7 @@ export const PlayersGetLastResultsResponse = {
   ): Uint8Array {
     return PlayersGetLastResultsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -5997,16 +6146,19 @@ export const PlayersGetLastResultsResponse = {
   decode: function (bytes: ByteSource): PlayersGetLastResultsResponse {
     return PlayersGetLastResultsResponse._readMessage(
       PlayersGetLastResultsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetLastResultsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastResultsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetLastResultsResponse>,
+  ): PlayersGetLastResultsResponse {
     return {
       results: [],
+      ...msg,
     };
   },
 
@@ -6015,8 +6167,8 @@ export const PlayersGetLastResultsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetLastResultsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.results?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -6032,7 +6184,7 @@ export const PlayersGetLastResultsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetLastResultsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetLastResultsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6060,7 +6212,7 @@ export const PlayersGetLastRoundPayload = {
   encode: function (msg: PartialDeep<PlayersGetLastRoundPayload>): Uint8Array {
     return PlayersGetLastRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6070,17 +6222,20 @@ export const PlayersGetLastRoundPayload = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundPayload {
     return PlayersGetLastRoundPayload._readMessage(
       PlayersGetLastRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetLastRoundPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundPayload>,
+  ): PlayersGetLastRoundPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -6089,8 +6244,8 @@ export const PlayersGetLastRoundPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetLastRoundPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -6105,7 +6260,7 @@ export const PlayersGetLastRoundPayload = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetLastRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6135,7 +6290,7 @@ export const PlayersGetLastRoundResponse = {
   encode: function (msg: PartialDeep<PlayersGetLastRoundResponse>): Uint8Array {
     return PlayersGetLastRoundResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6145,16 +6300,19 @@ export const PlayersGetLastRoundResponse = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundResponse {
     return PlayersGetLastRoundResponse._readMessage(
       PlayersGetLastRoundResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetLastRoundResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundResponse>,
+  ): PlayersGetLastRoundResponse {
     return {
       round: protoAtoms.RoundState.initialize(),
+      ...msg,
     };
   },
 
@@ -6163,8 +6321,8 @@ export const PlayersGetLastRoundResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetLastRoundResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.round) {
       writer.writeMessage(1, msg.round, protoAtoms.RoundState._writeMessage);
     }
@@ -6176,7 +6334,7 @@ export const PlayersGetLastRoundResponse = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetLastRoundResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6202,7 +6360,7 @@ export const PlayersGetAllRoundsPayload = {
   encode: function (msg: PartialDeep<PlayersGetAllRoundsPayload>): Uint8Array {
     return PlayersGetAllRoundsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6212,16 +6370,19 @@ export const PlayersGetAllRoundsPayload = {
   decode: function (bytes: ByteSource): PlayersGetAllRoundsPayload {
     return PlayersGetAllRoundsPayload._readMessage(
       PlayersGetAllRoundsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetAllRoundsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetAllRoundsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetAllRoundsPayload>,
+  ): PlayersGetAllRoundsPayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -6230,8 +6391,8 @@ export const PlayersGetAllRoundsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetAllRoundsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -6243,7 +6404,7 @@ export const PlayersGetAllRoundsPayload = {
    */
   _readMessage: function (
     msg: PlayersGetAllRoundsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetAllRoundsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6269,7 +6430,7 @@ export const PlayersGetAllRoundsResponse = {
   encode: function (msg: PartialDeep<PlayersGetAllRoundsResponse>): Uint8Array {
     return PlayersGetAllRoundsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6279,16 +6440,19 @@ export const PlayersGetAllRoundsResponse = {
   decode: function (bytes: ByteSource): PlayersGetAllRoundsResponse {
     return PlayersGetAllRoundsResponse._readMessage(
       PlayersGetAllRoundsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetAllRoundsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetAllRoundsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetAllRoundsResponse>,
+  ): PlayersGetAllRoundsResponse {
     return {
       rounds: [],
+      ...msg,
     };
   },
 
@@ -6297,8 +6461,8 @@ export const PlayersGetAllRoundsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetAllRoundsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.rounds?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -6314,7 +6478,7 @@ export const PlayersGetAllRoundsResponse = {
    */
   _readMessage: function (
     msg: PlayersGetAllRoundsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetAllRoundsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6344,7 +6508,7 @@ export const PlayersGetLastRoundByHashPayload = {
   ): Uint8Array {
     return PlayersGetLastRoundByHashPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6354,16 +6518,19 @@ export const PlayersGetLastRoundByHashPayload = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundByHashPayload {
     return PlayersGetLastRoundByHashPayload._readMessage(
       PlayersGetLastRoundByHashPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetLastRoundByHashPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundByHashPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundByHashPayload>,
+  ): PlayersGetLastRoundByHashPayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -6372,8 +6539,8 @@ export const PlayersGetLastRoundByHashPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetLastRoundByHashPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -6385,7 +6552,7 @@ export const PlayersGetLastRoundByHashPayload = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundByHashPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetLastRoundByHashPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6413,7 +6580,7 @@ export const PlayersGetLastRoundByHashResponse = {
   ): Uint8Array {
     return PlayersGetLastRoundByHashResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6423,16 +6590,19 @@ export const PlayersGetLastRoundByHashResponse = {
   decode: function (bytes: ByteSource): PlayersGetLastRoundByHashResponse {
     return PlayersGetLastRoundByHashResponse._readMessage(
       PlayersGetLastRoundByHashResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetLastRoundByHashResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundByHashResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundByHashResponse>,
+  ): PlayersGetLastRoundByHashResponse {
     return {
       round: protoAtoms.RoundState.initialize(),
+      ...msg,
     };
   },
 
@@ -6441,8 +6611,8 @@ export const PlayersGetLastRoundByHashResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetLastRoundByHashResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.round) {
       writer.writeMessage(1, msg.round, protoAtoms.RoundState._writeMessage);
     }
@@ -6454,7 +6624,7 @@ export const PlayersGetLastRoundByHashResponse = {
    */
   _readMessage: function (
     msg: PlayersGetLastRoundByHashResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetLastRoundByHashResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6482,7 +6652,7 @@ export const EventsGetEventForEditPayload = {
   ): Uint8Array {
     return EventsGetEventForEditPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6492,16 +6662,19 @@ export const EventsGetEventForEditPayload = {
   decode: function (bytes: ByteSource): EventsGetEventForEditPayload {
     return EventsGetEventForEditPayload._readMessage(
       EventsGetEventForEditPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetEventForEditPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventForEditPayload {
+  initialize: function (
+    msg?: Partial<EventsGetEventForEditPayload>,
+  ): EventsGetEventForEditPayload {
     return {
       id: 0,
+      ...msg,
     };
   },
 
@@ -6510,8 +6683,8 @@ export const EventsGetEventForEditPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetEventForEditPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -6523,7 +6696,7 @@ export const EventsGetEventForEditPayload = {
    */
   _readMessage: function (
     msg: EventsGetEventForEditPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetEventForEditPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6551,7 +6724,7 @@ export const EventsGetEventForEditResponse = {
   ): Uint8Array {
     return EventsGetEventForEditResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6561,17 +6734,20 @@ export const EventsGetEventForEditResponse = {
   decode: function (bytes: ByteSource): EventsGetEventForEditResponse {
     return EventsGetEventForEditResponse._readMessage(
       EventsGetEventForEditResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetEventForEditResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventForEditResponse {
+  initialize: function (
+    msg?: Partial<EventsGetEventForEditResponse>,
+  ): EventsGetEventForEditResponse {
     return {
       id: 0,
       event: protoAtoms.EventData.initialize(),
+      ...msg,
     };
   },
 
@@ -6580,8 +6756,8 @@ export const EventsGetEventForEditResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetEventForEditResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -6596,7 +6772,7 @@ export const EventsGetEventForEditResponse = {
    */
   _readMessage: function (
     msg: EventsGetEventForEditResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetEventForEditResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6626,7 +6802,7 @@ export const EventsUpdateEventPayload = {
   encode: function (msg: PartialDeep<EventsUpdateEventPayload>): Uint8Array {
     return EventsUpdateEventPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6636,17 +6812,20 @@ export const EventsUpdateEventPayload = {
   decode: function (bytes: ByteSource): EventsUpdateEventPayload {
     return EventsUpdateEventPayload._readMessage(
       EventsUpdateEventPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsUpdateEventPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdateEventPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdateEventPayload>,
+  ): EventsUpdateEventPayload {
     return {
       id: 0,
       event: protoAtoms.EventData.initialize(),
+      ...msg,
     };
   },
 
@@ -6655,8 +6834,8 @@ export const EventsUpdateEventPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsUpdateEventPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -6671,7 +6850,7 @@ export const EventsUpdateEventPayload = {
    */
   _readMessage: function (
     msg: EventsUpdateEventPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsUpdateEventPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6703,7 +6882,7 @@ export const EventsGetTablesStateResponse = {
   ): Uint8Array {
     return EventsGetTablesStateResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6713,16 +6892,19 @@ export const EventsGetTablesStateResponse = {
   decode: function (bytes: ByteSource): EventsGetTablesStateResponse {
     return EventsGetTablesStateResponse._readMessage(
       EventsGetTablesStateResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetTablesStateResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetTablesStateResponse {
+  initialize: function (
+    msg?: Partial<EventsGetTablesStateResponse>,
+  ): EventsGetTablesStateResponse {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -6731,8 +6913,8 @@ export const EventsGetTablesStateResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetTablesStateResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -6748,7 +6930,7 @@ export const EventsGetTablesStateResponse = {
    */
   _readMessage: function (
     msg: EventsGetTablesStateResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetTablesStateResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6776,7 +6958,7 @@ export const EventsRegisterPlayerPayload = {
   encode: function (msg: PartialDeep<EventsRegisterPlayerPayload>): Uint8Array {
     return EventsRegisterPlayerPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6786,17 +6968,20 @@ export const EventsRegisterPlayerPayload = {
   decode: function (bytes: ByteSource): EventsRegisterPlayerPayload {
     return EventsRegisterPlayerPayload._readMessage(
       EventsRegisterPlayerPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsRegisterPlayerPayload with all fields set to their default value.
    */
-  initialize: function (): EventsRegisterPlayerPayload {
+  initialize: function (
+    msg?: Partial<EventsRegisterPlayerPayload>,
+  ): EventsRegisterPlayerPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -6805,8 +6990,8 @@ export const EventsRegisterPlayerPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsRegisterPlayerPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -6821,7 +7006,7 @@ export const EventsRegisterPlayerPayload = {
    */
   _readMessage: function (
     msg: EventsRegisterPlayerPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsRegisterPlayerPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6853,7 +7038,7 @@ export const EventsUnregisterPlayerPayload = {
   ): Uint8Array {
     return EventsUnregisterPlayerPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6863,17 +7048,20 @@ export const EventsUnregisterPlayerPayload = {
   decode: function (bytes: ByteSource): EventsUnregisterPlayerPayload {
     return EventsUnregisterPlayerPayload._readMessage(
       EventsUnregisterPlayerPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsUnregisterPlayerPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUnregisterPlayerPayload {
+  initialize: function (
+    msg?: Partial<EventsUnregisterPlayerPayload>,
+  ): EventsUnregisterPlayerPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -6882,8 +7070,8 @@ export const EventsUnregisterPlayerPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsUnregisterPlayerPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -6898,7 +7086,7 @@ export const EventsUnregisterPlayerPayload = {
    */
   _readMessage: function (
     msg: EventsUnregisterPlayerPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsUnregisterPlayerPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -6930,7 +7118,7 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
   ): Uint8Array {
     return EventsUpdatePlayerSeatingFlagPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -6940,18 +7128,21 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayerSeatingFlagPayload {
     return EventsUpdatePlayerSeatingFlagPayload._readMessage(
       EventsUpdatePlayerSeatingFlagPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsUpdatePlayerSeatingFlagPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayerSeatingFlagPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayerSeatingFlagPayload>,
+  ): EventsUpdatePlayerSeatingFlagPayload {
     return {
       playerId: 0,
       eventId: 0,
       ignoreSeating: false,
+      ...msg,
     };
   },
 
@@ -6960,8 +7151,8 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsUpdatePlayerSeatingFlagPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -6979,7 +7170,7 @@ export const EventsUpdatePlayerSeatingFlagPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayerSeatingFlagPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsUpdatePlayerSeatingFlagPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7015,7 +7206,7 @@ export const EventsGetAchievementsPayload = {
   ): Uint8Array {
     return EventsGetAchievementsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7025,17 +7216,20 @@ export const EventsGetAchievementsPayload = {
   decode: function (bytes: ByteSource): EventsGetAchievementsPayload {
     return EventsGetAchievementsPayload._readMessage(
       EventsGetAchievementsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetAchievementsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetAchievementsPayload {
+  initialize: function (
+    msg?: Partial<EventsGetAchievementsPayload>,
+  ): EventsGetAchievementsPayload {
     return {
       achievementsList: [],
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -7044,8 +7238,8 @@ export const EventsGetAchievementsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetAchievementsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.achievementsList?.length) {
       writer.writeRepeatedString(2, msg.achievementsList);
     }
@@ -7060,7 +7254,7 @@ export const EventsGetAchievementsPayload = {
    */
   _readMessage: function (
     msg: EventsGetAchievementsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetAchievementsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7092,7 +7286,7 @@ export const EventsGetAchievementsResponse = {
   ): Uint8Array {
     return EventsGetAchievementsResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7102,16 +7296,19 @@ export const EventsGetAchievementsResponse = {
   decode: function (bytes: ByteSource): EventsGetAchievementsResponse {
     return EventsGetAchievementsResponse._readMessage(
       EventsGetAchievementsResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetAchievementsResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetAchievementsResponse {
+  initialize: function (
+    msg?: Partial<EventsGetAchievementsResponse>,
+  ): EventsGetAchievementsResponse {
     return {
       achievements: [],
+      ...msg,
     };
   },
 
@@ -7120,8 +7317,8 @@ export const EventsGetAchievementsResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetAchievementsResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.achievements?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -7137,7 +7334,7 @@ export const EventsGetAchievementsResponse = {
    */
   _readMessage: function (
     msg: EventsGetAchievementsResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetAchievementsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7167,7 +7364,7 @@ export const EventsUpdatePlayersLocalIdsPayload = {
   ): Uint8Array {
     return EventsUpdatePlayersLocalIdsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7177,17 +7374,20 @@ export const EventsUpdatePlayersLocalIdsPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayersLocalIdsPayload {
     return EventsUpdatePlayersLocalIdsPayload._readMessage(
       EventsUpdatePlayersLocalIdsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsUpdatePlayersLocalIdsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayersLocalIdsPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayersLocalIdsPayload>,
+  ): EventsUpdatePlayersLocalIdsPayload {
     return {
       eventId: 0,
       idsToLocalIds: [],
+      ...msg,
     };
   },
 
@@ -7196,8 +7396,8 @@ export const EventsUpdatePlayersLocalIdsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsUpdatePlayersLocalIdsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -7216,7 +7416,7 @@ export const EventsUpdatePlayersLocalIdsPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayersLocalIdsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsUpdatePlayersLocalIdsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7250,7 +7450,7 @@ export const EventsUpdatePlayerReplacementPayload = {
   ): Uint8Array {
     return EventsUpdatePlayerReplacementPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7260,18 +7460,21 @@ export const EventsUpdatePlayerReplacementPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayerReplacementPayload {
     return EventsUpdatePlayerReplacementPayload._readMessage(
       EventsUpdatePlayerReplacementPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsUpdatePlayerReplacementPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayerReplacementPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayerReplacementPayload>,
+  ): EventsUpdatePlayerReplacementPayload {
     return {
       playerId: 0,
       eventId: 0,
       replacementId: 0,
+      ...msg,
     };
   },
 
@@ -7280,8 +7483,8 @@ export const EventsUpdatePlayerReplacementPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsUpdatePlayerReplacementPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -7299,7 +7502,7 @@ export const EventsUpdatePlayerReplacementPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayerReplacementPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsUpdatePlayerReplacementPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7335,7 +7538,7 @@ export const EventsUpdatePlayersTeamsPayload = {
   ): Uint8Array {
     return EventsUpdatePlayersTeamsPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7345,17 +7548,20 @@ export const EventsUpdatePlayersTeamsPayload = {
   decode: function (bytes: ByteSource): EventsUpdatePlayersTeamsPayload {
     return EventsUpdatePlayersTeamsPayload._readMessage(
       EventsUpdatePlayersTeamsPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsUpdatePlayersTeamsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayersTeamsPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayersTeamsPayload>,
+  ): EventsUpdatePlayersTeamsPayload {
     return {
       eventId: 0,
       idsToTeamNames: [],
+      ...msg,
     };
   },
 
@@ -7364,8 +7570,8 @@ export const EventsUpdatePlayersTeamsPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsUpdatePlayersTeamsPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -7384,7 +7590,7 @@ export const EventsUpdatePlayersTeamsPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePlayersTeamsPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsUpdatePlayersTeamsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7416,7 +7622,7 @@ export const GamesStartGamePayload = {
   encode: function (msg: PartialDeep<GamesStartGamePayload>): Uint8Array {
     return GamesStartGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7426,17 +7632,20 @@ export const GamesStartGamePayload = {
   decode: function (bytes: ByteSource): GamesStartGamePayload {
     return GamesStartGamePayload._readMessage(
       GamesStartGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesStartGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesStartGamePayload {
+  initialize: function (
+    msg?: Partial<GamesStartGamePayload>,
+  ): GamesStartGamePayload {
     return {
       eventId: 0,
       players: [],
+      ...msg,
     };
   },
 
@@ -7445,8 +7654,8 @@ export const GamesStartGamePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesStartGamePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -7461,7 +7670,7 @@ export const GamesStartGamePayload = {
    */
   _readMessage: function (
     msg: GamesStartGamePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesStartGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7495,7 +7704,7 @@ export const GamesStartGameResponse = {
   encode: function (msg: PartialDeep<GamesStartGameResponse>): Uint8Array {
     return GamesStartGameResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7505,16 +7714,19 @@ export const GamesStartGameResponse = {
   decode: function (bytes: ByteSource): GamesStartGameResponse {
     return GamesStartGameResponse._readMessage(
       GamesStartGameResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesStartGameResponse with all fields set to their default value.
    */
-  initialize: function (): GamesStartGameResponse {
+  initialize: function (
+    msg?: Partial<GamesStartGameResponse>,
+  ): GamesStartGameResponse {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -7523,8 +7735,8 @@ export const GamesStartGameResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesStartGameResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -7536,7 +7748,7 @@ export const GamesStartGameResponse = {
    */
   _readMessage: function (
     msg: GamesStartGameResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesStartGameResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7562,7 +7774,7 @@ export const GamesEndGamePayload = {
   encode: function (msg: PartialDeep<GamesEndGamePayload>): Uint8Array {
     return GamesEndGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7572,16 +7784,19 @@ export const GamesEndGamePayload = {
   decode: function (bytes: ByteSource): GamesEndGamePayload {
     return GamesEndGamePayload._readMessage(
       GamesEndGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesEndGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesEndGamePayload {
+  initialize: function (
+    msg?: Partial<GamesEndGamePayload>,
+  ): GamesEndGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -7590,8 +7805,8 @@ export const GamesEndGamePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesEndGamePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -7603,7 +7818,7 @@ export const GamesEndGamePayload = {
    */
   _readMessage: function (
     msg: GamesEndGamePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesEndGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7629,7 +7844,7 @@ export const GamesCancelGamePayload = {
   encode: function (msg: PartialDeep<GamesCancelGamePayload>): Uint8Array {
     return GamesCancelGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7639,16 +7854,19 @@ export const GamesCancelGamePayload = {
   decode: function (bytes: ByteSource): GamesCancelGamePayload {
     return GamesCancelGamePayload._readMessage(
       GamesCancelGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesCancelGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesCancelGamePayload {
+  initialize: function (
+    msg?: Partial<GamesCancelGamePayload>,
+  ): GamesCancelGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -7657,8 +7875,8 @@ export const GamesCancelGamePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesCancelGamePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -7670,7 +7888,7 @@ export const GamesCancelGamePayload = {
    */
   _readMessage: function (
     msg: GamesCancelGamePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesCancelGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7696,7 +7914,7 @@ export const GamesDropLastRoundPayload = {
   encode: function (msg: PartialDeep<GamesDropLastRoundPayload>): Uint8Array {
     return GamesDropLastRoundPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7706,17 +7924,20 @@ export const GamesDropLastRoundPayload = {
   decode: function (bytes: ByteSource): GamesDropLastRoundPayload {
     return GamesDropLastRoundPayload._readMessage(
       GamesDropLastRoundPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesDropLastRoundPayload with all fields set to their default value.
    */
-  initialize: function (): GamesDropLastRoundPayload {
+  initialize: function (
+    msg?: Partial<GamesDropLastRoundPayload>,
+  ): GamesDropLastRoundPayload {
     return {
       sessionHash: "",
       intermediateResults: [],
+      ...msg,
     };
   },
 
@@ -7725,8 +7946,8 @@ export const GamesDropLastRoundPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesDropLastRoundPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -7745,7 +7966,7 @@ export const GamesDropLastRoundPayload = {
    */
   _readMessage: function (
     msg: GamesDropLastRoundPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesDropLastRoundPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7780,7 +8001,7 @@ export const GamesDefinalizeGamePayload = {
   encode: function (msg: PartialDeep<GamesDefinalizeGamePayload>): Uint8Array {
     return GamesDefinalizeGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7790,16 +8011,19 @@ export const GamesDefinalizeGamePayload = {
   decode: function (bytes: ByteSource): GamesDefinalizeGamePayload {
     return GamesDefinalizeGamePayload._readMessage(
       GamesDefinalizeGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesDefinalizeGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesDefinalizeGamePayload {
+  initialize: function (
+    msg?: Partial<GamesDefinalizeGamePayload>,
+  ): GamesDefinalizeGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -7808,8 +8032,8 @@ export const GamesDefinalizeGamePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesDefinalizeGamePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
     }
@@ -7821,7 +8045,7 @@ export const GamesDefinalizeGamePayload = {
    */
   _readMessage: function (
     msg: GamesDefinalizeGamePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesDefinalizeGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7847,7 +8071,7 @@ export const GamesAddPenaltyPayload = {
   encode: function (msg: PartialDeep<GamesAddPenaltyPayload>): Uint8Array {
     return GamesAddPenaltyPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7857,19 +8081,22 @@ export const GamesAddPenaltyPayload = {
   decode: function (bytes: ByteSource): GamesAddPenaltyPayload {
     return GamesAddPenaltyPayload._readMessage(
       GamesAddPenaltyPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesAddPenaltyPayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddPenaltyPayload {
+  initialize: function (
+    msg?: Partial<GamesAddPenaltyPayload>,
+  ): GamesAddPenaltyPayload {
     return {
       eventId: 0,
       playerId: 0,
       amount: 0,
       reason: "",
+      ...msg,
     };
   },
 
@@ -7878,8 +8105,8 @@ export const GamesAddPenaltyPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesAddPenaltyPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -7900,7 +8127,7 @@ export const GamesAddPenaltyPayload = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesAddPenaltyPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -7938,7 +8165,7 @@ export const GamesAddPenaltyGamePayload = {
   encode: function (msg: PartialDeep<GamesAddPenaltyGamePayload>): Uint8Array {
     return GamesAddPenaltyGamePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -7948,17 +8175,20 @@ export const GamesAddPenaltyGamePayload = {
   decode: function (bytes: ByteSource): GamesAddPenaltyGamePayload {
     return GamesAddPenaltyGamePayload._readMessage(
       GamesAddPenaltyGamePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesAddPenaltyGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddPenaltyGamePayload {
+  initialize: function (
+    msg?: Partial<GamesAddPenaltyGamePayload>,
+  ): GamesAddPenaltyGamePayload {
     return {
       eventId: 0,
       players: [],
+      ...msg,
     };
   },
 
@@ -7967,8 +8197,8 @@ export const GamesAddPenaltyGamePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesAddPenaltyGamePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -7983,7 +8213,7 @@ export const GamesAddPenaltyGamePayload = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyGamePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesAddPenaltyGamePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8017,7 +8247,7 @@ export const GamesAddPenaltyGameResponse = {
   encode: function (msg: PartialDeep<GamesAddPenaltyGameResponse>): Uint8Array {
     return GamesAddPenaltyGameResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8027,16 +8257,19 @@ export const GamesAddPenaltyGameResponse = {
   decode: function (bytes: ByteSource): GamesAddPenaltyGameResponse {
     return GamesAddPenaltyGameResponse._readMessage(
       GamesAddPenaltyGameResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GamesAddPenaltyGameResponse with all fields set to their default value.
    */
-  initialize: function (): GamesAddPenaltyGameResponse {
+  initialize: function (
+    msg?: Partial<GamesAddPenaltyGameResponse>,
+  ): GamesAddPenaltyGameResponse {
     return {
       hash: "",
+      ...msg,
     };
   },
 
@@ -8045,8 +8278,8 @@ export const GamesAddPenaltyGameResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GamesAddPenaltyGameResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.hash) {
       writer.writeString(1, msg.hash);
     }
@@ -8058,7 +8291,7 @@ export const GamesAddPenaltyGameResponse = {
    */
   _readMessage: function (
     msg: GamesAddPenaltyGameResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GamesAddPenaltyGameResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8084,7 +8317,7 @@ export const PlayersGetPlayerPayload = {
   encode: function (msg: PartialDeep<PlayersGetPlayerPayload>): Uint8Array {
     return PlayersGetPlayerPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8094,16 +8327,19 @@ export const PlayersGetPlayerPayload = {
   decode: function (bytes: ByteSource): PlayersGetPlayerPayload {
     return PlayersGetPlayerPayload._readMessage(
       PlayersGetPlayerPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetPlayerPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerPayload>,
+  ): PlayersGetPlayerPayload {
     return {
       id: 0,
+      ...msg,
     };
   },
 
@@ -8112,8 +8348,8 @@ export const PlayersGetPlayerPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetPlayerPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.id) {
       writer.writeInt32(1, msg.id);
     }
@@ -8125,7 +8361,7 @@ export const PlayersGetPlayerPayload = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetPlayerPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8151,7 +8387,7 @@ export const PlayersGetPlayerResponse = {
   encode: function (msg: PartialDeep<PlayersGetPlayerResponse>): Uint8Array {
     return PlayersGetPlayerResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8161,16 +8397,19 @@ export const PlayersGetPlayerResponse = {
   decode: function (bytes: ByteSource): PlayersGetPlayerResponse {
     return PlayersGetPlayerResponse._readMessage(
       PlayersGetPlayerResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes PlayersGetPlayerResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerResponse>,
+  ): PlayersGetPlayerResponse {
     return {
       players: protoAtoms.Player.initialize(),
+      ...msg,
     };
   },
 
@@ -8179,8 +8418,8 @@ export const PlayersGetPlayerResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<PlayersGetPlayerResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.players) {
       writer.writeMessage(1, msg.players, protoAtoms.Player._writeMessage);
     }
@@ -8192,7 +8431,7 @@ export const PlayersGetPlayerResponse = {
    */
   _readMessage: function (
     msg: PlayersGetPlayerResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): PlayersGetPlayerResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8220,7 +8459,7 @@ export const EventsGetCurrentSeatingResponse = {
   ): Uint8Array {
     return EventsGetCurrentSeatingResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8230,16 +8469,19 @@ export const EventsGetCurrentSeatingResponse = {
   decode: function (bytes: ByteSource): EventsGetCurrentSeatingResponse {
     return EventsGetCurrentSeatingResponse._readMessage(
       EventsGetCurrentSeatingResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetCurrentSeatingResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetCurrentSeatingResponse {
+  initialize: function (
+    msg?: Partial<EventsGetCurrentSeatingResponse>,
+  ): EventsGetCurrentSeatingResponse {
     return {
       seating: [],
+      ...msg,
     };
   },
 
@@ -8248,8 +8490,8 @@ export const EventsGetCurrentSeatingResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetCurrentSeatingResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.seating?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -8265,7 +8507,7 @@ export const EventsGetCurrentSeatingResponse = {
    */
   _readMessage: function (
     msg: EventsGetCurrentSeatingResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetCurrentSeatingResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8295,7 +8537,7 @@ export const SeatingMakeShuffledSeatingPayload = {
   ): Uint8Array {
     return SeatingMakeShuffledSeatingPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8305,18 +8547,21 @@ export const SeatingMakeShuffledSeatingPayload = {
   decode: function (bytes: ByteSource): SeatingMakeShuffledSeatingPayload {
     return SeatingMakeShuffledSeatingPayload._readMessage(
       SeatingMakeShuffledSeatingPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SeatingMakeShuffledSeatingPayload with all fields set to their default value.
    */
-  initialize: function (): SeatingMakeShuffledSeatingPayload {
+  initialize: function (
+    msg?: Partial<SeatingMakeShuffledSeatingPayload>,
+  ): SeatingMakeShuffledSeatingPayload {
     return {
       eventId: 0,
       groupsCount: 0,
       seed: 0,
+      ...msg,
     };
   },
 
@@ -8325,8 +8570,8 @@ export const SeatingMakeShuffledSeatingPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<SeatingMakeShuffledSeatingPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -8344,7 +8589,7 @@ export const SeatingMakeShuffledSeatingPayload = {
    */
   _readMessage: function (
     msg: SeatingMakeShuffledSeatingPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): SeatingMakeShuffledSeatingPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8380,7 +8625,7 @@ export const SeatingGenerateSwissSeatingResponse = {
   ): Uint8Array {
     return SeatingGenerateSwissSeatingResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8390,16 +8635,19 @@ export const SeatingGenerateSwissSeatingResponse = {
   decode: function (bytes: ByteSource): SeatingGenerateSwissSeatingResponse {
     return SeatingGenerateSwissSeatingResponse._readMessage(
       SeatingGenerateSwissSeatingResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SeatingGenerateSwissSeatingResponse with all fields set to their default value.
    */
-  initialize: function (): SeatingGenerateSwissSeatingResponse {
+  initialize: function (
+    msg?: Partial<SeatingGenerateSwissSeatingResponse>,
+  ): SeatingGenerateSwissSeatingResponse {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -8408,8 +8656,8 @@ export const SeatingGenerateSwissSeatingResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<SeatingGenerateSwissSeatingResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -8425,7 +8673,7 @@ export const SeatingGenerateSwissSeatingResponse = {
    */
   _readMessage: function (
     msg: SeatingGenerateSwissSeatingResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): SeatingGenerateSwissSeatingResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8455,7 +8703,7 @@ export const SeatingMakeIntervalSeatingPayload = {
   ): Uint8Array {
     return SeatingMakeIntervalSeatingPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8465,17 +8713,20 @@ export const SeatingMakeIntervalSeatingPayload = {
   decode: function (bytes: ByteSource): SeatingMakeIntervalSeatingPayload {
     return SeatingMakeIntervalSeatingPayload._readMessage(
       SeatingMakeIntervalSeatingPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SeatingMakeIntervalSeatingPayload with all fields set to their default value.
    */
-  initialize: function (): SeatingMakeIntervalSeatingPayload {
+  initialize: function (
+    msg?: Partial<SeatingMakeIntervalSeatingPayload>,
+  ): SeatingMakeIntervalSeatingPayload {
     return {
       eventId: 0,
       step: 0,
+      ...msg,
     };
   },
 
@@ -8484,8 +8735,8 @@ export const SeatingMakeIntervalSeatingPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<SeatingMakeIntervalSeatingPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -8500,7 +8751,7 @@ export const SeatingMakeIntervalSeatingPayload = {
    */
   _readMessage: function (
     msg: SeatingMakeIntervalSeatingPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): SeatingMakeIntervalSeatingPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8532,7 +8783,7 @@ export const SeatingMakePrescriptedSeatingPayload = {
   ): Uint8Array {
     return SeatingMakePrescriptedSeatingPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8542,17 +8793,20 @@ export const SeatingMakePrescriptedSeatingPayload = {
   decode: function (bytes: ByteSource): SeatingMakePrescriptedSeatingPayload {
     return SeatingMakePrescriptedSeatingPayload._readMessage(
       SeatingMakePrescriptedSeatingPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SeatingMakePrescriptedSeatingPayload with all fields set to their default value.
    */
-  initialize: function (): SeatingMakePrescriptedSeatingPayload {
+  initialize: function (
+    msg?: Partial<SeatingMakePrescriptedSeatingPayload>,
+  ): SeatingMakePrescriptedSeatingPayload {
     return {
       eventId: 0,
       randomizeAtTables: false,
+      ...msg,
     };
   },
 
@@ -8561,8 +8815,8 @@ export const SeatingMakePrescriptedSeatingPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<SeatingMakePrescriptedSeatingPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -8577,7 +8831,7 @@ export const SeatingMakePrescriptedSeatingPayload = {
    */
   _readMessage: function (
     msg: SeatingMakePrescriptedSeatingPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): SeatingMakePrescriptedSeatingPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8609,7 +8863,7 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
   ): Uint8Array {
     return SeatingGetNextPrescriptedSeatingResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8621,16 +8875,19 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
   ): SeatingGetNextPrescriptedSeatingResponse {
     return SeatingGetNextPrescriptedSeatingResponse._readMessage(
       SeatingGetNextPrescriptedSeatingResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes SeatingGetNextPrescriptedSeatingResponse with all fields set to their default value.
    */
-  initialize: function (): SeatingGetNextPrescriptedSeatingResponse {
+  initialize: function (
+    msg?: Partial<SeatingGetNextPrescriptedSeatingResponse>,
+  ): SeatingGetNextPrescriptedSeatingResponse {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -8639,8 +8896,8 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
@@ -8656,7 +8913,7 @@ export const SeatingGetNextPrescriptedSeatingResponse = {
    */
   _readMessage: function (
     msg: SeatingGetNextPrescriptedSeatingResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): SeatingGetNextPrescriptedSeatingResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8686,7 +8943,7 @@ export const EventsGetPrescriptedEventConfigResponse = {
   ): Uint8Array {
     return EventsGetPrescriptedEventConfigResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8698,19 +8955,22 @@ export const EventsGetPrescriptedEventConfigResponse = {
   ): EventsGetPrescriptedEventConfigResponse {
     return EventsGetPrescriptedEventConfigResponse._readMessage(
       EventsGetPrescriptedEventConfigResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetPrescriptedEventConfigResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetPrescriptedEventConfigResponse {
+  initialize: function (
+    msg?: Partial<EventsGetPrescriptedEventConfigResponse>,
+  ): EventsGetPrescriptedEventConfigResponse {
     return {
       eventId: 0,
       nextSessionIndex: 0,
       prescript: undefined,
       errors: [],
+      ...msg,
     };
   },
 
@@ -8719,8 +8979,8 @@ export const EventsGetPrescriptedEventConfigResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetPrescriptedEventConfigResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -8741,7 +9001,7 @@ export const EventsGetPrescriptedEventConfigResponse = {
    */
   _readMessage: function (
     msg: EventsGetPrescriptedEventConfigResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetPrescriptedEventConfigResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8781,7 +9041,7 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
   ): Uint8Array {
     return EventsUpdatePrescriptedEventConfigPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8793,18 +9053,21 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
   ): EventsUpdatePrescriptedEventConfigPayload {
     return EventsUpdatePrescriptedEventConfigPayload._readMessage(
       EventsUpdatePrescriptedEventConfigPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsUpdatePrescriptedEventConfigPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePrescriptedEventConfigPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePrescriptedEventConfigPayload>,
+  ): EventsUpdatePrescriptedEventConfigPayload {
     return {
       eventId: 0,
       nextSessionIndex: 0,
       prescript: "",
+      ...msg,
     };
   },
 
@@ -8813,8 +9076,8 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsUpdatePrescriptedEventConfigPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -8832,7 +9095,7 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
    */
   _readMessage: function (
     msg: EventsUpdatePrescriptedEventConfigPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsUpdatePrescriptedEventConfigPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8868,7 +9131,7 @@ export const EventsGetStartingTimerResponse = {
   ): Uint8Array {
     return EventsGetStartingTimerResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8878,16 +9141,19 @@ export const EventsGetStartingTimerResponse = {
   decode: function (bytes: ByteSource): EventsGetStartingTimerResponse {
     return EventsGetStartingTimerResponse._readMessage(
       EventsGetStartingTimerResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes EventsGetStartingTimerResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetStartingTimerResponse {
+  initialize: function (
+    msg?: Partial<EventsGetStartingTimerResponse>,
+  ): EventsGetStartingTimerResponse {
     return {
       timer: 0,
+      ...msg,
     };
   },
 
@@ -8896,8 +9162,8 @@ export const EventsGetStartingTimerResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<EventsGetStartingTimerResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.timer) {
       writer.writeInt32(1, msg.timer);
     }
@@ -8909,7 +9175,7 @@ export const EventsGetStartingTimerResponse = {
    */
   _readMessage: function (
     msg: EventsGetStartingTimerResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): EventsGetStartingTimerResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -8935,7 +9201,7 @@ export const ClearStatCachePayload = {
   encode: function (msg: PartialDeep<ClearStatCachePayload>): Uint8Array {
     return ClearStatCachePayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -8945,16 +9211,19 @@ export const ClearStatCachePayload = {
   decode: function (bytes: ByteSource): ClearStatCachePayload {
     return ClearStatCachePayload._readMessage(
       ClearStatCachePayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes ClearStatCachePayload with all fields set to their default value.
    */
-  initialize: function (): ClearStatCachePayload {
+  initialize: function (
+    msg?: Partial<ClearStatCachePayload>,
+  ): ClearStatCachePayload {
     return {
       playerId: 0,
+      ...msg,
     };
   },
 
@@ -8963,8 +9232,8 @@ export const ClearStatCachePayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<ClearStatCachePayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
     }
@@ -8976,7 +9245,7 @@ export const ClearStatCachePayload = {
    */
   _readMessage: function (
     msg: ClearStatCachePayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): ClearStatCachePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -9004,7 +9273,7 @@ export const TypedGamesAddOnlineReplayPayload = {
   ): Uint8Array {
     return TypedGamesAddOnlineReplayPayload._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -9014,14 +9283,16 @@ export const TypedGamesAddOnlineReplayPayload = {
   decode: function (bytes: ByteSource): TypedGamesAddOnlineReplayPayload {
     return TypedGamesAddOnlineReplayPayload._readMessage(
       TypedGamesAddOnlineReplayPayload.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes TypedGamesAddOnlineReplayPayload with all fields set to their default value.
    */
-  initialize: function (): TypedGamesAddOnlineReplayPayload {
+  initialize: function (
+    msg?: Partial<TypedGamesAddOnlineReplayPayload>,
+  ): TypedGamesAddOnlineReplayPayload {
     return {
       eventId: 0,
       platformId: 0,
@@ -9029,6 +9300,7 @@ export const TypedGamesAddOnlineReplayPayload = {
       logTimestamp: 0,
       replayHash: "",
       content: "",
+      ...msg,
     };
   },
 
@@ -9037,8 +9309,8 @@ export const TypedGamesAddOnlineReplayPayload = {
    */
   _writeMessage: function (
     msg: PartialDeep<TypedGamesAddOnlineReplayPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
@@ -9065,7 +9337,7 @@ export const TypedGamesAddOnlineReplayPayload = {
    */
   _readMessage: function (
     msg: TypedGamesAddOnlineReplayPayload,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): TypedGamesAddOnlineReplayPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -9126,8 +9398,12 @@ export const EventsGetRulesetsPayloadJSON = {
   /**
    * Initializes EventsGetRulesetsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetRulesetsPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<EventsGetRulesetsPayload>,
+  ): EventsGetRulesetsPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -9171,11 +9447,14 @@ export const EventsGetRulesetsResponseJSON = {
   /**
    * Initializes EventsGetRulesetsResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetRulesetsResponse {
+  initialize: function (
+    msg?: Partial<EventsGetRulesetsResponse>,
+  ): EventsGetRulesetsResponse {
     return {
       rulesets: [],
       rulesetIds: [],
       rulesetTitles: [],
+      ...msg,
     };
   },
 
@@ -9248,9 +9527,12 @@ export const EventsGetTimezonesPayloadJSON = {
   /**
    * Initializes EventsGetTimezonesPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetTimezonesPayload {
+  initialize: function (
+    msg?: Partial<EventsGetTimezonesPayload>,
+  ): EventsGetTimezonesPayload {
     return {
       addr: "",
+      ...msg,
     };
   },
 
@@ -9303,10 +9585,13 @@ export const EventsGetTimezonesResponseJSON = {
   /**
    * Initializes EventsGetTimezonesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetTimezonesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetTimezonesResponse>,
+  ): EventsGetTimezonesResponse {
     return {
       preferredByIp: "",
       timezones: [],
+      ...msg,
     };
   },
 
@@ -9366,9 +9651,12 @@ export const EventsGetCountriesPayloadJSON = {
   /**
    * Initializes EventsGetCountriesPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetCountriesPayload {
+  initialize: function (
+    msg?: Partial<EventsGetCountriesPayload>,
+  ): EventsGetCountriesPayload {
     return {
       addr: "",
+      ...msg,
     };
   },
 
@@ -9421,10 +9709,13 @@ export const EventsGetCountriesResponseJSON = {
   /**
    * Initializes EventsGetCountriesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetCountriesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetCountriesResponse>,
+  ): EventsGetCountriesResponse {
     return {
       preferredByIp: "",
       countries: [],
+      ...msg,
     };
   },
 
@@ -9490,12 +9781,15 @@ export const EventsGetEventsPayloadJSON = {
   /**
    * Initializes EventsGetEventsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsPayload {
+  initialize: function (
+    msg?: Partial<EventsGetEventsPayload>,
+  ): EventsGetEventsPayload {
     return {
       limit: 0,
       offset: 0,
       filterUnlisted: false,
       filter: "",
+      ...msg,
     };
   },
 
@@ -9530,11 +9824,11 @@ export const EventsGetEventsPayloadJSON = {
   ): EventsGetEventsPayload {
     const _limit_ = json["limit"];
     if (_limit_) {
-      msg.limit = _limit_;
+      msg.limit = protoscript.parseNumber(_limit_);
     }
     const _offset_ = json["offset"];
     if (_offset_) {
-      msg.offset = _offset_;
+      msg.offset = protoscript.parseNumber(_offset_);
     }
     const _filterUnlisted_ = json["filterUnlisted"] ?? json["filter_unlisted"];
     if (_filterUnlisted_) {
@@ -9569,10 +9863,13 @@ export const EventsGetEventsResponseJSON = {
   /**
    * Initializes EventsGetEventsResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsResponse {
+  initialize: function (
+    msg?: Partial<EventsGetEventsResponse>,
+  ): EventsGetEventsResponse {
     return {
       total: 0,
       events: [],
+      ...msg,
     };
   },
 
@@ -9601,7 +9898,7 @@ export const EventsGetEventsResponseJSON = {
   ): EventsGetEventsResponse {
     const _total_ = json["total"];
     if (_total_) {
-      msg.total = _total_;
+      msg.total = protoscript.parseNumber(_total_);
     }
     const _events_ = json["events"];
     if (_events_) {
@@ -9636,9 +9933,12 @@ export const EventsGetEventsByIdPayloadJSON = {
   /**
    * Initializes EventsGetEventsByIdPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsByIdPayload {
+  initialize: function (
+    msg?: Partial<EventsGetEventsByIdPayload>,
+  ): EventsGetEventsByIdPayload {
     return {
       ids: [],
+      ...msg,
     };
   },
 
@@ -9664,7 +9964,7 @@ export const EventsGetEventsByIdPayloadJSON = {
   ): EventsGetEventsByIdPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
-      msg.ids = _ids_;
+      msg.ids = _ids_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -9691,9 +9991,12 @@ export const EventsGetEventsByIdResponseJSON = {
   /**
    * Initializes EventsGetEventsByIdResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventsByIdResponse {
+  initialize: function (
+    msg?: Partial<EventsGetEventsByIdResponse>,
+  ): EventsGetEventsByIdResponse {
     return {
       events: [],
+      ...msg,
     };
   },
 
@@ -9747,8 +10050,12 @@ export const PlayersGetMyEventsPayloadJSON = {
   /**
    * Initializes PlayersGetMyEventsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetMyEventsPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<PlayersGetMyEventsPayload>,
+  ): PlayersGetMyEventsPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -9792,9 +10099,12 @@ export const PlayersGetMyEventsResponseJSON = {
   /**
    * Initializes PlayersGetMyEventsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetMyEventsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetMyEventsResponse>,
+  ): PlayersGetMyEventsResponse {
     return {
       events: [],
+      ...msg,
     };
   },
 
@@ -9851,13 +10161,16 @@ export const EventsGetRatingTablePayloadJSON = {
   /**
    * Initializes EventsGetRatingTablePayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetRatingTablePayload {
+  initialize: function (
+    msg?: Partial<EventsGetRatingTablePayload>,
+  ): EventsGetRatingTablePayload {
     return {
       eventIdList: [],
       orderBy: "",
       order: "",
       withPrefinished: undefined,
       onlyMinGames: undefined,
+      ...msg,
     };
   },
 
@@ -9895,7 +10208,7 @@ export const EventsGetRatingTablePayloadJSON = {
   ): EventsGetRatingTablePayload {
     const _eventIdList_ = json["eventIdList"] ?? json["event_id_list"];
     if (_eventIdList_) {
-      msg.eventIdList = _eventIdList_;
+      msg.eventIdList = _eventIdList_.map(protoscript.parseNumber);
     }
     const _orderBy_ = json["orderBy"] ?? json["order_by"];
     if (_orderBy_) {
@@ -9939,9 +10252,12 @@ export const EventsGetRatingTableResponseJSON = {
   /**
    * Initializes EventsGetRatingTableResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetRatingTableResponse {
+  initialize: function (
+    msg?: Partial<EventsGetRatingTableResponse>,
+  ): EventsGetRatingTableResponse {
     return {
       list: [],
+      ...msg,
     };
   },
 
@@ -9998,13 +10314,16 @@ export const EventsGetLastGamesPayloadJSON = {
   /**
    * Initializes EventsGetLastGamesPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetLastGamesPayload {
+  initialize: function (
+    msg?: Partial<EventsGetLastGamesPayload>,
+  ): EventsGetLastGamesPayload {
     return {
       eventIdList: [],
       limit: 0,
       offset: 0,
       orderBy: undefined,
       order: undefined,
+      ...msg,
     };
   },
 
@@ -10042,15 +10361,15 @@ export const EventsGetLastGamesPayloadJSON = {
   ): EventsGetLastGamesPayload {
     const _eventIdList_ = json["eventIdList"] ?? json["event_id_list"];
     if (_eventIdList_) {
-      msg.eventIdList = _eventIdList_;
+      msg.eventIdList = _eventIdList_.map(protoscript.parseNumber);
     }
     const _limit_ = json["limit"];
     if (_limit_) {
-      msg.limit = _limit_;
+      msg.limit = protoscript.parseNumber(_limit_);
     }
     const _offset_ = json["offset"];
     if (_offset_) {
-      msg.offset = _offset_;
+      msg.offset = protoscript.parseNumber(_offset_);
     }
     const _orderBy_ = json["orderBy"] ?? json["order_by"];
     if (_orderBy_) {
@@ -10085,11 +10404,14 @@ export const EventsGetLastGamesResponseJSON = {
   /**
    * Initializes EventsGetLastGamesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetLastGamesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetLastGamesResponse>,
+  ): EventsGetLastGamesResponse {
     return {
       games: [],
       players: [],
       totalGames: 0,
+      ...msg,
     };
   },
 
@@ -10137,7 +10459,7 @@ export const EventsGetLastGamesResponseJSON = {
     }
     const _totalGames_ = json["totalGames"] ?? json["total_games"];
     if (_totalGames_) {
-      msg.totalGames = _totalGames_;
+      msg.totalGames = protoscript.parseNumber(_totalGames_);
     }
     return msg;
   },
@@ -10164,9 +10486,12 @@ export const EventsGetGamePayloadJSON = {
   /**
    * Initializes EventsGetGamePayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetGamePayload {
+  initialize: function (
+    msg?: Partial<EventsGetGamePayload>,
+  ): EventsGetGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -10219,10 +10544,13 @@ export const EventsGetGameResponseJSON = {
   /**
    * Initializes EventsGetGameResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetGameResponse {
+  initialize: function (
+    msg?: Partial<EventsGetGameResponse>,
+  ): EventsGetGameResponse {
     return {
       game: protoAtoms.GameResultJSON.initialize(),
       players: [],
+      ...msg,
     };
   },
 
@@ -10289,9 +10617,12 @@ export const EventsGetGamesSeriesResponseJSON = {
   /**
    * Initializes EventsGetGamesSeriesResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetGamesSeriesResponse {
+  initialize: function (
+    msg?: Partial<EventsGetGamesSeriesResponse>,
+  ): EventsGetGamesSeriesResponse {
     return {
       results: [],
+      ...msg,
     };
   },
 
@@ -10354,10 +10685,13 @@ export const PlayersGetCurrentSessionsPayloadJSON = {
   /**
    * Initializes PlayersGetCurrentSessionsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetCurrentSessionsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetCurrentSessionsPayload>,
+  ): PlayersGetCurrentSessionsPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -10386,11 +10720,11 @@ export const PlayersGetCurrentSessionsPayloadJSON = {
   ): PlayersGetCurrentSessionsPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -10421,9 +10755,12 @@ export const PlayersGetCurrentSessionsResponseJSON = {
   /**
    * Initializes PlayersGetCurrentSessionsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetCurrentSessionsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetCurrentSessionsResponse>,
+  ): PlayersGetCurrentSessionsResponse {
     return {
       sessions: [],
+      ...msg,
     };
   },
 
@@ -10486,9 +10823,12 @@ export const EventsGetAllRegisteredPlayersPayloadJSON = {
   /**
    * Initializes EventsGetAllRegisteredPlayersPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetAllRegisteredPlayersPayload {
+  initialize: function (
+    msg?: Partial<EventsGetAllRegisteredPlayersPayload>,
+  ): EventsGetAllRegisteredPlayersPayload {
     return {
       eventIds: [],
+      ...msg,
     };
   },
 
@@ -10514,7 +10854,7 @@ export const EventsGetAllRegisteredPlayersPayloadJSON = {
   ): EventsGetAllRegisteredPlayersPayload {
     const _eventIds_ = json["eventIds"] ?? json["event_ids"];
     if (_eventIds_) {
-      msg.eventIds = _eventIds_;
+      msg.eventIds = _eventIds_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -10545,9 +10885,12 @@ export const EventsGetAllRegisteredPlayersResponseJSON = {
   /**
    * Initializes EventsGetAllRegisteredPlayersResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetAllRegisteredPlayersResponse {
+  initialize: function (
+    msg?: Partial<EventsGetAllRegisteredPlayersResponse>,
+  ): EventsGetAllRegisteredPlayersResponse {
     return {
       players: [],
+      ...msg,
     };
   },
 
@@ -10606,7 +10949,9 @@ export const EventsGetTimerStateResponseJSON = {
   /**
    * Initializes EventsGetTimerStateResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetTimerStateResponse {
+  initialize: function (
+    msg?: Partial<EventsGetTimerStateResponse>,
+  ): EventsGetTimerStateResponse {
     return {
       started: false,
       finished: false,
@@ -10615,6 +10960,7 @@ export const EventsGetTimerStateResponseJSON = {
       haveAutostart: false,
       autostartTimer: false,
       hideSeatingAfter: 0,
+      ...msg,
     };
   },
 
@@ -10666,7 +11012,7 @@ export const EventsGetTimerStateResponseJSON = {
     }
     const _timeRemaining_ = json["timeRemaining"] ?? json["time_remaining"];
     if (_timeRemaining_) {
-      msg.timeRemaining = _timeRemaining_;
+      msg.timeRemaining = protoscript.parseNumber(_timeRemaining_);
     }
     const _waitingForTimer_ =
       json["waitingForTimer"] ?? json["waiting_for_timer"];
@@ -10684,7 +11030,7 @@ export const EventsGetTimerStateResponseJSON = {
     const _hideSeatingAfter_ =
       json["hideSeatingAfter"] ?? json["hide_seating_after"];
     if (_hideSeatingAfter_) {
-      msg.hideSeatingAfter = _hideSeatingAfter_;
+      msg.hideSeatingAfter = protoscript.parseNumber(_hideSeatingAfter_);
     }
     return msg;
   },
@@ -10713,9 +11059,12 @@ export const GamesGetSessionOverviewPayloadJSON = {
   /**
    * Initializes GamesGetSessionOverviewPayload with all fields set to their default value.
    */
-  initialize: function (): GamesGetSessionOverviewPayload {
+  initialize: function (
+    msg?: Partial<GamesGetSessionOverviewPayload>,
+  ): GamesGetSessionOverviewPayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -10770,13 +11119,16 @@ export const GamesGetSessionOverviewResponseJSON = {
   /**
    * Initializes GamesGetSessionOverviewResponse with all fields set to their default value.
    */
-  initialize: function (): GamesGetSessionOverviewResponse {
+  initialize: function (
+    msg?: Partial<GamesGetSessionOverviewResponse>,
+  ): GamesGetSessionOverviewResponse {
     return {
       id: 0,
       eventId: 0,
       tableIndex: undefined,
       players: [],
       state: protoAtoms.SessionStateJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -10819,15 +11171,15 @@ export const GamesGetSessionOverviewResponseJSON = {
   ): GamesGetSessionOverviewResponse {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
-      msg.tableIndex = _tableIndex_;
+      msg.tableIndex = protoscript.parseNumber(_tableIndex_);
     }
     const _players_ = json["players"];
     if (_players_) {
@@ -10866,10 +11218,13 @@ export const PlayersGetPlayerStatsPayloadJSON = {
   /**
    * Initializes PlayersGetPlayerStatsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerStatsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerStatsPayload>,
+  ): PlayersGetPlayerStatsPayload {
     return {
       playerId: 0,
       eventIdList: [],
+      ...msg,
     };
   },
 
@@ -10898,11 +11253,11 @@ export const PlayersGetPlayerStatsPayloadJSON = {
   ): PlayersGetPlayerStatsPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventIdList_ = json["eventIdList"] ?? json["event_id_list"];
     if (_eventIdList_) {
-      msg.eventIdList = _eventIdList_;
+      msg.eventIdList = _eventIdList_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -10929,7 +11284,9 @@ export const PlayersGetPlayerStatsResponseJSON = {
   /**
    * Initializes PlayersGetPlayerStatsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerStatsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerStatsResponse>,
+  ): PlayersGetPlayerStatsResponse {
     return {
       ratingHistory: [],
       scoreHistory: [],
@@ -10943,6 +11300,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
       riichiSummary: protoAtoms.RiichiSummaryJSON.initialize(),
       doraStat: protoAtoms.DoraSummaryJSON.initialize(),
       lastUpdate: "",
+      ...msg,
     };
   },
 
@@ -11024,7 +11382,7 @@ export const PlayersGetPlayerStatsResponseJSON = {
   ): PlayersGetPlayerStatsResponse {
     const _ratingHistory_ = json["ratingHistory"] ?? json["rating_history"];
     if (_ratingHistory_) {
-      msg.ratingHistory = _ratingHistory_;
+      msg.ratingHistory = _ratingHistory_.map(protoscript.parseNumber);
     }
     const _scoreHistory_ = json["scoreHistory"] ?? json["score_history"];
     if (_scoreHistory_) {
@@ -11053,12 +11411,12 @@ export const PlayersGetPlayerStatsResponseJSON = {
     const _totalPlayedGames_ =
       json["totalPlayedGames"] ?? json["total_played_games"];
     if (_totalPlayedGames_) {
-      msg.totalPlayedGames = _totalPlayedGames_;
+      msg.totalPlayedGames = protoscript.parseNumber(_totalPlayedGames_);
     }
     const _totalPlayedRounds_ =
       json["totalPlayedRounds"] ?? json["total_played_rounds"];
     if (_totalPlayedRounds_) {
-      msg.totalPlayedRounds = _totalPlayedRounds_;
+      msg.totalPlayedRounds = protoscript.parseNumber(_totalPlayedRounds_);
     }
     const _winSummary_ = json["winSummary"] ?? json["win_summary"];
     if (_winSummary_) {
@@ -11124,10 +11482,13 @@ export const GamesAddRoundPayloadJSON = {
   /**
    * Initializes GamesAddRoundPayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddRoundPayload {
+  initialize: function (
+    msg?: Partial<GamesAddRoundPayload>,
+  ): GamesAddRoundPayload {
     return {
       sessionHash: "",
       roundData: protoAtoms.RoundJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -11190,7 +11551,9 @@ export const GamesAddRoundResponseJSON = {
   /**
    * Initializes GamesAddRoundResponse with all fields set to their default value.
    */
-  initialize: function (): GamesAddRoundResponse {
+  initialize: function (
+    msg?: Partial<GamesAddRoundResponse>,
+  ): GamesAddRoundResponse {
     return {
       scores: [],
       extraPenaltyLogs: [],
@@ -11202,6 +11565,7 @@ export const GamesAddRoundResponseJSON = {
       isFinished: false,
       lastHandStarted: false,
       lastOutcome: undefined,
+      ...msg,
     };
   },
 
@@ -11275,15 +11639,15 @@ export const GamesAddRoundResponseJSON = {
     }
     const _round_ = json["round"];
     if (_round_) {
-      msg.round = _round_;
+      msg.round = protoscript.parseNumber(_round_);
     }
     const _honba_ = json["honba"];
     if (_honba_) {
-      msg.honba = _honba_;
+      msg.honba = protoscript.parseNumber(_honba_);
     }
     const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
-      msg.riichiBets = _riichiBets_;
+      msg.riichiBets = protoscript.parseNumber(_riichiBets_);
     }
     const _prematurelyFinished_ =
       json["prematurelyFinished"] ?? json["prematurely_finished"];
@@ -11306,7 +11670,7 @@ export const GamesAddRoundResponseJSON = {
     }
     const _lastOutcome_ = json["lastOutcome"] ?? json["last_outcome"];
     if (_lastOutcome_) {
-      msg.lastOutcome = _lastOutcome_;
+      msg.lastOutcome = protoAtoms.RoundOutcome._fromInt(_lastOutcome_);
     }
     return msg;
   },
@@ -11333,10 +11697,13 @@ export const GamesPreviewRoundPayloadJSON = {
   /**
    * Initializes GamesPreviewRoundPayload with all fields set to their default value.
    */
-  initialize: function (): GamesPreviewRoundPayload {
+  initialize: function (
+    msg?: Partial<GamesPreviewRoundPayload>,
+  ): GamesPreviewRoundPayload {
     return {
       sessionHash: "",
       roundData: protoAtoms.RoundJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -11399,9 +11766,12 @@ export const GamesPreviewRoundResponseJSON = {
   /**
    * Initializes GamesPreviewRoundResponse with all fields set to their default value.
    */
-  initialize: function (): GamesPreviewRoundResponse {
+  initialize: function (
+    msg?: Partial<GamesPreviewRoundResponse>,
+  ): GamesPreviewRoundResponse {
     return {
       state: protoAtoms.RoundStateJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -11457,10 +11827,13 @@ export const GamesAddOnlineReplayPayloadJSON = {
   /**
    * Initializes GamesAddOnlineReplayPayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddOnlineReplayPayload {
+  initialize: function (
+    msg?: Partial<GamesAddOnlineReplayPayload>,
+  ): GamesAddOnlineReplayPayload {
     return {
       eventId: 0,
       link: "",
+      ...msg,
     };
   },
 
@@ -11489,7 +11862,7 @@ export const GamesAddOnlineReplayPayloadJSON = {
   ): GamesAddOnlineReplayPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _link_ = json["link"];
     if (_link_) {
@@ -11520,10 +11893,13 @@ export const GamesAddOnlineReplayResponseJSON = {
   /**
    * Initializes GamesAddOnlineReplayResponse with all fields set to their default value.
    */
-  initialize: function (): GamesAddOnlineReplayResponse {
+  initialize: function (
+    msg?: Partial<GamesAddOnlineReplayResponse>,
+  ): GamesAddOnlineReplayResponse {
     return {
       game: protoAtoms.GameResultJSON.initialize(),
       players: [],
+      ...msg,
     };
   },
 
@@ -11590,10 +11966,13 @@ export const PlayersGetLastResultsPayloadJSON = {
   /**
    * Initializes PlayersGetLastResultsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastResultsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetLastResultsPayload>,
+  ): PlayersGetLastResultsPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -11622,11 +12001,11 @@ export const PlayersGetLastResultsPayloadJSON = {
   ): PlayersGetLastResultsPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -11653,9 +12032,12 @@ export const PlayersGetLastResultsResponseJSON = {
   /**
    * Initializes PlayersGetLastResultsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastResultsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetLastResultsResponse>,
+  ): PlayersGetLastResultsResponse {
     return {
       results: [],
+      ...msg,
     };
   },
 
@@ -11714,10 +12096,13 @@ export const PlayersGetLastRoundPayloadJSON = {
   /**
    * Initializes PlayersGetLastRoundPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundPayload>,
+  ): PlayersGetLastRoundPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -11746,11 +12131,11 @@ export const PlayersGetLastRoundPayloadJSON = {
   ): PlayersGetLastRoundPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -11777,9 +12162,12 @@ export const PlayersGetLastRoundResponseJSON = {
   /**
    * Initializes PlayersGetLastRoundResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundResponse>,
+  ): PlayersGetLastRoundResponse {
     return {
       round: protoAtoms.RoundStateJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -11835,9 +12223,12 @@ export const PlayersGetAllRoundsPayloadJSON = {
   /**
    * Initializes PlayersGetAllRoundsPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetAllRoundsPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetAllRoundsPayload>,
+  ): PlayersGetAllRoundsPayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -11890,9 +12281,12 @@ export const PlayersGetAllRoundsResponseJSON = {
   /**
    * Initializes PlayersGetAllRoundsResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetAllRoundsResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetAllRoundsResponse>,
+  ): PlayersGetAllRoundsResponse {
     return {
       rounds: [],
+      ...msg,
     };
   },
 
@@ -11953,9 +12347,12 @@ export const PlayersGetLastRoundByHashPayloadJSON = {
   /**
    * Initializes PlayersGetLastRoundByHashPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundByHashPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundByHashPayload>,
+  ): PlayersGetLastRoundByHashPayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -12012,9 +12409,12 @@ export const PlayersGetLastRoundByHashResponseJSON = {
   /**
    * Initializes PlayersGetLastRoundByHashResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetLastRoundByHashResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetLastRoundByHashResponse>,
+  ): PlayersGetLastRoundByHashResponse {
     return {
       round: protoAtoms.RoundStateJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -12070,9 +12470,12 @@ export const EventsGetEventForEditPayloadJSON = {
   /**
    * Initializes EventsGetEventForEditPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventForEditPayload {
+  initialize: function (
+    msg?: Partial<EventsGetEventForEditPayload>,
+  ): EventsGetEventForEditPayload {
     return {
       id: 0,
+      ...msg,
     };
   },
 
@@ -12098,7 +12501,7 @@ export const EventsGetEventForEditPayloadJSON = {
   ): EventsGetEventForEditPayload {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     return msg;
   },
@@ -12125,10 +12528,13 @@ export const EventsGetEventForEditResponseJSON = {
   /**
    * Initializes EventsGetEventForEditResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetEventForEditResponse {
+  initialize: function (
+    msg?: Partial<EventsGetEventForEditResponse>,
+  ): EventsGetEventForEditResponse {
     return {
       id: 0,
       event: protoAtoms.EventDataJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -12160,7 +12566,7 @@ export const EventsGetEventForEditResponseJSON = {
   ): EventsGetEventForEditResponse {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _event_ = json["event"];
     if (_event_) {
@@ -12191,10 +12597,13 @@ export const EventsUpdateEventPayloadJSON = {
   /**
    * Initializes EventsUpdateEventPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdateEventPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdateEventPayload>,
+  ): EventsUpdateEventPayload {
     return {
       id: 0,
       event: protoAtoms.EventDataJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -12226,7 +12635,7 @@ export const EventsUpdateEventPayloadJSON = {
   ): EventsUpdateEventPayload {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     const _event_ = json["event"];
     if (_event_) {
@@ -12257,9 +12666,12 @@ export const EventsGetTablesStateResponseJSON = {
   /**
    * Initializes EventsGetTablesStateResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetTablesStateResponse {
+  initialize: function (
+    msg?: Partial<EventsGetTablesStateResponse>,
+  ): EventsGetTablesStateResponse {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -12316,10 +12728,13 @@ export const EventsRegisterPlayerPayloadJSON = {
   /**
    * Initializes EventsRegisterPlayerPayload with all fields set to their default value.
    */
-  initialize: function (): EventsRegisterPlayerPayload {
+  initialize: function (
+    msg?: Partial<EventsRegisterPlayerPayload>,
+  ): EventsRegisterPlayerPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -12348,11 +12763,11 @@ export const EventsRegisterPlayerPayloadJSON = {
   ): EventsRegisterPlayerPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -12379,10 +12794,13 @@ export const EventsUnregisterPlayerPayloadJSON = {
   /**
    * Initializes EventsUnregisterPlayerPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUnregisterPlayerPayload {
+  initialize: function (
+    msg?: Partial<EventsUnregisterPlayerPayload>,
+  ): EventsUnregisterPlayerPayload {
     return {
       playerId: 0,
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -12411,11 +12829,11 @@ export const EventsUnregisterPlayerPayloadJSON = {
   ): EventsUnregisterPlayerPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -12446,11 +12864,14 @@ export const EventsUpdatePlayerSeatingFlagPayloadJSON = {
   /**
    * Initializes EventsUpdatePlayerSeatingFlagPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayerSeatingFlagPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayerSeatingFlagPayload>,
+  ): EventsUpdatePlayerSeatingFlagPayload {
     return {
       playerId: 0,
       eventId: 0,
       ignoreSeating: false,
+      ...msg,
     };
   },
 
@@ -12482,11 +12903,11 @@ export const EventsUpdatePlayerSeatingFlagPayloadJSON = {
   ): EventsUpdatePlayerSeatingFlagPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _ignoreSeating_ = json["ignoreSeating"] ?? json["ignore_seating"];
     if (_ignoreSeating_) {
@@ -12517,10 +12938,13 @@ export const EventsGetAchievementsPayloadJSON = {
   /**
    * Initializes EventsGetAchievementsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsGetAchievementsPayload {
+  initialize: function (
+    msg?: Partial<EventsGetAchievementsPayload>,
+  ): EventsGetAchievementsPayload {
     return {
       achievementsList: [],
       eventId: 0,
+      ...msg,
     };
   },
 
@@ -12554,7 +12978,7 @@ export const EventsGetAchievementsPayloadJSON = {
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },
@@ -12581,9 +13005,12 @@ export const EventsGetAchievementsResponseJSON = {
   /**
    * Initializes EventsGetAchievementsResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetAchievementsResponse {
+  initialize: function (
+    msg?: Partial<EventsGetAchievementsResponse>,
+  ): EventsGetAchievementsResponse {
     return {
       achievements: [],
+      ...msg,
     };
   },
 
@@ -12646,10 +13073,13 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
   /**
    * Initializes EventsUpdatePlayersLocalIdsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayersLocalIdsPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayersLocalIdsPayload>,
+  ): EventsUpdatePlayersLocalIdsPayload {
     return {
       eventId: 0,
       idsToLocalIds: [],
+      ...msg,
     };
   },
 
@@ -12680,7 +13110,7 @@ export const EventsUpdatePlayersLocalIdsPayloadJSON = {
   ): EventsUpdatePlayersLocalIdsPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _idsToLocalIds_ = json["idsToLocalIds"] ?? json["ids_to_local_ids"];
     if (_idsToLocalIds_) {
@@ -12719,11 +13149,14 @@ export const EventsUpdatePlayerReplacementPayloadJSON = {
   /**
    * Initializes EventsUpdatePlayerReplacementPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayerReplacementPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayerReplacementPayload>,
+  ): EventsUpdatePlayerReplacementPayload {
     return {
       playerId: 0,
       eventId: 0,
       replacementId: 0,
+      ...msg,
     };
   },
 
@@ -12755,15 +13188,15 @@ export const EventsUpdatePlayerReplacementPayloadJSON = {
   ): EventsUpdatePlayerReplacementPayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _replacementId_ = json["replacementId"] ?? json["replacement_id"];
     if (_replacementId_) {
-      msg.replacementId = _replacementId_;
+      msg.replacementId = protoscript.parseNumber(_replacementId_);
     }
     return msg;
   },
@@ -12792,10 +13225,13 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
   /**
    * Initializes EventsUpdatePlayersTeamsPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePlayersTeamsPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePlayersTeamsPayload>,
+  ): EventsUpdatePlayersTeamsPayload {
     return {
       eventId: 0,
       idsToTeamNames: [],
+      ...msg,
     };
   },
 
@@ -12826,7 +13262,7 @@ export const EventsUpdatePlayersTeamsPayloadJSON = {
   ): EventsUpdatePlayersTeamsPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _idsToTeamNames_ =
       json["idsToTeamNames"] ?? json["ids_to_team_names"];
@@ -12862,10 +13298,13 @@ export const GamesStartGamePayloadJSON = {
   /**
    * Initializes GamesStartGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesStartGamePayload {
+  initialize: function (
+    msg?: Partial<GamesStartGamePayload>,
+  ): GamesStartGamePayload {
     return {
       eventId: 0,
       players: [],
+      ...msg,
     };
   },
 
@@ -12894,11 +13333,11 @@ export const GamesStartGamePayloadJSON = {
   ): GamesStartGamePayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _players_ = json["players"];
     if (_players_) {
-      msg.players = _players_;
+      msg.players = _players_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -12925,9 +13364,12 @@ export const GamesStartGameResponseJSON = {
   /**
    * Initializes GamesStartGameResponse with all fields set to their default value.
    */
-  initialize: function (): GamesStartGameResponse {
+  initialize: function (
+    msg?: Partial<GamesStartGameResponse>,
+  ): GamesStartGameResponse {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -12980,9 +13422,12 @@ export const GamesEndGamePayloadJSON = {
   /**
    * Initializes GamesEndGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesEndGamePayload {
+  initialize: function (
+    msg?: Partial<GamesEndGamePayload>,
+  ): GamesEndGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -13035,9 +13480,12 @@ export const GamesCancelGamePayloadJSON = {
   /**
    * Initializes GamesCancelGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesCancelGamePayload {
+  initialize: function (
+    msg?: Partial<GamesCancelGamePayload>,
+  ): GamesCancelGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -13090,10 +13538,13 @@ export const GamesDropLastRoundPayloadJSON = {
   /**
    * Initializes GamesDropLastRoundPayload with all fields set to their default value.
    */
-  initialize: function (): GamesDropLastRoundPayload {
+  initialize: function (
+    msg?: Partial<GamesDropLastRoundPayload>,
+  ): GamesDropLastRoundPayload {
     return {
       sessionHash: "",
       intermediateResults: [],
+      ...msg,
     };
   },
 
@@ -13160,9 +13611,12 @@ export const GamesDefinalizeGamePayloadJSON = {
   /**
    * Initializes GamesDefinalizeGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesDefinalizeGamePayload {
+  initialize: function (
+    msg?: Partial<GamesDefinalizeGamePayload>,
+  ): GamesDefinalizeGamePayload {
     return {
       sessionHash: "",
+      ...msg,
     };
   },
 
@@ -13215,12 +13669,15 @@ export const GamesAddPenaltyPayloadJSON = {
   /**
    * Initializes GamesAddPenaltyPayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddPenaltyPayload {
+  initialize: function (
+    msg?: Partial<GamesAddPenaltyPayload>,
+  ): GamesAddPenaltyPayload {
     return {
       eventId: 0,
       playerId: 0,
       amount: 0,
       reason: "",
+      ...msg,
     };
   },
 
@@ -13255,15 +13712,15 @@ export const GamesAddPenaltyPayloadJSON = {
   ): GamesAddPenaltyPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     const _amount_ = json["amount"];
     if (_amount_) {
-      msg.amount = _amount_;
+      msg.amount = protoscript.parseNumber(_amount_);
     }
     const _reason_ = json["reason"];
     if (_reason_) {
@@ -13294,10 +13751,13 @@ export const GamesAddPenaltyGamePayloadJSON = {
   /**
    * Initializes GamesAddPenaltyGamePayload with all fields set to their default value.
    */
-  initialize: function (): GamesAddPenaltyGamePayload {
+  initialize: function (
+    msg?: Partial<GamesAddPenaltyGamePayload>,
+  ): GamesAddPenaltyGamePayload {
     return {
       eventId: 0,
       players: [],
+      ...msg,
     };
   },
 
@@ -13326,11 +13786,11 @@ export const GamesAddPenaltyGamePayloadJSON = {
   ): GamesAddPenaltyGamePayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _players_ = json["players"];
     if (_players_) {
-      msg.players = _players_;
+      msg.players = _players_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -13357,9 +13817,12 @@ export const GamesAddPenaltyGameResponseJSON = {
   /**
    * Initializes GamesAddPenaltyGameResponse with all fields set to their default value.
    */
-  initialize: function (): GamesAddPenaltyGameResponse {
+  initialize: function (
+    msg?: Partial<GamesAddPenaltyGameResponse>,
+  ): GamesAddPenaltyGameResponse {
     return {
       hash: "",
+      ...msg,
     };
   },
 
@@ -13412,9 +13875,12 @@ export const PlayersGetPlayerPayloadJSON = {
   /**
    * Initializes PlayersGetPlayerPayload with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerPayload {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerPayload>,
+  ): PlayersGetPlayerPayload {
     return {
       id: 0,
+      ...msg,
     };
   },
 
@@ -13440,7 +13906,7 @@ export const PlayersGetPlayerPayloadJSON = {
   ): PlayersGetPlayerPayload {
     const _id_ = json["id"];
     if (_id_) {
-      msg.id = _id_;
+      msg.id = protoscript.parseNumber(_id_);
     }
     return msg;
   },
@@ -13467,9 +13933,12 @@ export const PlayersGetPlayerResponseJSON = {
   /**
    * Initializes PlayersGetPlayerResponse with all fields set to their default value.
    */
-  initialize: function (): PlayersGetPlayerResponse {
+  initialize: function (
+    msg?: Partial<PlayersGetPlayerResponse>,
+  ): PlayersGetPlayerResponse {
     return {
       players: protoAtoms.PlayerJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -13527,9 +13996,12 @@ export const EventsGetCurrentSeatingResponseJSON = {
   /**
    * Initializes EventsGetCurrentSeatingResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetCurrentSeatingResponse {
+  initialize: function (
+    msg?: Partial<EventsGetCurrentSeatingResponse>,
+  ): EventsGetCurrentSeatingResponse {
     return {
       seating: [],
+      ...msg,
     };
   },
 
@@ -13592,11 +14064,14 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
   /**
    * Initializes SeatingMakeShuffledSeatingPayload with all fields set to their default value.
    */
-  initialize: function (): SeatingMakeShuffledSeatingPayload {
+  initialize: function (
+    msg?: Partial<SeatingMakeShuffledSeatingPayload>,
+  ): SeatingMakeShuffledSeatingPayload {
     return {
       eventId: 0,
       groupsCount: 0,
       seed: 0,
+      ...msg,
     };
   },
 
@@ -13628,15 +14103,15 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
   ): SeatingMakeShuffledSeatingPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _groupsCount_ = json["groupsCount"] ?? json["groups_count"];
     if (_groupsCount_) {
-      msg.groupsCount = _groupsCount_;
+      msg.groupsCount = protoscript.parseNumber(_groupsCount_);
     }
     const _seed_ = json["seed"];
     if (_seed_) {
-      msg.seed = _seed_;
+      msg.seed = protoscript.parseNumber(_seed_);
     }
     return msg;
   },
@@ -13667,9 +14142,12 @@ export const SeatingGenerateSwissSeatingResponseJSON = {
   /**
    * Initializes SeatingGenerateSwissSeatingResponse with all fields set to their default value.
    */
-  initialize: function (): SeatingGenerateSwissSeatingResponse {
+  initialize: function (
+    msg?: Partial<SeatingGenerateSwissSeatingResponse>,
+  ): SeatingGenerateSwissSeatingResponse {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -13732,10 +14210,13 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
   /**
    * Initializes SeatingMakeIntervalSeatingPayload with all fields set to their default value.
    */
-  initialize: function (): SeatingMakeIntervalSeatingPayload {
+  initialize: function (
+    msg?: Partial<SeatingMakeIntervalSeatingPayload>,
+  ): SeatingMakeIntervalSeatingPayload {
     return {
       eventId: 0,
       step: 0,
+      ...msg,
     };
   },
 
@@ -13764,11 +14245,11 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
   ): SeatingMakeIntervalSeatingPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _step_ = json["step"];
     if (_step_) {
-      msg.step = _step_;
+      msg.step = protoscript.parseNumber(_step_);
     }
     return msg;
   },
@@ -13799,10 +14280,13 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
   /**
    * Initializes SeatingMakePrescriptedSeatingPayload with all fields set to their default value.
    */
-  initialize: function (): SeatingMakePrescriptedSeatingPayload {
+  initialize: function (
+    msg?: Partial<SeatingMakePrescriptedSeatingPayload>,
+  ): SeatingMakePrescriptedSeatingPayload {
     return {
       eventId: 0,
       randomizeAtTables: false,
+      ...msg,
     };
   },
 
@@ -13831,7 +14315,7 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
   ): SeatingMakePrescriptedSeatingPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _randomizeAtTables_ =
       json["randomizeAtTables"] ?? json["randomize_at_tables"];
@@ -13867,9 +14351,12 @@ export const SeatingGetNextPrescriptedSeatingResponseJSON = {
   /**
    * Initializes SeatingGetNextPrescriptedSeatingResponse with all fields set to their default value.
    */
-  initialize: function (): SeatingGetNextPrescriptedSeatingResponse {
+  initialize: function (
+    msg?: Partial<SeatingGetNextPrescriptedSeatingResponse>,
+  ): SeatingGetNextPrescriptedSeatingResponse {
     return {
       tables: [],
+      ...msg,
     };
   },
 
@@ -13932,12 +14419,15 @@ export const EventsGetPrescriptedEventConfigResponseJSON = {
   /**
    * Initializes EventsGetPrescriptedEventConfigResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetPrescriptedEventConfigResponse {
+  initialize: function (
+    msg?: Partial<EventsGetPrescriptedEventConfigResponse>,
+  ): EventsGetPrescriptedEventConfigResponse {
     return {
       eventId: 0,
       nextSessionIndex: 0,
       prescript: undefined,
       errors: [],
+      ...msg,
     };
   },
 
@@ -13972,12 +14462,12 @@ export const EventsGetPrescriptedEventConfigResponseJSON = {
   ): EventsGetPrescriptedEventConfigResponse {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _nextSessionIndex_ =
       json["nextSessionIndex"] ?? json["next_session_index"];
     if (_nextSessionIndex_) {
-      msg.nextSessionIndex = _nextSessionIndex_;
+      msg.nextSessionIndex = protoscript.parseNumber(_nextSessionIndex_);
     }
     const _prescript_ = json["prescript"];
     if (_prescript_) {
@@ -14016,11 +14506,14 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
   /**
    * Initializes EventsUpdatePrescriptedEventConfigPayload with all fields set to their default value.
    */
-  initialize: function (): EventsUpdatePrescriptedEventConfigPayload {
+  initialize: function (
+    msg?: Partial<EventsUpdatePrescriptedEventConfigPayload>,
+  ): EventsUpdatePrescriptedEventConfigPayload {
     return {
       eventId: 0,
       nextSessionIndex: 0,
       prescript: "",
+      ...msg,
     };
   },
 
@@ -14052,12 +14545,12 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
   ): EventsUpdatePrescriptedEventConfigPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _nextSessionIndex_ =
       json["nextSessionIndex"] ?? json["next_session_index"];
     if (_nextSessionIndex_) {
-      msg.nextSessionIndex = _nextSessionIndex_;
+      msg.nextSessionIndex = protoscript.parseNumber(_nextSessionIndex_);
     }
     const _prescript_ = json["prescript"];
     if (_prescript_) {
@@ -14090,9 +14583,12 @@ export const EventsGetStartingTimerResponseJSON = {
   /**
    * Initializes EventsGetStartingTimerResponse with all fields set to their default value.
    */
-  initialize: function (): EventsGetStartingTimerResponse {
+  initialize: function (
+    msg?: Partial<EventsGetStartingTimerResponse>,
+  ): EventsGetStartingTimerResponse {
     return {
       timer: 0,
+      ...msg,
     };
   },
 
@@ -14118,7 +14614,7 @@ export const EventsGetStartingTimerResponseJSON = {
   ): EventsGetStartingTimerResponse {
     const _timer_ = json["timer"];
     if (_timer_) {
-      msg.timer = _timer_;
+      msg.timer = protoscript.parseNumber(_timer_);
     }
     return msg;
   },
@@ -14145,9 +14641,12 @@ export const ClearStatCachePayloadJSON = {
   /**
    * Initializes ClearStatCachePayload with all fields set to their default value.
    */
-  initialize: function (): ClearStatCachePayload {
+  initialize: function (
+    msg?: Partial<ClearStatCachePayload>,
+  ): ClearStatCachePayload {
     return {
       playerId: 0,
+      ...msg,
     };
   },
 
@@ -14173,7 +14672,7 @@ export const ClearStatCachePayloadJSON = {
   ): ClearStatCachePayload {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
-      msg.playerId = _playerId_;
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     return msg;
   },
@@ -14204,7 +14703,9 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
   /**
    * Initializes TypedGamesAddOnlineReplayPayload with all fields set to their default value.
    */
-  initialize: function (): TypedGamesAddOnlineReplayPayload {
+  initialize: function (
+    msg?: Partial<TypedGamesAddOnlineReplayPayload>,
+  ): TypedGamesAddOnlineReplayPayload {
     return {
       eventId: 0,
       platformId: 0,
@@ -14212,6 +14713,7 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
       logTimestamp: 0,
       replayHash: "",
       content: "",
+      ...msg,
     };
   },
 
@@ -14252,19 +14754,19 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
   ): TypedGamesAddOnlineReplayPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
-      msg.eventId = _eventId_;
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     const _platformId_ = json["platformId"] ?? json["platform_id"];
     if (_platformId_) {
-      msg.platformId = _platformId_;
+      msg.platformId = protoscript.parseNumber(_platformId_);
     }
     const _contentType_ = json["contentType"] ?? json["content_type"];
     if (_contentType_) {
-      msg.contentType = _contentType_;
+      msg.contentType = protoscript.parseNumber(_contentType_);
     }
     const _logTimestamp_ = json["logTimestamp"] ?? json["log_timestamp"];
     if (_logTimestamp_) {
-      msg.logTimestamp = _logTimestamp_;
+      msg.logTimestamp = protoscript.parseNumber(_logTimestamp_);
     }
     const _replayHash_ = json["replayHash"] ?? json["replay_hash"];
     if (_replayHash_) {

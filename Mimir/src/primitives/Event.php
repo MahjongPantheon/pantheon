@@ -57,6 +57,7 @@ class EventPrimitive extends Primitive
         'series_length'     => '_seriesLength',
         'games_status'      => '_gamesStatus',
         'hide_results'      => '_hideResults',
+        'hide_achievements' => '_hideAchievements',
         'is_prescripted'    => '_isPrescripted',
         'min_games_count'   => '_minGamesCount',
         'finished'          => '_finished',
@@ -90,6 +91,7 @@ class EventPrimitive extends Primitive
             '_seriesLength'       => $this->_integerTransform(),
             '_gamesStatus'        => $this->_stringTransform(true),
             '_hideResults'        => $this->_integerTransform(),
+            '_hideAchievements'   => $this->_integerTransform(),
             '_minGamesCount'      => $this->_integerTransform(),
             '_finished'           => $this->_integerTransform(),
             '_nextGameStartTime'  => $this->_integerTransform(),
@@ -229,6 +231,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_hideResults;
+    /**
+     * Should be achievements page hidden or not
+     * @var integer
+     */
+    protected $_hideAchievements;
     /**
      * Is event finished / closed
      * @var integer
@@ -766,6 +773,24 @@ class EventPrimitive extends Primitive
     public function setHideResults($hideResults)
     {
         $this->_hideResults = $hideResults;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getHideAchievements()
+    {
+        return $this->_hideAchievements;
+    }
+
+    /**
+     * @param integer $hideAchievements
+     * @return EventPrimitive
+     */
+    public function setHideAchievements(int $hideAchievements)
+    {
+        $this->_hideAchievements = $hideAchievements;
         return $this;
     }
 

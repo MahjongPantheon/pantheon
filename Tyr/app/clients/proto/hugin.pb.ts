@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 import { JSONrequest, PBrequest } from "twirpscript";
 // This is the minimum version supported by the current runtime.
 // If this line fails typechecking, breaking changes have been introduced and this
@@ -202,8 +202,10 @@ export const GetLastDayPayload = {
   /**
    * Initializes GetLastDayPayload with all fields set to their default value.
    */
-  initialize: function (): GetLastDayPayload {
-    return {};
+  initialize: function (msg?: Partial<GetLastDayPayload>): GetLastDayPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -211,8 +213,8 @@ export const GetLastDayPayload = {
    */
   _writeMessage: function (
     _msg: PartialDeep<GetLastDayPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
@@ -221,7 +223,7 @@ export const GetLastDayPayload = {
    */
   _readMessage: function (
     _msg: GetLastDayPayload,
-    _reader: BinaryReader,
+    _reader: protoscript.BinaryReader,
   ): GetLastDayPayload {
     return _msg;
   },
@@ -234,7 +236,7 @@ export const GetLastDayResponse = {
   encode: function (msg: PartialDeep<GetLastDayResponse>): Uint8Array {
     return GetLastDayResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -244,16 +246,17 @@ export const GetLastDayResponse = {
   decode: function (bytes: ByteSource): GetLastDayResponse {
     return GetLastDayResponse._readMessage(
       GetLastDayResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GetLastDayResponse with all fields set to their default value.
    */
-  initialize: function (): GetLastDayResponse {
+  initialize: function (msg?: Partial<GetLastDayResponse>): GetLastDayResponse {
     return {
       data: [],
+      ...msg,
     };
   },
 
@@ -262,8 +265,8 @@ export const GetLastDayResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GetLastDayResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.data?.length) {
       writer.writeRepeatedMessage(1, msg.data as any, HuginData._writeMessage);
     }
@@ -275,7 +278,7 @@ export const GetLastDayResponse = {
    */
   _readMessage: function (
     msg: GetLastDayResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GetLastDayResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -314,8 +317,12 @@ export const GetLastMonthPayload = {
   /**
    * Initializes GetLastMonthPayload with all fields set to their default value.
    */
-  initialize: function (): GetLastMonthPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<GetLastMonthPayload>,
+  ): GetLastMonthPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -323,8 +330,8 @@ export const GetLastMonthPayload = {
    */
   _writeMessage: function (
     _msg: PartialDeep<GetLastMonthPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
@@ -333,7 +340,7 @@ export const GetLastMonthPayload = {
    */
   _readMessage: function (
     _msg: GetLastMonthPayload,
-    _reader: BinaryReader,
+    _reader: protoscript.BinaryReader,
   ): GetLastMonthPayload {
     return _msg;
   },
@@ -346,7 +353,7 @@ export const GetLastMonthResponse = {
   encode: function (msg: PartialDeep<GetLastMonthResponse>): Uint8Array {
     return GetLastMonthResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -356,16 +363,19 @@ export const GetLastMonthResponse = {
   decode: function (bytes: ByteSource): GetLastMonthResponse {
     return GetLastMonthResponse._readMessage(
       GetLastMonthResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GetLastMonthResponse with all fields set to their default value.
    */
-  initialize: function (): GetLastMonthResponse {
+  initialize: function (
+    msg?: Partial<GetLastMonthResponse>,
+  ): GetLastMonthResponse {
     return {
       data: [],
+      ...msg,
     };
   },
 
@@ -374,8 +384,8 @@ export const GetLastMonthResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GetLastMonthResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.data?.length) {
       writer.writeRepeatedMessage(1, msg.data as any, HuginData._writeMessage);
     }
@@ -387,7 +397,7 @@ export const GetLastMonthResponse = {
    */
   _readMessage: function (
     msg: GetLastMonthResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GetLastMonthResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -426,8 +436,10 @@ export const GetLastYearPayload = {
   /**
    * Initializes GetLastYearPayload with all fields set to their default value.
    */
-  initialize: function (): GetLastYearPayload {
-    return {};
+  initialize: function (msg?: Partial<GetLastYearPayload>): GetLastYearPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -435,8 +447,8 @@ export const GetLastYearPayload = {
    */
   _writeMessage: function (
     _msg: PartialDeep<GetLastYearPayload>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
@@ -445,7 +457,7 @@ export const GetLastYearPayload = {
    */
   _readMessage: function (
     _msg: GetLastYearPayload,
-    _reader: BinaryReader,
+    _reader: protoscript.BinaryReader,
   ): GetLastYearPayload {
     return _msg;
   },
@@ -458,7 +470,7 @@ export const GetLastYearResponse = {
   encode: function (msg: PartialDeep<GetLastYearResponse>): Uint8Array {
     return GetLastYearResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -468,16 +480,19 @@ export const GetLastYearResponse = {
   decode: function (bytes: ByteSource): GetLastYearResponse {
     return GetLastYearResponse._readMessage(
       GetLastYearResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes GetLastYearResponse with all fields set to their default value.
    */
-  initialize: function (): GetLastYearResponse {
+  initialize: function (
+    msg?: Partial<GetLastYearResponse>,
+  ): GetLastYearResponse {
     return {
       data: [],
+      ...msg,
     };
   },
 
@@ -486,8 +501,8 @@ export const GetLastYearResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<GetLastYearResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.data?.length) {
       writer.writeRepeatedMessage(1, msg.data as any, HuginData._writeMessage);
     }
@@ -499,7 +514,7 @@ export const GetLastYearResponse = {
    */
   _readMessage: function (
     msg: GetLastYearResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): GetLastYearResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -525,7 +540,10 @@ export const HuginData = {
    * Serializes HuginData to protobuf.
    */
   encode: function (msg: PartialDeep<HuginData>): Uint8Array {
-    return HuginData._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return HuginData._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -534,14 +552,14 @@ export const HuginData = {
   decode: function (bytes: ByteSource): HuginData {
     return HuginData._readMessage(
       HuginData.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
    * Initializes HuginData with all fields set to their default value.
    */
-  initialize: function (): HuginData {
+  initialize: function (msg?: Partial<HuginData>): HuginData {
     return {
       datetime: "",
       eventCount: 0,
@@ -556,6 +574,7 @@ export const HuginData = {
       language: "",
       eventType: "",
       hostname: "",
+      ...msg,
     };
   },
 
@@ -564,8 +583,8 @@ export const HuginData = {
    */
   _writeMessage: function (
     msg: PartialDeep<HuginData>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.datetime) {
       writer.writeString(1, msg.datetime);
     }
@@ -611,7 +630,10 @@ export const HuginData = {
   /**
    * @private
    */
-  _readMessage: function (msg: HuginData, reader: BinaryReader): HuginData {
+  _readMessage: function (
+    msg: HuginData,
+    reader: protoscript.BinaryReader,
+  ): HuginData {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -699,8 +721,10 @@ export const GetLastDayPayloadJSON = {
   /**
    * Initializes GetLastDayPayload with all fields set to their default value.
    */
-  initialize: function (): GetLastDayPayload {
-    return {};
+  initialize: function (msg?: Partial<GetLastDayPayload>): GetLastDayPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -744,9 +768,10 @@ export const GetLastDayResponseJSON = {
   /**
    * Initializes GetLastDayResponse with all fields set to their default value.
    */
-  initialize: function (): GetLastDayResponse {
+  initialize: function (msg?: Partial<GetLastDayResponse>): GetLastDayResponse {
     return {
       data: [],
+      ...msg,
     };
   },
 
@@ -800,8 +825,12 @@ export const GetLastMonthPayloadJSON = {
   /**
    * Initializes GetLastMonthPayload with all fields set to their default value.
    */
-  initialize: function (): GetLastMonthPayload {
-    return {};
+  initialize: function (
+    msg?: Partial<GetLastMonthPayload>,
+  ): GetLastMonthPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -845,9 +874,12 @@ export const GetLastMonthResponseJSON = {
   /**
    * Initializes GetLastMonthResponse with all fields set to their default value.
    */
-  initialize: function (): GetLastMonthResponse {
+  initialize: function (
+    msg?: Partial<GetLastMonthResponse>,
+  ): GetLastMonthResponse {
     return {
       data: [],
+      ...msg,
     };
   },
 
@@ -901,8 +933,10 @@ export const GetLastYearPayloadJSON = {
   /**
    * Initializes GetLastYearPayload with all fields set to their default value.
    */
-  initialize: function (): GetLastYearPayload {
-    return {};
+  initialize: function (msg?: Partial<GetLastYearPayload>): GetLastYearPayload {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -946,9 +980,12 @@ export const GetLastYearResponseJSON = {
   /**
    * Initializes GetLastYearResponse with all fields set to their default value.
    */
-  initialize: function (): GetLastYearResponse {
+  initialize: function (
+    msg?: Partial<GetLastYearResponse>,
+  ): GetLastYearResponse {
     return {
       data: [],
+      ...msg,
     };
   },
 
@@ -1005,7 +1042,7 @@ export const HuginDataJSON = {
   /**
    * Initializes HuginData with all fields set to their default value.
    */
-  initialize: function (): HuginData {
+  initialize: function (msg?: Partial<HuginData>): HuginData {
     return {
       datetime: "",
       eventCount: 0,
@@ -1020,6 +1057,7 @@ export const HuginDataJSON = {
       language: "",
       eventType: "",
       hostname: "",
+      ...msg,
     };
   },
 
@@ -1082,11 +1120,11 @@ export const HuginDataJSON = {
     }
     const _eventCount_ = json["eventCount"] ?? json["event_count"];
     if (_eventCount_) {
-      msg.eventCount = _eventCount_;
+      msg.eventCount = protoscript.parseNumber(_eventCount_);
     }
     const _uniqCount_ = json["uniqCount"] ?? json["uniq_count"];
     if (_uniqCount_) {
-      msg.uniqCount = _uniqCount_;
+      msg.uniqCount = protoscript.parseNumber(_uniqCount_);
     }
     const _siteId_ = json["siteId"] ?? json["site_id"];
     if (_siteId_) {

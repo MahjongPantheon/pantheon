@@ -125,17 +125,14 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     return null;
   }
 
-  const achDataByKey = achievementsData.reduce(
-    (acc, val) => {
-      try {
-        acc[val.achievementId] = JSON.parse(val.achievementData);
-      } catch (e) {
-        acc[val.achievementId] = null;
-      }
-      return acc;
-    },
-    {} as Record<string, any>
-  );
+  const achDataByKey = achievementsData.reduce((acc, val) => {
+    try {
+      acc[val.achievementId] = JSON.parse(val.achievementData);
+    } catch (e) {
+      acc[val.achievementId] = null;
+    }
+    return acc;
+  }, {} as Record<string, any>);
 
   const yMap = yakuNameMap(i18n);
 
@@ -766,7 +763,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   if (
     events &&
     !globals.data.loading &&
-    globals.data.ratingHidden &&
+    globals.data.achievementsHidden &&
     !auth.ownEvents.includes(events?.[0].id) &&
     !auth.isSuperadmin
   ) {
