@@ -305,4 +305,26 @@ class GamesController extends Controller
         $this->_log->info('Successfully added penalty game with players id# ' . implode(',', $players));
         return $gameHash;
     }
+
+    /**
+     * Forcefully finish game (for club events)
+     *
+     * @param string $sessionHash
+     * @return bool
+     * @throws \Exception
+     */
+    public function forceFinishGame($sessionHash)
+    {
+        $this->_log->info('Force finish session id# ' . $sessionHash);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$sessionHash]);
+        if (empty($session)) {
+            throw new TwirpError(ErrorCode::NotFound, "Couldn't find session in DB");
+        }
+        if (!$this->_meta->isEventAdminById($session[0]->getEventId())) {
+            throw new TwirpError(ErrorCode::NotFound, "This action is allowed only for event administrators");
+        }
+        $success = $session[0]->finish();
+        $this->_log->info('Successfully force-finished session id# ' . $sessionHash);
+        return $success;
+    }
 }

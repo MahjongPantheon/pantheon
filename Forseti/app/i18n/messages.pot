@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-03 16:15+0100\n"
+"POT-Creation-Date: 2024-01-03 22:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,97 +235,97 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: app/Navigation.tsx:209:25
+#: app/Navigation.tsx:211:29
 #: app/pages/OwnedEvents.tsx:361:34
 #: app/pages/OwnedEvents.tsx:363:33
 msgid "Manage players"
 msgstr ""
 
-#: app/Navigation.tsx:215:25
+#: app/Navigation.tsx:217:29
 #: app/pages/OwnedEvents.tsx:357:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr ""
 
-#: app/Navigation.tsx:221:25
+#: app/Navigation.tsx:223:29
 #: app/pages/OwnedEvents.tsx:351:33
 msgid "Manage games"
 msgstr ""
 
-#: app/Navigation.tsx:228:27
+#: app/Navigation.tsx:230:31
 #: app/pages/OwnedEvents.tsx:344:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/Navigation.tsx:236:26
+#: app/Navigation.tsx:241:28
 #: app/pages/OwnedEvents.tsx:373:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr ""
 
-#: app/Navigation.tsx:241:28
+#: app/Navigation.tsx:247:28
 #: app/pages/OwnedEvents.tsx:376:36
 #: app/pages/OwnedEvents.tsx:380:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/Navigation.tsx:251:26
+#: app/Navigation.tsx:258:28
 #: app/pages/OwnedEvents.tsx:384:34
 #: app/pages/OwnedEvents.tsx:392:28
 msgid "Finish event"
 msgstr ""
 
-#: app/Navigation.tsx:269:22
+#: app/Navigation.tsx:277:22
 msgid "Common actions"
 msgstr ""
 
-#: app/Navigation.tsx:276:21
+#: app/Navigation.tsx:284:21
 msgid "All events"
 msgstr ""
 
-#: app/Navigation.tsx:283:23
+#: app/Navigation.tsx:291:23
 msgid "My events"
 msgstr ""
 
-#: app/Navigation.tsx:291:23
+#: app/Navigation.tsx:299:23
 msgid "Sign in"
 msgstr ""
 
-#: app/Navigation.tsx:299:23
+#: app/Navigation.tsx:307:23
 msgid "Sign up"
 msgstr ""
 
-#: app/Navigation.tsx:307:23
+#: app/Navigation.tsx:315:23
 #: app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr ""
 
-#: app/Navigation.tsx:315:23
+#: app/Navigation.tsx:323:23
 msgid "Edit profile"
 msgstr ""
 
-#: app/Navigation.tsx:323:23
+#: app/Navigation.tsx:331:23
 msgid "Sign out"
 msgstr ""
 
-#: app/Navigation.tsx:332:22
+#: app/Navigation.tsx:340:22
 msgid "Language"
 msgstr ""
 
-#: app/Navigation.tsx:358:22
+#: app/Navigation.tsx:366:22
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/Navigation.tsx:367:22
+#: app/Navigation.tsx:375:22
 msgid "Toggle color scheme"
 msgstr ""
 
-#: app/Navigation.tsx:377:22
-#: app/Navigation.tsx:389:22
+#: app/Navigation.tsx:385:22
+#: app/Navigation.tsx:397:22
 msgid "Open menu"
 msgstr ""
 
-#: app/Navigation.tsx:385:16
+#: app/Navigation.tsx:393:16
 msgid "Menu"
 msgstr ""
 
@@ -338,8 +338,8 @@ msgstr ""
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14
 #: app/pages/OwnedEvents.tsx:93:14
-#: app/pages/OwnedEventsEdit/index.tsx:185:18
-#: app/pages/OwnedEventsEdit/index.tsx:216:18
+#: app/pages/OwnedEventsEdit/index.tsx:187:18
+#: app/pages/OwnedEventsEdit/index.tsx:218:18
 #: app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18
 #: app/pages/PlayersManage/index.tsx:87:18
@@ -406,93 +406,105 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:104:30
+#: app/pages/GamesControl/GamesList.tsx:107:30
 msgid "Table # %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:117:30
+#: app/pages/GamesControl/GamesList.tsx:120:30
 msgid "Current round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:179:30
+#: app/pages/GamesControl/GamesList.tsx:182:30
 msgid "Cancel last played round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:180:29
+#: app/pages/GamesControl/GamesList.tsx:183:29
 msgid "Cancel round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:181:32
-#: app/pages/GamesControl/GamesList.tsx:196:32
+#: app/pages/GamesControl/GamesList.tsx:184:32
+#: app/pages/GamesControl/GamesList.tsx:199:32
 msgid "This action can't be undone. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:194:30
+#: app/pages/GamesControl/GamesList.tsx:197:30
 msgid "Remove the game as it never existed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:195:29
+#: app/pages/GamesControl/GamesList.tsx:198:29
 msgid "Remove game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:209:30
+#: app/pages/GamesControl/GamesList.tsx:212:30
+msgid "Forcefully finish the game"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:213:29
+msgid "Force finish game"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:214:32
+msgid "You are going to forcefully finish this game. Continue?"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:227:30
 msgid "Remove game results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:210:29
+#: app/pages/GamesControl/GamesList.tsx:228:29
 msgid "Cancel results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:211:32
-msgid "This will only remove the game results, but you will need to cancel last round separately. This action can't be undone. Continue?"
+#: app/pages/GamesControl/GamesList.tsx:229:32
+msgid "This will only remove the game results, but you will need to cancel last round separately. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:244:20
+#: app/pages/GamesControl/GamesList.tsx:262:20
 msgid "Session is ready to start"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:256:20
+#: app/pages/GamesControl/GamesList.tsx:274:20
 msgid "Session in progress"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:269:18
+#: app/pages/GamesControl/GamesList.tsx:287:18
 msgid "Session finished, but not confirmed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:281:18
+#: app/pages/GamesControl/GamesList.tsx:299:18
 msgid "Session finished"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:293:18
+#: app/pages/GamesControl/GamesList.tsx:311:18
 msgid "Session cancelled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:305:18
+#: app/pages/GamesControl/GamesList.tsx:323:18
 msgid "Session is scheduled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:340:12
-#: app/pages/GamesControl/GamesList.tsx:351:9
+#: app/pages/GamesControl/GamesList.tsx:358:12
+#: app/pages/GamesControl/GamesList.tsx:369:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:362:12
+#: app/pages/GamesControl/GamesList.tsx:380:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:370:12
+#: app/pages/GamesControl/GamesList.tsx:388:12
 msgid "Chombo, %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:374:12
+#: app/pages/GamesControl/GamesList.tsx:392:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:381:12
+#: app/pages/GamesControl/GamesList.tsx:399:12
 msgid "Abortive draw, riichi: %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:387:12
+#: app/pages/GamesControl/GamesList.tsx:405:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr ""
 
@@ -545,7 +557,11 @@ msgstr ""
 msgid "Failed to reset seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:324:16
+#: app/pages/GamesControl/index.tsx:270:27
+msgid "Failed to finish the game"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:337:16
 msgid "Refresh data [%1]"
 msgstr ""
 
@@ -861,23 +877,23 @@ msgstr ""
 msgid "If checked, players will be able to see other tables state even if they are currently in game. It is strongly recommended to keep this checkbox disabled for all tournament events."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:61:18
+#: app/pages/OwnedEventsEdit/index.tsx:62:18
 msgid "Edit event :: %1"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:63:18
+#: app/pages/OwnedEventsEdit/index.tsx:64:18
 msgid "New event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:179:29
+#: app/pages/OwnedEventsEdit/index.tsx:181:29
 msgid "Failed to fetch event data"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:211:27
+#: app/pages/OwnedEventsEdit/index.tsx:213:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:273:30
+#: app/pages/OwnedEventsEdit/index.tsx:276:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32
@@ -885,7 +901,7 @@ msgstr ""
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:273:58
+#: app/pages/OwnedEventsEdit/index.tsx:276:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60

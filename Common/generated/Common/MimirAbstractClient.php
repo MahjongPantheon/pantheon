@@ -1506,6 +1506,29 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function ForceFinishGame(array $ctx, \Common\ForceFinishGamePayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'ForceFinishGame');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/ForceFinishGame';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/ForceFinishGame';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function AddTypedOnlineReplay(array $ctx, \Common\TypedGamesAddOnlineReplayPayload $in): \Common\GamesAddOnlineReplayResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');

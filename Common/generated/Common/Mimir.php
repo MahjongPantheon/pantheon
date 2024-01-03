@@ -574,6 +574,15 @@ interface Mimir
     /**
      *
      *
+     * Generated from protobuf method <code>common.Mimir/ForceFinishGame</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function ForceFinishGame(array $ctx, \Common\ForceFinishGamePayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
      * Generated from protobuf method <code>common.Mimir/AddTypedOnlineReplay</code>
      *
      * @throws \Twirp\Error
