@@ -77,7 +77,7 @@ class EventModel extends Model
             }
         }
 
-        return array_map(function ($seat) use (&$ratings, &$players) {
+        $users = array_map(function ($seat) use (&$ratings, &$players) {
             if (!empty($ratings[$seat['player_id']])) {
                 $seat['rating'] = $ratings[$seat['player_id']];
             } else {
@@ -92,6 +92,10 @@ class EventModel extends Model
             }
             return $seat;
         }, $seatings);
+
+        return array_filter($users, function ($user) {
+            return $user['table_index'] !== null;
+        });
     }
 
     /**
