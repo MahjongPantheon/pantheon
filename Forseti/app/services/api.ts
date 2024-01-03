@@ -23,6 +23,7 @@ import {
   DropLastRound,
   FinalizeSession,
   FinishEvent,
+  ForceFinishGame,
   GetAllRegisteredPlayers,
   GetCountries,
   GetEventForEdit,
@@ -525,6 +526,11 @@ export class ApiService {
   resetSeating(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ResetSeating' });
     return ResetSeating({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  forceFinish(sessionHash: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ForceFinishGame' });
+    return ForceFinishGame({ sessionHash }, this._clientConfMimir).then((r) => r.success);
   }
 
   getPrescriptedEventConfig(eventId: number) {

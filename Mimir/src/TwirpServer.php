@@ -1802,6 +1802,18 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param array $ctx
+     * @param \Common\ForceFinishGamePayload $req
+     * @return GenericSuccessResponse
+     * @throws \Exception
+     */
+    public function ForceFinishGame(array $ctx, \Common\ForceFinishGamePayload $req): \Common\GenericSuccessResponse
+    {
+        return (new GenericSuccessResponse())
+            ->setSuccess($this->_gamesController->forceFinishGame($req->getSessionHash()));
+    }
+
+    /**
      * Check of rights for access by external service.
      *
      * @param string $token

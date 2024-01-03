@@ -1614,9 +1614,3 @@ msgstr "нет"
 #: src/helpers/gameLog.ts:156:12
 msgid "yakuman!"
 msgstr "якуман!"
-
-#~ msgid "Profile & admin panel"
-#~ msgstr "Профиль и админ-панель"
-
-#~ msgid "Ratings & stats: actions"
-#~ msgstr "Рейтинги и статистика: меню"

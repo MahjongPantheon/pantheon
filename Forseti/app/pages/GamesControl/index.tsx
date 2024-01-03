@@ -262,6 +262,18 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, []);
 
+  const onForceFinish = useCallback((sessionHash: string) => {
+    api
+      .forceFinish(sessionHash)
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to finish the game'));
+        }
+      })
+      .then(doReloadTablesOnly)
+      .catch(errHandler);
+  }, []);
+
   let timer: ReturnType<typeof setInterval> | null = null;
   const reloader = useCallback(() => {
     setSecsUntilReload((secs) => {
@@ -318,6 +330,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         onCancelLastRound={onCancelRound}
         onDefinalizeGame={eventConfig?.syncStart ? undefined : onDefinalize}
         onRemoveGame={eventConfig?.syncStart ? undefined : onRemoveGame}
+        onForceFinish={eventConfig?.syncStart ? undefined : onForceFinish}
       />
       <TopActionButton
         color='green'

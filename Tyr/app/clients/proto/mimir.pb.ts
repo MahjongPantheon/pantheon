@@ -430,6 +430,10 @@ export interface TypedGamesAddOnlineReplayPayload {
   content: string;
 }
 
+export interface ForceFinishGamePayload {
+  sessionHash: string;
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -1185,6 +1189,18 @@ export async function ClearStatCache(
   const response = await PBrequest(
     "/common.Mimir/ClearStatCache",
     ClearStatCachePayload.encode(clearStatCachePayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function ForceFinishGame(
+  forceFinishGamePayload: ForceFinishGamePayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/ForceFinishGame",
+    ForceFinishGamePayload.encode(forceFinishGamePayload),
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
@@ -1970,6 +1986,18 @@ export async function ClearStatCacheJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+export async function ForceFinishGameJSON(
+  forceFinishGamePayload: ForceFinishGamePayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/ForceFinishGame",
+    ForceFinishGamePayloadJSON.encode(forceFinishGamePayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 export async function AddTypedOnlineReplayJSON(
   typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
   config?: ClientConfiguration,
@@ -2303,6 +2331,12 @@ export interface Mimir<Context = unknown> {
   ) => Promise<EventsGetStartingTimerResponse> | EventsGetStartingTimerResponse;
   ClearStatCache: (
     clearStatCachePayload: ClearStatCachePayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  ForceFinishGame: (
+    forceFinishGamePayload: ForceFinishGamePayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
@@ -3052,6 +3086,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
         input: {
           protobuf: ClearStatCachePayload,
           json: ClearStatCachePayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      ForceFinishGame: {
+        name: "ForceFinishGame",
+        handler: service.ForceFinishGame,
+        input: {
+          protobuf: ForceFinishGamePayload,
+          json: ForceFinishGamePayloadJSON,
         },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
@@ -9385,6 +9431,76 @@ export const TypedGamesAddOnlineReplayPayload = {
   },
 };
 
+export const ForceFinishGamePayload = {
+  /**
+   * Serializes ForceFinishGamePayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<ForceFinishGamePayload>): Uint8Array {
+    return ForceFinishGamePayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes ForceFinishGamePayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): ForceFinishGamePayload {
+    return ForceFinishGamePayload._readMessage(
+      ForceFinishGamePayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes ForceFinishGamePayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<ForceFinishGamePayload>,
+  ): ForceFinishGamePayload {
+    return {
+      sessionHash: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<ForceFinishGamePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.sessionHash) {
+      writer.writeString(1, msg.sessionHash);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: ForceFinishGamePayload,
+    reader: protoscript.BinaryReader,
+  ): ForceFinishGamePayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.sessionHash = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -14792,6 +14908,64 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
     const _content_ = json["content"];
     if (_content_) {
       msg.content = _content_;
+    }
+    return msg;
+  },
+};
+
+export const ForceFinishGamePayloadJSON = {
+  /**
+   * Serializes ForceFinishGamePayload to JSON.
+   */
+  encode: function (msg: PartialDeep<ForceFinishGamePayload>): string {
+    return JSON.stringify(ForceFinishGamePayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes ForceFinishGamePayload from JSON.
+   */
+  decode: function (json: string): ForceFinishGamePayload {
+    return ForceFinishGamePayloadJSON._readMessage(
+      ForceFinishGamePayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes ForceFinishGamePayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<ForceFinishGamePayload>,
+  ): ForceFinishGamePayload {
+    return {
+      sessionHash: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<ForceFinishGamePayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.sessionHash) {
+      json["sessionHash"] = msg.sessionHash;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: ForceFinishGamePayload,
+    json: any,
+  ): ForceFinishGamePayload {
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
+    if (_sessionHash_) {
+      msg.sessionHash = _sessionHash_;
     }
     return msg;
   },

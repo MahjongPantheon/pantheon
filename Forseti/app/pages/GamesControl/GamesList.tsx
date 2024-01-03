@@ -41,6 +41,7 @@ import {
   IconFileCheck,
   IconTrashX,
   IconX,
+  IconHandStop,
   IconZoomCheck,
 } from '@tabler/icons-react';
 import * as React from 'react';
@@ -57,6 +58,7 @@ type GamesListProps = {
   onCancelLastRound: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
   onRemoveGame?: (hash: string) => void;
   onDefinalizeGame?: (hash: string) => void;
+  onForceFinish?: (hash: string) => void;
 };
 
 export function GamesList({
@@ -65,6 +67,7 @@ export function GamesList({
   onDefinalizeGame,
   onRemoveGame,
   onCancelLastRound,
+  onForceFinish,
 }: GamesListProps) {
   const i18n = useI18n();
   const theme = useMantineTheme();
@@ -201,6 +204,23 @@ export function GamesList({
                       i18n={i18n}
                     />
                   )}
+                {t.status === SessionStatus.SESSION_STATUS_INPROGRESS &&
+                  t.lastRound &&
+                  eventConfig &&
+                  !eventConfig.syncStart &&
+                  !!onForceFinish && (
+                    <Confirmation
+                      icon={<IconHandStop />}
+                      title={i18n._t('Forcefully finish the game')}
+                      text={i18n._t('Force finish game')}
+                      warning={i18n._t('You are going to forcefully finish this game. Continue?')}
+                      color='yellow'
+                      onConfirm={() => {
+                        onForceFinish(t.sessionHash);
+                      }}
+                      i18n={i18n}
+                    />
+                  )}
                 {t.status === SessionStatus.SESSION_STATUS_FINISHED &&
                   t.mayDefinalize &&
                   !!onDefinalizeGame && (
@@ -209,7 +229,7 @@ export function GamesList({
                       title={i18n._t('Remove game results')}
                       text={i18n._t('Cancel results')}
                       warning={i18n._t(
-                        "This will only remove the game results, but you will need to cancel last round separately. This action can't be undone. Continue?"
+                        'This will only remove the game results, but you will need to cancel last round separately. Continue?'
                       )}
                       color='red'
                       onConfirm={() => {

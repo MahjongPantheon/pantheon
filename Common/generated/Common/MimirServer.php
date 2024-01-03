@@ -254,6 +254,8 @@ final class MimirServer implements RequestHandlerInterface
                 return $this->handleGetStartingTimer($ctx, $req);
             case 'ClearStatCache':
                 return $this->handleClearStatCache($ctx, $req);
+            case 'ForceFinishGame':
+                return $this->handleForceFinishGame($ctx, $req);
             case 'AddTypedOnlineReplay':
                 return $this->handleAddTypedOnlineReplay($ctx, $req);
 
@@ -6874,6 +6876,113 @@ final class MimirServer implements RequestHandlerInterface
 
             if ($out === null) {
                 return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling ClearStatCache. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/protobuf')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+    private function handleForceFinishGame(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $header = $req->getHeaderLine('Content-Type');
+        $i = strpos($header, ';');
+
+        if ($i === false) {
+            $i = strlen($header);
+        }
+
+        $respHeaders = [];
+        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
+
+        switch (trim(strtolower(substr($header, 0, $i)))) {
+            case 'application/json':
+                $resp = $this->handleForceFinishGameJson($ctx, $req);
+                break;
+
+            case 'application/protobuf':
+                $resp = $this->handleForceFinishGameProtobuf($ctx, $req);
+                break;
+
+            default:
+                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
+
+                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
+        }
+
+        foreach ($respHeaders as $key => $value) {
+            $resp = $resp->withHeader($key, $value);
+        }
+
+        return $resp;
+    }
+
+    private function handleForceFinishGameJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'ForceFinishGame');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\ForceFinishGamePayload();
+            $in->mergeFromJsonString((string)$req->getBody(), true);
+
+            $out = $this->svc->ForceFinishGame($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling ForceFinishGame. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToJsonString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+
+    private function handleForceFinishGameProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'ForceFinishGame');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\ForceFinishGamePayload();
+            $in->mergeFromString((string)$req->getBody());
+
+            $out = $this->svc->ForceFinishGame($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling ForceFinishGame. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

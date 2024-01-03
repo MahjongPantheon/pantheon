@@ -147,6 +147,8 @@ service Mimir {
     returns (EventsGetStartingTimerResponse);
   rpc ClearStatCache (ClearStatCachePayload)
     returns (GenericSuccessResponse);
+  rpc ForceFinishGame (ForceFinishGamePayload)
+    returns (GenericSuccessResponse);
   rpc AddTypedOnlineReplay (TypedGamesAddOnlineReplayPayload)
     returns (GamesAddOnlineReplayResponse);
 }
@@ -551,4 +553,8 @@ message TypedGamesAddOnlineReplayPayload {
   int32 log_timestamp = 4;
   string replay_hash = 5;
   string content = 6;
+}
+
+message ForceFinishGamePayload {
+  string session_hash = 1;
 }
