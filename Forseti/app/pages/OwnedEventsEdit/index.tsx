@@ -49,6 +49,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const [, navigate] = useLocation();
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [isLoading, setIsLoading] = useState(true);
+  const [isFinished, setIsFinished] = useState(false);
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
   const [rules, setRules] = useState<Array<{ value: string; label: string; rules: RulesetConfig }>>(
     []
@@ -175,6 +176,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
             // edit mode
             setEventName(eventData.event.title);
             setFormValues(eventData.event, eventData.event.rulesetConfig);
+            setIsFinished(eventData.finished);
           } else {
             throw new Error(i18n._t('Failed to fetch event data'));
           }
@@ -269,14 +271,16 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
               <YakuSettings form={form} i18n={i18n} />
             </Tabs.Panel>
           </Tabs>
-          <TopActionButton
-            title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
-            loading={isSaving || isLoading || isSaved}
-            icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
-            onClick={() => {
-              formRef.current?.requestSubmit();
-            }}
-          />
+          {!isFinished && (
+            <TopActionButton
+              title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
+              loading={isSaving || isLoading || isSaved}
+              icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
+              onClick={() => {
+                formRef.current?.requestSubmit();
+              }}
+            />
+          )}
         </form>
       </Container>
       <Filler h='150px' />
