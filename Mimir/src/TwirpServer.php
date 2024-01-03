@@ -1271,6 +1271,7 @@ final class TwirpServer implements Mimir
         $ret = $this->_eventsController->getEventForEdit($req->getId());
         return (new EventsGetEventForEditResponse())
             ->setId($ret['id'])
+            ->setFinished($ret['isFinished'])
             ->setEvent(self::_toEventData($ret));
     }
 

@@ -392,6 +392,7 @@ message EventsGetEventForEditPayload {
 message EventsGetEventForEditResponse {
   int32 id = 1;
   EventData event = 2;
+  bool finished = 3;
 }
 
 message EventsUpdateEventPayload {

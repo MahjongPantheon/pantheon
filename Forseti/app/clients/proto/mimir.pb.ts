@@ -269,6 +269,7 @@ export interface EventsGetEventForEditPayload {
 export interface EventsGetEventForEditResponse {
   id: number;
   event: protoAtoms.EventData;
+  finished: boolean;
 }
 
 export interface EventsUpdateEventPayload {
@@ -6747,6 +6748,7 @@ export const EventsGetEventForEditResponse = {
     return {
       id: 0,
       event: protoAtoms.EventData.initialize(),
+      finished: false,
       ...msg,
     };
   },
@@ -6763,6 +6765,9 @@ export const EventsGetEventForEditResponse = {
     }
     if (msg.event) {
       writer.writeMessage(2, msg.event, protoAtoms.EventData._writeMessage);
+    }
+    if (msg.finished) {
+      writer.writeBool(3, msg.finished);
     }
     return writer;
   },
@@ -6783,6 +6788,10 @@ export const EventsGetEventForEditResponse = {
         }
         case 2: {
           reader.readMessage(msg.event, protoAtoms.EventData._readMessage);
+          break;
+        }
+        case 3: {
+          msg.finished = reader.readBool();
           break;
         }
         default: {
@@ -12534,6 +12543,7 @@ export const EventsGetEventForEditResponseJSON = {
     return {
       id: 0,
       event: protoAtoms.EventDataJSON.initialize(),
+      finished: false,
       ...msg,
     };
   },
@@ -12554,6 +12564,9 @@ export const EventsGetEventForEditResponseJSON = {
         json["event"] = _event_;
       }
     }
+    if (msg.finished) {
+      json["finished"] = msg.finished;
+    }
     return json;
   },
 
@@ -12571,6 +12584,10 @@ export const EventsGetEventForEditResponseJSON = {
     const _event_ = json["event"];
     if (_event_) {
       protoAtoms.EventDataJSON._readMessage(msg.event, _event_);
+    }
+    const _finished_ = json["finished"];
+    if (_finished_) {
+      msg.finished = _finished_;
     }
     return msg;
   },

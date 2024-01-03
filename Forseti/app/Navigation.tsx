@@ -203,40 +203,46 @@ export const Navigation: React.FC<{
                   text={i18n._t('Settings')}
                   onClick={closeMenu}
                 />
-                <MainMenuLink
-                  href={`/event/${(match ? params : paramsEdit)?.id}/players`}
-                  icon={<IconFriends size={18} />}
-                  text={i18n._t('Manage players')}
-                  onClick={closeMenu}
-                />
-                <MainMenuLink
-                  href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
-                  icon={<IconAlertOctagon size={18} />}
-                  text={i18n._t('Penalties')}
-                  onClick={closeMenu}
-                />
-                <MainMenuLink
-                  href={`/event/${(match ? params : paramsEdit)?.id}/games`}
-                  icon={<IconOlympics size={18} />}
-                  text={i18n._t('Manage games')}
-                  onClick={closeMenu}
-                />
-                {eventData?.isPrescripted && (
-                  <MainMenuLink
-                    href={`/event/${(match ? params : paramsEdit)?.id}/prescript`}
-                    icon={<IconScript size={18} />}
-                    text={i18n._t('Predefined seating')}
-                    onClick={closeMenu}
+                {eventData && !eventData.finished && (
+                  <>
+                    <MainMenuLink
+                      href={`/event/${(match ? params : paramsEdit)?.id}/players`}
+                      icon={<IconFriends size={18} />}
+                      text={i18n._t('Manage players')}
+                      onClick={closeMenu}
+                    />
+                    <MainMenuLink
+                      href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
+                      icon={<IconAlertOctagon size={18} />}
+                      text={i18n._t('Penalties')}
+                      onClick={closeMenu}
+                    />
+                    <MainMenuLink
+                      href={`/event/${(match ? params : paramsEdit)?.id}/games`}
+                      icon={<IconOlympics size={18} />}
+                      text={i18n._t('Manage games')}
+                      onClick={closeMenu}
+                    />
+                    {eventData?.isPrescripted && (
+                      <MainMenuLink
+                        href={`/event/${(match ? params : paramsEdit)?.id}/prescript`}
+                        icon={<IconScript size={18} />}
+                        text={i18n._t('Predefined seating')}
+                        onClick={closeMenu}
+                      />
+                    )}
+                  </>
+                )}
+                {eventData && !eventData.finished && (
+                  <Divider
+                    size='xs'
+                    mt={10}
+                    mb={10}
+                    label={i18n._t('Danger zone')}
+                    labelPosition='center'
                   />
                 )}
-                <Divider
-                  size='xs'
-                  mt={10}
-                  mb={10}
-                  label={i18n._t('Danger zone')}
-                  labelPosition='center'
-                />
-                {isSuperadmin && (
+                {isSuperadmin && eventData && !eventData.finished && (
                   <NavLink
                     label={i18n._t('Rebuild scoring')}
                     styles={{ label: { fontSize: '18px', color: 'red' } }}
@@ -247,19 +253,21 @@ export const Navigation: React.FC<{
                     icon={<IconRefreshAlert />}
                   />
                 )}
-                <NavLink
-                  label={i18n._t('Finish event')}
-                  styles={{ label: { fontSize: '18px', color: 'red' } }}
-                  icon={<IconHandStop />}
-                  onClick={() => {
-                    closeMenu();
-                    setStopEventData({
-                      id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
-                      title: eventData?.title ?? '',
-                    });
-                    stopEventModalOpen();
-                  }}
-                />
+                {eventData && !eventData.finished && (
+                  <NavLink
+                    label={i18n._t('Finish event')}
+                    styles={{ label: { fontSize: '18px', color: 'red' } }}
+                    icon={<IconHandStop />}
+                    onClick={() => {
+                      closeMenu();
+                      setStopEventData({
+                        id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                        title: eventData?.title ?? '',
+                      });
+                      stopEventModalOpen();
+                    }}
+                  />
+                )}
               </>
             )}
             <Divider

@@ -21,6 +21,10 @@ class EventsGetEventForEditResponse extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.common.EventData event = 2;</code>
      */
     protected $event = null;
+    /**
+     * Generated from protobuf field <code>bool finished = 3;</code>
+     */
+    protected $finished = false;
 
     /**
      * Constructor.
@@ -30,6 +34,7 @@ class EventsGetEventForEditResponse extends \Google\Protobuf\Internal\Message
      *
      *     @type int $id
      *     @type \Common\EventData $event
+     *     @type bool $finished
      * }
      */
     public function __construct($data = NULL) {
@@ -87,6 +92,28 @@ class EventsGetEventForEditResponse extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\EventData::class);
         $this->event = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool finished = 3;</code>
+     * @return bool
+     */
+    public function getFinished()
+    {
+        return $this->finished;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool finished = 3;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setFinished($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->finished = $var;
 
         return $this;
     }

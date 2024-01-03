@@ -313,6 +313,7 @@ class EventsController extends Controller
             'isRatingShown' => !$event->getHideResults(),
             'allowViewOtherTables' => (bool)$event->getAllowViewOtherTables(),
             'achievementsShown' => !$event->getHideAchievements(),
+            'isFinished' => (bool)$event->getIsFinished(),
         ];
 
         $this->_log->info('Successfully got event settings for event #' . $id);
