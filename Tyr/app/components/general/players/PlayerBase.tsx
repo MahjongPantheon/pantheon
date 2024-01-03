@@ -22,7 +22,9 @@ import { PlayerProps } from './PlayerProps';
 import classNames from 'classnames';
 import RiichiBigIcon from '../../../img/icons/riichi-big.svg?react';
 import WinIcon from '../../../img/icons/thumbs-up.svg?react';
-import LooseIcon from '../../../img/icons/thumbs-down.svg?react';
+import LoseIcon from '../../../img/icons/thumbs-down.svg?react';
+import WinIconFilled from '../../../img/icons/thumbs-up-fill.svg?react';
+import LoseIconFilled from '../../../img/icons/thumbs-down-fill.svg?react';
 import { PlayerAvatar } from '../avatar/Avatar';
 
 type IProps = PlayerProps & {
@@ -125,7 +127,7 @@ export class PlayerBase extends React.Component<IProps> {
                   { 'flat-btn--success': winButton.mode === PlayerButtonMode.PRESSED }
                 )}
               >
-                <WinIcon />
+                {winButton.mode === PlayerButtonMode.PRESSED ? <WinIconFilled /> : <WinIcon />}
               </div>
             )}
 
@@ -142,7 +144,7 @@ export class PlayerBase extends React.Component<IProps> {
                   { 'flat-btn--danger': loseButton.mode === PlayerButtonMode.PRESSED }
                 )}
               >
-                <LooseIcon />
+                {loseButton.mode === PlayerButtonMode.PRESSED ? <LoseIconFilled /> : <LoseIcon />}
               </div>
             )}
 
