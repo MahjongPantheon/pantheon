@@ -193,7 +193,7 @@ class SessionState
 
         $scores = array_values($this->getScores());
         $dealerScores = end($scores);
-        return ($dealerScores === max($scores) && $dealerScores > $this->_rules->rules()->getGoalPoints());
+        return ($dealerScores === max($scores) && $dealerScores >= $this->_rules->rules()->getGoalPoints());
     }
 
     /**
