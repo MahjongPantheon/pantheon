@@ -48,6 +48,7 @@ class EventsController extends Controller
      * @param bool $isListed If event is shown on main page
      * @param bool $isRatingShown If event rating table is publicly accessible
      * @param bool $achievementsShown If event achievements page is publicly accessible
+     * @param bool $allowViewOtherTables If other tables can be viewed during ongoing game
      * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -69,6 +70,7 @@ class EventsController extends Controller
         $isListed,
         $isRatingShown,
         $achievementsShown,
+        $allowViewOtherTables,
         $rulesetConfig
     ) {
         $this->_log->info('Creating new event...');
@@ -99,6 +101,7 @@ class EventsController extends Controller
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
+            ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
             ->setStatHost($statHost)
         ;
 
@@ -187,6 +190,7 @@ class EventsController extends Controller
      * @param bool $isListed If event is shown on main page
      * @param bool $isRatingShown If event rating table is publicly accessible
      * @param bool $achievementsShown If event achievements page is publicly accessible
+     * @param bool $allowViewOtherTables If other tables can be viewed during ongoing game
      * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -208,6 +212,7 @@ class EventsController extends Controller
         $isListed,
         $isRatingShown,
         $achievementsShown,
+        $allowViewOtherTables,
         $rulesetConfig
     ) {
         $this->_log->info('Updating event with id #' . $id);
@@ -236,6 +241,7 @@ class EventsController extends Controller
             ->setHideAchievements($achievementsShown ? 0 : 1)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
+            ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
             ->setRulesetConfig(new Ruleset($rulesetConfig))
         ;
 
@@ -290,8 +296,8 @@ class EventsController extends Controller
 
         $data = [
             'id' => $event->getId(),
-            'isTournament' => $event->getSyncStart(),
-            'isOnline' => $event->getIsOnline(),
+            'isTournament' => (bool)$event->getSyncStart(),
+            'isOnline' => (bool)$event->getIsOnline(),
             'title' => $event->getTitle(),
             'description' => $event->getDescription(),
             'duration' => $event->getGameDuration(),
@@ -299,12 +305,13 @@ class EventsController extends Controller
             'lobbyId' => $event->getLobbyId(),
             'seriesLength' => $event->getSeriesLength(),
             'minGames' => $event->getMinGamesCount(),
-            'isTeam' => $event->getIsTeam(),
-            'isPrescripted' => $event->getIsPrescripted(),
+            'isTeam' => (bool)$event->getIsTeam(),
+            'isPrescripted' => (bool)$event->getIsPrescripted(),
             'autostart' => $event->getTimeToStart(),
             'ruleset' => $event->getRulesetConfig()->rules(),
-            'isListed' => $event->getIsListed(),
+            'isListed' => (bool)$event->getIsListed(),
             'isRatingShown' => !$event->getHideResults(),
+            'allowViewOtherTables' => (bool)$event->getAllowViewOtherTables(),
             'achievementsShown' => !$event->getHideAchievements(),
         ];
 
@@ -624,6 +631,7 @@ class EventsController extends Controller
             'isPrescripted'       => (bool)$event[0]->getIsPrescripted(),
             'isFinished'          => (bool)$event[0]->getIsFinished(),
             'lobbyId'             => $event[0]->getLobbyId(),
+            'allowViewOtherTables' => (bool)$event[0]->getAllowViewOtherTables(),
         ];
 
         $this->_log->info('Successfully received config for event id# ' . $eventId);

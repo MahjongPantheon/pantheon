@@ -111,6 +111,10 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 lobby_id = 54;</code>
      */
     protected $lobby_id = 0;
+    /**
+     * Generated from protobuf field <code>bool allow_view_other_tables = 55;</code>
+     */
+    protected $allow_view_other_tables = false;
 
     /**
      * Constructor.
@@ -143,6 +147,7 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      *     @type bool $is_finished
      *     @type \Common\RulesetConfig $ruleset_config
      *     @type int $lobby_id
+     *     @type bool $allow_view_other_tables
      * }
      */
     public function __construct($data = NULL) {
@@ -688,6 +693,28 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->lobby_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool allow_view_other_tables = 55;</code>
+     * @return bool
+     */
+    public function getAllowViewOtherTables()
+    {
+        return $this->allow_view_other_tables;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool allow_view_other_tables = 55;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setAllowViewOtherTables($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->allow_view_other_tables = $var;
 
         return $this;
     }

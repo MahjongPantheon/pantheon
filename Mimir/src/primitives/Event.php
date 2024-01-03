@@ -65,6 +65,7 @@ class EventPrimitive extends Primitive
         'time_to_start'     => '_timeToStart',
         'is_listed'         => '_isListed',
         'platform_id'       => '_platformId',
+        'allow_view_other_tables' => '_allowViewOtherTables',
     ];
 
     protected function _getFieldsTransforms()
@@ -97,6 +98,7 @@ class EventPrimitive extends Primitive
             '_nextGameStartTime'  => $this->_integerTransform(),
             '_timeToStart'        => $this->_integerTransform(),
             '_isListed'           => $this->_integerTransform(),
+            '_allowViewOtherTables' => $this->_integerTransform(),
             '_rulesetConfig'      => [
                 'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->rules()->serializeToJsonString();
@@ -256,6 +258,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_isListed;
+    /**
+     * If other tables are allowed to be viewed _during ongoing game_
+     * @var integer
+     */
+    protected $_allowViewOtherTables;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -906,6 +913,24 @@ class EventPrimitive extends Primitive
     public function setPlatformId($platformId)
     {
         $this->_platformId = $platformId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllowViewOtherTables()
+    {
+        return $this->_allowViewOtherTables;
+    }
+
+    /**
+     * @param int $allowViewOtherTables
+     * @return EventPrimitive
+     */
+    public function setAllowViewOtherTables(int $allowViewOtherTables)
+    {
+        $this->_allowViewOtherTables = $allowViewOtherTables;
         return $this;
     }
 }

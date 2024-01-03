@@ -132,25 +132,25 @@ export const apiClient =
         getGameOverview(action.payload, api, next);
         break;
       case GET_OTHER_TABLES_LIST_INIT:
-        if (!eventId) {
+        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
           return;
         }
         getOtherTablesList(api, next, eventId);
         break;
       case GET_OTHER_TABLES_LIST_RELOAD:
-        if (!eventId) {
+        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
           return;
         }
         getOtherTablesListReload(api, next, eventId);
         break;
       case GET_OTHER_TABLE_INIT:
-        if (!eventId) {
+        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
           return;
         }
         getOtherTable(action.payload, api, next);
         break;
       case GET_OTHER_TABLE_RELOAD:
-        if (!eventId) {
+        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
           return;
         }
         getOtherTableReload(mw.getState().currentOtherTableHash ?? '', api, next);

@@ -95,7 +95,7 @@ class EventModel extends Model
     }
 
     /**
-     * Find out currently playing tables state (for tournaments only)
+     * Find out currently playing tables state
      * @param integer $eventId
      * @return array
      * @throws \Exception
@@ -105,6 +105,10 @@ class EventModel extends Model
         $event = EventPrimitive::findById($this->_ds, [$eventId])[0];
         if ($event->getIsFinished()) {
             throw new \Exception('Event is already finished');
+        }
+
+        if (!$event->getAllowViewOtherTables() && !$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException('This is not allowed for this event');
         }
 
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);

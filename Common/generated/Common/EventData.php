@@ -79,6 +79,10 @@ class EventData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool achievements_shown = 17;</code>
      */
     protected $achievements_shown = false;
+    /**
+     * Generated from protobuf field <code>bool allow_view_other_tables = 18;</code>
+     */
+    protected $allow_view_other_tables = false;
 
     /**
      * Constructor.
@@ -104,6 +108,7 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     @type bool $is_listed
      *     @type bool $is_rating_shown
      *     @type bool $achievements_shown
+     *     @type bool $allow_view_other_tables
      * }
      */
     public function __construct($data = NULL) {
@@ -469,6 +474,28 @@ class EventData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->achievements_shown = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool allow_view_other_tables = 18;</code>
+     * @return bool
+     */
+    public function getAllowViewOtherTables()
+    {
+        return $this->allow_view_other_tables;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool allow_view_other_tables = 18;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setAllowViewOtherTables($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->allow_view_other_tables = $var;
 
         return $this;
     }
