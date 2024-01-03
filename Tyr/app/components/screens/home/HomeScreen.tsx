@@ -112,7 +112,7 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
         hasStartedGame={!!state.currentSessionHash && state.gameOverviewReady}
         // Show button always, if there is no prev game - empty screen with "No games found" text will be shown
         hasPrevGame={true}
-        canSeeOtherTables={true}
+        canSeeOtherTables={!!state.gameConfig.allowViewOtherTables}
         showDonate={showDonate}
         hasStat={!!state.gameConfig.eventStatHost}
         onDonateClick={this.onDonateClick.bind(this)}

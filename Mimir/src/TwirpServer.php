@@ -307,6 +307,7 @@ final class TwirpServer implements Mimir
             ->setAchievementsShown($ret['achievementsShown'])
             ->setIsPrescripted($ret['isPrescripted'])
             ->setAutostart($ret['autostart'])
+            ->setAllowViewOtherTables($ret['allowViewOtherTables'])
             ->setRulesetConfig($ret['ruleset']);
         if (!empty($ret['duration'])) {
             $data->setDuration($ret['duration']);
@@ -905,7 +906,8 @@ final class TwirpServer implements Mimir
             ->setHideResults($ret['hideResults'])
             ->setHideAddReplayButton($ret['hideAddReplayButton'])
             ->setIsPrescripted($ret['isPrescripted'])
-            ->setIsFinished($ret['isFinished']);
+            ->setIsFinished($ret['isFinished'])
+            ->setAllowViewOtherTables($ret['allowViewOtherTables']);
         if (!empty($ret['gameDuration'])) {
             $gc->setGameDuration($ret['gameDuration']);
         }
@@ -1303,6 +1305,7 @@ final class TwirpServer implements Mimir
                 $req->getIsListed(),
                 $req->getIsRatingShown(),
                 $req->getAchievementsShown(),
+                $req->getAllowViewOtherTables(),
                 $req->getRulesetConfig(),
             ));
     }
@@ -1333,6 +1336,7 @@ final class TwirpServer implements Mimir
                 $ev->getIsListed(),
                 $ev->getIsRatingShown(),
                 $ev->getAchievementsShown(),
+                $ev->getAllowViewOtherTables(),
                 $ev->getRulesetConfig(),
             ));
     }

@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2023 
+# Copyright (C) 2024 
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-26 22:38+0100\n"
+"POT-Creation-Date: 2024-01-03 16:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -338,8 +338,8 @@ msgstr ""
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14
 #: app/pages/OwnedEvents.tsx:93:14
-#: app/pages/OwnedEventsEdit/index.tsx:184:18
-#: app/pages/OwnedEventsEdit/index.tsx:215:18
+#: app/pages/OwnedEventsEdit/index.tsx:185:18
+#: app/pages/OwnedEventsEdit/index.tsx:216:18
 #: app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18
 #: app/pages/PlayersManage/index.tsx:87:18
@@ -797,58 +797,68 @@ msgstr ""
 msgid "Event title"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:76:18
-msgid "Show in ratings global list"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:77:24
-msgid "If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:83:18
-msgid "Show rating table for everyone"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:84:24
-msgid "If checked, the rating table will be shown for everyone, otherwise only for event administrators"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:90:18
-msgid "Show achievements for everyone"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:91:24
-msgid "If checked, achievements will be shown for everyone, otherwise only for event administrators"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:99:20
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:78:20
 msgid "Basic ruleset"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:100:26
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:79:26
 msgid "Ruleset to be used as a template for the event. Fine tuning is available in adjacent tabs. Please note that all ruleset settings will be reset when you select another ruleset here."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:118:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:97:18
 msgid "Primary timezone for event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:119:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:24
 msgid "All dates and time will be displayed according to the selected timezone."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:123:25
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:102:25
 #: app/pages/ProfileManage.tsx:231:29
 #: app/pages/ProfileManageAdmin.tsx:257:27
 msgid "Nothing found"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:129:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:108:18
 msgid "Brief description"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:130:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:109:24
 msgid "Multiline. Markdown syntax supported."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:114:18
+msgid "Show in ratings global list"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:115:24
+msgid "If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:121:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
+msgid "Show rating table for everyone"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:122:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
+msgid "If checked, the rating table will be shown for everyone, otherwise only for event administrators"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:128:18
+msgid "Show achievements for everyone"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:129:24
+msgid "If checked, achievements will be shown for everyone, otherwise only for event administrators"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:142:18
+msgid "Allow viewing of other tables during ongoing game"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:143:24
+msgid "If checked, players will be able to see other tables state even if they are currently in game. It is strongly recommended to keep this checkbox disabled for all tournament events."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/index.tsx:61:18
@@ -859,15 +869,15 @@ msgstr ""
 msgid "New event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:178:29
+#: app/pages/OwnedEventsEdit/index.tsx:179:29
 msgid "Failed to fetch event data"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:210:27
+#: app/pages/OwnedEventsEdit/index.tsx:211:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:272:30
+#: app/pages/OwnedEventsEdit/index.tsx:273:30
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32
@@ -875,7 +885,7 @@ msgstr ""
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:272:58
+#: app/pages/OwnedEventsEdit/index.tsx:273:58
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60

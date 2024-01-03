@@ -79,6 +79,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         seriesLength: 0, // local/online
         minGames: 0, // local/online
         lobbyId: 0, // online
+        allowViewOtherTables: false,
       },
       ruleset: {
         gameExpirationTime: 0, // online

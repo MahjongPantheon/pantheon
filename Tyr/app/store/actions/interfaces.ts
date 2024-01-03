@@ -46,8 +46,6 @@ export const GOTO_EVENT_SELECT = 'GOTO_EVENT_SELECT';
 export const SEARCH_PLAYER = 'SEARCH_PLAYER';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
 export const SHOW_GAME_LOG = 'SHOW_GAME_LOG';
-export const SHOW_OTHER_TABLES_LIST = 'SHOW_OTHER_TABLES_LIST';
-export const SHOW_OTHER_TABLE = 'SHOW_OTHER_TABLE';
 export const OPEN_SETTINGS = 'OPEN_SETTINGS';
 export const GOTO_NEXT_SCREEN = 'GOTO_NEXT_SCREEN';
 export const GOTO_PREV_SCREEN = 'GOTO_PREV_SCREEN';
@@ -176,17 +174,6 @@ interface ShowLastResultsAction {
 
 interface ShowGameLogAction {
   type: typeof SHOW_GAME_LOG;
-}
-
-interface ShowOtherTablesListAction {
-  type: typeof SHOW_OTHER_TABLES_LIST;
-}
-
-interface ShowOtherTableAction {
-  type: typeof SHOW_OTHER_TABLE;
-  payload: {
-    hash: string;
-  };
 }
 
 interface OpenSettingsAction {
@@ -603,8 +590,6 @@ export type AppActionTypes =
   | SearchPlayerAction
   | ShowLastResultsAction
   | ShowGameLogAction
-  | ShowOtherTablesListAction
-  | ShowOtherTableAction
   | OpenSettingsAction
   | GotoNextScreenAction
   | GotoPrevScreenAction

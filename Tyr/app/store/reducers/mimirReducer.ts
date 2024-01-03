@@ -497,7 +497,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           ...state.loading,
           otherTables: false,
         },
-        otherTablesList: action.payload,
+        otherTablesList: action.payload.filter((t) => t.sessionHash !== state.currentSessionHash),
         currentScreen: 'otherTablesList',
         otherTablesListError: undefined,
       };

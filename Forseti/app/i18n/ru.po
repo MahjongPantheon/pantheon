@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-26 22:38+0100\n"
-"PO-Revision-Date: 2023-12-27 00:43+0300\n"
+"POT-Creation-Date: 2024-01-03 16:15+0100\n"
+"PO-Revision-Date: 2024-01-03 18:17+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -72,7 +72,7 @@ msgstr "Действия"
 msgid "Agariyame"
 msgstr "Агарияме"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:119:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:24
 msgid ""
 "All dates and time will be displayed according to the selected timezone."
 msgstr ""
@@ -117,6 +117,10 @@ msgstr "Банкротство"
 #: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:142:18
+msgid "Allow viewing of other tables during ongoing game"
+msgstr "Разрешить просмотр других столов во время игры"
 
 #: app/pages/ProfileSignup.tsx:139:42
 msgid "Already registered?"
@@ -183,7 +187,7 @@ msgstr ""
 "изображения, в ином случае аватар будет обрезан до квадрата по центру. "
 "Размер файла не должен превышать 256 КБ."
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:99:20
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:78:20
 msgid "Basic ruleset"
 msgstr "Базовый набор правил"
 
@@ -191,7 +195,7 @@ msgstr "Базовый набор правил"
 msgid "Basic settings"
 msgstr "Базовые настройки"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:129:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:108:18
 msgid "Brief description"
 msgstr "Краткое описание"
 
@@ -218,7 +222,7 @@ msgstr "Удалить результаты"
 msgid "Cancel round"
 msgstr "Отменить раздачу"
 
-#: app/pages/OwnedEventsEdit/index.tsx:272:30
+#: app/pages/OwnedEventsEdit/index.tsx:273:30
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
@@ -400,8 +404,8 @@ msgstr "Выравнивание умы"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:93:14
-#: app/pages/OwnedEventsEdit/index.tsx:184:18
-#: app/pages/OwnedEventsEdit/index.tsx:215:18 app/pages/Penalties.tsx:73:18
+#: app/pages/OwnedEventsEdit/index.tsx:185:18
+#: app/pages/OwnedEventsEdit/index.tsx:216:18 app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18 app/pages/PlayersManage/index.tsx:87:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
@@ -469,7 +473,7 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Не удалось удалить результаты"
 
-#: app/pages/OwnedEventsEdit/index.tsx:178:29
+#: app/pages/OwnedEventsEdit/index.tsx:179:29
 msgid "Failed to fetch event data"
 msgstr "Не удалось получить данные события"
 
@@ -519,7 +523,7 @@ msgid "Failed to save event script: server error or network unreachable"
 msgstr ""
 "Не удалось сохранить скрипт рассадки: ошибка сервера или сеть недоступна"
 
-#: app/pages/OwnedEventsEdit/index.tsx:210:27
+#: app/pages/OwnedEventsEdit/index.tsx:211:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
 
@@ -674,13 +678,23 @@ msgstr ""
 "Я прочитал(а) политику конфиденциальности, приведенную ниже, и принимаю ее "
 "условия"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:91:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:129:24
 msgid ""
 "If checked, achievements will be shown for everyone, otherwise only for "
 "event administrators"
 msgstr ""
 "Если отмечено, номинации будут видны для всех, в ином случае - только для "
 "администраторов события"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:143:24
+msgid ""
+"If checked, players will be able to see other tables state even if they are "
+"currently in game. It is strongly recommended to keep this checkbox disabled "
+"for all tournament events."
+msgstr ""
+"Если отмечено, игроки смогут просматривать состояние других столов, даже в "
+"процессе игры за своим столом. Настоятельно рекомендуется не включать эту "
+"настройку для турнирных событий."
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:166:22
 msgid ""
@@ -691,7 +705,7 @@ msgstr ""
 "бонус, равный среднему их бонусу. В ином случае ума назначается по порядку "
 "хода."
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:77:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:115:24
 msgid ""
 "If checked, the event will be publicly visible on main page of ratings "
 "subsystem. If unchecked, event will not be visible in the list, but still "
@@ -701,7 +715,8 @@ msgstr ""
 "подсистемы рейтингов. Если не отмечено, событие не будет видно на главной "
 "странице, но все еще будет доступно по ссылке"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:84:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:122:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
 msgid ""
 "If checked, the rating table will be shown for everyone, otherwise only for "
 "event administrators"
@@ -921,7 +936,7 @@ msgstr ""
 msgid "Minimal games count"
 msgstr "Минимальное число игр"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:130:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:109:24
 msgid "Multiline. Markdown syntax supported."
 msgstr "Многострочное. Поддерживается синтаксис Markdown."
 
@@ -965,7 +980,7 @@ msgstr "Не готово"
 msgid "Not started"
 msgstr "Не начато"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:123:25
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:102:25
 #: app/pages/ProfileManage.tsx:231:29 app/pages/ProfileManageAdmin.tsx:257:27
 msgid "Nothing found"
 msgstr "Ничего не найдено"
@@ -1181,7 +1196,7 @@ msgstr ""
 "Предопределенная рассадка вводится как список столов, 1 стол на каждую "
 "строку. Новая игровая сессия отделяется пустой строкой. Пример:"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:118:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:97:18
 msgid "Primary timezone for event"
 msgstr "Основной часовой пояс события"
 
@@ -1326,7 +1341,7 @@ msgstr "Рон, %1 с %2 (%3), риичи: %4"
 msgid "Round outcomes"
 msgstr "Исходы раздач"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:100:26
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:79:26
 msgid ""
 "Ruleset to be used as a template for the event. Fine tuning is available in "
 "adjacent tabs. Please note that all ruleset settings will be reset when you "
@@ -1364,7 +1379,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/pages/OwnedEventsEdit/index.tsx:272:58
+#: app/pages/OwnedEventsEdit/index.tsx:273:58
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1492,15 +1507,16 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:90:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:128:18
 msgid "Show achievements for everyone"
 msgstr "Показать номинации для всех"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:76:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:114:18
 msgid "Show in ratings global list"
 msgstr "Показать в глобальном списке событий"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:83:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:121:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
 msgid "Show rating table for everyone"
 msgstr "Показать рейтинговую таблицу для всех"
 

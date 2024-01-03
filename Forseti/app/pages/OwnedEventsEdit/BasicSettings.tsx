@@ -72,27 +72,6 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           label={i18n._t('Event title')}
           {...form.getInputProps('event.title')}
         />
-        <Checkbox
-          label={i18n._t('Show in ratings global list')}
-          description={i18n._t(
-            'If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link'
-          )}
-          {...form.getInputProps('event.isRatingShown', { type: 'checkbox' })}
-        />
-        <Checkbox
-          label={i18n._t('Show rating table for everyone')}
-          description={i18n._t(
-            'If checked, the rating table will be shown for everyone, otherwise only for event administrators'
-          )}
-          {...form.getInputProps('event.achievementsShown', { type: 'checkbox' })}
-        />
-        <Checkbox
-          label={i18n._t('Show achievements for everyone')}
-          description={i18n._t(
-            'If checked, achievements will be shown for everyone, otherwise only for event administrators'
-          )}
-          {...form.getInputProps('event.isListed', { type: 'checkbox' })}
-        />
         {newEvent && (
           <Select
             icon={<IconChecklist size='1rem' />}
@@ -130,6 +109,41 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           description={i18n._t('Multiline. Markdown syntax supported.')}
           {...form.getInputProps('event.description')}
           autosize
+        />
+        <Checkbox
+          label={i18n._t('Show in ratings global list')}
+          description={i18n._t(
+            'If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link'
+          )}
+          {...form.getInputProps('event.isRatingShown', { type: 'checkbox' })}
+        />
+        <Checkbox
+          label={i18n._t('Show rating table for everyone')}
+          description={i18n._t(
+            'If checked, the rating table will be shown for everyone, otherwise only for event administrators'
+          )}
+          {...form.getInputProps('event.achievementsShown', { type: 'checkbox' })}
+        />
+        <Checkbox
+          label={i18n._t('Show achievements for everyone')}
+          description={i18n._t(
+            'If checked, achievements will be shown for everyone, otherwise only for event administrators'
+          )}
+          {...form.getInputProps('event.isListed', { type: 'checkbox' })}
+        />
+        <Checkbox
+          label={i18n._t('Show rating table for everyone')}
+          description={i18n._t(
+            'If checked, the rating table will be shown for everyone, otherwise only for event administrators'
+          )}
+          {...form.getInputProps('event.achievementsShown', { type: 'checkbox' })}
+        />
+        <Checkbox
+          label={i18n._t('Allow viewing of other tables during ongoing game')}
+          description={i18n._t(
+            'If checked, players will be able to see other tables state even if they are currently in game. It is strongly recommended to keep this checkbox disabled for all tournament events.'
+          )}
+          {...form.getInputProps('event.allowViewOtherTables', { type: 'checkbox' })}
         />
       </Stack>
     </>

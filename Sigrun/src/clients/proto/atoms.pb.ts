@@ -201,6 +201,7 @@ export interface GameConfig {
   isFinished: boolean;
   rulesetConfig: RulesetConfig;
   lobbyId: number;
+  allowViewOtherTables: boolean;
 }
 
 export interface PlayerInRating {
@@ -503,6 +504,7 @@ export interface EventData {
   isListed: boolean;
   isRatingShown: boolean;
   achievementsShown: boolean;
+  allowViewOtherTables: boolean;
 }
 
 export interface TableState {
@@ -2436,6 +2438,7 @@ export const GameConfig = {
       isFinished: false,
       rulesetConfig: RulesetConfig.initialize(),
       lobbyId: 0,
+      allowViewOtherTables: false,
       ...msg,
     };
   },
@@ -2518,6 +2521,9 @@ export const GameConfig = {
     }
     if (msg.lobbyId) {
       writer.writeInt32(54, msg.lobbyId);
+    }
+    if (msg.allowViewOtherTables) {
+      writer.writeBool(55, msg.allowViewOtherTables);
     }
     return writer;
   },
@@ -2626,6 +2632,10 @@ export const GameConfig = {
         }
         case 54: {
           msg.lobbyId = reader.readInt32();
+          break;
+        }
+        case 55: {
+          msg.allowViewOtherTables = reader.readBool();
           break;
         }
         default: {
@@ -6249,6 +6259,7 @@ export const EventData = {
       isListed: false,
       isRatingShown: false,
       achievementsShown: false,
+      allowViewOtherTables: false,
       ...msg,
     };
   },
@@ -6304,6 +6315,9 @@ export const EventData = {
     }
     if (msg.achievementsShown) {
       writer.writeBool(17, msg.achievementsShown);
+    }
+    if (msg.allowViewOtherTables) {
+      writer.writeBool(18, msg.allowViewOtherTables);
     }
     return writer;
   },
@@ -6376,6 +6390,10 @@ export const EventData = {
         }
         case 17: {
           msg.achievementsShown = reader.readBool();
+          break;
+        }
+        case 18: {
+          msg.allowViewOtherTables = reader.readBool();
           break;
         }
         default: {
@@ -9509,6 +9527,7 @@ export const GameConfigJSON = {
       isFinished: false,
       rulesetConfig: RulesetConfigJSON.initialize(),
       lobbyId: 0,
+      allowViewOtherTables: false,
       ...msg,
     };
   },
@@ -9596,6 +9615,9 @@ export const GameConfigJSON = {
     }
     if (msg.lobbyId) {
       json["lobbyId"] = msg.lobbyId;
+    }
+    if (msg.allowViewOtherTables) {
+      json["allowViewOtherTables"] = msg.allowViewOtherTables;
     }
     return json;
   },
@@ -9702,6 +9724,11 @@ export const GameConfigJSON = {
     const _lobbyId_ = json["lobbyId"] ?? json["lobby_id"];
     if (_lobbyId_) {
       msg.lobbyId = protoscript.parseNumber(_lobbyId_);
+    }
+    const _allowViewOtherTables_ =
+      json["allowViewOtherTables"] ?? json["allow_view_other_tables"];
+    if (_allowViewOtherTables_) {
+      msg.allowViewOtherTables = _allowViewOtherTables_;
     }
     return msg;
   },
@@ -12807,6 +12834,7 @@ export const EventDataJSON = {
       isListed: false,
       isRatingShown: false,
       achievementsShown: false,
+      allowViewOtherTables: false,
       ...msg,
     };
   },
@@ -12867,6 +12895,9 @@ export const EventDataJSON = {
     }
     if (msg.achievementsShown) {
       json["achievementsShown"] = msg.achievementsShown;
+    }
+    if (msg.allowViewOtherTables) {
+      json["allowViewOtherTables"] = msg.allowViewOtherTables;
     }
     return json;
   },
@@ -12935,6 +12966,11 @@ export const EventDataJSON = {
       json["achievementsShown"] ?? json["achievements_shown"];
     if (_achievementsShown_) {
       msg.achievementsShown = _achievementsShown_;
+    }
+    const _allowViewOtherTables_ =
+      json["allowViewOtherTables"] ?? json["allow_view_other_tables"];
+    if (_allowViewOtherTables_) {
+      msg.allowViewOtherTables = _allowViewOtherTables_;
     }
     return msg;
   },
