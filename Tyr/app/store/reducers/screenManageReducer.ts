@@ -217,10 +217,10 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           prevScreen = 'newGame';
           break;
         case 'gameLog':
-          if (state.currentSessionHash) {
-            prevScreen = 'currentGame';
-          } else {
+          if (state.currentOtherTableHash) {
             prevScreen = 'otherTable';
+          } else {
+            prevScreen = 'currentGame';
           }
           break;
         case 'playersSelect':

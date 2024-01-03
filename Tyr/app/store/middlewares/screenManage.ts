@@ -145,9 +145,12 @@ export const screenManageMw =
         mw.dispatch({ type: SET_NEWGAME_PLAYERS });
         break;
       case SHOW_GAME_LOG:
-        next(action);
         state = mw.getState();
-        const sessionHash = state.currentSessionHash ?? state.currentOtherTableHash;
+        next(action);
+        const sessionHash =
+          state.currentScreen === 'otherTable'
+            ? state.currentOtherTableHash
+            : state.currentSessionHash;
         if (sessionHash) {
           mw.dispatch({ type: GET_ALL_ROUNDS_INIT, payload: sessionHash });
         }
