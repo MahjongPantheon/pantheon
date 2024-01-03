@@ -26,8 +26,6 @@ import {
   SEARCH_PLAYER,
   SHOW_LAST_RESULTS,
   SHOW_GAME_LOG,
-  SHOW_OTHER_TABLE,
-  SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME,
   GOTO_EVENT_SELECT,
   GO_TO_DONATE,
@@ -99,17 +97,6 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
       return {
         ...state,
         currentScreen: 'gameLog',
-      };
-    case SHOW_OTHER_TABLE:
-      return {
-        ...state,
-        currentScreen: 'otherTable',
-        currentOtherTableHash: action.payload.hash,
-      };
-    case SHOW_OTHER_TABLES_LIST:
-      return {
-        ...state,
-        currentScreen: 'otherTablesList',
       };
     case OPEN_SETTINGS:
       return {
