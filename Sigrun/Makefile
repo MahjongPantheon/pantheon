@@ -34,7 +34,7 @@ eslint:
 
 PHONY: prettier
 prettier:
-	./node_modules/.bin/prettier -c ./src
+	./node_modules/.bin/prettier -c ./app
 
 PHONY: typecheck
 typecheck:
@@ -47,14 +47,14 @@ test:
 PHONY: autofix
 autofix:
 	./node_modules/.bin/eslint . --ext .js,.ts,.tsx --fix
-	./node_modules/.bin/prettier -w ./src
+	./node_modules/.bin/prettier -w ./app
 
 PHONY: build
 build:
 	./node_modules/.bin/tsc
 	rm -rf ./node_modules/.vite
 	./node_modules/.bin/vite build --outDir dist/client
-	./node_modules/.bin/vite build --ssr src/server.tsx --outDir dist/server
+	./node_modules/.bin/vite build --ssr app/server.tsx --outDir dist/server
 
 .PHONY: prod_deps
 prod_deps:
@@ -80,16 +80,16 @@ dev:
 
 PHONY: i18n_extract
 i18n_extract:
-	./node_modules/.bin/stex -s 'src/**/*.?(ts|tsx)' -o src/i18n/messages.pot.json
-	./node_modules/.bin/jsonpo -s src/i18n/messages.pot.json -o src/i18n/messages.pot --printOccurences
-	rm src/i18n/messages.pot.json
-	msgmerge -s -U ./src/i18n/ru.po ./src/i18n/messages.pot --backup=none
-	#msgmerge -s -U ./src/i18n/de.po ./src/i18n/messages.pot --backup=none
+	./node_modules/.bin/stex -s 'app/**/*.?(ts|tsx)' -o app/i18n/messages.pot.json
+	./node_modules/.bin/jsonpo -s app/i18n/messages.pot.json -o app/i18n/messages.pot --printOccurences
+	rm app/i18n/messages.pot.json
+	msgmerge -s -U ./app/i18n/ru.po ./app/i18n/messages.pot --backup=none
+	#msgmerge -s -U ./app/i18n/de.po ./app/i18n/messages.pot --backup=none
 
 PHONY: i18n_update
 i18n_update:
-	./node_modules/.bin/pojson -s src/i18n/ru.po -o src/i18n/ru.json --withMeta
-	#./node_modules/.bin/pojson -s src/i18n/de.po -o src/i18n/de.json --withMeta
+	./node_modules/.bin/pojson -s app/i18n/ru.po -o app/i18n/ru.json --withMeta
+	#./node_modules/.bin/pojson -s app/i18n/de.po -o app/i18n/de.json --withMeta
 
 PHONY: reload_pm2
 reload_pm2:

@@ -17,6 +17,6 @@
 
 export default {
   root: "../Common/",
-  dest: "./src/clients/",
+  dest: "./app/clients/",
   language: "typescript",
 };
