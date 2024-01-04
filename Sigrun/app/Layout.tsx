@@ -22,6 +22,7 @@ import {
   Footer,
   MantineProvider,
   Navbar,
+  ScrollArea,
   useMantineTheme,
 } from '@mantine/core';
 import { AppHeader } from './components/AppHeader';
@@ -357,14 +358,16 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
                         navbar={
                           veryLargeScreen ? (
                             <Navbar width={{ base: showLabels ? 350 : 80 }} p='xs'>
-                              <MainMenu
-                                isLoggedIn={isLoggedIn}
-                                saveLang={saveLang}
-                                toggleDimmed={toggleDimmed}
-                                toggleColorScheme={toggleColorScheme}
-                                showLabels={showLabels}
-                                dark={dark}
-                              />
+                              <Navbar.Section grow component={ScrollArea} mx='-xs' px='xs'>
+                                <MainMenu
+                                  isLoggedIn={isLoggedIn}
+                                  saveLang={saveLang}
+                                  toggleDimmed={toggleDimmed}
+                                  toggleColorScheme={toggleColorScheme}
+                                  showLabels={showLabels}
+                                  dark={dark}
+                                />
+                              </Navbar.Section>
                             </Navbar>
                           ) : undefined
                         }
