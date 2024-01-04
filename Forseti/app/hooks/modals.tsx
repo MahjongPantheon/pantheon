@@ -1,4 +1,4 @@
-/*  Sigrun: rating tables and statistics frontend
+/*  Forseti: personal area & event control panel
  *  Copyright (C) 2023  o.klimenko aka ctizen
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,17 +16,15 @@
  */
 
 import { createContext } from 'react';
-import { PersonEx } from '../clients/proto/atoms.pb';
 
-export const auth = {
-  isLoggedIn: false,
-  setIsLoggedIn: (_val: boolean) => {},
-  isSuperadmin: false,
-  setIsSuperadmin: (_val: boolean) => {},
-  userInfo: null as PersonEx | null,
-  setUserInfo: (_val: PersonEx | null) => {},
-  ownEvents: [] as number[],
-  setOwnEvents: (_val: number[]) => {},
+export const modals = {
+  stopEventModalShown: false,
+  stopEventModalData: { id: 0, title: '' },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setStopEventModalData: ({ id, title }: { id: number; title: string }) => {},
+  showStopEventModal: () => {},
+  hideStopEventModal: () => {},
 };
 
-export const authCtx = createContext(auth);
+export const modalsCtx = createContext(modals);
+export type Modals = typeof modals;

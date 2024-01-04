@@ -15,8 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export default {
-  root: "../Common/",
-  dest: "./app/clients/",
-  language: "typescript",
+import { createContext } from 'react';
+
+export const modals = {
+  onlineModalShown: false,
+  showOnlineModal: () => {},
+  hideOnlineModal: () => {},
 };
+
+export const modalsCtx = createContext(modals);

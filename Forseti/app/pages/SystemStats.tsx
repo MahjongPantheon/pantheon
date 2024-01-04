@@ -34,7 +34,7 @@ import {
 
 import { useStorage } from '../hooks/storage';
 import { HuginData } from '../clients/proto/hugin.pb';
-import LineGraph from '../helpers/LineGraph';
+import LineGraph from '../components/LineGraph';
 import { Link, Redirect } from 'wouter';
 
 const opts = {

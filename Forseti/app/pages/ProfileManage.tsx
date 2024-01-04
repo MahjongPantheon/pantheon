@@ -49,10 +49,10 @@ import { createRef, useCallback, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
 import { usePageTitle } from '../hooks/pageTitle';
 import { useStorage } from '../hooks/storage';
-import { TopActionButton } from '../helpers/TopActionButton';
+import { TopActionButton } from '../components/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
-import { FileUploadButton } from '../helpers/FileUploadButton';
+import { FileUploadButton } from '../components/FileUploadButton';
 import { env } from '../env';
 import { useDisclosure } from '@mantine/hooks';
 

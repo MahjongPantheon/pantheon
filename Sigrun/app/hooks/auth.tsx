@@ -15,8 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export default {
-  root: "../Common/",
-  dest: "./app/clients/",
-  language: "typescript",
+import { createContext } from 'react';
+import { PersonEx } from '../clients/proto/atoms.pb';
+
+export const auth = {
+  isLoggedIn: false,
+  setIsLoggedIn: (_val: boolean) => {},
+  isSuperadmin: false,
+  setIsSuperadmin: (_val: boolean) => {},
+  userInfo: null as PersonEx | null,
+  setUserInfo: (_val: PersonEx | null) => {},
+  ownEvents: [] as number[],
+  setOwnEvents: (_val: number[]) => {},
 };
+
+export const authCtx = createContext(auth);
+export type Auth = typeof auth;

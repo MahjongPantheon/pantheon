@@ -1,7 +1,7 @@
 build
 coverage
-src/i18n
-src/clients
+app/i18n
+app/clients
 node_modules
 dist
 yarn.lock

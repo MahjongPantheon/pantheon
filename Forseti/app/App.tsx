@@ -33,6 +33,7 @@ import { EventPrescript } from './pages/EventPrescript';
 import { ProfileImpersonate } from './pages/ProfileImpersonate';
 import { ProfileManageAdmin } from './pages/ProfileManageAdmin';
 import { SystemStats } from './pages/SystemStats';
+import './App.css';
 
 export const App = () => {
   return (
