@@ -33,7 +33,7 @@ import { useI18n } from '../hooks/i18n';
 import { useCallback, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
-import { TopActionButton } from '../helpers/TopActionButton';
+import { TopActionButton } from '../components/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';

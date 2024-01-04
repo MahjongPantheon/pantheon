@@ -45,9 +45,9 @@ import { createRef, useCallback, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
 import { usePageTitle } from '../hooks/pageTitle';
 import { notifications } from '@mantine/notifications';
-import { TopActionButton } from '../helpers/TopActionButton';
+import { TopActionButton } from '../components/TopActionButton';
 import { useStorage } from '../hooks/storage';
-import { FileUploadButton } from '../helpers/FileUploadButton';
+import { FileUploadButton } from '../components/FileUploadButton';
 import { env } from '../env';
 
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {

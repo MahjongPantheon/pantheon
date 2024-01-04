@@ -31,7 +31,7 @@ import {
   IconSignature,
   IconUserExclamation,
 } from '@tabler/icons-react';
-import { TopActionButton } from '../helpers/TopActionButton';
+import { TopActionButton } from '../components/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';

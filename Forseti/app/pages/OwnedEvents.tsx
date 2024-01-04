@@ -59,8 +59,8 @@ import { Event, EventType } from '../clients/proto/atoms.pb';
 import { authCtx } from '../hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
-import { TopActionButton } from '../helpers/TopActionButton';
-import { MenuItemLink } from '../helpers/MenuItemLink';
+import { TopActionButton } from '../components/TopActionButton';
+import { MenuItemLink } from '../components/MenuItemLink';
 import { env } from '../env';
 import { notifications } from '@mantine/notifications';
 

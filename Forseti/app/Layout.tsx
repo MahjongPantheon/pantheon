@@ -29,7 +29,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Navigation } from './Navigation';
+import { Navigation } from './components/Navigation';
 import { authCtx } from './hooks/auth';
 import { actionButtonCtx, actionButtonRef } from './hooks/actionButton';
 import { useApi } from './hooks/api';
@@ -39,7 +39,7 @@ import { useAnalytics } from './hooks/analytics';
 import { useI18n } from './hooks/i18n';
 import { useStorage } from './hooks/storage';
 import favicon from './forsetiico.png';
-import { AppFooter } from './AppFooter';
+import { AppFooter } from './components/AppFooter';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {

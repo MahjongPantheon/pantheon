@@ -50,14 +50,14 @@ import {
   IconUserPlus,
 } from '@tabler/icons-react';
 import { useLocation, useRoute } from 'wouter';
-import { useI18n } from './hooks/i18n';
-import { Event } from './clients/proto/atoms.pb';
-import { useApi } from './hooks/api';
-import { useStorage } from './hooks/storage';
+import { useI18n } from '../hooks/i18n';
+import { Event } from '../clients/proto/atoms.pb';
+import { useApi } from '../hooks/api';
+import { useStorage } from '../hooks/storage';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { env } from './env';
-import { ExternalTarget, MainMenuLink } from './helpers/MainMenuLink';
-import { FlagEn, FlagRu } from './helpers/flags';
+import { env } from '../env';
+import { ExternalTarget, MainMenuLink } from './MainMenuLink';
+import { FlagEn, FlagRu } from '../helpers/flags';
 
 const useStyles = createStyles((theme) => ({
   header: {

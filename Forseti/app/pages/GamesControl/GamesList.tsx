@@ -50,7 +50,7 @@ import { I18nService } from '../../services/i18n';
 import { yakuList } from '../../helpers/yaku';
 import { useI18n } from '../../hooks/i18n';
 import { Confirmation } from './Confirmation';
-import { PlayerAvatar } from '../../helpers/PlayerAvatar';
+import { PlayerAvatar } from '../../components/PlayerAvatar';
 
 type GamesListProps = {
   tablesState: TableState[];

@@ -33,7 +33,7 @@ import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { GamesList } from './GamesList';
 import { TournamentControls } from './TournamentControls';
-import { TopActionButton } from '../../helpers/TopActionButton';
+import { TopActionButton } from '../../components/TopActionButton';
 import { IconRefresh } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
 import { useStorage } from '../../hooks/storage';

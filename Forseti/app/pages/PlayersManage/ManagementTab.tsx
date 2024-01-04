@@ -46,7 +46,7 @@ import { PlayerSelector } from './PlayerSelector';
 import { useDisclosure } from '@mantine/hooks';
 import { Filler } from '../../helpers/filler';
 import { useStorage } from '../../hooks/storage';
-import { PlayerAvatar } from '../../helpers/PlayerAvatar';
+import { PlayerAvatar } from '../../components/PlayerAvatar';
 
 export const ManagementTab: React.FC<{
   eventId: number;

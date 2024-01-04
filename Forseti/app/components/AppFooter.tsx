@@ -17,7 +17,7 @@
 
 import { Group, Container, Footer } from '@mantine/core';
 import * as React from 'react';
-import { actionButtonRef } from './hooks/actionButton';
+import { actionButtonRef } from '../hooks/actionButton';
 
 interface AppFooterProps {
   dark: boolean;

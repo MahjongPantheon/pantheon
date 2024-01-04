@@ -31,10 +31,10 @@ import {
 } from '@mantine/core';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { useCallback, useState } from 'react';
-import { TopActionButton } from '../../helpers/TopActionButton';
+import { TopActionButton } from '../../components/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { Filler } from '../../helpers/filler';
-import { PlayerAvatar } from '../../helpers/PlayerAvatar';
+import { PlayerAvatar } from '../../components/PlayerAvatar';
 
 export const LocalIdsTab: React.FC<{
   eventId: number;
