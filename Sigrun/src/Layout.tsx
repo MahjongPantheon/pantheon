@@ -21,12 +21,14 @@ import {
   ColorSchemeProvider,
   Footer,
   MantineProvider,
+  Navbar,
   useMantineTheme,
 } from '@mantine/core';
 import { AppHeader } from './components/AppHeader';
 import { AnalyticsProvider, useAnalytics } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
 import { authCtx } from './hooks/auth';
+import { modalsCtx } from './hooks/modals';
 import { I18nProvider, useI18n } from './hooks/i18n';
 import { ApiProvider, useApi } from './hooks/api';
 import './App.css';
@@ -38,6 +40,11 @@ import { EmotionCache } from '@emotion/css';
 import { Meta } from './components/Meta';
 import { useIsomorphicState } from './hooks/useIsomorphicState';
 import { PersonEx } from './clients/proto/atoms.pb';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { MainMenu } from './components/MainMenu';
+import * as React from 'react';
+import { AddOnlineReplayModal } from './components/AddOnlineReplayModal';
+import { useRoute } from 'wouter';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -65,6 +72,8 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   const i18n = useI18n();
   const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
   const [useDimmed, setUseDimmed] = useState<boolean>(storage.getDimmed());
+  const [onlineModalShown, { open: showOnlineModal, close: hideOnlineModal }] =
+    useDisclosure(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSuperadmin, setIsSuperadmin] = useState(false);
   const [userInfo, setUserInfo] = useState<PersonEx | null>(null);
@@ -98,8 +107,8 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
         api.getSuperadminFlag(personId ?? undefined),
         api.getPersonalInfo(personId ?? undefined),
         api.getOwnedEventIds(personId ?? undefined),
-      ]).then(([auth, superadmin, info, ownedEvents]) => [
-        auth.status === 'fulfilled' ? auth.value : false,
+      ]).then(([authdata, superadmin, info, ownedEvents]) => [
+        authdata.status === 'fulfilled' ? authdata.value : false,
         superadmin.status === 'fulfilled' ? superadmin.value : false,
         info.status === 'fulfilled' ? info.value : null,
         ownedEvents.status === 'fulfilled' ? ownedEvents.value : [],
@@ -126,6 +135,11 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   };
   const theme = useMantineTheme();
   const dark = colorScheme === 'dark';
+
+  // it's better to hide menu item labels for timer page on wide screen
+  const [matchTimerPage] = useRoute('/event/:eventId/timer');
+  const veryLargeScreen = useMediaQuery('(min-width: 1024px)');
+  const showLabels = !(matchTimerPage && veryLargeScreen);
 
   const [data, setDataInt] = useState<Globals>({
     eventId: null,
@@ -305,66 +319,85 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     >
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>
-          <authCtx.Provider
-            value={{
-              isLoggedIn,
-              setIsLoggedIn,
-              isSuperadmin,
-              setIsSuperadmin,
-              userInfo,
-              setUserInfo,
-              ownEvents,
-              setOwnEvents,
-            }}
-          >
-            <globalsCtx.Provider value={{ data, setData }}>
-              <StorageProvider>
-                <I18nProvider>
-                  <ApiProvider>
-                    <Meta
-                      title={i18n._t('Sigrun: riichi mahjong ratings and statistics')}
-                      description={i18n._t(
-                        'Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.'
-                      )}
-                    />
-                    <NavigationProgress color='green' zIndex={10100} />
-                    <AppShell
-                      padding='md'
-                      header={
-                        <AppHeader
-                          dark={dark}
-                          isLoggedIn={isLoggedIn}
-                          toggleColorScheme={toggleColorScheme}
-                          toggleDimmed={toggleDimmed}
-                          saveLang={saveLang}
-                        />
-                      }
-                      footer={
-                        <Footer
-                          height={60}
-                          style={{ position: 'static', display: 'flex', alignItems: 'center' }}
-                        >
-                          <AppFooter />
-                        </Footer>
-                      }
-                      classNames={{
-                        main: haveNySpecs ? 'newyear' : '',
-                      }}
-                      styles={{
-                        main: {
-                          overflowX: 'hidden',
-                          minHeight: 'calc(100vh - var(--mantine-footer-height, 0px))',
-                          background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
-                        },
-                      }}
-                    >
-                      {children}
-                    </AppShell>
-                  </ApiProvider>
-                </I18nProvider>
-              </StorageProvider>
-            </globalsCtx.Provider>
-          </authCtx.Provider>
+          <modalsCtx.Provider value={{ onlineModalShown, showOnlineModal, hideOnlineModal }}>
+            <authCtx.Provider
+              value={{
+                isLoggedIn,
+                setIsLoggedIn,
+                isSuperadmin,
+                setIsSuperadmin,
+                userInfo,
+                setUserInfo,
+                ownEvents,
+                setOwnEvents,
+              }}
+            >
+              <globalsCtx.Provider value={{ data, setData }}>
+                <StorageProvider>
+                  <I18nProvider>
+                    <ApiProvider>
+                      <Meta
+                        title={i18n._t('Sigrun: riichi mahjong ratings and statistics')}
+                        description={i18n._t(
+                          'Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.'
+                        )}
+                      />
+                      <NavigationProgress color='green' zIndex={10100} />
+                      <AppShell
+                        padding='md'
+                        header={
+                          <AppHeader
+                            dark={dark}
+                            isLoggedIn={isLoggedIn}
+                            toggleColorScheme={toggleColorScheme}
+                            toggleDimmed={toggleDimmed}
+                            saveLang={saveLang}
+                          />
+                        }
+                        navbar={
+                          veryLargeScreen ? (
+                            <Navbar width={{ base: showLabels ? 350 : 80 }} p='xs'>
+                              <MainMenu
+                                isLoggedIn={isLoggedIn}
+                                saveLang={saveLang}
+                                toggleDimmed={toggleDimmed}
+                                toggleColorScheme={toggleColorScheme}
+                                showLabels={showLabels}
+                                dark={dark}
+                              />
+                            </Navbar>
+                          ) : undefined
+                        }
+                        footer={
+                          veryLargeScreen ? undefined : (
+                            <Footer
+                              height={veryLargeScreen ? 30 : 60}
+                              style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                              <AppFooter />
+                            </Footer>
+                          )
+                        }
+                        classNames={{
+                          main: haveNySpecs ? 'newyear' : '',
+                        }}
+                        styles={{
+                          main: {
+                            overflowX: 'hidden',
+                            minHeight: 'calc(100vh - var(--mantine-footer-height, 0px))',
+                            background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
+                          },
+                        }}
+                      >
+                        {children}
+                        <AddOnlineReplayModal />
+                      </AppShell>
+                    </ApiProvider>
+                  </I18nProvider>
+                </StorageProvider>
+              </globalsCtx.Provider>
+            </authCtx.Provider>
+          </modalsCtx.Provider>
         </AnalyticsProvider>
       </ColorSchemeProvider>
     </MantineProvider>

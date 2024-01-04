@@ -16,18 +16,11 @@
  */
 
 import { createContext } from 'react';
-import { PersonEx } from '../clients/proto/atoms.pb';
 
-export const auth = {
-  isLoggedIn: false,
-  setIsLoggedIn: (_val: boolean) => {},
-  isSuperadmin: false,
-  setIsSuperadmin: (_val: boolean) => {},
-  userInfo: null as PersonEx | null,
-  setUserInfo: (_val: PersonEx | null) => {},
-  ownEvents: [] as number[],
-  setOwnEvents: (_val: number[]) => {},
+export const modals = {
+  onlineModalShown: false,
+  showOnlineModal: () => {},
+  hideOnlineModal: () => {},
 };
 
-export const authCtx = createContext(auth);
-export type Auth = typeof auth;
+export const modalsCtx = createContext(modals);
