@@ -1,2 +1,1 @@
-*/15 * * * * php /var/www/html/Mimir/cron/achievements.php
-* * * * * php /var/www/html/Mimir/cron/playerStats.php
+* * * * * php /var/www/html/Mimir/cron/scheduler.php

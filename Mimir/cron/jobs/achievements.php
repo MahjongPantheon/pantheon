@@ -3,24 +3,24 @@ namespace Mimir;
 
 ini_set('display_errors', 'On');
 ini_set('memory_limit', '1024M');
-require __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../src/Config.php';
-require_once __DIR__ . '/../src/Db.php';
-require_once __DIR__ . '/../src/DataSource.php';
-require_once __DIR__ . '/../src/FreyClientTwirp.php';
-require_once __DIR__ . '/../src/helpers/PointsCalc.php';
-require_once __DIR__ . '/../src/helpers/SessionState.php';
-require_once __DIR__ . '/../src/primitives/Session.php';
-require_once __DIR__ . '/../src/primitives/SessionResults.php';
-require_once __DIR__ . '/../src/primitives/Round.php';
-require_once __DIR__ . '/../src/models/Event.php';
+require __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../src/Config.php';
+require_once __DIR__ . '/../../src/Db.php';
+require_once __DIR__ . '/../../src/DataSource.php';
+require_once __DIR__ . '/../../src/FreyClientTwirp.php';
+require_once __DIR__ . '/../../src/helpers/PointsCalc.php';
+require_once __DIR__ . '/../../src/helpers/SessionState.php';
+require_once __DIR__ . '/../../src/primitives/Session.php';
+require_once __DIR__ . '/../../src/primitives/SessionResults.php';
+require_once __DIR__ . '/../../src/primitives/Round.php';
+require_once __DIR__ . '/../../src/models/Event.php';
 
 define('ACH_SLEEP_INTERVAL', 2);
 
 if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
     $configPath = getenv('OVERRIDE_CONFIG_PATH');
 } else {
-    $configPath = __DIR__ . '/../config/index.php';
+    $configPath = __DIR__ . '/../../config/index.php';
 }
 
 try {
@@ -152,6 +152,7 @@ try {
             continue;
         }
     }
+    echo 'Achievements update success!' . PHP_EOL;
 } catch (\Exception $e) {
     echo 'Achievements update error!' . PHP_EOL;
     echo $e->getMessage() . PHP_EOL;
