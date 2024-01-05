@@ -42,6 +42,7 @@ RUN mkdir /home/user && chown user: /home/user
 # Munin setup
 RUN sed -i '/^allow/d' /etc/munin/munin-node.conf
 RUN echo 'allow ^.*$' >>/etc/munin/munin-node.conf
+RUN echo "ipv 4" >> /etc/munin/munin-node.conf
 
 COPY munin_plugins/00-default /etc/munin/plugin-conf.d/00-default
 COPY munin_plugins/cpubyuser /etc/munin/plugins
