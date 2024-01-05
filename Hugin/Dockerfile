@@ -14,6 +14,8 @@ RUN ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \
   ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
   ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
 
+RUN chown munin:munin /usr/share/webapps/munin/html
+
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
 RUN dos2unix /entrypoint.sh
