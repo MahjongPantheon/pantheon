@@ -111,7 +111,13 @@ class EventModel extends Model
             throw new \Exception('Event is already finished');
         }
 
-        if (!$event->getAllowViewOtherTables() && !$this->_meta->isEventAdminById($eventId)) {
+        $personId = $this->_meta->getCurrentPersonId();
+        $currentlyPlayedSession = $personId
+            ? SessionPrimitive::findByPlayerAndEvent($this->_ds, $personId, $eventId, SessionPrimitive::STATUS_INPROGRESS)
+            : [];
+        $canViewOtherTables = $event->getAllowViewOtherTables() || count($currentlyPlayedSession) === 0 || $this->_meta->isEventAdminById($eventId);
+
+        if (!$canViewOtherTables) {
             throw new BadActionException('This is not allowed for this event');
         }
 

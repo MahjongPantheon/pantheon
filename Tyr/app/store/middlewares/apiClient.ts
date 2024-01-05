@@ -132,25 +132,41 @@ export const apiClient =
         getGameOverview(action.payload, api, next);
         break;
       case GET_OTHER_TABLES_LIST_INIT:
-        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
+        if (
+          !eventId ||
+          (mw.getState().gameConfig?.allowViewOtherTables === false &&
+            mw.getState().currentSessionHash)
+        ) {
           return;
         }
         getOtherTablesList(api, next, eventId);
         break;
       case GET_OTHER_TABLES_LIST_RELOAD:
-        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
+        if (
+          !eventId ||
+          (mw.getState().gameConfig?.allowViewOtherTables === false &&
+            mw.getState().currentSessionHash)
+        ) {
           return;
         }
         getOtherTablesListReload(api, next, eventId);
         break;
       case GET_OTHER_TABLE_INIT:
-        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
+        if (
+          !eventId ||
+          (mw.getState().gameConfig?.allowViewOtherTables === false &&
+            mw.getState().currentSessionHash)
+        ) {
           return;
         }
         getOtherTable(action.payload, api, next);
         break;
       case GET_OTHER_TABLE_RELOAD:
-        if (!eventId || mw.getState().gameConfig?.allowViewOtherTables === false) {
+        if (
+          !eventId ||
+          (mw.getState().gameConfig?.allowViewOtherTables === false &&
+            mw.getState().currentSessionHash)
+        ) {
           return;
         }
         getOtherTableReload(mw.getState().currentOtherTableHash ?? '', api, next);
