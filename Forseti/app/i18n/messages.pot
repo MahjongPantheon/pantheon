@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-03 22:09+0100\n"
+"POT-Creation-Date: 2024-01-05 20:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,138 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/helpers/FileUploadButton.tsx:28:16
+#: app/components/AppHeader.tsx:118:24
+#: app/components/AppHeader.tsx:130:24
+msgid "Open menu"
+msgstr ""
+
+#: app/components/AppHeader.tsx:126:18
+msgid "Menu"
+msgstr ""
+
+#: app/components/FileUploadButton.tsx:28:16
 msgid "File is too big"
 msgstr ""
 
-#: app/helpers/FileUploadButton.tsx:29:18
+#: app/components/FileUploadButton.tsx:29:18
 msgid "Selected file is too big. Please select a file not bigger than 256KB"
 msgstr ""
 
-#: app/helpers/FileUploadButton.tsx:38:38
+#: app/components/FileUploadButton.tsx:38:38
 msgid "Select an avatar"
+msgstr ""
+
+#: app/components/MainMenu.tsx:74:22
+msgid "Event: %1"
+msgstr ""
+
+#: app/components/MainMenu.tsx:81:21
+msgid "Open event page"
+msgstr ""
+
+#: app/components/MainMenu.tsx:87:21
+#: app/pages/OwnedEvents.tsx:369:33
+msgid "Settings"
+msgstr ""
+
+#: app/components/MainMenu.tsx:95:25
+#: app/pages/OwnedEvents.tsx:361:34
+#: app/pages/OwnedEvents.tsx:363:33
+msgid "Manage players"
+msgstr ""
+
+#: app/components/MainMenu.tsx:101:25
+#: app/pages/OwnedEvents.tsx:357:33
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
+msgid "Penalties"
+msgstr ""
+
+#: app/components/MainMenu.tsx:107:25
+#: app/pages/OwnedEvents.tsx:351:33
+msgid "Manage games"
+msgstr ""
+
+#: app/components/MainMenu.tsx:114:27
+#: app/pages/OwnedEvents.tsx:344:35
+msgid "Predefined seating"
+msgstr ""
+
+#: app/components/MainMenu.tsx:125:24
+#: app/pages/OwnedEvents.tsx:373:38
+#: app/pages/ProfileManage.tsx:288:29
+msgid "Danger zone"
+msgstr ""
+
+#: app/components/MainMenu.tsx:131:24
+#: app/pages/OwnedEvents.tsx:376:36
+#: app/pages/OwnedEvents.tsx:380:30
+msgid "Rebuild scoring"
+msgstr ""
+
+#: app/components/MainMenu.tsx:142:24
+#: app/pages/OwnedEvents.tsx:384:34
+#: app/pages/OwnedEvents.tsx:392:28
+msgid "Finish event"
+msgstr ""
+
+#: app/components/MainMenu.tsx:161:18
+msgid "Common actions"
+msgstr ""
+
+#: app/components/MainMenu.tsx:168:17
+msgid "All events"
+msgstr ""
+
+#: app/components/MainMenu.tsx:175:19
+msgid "My events"
+msgstr ""
+
+#: app/components/MainMenu.tsx:183:19
+msgid "Sign in"
+msgstr ""
+
+#: app/components/MainMenu.tsx:191:19
+msgid "Sign up"
+msgstr ""
+
+#: app/components/MainMenu.tsx:199:19
+#: app/pages/ProfileManageAdmin.tsx:321:21
+msgid "Register player"
+msgstr ""
+
+#: app/components/MainMenu.tsx:207:19
+msgid "Edit profile"
+msgstr ""
+
+#: app/components/MainMenu.tsx:215:19
+msgid "Sign out"
+msgstr ""
+
+#: app/components/MainMenu.tsx:224:18
+msgid "Language"
+msgstr ""
+
+#: app/components/MainMenu.tsx:250:18
+msgid "Toggle dimmed colors"
+msgstr ""
+
+#: app/components/MainMenu.tsx:259:18
+msgid "Toggle color scheme"
+msgstr ""
+
+#: app/components/StopEventModal.tsx:29:10
+#: app/pages/OwnedEvents.tsx:244:12
+msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
+msgstr ""
+
+#: app/components/StopEventModal.tsx:36:12
+#: app/pages/OwnedEvents.tsx:251:14
+msgid "Cancel"
+msgstr ""
+
+#: app/components/StopEventModal.tsx:46:12
+#: app/pages/OwnedEvents.tsx:261:14
+msgid "Stop event"
 msgstr ""
 
 #: app/helpers/yaku.ts:70:34
@@ -207,128 +329,6 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: app/Navigation.tsx:143:12
-#: app/pages/OwnedEvents.tsx:244:12
-msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
-msgstr ""
-
-#: app/Navigation.tsx:150:14
-#: app/pages/OwnedEvents.tsx:251:14
-msgid "Cancel"
-msgstr ""
-
-#: app/Navigation.tsx:160:14
-#: app/pages/OwnedEvents.tsx:261:14
-msgid "Stop event"
-msgstr ""
-
-#: app/Navigation.tsx:190:26
-msgid "Event: %1"
-msgstr ""
-
-#: app/Navigation.tsx:197:25
-msgid "Open event page"
-msgstr ""
-
-#: app/Navigation.tsx:203:25
-#: app/pages/OwnedEvents.tsx:369:33
-msgid "Settings"
-msgstr ""
-
-#: app/Navigation.tsx:211:29
-#: app/pages/OwnedEvents.tsx:361:34
-#: app/pages/OwnedEvents.tsx:363:33
-msgid "Manage players"
-msgstr ""
-
-#: app/Navigation.tsx:217:29
-#: app/pages/OwnedEvents.tsx:357:33
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
-msgid "Penalties"
-msgstr ""
-
-#: app/Navigation.tsx:223:29
-#: app/pages/OwnedEvents.tsx:351:33
-msgid "Manage games"
-msgstr ""
-
-#: app/Navigation.tsx:230:31
-#: app/pages/OwnedEvents.tsx:344:35
-msgid "Predefined seating"
-msgstr ""
-
-#: app/Navigation.tsx:241:28
-#: app/pages/OwnedEvents.tsx:373:38
-#: app/pages/ProfileManage.tsx:288:29
-msgid "Danger zone"
-msgstr ""
-
-#: app/Navigation.tsx:247:28
-#: app/pages/OwnedEvents.tsx:376:36
-#: app/pages/OwnedEvents.tsx:380:30
-msgid "Rebuild scoring"
-msgstr ""
-
-#: app/Navigation.tsx:258:28
-#: app/pages/OwnedEvents.tsx:384:34
-#: app/pages/OwnedEvents.tsx:392:28
-msgid "Finish event"
-msgstr ""
-
-#: app/Navigation.tsx:277:22
-msgid "Common actions"
-msgstr ""
-
-#: app/Navigation.tsx:284:21
-msgid "All events"
-msgstr ""
-
-#: app/Navigation.tsx:291:23
-msgid "My events"
-msgstr ""
-
-#: app/Navigation.tsx:299:23
-msgid "Sign in"
-msgstr ""
-
-#: app/Navigation.tsx:307:23
-msgid "Sign up"
-msgstr ""
-
-#: app/Navigation.tsx:315:23
-#: app/pages/ProfileManageAdmin.tsx:321:21
-msgid "Register player"
-msgstr ""
-
-#: app/Navigation.tsx:323:23
-msgid "Edit profile"
-msgstr ""
-
-#: app/Navigation.tsx:331:23
-msgid "Sign out"
-msgstr ""
-
-#: app/Navigation.tsx:340:22
-msgid "Language"
-msgstr ""
-
-#: app/Navigation.tsx:366:22
-msgid "Toggle dimmed colors"
-msgstr ""
-
-#: app/Navigation.tsx:375:22
-msgid "Toggle color scheme"
-msgstr ""
-
-#: app/Navigation.tsx:385:22
-#: app/Navigation.tsx:397:22
-msgid "Open menu"
-msgstr ""
-
-#: app/Navigation.tsx:393:16
-msgid "Menu"
-msgstr ""
-
 #: app/pages/EventPrescript.tsx:64:16
 msgid "Predefined seating configuration"
 msgstr ""
@@ -435,76 +435,76 @@ msgstr ""
 msgid "Remove game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:212:30
+#: app/pages/GamesControl/GamesList.tsx:214:30
 msgid "Forcefully finish the game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:213:29
+#: app/pages/GamesControl/GamesList.tsx:215:29
 msgid "Force finish game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:214:32
+#: app/pages/GamesControl/GamesList.tsx:216:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:227:30
+#: app/pages/GamesControl/GamesList.tsx:229:30
 msgid "Remove game results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:228:29
+#: app/pages/GamesControl/GamesList.tsx:230:29
 msgid "Cancel results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:229:32
+#: app/pages/GamesControl/GamesList.tsx:231:32
 msgid "This will only remove the game results, but you will need to cancel last round separately. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:262:20
+#: app/pages/GamesControl/GamesList.tsx:264:20
 msgid "Session is ready to start"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:274:20
+#: app/pages/GamesControl/GamesList.tsx:276:20
 msgid "Session in progress"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:287:18
+#: app/pages/GamesControl/GamesList.tsx:289:18
 msgid "Session finished, but not confirmed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:299:18
+#: app/pages/GamesControl/GamesList.tsx:301:18
 msgid "Session finished"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:311:18
+#: app/pages/GamesControl/GamesList.tsx:313:18
 msgid "Session cancelled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:323:18
+#: app/pages/GamesControl/GamesList.tsx:325:18
 msgid "Session is scheduled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:358:12
-#: app/pages/GamesControl/GamesList.tsx:369:9
+#: app/pages/GamesControl/GamesList.tsx:360:12
+#: app/pages/GamesControl/GamesList.tsx:371:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:380:12
+#: app/pages/GamesControl/GamesList.tsx:382:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:388:12
+#: app/pages/GamesControl/GamesList.tsx:390:12
 msgid "Chombo, %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:392:12
+#: app/pages/GamesControl/GamesList.tsx:394:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:399:12
+#: app/pages/GamesControl/GamesList.tsx:401:12
 msgid "Abortive draw, riichi: %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:405:12
+#: app/pages/GamesControl/GamesList.tsx:407:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr ""
 
@@ -1455,7 +1455,7 @@ msgid "Your email has been successfully confirmed. Now you can proceed to login 
 msgstr ""
 
 #: app/pages/ProfileConfirm.tsx:92:37
-#: app/pages/ProfileResetPasswordConfirm.tsx:214:37
+#: app/pages/ProfileResetPasswordConfirm.tsx:232:37
 msgid "Go to Login page"
 msgstr ""
 
@@ -1683,7 +1683,7 @@ msgid "Update player"
 msgstr ""
 
 #: app/pages/ProfileResetPassword.tsx:32:16
-#: app/pages/ProfileResetPasswordConfirm.tsx:194:37
+#: app/pages/ProfileResetPasswordConfirm.tsx:212:37
 msgid "Recover password"
 msgstr ""
 
@@ -1703,48 +1703,60 @@ msgstr ""
 msgid "A confirmation link for password recovery has been sent to provided email. Please check your mailbox and follow the link in the message."
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:50:16
+#: app/pages/ProfileResetPasswordConfirm.tsx:51:16
 msgid "Reset your password"
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:132:13
+#: app/pages/ProfileResetPasswordConfirm.tsx:91:18
+msgid "Action required"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:94:12
+msgid "Please press the button below to proceed with password recovery"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:97:41
+msgid "Reset my password"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:150:13
 #: app/pages/ProfileSignup.tsx:62:13
 msgid "Your password is too weak. Please enter stronger password."
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:150:13
+#: app/pages/ProfileResetPasswordConfirm.tsx:168:13
 msgid "Failed to change password. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:159:60
+#: app/pages/ProfileResetPasswordConfirm.tsx:177:60
 msgid "Please note"
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:160:10
+#: app/pages/ProfileResetPasswordConfirm.tsx:178:10
 msgid "Your password has been set to temporary value. You won't be able to log in until you set you new password, even if you remembered your old password."
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:167:24
+#: app/pages/ProfileResetPasswordConfirm.tsx:185:24
 msgid "Enter new strong password"
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:172:34
+#: app/pages/ProfileResetPasswordConfirm.tsx:190:34
 msgid "Update password"
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:184:16
+#: app/pages/ProfileResetPasswordConfirm.tsx:202:16
 msgid "Password recovery failed"
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:187:10
+#: app/pages/ProfileResetPasswordConfirm.tsx:205:10
 msgid "Failed to recover your password. Probably the link you followed has been expired or already used. Please try again."
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:206:16
+#: app/pages/ProfileResetPasswordConfirm.tsx:224:16
 msgid "Password successfully updated"
 msgstr ""
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:209:10
+#: app/pages/ProfileResetPasswordConfirm.tsx:227:10
 msgid "Your password has been successfully reset. Now you can proceed to login page."
 msgstr ""
 

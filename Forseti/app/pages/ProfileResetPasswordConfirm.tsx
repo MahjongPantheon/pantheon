@@ -31,7 +31,7 @@ import { IconCheck, IconAlertCircle, IconLock } from '@tabler/icons-react';
 import { Link } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { I18nService } from '../services/i18n';
 import { useForm } from '@mantine/form';
 import { ApiService } from '../services/api';
@@ -45,11 +45,13 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
   const i18n = useI18n();
   const [approvalCode, email] = window.atob(code).split('@@@');
   const [tmpCode, setTmpCode] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isRequested, setIsRequested] = useState(false);
   usePageTitle(i18n._t('Reset your password'));
 
-  useEffect(() => {
+  const approveReset = () => {
+    setIsRequested(true);
     setIsLoading(true);
     api
       .approvePasswordRecovery(email, approvalCode)
@@ -61,7 +63,7 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
         setIsSuccess(false);
         setIsLoading(false);
       });
-  }, []);
+  };
 
   if (isLoading) {
     return (
@@ -77,6 +79,22 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
     return (
       <Container>
         <SuccessAlert i18n={i18n} />
+      </Container>
+    );
+  }
+
+  if (!isRequested) {
+    return (
+      <Container>
+        <Alert
+          icon={<IconAlertCircle size='1rem' />}
+          title={i18n._t('Action required')}
+          color='orange'
+        >
+          {i18n._t('Please press the button below to proceed with password recovery')}
+        </Alert>
+        <Space h='xl' />
+        <Button onClick={approveReset}>{i18n._t('Reset my password')}</Button>
       </Container>
     );
   }
