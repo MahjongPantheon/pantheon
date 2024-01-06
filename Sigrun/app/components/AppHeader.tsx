@@ -15,7 +15,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ActionIcon, Button, Container, createStyles, Drawer, Group, Header } from '@mantine/core';
+import {
+  ActionIcon,
+  Anchor,
+  Button,
+  Container,
+  createStyles,
+  Drawer,
+  Group,
+  Header,
+} from '@mantine/core';
 import { IconList } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
 import * as React from 'react';
@@ -23,6 +32,7 @@ import { useContext } from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { authCtx } from '../hooks/auth';
 import { MainMenu } from './MainMenu';
+import { useLocation } from 'wouter';
 
 const useStyles = createStyles(() => ({
   header: {
@@ -61,13 +71,15 @@ export function AppHeader({
 }: AppHeaderProps) {
   const { classes } = useStyles();
   const i18n = useI18n();
+  const [location, navigate] = useLocation();
   const auth = useContext(authCtx);
   const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
   const largeScreen = useMediaQuery('(min-width: 640px)');
   const veryLargeScreen = useMediaQuery('(min-width: 1024px)');
+  const matchedEventId = location.match(/\/event\/([^/]+)\//);
 
   return (
-    <Header height={44} className={classes.header} mb={120}>
+    <Header height={44} className={classes.header} pl={veryLargeScreen ? 350 : 0} mb={120}>
       {!veryLargeScreen && (
         <Drawer
           size='sm'
@@ -129,7 +141,22 @@ export function AppHeader({
         </div>
         {auth.userInfo && (
           <Group position='right' h={44}>
-            <div className={classes.userTitle}>{auth.userInfo?.title}</div>
+            <div className={classes.userTitle}>
+              {matchedEventId ? (
+                <Anchor
+                  className={classes.userTitle}
+                  href={`/event/${matchedEventId[1]}/player/${auth.userInfo.id}`}
+                  onClick={(e) => {
+                    navigate(`/event/${matchedEventId[1]}/player/${auth.userInfo?.id}`);
+                    e.preventDefault();
+                  }}
+                >
+                  {auth.userInfo.title}
+                </Anchor>
+              ) : (
+                auth.userInfo.title
+              )}
+            </div>
           </Group>
         )}
       </Container>

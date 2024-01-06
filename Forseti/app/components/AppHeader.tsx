@@ -75,7 +75,13 @@ export const AppHeader: React.FC<{
   const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
 
   return (
-    <Header bg={dark ? '#784421' : '#DCA57F'} height={44} mb={120} pt={0}>
+    <Header
+      bg={dark ? '#784421' : '#DCA57F'}
+      height={44}
+      mb={120}
+      pt={0}
+      pl={veryLargeScreen ? 350 : 0}
+    >
       {!veryLargeScreen && (
         <Drawer
           size='sm'
