@@ -26,6 +26,7 @@ import { Game } from './pages/Game';
 import { Timer } from './pages/Timer';
 import { Achievements } from './pages/Achievements';
 import { EventRulesOverview } from './pages/EventRulesOverview';
+import { RegisteredPlayers } from './pages/RegisteredPlayers';
 import './App.css';
 
 export function App() {
@@ -41,6 +42,7 @@ export function App() {
         path='/event/:eventId/order/:orderBy/filter/:minGamesSelector'
         component={RatingTable}
       />
+      <Route path='/event/:eventId/playersList' component={RegisteredPlayers} />
       <Route path='/event/:eventId/player/:playerId' component={PlayerStats} />
       <Route path='/event/:eventId/games' component={RecentGames} />
       <Route path='/event/:eventId/games/page/:page' component={RecentGames} />

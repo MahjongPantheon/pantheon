@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 20:29+0100\n"
+"POT-Creation-Date: 2024-01-06 18:04+0100\n"
 "PO-Revision-Date: 2024-01-05 22:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -122,7 +122,7 @@ msgstr "Банкротство"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:142:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
 msgid "Allow viewing of other tables during ongoing game"
 msgstr "Разрешить просмотр других столов во время игры"
 
@@ -702,7 +702,7 @@ msgstr ""
 "Если отмечено, номинации будут видны для всех, в ином случае - только для "
 "администраторов события"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:143:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
 msgid ""
 "If checked, players will be able to see other tables state even if they are "
 "currently in game. It is strongly recommended to keep this checkbox disabled "
@@ -732,7 +732,6 @@ msgstr ""
 "все еще будет доступно по ссылке"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:122:24
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
 msgid ""
 "If checked, the rating table will be shown for everyone, otherwise only for "
 "event administrators"
@@ -1540,7 +1539,6 @@ msgid "Show in ratings global list"
 msgstr "Показать в глобальном списке событий"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:121:18
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
 msgid "Show rating table for everyone"
 msgstr "Показать рейтинговую таблицу для всех"
 

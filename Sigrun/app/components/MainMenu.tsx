@@ -19,6 +19,7 @@ import {
   IconOlympics,
   IconSun,
   IconUserPlus,
+  IconUsers,
 } from '@tabler/icons-react';
 import { EventType } from '../clients/proto/atoms.pb';
 import { FlagEn, FlagRu } from '../helpers/flags';
@@ -102,6 +103,15 @@ export const MainMenu = ({
                 title={i18n._pt('Event menu', 'Rating table')}
                 onClick={closeMenu}
               />
+              {globals.data.type === EventType.EVENT_TYPE_ONLINE && (
+                <MainMenuLink
+                  href={`/event/${globals.data.eventId?.[0]}/playersList`}
+                  icon={<IconUsers size={24} />}
+                  text={showLabels ? i18n._pt('Event menu', 'Registered players') : ''}
+                  title={i18n._pt('Event menu', 'Players registered to event')}
+                  onClick={closeMenu}
+                />
+              )}
               {globals.data.eventId?.length === 1 && (
                 <MainMenuLink
                   href={`/event/${globals.data.eventId?.join('.')}/achievements`}

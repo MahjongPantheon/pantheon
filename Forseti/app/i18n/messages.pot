@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 20:29+0100\n"
+"POT-Creation-Date: 2024-01-06 18:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -852,12 +852,10 @@ msgid "If checked, the event will be publicly visible on main page of ratings su
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:121:18
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
 msgid "Show rating table for everyone"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:122:24
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
 msgid "If checked, the rating table will be shown for everyone, otherwise only for event administrators"
 msgstr ""
 
@@ -869,11 +867,11 @@ msgstr ""
 msgid "If checked, achievements will be shown for everyone, otherwise only for event administrators"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:142:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
 msgid "Allow viewing of other tables during ongoing game"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:143:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
 msgid "If checked, players will be able to see other tables state even if they are currently in game. It is strongly recommended to keep this checkbox disabled for all tournament events."
 msgstr ""
 
