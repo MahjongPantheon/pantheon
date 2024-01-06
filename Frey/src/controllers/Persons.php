@@ -145,7 +145,9 @@ class PersonsController extends Controller
             }
         }
 
-        $this->_logSuccess(__METHOD__, [implode(',', $majsoulPersonalInfo)]);
+        $this->_logSuccess(__METHOD__, [implode(',', array_map(function (MajsoulSearchEx $item) {
+            return 'nickname=' . $item['ms_nickname'] . ', account_id=' . $item['ms_account_id'];
+        }, $majsoulPersonalInfo))]);
         return $majsoulPersonalInfo;
     }
 
