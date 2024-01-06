@@ -60,9 +60,9 @@ class EventRatingTableModel extends Model
          * 1. We get history items for each event and place them all in a
          *    single $playersHistoryItemsCombined array.
          *    In the same loop we also get all unique players for all the events. We
-         *    want unique players, because some players may have participated in all of the events,
+         *    want unique players, because some players may have participated in all the events,
          *    some - only in one event. They are placed into $playerItems array.
-         * 2. For each player we find all history items that concern him. Then we create a new
+         * 2. For each player we find all history items that are related to him. Then we create a new
          *    history item that is the sum of all player's history items. New items are
          *    placed into $playerHistoryItemsSummed array. The size of this array is now the
          *    same as the size of $playerItems array.
