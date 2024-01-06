@@ -383,7 +383,7 @@ class FreyClientTwirp implements IFreyClient
                 'city' => $person->getCity(),
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
-                'tenhou_id' => $person->getTenhouId(),
+                'tenhou_id' => $person->getMsNickname(),
                 'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
