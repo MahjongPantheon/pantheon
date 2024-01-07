@@ -14,6 +14,7 @@ require_once __DIR__ . '/../../src/primitives/Session.php';
 require_once __DIR__ . '/../../src/primitives/SessionResults.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
 require_once __DIR__ . '/../../src/models/Event.php';
+require_once __DIR__ . '/../../src/models/PlatformTypeId.php';
 
 define('ACH_SLEEP_INTERVAL', 2);
 
