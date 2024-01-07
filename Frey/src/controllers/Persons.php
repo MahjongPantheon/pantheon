@@ -145,7 +145,7 @@ class PersonsController extends Controller
             }
         }
 
-        $this->_logSuccess(__METHOD__, [implode(',', array_map(function (MajsoulSearchEx $item) {
+        $this->_logSuccess(__METHOD__, [implode(',', array_map(function ($item) {
             return 'nickname=' . $item['ms_nickname'] . ', account_id=' . $item['ms_account_id'];
         }, $majsoulPersonalInfo))]);
         return $majsoulPersonalInfo;
@@ -322,6 +322,18 @@ class PersonsController extends Controller
         $this->_logStart(__METHOD__, [$groupId]);
         $data = $this->_getGroupsModel()->getPersonsOfGroup($groupId);
         $this->_logSuccess(__METHOD__, [$groupId]);
+        return $data;
+    }
+
+    /**
+     * @param int[] $ids
+     * @return array
+     */
+    public function getMajsoulNicknames($ids)
+    {
+        $this->_logStart(__METHOD__, [$ids]);
+        $data = $this->_getAccountModel()->getMajsoulNicknames($ids);
+        $this->_logSuccess(__METHOD__, [$ids]);
         return $data;
     }
 

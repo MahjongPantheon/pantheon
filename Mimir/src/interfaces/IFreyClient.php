@@ -444,4 +444,11 @@ interface IFreyClient
      * @return int|null
     */
     public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId);
+
+    /**
+     * Get majsoul nicknames list by person id list
+     * @param int[] $ids
+     * @return array
+     */
+    public function getMajsoulNicknames($ids);
 }

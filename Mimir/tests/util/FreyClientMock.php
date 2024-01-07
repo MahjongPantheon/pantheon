@@ -358,4 +358,10 @@ class FreyClientMock implements IFreyClient
             return ['id' => $this->resolvePlayerId($id), 'title' => $id, 'tenhou_id' => $id, 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
         }, $playersMapping));
     }
+
+    public function getMajsoulNicknames($ids)
+    {
+        // TODO: Implement getMajsoulNicknames() method.
+        return [];
+    }
 }

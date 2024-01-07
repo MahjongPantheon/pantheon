@@ -176,6 +176,15 @@ interface Frey
     public function GetEventAdmins(array $ctx, \Common\AccessGetEventAdminsPayload $req): \Common\AccessGetEventAdminsResponse;
 
     /**
+     *
+     *
+     * Generated from protobuf method <code>common.Frey/GetMajsoulNicknames</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function GetMajsoulNicknames(array $ctx, \Common\PersonsGetMajsoulNicknamesPayload $req): \Common\PersonsGetMajsoulNicknamesResponse;
+
+    /**
      * admin
      *
      * Generated from protobuf method <code>common.Frey/GetSuperadminFlag</code>

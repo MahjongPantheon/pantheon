@@ -1054,4 +1054,24 @@ class FreyClientTwirp implements IFreyClient
             'title' => $person->getTitle(),
         ];
     }
+
+    /**
+     * @param int[] $ids
+     * @return array
+     */
+    public function getMajsoulNicknames($ids)
+    {
+        $mapping = $this->_client->GetMajsoulNicknames(
+            $this->_ctx,
+            (new \Common\PersonsGetMajsoulNicknamesPayload())->setIds($ids)
+        );
+        return array_reduce(
+            iterator_to_array($mapping->getMapping()),
+            function ($acc, \Common\MajsoulPersonMapping $item) {
+                $acc[$item->getPersonId()] = $acc[$item->getNickname()];
+                return $acc;
+            },
+            []
+        );
+    }
 }

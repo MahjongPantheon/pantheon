@@ -362,14 +362,27 @@ class EventModel extends Model
     /**
      * @param DataSource $ds
      * @param SessionPrimitive[] $games
+     * @param int|null $eventId
      * @throws \Exception
      * @return array
      */
-    public static function getPlayersOfGames(DataSource $ds, $games)
+    public static function getPlayersOfGames(DataSource $ds, $games, $eventId = null)
     {
         $players = PlayerPrimitive::findById($ds, array_reduce($games, function ($acc, SessionPrimitive $el) {
             return array_merge($acc, $el->getPlayersIds());
         }, []));
+
+        $soulNicknames = [];
+        $useSoulNicknames = false;
+        if ($eventId) {
+            $event = EventPrimitive::findById($ds, [$eventId]);
+            $useSoulNicknames = $event[0]->getPlatformId() === PlatformTypeId::Majsoul->value;
+            if ($useSoulNicknames) {
+                $soulNicknames = $ds->remote()->getMajsoulNicknames(array_map(function (PlayerPrimitive $el) {
+                    return (int)$el->getId();
+                }, $players));
+            }
+        }
 
         $result = [];
         foreach ($players as $player) {
@@ -378,7 +391,7 @@ class EventModel extends Model
                 'title'         => $player->getDisplayName(),
                 'has_avatar'    => $player->getHasAvatar(),
                 'last_update'    => $player->getLastUpdate(),
-                'tenhou_id'     => $player->getTenhouId()
+                'tenhou_id'     => $useSoulNicknames ? $soulNicknames[(int)$player->getId()] : $player->getTenhouId()
             ];
         }
 

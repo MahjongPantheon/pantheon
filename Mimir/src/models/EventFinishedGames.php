@@ -73,7 +73,7 @@ class EventFinishedGamesModel extends Model
 
         $result = [
             'games' => [],
-            'players' => EventModel::getPlayersOfGames($this->_ds, $games),
+            'players' => EventModel::getPlayersOfGames($this->_ds, $games, $eventIdList[0]), // TODO: support multiple events
             'total_games' => $gamesCount
         ];
 
@@ -101,7 +101,7 @@ class EventFinishedGamesModel extends Model
 
         return [
             'games' => [Formatters::formatGameResults($session, $sessionResults, $rounds)],
-            'players' => EventModel::getPlayersOfGames($this->_ds, [$session])
+            'players' => EventModel::getPlayersOfGames($this->_ds, [$session], $session->getEventId())
         ];
     }
 

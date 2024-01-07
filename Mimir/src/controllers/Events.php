@@ -405,13 +405,21 @@ class EventsController extends Controller
             $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_ds, $eventIdList[0]);
         }
 
-        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames, &$ignoredPlayers, &$replacements) {
+        $soulNicknames = [];
+        $useSoulNicknames = $eventList[0]->getPlatformId() === PlatformTypeId::Majsoul->value;
+        if ($useSoulNicknames) {
+            $soulNicknames = $this->_ds->remote()->getMajsoulNicknames(array_map(function (PlayerPrimitive $el) {
+                return (int)$el->getId();
+            }, $players));
+        }
+
+        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames, &$ignoredPlayers, &$replacements, &$soulNicknames, $useSoulNicknames) {
             return [
                 'id'            => $p->getId(),
                 'title'         => $p->getDisplayName(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
                 'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
-                'tenhou_id'     => $p->getTenhouId(),
+                'tenhou_id'     => $useSoulNicknames ? $soulNicknames[$p->getId()] : $p->getTenhouId(),
                 'has_avatar'    => $p->getHasAvatar(),
                 'last_update'   => $p->getLastUpdate(),
                 'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
