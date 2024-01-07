@@ -495,7 +495,7 @@ class AccountModel extends Model
     {
         $accounts = MajsoulPlatformAccountsPrimitive::findByPersonIds($this->_db, $ids);
         return array_map(function ($acc) {
-            return ['id' => $acc->getId(), 'nickname' => $acc->getNickname()];
+            return ['id' => $acc->getPersonId(), 'nickname' => $acc->getNickname()];
         }, $accounts);
     }
 }
