@@ -1068,7 +1068,7 @@ class FreyClientTwirp implements IFreyClient
         return array_reduce(
             iterator_to_array($mapping->getMapping()),
             function ($acc, \Common\MajsoulPersonMapping $item) {
-                $acc[$item->getPersonId()] = $acc[$item->getNickname()];
+                $acc[(int)$item->getPersonId()] = $item->getNickname();
                 return $acc;
             },
             []

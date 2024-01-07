@@ -168,7 +168,7 @@ class EventRatingTableModel extends Model
                 'has_avatar'    => $playerItems[$el->getPlayerId()]->getHasAvatar(),
                 'last_update'    => $playerItems[$el->getPlayerId()]->getLastUpdate(),
                 'tenhou_id'     => $mainEvent->getPlatformId() === PlatformTypeId::Majsoul->value
-                    ? $soulNicknames[$el->getPlayerId()]
+                    ? $soulNicknames[(int)$el->getPlayerId()]
                     : $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),
