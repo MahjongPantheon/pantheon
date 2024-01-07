@@ -494,6 +494,29 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function GetMajsoulNicknames(array $ctx, \Common\PersonsGetMajsoulNicknamesPayload $in): \Common\PersonsGetMajsoulNicknamesResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Frey');
+        $ctx = Context::withMethodName($ctx, 'GetMajsoulNicknames');
+
+        $out = new \Common\PersonsGetMajsoulNicknamesResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Frey/GetMajsoulNicknames';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetMajsoulNicknames';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function GetSuperadminFlag(array $ctx, \Common\AccessGetSuperadminFlagPayload $in): \Common\AccessGetSuperadminFlagResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');

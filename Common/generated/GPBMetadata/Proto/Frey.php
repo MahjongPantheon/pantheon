@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-ýL
+¯O
 proto/frey.protocommon"d
 AuthRequestRegistrationPayload
 email (	
@@ -260,7 +260,14 @@ account_id ("B
 ids ("9
 PersonsGetGroupsResponse
 groups (2.common.Group"
-DepersonalizePayload2Œ 
+DepersonalizePayload"0
+!PersonsGetMajsoulNicknamesPayload
+ids ("S
+"PersonsGetMajsoulNicknamesResponse-
+mapping (2.common.MajsoulPersonMapping";
+MajsoulPersonMapping
+	person_id (
+nickname (	2ú 
 Freyf
 RequestRegistration&.common.AuthRequestRegistrationPayload\'.common.AuthRequestRegistrationResponsef
 ApproveRegistration&.common.AuthApproveRegistrationPayload\'.common.AuthApproveRegistrationResponseH
@@ -279,7 +286,8 @@ account_id ("B
 FindByMajsoulAccountId&.common.PersonsFindByMajsoulIdsPayload&.common.PersonsFindByTenhouIdsResponseT
 FindByTitle!.common.PersonsFindByTitlePayload".common.PersonsFindByTitleResponseN
 	GetGroups.common.PersonsGetGroupsPayload .common.PersonsGetGroupsResponse[
-GetEventAdmins#.common.AccessGetEventAdminsPayload$.common.AccessGetEventAdminsResponsed
+GetEventAdmins#.common.AccessGetEventAdminsPayload$.common.AccessGetEventAdminsResponsel
+GetMajsoulNicknames).common.PersonsGetMajsoulNicknamesPayload*.common.PersonsGetMajsoulNicknamesResponsed
 GetSuperadminFlag&.common.AccessGetSuperadminFlagPayload\'.common.AccessGetSuperadminFlagResponsea
 GetOwnedEventIds%.common.AccessGetOwnedEventIdsPayload&.common.AccessGetOwnedEventIdsResponseU
 GetRulesList!.common.AccessGetRulesListPayload".common.AccessGetRulesListResponsea

@@ -486,4 +486,16 @@ class AccountModel extends Model
             ];
         }, $persons);
     }
+
+    /**
+     * @param int[] $ids
+     * @return array[]
+     */
+    public function getMajsoulNicknames($ids)
+    {
+        $accounts = MajsoulPlatformAccountsPrimitive::findByPersonIds($this->_db, $ids);
+        return array_map(function ($acc) {
+            return ['id' => $acc->getId(), 'nickname' => $acc->getNickname()];
+        }, $accounts);
+    }
 }

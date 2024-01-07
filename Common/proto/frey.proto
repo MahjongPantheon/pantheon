@@ -59,6 +59,8 @@ service Frey {
     returns (PersonsGetGroupsResponse);
   rpc GetEventAdmins(AccessGetEventAdminsPayload)
     returns (AccessGetEventAdminsResponse);
+  rpc GetMajsoulNicknames(PersonsGetMajsoulNicknamesPayload)
+    returns (PersonsGetMajsoulNicknamesResponse);
 
   // admin
   rpc GetSuperadminFlag(AccessGetSuperadminFlagPayload)
@@ -482,4 +484,17 @@ message PersonsGetGroupsResponse {
 }
 
 message DepersonalizePayload {
+}
+
+message PersonsGetMajsoulNicknamesPayload {
+  repeated int32 ids = 1;
+}
+
+message PersonsGetMajsoulNicknamesResponse {
+  repeated MajsoulPersonMapping mapping = 1;
+}
+
+message MajsoulPersonMapping {
+  int32 person_id = 1;
+  string nickname = 2;
 }

@@ -933,4 +933,20 @@ final class TwirpServer implements Frey
             throw $e;
         }
     }
+
+    public function GetMajsoulNicknames(array $ctx, \Common\PersonsGetMajsoulNicknamesPayload $req): \Common\PersonsGetMajsoulNicknamesResponse
+    {
+        try {
+            $accounts = $this->_personsController->getMajsoulNicknames(iterator_to_array($req->getIds()));
+            return (new \Common\PersonsGetMajsoulNicknamesResponse())
+                ->setMapping(array_map(function ($acc) {
+                    return (new \Common\MajsoulPersonMapping())
+                        ->setPersonId($acc['id'])
+                        ->setNickname($acc['nickname']);
+                }, $accounts));
+        } catch (\Exception $e) {
+            $this->_syslog->error($e);
+            throw $e;
+        }
+    }
 }

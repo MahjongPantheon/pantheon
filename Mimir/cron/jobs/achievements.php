@@ -72,7 +72,7 @@ try {
                 [$id],
                 SessionPrimitive::STATUS_FINISHED
             );
-            $players = EventModel::getPlayersOfGames($ds, $games);
+            $players = EventModel::getPlayersOfGames($ds, $games, $id);
             /** @var array $sessionIds */
             $sessionIds = array_map(function (SessionPrimitive $el) {
                 return $el->getId();

@@ -154,13 +154,22 @@ class EventRatingTableModel extends Model
             $teams[$reg['id']] = $reg['team_name'];
         }
 
-        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $teams, $startRating) {
+        $soulNicknames = [];
+        if ($mainEvent->getPlatformId() === PlatformTypeId::Majsoul->value) {
+            $soulNicknames = $this->_ds->remote()->getMajsoulNicknames(array_map(function (PlayerHistoryPrimitive $el) {
+                return (int)$el->getPlayerId();
+            }, $playerHistoryItemsSummed));
+        }
+
+        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $teams, $startRating, $soulNicknames) {
             return [
                 'id'            => (int)$el->getPlayerId(),
                 'title'         => $playerItems[$el->getPlayerId()]->getDisplayName(),
                 'has_avatar'    => $playerItems[$el->getPlayerId()]->getHasAvatar(),
                 'last_update'    => $playerItems[$el->getPlayerId()]->getLastUpdate(),
-                'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
+                'tenhou_id'     => $mainEvent->getPlatformId() === PlatformTypeId::Majsoul->value
+                    ? $soulNicknames[$el->getPlayerId()]
+                    : $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),
                 'team_name'     => empty($teams[$el->getPlayerId()]) ? '' : $teams[$el->getPlayerId()],
