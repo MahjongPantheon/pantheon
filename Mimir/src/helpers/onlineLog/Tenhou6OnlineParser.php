@@ -227,12 +227,23 @@ class Tenhou6OnlineParser
     protected function _tokenUN(Tenhou6Model $tenhou6Model, SessionPrimitive $session): void
     {
         if (count($this->_players) == 0) {
-            $parsedPlayers = [
-                rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']) => 1
-            ];
+            if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+                $parsedPlayers = [
+                    rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']) => 1,
+                    rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']) => 1,
+                    rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']) => 1,
+                    rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']) => 1
+                ];
+                $playersLookup = array_keys($parsedPlayers);
+            } else {
+                $parsedPlayers = [
+                    (string)$tenhou6Model->getTokenUN()[0]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']),
+                    (string)$tenhou6Model->getTokenUN()[1]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']),
+                    (string)$tenhou6Model->getTokenUN()[2]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']),
+                    (string)$tenhou6Model->getTokenUN()[3]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']),
+                ];
+                $playersLookup = array_values($parsedPlayers);
+            }
 
             if (PlatformTypeId::Tenhou->value === $tenhou6Model->getPlatformId() && !empty($parsedPlayers['NoName'])) {
                 throw new ParseException('"NoName" players are not allowed in replays');
@@ -244,7 +255,7 @@ class Tenhou6OnlineParser
                 $registeredPlayers = array_map(function (PlayerPrimitive $p) {
                     return $p->getTenhouId();
                 }, $players);
-                $missedPlayers = array_diff(array_keys($parsedPlayers), $registeredPlayers);
+                $missedPlayers = array_diff($playersLookup, $registeredPlayers);
                 $missedPlayers = join(', ', $missedPlayers);
                 $platformName = PlatformTypeId::tryFrom($tenhou6Model->getPlatformId());
                 if (is_null($platformName)) {
@@ -268,7 +279,7 @@ class Tenhou6OnlineParser
             }
 
             $session->setPlayers($players);
-            $p = array_combine(array_keys($parsedPlayers), $players); // players order should persist
+            $p = array_combine($playersLookup, $players); // players order should persist
             if (!empty($p)) {
                 $this->_players = $p;
             }
