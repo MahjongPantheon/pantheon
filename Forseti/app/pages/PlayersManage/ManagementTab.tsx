@@ -163,7 +163,9 @@ export const ManagementTab: React.FC<{
 
   const showAddRemove = !event?.tournamentStarted;
   const showReplace = event?.type !== EventType.EVENT_TYPE_LOCAL;
-  const mayUseSeatingIgnore = config?.syncStart && !config?.isPrescripted;
+  const mayUseSeatingIgnore =
+    (config?.syncStart === true || event?.type === EventType.EVENT_TYPE_ONLINE) &&
+    !config?.isPrescripted;
 
   return (
     <>

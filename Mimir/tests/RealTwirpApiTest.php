@@ -28,6 +28,7 @@ use Common\EventsGetTimezonesPayload;
 use Common\EventsRegisterPlayerPayload;
 use Common\EventsUnregisterPlayerPayload;
 use Common\EventsUpdateEventPayload;
+use Common\EventsUpdatePlayerSeatingFlagPayload;
 use Common\EventType;
 use Common\GamesCancelGamePayload;
 use Common\GamesEndGamePayload;
@@ -36,6 +37,7 @@ use Common\GenericEventPayload;
 use Common\MyEvent;
 use Common\PlayersGetMyEventsPayload;
 use Common\RulesetConfig;
+use Common\SeatingMakeShuffledSeatingPayload;
 
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/DataSource.php';
@@ -736,6 +738,16 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
     public function testGenerateSwissSeating()
     {
+        // TODO: add seeder for simpler testing
+//        $event = $this->_createEvent();
+//        $playerIds = $this->_addPlayers($event->getId());
+//        $this->_client->RegisterPlayer([], (new EventsRegisterPlayerPayload())
+//            ->setEventId($event->getId())->setPlayerId(self::CURRENT_PERSON));
+//        $this->_client->UpdatePlayerSeatingFlag([], (new EventsUpdatePlayerSeatingFlagPayload())
+//            ->setEventId($event->getId())->setPlayerId($playerIds[0])->setIgnoreSeating(true));
+//        $this->_client->MakeShuffledSeating([], (new SeatingMakeShuffledSeatingPayload())
+//            ->setEventId($event->getId())->setSeed(1234)->setGroupsCount(1));
+//        $this->_client->StartTimer()
     }
 
     public function testMakeIntervalSeating()
