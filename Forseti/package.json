@@ -16,7 +16,7 @@
     "i18n-proto": "^1.0.5",
     "twirpscript": "^0.0.69",
     "typescript": "5.3.3",
-    "vite": "^5.0.10",
+    "vite": "^5.0.12",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.0.4"
   },
@@ -33,7 +33,7 @@
     "@types/jest": "^29.5.11",
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.14.0",
+    "@typescript-eslint/parser": "^6.15.0",
     "chart.js": "^4.4.1",
     "classnames": "^2.3.2",
     "dotenv": "^16.3.1",

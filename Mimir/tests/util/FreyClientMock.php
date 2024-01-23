@@ -344,9 +344,6 @@ class FreyClientMock implements IFreyClient
     {
         return array_filter(array_map(function ($item) {
             $id = $item['player_name'];
-            if ($id === 'NoName') {
-                return ['id' => 100, 'title' => 'NoName', 'tenhou_id' => 'NoName'];
-            }
 
             if (!empty($this->_mockPlayerNameMap)) {
                 if (!in_array($id, $this->_mockPlayerNameMap)) {
@@ -361,7 +358,13 @@ class FreyClientMock implements IFreyClient
 
     public function getMajsoulNicknames($ids)
     {
-        // TODO: Implement getMajsoulNicknames() method.
+        if (!empty($this->_mockPlayerNameMap)) {
+            $majsoulNicknames = [];
+            foreach ($ids as $id) {
+                $majsoulNicknames[$id] = $this->_mockPlayerNameMap[$id];
+            }
+            return $majsoulNicknames;
+        }
         return [];
     }
 }

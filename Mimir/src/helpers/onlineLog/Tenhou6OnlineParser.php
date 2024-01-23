@@ -234,7 +234,7 @@ class Tenhou6OnlineParser
                 rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']) => 1
             ];
 
-            if (!empty($parsedPlayers['NoName'])) {
+            if (PlatformTypeId::Tenhou->value === $tenhou6Model->getPlatformId() && !empty($parsedPlayers['NoName'])) {
                 throw new ParseException('"NoName" players are not allowed in replays');
             }
 
@@ -322,7 +322,7 @@ class Tenhou6OnlineParser
         if (!$this->_lastTokenIsAgari) { // single ron, or first ron in sequence
             $calculatedFu = $fu;
 
-            //logic for kiriage mangan
+            //logic for regular mangan
             if ($isMangan) {
                 $currentHan = intval($yakuData['han']);
                 if ($currentHan === 4) {
@@ -381,7 +381,7 @@ class Tenhou6OnlineParser
             $roundRecord['multi_ron']++;
             $calculatedFu = $fu;
 
-            //logic for kiriage mangan
+            //logic for regular mangan
             if ($isMangan) {
                 $currentHan = intval($yakuData['han']);
                 if ($currentHan === 4) {

@@ -100,6 +100,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $mockPlayerNameMap[2] = 'プレーヤー2';
         $mockPlayerNameMap[3] = 'プレーヤー3';
         $mockPlayerNameMap[4] = 'プレーヤー4';
+        $mockPlayerNameMap[5] = 'NoName';
         $this->_ds = DataSource::__getCleanTestingInstance($mockPlayerNameMap);
         $this->_meta = new Meta($this->_ds->remote(), new \Common\Storage('localhost'), $this->_config, $_SERVER);
         $this->_event = (new EventPrimitive($this->_ds))
@@ -109,7 +110,8 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setDescription('desc')
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
-            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'));
+            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'))
+            ->setPlatformId(PlatformTypeId::Majsoul->value);
         $this->_event->save();
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_usual.json');
         $this->_gameId = '231014-84c11a6f-b3f7-4363-966e-25f37886cfbf';
@@ -117,12 +119,15 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param array $tenhouNicknames
+     * @param array $majsoulNicknames
      * @throws InvalidParametersException
      */
-    private function playersRegistration($tenhouNicknames)
+    private function playersRegistration($majsoulNicknames)
     {
-        $this->_players = PlayerPrimitive::findByTenhouId($this->_ds, $tenhouNicknames);
+        $majsoulNicknamesMapping = array_map(function ($item) {
+            return ["player_name" => $item];
+        }, $majsoulNicknames);
+        $this->_players = PlayerPrimitive::findMajsoulAccounts($this->_ds, $majsoulNicknamesMapping);
         foreach ($this->_players as $p) {
             (new PlayerRegistrationPrimitive($this->_ds))
                 ->setReg($p, $this->_event)
@@ -231,5 +236,24 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             PlatformTypeId::Majsoul->value,
             ReplayContentType::Json->value
         );
+    }
+
+    public function testAddGameWithValidNoNamePlayer()
+    {
+        $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_hanchan_with_noname.json');
+        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'NoName']);
+        $this->_gameId = '230709-ae5c0c3c-2a52-49bc-9cac-1c620a94c894';
+
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
+        $result = $session->addTypedGame(
+            $this->_event->getId(),
+            $this->_gameId,
+            1688893135,
+            $this->_gameContent,
+            PlatformTypeId::Majsoul->value,
+            ReplayContentType::Json->value
+        );
+
+        $this->assertIsObject($result);
     }
 }
