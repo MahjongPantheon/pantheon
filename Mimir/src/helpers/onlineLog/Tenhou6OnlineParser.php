@@ -279,7 +279,7 @@ class Tenhou6OnlineParser
             }
 
             $session->setPlayers($players);
-            $p = array_combine($playersLookup, $players); // players order should persist
+            $p = array_combine(array_keys($parsedPlayers), $players); // players order should persist
             if (!empty($p)) {
                 $this->_players = $p;
             }
