@@ -213,6 +213,14 @@ class Tenhou6OnlineParser
         return implode(',', $riichis);
     }
 
+    /**
+     * Provide parsed player key specified for game platform.
+     *
+     * @param Tenhou6Model $tenhou6Model
+     * @param array $tokenUnItem
+     *
+     * @return string
+     */
     protected function _getParsedPlayerKey(Tenhou6Model $tenhou6Model, $tokenUnItem): string
     {
         if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
