@@ -97,10 +97,10 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 
         $mockPlayerNameMap = [];
         $mockPlayerNameMap[1] = 'TPlayer1';
-        $mockPlayerNameMap[2] = 'プレーヤー2';
-        $mockPlayerNameMap[3] = 'プレーヤー3';
-        $mockPlayerNameMap[4] = 'プレーヤー4';
-        $mockPlayerNameMap[5] = 'NoName';
+        $mockPlayerNameMap[22] = 'プレーヤー2';
+        $mockPlayerNameMap[33] = 'プレーヤー3';
+        $mockPlayerNameMap[44] = 'プレーヤー4';
+        $mockPlayerNameMap[55] = 'NoName';
         $this->_ds = DataSource::__getCleanTestingInstance($mockPlayerNameMap);
         $this->_meta = new Meta($this->_ds->remote(), new \Common\Storage('localhost'), $this->_config, $_SERVER);
         $this->_event = (new EventPrimitive($this->_ds))
@@ -122,11 +122,8 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
      * @param array $majsoulNicknames
      * @throws InvalidParametersException
      */
-    private function playersRegistration($majsoulNicknames)
+    private function playersRegistration($majsoulNicknamesMapping)
     {
-        $majsoulNicknamesMapping = array_map(function ($item) {
-            return ["player_name" => $item];
-        }, $majsoulNicknames);
         $this->_players = PlayerPrimitive::findMajsoulAccounts($this->_ds, $majsoulNicknamesMapping);
         foreach ($this->_players as $p) {
             (new PlayerRegistrationPrimitive($this->_ds))
@@ -137,7 +134,12 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddTypedOnlineGame()
     {
-        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
+        $this->playersRegistration([
+            ['player_name' => 'TPlayer1', 'account_id' => 1],
+            ['player_name' => 'プレーヤー2', 'account_id' => 22],
+            ['player_name' => 'プレーヤー3', 'account_id' => 33],
+            ['player_name' => 'プレーヤー4', 'account_id' => 44]
+        ]);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $result = $session->addTypedGame(
@@ -162,7 +164,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);
         $this->assertEquals(1, $ratings[0]['id']);
-        $this->assertEquals(4, $ratings[3]['id']);
+        $this->assertEquals(44, $ratings[3]['id']);
 
         $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, $this->_event->getId(), SessionPrimitive::STATUS_FINISHED);
         $this->assertEquals(1, count($sessionPrimitive));
@@ -185,7 +187,12 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\Mimir\ParseException::class);
         $this->_gameId = '231014-84c11a6f-b3f7-4363-966e-25f37886cfbf';
 
-        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
+        $this->playersRegistration([
+            ['player_name' => 'TPlayer1', 'account_id' => 1],
+            ['player_name' => 'プレーヤー2', 'account_id' => 22],
+            ['player_name' => 'プレーヤー3', 'account_id' => 33],
+            ['player_name' => 'プレーヤー4', 'account_id' => 44]
+        ]);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addTypedGame(
@@ -205,7 +212,12 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_without_mapping.json');
         $this->_gameId = '231014-84c11a6f-b3f7-4363-966e-25f37886cfbf';
 
-        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
+        $this->playersRegistration([
+            ['player_name' => 'TPlayer1', 'account_id' => 1],
+            ['player_name' => 'プレーヤー2', 'account_id' => 22],
+            ['player_name' => 'プレーヤー3', 'account_id' => 33],
+            ['player_name' => 'プレーヤー4', 'account_id' => 44]
+        ]);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addTypedGame(
@@ -225,7 +237,12 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_usual.json');
         $this->_gameId = '966e-25f37886cfbf';
 
-        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'プレーヤー4']);
+        $this->playersRegistration([
+            ['player_name' => 'TPlayer1', 'account_id' => 1],
+            ['player_name' => 'プレーヤー2', 'account_id' => 22],
+            ['player_name' => 'プレーヤー3', 'account_id' => 33],
+            ['player_name' => 'プレーヤー4', 'account_id' => 44]
+        ]);
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addTypedGame(
@@ -241,7 +258,12 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
     public function testAddGameWithValidNoNamePlayer()
     {
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_hanchan_with_noname.json');
-        $this->playersRegistration(['TPlayer1', 'プレーヤー2', 'プレーヤー3', 'NoName']);
+        $this->playersRegistration([
+            ['player_name' => 'TPlayer1', 'account_id' => 1],
+            ['player_name' => 'プレーヤー2', 'account_id' => 22],
+            ['player_name' => 'プレーヤー3', 'account_id' => 33],
+            ['player_name' => 'NoName', 'account_id' => 55]
+        ]);
         $this->_gameId = '230709-ae5c0c3c-2a52-49bc-9cac-1c620a94c894';
 
         $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);

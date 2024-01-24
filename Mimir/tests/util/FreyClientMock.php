@@ -345,14 +345,22 @@ class FreyClientMock implements IFreyClient
         return array_filter(array_map(function ($item) {
             $id = $item['player_name'];
 
+            $msAccountId = -1;
             if (!empty($this->_mockPlayerNameMap)) {
                 if (!in_array($id, $this->_mockPlayerNameMap)) {
                     return null;
                 }
+                $msAccountId = array_search($id, $this->_mockPlayerNameMap);
             } else if (strpos($id, 'player') !== 0) {
                 return null;
             }
-            return ['id' => $this->resolvePlayerId($id), 'title' => $id, 'tenhou_id' => $id, 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
+
+            return ['id' => $this->resolvePlayerId($id),
+                    'title' => $id,
+                    'tenhou_id' => $id,
+                    'has_avatar' => false,
+                    'last_update' => date('Y-m-d H:i:s'),
+                    'ms_account_id' => $msAccountId];
         }, $playersMapping));
     }
 
