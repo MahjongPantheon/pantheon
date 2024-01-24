@@ -189,7 +189,7 @@ class PlayerPrimitive extends Primitive
         /** @var PlayerPrimitive[] $players */
         $players = array_map(function ($item) use ($ds) {
             return (new PlayerPrimitive($ds))
-                ->setTenhouId($item['tenhou_id'] . $item['ms_account_id'])
+                ->setTenhouId($item['tenhou_id'] . '-' . $item['ms_account_id'])
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
                 ->_setId($item['id']);
@@ -207,7 +207,8 @@ class PlayerPrimitive extends Primitive
         }
 
         return array_filter(array_map(function ($id) use ($playersMap) {
-            return empty($playersMap[$id['player_name'] . $id['account_id']]) ? null : $playersMap[$id['player_name'] . $id['account_id']];
+            $current_key = $id['player_name'] . '-' . $id['account_id'];
+            return empty($playersMap[$current_key]) ? null : $playersMap[$current_key];
         }, $playersMapping));
     }
 

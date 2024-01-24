@@ -213,6 +213,15 @@ class Tenhou6OnlineParser
         return implode(',', $riichis);
     }
 
+    protected function _getParsedPlayerKey(Tenhou6Model $tenhou6Model, $tokenUnItem): string
+    {
+        if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+            return rawurldecode((string)$tokenUnItem['player_name']);
+        } else {
+            return rawurldecode((string)$tokenUnItem['player_name']) . '-' . $tokenUnItem['account_id'];
+        }
+    }
+
     /**
      * This actually should be called first, before any round.
      * If game format is not changed, this won't break.
@@ -229,20 +238,24 @@ class Tenhou6OnlineParser
         if (count($this->_players) == 0) {
             if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
                 $parsedPlayers = [
-                    rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']) => 1,
-                    rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']) => 1,
-                    rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']) => 1,
-                    rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']) => 1
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[0]) => 1,
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[1]) => 1,
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[2]) => 1,
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[3]) => 1
                 ];
                 $playersLookup = array_keys($parsedPlayers);
             } else {
                 $parsedPlayers = [
-                    (string)$tenhou6Model->getTokenUN()[0]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']),
-                    (string)$tenhou6Model->getTokenUN()[1]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']),
-                    (string)$tenhou6Model->getTokenUN()[2]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']),
-                    (string)$tenhou6Model->getTokenUN()[3]['account_id'] => rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']),
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[0]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']),
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[1]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']),
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[2]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']),
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[3]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']),
                 ];
-                $playersLookup = array_values($parsedPlayers);
+                $playersLookup = array_keys($parsedPlayers);
             }
 
             if (PlatformTypeId::Tenhou->value === $tenhou6Model->getPlatformId() && !empty($parsedPlayers['NoName'])) {
