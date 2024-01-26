@@ -383,11 +383,13 @@ class FreyClientTwirp implements IFreyClient
                 'city' => $person->getCity(),
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
-                'tenhou_id' => $person->getMsNickname(),
+                'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
+                'ms_nickname' => $person->getMsNickname(),
+                'ms_account_id' => $person->getMsAccountId(),
             ];
         }, iterator_to_array($persons));
     }

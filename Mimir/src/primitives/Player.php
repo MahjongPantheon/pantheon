@@ -189,7 +189,7 @@ class PlayerPrimitive extends Primitive
         /** @var PlayerPrimitive[] $players */
         $players = array_map(function ($item) use ($ds) {
             return (new PlayerPrimitive($ds))
-                ->setTenhouId($item['tenhou_id'] . '-' . $item['ms_account_id'])
+                ->setTenhouId($item['ms_nickname'] . '-' . $item['ms_account_id'])
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
                 ->_setId($item['id']);
