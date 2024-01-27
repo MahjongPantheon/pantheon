@@ -366,7 +366,7 @@ class FreyClientMock implements IFreyClient
             }
         }
 
-        return array_filter(array_map(function ($item) use($majsoulMapping) {
+        return array_filter(array_map(function ($item) use ($majsoulMapping) {
             $id = $item['player_name'];
 
             $msAccountId = -1;
