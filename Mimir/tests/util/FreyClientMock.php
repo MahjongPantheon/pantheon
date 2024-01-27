@@ -165,6 +165,20 @@ class FreyClientMock implements IFreyClient
         return intval(str_replace('player', '', strval($tenhouId)));
     }
 
+    /**
+     * @param int $msAccountId
+     * @return int return player id
+     */
+    private function resolvePlayerIdByMsAccountId($msAccountId): int
+    {
+        if (!empty($this->_mockPlayerNameMap)) {
+            if (array_key_exists($msAccountId, $this->_mockPlayerNameMap)) {
+                return intval($msAccountId);
+            }
+        }
+        return -1;
+    }
+
     public function findByTitle(string $query): array
     {
         // TODO: Implement findByTitle() method.
@@ -342,26 +356,43 @@ class FreyClientMock implements IFreyClient
 
     public function findByMajsoulAccountId(array $playersMapping): array
     {
-        return array_filter(array_map(function ($item) {
+        $majsoulMapping = [];
+        if (!empty($this->_mockPlayerNameMap)) {
+            foreach ($this->_mockPlayerNameMap as $mockAccountId => $mockPlayer) {
+                $majsoulMapping[$mockPlayer . "-" . $mockAccountId] = [
+                    'player_name' => $mockPlayer,
+                    'account_id' => $mockAccountId
+                ];
+            }
+        }
+
+        return array_filter(array_map(function ($item) use($majsoulMapping) {
             $id = $item['player_name'];
 
             $msAccountId = -1;
-            if (!empty($this->_mockPlayerNameMap)) {
-                if (!in_array($id, $this->_mockPlayerNameMap)) {
+            if (!empty($majsoulMapping)) {
+                $key = $id . "-" . $item['account_id'];
+                if (!array_key_exists($key, $majsoulMapping)) {
                     return null;
                 }
-                $msAccountId = array_search($id, $this->_mockPlayerNameMap);
+                $msAccountId = $majsoulMapping[$key]['account_id'];
             } else if (strpos($id, 'player') !== 0) {
                 return null;
             }
 
-            return ['id' => $this->resolvePlayerId($id),
-                    'title' => $id,
-                    'tenhou_id' => $id,
-                    'has_avatar' => false,
-                    'last_update' => date('Y-m-d H:i:s'),
-                    'ms_account_id' => $msAccountId,
-                    'ms_nickname' => $id];
+            $playerId = -1;
+            if ($msAccountId !== -1) {
+                $playerId = $this->resolvePlayerIdByMsAccountId($msAccountId);
+            } else {
+                $playerId = $this->resolvePlayerId($id);
+            }
+            return ['id' => $playerId,
+                'title' => $id,
+                'tenhou_id' => $id,
+                'has_avatar' => false,
+                'last_update' => date('Y-m-d H:i:s'),
+                'ms_account_id' => $msAccountId,
+                'ms_nickname' => $id];
         }, $playersMapping));
     }
 
