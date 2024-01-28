@@ -1430,15 +1430,15 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/parser@6.14.0":
-  version "6.14.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-6.14.0.tgz#a2d6a732e0d2b95c73f6a26ae7362877cc1b4212"
-  integrity sha512-QjToC14CKacd4Pa7JK4GeB/vHmWFJckec49FR4hmIRf97+KXole0T97xxu9IFiPxVQ1DBWrQ5wreLwAGwWAVQA==
+"@typescript-eslint/parser@6.17.0":
+  version "6.17.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-6.17.0.tgz#8cd7a0599888ca6056082225b2fdf9a635bf32a1"
+  integrity sha512-C4bBaX2orvhK+LlwrY8oWGmSl4WolCfYm513gEccdWZj0CwGadbIADb0FtVEcI+WzUyjyoBj2JRP8g25E6IB8A==
   dependencies:
-    "@typescript-eslint/scope-manager" "6.14.0"
-    "@typescript-eslint/types" "6.14.0"
-    "@typescript-eslint/typescript-estree" "6.14.0"
-    "@typescript-eslint/visitor-keys" "6.14.0"
+    "@typescript-eslint/scope-manager" "6.17.0"
+    "@typescript-eslint/types" "6.17.0"
+    "@typescript-eslint/typescript-estree" "6.17.0"
+    "@typescript-eslint/visitor-keys" "6.17.0"
     debug "^4.3.4"
 
 "@typescript-eslint/scope-manager@6.14.0":
@@ -1994,10 +1994,10 @@ cjs-module-lexer@^1.0.0:
   resolved "https://registry.yarnpkg.com/cjs-module-lexer/-/cjs-module-lexer-1.2.2.tgz#9f84ba3244a512f3a54e5277e8eef4c489864e40"
   integrity sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==
 
-classnames@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
-  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
+classnames@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.5.1.tgz#ba774c614be0f016da105c858e7159eae8e7687b"
+  integrity sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==
 
 cli@^1.0.1:
   version "1.0.1"

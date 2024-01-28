@@ -2056,19 +2056,19 @@
   "playerMapping": [
     {
       "nickname": "TPlayer1",
-      "account_id": -1
+      "account_id": 1
     },
     {
       "nickname": "プレーヤー2",
-      "account_id": -2
+      "account_id": 22
     },
     {
       "nickname": "NoName",
-      "account_id": -3
+      "account_id": 55
     },
     {
       "nickname": "プレーヤー3",
-      "account_id": -4
+      "account_id": 33
     }
   ]
 }
