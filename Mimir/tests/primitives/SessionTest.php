@@ -116,8 +116,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
         $sessionCopy = SessionPrimitive::findByReplayHashAndEvent($this->_ds, $this->_event->getId(), $newSession->getReplayHash());
         $this->assertEquals(1, count($sessionCopy));
-        $this->assertEquals(SessionPrimitive::STATUS_INPROGRESS, $sessionCopy[0]->getStatus());
-        $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!
+        $this->assertEquals(SessionPrimitive::STATUS_INPROGRESS, $sessionCopy[0]['status']);
     }
 
     public function testFindSessionByRepHash()

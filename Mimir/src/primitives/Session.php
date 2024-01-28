@@ -202,16 +202,17 @@ class SessionPrimitive extends Primitive
      *
      * @throws \Exception
      *
-     * @return self[]
+     * @return array[]
      *
      * @psalm-return array<array-key, self>
      */
     public static function findByReplayHashAndEvent(DataSource $ds, $eventId, $replayHash)
     {
-        return self::_findBySeveral(
-            $ds,
-            ['event_id' => [$eventId], 'replay_hash' => [$replayHash]]
-        );
+        // Note: plain select here to avoid session reconstruction for online games with same player names
+        return $ds->table(self::$_table)
+            ->where('event_id', $eventId)
+            ->where('replay_hash', $replayHash)
+            ->findArray();
     }
 
     /**
