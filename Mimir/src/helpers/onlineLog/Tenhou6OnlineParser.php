@@ -214,6 +214,23 @@ class Tenhou6OnlineParser
     }
 
     /**
+     * Provide parsed player key specified for game platform.
+     *
+     * @param Tenhou6Model $tenhou6Model
+     * @param array $tokenUnItem
+     *
+     * @return string
+     */
+    protected function _getParsedPlayerKey(Tenhou6Model $tenhou6Model, $tokenUnItem): string
+    {
+        if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+            return rawurldecode((string)$tokenUnItem['player_name']);
+        } else {
+            return rawurldecode((string)$tokenUnItem['player_name']) . '-' . $tokenUnItem['account_id'];
+        }
+    }
+
+    /**
      * This actually should be called first, before any round.
      * If game format is not changed, this won't break.
      *
@@ -227,12 +244,27 @@ class Tenhou6OnlineParser
     protected function _tokenUN(Tenhou6Model $tenhou6Model, SessionPrimitive $session): void
     {
         if (count($this->_players) == 0) {
-            $parsedPlayers = [
-                rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']) => 1,
-                rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']) => 1
-            ];
+            if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+                $parsedPlayers = [
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[0]) => 1,
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[1]) => 1,
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[2]) => 1,
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[3]) => 1
+                ];
+                $playersLookup = array_keys($parsedPlayers);
+            } else {
+                $parsedPlayers = [
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[0]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[0]['player_name']),
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[1]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[1]['player_name']),
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[2]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[2]['player_name']),
+                    $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[3]) =>
+                        rawurldecode((string)$tenhou6Model->getTokenUN()[3]['player_name']),
+                ];
+                $playersLookup = array_keys($parsedPlayers);
+            }
 
             if (PlatformTypeId::Tenhou->value === $tenhou6Model->getPlatformId() && !empty($parsedPlayers['NoName'])) {
                 throw new ParseException('"NoName" players are not allowed in replays');
@@ -244,7 +276,7 @@ class Tenhou6OnlineParser
                 $registeredPlayers = array_map(function (PlayerPrimitive $p) {
                     return $p->getTenhouId();
                 }, $players);
-                $missedPlayers = array_diff(array_keys($parsedPlayers), $registeredPlayers);
+                $missedPlayers = array_diff($playersLookup, $registeredPlayers);
                 $missedPlayers = join(', ', $missedPlayers);
                 $platformName = PlatformTypeId::tryFrom($tenhou6Model->getPlatformId());
                 if (is_null($platformName)) {

@@ -64,6 +64,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
         $mockPlayerNameMap[2] = 'プレーヤー2';
         $mockPlayerNameMap[3] = 'プレーヤー3';
         $mockPlayerNameMap[4] = 'プレーヤー4';
+        $mockPlayerNameMap[5] = 'TPlayer1';
         $this->_ds = DataSource::__getCleanTestingInstance($mockPlayerNameMap);
 
         $this->_event = (new EventPrimitive($this->_ds))
@@ -402,5 +403,46 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
         );
         $this->assertEquals(13, count($rounds));
         $this->assertEquals("abort", $rounds[6]->getOutcome());
+    }
+
+    public function testParseTensoulGameWithSameNicknames()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/format6/tensoul_with_same_nicknames.json');
+        $this->_session->setReplayHash("240122-8211b2d1-2b15-499e-a845-e1095c1b964a");
+
+        $this->_event->setPlatformId(PlatformTypeId::Majsoul->value);
+        $this->_event->save();
+
+        $this->_players = PlayerPrimitive::findById($this->_ds, [5]);
+        foreach ($this->_players as $p) {
+            (new PlayerRegistrationPrimitive($this->_ds))
+                ->setReg($p, $this->_event)
+                ->save();
+        }
+
+        list($success, $results, $rounds) = (new Tenhou6OnlineParser($this->_ds))
+            ->parseToSession($this->_session, $content, false, PlatformTypeId::Majsoul->value);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+
+        $openHands = 0;
+        $riichiCount = 0;
+        $tempaiCount = 0;
+        foreach ($rounds as $round) {
+            $tempaiCount = $tempaiCount + count($round->getTempaiIds());
+            $riichiCount = $riichiCount + count($round->getRiichiIds());
+            if ($round->getOpenHand()) {
+                $openHands++;
+            }
+        }
+
+        $this->assertEquals(4, count($rounds));
+        $this->assertEquals(1, $openHands);
+        $this->assertEquals(5, $riichiCount);
+        $this->assertEquals(0, $tempaiCount);
     }
 }
