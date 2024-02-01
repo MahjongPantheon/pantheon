@@ -268,8 +268,7 @@ class AccountModel extends Model
         }
 
         $superadminOtherEdit = !empty($this->_authorizedPerson) && $this->_authorizedPerson->getIsSuperadmin() && $this->_authorizedPerson->getId() !== $id;
-        $userOwnEdit = !empty($this->_authorizedPerson) && !$this->_authorizedPerson->getIsSuperadmin() && $this->_authorizedPerson->getId() === $id;
-        if ($superadminOtherEdit || $userOwnEdit) {
+        if ($superadminOtherEdit) {
             if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 throw new InvalidParametersException('Invalid email provided', 408);
             }
