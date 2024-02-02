@@ -1,0 +1,28 @@
+import { Meta } from '../components/Meta';
+import { CardsCarousel } from '../components/Carousel';
+import { FeaturesGrid } from '../components/FeaturesList';
+import { Space, Title, Button, Center } from '@mantine/core';
+import { Link } from 'wouter';
+
+<Meta title='Mahjong Pantheon'
+      description='Mahjong Pantheon is a set of useful tools to assist players and tournament organisers for Japanese Riichi mahjong events' />
+
+<Title align='center'>What Pantheon can offer?</Title>
+
+<FeaturesGrid />
+
+<Title align='center'>What does it look like?</Title>
+
+<Space h='xl' />
+
+<CardsCarousel />
+
+Also you may want to check out live links to real tournaments:
+- <a href='https://rating.riichimahjong.org/eid71/stat' target='_blank'>Rating table</a>
+- <a href='https://rating.riichimahjong.org/eid71/last' target='_blank'>Last games</a>
+
+<Center>
+  <Link to='/getStarted'>
+    <Button variant='gradient' gradient={{ from: 'pink', to: 'cyan' }} size='xl'>Get started</Button>
+  </Link>
+</Center>

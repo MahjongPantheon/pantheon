@@ -198,3 +198,18 @@ services:
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
+  bragi:
+    build: ./Bragi
+    image: ghcr.io/mahjongpantheon/pantheon-bragi:latest
+    ports:
+      - "127.0.0.1:4008:80"
+      - "127.0.0.1:4108:8080"
+      - "127.0.0.1:49500:4949"
+    environment:
+      ENV: /etc/profile
+      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
+    volumes:
+      - ./Env:/env
+      - ./Bragi:/var/www/html/Bragi
+      - ./Bragi-dist:/var/www/html/Bragi-dist
+      - ./Common:/var/www/html/Common
