@@ -305,6 +305,7 @@ prod_compile:
 	@cp Env/.env.production Tyr/.env.production
 	@cp Env/.env.production Sigrun/.env.production
 	@cp Env/.env.production Forseti/.env.production
+	@cp Env/.env.production Bragi/.env.production
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
