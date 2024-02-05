@@ -46,7 +46,7 @@ if (fs.existsSync('./node_modules')) {
     const server = http.createServer(() => {
     });
     server.listen(4108, 'localhost', () => {
-      console.log(`Server is running on http://localhost:4102`);
+      console.log(`Server is running on http://localhost:4108`);
       console.log('Dummy server started. Waiting for deps to be installed...');
     });
   })
