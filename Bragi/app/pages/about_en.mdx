@@ -1,0 +1,42 @@
+import { Meta } from '../components/Meta'
+import { InfoCard } from '../components/InfoCard';
+import { Alert, SimpleGrid } from '@mantine/core';
+import { IconUserQuestion } from '@tabler/icons-react';
+
+<Meta title='About us'
+      description='About Mahjong Pantheon team' />
+
+### Pantheon is made with love for everyone by its dream team and collaborators:
+
+<SimpleGrid
+  cols={3}
+  spacing="lg"
+  breakpoints={[
+    { maxWidth: '60rem', cols: 2, spacing: 'md' },
+    { maxWidth: '42rem', cols: 1, spacing: 'sm' },
+  ]}
+>
+  <InfoCard name='Oleg Klimenko' avatar='/assets/img/oleg.avif' email='me@ctizen.dev' github='https://github.com/ctizen' title='Project lead' />
+  <InfoCard name='Alexey Lisikhin' avatar='/assets/img/alexey.avif' github='https://github.com/Nihisil' title='Developer' />
+  <InfoCard name='Stepan Vakhonin' avatar='/assets/img/stepan.avif' github='https://github.com/unStatiK' title='Developer' />
+  <InfoCard name='Galina Kapger' avatar='/assets/img/galia.avif' github='https://github.com/kovavka' title='Developer' />
+  <InfoCard name='Pavel Bogachev' avatar='/assets/img/pavel.avif' github='https://github.com/bogachev-pa' title='Developer' />
+  <InfoCard name='Daria Ilina' avatar='/assets/img/daria.avif' title='QA' />
+</SimpleGrid>
+
+#### And also:
+
+- Vitaly Borzonogov, Arkhangelsk, Russia - **QA assistant, Arkhangelsk club leader** (and also honorable first project sponsor ever)
+- Maksim Veselov and all **Ivanovo** riichi club fellows, Russia - honorable sponsors to the project.
+- Nina Bychkova and all **Novosibirsk** riichi club fellows, Russia - honorable sponsors to the project.
+- All **Agari** Moscow riichi club fellows, Russia - honorable sponsors to the project.
+- Ivan Tkachenko and all **Sarov** riichi club fellows, Russia - honorable sponsors to the project.
+
+
+<br /><br />
+
+<Alert icon={<IconUserQuestion size="1rem" />} title="Want your name to be listed here?" color="green">
+  [**Join us**](mailto:me@ctizen.dev)! :) We need volunteer web developers, QA engineers, tech writers and translators! _Make sure to mention Pantheon in email subject line - this will drastically reduce probability of occasionally moving your email into spam folder :)_
+
+  If you already did something for Pantheon project but don't see your name here, please let us know via email or in support chats.
+</Alert>

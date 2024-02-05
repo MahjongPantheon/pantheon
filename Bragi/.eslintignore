@@ -1,0 +1,8 @@
+build
+coverage
+node_modules
+dist
+yarn.lock
+server.js
+vite.config.ts
+vitest.config.ts

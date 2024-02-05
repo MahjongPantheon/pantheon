@@ -17,6 +17,7 @@ Sigrun/.env.production
 Tyr/.env.development
 Forseti/.env.development
 Sigrun/.env.development
+Bragi/.env.development
 
 Mimir/www/.well-known
 Frey/www/.well-known

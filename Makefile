@@ -18,6 +18,7 @@ deps:
 	cd Mimir && ${MAKE} docker_deps
 	cd Frey && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
+	cd Bragi && ${MAKE} docker_deps
 	cd Sigrun && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
@@ -40,6 +41,7 @@ kill:
 		cd ../Frey && ${MAKE} kill ; \
 		cd ../Forseti && ${MAKE} kill ; \
 		cd ../Sigrun && ${MAKE} kill ; \
+		cd ../Bragi && ${MAKE} kill ; \
 		cd ../Hugin && ${MAKE} kill ; \
 		cd ../Database && ${MAKE} kill ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume01' | awk '{print $$2}'` ; \
@@ -57,6 +59,7 @@ pantheon_run: export ENV_FILENAME=.env.development
 pantheon_run:
 	@cp Env/.env.development Tyr/.env.development
 	@cp Env/.env.development Sigrun/.env.development
+	@cp Env/.env.development Bragi/.env.development
 	@cp Env/.env.development Forseti/.env.development
 	@${COMPOSE_COMMAND} up -d
 	@cd Mimir && ${MAKE} docker_enable_debug
@@ -70,6 +73,7 @@ pantheon_run:
 	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
 	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
+	echo "- ${YELLOW}Bragi${NC} is exposed on port 4008"; \
 	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"; \
 	echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"; \
 	echo "----------------------------------------------------------------------------------"; \
@@ -117,6 +121,10 @@ dev_forseti:
 dev_sigrun:
 	cd Sigrun && ${MAKE} docker_dev
 
+.PHONY: dev_bragi
+dev_bragi:
+	cd Bragi && ${MAKE} docker_dev
+
 .PHONY: forseti_stop
 forseti_stop:
 	cd Forseti && ${MAKE} docker_stop
@@ -128,6 +136,10 @@ tyr_stop:
 .PHONY: sigrun_stop
 sigrun_stop:
 	cd Sigrun && ${MAKE} docker_stop
+
+.PHONY: bragi_stop
+bragi_stop:
+	cd Bragi && ${MAKE} docker_stop
 
 .PHONY: dev
 dev: pantheon_run
@@ -168,6 +180,10 @@ shell_forseti:
 .PHONY: shell_sigrun
 shell_sigrun:
 	cd Sigrun && ${MAKE} shell
+
+.PHONY: shell_bragi
+shell_bragi:
+	cd Bragi && ${MAKE} shell
 
 .PHONY: shell_db
 shell_db:
@@ -213,6 +229,7 @@ check:
 	cd Sigrun && ${MAKE} docker_lint
 	cd Hugin && ${MAKE} docker_check
 	cd Gullveig && ${MAKE} docker_check
+	cd Bragi && ${MAKE} docker_lint
 
 .PHONY: autofix
 autofix:
@@ -224,6 +241,7 @@ autofix:
 	cd Sigrun && ${MAKE} docker_autofix
 	cd Hugin && ${MAKE} docker_autofix
 	cd Gullveig && ${MAKE} docker_autofix
+	cd Bragi && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -254,7 +272,7 @@ prod_deps:
 	cd Forseti && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
-	# sigrun should install deps after prebuild
+	# sigrun and bragi should install deps after prebuild
 
 .PHONY: prod_build_basic_images
 prod_build_basic_images:
@@ -276,6 +294,11 @@ prod_build_sigrun: export NODE_ENV=production
 prod_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
 
+.PHONY: prod_build_bragi
+prod_build_bragi: export NODE_ENV=production
+prod_build_bragi: # this is for automated builds, don't run it manually
+	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+
 .PHONY: prod_compile
 prod_compile: export ENV_FILENAME=.env.production
 prod_compile:
@@ -287,8 +310,10 @@ prod_compile:
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
+	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
 	@echo "- ${YELLOW}Mimir${NC} API is exposed on port 4001"
 	@echo "- ${YELLOW}Sigrun${NC} is exposed on port 4102 with server-side rendering"
+	@echo "- ${YELLOW}Bragi${NC} is exposed on port 4108 with server-side rendering"
 	@echo "- ${YELLOW}Tyr${NC} is exposed on port 4103"
 	@echo "- ${YELLOW}Frey${NC} API is exposed on port 4004"
 	@echo "- ${YELLOW}Forseti${NC} is exposed on port 4107"

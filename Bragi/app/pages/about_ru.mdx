@@ -1,0 +1,42 @@
+import { Meta } from '../components/Meta'
+import { InfoCard } from '../components/InfoCard';
+import { IconUserQuestion } from '@tabler/icons-react';
+import { Alert, SimpleGrid } from '@mantine/core';
+
+<Meta title='О нас'
+      description='Информация о команде Mahjong Pantheon' />
+
+### Команда мечты разработчиков Pantheon, коллабораторы и спонсоры
+
+<SimpleGrid
+  cols={3}
+  spacing="lg"
+  breakpoints={[
+    { maxWidth: '60rem', cols: 2, spacing: 'md' },
+    { maxWidth: '42rem', cols: 1, spacing: 'sm' },
+  ]}
+>
+  <InfoCard name='Олег Клименко' avatar='/assets/img/oleg.avif' email='me@ctizen.dev' github='https://github.com/ctizen' title='Ведущий разработчик' />
+  <InfoCard name='Алексей Лисихин' avatar='/assets/img/alexey.avif' github='https://github.com/Nihisil' title='Разработчик' />
+  <InfoCard name='Степан Вахонин' avatar='/assets/img/stepan.avif' github='https://github.com/unStatiK' title='Разработчик' />
+  <InfoCard name='Галина Капгер' avatar='/assets/img/galia.avif' github='https://github.com/kovavka' title='Разработчик' />
+  <InfoCard name='Павел Богачев' avatar='/assets/img/pavel.avif' github='https://github.com/bogachev-pa' title='Разработчик' />
+  <InfoCard name='Дарья Ильина' avatar='/assets/img/daria.avif' title='QA' />
+</SimpleGrid>
+
+#### А также:
+
+- Виталий Борзоногов, Архангельск - **QA, лидер клуба** (первый почетный спонсор проекта)
+- Максим Веселов и весь клуб города **Иваново** - почетные спонсоры
+- Нина Бычкова и весь клуб города **Новосибирска** - почетные спонсоры
+- Московский клуб **Агари** - почетные спонсоры
+- Иван Ткаченко и весь клуб города **Сарова** - почетные спонсоры
+
+<br /><br />
+
+<Alert icon={<IconUserQuestion size="1rem" />} title="Хотите попасть в этот список?" color="green">
+  [**Напишите нам**](mailto:me@ctizen.dev)! Нам всегда нужны веб-разработчики, тестировщики, технические писатели, переводчики и специалисты по PR! Не забудьте указать "Pantheon" в теме письма, это сильно уменьшит вероятность попадания его в спам.
+
+  Если вы уже что-то делали для проекта, но не видите своего имени в списке, пожалуйста дайте нам знать через чаты поддержки или по e-mail.
+</Alert>
+
