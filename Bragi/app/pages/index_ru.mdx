@@ -22,7 +22,7 @@ import { Link } from 'wouter';
 - <a href='https://rating.riichimahjong.org/eid71/last' target='_blank'>Последние игры</a>
 
 <Center>
-  <Link to='/getStarted'>
+  <Link onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }} to='/getStarted'>
     <Button variant='gradient' gradient={{ from: 'pink', to: 'cyan' }} size='xl'>Начинаем?</Button>
   </Link>
 </Center>
