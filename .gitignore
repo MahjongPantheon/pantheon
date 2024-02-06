@@ -14,6 +14,7 @@ Env/.env.production
 Tyr/.env.production
 Forseti/.env.production
 Sigrun/.env.production
+Bragi/.env.production
 Tyr/.env.development
 Forseti/.env.development
 Sigrun/.env.development
@@ -77,6 +78,12 @@ Sigrun-dist/*
 !Sigrun-dist/.keep
 !Sigrun-dist/server.js
 !Sigrun-dist/package.json
+
+Bragi-dist/*
+!Bragi-dist/.well-known
+!Bragi-dist/.keep
+!Bragi-dist/server.js
+!Bragi-dist/package.json
 
 Hermod/opendkim_keys/*
 !Hermod/opendkim_keys/.keep
