@@ -524,6 +524,11 @@ class Tenhou6Model
             }
             $playerMappings = $parsedContent->playerMapping;
         }
+
+        if (!property_exists($parsedContent, 'log') || count($parsedContent->log) <= 0) {
+            throw new ParseException('Log is empty');
+        }
+
         $this->setTokenUN($parsedContent->name, $playerMappings);
         $this->setTokenGO(['lobby' => $this->getLobbyOrDefaultZero($parsedContent)]);
         $this->setOwari($parsedContent->sc);
