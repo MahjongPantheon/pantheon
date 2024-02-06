@@ -25,7 +25,7 @@ import { env } from '../env';
  * Marked as deprecated to avoid using this in components. Use hook instead.
  * @deprecated
  */
-export const analytics = new Analytics(env.urls.hugin, 'Sigrun');
+export const analytics = new Analytics(env.urls.hugin, 'Bragi');
 analytics.setUserId(storage.getPersonId() ?? 0);
 analytics.setEventId(storage.getEventId() ?? 0);
 export const analyticsCtx = createContext(analytics);

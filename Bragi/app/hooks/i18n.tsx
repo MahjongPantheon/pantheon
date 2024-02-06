@@ -20,6 +20,8 @@ import { createContext, useContext } from 'react';
 import { I18nService } from '../services/i18n';
 import { storage } from './storage';
 
+// TODO: remove. i18n is handled by hand in Bragi
+
 /**
  * @deprecated use hook useI18n instead!
  */

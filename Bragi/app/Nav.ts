@@ -35,7 +35,7 @@ enum Path {
   CodeOfConduct = '/codeOfConduct',
   GetStarted = '/getStarted',
   ForPlayers = '/forPlayers',
-  ForHosts = '/forOrganizators',
+  ForHosts = '/forHosts',
   Reports = '/reports',
 }
 

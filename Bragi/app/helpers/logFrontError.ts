@@ -28,7 +28,7 @@ function errHandler(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      source: 'Sigrun [common]',
+      source: 'Bragi [common]',
       error: `From: ${currentUrl} | Details: ${errorMsg?.toString() ?? err?.message}`,
     }),
   });
