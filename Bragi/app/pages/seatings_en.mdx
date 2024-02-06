@@ -1,0 +1,76 @@
+import { Meta } from '../components/Meta'
+
+<Meta title='How seatings work - Mahjong Pantheon'
+      description='Description of seatings algorihtms in Mahjong Pantheon' />
+
+## How seatings work
+
+Pantheon offers several options of how seatings can be made:
+
+- Random seating
+- Swiss seating
+- Interval-based seating
+- Predefined seating
+
+Here are some details about them.
+
+### Random seating
+<section className='sparseList'>
+- This seating can be used any time during the tournament, because it doesn't take into account any previous data.
+- When using this seating, players are shuffled randomly.
+- There can be (and most likely will be) intersections, if this seating is used on later stages of a tournament.
+- This is the only seating you can use in the beginning of the tournament.
+</section>
+
+### Swiss seating
+<section className='sparseList'>
+- This seating uses both current positions of players in the rating table and the games history to minimize intersections.
+- Swiss seating can't be used if no games were played yet.
+- The seating has two goals:
+  - Minimization of intersections count (as possible)
+  - Players should play with more or less equal opponents according to the current rating (as possible, too)
+- Basic seating algorithm:
+  - Take current rating table and select first player (the one who has biggest score).
+  - Look down the table and search for the first player with the biggest score, who didn't play with the selected one yet,
+    and select them too.
+  - Look down the table and search for the first player with the biggest score, who didn't play with both the selected ones yet,
+    and select them too.
+  - Last player is found the same way. This is our first table. Selected players are excluded from the table.
+  - The steps above are repeated until all tables are determined.
+  - On later stages of tournament, it might be impossible to find suitable combination of players, in this case the
+    condition "who didn't play with the selected ones yet" is replaced by "who has the least intersection when the selected
+    ones".
+  - The algorithm generates more than one combination at a time, counting total intersections count. The combination which
+    has the least total intersections count is then selected.
+  - There is also a complexity limit (in general, the solution is found in non-polynomial time). When generation time is
+    expired, the best combination of already generated is selected.
+  - In case of table count being not a multiple of power of 2, last tables are formed according to the residual principle.
+    This means that on last tables the probability of intersection is increased drastically.
+</section>
+
+### Interval-based seating
+<section className='sparseList'>
+- This seating uses only current positions of players in rating table.
+- Interval-based seating can't be used if no games were played yet.
+- The input of the algorithm is integer interval.
+  - If the interval is 1, tables will play according to current positions: 1-2-3-4, 5-6-7-8, and so on.
+  - If the interval is 2, tables will play as follows: 1-3-5-7, 2-4-6-8, and so on.
+  - And so on.
+- Note that tables are selected sequentially, e.g. first table is selected, then second one, then third one. In case of
+  odd interval, first 12 players will play at first three tables, second 12 - at second three tables, and so on.
+- In case of table count being not a multiple of selected interval, last tables are formed according to the residual principle.
+  This means that on last tables the probability of intersection is increased drastically.
+</section>
+
+### Predefined seating
+<section className='sparseList'>
+- This kind of seatings doesn't go well along with previous three, because it requires preparing a seating script in advance.
+- Tournament administrator defines the seating script in event settings, using local identifiers of players (integers from 1 to N).
+- Next, it's required to define which player has which local identifier on players management page.
+- After that, the tournament can be started.
+- There is "Current game" field on script definition page, which is updated automtically every time the game results are confirmed.
+- Technically, you can change the tournament type to use automatic seatings, they will use ratings table and history of games.
+  Though, it's generally not recommended to change the tournament type backwards (from automatic seatings to predefined),
+  because it would require you to define a script with some fake games in the beginning and set appropriate game index
+  in the "Current game" field.
+</section>

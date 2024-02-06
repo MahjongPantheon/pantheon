@@ -15,19 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import IndexPageEn from './pages/index_en.mdx';
-import IndexPageRu from './pages/index_ru.mdx';
 import AboutEn from './pages/about_en.mdx';
 import BugsEn from './pages/bugs_en.mdx';
 import ForPlayerEn from './pages/forPlayers_en.mdx';
 import ForHostsEn from './pages/forHosts_en.mdx';
 import GetStartedEn from './pages/getStarted_en.mdx';
 import CodeOfConductEn from './pages/codeOfConduct_en.mdx';
+import SeatingsEn from './pages/seatings_en.mdx';
+
+import IndexPageRu from './pages/index_ru.mdx';
 import AboutRu from './pages/about_ru.mdx';
 import BugsRu from './pages/bugs_ru.mdx';
 import ForPlayersRu from './pages/forPlayers_ru.mdx';
 import ForHostsRu from './pages/forHosts_ru.mdx';
 import GetStartedRu from './pages/getStarted_ru.mdx';
 import CodeOfConductRu from './pages/codeOfConduct_ru.mdx';
+import SeatingsRu from './pages/seatings_ru.mdx';
 
 enum Path {
   Index = '/',
@@ -37,6 +40,7 @@ enum Path {
   ForPlayers = '/forPlayers',
   ForHosts = '/forHosts',
   Reports = '/reports',
+  Seatings = '/seatings',
 }
 
 export const links = [
@@ -58,5 +62,6 @@ export const components = {
   [Path.ForHosts]: { en: ForHostsEn, ru: ForHostsRu },
   [Path.GetStarted]: { en: GetStartedEn, ru: GetStartedRu },
   [Path.Reports]: { en: BugsEn, ru: BugsRu },
+  [Path.Seatings]: { en: SeatingsEn, ru: SeatingsRu },
   [Path.CodeOfConduct]: { en: CodeOfConductEn, ru: CodeOfConductRu },
 };
