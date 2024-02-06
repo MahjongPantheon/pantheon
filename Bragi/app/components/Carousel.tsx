@@ -19,14 +19,14 @@ const dataPreview = [
     },
   },
   {
-    image: '/assets/img/preview/sigrun2.avif',
+    image: '/assets/img/preview/sigrun3.avif',
     title: {
       en: 'Recent games',
       ru: 'Последние игры',
     },
   },
   {
-    image: '/assets/img/preview/sigrun3.avif',
+    image: '/assets/img/preview/sigrun2.avif',
     title: {
       en: 'Rating table',
       ru: 'Рейтинговая таблица',
