@@ -419,7 +419,7 @@ class EventsController extends Controller
                 'title'         => $p->getDisplayName(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
                 'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
-                'tenhou_id'     => $useSoulNicknames ? $soulNicknames[(int)$p->getId()] : $p->getTenhouId(),
+                'tenhou_id'     => $useSoulNicknames ? ($soulNicknames[(int)$p->getId()] ?? '') : $p->getTenhouId(),
                 'has_avatar'    => $p->getHasAvatar(),
                 'last_update'   => $p->getLastUpdate(),
                 'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
