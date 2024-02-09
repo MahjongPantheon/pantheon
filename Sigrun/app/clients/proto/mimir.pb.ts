@@ -382,6 +382,11 @@ export interface SeatingMakeShuffledSeatingPayload {
   seed: number;
 }
 
+export interface SeatingGenerateSwissSeatingPayload {
+  eventId: number;
+  substituteReplacementPlayers: boolean;
+}
+
 export interface SeatingGenerateSwissSeatingResponse {
   tables: protoAtoms.TableItemSwiss[];
 }
@@ -1083,12 +1088,14 @@ export async function ResetSeating(
 }
 
 export async function GenerateSwissSeating(
-  genericEventPayload: protoAtoms.GenericEventPayload,
+  seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
   config?: ClientConfiguration,
 ): Promise<SeatingGenerateSwissSeatingResponse> {
   const response = await PBrequest(
     "/common.Mimir/GenerateSwissSeating",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    SeatingGenerateSwissSeatingPayload.encode(
+      seatingGenerateSwissSeatingPayload,
+    ),
     config,
   );
   return SeatingGenerateSwissSeatingResponse.decode(response);
@@ -1873,12 +1880,14 @@ export async function ResetSeatingJSON(
 }
 
 export async function GenerateSwissSeatingJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
+  seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
   config?: ClientConfiguration,
 ): Promise<SeatingGenerateSwissSeatingResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GenerateSwissSeating",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    SeatingGenerateSwissSeatingPayloadJSON.encode(
+      seatingGenerateSwissSeatingPayload,
+    ),
     config,
   );
   return SeatingGenerateSwissSeatingResponseJSON.decode(response);
@@ -2284,7 +2293,7 @@ export interface Mimir<Context = unknown> {
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GenerateSwissSeating: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
+    seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
     context: Context,
   ) =>
     | Promise<SeatingGenerateSwissSeatingResponse>
@@ -2988,8 +2997,8 @@ export function createMimir<Context>(service: Mimir<Context>) {
         name: "GenerateSwissSeating",
         handler: service.GenerateSwissSeating,
         input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
+          protobuf: SeatingGenerateSwissSeatingPayload,
+          json: SeatingGenerateSwissSeatingPayloadJSON,
         },
         output: {
           protobuf: SeatingGenerateSwissSeatingResponse,
@@ -8671,6 +8680,86 @@ export const SeatingMakeShuffledSeatingPayload = {
   },
 };
 
+export const SeatingGenerateSwissSeatingPayload = {
+  /**
+   * Serializes SeatingGenerateSwissSeatingPayload to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<SeatingGenerateSwissSeatingPayload>,
+  ): Uint8Array {
+    return SeatingGenerateSwissSeatingPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes SeatingGenerateSwissSeatingPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): SeatingGenerateSwissSeatingPayload {
+    return SeatingGenerateSwissSeatingPayload._readMessage(
+      SeatingGenerateSwissSeatingPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes SeatingGenerateSwissSeatingPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<SeatingGenerateSwissSeatingPayload>,
+  ): SeatingGenerateSwissSeatingPayload {
+    return {
+      eventId: 0,
+      substituteReplacementPlayers: false,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<SeatingGenerateSwissSeatingPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.substituteReplacementPlayers) {
+      writer.writeBool(2, msg.substituteReplacementPlayers);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: SeatingGenerateSwissSeatingPayload,
+    reader: protoscript.BinaryReader,
+  ): SeatingGenerateSwissSeatingPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.substituteReplacementPlayers = reader.readBool();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const SeatingGenerateSwissSeatingResponse = {
   /**
    * Serializes SeatingGenerateSwissSeatingResponse to protobuf.
@@ -14245,6 +14334,78 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
     const _seed_ = json["seed"];
     if (_seed_) {
       msg.seed = protoscript.parseNumber(_seed_);
+    }
+    return msg;
+  },
+};
+
+export const SeatingGenerateSwissSeatingPayloadJSON = {
+  /**
+   * Serializes SeatingGenerateSwissSeatingPayload to JSON.
+   */
+  encode: function (
+    msg: PartialDeep<SeatingGenerateSwissSeatingPayload>,
+  ): string {
+    return JSON.stringify(
+      SeatingGenerateSwissSeatingPayloadJSON._writeMessage(msg),
+    );
+  },
+
+  /**
+   * Deserializes SeatingGenerateSwissSeatingPayload from JSON.
+   */
+  decode: function (json: string): SeatingGenerateSwissSeatingPayload {
+    return SeatingGenerateSwissSeatingPayloadJSON._readMessage(
+      SeatingGenerateSwissSeatingPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes SeatingGenerateSwissSeatingPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<SeatingGenerateSwissSeatingPayload>,
+  ): SeatingGenerateSwissSeatingPayload {
+    return {
+      eventId: 0,
+      substituteReplacementPlayers: false,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<SeatingGenerateSwissSeatingPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.substituteReplacementPlayers) {
+      json["substituteReplacementPlayers"] = msg.substituteReplacementPlayers;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: SeatingGenerateSwissSeatingPayload,
+    json: any,
+  ): SeatingGenerateSwissSeatingPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _substituteReplacementPlayers_ =
+      json["substituteReplacementPlayers"] ??
+      json["substitute_replacement_players"];
+    if (_substituteReplacementPlayers_) {
+      msg.substituteReplacementPlayers = _substituteReplacementPlayers_;
     }
     return msg;
   },

@@ -108,18 +108,38 @@ class SeatingController extends Controller
      * It is here because of online tournaments.
      *
      * @param int $eventId
+     * @param bool $substituteReplacementPlayers
      * @throws AuthFailedException
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array [[id, id, id, id], ... ]
      */
-    public function generateSwissSeating($eventId)
+    public function generateSwissSeating($eventId, $substituteReplacementPlayers = false)
     {
         $this->_checkIfAllowed($eventId);
         $this->_log->info('Generating new swiss seating for event #' . $eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
-        $seating = array_chunk(array_keys(Seating::swissSeating($playersMap, $tables)), 4);
+        $seating = array_keys(Seating::swissSeating($playersMap, $tables));
+
+        if ($substituteReplacementPlayers) {
+            $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
+            $replacementMap = [];
+            foreach ($regs as $reg) {
+                if (!empty($playersMap[$reg->getPlayerId()])) {
+                    $replacementMap[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
+                }
+            }
+
+            $seating = array_map(function ($id) use ($replacementMap) {
+                if (!empty($replacementMap[$id])) {
+                    return $replacementMap[$id];
+                }
+                return $id;
+            }, $seating);
+        }
+
+        $seating = array_chunk($seating, 4);
 
         $this->_log->info('Generated new swiss seating for event #' . $eventId);
         return $seating;

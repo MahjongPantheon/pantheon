@@ -27,6 +27,7 @@ use Common\EventData;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
 use Common\PrescriptedTable;
+use Common\SeatingGenerateSwissSeatingPayload;
 use Common\SessionHistoryResultTable;
 use Common\Storage;
 use Common\TableItemSwiss;
@@ -1666,7 +1667,7 @@ final class TwirpServer implements Mimir
      * @throws AuthFailedException
      * @throws InvalidParametersException
      */
-    public function GenerateSwissSeating(array $ctx, GenericEventPayload $req): SeatingGenerateSwissSeatingResponse
+    public function GenerateSwissSeating(array $ctx, SeatingGenerateSwissSeatingPayload $req): SeatingGenerateSwissSeatingResponse
     {
         return (new SeatingGenerateSwissSeatingResponse())
             ->setTables(array_map(function ($table) {
@@ -1676,7 +1677,7 @@ final class TwirpServer implements Mimir
                             ->setPlayerId((int)$player)
                             ->setRating(0.);
                     }, $table));
-            }, $this->_seatingController->generateSwissSeating($req->getEventId())));
+            }, $this->_seatingController->generateSwissSeating($req->getEventId(), $req->getSubstituteReplacementPlayers())));
     }
 
     /**

@@ -77,6 +77,10 @@ class Tenhou6OnlineParser
         $this->_tokenUN($tenhou6Model, $session);
         $this->_tokenGO($tenhou6Model->getTokenGO(), $session);
 
+        if (empty($tenhou6Model->getRounds())) {
+            throw new InvalidParametersException('Rounds were not found in replay: this is critical error.');
+        }
+
         foreach ($tenhou6Model->getRounds() as $roundData) {
             for ($i = 0; $i < count($roundData['reach_tokens']); $i++) {
                 $this->_tokenREACH($roundData['reach_tokens'][$i]);
