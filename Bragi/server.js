@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import process from 'node:process';
+const { exec } = require("child_process");
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
@@ -66,7 +67,37 @@ export async function createServer(app, env) {
 
   app.get('/robots.txt', (req, res) => {
     res.send(`User-agent: *\n` + `Allow: /\n`);
-  })
+  });
+
+  app.get('/sitemap.xml', (req, res) => {
+    const urls = [
+      'https://riichimahjong.org/',
+      'https://riichimahjong.org/about',
+      'https://riichimahjong.org/codeOfConduct',
+      'https://riichimahjong.org/getStarted',
+      'https://riichimahjong.org/forPlayers',
+      'https://riichimahjong.org/forHosts',
+      'https://riichimahjong.org/reports',
+      'https://riichimahjong.org/seatings',
+    ];
+    exec('git show | grep Date', (err, out) => {
+      const date = new Date(out.replace('Date:').trim());
+      const lastUpdate = date.getFullYear() + '-'
+        + date.getMonth().toString().padStart(2, '0')
+        + '-' + date.getDate().toString().padStart(2, '0');
+      res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${urls.map((url) => `<url>
+    <loc>${url}</loc>
+    <lastmod>2022-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+`)}
+</urlset>`);
+      }
+    );
+
+  });
 
   app.use('*', async (req, res) => {
     const url = req.baseUrl;
