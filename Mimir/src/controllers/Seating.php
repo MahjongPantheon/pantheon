@@ -126,9 +126,7 @@ class SeatingController extends Controller
             $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
             $replacementMap = [];
             foreach ($regs as $reg) {
-                if (!empty($playersMap[$reg->getPlayerId()])) {
-                    $replacementMap[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
-                }
+                $replacementMap[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
             }
 
             $seating = array_map(function ($id) use ($replacementMap) {

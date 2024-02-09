@@ -391,7 +391,7 @@ class EventModel extends Model
                 'title'         => $player->getDisplayName(),
                 'has_avatar'    => $player->getHasAvatar(),
                 'last_update'    => $player->getLastUpdate(),
-                'tenhou_id'     => $useSoulNicknames ? $soulNicknames[(int)$player->getId()] : $player->getTenhouId()
+                'tenhou_id'     => $useSoulNicknames ? ($soulNicknames[(int)$player->getId()] ?? '') : $player->getTenhouId()
             ];
         }
 

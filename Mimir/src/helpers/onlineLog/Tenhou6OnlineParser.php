@@ -303,6 +303,27 @@ class Tenhou6OnlineParser
                 }
             }
 
+            // check if some players were replaced and replace them back
+            $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $session->getEventId());
+            $backreplMap = [];
+            foreach ($regs as $reg) {
+                $backreplMap[$reg->getReplacementPlayerId()] = $reg->getPlayerId();
+            }
+
+            $mapToPlayer = [];
+            $originals = PlayerPrimitive::findById($this->_ds, array_filter(array_values($backreplMap)));
+            foreach ($originals as $rep) {
+                $mapToPlayer[$rep->getId()] = $rep;
+            }
+
+            /** @var PlayerPrimitive[] $players */
+            $players = array_map(function ($player) use ($mapToPlayer, $backreplMap) {
+                if (!empty($backreplMap[$player->getId()]) && !empty($mapToPlayer[$backreplMap[$player->getId()]])) {
+                    return $mapToPlayer[$backreplMap[$player->getId()]];
+                }
+                return $player;
+            }, $players);
+
             $session->setPlayers($players);
             $p = array_combine(array_keys($parsedPlayers), $players); // players order should persist
             if (!empty($p)) {
