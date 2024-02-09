@@ -5976,7 +5976,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GenericEventPayload();
+            $in = new \Common\SeatingGenerateSwissSeatingPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->GenerateSwissSeating($ctx, $in);
@@ -6013,7 +6013,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GenericEventPayload();
+            $in = new \Common\SeatingGenerateSwissSeatingPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->GenerateSwissSeating($ctx, $in);

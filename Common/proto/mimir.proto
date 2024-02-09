@@ -129,7 +129,7 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc ResetSeating (GenericEventPayload)
     returns (GenericSuccessResponse);
-  rpc GenerateSwissSeating (GenericEventPayload)
+  rpc GenerateSwissSeating (SeatingGenerateSwissSeatingPayload)
     returns (SeatingGenerateSwissSeatingResponse);
   rpc MakeIntervalSeating (SeatingMakeIntervalSeatingPayload)
     returns (GenericSuccessResponse);
@@ -505,6 +505,11 @@ message SeatingMakeShuffledSeatingPayload {
   int32 event_id = 1;
   int32 groups_count = 2;
   int32 seed = 3; // randomness factor
+}
+
+message SeatingGenerateSwissSeatingPayload {
+  int32 event_id = 1;
+  bool substitute_replacement_players = 2;
 }
 
 message SeatingGenerateSwissSeatingResponse {
