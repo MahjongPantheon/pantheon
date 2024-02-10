@@ -64,7 +64,9 @@ cleanup_prebuilts:
 prebuild:
 	cd dist/assets && gzip -k -9 -f *.js *.css
 	cd dist && \
-	cp -R * ../../Tyr-dist/
+	cp -R * ../../Tyr-dist/ && \
+	cp ../pwa-192x192.png ../../Tyr-dist/ && \
+	cp ../pwa-512x512.png ../../Tyr-dist/
 
 .PHONY: dev
 dev:

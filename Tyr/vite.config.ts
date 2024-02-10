@@ -43,12 +43,12 @@ export default defineConfig({
         theme_color: '#cccccc',
         icons: [
           {
-            src: 'apple-touch-icon.png',
-            sizes: '256x256',
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'apple-touch-icon-512.png',
+            src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
