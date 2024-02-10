@@ -20,10 +20,16 @@ import { TranslationJson } from 'i18n-proto';
 
 // TODO: exclude from primary bundle
 import langRu from '../i18n/ru.json';
+import langEma from '../i18n/ema.json';
+import langCn from '../i18n/cn.json';
+import langJp from '../i18n/jp.json';
 import langDe from '../i18n/de.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ru', 'de'];
+export const supportedLanguages = ['en', 'ema', 'jp', 'cn', 'ru', 'de'];
 const langs = {
+  ema: langEma,
+  jp: langJp,
+  cn: langCn,
   ru: langRu,
   de: langDe,
 };
@@ -40,9 +46,10 @@ export class I18nService {
       ) => {
         switch (name) {
           case 'ru':
-            onReady(name, JSON.stringify(langs[name]));
-            break;
           case 'de':
+          case 'ema':
+          case 'jp':
+          case 'cn':
             onReady(name, JSON.stringify(langs[name]));
             break;
           case 'en':

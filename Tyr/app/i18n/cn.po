@@ -1,121 +1,116 @@
-# Translations template for PROJECT.
-# Copyright (C) 2022
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-06 18:04+0100\n"
-"PO-Revision-Date: 2024-02-11 01:02+0300\n"
+"PO-Revision-Date: 2024-02-11 00:57+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: de_DE\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.3.2\n"
 
 #: app/components/general/dropdown/PlayerDropdown.tsx:41:60
 msgid "select player"
-msgstr "Spieler auswählen"
+msgstr "选择玩家"
 
 #: app/components/general/number-select/NumberSelect.tsx:100:13
 msgid "something goes wrong, please contact your administrator"
-msgstr "Etwas ist schiefgelaufen, bitte kontaktiere den Administrator"
+msgstr "出现错误，请联系管理员"
 
 #: app/components/general/search-input/SearchInput.tsx:82:24
 msgid "type to find someone"
-msgstr "Spieler suchen"
+msgstr "查找玩家"
 
 #: app/components/screens/event-select/EventSelectScreen.tsx:56:58
 msgid "name"
-msgstr "Name"
+msgstr "姓名"
 
 #: app/components/screens/event-select/EventSelectScreenView.tsx:57:66
 msgid "Select event"
-msgstr "Event auswählen"
+msgstr "选择活动或比赛"
 
 #: app/components/screens/event-select/EventSelectScreenView.tsx:74:16
 msgid "There is no events you participate in right now"
-msgstr "Du nimmst gerade an keinem Event teil"
+msgstr "你现在没有可选择的活动或比赛"
 
 #: app/components/screens/game-result/GameResultScreenView.tsx:93:56
 msgid "No games found"
-msgstr "Keine Spiele gefunden"
+msgstr "未找到对局"
 
 #: app/components/screens/home/HomeScreen.tsx:95:55
 msgid "Event title"
-msgstr "Eventname"
+msgstr "活动名称"
 
 #: app/components/screens/home/HomeScreenView.tsx:118:20
 msgid "New game"
-msgstr "Neues Spiel"
+msgstr "开始新对局"
 
 #: app/components/screens/home/HomeScreenView.tsx:125:20
 msgid "Current game"
-msgstr "Laufendes Spiel"
+msgstr "当前对局"
 
 #: app/components/screens/home/HomeScreenView.tsx:131:20
 msgid "Previous game"
-msgstr "Letztes Spiel"
+msgstr "上一场对局"
 
 #: app/components/screens/home/HomeScreenView.tsx:137:20
 msgid "Other playing tables"
-msgstr "Andere laufende Spiele"
+msgstr "他人进行中的对局"
 
 #: app/components/screens/home/HomeScreenView.tsx:143:20
 msgid "Statistics"
-msgstr "Statistiken"
+msgstr "统计"
 
 #: app/components/screens/log/view/LogScreenView.tsx:62:12
 msgid "No results found"
-msgstr "Keine Ergebnisse"
+msgstr "无结果"
 
 #: app/components/screens/log/view/LogScreenView.tsx:109:28
 msgid "Game log"
-msgstr "Spielaufzeichung"
+msgstr "对局记录"
 
 #: app/components/screens/log/view/RoundSelectors.ts:33:12
 msgid "yakuman"
-msgstr ""
+msgstr "役满"
 
 #: app/components/screens/log/view/RoundSelectors.ts:36:15
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:78:9
 msgid "%1 han"
-msgstr ""
+msgstr "%1 番"
 
 #: app/components/screens/log/view/RoundSelectors.ts:39:12
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:77:9
 msgid "%1 han %2 fu"
-msgstr ""
+msgstr "%1 番 %2 符"
 
 #: app/components/screens/log/view/RoundSelectors.ts:45:10
 msgid "Pao from: %1"
-msgstr "Pao von: %1"
+msgstr "包牌玩家: %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:49:10
 msgid "Honba: %1"
-msgstr ""
+msgstr "本场: %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:53:10
 msgid "Tempai: %1"
-msgstr "Tenpai: %1"
+msgstr "听牌: %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:67:10
 msgid "Riichi bets: %1"
-msgstr "Richieinsätze: %1"
+msgstr "立直棒: %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:71:19
 msgid "dora %1"
-msgstr ""
+msgstr "宝牌 %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:91:14
 msgid "Ron, %1"
-msgstr ""
+msgstr "荣和, %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:92:14
 msgid "%1 ← %2"
@@ -123,36 +118,36 @@ msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:119:14
 msgid "Multiron, from %1"
-msgstr "Multiron, von %1"
+msgstr "%1 放铳 一炮多响"
 
 #: app/components/screens/log/view/RoundSelectors.ts:149:14
 msgid "Tsumo, %1"
-msgstr ""
+msgstr "自摸, %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:166:14
 #: app/components/screens/table/TableHelper.ts:149:13
 msgid "Exhaustive draw"
-msgstr "Unentschieden"
+msgstr "流局"
 
 #: app/components/screens/log/view/RoundSelectors.ts:178:14
 #: app/components/screens/table/TableHelper.ts:166:15
 msgid "Abortive draw"
-msgstr "Abgebrochenes Unentschieden"
+msgstr "中途流局"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:155:13
 #: app/components/screens/table/TableHelper.ts:523:14
 msgid "Chombo"
-msgstr ""
+msgstr "犯规"
 
 #: app/components/screens/log/view/RoundSelectors.ts:204:14
 #: app/components/screens/table/TableHelper.ts:176:15
 msgid "Nagashi mangan"
-msgstr ""
+msgstr "流局满贯"
 
 #: app/components/screens/login/EnterCredentialsView.tsx:42:55
 msgid "Pantheon: log in"
-msgstr "Pantheon: Mobile App"
+msgstr "Pantheon: 登录"
 
 #: app/components/screens/login/EnterCredentialsView.tsx:47:24
 msgid "Email"
@@ -160,25 +155,25 @@ msgstr ""
 
 #: app/components/screens/login/EnterCredentialsView.tsx:53:24
 msgid "Password"
-msgstr "Passwort"
+msgstr "密码"
 
 #: app/components/screens/login/EnterCredentialsView.tsx:63:12
 msgid "Log in"
-msgstr "Anmelden"
+msgstr "登录"
 
 #: app/components/screens/login/EnterCredentialsView.tsx:73:12
 msgid "Sign up"
-msgstr "Registrieren"
+msgstr "注册"
 
 #: app/components/screens/login/EnterCredentialsView.tsx:81:12
 #: app/components/screens/login/LoginErrorView.tsx:50:16
 msgid "Forgot password?"
-msgstr "Passwort vergessen?"
+msgstr "忘记密码了吗?"
 
 #: app/components/screens/login/LoginErrorView.tsx:31:83
 msgctxt "Name of registration link"
 msgid "register"
-msgstr "registrieren"
+msgstr "注册"
 
 #: app/components/screens/login/LoginErrorView.tsx:38:49
 msgid "Pantheon"
@@ -186,24 +181,24 @@ msgstr ""
 
 #: app/components/screens/login/LoginErrorView.tsx:40:15
 msgid "Login attempt has failed. Possible reasons are:"
-msgstr "Anmeldeversuch fehlgeschlagen. Mögliche Ursachen:"
+msgstr "登录失败，可能的错误是:"
 
 #: app/components/screens/login/LoginErrorView.tsx:44:23
 msgid "E-mail is not registered in Pantheon database (%1)"
-msgstr "E-mail ist nicht registriert (%1)"
+msgstr "该用户不存在 (%1)"
 
 #: app/components/screens/login/LoginErrorView.tsx:48:14
 msgid "Password check has failed"
-msgstr "Passwort falsch"
+msgstr "密码错误"
 
 #: app/components/screens/login/LoginErrorView.tsx:53:16
 msgid "Unexpected server error"
-msgstr "Unerwarteter Fehler"
+msgstr "错误"
 
 #: app/components/screens/login/LoginErrorView.tsx:56:12
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
-msgstr "Bei Fragen kontaktiere bitte den Turnierleiter"
+msgstr "如有疑问，请联系赛事管理员"
 
 #: app/components/screens/login/LoginErrorView.tsx:61:12
 msgid "OK"
@@ -211,200 +206,199 @@ msgstr ""
 
 #: app/components/screens/new-game/NewGameScreenView.tsx:68:23
 msgid "Clear players"
-msgstr "Spieler löschen"
+msgstr "清除玩家"
 
 #: app/components/screens/new-game/NewGameScreenView.tsx:72:23
 msgid "Shuffle players"
-msgstr "Spieler mischen"
+msgstr "洗牌玩家"
 
 #: app/components/screens/new-game/NewGameScreenView.tsx:79:23
 msgid "Start game"
-msgstr "Spiel starten"
+msgstr "开始游戏"
 
 #: app/components/screens/other-tables-list/OtherTablesListView.tsx:55:14
 msgid "No tables are playing right now"
-msgstr "Zurzeit werden keine Tische bespielt"
+msgstr "目前没有桌子在游戏中"
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:85:16
 msgid "Han from yaku"
-msgstr "Han von Baku"
+msgstr "(宝牌以外)番数："
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:89:76
 msgid "Dora"
-msgstr ""
+msgstr "宝牌"
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:99:22
 msgid "Ura dora"
-msgstr ""
+msgstr "里宝牌"
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:22
 msgid "Red fives"
-msgstr "Rote Fünfen"
+msgstr "赤宝牌"
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:121:76
 msgid "Fu"
-msgstr ""
+msgstr "符"
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:128:68
 msgid "Yakuman"
-msgstr ""
+msgstr "役满"
 
 #: app/components/screens/settings/SettingsScreen.tsx:79:58
 msgid "Player name"
-msgstr "Spielername"
+msgstr "玩家名"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:92:14
 msgid "Go to personal area"
-msgstr "Zum persönlichen Bereich gehen"
+msgstr "前往个人区域"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:96:57
 msgid "Language"
-msgstr "Sprache"
+msgstr "语言"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:112:57
 msgid "Theme"
-msgstr "Design"
+msgstr "主题"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:150:16
 msgid "Select another event"
-msgstr "Event auswählen"
+msgstr "选择其他活动或比赛"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:158:57
 msgid "Single device mode"
-msgstr "Einzelgerätemodus"
+msgstr "单设备模式"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:160:18
 msgid "Turn on if you use a single device for all players"
-msgstr "Einschalten, wenn Sie ein einzelnes Gerät für alle Spieler verwenden"
+msgstr "如果您为所有玩家使用单一设备，请开启此功能"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:167:32
 msgid "Log out"
-msgstr "Abmelden"
+msgstr "注销"
 
 #: app/components/screens/table/base/TableInfo.tsx:92:20
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
-msgstr[0] "Noch %1 Hand "
-msgstr[1] "Noch %1 Hände"
+msgstr[0] "剩余 %1 局 "
 
 #: app/components/screens/table/base/TableInfo.tsx:100:57
 msgid "Table #%1"
-msgstr "Tisch #%1"
+msgstr "第 #%1 桌"
 
 #: app/components/screens/table/TableHelper.ts:137:13
 #: app/components/screens/table/TableHelper.ts:515:14
 msgid "Ron"
-msgstr ""
+msgstr "荣和"
 
 #: app/components/screens/table/TableHelper.ts:143:13
 #: app/components/screens/table/TableHelper.ts:517:14
 msgid "Tsumo"
-msgstr ""
+msgstr "自摸"
 
 #: app/components/screens/table/TableHelper.ts:221:16
 msgid "Penalty"
-msgstr "Strafe"
+msgstr "惩罚"
 
 #: app/components/screens/table/TableHelper.ts:413:25
 msgid "empty outcome"
-msgstr "Leeres Ergebnis"
+msgstr "无结果"
 
 #: app/components/screens/table/TableHelper.ts:422:22
 #: app/components/screens/table/TableHelper.ts:435:22
 msgid "Winner"
-msgstr "Gewinner"
+msgstr "赢家"
 
 #: app/components/screens/table/TableHelper.ts:425:22
 msgid "Loser"
-msgstr "Verlierer"
+msgstr "输家"
 
 #: app/components/screens/table/TableHelper.ts:440:27
 msgid "wrong outcome for paoSelect"
-msgstr "Falsches Ergebnis für paoSelect"
+msgstr "包牌玩家选择错误"
 
 #: app/components/screens/table/TableHelper.ts:496:16
 msgid "Select pao"
-msgstr "Pao auswählen"
+msgstr "选择包牌玩家"
 
 #: app/components/screens/table/TableHelper.ts:501:16
 msgid "Select tempai"
-msgstr "Tenpai auswählen"
+msgstr "选择听牌玩家"
 
 #: app/components/screens/table/TableHelper.ts:519:14
 msgid "Draw"
-msgstr "Unentschieden"
+msgstr "流局"
 
 #: app/components/screens/table/TableHelper.ts:521:14
 msgid "Abort"
-msgstr "Abbruch"
+msgstr "中途流局"
 
 #: app/components/screens/table/TableHelper.ts:525:14
 msgid "Nagashi"
-msgstr ""
+msgstr "流局"
 
 #: app/primitives/yaku.ts:120:34 app/primitives/yaku.ts:121:39
 msgid "Opened hand"
-msgstr "Offene Hand"
+msgstr "非门前清"
 
 #: app/primitives/yaku.ts:126:34 app/primitives/yaku.ts:127:39
 msgid "Toitoi"
-msgstr ""
+msgstr "对对和"
 
 #: app/primitives/yaku.ts:132:34 app/primitives/yaku.ts:133:39
 msgid "Honroutou"
-msgstr ""
+msgstr "混老头"
 
 #: app/primitives/yaku.ts:138:34 app/primitives/yaku.ts:139:39
 msgid "Sanankou"
-msgstr ""
+msgstr "三暗刻"
 
 #: app/primitives/yaku.ts:144:34 app/primitives/yaku.ts:145:39
 msgid "Sankantsu"
-msgstr ""
+msgstr "三杠子"
 
 #: app/primitives/yaku.ts:150:34 app/primitives/yaku.ts:151:39
 msgid "Suukantsu"
-msgstr ""
+msgstr "四杠子"
 
 #: app/primitives/yaku.ts:156:34 app/primitives/yaku.ts:157:39
 msgid "Suuankou"
-msgstr ""
+msgstr "四暗刻"
 
 #: app/primitives/yaku.ts:162:34 app/primitives/yaku.ts:163:39
 msgid "Pinfu"
-msgstr ""
+msgstr "平和"
 
 #: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
 msgid "Iipeikou"
-msgstr ""
+msgstr "一杯口"
 
 #: app/primitives/yaku.ts:174:34 app/primitives/yaku.ts:175:39
 msgid "Ryanpeikou"
-msgstr ""
+msgstr "两杯口"
 
 #: app/primitives/yaku.ts:180:34 app/primitives/yaku.ts:181:39
 msgid "Sanshoku"
-msgstr ""
+msgstr "三色同顺"
 
 #: app/primitives/yaku.ts:186:34 app/primitives/yaku.ts:187:39
 msgid "Sanshoku doukou"
-msgstr ""
+msgstr "三色同刻"
 
 #: app/primitives/yaku.ts:192:34 app/primitives/yaku.ts:193:39
 msgid "Ittsu"
-msgstr ""
+msgstr "一气通贯"
 
 #: app/primitives/yaku.ts:198:34
 msgid "Yakuhai x1"
-msgstr ""
+msgstr "役牌 x1"
 
 #: app/primitives/yaku.ts:199:39
 msgid "Yakuhai"
-msgstr ""
+msgstr "役牌"
 
 #: app/primitives/yaku.ts:204:34
 msgid "Yakuhai x2"
-msgstr ""
+msgstr "役牌 x2"
 
 #: app/primitives/yaku.ts:205:39
 msgid "x2"
@@ -412,7 +406,7 @@ msgstr ""
 
 #: app/primitives/yaku.ts:210:34
 msgid "Yakuhai x3"
-msgstr ""
+msgstr "役牌 x3"
 
 #: app/primitives/yaku.ts:211:39
 msgid "x3"
@@ -420,7 +414,7 @@ msgstr ""
 
 #: app/primitives/yaku.ts:216:34
 msgid "Yakuhai x4"
-msgstr ""
+msgstr "役牌 x4"
 
 #: app/primitives/yaku.ts:217:39
 msgid "x4"
@@ -428,128 +422,126 @@ msgstr ""
 
 #: app/primitives/yaku.ts:222:34 app/primitives/yaku.ts:223:39
 msgid "Shousangen"
-msgstr ""
+msgstr "小三元"
 
 #: app/primitives/yaku.ts:228:34 app/primitives/yaku.ts:229:39
 msgid "Daisangen"
-msgstr ""
+msgstr "大三元"
 
 #: app/primitives/yaku.ts:234:34 app/primitives/yaku.ts:235:39
 msgid "Shousuushii"
-msgstr ""
+msgstr "小四喜"
 
 #: app/primitives/yaku.ts:240:34 app/primitives/yaku.ts:241:39
 msgid "Daisuushii"
-msgstr ""
+msgstr "大四喜"
 
 #: app/primitives/yaku.ts:246:34 app/primitives/yaku.ts:247:39
 msgid "Tsuuiisou"
-msgstr ""
+msgstr "字一色"
 
 #: app/primitives/yaku.ts:252:34 app/primitives/yaku.ts:253:39
 msgid "Tanyao"
-msgstr ""
+msgstr "断幺九"
 
 #: app/primitives/yaku.ts:258:34 app/primitives/yaku.ts:259:39
 msgid "Chanta"
-msgstr ""
+msgstr "混全带幺九"
 
 #: app/primitives/yaku.ts:264:34 app/primitives/yaku.ts:265:39
 msgid "Junchan"
-msgstr ""
+msgstr "纯全带幺九"
 
 #: app/primitives/yaku.ts:270:34 app/primitives/yaku.ts:271:39
 msgid "Chinroutou"
-msgstr ""
+msgstr "清老头"
 
 #: app/primitives/yaku.ts:276:34 app/primitives/yaku.ts:277:39
 msgid "Honitsu"
-msgstr ""
+msgstr "混一色"
 
 #: app/primitives/yaku.ts:282:34 app/primitives/yaku.ts:283:39
 msgid "Chinitsu"
-msgstr ""
+msgstr "清一色"
 
 #: app/primitives/yaku.ts:288:34 app/primitives/yaku.ts:289:39
 msgid "Chuuren poutou"
-msgstr ""
+msgstr "九莲宝灯"
 
 #: app/primitives/yaku.ts:294:34 app/primitives/yaku.ts:295:39
 msgid "Ryuuiisou"
-msgstr ""
+msgstr "绿一色"
 
 #: app/primitives/yaku.ts:300:34 app/primitives/yaku.ts:301:39
 msgid "Chiitoitsu"
-msgstr ""
+msgstr "七对子"
 
 #: app/primitives/yaku.ts:306:34 app/primitives/yaku.ts:307:39
 msgid "Kokushi musou"
-msgstr ""
+msgstr "国士无双"
 
 #: app/primitives/yaku.ts:312:34 app/primitives/yaku.ts:313:39
 msgid "Riichi"
-msgstr ""
+msgstr "立直"
 
 #: app/primitives/yaku.ts:318:34
 msgid "Daburu riichi"
-msgstr ""
+msgstr "两立直"
 
 #: app/primitives/yaku.ts:319:39
 msgid "Daburu"
-msgstr ""
+msgstr "两"
 
 #: app/primitives/yaku.ts:324:34 app/primitives/yaku.ts:325:39
 msgid "Ippatsu"
-msgstr ""
+msgstr "一发"
 
 #: app/primitives/yaku.ts:330:34 app/primitives/yaku.ts:331:39
 msgid "Menzentsumo"
-msgstr ""
+msgstr "门前清自摸和"
 
 #: app/primitives/yaku.ts:336:34 app/primitives/yaku.ts:337:39
 msgid "Haitei"
-msgstr ""
+msgstr "海底摸月"
 
 #: app/primitives/yaku.ts:342:34
 msgid "Rinshan kaihou"
-msgstr ""
+msgstr "岭上开花"
 
 #: app/primitives/yaku.ts:343:39
 msgid "Rinshan"
-msgstr ""
+msgstr "岭上"
 
 #: app/primitives/yaku.ts:348:34 app/primitives/yaku.ts:349:39
 msgid "Tenhou"
-msgstr ""
+msgstr "天和"
 
 #: app/primitives/yaku.ts:354:34 app/primitives/yaku.ts:355:39
 msgid "Chiihou"
-msgstr ""
+msgstr "地和"
 
 #: app/primitives/yaku.ts:360:34
 msgid "Houtei raoyui"
-msgstr ""
+msgstr "河底捞鱼"
 
 #: app/primitives/yaku.ts:361:39
 msgid "Houtei"
-msgstr ""
+msgstr "河底"
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
 msgid "Chankan"
-msgstr ""
+msgstr "抢杠"
 
 #: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
 msgid "Renhou"
-msgstr ""
+msgstr "人和"
 
 #: app/primitives/yaku.ts:378:34 app/primitives/yaku.ts:379:39
 msgid "Open riichi"
-msgstr ""
+msgstr "开立直"
 
 #: app/store/middlewares/yaku.ts:35:13 app/store/middlewares/yaku.ts:50:17
 msgid ""
 "If you want to select a riichi, return back and press riichi button for the "
 "winner"
-msgstr ""
-"Bei Riichi bitte einen Schritt zurück und riichi Button für den Gewinner "
-"markieren"
+msgstr "如需选择/取消 役：立直，请返回确认立直玩家"

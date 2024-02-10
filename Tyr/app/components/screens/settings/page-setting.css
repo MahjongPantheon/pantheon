@@ -37,14 +37,11 @@
 .page-setting__section-content {
   margin-top: 16px;
   display: flex;
+  gap: 8px;
 }
 
 .page-setting__section-content button {
   font-size: var(--font-size-primary);
-}
-
-.page-setting__section-content > div {
-  margin-right: 24px;
 }
 
 .theme {
