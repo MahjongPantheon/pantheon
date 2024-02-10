@@ -42,6 +42,7 @@ Hugin/vendor/
 Gullveig/vendor/
 
 Tyr/dist
+Tyr/dev-dist
 Tyr/tmp
 Tyr/node_modules
 Tyr/bower_components
