@@ -17,6 +17,7 @@
 
 import * as React from 'react';
 import './page-setting.css';
+import LinkIcon from '../../../img/icons/link.svg?react';
 import { Switch } from '../../general/switch/Switch';
 import { TopPanel } from '../../general/top-panel/TopPanel';
 import classNames from 'classnames';
@@ -90,6 +91,9 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
             href={`${env.urls.forseti}/profile/manage`}
           >
             {loc._t('Go to personal area')}
+            <span className='inline-icon' style={{ marginLeft: 10 }}>
+              <LinkIcon />
+            </span>
           </a>
         </div>
         <div className='page-setting__section'>

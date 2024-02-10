@@ -157,6 +157,8 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--color-secondary-6);
+  color: var(--primary-text-color);
   border: 2px solid var(--color-secondary-4);
   border-radius: 8px;
   box-sizing: border-box;
@@ -237,4 +239,9 @@ p {
 
 .flex-container__bottom {
   flex: 0 0 auto;
+}
+
+.inline-icon > svg {
+  display: inline-block;
+  width: 24px;
 }
