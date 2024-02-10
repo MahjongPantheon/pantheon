@@ -14,16 +14,17 @@
     "jsdom": "^23.0.1",
     "redux": "4.2.1",
     "twirpscript": "^0.0.69",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "vite-plugin-pwa": "^0.17.5"
   },
   "dependencies": {
     "@foxglove/crc": "^0.0.3",
     "@types/lodash.debounce": "^4.0.9",
     "@types/react-helmet": "^6.1.11",
-    "@typescript-eslint/parser": "6.17.0",
     "@types/uuid": "^9.0.7",
-    "@vitejs/plugin-react-swc": "^3.5.0",
     "@typescript-eslint/eslint-plugin": "6.17.0",
+    "@typescript-eslint/parser": "6.17.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "@vitest/coverage-istanbul": "^1.1.0",
     "@vitest/ui": "^1.1.0",
     "classnames": "^2.5.1",

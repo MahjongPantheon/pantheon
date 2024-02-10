@@ -26,6 +26,9 @@ import { registerFrontErrorHandler } from './scripts/logFrontError';
 import { Storage } from '../../Common/storage';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 import { env } from './env';
+import { registerSW } from 'virtual:pwa-register';
+
+registerSW({ immediate: true });
 
 const storageStrategy = new StorageStrategyClient(env.cookieDomain);
 const storage = new Storage();
