@@ -86,10 +86,11 @@ class EventFinishedGamesModel extends Model
 
     /**
      * @param SessionPrimitive $session
+     * @param bool $substituteReplacementPlayers
      * @return array
      * @throws \Exception
      */
-    public function getFinishedGame(SessionPrimitive $session)
+    public function getFinishedGame(SessionPrimitive $session, $substituteReplacementPlayers = false)
     {
         $sId = $session->getId();
         if (empty($sId)) {
@@ -99,9 +100,17 @@ class EventFinishedGamesModel extends Model
         $sessionResults = $this->_getSessionResults([$sId]);
         $rounds = $this->_getRounds([$sId]);
 
+        $replacements = [];
+        if ($substituteReplacementPlayers) {
+            $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $session->getEventId());
+            foreach ($regs as $reg) {
+                $replacements[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
+            }
+        }
+
         return [
-            'games' => [Formatters::formatGameResults($session, $sessionResults, $rounds)],
-            'players' => EventModel::getPlayersOfGames($this->_ds, [$session], $session->getEventId())
+            'games' => [Formatters::formatGameResults($session, $sessionResults, $rounds, $replacements)],
+            'players' => EventModel::getPlayersOfGames($this->_ds, [$session], $session->getEventId(), $replacements)
         ];
     }
 

@@ -363,14 +363,26 @@ class EventModel extends Model
      * @param DataSource $ds
      * @param SessionPrimitive[] $games
      * @param int|null $eventId
-     * @throws \Exception
+     * @param array $replacements mapping of replacement players ids [id => replacement_id, ...]
      * @return array
+     *@throws \Exception
      */
-    public static function getPlayersOfGames(DataSource $ds, $games, $eventId = null)
+    public static function getPlayersOfGames(DataSource $ds, $games, $eventId = null, $replacements = [])
     {
-        $players = PlayerPrimitive::findById($ds, array_reduce($games, function ($acc, SessionPrimitive $el) {
+        $playerIds = array_reduce($games, function ($acc, SessionPrimitive $el) {
             return array_merge($acc, $el->getPlayersIds());
-        }, []));
+        }, []);
+
+        if (!empty($replacements)) {
+            $playerIds = array_map(function ($id) use ($replacements) {
+                if (!empty($replacements[$id])) {
+                    return $replacements[$id];
+                }
+                return $id;
+            }, $playerIds);
+        }
+
+        $players = PlayerPrimitive::findById($ds, $playerIds);
 
         $soulNicknames = [];
         $useSoulNicknames = false;
