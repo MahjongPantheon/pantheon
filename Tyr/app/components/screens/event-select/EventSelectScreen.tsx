@@ -60,6 +60,9 @@ export class EventSelectScreen extends React.PureComponent<IComponentProps> {
     ) : (
       <EventSelectScreenView
         playerName={playerName}
+        playerId={state.currentPlayerId}
+        playerHasAvatar={state.currentPlayerHasAvatar}
+        playerLastUpdate={state.currentPlayerLastUpdate}
         events={state.eventsList}
         currentEvent={state.currentEventId}
         onBackClick={this.onBackClick.bind(this)}

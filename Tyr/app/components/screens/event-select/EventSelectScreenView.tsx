@@ -23,9 +23,13 @@ import { i18n } from '../../i18n';
 import BackIcon from '../../../img/icons/arrow-left.svg?react';
 import SettingsIcon from '../../../img/icons/settings.svg?react';
 import { MyEvent } from '../../../clients/proto/atoms.pb';
+import { PlayerAvatar } from '../../general/avatar/Avatar';
 
 interface IProps {
   playerName: string;
+  playerId?: number;
+  playerHasAvatar?: boolean;
+  playerLastUpdate: string;
   events: MyEvent[];
   currentEvent: number | undefined;
   onBackClick: () => void;
@@ -35,7 +39,17 @@ interface IProps {
 
 export const EventSelectScreenView = React.memo(function (props: IProps) {
   const loc = useContext(i18n);
-  const { playerName, events, onBackClick, onSettingClick, onSelectEvent, currentEvent } = props;
+  const {
+    playerName,
+    playerId,
+    playerHasAvatar,
+    playerLastUpdate,
+    events,
+    onBackClick,
+    onSettingClick,
+    onSelectEvent,
+    currentEvent,
+  } = props;
 
   return (
     <div className='flex-container page-event-select'>
@@ -50,7 +64,20 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
             <SettingsIcon />
           </div>
         </div>
-        <div className='page-event-select__name'>{playerName}</div>
+        <div className='page-event-select__name'>
+          {playerId && (
+            <PlayerAvatar
+              size={48}
+              p={{
+                id: playerId,
+                title: playerName,
+                hasAvatar: playerHasAvatar,
+                lastUpdate: playerLastUpdate,
+              }}
+            />
+          )}
+          {playerName}
+        </div>
         <div className='page-event-select__section'>
           {events.length > 0 ? (
             <>

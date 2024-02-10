@@ -20,6 +20,10 @@
 }
 
 .page-event-select__name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 16px;
   margin: 24px 16px;
   text-align: center;
   font-size: var(--font-size-secondary);
