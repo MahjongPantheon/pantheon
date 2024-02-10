@@ -116,6 +116,10 @@ p {
   color: var(--color-secondary-1);
 }
 
+.svg-button-right {
+  float: right;
+}
+
 .svg-button--small {
   width: 28px;
   height: 28px;

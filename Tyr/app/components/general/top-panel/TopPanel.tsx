@@ -19,21 +19,30 @@ import * as React from 'react';
 import './top-panel.css';
 import { SearchInput } from '../search-input/SearchInput';
 import BackIcon from '../../../img/icons/arrow-left.svg?react';
+import LogoutIcon from '../../../img/icons/logout.svg?react';
 
 type IProps = {
   onBackClick?: () => void;
   showSearch?: boolean;
+  showLogout?: boolean;
   onSearchChange?: (value: string) => void;
+  onLogout?: () => void;
 };
 
 export const TopPanel = React.memo(function (props: IProps) {
-  const { showSearch, onBackClick, onSearchChange } = props;
+  const { showSearch, showLogout, onBackClick, onSearchChange, onLogout } = props;
 
   return (
-    <div className='top-panel'>
+    <div className='top-panel' style={showLogout ? { justifyContent: 'space-between' } : undefined}>
       <div className='svg-button' onClick={onBackClick}>
         <BackIcon />
       </div>
+
+      {showLogout && onLogout && (
+        <div className='svg-button svg-button-right' onClick={onLogout}>
+          <LogoutIcon />
+        </div>
+      )}
 
       {showSearch && onSearchChange && (
         <div className='top-panel__search'>

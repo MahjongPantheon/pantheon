@@ -67,7 +67,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
   return (
     <div className='flex-container page-setting'>
       <div className='flex-container__content'>
-        <TopPanel onBackClick={onBackClick} />
+        <TopPanel onBackClick={onBackClick} showLogout={true} onLogout={onLogout} />
         <div className='page-setting__name'>
           {playerId && (
             <PlayerAvatar
@@ -162,9 +162,6 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
             </div>
           </div>
         </div>
-      </div>
-      <div className='flex-container__bottom page-setting__bottom' onClick={onLogout}>
-        <div className='link'>{loc._t('Log out')}</div>
       </div>
     </div>
   );
