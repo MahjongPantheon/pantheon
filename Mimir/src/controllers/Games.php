@@ -282,7 +282,7 @@ class GamesController extends Controller
         $this->_log->info('Saving new online game for event id# ' . $eventId . ' @ platform id ' . $platformId);
         $session = (new OnlineSessionModel($this->_ds, $this->_config, $this->_meta))
             ->addTypedGame($eventId, $replayHash, $logTimestamp, $content, $platformId, $contentType);
-        $result = (new EventFinishedGamesModel($this->_ds, $this->_config, $this->_meta))->getFinishedGame($session);
+        $result = (new EventFinishedGamesModel($this->_ds, $this->_config, $this->_meta))->getFinishedGame($session, true);
         $this->_log->info('Successfully saved online game for event id# ' . $eventId . ' @ platform id ' . $platformId);
         return $result;
     }

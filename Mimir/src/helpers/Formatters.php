@@ -23,12 +23,13 @@ class Formatters
      * @param SessionPrimitive $session
      * @param SessionResultsPrimitive[][] $sessionResults
      * @param RoundPrimitive[][] $rounds
+     * @param array $replacements mapping of replacement players ids [id => replacement_id, ...]
      *
      * @return array
      * @throws \Exception
      *
      */
-    public static function formatGameResults(SessionPrimitive $session, array $sessionResults, array $rounds)
+    public static function formatGameResults(SessionPrimitive $session, array $sessionResults, array $rounds, $replacements = [])
     {
         $currentPlatformId = $session->getEvent()->getPlatformId();
         if ($currentPlatformId === -1 || $currentPlatformId === 0) {
@@ -38,29 +39,55 @@ class Formatters
             'hash' => $session->getRepresentationalHash(),
             'date' => $session->getEndDate(),
             'replay_link' => $session->getReplayLink($currentPlatformId),
-            'players' => array_map('intval', $session->getPlayersIds()),
-            'final_results' => self::_arrayMapPreserveKeys(function (SessionResultsPrimitive $el) {
+            'players' => self::_replaceMany(array_map('intval', $session->getPlayersIds()), $replacements),
+            'final_results' => self::_arrayMapPreserveKeys(function (SessionResultsPrimitive $el) use ($replacements) {
                 return [
-                    'player_id'     => (int) $el->getPlayerId(),
+                    'player_id'     => self::_replaceOne((int) $el->getPlayerId(), $replacements),
                     'score'         => (int) $el->getScore(),
                     'rating_delta'  => (float) $el->getRatingDelta(),
                     'place'         => (int) $el->getPlace()
                 ];
             }, $sessionResults[$session->getId()]),
             'penalties' => $session->getCurrentState()->getPenaltiesLog(),
-            'rounds' => array_map(function ($round) use ($session) {
-                return self::formatRound($round, $session);
+            'rounds' => array_map(function ($round) use ($session, $replacements) {
+                return self::formatRound($round, $session, $replacements);
             }, $rounds[$session->getId()]),
         ];
     }
 
     /**
+     * @param int $playerId
+     * @param array $replacements
+     * @return int
+     */
+    private static function _replaceOne(int $playerId, $replacements = [])
+    {
+        if (!empty($replacements[$playerId])) {
+            return (int)$replacements[$playerId];
+        }
+        return $playerId;
+    }
+
+    /**
+     * @param array $playerIds
+     * @param array $replacements
+     * @return int[]
+     */
+    private static function _replaceMany(array $playerIds, $replacements = [])
+    {
+        return array_map(function ($id) use ($replacements) {
+            return self::_replaceOne($id, $replacements);
+        }, $playerIds);
+    }
+
+    /**
      * @param RoundPrimitive $round
      * @param SessionPrimitive $session
+     * @param array $replacements mapping of replacement players ids [id => replacement_id, ...]
      * @return array
      * @throws DatabaseException
      */
-    public static function formatRound(RoundPrimitive $round, SessionPrimitive $session)
+    public static function formatRound(RoundPrimitive $round, SessionPrimitive $session, $replacements = [])
     {
         switch ($round->getOutcome()) {
             case 'ron':
@@ -68,13 +95,13 @@ class Formatters
                     'round_index'   => (int) $round->getRoundIndex(),
                     'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
-                    'winner_id'     => (int) $round->getWinnerId(),
-                    'loser_id'      => (int) $round->getLoserId(),
-                    'pao_player_id' => (int) $round->getPaoPlayerId(),
+                    'winner_id'     => self::_replaceOne((int) $round->getWinnerId(), $replacements),
+                    'loser_id'      => self::_replaceOne((int) $round->getLoserId(), $replacements),
+                    'pao_player_id' => self::_replaceOne((int) $round->getPaoPlayerId(), $replacements),
                     'han'           => (int) $round->getHan(),
                     'fu'            => (int) $round->getFu(),
                     'yaku'          => $round->getYaku(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
+                    'riichi_bets'   => implode(',', self::_replaceMany($round->getRiichiIds(), $replacements)),
                     'dora'          => (int) $round->getDora(),
                     'uradora'       => (int) $round->getUradora(), // TODO: not sure if we really need these guys
                     'kandora'       => (int) $round->getKandora(),
@@ -90,19 +117,19 @@ class Formatters
                     'round_index'   => (int) $rounds[0]->getRoundIndex(),
                     'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $mRound->getOutcome(),
-                    'loser_id'      => (int) $mRound->getLoserId(),
+                    'loser_id'      => self::_replaceOne((int) $mRound->getLoserId(), $replacements),
                     'multi_ron'     => (int) $rounds[0]->getMultiRon(),
-                    'riichi_bets'   => implode(',', array_filter(array_map(function (RoundPrimitive $r) {
-                        return implode(',', $r->getRiichiIds());
+                    'riichi_bets'   => implode(',', array_filter(array_map(function (RoundPrimitive $r) use ($replacements) {
+                        return implode(',', self::_replaceMany($r->getRiichiIds(), $replacements));
                     }, $rounds))),
-                    'wins'          => array_map(function (RoundPrimitive $round) {
+                    'wins'          => array_map(function (RoundPrimitive $round) use ($replacements) {
                         return [
-                            'winner_id'     => (int) $round->getWinnerId(),
-                            'pao_player_id' => (int) $round->getPaoPlayerId(),
+                            'winner_id'     => self::_replaceOne((int) $round->getWinnerId(), $replacements),
+                            'pao_player_id' => self::_replaceOne((int) $round->getPaoPlayerId(), $replacements),
                             'han'           => (int) $round->getHan(),
                             'fu'            => (int) $round->getFu(),
                             'yaku'          => $round->getYaku(),
-                            'riichi_bets'   => implode(',', $round->getRiichiIds()),
+                            'riichi_bets'   => implode(',', self::_replaceMany($round->getRiichiIds(), $replacements)),
                             'dora'          => (int) $round->getDora(),
                             'uradora'       => (int) $round->getUradora(), // TODO: not sure if we really need these guys
                             'kandora'       => (int) $round->getKandora(),
@@ -116,12 +143,12 @@ class Formatters
                     'round_index'   => (int) $round->getRoundIndex(),
                     'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
-                    'winner_id'     => (int) $round->getWinnerId(),
-                    'pao_player_id' => (int) $round->getPaoPlayerId(),
+                    'winner_id'     => self::_replaceOne((int) $round->getWinnerId(), $replacements),
+                    'pao_player_id' => self::_replaceOne((int) $round->getPaoPlayerId(), $replacements),
                     'han'           => (int) $round->getHan(),
                     'fu'            => (int) $round->getFu(),
                     'yaku'          => $round->getYaku(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
+                    'riichi_bets'   => implode(',', self::_replaceMany($round->getRiichiIds(), $replacements)),
                     'dora'          => (int) $round->getDora(),
                     'uradora'       => (int) $round->getUradora(), // TODO: not sure if we really need these guys
                     'kandora'       => (int) $round->getKandora(),
@@ -133,31 +160,31 @@ class Formatters
                     'round_index'   => (int) $round->getRoundIndex(),
                     'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
-                    'tempai'        => implode(',', $round->getTempaiIds())
+                    'riichi_bets'   => implode(',', self::_replaceMany($round->getRiichiIds(), $replacements)),
+                    'tempai'        => implode(',', self::_replaceMany($round->getTempaiIds(), $replacements))
                 ];
             case 'abort':
                 return [
                     'round_index'   => $round->getRoundIndex(),
                     'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds())
+                    'riichi_bets'   => implode(',', self::_replaceMany($round->getRiichiIds(), $replacements))
                 ];
             case 'chombo':
                 return [
                     'round_index'   => (int) $round->getRoundIndex(),
                     'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
-                    'loser_id'      => (int) $round->getLoserId()
+                    'loser_id'      => self::_replaceOne((int) $round->getLoserId(), $replacements)
                 ];
             case 'nagashi':
                 return [
                     'round_index'   => (int) $round->getRoundIndex(),
                     'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
-                    'tempai'        => implode(',', $round->getTempaiIds()),
-                    'nagashi'       => implode(',', $round->getNagashiIds())
+                    'riichi_bets'   => implode(',', self::_replaceMany($round->getRiichiIds(), $replacements)),
+                    'tempai'        => implode(',', self::_replaceMany($round->getTempaiIds(), $replacements)),
+                    'nagashi'       => implode(',', self::_replaceMany($round->getNagashiIds(), $replacements))
                 ];
             default:
                 throw new DatabaseException('Wrong outcome detected! This should not happen - DB corrupted?');
