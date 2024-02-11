@@ -66,7 +66,13 @@ foreach ($dayData as $day) {
                 if (empty($sites[$siteId][$k])) {
                     $sites[$siteId][$k] = $newData[$key];
                 } else {
-                    $sites[$siteId][$k] += $newData[$key];
+                    if (!empty($newData[$key])) {
+                        if (empty($sites[$siteId][$k][$key])) {
+                            $sites[$siteId][$k][$key] = $newData[$key];
+                        } else {
+                            $sites[$siteId][$k][$key] += $newData[$key];
+                        }
+                    }
                 }
             }
         }
