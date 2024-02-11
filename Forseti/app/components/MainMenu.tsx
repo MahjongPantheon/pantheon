@@ -3,6 +3,7 @@ import { ExternalTarget, MainMenuLink } from './MainMenuLink';
 import { env } from '../env';
 import {
   IconAlertOctagon,
+  IconChartArea,
   IconExternalLink,
   IconFriends,
   IconHandStop,
@@ -198,6 +199,14 @@ export const MainMenu = ({
             href='/profile/signupAdmin'
             icon={<IconUserPlus size={18} />}
             text={i18n._t('Register player')}
+            onClick={closeMenu}
+          />
+        )}
+        {isSuperadmin && (
+          <MainMenuLink
+            href='/stats'
+            icon={<IconChartArea size={18} />}
+            text={i18n._t('System stats')}
             onClick={closeMenu}
           />
         )}
