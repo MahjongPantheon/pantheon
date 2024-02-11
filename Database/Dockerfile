@@ -80,6 +80,7 @@ RUN echo "" > /var/lib/postgresql/.gitconfig
 RUN echo "[user]" >> /var/lib/postgresql/.gitconfig
 RUN echo "    email = pantheon_backup@riichimahjong.org" >> /var/lib/postgresql/.gitconfig
 RUN echo "    name = Pantheon Backup" >> /var/lib/postgresql/.gitconfig
+COPY ErrMailer.php /var/lib/postgresql/ErrMailer.php
 
 # Entry point
 CMD ["/entrypoint.sh"]

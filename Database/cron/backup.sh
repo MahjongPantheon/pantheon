@@ -29,7 +29,5 @@ if [ $? -eq 0 ]; then
   echo "Success"
 else
   echo "Backup failed!"
-  echo -e "Pantheon backup has failed. Here is what git said: \n\n" > ~/message.txt
-  cat ~/gitpush.log >> ~/message.txt
-  mail -s "[CRITICAL] Pantheon backup failed" $ADMIN_EMAIL < ~/message.txt
+  php /var/lib/postgresql/ErrMailer.php
 fi

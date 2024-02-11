@@ -8,20 +8,6 @@ volumes:
   gullveigstorage01: {}
   pgadmindata:
 services:
-  db:
-    build: ./Database
-    image: ghcr.io/mahjongpantheon/pantheon-database:latest
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
-    ports:
-      - "5532:5432"
-      - "127.0.0.1:49498:4949"
-    volumes:
-      - ./Env:/env
-      - datavolume01:/var/lib/postgresql/data
-      - configvolume01:/var/lib/postgresql/.ssh
-      - backupvolume01:/var/lib/postgresql/backup
   hermod:
     build: ./Hermod
     image: ghcr.io/mahjongpantheon/pantheon-hermod:latest
@@ -36,6 +22,22 @@ services:
       - ./Env:/env
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
+  db:
+    build: ./Database
+    image: ghcr.io/mahjongpantheon/pantheon-database:latest
+    environment:
+      ENV: /etc/profile
+      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
+    ports:
+      - "5532:5432"
+      - "127.0.0.1:49498:4949"
+    links:
+      - hermod:hermod
+    volumes:
+      - ./Env:/env
+      - datavolume01:/var/lib/postgresql/data
+      - configvolume01:/var/lib/postgresql/.ssh
+      - backupvolume01:/var/lib/postgresql/backup
   pgadmin:
     image: docker.io/dpage/pgadmin4:7.3
     ports:
