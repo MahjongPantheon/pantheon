@@ -1,18 +1,15 @@
 #!/bin/bash
 
 cd ~ || exit
-rm -rf ~/backup/frey ~/backup/mimir
+rm -rf ~/backup/frey ~/backup/mimir ~/backup/hugin
 pg_dump --clean -Z0 -Fd frey -f ~/backup/frey
 pg_dump --clean -Z0 -Fd mimir -f ~/backup/mimir
 pg_dump --clean -Z0 -Fd hugin -f ~/backup/hugin
 cd /var/lib/postgresql/backup || exit
 
-tar -c --lzma -f frey.tar.xz frey
-rm -rf frey
-tar -c --lzma -f mimir.tar.xz mimir
-rm -rf mimir
-tar -c --lzma -f hugin.tar.xz hugin
-rm -rf hugin
+cd frey && ls | xargs lzma && cd ..
+cd mimir && ls | xargs lzma && cd ..
+cd hugin && ls | xargs lzma && cd ..
 
 git add .
 git commit -m "Backup @ `date`"
