@@ -51,6 +51,28 @@ class PlayerPrimitive extends Primitive
      * @var string
      */
     protected $_lastUpdate = '';
+    /**
+     * @var string
+     */
+    protected $_telegramId = '';
+
+    /**
+     * @return string
+     */
+    public function getTelegramId()
+    {
+        return $this->_telegramId;
+    }
+
+    /**
+     * @param string $telegramId
+     * @return self
+     */
+    public function setTelegramId($telegramId)
+    {
+        $this->_telegramId = $telegramId;
+        return $this;
+    }
 
     /**
      * @return string
@@ -133,6 +155,7 @@ class PlayerPrimitive extends Primitive
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
                 ->setLastUpdate($item['last_update'])
+                ->setTelegramId($item['telegram_id'] ? (string)$item['telegram_id'] : '')
                 ->_setId($item['id']);
         }, $allData);
     }
@@ -155,6 +178,7 @@ class PlayerPrimitive extends Primitive
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
+                ->setTelegramId($item['telegram_id'] ? (string)$item['telegram_id'] : '')
                 ->_setId($item['id']);
         }, $playersData);
 
@@ -192,6 +216,7 @@ class PlayerPrimitive extends Primitive
                 ->setTenhouId($item['ms_nickname'] . '-' . $item['ms_account_id'])
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
+                ->setTelegramId($item['telegram_id'] ? (string)$item['telegram_id'] : '')
                 ->_setId($item['id']);
         }, $playersData);
 

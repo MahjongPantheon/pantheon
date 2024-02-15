@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-ØO
+èR
 proto/frey.protocommon"d
 AuthRequestRegistrationPayload
 email (	
@@ -267,7 +267,14 @@ account_id ("B
 mapping (2.common.MajsoulPersonMapping";
 MajsoulPersonMapping
 	person_id (
-nickname (	2˙ 
+nickname (	"0
+PersonsGetTelegramIdPayload
+	person_id ("3
+PersonsGetTelegramIdResponse
+telegram_id ("E
+PersonsSetTelegramIdPayload
+	person_id (
+telegram_id (2¨"
 Freyf
 RequestRegistration&.common.AuthRequestRegistrationPayload\'.common.AuthRequestRegistrationResponsef
 ApproveRegistration&.common.AuthApproveRegistrationPayload\'.common.AuthApproveRegistrationResponseH
@@ -310,7 +317,9 @@ account_id ("B
 AddPersonToGroup&.common.PersonsAddPersonToGroupPayload.common.GenericSuccessResponsed
 RemovePersonFromGroup+.common.PersonsRemovePersonFromGroupPayload.common.GenericSuccessResponsef
 GetPersonsOfGroup\'.common.PersonsGetPersonsOfGroupPayload(.common.PersonsGetPersonsOfGroupResponsef
-GetGroupsOfPerson\'.common.PersonsGetGroupsOfPersonPayload(.common.PersonsGetGroupsOfPersonResponse
+GetGroupsOfPerson\'.common.PersonsGetGroupsOfPersonPayload(.common.PersonsGetGroupsOfPersonResponseZ
+GetTelegramId#.common.PersonsGetTelegramIdPayload$.common.PersonsGetTelegramIdResponseT
+SetTelegramId#.common.PersonsSetTelegramIdPayload.common.GenericSuccessResponse
 AddSystemWideRuleForPerson/.common.AccessAddSystemWideRuleForPersonPayload0.common.AccessAddSystemWideRuleForPersonResponse|
 AddSystemWideRuleForGroup..common.AccessAddSystemWideRuleForGroupPayload/.common.AccessAddSystemWideRuleForGroupResponsebproto3'
         , true);

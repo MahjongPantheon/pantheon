@@ -355,6 +355,39 @@ class PersonsController extends Controller
     }
 
     /**
+     * Get person's telegram id
+     *
+     * @param int $personId
+     * @return string
+     * @throws AccessDeniedException
+     * @throws InvalidParametersException
+     */
+    public function getTelegramId($personId)
+    {
+        $this->_logStart(__METHOD__, [$personId]);
+        $data = $this->_getAccountModel()->getTelegramId($personId);
+        $this->_logSuccess(__METHOD__, [$personId]);
+        return $data;
+    }
+
+    /**
+     * Set person's telegram id
+     *
+     * @param int $personId
+     * @param string $telegramId
+     * @return bool
+     * @throws AccessDeniedException
+     * @throws InvalidParametersException
+     */
+    public function setTelegramId($personId, string $telegramId)
+    {
+        $this->_logStart(__METHOD__, [$personId]);
+        $data = $this->_getAccountModel()->setTelegramId($personId, $telegramId);
+        $this->_logSuccess(__METHOD__, [$personId]);
+        return $data;
+    }
+
+    /**
      * @return AccountModel
      */
     protected function _getAccountModel()

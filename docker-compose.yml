@@ -22,6 +22,21 @@ services:
       - ./Env:/env
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
+  skirnir:
+    build: ./Skirnir
+    image: ghcr.io/mahjongpantheon/pantheon-skirnir:latest
+    ports:
+      - "127.0.0.1:4015:80"
+      - "127.0.0.1:4115:8080"
+      - "127.0.0.1:49501:4949"
+    environment:
+      ENV: /etc/profile
+      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
+    volumes:
+      - ./Env:/env
+      - ./Skirnir:/var/www/html/Skirnir
+      - ./Skirnir-dist:/var/www/html/Skirnir-dist
+      - ./Common:/var/www/html/Common
   db:
     build: ./Database
     image: ghcr.io/mahjongpantheon/pantheon-database:latest
@@ -99,9 +114,11 @@ services:
     links:
       - frey:frey
       - db:db
+      - skirnir:skirnir
     depends_on:
       - frey
       - db
+      - skirnir
     volumes:
       - ./Env:/env
       - ./Mimir:/var/www/html/Mimir

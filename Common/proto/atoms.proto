@@ -93,6 +93,7 @@ message PersonEx {
   string last_update = 10;
   string ms_nickname = 11;
   int32 ms_account_id = 12;
+  int64 telegram_id = 13;
 }
 
 message Group {

@@ -3,6 +3,8 @@
 namespace Frey;
 
 use Common\Frey;
+use Common\GenericSuccessResponse;
+use Common\PersonsGetTelegramIdResponse;
 use Exception;
 use Memcached;
 use Monolog\Handler\ErrorLogHandler;
@@ -324,6 +326,7 @@ final class TwirpServer implements Frey
                         ->setPhone($person['phone'] ?? '') // TODO same
                         ->setTenhouId($person['tenhou_id'])
                         ->setGroups($person['groups'])
+                        ->setTelegramId($person['telegram_id'])
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
@@ -353,6 +356,7 @@ final class TwirpServer implements Frey
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
+                        ->setTelegramId($person['telegram_id'])
                         ->setMsNickname($person['ms_nickname'] ?? '')
                         ->setMsAccountId($person['ms_account_id'] ?? -1);
                     if (!empty($person['email'])) {
@@ -382,6 +386,7 @@ final class TwirpServer implements Frey
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
+                        ->setTelegramId($person['telegram_id'])
                         ->setMsNickname($person['ms_nickname'] ?? '')
                         ->setMsAccountId($person['ms_account_id'] ?? -1);
                     if (!empty($person['email'])) {
@@ -944,6 +949,42 @@ final class TwirpServer implements Frey
                         ->setPersonId($acc['id'])
                         ->setNickname($acc['nickname']);
                 }, $accounts));
+        } catch (\Exception $e) {
+            $this->_syslog->error($e);
+            throw $e;
+        }
+    }
+
+    /**
+     * @param array $ctx
+     * @param \Common\PersonsGetTelegramIdPayload $req
+     * @return \Common\PersonsGetTelegramIdResponse
+     * @throws AccessDeniedException
+     * @throws InvalidParametersException
+     */
+    public function GetTelegramId(array $ctx, \Common\PersonsGetTelegramIdPayload $req): \Common\PersonsGetTelegramIdResponse
+    {
+        try {
+            return (new PersonsGetTelegramIdResponse())
+                ->setTelegramId($this->_personsController->getTelegramId($req->getPersonId()));
+        } catch (\Exception $e) {
+            $this->_syslog->error($e);
+            throw $e;
+        }
+    }
+
+    /**
+     * @param array $ctx
+     * @param \Common\PersonsSetTelegramIdPayload $req
+     * @return GenericSuccessResponse
+     * @throws AccessDeniedException
+     * @throws InvalidParametersException
+     */
+    public function SetTelegramId(array $ctx, \Common\PersonsSetTelegramIdPayload $req): \Common\GenericSuccessResponse
+    {
+        try {
+            return (new GenericSuccessResponse())
+                ->setSuccess($this->_personsController->setTelegramId($req->getPersonId(), (string)$req->getTelegramId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;

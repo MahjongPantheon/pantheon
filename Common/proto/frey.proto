@@ -109,6 +109,10 @@ service Frey {
     returns (PersonsGetPersonsOfGroupResponse);
   rpc GetGroupsOfPerson(PersonsGetGroupsOfPersonPayload)
     returns (PersonsGetGroupsOfPersonResponse);
+  rpc GetTelegramId(PersonsGetTelegramIdPayload)
+    returns (PersonsGetTelegramIdResponse);
+  rpc SetTelegramId(PersonsSetTelegramIdPayload)
+    returns (GenericSuccessResponse);
 
   // superadmin: this should be covered with some
   // bootstrap authenthication, TODO
@@ -497,4 +501,17 @@ message PersonsGetMajsoulNicknamesResponse {
 message MajsoulPersonMapping {
   int32 person_id = 1;
   string nickname = 2;
+}
+
+message PersonsGetTelegramIdPayload {
+  int32 person_id = 1;
+}
+
+message PersonsGetTelegramIdResponse {
+  int64 telegram_id = 1;
+}
+
+message PersonsSetTelegramIdPayload {
+  int32 person_id = 1;
+  int64 telegram_id = 2;
 }
