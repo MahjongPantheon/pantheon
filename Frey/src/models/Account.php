@@ -136,6 +136,7 @@ class AccountModel extends Model
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
+                'telegram_id' => $person->getTelegramId(),
                 'ms_account_id' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
                 'ms_nickname' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
@@ -227,6 +228,7 @@ class AccountModel extends Model
             ->setPhone($phone)
             ->setTenhouId($tenhouId)
             ->setHasAvatar($hasAvatar)
+            ->setTelegramId('')
             ->setAuthHash(sha1(time() . mt_rand(0, 9999999)))
             ->setAuthResetToken(sha1(time() . mt_rand(0, 9999999)))
             ->save();
@@ -446,6 +448,7 @@ class AccountModel extends Model
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
+                'telegram_id' => $person->getTelegramId(),
                 'ms_account_id' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
                 'ms_nickname' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
@@ -478,6 +481,7 @@ class AccountModel extends Model
                 'email' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getEmail(),
                 'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
+                'telegram_id' => $person->getTelegramId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
@@ -496,5 +500,47 @@ class AccountModel extends Model
         return array_map(function ($acc) {
             return ['id' => $acc->getPersonId(), 'nickname' => $acc->getNickname()];
         }, $accounts);
+    }
+
+    /**
+     * Get person's telegram id
+     *
+     * @param int $personId
+     * @return string
+     * @throws AccessDeniedException|InvalidParametersException
+     */
+    public function getTelegramId($personId)
+    {
+        if ($this->_meta->getCurrentPersonId() === null || $this->_meta->getCurrentPersonId() !== $personId) {
+            throw new AccessDeniedException('You are not allowed to view this telegram id');
+        }
+        $person = PersonPrimitive::findById($this->_db, [$personId]);
+        if (empty($person)) {
+            throw new InvalidParametersException('Person is not found in DB');
+        }
+
+        return $person[0]->getTelegramId();
+    }
+
+    /**
+     * Set person's telegram id
+     *
+     * @param int $personId
+     * @param string $telegramId
+     * @return bool
+     * @throws AccessDeniedException
+     * @throws InvalidParametersException
+     */
+    public function setTelegramId($personId, string $telegramId)
+    {
+        if ($this->_meta->getCurrentPersonId() === null || $this->_meta->getCurrentPersonId() !== $personId) {
+            throw new AccessDeniedException('You are not allowed to view this telegram id');
+        }
+        $person = PersonPrimitive::findById($this->_db, [$personId]);
+        if (empty($person)) {
+            throw new InvalidParametersException('Person is not found in DB');
+        }
+
+        return $person[0]->setTelegramId($telegramId)->save();
     }
 }

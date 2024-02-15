@@ -214,6 +214,10 @@ final class FreyServer implements RequestHandlerInterface
                 return $this->handleGetPersonsOfGroup($ctx, $req);
             case 'GetGroupsOfPerson':
                 return $this->handleGetGroupsOfPerson($ctx, $req);
+            case 'GetTelegramId':
+                return $this->handleGetTelegramId($ctx, $req);
+            case 'SetTelegramId':
+                return $this->handleSetTelegramId($ctx, $req);
             case 'AddSystemWideRuleForPerson':
                 return $this->handleAddSystemWideRuleForPerson($ctx, $req);
             case 'AddSystemWideRuleForGroup':
@@ -4696,6 +4700,220 @@ final class FreyServer implements RequestHandlerInterface
 
             if ($out === null) {
                 return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetGroupsOfPerson. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/protobuf')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+    private function handleGetTelegramId(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $header = $req->getHeaderLine('Content-Type');
+        $i = strpos($header, ';');
+
+        if ($i === false) {
+            $i = strlen($header);
+        }
+
+        $respHeaders = [];
+        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
+
+        switch (trim(strtolower(substr($header, 0, $i)))) {
+            case 'application/json':
+                $resp = $this->handleGetTelegramIdJson($ctx, $req);
+                break;
+
+            case 'application/protobuf':
+                $resp = $this->handleGetTelegramIdProtobuf($ctx, $req);
+                break;
+
+            default:
+                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
+
+                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
+        }
+
+        foreach ($respHeaders as $key => $value) {
+            $resp = $resp->withHeader($key, $value);
+        }
+
+        return $resp;
+    }
+
+    private function handleGetTelegramIdJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'GetTelegramId');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\PersonsGetTelegramIdPayload();
+            $in->mergeFromJsonString((string)$req->getBody(), true);
+
+            $out = $this->svc->GetTelegramId($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetTelegramId. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToJsonString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+
+    private function handleGetTelegramIdProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'GetTelegramId');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\PersonsGetTelegramIdPayload();
+            $in->mergeFromString((string)$req->getBody());
+
+            $out = $this->svc->GetTelegramId($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetTelegramId. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/protobuf')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+    private function handleSetTelegramId(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $header = $req->getHeaderLine('Content-Type');
+        $i = strpos($header, ';');
+
+        if ($i === false) {
+            $i = strlen($header);
+        }
+
+        $respHeaders = [];
+        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
+
+        switch (trim(strtolower(substr($header, 0, $i)))) {
+            case 'application/json':
+                $resp = $this->handleSetTelegramIdJson($ctx, $req);
+                break;
+
+            case 'application/protobuf':
+                $resp = $this->handleSetTelegramIdProtobuf($ctx, $req);
+                break;
+
+            default:
+                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
+
+                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
+        }
+
+        foreach ($respHeaders as $key => $value) {
+            $resp = $resp->withHeader($key, $value);
+        }
+
+        return $resp;
+    }
+
+    private function handleSetTelegramIdJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'SetTelegramId');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\PersonsSetTelegramIdPayload();
+            $in->mergeFromJsonString((string)$req->getBody(), true);
+
+            $out = $this->svc->SetTelegramId($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling SetTelegramId. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToJsonString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+
+    private function handleSetTelegramIdProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'SetTelegramId');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\PersonsSetTelegramIdPayload();
+            $in->mergeFromString((string)$req->getBody());
+
+            $out = $this->svc->SetTelegramId($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling SetTelegramId. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

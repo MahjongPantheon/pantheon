@@ -22,6 +22,7 @@ deps:
 	cd Sigrun && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
+	cd Skirnir && ${MAKE} docker_deps
 
 .PHONY: kill_dev
 kill_dev: export ENV_FILENAME=.env.development
@@ -43,6 +44,7 @@ kill:
 		cd ../Sigrun && ${MAKE} kill ; \
 		cd ../Bragi && ${MAKE} kill ; \
 		cd ../Hugin && ${MAKE} kill ; \
+		cd ../Skirnir && ${MAKE} kill ; \
 		cd ../Database && ${MAKE} kill ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume01' | awk '{print $$2}'` ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'backupvolume01' | awk '{print $$2}'` ; \
@@ -61,6 +63,7 @@ pantheon_run:
 	@cp Env/.env.development Sigrun/.env.development
 	@cp Env/.env.development Bragi/.env.development
 	@cp Env/.env.development Forseti/.env.development
+	@cp Env/.env.development Skirnir/.env.development
 	@${COMPOSE_COMMAND} up -d
 	@cd Mimir && ${MAKE} docker_enable_debug
 	@cd Frey && ${MAKE} docker_enable_debug
@@ -125,6 +128,10 @@ dev_sigrun:
 dev_bragi:
 	cd Bragi && ${MAKE} docker_dev
 
+.PHONY: dev_skirnir
+dev_skirnir:
+	cd Skirnir && ${MAKE} docker_dev
+
 .PHONY: forseti_stop
 forseti_stop:
 	cd Forseti && ${MAKE} docker_stop
@@ -140,6 +147,10 @@ sigrun_stop:
 .PHONY: bragi_stop
 bragi_stop:
 	cd Bragi && ${MAKE} docker_stop
+
+.PHONY: skirnir_stop
+skirnir_stop:
+	cd Skirnir && ${MAKE} docker_stop
 
 .PHONY: dev
 dev: pantheon_run
@@ -193,6 +204,10 @@ shell_db:
 shell_gullveig:
 	cd Gullveig && ${MAKE} shell
 
+.PHONY: shell_skirnir
+shell_skirnir:
+	cd Skirnir && ${MAKE} shell
+
 # Some shortcuts for common tasks
 
 .PHONY: seed
@@ -230,6 +245,7 @@ check:
 	cd Hugin && ${MAKE} docker_check
 	cd Gullveig && ${MAKE} docker_check
 	cd Bragi && ${MAKE} docker_lint
+	cd Skirnir && ${MAKE} docker_lint
 
 .PHONY: autofix
 autofix:
@@ -242,6 +258,7 @@ autofix:
 	cd Hugin && ${MAKE} docker_autofix
 	cd Gullveig && ${MAKE} docker_autofix
 	cd Bragi && ${MAKE} docker_autofix
+	cd Skirnir && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -272,7 +289,7 @@ prod_deps:
 	cd Forseti && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
-	# sigrun and bragi should install deps after prebuild
+	# sigrun, skirnir and bragi should install deps after prebuild
 
 .PHONY: prod_build_basic_images
 prod_build_basic_images:
@@ -299,6 +316,11 @@ prod_build_bragi: export NODE_ENV=production
 prod_build_bragi: # this is for automated builds, don't run it manually
 	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
 
+.PHONY: prod_build_skirnir
+prod_build_skirnir: export NODE_ENV=production
+prod_build_skirnir: # this is for automated builds, don't run it manually
+	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+
 .PHONY: prod_compile
 prod_compile: export ENV_FILENAME=.env.production
 prod_compile:
@@ -306,12 +328,14 @@ prod_compile:
 	@cp Env/.env.production Sigrun/.env.production
 	@cp Env/.env.production Forseti/.env.production
 	@cp Env/.env.production Bragi/.env.production
+	@cp Env/.env.production Skirnir/.env.production
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
+	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
 	@echo "- ${YELLOW}Mimir${NC} API is exposed on port 4001"
 	@echo "- ${YELLOW}Sigrun${NC} is exposed on port 4102 with server-side rendering"
 	@echo "- ${YELLOW}Bragi${NC} is exposed on port 4108 with server-side rendering"
@@ -320,6 +344,7 @@ prod_compile:
 	@echo "- ${YELLOW}Forseti${NC} is exposed on port 4107"
 	@echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"
 	@echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"
+	@echo "- ${YELLOW}Skirnir${NC} is exposed on port 4015"
 
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
@@ -335,7 +360,7 @@ prod_stop_all:
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
-	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr gullveig
+	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr gullveig bragi skirnir
 
 .PHONY: prod_restart
 prod_restart:

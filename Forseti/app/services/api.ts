@@ -71,6 +71,8 @@ import {
   RequestRegistration,
   RequestResetPassword,
   UpdatePersonalInfo,
+  GetTelegramId,
+  SetTelegramId,
 } from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
@@ -576,5 +578,13 @@ export class ApiService {
 
   getLastYearStats() {
     return GetLastYear({}, this._clientConfHugin).then((r) => r.data);
+  }
+
+  getTelegramId(personId: number) {
+    return GetTelegramId({ personId }, this._clientConfFrey).then((r) => r.telegramId);
+  }
+
+  setTelegramId(personId: number, telegramId: bigint) {
+    return SetTelegramId({ personId, telegramId }, this._clientConfFrey).then((r) => r.success);
   }
 }

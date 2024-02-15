@@ -322,7 +322,8 @@ class FreyClientTwirp implements IFreyClient
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
                 'ms_nickname' => $person->getMsNickname(),
-                'ms_account_id' => $person->getMsAccountId()
+                'ms_account_id' => $person->getMsAccountId(),
+                'telegram_id' => $person->getTelegramId()
             ];
         }, iterator_to_array($persons));
     }
@@ -355,7 +356,8 @@ class FreyClientTwirp implements IFreyClient
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
                 'ms_nickname' => $person->getMsNickname(),
-                'ms_account_id' => $person->getMsAccountId()
+                'ms_account_id' => $person->getMsAccountId(),
+                'telegram_id' => $person->getTelegramId()
             ];
         }, iterator_to_array($persons));
     }
@@ -390,6 +392,7 @@ class FreyClientTwirp implements IFreyClient
                 'last_update' => $person->getLastUpdate(),
                 'ms_nickname' => $person->getMsNickname(),
                 'ms_account_id' => $person->getMsAccountId(),
+                'telegram_id' => $person->getTelegramId()
             ];
         }, iterator_to_array($persons));
     }

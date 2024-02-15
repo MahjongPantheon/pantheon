@@ -36,6 +36,7 @@ class PersonPrimitive extends Primitive
     protected static $_fieldsMapping = [
         'id'                => '_id',
         'email'             => '_email',
+        'telegram_id'       => '_telegramId',
         'phone'             => '_phone',
         'title'             => '_title',
         'auth_hash'         => '_authHash',
@@ -56,6 +57,7 @@ class PersonPrimitive extends Primitive
         return [
             '_id'       => $this->_integerTransform(true),
             '_email'    => $this->_stringTransform(),
+            '_telegramId' => $this->_stringTransform(),
             '_phone'    => $this->_stringTransform(),
             '_title'    => $this->_stringTransform(),
             '_authHash' => $this->_stringTransform(),
@@ -87,6 +89,11 @@ class PersonPrimitive extends Primitive
      * @var string
      */
     protected $_email;
+    /**
+     * Person's telegram id. Used for realtime notifications.
+     * @var string
+     */
+    protected $_telegramId;
     /**
      * Person's phone number. Used as contact info.
      * @var string
@@ -297,6 +304,24 @@ QRY;
     public function setEmail(string $email): PersonPrimitive
     {
         $this->_email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelegramId(): string
+    {
+        return $this->_telegramId;
+    }
+
+    /**
+     * @param string $telegramId
+     * @return PersonPrimitive
+     */
+    public function setTelegramId(string $telegramId): PersonPrimitive
+    {
+        $this->_telegramId = $telegramId;
         return $this;
     }
 

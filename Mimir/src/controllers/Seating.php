@@ -22,6 +22,7 @@ use Twirp\ErrorCode;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/Seating.php';
+require_once __DIR__ . '/../helpers/SkirnirClient.php';
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventRatingTable.php';
 
@@ -52,12 +53,16 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
-        $seating = array_chunk(array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed) ?? []), 4);
+        $playerIds = array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed) ?? []);
+        $seating = array_chunk($playerIds, 4);
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
+
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messageSeatingReady($playerIds, $eventId);
 
         $this->_log->info('Created new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
         if ($gamesWillStart) {
@@ -89,12 +94,16 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
-        $seating = array_chunk(array_keys(Seating::swissSeating($playersMap, $tables)), 4);
+        $playerIds = array_keys(Seating::swissSeating($playersMap, $tables));
+        $seating = array_chunk($playerIds, 4);
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
+
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messageSeatingReady($playerIds, $eventId);
 
         $this->_log->info('Created new swiss seating for event #' . $eventId);
         if ($gamesWillStart) {
@@ -191,6 +200,12 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
+        $playerIds = array_map(function ($player) {
+            return $player['id'];
+        }, $currentRatingTable);
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messageSeatingReady($playerIds, $eventId);
+
         $this->_log->info('Created new interval seating for event #' . $eventId);
         if ($gamesWillStart) {
             $this->_log->info('Started all games by interval seating for event #' . $eventId);
@@ -222,6 +237,7 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
         $tableIndex = 1;
 
+        $playerIds = [];
         foreach ($seating as $table) {
             $table = array_filter(array_map(function ($el) {
                 return $el['id'];
@@ -232,6 +248,8 @@ class SeatingController extends Controller
                 continue;
             }
 
+            $playerIds = array_merge($playerIds, $table);
+
             if ($randomizeAtTables) {
                 Seating::shuffleSeed();
                 $table = Seating::shuffle($table);
@@ -240,6 +258,9 @@ class SeatingController extends Controller
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
+
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messageSeatingReady($playerIds, $eventId);
 
         // increment game index when seating is generated
         $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);

@@ -392,6 +392,24 @@ interface Frey
     public function GetGroupsOfPerson(array $ctx, \Common\PersonsGetGroupsOfPersonPayload $req): \Common\PersonsGetGroupsOfPersonResponse;
 
     /**
+     *
+     *
+     * Generated from protobuf method <code>common.Frey/GetTelegramId</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function GetTelegramId(array $ctx, \Common\PersonsGetTelegramIdPayload $req): \Common\PersonsGetTelegramIdResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Frey/SetTelegramId</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function SetTelegramId(array $ctx, \Common\PersonsSetTelegramIdPayload $req): \Common\GenericSuccessResponse;
+
+    /**
      * superadmin: this should be covered with some
      * bootstrap authenthication, TODO
      *

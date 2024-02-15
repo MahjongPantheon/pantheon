@@ -117,7 +117,14 @@ class FreyClientMock implements IFreyClient
             return $id < 1000;
         });
         return array_map(function ($id) {
-            return ['id' => $id, 'title' => 'player' . $id, 'tenhou_id' => $this->resolvePlayerName($id), 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
+            return [
+                'id' => $id,
+                'title' => 'player' . $id,
+                'tenhou_id' => $this->resolvePlayerName($id),
+                'has_avatar' => false,
+                'last_update' => date('Y-m-d H:i:s'),
+                'telegram_id' => ''
+            ];
         }, $ids);
     }
 
@@ -149,7 +156,14 @@ class FreyClientMock implements IFreyClient
             } else if (strpos($id, 'player') !== 0) {
                 return null;
             }
-            return ['id' => $this->resolvePlayerId($id), 'title' => $id, 'tenhou_id' => $id, 'has_avatar' => false, 'last_update' => date('Y-m-d H:i:s')];
+            return [
+                'id' => $this->resolvePlayerId($id),
+                'title' => $id,
+                'tenhou_id' => $id,
+                'has_avatar' => false,
+                'last_update' => date('Y-m-d H:i:s'),
+                'telegram_id' => ''
+            ];
         }, $ids));
     }
 
@@ -391,6 +405,7 @@ class FreyClientMock implements IFreyClient
                 'tenhou_id' => $id,
                 'has_avatar' => false,
                 'last_update' => date('Y-m-d H:i:s'),
+                'telegram_id' => '',
                 'ms_account_id' => $msAccountId,
                 'ms_nickname' => $id];
         }, $playersMapping));

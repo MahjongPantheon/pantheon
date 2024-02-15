@@ -415,6 +415,19 @@ export interface MajsoulPersonMapping {
   nickname: string;
 }
 
+export interface PersonsGetTelegramIdPayload {
+  personId: number;
+}
+
+export interface PersonsGetTelegramIdResponse {
+  telegramId: bigint;
+}
+
+export interface PersonsSetTelegramIdPayload {
+  personId: number;
+  telegramId: bigint;
+}
+
 //========================================//
 //          Frey Protobuf Client          //
 //========================================//
@@ -926,6 +939,30 @@ export async function GetGroupsOfPerson(
     config,
   );
   return PersonsGetGroupsOfPersonResponse.decode(response);
+}
+
+export async function GetTelegramId(
+  personsGetTelegramIdPayload: PersonsGetTelegramIdPayload,
+  config?: ClientConfiguration,
+): Promise<PersonsGetTelegramIdResponse> {
+  const response = await PBrequest(
+    "/common.Frey/GetTelegramId",
+    PersonsGetTelegramIdPayload.encode(personsGetTelegramIdPayload),
+    config,
+  );
+  return PersonsGetTelegramIdResponse.decode(response);
+}
+
+export async function SetTelegramId(
+  personsSetTelegramIdPayload: PersonsSetTelegramIdPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Frey/SetTelegramId",
+    PersonsSetTelegramIdPayload.encode(personsSetTelegramIdPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 /**
@@ -1481,6 +1518,30 @@ export async function GetGroupsOfPersonJSON(
   return PersonsGetGroupsOfPersonResponseJSON.decode(response);
 }
 
+export async function GetTelegramIdJSON(
+  personsGetTelegramIdPayload: PersonsGetTelegramIdPayload,
+  config?: ClientConfiguration,
+): Promise<PersonsGetTelegramIdResponse> {
+  const response = await JSONrequest(
+    "/common.Frey/GetTelegramId",
+    PersonsGetTelegramIdPayloadJSON.encode(personsGetTelegramIdPayload),
+    config,
+  );
+  return PersonsGetTelegramIdResponseJSON.decode(response);
+}
+
+export async function SetTelegramIdJSON(
+  personsSetTelegramIdPayload: PersonsSetTelegramIdPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Frey/SetTelegramId",
+    PersonsSetTelegramIdPayloadJSON.encode(personsSetTelegramIdPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 /**
  * superadmin: this should be covered with some
  * bootstrap authenthication, TODO
@@ -1731,6 +1792,16 @@ export interface Frey<Context = unknown> {
   ) =>
     | Promise<PersonsGetGroupsOfPersonResponse>
     | PersonsGetGroupsOfPersonResponse;
+  GetTelegramId: (
+    personsGetTelegramIdPayload: PersonsGetTelegramIdPayload,
+    context: Context,
+  ) => Promise<PersonsGetTelegramIdResponse> | PersonsGetTelegramIdResponse;
+  SetTelegramId: (
+    personsSetTelegramIdPayload: PersonsSetTelegramIdPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   /**
    * superadmin: this should be covered with some
    * bootstrap authenthication, TODO
@@ -2249,6 +2320,30 @@ export function createFrey<Context>(service: Frey<Context>) {
         output: {
           protobuf: PersonsGetGroupsOfPersonResponse,
           json: PersonsGetGroupsOfPersonResponseJSON,
+        },
+      },
+      GetTelegramId: {
+        name: "GetTelegramId",
+        handler: service.GetTelegramId,
+        input: {
+          protobuf: PersonsGetTelegramIdPayload,
+          json: PersonsGetTelegramIdPayloadJSON,
+        },
+        output: {
+          protobuf: PersonsGetTelegramIdResponse,
+          json: PersonsGetTelegramIdResponseJSON,
+        },
+      },
+      SetTelegramId: {
+        name: "SetTelegramId",
+        handler: service.SetTelegramId,
+        input: {
+          protobuf: PersonsSetTelegramIdPayload,
+          json: PersonsSetTelegramIdPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       AddSystemWideRuleForPerson: {
@@ -8589,6 +8684,226 @@ export const MajsoulPersonMapping = {
   },
 };
 
+export const PersonsGetTelegramIdPayload = {
+  /**
+   * Serializes PersonsGetTelegramIdPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<PersonsGetTelegramIdPayload>): Uint8Array {
+    return PersonsGetTelegramIdPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes PersonsGetTelegramIdPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): PersonsGetTelegramIdPayload {
+    return PersonsGetTelegramIdPayload._readMessage(
+      PersonsGetTelegramIdPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes PersonsGetTelegramIdPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<PersonsGetTelegramIdPayload>,
+  ): PersonsGetTelegramIdPayload {
+    return {
+      personId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsGetTelegramIdPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.personId) {
+      writer.writeInt32(1, msg.personId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsGetTelegramIdPayload,
+    reader: protoscript.BinaryReader,
+  ): PersonsGetTelegramIdPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.personId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const PersonsGetTelegramIdResponse = {
+  /**
+   * Serializes PersonsGetTelegramIdResponse to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<PersonsGetTelegramIdResponse>,
+  ): Uint8Array {
+    return PersonsGetTelegramIdResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes PersonsGetTelegramIdResponse from protobuf.
+   */
+  decode: function (bytes: ByteSource): PersonsGetTelegramIdResponse {
+    return PersonsGetTelegramIdResponse._readMessage(
+      PersonsGetTelegramIdResponse.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes PersonsGetTelegramIdResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<PersonsGetTelegramIdResponse>,
+  ): PersonsGetTelegramIdResponse {
+    return {
+      telegramId: 0n,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsGetTelegramIdResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.telegramId) {
+      writer.writeInt64String(1, msg.telegramId.toString() as any);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsGetTelegramIdResponse,
+    reader: protoscript.BinaryReader,
+  ): PersonsGetTelegramIdResponse {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.telegramId = BigInt(reader.readInt64String());
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const PersonsSetTelegramIdPayload = {
+  /**
+   * Serializes PersonsSetTelegramIdPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<PersonsSetTelegramIdPayload>): Uint8Array {
+    return PersonsSetTelegramIdPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes PersonsSetTelegramIdPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): PersonsSetTelegramIdPayload {
+    return PersonsSetTelegramIdPayload._readMessage(
+      PersonsSetTelegramIdPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes PersonsSetTelegramIdPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<PersonsSetTelegramIdPayload>,
+  ): PersonsSetTelegramIdPayload {
+    return {
+      personId: 0,
+      telegramId: 0n,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsSetTelegramIdPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.personId) {
+      writer.writeInt32(1, msg.personId);
+    }
+    if (msg.telegramId) {
+      writer.writeInt64String(2, msg.telegramId.toString() as any);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsSetTelegramIdPayload,
+    reader: protoscript.BinaryReader,
+  ): PersonsSetTelegramIdPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.personId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.telegramId = BigInt(reader.readInt64String());
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -13935,6 +14250,188 @@ export const MajsoulPersonMappingJSON = {
     const _nickname_ = json["nickname"];
     if (_nickname_) {
       msg.nickname = _nickname_;
+    }
+    return msg;
+  },
+};
+
+export const PersonsGetTelegramIdPayloadJSON = {
+  /**
+   * Serializes PersonsGetTelegramIdPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<PersonsGetTelegramIdPayload>): string {
+    return JSON.stringify(PersonsGetTelegramIdPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes PersonsGetTelegramIdPayload from JSON.
+   */
+  decode: function (json: string): PersonsGetTelegramIdPayload {
+    return PersonsGetTelegramIdPayloadJSON._readMessage(
+      PersonsGetTelegramIdPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes PersonsGetTelegramIdPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<PersonsGetTelegramIdPayload>,
+  ): PersonsGetTelegramIdPayload {
+    return {
+      personId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsGetTelegramIdPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.personId) {
+      json["personId"] = msg.personId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsGetTelegramIdPayload,
+    json: any,
+  ): PersonsGetTelegramIdPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
+    if (_personId_) {
+      msg.personId = protoscript.parseNumber(_personId_);
+    }
+    return msg;
+  },
+};
+
+export const PersonsGetTelegramIdResponseJSON = {
+  /**
+   * Serializes PersonsGetTelegramIdResponse to JSON.
+   */
+  encode: function (msg: PartialDeep<PersonsGetTelegramIdResponse>): string {
+    return JSON.stringify(PersonsGetTelegramIdResponseJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes PersonsGetTelegramIdResponse from JSON.
+   */
+  decode: function (json: string): PersonsGetTelegramIdResponse {
+    return PersonsGetTelegramIdResponseJSON._readMessage(
+      PersonsGetTelegramIdResponseJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes PersonsGetTelegramIdResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<PersonsGetTelegramIdResponse>,
+  ): PersonsGetTelegramIdResponse {
+    return {
+      telegramId: 0n,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsGetTelegramIdResponse>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.telegramId) {
+      json["telegramId"] = String(msg.telegramId);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsGetTelegramIdResponse,
+    json: any,
+  ): PersonsGetTelegramIdResponse {
+    const _telegramId_ = json["telegramId"] ?? json["telegram_id"];
+    if (_telegramId_) {
+      msg.telegramId = BigInt(_telegramId_);
+    }
+    return msg;
+  },
+};
+
+export const PersonsSetTelegramIdPayloadJSON = {
+  /**
+   * Serializes PersonsSetTelegramIdPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<PersonsSetTelegramIdPayload>): string {
+    return JSON.stringify(PersonsSetTelegramIdPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes PersonsSetTelegramIdPayload from JSON.
+   */
+  decode: function (json: string): PersonsSetTelegramIdPayload {
+    return PersonsSetTelegramIdPayloadJSON._readMessage(
+      PersonsSetTelegramIdPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes PersonsSetTelegramIdPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<PersonsSetTelegramIdPayload>,
+  ): PersonsSetTelegramIdPayload {
+    return {
+      personId: 0,
+      telegramId: 0n,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<PersonsSetTelegramIdPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.personId) {
+      json["personId"] = msg.personId;
+    }
+    if (msg.telegramId) {
+      json["telegramId"] = String(msg.telegramId);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: PersonsSetTelegramIdPayload,
+    json: any,
+  ): PersonsSetTelegramIdPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
+    if (_personId_) {
+      msg.personId = protoscript.parseNumber(_personId_);
+    }
+    const _telegramId_ = json["telegramId"] ?? json["telegram_id"];
+    if (_telegramId_) {
+      msg.telegramId = BigInt(_telegramId_);
     }
     return msg;
   },

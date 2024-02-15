@@ -15,10 +15,12 @@ Tyr/.env.production
 Forseti/.env.production
 Sigrun/.env.production
 Bragi/.env.production
+Skirnir/.env.production
 Tyr/.env.development
 Forseti/.env.development
 Sigrun/.env.development
 Bragi/.env.development
+Skirnir/.env.development
 
 Mimir/www/.well-known
 Frey/www/.well-known

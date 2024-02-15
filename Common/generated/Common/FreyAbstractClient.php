@@ -1046,6 +1046,52 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function GetTelegramId(array $ctx, \Common\PersonsGetTelegramIdPayload $in): \Common\PersonsGetTelegramIdResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Frey');
+        $ctx = Context::withMethodName($ctx, 'GetTelegramId');
+
+        $out = new \Common\PersonsGetTelegramIdResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Frey/GetTelegramId';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetTelegramId';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function SetTelegramId(array $ctx, \Common\PersonsSetTelegramIdPayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Frey');
+        $ctx = Context::withMethodName($ctx, 'SetTelegramId');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Frey/SetTelegramId';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Frey/SetTelegramId';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function AddSystemWideRuleForPerson(array $ctx, \Common\AccessAddSystemWideRuleForPersonPayload $in): \Common\AccessAddSystemWideRuleForPersonResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
