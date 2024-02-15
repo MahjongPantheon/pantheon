@@ -148,6 +148,16 @@ Pantheon provides container with pre-installed email agent (Hermod). You can vie
 This is useful to test registration and password recovery, because emails sent from the developer environment will most likely be rejected
 by target email relay (e.g. gmail rejects it in 100% of cases).
 
+#### Notifications agent
+
+Pantheon supports realtime notifications (currently only via Telegram, but Discord may also be added soon).
+To use this functionality you should register a bot in Telegram and set its secret token in Env/.env.production:
+```
+BOT_TOKEN=yourtoken
+```
+After that your users should open the bot, start the conversation and follow the link it sends. After pressing
+the confirmation button, bot will be enabled for this particular user.
+
 ### Pull requests
 
 Any pull request should pass all current code style checks; also all unit tests should pass. Don't forget to run
