@@ -60,6 +60,7 @@ prod_deps:
 .PHONY: prebuild
 prebuild:
 	cp -R dist ../Skirnir-dist/
+	cp dist/server.js ../Skirnir-dist/
 	cp -f .env.production ../Skirnir-dist/
 	cp -f package.json ../Skirnir-dist/
 	cp -f yarn.lock ../Skirnir-dist/
@@ -83,13 +84,7 @@ i18n_update:
 PHONY: reload_pm2
 reload_pm2:
 	HOME=/home/user su-exec user pm2 restart all
-	HOME=/home/user su-exec user pm2 scale server 8 || exit 0
-
-.PHONY: rebuild_ssr
-rebuild_ssr:
-	HOME=/home/user su-exec user ${MAKE} build
-	HOME=/home/user su-exec user ${MAKE} prebuild
-	HOME=/home/user su-exec user ${MAKE} reload_pm2
+	HOME=/home/user su-exec user pm2 scale server 1 || exit 0
 
 .PHONY: docker_dev
 docker_dev: get_docker_id

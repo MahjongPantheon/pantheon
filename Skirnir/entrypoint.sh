@@ -18,7 +18,7 @@ nginx -g "daemon off;" 2>&1 &
 NGINX_PID=$!
 
 echo 'Starting PM2';
-cd /var/www/html/Skirnir-dist && NODE_ENV=production pm2-runtime server.js -i 8 2>&1 &
+cd /var/www/html/Skirnir-dist && NODE_ENV=production pm2-runtime server.js -i 1 2>&1 &
 PM2_PID=$!
 
 trap "TRAPPED_SIGNAL=true; kill -15 $NGINX_PID; kill -15 $PM2_PID" SIGTERM  SIGINT

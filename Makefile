@@ -319,7 +319,7 @@ prod_build_bragi: # this is for automated builds, don't run it manually
 .PHONY: prod_build_skirnir
 prod_build_skirnir: export NODE_ENV=production
 prod_build_skirnir: # this is for automated builds, don't run it manually
-	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
 
 .PHONY: prod_compile
 prod_compile: export ENV_FILENAME=.env.production

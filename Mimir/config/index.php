@@ -28,7 +28,7 @@ return [
     'db'        => require __DIR__ . '/db.php',
     'freyUrl'   => 'http://frey',
     'sigrunUrl'  => getenv('SIGRUN_URL'),
-    'skirnirUrl'  => 'http://skirnir',
+    'skirnirUrl'  => getenv('SKIRNIR_URL') ?: 'http://skirnir',
     'verbose'   => getenv('VERBOSE') === 'true',
     'verboseLog' => null,
     'cookieDomain' => getenv('COOKIE_DOMAIN'),
