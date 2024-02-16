@@ -2,6 +2,37 @@ import fs from 'node:fs';
 import process from 'node:process';
 import type { Bot } from 'grammy';
 
+// Module-scoped queue, acceptable because bot process must be single.
+const queue: Array<{ id: string; message: string }> = [];
+let isRunning = false;
+
+// Need to add artificial delay to meet telegram antiflood requirements (around ~30rps)
+function _sendNext(bot: Bot) {
+  if (isRunning) {
+    return;
+  }
+
+  if (queue.length === 0) {
+    isRunning = false;
+    return;
+  }
+
+  isRunning = true;
+  const { id, message } = queue.shift()!;
+  bot?.api.sendMessage(id, message, {
+    parse_mode: 'HTML',
+  });
+
+  setTimeout(() => _sendNext(bot), 100);
+}
+
+function sendQueued(ids: string[], message: string, bot: Bot) {
+  ids.forEach((id) => {
+    queue.push({ id, message });
+  });
+  _sendNext(bot);
+}
+
 if (fs.existsSync('./node_modules')) {
   Promise.all([import('express'), import('dotenv'), import('grammy')]).then(
     ([express, dotenv, grammy]) => {
@@ -42,11 +73,7 @@ if (fs.existsSync('./node_modules')) {
       app.use('*', async (req, res) => {
         const { to, message }: { to: string[]; message: string } = req.body;
         if (to && message) {
-          to.forEach((id) => {
-            bot?.api.sendMessage(id, message, {
-              parse_mode: 'HTML',
-            });
-          });
+          sendQueued(to, message, bot);
           res.status(200).end();
         } else {
           res.send('Method not found').status(400).end();
