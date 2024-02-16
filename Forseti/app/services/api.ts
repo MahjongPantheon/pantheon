@@ -584,7 +584,7 @@ export class ApiService {
     return GetTelegramId({ personId }, this._clientConfFrey).then((r) => r.telegramId);
   }
 
-  setTelegramId(personId: number, telegramId: bigint) {
+  setTelegramId(personId: number, telegramId: string) {
     return SetTelegramId({ personId, telegramId }, this._clientConfFrey).then((r) => r.success);
   }
 }

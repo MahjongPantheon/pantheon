@@ -18,9 +18,9 @@ class PersonsSetTelegramIdPayload extends \Google\Protobuf\Internal\Message
      */
     protected $person_id = 0;
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 2;</code>
+     * Generated from protobuf field <code>string telegram_id = 2;</code>
      */
-    protected $telegram_id = 0;
+    protected $telegram_id = '';
 
     /**
      * Constructor.
@@ -29,7 +29,7 @@ class PersonsSetTelegramIdPayload extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $person_id
-     *     @type int|string $telegram_id
+     *     @type string $telegram_id
      * }
      */
     public function __construct($data = NULL) {
@@ -60,8 +60,8 @@ class PersonsSetTelegramIdPayload extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 2;</code>
-     * @return int|string
+     * Generated from protobuf field <code>string telegram_id = 2;</code>
+     * @return string
      */
     public function getTelegramId()
     {
@@ -69,13 +69,13 @@ class PersonsSetTelegramIdPayload extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 2;</code>
-     * @param int|string $var
+     * Generated from protobuf field <code>string telegram_id = 2;</code>
+     * @param string $var
      * @return $this
      */
     public function setTelegramId($var)
     {
-        GPBUtil::checkInt64($var);
+        GPBUtil::checkString($var, True);
         $this->telegram_id = $var;
 
         return $this;

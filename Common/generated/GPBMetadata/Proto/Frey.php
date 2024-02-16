@@ -271,10 +271,10 @@ account_id ("B
 PersonsGetTelegramIdPayload
 	person_id ("3
 PersonsGetTelegramIdResponse
-telegram_id ("E
+telegram_id (	"E
 PersonsSetTelegramIdPayload
 	person_id (
-telegram_id (2¬"
+telegram_id (	2¬"
 Freyf
 RequestRegistration&.common.AuthRequestRegistrationPayload\'.common.AuthRequestRegistrationResponsef
 ApproveRegistration&.common.AuthApproveRegistrationPayload\'.common.AuthApproveRegistrationResponseH

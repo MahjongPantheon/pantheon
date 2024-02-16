@@ -62,9 +62,9 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      */
     protected $ms_account_id = 0;
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 13;</code>
+     * Generated from protobuf field <code>string telegram_id = 13;</code>
      */
-    protected $telegram_id = 0;
+    protected $telegram_id = '';
 
     /**
      * Constructor.
@@ -84,7 +84,7 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      *     @type string $last_update
      *     @type string $ms_nickname
      *     @type int $ms_account_id
-     *     @type int|string $telegram_id
+     *     @type string $telegram_id
      * }
      */
     public function __construct($data = NULL) {
@@ -357,8 +357,8 @@ class PersonEx extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 13;</code>
-     * @return int|string
+     * Generated from protobuf field <code>string telegram_id = 13;</code>
+     * @return string
      */
     public function getTelegramId()
     {
@@ -366,13 +366,13 @@ class PersonEx extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 13;</code>
-     * @param int|string $var
+     * Generated from protobuf field <code>string telegram_id = 13;</code>
+     * @param string $var
      * @return $this
      */
     public function setTelegramId($var)
     {
-        GPBUtil::checkInt64($var);
+        GPBUtil::checkString($var, True);
         $this->telegram_id = $var;
 
         return $this;

@@ -984,7 +984,7 @@ final class TwirpServer implements Frey
     {
         try {
             return (new GenericSuccessResponse())
-                ->setSuccess($this->_personsController->setTelegramId($req->getPersonId(), (string)$req->getTelegramId()));
+                ->setSuccess($this->_personsController->setTelegramId($req->getPersonId(), $req->getTelegramId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;

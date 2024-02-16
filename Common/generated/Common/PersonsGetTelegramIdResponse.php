@@ -14,9 +14,9 @@ use Google\Protobuf\Internal\GPBUtil;
 class PersonsGetTelegramIdResponse extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 1;</code>
+     * Generated from protobuf field <code>string telegram_id = 1;</code>
      */
-    protected $telegram_id = 0;
+    protected $telegram_id = '';
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ class PersonsGetTelegramIdResponse extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int|string $telegram_id
+     *     @type string $telegram_id
      * }
      */
     public function __construct($data = NULL) {
@@ -33,8 +33,8 @@ class PersonsGetTelegramIdResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 1;</code>
-     * @return int|string
+     * Generated from protobuf field <code>string telegram_id = 1;</code>
+     * @return string
      */
     public function getTelegramId()
     {
@@ -42,13 +42,13 @@ class PersonsGetTelegramIdResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int64 telegram_id = 1;</code>
-     * @param int|string $var
+     * Generated from protobuf field <code>string telegram_id = 1;</code>
+     * @param string $var
      * @return $this
      */
     public function setTelegramId($var)
     {
-        GPBUtil::checkInt64($var);
+        GPBUtil::checkString($var, True);
         $this->telegram_id = $var;
 
         return $this;

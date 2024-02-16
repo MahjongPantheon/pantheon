@@ -508,10 +508,10 @@ message PersonsGetTelegramIdPayload {
 }
 
 message PersonsGetTelegramIdResponse {
-  int64 telegram_id = 1;
+  string telegram_id = 1;
 }
 
 message PersonsSetTelegramIdPayload {
   int32 person_id = 1;
-  int64 telegram_id = 2;
+  string telegram_id = 2;
 }

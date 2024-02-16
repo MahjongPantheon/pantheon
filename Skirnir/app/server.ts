@@ -8,10 +8,6 @@ let isRunning = false;
 
 // Need to add artificial delay to meet telegram antiflood requirements (around ~30rps)
 function _sendNext(bot: Bot) {
-  if (isRunning) {
-    return;
-  }
-
   if (queue.length === 0) {
     isRunning = false;
     return;
@@ -30,7 +26,9 @@ function sendQueued(ids: string[], message: string, bot: Bot) {
   ids.forEach((id) => {
     queue.push({ id, message });
   });
-  _sendNext(bot);
+  if (!isRunning) {
+    _sendNext(bot);
+  }
 }
 
 if (fs.existsSync('./node_modules')) {

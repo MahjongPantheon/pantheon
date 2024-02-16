@@ -420,12 +420,12 @@ export interface PersonsGetTelegramIdPayload {
 }
 
 export interface PersonsGetTelegramIdResponse {
-  telegramId: bigint;
+  telegramId: string;
 }
 
 export interface PersonsSetTelegramIdPayload {
   personId: number;
-  telegramId: bigint;
+  telegramId: string;
 }
 
 //========================================//
@@ -8784,7 +8784,7 @@ export const PersonsGetTelegramIdResponse = {
     msg?: Partial<PersonsGetTelegramIdResponse>,
   ): PersonsGetTelegramIdResponse {
     return {
-      telegramId: 0n,
+      telegramId: "",
       ...msg,
     };
   },
@@ -8797,7 +8797,7 @@ export const PersonsGetTelegramIdResponse = {
     writer: protoscript.BinaryWriter,
   ): protoscript.BinaryWriter {
     if (msg.telegramId) {
-      writer.writeInt64String(1, msg.telegramId.toString() as any);
+      writer.writeString(1, msg.telegramId);
     }
     return writer;
   },
@@ -8813,7 +8813,7 @@ export const PersonsGetTelegramIdResponse = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.telegramId = BigInt(reader.readInt64String());
+          msg.telegramId = reader.readString();
           break;
         }
         default: {
@@ -8855,7 +8855,7 @@ export const PersonsSetTelegramIdPayload = {
   ): PersonsSetTelegramIdPayload {
     return {
       personId: 0,
-      telegramId: 0n,
+      telegramId: "",
       ...msg,
     };
   },
@@ -8871,7 +8871,7 @@ export const PersonsSetTelegramIdPayload = {
       writer.writeInt32(1, msg.personId);
     }
     if (msg.telegramId) {
-      writer.writeInt64String(2, msg.telegramId.toString() as any);
+      writer.writeString(2, msg.telegramId);
     }
     return writer;
   },
@@ -8891,7 +8891,7 @@ export const PersonsSetTelegramIdPayload = {
           break;
         }
         case 2: {
-          msg.telegramId = BigInt(reader.readInt64String());
+          msg.telegramId = reader.readString();
           break;
         }
         default: {
@@ -14338,7 +14338,7 @@ export const PersonsGetTelegramIdResponseJSON = {
     msg?: Partial<PersonsGetTelegramIdResponse>,
   ): PersonsGetTelegramIdResponse {
     return {
-      telegramId: 0n,
+      telegramId: "",
       ...msg,
     };
   },
@@ -14351,7 +14351,7 @@ export const PersonsGetTelegramIdResponseJSON = {
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.telegramId) {
-      json["telegramId"] = String(msg.telegramId);
+      json["telegramId"] = msg.telegramId;
     }
     return json;
   },
@@ -14365,7 +14365,7 @@ export const PersonsGetTelegramIdResponseJSON = {
   ): PersonsGetTelegramIdResponse {
     const _telegramId_ = json["telegramId"] ?? json["telegram_id"];
     if (_telegramId_) {
-      msg.telegramId = BigInt(_telegramId_);
+      msg.telegramId = _telegramId_;
     }
     return msg;
   },
@@ -14397,7 +14397,7 @@ export const PersonsSetTelegramIdPayloadJSON = {
   ): PersonsSetTelegramIdPayload {
     return {
       personId: 0,
-      telegramId: 0n,
+      telegramId: "",
       ...msg,
     };
   },
@@ -14413,7 +14413,7 @@ export const PersonsSetTelegramIdPayloadJSON = {
       json["personId"] = msg.personId;
     }
     if (msg.telegramId) {
-      json["telegramId"] = String(msg.telegramId);
+      json["telegramId"] = msg.telegramId;
     }
     return json;
   },
@@ -14431,7 +14431,7 @@ export const PersonsSetTelegramIdPayloadJSON = {
     }
     const _telegramId_ = json["telegramId"] ?? json["telegram_id"];
     if (_telegramId_) {
-      msg.telegramId = BigInt(_telegramId_);
+      msg.telegramId = _telegramId_;
     }
     return msg;
   },

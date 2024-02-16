@@ -16,7 +16,7 @@ export const ProfileSetTelegramId: React.FC<{ params: { id: string } }> = ({ par
   api.setEventId(0);
   const i18n = useI18n();
   const personId = storage.getPersonId();
-  const [currentId, setCurrentId] = useState(BigInt(id ?? '0'));
+  const [currentId, setCurrentId] = useState(id ?? '0');
   usePageTitle(i18n._t('Set up your Telegram connection'));
 
   useEffect(() => {
@@ -30,12 +30,12 @@ export const ProfileSetTelegramId: React.FC<{ params: { id: string } }> = ({ par
 
   const form = useForm({
     initialValues: {
-      id: currentId.toString(),
+      id: currentId,
     },
 
     validate: {
       id: (value: string) =>
-        value.trim() !== '' && parseInt(value.trim(), 10)
+        value.trim() !== '' && value.trim().match(/\d+/)
           ? null
           : i18n._t('Please enter you telegram ID'),
     },
@@ -47,7 +47,7 @@ export const ProfileSetTelegramId: React.FC<{ params: { id: string } }> = ({ par
         return;
       }
       api
-        .setTelegramId(personId, BigInt(values.id.trim()))
+        .setTelegramId(personId, values.id.trim())
         .then((success) => {
           if (!success) {
             throw new Error();

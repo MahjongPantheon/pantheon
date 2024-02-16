@@ -137,7 +137,7 @@ export interface PersonEx {
   lastUpdate: string;
   msNickname: string;
   msAccountId: number;
-  telegramId: bigint;
+  telegramId: string;
 }
 
 export interface Group {
@@ -1833,7 +1833,7 @@ export const PersonEx = {
       lastUpdate: "",
       msNickname: "",
       msAccountId: 0,
-      telegramId: 0n,
+      telegramId: "",
       ...msg,
     };
   },
@@ -1882,7 +1882,7 @@ export const PersonEx = {
       writer.writeInt32(12, msg.msAccountId);
     }
     if (msg.telegramId) {
-      writer.writeInt64String(13, msg.telegramId.toString() as any);
+      writer.writeString(13, msg.telegramId);
     }
     return writer;
   },
@@ -1950,7 +1950,7 @@ export const PersonEx = {
           break;
         }
         case 13: {
-          msg.telegramId = BigInt(reader.readInt64String());
+          msg.telegramId = reader.readString();
           break;
         }
         default: {
@@ -9021,7 +9021,7 @@ export const PersonExJSON = {
       lastUpdate: "",
       msNickname: "",
       msAccountId: 0,
-      telegramId: 0n,
+      telegramId: "",
       ...msg,
     };
   },
@@ -9070,7 +9070,7 @@ export const PersonExJSON = {
       json["msAccountId"] = msg.msAccountId;
     }
     if (msg.telegramId) {
-      json["telegramId"] = String(msg.telegramId);
+      json["telegramId"] = msg.telegramId;
     }
     return json;
   },
@@ -9129,7 +9129,7 @@ export const PersonExJSON = {
     }
     const _telegramId_ = json["telegramId"] ?? json["telegram_id"];
     if (_telegramId_) {
-      msg.telegramId = BigInt(_telegramId_);
+      msg.telegramId = _telegramId_;
     }
     return msg;
   },
