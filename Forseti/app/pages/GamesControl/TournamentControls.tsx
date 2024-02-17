@@ -226,18 +226,20 @@ export function TournamentControls({
               color='orange'
               onConfirm={resetSeating}
             />
-            <Confirmation
-              disabled={tablesState.length === 0}
-              i18n={i18n}
-              title={i18n._t('Notify players to come to their tables')}
-              text={i18n._t('Notify players')}
-              warning={i18n._t(
-                'Notify all subscribed players to come to their tables? This will send a message through notification service.'
-              )}
-              icon={<IconNotification />}
-              color='green'
-              onConfirm={notifyPlayers}
-            />
+            {!!import.meta.env.VITE_BOT_NICKNAME && (
+              <Confirmation
+                disabled={tablesState.length === 0}
+                i18n={i18n}
+                title={i18n._t('Notify players to come to their tables')}
+                text={i18n._t('Notify players')}
+                warning={i18n._t(
+                  'Notify all subscribed players to come to their tables? This will send a message through notification service.'
+                )}
+                icon={<IconNotification />}
+                color='green'
+                onConfirm={notifyPlayers}
+              />
+            )}
             <Confirmation
               disabled={tablesState.length === 0}
               i18n={i18n}

@@ -64,6 +64,13 @@ pantheon_run:
 	@cp Env/.env.development Bragi/.env.development
 	@cp Env/.env.development Forseti/.env.development
 	@cp Env/.env.development Skirnir/.env.development
+	@if [ -f Env/.env.development.local ]; then \
+  	cat Env/.env.development.local >> Tyr/.env.development && \
+  	cat Env/.env.development.local >> Sigrun/.env.development && \
+  	cat Env/.env.development.local >> Bragi/.env.development && \
+  	cat Env/.env.development.local >> Forseti/.env.development && \
+  	cat Env/.env.development.local >> Skirnir/.env.development ; \
+	fi
 	@${COMPOSE_COMMAND} up -d
 	@cd Mimir && ${MAKE} docker_enable_debug
 	@cd Frey && ${MAKE} docker_enable_debug

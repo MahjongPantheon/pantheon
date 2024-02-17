@@ -209,7 +209,7 @@ export const MainMenu = ({
             onClick={closeMenu}
           />
         )}
-        {isLoggedIn && (
+        {isLoggedIn && !!import.meta.env.VITE_BOT_NICKNAME && (
           <MainMenuLink
             href='/profile/notifications'
             icon={<IconNotification size={18} />}

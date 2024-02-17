@@ -90,6 +90,16 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
     return <Redirect to='/profile/manage' />;
   }
 
+  if (!import.meta.env.VITE_BOT_NICKNAME) {
+    return (
+      <Container>
+        {i18n._t(
+          'Notifications from Pantheon are supported via Telegram. Please configure your Telegram bot to use the service (see README).'
+        )}
+      </Container>
+    );
+  }
+
   return (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
       <Container>
@@ -124,7 +134,18 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
           label={i18n._t('Notify when session in club event has ended')}
           {...form.getInputProps('notifications.ce', { type: 'checkbox' })}
         />
-        <Space h='md' />
+        <Space h='xl' />
+        {form.getTransformedValues().id === '' && (
+          <>
+            {i18n._t(
+              'Notifications from Pantheon are supported via Telegram. Please use the following link to register with Telegram bot: '
+            )}
+            <br />
+            <a href={`https://t.me/${import.meta.env.VITE_BOT_NICKNAME}`} target='_blank'>
+              {i18n._t('Open Pantheon bot')}
+            </a>
+          </>
+        )}
         <TopActionButton
           title={isSaved ? i18n._t('Settings saved!') : i18n._t('Update settings')}
           loading={isSaving || isLoading || isSaved}

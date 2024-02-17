@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-17 23:41+0100\n"
+"POT-Creation-Date: 2024-02-18 00:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1712,36 +1712,48 @@ msgstr ""
 msgid "Failed to set notifications settings."
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:97:18
-#: app/pages/ProfileNotifications.tsx:99:24
+#: app/pages/ProfileNotifications.tsx:96:10
+msgid "Notifications from Pantheon are supported via Telegram. Please configure your Telegram bot to use the service (see README)."
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:107:18
+#: app/pages/ProfileNotifications.tsx:109:24
 msgid "Your telegram ID"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:104:18
+#: app/pages/ProfileNotifications.tsx:114:18
 msgid "Notify when seating for tournament sessions is ready"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:109:18
+#: app/pages/ProfileNotifications.tsx:119:18
 msgid "Notify when next tournament session is about to start (except online)"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:114:18
+#: app/pages/ProfileNotifications.tsx:124:18
 msgid "Notify when session in tournament has ended (except online)"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:119:18
+#: app/pages/ProfileNotifications.tsx:129:18
 msgid "Notify when a hand has been recorded"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:124:18
+#: app/pages/ProfileNotifications.tsx:134:18
 msgid "Notify when session in club event has ended"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:129:28
+#: app/pages/ProfileNotifications.tsx:138:10
+msgid "Notifications from Pantheon are supported via Telegram. Please use the following link to register with Telegram bot: "
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:143:12
+msgid "Open Pantheon bot"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:146:28
 msgid "Settings saved!"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:129:57
+#: app/pages/ProfileNotifications.tsx:146:57
 msgid "Update settings"
 msgstr ""
 
