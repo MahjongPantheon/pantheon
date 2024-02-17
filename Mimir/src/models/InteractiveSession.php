@@ -23,6 +23,7 @@ use Common\MultironResult;
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/EventUserManagement.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
+require_once __DIR__ . '/../helpers/SkirnirClient.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/Event.php';
 require_once __DIR__ . '/../primitives/Round.php';
