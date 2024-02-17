@@ -214,10 +214,10 @@ final class FreyServer implements RequestHandlerInterface
                 return $this->handleGetPersonsOfGroup($ctx, $req);
             case 'GetGroupsOfPerson':
                 return $this->handleGetGroupsOfPerson($ctx, $req);
-            case 'GetTelegramId':
-                return $this->handleGetTelegramId($ctx, $req);
-            case 'SetTelegramId':
-                return $this->handleSetTelegramId($ctx, $req);
+            case 'GetNotificationsSettings':
+                return $this->handleGetNotificationsSettings($ctx, $req);
+            case 'SetNotificationsSettings':
+                return $this->handleSetNotificationsSettings($ctx, $req);
             case 'AddSystemWideRuleForPerson':
                 return $this->handleAddSystemWideRuleForPerson($ctx, $req);
             case 'AddSystemWideRuleForGroup':
@@ -4722,7 +4722,7 @@ final class FreyServer implements RequestHandlerInterface
 
         return $resp;
     }
-    private function handleGetTelegramId(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleGetNotificationsSettings(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
         $header = $req->getHeaderLine('Content-Type');
         $i = strpos($header, ';');
@@ -4736,11 +4736,11 @@ final class FreyServer implements RequestHandlerInterface
 
         switch (trim(strtolower(substr($header, 0, $i)))) {
             case 'application/json':
-                $resp = $this->handleGetTelegramIdJson($ctx, $req);
+                $resp = $this->handleGetNotificationsSettingsJson($ctx, $req);
                 break;
 
             case 'application/protobuf':
-                $resp = $this->handleGetTelegramIdProtobuf($ctx, $req);
+                $resp = $this->handleGetNotificationsSettingsProtobuf($ctx, $req);
                 break;
 
             default:
@@ -4756,20 +4756,20 @@ final class FreyServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleGetTelegramIdJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleGetNotificationsSettingsJson(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'GetTelegramId');
+        $ctx = Context::withMethodName($ctx, 'GetNotificationsSettings');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PersonsGetTelegramIdPayload();
+            $in = new \Common\PersonsGetNotificationsSettingsPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
-            $out = $this->svc->GetTelegramId($ctx, $in);
+            $out = $this->svc->GetNotificationsSettings($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetTelegramId. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetNotificationsSettings. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);
@@ -4793,20 +4793,20 @@ final class FreyServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleGetTelegramIdProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleGetNotificationsSettingsProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'GetTelegramId');
+        $ctx = Context::withMethodName($ctx, 'GetNotificationsSettings');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PersonsGetTelegramIdPayload();
+            $in = new \Common\PersonsGetNotificationsSettingsPayload();
             $in->mergeFromString((string)$req->getBody());
 
-            $out = $this->svc->GetTelegramId($ctx, $in);
+            $out = $this->svc->GetNotificationsSettings($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetTelegramId. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetNotificationsSettings. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);
@@ -4829,7 +4829,7 @@ final class FreyServer implements RequestHandlerInterface
 
         return $resp;
     }
-    private function handleSetTelegramId(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleSetNotificationsSettings(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
         $header = $req->getHeaderLine('Content-Type');
         $i = strpos($header, ';');
@@ -4843,11 +4843,11 @@ final class FreyServer implements RequestHandlerInterface
 
         switch (trim(strtolower(substr($header, 0, $i)))) {
             case 'application/json':
-                $resp = $this->handleSetTelegramIdJson($ctx, $req);
+                $resp = $this->handleSetNotificationsSettingsJson($ctx, $req);
                 break;
 
             case 'application/protobuf':
-                $resp = $this->handleSetTelegramIdProtobuf($ctx, $req);
+                $resp = $this->handleSetNotificationsSettingsProtobuf($ctx, $req);
                 break;
 
             default:
@@ -4863,20 +4863,20 @@ final class FreyServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleSetTelegramIdJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleSetNotificationsSettingsJson(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'SetTelegramId');
+        $ctx = Context::withMethodName($ctx, 'SetNotificationsSettings');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PersonsSetTelegramIdPayload();
+            $in = new \Common\PersonsSetNotificationsSettingsPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
-            $out = $this->svc->SetTelegramId($ctx, $in);
+            $out = $this->svc->SetNotificationsSettings($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling SetTelegramId. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling SetNotificationsSettings. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);
@@ -4900,20 +4900,20 @@ final class FreyServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleSetTelegramIdProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleSetNotificationsSettingsProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'SetTelegramId');
+        $ctx = Context::withMethodName($ctx, 'SetNotificationsSettings');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PersonsSetTelegramIdPayload();
+            $in = new \Common\PersonsSetNotificationsSettingsPayload();
             $in->mergeFromString((string)$req->getBody());
 
-            $out = $this->svc->SetTelegramId($ctx, $in);
+            $out = $this->svc->SetNotificationsSettings($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling SetTelegramId. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling SetNotificationsSettings. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

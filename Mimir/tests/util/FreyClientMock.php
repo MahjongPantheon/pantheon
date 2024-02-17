@@ -123,7 +123,8 @@ class FreyClientMock implements IFreyClient
                 'tenhou_id' => $this->resolvePlayerName($id),
                 'has_avatar' => false,
                 'last_update' => date('Y-m-d H:i:s'),
-                'telegram_id' => ''
+                'telegram_id' => '',
+                'notifications' => ''
             ];
         }, $ids);
     }
@@ -162,7 +163,8 @@ class FreyClientMock implements IFreyClient
                 'tenhou_id' => $id,
                 'has_avatar' => false,
                 'last_update' => date('Y-m-d H:i:s'),
-                'telegram_id' => ''
+                'telegram_id' => '',
+                'notifications' => ''
             ];
         }, $ids));
     }
@@ -406,6 +408,7 @@ class FreyClientMock implements IFreyClient
                 'has_avatar' => false,
                 'last_update' => date('Y-m-d H:i:s'),
                 'telegram_id' => '',
+                'notifications' => '',
                 'ms_account_id' => $msAccountId,
                 'ms_nickname' => $id];
         }, $playersMapping));

@@ -15,9 +15,11 @@ function _sendNext(bot: Bot) {
 
   isRunning = true;
   const { id, message } = queue.shift()!;
-  bot?.api.sendMessage(id, message, {
-    parse_mode: 'HTML',
-  });
+  bot?.api
+    .sendMessage(id, message, {
+      parse_mode: 'HTML',
+    })
+    .catch((e) => console.error('Rejected sendMessage: ', e));
 
   setTimeout(() => _sendNext(bot), 100);
 }
@@ -47,7 +49,7 @@ if (fs.existsSync('./node_modules')) {
         bot = new grammy.Bot(TOKEN);
 
         bot.command('start', (ctx) => {
-          const link = `${process.env.FORSETI_URL}/profile/setTelegramId/${ctx.from?.id}`;
+          const link = `${process.env.FORSETI_URL}/profile/notifications/tg/${ctx.from?.id}`;
           const message =
             'Welcome to pantheon bot. Please follow next link to register your telegram account to Pantheon:\n\n' +
             `<a href="${link}">${link}</a>` +

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-06 18:04+0100\n"
+"POT-Creation-Date: 2024-02-17 23:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,11 +33,11 @@ msgstr ""
 msgid "name"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:57:66
+#: app/components/screens/event-select/EventSelectScreenView.tsx:84:66
 msgid "Select event"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:74:16
+#: app/components/screens/event-select/EventSelectScreenView.tsx:101:16
 msgid "There is no events you participate in right now"
 msgstr ""
 
@@ -250,32 +250,28 @@ msgstr ""
 msgid "Player name"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:92:14
+#: app/components/screens/settings/SettingsScreenView.tsx:93:14
 msgid "Go to personal area"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:96:57
+#: app/components/screens/settings/SettingsScreenView.tsx:100:57
 msgid "Language"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:112:57
+#: app/components/screens/settings/SettingsScreenView.tsx:116:57
 msgid "Theme"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:150:16
+#: app/components/screens/settings/SettingsScreenView.tsx:154:16
 msgid "Select another event"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:158:57
+#: app/components/screens/settings/SettingsScreenView.tsx:162:57
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:160:18
+#: app/components/screens/settings/SettingsScreenView.tsx:164:18
 msgid "Turn on if you use a single device for all players"
-msgstr ""
-
-#: app/components/screens/settings/SettingsScreenView.tsx:167:32
-msgid "Log out"
 msgstr ""
 
 #: app/components/screens/table/base/TableInfo.tsx:92:20

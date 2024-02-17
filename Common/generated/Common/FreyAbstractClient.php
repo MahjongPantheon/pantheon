@@ -1046,19 +1046,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetTelegramId(array $ctx, \Common\PersonsGetTelegramIdPayload $in): \Common\PersonsGetTelegramIdResponse
+    public function GetNotificationsSettings(array $ctx, \Common\PersonsGetNotificationsSettingsPayload $in): \Common\PersonsGetNotificationsSettingsResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
-        $ctx = Context::withMethodName($ctx, 'GetTelegramId');
+        $ctx = Context::withMethodName($ctx, 'GetNotificationsSettings');
 
-        $out = new \Common\PersonsGetTelegramIdResponse();
+        $out = new \Common\PersonsGetNotificationsSettingsResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/common.Frey/GetTelegramId';
+            $url = $url.'/common.Frey/GetNotificationsSettings';
         } else {
-            $url = $url.'/'.$this->prefix.'/common.Frey/GetTelegramId';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetNotificationsSettings';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -1069,19 +1069,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function SetTelegramId(array $ctx, \Common\PersonsSetTelegramIdPayload $in): \Common\GenericSuccessResponse
+    public function SetNotificationsSettings(array $ctx, \Common\PersonsSetNotificationsSettingsPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
-        $ctx = Context::withMethodName($ctx, 'SetTelegramId');
+        $ctx = Context::withMethodName($ctx, 'SetNotificationsSettings');
 
         $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/common.Frey/SetTelegramId';
+            $url = $url.'/common.Frey/SetNotificationsSettings';
         } else {
-            $url = $url.'/'.$this->prefix.'/common.Frey/SetTelegramId';
+            $url = $url.'/'.$this->prefix.'/common.Frey/SetNotificationsSettings';
         }
 
         $this->doRequest($ctx, $url, $in, $out);

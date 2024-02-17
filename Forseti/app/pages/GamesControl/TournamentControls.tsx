@@ -41,6 +41,7 @@ import {
   IconArrowsRandom,
   IconEyeCheck,
   IconLineHeight,
+  IconNotification,
   IconPlayerPlay,
   IconScript,
   IconSortAscending2,
@@ -65,6 +66,7 @@ type TournamentControlsProps = {
   makeSwissSeating: () => void;
   makeNextPredefinedSeating: (rndSeats: boolean) => void;
   startTimer: () => void;
+  notifyPlayers: () => void;
   resetTimer: () => void;
   approveResults: () => void;
   resetSeating: () => void;
@@ -81,6 +83,7 @@ export function TournamentControls({
   makeNextPredefinedSeating,
   approveResults,
   startTimer,
+  notifyPlayers,
   resetTimer,
   resetSeating,
   seatingLoading,
@@ -222,6 +225,18 @@ export function TournamentControls({
               icon={<IconSquareX />}
               color='orange'
               onConfirm={resetSeating}
+            />
+            <Confirmation
+              disabled={tablesState.length === 0}
+              i18n={i18n}
+              title={i18n._t('Notify players to come to their tables')}
+              text={i18n._t('Notify players')}
+              warning={i18n._t(
+                'Notify all subscribed players to come to their tables? This will send a message through notification service.'
+              )}
+              icon={<IconNotification />}
+              color='green'
+              onConfirm={notifyPlayers}
             />
             <Confirmation
               disabled={tablesState.length === 0}

@@ -655,4 +655,22 @@ class PlayersController extends Controller
 
         return PointsCalc::lastPaymentsInfo();
     }
+
+    /**
+     * @param int $eventId
+     * @return true
+     * @throws InvalidParametersException
+     */
+    public function notifyGameStartingSoon($eventId)
+    {
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $playerIds = array_filter(array_map(function ($pr) {
+            if ($pr->getIgnoreSeating()) {
+                return null;
+            }
+            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
+        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
+        $skirnir->messageSessionStartingSoon($playerIds, $eventId);
+        return true;
+    }
 }

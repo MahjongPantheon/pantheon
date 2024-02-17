@@ -162,6 +162,17 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, []);
 
+  const notifyPlayers = useCallback(() => {
+    api
+      .notifyPlayers(eventId)
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to notify players'));
+        }
+      })
+      .catch(errHandler);
+  }, []);
+
   const onToggleResults = useCallback(() => {
     api
       .toggleResults(eventId)
@@ -314,6 +325,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
           tablesState={tablesState}
           eventConfig={eventConfig}
           startTimer={onStartTimer}
+          notifyPlayers={notifyPlayers}
           resetTimer={onStartTimer}
           toggleResults={onToggleResults}
           approveResults={onApproveResults}

@@ -55,6 +55,28 @@ class PlayerPrimitive extends Primitive
      * @var string
      */
     protected $_telegramId = '';
+    /**
+     * @var string
+     */
+    protected $_notifications = '';
+
+    /**
+     * @return string
+     */
+    public function getNotifications()
+    {
+        return $this->_notifications;
+    }
+
+    /**
+     * @param string $notifications
+     * @return self
+     */
+    public function setNotifications(string $notifications)
+    {
+        $this->_notifications = $notifications;
+        return $this;
+    }
 
     /**
      * @return string
@@ -156,6 +178,7 @@ class PlayerPrimitive extends Primitive
                 ->setHasAvatar($item['has_avatar'])
                 ->setLastUpdate($item['last_update'])
                 ->setTelegramId($item['telegram_id'] ? (string)$item['telegram_id'] : '')
+                ->setNotifications($item['notifications'] ? (string)$item['notifications'] : '')
                 ->_setId($item['id']);
         }, $allData);
     }
@@ -179,6 +202,7 @@ class PlayerPrimitive extends Primitive
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
                 ->setTelegramId($item['telegram_id'] ? (string)$item['telegram_id'] : '')
+                ->setNotifications($item['notifications'] ? (string)$item['notifications'] : '')
                 ->_setId($item['id']);
         }, $playersData);
 
@@ -217,6 +241,7 @@ class PlayerPrimitive extends Primitive
                 ->setDisplayName($item['title'])
                 ->setHasAvatar($item['has_avatar'])
                 ->setTelegramId($item['telegram_id'] ? (string)$item['telegram_id'] : '')
+                ->setNotifications($item['notifications'] ? (string)$item['notifications'] : '')
                 ->_setId($item['id']);
         }, $playersData);
 

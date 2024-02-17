@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-06 18:04+0100\n"
+"POT-Creation-Date: 2024-02-17 23:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/components/AppHeader.tsx:118:24
-#: app/components/AppHeader.tsx:130:24
+#: app/components/AppHeader.tsx:124:24
+#: app/components/AppHeader.tsx:136:24
 msgid "Open menu"
 msgstr ""
 
-#: app/components/AppHeader.tsx:126:18
+#: app/components/AppHeader.tsx:132:18
 msgid "Menu"
 msgstr ""
 
@@ -38,101 +38,105 @@ msgstr ""
 msgid "Select an avatar"
 msgstr ""
 
-#: app/components/MainMenu.tsx:74:22
+#: app/components/MainMenu.tsx:75:22
 msgid "Event: %1"
 msgstr ""
 
-#: app/components/MainMenu.tsx:81:21
+#: app/components/MainMenu.tsx:82:21
 msgid "Open event page"
 msgstr ""
 
-#: app/components/MainMenu.tsx:87:21
+#: app/components/MainMenu.tsx:88:21
 #: app/pages/OwnedEvents.tsx:369:33
 msgid "Settings"
 msgstr ""
 
-#: app/components/MainMenu.tsx:95:25
+#: app/components/MainMenu.tsx:96:25
 #: app/pages/OwnedEvents.tsx:361:34
 #: app/pages/OwnedEvents.tsx:363:33
 msgid "Manage players"
 msgstr ""
 
-#: app/components/MainMenu.tsx:101:25
+#: app/components/MainMenu.tsx:102:25
 #: app/pages/OwnedEvents.tsx:357:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr ""
 
-#: app/components/MainMenu.tsx:107:25
+#: app/components/MainMenu.tsx:108:25
 #: app/pages/OwnedEvents.tsx:351:33
 msgid "Manage games"
 msgstr ""
 
-#: app/components/MainMenu.tsx:114:27
+#: app/components/MainMenu.tsx:115:27
 #: app/pages/OwnedEvents.tsx:344:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/components/MainMenu.tsx:125:24
+#: app/components/MainMenu.tsx:126:24
 #: app/pages/OwnedEvents.tsx:373:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr ""
 
-#: app/components/MainMenu.tsx:131:24
+#: app/components/MainMenu.tsx:132:24
 #: app/pages/OwnedEvents.tsx:376:36
 #: app/pages/OwnedEvents.tsx:380:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/components/MainMenu.tsx:142:24
+#: app/components/MainMenu.tsx:143:24
 #: app/pages/OwnedEvents.tsx:384:34
 #: app/pages/OwnedEvents.tsx:392:28
 msgid "Finish event"
 msgstr ""
 
-#: app/components/MainMenu.tsx:161:18
+#: app/components/MainMenu.tsx:162:18
 msgid "Common actions"
 msgstr ""
 
-#: app/components/MainMenu.tsx:168:17
+#: app/components/MainMenu.tsx:169:17
 msgid "All events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:175:19
+#: app/components/MainMenu.tsx:176:19
 msgid "My events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:183:19
+#: app/components/MainMenu.tsx:184:19
 msgid "Sign in"
 msgstr ""
 
-#: app/components/MainMenu.tsx:191:19
+#: app/components/MainMenu.tsx:192:19
 msgid "Sign up"
 msgstr ""
 
-#: app/components/MainMenu.tsx:199:19
+#: app/components/MainMenu.tsx:200:19
 #: app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr ""
 
-#: app/components/MainMenu.tsx:207:19
+#: app/components/MainMenu.tsx:208:19
 msgid "Edit profile"
 msgstr ""
 
-#: app/components/MainMenu.tsx:215:19
+#: app/components/MainMenu.tsx:216:19
+msgid "Notifications"
+msgstr ""
+
+#: app/components/MainMenu.tsx:224:19
 msgid "Sign out"
 msgstr ""
 
-#: app/components/MainMenu.tsx:224:18
+#: app/components/MainMenu.tsx:233:18
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:250:18
+#: app/components/MainMenu.tsx:259:18
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:259:18
+#: app/components/MainMenu.tsx:268:18
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -529,207 +533,223 @@ msgid "Failed to start timer"
 msgstr ""
 
 #: app/pages/GamesControl/index.tsx:170:27
+msgid "Failed to notify players"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:181:27
 #: app/pages/OwnedEvents.tsx:197:27
 msgid "Failed to toggle results visibility"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:182:27
+#: app/pages/GamesControl/index.tsx:193:27
 msgid "Failed to approve session results"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:195:27
+#: app/pages/GamesControl/index.tsx:206:27
 msgid "Failed to generate interval seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:211:27
+#: app/pages/GamesControl/index.tsx:222:27
 msgid "Failed to generate random seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:227:27
+#: app/pages/GamesControl/index.tsx:238:27
 msgid "Failed to generate swiss seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:243:27
+#: app/pages/GamesControl/index.tsx:254:27
 msgid "Failed to generate prescripted seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:258:27
+#: app/pages/GamesControl/index.tsx:269:27
 msgid "Failed to reset seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:270:27
+#: app/pages/GamesControl/index.tsx:281:27
 msgid "Failed to finish the game"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:337:16
+#: app/pages/GamesControl/index.tsx:349:16
 msgid "Refresh data [%1]"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:95:28
+#: app/pages/GamesControl/TournamentControls.tsx:98:28
 msgid "Current status"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:102:22
+#: app/pages/GamesControl/TournamentControls.tsx:105:22
 msgid "Not ready"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:103:22
+#: app/pages/GamesControl/TournamentControls.tsx:106:22
 msgid "Not started"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:104:22
+#: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Seating..."
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:105:22
+#: app/pages/GamesControl/TournamentControls.tsx:108:22
 msgid "Seating ready"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:106:22
+#: app/pages/GamesControl/TournamentControls.tsx:109:22
 msgid "Session started"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:107:22
+#: app/pages/GamesControl/TournamentControls.tsx:110:22
 msgid "Ready to approve"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:112:14
+#: app/pages/GamesControl/TournamentControls.tsx:115:14
 msgid "Can't generate seating: count of registered players is not divisible by 4"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:119:19
+#: app/pages/GamesControl/TournamentControls.tsx:122:19
 msgid "Show results table and achievements"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:120:19
+#: app/pages/GamesControl/TournamentControls.tsx:123:19
 msgid "Hide results table and achievements"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:124:22
+#: app/pages/GamesControl/TournamentControls.tsx:127:22
 msgid "Use random seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:125:21
+#: app/pages/GamesControl/TournamentControls.tsx:128:21
 msgid "Random seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:126:24
+#: app/pages/GamesControl/TournamentControls.tsx:129:24
 msgid "Use random seating for next session?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:136:21
+#: app/pages/GamesControl/TournamentControls.tsx:139:21
 msgid "Interval seating can't be used for first session in tournament"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:137:21
+#: app/pages/GamesControl/TournamentControls.tsx:140:21
 msgid "Use interval seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:139:21
+#: app/pages/GamesControl/TournamentControls.tsx:142:21
 msgid "Interval seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:143:28
+#: app/pages/GamesControl/TournamentControls.tsx:146:28
 msgid "Select interval"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:156:26
+#: app/pages/GamesControl/TournamentControls.tsx:159:26
 msgid "Use interval seating for next session?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:170:21
+#: app/pages/GamesControl/TournamentControls.tsx:173:21
 msgid "Swiss seating can't be used for first session in tournament"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:171:21
+#: app/pages/GamesControl/TournamentControls.tsx:174:21
 msgid "Use swiss seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:173:21
+#: app/pages/GamesControl/TournamentControls.tsx:176:21
 msgid "Swiss seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:174:24
+#: app/pages/GamesControl/TournamentControls.tsx:177:24
 msgid "Use swiss seating for next session?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:185:19
-#: app/pages/GamesControl/TournamentControls.tsx:252:19
-#: app/pages/GamesControl/TournamentControls.tsx:273:19
+#: app/pages/GamesControl/TournamentControls.tsx:188:19
+#: app/pages/GamesControl/TournamentControls.tsx:267:19
+#: app/pages/GamesControl/TournamentControls.tsx:288:19
 msgid "Show results table"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:186:19
-#: app/pages/GamesControl/TournamentControls.tsx:253:19
-#: app/pages/GamesControl/TournamentControls.tsx:274:19
+#: app/pages/GamesControl/TournamentControls.tsx:189:19
+#: app/pages/GamesControl/TournamentControls.tsx:268:19
+#: app/pages/GamesControl/TournamentControls.tsx:289:19
 msgid "Hide results table"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:190:22
+#: app/pages/GamesControl/TournamentControls.tsx:193:22
 msgid "Generate seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:191:21
+#: app/pages/GamesControl/TournamentControls.tsx:194:21
 msgid "Next seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:195:28
+#: app/pages/GamesControl/TournamentControls.tsx:198:28
 msgid "Randomize seating by wind"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:200:26
+#: app/pages/GamesControl/TournamentControls.tsx:203:26
 msgid "Apply seating for next session?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:212:17
+#: app/pages/GamesControl/TournamentControls.tsx:215:17
 msgid "Please wait unit seating is ready"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:219:22
+#: app/pages/GamesControl/TournamentControls.tsx:222:22
 msgid "Reset generated seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:220:21
+#: app/pages/GamesControl/TournamentControls.tsx:223:21
 msgid "Reset seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:221:24
+#: app/pages/GamesControl/TournamentControls.tsx:224:24
 msgid "This will remove generated seating. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:229:22
+#: app/pages/GamesControl/TournamentControls.tsx:232:22
+msgid "Notify players to come to their tables"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:233:21
+msgid "Notify players"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:234:24
+msgid "Notify all subscribed players to come to their tables? This will send a message through notification service."
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:244:22
 msgid "Start timer and sessions"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:230:21
+#: app/pages/GamesControl/TournamentControls.tsx:245:21
 msgid "Start timer"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:231:24
+#: app/pages/GamesControl/TournamentControls.tsx:246:24
 msgid "Start timer and game sessions?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:243:22
+#: app/pages/GamesControl/TournamentControls.tsx:258:22
 msgid "Reset the timer to initial value"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:244:21
+#: app/pages/GamesControl/TournamentControls.tsx:259:21
 msgid "Reset timer"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:245:24
+#: app/pages/GamesControl/TournamentControls.tsx:260:24
 msgid "Really reset timer?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:262:22
+#: app/pages/GamesControl/TournamentControls.tsx:277:22
 msgid "Approve session results and go on to next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:263:21
+#: app/pages/GamesControl/TournamentControls.tsx:278:21
 msgid "Approve sessions"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:264:24
+#: app/pages/GamesControl/TournamentControls.tsx:279:24
 msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
 msgstr ""
 
@@ -1379,48 +1399,48 @@ msgstr ""
 msgid "Local ID"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:174:16
+#: app/pages/PlayersManage/ManagementTab.tsx:176:16
 msgid "Select replacement player for %1"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:179:24
+#: app/pages/PlayersManage/ManagementTab.tsx:181:24
 msgid "Find replacement player by name..."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:195:30
+#: app/pages/PlayersManage/ManagementTab.tsx:197:30
 msgid "Find and add player by name..."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:226:28
+#: app/pages/PlayersManage/ManagementTab.tsx:228:28
 msgid "Replace player with someone else"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:242:28
+#: app/pages/PlayersManage/ManagementTab.tsx:244:28
 msgid "Replaced by %1"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:249:37
-#: app/pages/PlayersManage/ManagementTab.tsx:250:32
+#: app/pages/PlayersManage/ManagementTab.tsx:251:37
+#: app/pages/PlayersManage/ManagementTab.tsx:252:32
 msgid "Remove replacement"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:268:27
+#: app/pages/PlayersManage/ManagementTab.tsx:270:27
 msgid "Player is event administrator. Click to revoke privileges."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:269:27
+#: app/pages/PlayersManage/ManagementTab.tsx:271:27
 msgid "Player is a regular user. Click to promote to event admin."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:284:27
+#: app/pages/PlayersManage/ManagementTab.tsx:286:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:285:27
+#: app/pages/PlayersManage/ManagementTab.tsx:287:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:298:28
+#: app/pages/PlayersManage/ManagementTab.tsx:300:28
 msgid "Remove player from event"
 msgstr ""
 
@@ -1678,6 +1698,51 @@ msgstr ""
 
 #: app/pages/ProfileManageAdmin.tsx:320:21
 msgid "Update player"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:24:16
+msgid "Notifications settings"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:48:13
+msgid "Please enter you telegram ID"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:83:36
+msgid "Failed to set notifications settings."
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:97:18
+#: app/pages/ProfileNotifications.tsx:99:24
+msgid "Your telegram ID"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:104:18
+msgid "Notify when seating for tournament sessions is ready"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:109:18
+msgid "Notify when next tournament session is about to start (except online)"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:114:18
+msgid "Notify when session in tournament has ended (except online)"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:119:18
+msgid "Notify when a hand has been recorded"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:124:18
+msgid "Notify when session in club event has ended"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:129:28
+msgid "Settings saved!"
+msgstr ""
+
+#: app/pages/ProfileNotifications.tsx:129:57
+msgid "Update settings"
 msgstr ""
 
 #: app/pages/ProfileResetPassword.tsx:32:16

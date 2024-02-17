@@ -65,6 +65,10 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string telegram_id = 13;</code>
      */
     protected $telegram_id = '';
+    /**
+     * Generated from protobuf field <code>string notifications = 14;</code>
+     */
+    protected $notifications = '';
 
     /**
      * Constructor.
@@ -85,6 +89,7 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      *     @type string $ms_nickname
      *     @type int $ms_account_id
      *     @type string $telegram_id
+     *     @type string $notifications
      * }
      */
     public function __construct($data = NULL) {
@@ -374,6 +379,28 @@ class PersonEx extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->telegram_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string notifications = 14;</code>
+     * @return string
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
+    /**
+     * Generated from protobuf field <code>string notifications = 14;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setNotifications($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->notifications = $var;
 
         return $this;
     }

@@ -38,6 +38,7 @@ import {
   MakePrescriptedSeating,
   MakeShuffledSeating,
   MakeSwissSeating,
+  NotifyPlayersSessionStartsSoon,
   RebuildScoring,
   RegisterPlayer,
   ResetSeating,
@@ -71,8 +72,8 @@ import {
   RequestRegistration,
   RequestResetPassword,
   UpdatePersonalInfo,
-  GetTelegramId,
-  SetTelegramId,
+  GetNotificationsSettings,
+  SetNotificationsSettings,
 } from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
@@ -455,6 +456,13 @@ export class ApiService {
     return StartTimer({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
+  notifyPlayers(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'NotifyPlayers' });
+    return NotifyPlayersSessionStartsSoon({ eventId }, this._clientConfMimir).then(
+      (r) => r.success
+    );
+  }
+
   toggleResults(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ToggleHideResults' });
     return ToggleHideResults({ eventId }, this._clientConfMimir).then((r) => r.success);
@@ -580,11 +588,34 @@ export class ApiService {
     return GetLastYear({}, this._clientConfHugin).then((r) => r.data);
   }
 
-  getTelegramId(personId: number) {
-    return GetTelegramId({ personId }, this._clientConfFrey).then((r) => r.telegramId);
+  getNotificationsSettings(personId: number) {
+    return GetNotificationsSettings({ personId }, this._clientConfFrey).then((r) => {
+      let notifications = {};
+      try {
+        notifications = JSON.parse(r.notifications);
+      } catch (e) {
+        notifications = {};
+      }
+      return { id: r.telegramId, notifications: notifications as Record<string, number> };
+    });
   }
 
-  setTelegramId(personId: number, telegramId: string) {
-    return SetTelegramId({ personId, telegramId }, this._clientConfFrey).then((r) => r.success);
+  setNotificationsSettings(
+    personId: number,
+    telegramId: string,
+    notifications: Record<string, any>
+  ) {
+    for (const i in notifications) {
+      if (notifications[i] === false) {
+        notifications[i] = 0;
+      }
+      if (notifications[i] === true) {
+        notifications[i] = 1;
+      }
+    }
+    return SetNotificationsSettings(
+      { personId, telegramId, notifications: JSON.stringify(notifications) },
+      this._clientConfFrey
+    ).then((r) => r.success);
   }
 }

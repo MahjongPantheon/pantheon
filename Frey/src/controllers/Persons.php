@@ -355,34 +355,35 @@ class PersonsController extends Controller
     }
 
     /**
-     * Get person's telegram id
+     * Get person's notifications settings
      *
      * @param int $personId
-     * @return string
+     * @return array
      * @throws AccessDeniedException
      * @throws InvalidParametersException
      */
-    public function getTelegramId($personId)
+    public function getNotificationsSettings($personId)
     {
         $this->_logStart(__METHOD__, [$personId]);
-        $data = $this->_getAccountModel()->getTelegramId($personId);
+        $data = $this->_getAccountModel()->getNotificationsSettings($personId);
         $this->_logSuccess(__METHOD__, [$personId]);
         return $data;
     }
 
     /**
-     * Set person's telegram id
+     * Set person's notifications settings
      *
      * @param int $personId
      * @param string $telegramId
+     * @param string $notifications
      * @return bool
      * @throws AccessDeniedException
      * @throws InvalidParametersException
      */
-    public function setTelegramId($personId, string $telegramId)
+    public function setNotificationsSettings($personId, string $telegramId, string $notifications)
     {
         $this->_logStart(__METHOD__, [$personId]);
-        $data = $this->_getAccountModel()->setTelegramId($personId, $telegramId);
+        $data = $this->_getAccountModel()->setNotificationsSettings($personId, $telegramId, $notifications);
         $this->_logSuccess(__METHOD__, [$personId]);
         return $data;
     }

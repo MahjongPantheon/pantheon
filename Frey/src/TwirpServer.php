@@ -4,6 +4,7 @@ namespace Frey;
 
 use Common\Frey;
 use Common\GenericSuccessResponse;
+use Common\PersonsGetNotificationsSettingsResponse;
 use Common\PersonsGetTelegramIdResponse;
 use Exception;
 use Memcached;
@@ -327,6 +328,7 @@ final class TwirpServer implements Frey
                         ->setTenhouId($person['tenhou_id'])
                         ->setGroups($person['groups'])
                         ->setTelegramId($person['telegram_id'])
+                        ->setNotifications($person['notifications'] ?? '')
                         ->setHasAvatar($person['has_avatar'])
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
@@ -357,6 +359,7 @@ final class TwirpServer implements Frey
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
                         ->setTelegramId($person['telegram_id'])
+                        ->setNotifications($person['notifications'] ?? '')
                         ->setMsNickname($person['ms_nickname'] ?? '')
                         ->setMsAccountId($person['ms_account_id'] ?? -1);
                     if (!empty($person['email'])) {
@@ -387,6 +390,7 @@ final class TwirpServer implements Frey
                         ->setLastUpdate($person['last_update'])
                         ->setTitle($person['title'])
                         ->setTelegramId($person['telegram_id'])
+                        ->setNotifications($person['notifications'] ?? '')
                         ->setMsNickname($person['ms_nickname'] ?? '')
                         ->setMsAccountId($person['ms_account_id'] ?? -1);
                     if (!empty($person['email'])) {
@@ -957,16 +961,18 @@ final class TwirpServer implements Frey
 
     /**
      * @param array $ctx
-     * @param \Common\PersonsGetTelegramIdPayload $req
-     * @return \Common\PersonsGetTelegramIdResponse
+     * @param \Common\PersonsGetNotificationsSettingsPayload $req
+     * @return \Common\PersonsGetNotificationsSettingsResponse
      * @throws AccessDeniedException
      * @throws InvalidParametersException
      */
-    public function GetTelegramId(array $ctx, \Common\PersonsGetTelegramIdPayload $req): \Common\PersonsGetTelegramIdResponse
+    public function GetNotificationsSettings(array $ctx, \Common\PersonsGetNotificationsSettingsPayload $req): \Common\PersonsGetNotificationsSettingsResponse
     {
         try {
-            return (new PersonsGetTelegramIdResponse())
-                ->setTelegramId($this->_personsController->getTelegramId($req->getPersonId()));
+            $settings = $this->_personsController->getNotificationsSettings($req->getPersonId());
+            return (new PersonsGetNotificationsSettingsResponse())
+                ->setTelegramId($settings['telegram_id'])
+                ->setNotifications($settings['notifications']);
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;
@@ -975,16 +981,20 @@ final class TwirpServer implements Frey
 
     /**
      * @param array $ctx
-     * @param \Common\PersonsSetTelegramIdPayload $req
+     * @param \Common\PersonsSetNotificationsSettingsPayload $req
      * @return GenericSuccessResponse
      * @throws AccessDeniedException
      * @throws InvalidParametersException
      */
-    public function SetTelegramId(array $ctx, \Common\PersonsSetTelegramIdPayload $req): \Common\GenericSuccessResponse
+    public function SetNotificationsSettings(array $ctx, \Common\PersonsSetNotificationsSettingsPayload $req): \Common\GenericSuccessResponse
     {
         try {
             return (new GenericSuccessResponse())
-                ->setSuccess($this->_personsController->setTelegramId($req->getPersonId(), $req->getTelegramId()));
+                ->setSuccess($this->_personsController->setNotificationsSettings(
+                    $req->getPersonId(),
+                    $req->getTelegramId(),
+                    $req->getNotifications()
+                ));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;

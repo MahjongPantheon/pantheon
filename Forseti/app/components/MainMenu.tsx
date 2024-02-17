@@ -11,6 +11,7 @@ import {
   IconLogin,
   IconLogout,
   IconMoonStars,
+  IconNotification,
   IconOlympics,
   IconRefreshAlert,
   IconScript,
@@ -205,6 +206,14 @@ export const MainMenu = ({
             href='/profile/manage'
             icon={<IconUserCircle size={18} />}
             text={i18n._t('Edit profile')}
+            onClick={closeMenu}
+          />
+        )}
+        {isLoggedIn && (
+          <MainMenuLink
+            href='/profile/notifications'
+            icon={<IconNotification size={18} />}
+            text={i18n._t('Notifications')}
             onClick={closeMenu}
           />
         )}

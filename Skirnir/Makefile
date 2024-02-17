@@ -66,7 +66,7 @@ prebuild:
 	cp -f yarn.lock ../Skirnir-dist/
 
 dev:
-	./node_modules/.bin/nodemon app/bot.ts
+	./node_modules/.bin/nodemon app/server.ts
 
 PHONY: i18n_extract
 i18n_extract:

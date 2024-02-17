@@ -23,6 +23,7 @@ use Common\MultironResult;
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/EventUserManagement.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
+require_once __DIR__ . '/../helpers/SkirnirClient.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/Event.php';
 require_once __DIR__ . '/../primitives/Round.php';
@@ -153,8 +154,25 @@ class InteractiveSessionModel extends Model
             return 0;
         }
 
-        return array_reduce($games, function ($acc, SessionPrimitive $p) {
-            return $p->finish() ? $acc + 1 : $acc;
+        $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
+        $playerMap = [];
+        foreach ($regs as $r) {
+            $playerMap[$r->getPlayerId()] = $r->getReplacementPlayerId();
+        }
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+
+        return array_reduce($games, function ($acc, SessionPrimitive $p) use ($skirnir, $playerMap) {
+            $success = $p->finish();
+            if ($success) {
+                $whoPlays = $p->getPlayersIds();
+                foreach ($whoPlays as $k => $v) {
+                    if (!empty($playerMap[$v])) {
+                        $whoPlays[$k] = $playerMap[$v];
+                    }
+                }
+                $skirnir->messageTournamentSessionEnd($whoPlays, $p->getEventId(), $p->getCurrentState()->getScores());
+            }
+            return $success ? $acc + 1 : $acc;
         }, 0);
     }
 
@@ -323,9 +341,31 @@ class InteractiveSessionModel extends Model
             return $result;
         }
 
+        $lastScores = $session->getCurrentState()->getScores();
         $success = $round->save();
         if ($success) {
             $data = $session->updateCurrentState($round);
+            $currentScores = $session->getCurrentState()->getScores();
+            $diff = [];
+            foreach ($lastScores as $playerId => $score) {
+                $diff[$playerId] = [$score, $currentScores[$playerId]];
+            }
+
+            $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+            $whoPlays = $session->getPlayersIds();
+            $playerIds = array_filter(array_map(function ($pr) use ($whoPlays) {
+                if ($pr->getIgnoreSeating() || !in_array($pr->getPlayerId(), $whoPlays)) {
+                    return null;
+                }
+                return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
+            }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $session->getEventId())));
+
+            $skirnir->messageHandRecorded($playerIds, $session->getEventId(), $diff);
+
+            if ($data && $data['_isFinished'] && !$session->getEvent()->getSyncEnd()) {
+                $skirnir->messageClubSessionEnd($playerIds, $session->getEventId(), $currentScores);
+            }
+
             if ($data) {
                 $this->_trackUpdate($gameHashcode);
                 return $data;

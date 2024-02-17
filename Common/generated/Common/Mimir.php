@@ -588,4 +588,13 @@ interface Mimir
      * @throws \Twirp\Error
      */
     public function AddTypedOnlineReplay(array $ctx, \Common\TypedGamesAddOnlineReplayPayload $req): \Common\GamesAddOnlineReplayResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/NotifyPlayersSessionStartsSoon</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function NotifyPlayersSessionStartsSoon(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 }

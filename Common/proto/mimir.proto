@@ -151,6 +151,8 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc AddTypedOnlineReplay (TypedGamesAddOnlineReplayPayload)
     returns (GamesAddOnlineReplayResponse);
+  rpc NotifyPlayersSessionStartsSoon (GenericEventPayload)
+    returns (GenericSuccessResponse);
 }
 
 message EventsGetRulesetsPayload {

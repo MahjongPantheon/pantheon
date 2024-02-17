@@ -49,6 +49,7 @@ class PersonPrimitive extends Primitive
         'has_avatar'        => '_hasAvatar',
         'last_update'       => '_lastUpdate',
         'is_superadmin'     => '_superadmin',
+        'notifications'     => '_notifications',
         '::group'           => '_groupIds', // external many-to-many relation
     ];
 
@@ -70,6 +71,7 @@ class PersonPrimitive extends Primitive
             '_hasAvatar'   => $this->_integerTransform(),
             '_lastUpdate' => $this->_stringTransform(true),
             '_superadmin' => $this->_integerTransform(),
+            '_notifications' => $this->_stringTransform(),
             '_groupIds'   => $this->_externalManyToManyTransform(
                 self::REL_GROUP,
                 'person_id',
@@ -165,6 +167,11 @@ class PersonPrimitive extends Primitive
      * @var string
      */
     protected $_lastUpdate = '';
+    /**
+     * Notifications settings (plain string, format is controlled outside of Frey)
+     * @var string
+     */
+    protected $_notifications = '';
 
     /**
      * @return string
@@ -322,6 +329,24 @@ QRY;
     public function setTelegramId(string $telegramId): PersonPrimitive
     {
         $this->_telegramId = $telegramId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotifications(): string
+    {
+        return $this->_notifications;
+    }
+
+    /**
+     * @param string $notifications
+     * @return PersonPrimitive
+     */
+    public function setNotifications(string $notifications): PersonPrimitive
+    {
+        $this->_notifications = $notifications;
         return $this;
     }
 

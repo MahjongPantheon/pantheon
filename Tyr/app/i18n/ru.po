@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 17:59Z\n"
+"POT-Creation-Date: 2024-02-17 23:41+0100\n"
 "PO-Revision-Date: 2023-04-16 21:56+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -146,7 +146,7 @@ msgstr "Фу"
 msgid "Game log"
 msgstr "Лог игры"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:92:14
+#: app/components/screens/settings/SettingsScreenView.tsx:93:14
 msgid "Go to personal area"
 msgstr "В личный кабинет"
 
@@ -211,17 +211,13 @@ msgstr "Джунчан"
 msgid "Kokushi musou"
 msgstr "Кокушимусо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:96:57
+#: app/components/screens/settings/SettingsScreenView.tsx:100:57
 msgid "Language"
 msgstr "Язык"
 
 #: app/components/screens/login/EnterCredentialsView.tsx:63:12
 msgid "Log in"
 msgstr "Вход"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:167:32
-msgid "Log out"
-msgstr "Выйти из системы"
 
 #: app/components/screens/login/LoginErrorView.tsx:40:15
 msgid "Login attempt has failed. Possible reasons are:"
@@ -373,11 +369,11 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:150:16
+#: app/components/screens/settings/SettingsScreenView.tsx:154:16
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:57:66
+#: app/components/screens/event-select/EventSelectScreenView.tsx:84:66
 msgid "Select event"
 msgstr "Выбрать событие"
 
@@ -405,7 +401,7 @@ msgstr "Перемешать"
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:158:57
+#: app/components/screens/settings/SettingsScreenView.tsx:162:57
 msgid "Single device mode"
 msgstr "Режим одного устройства"
 
@@ -441,11 +437,11 @@ msgstr "Темпай: %1"
 msgid "Tenhou"
 msgstr "Тенхо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:112:57
+#: app/components/screens/settings/SettingsScreenView.tsx:116:57
 msgid "Theme"
 msgstr "Оформление"
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:74:16
+#: app/components/screens/event-select/EventSelectScreenView.tsx:101:16
 msgid "There is no events you participate in right now"
 msgstr "На данный момент нет активных событий, в которых вы участвуете"
 
@@ -466,7 +462,7 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:160:18
+#: app/components/screens/settings/SettingsScreenView.tsx:164:18
 msgid "Turn on if you use a single device for all players"
 msgstr "Включите, если вы используете одно устройство для всех игроков"
 
@@ -555,3 +551,6 @@ msgstr "х4"
 #: app/components/screens/log/view/RoundSelectors.ts:33:12
 msgid "yakuman"
 msgstr "якуман"
+
+#~ msgid "Log out"
+#~ msgstr "Выйти из системы"
