@@ -361,7 +361,7 @@ class InteractiveSessionModel extends Model
 
             $skirnir->messageHandRecorded($playerIds, $session->getEventId(), $diff);
 
-            if ($data['_isFinished'] && !$session->getEvent()->getSyncEnd()) {
+            if ($data && $data['_isFinished'] && !$session->getEvent()->getSyncEnd()) {
                 $skirnir->messageClubSessionEnd($playerIds, $session->getEventId(), $currentScores);
             }
 

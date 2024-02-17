@@ -66,7 +66,7 @@ class SkirnirClient
     /**
      * @param int[] $playerIds
      * @param int $eventId
-     * @param $diff
+     * @param array $diff
      * @return void
      * @throws InvalidParametersException
      */

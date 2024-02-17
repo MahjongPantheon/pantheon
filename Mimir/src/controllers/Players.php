@@ -657,7 +657,7 @@ class PlayersController extends Controller
     }
 
     /**
-     * @param $eventId
+     * @param int $eventId
      * @return true
      * @throws InvalidParametersException
      */

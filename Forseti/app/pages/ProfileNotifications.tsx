@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Button, Checkbox, Container, Group, Space, TextInput } from '@mantine/core';
-import { IconUserCode } from '@tabler/icons-react';
+import { Checkbox, Container, Space, TextInput } from '@mantine/core';
+import { IconCircleCheck, IconDeviceFloppy, IconUserCode } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
-import { useCallback, useEffect } from 'react';
+import { createRef, useCallback, useEffect, useState } from 'react';
 import { usePageTitle } from '../hooks/pageTitle';
 import { useForm } from '@mantine/form';
 import { useStorage } from '../hooks/storage';
-import { notifications } from '@mantine/notifications';
+import { TopActionButton } from '../components/TopActionButton';
 
 export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const api = useApi();
@@ -16,6 +16,11 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
   api.setEventId(0);
   const i18n = useI18n();
   const personId = storage.getPersonId();
+  const formRef: React.RefObject<HTMLFormElement> = createRef();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+
   usePageTitle(i18n._t('Notifications settings'));
 
   const form = useForm({
@@ -49,6 +54,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
       return;
     }
     api.getNotificationsSettings(personId).then((resp) => {
+      setIsLoading(false);
       form.setValues({
         id: resp.id,
         notifications: resp.notifications,
@@ -61,19 +67,19 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
       if (!personId) {
         return;
       }
+      setIsSaving(true);
       api
         .setNotificationsSettings(personId, values.id.trim(), values.notifications)
         .then((success) => {
+          setIsSaving(false);
           if (!success) {
             throw new Error();
           }
-          notifications.show({
-            title: i18n._t('Success'),
-            message: i18n._t('Your notifications settings saved successfully'),
-            color: 'green',
-          });
+          setIsSaved(true);
+          setTimeout(() => setIsSaved(false), 5000);
         })
         .catch(() => {
+          setIsSaving(false);
           form.setFieldError('id', i18n._t('Failed to set notifications settings.'));
         });
     },
@@ -85,7 +91,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
   }
 
   return (
-    <form onSubmit={form.onSubmit(submitForm)}>
+    <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
       <Container>
         <TextInput
           label={i18n._t('Your telegram ID')}
@@ -119,9 +125,14 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
           {...form.getInputProps('notifications.ce', { type: 'checkbox' })}
         />
         <Space h='md' />
-        <Group position='right' mt='md'>
-          <Button type='submit'>{i18n._t('Update notifications settings')}</Button>
-        </Group>
+        <TopActionButton
+          title={isSaved ? i18n._t('Settings saved!') : i18n._t('Update settings')}
+          loading={isSaving || isLoading || isSaved}
+          icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
+          onClick={() => {
+            formRef.current?.requestSubmit();
+          }}
+        />
       </Container>
     </form>
   );
