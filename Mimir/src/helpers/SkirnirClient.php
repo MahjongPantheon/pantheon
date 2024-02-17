@@ -79,7 +79,8 @@ class SkirnirClient
         $playerMap = $this->_getPlayersMap($settings);
         foreach ($diff as $player => $scores) {
             if ($scores[0] !== $scores[1]) {
-                $diffMsg [] = '<b>' . $playerMap[$player] . '</b>: ' . $scores[0] . ' -> ' . $scores[1];
+                $diffMsg [] = '<b>' . $playerMap[$player] . '</b>: ' . $scores[0] . '➡️' . $scores[1]
+                    . ' (' . ($scores[1] > $scores[0] ? '+' : '') . ($scores[1] - $scores[0]) . ')';
             }
         }
         if (empty($diffMsg)) {
