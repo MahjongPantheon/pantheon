@@ -109,9 +109,9 @@ service Frey {
     returns (PersonsGetPersonsOfGroupResponse);
   rpc GetGroupsOfPerson(PersonsGetGroupsOfPersonPayload)
     returns (PersonsGetGroupsOfPersonResponse);
-  rpc GetTelegramId(PersonsGetTelegramIdPayload)
-    returns (PersonsGetTelegramIdResponse);
-  rpc SetTelegramId(PersonsSetTelegramIdPayload)
+  rpc GetNotificationsSettings(PersonsGetNotificationsSettingsPayload)
+    returns (PersonsGetNotificationsSettingsResponse);
+  rpc SetNotificationsSettings(PersonsSetNotificationsSettingsPayload)
     returns (GenericSuccessResponse);
 
   // superadmin: this should be covered with some
@@ -503,15 +503,17 @@ message MajsoulPersonMapping {
   string nickname = 2;
 }
 
-message PersonsGetTelegramIdPayload {
+message PersonsGetNotificationsSettingsPayload {
   int32 person_id = 1;
 }
 
-message PersonsGetTelegramIdResponse {
+message PersonsGetNotificationsSettingsResponse {
   string telegram_id = 1;
+  string notifications = 2;
 }
 
-message PersonsSetTelegramIdPayload {
+message PersonsSetNotificationsSettingsPayload {
   int32 person_id = 1;
   string telegram_id = 2;
+  string notifications = 3;
 }

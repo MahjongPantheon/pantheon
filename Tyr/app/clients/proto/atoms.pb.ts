@@ -138,6 +138,7 @@ export interface PersonEx {
   msNickname: string;
   msAccountId: number;
   telegramId: string;
+  notifications: string;
 }
 
 export interface Group {
@@ -1834,6 +1835,7 @@ export const PersonEx = {
       msNickname: "",
       msAccountId: 0,
       telegramId: "",
+      notifications: "",
       ...msg,
     };
   },
@@ -1883,6 +1885,9 @@ export const PersonEx = {
     }
     if (msg.telegramId) {
       writer.writeString(13, msg.telegramId);
+    }
+    if (msg.notifications) {
+      writer.writeString(14, msg.notifications);
     }
     return writer;
   },
@@ -1951,6 +1956,10 @@ export const PersonEx = {
         }
         case 13: {
           msg.telegramId = reader.readString();
+          break;
+        }
+        case 14: {
+          msg.notifications = reader.readString();
           break;
         }
         default: {
@@ -9022,6 +9031,7 @@ export const PersonExJSON = {
       msNickname: "",
       msAccountId: 0,
       telegramId: "",
+      notifications: "",
       ...msg,
     };
   },
@@ -9071,6 +9081,9 @@ export const PersonExJSON = {
     }
     if (msg.telegramId) {
       json["telegramId"] = msg.telegramId;
+    }
+    if (msg.notifications) {
+      json["notifications"] = msg.notifications;
     }
     return json;
   },
@@ -9130,6 +9143,10 @@ export const PersonExJSON = {
     const _telegramId_ = json["telegramId"] ?? json["telegram_id"];
     if (_telegramId_) {
       msg.telegramId = _telegramId_;
+    }
+    const _notifications_ = json["notifications"];
+    if (_notifications_) {
+      msg.notifications = _notifications_;
     }
     return msg;
   },

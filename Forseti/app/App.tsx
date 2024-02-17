@@ -33,8 +33,8 @@ import { EventPrescript } from './pages/EventPrescript';
 import { ProfileImpersonate } from './pages/ProfileImpersonate';
 import { ProfileManageAdmin } from './pages/ProfileManageAdmin';
 import { SystemStats } from './pages/SystemStats';
-import { ProfileSetTelegramId } from './pages/SetTelegramId';
 import './App.css';
+import { ProfileNotifications } from './pages/ProfileNotifications';
 
 export const App = () => {
   return (
@@ -54,7 +54,8 @@ export const App = () => {
       <Route path='/profile/signupAdmin' component={ProfileManageAdmin} />
       <Route path='/profile/editPlayer/:id' component={ProfileManageAdmin} />
 
-      <Route path='/profile/setTelegramId/:id' component={ProfileSetTelegramId} />
+      <Route path='/profile/notifications/tg/:id' component={ProfileNotifications} />
+      <Route path='/profile/notifications' component={ProfileNotifications} />
 
       <Route path='/ownedEvents/new' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/edit/:id' component={OwnedEventsEdit} />

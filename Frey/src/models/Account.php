@@ -137,6 +137,7 @@ class AccountModel extends Model
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
                 'telegram_id' => $person->getTelegramId(),
+                'notifications' => $person->getNotifications(),
                 'ms_account_id' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
                 'ms_nickname' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
@@ -449,6 +450,7 @@ class AccountModel extends Model
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
                 'telegram_id' => $person->getTelegramId(),
+                'notifications' => $person->getNotifications(),
                 'ms_account_id' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getAccountId() : null,
                 'ms_nickname' => $this->_safeExistsKey($person->getId(), $personMap) ? $personMap[$person->getId()]->getNickname() : null
             ];
@@ -482,6 +484,7 @@ class AccountModel extends Model
                 'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
                 'telegram_id' => $person->getTelegramId(),
+                'notifications' => $person->getNotifications(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
@@ -503,44 +506,48 @@ class AccountModel extends Model
     }
 
     /**
-     * Get person's telegram id
+     * Get person's notifications settings
      *
      * @param int $personId
-     * @return string
+     * @return array
      * @throws AccessDeniedException|InvalidParametersException
      */
-    public function getTelegramId($personId)
+    public function getNotificationsSettings($personId)
     {
         if ($this->_meta->getCurrentPersonId() === null || $this->_meta->getCurrentPersonId() !== $personId) {
-            throw new AccessDeniedException('You are not allowed to view this telegram id');
+            throw new AccessDeniedException('You are not allowed to view notifications settings');
         }
         $person = PersonPrimitive::findById($this->_db, [$personId]);
         if (empty($person)) {
             throw new InvalidParametersException('Person is not found in DB');
         }
 
-        return $person[0]->getTelegramId();
+        return [
+            'telegram_id' => $person[0]->getTelegramId(),
+            'notifications' => $person[0]->getNotifications()
+        ];
     }
 
     /**
-     * Set person's telegram id
+     * Set person's notifications settings
      *
      * @param int $personId
      * @param string $telegramId
+     * @param string $notifications
      * @return bool
      * @throws AccessDeniedException
      * @throws InvalidParametersException
      */
-    public function setTelegramId($personId, string $telegramId)
+    public function setNotificationsSettings($personId, string $telegramId, string $notifications)
     {
         if ($this->_meta->getCurrentPersonId() === null || $this->_meta->getCurrentPersonId() !== $personId) {
-            throw new AccessDeniedException('You are not allowed to view this telegram id');
+            throw new AccessDeniedException('You are not allowed to update notifications settings');
         }
         $person = PersonPrimitive::findById($this->_db, [$personId]);
         if (empty($person)) {
             throw new InvalidParametersException('Person is not found in DB');
         }
 
-        return $person[0]->setTelegramId($telegramId)->save();
+        return $person[0]->setTelegramId($telegramId)->setNotifications($notifications)->save();
     }
 }

@@ -394,20 +394,20 @@ interface Frey
     /**
      *
      *
-     * Generated from protobuf method <code>common.Frey/GetTelegramId</code>
+     * Generated from protobuf method <code>common.Frey/GetNotificationsSettings</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetTelegramId(array $ctx, \Common\PersonsGetTelegramIdPayload $req): \Common\PersonsGetTelegramIdResponse;
+    public function GetNotificationsSettings(array $ctx, \Common\PersonsGetNotificationsSettingsPayload $req): \Common\PersonsGetNotificationsSettingsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>common.Frey/SetTelegramId</code>
+     * Generated from protobuf method <code>common.Frey/SetNotificationsSettings</code>
      *
      * @throws \Twirp\Error
      */
-    public function SetTelegramId(array $ctx, \Common\PersonsSetTelegramIdPayload $req): \Common\GenericSuccessResponse;
+    public function SetNotificationsSettings(array $ctx, \Common\PersonsSetNotificationsSettingsPayload $req): \Common\GenericSuccessResponse;
 
     /**
      * superadmin: this should be covered with some

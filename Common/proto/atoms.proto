@@ -94,6 +94,7 @@ message PersonEx {
   string ms_nickname = 11;
   int32 ms_account_id = 12;
   string telegram_id = 13;
+  string notifications = 14;
 }
 
 message Group {
