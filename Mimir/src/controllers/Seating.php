@@ -61,6 +61,12 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
+        $playerIds = array_filter(array_map(function ($pr) {
+            if ($pr->getIgnoreSeating()) {
+                return null;
+            }
+            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
+        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
         $skirnir->messageSeatingReady($playerIds, $eventId);
 
@@ -102,6 +108,12 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
+        $playerIds = array_filter(array_map(function ($pr) {
+            if ($pr->getIgnoreSeating()) {
+                return null;
+            }
+            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
+        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
         $skirnir->messageSeatingReady($playerIds, $eventId);
 
@@ -200,9 +212,12 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
-        $playerIds = array_map(function ($player) {
-            return $player['id'];
-        }, $currentRatingTable);
+        $playerIds = array_filter(array_map(function ($pr) {
+            if ($pr->getIgnoreSeating()) {
+                return null;
+            }
+            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
+        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
         $skirnir->messageSeatingReady($playerIds, $eventId);
 
@@ -259,6 +274,12 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
+        $playerIds = array_filter(array_map(function ($pr) use ($playerIds) {
+            if ($pr->getIgnoreSeating() || !in_array($pr->getPlayerId(), $playerIds)) {
+                return null;
+            }
+            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
+        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
         $skirnir->messageSeatingReady($playerIds, $eventId);
 

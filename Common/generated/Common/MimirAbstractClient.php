@@ -1550,6 +1550,29 @@ abstract class MimirAbstractClient
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function NotifyPlayersSessionStartsSoon(array $ctx, \Common\GenericEventPayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'NotifyPlayersSessionStartsSoon');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/NotifyPlayersSessionStartsSoon';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/NotifyPlayersSessionStartsSoon';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
      * Common code to make a request to the remote twirp service.
      */
     abstract protected function doRequest(array $ctx, string $url, Message $in, Message $out): void;

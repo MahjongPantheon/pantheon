@@ -23,7 +23,16 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
       id: id ?? '',
       notifications: {
         // Should match defaults described in Common/Notifications.php
+        // const SessionSeatingReady = 'sr';
+        // const SessionStartingSoon = 'ss';
+        // const HandHasBeenRecorded = 'h';
+        // const ClubSessionEnded = 'ce';
+        // const TournamentSessionEnded = 'te';
         sr: 1,
+        ss: 1,
+        h: 0,
+        ce: 0,
+        te: 0,
       } as Record<string, number>,
     },
 
@@ -79,6 +88,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
     <form onSubmit={form.onSubmit(submitForm)}>
       <Container>
         <TextInput
+          label={i18n._t('Your telegram ID')}
           icon={<IconUserCode size='1rem' />}
           placeholder={i18n._t('Your telegram ID')}
           {...form.getInputProps('id')}
@@ -88,6 +98,27 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
           label={i18n._t('Notify when seating for tournament sessions is ready')}
           {...form.getInputProps('notifications.sr', { type: 'checkbox' })}
         />
+        <Space h='md' />
+        <Checkbox
+          label={i18n._t('Notify when next tournament session is about to start (except online)')}
+          {...form.getInputProps('notifications.ss', { type: 'checkbox' })}
+        />
+        <Space h='md' />
+        <Checkbox
+          label={i18n._t('Notify when session in tournament has ended (except online)')}
+          {...form.getInputProps('notifications.te', { type: 'checkbox' })}
+        />
+        <Space h='md' />
+        <Checkbox
+          label={i18n._t('Notify when a hand has been recorded')}
+          {...form.getInputProps('notifications.h', { type: 'checkbox' })}
+        />
+        <Space h='md' />
+        <Checkbox
+          label={i18n._t('Notify when session in club event has ended')}
+          {...form.getInputProps('notifications.ce', { type: 'checkbox' })}
+        />
+        <Space h='md' />
         <Group position='right' mt='md'>
           <Button type='submit'>{i18n._t('Update notifications settings')}</Button>
         </Group>

@@ -1815,6 +1815,18 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param array $ctx
+     * @param GenericEventPayload $req
+     * @return GenericSuccessResponse
+     * @throws InvalidParametersException
+     */
+    public function NotifyPlayersSessionStartsSoon(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse
+    {
+        return (new GenericSuccessResponse())
+            ->setSuccess($this->_playersController->notifyGameStartingSoon($req->getEventId()));
+    }
+
+    /**
      * Check of rights for access by external service.
      *
      * @param string $token

@@ -4,13 +4,20 @@ namespace Common;
 
 class Notifications {
     const SessionSeatingReady = 'sr';
+    const SessionStartingSoon = 'ss';
+    const HandHasBeenRecorded = 'h';
+    const ClubSessionEnded = 'ce';
+    const TournamentSessionEnded = 'te';
 
     /**
      * @var int[]
      */
     public static $defaults = [
-        // session seating ready
         self::SessionSeatingReady => 1,
+        self::SessionStartingSoon => 1,
+        self::HandHasBeenRecorded => 0,
+        self::ClubSessionEnded => 0,
+        self::TournamentSessionEnded => 0,
     ];
 
     /**
@@ -25,21 +32,5 @@ class Notifications {
             $result[$k] = $v;
         }
         return $result;
-    }
-
-    /**
-     * @param int[] $settings
-     * @return string
-     */
-    public static function serialize($settings)
-    {
-        $serialized = [];
-        foreach ($settings as $k => $v) {
-            if (self::$defaults[$k] === $v) {
-                continue;
-            }
-            $serialized[$k] = $v;
-        }
-        return json_encode($serialized) ?: '';
     }
 }

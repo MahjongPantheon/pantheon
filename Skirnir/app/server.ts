@@ -15,9 +15,11 @@ function _sendNext(bot: Bot) {
 
   isRunning = true;
   const { id, message } = queue.shift()!;
-  bot?.api.sendMessage(id, message, {
-    parse_mode: 'HTML',
-  });
+  bot?.api
+    .sendMessage(id, message, {
+      parse_mode: 'HTML',
+    })
+    .catch((e) => console.error('Rejected sendMessage: ', e));
 
   setTimeout(() => _sendNext(bot), 100);
 }

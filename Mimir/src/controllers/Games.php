@@ -324,6 +324,17 @@ class GamesController extends Controller
             throw new TwirpError(ErrorCode::NotFound, "This action is allowed only for event administrators");
         }
         $success = $session[0]->finish();
+
+        $whoPlays = $session[0]->getPlayersIds();
+        $playerIds = array_filter(array_map(function ($pr) use ($whoPlays) {
+            if ($pr->getIgnoreSeating() || !in_array($pr->getPlayerId(), $whoPlays)) {
+                return null;
+            }
+            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
+        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $session[0]->getEventId())));
+
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messageClubSessionEnd($playerIds, $session[0]->getEventId(), $session[0]->getCurrentState()->getScores());
         $this->_log->info('Successfully force-finished session id# ' . $sessionHash);
         return $success;
     }

@@ -38,6 +38,7 @@ import {
   MakePrescriptedSeating,
   MakeShuffledSeating,
   MakeSwissSeating,
+  NotifyPlayersSessionStartsSoon,
   RebuildScoring,
   RegisterPlayer,
   ResetSeating,
@@ -453,6 +454,13 @@ export class ApiService {
   startTimer(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'StartTimer' });
     return StartTimer({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  notifyPlayers(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'NotifyPlayers' });
+    return NotifyPlayersSessionStartsSoon({ eventId }, this._clientConfMimir).then(
+      (r) => r.success
+    );
   }
 
   toggleResults(eventId: number) {

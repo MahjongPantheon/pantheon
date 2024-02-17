@@ -1225,6 +1225,18 @@ export async function AddTypedOnlineReplay(
   return GamesAddOnlineReplayResponse.decode(response);
 }
 
+export async function NotifyPlayersSessionStartsSoon(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/NotifyPlayersSessionStartsSoon",
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
 //========================================//
 //           Mimir JSON Client            //
 //========================================//
@@ -2021,6 +2033,18 @@ export async function AddTypedOnlineReplayJSON(
   return GamesAddOnlineReplayResponseJSON.decode(response);
 }
 
+export async function NotifyPlayersSessionStartsSoonJSON(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/NotifyPlayersSessionStartsSoon",
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 //========================================//
 //                 Mimir                  //
 //========================================//
@@ -2354,6 +2378,12 @@ export interface Mimir<Context = unknown> {
     typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
     context: Context,
   ) => Promise<GamesAddOnlineReplayResponse> | GamesAddOnlineReplayResponse;
+  NotifyPlayersSessionStartsSoon: (
+    genericEventPayload: protoAtoms.GenericEventPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
 }
 
 export function createMimir<Context>(service: Mimir<Context>) {
@@ -3123,6 +3153,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: GamesAddOnlineReplayResponse,
           json: GamesAddOnlineReplayResponseJSON,
+        },
+      },
+      NotifyPlayersSessionStartsSoon: {
+        name: "NotifyPlayersSessionStartsSoon",
+        handler: service.NotifyPlayersSessionStartsSoon,
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
     },
