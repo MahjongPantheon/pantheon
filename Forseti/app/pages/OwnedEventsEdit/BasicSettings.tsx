@@ -70,6 +70,9 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           withAsterisk
           icon={<IconAbc size='1rem' />}
           label={i18n._t('Event title')}
+          description={i18n._t(
+            'Please include a "TEST" word if you make a test tournament. Events that have "TEST" in title do not send any notifications to players.'
+          )}
           {...form.getInputProps('event.title')}
         />
         {newEvent && (

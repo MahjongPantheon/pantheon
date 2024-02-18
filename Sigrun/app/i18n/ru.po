@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-17 23:41+0100\n"
+"POT-Creation-Date: 2024-02-18 22:59+0100\n"
 "PO-Revision-Date: 2024-01-06 20:06+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -873,7 +873,7 @@ msgstr "Кокуши мусо"
 msgid "Kuitan"
 msgstr "Куитан"
 
-#: app/components/MainMenu.tsx:212:33 app/components/MainMenu.tsx:213:20
+#: app/components/MainMenu.tsx:210:33 app/components/MainMenu.tsx:211:20
 msgid "Language"
 msgstr "Язык"
 
@@ -990,7 +990,7 @@ msgstr ""
 "Только первый игрок по ходу раздачи считается победителем по рон. Если "
 "галочка не отмечена, все игроки, объявившие рон, считаются победителями."
 
-#: app/components/MainMenu.tsx:198:34 app/components/MainMenu.tsx:199:22
+#: app/components/MainMenu.tsx:197:32 app/components/MainMenu.tsx:198:20
 msgid "Open assistant"
 msgstr "Ассистент"
 
@@ -1452,11 +1452,11 @@ msgstr "В руки с риичи: "
 msgid "To open hands: "
 msgstr "В открытые руки: "
 
-#: app/components/MainMenu.tsx:249:33 app/components/MainMenu.tsx:250:20
+#: app/components/MainMenu.tsx:247:33 app/components/MainMenu.tsx:248:20
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
-#: app/components/MainMenu.tsx:239:33 app/components/MainMenu.tsx:240:20
+#: app/components/MainMenu.tsx:237:33 app/components/MainMenu.tsx:238:20
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 

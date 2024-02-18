@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-18 00:27+0100\n"
+"POT-Creation-Date: 2024-02-18 22:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,23 +212,23 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: app/components/MainMenu.tsx:198:34
-#: app/components/MainMenu.tsx:199:22
+#: app/components/MainMenu.tsx:197:32
+#: app/components/MainMenu.tsx:198:20
 msgid "Open assistant"
 msgstr ""
 
-#: app/components/MainMenu.tsx:212:33
-#: app/components/MainMenu.tsx:213:20
+#: app/components/MainMenu.tsx:210:33
+#: app/components/MainMenu.tsx:211:20
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:239:33
-#: app/components/MainMenu.tsx:240:20
+#: app/components/MainMenu.tsx:237:33
+#: app/components/MainMenu.tsx:238:20
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:249:33
-#: app/components/MainMenu.tsx:250:20
+#: app/components/MainMenu.tsx:247:33
+#: app/components/MainMenu.tsx:248:20
 msgid "Toggle color scheme"
 msgstr ""
 

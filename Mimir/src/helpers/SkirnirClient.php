@@ -39,7 +39,10 @@ class SkirnirClient
     public function messageSeatingReady($playerIds, $table, $eventId)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
-        $eventTitle = $this->_fetchEventTitle($eventId);
+        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        if ($disabledForEvent) {
+            return;
+        }
         $ids = $this->_getFilteredIdsByPermissions(Notifications::SessionSeatingReady, $settings);
         $this->_sendMessage(
             $ids,
@@ -57,7 +60,10 @@ class SkirnirClient
     public function messageSessionStartingSoon($playerIds, $eventId)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
-        $eventTitle = $this->_fetchEventTitle($eventId);
+        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        if ($disabledForEvent) {
+            return;
+        }
         $ids = $this->_getFilteredIdsByPermissions(Notifications::SessionStartingSoon, $settings);
         $this->_sendMessage(
             $ids,
@@ -75,7 +81,10 @@ class SkirnirClient
     public function messageHandRecorded($playerIds, $eventId, $diff)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
-        $eventTitle = $this->_fetchEventTitle($eventId);
+        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        if ($disabledForEvent) {
+            return;
+        }
         $ids = $this->_getFilteredIdsByPermissions(Notifications::HandHasBeenRecorded, $settings);
         $diffMsg = [];
         $playerMap = $this->_getPlayersMap($settings);
@@ -105,7 +114,10 @@ class SkirnirClient
     public function messageClubSessionEnd($playerIds, $eventId, $results)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
-        $eventTitle = $this->_fetchEventTitle($eventId);
+        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        if ($disabledForEvent) {
+            return;
+        }
         $ids = $this->_getFilteredIdsByPermissions(Notifications::ClubSessionEnded, $settings);
         $playerMap = $this->_getPlayersMap($settings);
         $resultsMsg = [];
@@ -128,7 +140,10 @@ class SkirnirClient
     public function messageTournamentSessionEnd($playerIds, $eventId, $results)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
-        $eventTitle = $this->_fetchEventTitle($eventId);
+        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        if ($disabledForEvent) {
+            return;
+        }
         $ids = $this->_getFilteredIdsByPermissions(Notifications::TournamentSessionEnded, $settings);
         $playerMap = $this->_getPlayersMap($settings);
         $resultsMsg = [];
@@ -165,17 +180,17 @@ class SkirnirClient
 
     /**
      * @param int $eventId
-     * @return string
+     * @return array
      * @throws InvalidParametersException
      */
-    protected function _fetchEventTitle($eventId)
+    protected function _fetchEventData($eventId)
     {
         $events = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($events)) {
             throw new InvalidParametersException('Event not found in DB');
         }
 
-        return $events[0]->getTitle();
+        return [mb_strpos($events[0]->getTitle(), 'TEST') !== false, $events[0]->getTitle()];
     }
 
     /**
