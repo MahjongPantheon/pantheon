@@ -31,18 +31,20 @@ class SkirnirClient
 
     /**
      * @param int[] $playerIds
+     * @param int $table
      * @param int $eventId
      * @return void
      * @throws InvalidParametersException
      */
-    public function messageSeatingReady($playerIds, $eventId)
+    public function messageSeatingReady($playerIds, $table, $eventId)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
         $eventTitle = $this->_fetchEventTitle($eventId);
         $ids = $this->_getFilteredIdsByPermissions(Notifications::SessionSeatingReady, $settings);
         $this->_sendMessage(
             $ids,
-            "[<b>$eventTitle</b>]\n\n🪑 The seating for next round is ready! Please don't be late!"
+            "[<b>$eventTitle</b>]\n\n🪑 The seating for next round is ready! " .
+            " Your table is #$table - please don't be late!"
         );
     }
 

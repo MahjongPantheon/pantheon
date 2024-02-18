@@ -55,20 +55,28 @@ class SeatingController extends Controller
         list ($playersMap, $tables) = $this->_getData($eventId);
         $playerIds = array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed) ?? []);
         $seating = array_chunk($playerIds, 4);
+
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
+        $playerMap = [];
+        foreach ($regs as $r) {
+            $playerMap[$r->getPlayerId()] = $r->getReplacementPlayerId();
+        }
+
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
-                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
-        }
+                ->startGame($eventId, $table, $tableIndex); // TODO: here might be an exception inside loop!
 
-        $playerIds = array_filter(array_map(function ($pr) {
-            if ($pr->getIgnoreSeating()) {
-                return null;
+            foreach ($table as $k => $v) {
+                if (!empty($playerMap[$v])) {
+                    $table[$k] = $playerMap[$v];
+                }
             }
-            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
-        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
-        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
-        $skirnir->messageSeatingReady($playerIds, $eventId);
+            $skirnir->messageSeatingReady($table, $tableIndex, $eventId);
+
+            $tableIndex++;
+        }
 
         $this->_log->info('Created new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
         if ($gamesWillStart) {
@@ -102,20 +110,27 @@ class SeatingController extends Controller
         list ($playersMap, $tables) = $this->_getData($eventId);
         $playerIds = array_keys(Seating::swissSeating($playersMap, $tables));
         $seating = array_chunk($playerIds, 4);
+
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
+        $playerMap = [];
+        foreach ($regs as $r) {
+            $playerMap[$r->getPlayerId()] = $r->getReplacementPlayerId();
+        }
+
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
-                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
-        }
+                ->startGame($eventId, $table, $tableIndex); // TODO: here might be an exception inside loop!
 
-        $playerIds = array_filter(array_map(function ($pr) {
-            if ($pr->getIgnoreSeating()) {
-                return null;
+            foreach ($table as $k => $v) {
+                if (!empty($playerMap[$v])) {
+                    $table[$k] = $playerMap[$v];
+                }
             }
-            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
-        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
-        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
-        $skirnir->messageSeatingReady($playerIds, $eventId);
+            $skirnir->messageSeatingReady($table, $tableIndex, $eventId);
+            $tableIndex++;
+        }
 
         $this->_log->info('Created new swiss seating for event #' . $eventId);
         if ($gamesWillStart) {
@@ -206,20 +221,26 @@ class SeatingController extends Controller
 
         $seating = Seating::makeIntervalSeating($currentRatingTable, $step, true);
 
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
+        $playerMap = [];
+        foreach ($regs as $r) {
+            $playerMap[$r->getPlayerId()] = $r->getReplacementPlayerId();
+        }
+
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
-                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
-        }
+                ->startGame($eventId, $table, $tableIndex); // TODO: here might be an exception inside loop!
 
-        $playerIds = array_filter(array_map(function ($pr) {
-            if ($pr->getIgnoreSeating()) {
-                return null;
+            foreach ($table as $k => $v) {
+                if (!empty($playerMap[$v])) {
+                    $table[$k] = $playerMap[$v];
+                }
             }
-            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
-        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
-        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
-        $skirnir->messageSeatingReady($playerIds, $eventId);
+            $skirnir->messageSeatingReady($table, $tableIndex, $eventId);
+            $tableIndex++;
+        }
 
         $this->_log->info('Created new interval seating for event #' . $eventId);
         if ($gamesWillStart) {
@@ -252,6 +273,13 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
         $tableIndex = 1;
 
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
+        $playerMap = [];
+        foreach ($regs as $r) {
+            $playerMap[$r->getPlayerId()] = $r->getReplacementPlayerId();
+        }
+
         $playerIds = [];
         foreach ($seating as $table) {
             $table = array_filter(array_map(function ($el) {
@@ -271,17 +299,16 @@ class SeatingController extends Controller
             }
 
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
-                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
-        }
+                ->startGame($eventId, $table, $tableIndex); // TODO: here might be an exception inside loop!
 
-        $playerIds = array_filter(array_map(function ($pr) use ($playerIds) {
-            if ($pr->getIgnoreSeating() || !in_array($pr->getPlayerId(), $playerIds)) {
-                return null;
+            foreach ($table as $k => $v) {
+                if (!empty($playerMap[$v])) {
+                    $table[$k] = $playerMap[$v];
+                }
             }
-            return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
-        }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId)));
-        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
-        $skirnir->messageSeatingReady($playerIds, $eventId);
+            $skirnir->messageSeatingReady($table, $tableIndex, $eventId);
+            $tableIndex++;
+        }
 
         // increment game index when seating is generated
         $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);
