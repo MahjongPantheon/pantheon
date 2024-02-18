@@ -26,6 +26,7 @@ if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
 
 try {
     $config = new Config($configPath);
+    date_default_timezone_set($config->getStringValue('serverDefaultTimezone') ?: 'UTC');
     $db = new Db($config);
     $freyClient = new FreyClientTwirp($config->getStringValue('freyUrl'));
     $mc = new \Memcached();

@@ -24,6 +24,7 @@ class ClubEventSeeder extends AbstractSeed
     {
         // Non-phinx-based seeder to avoid rewriting seeds for every schema change
         list($src, $config) = $this->_getConnection();
+        date_default_timezone_set((string)$config->getValue('serverDefaultTimezone'));
         $event = $this->_seedEvent($src);
         $idMap = $this->_seedPlayers($src, $event);
         $this->_seedGames($src, $config, $event, $idMap, intval(getenv('SEED_REPEAT') ?: '1'));
@@ -134,6 +135,7 @@ class ClubEventSeeder extends AbstractSeed
             'admin'     => [
                 'debug_token' => 'CHANGE_ME'
             ],
+            'serverDefaultTimezone' => 'UTC',
             'freyUrl'   => 'http://frey',
             'verbose'   => false,
             'verboseLog' => '',

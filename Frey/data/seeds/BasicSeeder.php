@@ -47,6 +47,7 @@ class BasicSeeder extends AbstractSeed
         $this->table('player')->getAdapter()->commitTransaction();
 
         list($db, $config) = $this->_getConnection();
+        date_default_timezone_set((string)$config->getValue('serverDefaultTimezone'));
         $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
         $_SERVER['HTTP_X_DEBUG_TOKEN'] = 'CHANGE_ME';
         $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] = 'CHANGE_ME_INTERNAL';
@@ -250,6 +251,7 @@ class BasicSeeder extends AbstractSeed
             'testing_token' => '',
             'verbose'   => false,
             'verboseLog' => '',
+            'serverDefaultTimezone' => 'UTC',
             'api' => [
                 'version_major' => 1,
                 'version_minor' => 0
