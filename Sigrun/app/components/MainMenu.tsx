@@ -190,16 +190,14 @@ export const MainMenu = ({
               onClick={closeMenu}
             />
           )}
-          {globals.data.eventId?.length === 1 && (
-            <MainMenuLink
-              external={ExternalTarget.TYR}
-              href={env.urls.tyr}
-              icon={<IconDeviceMobileShare size={20} />}
-              text={showLabels ? i18n._t('Open assistant') : ''}
-              title={i18n._t('Open assistant')}
-              onClick={closeMenu}
-            />
-          )}
+          <MainMenuLink
+            external={ExternalTarget.TYR}
+            href={env.urls.tyr}
+            icon={<IconDeviceMobileShare size={20} />}
+            text={showLabels ? i18n._t('Open assistant') : ''}
+            title={i18n._t('Open assistant')}
+            onClick={closeMenu}
+          />
         </Stack>
         <Group mt={0} spacing={0}>
           <NavLink
