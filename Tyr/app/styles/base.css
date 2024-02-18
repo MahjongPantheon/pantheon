@@ -86,6 +86,15 @@ p {
   color: var(--primary-text-color);
 }
 
+.AppWrap {
+  height: 100%;
+  overflow: scroll;
+}
+
+.AppWrap.pwafix {
+  height: calc(100% - 20px);
+}
+
 .newyear {
   background-image: url(../img/snow.png);
   background-repeat: no-repeat;

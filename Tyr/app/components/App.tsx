@@ -124,11 +124,15 @@ export const App: React.FC<IProps> = (props: IProps) => {
     (curDate.getMonth() === 11 && curDate.getDate() > 20) ||
     (curDate.getMonth() === 0 && curDate.getDate() < 10);
 
+  const isInStandaloneMode = 'standalone' in window.navigator && window.navigator.standalone;
+
   return (
     <div id='screen' className={`App theme-${currentThemeName}${haveNySpecs ? ' newyear' : ''}`}>
-      <i18n.Provider value={i18nService}>
-        <CurrentScreen state={state} dispatch={dispatch} />
-      </i18n.Provider>
+      <div className={`AppWrap ${isInStandaloneMode ? 'pwafix' : ''}`}>
+        <i18n.Provider value={i18nService}>
+          <CurrentScreen state={state} dispatch={dispatch} />
+        </i18n.Provider>
+      </div>
     </div>
   );
 };
