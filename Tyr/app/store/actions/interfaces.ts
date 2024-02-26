@@ -143,6 +143,7 @@ interface StartupWithAuthAction {
   payload: {
     token: string;
     personId: number;
+    sessionId: string; // analytics session id, not gaming session!
   };
 }
 

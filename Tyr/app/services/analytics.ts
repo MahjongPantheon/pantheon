@@ -16,7 +16,6 @@
  */
 
 import debounce from 'lodash.debounce';
-import { v4 } from 'uuid';
 import { env } from '../env';
 
 let OSName = 'Unknown OS';
@@ -24,8 +23,6 @@ if (navigator.appVersion.includes('Win')) OSName = 'Windows';
 if (navigator.appVersion.includes('Mac')) OSName = 'MacOS';
 if (navigator.appVersion.includes('X11')) OSName = 'UNIX';
 if (navigator.appVersion.includes('Linux')) OSName = 'Linux';
-
-const sessionId = v4();
 
 let isTablet = false;
 (function (a) {
@@ -92,6 +89,7 @@ export class Analytics {
   public static readonly LOAD_ERROR = 'load_error';
   private _eventId: number | null = null;
   private _userId: number | null = null;
+  private _sessionId: string | null = null;
   private readonly _statDomain: string | null = null;
   private readonly _siteId: string | null = null;
   private readonly _track: typeof Analytics.prototype.track | null = null;
@@ -102,7 +100,7 @@ export class Analytics {
     }
     const payload = {
       s: this._siteId,
-      si: sessionId,
+      si: this._sessionId,
       h: window.location.hostname,
       o: OSName,
       d: isTablet ? 'tablet' : isMobile ? 'mobile' : 'desktop',
@@ -141,7 +139,7 @@ export class Analytics {
     }
     const payload = {
       s: this._siteId,
-      si: sessionId,
+      si: this._sessionId,
       h: window.location.hostname,
       o: OSName,
       d: isTablet ? 'tablet' : isMobile ? 'mobile' : 'desktop',
@@ -206,6 +204,13 @@ export class Analytics {
       return;
     }
     this._eventId = eventId;
+  }
+
+  setSessionId(sessionId: string) {
+    if (!this._statDomain) {
+      return;
+    }
+    this._sessionId = sessionId;
   }
 
   track(action: string, params: { [key: string]: any } = {}, eventId?: number) {

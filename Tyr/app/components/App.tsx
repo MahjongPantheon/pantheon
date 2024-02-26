@@ -46,6 +46,7 @@ import { EventSelectScreen } from './screens/event-select/EventSelectScreen';
 import { OtherTablesList } from './screens/other-tables-list/OtherTablesListScreen';
 import { i18n } from './i18n';
 import { IStorage } from '../../../Common/storage';
+import { v4 } from 'uuid';
 
 interface IProps {
   state: IAppState;
@@ -110,11 +111,14 @@ export const App: React.FC<IProps> = (props: IProps) => {
     if (event) {
       dispatch({ type: SELECT_EVENT, payload: event });
     }
+    const sid = storage.getSessionId() ?? v4();
+    storage.setSessionId(sid);
     dispatch({
       type: STARTUP_WITH_AUTH,
       payload: {
         token: storage.getAuthToken() ?? '',
         personId: storage.getPersonId() ?? 0,
+        sessionId: sid,
       },
     });
   }, []);

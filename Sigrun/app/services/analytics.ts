@@ -16,7 +16,6 @@
  */
 
 import debounce from 'lodash.debounce';
-import { v4 } from 'uuid';
 
 export class Analytics {
   public static readonly NOT_INITIALIZED = 'not_initialized';
@@ -32,13 +31,13 @@ export class Analytics {
   public static readonly LOAD_ERROR = 'load_error';
   private _eventId: number | null = null;
   private _userId: number | null = null;
+  private _sessionId: string | null = null;
   private readonly _statDomain: string | null = null;
   private readonly _siteId: string | null = null;
   private readonly _track: typeof Analytics.prototype.track | null = null;
   private readonly _trackView: typeof Analytics.prototype.trackView | null = null;
   private static OSName = 'Unknown OS';
   private static browser = 'unknown';
-  private static sessionId: string;
   private static isTablet = false;
   private static isMobile = false;
 
@@ -47,8 +46,6 @@ export class Analytics {
     if (navigator.appVersion.includes('Mac')) Analytics.OSName = 'MacOS';
     if (navigator.appVersion.includes('X11')) Analytics.OSName = 'UNIX';
     if (navigator.appVersion.includes('Linux')) Analytics.OSName = 'Linux';
-
-    Analytics.sessionId = v4();
 
     Analytics.isTablet = false;
     (function (a) {
@@ -106,7 +103,7 @@ export class Analytics {
     }
     const payload = {
       s: this._siteId,
-      si: Analytics.sessionId,
+      si: this._sessionId,
       h: window.location.hostname,
       o: Analytics.OSName,
       d: Analytics.isTablet ? 'tablet' : Analytics.isMobile ? 'mobile' : 'desktop',
@@ -145,7 +142,7 @@ export class Analytics {
     }
     const payload = {
       s: this._siteId,
-      si: Analytics.sessionId,
+      si: this._sessionId,
       h: window.location.hostname,
       o: Analytics.OSName,
       d: Analytics.isTablet ? 'tablet' : Analytics.isMobile ? 'mobile' : 'desktop',
@@ -227,6 +224,13 @@ export class Analytics {
       return;
     }
     this._eventId = eventId;
+  }
+
+  setSessionId(sessionId: string) {
+    if (!this._statDomain) {
+      return;
+    }
+    this._sessionId = sessionId;
   }
 
   track(action: string, params: { [key: string]: any } = {}, eventId?: number) {
