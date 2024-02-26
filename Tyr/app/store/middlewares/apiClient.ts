@@ -96,6 +96,7 @@ export const apiClient =
           mw.dispatch,
           next,
           action.payload.personId,
+          action.payload.sessionId,
           action.payload.token,
           eventId,
           mw.getState().currentSessionHash
@@ -204,7 +205,7 @@ export const apiClient =
   };
 
 function loginWithRetry(
-  data: { email: string; password: string },
+  data: { email: string; password: string; sessionId: string },
   api: IRiichiApi,
   dispatch: Dispatch<AppActionTypes>,
   next: Dispatch<AppActionTypes>
@@ -218,7 +219,7 @@ function loginWithRetry(
       .then((auth) => {
         retriesCount = 0;
         dispatch({ type: LOGIN_SUCCESS, payload: auth });
-        startupWithAuth(api, dispatch, next, auth.personId, auth.authToken);
+        startupWithAuth(api, dispatch, next, auth.personId, data.sessionId, auth.authToken);
       })
       .catch((e) => {
         retriesCount++;
@@ -431,6 +432,7 @@ function startupWithAuth(
   dispatchToStore: Dispatch<AppActionTypes>,
   dispatchNext: Dispatch<AppActionTypes>,
   personId: number,
+  sessionId: string,
   token: string,
   eventId?: number,
   sessionHash?: string
@@ -444,7 +446,7 @@ function startupWithAuth(
       }
       dispatchToStore({
         type: SET_CREDENTIALS,
-        payload: { authToken: token, personId: personId },
+        payload: { authToken: token, personId, sessionId },
       });
       getUserinfo(personId, api, dispatchNext);
       if (!eventId) {

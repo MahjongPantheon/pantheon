@@ -36,11 +36,11 @@ import {
   LOGIN_INIT,
   LOGIN_SUCCESS,
   SELECT_EVENT,
+  SET_CREDENTIALS,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
   SETTINGS_SAVE_THEME,
   START_GAME_FAIL,
-  STARTUP_WITH_AUTH,
   TRACK_ARBITRARY_EVENT,
   TRACK_SCREEN_ENTER,
   UPDATE_CURRENT_GAMES_FAIL,
@@ -57,7 +57,7 @@ export const analytics =
   (next: Dispatch<AppActionTypes>) =>
   (action: AppActionTypes) => {
     switch (action.type) {
-      case STARTUP_WITH_AUTH:
+      case SET_CREDENTIALS:
         an.setSessionId(action.payload.sessionId);
         an.setUserId(action.payload.personId);
         break;

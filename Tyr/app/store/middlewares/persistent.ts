@@ -33,6 +33,7 @@ import {
 import { IAppState } from '../interfaces';
 import { RemoteError } from '../../services/remoteError';
 import { IStorage } from '../../../../Common/storage';
+import { v4 } from 'uuid';
 
 export const persistentMw =
   (storage: IStorage) =>
@@ -40,24 +41,36 @@ export const persistentMw =
   (next: Dispatch<AppActionTypes>) =>
   (action: AppActionTypes) => {
     switch (action.type) {
-      case LOGIN_SUCCESS:
+      case LOGIN_SUCCESS: {
+        const sessionId = storage.getSessionId() ?? v4();
         storage
+          .setSessionId(sessionId)
           .setAuthToken(action.payload.authToken)
           .setPersonId(action.payload.personId)
           .deleteEventId();
         mw.dispatch({
           type: SET_CREDENTIALS,
-          payload: { authToken: action.payload.authToken, personId: action.payload.personId },
+          payload: {
+            authToken: action.payload.authToken,
+            personId: action.payload.personId,
+            sessionId,
+          },
         });
         break;
-      case LOGIN_INIT:
+      }
+      case LOGIN_INIT: {
         // Remove current token, we're going to get the new one
         storage.deleteAuthToken().deletePersonId();
-        mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: '', personId: 0 } });
+        const sessionId = storage.getSessionId() ?? v4();
+        storage.setSessionId(sessionId);
+        mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: '', personId: 0, sessionId } });
         break;
+      }
       case FORCE_LOGOUT:
+        const sessionId = storage.getSessionId() ?? v4();
         storage.clear();
-        mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: '', personId: 0 } });
+        storage.setSessionId(sessionId);
+        mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: '', personId: 0, sessionId } });
         mw.dispatch({
           type: LOGIN_FAIL,
           payload: action.payload ?? new RemoteError('Not logged in', '403'),

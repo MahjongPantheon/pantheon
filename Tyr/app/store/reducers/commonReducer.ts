@@ -40,6 +40,7 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
       return {
         ...state,
         currentPlayerId: action.payload.personId,
+        analyticsSession: action.payload.sessionId,
       };
     case SELECT_MULTIRON_WINNER:
       return {

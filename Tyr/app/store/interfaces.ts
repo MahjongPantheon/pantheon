@@ -78,6 +78,7 @@ export type ErrorState = {
 };
 
 export interface IAppState {
+  analyticsSession?: string;
   currentScreen: AppScreen;
   currentSessionHash?: string;
   currentOutcome?: AppOutcome;

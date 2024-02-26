@@ -260,6 +260,7 @@ interface LoginActionInit {
   payload: {
     email: string;
     password: string;
+    sessionId: string;
   };
 }
 interface LoginActionSuccess {
@@ -278,6 +279,7 @@ interface SetCredentialsAction {
   payload: {
     authToken: string;
     personId: number;
+    sessionId: string;
   };
 }
 interface UpdateCurrentGamesActionInit {

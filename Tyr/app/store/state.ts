@@ -34,6 +34,7 @@ export const initialState: IAppState = {
   settings: { currentLang: 'en', currentTheme: 'day', singleDeviceMode: false },
   timer: undefined,
   yakuList: undefined,
+  analyticsSession: undefined,
 
   currentScreen: 'overview',
   currentSessionHash: undefined,
