@@ -16,7 +16,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Hugin;
-
 require_once __DIR__ . '/../src/helpers/Config.php';
 require_once __DIR__ . '/../src/helpers/Db.php';
 

@@ -23,19 +23,20 @@ import { usePageTitle } from '../hooks/pageTitle';
 import {
   Button,
   Container,
+  Divider,
   Group,
   LoadingOverlay,
-  Divider,
   Select,
   Space,
+  Table,
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
 
 import { useStorage } from '../hooks/storage';
 import { HuginData } from '../clients/proto/hugin.pb';
-import LineGraph from '../components/LineGraph';
 import { Link, Redirect } from 'wouter';
+import LineGraph from '../components/LineGraph';
 
 const opts = {
   type: 'line',
@@ -60,7 +61,65 @@ const opts = {
   },
 };
 
-type HuginKeys = Exclude<Exclude<keyof HuginData, 'uniqCount'>, 'eventCount'>;
+type HuginKeys = Exclude<keyof HuginData, 'eventCount'>;
+type Subsystems = 'all' | 'Forset' | 'Tyr' | 'Sigrun' | 'Bragi';
+type Dataset<Data> = {
+  label: string;
+  fill: boolean;
+  tension: number;
+  backgroundColor: string;
+  borderColor: string;
+  data: Data;
+};
+type Stats = {
+  labels?: string[]; // dates
+  datasets: Dataset<{ /*date*/ x: string; y: number }[]>[];
+};
+
+const TableTotalView = ({
+  elements,
+  selectedField,
+}: {
+  elements: Stats;
+  selectedField: HuginKeys;
+}) => {
+  const sums = elements.datasets
+    .map((item) => {
+      return {
+        ...item,
+        data: item.data.reduce((acc, i) => acc + i.y, 0),
+      };
+    }, [])
+    .sort((a, b) => b.data - a.data);
+  const rows = sums.map((element, idx) => (
+    <tr key={`table_${idx}`}>
+      <td>{element.label}</td>
+      <td>{element.data}</td>
+    </tr>
+  ));
+
+  const total = sums.reduce((acc, v) => acc + v.data, 0);
+
+  return (
+    <>
+      <h3>
+        Total by {selectedField}: {total}
+      </h3>
+      <Table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </>
+  );
+};
+
+const keys: HuginKeys[] = ['uniqCount', 'browser', 'country', 'city', 'os', 'device', 'language'];
+const subsystems: Subsystems[] = ['all', 'Sigrun', 'Bragi', 'Tyr'];
 
 export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params: { period } }) => {
   period = period ?? 'lastday';
@@ -70,7 +129,8 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
   const storage = useStorage();
   const personId = storage.getPersonId();
   const [stats, setStats] = useState<HuginData[] | null>(null);
-  const [selectedItem, setSelectedItem] = useState<HuginKeys>('browser');
+  const [selectedItem, setSelectedItem] = useState<HuginKeys>('uniqCount');
+  const [selectedSubsystem, setSelectedSubsystem] = useState<Subsystems>('all');
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
 
@@ -78,10 +138,8 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
   const shade2 = isDark ? 7 : 3;
   const colors = [
     theme.colors.red[shade1],
-    theme.colors.pink[shade1],
     theme.colors.grape[shade1],
     theme.colors.violet[shade1],
-    theme.colors.indigo[shade1],
     theme.colors.blue[shade1],
     theme.colors.cyan[shade1],
     theme.colors.green[shade1],
@@ -90,10 +148,8 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
     theme.colors.orange[shade1],
     theme.colors.teal[shade1],
     theme.colors.red[shade2],
-    theme.colors.pink[shade2],
     theme.colors.grape[shade2],
     theme.colors.violet[shade2],
-    theme.colors.indigo[shade2],
     theme.colors.blue[shade2],
     theme.colors.cyan[shade2],
     theme.colors.green[shade2],
@@ -103,17 +159,7 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
     theme.colors.teal[shade2],
   ];
 
-  const keys: HuginKeys[] = [
-    'browser',
-    'eventType',
-    'country',
-    'city',
-    'os',
-    'device',
-    'language',
-    'screen',
-  ];
-  const [selectedStats, setSelectedStats] = useState<any>();
+  const [selectedStats, setSelectedStats] = useState<Stats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   usePageTitle(i18n._t('System stats'));
 
@@ -146,8 +192,16 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
   }
 
   useEffect(() => {
-    setSelectedStats(makeStat(stats, selectedItem, colors));
-  }, [stats, selectedItem, isDark]);
+    setSelectedStats(
+      makeStat(
+        stats,
+        selectedItem,
+        selectedSubsystem,
+        colors,
+        period as 'lastday' | 'lastmonth' | 'lastyear'
+      )
+    );
+  }, [stats, selectedItem, selectedSubsystem, isDark]);
 
   return (
     <Container>
@@ -170,101 +224,144 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
           onChange={(val) => setSelectedItem(val as HuginKeys)}
           data={keys.map((i) => ({ value: i, label: i }))}
         />
+        <Select
+          label={i18n._t('Subsystem')}
+          value={selectedSubsystem}
+          onChange={(val) => setSelectedSubsystem(val as Subsystems)}
+          data={subsystems.map((i) => ({ value: i, label: i }))}
+        />
       </Group>
       <Space h='xl' />
-      {selectedStats &&
-        Object.entries(selectedStats).map(([site, data]) => (
-          <>
-            <LineGraph
-              data={data as any}
-              options={{
-                ...opts,
-                plugins: {
-                  ...opts.plugins,
-                  title: { ...opts.plugins.title, text: site },
-                  legend: {
-                    ...opts.plugins.legend,
-                    labels: { color: theme.colors.dark[1] },
-                  },
+      {selectedStats && (
+        <>
+          <LineGraph
+            data={selectedStats}
+            options={{
+              ...opts,
+              plugins: {
+                ...opts.plugins,
+                title: { ...opts.plugins.title, text: selectedSubsystem },
+                legend: {
+                  ...opts.plugins.legend,
+                  labels: { color: theme.colors.dark[1] },
                 },
-              }}
-            />
-            <Space h='xl' />
-            <Divider my='sm' />
-            <Space h='xl' />
-          </>
-        ))}
+              },
+            }}
+          />
+          <Space h='xl' />
+          <Divider my='sm' />
+          <Space h='xl' />
+          <TableTotalView elements={selectedStats} selectedField={selectedItem} />
+          <Divider my='sm' />
+          <Space h='xl' />
+        </>
+      )}
     </Container>
   );
 };
 
-function makeStat(stats: HuginData[] | null | undefined, field: HuginKeys, colors: string[]) {
-  if (stats) {
-    const data = stats.reduce(
-      (acc, item) => {
-        acc[item.siteId] = [...(acc[item.siteId] ?? []), [item.datetime, JSON.parse(item[field])]];
-        return acc;
-      },
-      {} as Record<string, [string, any][]>
-    );
-
-    const allTimes = Object.fromEntries(
-      Object.entries(data).map(([site, item]) => [
-        site,
-        Object.entries(item).map(([, [date]]) => date),
-      ])
-    );
-
-    const allItemKeys: Record<string, string[]> = Object.fromEntries(
-      Object.entries(data).map(([site, d]) => {
-        return [
-          site,
-          d.reduce((acc, [, item]) => {
-            acc = [...acc, ...Object.keys(item)];
-            return acc;
-          }, [] as string[]),
-        ];
-      })
-    );
-
-    const datasets: Record<string, Record<string, Record<string, number>>> = Object.fromEntries(
-      Object.entries(allItemKeys).map(([siteId, itemKeys]) => {
-        return [
-          siteId,
-          Object.fromEntries(
-            itemKeys.map((n) => [n, Object.fromEntries(allTimes[siteId].map((t) => [t, 0]))])
-          ),
-        ];
-      })
-    );
-
-    Object.entries(data).forEach(([site, items]) => {
-      items.forEach(([time, stat]) => {
-        Object.entries(stat).forEach(([name, count]) => {
-          datasets[site][name][time] = parseInt(count as string, 10);
-        });
-      });
-    });
-
-    return Object.fromEntries(
-      Object.entries(datasets).map(([site, item]) => {
-        return [
-          site,
-          {
-            labels: allTimes[site],
-            datasets: Object.entries(item).map(([name, vals], idx) => {
-              return {
-                label: name,
-                fill: true,
-                tension: 0.2,
-                data: Object.values(vals),
-                backgroundColor: colors[idx % colors.length],
-                borderColor: colors[idx % colors.length],
-              };
-            }),
-          },
-        ];
-      })
-    );
+function makeStat(
+  stats: HuginData[] | null | undefined,
+  field: HuginKeys,
+  subsystem: Subsystems,
+  colors: string[],
+  type: 'lastday' | 'lastmonth' | 'lastyear'
+): Stats | null {
+  if (!stats) {
+    return null;
   }
+
+  const subStats = stats.filter((item) => item.siteId === subsystem || subsystem === 'all');
+  const allDates = Array.from(new Set(subStats.map((item) => item.datetime)));
+  const allDatasets = Array.from(
+    new Set(subStats.flatMap((item) => Object.keys(JSON.parse(item[field].toString()))))
+  );
+
+  const datasetValues: Record<string, Record<string, { x: string; y: number }>> = {};
+
+  for (const date of allDates) {
+    for (const logItem of subStats) {
+      if (logItem.datetime !== date) {
+        continue;
+      }
+      if (field === 'uniqCount') {
+        if (!datasetValues['uniqCount']) {
+          datasetValues['uniqCount'] = {};
+        }
+        if (!datasetValues['uniqCount'][logItem.datetime]) {
+          datasetValues['uniqCount'][logItem.datetime] = {
+            x: logItem.datetime,
+            y: 0,
+          };
+        }
+        datasetValues['uniqCount'][logItem.datetime].y += logItem.uniqCount ?? 0;
+      } else {
+        const data = JSON.parse(logItem[field].toString());
+        for (const datasetItem of allDatasets) {
+          const value = parseInt(data[datasetItem] ?? '0', 10) ?? 0;
+          if (!datasetValues[datasetItem]) {
+            datasetValues[datasetItem] = {};
+          }
+          if (!datasetValues[datasetItem][logItem.datetime]) {
+            datasetValues[datasetItem][logItem.datetime] = { x: logItem.datetime, y: 0 };
+          }
+          datasetValues[datasetItem][logItem.datetime].y += value;
+        }
+      }
+    }
+  }
+
+  const datasetValuesMod = Object.entries(datasetValues).map(([label, data], idx) => ({
+    data: sortBy(type, Object.values(data)),
+    label: label,
+    fill: true,
+    tension: 0.2,
+    backgroundColor: colors[idx % colors.length],
+    borderColor: colors[idx % colors.length],
+  }));
+
+  return {
+    labels: sortDates(type, allDates),
+    datasets: datasetValuesMod,
+  };
+}
+
+function sortBy(type: 'lastday' | 'lastmonth' | 'lastyear', data: Array<{ x: string; y: number }>) {
+  data = data.sort((a, b) => a.x.localeCompare(b.x));
+  let compareTo: number;
+  switch (type) {
+    case 'lastday':
+      compareTo = new Date().getHours() + 1;
+      break;
+    case 'lastmonth':
+      compareTo = new Date().getDate() + 1;
+      break;
+    case 'lastyear':
+      compareTo = new Date().getMonth() + 1;
+      break;
+  }
+  return [
+    ...data.filter((v) => parseInt(v.x, 10) > compareTo),
+    ...data.filter((v) => parseInt(v.x, 10) <= compareTo),
+  ];
+}
+
+function sortDates(type: 'lastday' | 'lastmonth' | 'lastyear', data: string[]) {
+  data = data.sort((a, b) => a.localeCompare(b));
+  let compareTo: number;
+  switch (type) {
+    case 'lastday':
+      compareTo = new Date().getHours() + 1;
+      break;
+    case 'lastmonth':
+      compareTo = new Date().getDate() + 1;
+      break;
+    case 'lastyear':
+      compareTo = new Date().getMonth() + 1;
+      break;
+  }
+  return [
+    ...data.filter((v) => parseInt(v, 10) > compareTo),
+    ...data.filter((v) => parseInt(v, 10) <= compareTo),
+  ];
 }
