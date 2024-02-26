@@ -28,6 +28,7 @@ export interface IStorage {
   getAuthToken(): string | null;
   getPersonId(): number | null;
   getEventId(): number | null;
+  getSessionId(): string | null;
   getLang(): string | null;
   getTheme(): string | null;
   getSingleDeviceMode(): boolean;
@@ -36,6 +37,7 @@ export interface IStorage {
   setAuthToken(token: string): IStorage;
   setPersonId(id: number): IStorage;
   setEventId(id: number): IStorage;
+  setSessionId(id: string): IStorage;
   setLang(lang: string): IStorage;
   setTheme(theme: string): IStorage;
   setSingleDeviceMode(enabled: boolean): IStorage;
@@ -43,6 +45,7 @@ export interface IStorage {
 
   deleteAuthToken(): IStorage;
   deletePersonId(): IStorage;
+  deleteSessionId(): IStorage;
   deleteEventId(): IStorage;
   deleteLang(): IStorage;
   deleteTheme(): IStorage;
@@ -54,6 +57,7 @@ const AUTH_TOKEN_KEY = "auth";
 const PERSON_ID_KEY = "pid";
 const EVENT_ID_KEY = "eid";
 const LANG_KEY = "lng";
+const SESSION_KEY = "sid";
 const THEME_KEY = "thm";
 const DIMMED_KEY = "dim";
 const SINGLE_DEVICE_MODE_KEY = "sdm";
@@ -75,6 +79,10 @@ export class Storage implements IStorage {
 
   public getEventId(): number | null {
     return this.get(EVENT_ID_KEY, "int") as number | null;
+  }
+
+  public getSessionId(): string | null {
+    return this.get(SESSION_KEY, "string") as string | null;
   }
 
   public getLang(): string | null {
@@ -105,6 +113,11 @@ export class Storage implements IStorage {
 
   public setEventId(id: number): IStorage {
     this.set(EVENT_ID_KEY, "int", id);
+    return this;
+  }
+
+  public setSessionId(id: string): IStorage {
+    this.set(SESSION_KEY, "string", id);
     return this;
   }
 
@@ -144,6 +157,11 @@ export class Storage implements IStorage {
 
   public deleteEventId(): IStorage {
     this.delete(EVENT_ID_KEY);
+    return this;
+  }
+
+  public deleteSessionId(): IStorage {
+    this.delete(SESSION_KEY);
     return this;
   }
 

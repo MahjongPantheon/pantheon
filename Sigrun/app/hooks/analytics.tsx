@@ -20,14 +20,18 @@ import { createContext, useContext } from 'react';
 import { Analytics } from '../services/analytics';
 import { storage } from './storage';
 import { env } from '../env';
+import { v4 } from 'uuid';
 
 /**
  * Marked as deprecated to avoid using this in components. Use hook instead.
  * @deprecated
  */
 export const analytics = new Analytics(env.urls.hugin, 'Sigrun');
+const sid = storage.getSessionId() ?? v4();
+storage.setSessionId(sid);
 analytics.setUserId(storage.getPersonId() ?? 0);
 analytics.setEventId(storage.getEventId() ?? 0);
+analytics.setSessionId(sid);
 export const analyticsCtx = createContext(analytics);
 
 export const useAnalytics = () => {
