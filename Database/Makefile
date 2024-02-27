@@ -26,7 +26,7 @@ stop: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi `docker images | grep 'pantheon' | grep 'db' | awk '{print $$3}'` || exit 0
+	docker rmi `docker images | grep 'pantheon' | grep 'database' | awk '{print $$3}'` || exit 0
 
 .PHONY: db_export
 db_export: get_docker_id

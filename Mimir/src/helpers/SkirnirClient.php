@@ -44,10 +44,21 @@ class SkirnirClient
             return;
         }
         $ids = $this->_getFilteredIdsByPermissions(Notifications::SessionSeatingReady, $settings);
+        $winds = ['東', '南', '西', '北'];
+        $namesAndWinds = [];
+        for ($i = 0; $i < 4; $i++) {
+            foreach ($settings as $player) {
+                if ($player['id'] === $playerIds[$i]) {
+                    $namesAndWinds []= $winds[$i] . ' ' . $player['title'];
+                }
+            }
+        }
         $this->_sendMessage(
             $ids,
             "[<b>$eventTitle</b>]\n\n🪑 The seating for next round is ready! " .
-            " Your table is #$table - please don't be late!"
+            " Your table is #$table - please don't be late!\n\n" .
+            "Seating at your table is: \n" .
+            implode("\n", $namesAndWinds)
         );
     }
 
