@@ -82,6 +82,7 @@ i18n_extract:
 	msgmerge -s -U ./app/i18n/de.po ./app/i18n/messages.pot --backup=none
 	msgmerge -s -U ./app/i18n/cn.po ./app/i18n/messages.pot --backup=none
 	msgmerge -s -U ./app/i18n/jp.po ./app/i18n/messages.pot --backup=none
+	msgmerge -s -U ./app/i18n/ko.po ./app/i18n/messages.pot --backup=none
 
 PHONY: i18n_update
 i18n_update:
@@ -90,6 +91,7 @@ i18n_update:
 	./node_modules/.bin/pojson -s app/i18n/ema.po -o app/i18n/ema.json --withMeta
 	./node_modules/.bin/pojson -s app/i18n/jp.po -o app/i18n/jp.json --withMeta
 	./node_modules/.bin/pojson -s app/i18n/cn.po -o app/i18n/cn.json --withMeta
+	./node_modules/.bin/pojson -s app/i18n/ko.po -o app/i18n/ko.json --withMeta
 
 PHONY: proto_gen
 proto_gen:

@@ -24,14 +24,16 @@ import langEma from '../i18n/ema.json';
 import langCn from '../i18n/cn.json';
 import langJp from '../i18n/jp.json';
 import langDe from '../i18n/de.json';
+import langKo from '../i18n/ko.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ema', 'jp', 'cn', 'ru', 'de'];
+export const supportedLanguages = ['en', 'ema', 'jp', 'ko', 'cn', 'ru', 'de'];
 const langs = {
   ema: langEma,
   jp: langJp,
   cn: langCn,
   ru: langRu,
   de: langDe,
+  ko: langKo,
 };
 
 export class I18nService {
@@ -50,6 +52,7 @@ export class I18nService {
           case 'ema':
           case 'jp':
           case 'cn':
+          case 'ko':
             onReady(name, JSON.stringify(langs[name]));
             break;
           case 'en':
