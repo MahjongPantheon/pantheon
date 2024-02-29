@@ -218,3 +218,12 @@ docker_proto_gen: get_docker_id
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Sigrun && HOME=/home/user su-exec user make proto_gen' ; \
 	fi
+
+PHONY: docker_warmup
+docker_warmup: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Sigrun container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://localhost:4102 > /dev/null; done' ; \
+	fi
+

@@ -341,7 +341,9 @@ prod_compile:
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
+	cd Sigrun && ${MAKE} docker_warmup
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
+	cd Bragi && ${MAKE} docker_warmup
 	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
 	@echo "- ${YELLOW}Mimir${NC} API is exposed on port 4001"
 	@echo "- ${YELLOW}Sigrun${NC} is exposed on port 4102 with server-side rendering"

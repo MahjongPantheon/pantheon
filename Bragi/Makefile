@@ -206,3 +206,12 @@ docker_reload_pm2: get_docker_id
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make reload_pm2' ; \
 	fi
+
+PHONY: docker_warmup
+docker_warmup: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Bragi container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://localhost:4108 > /dev/null; done' ; \
+	fi
+
