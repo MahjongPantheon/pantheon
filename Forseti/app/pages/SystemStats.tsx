@@ -62,7 +62,7 @@ const opts = {
 };
 
 type HuginKeys = Exclude<keyof HuginData, 'eventCount'>;
-type Subsystems = 'all' | 'Forset' | 'Tyr' | 'Sigrun' | 'Bragi';
+type Subsystems = 'all' | 'Forseti' | 'Tyr' | 'Sigrun' | 'Bragi';
 type Dataset<Data> = {
   label: string;
   fill: boolean;
@@ -119,7 +119,7 @@ const TableTotalView = ({
 };
 
 const keys: HuginKeys[] = ['uniqCount', 'browser', 'country', 'city', 'os', 'device', 'language'];
-const subsystems: Subsystems[] = ['all', 'Sigrun', 'Bragi', 'Tyr'];
+const subsystems: Subsystems[] = ['all', 'Sigrun', 'Bragi', 'Forseti', 'Tyr'];
 
 export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params: { period } }) => {
   period = period ?? 'lastday';
