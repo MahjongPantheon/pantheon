@@ -702,10 +702,23 @@ class Tenhou6Model
             $sc = array_map('self::asString', $roundLog[16][1]);
             //nagashi not provide tempai
             if ($isNormalRyuukyoku || $type != 'nm') {
-                $hai0 = $sc[0] > 0;
-                $hai1 = $sc[1] > 0;
-                $hai2 = $sc[2] > 0;
-                $hai3 = $sc[3] > 0;
+                $score0 = intval($sc[0]);
+                $score1 = intval($sc[1]);
+                $score2 = intval($sc[2]);
+                $score3 = intval($sc[3]);
+
+                $hai0 = $score0 > 0;
+                $hai1 = $score1 > 0;
+                $hai2 = $score2 > 0;
+                $hai3 = $score3 > 0;
+
+                //all tempai
+                if ($score0 === 0 && $score1 === 0 && $score2 === 0 && $score3 === 0) {
+                    $hai0 = true;
+                    $hai1 = true;
+                    $hai2 = true;
+                    $hai3 = true;
+                }
             }
         }
 
