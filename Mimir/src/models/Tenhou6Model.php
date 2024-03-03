@@ -678,6 +678,7 @@ class Tenhou6Model
      * @param array $roundLog
      * @param string $type
      * @param string $abortType
+     * @param string $roundEndType
      * @return array return data for _tokenRYUUKYOKU
      */
     private function calculateTokenRyuukyoku($roundLog, $type = null, $abortType = null, $roundEndType = null): array
