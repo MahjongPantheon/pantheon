@@ -72,14 +72,14 @@ class Tenhou6Model
     private string $RYUUKYOKU = "RYUUKYOKU";
 
     /**
-     * @var string $RYUUKYOKU_NO_SCORES
+     * @var string $RYUUKYOKU_NO_SCORES_ALL_TEMPAI
      */
-    private string $RYUUKYOKU_NO_SCORES = "RYUUKYOKU_NO_SCORES";
+    private string $RYUUKYOKU_NO_SCORES_ALL_TEMPAI = "RYUUKYOKU_NO_SCORES_ALL_TEMPAI";
 
     /**
-     * @var string $RYUUKYOKU_NO_SCORES_ALT
+     * @var string $RYUUKYOKU_NO_SCORES_ALL_NOTEN
      */
-    private string $RYUUKYOKU_NO_SCORES_ALT = "RYUUKYOKU_NO_SCORES_ALT";
+    private string $RYUUKYOKU_NO_SCORES_ALL_NOTEN = "RYUUKYOKU_NO_SCORES_ALL_NOTEN";
 
     /**
      * @var string $YAKUMAN
@@ -438,10 +438,10 @@ class Tenhou6Model
     {
         $this->_RUNES[$this->AGARI] = "和了";
         $this->_RUNES[$this->RYUUKYOKU] = "流局";
-        $this->_RUNES[$this->RYUUKYOKU_NO_SCORES] = "全員聴牌";
+        $this->_RUNES[$this->RYUUKYOKU_NO_SCORES_ALL_TEMPAI] = "全員聴牌";
         $this->_RUNES[$this->FOUR_KAN_ABORTTION] = "四開槓";
         $this->_RUNES[$this->THREE_RON_ABORTION] = "三家和";
-        $this->_RUNES[$this->RYUUKYOKU_NO_SCORES_ALT] = "全員不聴";
+        $this->_RUNES[$this->RYUUKYOKU_NO_SCORES_ALL_NOTEN] = "全員不聴";
         $this->_RUNES[$this->FOUR_KAN_ABORTTION_ALT] = "四槓散了";
         $this->_RUNES[$this->THREE_RON_ABORTION_ALT] = "三家和了";
         $this->_RUNES[$this->NINE_TERMINAL_ABORTION] = "九種九牌";
@@ -569,11 +569,11 @@ class Tenhou6Model
                         'token' => $this->calculateTokenRyuukyoku($roundLog),
                         'reach_tokens' => $reachTokens
                     ]);
-            } else if ($roundEndType === $this->_RUNES[$this->RYUUKYOKU_NO_SCORES] || $this->rawDecode($roundLog[16][0]) === $this->_RUNES[$this->RYUUKYOKU_NO_SCORES_ALT]) {
+            } else if ($roundEndType === $this->_RUNES[$this->RYUUKYOKU_NO_SCORES_ALL_TEMPAI] || $roundEndType === $this->_RUNES[$this->RYUUKYOKU_NO_SCORES_ALL_NOTEN]) {
                 $reachTokens = $this->calculateTokensReach($roundLog);
                 array_push($this->_rounds, [
                         'type' => $this->RYUUKYOKU,
-                        'token' => $this->calculateTokenRyuukyoku($roundLog, 'no_scores'),
+                        'token' => $this->calculateTokenRyuukyoku($roundLog, 'no_scores', null, $roundEndType),
                         'reach_tokens' => $reachTokens
                     ]);
             } else if ($roundEndType === $this->_RUNES[$this->NAGASHI_MANGAN]) {
@@ -680,7 +680,7 @@ class Tenhou6Model
      * @param string $abortType
      * @return array return data for _tokenRYUUKYOKU
      */
-    private function calculateTokenRyuukyoku($roundLog, $type = null, $abortType = null): array
+    private function calculateTokenRyuukyoku($roundLog, $type = null, $abortType = null, $roundEndType = null): array
     {
         $calculatedType = null;
         $sc = ["0", "0", "0", "0"];
@@ -720,6 +720,13 @@ class Tenhou6Model
                     $hai3 = true;
                 }
             }
+        }
+
+        if ($roundEndType && $roundEndType === $this->_RUNES[$this->RYUUKYOKU_NO_SCORES_ALL_TEMPAI]) {
+            $hai0 = true;
+            $hai1 = true;
+            $hai2 = true;
+            $hai3 = true;
         }
 
         return [
