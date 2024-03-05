@@ -15,5 +15,6 @@ export const env = {
     hugin: proxyAppend(import.meta.env.VITE_HUGIN_URL),
     mimir: proxyAppend(import.meta.env.VITE_MIMIR_URL),
     frey: proxyAppend(import.meta.env.VITE_FREY_URL),
+    tyr: proxyAppend(import.meta.env.VITE_TYR_URL),
   },
 };

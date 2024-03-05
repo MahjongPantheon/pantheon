@@ -4,6 +4,7 @@ import { env } from '../env';
 import {
   IconAlertOctagon,
   IconChartArea,
+  IconDeviceMobileShare,
   IconExternalLink,
   IconFriends,
   IconHandStop,
@@ -234,6 +235,13 @@ export const MainMenu = ({
             onClick={closeMenu}
           />
         )}
+        <MainMenuLink
+          external={ExternalTarget.TYR}
+          href={env.urls.tyr}
+          icon={<IconDeviceMobileShare size={20} />}
+          text={i18n._t('Open assistant')}
+          onClick={closeMenu}
+        />
       </Stack>
       <Group mt={0} spacing={0}>
         <NavLink
