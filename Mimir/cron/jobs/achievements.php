@@ -360,6 +360,11 @@ function addLoserPayment(RoundPrimitive $round, SessionState $sessionState, arra
 
     $lastSessionState = $round->getLastSessionState();
     $loserId = $round->getLoserId();
+
+    if (empty($loserId)) {
+        return $payments;
+    }
+
     $loserHasRiichi = in_array($loserId, $round->getRiichiIds());
 
     $lastScore = $lastSessionState->getScores()[$loserId];
@@ -539,6 +544,10 @@ function getMaxFuHand(Db $db, array $eventIdList, array $players)
         }
 
         if ($round['fu'] < $maxFu) {
+            continue;
+        }
+
+        if (empty($players[$round['winner_id']])) {
             continue;
         }
 
@@ -932,8 +941,8 @@ function getImpossibleWait(Db $db, array $eventIdList, array $players)
         ->limit(100) // limit here for performance reasons
         ->findArray();
 
-    $filteredRounds = array_filter($rounds, function ($round) {
-        return !in_array($round['loser_id'], explode(',', $round['riichi']));
+    $filteredRounds = array_filter($rounds, function ($round) use (&$players) {
+        return !empty($players[$round['loser_id']]) && !in_array($round['loser_id'], explode(',', $round['riichi']));
     });
 
     return array_map(function ($round) use (&$players) {
@@ -969,6 +978,9 @@ function getJustAsPlanned(Db $db, array $eventIdList, array $players)
     $counts = [];
     if ($filteredRounds) {
         foreach ($filteredRounds as $round) {
+            if (empty($players[$round['winner_id']])) {
+                continue;
+            }
             $name = $players[$round['winner_id']]['title'];
             if (empty($counts[$name])) {
                 $counts[$name] = 0;
@@ -1010,8 +1022,8 @@ function getMaxAverageDoraCount(Db $db, array $eventIdList, array $players)
         ->orderByDesc('average')
         ->findArray();
 
-    $filteredRounds = array_filter($rounds, function ($round) {
-        return !empty($round['average']);
+    $filteredRounds = array_filter($rounds, function ($round) use (&$players) {
+        return !empty($players[$round['winner_id']]) && !empty($round['average']);
     });
 
     return array_map(
@@ -1044,6 +1056,9 @@ function getMaxDifferentYakuCount(Db $db, array $eventIdList, array $players)
 
     $playersYaku = [];
     foreach ($rounds as $round) {
+        if (empty($players[$round['winner_id']])) {
+            continue;
+        }
         $name = $players[$round['winner_id']]['title'];
         if (empty($playersYaku[$name])) {
             $playersYaku[$name] = [];
@@ -1126,6 +1141,12 @@ function getFavoriteAsapinApprentice(Db $db, array $eventIdList, array $players)
         return $payment != 0;
     });
 
+    foreach ($filteredPayments as $playerId => $payment) {
+        if (empty($players[$playerId])) {
+            unset($filteredPayments[$playerId]);
+        }
+    }
+
     arsort($filteredPayments);
 
     return array_map(
@@ -1165,6 +1186,9 @@ function getNinja(Db $db, array $eventIdList, array $players)
     $counts = [];
     if ($filteredRounds) {
         foreach ($filteredRounds as $round) {
+            if (empty($players[$round['winner_id']])) {
+                continue;
+            }
             $name = $players[$round['winner_id']]['title'];
             if (empty($counts[$name])) {
                 $counts[$name] = 0;
@@ -1205,6 +1229,9 @@ function getNeedMoreGold(Db $db, array $eventIdList, array $players)
         ->limit(3)
         ->findArray();
     foreach ($results as &$result) {
+        if (empty($players[$result['player_id']])) {
+            continue;
+        }
         $result['title'] = $players[$result['player_id']]['title'];
     }
     return $results;
