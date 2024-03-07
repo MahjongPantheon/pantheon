@@ -2340,14 +2340,6 @@
     "@typescript-eslint/visitor-keys" "6.21.0"
     debug "^4.3.4"
 
-"@typescript-eslint/scope-manager@6.17.0":
-  version "6.17.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-6.17.0.tgz#70e6c1334d0d76562dfa61aed9009c140a7601b4"
-  integrity sha512-RX7a8lwgOi7am0k17NUO0+ZmMOX4PpjLtLRgLmT1d3lBYdWH4ssBUbwdmc5pdRX8rXon8v9x8vaoOSpkHfcXGA==
-  dependencies:
-    "@typescript-eslint/types" "6.17.0"
-    "@typescript-eslint/visitor-keys" "6.17.0"
-
 "@typescript-eslint/scope-manager@6.21.0":
   version "6.21.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-6.21.0.tgz#ea8a9bfc8f1504a6ac5d59a6df308d3a0630a2b1"
@@ -2366,29 +2358,10 @@
     debug "^4.3.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/types@6.17.0":
-  version "6.17.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-6.17.0.tgz#844a92eb7c527110bf9a7d177e3f22bd5a2f40cb"
-  integrity sha512-qRKs9tvc3a4RBcL/9PXtKSehI/q8wuU9xYJxe97WFxnzH8NWWtcW3ffNS+EWg8uPvIerhjsEZ+rHtDqOCiH57A==
-
 "@typescript-eslint/types@6.21.0":
   version "6.21.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-6.21.0.tgz#205724c5123a8fef7ecd195075fa6e85bac3436d"
   integrity sha512-1kFmZ1rOm5epu9NZEZm1kckCDGj5UJEf7P1kliH4LKu/RkwpsfqqGmY2OOcUs18lSlQBKLDYBOGxRVtrMN5lpg==
-
-"@typescript-eslint/typescript-estree@6.17.0":
-  version "6.17.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-6.17.0.tgz#b913d19886c52d8dc3db856903a36c6c64fd62aa"
-  integrity sha512-gVQe+SLdNPfjlJn5VNGhlOhrXz4cajwFd5kAgWtZ9dCZf4XJf8xmgCTLIqec7aha3JwgLI2CK6GY1043FRxZwg==
-  dependencies:
-    "@typescript-eslint/types" "6.17.0"
-    "@typescript-eslint/visitor-keys" "6.17.0"
-    debug "^4.3.4"
-    globby "^11.1.0"
-    is-glob "^4.0.3"
-    minimatch "9.0.3"
-    semver "^7.5.4"
-    ts-api-utils "^1.0.1"
 
 "@typescript-eslint/typescript-estree@6.21.0":
   version "6.21.0"
@@ -2416,14 +2389,6 @@
     "@typescript-eslint/types" "6.21.0"
     "@typescript-eslint/typescript-estree" "6.21.0"
     semver "^7.5.4"
-
-"@typescript-eslint/visitor-keys@6.17.0":
-  version "6.17.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-6.17.0.tgz#3ed043709c39b43ec1e58694f329e0b0430c26b6"
-  integrity sha512-H6VwB/k3IuIeQOyYczyyKN8wH6ed8EwliaYHLxOIhyF0dYEIsN8+Bk3GE19qafeMKyZJJHP8+O1HiFhFLUNKSg==
-  dependencies:
-    "@typescript-eslint/types" "6.17.0"
-    eslint-visitor-keys "^3.4.1"
 
 "@typescript-eslint/visitor-keys@6.21.0":
   version "6.21.0"
@@ -2494,12 +2459,12 @@
   dependencies:
     tinyspy "^2.2.0"
 
-"@vitest/ui@^1.1.0":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-1.1.3.tgz#d4367cf30d3b7ae681ce2748bf0d71468ba9434b"
-  integrity sha512-JKGgftXZgTtK7kfQNicE9Q2FuiUlYvCGyUENkA2/S1VBThtfQyGUwaJmiDFVAKBOrW305cNgjP67vsxMm9/SDQ==
+"@vitest/ui@^1.2.2":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-1.3.1.tgz#89e6a049f3fa68f6dad804318f0b8477cd5392da"
+  integrity sha512-2UrFLJ62c/eJGPHcclstMKlAR7E1WB1ITe1isuowEPJJHi3HfqofvsUqQ1cGrEF7kitG1DJuwURUA3HLDtQkXA==
   dependencies:
-    "@vitest/utils" "1.1.3"
+    "@vitest/utils" "1.3.1"
     fast-glob "^3.3.2"
     fflate "^0.8.1"
     flatted "^3.2.9"
@@ -2511,6 +2476,16 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@vitest/utils/-/utils-1.1.3.tgz#1f82122f916b0b6feb5e85fc854cfa1fbd522b55"
   integrity sha512-Dyt3UMcdElTll2H75vhxfpZu03uFpXRCHxWnzcrFjZxT1kTbq8ALUYIeBgGolo1gldVdI0YSlQRacsqxTwNqwg==
+  dependencies:
+    diff-sequences "^29.6.3"
+    estree-walker "^3.0.3"
+    loupe "^2.3.7"
+    pretty-format "^29.7.0"
+
+"@vitest/utils@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@vitest/utils/-/utils-1.3.1.tgz#7b05838654557544f694a372de767fcc9594d61a"
+  integrity sha512-d3Waie/299qqRyHTm2DjADeTaNdNSVsnwHPWrs20JMpjh6eiVq7ggggweO8rc4arhf6rRkWuHKwvxGvejUXZZQ==
   dependencies:
     diff-sequences "^29.6.3"
     estree-walker "^3.0.3"
