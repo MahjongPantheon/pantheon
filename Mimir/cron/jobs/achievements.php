@@ -3,11 +3,6 @@ namespace Mimir;
 
 ini_set('display_errors', 'On');
 ini_set('memory_limit', '1024M');
-require __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../../src/Config.php';
-require_once __DIR__ . '/../../src/Db.php';
-require_once __DIR__ . '/../../src/DataSource.php';
-require_once __DIR__ . '/../../src/FreyClientTwirp.php';
 require_once __DIR__ . '/../../src/helpers/PointsCalc.php';
 require_once __DIR__ . '/../../src/helpers/SessionState.php';
 require_once __DIR__ . '/../../src/primitives/Session.php';
@@ -18,162 +13,98 @@ require_once __DIR__ . '/../../src/models/PlatformTypeId.php';
 
 define('ACH_SLEEP_INTERVAL', 2);
 
-if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
-    $configPath = getenv('OVERRIDE_CONFIG_PATH');
-} else {
-    $configPath = __DIR__ . '/../../config/index.php';
-}
-
-try {
-    $config = new Config($configPath);
-    date_default_timezone_set($config->getStringValue('serverDefaultTimezone') ?: 'UTC');
-    $db = new Db($config);
-    $freyClient = new FreyClientTwirp($config->getStringValue('freyUrl'));
-    $mc = new \Memcached();
-    $mc->addServer('127.0.0.1', 11211);
-    $ds = new DataSource($db, $freyClient, $mc);
-
-    $allEvents = $db->table('event')
-        ->rawQuery('select id from event')
-        ->findArray();
-    $allAchievements = elm2Key($db->table('achievements')
-        ->rawQuery('select event_id, last_update from achievements')
-        ->findArray(), 'event_id');
-    $lastSessions = elm2Key($db->table('session')
-        ->rawQuery('select s1.event_id, s1.end_date
-        from session s1
-        left join session s2 on (s2.event_id = s1.event_id AND s2.end_date > s1.end_date)
-        where s1.end_date is not null AND s2.id is null')
-        ->findArray(), 'event_id');
-
-    $eventIdsToProcess = [];
-    foreach ($allEvents as $ev) {
-        if (empty($allAchievements[$ev['id']])) {
-            $eventIdsToProcess [] = $ev['id'];
-        } else if (!empty($lastSessions[$ev['id']]) && strtotime($lastSessions[$ev['id']]['end_date']) > strtotime($allAchievements[$ev['id']]['last_update'])) {
-            $eventIdsToProcess [] = $ev['id'];
-        }
-    }
-
-    echo 'Found ' . count($eventIdsToProcess) . ' events to process' . PHP_EOL;
-
-    file_put_contents(
-        '/tmp/ach_last_run', 'Last start: ' . date('H:i:s d-m-Y') . '; Found ' .
-        count($eventIdsToProcess) . ' events to process' . PHP_EOL
-    );
-
-    if (count($eventIdsToProcess) === 0) {
-        exit(0);
-    }
-
-    foreach ($eventIdsToProcess as $id) {
-        try {
-            $processedData = [];
-            $games = SessionPrimitive::findByEventListAndStatus(
-                $ds,
-                [$id],
-                SessionPrimitive::STATUS_FINISHED
-            );
-            $players = EventModel::getPlayersOfGames($ds, $games, $id);
-            /** @var array $sessionIds */
-            $sessionIds = array_map(function (SessionPrimitive $el) {
-                return $el->getId();
-            }, $games);
-            $rounds = getRounds($ds, $sessionIds);
-
-            echo 'Running [bestHand] on event #' . $id . PHP_EOL;
-            $processedData['bestHand'] = getBestHandOfEvent($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [bestTsumoist] on event #' . $id . PHP_EOL;
-            $processedData['bestTsumoist'] = getBestTsumoistInSingleSession($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [braveSapper] on event #' . $id . PHP_EOL;
-            $processedData['braveSapper'] = getBraveSappers($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [dieHard] on event #' . $id . PHP_EOL;
-            $processedData['dieHard'] = getDieHardData($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [dovakins] on event #' . $id . PHP_EOL;
-            $processedData['dovakins'] = getDovakins($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [yakumans] on event #' . $id . PHP_EOL;
-            $processedData['yakumans'] = getYakumans($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [shithander] on event #' . $id . PHP_EOL;
-            $processedData['shithander'] = getBestShithander($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [bestDealer] on event #' . $id . PHP_EOL;
-            $processedData['bestDealer'] = getBestDealer($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [bestFu] on event #' . $id . PHP_EOL;
-            $processedData['bestFu'] = getMaxFuHand($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [impossibleWait] on event #' . $id . PHP_EOL;
-            $processedData['impossibleWait'] = getImpossibleWait($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [honoredDonor] on event #' . $id . PHP_EOL;
-            $processedData['honoredDonor'] = getHonoredDonor($id, $games, $players, $rounds);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [justAsPlanned] on event #' . $id . PHP_EOL;
-            $processedData['justAsPlanned'] = getJustAsPlanned($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [carefulPlanning] on event #' . $id . PHP_EOL;
-            $processedData['carefulPlanning'] = getMinFeedsScore($id, $games, $players, $rounds);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [doraLord] on event #' . $id . PHP_EOL;
-            $processedData['doraLord'] = getMaxAverageDoraCount($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [catchEmAll] on event #' . $id . PHP_EOL;
-            $processedData['catchEmAll'] = getMaxDifferentYakuCount($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [favoriteAsapinApprentice] on event #' . $id . PHP_EOL;
-            $processedData['favoriteAsapinApprentice'] = getFavoriteAsapinApprentice($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [andYourRiichiBet] on event #' . $id . PHP_EOL;
-            $processedData['andYourRiichiBet'] = getMaxStolenRiichiBetsCount($id, $games, $players, $rounds);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [covetousKnight] on event #' . $id . PHP_EOL;
-            $processedData['covetousKnight'] = getMinLostRiichiBetsCount($id, $games, $players, $rounds);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [ninja] on event #' . $id . PHP_EOL;
-            $processedData['ninja'] = getNinja($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Running [needMoreGold] on event #' . $id . PHP_EOL;
-            $processedData['needMoreGold'] = getNeedMoreGold($db, [$id], $players);
-            sleep(ACH_SLEEP_INTERVAL);
-            echo 'Saving achievements on event #' . $id . PHP_EOL;
-            $db->upsertQuery(
-                'achievements',
-                [['event_id' => $id, 'data' => json_encode($processedData), 'last_update' => date('Y-m-d H:i:s')]],
-                ['event_id']
-            );
-            sleep(ACH_SLEEP_INTERVAL);
-        } catch (\Exception $e) {
-            echo $e->getMessage() . PHP_EOL;
-            echo 'Failed to update achievements for event #' . $id . ', skipping...' . PHP_EOL;
-            continue;
-        }
-    }
-    echo 'Achievements update success!' . PHP_EOL;
-} catch (\Exception $e) {
-    echo 'Achievements update error!' . PHP_EOL;
-    echo $e->getMessage() . PHP_EOL;
-}
-
-function elm2Key(array $array, $elmKey)
+/**
+ * @param DataSource $ds
+ * @param int $eventId
+ * @return void
+ */
+function runAchievements(DataSource $ds, $eventId)
 {
-    $result = [];
+    try {
+        $processedData = [];
+        $games = SessionPrimitive::findByEventListAndStatus(
+            $ds,
+            [$eventId],
+            SessionPrimitive::STATUS_FINISHED
+        );
+        $players = EventModel::getPlayersOfGames($ds, $games, $eventId);
+        /** @var array $sessionIds */
+        $sessionIds = array_map(function (SessionPrimitive $el) {
+            return $el->getId();
+        }, $games);
+        $rounds = getRounds($ds, $sessionIds);
 
-    foreach ($array as $k => $v) {
-        if (!isset($v[$elmKey])) {
-            throw new \Exception('Wrong key');
-        }
-        if (empty($result[$v[$elmKey]])) {
-            $result[$v[$elmKey]] = $v;
-        }
+        echo 'Running [bestHand] on event #' . $eventId . PHP_EOL;
+        $processedData['bestHand'] = getBestHandOfEvent($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [bestTsumoist] on event #' . $eventId . PHP_EOL;
+        $processedData['bestTsumoist'] = getBestTsumoistInSingleSession($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [braveSapper] on event #' . $eventId . PHP_EOL;
+        $processedData['braveSapper'] = getBraveSappers($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [dieHard] on event #' . $eventId . PHP_EOL;
+        $processedData['dieHard'] = getDieHardData($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [dovakins] on event #' . $eventId . PHP_EOL;
+        $processedData['dovakins'] = getDovakins($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [yakumans] on event #' . $eventId . PHP_EOL;
+        $processedData['yakumans'] = getYakumans($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [shithander] on event #' . $eventId . PHP_EOL;
+        $processedData['shithander'] = getBestShithander($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [bestDealer] on event #' . $eventId . PHP_EOL;
+        $processedData['bestDealer'] = getBestDealer($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [bestFu] on event #' . $eventId . PHP_EOL;
+        $processedData['bestFu'] = getMaxFuHand($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [impossibleWait] on event #' . $eventId . PHP_EOL;
+        $processedData['impossibleWait'] = getImpossibleWait($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [honoredDonor] on event #' . $eventId . PHP_EOL;
+        $processedData['honoredDonor'] = getHonoredDonor($eventId, $games, $players, $rounds);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [justAsPlanned] on event #' . $eventId . PHP_EOL;
+        $processedData['justAsPlanned'] = getJustAsPlanned($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [carefulPlanning] on event #' . $eventId . PHP_EOL;
+        $processedData['carefulPlanning'] = getMinFeedsScore($eventId, $games, $players, $rounds);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [doraLord] on event #' . $eventId . PHP_EOL;
+        $processedData['doraLord'] = getMaxAverageDoraCount($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [catchEmAll] on event #' . $eventId . PHP_EOL;
+        $processedData['catchEmAll'] = getMaxDifferentYakuCount($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [favoriteAsapinApprentice] on event #' . $eventId . PHP_EOL;
+        $processedData['favoriteAsapinApprentice'] = getFavoriteAsapinApprentice($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [andYourRiichiBet] on event #' . $eventId . PHP_EOL;
+        $processedData['andYourRiichiBet'] = getMaxStolenRiichiBetsCount($eventId, $games, $players, $rounds);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [covetousKnight] on event #' . $eventId . PHP_EOL;
+        $processedData['covetousKnight'] = getMinLostRiichiBetsCount($eventId, $games, $players, $rounds);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [ninja] on event #' . $eventId . PHP_EOL;
+        $processedData['ninja'] = getNinja($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Running [needMoreGold] on event #' . $eventId . PHP_EOL;
+        $processedData['needMoreGold'] = getNeedMoreGold($ds->local(), [$eventId], $players);
+        sleep(ACH_SLEEP_INTERVAL);
+        echo 'Saving achievements on event #' . $eventId . PHP_EOL;
+        $ds->local()->upsertQuery(
+            'achievements',
+            [['event_id' => $eventId, 'data' => json_encode($processedData), 'last_update' => date('Y-m-d H:i:s')]],
+            ['event_id']
+        );
+        sleep(ACH_SLEEP_INTERVAL);
+    } catch (\Exception $e) {
+        echo $e->getMessage() . PHP_EOL;
+        echo 'Failed to update achievements for event #' . $eventId . ', skipping...' . PHP_EOL;
     }
-
-    return $result;
 }
 
 function getRounds(DataSource $ds, array $sessionIds)

@@ -48,26 +48,6 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * Json serialize-deserialize
-     * @return \Closure[]
-     */
-    protected function _jsonTransform(): array
-    {
-        return [
-            'serialize' => function ($obj) {
-                return json_encode($obj);
-            },
-            'deserialize' => function ($str) {
-                try {
-                    return json_decode($str, true, 512, JSON_THROW_ON_ERROR);
-                } catch (\Exception $e) {
-                    return [];
-                }
-            }
-        ];
-    }
-
-    /**
      * Local id
      * @var int|null
      */

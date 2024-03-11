@@ -838,10 +838,11 @@ class SessionPrimitive extends Primitive
     public function scheduleRecalcStats()
     {
         foreach ($this->getPlayersIds() as $playerId) {
-            $psp = PlayerStatsPrimitive::findByEventAndPlayer($this->_ds, $this->getEventId(), $playerId);
-            if (!empty($psp)) {
-                $psp[0]->setNeedRecalc(true)->save();
-            }
+            (new JobsQueuePrimitive($this->_ds))
+                ->setJobName(JobsQueuePrimitive::JOB_PLAYER_STATS)
+                ->setJobArguments(['playerId' => $playerId, 'eventId' => $this->getEventId()])
+                ->setCreatedAt(date('Y-m-d H:i:s'))
+                ->save();
         }
     }
 

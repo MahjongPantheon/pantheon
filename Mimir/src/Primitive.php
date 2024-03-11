@@ -198,6 +198,26 @@ abstract class Primitive
     }
 
     /**
+     * Json serialize-deserialize
+     * @return \Closure[]
+     */
+    protected function _jsonTransform(): array
+    {
+        return [
+            'serialize' => function ($obj) {
+                return json_encode($obj);
+            },
+            'deserialize' => function ($str) {
+                try {
+                    return json_decode($str, true, 512, JSON_THROW_ON_ERROR);
+                } catch (\Exception $e) {
+                    return [];
+                }
+            }
+        ];
+    }
+
+    /**
      * @var DataSource
      */
     protected $_ds;
@@ -372,23 +392,6 @@ abstract class Primitive
         }
 
         $result = $ds->table(static::$_table)->whereIn($key, $identifiers)->findArray();
-        if (empty($result)) {
-            return [];
-        }
-
-        return array_map(function ($data) use ($ds) {
-            return self::_recreateInstance($ds, $data);
-        }, $result);
-    }
-
-    /**
-     * @param DataSource $ds
-     * @throws \Exception
-     * @return static[]
-     */
-    public static function findAll(DataSource $ds)
-    {
-        $result = $ds->table(static::$_table)->findArray();
         if (empty($result)) {
             return [];
         }
