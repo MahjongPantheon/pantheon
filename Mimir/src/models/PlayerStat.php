@@ -119,7 +119,6 @@ class PlayerStatModel extends Model
             $precalc
                 ->setPlayerId($playerId)
                 ->setEventId($eventIdList[0])
-                ->setNeedRecalc(false)
                 ->setLastUpdate(date('Y-m-d H:i:s'))
                 ->setData($data)
                 ->save();

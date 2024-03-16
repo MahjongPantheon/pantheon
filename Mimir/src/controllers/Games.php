@@ -25,6 +25,7 @@ require_once __DIR__ . '/../models/InteractiveSession.php';
 require_once __DIR__ . '/../models/PenaltySession.php';
 require_once __DIR__ . '/../models/OnlineSession.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
+require_once __DIR__ . '/../primitives/JobsQueue.php';
 require_once __DIR__ . '/../Controller.php';
 
 class GamesController extends Controller
@@ -332,6 +333,12 @@ class GamesController extends Controller
             }
             return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
         }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $session[0]->getEventId())));
+
+        (new JobsQueuePrimitive($this->_ds))
+            ->setJobName(JobsQueuePrimitive::JOB_ACHIEVEMENTS)
+            ->setJobArguments(['eventId' =>  $session[0]->getEventId()])
+            ->setCreatedAt(date('Y-m-d H:i:s'))
+            ->save();
 
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
         $skirnir->messageClubSessionEnd($playerIds, $session[0]->getEventId(), $session[0]->getCurrentState()->getScores());

@@ -35,8 +35,7 @@ class PlayerStatsPrimitive extends Primitive
         'event_id'      => '_eventId',
         'player_id'     => '_playerId',
         'data'          => '_data',
-        'last_update'   => '_lastUpdate',
-        'need_recalc'   => '_needRecalc'
+        'last_update'   => '_lastUpdate'
     ];
 
     protected function _getFieldsTransforms()
@@ -46,28 +45,7 @@ class PlayerStatsPrimitive extends Primitive
             '_eventId'         => $this->_integerTransform(),
             '_playerId'        => $this->_integerTransform(),
             '_data'            => $this->_jsonTransform(),
-            '_lastUpdate'      => $this->_stringTransform(true),
-            '_needRecalc'      => $this->_integerTransform(),
-        ];
-    }
-
-    /**
-     * Json serialize-deserialize
-     * @return \Closure[]
-     */
-    protected function _jsonTransform(): array
-    {
-        return [
-            'serialize' => function ($obj) {
-                return json_encode($obj);
-            },
-            'deserialize' => function ($str) {
-                try {
-                    return json_decode($str, true, 512, JSON_THROW_ON_ERROR);
-                } catch (\Exception $e) {
-                    return [];
-                }
-            }
+            '_lastUpdate'      => $this->_stringTransform(true)
         ];
     }
 
@@ -97,11 +75,6 @@ class PlayerStatsPrimitive extends Primitive
      * @var string
      */
     protected $_lastUpdate;
-    /**
-     * Do we need recalculation?
-     * @var int
-     */
-    protected $_needRecalc;
 
     /**
      * Find stats
@@ -123,13 +96,21 @@ class PlayerStatsPrimitive extends Primitive
      * @param DataSource $ds
      * @param int $playerId
      * @throws \Exception
-     * @return bool
+     * @return true
      */
     public static function invalidateByPlayer(DataSource $ds, $playerId)
     {
-        return (bool)($ds->table(self::$_table)
-            ->rawQuery('UPDATE ' . self::$_table . ' SET need_recalc = 1 WHERE player_id = ' . intval($playerId))
-            ->findOne());
+        $stats = self::_findBy($ds, 'player_id', [intval($playerId)]);
+        if (!empty($stats)) {
+            foreach ($stats as $stat) {
+                (new JobsQueuePrimitive($ds))
+                    ->setJobName(JobsQueuePrimitive::JOB_PLAYER_STATS)
+                    ->setJobArguments(['playerId' => $stat->getPlayerId(), 'eventId' => $stat->getEventId()])
+                    ->setCreatedAt(date('Y-m-d H:i:s'))
+                    ->save();
+            }
+        }
+        return true;
     }
 
     /**
@@ -229,24 +210,6 @@ class PlayerStatsPrimitive extends Primitive
     public function setLastUpdate($lastUpdate)
     {
         $this->_lastUpdate = $lastUpdate;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getNeedRecalc()
-    {
-        return $this->_needRecalc === 1;
-    }
-
-    /**
-     * @param boolean $needRecalc
-     * @return PlayerStatsPrimitive
-     */
-    public function setNeedRecalc($needRecalc)
-    {
-        $this->_needRecalc = $needRecalc ? 1 : 0;
         return $this;
     }
 }

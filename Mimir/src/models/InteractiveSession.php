@@ -161,6 +161,12 @@ class InteractiveSessionModel extends Model
         }
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
 
+        (new JobsQueuePrimitive($this->_ds))
+            ->setJobName(JobsQueuePrimitive::JOB_ACHIEVEMENTS)
+            ->setJobArguments(['eventId' =>  $eventId])
+            ->setCreatedAt(date('Y-m-d H:i:s'))
+            ->save();
+
         return array_reduce($games, function ($acc, SessionPrimitive $p) use ($skirnir, $playerMap) {
             $success = $p->finish();
             if ($success) {
@@ -363,6 +369,12 @@ class InteractiveSessionModel extends Model
             $skirnir->messageHandRecorded($playerIds, $session->getEventId(), $diff);
 
             if ($data && $data['_isFinished'] && !$session->getEvent()->getSyncEnd()) {
+                (new JobsQueuePrimitive($this->_ds))
+                    ->setJobName(JobsQueuePrimitive::JOB_ACHIEVEMENTS)
+                    ->setJobArguments(['eventId' =>  $session->getEventId()])
+                    ->setCreatedAt(date('Y-m-d H:i:s'))
+                    ->save();
+
                 $skirnir->messageClubSessionEnd($playerIds, $session->getEventId(), $currentScores);
             }
 

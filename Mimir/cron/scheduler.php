@@ -6,15 +6,10 @@ use GO\Scheduler;
 // Create a new scheduler
 $scheduler = new Scheduler();
 
-$scheduler->php(__DIR__ . '/jobs/achievements.php', null, [], 'achievements')
-    ->at('*/5 * * * *')
-    ->onlyOne()
-    ->output(['/tmp/achievements.cron.log']);
-
-$scheduler->php(__DIR__ . '/jobs/playerStats.php', null, [], 'playerStats')
+$scheduler->php(__DIR__ . '/runJobs.php', null, [], 'runJobs')
     ->at('* * * * *')
     ->onlyOne()
-    ->output(['/tmp/playerStats.cron.log']);
+    ->output(['/tmp/runJobs.cron.log']);
 
 // Let the scheduler execute jobs which are due.
 $scheduler->run();
