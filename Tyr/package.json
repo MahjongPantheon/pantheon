@@ -24,7 +24,7 @@
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vitejs/plugin-react-swc": "^3.6.0",
     "@vitest/ui": "^1.2.2",
     "@vitest/coverage-istanbul": "^1.2.2",
     "classnames": "^2.5.1",
