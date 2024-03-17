@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-18 22:59+0100\n"
-"PO-Revision-Date: 2024-03-01 00:27+0300\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2024-03-11 16:02+0100\n"
+"Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "플레이어 선택"
 
 #: app/components/general/number-select/NumberSelect.tsx:100:13
 msgid "something goes wrong, please contact your administrator"
-msgstr "문제가 발생했습니다. 관리자에게 문의하세요."
+msgstr "문제가 발생했습니다. 관리자에게 문의하세요"
 
 #: app/components/general/search-input/SearchInput.tsx:82:24
 msgid "type to find someone"
@@ -66,7 +66,7 @@ msgstr "이전 대국"
 
 #: app/components/screens/home/HomeScreenView.tsx:137:20
 msgid "Other playing tables"
-msgstr "다른 플레이어의 대국"
+msgstr "대국 관전"
 
 #: app/components/screens/home/HomeScreenView.tsx:143:20
 msgid "Statistics"
@@ -204,7 +204,7 @@ msgstr "예기치 못한 오류가 발생했습니다"
 #: app/components/screens/login/LoginErrorView.tsx:56:12
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
-msgstr "궁금하신 사항이 있으시면 관리자에게 문의해주세요"
+msgstr "궁금하신 사항이 있으시면 관리자에게 문의해주세요."
 
 #: app/components/screens/login/LoginErrorView.tsx:61:12
 msgid "OK"
