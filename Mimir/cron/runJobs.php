@@ -6,6 +6,7 @@ use Common\Storage;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Config.php';
+require_once __DIR__ . '/../src/FreyClientTwirp.php';
 require_once __DIR__ . '/../src/Meta.php';
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/DataSource.php';
@@ -16,7 +17,7 @@ require_once __DIR__ . '/jobs/playerStats.php';
 if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
     $configPath = getenv('OVERRIDE_CONFIG_PATH');
 } else {
-    $configPath = __DIR__ . '/../../config/index.php';
+    $configPath = __DIR__ . '/../config/index.php';
 }
 
 try {
