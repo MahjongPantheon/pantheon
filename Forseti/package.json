@@ -30,7 +30,7 @@
     "@mantine/nprogress": "^6.0.21",
     "@tabler/icons-react": "^2.47.0",
     "@types/lodash.debounce": "^4.0.9",
-    "@types/jest": "^29.5.11",
+    "@types/jest": "^29.5.12",
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
