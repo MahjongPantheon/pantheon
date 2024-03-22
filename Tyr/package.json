@@ -32,7 +32,7 @@
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-react": "7.33.2",
-    "eslint-plugin-unused-imports": "3.0.0",
+    "eslint-plugin-unused-imports": "3.1.0",
     "i18n-json-po": "1.0.7",
     "i18n-po-json": "1.0.7",
     "i18n-stex": "^1.0.12",
