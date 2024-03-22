@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-18 22:59+0100\n"
+"POT-Creation-Date: 2024-03-22 23:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,105 +38,114 @@ msgstr ""
 msgid "Select an avatar"
 msgstr ""
 
-#: app/components/MainMenu.tsx:75:22
+#: app/components/MainMenu.tsx:77:22
 msgid "Event: %1"
 msgstr ""
 
-#: app/components/MainMenu.tsx:82:21
+#: app/components/MainMenu.tsx:84:21
 msgid "Open event page"
 msgstr ""
 
-#: app/components/MainMenu.tsx:88:21
+#: app/components/MainMenu.tsx:90:21
 #: app/pages/OwnedEvents.tsx:369:33
 msgid "Settings"
 msgstr ""
 
-#: app/components/MainMenu.tsx:96:25
+#: app/components/MainMenu.tsx:98:25
 #: app/pages/OwnedEvents.tsx:361:34
 #: app/pages/OwnedEvents.tsx:363:33
 msgid "Manage players"
 msgstr ""
 
-#: app/components/MainMenu.tsx:102:25
+#: app/components/MainMenu.tsx:104:25
 #: app/pages/OwnedEvents.tsx:357:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr ""
 
-#: app/components/MainMenu.tsx:108:25
+#: app/components/MainMenu.tsx:110:25
 #: app/pages/OwnedEvents.tsx:351:33
 msgid "Manage games"
 msgstr ""
 
-#: app/components/MainMenu.tsx:115:27
+#: app/components/MainMenu.tsx:117:27
 #: app/pages/OwnedEvents.tsx:344:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/components/MainMenu.tsx:126:24
+#: app/components/MainMenu.tsx:128:24
 #: app/pages/OwnedEvents.tsx:373:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr ""
 
-#: app/components/MainMenu.tsx:132:24
+#: app/components/MainMenu.tsx:134:24
 #: app/pages/OwnedEvents.tsx:376:36
 #: app/pages/OwnedEvents.tsx:380:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/components/MainMenu.tsx:143:24
+#: app/components/MainMenu.tsx:145:24
 #: app/pages/OwnedEvents.tsx:384:34
 #: app/pages/OwnedEvents.tsx:392:28
 msgid "Finish event"
 msgstr ""
 
-#: app/components/MainMenu.tsx:162:18
+#: app/components/MainMenu.tsx:164:18
 msgid "Common actions"
 msgstr ""
 
-#: app/components/MainMenu.tsx:169:17
+#: app/components/MainMenu.tsx:171:17
 msgid "All events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:176:19
+#: app/components/MainMenu.tsx:178:19
 msgid "My events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:184:19
+#: app/components/MainMenu.tsx:186:19
 msgid "Sign in"
 msgstr ""
 
-#: app/components/MainMenu.tsx:192:19
+#: app/components/MainMenu.tsx:194:19
 msgid "Sign up"
 msgstr ""
 
-#: app/components/MainMenu.tsx:200:19
+#: app/components/MainMenu.tsx:202:19
 #: app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr ""
 
-#: app/components/MainMenu.tsx:208:19
+#: app/components/MainMenu.tsx:210:19
+#: app/pages/SystemStats.tsx:164:16
+msgid "System stats"
+msgstr ""
+
+#: app/components/MainMenu.tsx:218:19
 msgid "Edit profile"
 msgstr ""
 
-#: app/components/MainMenu.tsx:216:19
+#: app/components/MainMenu.tsx:226:19
 msgid "Notifications"
 msgstr ""
 
-#: app/components/MainMenu.tsx:224:19
+#: app/components/MainMenu.tsx:234:19
 msgid "Sign out"
 msgstr ""
 
-#: app/components/MainMenu.tsx:233:18
+#: app/components/MainMenu.tsx:242:17
+msgid "Open assistant"
+msgstr ""
+
+#: app/components/MainMenu.tsx:250:18
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:259:18
+#: app/components/MainMenu.tsx:284:18
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:268:18
+#: app/components/MainMenu.tsx:293:18
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -1867,22 +1876,22 @@ msgstr ""
 msgid "show / hide"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:118:16
-msgid "System stats"
-msgstr ""
-
-#: app/pages/SystemStats.tsx:158:39
+#: app/pages/SystemStats.tsx:212:39
 msgid "Last 24h"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:161:39
+#: app/pages/SystemStats.tsx:215:39
 msgid "Last 30d"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:164:39
+#: app/pages/SystemStats.tsx:218:39
 msgid "Last 12mon"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:168:18
+#: app/pages/SystemStats.tsx:222:18
 msgid "Data slice"
+msgstr ""
+
+#: app/pages/SystemStats.tsx:228:18
+msgid "Subsystem"
 msgstr ""
