@@ -1102,7 +1102,7 @@ msgstr "Открыть бот Pantheon"
 
 #: app/components/MainMenu.tsx:242:17
 msgid "Open assistant"
-msgstr ""
+msgstr "Ассистент"
 
 #: app/components/MainMenu.tsx:84:21
 msgid "Open event page"
