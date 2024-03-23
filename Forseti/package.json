@@ -40,7 +40,7 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
     "i18n-json-po": "git+https://github.com/ctizen/i18n-json-po#2.0.3",
     "i18n-po-json": "git+https://github.com/ctizen/i18n-po-json#2.0.8",
     "i18n-stex": "git+https://github.com/ctizen/stex#2.0.3",
