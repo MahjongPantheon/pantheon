@@ -399,12 +399,14 @@ i18n_extract:
 	cd Tyr && ${MAKE} docker_i18n_extract
 	cd Forseti && ${MAKE} docker_i18n_extract
 	cd Sigrun && ${MAKE} docker_i18n_extract
+	cd Bragi && ${MAKE} docker_i18n_extract
 
 .PHONY: i18n_compile
 i18n_compile:
 	cd Tyr && ${MAKE} docker_i18n_update
 	cd Forseti && ${MAKE} docker_i18n_update
 	cd Sigrun && ${MAKE} docker_i18n_update
+	cd Bragi && ${MAKE} docker_i18n_update
 
 .PHONY: bump_release
 bump_release:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-18 22:59+0100\n"
+"POT-Creation-Date: 2024-03-24 20:54+0100\n"
 "PO-Revision-Date: 2024-03-21 08:59+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -19,6 +19,503 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
+
+#: app/components/screens/table/base/TableInfo.tsx:92:20
+msgid "%1 deal left"
+msgid_plural "%1 deals left"
+msgstr[0] "%1 국 남음"
+
+#: app/components/screens/log/view/RoundSelectors.ts:36:15
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:78:9
+msgid "%1 han"
+msgstr "%1 판"
+
+#: app/components/screens/log/view/RoundSelectors.ts:39:12
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:77:9
+msgid "%1 han %2 fu"
+msgstr "%1 판 %2 부"
+
+#: app/components/screens/log/view/RoundSelectors.ts:92:14
+msgid "%1 ← %2"
+msgstr "%1 ← %2"
+
+#: app/components/screens/table/TableHelper.ts:521:14
+msgid "Abort"
+msgstr "도중유국"
+
+#: app/components/screens/log/view/RoundSelectors.ts:178:14
+#: app/components/screens/table/TableHelper.ts:166:15
+msgid "Abortive draw"
+msgstr "도중유국"
+
+#: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
+msgid "Chankan"
+msgstr "창깡"
+
+#: app/primitives/yaku.ts:258:34 app/primitives/yaku.ts:259:39
+msgid "Chanta"
+msgstr "찬타"
+
+#: app/primitives/yaku.ts:354:34 app/primitives/yaku.ts:355:39
+msgid "Chiihou"
+msgstr "지화"
+
+#: app/primitives/yaku.ts:300:34 app/primitives/yaku.ts:301:39
+msgid "Chiitoitsu"
+msgstr "치또이쯔"
+
+#: app/primitives/yaku.ts:282:34 app/primitives/yaku.ts:283:39
+msgid "Chinitsu"
+msgstr "청일색"
+
+#: app/primitives/yaku.ts:270:34 app/primitives/yaku.ts:271:39
+msgid "Chinroutou"
+msgstr "청노두"
+
+#: app/components/screens/log/view/RoundSelectors.ts:191:14
+#: app/components/screens/table/TableHelper.ts:155:13
+#: app/components/screens/table/TableHelper.ts:523:14
+msgid "Chombo"
+msgstr "촌보"
+
+#: app/primitives/yaku.ts:288:34 app/primitives/yaku.ts:289:39
+msgid "Chuuren poutou"
+msgstr "구련보등"
+
+#: app/components/screens/new-game/NewGameScreenView.tsx:68:23
+msgid "Clear players"
+msgstr "작사 초기화"
+
+#: app/components/screens/home/HomeScreenView.tsx:125:20
+msgid "Current game"
+msgstr "현재 대국"
+
+#: app/primitives/yaku.ts:319:39
+msgid "Daburu"
+msgstr "더블"
+
+#: app/primitives/yaku.ts:318:34
+msgid "Daburu riichi"
+msgstr "더블 리치"
+
+#: app/primitives/yaku.ts:228:34 app/primitives/yaku.ts:229:39
+msgid "Daisangen"
+msgstr "대삼원"
+
+#: app/primitives/yaku.ts:240:34 app/primitives/yaku.ts:241:39
+msgid "Daisuushii"
+msgstr "대사희"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:89:76
+msgid "Dora"
+msgstr "도라"
+
+#: app/components/screens/table/TableHelper.ts:519:14
+msgid "Draw"
+msgstr "유국"
+
+#: app/components/screens/login/LoginErrorView.tsx:44:23
+msgid "E-mail is not registered in Pantheon database (%1)"
+msgstr "다음 사용자가 존재하지 않습니다 (%1)"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:47:24
+msgid "Email"
+msgstr "이메일"
+
+#: app/components/screens/home/HomeScreen.tsx:95:55
+msgid "Event title"
+msgstr "이벤트"
+
+#: app/components/screens/log/view/RoundSelectors.ts:166:14
+#: app/components/screens/table/TableHelper.ts:149:13
+msgid "Exhaustive draw"
+msgstr "유국"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:81:12
+#: app/components/screens/login/LoginErrorView.tsx:50:16
+msgid "Forgot password?"
+msgstr "비밀번호 찾기"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:121:76
+msgid "Fu"
+msgstr "부"
+
+#: app/components/screens/log/view/LogScreenView.tsx:109:28
+msgid "Game log"
+msgstr "대국 로그"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:93:14
+msgid "Go to personal area"
+msgstr "계정 설정"
+
+#: app/primitives/yaku.ts:336:34 app/primitives/yaku.ts:337:39
+msgid "Haitei"
+msgstr "해저로월"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:85:16
+msgid "Han from yaku"
+msgstr "(도라 외의) 판: "
+
+#: app/components/screens/log/view/RoundSelectors.ts:49:10
+msgid "Honba: %1"
+msgstr "본장: %1"
+
+#: app/primitives/yaku.ts:276:34 app/primitives/yaku.ts:277:39
+msgid "Honitsu"
+msgstr "혼일색"
+
+#: app/primitives/yaku.ts:132:34 app/primitives/yaku.ts:133:39
+msgid "Honroutou"
+msgstr "혼노두"
+
+#: app/primitives/yaku.ts:361:39
+msgid "Houtei"
+msgstr "하저"
+
+#: app/primitives/yaku.ts:360:34
+msgid "Houtei raoyui"
+msgstr "하저로어"
+
+#: app/components/screens/login/LoginErrorView.tsx:56:12
+msgid ""
+"If in doubt, contact the tournament administrator for further instructions."
+msgstr "궁금하신 사항이 있으시면 관리자에게 문의해주세요."
+
+#: app/store/middlewares/yaku.ts:35:13 app/store/middlewares/yaku.ts:50:17
+msgid ""
+"If you want to select a riichi, return back and press riichi button for the "
+"winner"
+msgstr ""
+"역: 리치를 선택/해제하는 경우에는 돌아가서 승자의 리치 버튼을 눌러주세요"
+
+#: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
+msgid "Iipeikou"
+msgstr "이페코"
+
+#: app/primitives/yaku.ts:324:34 app/primitives/yaku.ts:325:39
+msgid "Ippatsu"
+msgstr "일발"
+
+#: app/primitives/yaku.ts:192:34 app/primitives/yaku.ts:193:39
+msgid "Ittsu"
+msgstr "일기통관"
+
+#: app/primitives/yaku.ts:264:34 app/primitives/yaku.ts:265:39
+msgid "Junchan"
+msgstr "준찬타"
+
+#: app/primitives/yaku.ts:306:34 app/primitives/yaku.ts:307:39
+msgid "Kokushi musou"
+msgstr "국사무쌍"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:100:57
+msgid "Language"
+msgstr "언어"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:63:12
+msgid "Log in"
+msgstr "로그인"
+
+#: app/components/screens/login/LoginErrorView.tsx:40:15
+msgid "Login attempt has failed. Possible reasons are:"
+msgstr "로그인에 실패했습니다. 가능성 있는 오류는:"
+
+#: app/components/screens/table/TableHelper.ts:425:22
+msgid "Loser"
+msgstr "패자"
+
+#: app/primitives/yaku.ts:330:34 app/primitives/yaku.ts:331:39
+msgid "Menzentsumo"
+msgstr "멘젠쯔모"
+
+#: app/components/screens/log/view/RoundSelectors.ts:119:14
+msgid "Multiron, from %1"
+msgstr "%1 방총, 다가화"
+
+#: app/components/screens/table/TableHelper.ts:525:14
+msgid "Nagashi"
+msgstr "유국만관"
+
+#: app/components/screens/log/view/RoundSelectors.ts:204:14
+#: app/components/screens/table/TableHelper.ts:176:15
+msgid "Nagashi mangan"
+msgstr "유국만관"
+
+#: app/components/screens/home/HomeScreenView.tsx:118:20
+msgid "New game"
+msgstr "신규 대국"
+
+#: app/components/screens/game-result/GameResultScreenView.tsx:93:56
+msgid "No games found"
+msgstr "대국을 찾을 수 없습니다"
+
+#: app/components/screens/log/view/LogScreenView.tsx:62:12
+msgid "No results found"
+msgstr "결과를 찾을 수 없습니다"
+
+#: app/components/screens/other-tables-list/OtherTablesListView.tsx:55:14
+msgid "No tables are playing right now"
+msgstr "진행 중인 대국이 없습니다"
+
+#: app/components/screens/login/LoginErrorView.tsx:61:12
+msgid "OK"
+msgstr "확인"
+
+#: app/primitives/yaku.ts:378:34 app/primitives/yaku.ts:379:39
+msgid "Open riichi"
+msgstr "오픈 리치"
+
+#: app/primitives/yaku.ts:120:34 app/primitives/yaku.ts:121:39
+msgid "Opened hand"
+msgstr "비멘젠"
+
+#: app/components/screens/home/HomeScreenView.tsx:137:20
+msgid "Other playing tables"
+msgstr "대국 관전"
+
+#: app/components/screens/login/LoginErrorView.tsx:38:49
+msgid "Pantheon"
+msgstr "Pantheon"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:42:55
+msgid "Pantheon: log in"
+msgstr "Pantheon: Mobile App"
+
+#: app/components/screens/log/view/RoundSelectors.ts:45:10
+msgid "Pao from: %1"
+msgstr "책임지불 (파오): %1"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:53:24
+msgid "Password"
+msgstr "비밀번호"
+
+#: app/components/screens/login/LoginErrorView.tsx:48:14
+msgid "Password check has failed"
+msgstr "비밀번호가 틀렸습니다"
+
+#: app/components/screens/table/TableHelper.ts:221:16
+msgid "Penalty"
+msgstr "벌부"
+
+#: app/primitives/yaku.ts:162:34 app/primitives/yaku.ts:163:39
+msgid "Pinfu"
+msgstr "핑후"
+
+#: app/components/screens/settings/SettingsScreen.tsx:79:58
+msgid "Player name"
+msgstr "작사 명"
+
+#: app/components/screens/home/HomeScreenView.tsx:131:20
+msgid "Previous game"
+msgstr "이전 대국"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:22
+msgid "Red fives"
+msgstr "적도라"
+
+#: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
+msgid "Renhou"
+msgstr "인화"
+
+#: app/primitives/yaku.ts:312:34 app/primitives/yaku.ts:313:39
+msgid "Riichi"
+msgstr "리치"
+
+#: app/components/screens/log/view/RoundSelectors.ts:67:10
+msgid "Riichi bets: %1"
+msgstr "리치봉: %1"
+
+#: app/primitives/yaku.ts:343:39
+msgid "Rinshan"
+msgstr "영상"
+
+#: app/primitives/yaku.ts:342:34
+msgid "Rinshan kaihou"
+msgstr "영상개화"
+
+#: app/components/screens/table/TableHelper.ts:137:13
+#: app/components/screens/table/TableHelper.ts:515:14
+msgid "Ron"
+msgstr "론"
+
+#: app/components/screens/log/view/RoundSelectors.ts:91:14
+msgid "Ron, %1"
+msgstr "론, %1"
+
+#: app/primitives/yaku.ts:174:34 app/primitives/yaku.ts:175:39
+msgid "Ryanpeikou"
+msgstr "량페코"
+
+#: app/primitives/yaku.ts:294:34 app/primitives/yaku.ts:295:39
+msgid "Ryuuiisou"
+msgstr "녹일색"
+
+#: app/primitives/yaku.ts:138:34 app/primitives/yaku.ts:139:39
+msgid "Sanankou"
+msgstr "산안커"
+
+#: app/primitives/yaku.ts:144:34 app/primitives/yaku.ts:145:39
+msgid "Sankantsu"
+msgstr "산깡쯔"
+
+#: app/primitives/yaku.ts:180:34 app/primitives/yaku.ts:181:39
+msgid "Sanshoku"
+msgstr "삼색동순"
+
+#: app/primitives/yaku.ts:186:34 app/primitives/yaku.ts:187:39
+msgid "Sanshoku doukou"
+msgstr "삼색동각"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:154:16
+msgid "Select another event"
+msgstr "다른 이벤트 선택"
+
+#: app/components/screens/event-select/EventSelectScreenView.tsx:84:66
+msgid "Select event"
+msgstr "이벤트 선택"
+
+#: app/components/screens/table/TableHelper.ts:496:16
+msgid "Select pao"
+msgstr "책임지불(파오) 선택"
+
+#: app/components/screens/table/TableHelper.ts:501:16
+msgid "Select tempai"
+msgstr "텐파이 선택"
+
+#: app/primitives/yaku.ts:222:34 app/primitives/yaku.ts:223:39
+msgid "Shousangen"
+msgstr "소삼원"
+
+#: app/primitives/yaku.ts:234:34 app/primitives/yaku.ts:235:39
+msgid "Shousuushii"
+msgstr "소사희"
+
+#: app/components/screens/new-game/NewGameScreenView.tsx:72:23
+msgid "Shuffle players"
+msgstr "작사 셔플"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:73:12
+msgid "Sign up"
+msgstr "회원가입"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:162:57
+msgid "Single device mode"
+msgstr "단일 기기 모드"
+
+#: app/components/screens/new-game/NewGameScreenView.tsx:79:23
+msgid "Start game"
+msgstr "대국 시작"
+
+#: app/components/screens/home/HomeScreenView.tsx:143:20
+msgid "Statistics"
+msgstr "통계"
+
+#: app/primitives/yaku.ts:156:34 app/primitives/yaku.ts:157:39
+msgid "Suuankou"
+msgstr "스안커"
+
+#: app/primitives/yaku.ts:150:34 app/primitives/yaku.ts:151:39
+msgid "Suukantsu"
+msgstr "스깡쯔"
+
+#: app/components/screens/table/base/TableInfo.tsx:100:57
+msgid "Table #%1"
+msgstr "제 #%1 탁"
+
+#: app/primitives/yaku.ts:252:34 app/primitives/yaku.ts:253:39
+msgid "Tanyao"
+msgstr "탕야오"
+
+#: app/components/screens/log/view/RoundSelectors.ts:53:10
+msgid "Tempai: %1"
+msgstr "텐파이: %1"
+
+#: app/primitives/yaku.ts:348:34 app/primitives/yaku.ts:349:39
+msgid "Tenhou"
+msgstr "천화"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:116:57
+msgid "Theme"
+msgstr "테마"
+
+#: app/components/screens/event-select/EventSelectScreenView.tsx:101:16
+msgid "There is no events you participate in right now"
+msgstr "현재 참가중인 이벤트가 없습니다"
+
+#: app/primitives/yaku.ts:126:34 app/primitives/yaku.ts:127:39
+msgid "Toitoi"
+msgstr "또이또이"
+
+#: app/components/screens/table/TableHelper.ts:143:13
+#: app/components/screens/table/TableHelper.ts:517:14
+msgid "Tsumo"
+msgstr "쯔모"
+
+#: app/components/screens/log/view/RoundSelectors.ts:149:14
+msgid "Tsumo, %1"
+msgstr "쯔모, %1"
+
+#: app/primitives/yaku.ts:246:34 app/primitives/yaku.ts:247:39
+msgid "Tsuuiisou"
+msgstr "자일색"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:164:18
+msgid "Turn on if you use a single device for all players"
+msgstr "모든 작사가 하나의 기기를 사용할 경우 활성화하십시오"
+
+#: app/components/screens/login/LoginErrorView.tsx:53:16
+msgid "Unexpected server error"
+msgstr "예기치 못한 오류가 발생했습니다"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:99:22
+msgid "Ura dora"
+msgstr "뒷도라"
+
+#: app/components/screens/table/TableHelper.ts:422:22
+#: app/components/screens/table/TableHelper.ts:435:22
+msgid "Winner"
+msgstr "승자"
+
+#: app/primitives/yaku.ts:199:39
+msgid "Yakuhai"
+msgstr "역패"
+
+#: app/primitives/yaku.ts:198:34
+msgid "Yakuhai x1"
+msgstr "역패 x1"
+
+#: app/primitives/yaku.ts:204:34
+msgid "Yakuhai x2"
+msgstr "역패 x2"
+
+#: app/primitives/yaku.ts:210:34
+msgid "Yakuhai x3"
+msgstr "역패 x3"
+
+#: app/primitives/yaku.ts:216:34
+msgid "Yakuhai x4"
+msgstr "역패 x4"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:128:68
+msgid "Yakuman"
+msgstr "역만"
+
+#: app/components/screens/log/view/RoundSelectors.ts:71:19
+msgid "dora %1"
+msgstr "도라 %1"
+
+#: app/components/screens/table/TableHelper.ts:413:25
+msgid "empty outcome"
+msgstr "결과 없음"
+
+#: app/components/screens/event-select/EventSelectScreen.tsx:56:58
+msgid "name"
+msgstr "이름"
+
+#: app/components/screens/login/LoginErrorView.tsx:31:83
+msgctxt "Name of registration link"
+msgid "register"
+msgstr "회원가입"
 
 #: app/components/general/dropdown/PlayerDropdown.tsx:41:60
 msgid "select player"
@@ -32,519 +529,22 @@ msgstr "문제가 발생했습니다. 관리자에게 문의하세요"
 msgid "type to find someone"
 msgstr "작사 검색"
 
-#: app/components/screens/event-select/EventSelectScreen.tsx:56:58
-msgid "name"
-msgstr "이름"
-
-#: app/components/screens/event-select/EventSelectScreenView.tsx:84:66
-msgid "Select event"
-msgstr "이벤트 선택"
-
-#: app/components/screens/event-select/EventSelectScreenView.tsx:101:16
-msgid "There is no events you participate in right now"
-msgstr "현재 참가중인 이벤트가 없습니다"
-
-#: app/components/screens/game-result/GameResultScreenView.tsx:93:56
-msgid "No games found"
-msgstr "대국을 찾을 수 없습니다"
-
-#: app/components/screens/home/HomeScreen.tsx:95:55
-msgid "Event title"
-msgstr "이벤트"
-
-#: app/components/screens/home/HomeScreenView.tsx:118:20
-msgid "New game"
-msgstr "신규 대국"
-
-#: app/components/screens/home/HomeScreenView.tsx:125:20
-msgid "Current game"
-msgstr "현재 대국"
-
-#: app/components/screens/home/HomeScreenView.tsx:131:20
-msgid "Previous game"
-msgstr "이전 대국"
-
-#: app/components/screens/home/HomeScreenView.tsx:137:20
-msgid "Other playing tables"
-msgstr "대국 관전"
-
-#: app/components/screens/home/HomeScreenView.tsx:143:20
-msgid "Statistics"
-msgstr "통계"
-
-#: app/components/screens/log/view/LogScreenView.tsx:62:12
-msgid "No results found"
-msgstr "결과를 찾을 수 없습니다"
-
-#: app/components/screens/log/view/LogScreenView.tsx:109:28
-msgid "Game log"
-msgstr "대국 로그"
-
-#: app/components/screens/log/view/RoundSelectors.ts:33:12
-msgid "yakuman"
-msgstr "역만"
-
-#: app/components/screens/log/view/RoundSelectors.ts:36:15
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:78:9
-msgid "%1 han"
-msgstr "%1 판"
-
-#: app/components/screens/log/view/RoundSelectors.ts:39:12
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:77:9
-msgid "%1 han %2 fu"
-msgstr "%1 판 %2 부"
-
-#: app/components/screens/log/view/RoundSelectors.ts:45:10
-msgid "Pao from: %1"
-msgstr "책임지불 (파오): %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:49:10
-msgid "Honba: %1"
-msgstr "본장: %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:53:10
-msgid "Tempai: %1"
-msgstr "텐파이: %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:67:10
-msgid "Riichi bets: %1"
-msgstr "리치봉: %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:71:19
-msgid "dora %1"
-msgstr "도라 %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:91:14
-msgid "Ron, %1"
-msgstr "론, %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:92:14
-msgid "%1 ← %2"
-msgstr "%1 ← %2"
-
-#: app/components/screens/log/view/RoundSelectors.ts:119:14
-msgid "Multiron, from %1"
-msgstr "%1 방총, 다가화"
-
-#: app/components/screens/log/view/RoundSelectors.ts:149:14
-msgid "Tsumo, %1"
-msgstr "쯔모, %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:149:13
-msgid "Exhaustive draw"
-msgstr "유국"
-
-#: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:166:15
-msgid "Abortive draw"
-msgstr "도중유국"
-
-#: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:523:14
-msgid "Chombo"
-msgstr "촌보"
-
-#: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:176:15
-msgid "Nagashi mangan"
-msgstr "유국만관"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:42:55
-msgid "Pantheon: log in"
-msgstr "Pantheon: Mobile App"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:47:24
-msgid "Email"
-msgstr "이메일"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:53:24
-msgid "Password"
-msgstr "비밀번호"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:63:12
-msgid "Log in"
-msgstr "로그인"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:73:12
-msgid "Sign up"
-msgstr "회원가입"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:81:12
-#: app/components/screens/login/LoginErrorView.tsx:50:16
-msgid "Forgot password?"
-msgstr "비밀번호 찾기"
-
-#: app/components/screens/login/LoginErrorView.tsx:31:83
-msgctxt "Name of registration link"
-msgid "register"
-msgstr "회원가입"
-
-#: app/components/screens/login/LoginErrorView.tsx:38:49
-msgid "Pantheon"
-msgstr "Pantheon"
-
-#: app/components/screens/login/LoginErrorView.tsx:40:15
-msgid "Login attempt has failed. Possible reasons are:"
-msgstr "로그인에 실패했습니다. 가능성 있는 오류는:"
-
-#: app/components/screens/login/LoginErrorView.tsx:44:23
-msgid "E-mail is not registered in Pantheon database (%1)"
-msgstr "다음 사용자가 존재하지 않습니다 (%1)"
-
-#: app/components/screens/login/LoginErrorView.tsx:48:14
-msgid "Password check has failed"
-msgstr "비밀번호가 틀렸습니다"
-
-#: app/components/screens/login/LoginErrorView.tsx:53:16
-msgid "Unexpected server error"
-msgstr "예기치 못한 오류가 발생했습니다"
-
-#: app/components/screens/login/LoginErrorView.tsx:56:12
-msgid ""
-"If in doubt, contact the tournament administrator for further instructions."
-msgstr "궁금하신 사항이 있으시면 관리자에게 문의해주세요."
-
-#: app/components/screens/login/LoginErrorView.tsx:61:12
-msgid "OK"
-msgstr "확인"
-
-#: app/components/screens/new-game/NewGameScreenView.tsx:68:23
-msgid "Clear players"
-msgstr "작사 초기화"
-
-#: app/components/screens/new-game/NewGameScreenView.tsx:72:23
-msgid "Shuffle players"
-msgstr "작사 셔플"
-
-#: app/components/screens/new-game/NewGameScreenView.tsx:79:23
-msgid "Start game"
-msgstr "대국 시작"
-
-#: app/components/screens/other-tables-list/OtherTablesListView.tsx:55:14
-msgid "No tables are playing right now"
-msgstr "진행 중인 대국이 없습니다"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:85:16
-msgid "Han from yaku"
-msgstr "(도라 외의) 판: "
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:89:76
-msgid "Dora"
-msgstr "도라"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:99:22
-msgid "Ura dora"
-msgstr "뒷도라"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:22
-msgid "Red fives"
-msgstr "적도라"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:121:76
-msgid "Fu"
-msgstr "부"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:128:68
-msgid "Yakuman"
-msgstr "역만"
-
-#: app/components/screens/settings/SettingsScreen.tsx:79:58
-msgid "Player name"
-msgstr "작사 명"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:93:14
-msgid "Go to personal area"
-msgstr "계정 설정"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:100:57
-msgid "Language"
-msgstr "언어"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:116:57
-msgid "Theme"
-msgstr "테마"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:154:16
-msgid "Select another event"
-msgstr "다른 이벤트 선택"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:162:57
-msgid "Single device mode"
-msgstr "단일 기기 모드"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:164:18
-msgid "Turn on if you use a single device for all players"
-msgstr "모든 작사가 하나의 기기를 사용할 경우 활성화하십시오"
-
-#: app/components/screens/table/base/TableInfo.tsx:92:20
-msgid "%1 deal left"
-msgid_plural "%1 deals left"
-msgstr[0] "%1 국 남음"
-
-#: app/components/screens/table/base/TableInfo.tsx:100:57
-msgid "Table #%1"
-msgstr "제 #%1 탁"
-
-#: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:515:14
-msgid "Ron"
-msgstr "론"
-
-#: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:517:14
-msgid "Tsumo"
-msgstr "쯔모"
-
-#: app/components/screens/table/TableHelper.ts:221:16
-msgid "Penalty"
-msgstr "벌부"
-
-#: app/components/screens/table/TableHelper.ts:413:25
-msgid "empty outcome"
-msgstr "결과 없음"
-
-#: app/components/screens/table/TableHelper.ts:422:22
-#: app/components/screens/table/TableHelper.ts:435:22
-msgid "Winner"
-msgstr "승자"
-
-#: app/components/screens/table/TableHelper.ts:425:22
-msgid "Loser"
-msgstr "패자"
-
 #: app/components/screens/table/TableHelper.ts:440:27
 msgid "wrong outcome for paoSelect"
 msgstr "책임지불(파오) 선택이 잘못됨"
-
-#: app/components/screens/table/TableHelper.ts:496:16
-msgid "Select pao"
-msgstr "책임지불(파오) 선택"
-
-#: app/components/screens/table/TableHelper.ts:501:16
-msgid "Select tempai"
-msgstr "텐파이 선택"
-
-#: app/components/screens/table/TableHelper.ts:519:14
-msgid "Draw"
-msgstr "유국"
-
-#: app/components/screens/table/TableHelper.ts:521:14
-msgid "Abort"
-msgstr "도중유국"
-
-#: app/components/screens/table/TableHelper.ts:525:14
-msgid "Nagashi"
-msgstr "유국만관"
-
-#: app/primitives/yaku.ts:120:34 app/primitives/yaku.ts:121:39
-msgid "Opened hand"
-msgstr "비멘젠"
-
-#: app/primitives/yaku.ts:126:34 app/primitives/yaku.ts:127:39
-msgid "Toitoi"
-msgstr "또이또이"
-
-#: app/primitives/yaku.ts:132:34 app/primitives/yaku.ts:133:39
-msgid "Honroutou"
-msgstr "혼노두"
-
-#: app/primitives/yaku.ts:138:34 app/primitives/yaku.ts:139:39
-msgid "Sanankou"
-msgstr "산안커"
-
-#: app/primitives/yaku.ts:144:34 app/primitives/yaku.ts:145:39
-msgid "Sankantsu"
-msgstr "산깡쯔"
-
-#: app/primitives/yaku.ts:150:34 app/primitives/yaku.ts:151:39
-msgid "Suukantsu"
-msgstr "스깡쯔"
-
-#: app/primitives/yaku.ts:156:34 app/primitives/yaku.ts:157:39
-msgid "Suuankou"
-msgstr "스안커"
-
-#: app/primitives/yaku.ts:162:34 app/primitives/yaku.ts:163:39
-msgid "Pinfu"
-msgstr "핑후"
-
-#: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
-msgid "Iipeikou"
-msgstr "이페코"
-
-#: app/primitives/yaku.ts:174:34 app/primitives/yaku.ts:175:39
-msgid "Ryanpeikou"
-msgstr "량페코"
-
-#: app/primitives/yaku.ts:180:34 app/primitives/yaku.ts:181:39
-msgid "Sanshoku"
-msgstr "삼색동순"
-
-#: app/primitives/yaku.ts:186:34 app/primitives/yaku.ts:187:39
-msgid "Sanshoku doukou"
-msgstr "삼색동각"
-
-#: app/primitives/yaku.ts:192:34 app/primitives/yaku.ts:193:39
-msgid "Ittsu"
-msgstr "일기통관"
-
-#: app/primitives/yaku.ts:198:34
-msgid "Yakuhai x1"
-msgstr "역패 x1"
-
-#: app/primitives/yaku.ts:199:39
-msgid "Yakuhai"
-msgstr "역패"
-
-#: app/primitives/yaku.ts:204:34
-msgid "Yakuhai x2"
-msgstr "역패 x2"
 
 #: app/primitives/yaku.ts:205:39
 msgid "x2"
 msgstr "x2"
 
-#: app/primitives/yaku.ts:210:34
-msgid "Yakuhai x3"
-msgstr "역패 x3"
-
 #: app/primitives/yaku.ts:211:39
 msgid "x3"
 msgstr "x3"
-
-#: app/primitives/yaku.ts:216:34
-msgid "Yakuhai x4"
-msgstr "역패 x4"
 
 #: app/primitives/yaku.ts:217:39
 msgid "x4"
 msgstr "x4"
 
-#: app/primitives/yaku.ts:222:34 app/primitives/yaku.ts:223:39
-msgid "Shousangen"
-msgstr "소삼원"
-
-#: app/primitives/yaku.ts:228:34 app/primitives/yaku.ts:229:39
-msgid "Daisangen"
-msgstr "대삼원"
-
-#: app/primitives/yaku.ts:234:34 app/primitives/yaku.ts:235:39
-msgid "Shousuushii"
-msgstr "소사희"
-
-#: app/primitives/yaku.ts:240:34 app/primitives/yaku.ts:241:39
-msgid "Daisuushii"
-msgstr "대사희"
-
-#: app/primitives/yaku.ts:246:34 app/primitives/yaku.ts:247:39
-msgid "Tsuuiisou"
-msgstr "자일색"
-
-#: app/primitives/yaku.ts:252:34 app/primitives/yaku.ts:253:39
-msgid "Tanyao"
-msgstr "탕야오"
-
-#: app/primitives/yaku.ts:258:34 app/primitives/yaku.ts:259:39
-msgid "Chanta"
-msgstr "찬타"
-
-#: app/primitives/yaku.ts:264:34 app/primitives/yaku.ts:265:39
-msgid "Junchan"
-msgstr "준찬타"
-
-#: app/primitives/yaku.ts:270:34 app/primitives/yaku.ts:271:39
-msgid "Chinroutou"
-msgstr "청노두"
-
-#: app/primitives/yaku.ts:276:34 app/primitives/yaku.ts:277:39
-msgid "Honitsu"
-msgstr "혼일색"
-
-#: app/primitives/yaku.ts:282:34 app/primitives/yaku.ts:283:39
-msgid "Chinitsu"
-msgstr "청일색"
-
-#: app/primitives/yaku.ts:288:34 app/primitives/yaku.ts:289:39
-msgid "Chuuren poutou"
-msgstr "구련보등"
-
-#: app/primitives/yaku.ts:294:34 app/primitives/yaku.ts:295:39
-msgid "Ryuuiisou"
-msgstr "녹일색"
-
-#: app/primitives/yaku.ts:300:34 app/primitives/yaku.ts:301:39
-msgid "Chiitoitsu"
-msgstr "치또이쯔"
-
-#: app/primitives/yaku.ts:306:34 app/primitives/yaku.ts:307:39
-msgid "Kokushi musou"
-msgstr "국사무쌍"
-
-#: app/primitives/yaku.ts:312:34 app/primitives/yaku.ts:313:39
-msgid "Riichi"
-msgstr "리치"
-
-#: app/primitives/yaku.ts:318:34
-msgid "Daburu riichi"
-msgstr "더블 리치"
-
-#: app/primitives/yaku.ts:319:39
-msgid "Daburu"
-msgstr "더블"
-
-#: app/primitives/yaku.ts:324:34 app/primitives/yaku.ts:325:39
-msgid "Ippatsu"
-msgstr "일발"
-
-#: app/primitives/yaku.ts:330:34 app/primitives/yaku.ts:331:39
-msgid "Menzentsumo"
-msgstr "멘젠쯔모"
-
-#: app/primitives/yaku.ts:336:34 app/primitives/yaku.ts:337:39
-msgid "Haitei"
-msgstr "해저로월"
-
-#: app/primitives/yaku.ts:342:34
-msgid "Rinshan kaihou"
-msgstr "영상개화"
-
-#: app/primitives/yaku.ts:343:39
-msgid "Rinshan"
-msgstr "영상"
-
-#: app/primitives/yaku.ts:348:34 app/primitives/yaku.ts:349:39
-msgid "Tenhou"
-msgstr "천화"
-
-#: app/primitives/yaku.ts:354:34 app/primitives/yaku.ts:355:39
-msgid "Chiihou"
-msgstr "지화"
-
-#: app/primitives/yaku.ts:360:34
-msgid "Houtei raoyui"
-msgstr "하저로어"
-
-#: app/primitives/yaku.ts:361:39
-msgid "Houtei"
-msgstr "하저"
-
-#: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
-msgid "Chankan"
-msgstr "창깡"
-
-#: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
-msgid "Renhou"
-msgstr "인화"
-
-#: app/primitives/yaku.ts:378:34 app/primitives/yaku.ts:379:39
-msgid "Open riichi"
-msgstr "오픈 리치"
-
-#: app/store/middlewares/yaku.ts:35:13 app/store/middlewares/yaku.ts:50:17
-msgid ""
-"If you want to select a riichi, return back and press riichi button for the "
-"winner"
-msgstr ""
-"역: 리치를 선택/해제하는 경우에는 돌아가서 승자의 리치 버튼을 눌러주세요"
+#: app/components/screens/log/view/RoundSelectors.ts:33:12
+msgid "yakuman"
+msgstr "역만"
