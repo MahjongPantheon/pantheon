@@ -187,7 +187,7 @@ class Db implements IDb
         shell_exec('cd ' . __DIR__ . '/../../ && make clean_test_db && make init_test_db');
         $cfg = new Config(__DIR__ . '/../../tests/util/config.php');
         $mc = new \Memcached();
-        $mc->addServer('127.0.0.1', 11211);
+        $mc->addServer('localhost', 11211);
 
         if (self::$__testingInstance === null) {
             self::$_ctr = 0;
