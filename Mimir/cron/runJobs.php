@@ -26,7 +26,7 @@ try {
     $db = new Db($config);
     $freyClient = new FreyClientTwirp($config->getStringValue('freyUrl'));
     $mc = new \Memcached();
-    $mc->addServer('127.0.0.1', 11211);
+    $mc->addServer('localhost', 11211);
     $ds = new DataSource($db, $freyClient, $mc);
     $storage = new Storage('');
     $meta = new Meta($freyClient, $storage, $config);
