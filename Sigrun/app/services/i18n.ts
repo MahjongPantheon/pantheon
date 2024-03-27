@@ -20,13 +20,13 @@ import { TranslationJson } from 'i18n-proto';
 
 import langRu from '../i18n/ru.json';
 import langKo from '../i18n/ko.json';
-// import langDe from '../i18n/de.json';
+import langDe from '../i18n/de.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ru', 'ko' /* 'de'*/];
+export const supportedLanguages = ['en', 'ru', 'ko', 'de'];
 const langs = {
   ru: langRu,
   ko: langKo,
-  /*de: langDe,*/
+  de: langDe,
 };
 
 export class I18nService {
@@ -44,9 +44,9 @@ export class I18nService {
           case 'ko':
             onReady(name, JSON.stringify(langs[name]));
             break;
-          // case 'de':
-          //   onReady(name, JSON.stringify(langs[name]));
-          //   break;
+          case 'de':
+            onReady(name, JSON.stringify(langs[name]));
+            break;
           case 'en':
           default:
             const defaultTrn: TranslationJson = {
