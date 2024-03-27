@@ -106,9 +106,9 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
           <StorageProvider>
             <I18nProvider>
               <Meta
-                title={i18n._t('Sigrun: riichi mahjong ratings and statistics')}
+                title={i18n._t('Pantheon: riichi mahjong ratings and statistics')}
                 description={i18n._t(
-                  'Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.'
+                  'Pantheon is a set of tools to record and show detailed riichi mahjong games with recording assistance, admin panel and statistics service.'
                 )}
               />
               <NavigationProgress color='green' zIndex={10100} />
