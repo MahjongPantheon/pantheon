@@ -58,7 +58,7 @@ final class TwirpServer implements Hugin
         $this->_syslog = new Logger('Hugin');
         $this->_syslog->pushHandler(new ErrorLogHandler());
         $this->_mc = new \Memcached();
-        $this->_mc->addServer('127.0.0.1', 11211);
+        $this->_mc->addServer('localhost', 11211);
 
         // + some custom handler for testing errors
         if ($this->_config->getValue('verbose')) {

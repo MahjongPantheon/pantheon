@@ -178,7 +178,7 @@ final class TwirpServer implements Mimir
         $this->_storage = new \Common\Storage($this->_config->getStringValue('cookieDomain'));
         $this->_db = new Db($this->_config);
         $this->_mc = new \Memcached();
-        $this->_mc->addServer('127.0.0.1', 11211);
+        $this->_mc->addServer('localhost', 11211);
         $freyUrl = $this->_config->getStringValue('freyUrl');
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
