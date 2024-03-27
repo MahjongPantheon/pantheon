@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-17 23:41+0100\n"
-"PO-Revision-Date: 2024-02-11 01:02+0300\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2024-03-22 12:07+0100\n"
+"Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: app/components/screens/table/base/TableInfo.tsx:92:20
 msgid "%1 deal left"
@@ -154,7 +154,7 @@ msgstr ""
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:85:16
 msgid "Han from yaku"
-msgstr "Han von Baku"
+msgstr "Han durch Yaku"
 
 #: app/components/screens/log/view/RoundSelectors.ts:49:10
 msgid "Honba: %1"
@@ -256,7 +256,7 @@ msgstr "Keine Ergebnisse"
 
 #: app/components/screens/other-tables-list/OtherTablesListView.tsx:55:14
 msgid "No tables are playing right now"
-msgstr "Zurzeit werden keine Tische bespielt"
+msgstr "Keine anderen laufenden Spiele"
 
 #: app/components/screens/login/LoginErrorView.tsx:61:12
 msgid "OK"
@@ -272,7 +272,7 @@ msgstr "Offene Hand"
 
 #: app/components/screens/home/HomeScreenView.tsx:137:20
 msgid "Other playing tables"
-msgstr "Andere laufende Spiele"
+msgstr "Laufende Spiele"
 
 #: app/components/screens/login/LoginErrorView.tsx:38:49
 msgid "Pantheon"
