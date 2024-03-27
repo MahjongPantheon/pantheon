@@ -19,12 +19,12 @@ import { TranslationProvider, TranslationController } from 'i18n-dialect';
 import { TranslationJson } from 'i18n-proto';
 
 import langRu from '../i18n/ru.json';
-// import langDe from '../i18n/de.json';
+import langDe from '../i18n/de.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ru' /* 'de'*/];
+export const supportedLanguages = ['en', 'ru', 'de'];
 const langs = {
   ru: langRu,
-  /*de: langDe,*/
+  de: langDe,
 };
 
 export class I18nService {
@@ -41,9 +41,9 @@ export class I18nService {
           case 'ru':
             onReady(name, JSON.stringify(langs[name]));
             break;
-          // case 'de':
-          //   onReady(name, JSON.stringify(langs[name]));
-          //   break;
+          case 'de':
+            onReady(name, JSON.stringify(langs[name]));
+            break;
           case 'en':
           default:
             const defaultTrn: TranslationJson = {
