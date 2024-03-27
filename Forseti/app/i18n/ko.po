@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-24 22:27+0100\n"
+"POT-Creation-Date: 2024-03-27 21:06+0100\n"
 "PO-Revision-Date: 2024-03-22 14:12+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -1800,11 +1800,11 @@ msgid ""
 "(see below)."
 msgstr "타이머의 시작 값. 타이머가 종료될 경우 하기의 대국 종료 규칙이 적용됨"
 
-#: app/components/MainMenu.tsx:293:18
+#: app/components/MainMenu.tsx:301:18
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:284:18
+#: app/components/MainMenu.tsx:292:18
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 

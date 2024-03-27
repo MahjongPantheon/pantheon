@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-24 22:27+0100\n"
+"POT-Creation-Date: 2024-03-27 21:06+0100\n"
 "PO-Revision-Date: 2024-03-22 14:12+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -1404,11 +1404,11 @@ msgstr "리치 상대: "
 msgid "To open hands: "
 msgstr "비멘젠 상대: "
 
-#: app/components/MainMenu.tsx:255:33 app/components/MainMenu.tsx:256:20
+#: app/components/MainMenu.tsx:263:33 app/components/MainMenu.tsx:264:20
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:245:33 app/components/MainMenu.tsx:246:20
+#: app/components/MainMenu.tsx:253:33 app/components/MainMenu.tsx:254:20
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 
