@@ -19,11 +19,13 @@ import { TranslationProvider, TranslationController } from 'i18n-dialect';
 import { TranslationJson } from 'i18n-proto';
 
 import langRu from '../i18n/ru.json';
+import langKo from '../i18n/ko.json';
 import langDe from '../i18n/de.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ru', 'de'];
+export const supportedLanguages = ['en', 'ru', 'de', 'ko'];
 const langs = {
   ru: langRu,
+  ko: langKo,
   de: langDe,
 };
 
@@ -39,6 +41,7 @@ export class I18nService {
       ) => {
         switch (name) {
           case 'ru':
+          case 'ko':
             onReady(name, JSON.stringify(langs[name]));
             break;
           case 'de':

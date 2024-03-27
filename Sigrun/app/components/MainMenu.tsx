@@ -228,19 +228,19 @@ export const MainMenu = ({
             />
             <NavLink
               onClick={() => {
-                saveLang('ko');
-                closeMenu?.();
-              }}
-              icon={<FlagKo width={24} />}
-              label={showLabels ? 'ko' : ''}
-            />
-            <NavLink
-              onClick={() => {
                 saveLang('de');
                 closeMenu?.();
               }}
               icon={<FlagDe width={24} />}
               label={showLabels ? 'de' : ''}
+            />
+            <NavLink
+              onClick={() => {
+                saveLang('ko');
+                closeMenu?.();
+              }}
+              icon={<FlagKo width={24} />}
+              label={showLabels ? 'ko' : ''}
             />
           </NavLink>
           <NavLink

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-18 22:59+0100\n"
-"PO-Revision-Date: 2024-03-11 16:02+0100\n"
+"PO-Revision-Date: 2024-03-21 08:59+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: app/components/general/dropdown/PlayerDropdown.tsx:41:60
 msgid "select player"
-msgstr "플레이어 선택"
+msgstr "작사 선택"
 
 #: app/components/general/number-select/NumberSelect.tsx:100:13
 msgid "something goes wrong, please contact your administrator"
@@ -30,7 +30,7 @@ msgstr "문제가 발생했습니다. 관리자에게 문의하세요"
 
 #: app/components/general/search-input/SearchInput.tsx:82:24
 msgid "type to find someone"
-msgstr "플레이어 검색"
+msgstr "작사 검색"
 
 #: app/components/screens/event-select/EventSelectScreen.tsx:56:58
 msgid "name"
@@ -42,7 +42,7 @@ msgstr "이벤트 선택"
 
 #: app/components/screens/event-select/EventSelectScreenView.tsx:101:16
 msgid "There is no events you participate in right now"
-msgstr "참가하고 있는 이벤트가 없습니다"
+msgstr "현재 참가중인 이벤트가 없습니다"
 
 #: app/components/screens/game-result/GameResultScreenView.tsx:93:56
 msgid "No games found"
@@ -187,7 +187,7 @@ msgstr "Pantheon"
 
 #: app/components/screens/login/LoginErrorView.tsx:40:15
 msgid "Login attempt has failed. Possible reasons are:"
-msgstr "로그인에 실패했습니다. 생각할 수 있는 오류는:"
+msgstr "로그인에 실패했습니다. 가능성 있는 오류는:"
 
 #: app/components/screens/login/LoginErrorView.tsx:44:23
 msgid "E-mail is not registered in Pantheon database (%1)"
@@ -212,11 +212,11 @@ msgstr "확인"
 
 #: app/components/screens/new-game/NewGameScreenView.tsx:68:23
 msgid "Clear players"
-msgstr "플레이어 초기화"
+msgstr "작사 초기화"
 
 #: app/components/screens/new-game/NewGameScreenView.tsx:72:23
 msgid "Shuffle players"
-msgstr "플레이어 셔플"
+msgstr "작사 셔플"
 
 #: app/components/screens/new-game/NewGameScreenView.tsx:79:23
 msgid "Start game"
@@ -252,7 +252,7 @@ msgstr "역만"
 
 #: app/components/screens/settings/SettingsScreen.tsx:79:58
 msgid "Player name"
-msgstr "플레이어 명"
+msgstr "작사 명"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:93:14
 msgid "Go to personal area"
@@ -276,7 +276,7 @@ msgstr "단일 기기 모드"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:164:18
 msgid "Turn on if you use a single device for all players"
-msgstr "모든 플레이어가 하나의 기기를 사용할 경우 활성화하십시오"
+msgstr "모든 작사가 하나의 기기를 사용할 경우 활성화하십시오"
 
 #: app/components/screens/table/base/TableInfo.tsx:92:20
 msgid "%1 deal left"
@@ -547,4 +547,4 @@ msgid ""
 "If you want to select a riichi, return back and press riichi button for the "
 "winner"
 msgstr ""
-"역: 리치를 선택/해제하는 경우에는 돌아가서 리치 플레이어를 확인해주세요"
+"역: 리치를 선택/해제하는 경우에는 돌아가서 승자의 리치 버튼을 눌러주세요"
