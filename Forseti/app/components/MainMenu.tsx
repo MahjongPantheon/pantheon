@@ -22,7 +22,7 @@ import {
   IconUserCircle,
   IconUserPlus,
 } from '@tabler/icons-react';
-import { FlagEn, FlagKo, FlagRu } from '../helpers/flags';
+import { FlagEn, FlagRu, FlagKo, FlagDe } from '../helpers/flags';
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { Event } from '../clients/proto/atoms.pb';
@@ -264,6 +264,14 @@ export const MainMenu = ({
             }}
             icon={<FlagRu width={24} />}
             label='ru'
+          />
+          <NavLink
+            onClick={() => {
+              saveLang('de');
+              closeMenu?.();
+            }}
+            icon={<FlagDe width={24} />}
+            label='de'
           />
           <NavLink
             onClick={() => {

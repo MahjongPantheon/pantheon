@@ -25,7 +25,7 @@ require_once __DIR__ . '/../src/controllers/Avatars.php';
 $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
 $config = new \Gullveig\Config($cfgPath);
 $mc = new Memcached();
-$mc->addServer('127.0.0.1', 11211);
+$mc->addServer('localhost', 11211);
 $log = new Logger('Gullveig');
 $log->pushHandler(new ErrorLogHandler());
 $controller = new \Gullveig\AvatarsController($log, $config, $mc);

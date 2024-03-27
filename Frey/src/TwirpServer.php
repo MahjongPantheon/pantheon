@@ -46,7 +46,7 @@ final class TwirpServer implements Frey
         $storage = new \Common\Storage($this->_config->getValue('cookieDomain'));
         $this->_meta = new Meta($storage, $_SERVER);
         $this->_mc = new Memcached();
-        $this->_mc->addServer('127.0.0.1', 11211);
+        $this->_mc->addServer('localhost', 11211);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
