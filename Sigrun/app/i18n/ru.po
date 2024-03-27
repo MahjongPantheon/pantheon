@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 21:06+0100\n"
+"POT-Creation-Date: 2024-03-27 23:19+0100\n"
 "PO-Revision-Date: 2024-01-06 20:06+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1621,6 +1621,14 @@ msgid ""
 msgstr ""
 "Вы должны подготовить скрипт рассадки самостоятельно. Функциональность "
 "автоматических рассадок недоступна в этом режиме."
+
+#: app/helpers/gameLog.ts:64:59
+msgid "all noten"
+msgstr "все нотен"
+
+#: app/helpers/gameLog.ts:63:13
+msgid "all tenpai"
+msgstr "все темпай"
 
 #: app/helpers/gameLog.ts:149:19
 msgid "dora %1"

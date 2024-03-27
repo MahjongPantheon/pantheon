@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 21:06+0100\n"
+"POT-Creation-Date: 2024-03-27 23:19+0100\n"
 "PO-Revision-Date: 2024-03-22 12:17+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -1596,6 +1596,14 @@ msgid ""
 msgstr ""
 "Sitzordnung muss manuell festgelegt werden. Keine automatische Sitzzuordnung "
 "aktiv wenn diese Option aktiviert ist."
+
+#: app/helpers/gameLog.ts:64:59
+msgid "all noten"
+msgstr ""
+
+#: app/helpers/gameLog.ts:63:13
+msgid "all tenpai"
+msgstr ""
 
 #: app/helpers/gameLog.ts:149:19
 msgid "dora %1"

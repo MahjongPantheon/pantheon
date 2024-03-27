@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 21:06+0100\n"
+"POT-Creation-Date: 2024-03-27 23:19+0100\n"
 "PO-Revision-Date: 2024-03-22 14:12+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -1570,6 +1570,14 @@ msgid ""
 msgstr ""
 "대회 좌석 선정 방법은 직접 준비해야 함. 해당 설정 활성화 시 별도의 자동 좌석 "
 "설정 기능은 주어지지 않음"
+
+#: app/helpers/gameLog.ts:64:59
+msgid "all noten"
+msgstr ""
+
+#: app/helpers/gameLog.ts:63:13
+msgid "all tenpai"
+msgstr ""
 
 #: app/helpers/gameLog.ts:149:19
 msgid "dora %1"

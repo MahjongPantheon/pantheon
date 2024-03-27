@@ -43,7 +43,7 @@
     "eslint-plugin-unused-imports": "^3.1.0",
     "i18n-json-po": "git+https://github.com/ctizen/i18n-json-po#2.0.3",
     "i18n-po-json": "git+https://github.com/ctizen/i18n-po-json#2.0.8",
-    "i18n-stex": "git+https://github.com/ctizen/stex#2.0.3",
+    "i18n-stex": "git+https://github.com/ctizen/stex#2.1.1",
     "jest": "^29.7.0",
     "lodash.debounce": "^4.0.8",
     "prettier": "^3.2.5",
