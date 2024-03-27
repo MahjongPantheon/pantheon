@@ -152,7 +152,7 @@ class ClubEventSeeder extends AbstractSeed
             'X-Debug-Token' => 'CHANGE_ME'
         ]);
         $mc = new \Memcached();
-        $mc->addServer('127.0.0.1', 11211);
+        $mc->addServer('localhost', 11211);
         return [new \Mimir\DataSource($db, $frey, $mc), $cfg];
     }
 }

@@ -27,7 +27,7 @@ $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
 $config = new \Hugin\Config($cfgPath);
 $db = new \Hugin\Db($config);
 $mc = new Memcached();
-$mc->addServer('127.0.0.1', 11211);
+$mc->addServer('localhost', 11211);
 $log = new Logger('Hugin');
 $log->pushHandler(new ErrorLogHandler());
 $controller = new \Hugin\EventsController($db, $log, $config, $mc);

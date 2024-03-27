@@ -55,7 +55,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
         $this->_meta = new Meta(new \Common\Storage('localhost'), $_SERVER);
         $this->_mc = new \Memcached();
-        $this->_mc->addServer('127.0.0.1', 11211);
+        $this->_mc->addServer('localhost', 11211);
         $this->_person = (new PersonPrimitive($this->_db))
             ->setTitle('testPerson')
             ->setEmail('test@email.com')

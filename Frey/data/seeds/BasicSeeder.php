@@ -30,7 +30,7 @@ class BasicSeeder extends AbstractSeed
     public function run()
     {
         $this->_mc = new \Memcached();
-        $this->_mc->addServer('127.0.0.1', 11211);
+        $this->_mc->addServer('localhost', 11211);
 
         // Non-phinx-based seeder to avoid rewriting seeds for every schema change
 

@@ -20,6 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Model.php';
 require_once __DIR__ . '/Parser.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
+require_once __DIR__ . '/../../src/primitives/JobsQueue.php';
 require_once __DIR__ . '/../../src/primitives/Session.php';
 
 class TextlogImportModel extends Model

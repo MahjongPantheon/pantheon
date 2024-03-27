@@ -1,4 +1,4 @@
-FROM alpine:3.18.6
+FROM alpine:3.19.1
 
 RUN apk update && \
     apk upgrade && \
@@ -83,6 +83,9 @@ RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
 
+RUN ln -s /usr/bin/php81 /usr/bin/php
+RUN ln -s /usr/bin/php-fpm81 /usr/bin/php-fpm
+
 # Set environments
 RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php81/php-fpm.d/www.conf && \
     sed -i "s|;*clear_env\s*=\s*no|clear_env = no|g" /etc/php81/php-fpm.d/www.conf && \
@@ -90,7 +93,7 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php81/php-fpm.d/www.c
     sed -i "s|;*pm\.start_servers\s*=\s*.*|pm.start_servers = 10|g" /etc/php81/php-fpm.d/www.conf && \
     sed -i "s|;*pm\.min_spare_servers\s*=\s*.*|pm.min_spare_servers = 5|g" /etc/php81/php-fpm.d/www.conf && \
     sed -i "s|;*pm\.max_spare_servers\s*=\s*.*|pm.max_spare_servers = 10|g" /etc/php81/php-fpm.d/www.conf && \
-    sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = 9000|g" /etc/php81/php-fpm.d/www.conf && \
+    sed -i "s|;*listen\s*=\s*localhost:9000|listen = 9000|g" /etc/php81/php-fpm.d/www.conf && \
     sed -i "s|;*listen\s*=\s*/||g" /etc/php81/php-fpm.d/www.conf && \
     sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /etc/php81/php.ini && \
     sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php81/php.ini && \
