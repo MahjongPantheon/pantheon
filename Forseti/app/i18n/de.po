@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-27 21:06+0100\n"
-"PO-Revision-Date: 2024-03-27 14:36+0100\n"
+"PO-Revision-Date: 2024-03-28 09:21+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -86,7 +86,7 @@ msgstr ""
 
 #: app/components/MainMenu.tsx:171:17
 msgid "All events"
-msgstr "Alle Events"
+msgstr "Events"
 
 #: app/pages/ProfileManage.tsx:332:18
 msgid "All player stats and achievements"
@@ -736,8 +736,8 @@ msgid ""
 "If checked, the rating table will be shown for everyone, otherwise only for "
 "event administrators"
 msgstr ""
-"Die Wertungstabelle wird für alle Nutzer öffentlich angezeigt. Ansonsten nur "
-"für Administratoren"
+"Die Rangliste wird für alle Nutzer öffentlich angezeigt. Ansonsten nur für "
+"Administratoren"
 
 #: app/pages/ProfileManage.tsx:257:28 app/pages/ProfileManageAdmin.tsx:283:26
 msgid ""
@@ -870,7 +870,7 @@ msgstr "Lokale IDs"
 
 #: app/pages/OwnedEventsEdit/TabsList.tsx:45:12
 msgid "Local event settings"
-msgstr "Einstellungen für Klubspiele"
+msgstr "Einstellungen für Klubrangliste"
 
 #: app/pages/OwnedEvents.tsx:287:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
@@ -879,7 +879,7 @@ msgstr "Klubrangliste"
 
 #: app/pages/ProfileLogin.tsx:36:16
 msgid "Login to your account"
-msgstr "Accountlogin"
+msgstr "Einloggen"
 
 #: app/pages/ProfileLogout.tsx:32:16
 msgid "Logout"
@@ -948,7 +948,7 @@ msgstr "Mindestanzahl an Spielen"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:112:24
 msgid "Multiline. Markdown syntax supported."
-msgstr "Mehrlinienfeld. Markdown syntax wird unterstützt."
+msgstr "Mehrlinienfeld. Markdown Syntax wird unterstützt."
 
 #: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
 msgid "Multiple yakumans"
@@ -1448,12 +1448,12 @@ msgid ""
 "select another ruleset here."
 msgstr ""
 "Regelsatz der als Template für das Event verwendet wird. Die Regeln können "
-"in den Eventeinstellungen angepasst werden. Beim Wechsel des Templates "
-"werden alle Einstellungen zurückgesetzt."
+"unter \"Regeln\" angepasst werden. Beim Wechsel des Templates werden alle "
+"Einstellungen zurückgesetzt."
 
 #: app/pages/OwnedEventsEdit/TabsList.tsx:59:10
 msgid "Ruleset tuning"
-msgstr "Regelsatz"
+msgstr "Regeln"
 
 #: app/helpers/yaku.ts:114:34
 msgid "Ryanpeikou"
@@ -1614,11 +1614,11 @@ msgstr "Auszeichnungen für Alle einblenden"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:117:18
 msgid "Show in ratings global list"
-msgstr "In Globaler Wertungstabelle anzeigen"
+msgstr "In globaler Rangliste anzeigen"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:124:18
 msgid "Show rating table for everyone"
-msgstr "Wertungstabelle für Alle einblenden"
+msgstr "Rangliste für Alle einblenden"
 
 #: app/pages/GamesControl/TournamentControls.tsx:188:19
 #: app/pages/GamesControl/TournamentControls.tsx:269:19
@@ -1644,7 +1644,7 @@ msgstr "Abmelden"
 
 #: app/components/MainMenu.tsx:194:19
 msgid "Sign up"
-msgstr "Registrieren"
+msgstr "Konto anmelden"
 
 #: app/pages/OwnedEventsEdit/UmaSelect.tsx:37:61
 msgid "Simple rank-based"
@@ -1832,11 +1832,11 @@ msgstr ""
 
 #: app/components/MainMenu.tsx:301:18
 msgid "Toggle color scheme"
-msgstr "Farbschema umschalten"
+msgstr "Farbschema"
 
 #: app/components/MainMenu.tsx:292:18
 msgid "Toggle dimmed colors"
-msgstr "Farbstärke umschalten"
+msgstr "Helligkeit"
 
 #: app/pages/OwnedEvents.tsx:405:28
 msgid "Toggle visibility in ratings global list"
@@ -1848,7 +1848,7 @@ msgstr "Auszeichnungen ein/ausblenden"
 
 #: app/pages/OwnedEvents.tsx:415:28
 msgid "Toggle visibility of rating table"
-msgstr "Wertungstabelle ein/ausblenden"
+msgstr "Rangliste ein/ausblenden"
 
 #: app/helpers/yaku.ts:146:34
 msgid "Toitoi"
