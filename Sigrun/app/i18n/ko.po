@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-27 23:19+0100\n"
-"PO-Revision-Date: 2024-03-22 14:12+0100\n"
+"PO-Revision-Date: 2024-03-28 18:55+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -1573,11 +1573,11 @@ msgstr ""
 
 #: app/helpers/gameLog.ts:64:59
 msgid "all noten"
-msgstr ""
+msgstr "전원 노텐"
 
 #: app/helpers/gameLog.ts:63:13
 msgid "all tenpai"
-msgstr ""
+msgstr "전원 텐파이"
 
 #: app/helpers/gameLog.ts:149:19
 msgid "dora %1"

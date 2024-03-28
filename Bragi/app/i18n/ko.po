@@ -1,0 +1,36 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 23:19+0100\n"
+"PO-Revision-Date: 2024-03-28 19:52+0100\n"
+"Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: i18n-json2po\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: app/components/AppFooter.tsx:125:20
+msgid "Toggle color scheme"
+msgstr "다크모드 전환"
+
+#: app/components/Layout.tsx:109:24
+msgid "Pantheon: riichi mahjong ratings and statistics"
+msgstr "Pantheon: 리치 마작 순위표 및 통계"
+
+#: app/components/Layout.tsx:110:30
+msgid ""
+"Pantheon is a set of tools to record and show detailed riichi mahjong games "
+"with recording assistance, admin panel and statistics service."
+msgstr ""
+"Pantheon은 리치 마작 대국 내용 기록, 관리 패널, 통계 서비스를 제공하는 종합 "
+"시스템입니다."

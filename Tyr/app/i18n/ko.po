@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-27 21:06+0100\n"
-"PO-Revision-Date: 2024-03-23 15:29+0100\n"
+"PO-Revision-Date: 2024-03-28 19:56+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -179,14 +179,13 @@ msgstr "하저로어"
 #: app/components/screens/login/LoginErrorView.tsx:56:12
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
-msgstr "궁금하신 사항이 있으시면 관리자에게 문의해주세요."
+msgstr "궁금하신 사항은 관리자에게 문의해주세요."
 
 #: app/store/middlewares/yaku.ts:35:13 app/store/middlewares/yaku.ts:50:17
 msgid ""
 "If you want to select a riichi, return back and press riichi button for the "
 "winner"
-msgstr ""
-"역: 리치를 선택/해제하는 경우에는 돌아가서 승자의 리치 버튼을 눌러주세요"
+msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
 
 #: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
 msgid "Iipeikou"
@@ -461,7 +460,7 @@ msgstr "자일색"
 
 #: app/components/screens/settings/SettingsScreenView.tsx:164:18
 msgid "Turn on if you use a single device for all players"
-msgstr "모든 작사가 하나의 기기를 사용할 경우 활성화하십시오"
+msgstr "모든 작사가 이 기기만 사용할 경우 활성화하십시오"
 
 #: app/components/screens/login/LoginErrorView.tsx:53:16
 msgid "Unexpected server error"

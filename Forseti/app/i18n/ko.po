@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-27 21:06+0100\n"
-"PO-Revision-Date: 2024-03-22 14:12+0100\n"
+"PO-Revision-Date: 2024-03-28 18:57+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -1070,7 +1070,7 @@ msgstr "Pantheon 봇"
 
 #: app/components/MainMenu.tsx:242:17
 msgid "Open assistant"
-msgstr ""
+msgstr "Pantheon으로 이동"
 
 #: app/components/MainMenu.tsx:84:21
 msgid "Open event page"
@@ -1650,9 +1650,8 @@ msgstr ""
 "이벤트 \"%1\" (id #%2)를 종료하시겠습니까? 이 행동은 돌이킬 수 없습니다!"
 
 #: app/pages/SystemStats.tsx:228:18
-#, fuzzy
 msgid "Subsystem"
-msgstr "시스템 ID"
+msgstr "하위 시스템"
 
 #: app/pages/ProfileManageAdmin.tsx:120:24
 #: app/pages/ProfileManageAdmin.tsx:157:24 app/pages/ProfileSignup.tsx:100:64
