@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-17 23:41+0100\n"
+"POT-Creation-Date: 2024-03-29 21:52+0100\n"
 "PO-Revision-Date: 2024-02-11 00:57+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,14 +33,18 @@ msgstr "%1 番 %2 符"
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:521:14
+#: app/components/screens/table/TableHelper.ts:522:14
 msgid "Abort"
 msgstr "中途流局"
 
 #: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:166:15
+#: app/components/screens/table/TableHelper.ts:167:15
 msgid "Abortive draw"
 msgstr "中途流局"
+
+#: app/components/general/bottom-panel/BottomPanel.tsx:114:36
+msgid "Call referee for your table?"
+msgstr ""
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
 msgid "Chankan"
@@ -67,8 +71,8 @@ msgid "Chinroutou"
 msgstr "清老头"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:523:14
+#: app/components/screens/table/TableHelper.ts:156:13
+#: app/components/screens/table/TableHelper.ts:524:14
 msgid "Chombo"
 msgstr "犯规"
 
@@ -104,7 +108,7 @@ msgstr "大四喜"
 msgid "Dora"
 msgstr "宝牌"
 
-#: app/components/screens/table/TableHelper.ts:519:14
+#: app/components/screens/table/TableHelper.ts:520:14
 msgid "Draw"
 msgstr "流局"
 
@@ -121,7 +125,7 @@ msgid "Event title"
 msgstr "活动名称"
 
 #: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:149:13
+#: app/components/screens/table/TableHelper.ts:150:13
 msgid "Exhaustive draw"
 msgstr "流局"
 
@@ -213,7 +217,7 @@ msgstr "登录"
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "登录失败，可能的错误是:"
 
-#: app/components/screens/table/TableHelper.ts:425:22
+#: app/components/screens/table/TableHelper.ts:426:22
 msgid "Loser"
 msgstr "输家"
 
@@ -225,12 +229,12 @@ msgstr "门前清自摸和"
 msgid "Multiron, from %1"
 msgstr "%1 放铳 一炮多响"
 
-#: app/components/screens/table/TableHelper.ts:525:14
+#: app/components/screens/table/TableHelper.ts:526:14
 msgid "Nagashi"
 msgstr "流局"
 
 #: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:176:15
+#: app/components/screens/table/TableHelper.ts:177:15
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
@@ -286,7 +290,7 @@ msgstr "密码"
 msgid "Password check has failed"
 msgstr "密码错误"
 
-#: app/components/screens/table/TableHelper.ts:221:16
+#: app/components/screens/table/TableHelper.ts:222:16
 msgid "Penalty"
 msgstr "惩罚"
 
@@ -294,7 +298,7 @@ msgstr "惩罚"
 msgid "Pinfu"
 msgstr "平和"
 
-#: app/components/screens/settings/SettingsScreen.tsx:79:58
+#: app/components/screens/settings/SettingsScreen.tsx:89:58
 msgid "Player name"
 msgstr "玩家名"
 
@@ -305,6 +309,10 @@ msgstr "上一场对局"
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:22
 msgid "Red fives"
 msgstr "赤宝牌"
+
+#: app/components/general/bottom-panel/BottomPanel.tsx:117:27
+msgid "Referee has been requested to your table!"
+msgstr ""
 
 #: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
 msgid "Renhou"
@@ -326,8 +334,8 @@ msgstr "岭上"
 msgid "Rinshan kaihou"
 msgstr "岭上开花"
 
-#: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:515:14
+#: app/components/screens/table/TableHelper.ts:138:13
+#: app/components/screens/table/TableHelper.ts:516:14
 msgid "Ron"
 msgstr "荣和"
 
@@ -367,11 +375,11 @@ msgstr "选择其他活动或比赛"
 msgid "Select event"
 msgstr "选择活动或比赛"
 
-#: app/components/screens/table/TableHelper.ts:496:16
+#: app/components/screens/table/TableHelper.ts:497:16
 msgid "Select pao"
 msgstr "选择包牌玩家"
 
-#: app/components/screens/table/TableHelper.ts:501:16
+#: app/components/screens/table/TableHelper.ts:502:16
 msgid "Select tempai"
 msgstr "选择听牌玩家"
 
@@ -439,8 +447,8 @@ msgstr "你现在没有可选择的活动或比赛"
 msgid "Toitoi"
 msgstr "对对和"
 
-#: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:144:13
+#: app/components/screens/table/TableHelper.ts:518:14
 msgid "Tsumo"
 msgstr "自摸"
 
@@ -464,8 +472,8 @@ msgstr "错误"
 msgid "Ura dora"
 msgstr "里宝牌"
 
-#: app/components/screens/table/TableHelper.ts:422:22
-#: app/components/screens/table/TableHelper.ts:435:22
+#: app/components/screens/table/TableHelper.ts:423:22
+#: app/components/screens/table/TableHelper.ts:436:22
 msgid "Winner"
 msgstr "赢家"
 
@@ -497,7 +505,7 @@ msgstr "役满"
 msgid "dora %1"
 msgstr "宝牌 %1"
 
-#: app/components/screens/table/TableHelper.ts:413:25
+#: app/components/screens/table/TableHelper.ts:414:25
 msgid "empty outcome"
 msgstr "无结果"
 
@@ -522,7 +530,7 @@ msgstr "出现错误，请联系管理员"
 msgid "type to find someone"
 msgstr "查找玩家"
 
-#: app/components/screens/table/TableHelper.ts:440:27
+#: app/components/screens/table/TableHelper.ts:441:27
 msgid "wrong outcome for paoSelect"
 msgstr "包牌玩家选择错误"
 

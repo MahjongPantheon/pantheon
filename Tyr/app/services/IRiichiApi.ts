@@ -51,5 +51,6 @@ export interface IRiichiApi {
   addRound(state: IAppState): Promise<GamesAddRoundResponse>;
   getTablesState(eventId: number): Promise<TableState[]>;
   quickAuthorize(): Promise<boolean>;
+  callReferee(eventId: number, tableIndex: number): Promise<boolean>;
   authorize(email: string, password: string): Promise<AuthAuthorizeResponse>;
 }

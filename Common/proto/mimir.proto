@@ -153,6 +153,8 @@ service Mimir {
     returns (GamesAddOnlineReplayResponse);
   rpc NotifyPlayersSessionStartsSoon (GenericEventPayload)
     returns (GenericSuccessResponse);
+  rpc CallReferee (CallRefereePayload)
+    returns (GenericSuccessResponse);
 }
 
 message EventsGetRulesetsPayload {
@@ -564,4 +566,9 @@ message TypedGamesAddOnlineReplayPayload {
 
 message ForceFinishGamePayload {
   string session_hash = 1;
+}
+
+message CallRefereePayload {
+  int32 table_index = 1;
+  int32 event_id = 2;
 }

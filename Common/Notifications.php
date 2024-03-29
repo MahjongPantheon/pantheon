@@ -8,6 +8,7 @@ class Notifications {
     const HandHasBeenRecorded = 'h';
     const ClubSessionEnded = 'ce';
     const TournamentSessionEnded = 'te';
+    const RefereeCalled = 'rc';
 
     /**
      * @var int[]
@@ -18,6 +19,7 @@ class Notifications {
         self::HandHasBeenRecorded => 0,
         self::ClubSessionEnded => 0,
         self::TournamentSessionEnded => 0,
+        self::RefereeCalled => 1,
     ];
 
     /**

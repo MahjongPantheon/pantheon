@@ -597,4 +597,13 @@ interface Mimir
      * @throws \Twirp\Error
      */
     public function NotifyPlayersSessionStartsSoon(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/CallReferee</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function CallReferee(array $ctx, \Common\CallRefereePayload $req): \Common\GenericSuccessResponse;
 }

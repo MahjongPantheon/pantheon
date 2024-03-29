@@ -83,6 +83,27 @@ class SkirnirClient
     }
 
     /**
+     * @param int $eventId
+     * @param int $tableId
+     * @return void
+     * @throws InvalidParametersException
+     */
+    public function messageCallReferee($eventId, int $tableId)
+    {
+        $refereeIds = $this->_fetchReferees($eventId);
+        $settings = $this->_fetchNotificationSettings($refereeIds);
+        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        if ($disabledForEvent) {
+            return;
+        }
+        $ids = $this->_getFilteredIdsByPermissions(Notifications::RefereeCalled, $settings);
+        $this->_sendMessage(
+            $ids,
+            "[<b>$eventTitle</b>]\n\n⚠️⚠️ Referee is requested at table # $tableId"
+        );
+    }
+
+    /**
      * @param int[] $playerIds
      * @param int $eventId
      * @param array $diff
@@ -220,6 +241,17 @@ class SkirnirClient
                 'notifications' => $p->getNotifications()
             ];
         }, $players)));
+    }
+
+    /**
+     * @param int $eventId
+     * @return array
+     */
+    protected function _fetchReferees($eventId)
+    {
+        return array_map(function ($item) {
+            return (int)$item['id'];
+        }, $this->_ds->remote()->getEventAdmins($eventId));
     }
 
     /**

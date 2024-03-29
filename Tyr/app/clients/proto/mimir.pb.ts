@@ -439,6 +439,11 @@ export interface ForceFinishGamePayload {
   sessionHash: string;
 }
 
+export interface CallRefereePayload {
+  tableIndex: number;
+  eventId: number;
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -1232,6 +1237,18 @@ export async function NotifyPlayersSessionStartsSoon(
   const response = await PBrequest(
     "/common.Mimir/NotifyPlayersSessionStartsSoon",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function CallReferee(
+  callRefereePayload: CallRefereePayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/CallReferee",
+    CallRefereePayload.encode(callRefereePayload),
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
@@ -2045,6 +2062,18 @@ export async function NotifyPlayersSessionStartsSoonJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+export async function CallRefereeJSON(
+  callRefereePayload: CallRefereePayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/CallReferee",
+    CallRefereePayloadJSON.encode(callRefereePayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 //========================================//
 //                 Mimir                  //
 //========================================//
@@ -2380,6 +2409,12 @@ export interface Mimir<Context = unknown> {
   ) => Promise<GamesAddOnlineReplayResponse> | GamesAddOnlineReplayResponse;
   NotifyPlayersSessionStartsSoon: (
     genericEventPayload: protoAtoms.GenericEventPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  CallReferee: (
+    callRefereePayload: CallRefereePayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
@@ -3162,6 +3197,15 @@ export function createMimir<Context>(service: Mimir<Context>) {
           protobuf: protoAtoms.GenericEventPayload,
           json: protoAtoms.GenericEventPayloadJSON,
         },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      CallReferee: {
+        name: "CallReferee",
+        handler: service.CallReferee,
+        input: { protobuf: CallRefereePayload, json: CallRefereePayloadJSON },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
@@ -9632,6 +9676,82 @@ export const ForceFinishGamePayload = {
   },
 };
 
+export const CallRefereePayload = {
+  /**
+   * Serializes CallRefereePayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<CallRefereePayload>): Uint8Array {
+    return CallRefereePayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes CallRefereePayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): CallRefereePayload {
+    return CallRefereePayload._readMessage(
+      CallRefereePayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes CallRefereePayload with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<CallRefereePayload>): CallRefereePayload {
+    return {
+      tableIndex: 0,
+      eventId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<CallRefereePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.tableIndex) {
+      writer.writeInt32(1, msg.tableIndex);
+    }
+    if (msg.eventId) {
+      writer.writeInt32(2, msg.eventId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: CallRefereePayload,
+    reader: protoscript.BinaryReader,
+  ): CallRefereePayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.tableIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -15169,6 +15289,70 @@ export const ForceFinishGamePayloadJSON = {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
+    }
+    return msg;
+  },
+};
+
+export const CallRefereePayloadJSON = {
+  /**
+   * Serializes CallRefereePayload to JSON.
+   */
+  encode: function (msg: PartialDeep<CallRefereePayload>): string {
+    return JSON.stringify(CallRefereePayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes CallRefereePayload from JSON.
+   */
+  decode: function (json: string): CallRefereePayload {
+    return CallRefereePayloadJSON._readMessage(
+      CallRefereePayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes CallRefereePayload with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<CallRefereePayload>): CallRefereePayload {
+    return {
+      tableIndex: 0,
+      eventId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<CallRefereePayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.tableIndex) {
+      json["tableIndex"] = msg.tableIndex;
+    }
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: CallRefereePayload,
+    json: any,
+  ): CallRefereePayload {
+    const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
+    if (_tableIndex_) {
+      msg.tableIndex = protoscript.parseNumber(_tableIndex_);
+    }
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },

@@ -1827,6 +1827,18 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param array $ctx
+     * @param \Common\CallRefereePayload $req
+     * @return GenericSuccessResponse
+     * @throws InvalidParametersException
+     */
+    public function CallReferee(array $ctx, \Common\CallRefereePayload $req): \Common\GenericSuccessResponse
+    {
+        return (new GenericSuccessResponse())
+            ->setSuccess($this->_playersController->callReferee($req->getEventId(), $req->getTableIndex()));
+    }
+
+    /**
      * Check of rights for access by external service.
      *
      * @param string $token

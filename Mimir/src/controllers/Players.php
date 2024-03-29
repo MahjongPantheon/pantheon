@@ -673,4 +673,17 @@ class PlayersController extends Controller
         $skirnir->messageSessionStartingSoon($playerIds, $eventId);
         return true;
     }
+
+    /**
+     * @param int $eventId
+     * @param int $tableIndex
+     * @return true
+     * @throws InvalidParametersException
+     */
+    public function callReferee($eventId, int $tableIndex)
+    {
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messageCallReferee($eventId, $tableIndex);
+        return true;
+    }
 }
