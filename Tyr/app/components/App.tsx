@@ -109,7 +109,7 @@ export const App: React.FC<IProps> = (props: IProps) => {
             const newLink = window.document.createElement('link');
             newLink.setAttribute('id', 'font-' + localeName);
             newLink.setAttribute('rel', 'stylesheet');
-            newLink.setAttribute('href', '/public/font-' + localeName + '.css');
+            newLink.setAttribute('href', '/font-' + localeName + '.css');
             window.document.head.appendChild(newLink);
           }
         }
