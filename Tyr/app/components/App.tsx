@@ -103,6 +103,16 @@ export const App: React.FC<IProps> = (props: IProps) => {
     i18nService.init(
       (localeName) => {
         dispatch({ type: SETTINGS_SAVE_LANG, payload: localeName });
+        if (localeName === 'jp' || localeName === 'ko') {
+          const fontLink = window.document.getElementById('font-' + localeName);
+          if (!fontLink) {
+            const newLink = window.document.createElement('link');
+            newLink.setAttribute('id', 'font-' + localeName);
+            newLink.setAttribute('rel', 'stylesheet');
+            newLink.setAttribute('href', '/public/font-' + localeName + '.css');
+            window.document.head.appendChild(newLink);
+          }
+        }
       },
       (err) => console.error(err)
     );

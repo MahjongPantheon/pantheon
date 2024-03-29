@@ -57,6 +57,16 @@ export class SettingsScreen extends React.PureComponent<IComponentProps> {
       (localeName: string) => {
         // make sure value is valid - set it again in callback
         dispatch({ type: SETTINGS_SAVE_LANG, payload: localeName });
+        if (localeName === 'jp' || localeName === 'ko') {
+          const fontLink = window.document.getElementById('font-' + localeName);
+          if (!fontLink) {
+            const newLink = window.document.createElement('link');
+            newLink.setAttribute('id', 'font-' + localeName);
+            newLink.setAttribute('rel', 'stylesheet');
+            newLink.setAttribute('href', '/public/font-' + localeName + '.css');
+            window.document.head.appendChild(newLink);
+          }
+        }
       },
       (error: any) => console.error(error)
     );
