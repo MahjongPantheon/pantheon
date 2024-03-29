@@ -129,6 +129,7 @@ export const SET_SELECT_HAND_TAB = 'SET_SELECT_HAND_TAB';
 export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 export const HISTORY_INIT = 'HISTORY_INIT';
+export const CALL_REFEREE = 'CALL_REFEREE';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -582,6 +583,10 @@ interface HistoryInitAction {
   type: typeof HISTORY_INIT;
 }
 
+interface CallRefereeAction {
+  type: typeof CALL_REFEREE;
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -675,4 +680,5 @@ export type AppActionTypes =
   | EventsGetListActionSuccess
   | EventsGetListActionFail
   | SelectEventAction
-  | HistoryInitAction;
+  | HistoryInitAction
+  | CallRefereeAction;

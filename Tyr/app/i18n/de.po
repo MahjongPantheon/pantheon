@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-17 23:41+0100\n"
+"POT-Creation-Date: 2024-03-29 21:52+0100\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -39,14 +39,18 @@ msgstr ""
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:521:14
+#: app/components/screens/table/TableHelper.ts:522:14
 msgid "Abort"
 msgstr "Abbruch"
 
 #: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:166:15
+#: app/components/screens/table/TableHelper.ts:167:15
 msgid "Abortive draw"
 msgstr "Abgebrochenes Unentschieden"
+
+#: app/components/general/bottom-panel/BottomPanel.tsx:114:36
+msgid "Call referee for your table?"
+msgstr ""
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
 msgid "Chankan"
@@ -73,8 +77,8 @@ msgid "Chinroutou"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:523:14
+#: app/components/screens/table/TableHelper.ts:156:13
+#: app/components/screens/table/TableHelper.ts:524:14
 msgid "Chombo"
 msgstr ""
 
@@ -110,7 +114,7 @@ msgstr ""
 msgid "Dora"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:519:14
+#: app/components/screens/table/TableHelper.ts:520:14
 msgid "Draw"
 msgstr "Unentschieden"
 
@@ -127,7 +131,7 @@ msgid "Event title"
 msgstr "Eventname"
 
 #: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:149:13
+#: app/components/screens/table/TableHelper.ts:150:13
 msgid "Exhaustive draw"
 msgstr "Unentschieden"
 
@@ -221,7 +225,7 @@ msgstr "Anmelden"
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "Anmeldeversuch fehlgeschlagen. Mögliche Ursachen:"
 
-#: app/components/screens/table/TableHelper.ts:425:22
+#: app/components/screens/table/TableHelper.ts:426:22
 msgid "Loser"
 msgstr "Verlierer"
 
@@ -233,12 +237,12 @@ msgstr ""
 msgid "Multiron, from %1"
 msgstr "Multiron, von %1"
 
-#: app/components/screens/table/TableHelper.ts:525:14
+#: app/components/screens/table/TableHelper.ts:526:14
 msgid "Nagashi"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:176:15
+#: app/components/screens/table/TableHelper.ts:177:15
 msgid "Nagashi mangan"
 msgstr ""
 
@@ -294,7 +298,7 @@ msgstr "Passwort"
 msgid "Password check has failed"
 msgstr "Passwort falsch"
 
-#: app/components/screens/table/TableHelper.ts:221:16
+#: app/components/screens/table/TableHelper.ts:222:16
 msgid "Penalty"
 msgstr "Strafe"
 
@@ -302,7 +306,7 @@ msgstr "Strafe"
 msgid "Pinfu"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreen.tsx:79:58
+#: app/components/screens/settings/SettingsScreen.tsx:89:58
 msgid "Player name"
 msgstr "Spielername"
 
@@ -313,6 +317,10 @@ msgstr "Letztes Spiel"
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:22
 msgid "Red fives"
 msgstr "Rote Fünfen"
+
+#: app/components/general/bottom-panel/BottomPanel.tsx:117:27
+msgid "Referee has been requested to your table!"
+msgstr ""
 
 #: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
 msgid "Renhou"
@@ -334,8 +342,8 @@ msgstr ""
 msgid "Rinshan kaihou"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:515:14
+#: app/components/screens/table/TableHelper.ts:138:13
+#: app/components/screens/table/TableHelper.ts:516:14
 msgid "Ron"
 msgstr ""
 
@@ -375,11 +383,11 @@ msgstr "Event auswählen"
 msgid "Select event"
 msgstr "Event auswählen"
 
-#: app/components/screens/table/TableHelper.ts:496:16
+#: app/components/screens/table/TableHelper.ts:497:16
 msgid "Select pao"
 msgstr "Pao auswählen"
 
-#: app/components/screens/table/TableHelper.ts:501:16
+#: app/components/screens/table/TableHelper.ts:502:16
 msgid "Select tempai"
 msgstr "Tenpai auswählen"
 
@@ -447,8 +455,8 @@ msgstr "Du nimmst gerade an keinem Event teil"
 msgid "Toitoi"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:144:13
+#: app/components/screens/table/TableHelper.ts:518:14
 msgid "Tsumo"
 msgstr ""
 
@@ -472,8 +480,8 @@ msgstr "Unerwarteter Fehler"
 msgid "Ura dora"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:422:22
-#: app/components/screens/table/TableHelper.ts:435:22
+#: app/components/screens/table/TableHelper.ts:423:22
+#: app/components/screens/table/TableHelper.ts:436:22
 msgid "Winner"
 msgstr "Gewinner"
 
@@ -505,7 +513,7 @@ msgstr ""
 msgid "dora %1"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:413:25
+#: app/components/screens/table/TableHelper.ts:414:25
 msgid "empty outcome"
 msgstr "Leeres Ergebnis"
 
@@ -530,7 +538,7 @@ msgstr "Etwas ist schiefgelaufen, bitte kontaktiere den Administrator"
 msgid "type to find someone"
 msgstr "Spieler suchen"
 
-#: app/components/screens/table/TableHelper.ts:440:27
+#: app/components/screens/table/TableHelper.ts:441:27
 msgid "wrong outcome for paoSelect"
 msgstr "Falsches Ergebnis für paoSelect"
 

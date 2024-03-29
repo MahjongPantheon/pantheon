@@ -21,6 +21,7 @@ import {
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
   AppActionTypes,
+  CALL_REFEREE,
   EVENTS_GET_LIST_FAIL,
   EVENTS_GET_LIST_INIT,
   EVENTS_GET_LIST_SUCCESS,
@@ -199,10 +200,25 @@ export const apiClient =
       case ADD_ROUND_INIT:
         addRound(action.payload, api, next, mw.dispatch);
         break;
+      case CALL_REFEREE:
+        callReferee(mw.getState().tableIndex, mw.getState().currentEventId, api);
+        next(action);
+        break;
       default:
         return next(action);
     }
   };
+
+function callReferee(
+  tableIndex: number | undefined | null,
+  eventId: number | undefined,
+  api: IRiichiApi
+) {
+  if (!tableIndex || !eventId) {
+    return;
+  }
+  api.callReferee(eventId, tableIndex);
+}
 
 function loginWithRetry(
   data: { email: string; password: string; sessionId: string },

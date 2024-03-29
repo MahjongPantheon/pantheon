@@ -1573,6 +1573,29 @@ abstract class MimirAbstractClient
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function CallReferee(array $ctx, \Common\CallRefereePayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'CallReferee');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/CallReferee';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/CallReferee';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
      * Common code to make a request to the remote twirp service.
      */
     abstract protected function doRequest(array $ctx, string $url, Message $in, Message $out): void;

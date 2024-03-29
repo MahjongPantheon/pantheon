@@ -26,6 +26,7 @@ export type BottomPanelProps = {
   showRefresh?: boolean;
   showAdd?: boolean;
   showLog?: boolean;
+  showCallReferee?: boolean;
 } & BottomPanelPropsBase;
 
 export type BottomPanelPropsBase = {
@@ -38,4 +39,5 @@ export type BottomPanelPropsBase = {
   onAddClick?: () => void;
   onHomeClick?: () => void;
   onRefreshClick?: () => void;
+  onCallRefereeClick?: () => void;
 };

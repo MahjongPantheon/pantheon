@@ -34,6 +34,7 @@ import { ItemSelect } from '../../general/select-modal/ItemSelect';
 import { SelectModalProps } from '../../general/select-modal/SelectModal';
 import {
   ADD_ROUND_INIT,
+  CALL_REFEREE,
   GET_OTHER_TABLE_RELOAD,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
@@ -544,6 +545,8 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
   const showSave = tableMode === TableMode.RESULT;
   const isSaveDisabled = false; //todo do we really need disabled state for save? seems no
 
+  const showCallReferee = state.gameConfig?.syncStart; // only show for tournaments
+
   const showHome = [TableMode.GAME, TableMode.BEFORE_START].includes(tableMode);
   const showRefresh = [
     TableMode.GAME,
@@ -570,16 +573,17 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
   };
 
   return {
-    text: text,
-    showBack: showBack,
-    showNext: showNext,
-    isNextDisabled: isNextDisabled,
-    showHome: showHome,
-    showRefresh: showRefresh,
-    showAdd: showAdd,
-    showLog: showLog,
-    showSave: showSave,
-    isSaveDisabled: isSaveDisabled,
+    text,
+    showBack,
+    showNext,
+    isNextDisabled,
+    showHome,
+    showRefresh,
+    showAdd,
+    showLog,
+    showSave,
+    showCallReferee,
+    isSaveDisabled,
     onNextClick: nextClickHandler(),
     onBackClick: onBackClick(dispatch),
     onSaveClick: onSaveClick(state, dispatch),
@@ -587,6 +591,7 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
     onAddClick: onAddClick(state, dispatch),
     onHomeClick: onHomeClick(dispatch),
     onRefreshClick: onRefreshClick(state, dispatch),
+    onCallRefereeClick: onCallRefereeClick(state, dispatch),
   };
 }
 
@@ -851,6 +856,14 @@ function onAddClick(state: IAppState, dispatch: Dispatch) {
       dispatch({ type: GOTO_NEXT_SCREEN });
     } else if (state.currentScreen === 'outcomeSelect') {
       dispatch({ type: GOTO_PREV_SCREEN });
+    }
+  };
+}
+
+function onCallRefereeClick(state: IAppState, dispatch: Dispatch) {
+  return () => {
+    if (state.currentScreen === 'currentGame') {
+      dispatch({ type: CALL_REFEREE });
     }
   };
 }

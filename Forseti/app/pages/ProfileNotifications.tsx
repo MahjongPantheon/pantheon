@@ -38,6 +38,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
         h: 0,
         ce: 0,
         te: 0,
+        rc: 1,
       } as Record<string, number>,
     },
 
@@ -133,6 +134,11 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
         <Checkbox
           label={i18n._t('Notify when session in club event has ended')}
           {...form.getInputProps('notifications.ce', { type: 'checkbox' })}
+        />
+        <Space h='md' />
+        <Checkbox
+          label={i18n._t('Notify when you are requested as referee')}
+          {...form.getInputProps('notifications.rc', { type: 'checkbox' })}
         />
         <Space h='xl' />
         {form.getTransformedValues().id === '' && (

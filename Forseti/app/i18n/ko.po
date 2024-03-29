@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 21:06+0100\n"
+"POT-Creation-Date: 2024-03-29 21:52+0100\n"
 "PO-Revision-Date: 2024-03-22 14:12+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -529,7 +529,7 @@ msgstr "이벤트 스크립트 저장 실패: 서버 오류 또는 네트워크�
 msgid "Failed to save event: server error or network unreachable"
 msgstr "이벤트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
-#: app/pages/ProfileNotifications.tsx:83:36
+#: app/pages/ProfileNotifications.tsx:84:36
 msgid "Failed to set notifications settings."
 msgstr "알림 설정 실패"
 
@@ -982,7 +982,7 @@ msgstr "검색 결과 없음"
 msgid "Notifications"
 msgstr "알림 설정"
 
-#: app/pages/ProfileNotifications.tsx:96:10
+#: app/pages/ProfileNotifications.tsx:97:10
 msgid ""
 "Notifications from Pantheon are supported via Telegram. Please configure "
 "your Telegram bot to use the service (see README)."
@@ -990,7 +990,7 @@ msgstr ""
 "Pantheon의 알림 기능은 텔레그램을 통해 지원됩니다. 알림 기능을 사용하려면 텔"
 "레그램 봇을 설정하세요 (README 참조)."
 
-#: app/pages/ProfileNotifications.tsx:140:14
+#: app/pages/ProfileNotifications.tsx:146:14
 msgid ""
 "Notifications from Pantheon are supported via Telegram. Please use the "
 "following link to register with Telegram bot: "
@@ -1018,25 +1018,30 @@ msgstr "작사 알림"
 msgid "Notify players to come to their tables"
 msgstr "작사들에게 작탁으로 이동하도록 알림"
 
-#: app/pages/ProfileNotifications.tsx:129:18
+#: app/pages/ProfileNotifications.tsx:130:18
 msgid "Notify when a hand has been recorded"
 msgstr "국 결과가 기록되면 알림"
 
-#: app/pages/ProfileNotifications.tsx:119:18
+#: app/pages/ProfileNotifications.tsx:120:18
 msgid "Notify when next tournament session is about to start (except online)"
 msgstr "대회 대국 시작이 임박하면 알림 (온라인 제외)"
 
-#: app/pages/ProfileNotifications.tsx:114:18
+#: app/pages/ProfileNotifications.tsx:115:18
 msgid "Notify when seating for tournament sessions is ready"
 msgstr "대회 대국 좌석이 준비되면 알림"
 
-#: app/pages/ProfileNotifications.tsx:134:18
+#: app/pages/ProfileNotifications.tsx:135:18
 msgid "Notify when session in club event has ended"
 msgstr "로컬 이벤트의 대국이 종료되면 알림"
 
-#: app/pages/ProfileNotifications.tsx:124:18
+#: app/pages/ProfileNotifications.tsx:125:18
 msgid "Notify when session in tournament has ended (except online)"
 msgstr "대회 대국이 종료되면 알림 (온라인 제외)"
+
+#: app/pages/ProfileNotifications.tsx:140:18
+#, fuzzy
+msgid "Notify when you are requested as referee"
+msgstr "국 결과가 기록되면 알림"
 
 #: app/pages/ProfileManage.tsx:223:28
 msgid "Numerical identifier of your user profile."
@@ -1064,7 +1069,7 @@ msgstr ""
 "다가화 상황 발생 시 좌석 순서에 따라 첫번째 작사만 론 화료가 가능함. 비활성 "
 "시 론을 선언한 모든 작사가 화료하게 됨"
 
-#: app/pages/ProfileNotifications.tsx:145:16
+#: app/pages/ProfileNotifications.tsx:151:16
 msgid "Open Pantheon bot"
 msgstr "Pantheon 봇"
 
@@ -1209,7 +1214,7 @@ msgstr "이벤트 스크립트를 입력하세요"
 msgid "Please enter password"
 msgstr "암호를 입력해 주십시오"
 
-#: app/pages/ProfileNotifications.tsx:48:13
+#: app/pages/ProfileNotifications.tsx:49:13
 msgid "Please enter you telegram ID"
 msgstr "텔레그램 ID를 입력해 주십시오"
 
@@ -1561,7 +1566,7 @@ msgstr "대국 시작됨"
 msgid "Settings"
 msgstr "설정"
 
-#: app/pages/ProfileNotifications.tsx:150:28
+#: app/pages/ProfileNotifications.tsx:156:28
 msgid "Settings saved!"
 msgstr "설정이 저장되었습니다!"
 
@@ -1877,7 +1882,7 @@ msgstr "계정 업데이트"
 msgid "Update script"
 msgstr "스크립트 업데이트"
 
-#: app/pages/ProfileNotifications.tsx:150:57
+#: app/pages/ProfileNotifications.tsx:156:57
 msgid "Update settings"
 msgstr "설정 업데이트"
 
@@ -2044,8 +2049,8 @@ msgstr "비밀번호가 재설정되었습니다. 로그인으로 이동바랍�
 msgid "Your password is too weak. Please enter stronger password."
 msgstr "비밀번호가 취약합니다. 더 강력한 비밀번호를 입력해주세요."
 
-#: app/pages/ProfileNotifications.tsx:107:18
-#: app/pages/ProfileNotifications.tsx:109:24
+#: app/pages/ProfileNotifications.tsx:108:18
+#: app/pages/ProfileNotifications.tsx:110:24
 msgid "Your telegram ID"
 msgstr "텔레그램 ID"
 

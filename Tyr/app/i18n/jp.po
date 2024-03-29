@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-17 23:41+0100\n"
+"POT-Creation-Date: 2024-03-29 21:52+0100\n"
 "PO-Revision-Date: 2024-02-11 01:17+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,14 +33,18 @@ msgstr "%1 番 %2 符"
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:521:14
+#: app/components/screens/table/TableHelper.ts:522:14
 msgid "Abort"
 msgstr "途中流局"
 
 #: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:166:15
+#: app/components/screens/table/TableHelper.ts:167:15
 msgid "Abortive draw"
 msgstr "途中流局"
+
+#: app/components/general/bottom-panel/BottomPanel.tsx:114:36
+msgid "Call referee for your table?"
+msgstr ""
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
 msgid "Chankan"
@@ -67,8 +71,8 @@ msgid "Chinroutou"
 msgstr "清老頭"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:523:14
+#: app/components/screens/table/TableHelper.ts:156:13
+#: app/components/screens/table/TableHelper.ts:524:14
 msgid "Chombo"
 msgstr "チョンボ"
 
@@ -104,7 +108,7 @@ msgstr "大四喜"
 msgid "Dora"
 msgstr "ドラ"
 
-#: app/components/screens/table/TableHelper.ts:519:14
+#: app/components/screens/table/TableHelper.ts:520:14
 msgid "Draw"
 msgstr "流局"
 
@@ -121,7 +125,7 @@ msgid "Event title"
 msgstr "イベント"
 
 #: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:149:13
+#: app/components/screens/table/TableHelper.ts:150:13
 msgid "Exhaustive draw"
 msgstr "流局"
 
@@ -213,7 +217,7 @@ msgstr "ログイン"
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "ログインに失敗しました。考えられるエラーは:"
 
-#: app/components/screens/table/TableHelper.ts:425:22
+#: app/components/screens/table/TableHelper.ts:426:22
 msgid "Loser"
 msgstr "敗者"
 
@@ -225,12 +229,12 @@ msgstr "門前清自摸和"
 msgid "Multiron, from %1"
 msgstr "%1 放銃 マルチロン"
 
-#: app/components/screens/table/TableHelper.ts:525:14
+#: app/components/screens/table/TableHelper.ts:526:14
 msgid "Nagashi"
 msgstr "流し"
 
 #: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:176:15
+#: app/components/screens/table/TableHelper.ts:177:15
 msgid "Nagashi mangan"
 msgstr "流し満貫"
 
@@ -286,7 +290,7 @@ msgstr "パスワード"
 msgid "Password check has failed"
 msgstr "パスワードが間違っています"
 
-#: app/components/screens/table/TableHelper.ts:221:16
+#: app/components/screens/table/TableHelper.ts:222:16
 msgid "Penalty"
 msgstr "罰符"
 
@@ -294,7 +298,7 @@ msgstr "罰符"
 msgid "Pinfu"
 msgstr "平和"
 
-#: app/components/screens/settings/SettingsScreen.tsx:79:58
+#: app/components/screens/settings/SettingsScreen.tsx:89:58
 msgid "Player name"
 msgstr "玩家名"
 
@@ -305,6 +309,10 @@ msgstr "前の対局"
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:22
 msgid "Red fives"
 msgstr "赤ドラ"
+
+#: app/components/general/bottom-panel/BottomPanel.tsx:117:27
+msgid "Referee has been requested to your table!"
+msgstr ""
 
 #: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
 msgid "Renhou"
@@ -326,8 +334,8 @@ msgstr "嶺上"
 msgid "Rinshan kaihou"
 msgstr "嶺上開花"
 
-#: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:515:14
+#: app/components/screens/table/TableHelper.ts:138:13
+#: app/components/screens/table/TableHelper.ts:516:14
 msgid "Ron"
 msgstr "ロン"
 
@@ -367,11 +375,11 @@ msgstr "別のイベントを選択…"
 msgid "Select event"
 msgstr "イベントを選ぶ…"
 
-#: app/components/screens/table/TableHelper.ts:496:16
+#: app/components/screens/table/TableHelper.ts:497:16
 msgid "Select pao"
 msgstr "包(パオ)の責任払い"
 
-#: app/components/screens/table/TableHelper.ts:501:16
+#: app/components/screens/table/TableHelper.ts:502:16
 msgid "Select tempai"
 msgstr "聴牌(テンパイ)"
 
@@ -439,8 +447,8 @@ msgstr "参加しているイベントはありません"
 msgid "Toitoi"
 msgstr "対々和"
 
-#: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:144:13
+#: app/components/screens/table/TableHelper.ts:518:14
 msgid "Tsumo"
 msgstr "ツモ"
 
@@ -464,8 +472,8 @@ msgstr "エラーが発生しました"
 msgid "Ura dora"
 msgstr "裏ドラ"
 
-#: app/components/screens/table/TableHelper.ts:422:22
-#: app/components/screens/table/TableHelper.ts:435:22
+#: app/components/screens/table/TableHelper.ts:423:22
+#: app/components/screens/table/TableHelper.ts:436:22
 msgid "Winner"
 msgstr "勝者"
 
@@ -497,7 +505,7 @@ msgstr "役満"
 msgid "dora %1"
 msgstr "ドラ %1"
 
-#: app/components/screens/table/TableHelper.ts:413:25
+#: app/components/screens/table/TableHelper.ts:414:25
 msgid "empty outcome"
 msgstr "結果なし"
 
@@ -522,7 +530,7 @@ msgstr "問題が発生しました。管理者に連絡してください。"
 msgid "type to find someone"
 msgstr "プレイヤーを見つける…"
 
-#: app/components/screens/table/TableHelper.ts:440:27
+#: app/components/screens/table/TableHelper.ts:441:27
 msgid "wrong outcome for paoSelect"
 msgstr "包（パオ）の選択が間違っている"
 

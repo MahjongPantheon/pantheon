@@ -18,6 +18,7 @@
 import { IAppState } from '../store/interfaces';
 import {
   AddRound,
+  CallReferee,
   GetAllRegisteredPlayers,
   GetAllRounds,
   GetCurrentSessions,
@@ -217,5 +218,9 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
   authorize(email: string, password: string) {
     return Authorize({ email, password }, this._clientConfFrey);
+  }
+
+  callReferee(eventId: number, tableIndex: number): Promise<boolean> {
+    return CallReferee({ eventId, tableIndex }, this._clientConfMimir).then((v) => v.success);
   }
 }
