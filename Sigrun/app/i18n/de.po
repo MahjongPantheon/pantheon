@@ -548,7 +548,7 @@ msgstr "Event im Adminbereich bearbeiten"
 
 #: app/components/MainMenu.tsx:168:34 app/components/MainMenu.tsx:169:22
 msgid "Edit my profile"
-msgstr "Persönliches Profil bearbeiten"
+msgstr "Profil bearbeiten"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:123:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
@@ -1296,7 +1296,7 @@ msgstr "Anmelden"
 
 #: app/components/MainMenu.tsx:188:34 app/components/MainMenu.tsx:189:22
 msgid "Sign up"
-msgstr "Neues Konto erstellen"
+msgstr "Konto erstellen"
 
 #: app/Layout.tsx:342:38
 msgid ""
@@ -1419,7 +1419,7 @@ msgstr "In Damaten Hände:"
 
 #: app/components/MainMenu.tsx:159:32 app/components/MainMenu.tsx:160:20
 msgid "To events list"
-msgstr "Zur Eventliste"
+msgstr "Events"
 
 #: app/components/PlayerStatsListing.tsx:235:24
 msgid "To hands with riichi: "
@@ -1431,11 +1431,11 @@ msgstr "In offene Hände:i"
 
 #: app/components/MainMenu.tsx:263:33 app/components/MainMenu.tsx:264:20
 msgid "Toggle color scheme"
-msgstr "Farbschema umschalten"
+msgstr "Farbschema"
 
 #: app/components/MainMenu.tsx:253:33 app/components/MainMenu.tsx:254:20
 msgid "Toggle dimmed colors"
-msgstr "Farbstärke umschalten"
+msgstr "Helligkeit"
 
 #: app/helpers/yaku.ts:146:34
 msgid "Toitoi"
@@ -1599,11 +1599,11 @@ msgstr ""
 
 #: app/helpers/gameLog.ts:64:59
 msgid "all noten"
-msgstr ""
+msgstr "Alle in Noten"
 
 #: app/helpers/gameLog.ts:63:13
 msgid "all tenpai"
-msgstr ""
+msgstr "Alle in Tenpai"
 
 #: app/helpers/gameLog.ts:149:19
 msgid "dora %1"
