@@ -67,6 +67,7 @@ Tyr-dist/*
 Forseti/app/i18n/*.mo
 Sigrun/src/i18n/*.mo
 
+Forseti/dev-dist
 Forseti-dist/*
 !Forseti-dist/.well-known
 !Forseti-dist/.keep
@@ -77,6 +78,7 @@ Frey/data/verbose.log
 Frey/data/db.sqlite
 Frey/tests/data/*
 
+Sigrun/dev-dist
 Sigrun-dist/*
 !Sigrun-dist/.well-known
 !Sigrun-dist/.keep

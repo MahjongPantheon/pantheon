@@ -19,11 +19,13 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { I18nService } from '../services/i18n';
 import { storage } from './storage';
+import { fontLoader } from '../helpers/fontLoader';
 
 const i18n = new I18nService(storage);
 i18n.init(
   (locale) => {
     storage.setLang(locale);
+    fontLoader(locale);
   },
   (err) => console.error(err)
 );

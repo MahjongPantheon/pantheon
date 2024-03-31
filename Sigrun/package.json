@@ -19,8 +19,8 @@
     "@mantine/nprogress": "^6.0.21",
     "@mantine/ssr": "^6.0.21",
     "@tabler/icons-react": "^2.47.0",
-    "@types/uuid": "^9.0.8",
     "@types/jsdom": "^21.1.6",
+    "@types/uuid": "^9.0.8",
     "@types/wouter": "^2.2.0",
     "chart.js": "^4.4.2",
     "chartjs-plugin-zoom": "^2.0.1",
@@ -44,6 +44,7 @@
     "strip-markdown": "^6.0.0",
     "twirpscript": "^0.0.69",
     "uuid": "^9.0.1",
+    "vite-plugin-pwa": "^0.19.7",
     "wouter": "2.12.1"
   },
   "devDependencies": {

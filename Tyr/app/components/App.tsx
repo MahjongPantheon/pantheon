@@ -47,6 +47,7 @@ import { OtherTablesList } from './screens/other-tables-list/OtherTablesListScre
 import { i18n } from './i18n';
 import { IStorage } from '../../../Common/storage';
 import { v4 } from 'uuid';
+import { fontLoader } from '../scripts/fontLoader';
 
 interface IProps {
   state: IAppState;
@@ -103,16 +104,7 @@ export const App: React.FC<IProps> = (props: IProps) => {
     i18nService.init(
       (localeName) => {
         dispatch({ type: SETTINGS_SAVE_LANG, payload: localeName });
-        if (localeName === 'jp' || localeName === 'ko') {
-          const fontLink = window.document.getElementById('font-' + localeName);
-          if (!fontLink) {
-            const newLink = window.document.createElement('link');
-            newLink.setAttribute('id', 'font-' + localeName);
-            newLink.setAttribute('rel', 'stylesheet');
-            newLink.setAttribute('href', '/font-' + localeName + '.css');
-            window.document.head.appendChild(newLink);
-          }
-        }
+        fontLoader(localeName);
       },
       (err) => console.error(err)
     );

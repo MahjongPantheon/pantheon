@@ -32,10 +32,10 @@ export default defineConfig({
         enabled: true,
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,gif}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,gif,woff2}'],
         cleanupOutdatedCaches: false,
       },
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'Tyr game tracker',
         short_name: 'PantheonTracker',

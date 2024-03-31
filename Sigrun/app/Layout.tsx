@@ -46,6 +46,7 @@ import { MainMenu } from './components/MainMenu';
 import * as React from 'react';
 import { AddOnlineReplayModal } from './components/AddOnlineReplayModal';
 import { useRoute } from 'wouter';
+import { fontLoader } from './helpers/fontLoader';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -166,6 +167,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     i18n.init(
       (locale) => {
         storage.setLang(locale);
+        fontLoader(locale);
         forceUpdate();
       },
       (err) => console.error(err)
