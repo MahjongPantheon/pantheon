@@ -4,9 +4,7 @@
   font-weight: 300;
   font-style: normal;
   font-display: swap;
-  unicode-range:
-    U+AC00-D7A3,
-    U+3130-318F U+1100-11FF;
+  unicode-range: U+AC00-D7A3, U+3130-318F, U+1100-11FF;
 }
 @font-face {
   font-family: IBM Plex Sans;
@@ -14,7 +12,5 @@
   font-weight: 600;
   font-style: normal;
   font-display: swap;
-  unicode-range:
-    U+AC00-D7A3,
-    U+3130-318F U+1100-11FF;
+  unicode-range: U+AC00-D7A3, U+3130-318F, U+1100-11FF;
 }
