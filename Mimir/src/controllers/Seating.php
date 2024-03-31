@@ -219,9 +219,10 @@ class SeatingController extends Controller
             return !in_array($player['id'], $ignoredPlayerIds);
         }));
 
-        $seating = Seating::makeIntervalSeating($currentRatingTable, $step, true);
-
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $seating = array_keys(Seating::makeIntervalSeating($currentRatingTable, $step));
+        $seating = array_chunk($seating, 4);
+
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
         $playerMap = [];
         foreach ($regs as $r) {

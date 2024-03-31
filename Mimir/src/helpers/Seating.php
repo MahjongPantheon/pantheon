@@ -59,7 +59,7 @@ class Seating
             $seating[$indexToPlayer[$playerIndex]] = $indexToRating[$playerIndex];
         }
 
-        return $seating;
+        return self::_updatePlacesToRandom($seating) ?: [];
     }
 
     /**
@@ -226,6 +226,24 @@ class Seating
         }
 
         return $factor / 2; // div by 2 because of symmetrical matrix counting
+    }
+
+
+    /**
+     * Make sure players will sit on random winds
+     *
+     * @param array $seating
+     * @return array|null
+     */
+    protected static function _updatePlacesToRandom(array $seating)
+    {
+        $tables = array_chunk($seating, 4, true);
+        $resultSeating = [];
+        foreach ($tables as $tableWithRatings) {
+            $resultSeating += self::shuffle($tableWithRatings);
+        }
+
+        return $resultSeating;
     }
 
     /**
@@ -575,12 +593,11 @@ class Seating
      *
      * @param array $currentRatingList :ordered list
      * @param int $step
-     * @param bool $randomize
      *
      * @return array
      * @throws \Exception
      */
-    public static function makeIntervalSeating(array $currentRatingList, int $step, bool $randomize = false)
+    public static function makeIntervalSeating(array $currentRatingList, int $step)
     {
         srand(crc32(microtime()));
         $tables = [];
@@ -597,7 +614,7 @@ class Seating
                 $currentTable []= [$currentRatingList[$offset + $i]['id'], $currentRatingList[$offset + $i]['rating']];
                 if (count($currentTable) == 4) {
                     $tables []= [
-                        $randomize ? self::shuffle($currentTable) : $currentTable,
+                        $currentTable,
                         array_reduce($currentTable, function ($acc, $val) {
                             return max($acc, $val[1]);
                         }, -1000000)
@@ -612,7 +629,7 @@ class Seating
             $currentTable []= [$currentRatingList[$i]['id'], $currentRatingList[$i]['rating']];
             if (count($currentTable) == 4) {
                 $tables []= [
-                    $randomize ? self::shuffle($currentTable) : $currentTable,
+                    $currentTable,
                     array_reduce($currentTable, function ($acc, $val) {
                         return max($acc, $val[1]);
                     }, -1000000)
@@ -626,12 +643,14 @@ class Seating
             return $table2[1] - $table1[1];
         });
 
-        // Clean up ratings and leave only sets of IDs
-        return array_map(function ($t) {
-            return array_map(function ($player) {
-                return $player[0];
-            }, $t[0]);
-        }, $tables);
+        $flattenedGroups = [];
+        foreach ($tables as $group) {
+            foreach ($group[0] as $v) {
+                $flattenedGroups[$v[0]] = $v[1];
+            }
+        }
+
+        return self::_updatePlacesToRandom($flattenedGroups) ?: [];
     }
 
     /**
