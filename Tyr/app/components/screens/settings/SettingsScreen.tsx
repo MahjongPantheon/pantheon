@@ -30,6 +30,7 @@ import {
 import { I18nService, supportedLanguages } from '../../../services/i18n';
 import { themes } from '../../../services/themes';
 import { i18n } from '../../i18n';
+import { fontLoader } from '../../../scripts/fontLoader';
 
 export class SettingsScreen extends React.PureComponent<IComponentProps> {
   static contextType = i18n;
@@ -57,16 +58,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps> {
       (localeName: string) => {
         // make sure value is valid - set it again in callback
         dispatch({ type: SETTINGS_SAVE_LANG, payload: localeName });
-        if (localeName === 'jp' || localeName === 'ko') {
-          const fontLink = window.document.getElementById('font-' + localeName);
-          if (!fontLink) {
-            const newLink = window.document.createElement('link');
-            newLink.setAttribute('id', 'font-' + localeName);
-            newLink.setAttribute('rel', 'stylesheet');
-            newLink.setAttribute('href', '/font-' + localeName + '.css');
-            window.document.head.appendChild(newLink);
-          }
-        }
+        fontLoader(localeName);
       },
       (error: any) => console.error(error)
     );

@@ -48,6 +48,7 @@ import { StopEventModal } from './components/StopEventModal';
 import { MainMenu } from './components/MainMenu';
 import { useRoute } from 'wouter';
 import { Event } from './clients/proto/atoms.pb';
+import { fontLoader } from './helpers/fontLoader';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -150,6 +151,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     i18n.init(
       (locale) => {
         storage.setLang(locale);
+        fontLoader(locale);
         forceUpdate();
       },
       (err) => console.error(err)
