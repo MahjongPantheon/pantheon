@@ -29,8 +29,8 @@
     "@mantine/notifications": "^6.0.21",
     "@mantine/nprogress": "^6.0.21",
     "@tabler/icons-react": "^2.47.0",
-    "@types/lodash.debounce": "^4.0.9",
     "@types/jest": "^29.5.12",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
@@ -54,6 +54,7 @@
     "resolve-url-loader": "^5.0.0",
     "ts-jest": "^29.1.2",
     "uuid": "^9.0.1",
+    "vite-plugin-pwa": "^0.19.7",
     "wouter": "^2.12.1"
   },
   "scripts": {}
