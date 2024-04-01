@@ -62,8 +62,8 @@ prod_deps:
 
 .PHONY: prebuild
 prebuild:
-	cp pwa-192x192.png dist/client/assets/
-	cp pwa-512x512.png dist/client/assets/
+	cp pwa-192x192.png dist/client/
+	cp pwa-512x512.png dist/client/
 	cd dist/client/assets && gzip -k -9 -f *.js *.css
 	cp -R dist ../Sigrun-dist/
 	cp -f server.js ../Sigrun-dist/
