@@ -63,7 +63,9 @@ cleanup_prebuilts:
 prebuild:
 	cd dist/assets && gzip -k -9 -f *.js *.css
 	cd dist && \
-	cp -R * ../../Forseti-dist/
+	cp -R * ../../Forseti-dist/ && \
+	cp ../pwa-192x192.png ../../Forseti-dist/ && \
+	cp ../pwa-512x512.png ../../Forseti-dist/
 
 dev:
 	./node_modules/.bin/vite --clearScreen=false
