@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-29 21:52+0100\n"
-"PO-Revision-Date: 2024-03-23 15:29+0100\n"
+"PO-Revision-Date: 2024-04-01 22:36+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -50,7 +50,7 @@ msgstr "도중유국"
 
 #: app/components/general/bottom-panel/BottomPanel.tsx:114:36
 msgid "Call referee for your table?"
-msgstr ""
+msgstr "심판을 호출하시겠습니까?"
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
 msgid "Chankan"
@@ -318,7 +318,7 @@ msgstr "적도라"
 
 #: app/components/general/bottom-panel/BottomPanel.tsx:117:27
 msgid "Referee has been requested to your table!"
-msgstr ""
+msgstr "심판이 호출되었습니다!"
 
 #: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
 msgid "Renhou"

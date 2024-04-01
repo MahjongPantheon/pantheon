@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-29 21:52+0100\n"
-"PO-Revision-Date: 2024-03-22 14:12+0100\n"
+"PO-Revision-Date: 2024-04-01 22:34+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -1039,9 +1039,8 @@ msgid "Notify when session in tournament has ended (except online)"
 msgstr "대회 대국이 종료되면 알림 (온라인 제외)"
 
 #: app/pages/ProfileNotifications.tsx:140:18
-#, fuzzy
 msgid "Notify when you are requested as referee"
-msgstr "국 결과가 기록되면 알림"
+msgstr "심판 호출을 받을 시 알림"
 
 #: app/pages/ProfileManage.tsx:223:28
 msgid "Numerical identifier of your user profile."
