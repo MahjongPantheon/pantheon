@@ -215,6 +215,21 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           {...form.getInputProps('ruleset.chomboPenalty')}
         />
       )}
+      <Checkbox
+        label={i18n._t('Yakitori')}
+        description={i18n._t('Use yakitori rule')}
+        {...form.getInputProps('ruleset.withYakitori', { type: 'checkbox' })}
+      />
+      {form.getTransformedValues().ruleset.withYakitori && (
+        <NumberInput
+          icon={<IconHandStop size='1rem' />}
+          label={i18n._t('Yakitori penalty')}
+          description={i18n._t("Amount of penalty applied to those who didn't win once in game.")}
+          defaultValue={0}
+          min={0}
+          {...form.getInputProps('ruleset.yakitoriPenalty')}
+        />
+      )}
     </Stack>
   );
 };

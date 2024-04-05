@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 21:52+0100\n"
+"POT-Creation-Date: 2024-04-05 21:15Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -691,11 +691,11 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: app/Layout.tsx:341:32
+#: app/Layout.tsx:343:32
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr ""
 
-#: app/Layout.tsx:342:38
+#: app/Layout.tsx:344:38
 msgid "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list."
 msgstr ""
 

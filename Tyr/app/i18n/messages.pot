@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 21:52+0100\n"
+"POT-Creation-Date: 2024-04-05 21:15Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,7 +147,7 @@ msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:156:13
-#: app/components/screens/table/TableHelper.ts:524:14
+#: app/components/screens/table/TableHelper.ts:525:14
 msgid "Chombo"
 msgstr ""
 
@@ -254,7 +254,7 @@ msgstr ""
 msgid "Yakuman"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreen.tsx:89:58
+#: app/components/screens/settings/SettingsScreen.tsx:81:58
 msgid "Player name"
 msgstr ""
 
@@ -293,12 +293,12 @@ msgid "Table #%1"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:138:13
-#: app/components/screens/table/TableHelper.ts:516:14
+#: app/components/screens/table/TableHelper.ts:517:14
 msgid "Ron"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:144:13
-#: app/components/screens/table/TableHelper.ts:518:14
+#: app/components/screens/table/TableHelper.ts:519:14
 msgid "Tsumo"
 msgstr ""
 
@@ -323,23 +323,23 @@ msgstr ""
 msgid "wrong outcome for paoSelect"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:497:16
+#: app/components/screens/table/TableHelper.ts:498:16
 msgid "Select pao"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:502:16
+#: app/components/screens/table/TableHelper.ts:503:16
 msgid "Select tempai"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:520:14
+#: app/components/screens/table/TableHelper.ts:521:14
 msgid "Draw"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:522:14
+#: app/components/screens/table/TableHelper.ts:523:14
 msgid "Abort"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:526:14
+#: app/components/screens/table/TableHelper.ts:527:14
 msgid "Nagashi"
 msgstr ""
 

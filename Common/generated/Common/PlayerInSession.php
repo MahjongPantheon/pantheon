@@ -41,6 +41,10 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string last_update = 7;</code>
      */
     protected $last_update = '';
+    /**
+     * Generated from protobuf field <code>bool yakitori = 8;</code>
+     */
+    protected $yakitori = false;
 
     /**
      * Constructor.
@@ -55,6 +59,7 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      *     @type float $rating_delta
      *     @type bool $has_avatar
      *     @type string $last_update
+     *     @type bool $yakitori
      * }
      */
     public function __construct($data = NULL) {
@@ -222,6 +227,28 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->last_update = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool yakitori = 8;</code>
+     * @return bool
+     */
+    public function getYakitori()
+    {
+        return $this->yakitori;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool yakitori = 8;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setYakitori($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->yakitori = $var;
 
         return $this;
     }

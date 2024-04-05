@@ -369,6 +369,7 @@ message PlayerInSession {
   float rating_delta = 5;
   bool has_avatar = 6;
   string last_update = 7;
+  bool yakitori = 8;
 }
 
 message CurrentSession {
@@ -625,6 +626,8 @@ message RulesetConfig {
   int32 start_rating = 33;
   repeated int32 allowed_yaku = 34;
   repeated int32 yaku_with_pao = 35;
+  bool with_yakitori = 36;
+  int32 yakitori_penalty = 37;
 }
 
 // Generics

@@ -1,4 +1,5 @@
 build
+dev-dist
 coverage
 node_modules
 dist
