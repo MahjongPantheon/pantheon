@@ -30,47 +30,77 @@ import {
 import { TableScreenStateless } from './base/TableScreenStateless';
 import { Preloader } from '../../general/preloader/Preloader';
 import { i18n } from '../../i18n';
-import { I18nService } from '../../../services/i18n';
+import { ModalDialog } from '../../general/modal-dialog/ModalDialog';
+import { useContext, useState } from 'react';
+import { CALL_REFEREE } from '../../../store/actions/interfaces';
+import { Notification } from '../../general/notification/Notification';
 
-export class TableScreen extends React.Component<IComponentProps> {
-  static contextType = i18n;
+export const TableScreen = ({ state, dispatch }: IComponentProps) => {
+  const loc = useContext(i18n);
+  const [callRefereeConfirmationShown, setCallRefereeConfirmationShown] = useState(false);
+  const [callRefereeNotificationShown, setCallRefereeNotificationShown] = useState(false);
+  function onCallRefereeClick() {
+    dispatch({ type: CALL_REFEREE });
+    setCallRefereeNotificationShown(true);
+    setTimeout(() => {
+      setCallRefereeNotificationShown(false);
+    }, 3000);
+  }
 
-  render() {
-    const loc = this.context as I18nService;
-    const { state, dispatch } = this.props;
-    const isLoading =
-      state.loading.events ||
-      (state.currentScreen === 'overview' &&
-        (!state.gameOverviewReady || !state.players || state.players.length !== 4)) ||
-      state.loading.addRound ||
-      state.loading.overview;
-    if (isLoading) {
-      return <Preloader />;
-    }
+  const isLoading =
+    state.loading.events ||
+    (state.currentScreen === 'overview' &&
+      (!state.gameOverviewReady || !state.players || state.players.length !== 4)) ||
+    state.loading.addRound ||
+    state.loading.overview;
+  if (isLoading) {
+    return <Preloader />;
+  }
 
-    const topPlayerInfo = getPlayerTopInfo(loc, state, dispatch);
-    const leftPlayerInfo = getPlayerLeftInfo(loc, state, dispatch);
-    const rightPlayerInfo = getPlayerRightInfo(loc, state, dispatch);
-    const bottomPlayerInfo = getPlayerBottomInfo(loc, state, dispatch);
+  const topPlayerInfo = getPlayerTopInfo(loc, state, dispatch);
+  const leftPlayerInfo = getPlayerLeftInfo(loc, state, dispatch);
+  const rightPlayerInfo = getPlayerRightInfo(loc, state, dispatch);
+  const bottomPlayerInfo = getPlayerBottomInfo(loc, state, dispatch);
 
-    const tableInfo = getTableInfo(state, dispatch);
+  const tableInfo = getTableInfo(state, dispatch);
 
-    const outcomeModalInfo = getOutcomeModalInfo(loc, state, dispatch);
-    const buttonPanelInfo = getBottomPanel(loc, state, dispatch);
+  const outcomeModalInfo = getOutcomeModalInfo(loc, state, dispatch);
+  const buttonPanelInfo = getBottomPanel(loc, state, dispatch);
 
-    const arrowsInfo = getArrowsInfo(state);
+  const arrowsInfo = getArrowsInfo(state);
 
-    return (
+  return (
+    <>
       <TableScreenStateless
         topPlayer={topPlayerInfo}
         leftPlayer={leftPlayerInfo}
         rightPlayer={rightPlayerInfo}
         bottomPlayer={bottomPlayerInfo}
-        tableInfo={tableInfo}
+        tableInfo={{
+          ...tableInfo,
+          onCallRefereeClick: () => setCallRefereeConfirmationShown(true),
+        }}
         arrowsInfo={arrowsInfo}
         outcomeModal={outcomeModalInfo}
         bottomPanel={buttonPanelInfo}
       />
-    );
-  }
-}
+      {callRefereeConfirmationShown && (
+        <ModalDialog
+          onClose={() => setCallRefereeConfirmationShown(false)}
+          actionPrimaryLabel={loc._t('Call referee')}
+          actionPrimary={() => {
+            onCallRefereeClick();
+            setCallRefereeConfirmationShown(false);
+          }}
+          actionSecondaryLabel={loc._t('Cancel')}
+          actionSecondary={() => setCallRefereeConfirmationShown(false)}
+        >
+          {loc._t('Call referee for your table?')}
+        </ModalDialog>
+      )}
+      <Notification isShown={callRefereeNotificationShown}>
+        {loc._t('Referee has been requested to your table!')}
+      </Notification>
+    </>
+  );
+};

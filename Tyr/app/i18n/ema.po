@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:15Z\n"
+"POT-Creation-Date: 2024-04-05 23:36Z\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: app/components/screens/table/base/TableInfo.tsx:92:20
+#: app/components/screens/table/base/TableInfo.tsx:114:22
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "%1 deal left"
@@ -34,17 +34,25 @@ msgstr ""
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:523:14
+#: app/components/screens/table/TableHelper.ts:524:14
 msgid "Abort"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:167:15
+#: app/components/screens/table/TableHelper.ts:166:15
 msgid "Abortive draw"
 msgstr ""
 
-#: app/components/general/bottom-panel/BottomPanel.tsx:114:36
+#: app/components/screens/table/TableScreen.tsx:90:31
+msgid "Call referee"
+msgstr ""
+
+#: app/components/screens/table/TableScreen.tsx:98:12
 msgid "Call referee for your table?"
+msgstr ""
+
+#: app/components/screens/table/TableScreen.tsx:95:33
+msgid "Cancel"
 msgstr ""
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
@@ -72,8 +80,8 @@ msgid "Chinroutou"
 msgstr "All Terminals"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:156:13
-#: app/components/screens/table/TableHelper.ts:525:14
+#: app/components/screens/table/TableHelper.ts:155:13
+#: app/components/screens/table/TableHelper.ts:526:14
 msgid "Chombo"
 msgstr ""
 
@@ -109,7 +117,7 @@ msgstr "Big Four Winds"
 msgid "Dora"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:521:14
+#: app/components/screens/table/TableHelper.ts:522:14
 msgid "Draw"
 msgstr ""
 
@@ -126,7 +134,7 @@ msgid "Event title"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:150:13
+#: app/components/screens/table/TableHelper.ts:149:13
 msgid "Exhaustive draw"
 msgstr ""
 
@@ -180,12 +188,6 @@ msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/store/middlewares/yaku.ts:35:13 app/store/middlewares/yaku.ts:50:17
-msgid ""
-"If you want to select a riichi, return back and press riichi button for the "
-"winner"
-msgstr ""
-
 #: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
 msgid "Iipeikou"
 msgstr "Pure Double Chow"
@@ -218,7 +220,7 @@ msgstr ""
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:426:22
+#: app/components/screens/table/TableHelper.ts:425:22
 msgid "Loser"
 msgstr ""
 
@@ -230,12 +232,12 @@ msgstr "Fully Concealed Hand"
 msgid "Multiron, from %1"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:527:14
+#: app/components/screens/table/TableHelper.ts:528:14
 msgid "Nagashi"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:177:15
+#: app/components/screens/table/TableHelper.ts:176:15
 msgid "Nagashi mangan"
 msgstr ""
 
@@ -255,6 +257,7 @@ msgstr ""
 msgid "No tables are playing right now"
 msgstr ""
 
+#: app/components/App.tsx:150:35
 #: app/components/screens/login/LoginErrorView.tsx:61:12
 msgid "OK"
 msgstr ""
@@ -291,7 +294,7 @@ msgstr ""
 msgid "Password check has failed"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:222:16
+#: app/components/screens/table/TableHelper.ts:221:16
 msgid "Penalty"
 msgstr ""
 
@@ -303,6 +306,10 @@ msgstr "Pinfu"
 msgid "Player name"
 msgstr ""
 
+#: app/components/App.tsx:152:16
+msgid "Please return back and press riichi button for the winner"
+msgstr ""
+
 #: app/components/screens/home/HomeScreenView.tsx:131:20
 msgid "Previous game"
 msgstr ""
@@ -311,7 +318,7 @@ msgstr ""
 msgid "Red fives"
 msgstr ""
 
-#: app/components/general/bottom-panel/BottomPanel.tsx:117:27
+#: app/components/screens/table/TableScreen.tsx:102:10
 msgid "Referee has been requested to your table!"
 msgstr ""
 
@@ -335,8 +342,8 @@ msgstr "After a Kong"
 msgid "Rinshan kaihou"
 msgstr "After a Kong"
 
-#: app/components/screens/table/TableHelper.ts:138:13
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:137:13
+#: app/components/screens/table/TableHelper.ts:518:14
 msgid "Ron"
 msgstr ""
 
@@ -376,11 +383,11 @@ msgstr ""
 msgid "Select event"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:498:16
+#: app/components/screens/table/TableHelper.ts:499:16
 msgid "Select pao"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:503:16
+#: app/components/screens/table/TableHelper.ts:504:16
 msgid "Select tempai"
 msgstr ""
 
@@ -420,7 +427,7 @@ msgstr "Four Concealed Pungs"
 msgid "Suukantsu"
 msgstr "Four Kongs"
 
-#: app/components/screens/table/base/TableInfo.tsx:100:57
+#: app/components/screens/table/base/TableInfo.tsx:122:59
 msgid "Table #%1"
 msgstr ""
 
@@ -448,8 +455,8 @@ msgstr ""
 msgid "Toitoi"
 msgstr "All Pungs"
 
-#: app/components/screens/table/TableHelper.ts:144:13
-#: app/components/screens/table/TableHelper.ts:519:14
+#: app/components/screens/table/TableHelper.ts:143:13
+#: app/components/screens/table/TableHelper.ts:520:14
 msgid "Tsumo"
 msgstr ""
 
@@ -473,8 +480,8 @@ msgstr ""
 msgid "Ura dora"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:423:22
-#: app/components/screens/table/TableHelper.ts:436:22
+#: app/components/screens/table/TableHelper.ts:422:22
+#: app/components/screens/table/TableHelper.ts:435:22
 msgid "Winner"
 msgstr ""
 
@@ -506,7 +513,7 @@ msgstr ""
 msgid "dora %1"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:414:25
+#: app/components/screens/table/TableHelper.ts:413:25
 msgid "empty outcome"
 msgstr ""
 
@@ -531,7 +538,7 @@ msgstr ""
 msgid "type to find someone"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:441:27
+#: app/components/screens/table/TableHelper.ts:440:27
 msgid "wrong outcome for paoSelect"
 msgstr ""
 

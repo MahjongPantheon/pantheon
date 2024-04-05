@@ -28,6 +28,7 @@ import {
   SELECT_EVENT,
   SETTINGS_SAVE_LANG,
   STARTUP_WITH_AUTH,
+  TOGGLE_RIICHI_NOTIFICATION,
 } from '../store/actions/interfaces';
 import { Dispatch } from 'redux';
 import { IComponentProps } from './IComponentProps';
@@ -48,6 +49,7 @@ import { i18n } from './i18n';
 import { IStorage } from '../../../Common/storage';
 import { v4 } from 'uuid';
 import { fontLoader } from '../scripts/fontLoader';
+import { ModalDialog } from './general/modal-dialog/ModalDialog';
 
 interface IProps {
   state: IAppState;
@@ -137,6 +139,19 @@ export const App: React.FC<IProps> = (props: IProps) => {
       <div className={`AppWrap ${isInStandaloneMode ? 'pwafix' : ''}`}>
         <i18n.Provider value={i18nService}>
           <CurrentScreen state={state} dispatch={dispatch} />
+          {state.riichiNotificationShown && (
+            <ModalDialog
+              onClose={() => {
+                dispatch({ type: TOGGLE_RIICHI_NOTIFICATION, payload: false });
+              }}
+              actionPrimary={() => {
+                dispatch({ type: TOGGLE_RIICHI_NOTIFICATION, payload: false });
+              }}
+              actionPrimaryLabel={i18nService._t('OK')}
+            >
+              {i18nService._t('Please return back and press riichi button for the winner')}
+            </ModalDialog>
+          )}
         </i18n.Provider>
       </div>
     </div>

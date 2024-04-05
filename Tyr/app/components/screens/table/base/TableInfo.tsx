@@ -24,6 +24,7 @@ import RiichiIcon from '../../../../img/icons/riichi-small.svg?react';
 import HonbaIcon from '../../../../img/icons/honba.svg?react';
 import RotateCWIcon from '../../../../img/icons/rotate-cw.svg?react';
 import RotateCCWIcon from '../../../../img/icons/rotate-ccw.svg?react';
+import CallRefereeIcon from '../../../../img/icons/call-referee.svg?react';
 
 export type TableInfoProps = {
   showRoundInfo?: boolean;
@@ -41,6 +42,8 @@ export type TableInfoProps = {
   onRotateCwClick?: () => void;
   onRotateCcwClick?: () => void;
   onTableInfoToggle?: () => void;
+  onCallRefereeClick?: () => void;
+  showCallReferee?: boolean;
 };
 
 export const TableInfo = React.memo(function (props: TableInfoProps) {
@@ -61,6 +64,8 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
     onTableInfoToggle,
     onRotateCcwClick,
     onRotateCwClick,
+    showCallReferee,
+    onCallRefereeClick,
   } = props;
 
   if (!showRoundInfo && !showTableNumber) {
@@ -68,49 +73,67 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
   }
 
   return (
-    <div className='table-info'>
-      {showRotators && (
-        <>
-          <div className='table-info__rotator_ccw' onClick={onRotateCcwClick}>
-            <RotateCWIcon />
-          </div>
-          <div className='table-info__rotator_cw' onClick={onRotateCwClick}>
-            <RotateCCWIcon />
-          </div>
-        </>
-      )}
-      <div className='table-info__info' onClick={onTableInfoToggle}>
-        {showRoundInfo && (
+    <>
+      <div className='table-info'>
+        {showRotators && (
           <>
-            {!!round && <div className='table-info__round'>{round}</div>}
-            {riichiCount !== undefined && <TableTenbou icon={<RiichiIcon />} count={riichiCount} />}
-            {honbaCount !== undefined && <TableTenbou icon={<HonbaIcon />} count={honbaCount} />}
-            {showTimer && <div className='table-info__timer'>{currentTime}</div>}
-            {gamesLeft && (
-              <div className='table-info__games-left'>
-                <div className='table-info__games-left-count'>
-                  {loc._nt(['%1 deal left', '%1 deals left'], gamesLeft, [gamesLeft])}
+            <div className='table-info__rotator_ccw' onClick={onRotateCcwClick}>
+              <RotateCWIcon />
+            </div>
+            <div className='table-info__rotator_cw' onClick={onRotateCwClick}>
+              <RotateCCWIcon />
+            </div>
+          </>
+        )}
+        <div className='table-info__info' onClick={onTableInfoToggle}>
+          {showRoundInfo && (
+            <>
+              {showCallReferee && (
+                <div
+                  className='svg-button'
+                  style={{ marginBottom: '30px' }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onCallRefereeClick?.();
+                    return false;
+                  }}
+                >
+                  <CallRefereeIcon />
                 </div>
-              </div>
-            )}
-          </>
-        )}
-        {showTableNumber && (
-          <>
-            <div className='table-info__table-caption'>{loc._t('Table #%1', [tableNumber])}</div>
-            {/*TODO*/}
-            {/*{showTimer && isAutostartTimer && (*/}
-            {/*  <>*/}
-            {/*    <hr className='table-info__autostart-separator' />*/}
-            {/*    <div className='table-info__autostart-hint'>*/}
-            {/*      {loc._t('Time before game start:')}*/}
-            {/*    </div>*/}
-            {/*  </>*/}
-            {/*)}*/}
-            {showTimer && !timerWaiting && <div className='table-info__timer'>{currentTime}</div>}
-          </>
-        )}
+              )}
+              {!!round && <div className='table-info__round'>{round}</div>}
+              {riichiCount !== undefined && (
+                <TableTenbou icon={<RiichiIcon />} count={riichiCount} />
+              )}
+              {honbaCount !== undefined && <TableTenbou icon={<HonbaIcon />} count={honbaCount} />}
+              {showTimer && <div className='table-info__timer'>{currentTime}</div>}
+              {gamesLeft && (
+                <div className='table-info__games-left'>
+                  <div className='table-info__games-left-count'>
+                    {loc._nt(['%1 deal left', '%1 deals left'], gamesLeft, [gamesLeft])}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+          {showTableNumber && (
+            <>
+              <div className='table-info__table-caption'>{loc._t('Table #%1', [tableNumber])}</div>
+              {/*TODO*/}
+              {/*{showTimer && isAutostartTimer && (*/}
+              {/*  <>*/}
+              {/*    <hr className='table-info__autostart-separator' />*/}
+              {/*    <div className='table-info__autostart-hint'>*/}
+              {/*      {loc._t('Time before game start:')}*/}
+              {/*    </div>*/}
+              {/*  </>*/}
+              {/*)}*/}
+              {showTimer && !timerWaiting && <div className='table-info__timer'>{currentTime}</div>}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 });

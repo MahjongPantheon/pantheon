@@ -130,6 +130,7 @@ export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 export const HISTORY_INIT = 'HISTORY_INIT';
 export const CALL_REFEREE = 'CALL_REFEREE';
+export const TOGGLE_RIICHI_NOTIFICATION = 'TOGGLE_RIICHI_NOTIFICATION';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -587,6 +588,11 @@ interface CallRefereeAction {
   type: typeof CALL_REFEREE;
 }
 
+interface ToggleRiichiNotificationAction {
+  type: typeof TOGGLE_RIICHI_NOTIFICATION;
+  payload: boolean;
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -681,4 +687,5 @@ export type AppActionTypes =
   | EventsGetListActionFail
   | SelectEventAction
   | HistoryInitAction
-  | CallRefereeAction;
+  | CallRefereeAction
+  | ToggleRiichiNotificationAction;

@@ -67,7 +67,7 @@ export class Store {
       history(),
       timerMw(this.timerSt),
       persistentMw(storage),
-      yaku(i18n),
+      yaku,
       logging(`⇨ [reducers]`),
       screenManageMw()
     );

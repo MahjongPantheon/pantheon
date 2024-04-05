@@ -25,10 +25,11 @@ import {
   SET_SELECT_HAND_TAB,
   SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
-  SETTINGS_SAVE_THEME,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
+  SETTINGS_SAVE_THEME,
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_OVERVIEW_DIFFBY,
+  TOGGLE_RIICHI_NOTIFICATION,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 
@@ -95,6 +96,11 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
       return {
         ...state,
         showAdditionalTableInfo: !state.showAdditionalTableInfo,
+      };
+    case TOGGLE_RIICHI_NOTIFICATION:
+      return {
+        ...state,
+        riichiNotificationShown: action.payload,
       };
     default:
       return state;

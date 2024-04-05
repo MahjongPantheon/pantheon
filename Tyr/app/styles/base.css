@@ -236,6 +236,10 @@ p {
   font-size: var(--font-size-small-2);
 }
 
+.flat-btn__responsive--medium {
+  padding: 8px;
+}
+
 .link {
   text-decoration: underline;
   color: var(--color-primary);

@@ -26,13 +26,8 @@ import HomeIcon from '../../../img/icons/home.svg?react';
 import RefreshIcon from '../../../img/icons/refresh.svg?react';
 import PlusIcon from '../../../img/icons/plus.svg?react';
 import LogIcon from '../../../img/icons/log.svg?react';
-import CallRefereeIcon from '../../../img/icons/call-referee.svg?react';
-import { i18n } from '../../i18n';
-import { I18nService } from '../../../services/i18n';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
-  static contextType = i18n;
-
   private onNextButtonClick() {
     const { isNextDisabled, onNextClick } = this.props;
     if (onNextClick && !isNextDisabled) {
@@ -48,7 +43,6 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
   }
 
   render() {
-    const loc = this.context as I18nService;
     const {
       text,
       showBack,
@@ -60,8 +54,6 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
       showRefresh,
       showAdd,
       showLog,
-      showCallReferee,
-      onCallRefereeClick,
       onAddClick,
       onBackClick,
       onHomeClick,
@@ -105,21 +97,6 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
           {showRefresh && (
             <div className='svg-button' onClick={onRefreshClick}>
               <RefreshIcon />
-            </div>
-          )}
-          {showCallReferee && (
-            <div
-              className='svg-button'
-              onClick={() => {
-                if (window.confirm(loc._t('Call referee for your table?'))) {
-                  onCallRefereeClick?.();
-                  setTimeout(() => {
-                    alert(loc._t('Referee has been requested to your table!'));
-                  }, 0);
-                }
-              }}
-            >
-              <CallRefereeIcon />
             </div>
           )}
           {showAdd && (

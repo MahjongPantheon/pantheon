@@ -16,14 +16,17 @@
  */
 
 import { Dispatch, MiddlewareAPI } from 'redux';
-import { ADD_YAKU, AppActionTypes, REMOVE_YAKU } from '../actions/interfaces';
-import { I18nService } from '../../services/i18n';
+import {
+  ADD_YAKU,
+  AppActionTypes,
+  REMOVE_YAKU,
+  TOGGLE_RIICHI_NOTIFICATION,
+} from '../actions/interfaces';
 import { YakuId } from '../../primitives/yaku';
 import { IAppState } from '../interfaces';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export const yaku =
-  (i18n: I18nService) =>
   (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) =>
   (action: AppActionTypes) => {
@@ -31,11 +34,7 @@ export const yaku =
       case ADD_YAKU:
       case REMOVE_YAKU:
         if (action.payload.id === YakuId.RIICHI) {
-          alert(
-            i18n._t(
-              'If you want to select a riichi, return back and press riichi button for the winner'
-            )
-          );
+          mw.dispatch({ type: TOGGLE_RIICHI_NOTIFICATION, payload: true });
           return;
         }
 
@@ -46,11 +45,7 @@ export const yaku =
             outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
           ) {
             if (action.payload.winner && !outcome.riichiBets.includes(action.payload.winner)) {
-              alert(
-                i18n._t(
-                  'If you want to select a riichi, return back and press riichi button for the winner'
-                )
-              );
+              mw.dispatch({ type: TOGGLE_RIICHI_NOTIFICATION, payload: true });
               return;
             }
           }

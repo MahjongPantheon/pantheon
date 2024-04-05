@@ -152,6 +152,8 @@ export interface IAppState {
   eventsListError?: RemoteError;
 
   historyInitialized: boolean;
+
+  riichiNotificationShown?: boolean;
 }
 
 export type TimerStorage = {

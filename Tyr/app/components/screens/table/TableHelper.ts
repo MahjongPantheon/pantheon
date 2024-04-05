@@ -34,7 +34,6 @@ import { ItemSelect } from '../../general/select-modal/ItemSelect';
 import { SelectModalProps } from '../../general/select-modal/SelectModal';
 import {
   ADD_ROUND_INIT,
-  CALL_REFEREE,
   GET_OTHER_TABLE_RELOAD,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
@@ -548,8 +547,6 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
   const showSave = tableMode === TableMode.RESULT;
   const isSaveDisabled = false; //todo do we really need disabled state for save? seems no
 
-  const showCallReferee = state.gameConfig?.syncStart; // only show for tournaments
-
   const showHome = [TableMode.GAME, TableMode.BEFORE_START].includes(tableMode);
   const showRefresh = [
     TableMode.GAME,
@@ -585,7 +582,6 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
     showAdd,
     showLog,
     showSave,
-    showCallReferee,
     isSaveDisabled,
     onNextClick: nextClickHandler(),
     onBackClick: onBackClick(dispatch),
@@ -594,7 +590,6 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
     onAddClick: onAddClick(state, dispatch),
     onHomeClick: onHomeClick(dispatch),
     onRefreshClick: onRefreshClick(state, dispatch),
-    onCallRefereeClick: onCallRefereeClick(state, dispatch),
   };
 }
 
@@ -633,6 +628,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
   const isAutostartTimer = false;
   let currentTime: string | undefined = undefined;
   let gamesLeft: number | undefined = undefined;
+  const showCallReferee = state.gameConfig?.syncStart && state.currentScreen === 'currentGame'; // only show for tournaments
 
   if (state.showAdditionalTableInfo) {
     if (state.currentScreen === 'currentGame') {
@@ -684,6 +680,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
     timerWaiting: state.timer?.waiting,
     onRotateCwClick: () => dispatch({ type: TABLE_ROTATE_CLOCKWISE }),
     onRotateCcwClick: () => dispatch({ type: TABLE_ROTATE_COUNTERCLOCKWISE }),
+    showCallReferee,
   };
 }
 
@@ -859,14 +856,6 @@ function onAddClick(state: IAppState, dispatch: Dispatch) {
       dispatch({ type: GOTO_NEXT_SCREEN });
     } else if (state.currentScreen === 'outcomeSelect') {
       dispatch({ type: GOTO_PREV_SCREEN });
-    }
-  };
-}
-
-function onCallRefereeClick(state: IAppState, dispatch: Dispatch) {
-  return () => {
-    if (state.currentScreen === 'currentGame') {
-      dispatch({ type: CALL_REFEREE });
     }
   };
 }

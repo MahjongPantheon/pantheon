@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:15Z\n"
+"POT-Creation-Date: 2024-04-05 23:36Z\n"
 "PO-Revision-Date: 2024-03-23 15:29+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: app/components/screens/table/base/TableInfo.tsx:92:20
+#: app/components/screens/table/base/TableInfo.tsx:114:22
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "%1 국 남음"
@@ -39,17 +39,25 @@ msgstr "%1 판 %2 부"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/components/screens/table/TableHelper.ts:523:14
+#: app/components/screens/table/TableHelper.ts:524:14
 msgid "Abort"
 msgstr "도중유국"
 
 #: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:167:15
+#: app/components/screens/table/TableHelper.ts:166:15
 msgid "Abortive draw"
 msgstr "도중유국"
 
-#: app/components/general/bottom-panel/BottomPanel.tsx:114:36
+#: app/components/screens/table/TableScreen.tsx:90:31
+msgid "Call referee"
+msgstr ""
+
+#: app/components/screens/table/TableScreen.tsx:98:12
 msgid "Call referee for your table?"
+msgstr ""
+
+#: app/components/screens/table/TableScreen.tsx:95:33
+msgid "Cancel"
 msgstr ""
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
@@ -77,8 +85,8 @@ msgid "Chinroutou"
 msgstr "청노두"
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:156:13
-#: app/components/screens/table/TableHelper.ts:525:14
+#: app/components/screens/table/TableHelper.ts:155:13
+#: app/components/screens/table/TableHelper.ts:526:14
 msgid "Chombo"
 msgstr "촌보"
 
@@ -114,7 +122,7 @@ msgstr "대사희"
 msgid "Dora"
 msgstr "도라"
 
-#: app/components/screens/table/TableHelper.ts:521:14
+#: app/components/screens/table/TableHelper.ts:522:14
 msgid "Draw"
 msgstr "유국"
 
@@ -131,7 +139,7 @@ msgid "Event title"
 msgstr "이벤트"
 
 #: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:150:13
+#: app/components/screens/table/TableHelper.ts:149:13
 msgid "Exhaustive draw"
 msgstr "유국"
 
@@ -185,12 +193,6 @@ msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
 msgstr "궁금하신 사항은 관리자에게 문의해주세요.."
 
-#: app/store/middlewares/yaku.ts:35:13 app/store/middlewares/yaku.ts:50:17
-msgid ""
-"If you want to select a riichi, return back and press riichi button for the "
-"winner"
-msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
-
 #: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
 msgid "Iipeikou"
 msgstr "이페코"
@@ -223,7 +225,7 @@ msgstr "로그인"
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "로그인에 실패했습니다. 가능성 있는 오류는:"
 
-#: app/components/screens/table/TableHelper.ts:426:22
+#: app/components/screens/table/TableHelper.ts:425:22
 msgid "Loser"
 msgstr "패자"
 
@@ -235,12 +237,12 @@ msgstr "멘젠쯔모"
 msgid "Multiron, from %1"
 msgstr "%1 방총, 다가화"
 
-#: app/components/screens/table/TableHelper.ts:527:14
+#: app/components/screens/table/TableHelper.ts:528:14
 msgid "Nagashi"
 msgstr "유국만관"
 
 #: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:177:15
+#: app/components/screens/table/TableHelper.ts:176:15
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
@@ -260,6 +262,7 @@ msgstr "결과를 찾을 수 없습니다"
 msgid "No tables are playing right now"
 msgstr "진행 중인 대국이 없습니다"
 
+#: app/components/App.tsx:150:35
 #: app/components/screens/login/LoginErrorView.tsx:61:12
 msgid "OK"
 msgstr "확인"
@@ -296,7 +299,7 @@ msgstr "비밀번호"
 msgid "Password check has failed"
 msgstr "비밀번호가 틀렸습니다"
 
-#: app/components/screens/table/TableHelper.ts:222:16
+#: app/components/screens/table/TableHelper.ts:221:16
 msgid "Penalty"
 msgstr "벌부"
 
@@ -308,6 +311,11 @@ msgstr "핑후"
 msgid "Player name"
 msgstr "작사 명"
 
+#: app/components/App.tsx:152:16
+#, fuzzy
+msgid "Please return back and press riichi button for the winner"
+msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
+
 #: app/components/screens/home/HomeScreenView.tsx:131:20
 msgid "Previous game"
 msgstr "이전 대국"
@@ -316,7 +324,7 @@ msgstr "이전 대국"
 msgid "Red fives"
 msgstr "적도라"
 
-#: app/components/general/bottom-panel/BottomPanel.tsx:117:27
+#: app/components/screens/table/TableScreen.tsx:102:10
 msgid "Referee has been requested to your table!"
 msgstr ""
 
@@ -340,8 +348,8 @@ msgstr "영상"
 msgid "Rinshan kaihou"
 msgstr "영상개화"
 
-#: app/components/screens/table/TableHelper.ts:138:13
-#: app/components/screens/table/TableHelper.ts:517:14
+#: app/components/screens/table/TableHelper.ts:137:13
+#: app/components/screens/table/TableHelper.ts:518:14
 msgid "Ron"
 msgstr "론"
 
@@ -381,11 +389,11 @@ msgstr "다른 이벤트 선택"
 msgid "Select event"
 msgstr "이벤트 선택"
 
-#: app/components/screens/table/TableHelper.ts:498:16
+#: app/components/screens/table/TableHelper.ts:499:16
 msgid "Select pao"
 msgstr "책임지불(파오) 선택"
 
-#: app/components/screens/table/TableHelper.ts:503:16
+#: app/components/screens/table/TableHelper.ts:504:16
 msgid "Select tempai"
 msgstr "텐파이 선택"
 
@@ -425,7 +433,7 @@ msgstr "스안커"
 msgid "Suukantsu"
 msgstr "스깡쯔"
 
-#: app/components/screens/table/base/TableInfo.tsx:100:57
+#: app/components/screens/table/base/TableInfo.tsx:122:59
 msgid "Table #%1"
 msgstr "제 #%1 탁"
 
@@ -453,8 +461,8 @@ msgstr "현재 참가중인 이벤트가 없습니다"
 msgid "Toitoi"
 msgstr "또이또이"
 
-#: app/components/screens/table/TableHelper.ts:144:13
-#: app/components/screens/table/TableHelper.ts:519:14
+#: app/components/screens/table/TableHelper.ts:143:13
+#: app/components/screens/table/TableHelper.ts:520:14
 msgid "Tsumo"
 msgstr "쯔모"
 
@@ -478,8 +486,8 @@ msgstr "예기치 못한 오류가 발생했습니다"
 msgid "Ura dora"
 msgstr "뒷도라"
 
-#: app/components/screens/table/TableHelper.ts:423:22
-#: app/components/screens/table/TableHelper.ts:436:22
+#: app/components/screens/table/TableHelper.ts:422:22
+#: app/components/screens/table/TableHelper.ts:435:22
 msgid "Winner"
 msgstr "승자"
 
@@ -511,7 +519,7 @@ msgstr "역만"
 msgid "dora %1"
 msgstr "도라 %1"
 
-#: app/components/screens/table/TableHelper.ts:414:25
+#: app/components/screens/table/TableHelper.ts:413:25
 msgid "empty outcome"
 msgstr "결과 없음"
 
@@ -536,7 +544,7 @@ msgstr "문제가 발생했습니다. 관리자에게 문의하세요"
 msgid "type to find someone"
 msgstr "작사 검색"
 
-#: app/components/screens/table/TableHelper.ts:441:27
+#: app/components/screens/table/TableHelper.ts:440:27
 msgid "wrong outcome for paoSelect"
 msgstr "책임지불(파오) 선택이 잘못됨"
 

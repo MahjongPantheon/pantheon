@@ -17,6 +17,7 @@
 
 .theme-day {
   --bg-color: #f4f5f7;
+  --shade-color: rgba(40, 44, 52, 0.6);
 
   --primary-text-color: #000000;
   --secondary-text-color: #ffffff;
@@ -63,6 +64,7 @@
 
 .theme-night {
   --bg-color: #282c34;
+  --shade-color: rgba(170, 178, 180, 0.6);
 
   --primary-text-color: #e6e6e6;
   --secondary-text-color: #ffffff;
