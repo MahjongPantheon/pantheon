@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 21:52+0100\n"
+"POT-Creation-Date: 2024-04-05 21:15Z\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -39,7 +39,7 @@ msgstr ""
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:522:14
+#: app/components/screens/table/TableHelper.ts:523:14
 msgid "Abort"
 msgstr "Abbruch"
 
@@ -78,7 +78,7 @@ msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:191:14
 #: app/components/screens/table/TableHelper.ts:156:13
-#: app/components/screens/table/TableHelper.ts:524:14
+#: app/components/screens/table/TableHelper.ts:525:14
 msgid "Chombo"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Dora"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:520:14
+#: app/components/screens/table/TableHelper.ts:521:14
 msgid "Draw"
 msgstr "Unentschieden"
 
@@ -237,7 +237,7 @@ msgstr ""
 msgid "Multiron, from %1"
 msgstr "Multiron, von %1"
 
-#: app/components/screens/table/TableHelper.ts:526:14
+#: app/components/screens/table/TableHelper.ts:527:14
 msgid "Nagashi"
 msgstr ""
 
@@ -306,7 +306,7 @@ msgstr "Strafe"
 msgid "Pinfu"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreen.tsx:89:58
+#: app/components/screens/settings/SettingsScreen.tsx:81:58
 msgid "Player name"
 msgstr "Spielername"
 
@@ -343,7 +343,7 @@ msgid "Rinshan kaihou"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:138:13
-#: app/components/screens/table/TableHelper.ts:516:14
+#: app/components/screens/table/TableHelper.ts:517:14
 msgid "Ron"
 msgstr ""
 
@@ -383,11 +383,11 @@ msgstr "Event auswählen"
 msgid "Select event"
 msgstr "Event auswählen"
 
-#: app/components/screens/table/TableHelper.ts:497:16
+#: app/components/screens/table/TableHelper.ts:498:16
 msgid "Select pao"
 msgstr "Pao auswählen"
 
-#: app/components/screens/table/TableHelper.ts:502:16
+#: app/components/screens/table/TableHelper.ts:503:16
 msgid "Select tempai"
 msgstr "Tenpai auswählen"
 
@@ -456,7 +456,7 @@ msgid "Toitoi"
 msgstr ""
 
 #: app/components/screens/table/TableHelper.ts:144:13
-#: app/components/screens/table/TableHelper.ts:518:14
+#: app/components/screens/table/TableHelper.ts:519:14
 msgid "Tsumo"
 msgstr ""
 

@@ -15,27 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { PlayerPointsMode } from '../../types/PlayerEnums';
-import { PlayerButtonProps } from '../../types/PlayerButtonProps';
+import Yakitori from '../../../img/yakitori.svg?react';
 
-export type PlayerProps = {
-  id?: number;
-  name: string;
-  hasAvatar?: boolean;
-  lastUpdate: string;
-  rotated?: boolean;
-  wind: string;
-  gotRiichiFromTable: number;
-  inlineWind?: boolean;
-  points?: number | string;
-  pointsMode?: PlayerPointsMode;
-  penaltyPoints?: number;
-  winButton?: PlayerButtonProps;
-  loseButton?: PlayerButtonProps;
-  riichiButton?: PlayerButtonProps;
-  showDeadButton?: boolean;
-  onDeadButtonClick?: () => void;
-  showInlineRiichi?: boolean;
-  onPlayerClick?: () => void;
-  yakitori?: boolean;
+export const YakitoriIndicator = () => {
+  return (
+    <div
+      style={{
+        backgroundColor: '#e57b1e',
+        color: '#000',
+        borderRadius: '6px',
+        width: '36px',
+        height: '28px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        boxShadow: ' 1px 1px 3px 0px rgba(0,0,0,0.75)',
+      }}
+    >
+      <Yakitori />
+    </div>
+  );
 };

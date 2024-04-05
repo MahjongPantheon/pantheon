@@ -122,6 +122,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         startRating: 0,
         startPoints: 30000,
         replacementPlayerFixedPoints: -15000, // tourn
+        withYakitori: false,
+        yakitoriPenalty: 0,
       },
     },
 

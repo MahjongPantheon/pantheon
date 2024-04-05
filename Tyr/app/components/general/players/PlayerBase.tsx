@@ -26,17 +26,19 @@ import LoseIcon from '../../../img/icons/thumbs-down.svg?react';
 import WinIconFilled from '../../../img/icons/thumbs-up-fill.svg?react';
 import LoseIconFilled from '../../../img/icons/thumbs-down-fill.svg?react';
 import { PlayerAvatar } from '../avatar/Avatar';
+import { YakitoriIndicator } from '../utils/YakitoriIndicator';
 
 type IProps = PlayerProps & {
   mode: PlayerMode;
   startWithName?: boolean;
   verticalButtons?: boolean;
   nameWidth?: string;
+  yakitori?: boolean;
 };
 
 export class PlayerBase extends React.Component<IProps> {
   renderName() {
-    const { id, name, hasAvatar, lastUpdate, wind, nameWidth, inlineWind } = this.props;
+    const { id, name, hasAvatar, lastUpdate, wind, nameWidth, inlineWind, yakitori } = this.props;
 
     return (
       <div className='player__name-container'>
@@ -44,6 +46,7 @@ export class PlayerBase extends React.Component<IProps> {
           {inlineWind && <span className='player__inline-wind'>{wind}</span>}
           <PlayerAvatar p={{ id: id ?? 0, title: name, hasAvatar, lastUpdate }} size={32} />
           {name}
+          {yakitori && <YakitoriIndicator />}
         </div>
       </div>
     );

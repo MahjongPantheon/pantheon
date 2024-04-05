@@ -619,7 +619,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     public function testSessionStateToJson()
     {
         $this->assertEquals(
-            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null,"_isFinished":false}',
+            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null,"_yakitori":[],"_isFinished":false}',
             $this->_state->toJson()
         );
 
@@ -631,14 +631,14 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->_state->update($round);
 
         $this->assertEquals(
-            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":"draw","_isFinished":false}',
+            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":"draw","_yakitori":[],"_isFinished":false}',
             $this->_state->toJson()
         );
     }
 
     public function testSessionStateFromJson()
     {
-        $json1 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null,"_isFinished":false}';
+        $json1 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null,"_yakitori":[],"_isFinished":false}';
 
         $state = SessionState::fromJson(
             $this->_ruleset,
@@ -652,7 +652,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $state->getRound());
         $this->assertEquals(0, $state->getHonba());
 
-        $json2 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null}';
+        $json2 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_yakitori":[],"_lastOutcome":null}';
 
         $state = SessionState::fromJson(
             $this->_ruleset,

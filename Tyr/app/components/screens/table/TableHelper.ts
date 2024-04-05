@@ -463,6 +463,9 @@ function getPlayer(
     name: player.title,
     hasAvatar: player.hasAvatar,
     lastUpdate: player.lastUpdate,
+    yakitori:
+      (state.currentScreen === 'currentGame' || state.currentScreen === 'otherTable') &&
+      player.yakitori,
     wind,
     points,
     penaltyPoints,

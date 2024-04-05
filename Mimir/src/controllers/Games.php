@@ -216,6 +216,7 @@ class GamesController extends Controller
                     'has_avatar' => $player->getHasAvatar(),
                     'last_update' => $player->getLastUpdate(),
                     'score' => $session[0]->getCurrentState()->getScores()[$player->getId()],
+                    'yakitori' => $session[0]->getCurrentState()->getYakitori()[$player->getId()],
                     'replaced_by' => empty($playersReg['replacements'][$player->getId()])
                         ? null
                         : [

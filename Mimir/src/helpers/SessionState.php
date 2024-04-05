@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\RoundOutcome;
+
 require_once __DIR__ . '/PointsCalc.php';
 
 /**
@@ -84,6 +86,11 @@ class SessionState
      * @var string|null
      */
     protected $_lastOutcome = null;
+    /**
+     * If player has yakitori indicator
+     * @var array
+     */
+    protected $_yakitori = [];
 
     /**
      * SessionState constructor.
@@ -333,6 +340,24 @@ class SessionState
     }
 
     /**
+     * @return bool[]
+     */
+    public function getYakitori()
+    {
+        return $this->_yakitori;
+    }
+
+    /**
+     * @param array $yakitori
+     * @return SessionState
+     */
+    public function setYakitori(array $yakitori)
+    {
+        $this->_yakitori = $yakitori;
+        return $this;
+    }
+
+    /**
      * @return int[]
      */
     public function getChips()
@@ -406,6 +431,7 @@ class SessionState
                 throw new InvalidParametersException('wrong outcome passed');
         }
 
+        $this->_updateYakitori($round);
         $this->_roundJustChanged = ($lastRoundIndex != $this->getRound());
         $this->_lastOutcome = $round->getOutcome();
         return $payments; // for dry run
@@ -420,6 +446,17 @@ class SessionState
     public function giveRiichiBetsToPlayer($id, int $betAmount): void
     {
         $this->_scores[$id] += $betAmount;
+    }
+
+    /**
+     * @param int|null $id
+     * @param int $penaltyAmount - total points amount to be subtracted from player score
+     *
+     * @return void
+     */
+    public function applyYakitoriPenalty($id, int $penaltyAmount): void
+    {
+        $this->_scores[$id] -= $penaltyAmount;
     }
 
     /**
@@ -627,6 +664,32 @@ class SessionState
             $this->_nextRound();
         }
         return PointsCalc::lastPaymentsInfo();
+    }
+
+    /**
+     * @param RoundPrimitive $round
+     * @return void
+     */
+    protected function _updateYakitori(RoundPrimitive $round)
+    {
+        if ($this->_rules->rules()->getWithYakitori()) {
+            if ($round instanceof MultiRoundPrimitive) {
+                foreach ($round->rounds() as $r) {
+                    if ($r->getWinnerId()) {
+                        $this->_yakitori[$r->getWinnerId()] = false;
+                    }
+                }
+            } else {
+                if ($round->getWinnerId()) {
+                    $this->_yakitori[$round->getWinnerId()] = false;
+                }
+                if ($round->getOutcome() === 'nagashi') {
+                    foreach ($round->getNagashiIds() as $id) {
+                        $this->_yakitori[$id] = false;
+                    }
+                }
+            }
+        }
     }
 
     /**

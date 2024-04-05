@@ -376,6 +376,7 @@ export interface PlayerInSession {
   ratingDelta: number;
   hasAvatar: boolean;
   lastUpdate: string;
+  yakitori: boolean;
 }
 
 export interface CurrentSession {
@@ -620,6 +621,8 @@ export interface RulesetConfig {
   startRating: number;
   allowedYaku: number[];
   yakuWithPao: number[];
+  withYakitori: boolean;
+  yakitoriPenalty: number;
 }
 
 export interface GenericSuccessResponse {
@@ -4699,6 +4702,7 @@ export const PlayerInSession = {
       ratingDelta: 0,
       hasAvatar: false,
       lastUpdate: "",
+      yakitori: false,
       ...msg,
     };
   },
@@ -4730,6 +4734,9 @@ export const PlayerInSession = {
     }
     if (msg.lastUpdate) {
       writer.writeString(7, msg.lastUpdate);
+    }
+    if (msg.yakitori) {
+      writer.writeBool(8, msg.yakitori);
     }
     return writer;
   },
@@ -4771,6 +4778,10 @@ export const PlayerInSession = {
         }
         case 7: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 8: {
+          msg.yakitori = reader.readBool();
           break;
         }
         default: {
@@ -7521,6 +7532,8 @@ export const RulesetConfig = {
       startRating: 0,
       allowedYaku: [],
       yakuWithPao: [],
+      withYakitori: false,
+      yakitoriPenalty: 0,
       ...msg,
     };
   },
@@ -7636,6 +7649,12 @@ export const RulesetConfig = {
     }
     if (msg.yakuWithPao?.length) {
       writer.writePackedInt32(35, msg.yakuWithPao);
+    }
+    if (msg.withYakitori) {
+      writer.writeBool(36, msg.withYakitori);
+    }
+    if (msg.yakitoriPenalty) {
+      writer.writeInt32(37, msg.yakitoriPenalty);
     }
     return writer;
   },
@@ -7796,6 +7815,14 @@ export const RulesetConfig = {
           } else {
             msg.yakuWithPao.push(reader.readInt32());
           }
+          break;
+        }
+        case 36: {
+          msg.withYakitori = reader.readBool();
+          break;
+        }
+        case 37: {
+          msg.yakitoriPenalty = reader.readInt32();
           break;
         }
         default: {
@@ -11502,6 +11529,7 @@ export const PlayerInSessionJSON = {
       ratingDelta: 0,
       hasAvatar: false,
       lastUpdate: "",
+      yakitori: false,
       ...msg,
     };
   },
@@ -11534,6 +11562,9 @@ export const PlayerInSessionJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.yakitori) {
+      json["yakitori"] = msg.yakitori;
     }
     return json;
   },
@@ -11570,6 +11601,10 @@ export const PlayerInSessionJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _yakitori_ = json["yakitori"];
+    if (_yakitori_) {
+      msg.yakitori = _yakitori_;
     }
     return msg;
   },
@@ -13943,6 +13978,8 @@ export const RulesetConfigJSON = {
       startRating: 0,
       allowedYaku: [],
       yakuWithPao: [],
+      withYakitori: false,
+      yakitoriPenalty: 0,
       ...msg,
     };
   },
@@ -14064,6 +14101,12 @@ export const RulesetConfigJSON = {
     }
     if (msg.yakuWithPao?.length) {
       json["yakuWithPao"] = msg.yakuWithPao;
+    }
+    if (msg.withYakitori) {
+      json["withYakitori"] = msg.withYakitori;
+    }
+    if (msg.yakitoriPenalty) {
+      json["yakitoriPenalty"] = msg.yakitoriPenalty;
     }
     return json;
   },
@@ -14232,6 +14275,15 @@ export const RulesetConfigJSON = {
     const _yakuWithPao_ = json["yakuWithPao"] ?? json["yaku_with_pao"];
     if (_yakuWithPao_) {
       msg.yakuWithPao = _yakuWithPao_.map(protoscript.parseNumber);
+    }
+    const _withYakitori_ = json["withYakitori"] ?? json["with_yakitori"];
+    if (_withYakitori_) {
+      msg.withYakitori = _withYakitori_;
+    }
+    const _yakitoriPenalty_ =
+      json["yakitoriPenalty"] ?? json["yakitori_penalty"];
+    if (_yakitoriPenalty_) {
+      msg.yakitoriPenalty = protoscript.parseNumber(_yakitoriPenalty_);
     }
     return msg;
   },

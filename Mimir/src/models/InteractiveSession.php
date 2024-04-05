@@ -97,6 +97,15 @@ class InteractiveSessionModel extends Model
             throw new DatabaseException('Couldn\'t save session data to DB!');
         }
 
+        if ($event[0]->getRulesetConfig()->rules()->getWithYakitori()) {
+            $yakitori = [];
+            foreach ($playerIds as $id) {
+                $yakitori[$id] = true;
+            }
+            $newSession->getCurrentState()->setYakitori($yakitori);
+            $newSession->save();
+        }
+
         $this->_trackUpdate($newSession->getRepresentationalHash());
         return $newSession->getRepresentationalHash();
     }

@@ -1087,6 +1087,7 @@ final class TwirpServer implements Mimir
                     ->setId($player['id'])
                     ->setTitle($player['title'])
                     ->setScore($player['score'])
+                    ->setYakitori($player['yakitori'])
                     ->setHasAvatar($player['has_avatar'])
                     ->setLastUpdate($player['last_update'])
                     ->setRatingDelta(0.0); // wtf?

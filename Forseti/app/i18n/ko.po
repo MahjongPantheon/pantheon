@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 21:52+0100\n"
+"POT-Creation-Date: 2024-04-05 21:15Z\n"
 "PO-Revision-Date: 2024-03-22 14:12+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -137,6 +137,11 @@ msgstr "촌보 벌부값"
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "대국 종료 및 우마 적용 후에 적용될 촌보 벌부값"
 
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:227:24
+#, fuzzy
+msgid "Amount of penalty applied to those who didn't win once in game."
+msgstr "대국 종료 및 우마 적용 후에 적용될 촌보 벌부값"
+
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:68:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
@@ -220,7 +225,7 @@ msgstr "결과 취소"
 msgid "Cancel round"
 msgstr "국 취소"
 
-#: app/pages/OwnedEventsEdit/index.tsx:276:32
+#: app/pages/OwnedEventsEdit/index.tsx:278:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
@@ -401,8 +406,8 @@ msgstr "동점 동일 우마"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:93:14
-#: app/pages/OwnedEventsEdit/index.tsx:187:18
-#: app/pages/OwnedEventsEdit/index.tsx:218:18 app/pages/Penalties.tsx:73:18
+#: app/pages/OwnedEventsEdit/index.tsx:189:18
+#: app/pages/OwnedEventsEdit/index.tsx:220:18 app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18 app/pages/PlayersManage/index.tsx:87:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
@@ -469,7 +474,7 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "대국 종료 취소 실패"
 
-#: app/pages/OwnedEventsEdit/index.tsx:181:29
+#: app/pages/OwnedEventsEdit/index.tsx:183:29
 msgid "Failed to fetch event data"
 msgstr "이벤트 데이터 불러오기 실패"
 
@@ -525,7 +530,7 @@ msgstr "좌석 초기화 실패"
 msgid "Failed to save event script: server error or network unreachable"
 msgstr "이벤트 스크립트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
-#: app/pages/OwnedEventsEdit/index.tsx:213:27
+#: app/pages/OwnedEventsEdit/index.tsx:215:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "이벤트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
@@ -1460,7 +1465,7 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/pages/OwnedEventsEdit/index.tsx:276:60
+#: app/pages/OwnedEventsEdit/index.tsx:278:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1909,6 +1914,10 @@ msgstr "다음 대국에 스위스 좌석를 사용"
 msgid "Use swiss seating for next session?"
 msgstr "다음 대국에 스위스 자리를 사용하시겠습니까?"
 
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:220:22
+msgid "Use yakitori rule"
+msgstr ""
+
 #: app/pages/ProfileManage.tsx:329:18
 msgid "What will NOT be deleted:"
 msgstr "다음 항목들은 삭제되지 않습니다:"
@@ -1938,6 +1947,14 @@ msgid ""
 "When time is out, finish current hand, play one more, and then interrup the "
 "session"
 msgstr "타이머 종료 시점에서 진행중인 국 및 그 다음 국까지 진행하고 대국 종료"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:219:16
+msgid "Yakitori"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:226:18
+msgid "Yakitori penalty"
+msgstr ""
 
 #: app/pages/OwnedEventsEdit/YakuSettings.tsx:44:25
 msgid "Yaku allowed"

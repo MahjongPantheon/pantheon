@@ -153,6 +153,14 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated int32 yaku_with_pao = 35;</code>
      */
     private $yaku_with_pao;
+    /**
+     * Generated from protobuf field <code>bool with_yakitori = 36;</code>
+     */
+    protected $with_yakitori = false;
+    /**
+     * Generated from protobuf field <code>int32 yakitori_penalty = 37;</code>
+     */
+    protected $yakitori_penalty = 0;
 
     /**
      * Constructor.
@@ -195,6 +203,8 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      *     @type int $start_rating
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $allowed_yaku
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $yaku_with_pao
+     *     @type bool $with_yakitori
+     *     @type int $yakitori_penalty
      * }
      */
     public function __construct($data = NULL) {
@@ -988,6 +998,50 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
         $this->yaku_with_pao = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool with_yakitori = 36;</code>
+     * @return bool
+     */
+    public function getWithYakitori()
+    {
+        return $this->with_yakitori;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool with_yakitori = 36;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setWithYakitori($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->with_yakitori = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 yakitori_penalty = 37;</code>
+     * @return int
+     */
+    public function getYakitoriPenalty()
+    {
+        return $this->yakitori_penalty;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 yakitori_penalty = 37;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setYakitoriPenalty($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->yakitori_penalty = $var;
 
         return $this;
     }
