@@ -83,13 +83,20 @@ function ErrorAlert({ i18n }: { i18n: I18nService }) {
 function SuccessAlert({ i18n }: { i18n: I18nService }) {
   return (
     <>
-      <Alert icon={<IconCheck size='1rem' />} title={i18n._t('Email confirmed')} color='green'>
+      <Alert
+        data-testid='confirmation_success'
+        icon={<IconCheck size='1rem' />}
+        title={i18n._t('Email confirmed')}
+        color='green'
+      >
         {i18n._t('Your email has been successfully confirmed. Now you can proceed to login page.')}
       </Alert>
       <Space h='xl' />
       <Group position='right'>
         <Link to='/profile/login'>
-          <Button variant='filled'>{i18n._t('Go to Login page')}</Button>
+          <Button variant='filled' data-testid='goto_login'>
+            {i18n._t('Go to Login page')}
+          </Button>
         </Link>
       </Group>
     </>

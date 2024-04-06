@@ -57,6 +57,7 @@ export const EnterCredentialsView: React.FC<IProps> = ({ onSubmit, signupLink, r
       <div className='page-enter-credentials__button-container'>
         <button
           className='flat-btn flat-btn--large'
+          data-testid='button_login'
           style={{ justifySelf: 'end', width: '100%' }}
           type='submit'
         >
@@ -68,6 +69,7 @@ export const EnterCredentialsView: React.FC<IProps> = ({ onSubmit, signupLink, r
           className='flat-btn flat-btn--large'
           href={signupLink}
           target='_blank'
+          data-testid='button_signup'
           style={{ width: '100%' }}
         >
           {loc._t('Sign up')}
@@ -76,6 +78,7 @@ export const EnterCredentialsView: React.FC<IProps> = ({ onSubmit, signupLink, r
           className='flat-btn flat-btn--large'
           href={recoveryLink}
           target='_blank'
+          data-testid='button_forgot'
           style={{ width: '100%' }}
         >
           {loc._t('Forgot password?')}

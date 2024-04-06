@@ -22,7 +22,8 @@ kill:
 
 PHONY: deps
 deps:
-	if [ -e "`which yarn`" ]; then yarn; else npm install; fi
+	yarn
+	yarn playwright install
 
 PHONY: lint
 lint:

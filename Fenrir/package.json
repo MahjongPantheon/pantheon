@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {},
   "dependencies": {
+    "@types/uuid": "^9.0.8",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.4",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.43.0",
