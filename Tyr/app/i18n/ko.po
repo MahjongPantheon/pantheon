@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 23:36Z\n"
-"PO-Revision-Date: 2024-03-23 15:29+0100\n"
+"PO-Revision-Date: 2024-04-06 21:27+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -50,15 +50,15 @@ msgstr "도중유국"
 
 #: app/components/screens/table/TableScreen.tsx:90:31
 msgid "Call referee"
-msgstr ""
+msgstr "심판 호출"
 
 #: app/components/screens/table/TableScreen.tsx:98:12
 msgid "Call referee for your table?"
-msgstr ""
+msgstr "심판을 호출하시겠습니까?"
 
 #: app/components/screens/table/TableScreen.tsx:95:33
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
 msgid "Chankan"
@@ -189,8 +189,7 @@ msgid "Houtei raoyui"
 msgstr "하저로어"
 
 #: app/components/screens/login/LoginErrorView.tsx:56:12
-msgid ""
-"If in doubt, contact the tournament administrator for further instructions."
+msgid "If in doubt, contact the tournament administrator for further instructions."
 msgstr "궁금하신 사항은 관리자에게 문의해주세요.."
 
 #: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
@@ -312,7 +311,6 @@ msgid "Player name"
 msgstr "작사 명"
 
 #: app/components/App.tsx:152:16
-#, fuzzy
 msgid "Please return back and press riichi button for the winner"
 msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
 
@@ -326,7 +324,7 @@ msgstr "적도라"
 
 #: app/components/screens/table/TableScreen.tsx:102:10
 msgid "Referee has been requested to your table!"
-msgstr ""
+msgstr "심판이 호출되었습니다!"
 
 #: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
 msgid "Renhou"
