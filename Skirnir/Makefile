@@ -61,7 +61,8 @@ prod_deps:
 prebuild:
 	cp -R dist ../Skirnir-dist/
 	cp dist/server.js ../Skirnir-dist/
-	cp -f .env.production ../Skirnir-dist/
+	if [ -f .env.production ]; then cp -f .env.production ../Skirnir-dist/ ; fi
+	if [ -f .env.development ]; then cp -f .env.development ../Skirnir-dist/ ; fi
 	cp -f package.json ../Skirnir-dist/
 	cp -f yarn.lock ../Skirnir-dist/
 

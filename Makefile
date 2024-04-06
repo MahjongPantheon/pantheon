@@ -371,12 +371,12 @@ e2e_build_forseti: # this is for automated builds, don't run it manually
 .PHONY: e2e_build_sigrun
 e2e_build_sigrun: export NODE_ENV=development
 e2e_build_sigrun: # this is for automated builds, don't run it manually
-	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_e2e_deps
+	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
 
 .PHONY: e2e_build_bragi
 e2e_build_bragi: export NODE_ENV=development
 e2e_build_bragi: # this is for automated builds, don't run it manually
-	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_e2e_deps
+	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
 
 .PHONY: e2e_build_skirnir
 e2e_build_skirnir: export NODE_ENV=development

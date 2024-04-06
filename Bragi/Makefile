@@ -65,7 +65,8 @@ prebuild:
 	cd dist/client/assets && gzip -k -9 -f *.js *.css
 	cp -R dist ../Bragi-dist/
 	cp -f server.js ../Bragi-dist/
-	cp -f .env.production ../Bragi-dist/
+	if [ -f .env.production ]; then cp -f .env.production ../Bragi-dist/ ; fi
+	if [ -f .env.development ]; then cp -f .env.development ../Bragi-dist/ ; fi
 	cp -f package.json ../Bragi-dist/
 	cp -f yarn.lock ../Bragi-dist/
 
