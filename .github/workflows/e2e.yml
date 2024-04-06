@@ -19,6 +19,9 @@ jobs:
       - name: Apply db migrations
         run: make migrate
 
+      - name: Build all systems
+        run: make e2e_compile
+
       - name: Run all tests
         run: make e2e
 

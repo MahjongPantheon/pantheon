@@ -13,7 +13,7 @@ shell: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && /bin/sh' ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && /bin/bash' ; \
 	fi
 
 .PHONY: kill
@@ -54,7 +54,7 @@ docker_run: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && HOME=/home/user su-exec user make run' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make run' ; \
 	fi
 
 PHONY: docker_deps
@@ -62,7 +62,7 @@ docker_deps: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && HOME=/home/user su-exec user make deps' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make deps' ; \
 	fi
 
 PHONY: docker_lint
@@ -70,7 +70,7 @@ docker_lint: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && HOME=/home/user su-exec user make lint' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make lint' ; \
 	fi
 
 PHONY: docker_autofix
@@ -78,5 +78,5 @@ docker_autofix: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && HOME=/home/user su-exec user make autofix' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make autofix' ; \
 	fi

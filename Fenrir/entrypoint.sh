@@ -1,15 +1,8 @@
 #!/bin/sh
 
-export HOME=/home/user
 cat /env/"$ENV_FILENAME" | grep -v '# ' | grep -v  -e '^$' | awk '{ print "export " $1 }' > /etc/profile.d/external.sh
 echo "export PS1=\"|\033[1;31m Fenrir container \033[0m~> \$PWD (\\u) \\$ \"" >> /etc/profile.d/external.sh
 . /etc/profile.d/external.sh
-
-# yarn care
-mkdir /home/user/.yarn-cache
-chown user /home/user/.yarn-cache
-
-munin-node
 
 TRAPPED_SIGNAL=false
 

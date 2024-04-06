@@ -358,6 +358,47 @@ prod_compile:
 	@echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"
 	@echo "- ${YELLOW}Skirnir${NC} is exposed on port 4015"
 
+.PHONY: e2e_build_tyr
+e2e_build_tyr: export NODE_ENV=development
+e2e_build_tyr: # this is for automated builds, don't run it manually
+	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: e2e_build_forseti
+e2e_build_forseti: export NODE_ENV=development
+e2e_build_forseti: # this is for automated builds, don't run it manually
+	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: e2e_build_sigrun
+e2e_build_sigrun: export NODE_ENV=development
+e2e_build_sigrun: # this is for automated builds, don't run it manually
+	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_e2e_deps
+
+.PHONY: e2e_build_bragi
+e2e_build_bragi: export NODE_ENV=development
+e2e_build_bragi: # this is for automated builds, don't run it manually
+	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_e2e_deps
+
+.PHONY: e2e_build_skirnir
+e2e_build_skirnir: export NODE_ENV=development
+e2e_build_skirnir: # this is for automated builds, don't run it manually
+	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
+
+.PHONY: e2e_compile
+e2e_compile: export ENV_FILENAME=.env.development
+e2e_compile:
+	@cp Env/.env.development Tyr/.env.development
+	@cp Env/.env.development Sigrun/.env.development
+	@cp Env/.env.development Forseti/.env.development
+	@cp Env/.env.development Bragi/.env.development
+	@cp Env/.env.development Skirnir/.env.development
+	${MAKE} deps
+	${MAKE} migrate
+	${MAKE} e2e_build_tyr
+	${MAKE} e2e_build_forseti
+	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
+	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
+	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
+
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
 prod_start:

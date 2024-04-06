@@ -1,13 +1,47 @@
-FROM ghcr.io/mahjongpantheon/pantheon-frontend-common:latest
+FROM ubuntu:22.04
+
+ENV TIMEZONE            Europe/Berlin
+ENV PHP_MEMORY_LIMIT    512M
+ENV LANG                en_US.utf8
+
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update && \
+    apt-get install -y tzdata && \
+    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo "${TIMEZONE}" > /etc/timezone && \
+    apt-get install -y \
+    curl \
+    make \
+    procps \
+    dos2unix \
+    net-tools \
+    findutils \
+    git \
+    nginx && \
+    (rm "/tmp/"* 2>/dev/null || true)
+
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash ;\
+     apt-get update; \
+     apt-get install -y nodejs
+
+RUN npm install -g yarn && chown -R root:root /usr/lib/node_modules/
+
+# Cleaning up
+RUN mkdir /www && \
+    apt-get remove -y tzdata && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 ENV RUN_IN_DOCKER true
 
-RUN echo "host_name fenrir" >> /etc/munin/munin-node.conf
-
-RUN ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \
-  ln -s /usr/lib/munin/plugins/proc_pri /etc/munin/plugins/proc_pri && \
-  ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
-  ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
+RUN mkdir /root/dummy && \
+    cd /root/dummy && \
+    npm init -y && \
+    yarn add @playwright/test && \
+    yarn run playwright install --with-deps
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
