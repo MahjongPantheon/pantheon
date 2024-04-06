@@ -232,3 +232,35 @@ services:
       - ./Bragi:/var/www/html/Bragi
       - ./Bragi-dist:/var/www/html/Bragi-dist
       - ./Common:/var/www/html/Common
+  fenrir:
+    build: ./Fenrir
+    image: ghcr.io/mahjongpantheon/pantheon-fenrir:latest
+    ports:
+      - "127.0.0.1:4017:80"
+    links:
+      - db:db
+      - hermod:hermod
+      - tyr:tyr
+      - forseti:forseti
+      - mimir:mimir
+      - frey:frey
+      - sigrun:sigrun
+      - gullveig:gullveig
+      - skirnir:skirnir
+    depends_on:
+      - db
+      - hermod
+      - tyr
+      - forseti
+      - mimir
+      - frey
+      - sigrun
+      - gullveig
+      - skirnir
+    volumes:
+      - ./Env:/env
+      - ./Fenrir:/var/www/html/Fenrir
+      - ./Common:/var/www/html/Common
+    environment:
+      ENV: /etc/profile
+      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
