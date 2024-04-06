@@ -23,7 +23,7 @@ kill:
 PHONY: deps
 deps:
 	yarn
-	yarn playwright install
+	yarn playwright install --with-deps
 
 PHONY: lint
 lint:

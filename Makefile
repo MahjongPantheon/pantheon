@@ -23,6 +23,7 @@ deps:
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
 	cd Skirnir && ${MAKE} docker_deps
+	cd Fenrir && ${MAKE} docker_deps
 
 .PHONY: kill_dev
 kill_dev: export ENV_FILENAME=.env.development
@@ -253,6 +254,7 @@ check:
 	cd Gullveig && ${MAKE} docker_check
 	cd Bragi && ${MAKE} docker_lint
 	cd Skirnir && ${MAKE} docker_lint
+	cd Fenrir && ${MAKE} docker_lint
 
 .PHONY: autofix
 autofix:
@@ -266,6 +268,7 @@ autofix:
 	cd Gullveig && ${MAKE} docker_autofix
 	cd Bragi && ${MAKE} docker_autofix
 	cd Skirnir && ${MAKE} docker_autofix
+	cd Fenrir && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -413,3 +416,7 @@ bump_release:
 	git rev-parse --short HEAD > Common/ReleaseTag.txt
 	git add Common/ReleaseTag.txt
 	git commit --message "Updated release tag"
+
+.PHONY: e2e
+e2e:
+	cd Fenrir && ${MAKE} docker_run
