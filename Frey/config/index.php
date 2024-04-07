@@ -28,14 +28,14 @@ return [
     'serverDefaultTimezone' => 'UTC',
     'mailer' => [
         'mode' => 'remote_api', // 'local_mta' or 'remote_api'
-        'remote_url' => 'http://hermod', // if mode set to 'remote_api', this should point to API address
+        'remote_url' => getenv('HERMOD_URL'), // if mode set to 'remote_api', this should point to API address
         'remote_action_key' => getenv('MAIL_ACTION_KEY') ?: 'CHANGE_ME', // if mode set to 'remote_api', this should point to API auth token
         'mailer_addr' => 'noreply@' . getenv('ALLOWED_SENDER_DOMAINS') ?: 'riichimahjong.org', // address of mailer
         'gui_url' => getenv('FORSETI_URL') // target host handling emailed links
     ],
     'cookieDomain' => getenv('COOKIE_DOMAIN'),
-    'gullveigUrl' => 'http://gullveig',
-    'mimirUrl' => 'http://mimir',
+    'gullveigUrl' => getenv('GULLVEIG_URL'),
+    'mimirUrl' => getenv('MIMIR_URL'),
     'trackerUrl' => getenv('TRACKER_URL') ?: null,
     'userinfoHook' => getenv('USERINFO_HOOK') ?: null,
     'userinfoHookApiKey' => getenv('USERINFO_HOOK_API_KEY') ?: '',

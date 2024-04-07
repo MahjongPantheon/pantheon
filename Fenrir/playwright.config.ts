@@ -6,9 +6,9 @@ import dotenv from 'dotenv';
  * https://github.com/motdotla/dotenv
  */
 if (process.env.RUN_IN_DOCKER) {
-  dotenv.config({ path: '.env.docker' });
+  dotenv.config({ path: '/env/.env.e2e' });
 } else {
-  dotenv.config({ path: '.env.local' });
+  dotenv.config({ path: '/env/.env.development' });
 }
 
 /**

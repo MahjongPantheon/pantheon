@@ -130,7 +130,7 @@ class TournamentSeeder extends AbstractSeed
                 'debug_token' => 'CHANGE_ME'
             ],
             'serverDefaultTimezone' => 'UTC',
-            'freyUrl'   => 'http://frey',
+            'freyUrl'   => getenv('FREY_URL'),
             'verbose'   => false,
             'verboseLog' => '',
             'api' => [

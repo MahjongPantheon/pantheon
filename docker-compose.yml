@@ -13,7 +13,7 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-hermod:latest
     hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
     ports:
-      - "127.0.0.1:4109:80"
+      - "127.0.0.1:4009:80"
       - "127.0.0.1:49491:4949"
     environment:
       ENV: /etc/profile
@@ -27,7 +27,6 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-skirnir:latest
     ports:
       - "127.0.0.1:4015:80"
-      - "127.0.0.1:4115:8080"
       - "127.0.0.1:49501:4949"
     environment:
       ENV: /etc/profile
@@ -47,7 +46,8 @@ services:
       - "5532:5432"
       - "127.0.0.1:49498:4949"
     links:
-      - hermod:hermod
+      - hermod:hermod.pantheon.internal
+      - hermod:hermod.pantheon.local
     volumes:
       - ./Env:/env
       - datavolume01:/var/lib/postgresql/data
@@ -57,6 +57,9 @@ services:
     image: docker.io/dpage/pgadmin4:7.3
     ports:
       - "127.0.0.1:5632:80"
+    links:
+      - db:db.pantheon.internal
+      - db:db.pantheon.local
     environment:
       PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
       PGADMIN_DEFAULT_PASSWORD: "password"
@@ -68,11 +71,12 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-tyr:latest
     ports:
       - "127.0.0.1:4003:80"
-      - "127.0.0.1:4103:8080"
       - "127.0.0.1:49492:4949"
     links:
-      - mimir:mimir
-      - frey:frey
+      - mimir:mimir.pantheon.internal
+      - mimir:mimir.pantheon.local
+      - frey:frey.pantheon.internal
+      - frey:frey.pantheon.local
     depends_on:
       - frey
       - mimir
@@ -89,11 +93,12 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-forseti:latest
     ports:
       - "127.0.0.1:4007:80"
-      - "127.0.0.1:4107:8080"
       - "127.0.0.1:49493:4949"
     links:
-      - mimir:mimir
-      - frey:frey
+      - mimir:mimir.pantheon.internal
+      - mimir:mimir.pantheon.local
+      - frey:frey.pantheon.internal
+      - frey:frey.pantheon.local
     depends_on:
       - frey
       - mimir
@@ -112,9 +117,12 @@ services:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
     links:
-      - frey:frey
-      - db:db
-      - skirnir:skirnir
+      - frey:frey.pantheon.internal
+      - frey:frey.pantheon.local
+      - db:db.pantheon.internal
+      - db:db.pantheon.local
+      - skirnir:skirnir.pantheon.internal
+      - skirnir:skirnir.pantheon.local
     depends_on:
       - frey
       - db
@@ -135,8 +143,10 @@ services:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
     links:
-      - db:db
-      - hermod:hermod
+      - db:db.pantheon.internal
+      - db:db.pantheon.local
+      - hermod:hermod.pantheon.internal
+      - hermod:hermod.pantheon.local
     depends_on:
       - db
       - hermod
@@ -154,11 +164,12 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-sigrun:latest
     ports:
       - "127.0.0.1:4002:80"
-      - "127.0.0.1:4102:8080"
       - "127.0.0.1:49496:4949"
     links:
-      - mimir:mimir
-      - frey:frey
+      - mimir:mimir.pantheon.internal
+      - mimir:mimir.pantheon.local
+      - frey:frey.pantheon.internal
+      - frey:frey.pantheon.local
     depends_on:
       - frey
       - mimir
@@ -175,16 +186,22 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-hugin:latest
     ports:
       - "127.0.0.1:4010:80"
-      - "127.0.0.1:4011:8080"
       - "127.0.0.1:49497:4949"
     links:
-      - db:db
-      - hermod:hermod
-      - tyr:tyr
-      - forseti:forseti
-      - mimir:mimir
-      - frey:frey
-      - sigrun:sigrun
+      - db:db.pantheon.internal
+      - db:db.pantheon.local
+      - hermod:hermod.pantheon.internal
+      - hermod:hermod.pantheon.local
+      - tyr:tyr.pantheon.internal
+      - tyr:tyr.pantheon.local
+      - forseti:forseti.pantheon.internal
+      - forseti:forseti.pantheon.local
+      - mimir:mimir.pantheon.internal
+      - mimir:mimir.pantheon.local
+      - frey:frey.pantheon.internal
+      - frey:frey.pantheon.local
+      - sigrun:sigrun.pantheon.internal
+      - sigrun:sigrun.pantheon.local
     depends_on:
       - db
       - hermod
@@ -222,7 +239,6 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-bragi:latest
     ports:
       - "127.0.0.1:4008:80"
-      - "127.0.0.1:4108:8080"
       - "127.0.0.1:49500:4949"
     environment:
       ENV: /etc/profile
@@ -238,15 +254,24 @@ services:
     ports:
       - "127.0.0.1:4017:80"
     links:
-      - db:db
-      - hermod:hermod
-      - tyr:tyr
-      - forseti:forseti
-      - mimir:mimir
-      - frey:frey
-      - sigrun:sigrun
-      - gullveig:gullveig
-      - skirnir:skirnir
+      - db:db.pantheon.internal
+      - db:db.pantheon.local
+      - hermod:hermod.pantheon.internal
+      - hermod:hermod.pantheon.local
+      - tyr:tyr.pantheon.internal
+      - tyr:tyr.pantheon.local
+      - forseti:forseti.pantheon.internal
+      - forseti:forseti.pantheon.local
+      - mimir:mimir.pantheon.internal
+      - mimir:mimir.pantheon.local
+      - frey:frey.pantheon.internal
+      - frey:frey.pantheon.local
+      - sigrun:sigrun.pantheon.internal
+      - sigrun:sigrun.pantheon.local
+      - gullveig:gullveig.pantheon.internal
+      - gullveig:gullveig.pantheon.local
+      - skirnir:skirnir.pantheon.internal
+      - skirnir:skirnir.pantheon.local
     depends_on:
       - db
       - hermod
