@@ -110,7 +110,10 @@ First, please add the following entries to your `/etc/hosts` file so you could a
 
 Second, make sure your **local port 80** is not used by any other software (like nginx, apache or another web server).
 - If the port is not used, everything should work as is. Please note that in this case Pantheon development environment will use port 80, and no other service using that port can be started until `make pantheon_stop` is run.
-- Otherwise, please refer to `Common/ReverseProxy/nginx.conf` file for a list of hosts configuration (for nginx). For other web servers, please use equivalent instructions. Modify configuration of your currently running web server to allow requests pass to the services from your local browser.
+- Otherwise, please refer to `Common/ReverseProxy/external-proxy.example.conf` file for a list of hosts configuration (for nginx). For other web servers, please use equivalent instructions. Modify configuration of your currently running web server to allow requests pass to the services from your local browser.
+- If there is some external nginx running inside docker container on your local machine, you can use `Common/ReverseProxy/nginx.conf` file to add pantheon configuration there. You'll also need to add the container to `pantheon_internal_net` docker network.  
+
+#### Installing and running
 
 Make sure you have Docker and Docker Compose installed and daemon running on your system. For debugging, please make sure all the php extensions are
 installed as well, see Dockerfile for a complete list. 
