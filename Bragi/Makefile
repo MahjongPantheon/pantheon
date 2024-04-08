@@ -213,6 +213,6 @@ docker_warmup: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Bragi container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://localhost:4108 > /dev/null; done' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://bragi.pantheon.internal > /dev/null; done' ; \
 	fi
 
