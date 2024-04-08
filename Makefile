@@ -58,6 +58,11 @@ container:
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
 
+.PHONY: container_dev
+container_dev: export ENV_FILENAME=.env.development
+container_dev:
+	${MAKE} container
+
 .PHONY: reverse_proxy_start
 reverse_proxy_start:
 	@if [ -z "`netstat -tunl | grep ':80 '`" ]; then \
@@ -94,8 +99,6 @@ pantheon_run:
 	@cd Frey && ${MAKE} docker_enable_debug
 	@cd Hugin && ${MAKE} docker_enable_debug
 	@cd Gullveig && ${MAKE} docker_enable_debug
-	${MAKE} reverse_proxy_stop
-	${MAKE} reverse_proxy_start
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "----------------------------------------------------------------------------------"; \
@@ -148,6 +151,8 @@ skirnir_stop:
 
 .PHONY: dev
 dev: pantheon_run
+	${MAKE} reverse_proxy_stop
+	${MAKE} reverse_proxy_start
 	${MAKE} deps
 	${MAKE} migrate
 	bash ./parallel_dev.sh

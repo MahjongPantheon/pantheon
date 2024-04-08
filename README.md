@@ -25,6 +25,7 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Please use included `nginx-reverse-proxy.example.conf` as reference of what host to point where. Note that `*.pantheon.internal` hosts are used to distinguish the services inside container network. Optionally, you can also point PgAdmin4 host to port 5632.
 5. Run `make pull` to fetch fresh containers from registry.
+   - As an option, you can run `make container` to build containers from scratch, but it's not recommended for production environment.
 6. Run `make prod_start` to start containers
 7. Run the following command: `make prod_compile`. This will build all static files for Tyr/Forseti/Sigrun and Sigrun server.
 8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). Don't do this on database that already has users!
@@ -122,7 +123,8 @@ _Note: on some linux distros almost every docker-related command should be run a
 is displayed, try adding `sudo` before `make`._
 
 1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process. 
-2. Run `make dev` to build and start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
+   - As an option, you can run `make container_dev` to build containers from scratch on you local machine. This may take a long time.
+2. Run `make dev` to start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
 3. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
 to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
 4. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
