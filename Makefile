@@ -64,7 +64,7 @@ reverse_proxy_start:
 		cd Common/ReverseProxy && \
     	docker run \
     	    -p 80:80 \
-    	    --add-host host.docker.internal:host-gateway \
+    	    --network=pantheon_internal_net \
     	    --name pantheon-reverse-proxy-container \
     	    -d pantheon-reverse-proxy ; \
 	fi
@@ -76,7 +76,7 @@ reverse_proxy_stop:
 
 .PHONY: pantheon_run
 pantheon_run: export ENV_FILENAME=.env.development
-pantheon_run: reverse_proxy_start
+pantheon_run:
 	@cp Env/.env.development Tyr/.env.development
 	@cp Env/.env.development Sigrun/.env.development
 	@cp Env/.env.development Bragi/.env.development
@@ -94,6 +94,8 @@ pantheon_run: reverse_proxy_start
 	@cd Frey && ${MAKE} docker_enable_debug
 	@cd Hugin && ${MAKE} docker_enable_debug
 	@cd Gullveig && ${MAKE} docker_enable_debug
+	${MAKE} reverse_proxy_stop
+	${MAKE} reverse_proxy_start
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "----------------------------------------------------------------------------------"; \

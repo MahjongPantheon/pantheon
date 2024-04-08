@@ -1,4 +1,3 @@
-version: "3.9"
 name: pantheon
 volumes:
   datavolume01: {}
@@ -7,6 +6,10 @@ volumes:
   muninvolume01: {}
   gullveigstorage01: {}
   pgadmindata:
+networks:
+  internal_net:
+    driver: bridge
+    attachable: true
 services:
   hermod:
     build: ./Hermod
@@ -22,6 +25,11 @@ services:
       - ./Env:/env
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
+    networks:
+      internal_net:
+        aliases:
+          - hermod.pantheon.local
+          - hermod.pantheon.internal
   skirnir:
     build: ./Skirnir
     image: ghcr.io/mahjongpantheon/pantheon-skirnir:latest
@@ -36,6 +44,11 @@ services:
       - ./Skirnir:/var/www/html/Skirnir
       - ./Skirnir-dist:/var/www/html/Skirnir-dist
       - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - skirnir.pantheon.local
+          - skirnir.pantheon.internal
   db:
     build: ./Database
     image: ghcr.io/mahjongpantheon/pantheon-database:latest
@@ -45,38 +58,37 @@ services:
     ports:
       - "5532:5432"
       - "127.0.0.1:49498:4949"
-    links:
-      - hermod:hermod.pantheon.internal
-      - hermod:hermod.pantheon.local
     volumes:
       - ./Env:/env
       - datavolume01:/var/lib/postgresql/data
       - configvolume01:/var/lib/postgresql/.ssh
       - backupvolume01:/var/lib/postgresql/backup
+    networks:
+      internal_net:
+        aliases:
+          - db.pantheon.local
+          - db.pantheon.internal
   pgadmin:
     image: docker.io/dpage/pgadmin4:7.3
     ports:
       - "127.0.0.1:5632:80"
-    links:
-      - db:db.pantheon.internal
-      - db:db.pantheon.local
     environment:
       PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
       PGADMIN_DEFAULT_PASSWORD: "password"
       PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
     volumes:
       - pgadmindata:/var/lib/pgadmin
+    networks:
+      internal_net:
+        aliases:
+          - pga.pantheon.local
+          - pga.pantheon.internal
   tyr:
     build: ./Tyr
     image: ghcr.io/mahjongpantheon/pantheon-tyr:latest
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:49492:4949"
-    links:
-      - mimir:mimir.pantheon.internal
-      - mimir:mimir.pantheon.local
-      - frey:frey.pantheon.internal
-      - frey:frey.pantheon.local
     depends_on:
       - frey
       - mimir
@@ -88,17 +100,17 @@ services:
       - ./Tyr:/var/www/html/Tyr
       - ./Tyr-dist:/var/www/html/Tyr-dist
       - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - tyr.pantheon.local
+          - tyr.pantheon.internal
   forseti:
     build: ./Forseti
     image: ghcr.io/mahjongpantheon/pantheon-forseti:latest
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:49493:4949"
-    links:
-      - mimir:mimir.pantheon.internal
-      - mimir:mimir.pantheon.local
-      - frey:frey.pantheon.internal
-      - frey:frey.pantheon.local
     depends_on:
       - frey
       - mimir
@@ -110,19 +122,17 @@ services:
       - ./Forseti:/var/www/html/Forseti
       - ./Forseti-dist:/var/www/html/Forseti-dist
       - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - forseti.pantheon.local
+          - forseti.pantheon.internal
   mimir:
     build: ./Mimir
     image: ghcr.io/mahjongpantheon/pantheon-mimir:latest
     ports:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
-    links:
-      - frey:frey.pantheon.internal
-      - frey:frey.pantheon.local
-      - db:db.pantheon.internal
-      - db:db.pantheon.local
-      - skirnir:skirnir.pantheon.internal
-      - skirnir:skirnir.pantheon.local
     depends_on:
       - frey
       - db
@@ -136,17 +146,17 @@ services:
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db
+    networks:
+      internal_net:
+        aliases:
+          - mimir.pantheon.local
+          - mimir.pantheon.internal
   frey:
     build: ./Frey
     image: ghcr.io/mahjongpantheon/pantheon-frey:latest
     ports:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
-    links:
-      - db:db.pantheon.internal
-      - db:db.pantheon.local
-      - hermod:hermod.pantheon.internal
-      - hermod:hermod.pantheon.local
     depends_on:
       - db
       - hermod
@@ -159,17 +169,17 @@ services:
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db
+    networks:
+      internal_net:
+        aliases:
+          - frey.pantheon.local
+          - frey.pantheon.internal
   sigrun:
     build: ./Sigrun
     image: ghcr.io/mahjongpantheon/pantheon-sigrun:latest
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:49496:4949"
-    links:
-      - mimir:mimir.pantheon.internal
-      - mimir:mimir.pantheon.local
-      - frey:frey.pantheon.internal
-      - frey:frey.pantheon.local
     depends_on:
       - frey
       - mimir
@@ -181,27 +191,17 @@ services:
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
       - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - sigrun.pantheon.local
+          - sigrun.pantheon.internal
   hugin:
     build: ./Hugin
     image: ghcr.io/mahjongpantheon/pantheon-hugin:latest
     ports:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:49497:4949"
-    links:
-      - db:db.pantheon.internal
-      - db:db.pantheon.local
-      - hermod:hermod.pantheon.internal
-      - hermod:hermod.pantheon.local
-      - tyr:tyr.pantheon.internal
-      - tyr:tyr.pantheon.local
-      - forseti:forseti.pantheon.internal
-      - forseti:forseti.pantheon.local
-      - mimir:mimir.pantheon.internal
-      - mimir:mimir.pantheon.local
-      - frey:frey.pantheon.internal
-      - frey:frey.pantheon.local
-      - sigrun:sigrun.pantheon.internal
-      - sigrun:sigrun.pantheon.local
     depends_on:
       - db
       - hermod
@@ -220,6 +220,13 @@ services:
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db
+    networks:
+      internal_net:
+        aliases:
+          - hugin.pantheon.local
+          - munin.pantheon.local
+          - hugin.pantheon.internal
+          - munin.pantheon.internal
   gullveig:
     build: ./Gullveig
     image: ghcr.io/mahjongpantheon/pantheon-gullveig:latest
@@ -234,6 +241,11 @@ services:
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
+    networks:
+      internal_net:
+        aliases:
+          - gullveig.pantheon.local
+          - gullveig.pantheon.internal
   bragi:
     build: ./Bragi
     image: ghcr.io/mahjongpantheon/pantheon-bragi:latest
@@ -248,30 +260,16 @@ services:
       - ./Bragi:/var/www/html/Bragi
       - ./Bragi-dist:/var/www/html/Bragi-dist
       - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - bragi.pantheon.local
+          - bragi.pantheon.internal
   fenrir:
     build: ./Fenrir
     image: ghcr.io/mahjongpantheon/pantheon-fenrir:latest
     ports:
       - "127.0.0.1:4017:80"
-    links:
-      - db:db.pantheon.internal
-      - db:db.pantheon.local
-      - hermod:hermod.pantheon.internal
-      - hermod:hermod.pantheon.local
-      - tyr:tyr.pantheon.internal
-      - tyr:tyr.pantheon.local
-      - forseti:forseti.pantheon.internal
-      - forseti:forseti.pantheon.local
-      - mimir:mimir.pantheon.internal
-      - mimir:mimir.pantheon.local
-      - frey:frey.pantheon.internal
-      - frey:frey.pantheon.local
-      - sigrun:sigrun.pantheon.internal
-      - sigrun:sigrun.pantheon.local
-      - gullveig:gullveig.pantheon.internal
-      - gullveig:gullveig.pantheon.local
-      - skirnir:skirnir.pantheon.internal
-      - skirnir:skirnir.pantheon.local
     depends_on:
       - db
       - hermod
@@ -289,3 +287,8 @@ services:
     environment:
       ENV: /etc/profile
       ENV_FILENAME: ${ENV_FILENAME:-.env.production}
+    networks:
+      internal_net:
+        aliases:
+          - fenrir.pantheon.local
+          - fenrir.pantheon.internal
