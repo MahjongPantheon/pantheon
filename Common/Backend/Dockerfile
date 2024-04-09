@@ -72,11 +72,6 @@ ENV PHP_MAX_POST        100M
 ENV LANG                en_US.utf8
 ENV COMPOSER_CACHE_DIR  /home/user/.composer-cache
 
-# Need to override this inside the container
-ENV MIMIR_URL http://mimir
-ENV FREY_URL  http://frey
-ENV HUGIN_URL  http://hugin
-
 RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
     echo "${TIMEZONE}" > /etc/timezone
 
