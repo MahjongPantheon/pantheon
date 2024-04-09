@@ -368,13 +368,13 @@ e2e_build_skirnir: # this is for automated builds, don't run it manually
 	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
 
 .PHONY: e2e_compile
-e2e_compile: export ENV_FILENAME=.env.development
+e2e_compile: export ENV_FILENAME=.env.e2e
 e2e_compile:
-	@cp Env/.env.development Tyr/.env.development
-	@cp Env/.env.development Sigrun/.env.development
-	@cp Env/.env.development Forseti/.env.development
-	@cp Env/.env.development Bragi/.env.development
-	@cp Env/.env.development Skirnir/.env.development
+	@cp Env/.env.e2e Tyr/.env.e2e
+	@cp Env/.env.e2e Sigrun/.env.e2e
+	@cp Env/.env.e2e Forseti/.env.e2e
+	@cp Env/.env.e2e Bragi/.env.e2e
+	@cp Env/.env.e2e Skirnir/.env.e2e
 	${MAKE} deps
 	${MAKE} migrate
 	${MAKE} e2e_build_tyr
@@ -443,5 +443,6 @@ bump_release:
 	git commit --message "Updated release tag"
 
 .PHONY: e2e
+e2e: export ENV_FILENAME=.env.e2e
 e2e:
 	cd Fenrir && ${MAKE} docker_run

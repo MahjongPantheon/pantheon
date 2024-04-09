@@ -47,6 +47,7 @@ autofix:
 	./node_modules/.bin/prettier -w ./tests
 
 run:
+	env | sort
 	CI=true ./node_modules/.bin/playwright test
 
 .PHONY: docker_run
