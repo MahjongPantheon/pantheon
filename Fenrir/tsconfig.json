@@ -18,6 +18,5 @@
   "ts-node": {
     "esm": true
   },
-  "include": ["tests"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["tests/**/*", "playwright.config.ts"]
 }

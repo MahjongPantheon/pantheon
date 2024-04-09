@@ -4,7 +4,7 @@ import { getLastMail } from './utils/mail';
 import * as process from 'process';
 
 test('Register link from assistant', async ({ page, context }) => {
-  await page.goto(process.env.TYR_URL);
+  await page.goto(process.env.TYR_URL!);
   const [newTab] = await Promise.all([
     context.waitForEvent('page'),
     page.getByTestId('button_signup').click(),
@@ -13,7 +13,7 @@ test('Register link from assistant', async ({ page, context }) => {
 });
 
 test('Reset password link from assistant', async ({ page, context }) => {
-  await page.goto(process.env.TYR_URL);
+  await page.goto(process.env.TYR_URL!);
   const [newTab] = await Promise.all([
     context.waitForEvent('page'),
     page.getByTestId('button_forgot').click(),
@@ -39,7 +39,7 @@ test('Register and login from admin panel', async ({ page }) => {
   expect(link).toBeTruthy();
 
   // Follow link in message and confirm signup
-  await page.goto(process.env.FORSETI_URL + link);
+  await page.goto(process.env.FORSETI_URL! + link);
   await expect(page.getByTestId('confirmation_success')).toBeVisible();
   await page.getByTestId('goto_login').click();
 

@@ -31,11 +31,11 @@ lint:
 
 PHONY: eslint
 eslint:
-	./node_modules/.bin/eslint . --ext .js,.ts,.tsx
+	./node_modules/.bin/eslint --ext .js,.ts,.tsx .
 
 PHONY: prettier
 prettier:
-	./node_modules/.bin/prettier -c ./app
+	./node_modules/.bin/prettier -c ./tests
 
 PHONY: typecheck
 typecheck:
@@ -44,7 +44,7 @@ typecheck:
 PHONY: autofix
 autofix:
 	./node_modules/.bin/eslint . --ext .js,.ts,.tsx --fix
-	./node_modules/.bin/prettier -w ./app
+	./node_modules/.bin/prettier -w ./tests
 
 run:
 	CI=true ./node_modules/.bin/playwright test
