@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cat /env/"$ENV_FILENAME" | grep -v '# ' | grep -v  -e '^$' | awk '{ print "export " $1 }' > /etc/profile.d/external.sh
-echo "export PS1=\"|\033[1;31m Hermod container \033[0m~> \$PWD (\\u) \\$ \"" >> /etc/profile.d/external.sh
-. /etc/profile.d/external.sh
+echo "export PS1=\"|\033[1;31m Hermod container \033[0m~> \$PWD (\\u) \\$ \"" > /etc/profile.d/external.sh
 
 . /common.sh
 . /common-run.sh

@@ -106,6 +106,8 @@ pantheon_run:
 
 .PHONY: pantheon_stop
 pantheon_stop: reverse_proxy_stop
+pantheon_stop: export ENV_FILENAME=.env.development
+pantheon_stop:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
 	${COMPOSE_COMMAND} down
 

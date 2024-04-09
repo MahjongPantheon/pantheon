@@ -15,14 +15,12 @@ services:
     build: ./Hermod
     image: ghcr.io/mahjongpantheon/pantheon-hermod:latest
     hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4009:80"
       - "127.0.0.1:49491:4949"
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
-      - ./Env:/env
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
     networks:
@@ -33,14 +31,12 @@ services:
   skirnir:
     build: ./Skirnir
     image: ghcr.io/mahjongpantheon/pantheon-skirnir:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4015:80"
       - "127.0.0.1:49501:4949"
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
-      - ./Env:/env
       - ./Skirnir:/var/www/html/Skirnir
       - ./Skirnir-dist:/var/www/html/Skirnir-dist
       - ./Common:/var/www/html/Common
@@ -52,14 +48,12 @@ services:
   db:
     build: ./Database
     image: ghcr.io/mahjongpantheon/pantheon-database:latest
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "5532:5432"
       - "127.0.0.1:49498:4949"
     volumes:
-      - ./Env:/env
       - datavolume01:/var/lib/postgresql/data
       - configvolume01:/var/lib/postgresql/.ssh
       - backupvolume01:/var/lib/postgresql/backup
@@ -86,17 +80,15 @@ services:
   tyr:
     build: ./Tyr
     image: ghcr.io/mahjongpantheon/pantheon-tyr:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:49492:4949"
     depends_on:
       - frey
       - mimir
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
-      - ./Env:/env
       - ./Tyr:/var/www/html/Tyr
       - ./Tyr-dist:/var/www/html/Tyr-dist
       - ./Common:/var/www/html/Common
@@ -108,17 +100,15 @@ services:
   forseti:
     build: ./Forseti
     image: ghcr.io/mahjongpantheon/pantheon-forseti:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:49493:4949"
     depends_on:
       - frey
       - mimir
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
-      - ./Env:/env
       - ./Forseti:/var/www/html/Forseti
       - ./Forseti-dist:/var/www/html/Forseti-dist
       - ./Common:/var/www/html/Common
@@ -130,6 +120,8 @@ services:
   mimir:
     build: ./Mimir
     image: ghcr.io/mahjongpantheon/pantheon-mimir:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
@@ -138,12 +130,9 @@ services:
       - db
       - skirnir
     volumes:
-      - ./Env:/env
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
     environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db
     networks:
@@ -154,6 +143,8 @@ services:
   frey:
     build: ./Frey
     image: ghcr.io/mahjongpantheon/pantheon-frey:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
@@ -161,12 +152,9 @@ services:
       - db
       - hermod
     volumes:
-      - ./Env:/env
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
     environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db
     networks:
@@ -177,17 +165,15 @@ services:
   sigrun:
     build: ./Sigrun
     image: ghcr.io/mahjongpantheon/pantheon-sigrun:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:49496:4949"
     depends_on:
       - frey
       - mimir
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
-      - ./Env:/env
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
       - ./Common:/var/www/html/Common
@@ -199,6 +185,8 @@ services:
   hugin:
     build: ./Hugin
     image: ghcr.io/mahjongpantheon/pantheon-hugin:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:49497:4949"
@@ -211,13 +199,10 @@ services:
       - frey
       - sigrun
     volumes:
-      - ./Env:/env
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
       - muninvolume01:/var/lib/munin/spool
     environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db
     networks:
@@ -230,17 +215,15 @@ services:
   gullveig:
     build: ./Gullveig
     image: ghcr.io/mahjongpantheon/pantheon-gullveig:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4012:80"
       - "127.0.0.1:49499:4949"
     volumes:
-      - ./Env:/env
       - ./Gullveig:/var/www/html/Gullveig
       - ./Common:/var/www/html/Common
       - gullveigstorage01:/var/storage
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     networks:
       internal_net:
         aliases:
@@ -249,14 +232,12 @@ services:
   bragi:
     build: ./Bragi
     image: ghcr.io/mahjongpantheon/pantheon-bragi:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4008:80"
       - "127.0.0.1:49500:4949"
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     volumes:
-      - ./Env:/env
       - ./Bragi:/var/www/html/Bragi
       - ./Bragi-dist:/var/www/html/Bragi-dist
       - ./Common:/var/www/html/Common
@@ -268,6 +249,8 @@ services:
   fenrir:
     build: ./Fenrir
     image: ghcr.io/mahjongpantheon/pantheon-fenrir:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4017:80"
     depends_on:
@@ -281,12 +264,8 @@ services:
       - gullveig
       - skirnir
     volumes:
-      - ./Env:/env
       - ./Fenrir:/var/www/html/Fenrir
       - ./Common:/var/www/html/Common
-    environment:
-      ENV: /etc/profile
-      ENV_FILENAME: ${ENV_FILENAME:-.env.production}
     networks:
       internal_net:
         aliases:
