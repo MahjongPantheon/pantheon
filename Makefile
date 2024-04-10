@@ -461,3 +461,4 @@ e2e_compile:
 e2e_run: export ENV_FILENAME=.env.e2e
 e2e_run:
 	@${COMPOSE_COMMAND} up -d
+	@${COMPOSE_COMMAND} up fenrir -d

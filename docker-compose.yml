@@ -249,6 +249,8 @@ services:
   fenrir:
     build: ./Fenrir
     image: ghcr.io/mahjongpantheon/pantheon-fenrir:latest
+    profiles:
+      - donotstart
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
