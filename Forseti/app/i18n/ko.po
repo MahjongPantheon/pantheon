@@ -139,7 +139,7 @@ msgstr "대국 종료 및 우마 적용 후에 적용될 촌보 벌부값"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:227:24
 msgid "Amount of penalty applied to those who didn't win once in game."
-msgstr "대국 종료 및 우마 적용 후에 적용될 촌보 벌부값"
+msgstr "한번도 화료하지 못한 작사에게 적용될 야키토리 벌부값"
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:68:22
 msgid ""
