@@ -38,7 +38,8 @@ kill:
 	read answer ; \
 	if [ "$$answer" = "Y" ] || [ "$$answer" = "y" ]  ; then \
 		${COMPOSE_COMMAND} down --remove-orphans ; \
-		cd Tyr && ${MAKE} kill ; \
+		cd Fenrir && ${MAKE} kill ; \
+		cd ../Tyr && ${MAKE} kill ; \
 		cd ../Mimir && ${MAKE} kill ; \
 		cd ../Frey && ${MAKE} kill ; \
 		cd ../Forseti && ${MAKE} kill ; \
@@ -209,6 +210,10 @@ shell_gullveig:
 shell_skirnir:
 	cd Skirnir && ${MAKE} shell
 
+.PHONY: shell_fenrir
+shell_fenrir:
+	cd Fenrir && ${MAKE} shell
+
 # Some shortcuts for common tasks
 
 .PHONY: seed
@@ -342,47 +347,6 @@ prod_compile:
 	cd Bragi && ${MAKE} docker_warmup
 	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
 
-.PHONY: e2e_build_tyr
-e2e_build_tyr: export NODE_ENV=development
-e2e_build_tyr: # this is for automated builds, don't run it manually
-	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
-
-.PHONY: e2e_build_forseti
-e2e_build_forseti: export NODE_ENV=development
-e2e_build_forseti: # this is for automated builds, don't run it manually
-	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
-
-.PHONY: e2e_build_sigrun
-e2e_build_sigrun: export NODE_ENV=development
-e2e_build_sigrun: # this is for automated builds, don't run it manually
-	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
-
-.PHONY: e2e_build_bragi
-e2e_build_bragi: export NODE_ENV=development
-e2e_build_bragi: # this is for automated builds, don't run it manually
-	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
-
-.PHONY: e2e_build_skirnir
-e2e_build_skirnir: export NODE_ENV=development
-e2e_build_skirnir: # this is for automated builds, don't run it manually
-	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
-
-.PHONY: e2e_compile
-e2e_compile: export ENV_FILENAME=.env.e2e
-e2e_compile:
-	@cp Env/.env.e2e Tyr/.env.e2e
-	@cp Env/.env.e2e Sigrun/.env.e2e
-	@cp Env/.env.e2e Forseti/.env.e2e
-	@cp Env/.env.e2e Bragi/.env.e2e
-	@cp Env/.env.e2e Skirnir/.env.e2e
-	${MAKE} deps
-	${MAKE} migrate
-	${MAKE} e2e_build_tyr
-	${MAKE} e2e_build_forseti
-	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
-	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
-	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
-
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
 prod_start:
@@ -446,3 +410,54 @@ bump_release:
 e2e: export ENV_FILENAME=.env.e2e
 e2e:
 	cd Fenrir && ${MAKE} docker_run
+
+.PHONY: e2e_build_tyr
+e2e_build_tyr: export NODE_ENV=development
+e2e_build_tyr: export ENV_FILENAME=.env.e2e
+e2e_build_tyr: # this is for automated builds, don't run it manually
+	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: e2e_build_forseti
+e2e_build_forseti: export NODE_ENV=development
+e2e_build_forseti: export ENV_FILENAME=.env.e2e
+e2e_build_forseti: # this is for automated builds, don't run it manually
+	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: e2e_build_sigrun
+e2e_build_sigrun: export NODE_ENV=development
+e2e_build_sigrun: export ENV_FILENAME=.env.e2e
+e2e_build_sigrun: # this is for automated builds, don't run it manually
+	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+
+.PHONY: e2e_build_bragi
+e2e_build_bragi: export NODE_ENV=development
+e2e_build_bragi: export ENV_FILENAME=.env.e2e
+e2e_build_bragi: # this is for automated builds, don't run it manually
+	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+
+.PHONY: e2e_build_skirnir
+e2e_build_skirnir: export NODE_ENV=development
+e2e_build_skirnir: export ENV_FILENAME=.env.e2e
+e2e_build_skirnir: # this is for automated builds, don't run it manually
+	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
+
+.PHONY: e2e_compile
+e2e_compile: export ENV_FILENAME=.env.e2e
+e2e_compile:
+	@cp Env/.env.e2e Tyr/.env.e2e
+	@cp Env/.env.e2e Sigrun/.env.e2e
+	@cp Env/.env.e2e Forseti/.env.e2e
+	@cp Env/.env.e2e Bragi/.env.e2e
+	@cp Env/.env.e2e Skirnir/.env.e2e
+	${MAKE} deps
+	${MAKE} migrate
+	${MAKE} e2e_build_tyr
+	${MAKE} e2e_build_forseti
+	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
+	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
+	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
+
+.PHONY: e2e_run
+e2e_run: export ENV_FILENAME=.env.e2e
+e2e_run:
+	@${COMPOSE_COMMAND} up -d
