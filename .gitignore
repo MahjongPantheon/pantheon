@@ -10,6 +10,9 @@
 .phpunit.result.cache
 php-errors.log
 
+.env.e2e
+
+!Env/.env.e2e
 Env/.env.development.local
 Env/.env.production
 Tyr/.env.production

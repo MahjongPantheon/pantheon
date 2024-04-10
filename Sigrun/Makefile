@@ -13,7 +13,7 @@ shell: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Sigrun container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Sigrun && /bin/sh' ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Sigrun && /bin/sh -l' ; \
 	fi
 
 .PHONY: kill
@@ -67,7 +67,8 @@ prebuild:
 	cd dist/client/assets && gzip -k -9 -f *.js *.css
 	cp -R dist ../Sigrun-dist/
 	cp -f server.js ../Sigrun-dist/
-	cp -f .env.production ../Sigrun-dist/
+	if [ -f .env.production ]; then cp -f .env.production ../Sigrun-dist/ ; fi
+	if [ -f .env.development ]; then cp -f .env.development ../Sigrun-dist/ ; fi
 	cp -f package.json ../Sigrun-dist/
 	cp -f yarn.lock ../Sigrun-dist/
 
@@ -228,6 +229,6 @@ docker_warmup: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Sigrun container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://localhost:4102 > /dev/null; done' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://sigrun.pantheon.internal > /dev/null; done' ; \
 	fi
 

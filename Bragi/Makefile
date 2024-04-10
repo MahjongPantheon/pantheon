@@ -13,7 +13,7 @@ shell: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Bragi container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Bragi && /bin/sh' ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Bragi && /bin/sh -l' ; \
 	fi
 
 .PHONY: kill
@@ -65,7 +65,8 @@ prebuild:
 	cd dist/client/assets && gzip -k -9 -f *.js *.css
 	cp -R dist ../Bragi-dist/
 	cp -f server.js ../Bragi-dist/
-	cp -f .env.production ../Bragi-dist/
+	if [ -f .env.production ]; then cp -f .env.production ../Bragi-dist/ ; fi
+	if [ -f .env.development ]; then cp -f .env.development ../Bragi-dist/ ; fi
 	cp -f package.json ../Bragi-dist/
 	cp -f yarn.lock ../Bragi-dist/
 
@@ -212,6 +213,6 @@ docker_warmup: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Bragi container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://localhost:4108 > /dev/null; done' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'for i in $$(seq 1 8); do curl http://bragi.pantheon.internal > /dev/null; done' ; \
 	fi
 

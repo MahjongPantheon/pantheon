@@ -23,16 +23,9 @@ To deploy pantheon on your own VPS or personal environment on production mode:
      - Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
 2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
-4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
-   1. Game API (Mimir) to port 4001 
-   2. User API (Frey) to port 4004 
-   3. Ratings service (Sigrun) to port 4002 
-   4. Mobile assistant (Tyr) to port 4103 
-   5. Admin panel (Forseti) to port 4107
-   6. System logger and statistics system (Hugin) to port 4010
-   7. (optional) System monitoring (Munin) to port 4011
-   8. (optional) PgAdmin4 host to port 5632
+4. Set up your reverse proxy, add SSL certificates (optionally). Please use included `nginx-reverse-proxy.example.conf` as reference of what host to point where. Note that `*.pantheon.internal` hosts are used to distinguish the services inside container network. Optionally, you can also point PgAdmin4 host to port 5632.
 5. Run `make pull` to fetch fresh containers from registry.
+   - As an option, you can run `make container` to build containers from scratch, but it's not recommended for production environment.
 6. Run `make prod_start` to start containers
 7. Run the following command: `make prod_compile`. This will build all static files for Tyr/Forseti/Sigrun and Sigrun server.
 8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). Don't do this on database that already has users!
@@ -96,7 +89,32 @@ and changing the `BACKUP_GIT_REMOTE` variable, followed by containers restart.
 
 Pantheon developer environment works on *nix hosts (mac, linux, *bsd). Windows-based systems 
 are not supported (while it still MAY work, it is not tested at all, also you may want to try
-using it under WSL in Windows 10+). 
+using it under WSL in Windows 10+).
+
+#### Prerequisites
+
+First, please add the following entries to your `/etc/hosts` file so you could access pantheon services locally:
+```
+127.0.0.1   bragi.pantheon.local
+127.0.0.1   forseti.pantheon.local
+127.0.0.1   frey.pantheon.local
+127.0.0.1   gullveig.pantheon.local
+127.0.0.1   hermod.pantheon.local
+127.0.0.1   hugin.pantheon.local
+127.0.0.1   mimir.pantheon.local
+127.0.0.1   munin.pantheon.local
+127.0.0.1   sigrun.pantheon.local
+127.0.0.1   skirnir.pantheon.local
+127.0.0.1   tyr.pantheon.local
+127.0.0.1   pga.pantheon.local
+```
+
+Second, make sure your **local port 80** is not used by any other software (like nginx, apache or another web server).
+- If the port is not used, everything should work as is. Please note that in this case Pantheon development environment will use port 80, and no other service using that port can be started until `make pantheon_stop` is run.
+- Otherwise, please refer to `Common/ReverseProxy/external-proxy.example.conf` file for a list of hosts configuration (for nginx). For other web servers, please use equivalent instructions. Modify configuration of your currently running web server to allow requests pass to the services from your local browser.
+- If there is some external nginx running inside docker container on your local machine, you can use `Common/ReverseProxy/nginx.conf` file to add pantheon configuration there. You'll also need to add the container to `pantheon_internal_net` docker network.  
+
+#### Installing and running
 
 Make sure you have Docker and Docker Compose installed and daemon running on your system. For debugging, please make sure all the php extensions are
 installed as well, see Dockerfile for a complete list. 
@@ -105,7 +123,8 @@ _Note: on some linux distros almost every docker-related command should be run a
 is displayed, try adding `sudo` before `make`._
 
 1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process. 
-2. Run `make dev` to build and start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
+   - As an option, you can run `make container_dev` to build containers from scratch on you local machine. This may take a long time.
+2. Run `make dev` to start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
 3. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
 to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
 4. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
@@ -117,21 +136,22 @@ re-seeded on each command run.
 
 A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md) is available.
 
-Default ports for services are:
-- 4001 for **Mimir** game management API (http://localhost:4001/)
-- 4002 for **Sigrun** public interface (http://localhost:4002/)
-- 4003 for **Tyr** mobile interface (http://localhost:4003/)
-- 4004 for **Frey** user management backend (http://localhost:4004/)
-- 4007 for **Forseti** management interface (http://localhost:4007/)
-- 5532 for PostgreSQL connections - if you want to use external pgAdmin3/4 or any other client to access your databases.
-- 5632 for pgAdmin4 container (http://localhost:5632/), which is run for convenience. You will need to setup initial connections using following credentials:
+Local port 5532 will available for PostgreSQL connections - if you want to use external pgAdmin3/4 or any other client to access your databases.
+
+Services will be available at:
+- http://mimir.pantheon.local for **Mimir** game management API
+- http://sigrun.pantheon.local for **Sigrun** public interface
+- http://tyr.pantheon.local for **Tyr** mobile interface
+- http://frey.pantheon.local for **Frey** user management backend
+- http://forseti.pantheon.local for **Forseti** management interface
+- http://pga.pantheon.local for pgAdmin4 service, which is run for convenience. You will need to setup initial connections using following credentials:
   - PgAdmin login: `dev@riichimahjong.org`
   - Password: `password`
-  - Mimir database host: `db`
+  - Mimir database host: `db.pantheon.local`
   - Mimir database port: `5432`
   - Mimir database user: `mimir`
   - Mimir database password: `pgpass`
-  - Frey database host: `db`
+  - Frey database host: `db.pantheon.local`
   - Frey database port: `5432`
   - Frey database user: `frey`
   - Frey database password: `pgpass`

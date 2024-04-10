@@ -13,7 +13,7 @@ shell: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Skirnir container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Skirnir && /bin/sh' ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Skirnir && /bin/sh -l' ; \
 	fi
 
 .PHONY: kill
@@ -61,7 +61,8 @@ prod_deps:
 prebuild:
 	cp -R dist ../Skirnir-dist/
 	cp dist/server.js ../Skirnir-dist/
-	cp -f .env.production ../Skirnir-dist/
+	if [ -f .env.production ]; then cp -f .env.production ../Skirnir-dist/ ; fi
+	if [ -f .env.development ]; then cp -f .env.development ../Skirnir-dist/ ; fi
 	cp -f package.json ../Skirnir-dist/
 	cp -f yarn.lock ../Skirnir-dist/
 

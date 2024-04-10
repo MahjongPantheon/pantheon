@@ -23,6 +23,7 @@ deps:
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
 	cd Skirnir && ${MAKE} docker_deps
+	cd Fenrir && ${MAKE} docker_deps
 
 .PHONY: kill_dev
 kill_dev: export ENV_FILENAME=.env.development
@@ -37,7 +38,8 @@ kill:
 	read answer ; \
 	if [ "$$answer" = "Y" ] || [ "$$answer" = "y" ]  ; then \
 		${COMPOSE_COMMAND} down --remove-orphans ; \
-		cd Tyr && ${MAKE} kill ; \
+		cd Fenrir && ${MAKE} kill ; \
+		cd ../Tyr && ${MAKE} kill ; \
 		cd ../Mimir && ${MAKE} kill ; \
 		cd ../Frey && ${MAKE} kill ; \
 		cd ../Forseti && ${MAKE} kill ; \
@@ -53,8 +55,30 @@ kill:
 
 .PHONY: container
 container:
+	cd Common/ReverseProxy && docker build -t pantheon-reverse-proxy .
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
+
+.PHONY: container_dev
+container_dev: export ENV_FILENAME=.env.development
+container_dev:
+	${MAKE} container
+
+.PHONY: reverse_proxy_start
+reverse_proxy_start:
+	@if [ -z "`netstat -tunl | grep ':80 '`" ]; then \
+		cd Common/ReverseProxy && \
+    	docker run \
+    	    -p 80:80 \
+    	    --network=pantheon_internal_net \
+    	    --name pantheon-reverse-proxy-container \
+    	    -d pantheon-reverse-proxy ; \
+	fi
+
+.PHONY: reverse_proxy_stop
+reverse_proxy_stop:
+	@docker stop pantheon-reverse-proxy-container || true
+	@docker rm pantheon-reverse-proxy-container || true
 
 .PHONY: pantheon_run
 pantheon_run: export ENV_FILENAME=.env.development
@@ -78,43 +102,12 @@ pantheon_run:
 	@cd Gullveig && ${MAKE} docker_enable_debug
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
-	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
-	echo "- ${YELLOW}Sigrun${NC} is accessible on port 4002 (http://localhost:4002) without server-side rendering"; \
-	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
-	echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
-	echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
-	echo "- ${YELLOW}Bragi${NC} is exposed on port 4008"; \
-	echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"; \
-	echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"; \
 	echo "----------------------------------------------------------------------------------"; \
-	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
-	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
-	echo "    -> Login to PgAdmin4 as: "; \
-	echo "    ->     Username: devriichimahjong.org "; \
-	echo "    ->     Password: password "; \
-	echo "    -> PgAdmin4-mimir pgsql connection credentials hint: "; \
-	echo "    ->     Hostname: db "; \
-	echo "    ->     Port:     5432 "; \
-	echo "    ->     Username: mimir "; \
-	echo "    ->     Password: pgpass "; \
-	echo "    -> PgAdmin4-frey pgsql connection credentials hint: "; \
-	echo "    ->     Hostname: db "; \
-	echo "    ->     Port:     5432 "; \
-	echo "    ->     Username: frey "; \
-	echo "    ->     Password: pgpass "; \
-  echo "    -> PgAdmin4-hugin pgsql connection credentials hint: "; \
-  echo "    ->     Hostname: db "; \
-  echo "    ->     Port:     5432 "; \
-  echo "    ->     Username: hugin "; \
-  echo "    ->     Password: pgpass "; \
-	echo "----------------------------------------------------------------------------------"; \
-	echo " ${GREEN}Run 'make logs' in each subproject folder to view container logs on-line${NC} "; \
-	echo " ${GREEN}Run 'make php_logs' in each subproject folder to view container php logs on-line${NC} "; \
-	echo " ${YELLOW}Run 'make shell' in each subproject folder to get into each container shell.${NC} "; \
-	echo " ${YELLOW}Also you can use 'make shell_{tyr|frey|mimir|forseti|sigrun}' to get ${NC} "; \
-	echo " ${YELLOW}to specific subproject folder${NC} ";
+	echo "Please see README.md for addresses of services and further instructions." ;
 
 .PHONY: pantheon_stop
+pantheon_stop: reverse_proxy_stop
+pantheon_stop: export ENV_FILENAME=.env.development
 pantheon_stop:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
 	${COMPOSE_COMMAND} down
@@ -161,6 +154,8 @@ skirnir_stop:
 
 .PHONY: dev
 dev: pantheon_run
+	${MAKE} reverse_proxy_stop
+	${MAKE} reverse_proxy_start
 	${MAKE} deps
 	${MAKE} migrate
 	bash ./parallel_dev.sh
@@ -215,6 +210,10 @@ shell_gullveig:
 shell_skirnir:
 	cd Skirnir && ${MAKE} shell
 
+.PHONY: shell_fenrir
+shell_fenrir:
+	cd Fenrir && ${MAKE} shell
+
 # Some shortcuts for common tasks
 
 .PHONY: seed
@@ -253,6 +252,7 @@ check:
 	cd Gullveig && ${MAKE} docker_check
 	cd Bragi && ${MAKE} docker_lint
 	cd Skirnir && ${MAKE} docker_lint
+	cd Fenrir && ${MAKE} docker_lint
 
 .PHONY: autofix
 autofix:
@@ -266,6 +266,7 @@ autofix:
 	cd Gullveig && ${MAKE} docker_autofix
 	cd Bragi && ${MAKE} docker_autofix
 	cd Skirnir && ${MAKE} docker_autofix
+	cd Fenrir && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
@@ -345,15 +346,6 @@ prod_compile:
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
 	cd Bragi && ${MAKE} docker_warmup
 	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
-	@echo "- ${YELLOW}Mimir${NC} API is exposed on port 4001"
-	@echo "- ${YELLOW}Sigrun${NC} is exposed on port 4102 with server-side rendering"
-	@echo "- ${YELLOW}Bragi${NC} is exposed on port 4108 with server-side rendering"
-	@echo "- ${YELLOW}Tyr${NC} is exposed on port 4103"
-	@echo "- ${YELLOW}Frey${NC} API is exposed on port 4004"
-	@echo "- ${YELLOW}Forseti${NC} is exposed on port 4107"
-	@echo "- ${YELLOW}Hugin${NC} is exposed on port 4010"
-	@echo "- ${YELLOW}Munin${NC} monitoring is exposed on port 4011"
-	@echo "- ${YELLOW}Skirnir${NC} is exposed on port 4015"
 
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
@@ -413,3 +405,59 @@ bump_release:
 	git rev-parse --short HEAD > Common/ReleaseTag.txt
 	git add Common/ReleaseTag.txt
 	git commit --message "Updated release tag"
+
+.PHONY: e2e
+e2e: export ENV_FILENAME=.env.e2e
+e2e:
+	cd Fenrir && ${MAKE} docker_run
+
+.PHONY: e2e_build_tyr
+e2e_build_tyr: export NODE_ENV=development
+e2e_build_tyr: export ENV_FILENAME=.env.e2e
+e2e_build_tyr: # this is for automated builds, don't run it manually
+	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: e2e_build_forseti
+e2e_build_forseti: export NODE_ENV=development
+e2e_build_forseti: export ENV_FILENAME=.env.e2e
+e2e_build_forseti: # this is for automated builds, don't run it manually
+	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: e2e_build_sigrun
+e2e_build_sigrun: export NODE_ENV=development
+e2e_build_sigrun: export ENV_FILENAME=.env.e2e
+e2e_build_sigrun: # this is for automated builds, don't run it manually
+	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+
+.PHONY: e2e_build_bragi
+e2e_build_bragi: export NODE_ENV=development
+e2e_build_bragi: export ENV_FILENAME=.env.e2e
+e2e_build_bragi: # this is for automated builds, don't run it manually
+	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+
+.PHONY: e2e_build_skirnir
+e2e_build_skirnir: export NODE_ENV=development
+e2e_build_skirnir: export ENV_FILENAME=.env.e2e
+e2e_build_skirnir: # this is for automated builds, don't run it manually
+	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
+
+.PHONY: e2e_compile
+e2e_compile: export ENV_FILENAME=.env.e2e
+e2e_compile:
+	@cp Env/.env.e2e Tyr/.env.e2e
+	@cp Env/.env.e2e Sigrun/.env.e2e
+	@cp Env/.env.e2e Forseti/.env.e2e
+	@cp Env/.env.e2e Bragi/.env.e2e
+	@cp Env/.env.e2e Skirnir/.env.e2e
+	${MAKE} deps
+	${MAKE} migrate
+	${MAKE} e2e_build_tyr
+	${MAKE} e2e_build_forseti
+	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
+	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
+	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
+
+.PHONY: e2e_run
+e2e_run: export ENV_FILENAME=.env.e2e
+e2e_run:
+	@${COMPOSE_COMMAND} up -d

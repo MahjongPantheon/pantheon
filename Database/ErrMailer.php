@@ -97,7 +97,7 @@ $gitOutput
 $mailer = new Mailer(
     'remote_api', // remote_api or local_mta
     'noreply@' . getenv('ALLOWED_SENDER_DOMAINS') ?: 'riichimahjong.org',
-    'http://hermod',
+    getenv('HERMOD_URL'),
     getenv('MAIL_ACTION_KEY') ?: 'CHANGE_ME',
 );
 $mailer->sendLastBackupError();

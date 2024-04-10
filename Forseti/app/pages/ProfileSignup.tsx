@@ -97,7 +97,12 @@ export const ProfileSignup: React.FC = () => {
     return (
       <>
         <Container>
-          <Alert icon={<IconCircleCheck size='1rem' />} title={i18n._t('Success')} color='green'>
+          <Alert
+            data-testid='register_success'
+            icon={<IconCircleCheck size='1rem' />}
+            title={i18n._t('Success')}
+            color='green'
+          >
             {i18n._t('Please check your mailbox for the verification email.')}
           </Alert>
         </Container>
@@ -110,12 +115,14 @@ export const ProfileSignup: React.FC = () => {
       <Container>
         <form onSubmit={form.onSubmit(submitForm)}>
           <TextInput
+            data-testid='email_field'
             icon={<IconMailQuestion size='1rem' />}
             description={i18n._t('Enter your e-mail address')}
             {...form.getInputProps('email')}
           />
           <Space h='md' />
           <TextInput
+            data-testid='title_field'
             icon={<IconSignature size='1rem' />}
             description={i18n._t(
               "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
@@ -124,6 +131,7 @@ export const ProfileSignup: React.FC = () => {
           />
           <Space h='md' />
           <PasswordInput
+            data-testid='password_field'
             description={i18n._t('Enter strong password')}
             icon={<IconLock size='1rem' />}
             {...form.getInputProps('password')}
@@ -131,6 +139,7 @@ export const ProfileSignup: React.FC = () => {
           <Space h='md' />
           <Checkbox
             mt='md'
+            data-testid='agreement_checkbox'
             label={i18n._t("I've read the privacy policy listed below and accept its terms")}
             {...form.getInputProps('privacyPolicy', { type: 'checkbox' })}
           />
@@ -138,7 +147,9 @@ export const ProfileSignup: React.FC = () => {
             <Link to='/profile/login'>
               <Button variant='outline'>{i18n._t('Already registered?')}</Button>
             </Link>
-            <Button type='submit'>{i18n._t('Register new account')}</Button>
+            <Button type='submit' data-testid='register_submit_button'>
+              {i18n._t('Register new account')}
+            </Button>
           </Group>
         </form>
 
