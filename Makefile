@@ -409,6 +409,7 @@ bump_release:
 .PHONY: e2e
 e2e: export ENV_FILENAME=.env.e2e
 e2e:
+	@${COMPOSE_COMMAND} up fenrir -d
 	cd Fenrir && ${MAKE} docker_run
 
 .PHONY: e2e_build_tyr
