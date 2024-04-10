@@ -26,9 +26,9 @@ return [
         'externalQuerySecret' => getenv('EXTERNAL_QUERY_SECRET')
     ],
     'db'        => require __DIR__ . '/db.php',
-    'freyUrl'   => getenv('FREY_URL'),
+    'freyUrl'   => getenv('FREY_URL_INTERNAL'),
     'sigrunUrl'  => getenv('SIGRUN_URL'),
-    'skirnirUrl'  => getenv('SKIRNIR_URL'),
+    'skirnirUrl'  => getenv('SKIRNIR_URL_INTERNAL'),
     'verbose'   => getenv('VERBOSE') === 'true',
     'verboseLog' => null,
     'cookieDomain' => getenv('COOKIE_DOMAIN'),
