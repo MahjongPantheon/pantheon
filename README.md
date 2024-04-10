@@ -162,6 +162,20 @@ Please note:
 - If you change the protocols, you should run `make proto_gen` in root repo folder to regenerate all protocol related code. 
 - You always should change the proto files and never should change the generated code by hand.
 
+#### End-to-end tests
+
+Pantheon services include e2e testing framework based on Playwright. To run it locally, make sure pantheon development
+environment is running (`make dev`) and use `make e2e_dev` command in separate terminal window. Note that it will run tests against 
+development build, so no SSR is tested locally.
+
+If you want to test full production build locally, you may stop the development environment and use following commands:
+```
+make e2e_run
+make e2e_compile
+make e2e
+```
+Remember to remove all the files created during the run before committing changes.
+
 #### Email agent
 
 Pantheon provides container with pre-installed email agent (Hermod). You can view last sent email in CLI using `make dump_last_mail` command.
