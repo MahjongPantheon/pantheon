@@ -118,6 +118,15 @@ class OnlineSessionModel extends Model
         }
 
         list($success, $originalScore, $rounds, $debug) = $parser->parseToSession($session, $gameContent, $withChips, $platformId);
+
+        if ($event[0]->getRulesetConfig()->rules()->getWithYakitori()) {
+            $yakitori = [];
+            foreach ($session->getPlayersIds() as $id) {
+                $yakitori[$id] = true;
+            }
+            $session->getCurrentState()->setYakitori($yakitori);
+        }
+
         $success = $success && $session->save();
 
         /** @var MultiRoundPrimitive|RoundPrimitive $round */
