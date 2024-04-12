@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:15Z\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
 "PO-Revision-Date: 2024-04-06 21:29+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -125,7 +125,7 @@ msgstr "역만 중첩을 허용, 예시: 자일색 + 대삼원"
 msgid "Allow viewing of other tables during ongoing game"
 msgstr "대국 중 다른 테이블 관전 허용"
 
-#: app/pages/ProfileSignup.tsx:139:42
+#: app/pages/ProfileSignup.tsx:148:42
 msgid "Already registered?"
 msgstr "기존 계정 로그인"
 
@@ -362,7 +362,7 @@ msgstr "내 프로필 수정"
 msgid "Email confirmation failed"
 msgstr "이메일 인증 실패"
 
-#: app/pages/ProfileConfirm.tsx:86:54
+#: app/pages/ProfileConfirm.tsx:89:16
 msgid "Email confirmed"
 msgstr "이메일 인증 성공"
 
@@ -390,11 +390,11 @@ msgstr "이메일 주소 입력"
 msgid "Enter player's phone"
 msgstr "전화번호를 입력해 주십시오"
 
-#: app/pages/ProfileManageAdmin.tsx:246:30 app/pages/ProfileSignup.tsx:127:26
+#: app/pages/ProfileManageAdmin.tsx:246:30 app/pages/ProfileSignup.tsx:135:26
 msgid "Enter strong password"
 msgstr "강력한 암호를 입력해 주십시오"
 
-#: app/pages/ProfileSignup.tsx:114:26
+#: app/pages/ProfileSignup.tsx:120:26
 msgid "Enter your e-mail address"
 msgstr "이메일 주소를 입력해주세요"
 
@@ -606,7 +606,7 @@ msgstr "대국 강제 종료"
 msgid "Forcefully finish the game"
 msgstr "대국 강제 종료하기"
 
-#: app/pages/ProfileLogin.tsx:92:40
+#: app/pages/ProfileLogin.tsx:94:40
 msgid "Forgot your password?"
 msgstr "비밀번호 찾기"
 
@@ -631,7 +631,7 @@ msgstr "대국 관리"
 msgid "Generate seating for next session"
 msgstr "다음 대국을 위한 좌석을 생성"
 
-#: app/pages/ProfileConfirm.tsx:92:37
+#: app/pages/ProfileConfirm.tsx:98:14
 #: app/pages/ProfileResetPasswordConfirm.tsx:232:37
 msgid "Go to Login page"
 msgstr "로그인으로 이동"
@@ -686,7 +686,7 @@ msgstr "하저로어"
 msgid "How game sessions should end during the tournament"
 msgstr "대회 중 대국이 종료되는 방법"
 
-#: app/pages/ProfileSignup.tsx:134:20
+#: app/pages/ProfileSignup.tsx:143:20
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr "아래 나열된 개인정보 보호정책을 읽었으며 약관에 동의합니다"
 
@@ -1201,7 +1201,7 @@ msgstr "성공적으로 회원가입되었습니다"
 msgid "Players"
 msgstr "작사"
 
-#: app/pages/ProfileSignup.tsx:101:14
+#: app/pages/ProfileSignup.tsx:106:14
 msgid "Please check your mailbox for the verification email."
 msgstr "메일함에서 인증 메일을 확인해주세요."
 
@@ -1281,7 +1281,7 @@ msgstr ""
 msgid "Primary timezone for event"
 msgstr "이벤트 시간대"
 
-#: app/pages/ProfileLogin.tsx:94:34
+#: app/pages/ProfileLogin.tsx:97:14
 msgid "Proceed with sign in"
 msgstr "로그인"
 
@@ -1316,7 +1316,7 @@ msgid "Refresh data [%1]"
 msgstr "데이터 새로고침 [%1]"
 
 #: app/pages/ProfileManageAdmin.tsx:58:18 app/pages/ProfileSignup.tsx:43:16
-#: app/pages/ProfileSignup.tsx:141:36
+#: app/pages/ProfileSignup.tsx:151:16
 msgid "Register new account"
 msgstr "신규 회원가입"
 
@@ -1662,7 +1662,7 @@ msgid "Subsystem"
 msgstr "하위 시스템"
 
 #: app/pages/ProfileManageAdmin.tsx:120:24
-#: app/pages/ProfileManageAdmin.tsx:157:24 app/pages/ProfileSignup.tsx:100:64
+#: app/pages/ProfileManageAdmin.tsx:157:24 app/pages/ProfileSignup.tsx:103:20
 msgid "Success"
 msgstr "성공"
 
@@ -1763,7 +1763,7 @@ msgstr "이 행동은 돌이킬 수 없습니다. 계속하시겠습니까?"
 msgid "This is a player to be penalized"
 msgstr "해당 작사에게 벌부가 적용됨"
 
-#: app/pages/ProfileManage.tsx:214:28 app/pages/ProfileSignup.tsx:120:26
+#: app/pages/ProfileManage.tsx:214:28 app/pages/ProfileSignup.tsx:127:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant, "
 "also event administrators will use this title to find you and add to the "
@@ -2018,7 +2018,7 @@ msgstr ""
 "결과 승인 후에는 이전 대국을 취소할 수 없게 됩니다. 대국 결과를 승인하시겠습"
 "니까?"
 
-#: app/pages/ProfileLogin.tsx:81:24 app/pages/ProfileManage.tsx:204:22
+#: app/pages/ProfileLogin.tsx:82:24 app/pages/ProfileManage.tsx:204:22
 #: app/pages/ProfileResetPassword.tsx:79:26
 msgid "Your e-mail address"
 msgstr "이메일 주소"
@@ -2031,7 +2031,7 @@ msgstr ""
 "이메일은 다른 누구와도 공유되지 않으며 어디에도 표시되지 않습니다. 이메일 주"
 "소를 변경하고 싶으시면 최고 관리자에게 문의하십시오."
 
-#: app/pages/ProfileConfirm.tsx:87:10
+#: app/pages/ProfileConfirm.tsx:92:10
 msgid ""
 "Your email has been successfully confirmed. Now you can proceed to login "
 "page."
@@ -2041,7 +2041,7 @@ msgstr "이메일이 인증되었습니다. 로그인으로 이동바랍니다."
 msgid "Your login credentials. YOU WON'T BE ABLE TO LOG IN AGAIN"
 msgstr "로그인 자격 증명. 다시는 로그인 할 수 없게 됩니다"
 
-#: app/pages/ProfileLogin.tsx:86:24
+#: app/pages/ProfileLogin.tsx:88:24
 msgid "Your password"
 msgstr "비밀번호"
 
@@ -2068,6 +2068,6 @@ msgstr "비밀번호가 취약합니다. 더 강력한 비밀번호를 입력해
 msgid "Your telegram ID"
 msgstr "텔레그램 ID"
 
-#: app/pages/ProfileSignup.tsx:151:14
+#: app/pages/ProfileSignup.tsx:162:14
 msgid "show / hide"
 msgstr "표시 / 숨김"

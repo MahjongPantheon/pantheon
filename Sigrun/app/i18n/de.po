@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:15Z\n"
-"PO-Revision-Date: 2024-03-22 12:17+0100\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
+"PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: app/pages/Achievements.tsx:460:20
 msgctxt "Achievements badge"
@@ -293,6 +293,10 @@ msgstr "Höhe der Strafe für Chombo"
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "Höhe der Strafe die ein Spieler nach Uma für einen Chombo erhält."
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:213:24
+msgid "Amount of penalty applied to those who didn't win once in game."
+msgstr "Strafe für diejenigen, die im Spiel kein einziges Mal gewonnen haben."
+
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:61:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
@@ -434,7 +438,7 @@ msgstr "Shuugi Wert"
 msgid "Chombo penalties: "
 msgstr "Chombo Strafen:"
 
-#: app/components/GameListing.tsx:169:16
+#: app/components/GameListing.tsx:198:16
 msgid "Chombo: %1"
 msgstr ""
 
@@ -534,7 +538,7 @@ msgstr "Gesammelte Dora:"
 msgid "Dora lord"
 msgstr "Dora Lord"
 
-#: app/components/GameListing.tsx:165:14
+#: app/components/GameListing.tsx:194:14
 msgid "Draw: %1"
 msgstr "Unentschieden: %1"
 
@@ -616,7 +620,7 @@ msgstr "Spieldauer"
 msgid "Game expiration time (in hours)"
 msgstr "Gültigkeitsdauer des Spiels(in Stunden)"
 
-#: app/components/GameListing.tsx:81:16
+#: app/components/GameListing.tsx:109:16
 msgid "Game link"
 msgstr "Link zum Spiel"
 
@@ -935,7 +939,7 @@ msgstr "Mehrfach Yakuman"
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/components/GameListing.tsx:174:16
+#: app/components/GameListing.tsx:203:16
 msgid "Nagashi: %1"
 msgstr ""
 
@@ -1169,7 +1173,7 @@ msgstr "Riichi mahjong Eventliste"
 msgid "Rinshan kaihou"
 msgstr ""
 
-#: app/components/GameListing.tsx:159:14
+#: app/components/GameListing.tsx:188:14
 msgid "Ron: %1"
 msgstr ""
 
@@ -1466,7 +1470,7 @@ msgstr "Einstellungen für Turniere"
 msgid "Tsumo payments: "
 msgstr "Tsumo Zahlungen:"
 
-#: app/components/GameListing.tsx:162:14
+#: app/components/GameListing.tsx:191:14
 msgid "Tsumo: %1"
 msgstr ""
 
@@ -1493,6 +1497,10 @@ msgstr "Uma Bonus für den dritten Platz"
 #: app/pages/EventRulesOverview/UmaSelect.tsx:63:20
 msgid "Uma penalty for 4th place"
 msgstr "Uma Bonus für den vierten Platz"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:205:22
+msgid "Use yakitori rule"
+msgstr "Verwende die Yakitori-Regel"
 
 #: app/pages/Game.tsx:71:35
 msgid "View game"
@@ -1556,6 +1564,14 @@ msgstr "In tenpai:"
 #: app/components/PlayerStatsListing.tsx:221:20
 msgid "Without declared riichi: "
 msgstr "Ohne Riichi:"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:16
+msgid "Yakitori"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:18
+msgid "Yakitori penalty"
+msgstr "Yakitori Strafe"
 
 #: app/pages/EventRulesOverview/YakuSettings.tsx:46:25
 msgid "Yaku allowed"

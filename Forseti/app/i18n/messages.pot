@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 23:36Z\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1493,15 +1493,15 @@ msgstr ""
 msgid "Go to Signup page"
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:86:54
+#: app/pages/ProfileConfirm.tsx:89:16
 msgid "Email confirmed"
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:87:10
+#: app/pages/ProfileConfirm.tsx:92:10
 msgid "Your email has been successfully confirmed. Now you can proceed to login page."
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:92:37
+#: app/pages/ProfileConfirm.tsx:98:14
 #: app/pages/ProfileResetPasswordConfirm.tsx:232:37
 msgid "Go to Login page"
 msgstr ""
@@ -1525,21 +1525,21 @@ msgstr ""
 msgid "Failed to authorize. Please check your email and password."
 msgstr ""
 
-#: app/pages/ProfileLogin.tsx:81:24
+#: app/pages/ProfileLogin.tsx:82:24
 #: app/pages/ProfileManage.tsx:204:22
 #: app/pages/ProfileResetPassword.tsx:79:26
 msgid "Your e-mail address"
 msgstr ""
 
-#: app/pages/ProfileLogin.tsx:86:24
+#: app/pages/ProfileLogin.tsx:88:24
 msgid "Your password"
 msgstr ""
 
-#: app/pages/ProfileLogin.tsx:92:40
+#: app/pages/ProfileLogin.tsx:94:40
 msgid "Forgot your password?"
 msgstr ""
 
-#: app/pages/ProfileLogin.tsx:94:34
+#: app/pages/ProfileLogin.tsx:97:14
 msgid "Proceed with sign in"
 msgstr ""
 
@@ -1574,7 +1574,7 @@ msgid "Player title"
 msgstr ""
 
 #: app/pages/ProfileManage.tsx:214:28
-#: app/pages/ProfileSignup.tsx:120:26
+#: app/pages/ProfileSignup.tsx:127:26
 msgid "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
 msgstr ""
 
@@ -1674,13 +1674,13 @@ msgstr ""
 
 #: app/pages/ProfileManageAdmin.tsx:58:18
 #: app/pages/ProfileSignup.tsx:43:16
-#: app/pages/ProfileSignup.tsx:141:36
+#: app/pages/ProfileSignup.tsx:151:16
 msgid "Register new account"
 msgstr ""
 
 #: app/pages/ProfileManageAdmin.tsx:120:24
 #: app/pages/ProfileManageAdmin.tsx:157:24
-#: app/pages/ProfileSignup.tsx:100:64
+#: app/pages/ProfileSignup.tsx:103:20
 msgid "Success"
 msgstr ""
 
@@ -1709,7 +1709,7 @@ msgid "This is a title that will be shown in rating table and in mobile assistan
 msgstr ""
 
 #: app/pages/ProfileManageAdmin.tsx:246:30
-#: app/pages/ProfileSignup.tsx:127:26
+#: app/pages/ProfileSignup.tsx:135:26
 msgid "Enter strong password"
 msgstr ""
 
@@ -1876,23 +1876,23 @@ msgstr ""
 msgid "Failed to request registration. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:101:14
+#: app/pages/ProfileSignup.tsx:106:14
 msgid "Please check your mailbox for the verification email."
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:114:26
+#: app/pages/ProfileSignup.tsx:120:26
 msgid "Enter your e-mail address"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:134:20
+#: app/pages/ProfileSignup.tsx:143:20
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:139:42
+#: app/pages/ProfileSignup.tsx:148:42
 msgid "Already registered?"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:151:14
+#: app/pages/ProfileSignup.tsx:162:14
 msgid "show / hide"
 msgstr ""
 

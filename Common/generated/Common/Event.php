@@ -73,6 +73,10 @@ class Event extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool achievements_shown = 15;</code>
      */
     protected $achievements_shown = false;
+    /**
+     * Generated from protobuf field <code>bool with_yakitori = 16;</code>
+     */
+    protected $with_yakitori = false;
 
     /**
      * Constructor.
@@ -95,6 +99,7 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type int $min_games_count
      *     @type int $platform_id
      *     @type bool $achievements_shown
+     *     @type bool $with_yakitori
      * }
      */
     public function __construct($data = NULL) {
@@ -428,6 +433,28 @@ class Event extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->achievements_shown = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool with_yakitori = 16;</code>
+     * @return bool
+     */
+    public function getWithYakitori()
+    {
+        return $this->with_yakitori;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool with_yakitori = 16;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setWithYakitori($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->with_yakitori = $var;
 
         return $this;
     }

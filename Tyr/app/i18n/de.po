@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 23:36Z\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -143,7 +143,7 @@ msgstr "Eventname"
 msgid "Exhaustive draw"
 msgstr "Unentschieden"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:81:12
+#: app/components/screens/login/EnterCredentialsView.tsx:84:12
 #: app/components/screens/login/LoginErrorView.tsx:50:16
 msgid "Forgot password?"
 msgstr "Passwort vergessen?"
@@ -217,7 +217,7 @@ msgstr ""
 msgid "Language"
 msgstr "Sprache"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:63:12
+#: app/components/screens/login/EnterCredentialsView.tsx:64:12
 msgid "Log in"
 msgstr "Anmelden"
 
@@ -411,7 +411,7 @@ msgstr ""
 msgid "Shuffle players"
 msgstr "Spieler mischen"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:73:12
+#: app/components/screens/login/EnterCredentialsView.tsx:75:12
 msgid "Sign up"
 msgstr "Registrieren"
 

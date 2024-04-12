@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:15Z\n"
-"PO-Revision-Date: 2024-03-27 14:36+0100\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
+"PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../../Sigrun/app/i18n\n"
 "X-Poedit-SearchPath-0: de.po\n"
 
@@ -125,7 +125,7 @@ msgstr "Kombinationen aus Yakuman sind erlaubt, z.B.: Tsuuisou + Daisangen"
 msgid "Allow viewing of other tables during ongoing game"
 msgstr "Andere laufende Tische während einer laufenden Runde anzeigen"
 
-#: app/pages/ProfileSignup.tsx:139:42
+#: app/pages/ProfileSignup.tsx:148:42
 msgid "Already registered?"
 msgstr "Bereits angemeldet?"
 
@@ -138,9 +138,8 @@ msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "Höhe der Strafe die ein Spieler nach Uma für einen Chombo erhält."
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:227:24
-#, fuzzy
 msgid "Amount of penalty applied to those who didn't win once in game."
-msgstr "Höhe der Strafe die ein Spieler nach Uma für einen Chombo erhält."
+msgstr "Strafe für diejenigen, die im Spiel kein einziges Mal gewonnen haben."
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:68:22
 msgid ""
@@ -364,7 +363,7 @@ msgstr "Profil bearbeiten"
 msgid "Email confirmation failed"
 msgstr "Email Bestätigung fehlgeschlagen"
 
-#: app/pages/ProfileConfirm.tsx:86:54
+#: app/pages/ProfileConfirm.tsx:89:16
 msgid "Email confirmed"
 msgstr "Email bestätigt"
 
@@ -394,11 +393,11 @@ msgstr "Email Adresse des Spielers eingeben"
 msgid "Enter player's phone"
 msgstr "Telefonnummer des Spielers eingeben"
 
-#: app/pages/ProfileManageAdmin.tsx:246:30 app/pages/ProfileSignup.tsx:127:26
+#: app/pages/ProfileManageAdmin.tsx:246:30 app/pages/ProfileSignup.tsx:135:26
 msgid "Enter strong password"
 msgstr "Sicheres Passwort eingeben"
 
-#: app/pages/ProfileSignup.tsx:114:26
+#: app/pages/ProfileSignup.tsx:120:26
 msgid "Enter your e-mail address"
 msgstr "Bitte Email Adresse eingeben"
 
@@ -618,7 +617,7 @@ msgstr "Spielende erzwingen"
 msgid "Forcefully finish the game"
 msgstr "Spielende erzwingen"
 
-#: app/pages/ProfileLogin.tsx:92:40
+#: app/pages/ProfileLogin.tsx:94:40
 msgid "Forgot your password?"
 msgstr "Passwort vergessen?"
 
@@ -644,7 +643,7 @@ msgstr "Spiele bearbeiten"
 msgid "Generate seating for next session"
 msgstr "Sitzplan für die nächste Runde erstellen"
 
-#: app/pages/ProfileConfirm.tsx:92:37
+#: app/pages/ProfileConfirm.tsx:98:14
 #: app/pages/ProfileResetPasswordConfirm.tsx:232:37
 msgid "Go to Login page"
 msgstr "Zur Loginseite gehen"
@@ -697,7 +696,7 @@ msgstr ""
 msgid "How game sessions should end during the tournament"
 msgstr "Wie Matches während eines Turniers beendet werden"
 
-#: app/pages/ProfileSignup.tsx:134:20
+#: app/pages/ProfileSignup.tsx:143:20
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr "Ich habe die Datenschutzbestimmungen gelesen und akzeptiert"
 
@@ -1224,7 +1223,7 @@ msgstr "Spiele wurde erfolgreich angemeldet"
 msgid "Players"
 msgstr "Spieler"
 
-#: app/pages/ProfileSignup.tsx:101:14
+#: app/pages/ProfileSignup.tsx:106:14
 msgid "Please check your mailbox for the verification email."
 msgstr "Bitte Mailbox auf Bestätigungsemail überprüfen."
 
@@ -1306,7 +1305,7 @@ msgstr ""
 msgid "Primary timezone for event"
 msgstr "Zeitzone des Events"
 
-#: app/pages/ProfileLogin.tsx:94:34
+#: app/pages/ProfileLogin.tsx:97:14
 msgid "Proceed with sign in"
 msgstr "Anmelden"
 
@@ -1341,7 +1340,7 @@ msgid "Refresh data [%1]"
 msgstr "Daten aktualisieren [%1]"
 
 #: app/pages/ProfileManageAdmin.tsx:58:18 app/pages/ProfileSignup.tsx:43:16
-#: app/pages/ProfileSignup.tsx:141:36
+#: app/pages/ProfileSignup.tsx:151:16
 msgid "Register new account"
 msgstr "Neuen Account erstellen"
 
@@ -1691,7 +1690,7 @@ msgid "Subsystem"
 msgstr "Subsystem"
 
 #: app/pages/ProfileManageAdmin.tsx:120:24
-#: app/pages/ProfileManageAdmin.tsx:157:24 app/pages/ProfileSignup.tsx:100:64
+#: app/pages/ProfileManageAdmin.tsx:157:24 app/pages/ProfileSignup.tsx:103:20
 msgid "Success"
 msgstr "Erfolgreich"
 
@@ -1794,7 +1793,7 @@ msgstr ""
 msgid "This is a player to be penalized"
 msgstr "Spieler dem die Strafe zugeordnet wird"
 
-#: app/pages/ProfileManage.tsx:214:28 app/pages/ProfileSignup.tsx:120:26
+#: app/pages/ProfileManage.tsx:214:28 app/pages/ProfileSignup.tsx:127:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant, "
 "also event administrators will use this title to find you and add to the "
@@ -1947,7 +1946,7 @@ msgstr "Sitzplan nach Schweizer System für die nächste Runde verwenden?"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:220:22
 msgid "Use yakitori rule"
-msgstr ""
+msgstr "Verwende die Yakitori-Regel"
 
 #: app/pages/ProfileManage.tsx:329:18
 msgid "What will NOT be deleted:"
@@ -1986,7 +1985,7 @@ msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:226:18
 msgid "Yakitori penalty"
-msgstr ""
+msgstr "Yakitori Strafe"
 
 #: app/pages/OwnedEventsEdit/YakuSettings.tsx:44:25
 msgid "Yaku allowed"
@@ -2053,7 +2052,7 @@ msgstr ""
 "Die letzte Runde kann nach dem Bestätigen dieser Runde nicht mehr geändert "
 "werden. Trotzdem bestätigen?"
 
-#: app/pages/ProfileLogin.tsx:81:24 app/pages/ProfileManage.tsx:204:22
+#: app/pages/ProfileLogin.tsx:82:24 app/pages/ProfileManage.tsx:204:22
 #: app/pages/ProfileResetPassword.tsx:79:26
 msgid "Your e-mail address"
 msgstr "Email Adresse"
@@ -2066,7 +2065,7 @@ msgstr ""
 "Die Email Adresse wird nicht geteilt oder angezeigt. Zum Ändern bitte den "
 "Seitenbetreiber kontaktieren."
 
-#: app/pages/ProfileConfirm.tsx:87:10
+#: app/pages/ProfileConfirm.tsx:92:10
 msgid ""
 "Your email has been successfully confirmed. Now you can proceed to login "
 "page."
@@ -2076,7 +2075,7 @@ msgstr "Email wurde bestätigt. Bitte weiter zur Loginseite."
 msgid "Your login credentials. YOU WON'T BE ABLE TO LOG IN AGAIN"
 msgstr "Deine Logindaten. EIN LOGIN IST DANN NICHT MEHR MÖGLICH"
 
-#: app/pages/ProfileLogin.tsx:86:24
+#: app/pages/ProfileLogin.tsx:88:24
 msgid "Your password"
 msgstr "Dein Passwort"
 
@@ -2103,6 +2102,6 @@ msgstr "Passwort zu schwach."
 msgid "Your telegram ID"
 msgstr "Deine Telegram ID"
 
-#: app/pages/ProfileSignup.tsx:151:14
+#: app/pages/ProfileSignup.tsx:162:14
 msgid "show / hide"
 msgstr "anzeigen /ausblenden"

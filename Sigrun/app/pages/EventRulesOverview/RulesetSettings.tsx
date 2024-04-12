@@ -200,6 +200,21 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           onChange={() => {}}
         />
       )}
+      <Checkbox
+        label={i18n._t('Yakitori')}
+        description={i18n._t('Use yakitori rule')}
+        checked={config.rulesetConfig.withYakitori}
+        onChange={() => {}}
+      />
+      {config.rulesetConfig.withYakitori && (
+        <NumberInput
+          icon={<IconHandStop size='1rem' />}
+          label={i18n._t('Yakitori penalty')}
+          description={i18n._t("Amount of penalty applied to those who didn't win once in game.")}
+          value={config.rulesetConfig.yakitoriPenalty}
+          onChange={() => {}}
+        />
+      )}
     </Stack>
   );
 };

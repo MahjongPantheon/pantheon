@@ -77,6 +77,7 @@ export const Game: React.FC<{
           showShareLink={false}
           isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
           eventId={events?.[0]?.id.toString()}
+          withYakitori={events?.[0]?.withYakitori}
           game={game.game}
           players={players}
           rowStyle={{

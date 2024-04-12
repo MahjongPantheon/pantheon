@@ -160,6 +160,7 @@ message Event {
   int32 min_games_count = 13;
   int32 platform_id = 14;
   bool achievements_shown = 15;
+  bool with_yakitori = 16;
 }
 
 message MyEvent {

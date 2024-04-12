@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:15Z\n"
-"PO-Revision-Date: 2024-01-06 20:06+0300\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
+"PO-Revision-Date: 2024-04-12 22:48+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: app/pages/Achievements.tsx:460:20
 msgctxt "Achievements badge"
@@ -306,6 +306,12 @@ msgstr ""
 "Количество очков, вычитаемое из очков игрока за каждый штраф чомбо после "
 "окончания игры."
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:213:24
+msgid "Amount of penalty applied to those who didn't win once in game."
+msgstr ""
+"Количество очков, вычитаемое из очков игрока, который ни разу не выиграл за "
+"игру."
+
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:61:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
@@ -447,7 +453,7 @@ msgstr "Стоимость чипа"
 msgid "Chombo penalties: "
 msgstr "Штрафов чомбо: "
 
-#: app/components/GameListing.tsx:169:16
+#: app/components/GameListing.tsx:198:16
 msgid "Chombo: %1"
 msgstr "Чомбо: %1"
 
@@ -546,7 +552,7 @@ msgstr "Собрано дор: "
 msgid "Dora lord"
 msgstr "Повелитель дор"
 
-#: app/components/GameListing.tsx:165:14
+#: app/components/GameListing.tsx:194:14
 msgid "Draw: %1"
 msgstr "Ничья: %1"
 
@@ -624,7 +630,7 @@ msgstr "Длительность сессии"
 msgid "Game expiration time (in hours)"
 msgstr "Время истечения игры (в часах)"
 
-#: app/components/GameListing.tsx:81:16
+#: app/components/GameListing.tsx:109:16
 msgid "Game link"
 msgstr "Ссылка на игру"
 
@@ -953,7 +959,7 @@ msgstr "Суммирование якуманов"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/GameListing.tsx:174:16
+#: app/components/GameListing.tsx:203:16
 msgid "Nagashi: %1"
 msgstr "Нагаши манган: %1"
 
@@ -1187,7 +1193,7 @@ msgstr "Список турниров и рейтингов"
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/components/GameListing.tsx:159:14
+#: app/components/GameListing.tsx:188:14
 msgid "Ron: %1"
 msgstr "Рон: %1"
 
@@ -1489,7 +1495,7 @@ msgstr "Настройки турнира"
 msgid "Tsumo payments: "
 msgstr "Выплаты по цумо: "
 
-#: app/components/GameListing.tsx:162:14
+#: app/components/GameListing.tsx:191:14
 msgid "Tsumo: %1"
 msgstr "Цумо: %1"
 
@@ -1516,6 +1522,10 @@ msgstr "Ума за 3 место"
 #: app/pages/EventRulesOverview/UmaSelect.tsx:63:20
 msgid "Uma penalty for 4th place"
 msgstr "Ума за 4 место"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:205:22
+msgid "Use yakitori rule"
+msgstr "Использовать правило якитори"
 
 #: app/pages/Game.tsx:71:35
 msgid "View game"
@@ -1581,6 +1591,14 @@ msgstr "С темпаем: "
 #: app/components/PlayerStatsListing.tsx:221:20
 msgid "Without declared riichi: "
 msgstr "Без объявления риичи: "
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:16
+msgid "Yakitori"
+msgstr "Якитори"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:18
+msgid "Yakitori penalty"
+msgstr "Штраф за якитори"
 
 #: app/pages/EventRulesOverview/YakuSettings.tsx:46:25
 msgid "Yaku allowed"

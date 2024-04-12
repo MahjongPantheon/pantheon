@@ -107,6 +107,7 @@ export const RecentGames: React.FC<{
                 <GameListing
                   showShareLink={true}
                   isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
+                  withYakitori={events?.[0]?.withYakitori}
                   eventId={eventId}
                   game={game}
                   players={players}

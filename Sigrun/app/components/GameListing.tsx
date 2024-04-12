@@ -25,10 +25,12 @@ import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
 import { makeLog } from '../helpers/gameLog';
 import { IconShare } from '@tabler/icons-react';
+import { YakitoriIndicator } from './YakitoriIndicator';
 
 type GameListingProps = {
   eventId: string;
   isOnline: boolean;
+  withYakitori: boolean;
   game: GameResult;
   players: Record<number, Player>;
   rowStyle: CSSProperties;
@@ -37,6 +39,7 @@ type GameListingProps = {
 export const GameListing: React.FC<GameListingProps> = ({
   eventId,
   isOnline,
+  withYakitori,
   game,
   players,
   rowStyle,
@@ -49,7 +52,32 @@ export const GameListing: React.FC<GameListingProps> = ({
   const winds = ['東', '南', '西', '北'];
 
   const outcomes = { ron: 0, tsumo: 0, draw: 0, chombo: 0, nagashi: 0 };
+  const yakitori = withYakitori
+    ? Object.keys(players).reduce(
+        (acc, id) => {
+          acc[parseInt(id.toString(), 10)] = true;
+          return acc;
+        },
+        {} as Record<number, boolean>
+      )
+    : null;
   game.rounds.forEach((r) => {
+    if (yakitori) {
+      if (r.ron) {
+        yakitori[r.ron.winnerId] = false;
+      } else if (r.multiron) {
+        r.multiron.wins.forEach((mr) => {
+          yakitori[mr.winnerId] = false;
+        });
+      } else if (r.tsumo) {
+        yakitori[r.tsumo.winnerId] = false;
+      } else if (r.nagashi) {
+        r.nagashi.nagashi.forEach((id) => {
+          yakitori[id] = false;
+        });
+      }
+    }
+
     if (r.ron ?? r.multiron) {
       outcomes.ron++;
     } else if (r.tsumo) {
@@ -138,6 +166,7 @@ export const GameListing: React.FC<GameListingProps> = ({
                   <Badge w={65} size='lg' color='cyan' radius='sm' style={{ padding: 0 }}>
                     {result.score}
                   </Badge>
+                  {yakitori && yakitori[result.playerId] && <YakitoriIndicator />}
                 </Group>
               </Stack>
             </Group>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 23:36Z\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
 "PO-Revision-Date: 2024-02-11 00:57+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -137,7 +137,7 @@ msgstr "活动名称"
 msgid "Exhaustive draw"
 msgstr "流局"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:81:12
+#: app/components/screens/login/EnterCredentialsView.tsx:84:12
 #: app/components/screens/login/LoginErrorView.tsx:50:16
 msgid "Forgot password?"
 msgstr "忘记密码了吗?"
@@ -211,7 +211,7 @@ msgstr "国士无双"
 msgid "Language"
 msgstr "语言"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:63:12
+#: app/components/screens/login/EnterCredentialsView.tsx:64:12
 msgid "Log in"
 msgstr "登录"
 
@@ -403,7 +403,7 @@ msgstr "小四喜"
 msgid "Shuffle players"
 msgstr "洗牌玩家"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:73:12
+#: app/components/screens/login/EnterCredentialsView.tsx:75:12
 msgid "Sign up"
 msgstr "注册"
 

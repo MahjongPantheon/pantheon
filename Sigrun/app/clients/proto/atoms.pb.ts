@@ -169,6 +169,7 @@ export interface Event {
   minGamesCount: number;
   platformId: number;
   achievementsShown: boolean;
+  withYakitori: boolean;
 }
 
 export interface MyEvent {
@@ -2181,6 +2182,7 @@ export const Event = {
       minGamesCount: 0,
       platformId: 0,
       achievementsShown: false,
+      withYakitori: false,
       ...msg,
     };
   },
@@ -2236,6 +2238,9 @@ export const Event = {
     }
     if (msg.achievementsShown) {
       writer.writeBool(15, msg.achievementsShown);
+    }
+    if (msg.withYakitori) {
+      writer.writeBool(16, msg.withYakitori);
     }
     return writer;
   },
@@ -2305,6 +2310,10 @@ export const Event = {
         }
         case 15: {
           msg.achievementsShown = reader.readBool();
+          break;
+        }
+        case 16: {
+          msg.withYakitori = reader.readBool();
           break;
         }
         default: {
@@ -9342,6 +9351,7 @@ export const EventJSON = {
       minGamesCount: 0,
       platformId: 0,
       achievementsShown: false,
+      withYakitori: false,
       ...msg,
     };
   },
@@ -9395,6 +9405,9 @@ export const EventJSON = {
     }
     if (msg.achievementsShown) {
       json["achievementsShown"] = msg.achievementsShown;
+    }
+    if (msg.withYakitori) {
+      json["withYakitori"] = msg.withYakitori;
     }
     return json;
   },
@@ -9464,6 +9477,10 @@ export const EventJSON = {
       json["achievementsShown"] ?? json["achievements_shown"];
     if (_achievementsShown_) {
       msg.achievementsShown = _achievementsShown_;
+    }
+    const _withYakitori_ = json["withYakitori"] ?? json["with_yakitori"];
+    if (_withYakitori_) {
+      msg.withYakitori = _withYakitori_;
     }
     return msg;
   },

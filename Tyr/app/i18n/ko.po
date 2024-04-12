@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 23:36Z\n"
+"POT-Creation-Date: 2024-04-12 19:38Z\n"
 "PO-Revision-Date: 2024-04-06 21:27+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -143,7 +143,7 @@ msgstr "이벤트"
 msgid "Exhaustive draw"
 msgstr "유국"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:81:12
+#: app/components/screens/login/EnterCredentialsView.tsx:84:12
 #: app/components/screens/login/LoginErrorView.tsx:50:16
 msgid "Forgot password?"
 msgstr "비밀번호 찾기"
@@ -189,7 +189,8 @@ msgid "Houtei raoyui"
 msgstr "하저로어"
 
 #: app/components/screens/login/LoginErrorView.tsx:56:12
-msgid "If in doubt, contact the tournament administrator for further instructions."
+msgid ""
+"If in doubt, contact the tournament administrator for further instructions."
 msgstr "궁금하신 사항은 관리자에게 문의해주세요.."
 
 #: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
@@ -216,7 +217,7 @@ msgstr "국사무쌍"
 msgid "Language"
 msgstr "언어"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:63:12
+#: app/components/screens/login/EnterCredentialsView.tsx:64:12
 msgid "Log in"
 msgstr "로그인"
 
@@ -407,7 +408,7 @@ msgstr "소사희"
 msgid "Shuffle players"
 msgstr "작사 셔플"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:73:12
+#: app/components/screens/login/EnterCredentialsView.tsx:75:12
 msgid "Sign up"
 msgstr "회원가입"
 

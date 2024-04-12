@@ -486,6 +486,7 @@ class EventModel extends Model
                     'isRatingShown' => !$event['hide_results'],
                     'achievementsShown' => !$event['hide_achievements'],
                     'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
+                    'withYakitori' => !empty($ruleset) && !empty($ruleset['withYakitori']),
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                     'type' => $type,
                     'platformId' => $event['platform_id']
@@ -543,6 +544,7 @@ class EventModel extends Model
                 'achievementsShown' => !$event['hide_achievements'],
                 'hasSeries' => $event['series_length'] > 0,
                 'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
+                'withYakitori' => !empty($ruleset) && !empty($ruleset['withYakitori']),
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                 'type' => $type,
                 'platformId' => $event['platform_id']

@@ -834,6 +834,7 @@ final class TwirpServer implements Mimir
                     ->setAchievementsShown($ev['achievementsShown'])
                     ->setHasSeries($ev['hasSeries'])
                     ->setWithChips($ev['withChips'])
+                    ->setWithYakitori($ev['withYakitori'])
                     ->setTournamentStarted($ev['tournamentStarted'])
                     ->setPlatformId($ev['platformId'] ?: -1);
             }, $ret['events']));
@@ -857,6 +858,7 @@ final class TwirpServer implements Mimir
                     ->setIsListed($ev['isListed'])
                     ->setMinGamesCount($ev['minGamesCount'])
                     ->setWithChips($ev['withChips'])
+                    ->setWithYakitori($ev['withYakitori'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setAchievementsShown($ev['achievementsShown'])
                     ->setHasSeries($ev['hasSeries'])
