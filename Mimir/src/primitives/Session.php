@@ -985,17 +985,6 @@ class SessionPrimitive extends Primitive
             }
         }
 
-        if ($this->getEvent()->getRulesetConfig()->rules()->getWithYakitori()) {
-            foreach ($this->getPlayers() as $player) {
-                if ($this->getCurrentState()->getYakitori()[$player->getId()]) {
-                    $this->getCurrentState()->applyYakitoriPenalty(
-                        $player->getId(),
-                        $this->getEvent()->getRulesetConfig()->rules()->getYakitoriPenalty()
-                    );
-                }
-            }
-        }
-
         return array_map(function (PlayerPrimitive $player) {
             return (new SessionResultsPrimitive($this->_ds))
                 ->setPlayer($player)

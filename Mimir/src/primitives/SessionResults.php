@@ -432,6 +432,12 @@ class SessionResultsPrimitive extends Primitive
             $this->_ratingDelta += $results->getPenalties()[$this->_playerId];
         }
 
+        if ($rules->rules()->getWithYakitori()) { // apply yakitori after everything
+            if ($results->getYakitori()[$this->_playerId]) {
+                $this->_ratingDelta -= $rules->rules()->getYakitoriPenalty();
+            }
+        }
+
         return $this;
     }
 

@@ -135,7 +135,6 @@ class OnlineSessionModel extends Model
             $success = $success && $round->save();
         }
 
-        $session->scheduleRecalcStats();
         (new JobsQueuePrimitive($this->_ds))
             ->setJobName(JobsQueuePrimitive::JOB_ACHIEVEMENTS)
             ->setJobArguments(['eventId' =>  $session->getEventId()])
