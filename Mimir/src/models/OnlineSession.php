@@ -119,12 +119,9 @@ class OnlineSessionModel extends Model
 
         list($success, $originalScore, $rounds, $debug) = $parser->parseToSession($session, $gameContent, $withChips, $platformId);
 
-        if ($event->getRulesetConfig()->rules()->getWithYakitori()) {
-            $yakitori = [];
-            foreach ($session->getPlayersIds() as $id) {
-                $yakitori[$id] = true;
-            }
-            $session->getCurrentState()->setYakitori($yakitori);
+        $yakitori = [];
+        foreach ($session->getPlayersIds() as $id) {
+            $yakitori[$id] = true;
         }
 
         $success = $success && $session->save();
@@ -132,7 +129,29 @@ class OnlineSessionModel extends Model
         /** @var MultiRoundPrimitive|RoundPrimitive $round */
         foreach ($rounds as $round) {
             $round->setSession($session);
+            if ($round instanceof MultiRoundPrimitive) {
+                foreach ($round->rounds() as $r) {
+                    $yakitori[$r->getWinnerId()] = false;
+                }
+            } else {
+                switch ($round->getOutcome()) {
+                    case 'ron':
+                    case 'tsumo':
+                        $yakitori[$round->getWinnerId()] = false;
+                        break;
+                    case 'nagashi':
+                        foreach ($round->getNagashiIds() as $id) {
+                            $yakitori[$id] = false;
+                        }
+                        break;
+                    default:
+                }
+            }
             $success = $success && $round->save();
+        }
+
+        if ($event->getRulesetConfig()->rules()->getWithYakitori()) {
+            $session->getCurrentState()->setYakitori($yakitori);
         }
 
         (new JobsQueuePrimitive($this->_ds))
