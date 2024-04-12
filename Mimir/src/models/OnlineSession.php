@@ -136,6 +136,11 @@ class OnlineSessionModel extends Model
         }
 
         $session->scheduleRecalcStats();
+        (new JobsQueuePrimitive($this->_ds))
+            ->setJobName(JobsQueuePrimitive::JOB_ACHIEVEMENTS)
+            ->setJobArguments(['eventId' =>  $session->getEventId()])
+            ->setCreatedAt(date('Y-m-d H:i:s'))
+            ->save();
         $success = $success && $session->finish();
         if (!$success) {
             throw new \Exception("Wasn't able to properly save the game.");
