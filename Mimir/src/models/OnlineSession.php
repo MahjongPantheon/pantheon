@@ -139,11 +139,6 @@ class OnlineSessionModel extends Model
                     case 'tsumo':
                         $yakitori[$round->getWinnerId()] = false;
                         break;
-                    case 'nagashi':
-                        foreach ($round->getNagashiIds() as $id) {
-                            $yakitori[$id] = false;
-                        }
-                        break;
                     default:
                 }
             }

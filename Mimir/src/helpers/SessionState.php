@@ -683,11 +683,6 @@ class SessionState
                 if ($round->getWinnerId()) {
                     $this->_yakitori[$round->getWinnerId()] = false;
                 }
-                if ($round->getOutcome() === 'nagashi') {
-                    foreach ($round->getNagashiIds() as $id) {
-                        $this->_yakitori[$id] = false;
-                    }
-                }
             }
         }
     }
