@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 19:38Z\n"
+"POT-Creation-Date: 2024-05-09 18:55Z\n"
 "PO-Revision-Date: 2024-04-12 22:48+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -265,12 +265,12 @@ msgstr "Добавить игру"
 msgid "Agariyame"
 msgstr "Агарияме"
 
-#: app/pages/EventInfo.tsx:54:20 app/pages/RatingTable.tsx:142:51
+#: app/pages/EventInfo.tsx:54:20 app/pages/RatingTable.tsx:146:51
 #: app/pages/RecentGames.tsx:85:49
 msgid "Aggregated event"
 msgstr "Агрегированное событие"
 
-#: app/pages/RatingTable.tsx:320:24
+#: app/pages/RatingTable.tsx:324:24
 msgid "All players"
 msgstr "Все игроки"
 
@@ -349,11 +349,11 @@ msgstr "Средняя величина наброса: "
 msgid "Average dora per hand: "
 msgstr "Среднее количество дор в руке: "
 
-#: app/pages/RatingTable.tsx:290:20 app/pages/RatingTable.tsx:483:7
+#: app/pages/RatingTable.tsx:294:20 app/pages/RatingTable.tsx:487:7
 msgid "Average place"
 msgstr "Среднее место"
 
-#: app/pages/RatingTable.tsx:484:7
+#: app/pages/RatingTable.tsx:488:7
 msgid "Average points"
 msgstr "Средние очки"
 
@@ -361,7 +361,7 @@ msgstr "Средние очки"
 msgid "Average points lost: "
 msgstr "Среднее число потерянных очков: "
 
-#: app/pages/RatingTable.tsx:262:20
+#: app/pages/RatingTable.tsx:266:20
 msgid "Average score"
 msgstr "Средние очки"
 
@@ -441,7 +441,7 @@ msgstr "Чиницу"
 msgid "Chinroutou"
 msgstr "Чинрото"
 
-#: app/pages/RatingTable.tsx:437:34 app/pages/RatingTable.tsx:481:24
+#: app/pages/RatingTable.tsx:441:34 app/pages/RatingTable.tsx:485:24
 msgid "Chips"
 msgstr "Чипы"
 
@@ -638,8 +638,8 @@ msgstr "Ссылка на игру"
 msgid "Game preview"
 msgstr "Просмотр игры"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:426:32
-#: app/pages/RatingTable.tsx:485:7
+#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:430:32
+#: app/pages/RatingTable.tsx:489:7
 msgid "Games played"
 msgstr "Сыграно игр"
 
@@ -1048,7 +1048,7 @@ msgstr "Штрафы"
 msgid "Pinfu"
 msgstr "Пин-фу"
 
-#: app/pages/RatingTable.tsx:477:7
+#: app/pages/RatingTable.tsx:481:7
 msgid "Place"
 msgstr "Место"
 
@@ -1068,11 +1068,11 @@ msgstr "Дополнительные раунды"
 msgid "Play only east rounds"
 msgstr "Играть только восточные раунды"
 
-#: app/pages/RatingTable.tsx:478:7
+#: app/pages/RatingTable.tsx:482:7
 msgid "Player ID"
 msgstr "ID игрока"
 
-#: app/pages/RatingTable.tsx:479:7
+#: app/pages/RatingTable.tsx:483:7
 msgid "Player name"
 msgstr "Имя игрока"
 
@@ -1087,7 +1087,7 @@ msgstr ""
 msgid "Player stats"
 msgstr "Статистика игрока"
 
-#: app/pages/RatingTable.tsx:330:30
+#: app/pages/RatingTable.tsx:334:30
 msgid "Players having a required minimum of games"
 msgstr "Игроки, сыгравшие минимальное количество игр"
 
@@ -1100,18 +1100,18 @@ msgstr "Игроки, зарегистрированные в событии"
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:232:20
+#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:236:20
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: app/pages/RatingTable.tsx:482:7
+#: app/pages/RatingTable.tsx:486:7
 msgid "Rating points"
 msgstr "Рейтинговые очки"
 
 #: app/components/AppFooter.tsx:80:20 app/pages/Achievements.tsx:777:35
-#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:125:35
-#: app/pages/RatingTable.tsx:140:20 app/pages/RatingTable.tsx:142:22
-#: app/pages/RatingTable.tsx:153:33
+#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:129:35
+#: app/pages/RatingTable.tsx:144:20 app/pages/RatingTable.tsx:146:22
+#: app/pages/RatingTable.tsx:157:33
 msgid "Rating table"
 msgstr "Рейтинг"
 
@@ -1120,11 +1120,11 @@ msgctxt "Event menu"
 msgid "Rating table"
 msgstr "Рейтинг"
 
-#: app/pages/RatingTable.tsx:128:12
+#: app/pages/RatingTable.tsx:132:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "Рейтинговая таблица была скрыта администратором турнира"
 
-#: app/pages/RatingTable.tsx:145:24
+#: app/pages/RatingTable.tsx:149:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Рейтинговая таблица события \"%1\", предоставленная системой Mahjong Pantheon"
@@ -1256,7 +1256,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/pages/RatingTable.tsx:170:18
+#: app/pages/RatingTable.tsx:174:18
 msgid "Save as CSV"
 msgstr "Экспорт в CSV"
 
@@ -1365,7 +1365,7 @@ msgstr ""
 "Тан-яо стоит 1 хан на открытой руке. Если не проставлено, тан-яо не работает "
 "на открытой руке."
 
-#: app/pages/RatingTable.tsx:203:22 app/pages/RatingTable.tsx:480:21
+#: app/pages/RatingTable.tsx:207:22 app/pages/RatingTable.tsx:484:21
 msgid "Team"
 msgstr "Команда"
 
@@ -1572,7 +1572,7 @@ msgstr "Статистика по победам"
 msgid "With damaten: "
 msgstr "В даматене: "
 
-#: app/pages/RatingTable.tsx:338:24
+#: app/pages/RatingTable.tsx:342:24
 msgid "With min games"
 msgstr "С минимумом игр"
 

@@ -1,0 +1,8 @@
+.wrapper {
+}
+
+.outcomeTitle {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-lg);
+}

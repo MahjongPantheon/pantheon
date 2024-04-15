@@ -1,0 +1,35 @@
+.menuItem {
+  padding: 10px;
+  font-size: var(--font-md);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+
+  &:active {
+    background-color: var(--element-highlight);
+  }
+}
+
+.menuItemPrimary {
+  background-color: var(--color-action);
+  color: var(--color-text-contrast);
+  &:active {
+    background-color: var(--color-highlight-primary);
+  }
+}
+
+.menuItemIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.menuItemRightIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+}

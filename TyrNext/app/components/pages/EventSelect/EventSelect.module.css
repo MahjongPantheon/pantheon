@@ -1,0 +1,22 @@
+.wrapper {
+  min-height: 580px;
+  padding: 20px;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eventSelect {
+  margin: 20px 0;
+}
+
+.eventSelectContent {
+  margin-top: 16px;
+}
+
+.eventSelectTitle {
+  font-size: var(--font-lg);
+}

@@ -1,0 +1,576 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-09 18:51Z\n"
+"PO-Revision-Date: 2024-05-09 22:09+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: i18n-json2po\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: app/components/base/TableStatus/TableStatus.tsx:91:16
+msgid "%1 deal left"
+msgid_plural "%1 deals left"
+msgstr[0] "剩余 %1 局 "
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:104:28
+msgid "%1 fu"
+msgstr "%1 符"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/store/selectors/round.ts:36:15
+msgid "%1 han"
+msgstr "%1 番"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/store/selectors/round.ts:39:12
+msgid "%1 han %2 fu"
+msgstr "%1 番 %2 符"
+
+#: app/store/selectors/round.ts:92:14
+msgid "%1 ← %2"
+msgstr ""
+
+#: app/store/selectors/table.ts:416:14
+msgid "Abort"
+msgstr "中途流局"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:72:24
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
+msgid "Abortive draw"
+msgstr "中途流局"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:115:31
+msgid "Call referee"
+msgstr "呼叫裁判"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:123:12
+msgid "Call referee for your table?"
+msgstr "叫裁判到你的桌子来吗？"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:120:33
+msgid "Cancel"
+msgstr "取消"
+
+#: app/helpers/yaku.ts:366:34 app/helpers/yaku.ts:367:39
+msgid "Chankan"
+msgstr "抢杠"
+
+#: app/helpers/yaku.ts:258:34 app/helpers/yaku.ts:259:39
+msgid "Chanta"
+msgstr "混全带幺九"
+
+#: app/helpers/yaku.ts:354:34 app/helpers/yaku.ts:355:39
+msgid "Chiihou"
+msgstr "地和"
+
+#: app/helpers/yaku.ts:300:34 app/helpers/yaku.ts:301:39
+msgid "Chiitoitsu"
+msgstr "七对子"
+
+#: app/helpers/yaku.ts:282:34 app/helpers/yaku.ts:283:39
+msgid "Chinitsu"
+msgstr "清一色"
+
+#: app/helpers/yaku.ts:270:34 app/helpers/yaku.ts:271:39
+msgid "Chinroutou"
+msgstr "清老头"
+
+#: app/components/base/Player/Player.tsx:59:58
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:22
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
+#: app/store/selectors/table.ts:418:14
+msgid "Chombo"
+msgstr "犯规"
+
+#: app/helpers/yaku.ts:288:34 app/helpers/yaku.ts:289:39
+msgid "Chuuren poutou"
+msgstr "九莲宝灯"
+
+#: app/components/pages/NewGame/NewGame.tsx:72:14
+msgid "Clear players"
+msgstr "清除玩家"
+
+#: app/components/pages/Home/Home.tsx:70:14
+msgid "Current game"
+msgstr "当前对局"
+
+#: app/helpers/yaku.ts:319:39
+msgid "Daburu"
+msgstr "两"
+
+#: app/helpers/yaku.ts:318:34
+msgid "Daburu riichi"
+msgstr "两立直"
+
+#: app/helpers/yaku.ts:228:34 app/helpers/yaku.ts:229:39
+msgid "Daisangen"
+msgstr "大三元"
+
+#: app/helpers/yaku.ts:240:34 app/helpers/yaku.ts:241:39
+msgid "Daisuushii"
+msgstr "大四喜"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:123:22
+msgid "Dora %1"
+msgstr "宝牌 %1"
+
+#: app/store/selectors/table.ts:414:14
+msgid "Draw"
+msgstr "流局"
+
+#: app/components/pages/Login/LoginError.tsx:27:23
+msgid "E-mail is not registered in Pantheon database (%1)"
+msgstr "该用户不存在 (%1)"
+
+#: app/components/pages/Login/Login.tsx:33:24
+msgid "Email"
+msgstr ""
+
+#: app/components/screens/Home/Home.tsx:98:60
+msgid "Event title"
+msgstr "活动名称"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:67:22
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
+msgid "Exhaustive draw"
+msgstr "流局"
+
+#: app/components/pages/Login/Login.tsx:56:12
+#: app/components/pages/Login/LoginError.tsx:33:16
+msgid "Forgot password?"
+msgstr "忘记密码了吗?"
+
+#: app/components/pages/LogView/LogView.tsx:81:46
+msgid "Game log"
+msgstr "对局记录"
+
+#: app/components/pages/Settings/Settings.tsx:104:10
+msgid "Go to personal area"
+msgstr "前往个人区域"
+
+#: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
+msgid "Haitei"
+msgstr "海底摸月"
+
+#: app/store/selectors/round.ts:49:10
+msgid "Honba: %1"
+msgstr "本场: %1"
+
+#: app/helpers/yaku.ts:276:34 app/helpers/yaku.ts:277:39
+msgid "Honitsu"
+msgstr "混一色"
+
+#: app/helpers/yaku.ts:132:34 app/helpers/yaku.ts:133:39
+msgid "Honroutou"
+msgstr "混老头"
+
+#: app/helpers/yaku.ts:361:39
+msgid "Houtei"
+msgstr "河底"
+
+#: app/helpers/yaku.ts:360:34
+msgid "Houtei raoyui"
+msgstr "河底捞鱼"
+
+#: app/components/pages/Login/LoginError.tsx:39:12
+msgid "If in doubt, contact the tournament administrator for further instructions."
+msgstr "如有疑问，请联系赛事管理员"
+
+#: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
+msgid "Iipeikou"
+msgstr "一杯口"
+
+#: app/helpers/yaku.ts:324:34 app/helpers/yaku.ts:325:39
+msgid "Ippatsu"
+msgstr "一发"
+
+#: app/helpers/yaku.ts:192:34 app/helpers/yaku.ts:193:39
+msgid "Ittsu"
+msgstr "一气通贯"
+
+#: app/helpers/yaku.ts:264:34 app/helpers/yaku.ts:265:39
+msgid "Junchan"
+msgstr "纯全带幺九"
+
+#: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
+msgid "Kokushi musou"
+msgstr "国士无双"
+
+#: app/components/pages/Settings/Settings.tsx:110:45
+msgid "Language"
+msgstr "语言"
+
+#: app/components/pages/Login/Login.tsx:48:12
+msgid "Log in"
+msgstr "登录"
+
+#: app/components/pages/Login/LoginError.tsx:23:15
+msgid "Login attempt has failed. Possible reasons are:"
+msgstr "登录失败，可能的错误是:"
+
+#: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
+msgid "Menzentsumo"
+msgstr "门前清自摸和"
+
+#: app/store/selectors/round.ts:119:14
+msgid "Multiron, from %1"
+msgstr "%1 放铳 一炮多响"
+
+#: app/store/selectors/table.ts:420:14
+msgid "Nagashi"
+msgstr "流局"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:82:24
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
+msgid "Nagashi mangan"
+msgstr "流局满贯"
+
+#: app/components/pages/Home/Home.tsx:65:14
+msgid "New game"
+msgstr "开始新对局"
+
+#: app/components/pages/GameResult/GameResult.tsx:61:44
+msgid "No games found"
+msgstr "未找到对局"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:141:18
+msgid "No pao"
+msgstr ""
+
+#: app/components/pages/LogView/LogView.tsx:37:62
+msgid "No results found"
+msgstr "无结果"
+
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:42:42
+msgid "No tables are playing right now"
+msgstr "目前没有桌子在游戏中"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:92:30
+msgid "Nobody selected"
+msgstr ""
+
+#: app/components/App.tsx:182:35
+#: app/components/pages/Login/LoginError.tsx:44:12
+msgid "OK"
+msgstr ""
+
+#: app/helpers/yaku.ts:378:34 app/helpers/yaku.ts:379:39
+msgid "Open riichi"
+msgstr "开立直"
+
+#: app/helpers/yaku.ts:120:34 app/helpers/yaku.ts:121:39
+msgid "Opened hand"
+msgstr "非门前清"
+
+#: app/components/pages/Home/Home.tsx:80:14
+msgid "Other playing tables"
+msgstr "他人进行中的对局"
+
+#: app/components/pages/Login/LoginError.tsx:21:38
+msgid "Pantheon"
+msgstr ""
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:89:19
+msgid "Pao"
+msgstr ""
+
+#: app/store/selectors/round.ts:45:10
+msgid "Pao from: %1"
+msgstr "包牌玩家: %1"
+
+#: app/components/pages/Login/Login.tsx:40:24
+msgid "Password"
+msgstr "密码"
+
+#: app/components/pages/Login/LoginError.tsx:31:14
+msgid "Password check has failed"
+msgstr "密码错误"
+
+#: app/helpers/yaku.ts:162:34 app/helpers/yaku.ts:163:39
+msgid "Pinfu"
+msgstr "平和"
+
+#: app/components/screens/Settings/Settings.tsx:78:56
+msgid "Player name"
+msgstr "玩家名"
+
+#: app/components/App.tsx:184:16
+#, fuzzy
+msgid "Please return back and press riichi button for the winner"
+msgstr "如需选择/取消 役：立直，请返回确认立直玩家"
+
+#: app/components/pages/Home/Home.tsx:75:14
+msgid "Previous game"
+msgstr "上一场对局"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:127:10
+msgid "Referee has been requested to your table!"
+msgstr ""
+
+#: app/helpers/yaku.ts:372:34 app/helpers/yaku.ts:373:39
+msgid "Renhou"
+msgstr "人和"
+
+#: app/helpers/yaku.ts:312:34 app/helpers/yaku.ts:313:39
+msgid "Riichi"
+msgstr "立直"
+
+#: app/store/selectors/round.ts:67:10
+msgid "Riichi bets: %1"
+msgstr "立直棒: %1"
+
+#: app/helpers/yaku.ts:343:39
+msgid "Rinshan"
+msgstr "岭上"
+
+#: app/helpers/yaku.ts:342:34
+msgid "Rinshan kaihou"
+msgstr "岭上开花"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:63:79
+#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:410:14
+msgid "Ron"
+msgstr "荣和"
+
+#: app/store/selectors/round.ts:91:14
+msgid "Ron, %1"
+msgstr "荣和, %1"
+
+#: app/helpers/yaku.ts:174:34 app/helpers/yaku.ts:175:39
+msgid "Ryanpeikou"
+msgstr "两杯口"
+
+#: app/helpers/yaku.ts:294:34 app/helpers/yaku.ts:295:39
+msgid "Ryuuiisou"
+msgstr "绿一色"
+
+#: app/helpers/yaku.ts:138:34 app/helpers/yaku.ts:139:39
+msgid "Sanankou"
+msgstr "三暗刻"
+
+#: app/helpers/yaku.ts:144:34 app/helpers/yaku.ts:145:39
+msgid "Sankantsu"
+msgstr "三杠子"
+
+#: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
+msgid "Sanshoku"
+msgstr "三色同顺"
+
+#: app/helpers/yaku.ts:186:34 app/helpers/yaku.ts:187:39
+msgid "Sanshoku doukou"
+msgstr "三色同刻"
+
+#: app/components/pages/Settings/Settings.tsx:107:10
+msgid "Select another event"
+msgstr "选择其他活动或比赛"
+
+#: app/components/pages/EventSelect/EventSelect.tsx:42:55
+msgid "Select event"
+msgstr "选择活动或比赛"
+
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+#, fuzzy
+msgid "Select nagashi"
+msgstr "选择包牌玩家"
+
+#: app/helpers/yaku.ts:222:34 app/helpers/yaku.ts:223:39
+msgid "Shousangen"
+msgstr "小三元"
+
+#: app/helpers/yaku.ts:234:34 app/helpers/yaku.ts:235:39
+msgid "Shousuushii"
+msgstr "小四喜"
+
+#: app/components/pages/NewGame/NewGame.tsx:81:14
+msgid "Shuffle players"
+msgstr "洗牌玩家"
+
+#: app/components/pages/Login/Login.tsx:53:12
+msgid "Sign up"
+msgstr "注册"
+
+#: app/components/pages/Settings/Settings.tsx:128:16
+msgid "Single device mode"
+msgstr "单设备模式"
+
+#: app/components/pages/NewGame/NewGame.tsx:91:14
+msgid "Start game"
+msgstr "开始游戏"
+
+#: app/components/pages/Home/Home.tsx:90:14
+msgid "Statistics"
+msgstr "统计"
+
+#: app/helpers/yaku.ts:156:34 app/helpers/yaku.ts:157:39
+msgid "Suuankou"
+msgstr "四暗刻"
+
+#: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
+msgid "Suukantsu"
+msgstr "四杠子"
+
+#: app/components/base/TableStatus/TableStatus.tsx:42:45
+msgid "Table #%1"
+msgstr "第 #%1 桌"
+
+#: app/helpers/yaku.ts:252:34 app/helpers/yaku.ts:253:39
+msgid "Tanyao"
+msgstr "断幺九"
+
+#: app/store/selectors/round.ts:53:10
+msgid "Tempai: %1"
+msgstr "听牌: %1"
+
+#: app/helpers/yaku.ts:348:34 app/helpers/yaku.ts:349:39
+msgid "Tenhou"
+msgstr "天和"
+
+#: app/components/base/ThemeSelector/ThemeSelector.tsx:18:45
+msgid "Theme"
+msgstr "主题"
+
+#: app/components/pages/EventSelect/EventSelect.tsx:56:14
+#, fuzzy
+msgid "There are no events you participate in right now"
+msgstr "你现在没有可选择的活动或比赛"
+
+#: app/helpers/yaku.ts:126:34 app/helpers/yaku.ts:127:39
+msgid "Toitoi"
+msgstr "对对和"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:64:81
+#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:412:14
+msgid "Tsumo"
+msgstr "自摸"
+
+#: app/store/selectors/round.ts:149:14
+msgid "Tsumo, %1"
+msgstr "自摸, %1"
+
+#: app/helpers/yaku.ts:246:34 app/helpers/yaku.ts:247:39
+msgid "Tsuuiisou"
+msgstr "字一色"
+
+#: app/components/pages/Settings/Settings.tsx:129:22
+msgid "Turn on if you use a single device for all players"
+msgstr "如果您为所有玩家使用单一设备，请开启此功能"
+
+#: app/components/pages/Login/LoginError.tsx:36:16
+msgid "Unexpected server error"
+msgstr "错误"
+
+#: app/helpers/yaku.ts:199:39
+msgid "Yakuhai"
+msgstr "役牌"
+
+#: app/helpers/yaku.ts:198:34
+msgid "Yakuhai x1"
+msgstr "役牌 x1"
+
+#: app/helpers/yaku.ts:204:34
+msgid "Yakuhai x2"
+msgstr "役牌 x2"
+
+#: app/helpers/yaku.ts:210:34
+msgid "Yakuhai x3"
+msgstr "役牌 x3"
+
+#: app/helpers/yaku.ts:216:34
+msgid "Yakuhai x4"
+msgstr "役牌 x4"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
+msgid "Yakuman"
+msgstr "役满"
+
+#: app/store/selectors/round.ts:71:19
+msgid "dora %1"
+msgstr "宝牌 %1"
+
+#: app/components/pages/PlayersSearch/PlayersSearch.tsx:45:24
+msgid "find player..."
+msgstr ""
+
+#: app/components/screens/EventSelect/EventSelect.tsx:48:62
+msgid "name"
+msgstr "姓名"
+
+#: app/components/pages/Login/LoginError.tsx:14:83
+msgctxt "Name of registration link"
+msgid "register"
+msgstr "注册"
+
+#: app/components/pages/NewGame/NewGame.tsx:46:26
+#: app/components/pages/NewGame/NewGame.tsx:52:26
+#: app/components/pages/NewGame/NewGame.tsx:58:26
+#: app/components/pages/NewGame/NewGame.tsx:64:26
+msgid "select player"
+msgstr "选择玩家"
+
+#: app/helpers/yaku.ts:205:39
+msgid "x2"
+msgstr ""
+
+#: app/helpers/yaku.ts:211:39
+msgid "x3"
+msgstr ""
+
+#: app/helpers/yaku.ts:217:39
+msgid "x4"
+msgstr ""
+
+#: app/store/selectors/round.ts:33:12
+msgid "yakuman"
+msgstr "役满"
+
+#~ msgid "Dora"
+#~ msgstr "宝牌"
+
+#~ msgid "Fu"
+#~ msgstr "符"
+
+#~ msgid "Han from yaku"
+#~ msgstr "(宝牌以外)番数："
+
+#~ msgid "Log out"
+#~ msgstr "注销"
+
+#~ msgid "Loser"
+#~ msgstr "输家"
+
+#~ msgid "Pantheon: log in"
+#~ msgstr "Pantheon: 登录"
+
+#~ msgid "Penalty"
+#~ msgstr "惩罚"
+
+#~ msgid "Red fives"
+#~ msgstr "赤宝牌"
+
+#~ msgid "Select tempai"
+#~ msgstr "选择听牌玩家"
+
+#~ msgid "Ura dora"
+#~ msgstr "里宝牌"
+
+#~ msgid "Winner"
+#~ msgstr "赢家"
+
+#~ msgid "empty outcome"
+#~ msgstr "无结果"
+
+#~ msgid "something goes wrong, please contact your administrator"
+#~ msgstr "出现错误，请联系管理员"
+
+#~ msgid "type to find someone"
+#~ msgstr "查找玩家"
+
+#~ msgid "wrong outcome for paoSelect"
+#~ msgstr "包牌玩家选择错误"

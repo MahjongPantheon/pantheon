@@ -1,0 +1,26 @@
+.wrapper {
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+  top: -100px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+}
+
+.active {
+  top: 20px;
+  opacity: 1;
+}
+
+.content {
+  background-color: var(--element-bg);
+  border: 1px solid var(--color-text-primary);
+  color: var(--color-text-primary);
+  font-size: 12px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 18px 0 rgba(0, 0, 0, 0.25);
+  padding: 8px;
+  max-width: 80%;
+}

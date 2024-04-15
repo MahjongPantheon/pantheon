@@ -1,0 +1,119 @@
+.wrapper {
+  display: flex;
+}
+
+.wrapperFullWidth {
+  width: 100%;
+}
+
+.buttonBase {
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  padding: 4px 10px;
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.1s linear;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &.disabled,
+  &.disabled:active {
+    opacity: 0.3;
+    cursor: default;
+    margin-top: 0;
+    margin-bottom: 2px;
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    margin-top: 2px;
+    margin-bottom: 0;
+    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+.buttonPrimary {
+  background: var(--color-action);
+  color: var(--color-text-contrast);
+}
+
+.buttonContained {
+  background: var(--element-bg);
+  color: var(--color-text-primary);
+}
+
+.buttonOutline {
+  background: transparent;
+  color: var(--color-text-primary);
+}
+
+.buttonLight {
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  box-shadow: none;
+  padding: 4px !important;
+  &:active,
+  &.disabled:active,
+  &.disabled {
+    box-shadow: none;
+  }
+}
+
+.leftIcon,
+.rightIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.buttonSmall {
+  font-size: var(--font-sm);
+
+  & .leftIcon,
+  & .rightIcon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.buttonMedium {
+  font-size: var(--font-md);
+}
+
+.buttonLarge {
+  padding: 6px 14px;
+  font-size: var(--font-lg);
+
+  & .leftIcon,
+  & .rightIcon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.buttonFullWidth {
+  padding: 10px 14px;
+  font-size: var(--font-lg);
+  width: 100%;
+  justify-content: center;
+  position: relative;
+
+  & .leftIcon,
+  & .rightIcon {
+    display: inline;
+    width: 24px;
+    height: 24px;
+  }
+
+  & .rightIcon {
+    position: absolute;
+    right: 10px;
+  }
+}

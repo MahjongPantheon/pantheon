@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.listItem {
+  padding: 10px 20px;
+  font-size: var(--font-lg);
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+
+  &:active {
+    background-color: var(--element-highlight);
+  }
+}
+
+.selected {
+  background-color: var(--element-highlight);
+}

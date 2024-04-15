@@ -2280,20 +2280,20 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-"i18n-dialect@git+https://github.com/ctizen/i18n-dialect#2.0.2":
+"i18n-dialect@https://github.com/ctizen/i18n-dialect#2.0.2":
   version "2.0.2"
-  resolved "git+https://github.com/ctizen/i18n-dialect#392cc08f9937aa8bfdbe5e45a7327954d5dcb01e"
+  resolved "https://github.com/ctizen/i18n-dialect#392cc08f9937aa8bfdbe5e45a7327954d5dcb01e"
 
-"i18n-json-po@git+https://github.com/ctizen/i18n-json-po#2.0.3":
+"i18n-json-po@https://github.com/ctizen/i18n-json-po#2.0.3":
   version "2.0.3"
-  resolved "git+https://github.com/ctizen/i18n-json-po#bdef8fefd3b939ea067e85ee520161d27d6afafd"
+  resolved "https://github.com/ctizen/i18n-json-po#bdef8fefd3b939ea067e85ee520161d27d6afafd"
   dependencies:
     cli "^1.0.1"
     tslib "2.6.2"
 
-"i18n-po-json@git+https://github.com/ctizen/i18n-po-json#2.0.8":
+"i18n-po-json@https://github.com/ctizen/i18n-po-json#2.0.8":
   version "2.0.8"
-  resolved "git+https://github.com/ctizen/i18n-po-json#1fd6515e682ae38db21e71447669c1148cdec9b5"
+  resolved "https://github.com/ctizen/i18n-po-json#1fd6515e682ae38db21e71447669c1148cdec9b5"
   dependencies:
     cli "^1.0.1"
     get-stdin "^7.0.0"
@@ -2304,9 +2304,9 @@ i18n-proto@^1.0.5:
   resolved "https://registry.yarnpkg.com/i18n-proto/-/i18n-proto-1.0.5.tgz#5688a311022b46ca25612a15d53bee649930da0d"
   integrity sha512-GTfRkYXsLKH0geFb4JRP/KBFXN6YM6PpXkpuG2lEWrwAF6bGLaDSJfh/kwc3vqtIqEmvnQ+7fL6cgIcupKtROA==
 
-"i18n-stex@git+https://github.com/ctizen/stex#2.1.1":
+"i18n-stex@https://github.com/ctizen/stex#2.1.1":
   version "2.1.1"
-  resolved "git+https://github.com/ctizen/stex#901fd13dba9b3060c1c190e96618fe231cf3f252"
+  resolved "https://github.com/ctizen/stex#901fd13dba9b3060c1c190e96618fe231cf3f252"
   dependencies:
     "@types/glob" "^8.1.0"
     cli "^1.0.1"

@@ -1,0 +1,35 @@
+.wrapper {
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+
+.topPanel {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 36px;
+}
+
+.sectionTitle {
+  font-size: var(--font-lg);
+}
+
+.separator {
+  width: 10%;
+  height: 2px;
+  border-radius: 2px;
+  border: 0;
+  background-color: var(--color-text-primary);
+  opacity: 0.3;
+  align-self: center;
+  margin: 10px;
+}
+
+.flagWithLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 26px;
+}

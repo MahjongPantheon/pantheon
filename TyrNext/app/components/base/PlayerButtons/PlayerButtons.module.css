@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.actionIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.riichiButton {
+  cursor: pointer;
+  width: 150px;
+  height: 18px;
+}
+
+.riichiInactive {
+  opacity: 0.3;
+}
+
+.iconButtons {
+  display: flex;
+  gap: 16px;
+}
+
+.buttonsReverse {
+  flex-direction: row-reverse;
+}
+
+.rotateClockwise {
+  transform: rotate(90deg);
+}
+
+.rotateCounterClockwise {
+  transform: rotate(270deg);
+}

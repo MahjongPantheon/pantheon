@@ -1,0 +1,114 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 40px);
+  padding: 20px;
+}
+
+.newyear {
+  background-image: url(../../../img/ny.gif);
+  background-size: auto 16px;
+  background-repeat: repeat-x;
+}
+
+.topPanel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 32px;
+  text-align: center;
+  margin-top: 24px;
+  word-break: break-word;
+  flex: 1 1 auto;
+}
+
+.menu {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.page-home__button--active {
+  background-color: var(--color-action);
+  color: var(--secondary-text-color);
+}
+
+.page-home__button--active:active {
+  background-color: var(--color-primary-active);
+}
+
+.page-home__button:not(.page-home__button--active):active {
+  background-color: var(--color-secondary-6);
+}
+
+.page-home__button--bordered {
+  padding: 0 12px;
+}
+
+.page-home__button--bordered:active {
+  padding: 0;
+}
+
+.page-home__button--bordered:active:before,
+.page-home__button--bordered:active:after {
+  width: 100%;
+}
+
+.page-home__button--bordered:before {
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: var(--color-secondary-4);
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+.page-home__button--bordered:not(.page-home__button--bordered:last-child):after {
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: var(--color-secondary-4);
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+.page-home__button-content {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-home__button .icon {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+}
+
+.page-home__button .icon--right {
+  right: 18px;
+}
+.page-home__button .icon:not(.icon--right) {
+  left: 18px;
+}

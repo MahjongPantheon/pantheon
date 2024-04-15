@@ -33,6 +33,7 @@ export interface IStorage {
   getTheme(): string | null;
   getSingleDeviceMode(): boolean;
   getDimmed(): boolean;
+  getThemeVariant(): string | null;
 
   setAuthToken(token: string): IStorage;
   setPersonId(id: number): IStorage;
@@ -42,6 +43,7 @@ export interface IStorage {
   setTheme(theme: string): IStorage;
   setSingleDeviceMode(enabled: boolean): IStorage;
   setDimmed(enabled: boolean): IStorage;
+  setThemeVariant(variant: string): IStorage;
 
   deleteAuthToken(): IStorage;
   deletePersonId(): IStorage;
@@ -50,6 +52,7 @@ export interface IStorage {
   deleteLang(): IStorage;
   deleteTheme(): IStorage;
   deleteSingleDeviceMode(): IStorage;
+  deleteThemeVariant(): IStorage;
 }
 
 // These should be same as in Common/Storage.php cookie interface
@@ -60,6 +63,7 @@ const LANG_KEY = "lng";
 const SESSION_KEY = "sid";
 const THEME_KEY = "thm";
 const DIMMED_KEY = "dim";
+const THVAR_KEY = "thv";
 const SINGLE_DEVICE_MODE_KEY = "sdm";
 
 export class Storage implements IStorage {
@@ -95,6 +99,10 @@ export class Storage implements IStorage {
 
   public getDimmed(): boolean {
     return !!this.get(DIMMED_KEY, "int");
+  }
+
+  public getThemeVariant(): string | null {
+    return this.get(THVAR_KEY, "string") as string | null;
   }
 
   public getSingleDeviceMode(): boolean {
@@ -133,6 +141,11 @@ export class Storage implements IStorage {
 
   public setDimmed(dimmed: boolean): IStorage {
     this.set(DIMMED_KEY, "int", dimmed ? 1 : 0);
+    return this;
+  }
+
+  public setThemeVariant(variant: string): IStorage {
+    this.set(THVAR_KEY, "string", variant);
     return this;
   }
 
@@ -177,6 +190,11 @@ export class Storage implements IStorage {
 
   public deleteSingleDeviceMode(): IStorage {
     this.delete(SINGLE_DEVICE_MODE_KEY);
+    return this;
+  }
+
+  public deleteThemeVariant(): IStorage {
+    this.delete(THVAR_KEY);
     return this;
   }
 

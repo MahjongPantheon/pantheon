@@ -1,0 +1,17 @@
+.wrapper {
+  height: calc(100% - 40px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.content {
+  flex-grow: 1;
+  overflow-y: scroll;
+}

@@ -1,0 +1,33 @@
+.wrapper {
+  height: calc(100% - 40px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  flex-grow: 1;
+  gap: 10px;
+  height: 100%;
+}
+
+.players {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  height: 90%;
+  width: 90%;
+  min-height: 352px;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 36px;
+}

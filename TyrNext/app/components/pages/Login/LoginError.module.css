@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  flex: 0 0 auto;
+  margin-top: 48px;
+  font-size: var(--font-header);
+  text-align: center;
+}
+
+.message {
+  flex: 1 1 auto;
+  margin: 32px 24px;
+
+  & ul {
+    margin: 12px 0 24px 0;
+    color: var(--color-text-primary);
+  }
+
+  & li {
+    margin-bottom: 12px;
+  }
+}
+
+.buttons {
+  flex: 0 0 auto;
+  margin: 16px 24px;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -15,6 +15,7 @@ NC = $(shell echo -e '\033[0m') # No Color
 deps:
 	@echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."
 	cd Tyr && ${MAKE} docker_deps
+	cd TyrNext && ${MAKE} docker_deps
 	cd Mimir && ${MAKE} docker_deps
 	cd Frey && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
@@ -40,6 +41,7 @@ kill:
 		${COMPOSE_COMMAND} down --remove-orphans ; \
 		cd Fenrir && ${MAKE} kill ; \
 		cd ../Tyr && ${MAKE} kill ; \
+		cd ../TyrNext && ${MAKE} kill ; \
 		cd ../Mimir && ${MAKE} kill ; \
 		cd ../Frey && ${MAKE} kill ; \
 		cd ../Forseti && ${MAKE} kill ; \
@@ -84,12 +86,14 @@ reverse_proxy_stop:
 pantheon_run: export ENV_FILENAME=.env.development
 pantheon_run:
 	@cp Env/.env.development Tyr/.env.development
+	@cp Env/.env.development TyrNext/.env.development
 	@cp Env/.env.development Sigrun/.env.development
 	@cp Env/.env.development Bragi/.env.development
 	@cp Env/.env.development Forseti/.env.development
 	@cp Env/.env.development Skirnir/.env.development
 	@if [ -f Env/.env.development.local ]; then \
   	cat Env/.env.development.local >> Tyr/.env.development && \
+  	cat Env/.env.development.local >> TyrNext/.env.development && \
   	cat Env/.env.development.local >> Sigrun/.env.development && \
   	cat Env/.env.development.local >> Bragi/.env.development && \
   	cat Env/.env.development.local >> Forseti/.env.development && \
@@ -115,6 +119,10 @@ pantheon_stop:
 .PHONY: dev_tyr
 dev_tyr:
 	cd Tyr && ${MAKE} docker_dev
+
+.PHONY: dev_tyrnext
+dev_tyrnext:
+	cd TyrNext && ${MAKE} docker_dev
 
 .PHONY: dev_forseti
 dev_forseti:
@@ -169,6 +177,10 @@ migrate:
 .PHONY: shell_tyr
 shell_tyr:
 	cd Tyr && ${MAKE} shell
+
+.PHONY: shell_tyrnext
+shell_tyrnext:
+	cd TyrNext && ${MAKE} shell
 
 .PHONY: shell_hermod
 shell_hermod:
@@ -246,6 +258,8 @@ check:
 	cd Frey && ${MAKE} docker_check_common
 	cd Tyr && ${MAKE} docker_lint
 	cd Tyr && ${MAKE} docker_unit
+	cd TyrNext && ${MAKE} docker_lint
+	cd TyrNext && ${MAKE} docker_unit
 	cd Forseti && ${MAKE} docker_lint
 	cd Sigrun && ${MAKE} docker_lint
 	cd Hugin && ${MAKE} docker_check
@@ -260,6 +274,7 @@ autofix:
 	cd Frey && ${MAKE} docker_autofix
 	cd Frey && ${MAKE} docker_autofix_common
 	cd Tyr && ${MAKE} docker_autofix
+	cd TyrNext && ${MAKE} docker_autofix
 	cd Forseti && ${MAKE} docker_autofix
 	cd Sigrun && ${MAKE} docker_autofix
 	cd Hugin && ${MAKE} docker_autofix
@@ -274,6 +289,7 @@ proto_gen:
 	cd Frey && ${MAKE} docker_proto_gen
 	cd Forseti && ${MAKE} docker_proto_gen
 	cd Tyr && ${MAKE} docker_proto_gen
+	cd TyrNext && ${MAKE} docker_proto_gen
 	cd Sigrun && ${MAKE} docker_proto_gen
 	cd Hugin && ${MAKE} docker_proto_gen
 
@@ -294,6 +310,7 @@ prod_deps:
 	cd Mimir && ${MAKE} docker_deps
 	cd Frey && ${MAKE} docker_deps
 	cd Tyr && ${MAKE} docker_deps
+	cd TyrNext && ${MAKE} docker_deps
 	cd Forseti && ${MAKE} docker_deps
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
@@ -308,6 +325,11 @@ prod_build_basic_images:
 prod_build_tyr: export NODE_ENV=production
 prod_build_tyr: # this is for automated builds, don't run it manually
 	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: prod_build_tyrnext
+prod_build_tyrnext: export NODE_ENV=production
+prod_build_tyrnext: # this is for automated builds, don't run it manually
+	cd TyrNext && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
 
 .PHONY: prod_build_forseti
 prod_build_forseti: export NODE_ENV=production
@@ -333,6 +355,7 @@ prod_build_skirnir: # this is for automated builds, don't run it manually
 prod_compile: export ENV_FILENAME=.env.production
 prod_compile:
 	@cp Env/.env.production Tyr/.env.production
+	@cp Env/.env.production TyrNext/.env.production
 	@cp Env/.env.production Sigrun/.env.production
 	@cp Env/.env.production Forseti/.env.production
 	@cp Env/.env.production Bragi/.env.production
@@ -340,6 +363,7 @@ prod_compile:
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
+	${MAKE} prod_build_tyrnext
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
 	cd Sigrun && ${MAKE} docker_warmup
@@ -361,7 +385,7 @@ prod_stop_all:
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
-	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr gullveig bragi skirnir
+	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr tyrnext gullveig bragi skirnir
 
 .PHONY: prod_restart
 prod_restart:
@@ -389,6 +413,7 @@ bootstrap_admin:
 .PHONY: i18n_extract
 i18n_extract:
 	cd Tyr && ${MAKE} docker_i18n_extract
+	cd TyrNext && ${MAKE} docker_i18n_extract
 	cd Forseti && ${MAKE} docker_i18n_extract
 	cd Sigrun && ${MAKE} docker_i18n_extract
 	cd Bragi && ${MAKE} docker_i18n_extract
@@ -396,6 +421,7 @@ i18n_extract:
 .PHONY: i18n_compile
 i18n_compile:
 	cd Tyr && ${MAKE} docker_i18n_update
+	cd TyrNext && ${MAKE} docker_i18n_update
 	cd Forseti && ${MAKE} docker_i18n_update
 	cd Sigrun && ${MAKE} docker_i18n_update
 	cd Bragi && ${MAKE} docker_i18n_update
