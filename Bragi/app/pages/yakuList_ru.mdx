@@ -1,0 +1,533 @@
+import { Tile, TileValue } from '../components/Tile';
+import { ClosedPart, Hand, OpenPart, TileSet } from '../components/Hand';
+import { Meta } from '../components/Meta';
+
+<Meta title='Список яку в риичи-маджонге'
+      description='Полный список яку (комбинаций) в риичи-маджонге' />
+
+<a target='_blank' href='https://furiten.riichimahjong.org/httpsfuriten.ru/pages/lib/yaku-cheatsheet.pdf'>Шпаргалка по яку</a>
+
+## Комбинационные яку
+
+Комбинационные яку представляют собой некоторые комбинации тайлов внутри руки
+Обычно в игре любое развитие руки начинается в сторону любого из комбинационных яку. Другими словами, речь идет о таких яку,
+которые возможно и нужно собирать намеренно. Условно комбинационные яку можно разделить на несколько групп.
+
+### Яку на ценных тайлах
+
+Одно из самых часто собираемых яку - без сомнения, **якухай** (<abbr title="やくはい">役牌</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Man6} /><Tile value={TileValue.Man6} /><Tile value={TileValue.Man6} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /><Tile value={TileValue.Sou7} /></TileSet>
+    <Tile value={TileValue.Man1} />
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+**Якухай** представляет собой <abbr title="три одинаковых тайла">пон</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кан</abbr>
+любых драконов, либо <abbr title="три одинаковых тайла">пон</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кан</abbr>
+ветров места или ветров раунда. Якухай дает 1 хан.
+Несколько якухаев могут суммироваться, кроме того, якухай ветра, являющегося одновременно и ветром раунда, и ветром места, является
+двойным якухаем и дает 2 хан.
+
+Два <abbr title="три одинаковых тайла">пона</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> драконов и
+пара драконов дают комбинацию **шосанген** (<abbr title="しょうさんげん">小三元</abbr>).
+
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Haku} /><Tile value={TileValue.Haku} /><Tile value={TileValue.Haku} /></TileSet>
+    <TileSet><Tile value={TileValue.Man6} /><Tile value={TileValue.Man6} /><Tile value={TileValue.Man6} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /></TileSet>
+    <TileSet><Tile value={TileValue.Chun} /><Tile value={TileValue.Chun} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+Сам по себе шосанген дает только 2 хан, однако поскольку к нему плюсуется минимум 2 якухая, такая рука будет стоить не менее 4 хан.
+
+Три <abbr title="три одинаковых тайла">пона</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> драконов дают
+комбинацию **дайсанген** (<abbr title="だいさんげん">大三元</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Haku} /><Tile value={TileValue.Haku} /><Tile value={TileValue.Haku} /></TileSet>
+    <TileSet><Tile value={TileValue.Man3} /><Tile value={TileValue.Man4} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou5} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Chun} rotated /><Tile value={TileValue.Chun} /><Tile value={TileValue.Chun} /></TileSet>
+    <TileSet><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+Дайсанген - **якуман**.
+
+Три <abbr title="три одинаковых тайла">пона</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> ветров и
+пара ветров дают комбинацию **шосууши** (<abbr title="しょうすうし">小四喜</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+    <TileSet><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou2} /><Tile value={TileValue.Sou3} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pei} rotated /><Tile value={TileValue.Pei} /><Tile value={TileValue.Pei} /></TileSet>
+    <TileSet><Tile value={TileValue.Nan} /><Tile value={TileValue.Nan} rotated /><Tile value={TileValue.Nan} /></TileSet>
+  </OpenPart>
+</Hand>
+
+Шосууши - **якуман**.
+
+Четыре <abbr title="три одинаковых тайла">пона</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> ветров дают
+комбинацию **дайсууши** (<abbr title="だいすうし">大四喜</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+    <TileSet><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /></TileSet>
+    <Tile value={TileValue.Sou3} />
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pei} rotated /><Tile value={TileValue.Pei} /><Tile value={TileValue.Pei} /></TileSet>
+    <TileSet><Tile value={TileValue.Nan} /><Tile value={TileValue.Nan} rotated /><Tile value={TileValue.Nan} /></TileSet>
+  </OpenPart>
+</Hand>
+
+Дайсууши - **якуман** (в некоторых правилах дайсууши является двойным якуманом).
+
+Рука, состоящая только из благородных тайлов, сама по себе является комбинацией **цуиисо** (<abbr title="ついいそう">字一色</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+    <TileSet><Tile value={TileValue.Chun} /><Tile value={TileValue.Chun} /><Tile value={TileValue.Chun} /></TileSet>
+    <Tile value={TileValue.Haku} />
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pei} rotated /><Tile value={TileValue.Pei} /><Tile value={TileValue.Pei} /></TileSet>
+    <TileSet><Tile value={TileValue.Nan} /><Tile value={TileValue.Nan} rotated /><Tile value={TileValue.Nan} /></TileSet>
+  </OpenPart>
+</Hand>
+
+Цууисо - **якуман**.
+
+### Яку на понах / канах
+
+Комбинацию **тойтой** (<abbr title="といといほう">対々和</abbr>) содержит рука, состоящая только из <abbr title="три одинаковых тайла">понов</abbr>
+и <abbr title="четыре одинаковых тайла, объявленные как сет">канов</abbr>.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+    <TileSet><Tile value={TileValue.Man2} /><Tile value={TileValue.Man2} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou8} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin5} rotated /><Tile value={TileValue.Pin5} /><Tile value={TileValue.Pin5} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+Тойтой стоит 2 хан.
+
+Три закрытых <abbr title="три одинаковых тайла">пона</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr>
+сами по себе являются комбинацией **сананко** (<abbr title="さんあんこう">三暗刻</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+    <TileSet><Tile value={TileValue.Man2} /><Tile value={TileValue.Man2} /><Tile value={TileValue.Man2} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou8} /></TileSet>
+    <Tile value={TileValue.Chun} />
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+Сананко дает 2 хан. Рука может быть открытой, закрытыми должны быть сами сеты.
+Если рука открыта и в руке ожидание в <abbr title="ожидание в два пона, например 3-3-7-7, где каждая из двух пар может стать поном">шанпон</abbr>,
+сананко засчитывается только по цумо, т.к. при победе по рон, пон считается открытым.
+
+Три одинаковых <abbr title="три одинаковых тайла">пона</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> разных
+мастей называются **саншоку доко** (<abbr title="さんしょくどうこう">三色同刻</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Man4} /><Tile value={TileValue.Man4} /><Tile value={TileValue.Man4} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou7} /><Tile value={TileValue.Sou8} /></TileSet>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin4} rotated /><Tile value={TileValue.Pin4} /><Tile value={TileValue.Pin4} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou4} /><Tile value={TileValue.Sou4} /><Tile value={TileValue.Sou4} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+Саншоку доко всегда дает 2 хан.
+
+Три <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> в руке называются **санканцу** (<abbr title="さんかんつ">三槓子</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Man1} /><Tile value={TileValue.Man2} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou7} /><Tile value={TileValue.Sou7} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Closed} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Closed} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} rotated shominkan /></TileSet>
+    <TileSet><Tile value={TileValue.Pin4} /><Tile value={TileValue.Pin4} /><Tile value={TileValue.Pin4} /><Tile value={TileValue.Pin4} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+Санканцу дает 2 хан. Каны могут быть как закрытыми, так и открытыми.
+
+Четыре <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> в руке называются **сууканцу** (<abbr title="すうかんつ">四槓子</abbr>).
+<Hand>
+  <ClosedPart>
+    <Tile value={TileValue.Man1} />
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Sou7} /><Tile value={TileValue.Sou7} /><Tile value={TileValue.Sou7} rotated /><Tile value={TileValue.Sou7} /></TileSet>
+    <TileSet><Tile value={TileValue.Closed} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Closed} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} rotated shominkan /></TileSet>
+    <TileSet><Tile value={TileValue.Pin4} /><Tile value={TileValue.Pin4} rotated /><Tile value={TileValue.Pin4} /><Tile value={TileValue.Pin4} /></TileSet>
+  </OpenPart>
+</Hand>
+Сууканцу - **якуман**. Каны могут быть как закрытыми, так и открытыми.
+В случае, если все четыре кана объявил один и тот же игрок, игра продолжается (пересдача не объявляется), но с этого момента игроки не
+вправе объявлять каны.
+
+Четыре закрытых <abbr title="три одинаковых тайла">пона</abbr> или <abbr title="четыре одинаковых тайла, объявленные как сет">кана</abbr> являются
+комбинацией **сууанко** (<abbr title="すうあんこう">四暗刻</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+    <TileSet><Tile value={TileValue.Man2} /><Tile value={TileValue.Man2} /><Tile value={TileValue.Man2} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou8} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} /></TileSet>
+    <Tile value={TileValue.Chun} />
+  </ClosedPart>
+</Hand>
+Сууанко - **якуман**.
+Если в руке ожидание в <abbr title="ожидание в два пона, например 3-3-7-7, где каждая из двух пар может стать поном">шанпон</abbr>, сууанко
+засчитывается только по цумо, т.к. при победе по рон, пон считается открытым. В случае победы по рон, засчитывается сананко.
+
+### Яку на последовательностях
+
+**Пин-фу** (<abbr title="ぴんふ">平和</abbr>) - рука без миниочков (фу), в каком-то смысле антагонизм тойтоя. Рука должна состоять
+только из <abbr title="три последовательных тайла масти, например 2-3-4">чи</abbr>,
+не содержать якухайных пар и иметь ожидание <abbr title="двустороннее ожидание в чи, например 4-5">рянмен</abbr>.
+
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Man2} /><Tile value={TileValue.Man3} /><Tile value={TileValue.Man4} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /><Tile value={TileValue.Sou7} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} /></TileSet>
+    <TileSet><Tile value={TileValue.Man5} /><Tile value={TileValue.Man6} /></TileSet>
+  </ClosedPart>
+</Hand>
+Пин-фу стоит 1 хан и собирается исключительно на закрытой руке.
+
+Комбинация **иипейко** (<abbr title="いいぺいこう">一盃口</abbr>) засчитывается тогда, когда в руке есть два одинаковых
+<abbr title="три последовательных тайла масти, например 2-3-4">чи</abbr> одной и той же масти.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /><Tile value={TileValue.Sou7} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} /></TileSet>
+    <TileSet><Tile value={TileValue.Man5} /><Tile value={TileValue.Man6} /></TileSet>
+  </ClosedPart>
+</Hand>
+Как и пин-фу, иипейко стоит 1 хан и собирается исключительно на закрытой руке. Иипейко **не засчитывается**, если в руке
+есть комбинации чиитойцу или рянпейко.
+
+Комбинация **рянпейко** (<abbr title="りゃんぺいこう">二盃口</abbr>) засчитывается тогда, когда в руке есть две пары одинаковых
+<abbr title="три последовательных тайла масти, например 2-3-4">чи</abbr>, каждая пара - одной и той же масти.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /><Tile value={TileValue.Sou7} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /><Tile value={TileValue.Sou7} /></TileSet>
+    <Tile value={TileValue.Man5} />
+  </ClosedPart>
+</Hand>
+Рянпейко стоит 3 хан и собирается исключительно на закрытой руке. Если в руке есть рянпейко, комбинации чиитойцу и иипейко **не засчитываются**.
+
+Если в руке есть три одинаковых <abbr title="три последовательных тайла масти, например 2-3-4">чи</abbr> разных мастей, в руке
+содержится комбинация **саншоку** (<abbr title="さんしょくどうじゅん">三色同順</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou2} /><Tile value={TileValue.Sou3} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /></TileSet>
+    <TileSet><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Man1} rotated /><Tile value={TileValue.Man2} /><Tile value={TileValue.Man3} /></TileSet>
+  </OpenPart>
+</Hand>
+Саншоку стоит 2 хан на закрытой руке и 1 хан на открытой.
+
+**Иццу** (<abbr title="いっきつうかん">一気通貫</abbr>) представляет собой три
+<abbr title="три последовательных тайла масти, например 2-3-4">чи</abbr> одной и той же масти, образующие ряд от 1 до 9.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin7} /><Tile value={TileValue.Pin8} /><Tile value={TileValue.Pin9} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /></TileSet>
+    <TileSet><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin4} rotated /><Tile value={TileValue.Pin5} /><Tile value={TileValue.Pin6} /></TileSet>
+  </OpenPart>
+</Hand>
+
+Иццу стоит 2 хан на закрытой руке и 1 хан на открытой.
+
+### Одноцветы
+
+Рука, состоящая из благородных тайлов и тайлов одной и той же масти, содержит комбинацию **хоницу** (<abbr title="ほんいつ">混一色</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin7} /><Tile value={TileValue.Pin8} /><Tile value={TileValue.Pin9} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin5} /><Tile value={TileValue.Pin5} /></TileSet>
+    <TileSet><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Haku} rotated /><Tile value={TileValue.Haku} /><Tile value={TileValue.Haku} /></TileSet>
+  </OpenPart>
+</Hand>
+
+Хоницу стоит 3 хан на закрытой руке и 2 хан на открытой.
+
+Рука, состоящая исключительно из тайлов одной и той же масти, содержит комибнацию **чиницу** (<abbr title="ちんいつ">清一色</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin7} /><Tile value={TileValue.Pin8} /><Tile value={TileValue.Pin9} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin5} /><Tile value={TileValue.Pin5} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin6} /><Tile value={TileValue.Pin6} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin2} rotated /><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin3} /></TileSet>
+  </OpenPart>
+</Hand>
+
+Чиницу стоит 6 хан на закрытой руке и 5 хан на открытой.
+
+Рука, имеющая чиницу в форме 1112345678999 плюс пару к любому из тайлов, называется **чууренпото** (<abbr title="ちゅうれんぽうと">九蓮宝燈</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet>
+      <Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin1} />
+      <Tile value={TileValue.Pin2} /><Tile value={TileValue.Pin3} /><Tile value={TileValue.Pin4} />
+      <Tile value={TileValue.Pin5} /><Tile value={TileValue.Pin6} /><Tile value={TileValue.Pin7} />
+      <Tile value={TileValue.Pin8} />
+      <Tile value={TileValue.Pin9} /><Tile value={TileValue.Pin9} /><Tile value={TileValue.Pin9} />
+    </TileSet>
+  </ClosedPart>
+</Hand>
+
+В руке может уже быть пара, но не хватать последнего тайла до формы (ожидание в одну сторону). Чууренпото - **якуман**. Собирается только на закрытой руке.
+В случае если рука имеется девятистороннее ожидание (т.е. строго форму 1112345678999), в некоторых правилах это засчитывается как двойной якуман.
+
+Рука, имеющая хоницу из всех зеленых тайлов бамбуков (2,3,4,6,8) и зеленых драконов, называется **рюисо**
+(<abbr title="りゅういそう">緑一色</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou8} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou2} /><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou4} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou6} /><Tile value={TileValue.Sou6} /></TileSet>
+  </ClosedPart>
+    <OpenPart>
+      <TileSet><Tile value={TileValue.Sou3} rotated /><Tile value={TileValue.Sou2} /><Tile value={TileValue.Sou4} /></TileSet>
+      <TileSet><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} rotated /></TileSet>
+    </OpenPart>
+</Hand>
+
+Рюисо - **якуман**. В некоторых правилах в руке обязана присутствовать хотя бы пара зеленых драконов, в других - допускается и их отсутствие.
+
+### Терминалы и благородные
+
+Рука, в которой вообще нет ни благородных, ни терминальных тайлов, содержит комбинацию **тан-яо**
+(<abbr title="たんやおちゅう">断ヤオ九</abbr>). Это также одна из самых частых комбинаций в игре.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sou2} /><Tile value={TileValue.Sou2} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou4} /><Tile value={TileValue.Sou5} /><Tile value={TileValue.Sou6} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin6} /><Tile value={TileValue.Pin7} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin6} rotated /><Tile value={TileValue.Pin4} /><Tile value={TileValue.Pin5} /></TileSet>
+    <TileSet><Tile value={TileValue.Man6} /><Tile value={TileValue.Man6} /><Tile value={TileValue.Man6} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+Тан-яо стоит 1 хан. В некоторых правилах тан-яо не работает на открытой руке.
+
+Рука, в каждом из сетов которой есть терминальный или благородный тайл, содержит комбинацию **чанта**
+(<abbr title="ちゃんたやお">全帯ヤオ</abbr>). Пара также должна быть терминальной или благородной.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou7} /><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou9} /></TileSet>
+    <TileSet><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin3} rotated /><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /></TileSet>
+    <TileSet><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} /><Tile value={TileValue.Hatsu} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+Чанта стоит 2 хан на закрытой руке и 1 хан на открытой. В руке должно быть хотя бы одно
+<abbr title="три последовательных тайла масти, например 1-2-3">чи</abbr>, иначе вместо чанты засчитывается хонрото (см. далее).
+
+Если в руке содержатся только благородные или терминальные тайлы, рука содержит комбинацию **хонрото**
+(<abbr title="ほんろうとう">混老頭</abbr>). Такое требование исключает возможность существования
+<abbr title="три последовательных тайла масти, например 1-2-3">чи</abbr> в руке, поэтому хонрото может сочетаться
+с одной из двух комбинаций - тойтой или чиитойцу.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /><Tile value={TileValue.Sha} /></TileSet>
+    <TileSet><Tile value={TileValue.Man1} /><Tile value={TileValue.Man1} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou9} /><Tile value={TileValue.Sou9} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Haku} rotated /><Tile value={TileValue.Haku} /><Tile value={TileValue.Haku} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} rotated /></TileSet>
+  </OpenPart>
+</Hand>
+
+Хонрото стоит 2 хан. Если в руке есть хонрото, комбинация чанта **не засчитывается**.
+
+Рука, в каждом из сетов которой есть терминальный тайл, содержит комбинацию **джунчан** (<abbr title="じゅんちゃんたやお">純全帯ヤオ</abbr>).
+Пара также должна быть терминальной. Благородных тайлов в руке быть не должно (иначе засчитывается чанта).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou7} /><Tile value={TileValue.Sou8} /><Tile value={TileValue.Sou9} /></TileSet>
+    <TileSet><Tile value={TileValue.Man9} /><Tile value={TileValue.Man9} /></TileSet>
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin3} rotated /><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin2} /></TileSet>
+    <TileSet><Tile value={TileValue.Man7} rotated /><Tile value={TileValue.Man8} /><Tile value={TileValue.Man9} /></TileSet>
+  </OpenPart>
+</Hand>
+Джунчан стоит 3 хан на закрытой руке и 2 хан на открытой. В руке должно быть хотя бы одно
+<abbr title="три последовательных тайла масти, например 1-2-3">чи</abbr>, иначе вместо джунчана засчитывается чинрото.
+
+Рука, содержащая джунчан и тойтой, содержит комбинацию **чинрото** (<abbr title="ちんろうとう">清老頭</abbr>). Такая рука состоит
+исключительно из единиц и девяток мастей.
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou9} /><Tile value={TileValue.Sou9} /><Tile value={TileValue.Sou9} /></TileSet>
+    <Tile value={TileValue.Man9} />
+  </ClosedPart>
+  <OpenPart>
+    <TileSet><Tile value={TileValue.Pin1} rotated /><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin1} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin9} /><Tile value={TileValue.Pin9} rotated /><Tile value={TileValue.Pin9} /></TileSet>
+  </OpenPart>
+</Hand>
+
+Чинрото - **якуман**. <abbr title="три одинаковых тайла">поны</abbr> и <abbr title="четыре одинаковых тайла, объявленные как сет">каны</abbr>
+могут быть как закрытыми, так и открытыми.
+
+### Особые яку
+
+Рука, состоящая из семи пар, содержит комбинацию **чиитойцу** (<abbr title="ちいといつ">七対子</abbr>).
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sou6} /><Tile value={TileValue.Sou6} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou3} /></TileSet>
+    <TileSet><Tile value={TileValue.Man9} /><Tile value={TileValue.Man9} /></TileSet>
+    <TileSet><Tile value={TileValue.Pin3} /><Tile value={TileValue.Pin3} /></TileSet>
+    <TileSet><Tile value={TileValue.Ton} /><Tile value={TileValue.Ton} /></TileSet>
+    <TileSet><Tile value={TileValue.Man7} /><Tile value={TileValue.Man7} /></TileSet>
+    <Tile value={TileValue.Sha} />
+  </ClosedPart>
+</Hand>
+Чиитойцу стоит 2 хан и фиксированное количество миниочков (фу) - 25. Чиитойцу собирается только на закрытой руке.
+
+Рука, состоящая из единиц и девяток всех мастей, драконов и ветров, каждого по одному, называется **кокушимусо**
+(<abbr title="こくしむそう">国士無双</abbr>, 13 сирот). Для завершения руки требуется пара к любому из тринадцати тайлов.
+В руке может уже быть пара и не хватать какого-либо из остальных тайлов (одностороннее ожидание)
+<Hand>
+  <ClosedPart>
+    <TileSet>
+      <Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou9} /><Tile value={TileValue.Man1} />
+      <Tile value={TileValue.Man9} /><Tile value={TileValue.Pin1} /><Tile value={TileValue.Pin9} />
+      <Tile value={TileValue.Ton} /><Tile value={TileValue.Nan} /><Tile value={TileValue.Sha} />
+      <Tile value={TileValue.Pei} /><Tile value={TileValue.Chun} /><Tile value={TileValue.Haku} />
+      <Tile value={TileValue.Hatsu} />
+    </TileSet>
+  </ClosedPart>
+</Hand>
+Кокушимусо - **якуман**. В некоторых правилах дается двойной якуман за 13ти-стороннее ожидание.
+
+## Ситуационные яку
+
+Ситуационные яку даются при выполнении определенных игровых условий, не связанных с рукой игрока. Большую часть
+ситуационных яку невозможно собрать намеренно.
+
+### Риичи
+
+При темпае на закрытой руке, игрок вправе объявить **риичи** (<abbr title="リーチ">立直</abbr>). При этом игрок лишается
+возможности модифицировать свою руку после объявления. В руке может не быть никаких других яку, но риичи как раз
+дает возможность выиграть на руке, которая изначально не предполагала никакой ценности:
+<Hand>
+  <ClosedPart>
+    <TileSet><Tile value={TileValue.Sou1} /><Tile value={TileValue.Sou1} /></TileSet>
+    <TileSet><Tile value={TileValue.Sou3} /><Tile value={TileValue.Sou4} /><Tile value={TileValue.Sou5} /></TileSet>
+    <TileSet><Tile value={TileValue.Man5} /><Tile value={TileValue.Man7} /></TileSet>
+    <TileSet><Tile value={TileValue.Man3} /><Tile value={TileValue.Man3} /><Tile value={TileValue.Man3} /></TileSet>
+    <TileSet><Tile value={TileValue.Man7} /><Tile value={TileValue.Man8} /><Tile value={TileValue.Man9} /></TileSet>
+  </ClosedPart>
+</Hand>
+Риичи стоит 1 хан.
+
+Если риичи объявляется на первом же круге, то он называется **дабл-риичи** (<abbr title="ダブルリーチ">ダブル立直</abbr>).
+Правила те же, что и для обычного риичи, с тем только отличием, что дабл-риичи стоит 2 хан.
+
+Если после объявления риичи на первом же круге игрок получает выигрышный тайл со стены или чужого дискарда, ему засчитывается
+**иппацу** (<abbr title="いっぱつ">一発</abbr>). Круг не должен быть прерван никакими объявлениями (включая закрытый кан).
+Иппацу стоит 1 хан.
+
+### Яку по взятию со стены
+
+Если при темпае на закрытой руке игрок получает свой выигрышный тайл со стены, ему засчитывается **мендзен цумо**
+(<abbr title="めんぜんちんつも">門前清自摸</abbr>). Цумо стоит 1 хан.
+
+Если игрок побеждает по цумо с последнего тайла стены, ему засчитывается **хайтей**
+(<abbr title="はいていらおゆえ">海底摸月</abbr>). Хайтей стоит 1 хан.
+
+Если игрок побеждает по цумо с тайла, взятого с мертвой стены после объявления кана, ему засчитывается
+**риншан кайхо** (<abbr title="りんしゃんかいほう">嶺上開花</abbr>). Риншан стоит 1 хан.
+
+Если дилер побеждает по цумо сразу после начала раздачи (со стартовой руки), то ему засчитывается
+**тенхо** (<abbr title="てんほう">天和</abbr>). Тенхо - **якуман**.
+
+Если игрок, не являющийся дилером в текущей раздаче побеждает по цумо с первого же взятия
+со стены, то ему засчитывается **чихо** (<abbr title="ちほう">地和</abbr>). До объявления чихо не допускается никаких
+других объявлений понов, чи и канов, в ином случае чихо не засчитывается. Чихо - **якуман**.
+
+### Яку по взятию с другого игрока
+
+Если игрок побеждает с последнего сброса в раздаче, ему засчитывается **хотей**
+(<abbr title="ほうていらおゆい">河底撈魚</abbr>). Хотей стоит 1 хан.
+
+В случае, если кто-либо дополняет пон до кана и игрок побеждает с докладываемого тайла, игроку засчитывается
+**чанкан** (<abbr title="ちゃんかん">槍槓</abbr>, кража кана). Чанкан стоит 1 хан.
+
+В случае, если игрок побеждает с первого сброса в раздаче, ему засчитывается **ренхо** (<abbr title="れんほう">人和</abbr>).
+Ренхо стоит манган и не суммируется с другими яку. В некоторых правилах ренхо может быть якуманом.
+
+## Нагаши манган
+
+Нагаши манган (<abbr title="ながしまんがん">流し満貫</abbr>) - особое условие, не относящееся ни к комбинационным,
+ни к ситуационным яку. Нагаши манган засчитывается в том случае, если дискард игрока состоит исключительно
+из благородных и терминальных тайлов. Из дискарда игрока не должно быть совершено ни одного объявления пона,
+кана или чи; тем не менее сам игрок может объявлять сеты. Как очевидно из названия, стоимость равна мангану.
+В правилах EMA нагаши манган **отсутствует**.

@@ -103,7 +103,6 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps)
           <ActionIcon
             onClick={() => {
               saveLang('en');
-              window.location.reload();
             }}
             title={'In English'}
           >
@@ -112,7 +111,6 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps)
           <ActionIcon
             onClick={() => {
               saveLang('ru');
-              window.location.reload();
             }}
             title={'По-русски'}
           >

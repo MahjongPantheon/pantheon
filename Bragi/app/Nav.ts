@@ -25,22 +25,26 @@ import SeatingsEn from './pages/seatings_en.mdx';
 
 import IndexPageRu from './pages/index_ru.mdx';
 import AboutRu from './pages/about_ru.mdx';
+import HowToPlayRu from './pages/howToPlay_ru.mdx';
 import BugsRu from './pages/bugs_ru.mdx';
 import ForPlayersRu from './pages/forPlayers_ru.mdx';
 import ForHostsRu from './pages/forHosts_ru.mdx';
 import GetStartedRu from './pages/getStarted_ru.mdx';
 import CodeOfConductRu from './pages/codeOfConduct_ru.mdx';
 import SeatingsRu from './pages/seatings_ru.mdx';
+import YakuListRu from './pages/yakuList_ru.mdx';
 
 enum Path {
   Index = '/',
   About = '/about',
+  HowToPlay = '/howToPlay',
   CodeOfConduct = '/codeOfConduct',
   GetStarted = '/getStarted',
   ForPlayers = '/forPlayers',
   ForHosts = '/forHosts',
   Reports = '/reports',
   Seatings = '/seatings',
+  YakuList = '/yakuList',
 }
 
 export const links = [
@@ -55,13 +59,17 @@ export const links = [
   { link: Path.About, label: { en: 'About us', ru: 'О нас' } },
 ];
 
+const Dummy = () => '';
+
 export const components = {
   [Path.Index]: { en: IndexPageEn, ru: IndexPageRu },
   [Path.About]: { en: AboutEn, ru: AboutRu },
+  [Path.HowToPlay]: { en: Dummy, ru: HowToPlayRu },
   [Path.ForPlayers]: { en: ForPlayerEn, ru: ForPlayersRu },
   [Path.ForHosts]: { en: ForHostsEn, ru: ForHostsRu },
   [Path.GetStarted]: { en: GetStartedEn, ru: GetStartedRu },
   [Path.Reports]: { en: BugsEn, ru: BugsRu },
   [Path.Seatings]: { en: SeatingsEn, ru: SeatingsRu },
   [Path.CodeOfConduct]: { en: CodeOfConductEn, ru: CodeOfConductRu },
+  [Path.YakuList]: { en: Dummy, ru: YakuListRu },
 };

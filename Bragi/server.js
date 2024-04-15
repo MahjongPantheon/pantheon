@@ -71,14 +71,25 @@ export async function createServer(app, env) {
 
   app.get('/sitemap.xml', (req, res) => {
     const urls = [
-      'https://riichimahjong.org/',
-      'https://riichimahjong.org/about',
-      'https://riichimahjong.org/codeOfConduct',
-      'https://riichimahjong.org/getStarted',
-      'https://riichimahjong.org/forPlayers',
-      'https://riichimahjong.org/forHosts',
-      'https://riichimahjong.org/reports',
-      'https://riichimahjong.org/seatings',
+      'https://riichimahjong.org/en',
+      'https://riichimahjong.org/en/about',
+      'https://riichimahjong.org/en/codeOfConduct',
+      'https://riichimahjong.org/en/getStarted',
+      'https://riichimahjong.org/en/forPlayers',
+      'https://riichimahjong.org/en/forHosts',
+      'https://riichimahjong.org/en/reports',
+      'https://riichimahjong.org/en/seatings',
+      'https://riichimahjong.org/ru',
+      'https://riichimahjong.org/ru/about',
+      'https://riichimahjong.org/ru/codeOfConduct',
+      'https://riichimahjong.org/ru/getStarted',
+      'https://riichimahjong.org/ru/forPlayers',
+      'https://riichimahjong.org/ru/forHosts',
+      'https://riichimahjong.org/ru/howToPlay',
+      'https://riichimahjong.org/ru/yakuList',
+      'https://riichimahjong.org/ru/forHosts',
+      'https://riichimahjong.org/ru/reports',
+      'https://riichimahjong.org/ru/seatings',
     ];
     exec('git show | grep Date', (err, out) => {
       const date = new Date(out.replace('Date:').trim());
