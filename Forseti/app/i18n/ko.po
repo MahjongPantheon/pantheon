@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:38Z\n"
-"PO-Revision-Date: 2024-04-06 21:29+0200\n"
+"PO-Revision-Date: 2024-04-20 10:57+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -261,7 +261,7 @@ msgstr "칩 가치"
 
 #: app/pages/GamesControl/GamesList.tsx:390:12
 msgid "Chombo, %1"
-msgstr "촌보, %1"
+msgstr "촌보: %1"
 
 #: app/helpers/yaku.ts:222:34
 msgid "Chuuren poutou"
@@ -951,7 +951,7 @@ msgstr "유국만관"
 
 #: app/pages/GamesControl/GamesList.tsx:407:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
-msgstr "유국만관, 유국만관: %1, 텐파이: %2, 리치: %3"
+msgstr "유국만관: %1, 텐파이: %2, 리치: %3"
 
 #: app/pages/OwnedEventsEdit/index.tsx:64:18
 msgid "New event"
@@ -1420,7 +1420,7 @@ msgstr "영상개화"
 #: app/pages/GamesControl/GamesList.tsx:360:12
 #: app/pages/GamesControl/GamesList.tsx:371:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
-msgstr "론, %1 방총 %2 (%3), 리치: %4"
+msgstr "론: %1 방총: %2 (%3), 리치: %4"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:102:25
 msgid "Round outcomes"
@@ -1846,7 +1846,7 @@ msgstr "대회 설정"
 
 #: app/pages/GamesControl/GamesList.tsx:382:12
 msgid "Tsumo, %1 (%2), riichi: %3"
-msgstr "쯔모, %1 (%2), 리치: %3"
+msgstr "쯔모: %1 (%2), 리치: %3"
 
 #: app/helpers/yaku.ts:210:34 app/helpers/yaku.ts:253:34
 msgid "Tsuuiisou"
