@@ -50,12 +50,7 @@ import { PlayerInSession, RoundOutcome } from '../../clients/proto/atoms.pb';
  * Get id of player who is dealer in this round
  */
 function getDealerId(outcome: AppOutcome, playersList: PlayerInSession[]): number {
-  let players = [playersList[0], playersList[1], playersList[2], playersList[3]];
-  for (let i = 1; i < outcome.roundIndex; i++) {
-    players = [players.pop()!].concat(players);
-  }
-
-  return players[0].id;
+  return playersList[(outcome.roundIndex - 1) % 4].id;
 }
 
 function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: number) {
