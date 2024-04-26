@@ -19,7 +19,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import process from 'node:process';
-import { exec } from 'child_process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
@@ -66,7 +65,7 @@ export async function createServer(app, env) {
   app.use((await import('express')).json());
 
   app.get('/robots.txt', (req, res) => {
-    res.send(`User-agent: *\n` + `Allow: /\n`);
+    res.send(`User-agent: *\n` + `Allow: /\n` + `Sitemap: https://riichimahjong.org/sitemap.xml\n`);
   });
 
   app.get('/sitemap.xml', (req, res) => {
@@ -91,23 +90,23 @@ export async function createServer(app, env) {
       'https://riichimahjong.org/ru/reports',
       'https://riichimahjong.org/ru/seatings',
     ];
-    exec('git show | grep Date', (err, out) => {
-      const date = new Date(out.replace('Date:').trim());
-      const lastUpdate = date.getFullYear() + '-'
-        + date.getMonth().toString().padStart(2, '0')
-        + '-' + date.getDate().toString().padStart(2, '0');
+    fs.readFile('./lastbuild.txt', { encoding: 'utf-8' }, (err, lastUpdate) => {
+      if (err) {
+        const date = new Date();
+        lastUpdate = date.getFullYear() + '-'
+          + date.getMonth().toString().padStart(2, '0')
+          + '-' + date.getDate().toString().padStart(2, '0');
+      }
       res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${urls.map((url) => `<url>
     <loc>${url}</loc>
-    <lastmod>${lastUpdate}</lastmod>
+    <lastmod>${lastUpdate.trim()}</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 `)}
 </urlset>`);
-      }
-    );
-
+    });
   });
 
   app.use('*', async (req, res) => {

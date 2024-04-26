@@ -67,6 +67,7 @@ prebuild:
 	cp -f server.js ../Bragi-dist/
 	if [ -f .env.production ]; then cp -f .env.production ../Bragi-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Bragi-dist/ ; fi
+	echo `date +"%Y-%m-%d"` > ../Bragi-dist/lastbuild.txt
 	cp -f package.json ../Bragi-dist/
 	cp -f yarn.lock ../Bragi-dist/
 
@@ -134,7 +135,6 @@ docker_prod_deps: get_docker_id
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make prod_deps' ; \
 	fi
-
 
 PHONY: docker_lint
 docker_lint: get_docker_id
