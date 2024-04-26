@@ -100,7 +100,7 @@ export async function createServer(app, env) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${urls.map((url) => `<url>
     <loc>${url}</loc>
-    <lastmod>2022-06-04</lastmod>
+    <lastmod>${lastUpdate}</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 `)}
