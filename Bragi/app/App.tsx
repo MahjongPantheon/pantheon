@@ -15,22 +15,41 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Route, Switch } from 'wouter';
+import { Redirect, Route, Router, Switch, useRouter } from 'wouter';
 import './App.css';
-import { useStorage } from './hooks/storage';
 import { components } from './Nav';
+import { supportedLanguages } from './services/i18n';
+import { useStorage } from './hooks/storage';
+
+const makeLangRoutes = (lang: string) => () => {
+  const router = useRouter();
+
+  return (
+    <Router base={`/${lang}`} parent={router}>
+      <Switch>
+        {Object.keys(components).map((url) => (
+          <Route
+            path={url}
+            key={url}
+            component={components[url as keyof typeof components][lang as 'ru' | 'en']}
+          />
+        ))}
+      </Switch>
+    </Router>
+  );
+};
 
 export function App() {
-  const lang = useStorage().getLang() ?? 'en';
+  const routes = supportedLanguages.map((lang) => makeLangRoutes(lang));
+  const selectedLang = useStorage().getLang() ?? 'en';
   return (
-    <Switch>
-      {Object.keys(components).map((url) => (
-        <Route
-          path={url}
-          key={url}
-          component={components[url as keyof typeof components][lang as 'en' | 'ru']}
-        />
+    <>
+      <Route path='/'>
+        <Redirect to={`/${selectedLang}`} />
+      </Route>
+      {routes.map((Routes, idx) => (
+        <Routes key={`route_${idx}`} />
       ))}
-    </Switch>
+    </>
   );
 }

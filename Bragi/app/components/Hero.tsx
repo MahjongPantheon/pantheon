@@ -208,11 +208,11 @@ export const Hero = () => {
   const [active, setActive] = useState('/');
   const { classes, cx } = useStyles();
   const [location, navigate] = useLocation();
-  const collapsed = location !== '/';
+  const collapsed = location !== '/' + lang;
 
   useEffect(() => {
     links.forEach((link) => {
-      if (location === link.link) {
+      if (location === `/${lang}${link.link}`) {
         setActive(link.link);
       }
     });
@@ -221,13 +221,13 @@ export const Hero = () => {
   const items = links.map((link, idx) => (
     <a
       key={`mainmenu_${idx}`}
-      href={link.link}
+      href={link.link.startsWith('/') ? `/${lang}${link.link}` : link.link}
       target={link.link.startsWith('/') ? undefined : '_blank'}
       className={cx(classes.link, { [classes.linkActive]: active === link.link })}
       onClick={(event) => {
         if (link.link.startsWith('/')) {
           event.preventDefault();
-          navigate(link.link);
+          navigate(`/${lang}${link.link}`);
         }
         close();
       }}
@@ -240,19 +240,20 @@ export const Hero = () => {
     <div
       className={classes.wrapper}
       style={{
+        overflow: 'hidden',
         height: collapsed ? 125 : 475,
       }}
     >
       {/* Main menu */}
       <Container className={classes.menu}>
         <a
-          href='/'
+          href={'/' + lang}
           className={cx(classes.link)}
           style={{ padding: 8, margin: -8, borderRadius: 4, backgroundColor: 'transparent' }}
           onClick={(event) => {
             event.preventDefault();
-            navigate('/');
-            setActive('/');
+            navigate('/' + lang);
+            setActive('/' + lang);
             close();
           }}
         >
@@ -320,16 +321,30 @@ export const Hero = () => {
             : 'Mahjong Pantheon can help with games and tournaments'}
         </Text>
 
-        <Link to='/getStarted'>
-          <Button
-            variant='gradient'
-            gradient={{ from: 'pink', to: 'cyan' }}
-            size='xl'
-            className={classes.control}
-          >
-            {storage.getLang() === 'ru' ? 'Начинаем?' : 'Get started'}
-          </Button>
-        </Link>
+        <Group>
+          <Link to={`/${lang}/getStarted`}>
+            <Button
+              variant='gradient'
+              gradient={{ from: 'pink', to: 'cyan' }}
+              size='xl'
+              className={classes.control}
+            >
+              {storage.getLang() === 'ru' ? 'Начинаем?' : 'Get started'}
+            </Button>
+          </Link>
+          {storage.getLang() === 'ru' && (
+            <Link to={`/${lang}/howToPlay`}>
+              <Button
+                variant='gradient'
+                gradient={{ from: 'cyan', to: 'pink' }}
+                size='xl'
+                className={classes.control}
+              >
+                Как играть
+              </Button>
+            </Link>
+          )}
+        </Group>
       </div>
 
       <div className={classes.quickLinks}>

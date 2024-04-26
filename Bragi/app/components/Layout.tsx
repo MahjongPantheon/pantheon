@@ -28,12 +28,13 @@ import { AnalyticsProvider, useAnalytics } from '../hooks/analytics';
 import { StorageProvider, useStorage } from '../hooks/storage';
 import { I18nProvider, useI18n } from '../hooks/i18n';
 import '../App.css';
-import { useCallback, useState, ReactNode, useEffect } from 'react';
+import { useState, ReactNode, useEffect } from 'react';
 import { NavigationProgress } from '@mantine/nprogress';
 import { EmotionCache } from '@emotion/css';
 import { Meta } from './Meta';
 import * as React from 'react';
 import { Hero } from './Hero';
+import { useLocation } from 'wouter';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -59,6 +60,7 @@ const haveNySpecs =
 export function Layout({ children, cache }: { children: ReactNode; cache: EmotionCache }) {
   const storage = useStorage();
   const i18n = useI18n();
+  const [location, navigate] = useLocation();
   const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
   const analytics = useAnalytics();
   useEffect(() => {
@@ -77,15 +79,12 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   };
   const dark = colorScheme === 'dark';
 
-  // Small kludge to forcefully rerender after language change
-  const [, updateState] = useState({});
-  const forceUpdate = useCallback(() => updateState({}), []);
   const saveLang = (lang: string) => {
     storage.setLang(lang);
     i18n.init(
       (locale) => {
         storage.setLang(locale);
-        forceUpdate();
+        navigate(location.replace(/^\/([^/]+)(.*)/, `/${locale}$2`));
       },
       (err) => console.error(err)
     );
@@ -101,6 +100,12 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
       }}
       emotionCache={cache}
     >
+      <style>{`
+      abbr {
+        border-bottom: none !important;
+        text-decoration: revert !important;
+      }
+      `}</style>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <AnalyticsProvider>
           <StorageProvider>
