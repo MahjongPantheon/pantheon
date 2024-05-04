@@ -156,7 +156,9 @@ class SeatingController extends Controller
         $this->_log->info('Generating new swiss seating for event #' . $eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
-        $seating = array_keys(Seating::swissSeating($playersMap, $tables));
+
+        // TODO: check if unique works here; there should not be any repeating players is swiss seating results
+        $seating = array_unique(array_keys(Seating::swissSeating($playersMap, $tables)));
 
         if ($substituteReplacementPlayers) {
             $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
@@ -173,6 +175,8 @@ class SeatingController extends Controller
             }, $seating);
         }
 
+        // TODO: check why unique works here (especially in case when replacement player already plays in event)
+        $seating = array_unique($seating);
         $seating = array_chunk($seating, 4);
 
         $this->_log->info('Generated new swiss seating for event #' . $eventId);
