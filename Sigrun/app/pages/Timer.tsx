@@ -78,7 +78,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
           );
           setTimerWaiting(newState.waitingForTimer);
           hideSeatingAfter = newState.hideSeatingAfter;
-          // If we're still watinig, we do updates every second.
+          // If we're still waiting, we do updates every second.
           shouldUpdateTimerFromServer = newState.waitingForTimer;
           setSoundPlayed((old) => {
             if (newState.finished && !old) {

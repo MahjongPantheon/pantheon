@@ -52,7 +52,6 @@ class EventModel extends Model
         $startRating = $event[0]->getRulesetConfig()->rules()->getStartRating();
 
         // get data from primitives, and some raw data
-        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
         $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
         $seatings = $this->_ds->table('session_player')
             ->join('session', 'session.id = session_player.session_id')
@@ -63,12 +62,12 @@ class EventModel extends Model
             ->where('session.event_id', $eventId)
             ->orderByDesc('session.id')
             ->orderByAsc('order')
-            ->limit(count($reggedPlayers))
+            ->limit(count($players))
             ->findArray();
 
         // merge it all together
         $ratings = [];
-        foreach ($reggedPlayers as $reg) {
+        foreach ($players as $reg) {
             $ratings[$reg['id']] = $startRating;
         }
         foreach ($historyItems as $item) { // overwrite with real values
