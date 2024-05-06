@@ -117,7 +117,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   const [achievementsData] = useIsomorphicState(
     null,
     'Achievements_' + eventId,
-    () => api.getAchievements(parseInt(eventId, 10), fullList),
+    () => api.setEventId(parseInt(eventId, 10)).getAchievements(parseInt(eventId, 10), fullList),
     [eventId, fullList]
   );
 

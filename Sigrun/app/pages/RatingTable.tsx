@@ -87,13 +87,17 @@ export const RatingTable: React.FC<{
   const [players, , playersLoading] = useIsomorphicState(
     [],
     'RatingTable_event_' + eventId + order + orderBy + minGamesSelector,
-    () =>
-      api.getRatingTable(
+    () => {
+      if (eventIds.length === 1) {
+        api.setEventId(eventIds[0]);
+      }
+      return api.getRatingTable(
         eventIds,
         order ?? 'desc',
         orderBy === 'team' ? 'rating' : orderBy ?? 'rating',
         minGamesSelector === 'min'
-      ),
+      );
+    },
     [eventId, order, orderBy, minGamesSelector]
   );
 

@@ -27,7 +27,12 @@ export const useEvent = (eventIdListStr: string | null) => {
   const [events] = useIsomorphicState(
     null,
     'EventInfo_event_' + (eventIdListStr ?? 'null'),
-    () => (eventsId ? api.getEventsById(eventsId) : Promise.resolve(null)),
+    () => {
+      if (eventsId && eventsId.length === 1) {
+        api.setEventId(eventsId[0]);
+      }
+      return eventsId ? api.getEventsById(eventsId) : Promise.resolve(null);
+    },
     [eventIdListStr]
   );
   useEffect(() => {

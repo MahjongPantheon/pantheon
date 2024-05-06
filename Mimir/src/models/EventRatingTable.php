@@ -35,13 +35,13 @@ class EventRatingTableModel extends Model
      * @param array $playerRegs
      * @param string $orderBy
      * @param string $order
-     * @param bool $withPrefinished
+     * @param bool $isAdmin show prefinished games and also all rating table if it's hidden
      * @param bool $onlyMinGames
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $withPrefinished = false, $onlyMinGames = false)
+    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $isAdmin = false, $onlyMinGames = false)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
@@ -75,31 +75,33 @@ class EventRatingTableModel extends Model
                 throw new InvalidParametersException('Attempted to use deidented primitive');
             }
 
-            /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
-            $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eId);
-            foreach ($tmpPlayersHistoryItems as $item) {
-                // php kludge: keys should be string, not numeric (to overwrite values)
-                $playersHistoryItems['id' . $item->getPlayerId()] = $item;
-            }
-
-            if ($withPrefinished) {
-                // Include fake player history items made of prefinished games results
-                $tmpFakeItems = $this->_getFakePrefinishedItems($event);
-                $fakeItems = [];
-                foreach ($tmpFakeItems as $item) {
+            if (!$event->getHideResults() || $isAdmin) {
+                /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
+                $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eId);
+                foreach ($tmpPlayersHistoryItems as $item) {
                     // php kludge: keys should be string, not numeric (to overwrite values)
-                    $fakeItems['id' . $item->getPlayerId()] = $item;
+                    $playersHistoryItems['id' . $item->getPlayerId()] = $item;
                 }
-                $playersHistoryItems = array_merge($playersHistoryItems, $fakeItems);
-                // Warning: don't ever call ->save() on these items!
+
+                if ($isAdmin) {
+                    // Include fake player history items made of prefinished games results
+                    $tmpFakeItems = $this->_getFakePrefinishedItems($event);
+                    $fakeItems = [];
+                    foreach ($tmpFakeItems as $item) {
+                        // php kludge: keys should be string, not numeric (to overwrite values)
+                        $fakeItems['id' . $item->getPlayerId()] = $item;
+                    }
+                    $playersHistoryItems = array_merge($playersHistoryItems, $fakeItems);
+                    // Warning: don't ever call ->save() on these items!
+                }
+
+                $playersHistoryItems = array_values($playersHistoryItems);
+                /* We use '+' operator here, because we want to keep keys (player id) and we know, that
+                 * merged arrays can't have different values for same keys. */
+                $playerItems = $playerItems + $this->_getPlayers($playersHistoryItems);
+
+                $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, $playersHistoryItems);
             }
-
-            $playersHistoryItems = array_values($playersHistoryItems);
-            /* We use '+' operator here, because we want to keep keys (player id) and we know, that
-             * merged arrays can't have different values for same keys. */
-            $playerItems = $playerItems + $this->_getPlayers($playersHistoryItems);
-
-            $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, $playersHistoryItems);
         }
 
         $playerHistoryItemsSummed = [];
