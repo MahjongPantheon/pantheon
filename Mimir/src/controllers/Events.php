@@ -671,15 +671,15 @@ class EventsController extends Controller
             throw new TwirpError(ErrorCode::NotFound, 'Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
-        // Show prefinished results only for event admin.
+        // Show prefinished results and hidden results only for event admin.
         // We should also check that requested event matches authorization header.
-        $withPrefinished = count($eventIdList) === 1 &&
+        $isAdmin = count($eventIdList) === 1 &&
             $this->_meta->isAuthorizedForEvent($eventIdList[0]) &&
             $this->_meta->isEventAdmin();
 
         $playerRegs = PlayerRegistrationPrimitive::fetchPlayerRegData($this->_ds, $eventIdList);
         $table = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
-            ->getRatingTable($eventList, $playerRegs, $orderBy, $order, $withPrefinished, $onlyWithMinGames);
+            ->getRatingTable($eventList, $playerRegs, $orderBy, $order, $isAdmin, $onlyWithMinGames);
 
         $this->_log->info('Successfully received rating table for event ids: ' . implode(", ", $eventIdList));
 
@@ -704,10 +704,19 @@ class EventsController extends Controller
             throw new TwirpError(ErrorCode::NotFound, 'Event id # ' . $eventId . ' was not found in DB');
         }
 
-        $table = AchievementsPrimitive::findByEventId($this->_ds, [$eventId])[0]->getData();
+        // Show prefinished results and hidden achievements only for event admin.
+        // We should also check that requested event matches authorization header.
+        $isAdmin = count($eventList) === 1 &&
+            $eventList[0]->getId() &&
+            $this->_meta->isAuthorizedForEvent($eventList[0]->getId()) &&
+            $this->_meta->isEventAdmin();
+
         $result = [];
-        foreach ($achievementsList as $ach) {
-            $result[$ach] = $table[$ach];
+        if (!$eventList[0]->getHideAchievements() || $isAdmin) {
+            $table = AchievementsPrimitive::findByEventId($this->_ds, [$eventId])[0]->getData();
+            foreach ($achievementsList as $ach) {
+                $result[$ach] = $table[$ach];
+            }
         }
 
         $this->_log->info('Successfully received achievements list for event ids# ' . $eventId);
