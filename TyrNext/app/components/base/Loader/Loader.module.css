@@ -1,0 +1,65 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.overlay {
+  z-index: 1000;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 120px;
+  height: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background-color: var(--riichi-fill-color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
+
+  &:after {
+    display: block;
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-riichi-point);
+    animation: cssload-motion 1.2s ease-in-out infinite;
+    animation-delay: -0.9s;
+    box-shadow: inset 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes cssload-motion {
+  from {
+    transform: translate(calc(-120px / 2 + 8px + 5px));
+  }
+  50% {
+    transform: translate(calc(120px / 2 - 8px - 5px));
+  }
+  to {
+    transform: translate(calc(-120px / 2 + 8px + 5px));
+  }
+}

@@ -1,0 +1,31 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100% - 40px);
+  padding: 20px;
+}
+
+.loginFormTitle {
+  flex: 0 0 auto;
+  margin: 48px 0 36px 0;
+  font-size: var(--font-header);
+  color: var(--color-text-slight);
+  text-align: center;
+}
+
+.loginFormFields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.loginFormButtons {
+  display: flex;
+}
+
+.loginFormButtons {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 19:38Z\n"
+"POT-Creation-Date: 2024-05-09 18:55Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/components/AppFooter.tsx:125:20
+#: app/components/AppFooter.tsx:123:20
 msgid "Toggle color scheme"
 msgstr ""
 
-#: app/components/Layout.tsx:109:24
+#: app/components/Layout.tsx:114:24
 msgid "Pantheon: riichi mahjong ratings and statistics"
 msgstr ""
 
-#: app/components/Layout.tsx:110:30
+#: app/components/Layout.tsx:115:30
 msgid "Pantheon is a set of tools to record and show detailed riichi mahjong games with recording assistance, admin panel and statistics service."
 msgstr ""

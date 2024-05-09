@@ -1,0 +1,47 @@
+.textFieldBase {
+  border: 0;
+  padding: 6px;
+  background: transparent;
+  outline-color: transparent;
+  outline-style: none;
+  transition: all 0.3s ease-out;
+  &:focus {
+    box-shadow: inset 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.textFieldUnderline {
+  border-bottom: 2px solid var(--border-color);
+  &:focus {
+    box-shadow: none;
+    border-bottom: 2px solid var(--color-action);
+  }
+}
+
+.textFieldContained {
+  background: var(--element-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  &:focus {
+    border: 2px solid var(--color-action);
+  }
+}
+
+.textFieldSmall {
+  font-size: var(--font-sm);
+}
+
+.textFieldMedium {
+  font-size: var(--font-md);
+}
+
+.textFieldLarge {
+  padding: 6px 14px;
+  font-size: var(--font-lg);
+}
+
+.textFieldFullWidth {
+  padding: 6px 14px;
+  font-size: var(--font-lg);
+  width: 100%;
+}

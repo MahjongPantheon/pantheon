@@ -1,0 +1,45 @@
+.wrapper {
+  height: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.list {
+  flex-grow: 1;
+  overflow-y: scroll;
+  margin-top: 20px;
+}
+
+.empty {
+  text-align: center;
+}
+
+.table {
+  margin: 0 16px 20px 16px;
+  display: flex;
+  gap: 20px;
+  user-select: none;
+  cursor: pointer;
+
+  &:active {
+    background-color: var(--color-secondary-6);
+  }
+}
+
+.playersList {
+  display: flex;
+  flex-direction: column;
+}
+
+.listItem {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  column-gap: 12px;
+  padding: 4px 0;
+}
+
+.wind {
+  padding-bottom: 8px;
+}

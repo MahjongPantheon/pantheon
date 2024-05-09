@@ -1,0 +1,37 @@
+.tabWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabHeadScroller {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 2px solid var(--border-color);
+  padding: 20px;
+}
+
+.swipeContainer {
+  max-height: 100%;
+}
+
+.tabHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.tabContentView {
+  background-color: var(--page-bg);
+}
+
+.tabContent {
+  height: calc(100vh - 126px);
+  position: relative;
+}
+
+.previousTab,
+.nextTab {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}

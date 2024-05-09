@@ -1,0 +1,28 @@
+.wrapper {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  display: flex;
+  user-select: none;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--element-bg);
+
+  &.disabled {
+    border: 1px solid var(--border-color-disabled);
+  }
+}
+
+.less,
+.more {
+  color: var(--color-text-primary);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & svg {
+    width: 28px;
+    height: 28px;
+  }
+}

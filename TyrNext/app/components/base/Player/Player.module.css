@@ -1,0 +1,82 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chombo {
+  color: var(--color-danger);
+}
+
+.infoWrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.wind {
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2px;
+
+  &.east {
+    background-color: var(--wind-bg-color-east);
+  }
+
+  &.south {
+    background-color: var(--wind-bg-color-south);
+  }
+
+  &.west {
+    background-color: var(--wind-bg-color-west);
+  }
+
+  &.north {
+    background-color: var(--wind-bg-color-north);
+  }
+}
+
+.medium {
+  .playerName {
+    font-size: var(--font-md);
+  }
+
+  .wind {
+    font-size: calc(var(--font-md));
+    height: var(--size-md);
+    width: var(--size-md);
+    border-radius: var(--size-md);
+  }
+}
+
+.small {
+  .playerName {
+    font-size: var(--font-sm);
+  }
+
+  .wind {
+    font-size: calc(var(--font-sm));
+    height: var(--size-sm);
+    width: var(--size-sm);
+    border-radius: var(--size-sm);
+  }
+}
+
+.large {
+  .playerName {
+    font-size: var(--font-lg);
+  }
+
+  .wind {
+    font-size: calc(var(--font-lg));
+    height: var(--size-lg);
+    width: var(--size-lg);
+    border-radius: var(--size-lg);
+  }
+}
+
+.upsideDown {
+  transform: rotate(180deg);
+}

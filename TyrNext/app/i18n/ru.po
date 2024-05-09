@@ -1,0 +1,585 @@
+# Translations template for PROJECT.
+# Copyright (C) 2017
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-09 18:55Z\n"
+"PO-Revision-Date: 2024-05-09 21:58+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: i18n-json2po\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: app/components/App.tsx:182:35
+#: app/components/pages/Login/LoginError.tsx:44:12
+msgid "OK"
+msgstr "ОК"
+
+#: app/components/App.tsx:184:16
+msgid "Please return back and press riichi button for the winner"
+msgstr "Пожалуйста, вернитесь назад и нажмите кнопку риичи для выигравшего"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:89:19
+msgid "Pao"
+msgstr "Пао"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:92:30
+msgid "Nobody selected"
+msgstr "Никто не выбран"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:104:28
+msgid "%1 fu"
+msgstr "%1 фу"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:123:22
+msgid "Dora %1"
+msgstr "Дора %1"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
+msgid "Yakuman"
+msgstr "Якуман"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/store/selectors/round.ts:39:12
+msgid "%1 han %2 fu"
+msgstr "%1 хан, %2 фу"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/store/selectors/round.ts:36:15
+msgid "%1 han"
+msgstr "%1 хан"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:141:18
+msgid "No pao"
+msgstr "Нет пао"
+
+#: app/components/base/Player/Player.tsx:59:58
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:22
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
+#: app/store/selectors/table.ts:418:14
+msgid "Chombo"
+msgstr "Чомбо"
+
+#: app/components/base/TableStatus/TableStatus.tsx:42:45
+msgid "Table #%1"
+msgstr "Стол №%1"
+
+#: app/components/base/TableStatus/TableStatus.tsx:91:16
+msgid "%1 deal left"
+msgid_plural "%1 deals left"
+msgstr[0] "Осталась %1 раздача"
+msgstr[1] "Осталось %1 раздачи"
+msgstr[2] "Осталось %1 раздач"
+
+#: app/components/base/ThemeSelector/ThemeSelector.tsx:18:45
+msgid "Theme"
+msgstr "Оформление"
+
+#: app/components/pages/EventSelect/EventSelect.tsx:42:55
+msgid "Select event"
+msgstr "Выбрать событие"
+
+#: app/components/pages/EventSelect/EventSelect.tsx:56:14
+msgid "There are no events you participate in right now"
+msgstr "На данный момент нет активных событий, в которых вы участвуете"
+
+#: app/components/pages/GameResult/GameResult.tsx:61:44
+msgid "No games found"
+msgstr "Игры не найдены"
+
+#: app/components/pages/Home/Home.tsx:65:14
+msgid "New game"
+msgstr "Новая игра"
+
+#: app/components/pages/Home/Home.tsx:70:14
+msgid "Current game"
+msgstr "Текущая игра"
+
+#: app/components/pages/Home/Home.tsx:75:14
+msgid "Previous game"
+msgstr "Предыдущая игра"
+
+#: app/components/pages/Home/Home.tsx:80:14
+msgid "Other playing tables"
+msgstr "Другие столы"
+
+#: app/components/pages/Home/Home.tsx:90:14
+msgid "Statistics"
+msgstr "Статистика"
+
+#: app/components/pages/Login/Login.tsx:33:24
+msgid "Email"
+msgstr "Email"
+
+#: app/components/pages/Login/Login.tsx:40:24
+msgid "Password"
+msgstr "Пароль"
+
+#: app/components/pages/Login/Login.tsx:48:12
+msgid "Log in"
+msgstr "Вход"
+
+#: app/components/pages/Login/Login.tsx:53:12
+msgid "Sign up"
+msgstr "Регистрация"
+
+#: app/components/pages/Login/Login.tsx:56:12
+#: app/components/pages/Login/LoginError.tsx:33:16
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: app/components/pages/Login/LoginError.tsx:14:83
+msgctxt "Name of registration link"
+msgid "register"
+msgstr "регистрация"
+
+#: app/components/pages/Login/LoginError.tsx:21:38
+msgid "Pantheon"
+msgstr "Pantheon"
+
+#: app/components/pages/Login/LoginError.tsx:23:15
+msgid "Login attempt has failed. Possible reasons are:"
+msgstr "Попытка входа в систему не удалась. Возможные причины:"
+
+#: app/components/pages/Login/LoginError.tsx:27:23
+msgid "E-mail is not registered in Pantheon database (%1)"
+msgstr "E-mail не зарегистрирован в базе данных Pantheon (%1)"
+
+#: app/components/pages/Login/LoginError.tsx:31:14
+msgid "Password check has failed"
+msgstr "Пароль введен некорректно"
+
+#: app/components/pages/Login/LoginError.tsx:36:16
+msgid "Unexpected server error"
+msgstr "Неожиданная ошибка сервера"
+
+#: app/components/pages/Login/LoginError.tsx:39:12
+msgid ""
+"If in doubt, contact the tournament administrator for further instructions."
+msgstr "Обратитесь к администратору турнира для дальнейших инструкций."
+
+#: app/components/pages/LogView/LogView.tsx:37:62
+msgid "No results found"
+msgstr "Результаты отсутствуют"
+
+#: app/components/pages/LogView/LogView.tsx:81:46
+msgid "Game log"
+msgstr "Лог игры"
+
+#: app/components/pages/NewGame/NewGame.tsx:46:26
+#: app/components/pages/NewGame/NewGame.tsx:52:26
+#: app/components/pages/NewGame/NewGame.tsx:58:26
+#: app/components/pages/NewGame/NewGame.tsx:64:26
+msgid "select player"
+msgstr "выбрать игрока"
+
+#: app/components/pages/NewGame/NewGame.tsx:72:14
+msgid "Clear players"
+msgstr "Очистить"
+
+#: app/components/pages/NewGame/NewGame.tsx:81:14
+msgid "Shuffle players"
+msgstr "Перемешать"
+
+#: app/components/pages/NewGame/NewGame.tsx:91:14
+msgid "Start game"
+msgstr "Начать игру"
+
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:42:42
+msgid "No tables are playing right now"
+msgstr "На данный момент ни один стол не играет"
+
+#: app/components/pages/PlayersSearch/PlayersSearch.tsx:45:24
+msgid "find player..."
+msgstr "найти игрока..."
+
+#: app/components/pages/Settings/Settings.tsx:104:10
+msgid "Go to personal area"
+msgstr "В личный кабинет"
+
+#: app/components/pages/Settings/Settings.tsx:107:10
+msgid "Select another event"
+msgstr "Выбрать другое событие"
+
+#: app/components/pages/Settings/Settings.tsx:110:45
+msgid "Language"
+msgstr "Язык"
+
+#: app/components/pages/Settings/Settings.tsx:128:16
+msgid "Single device mode"
+msgstr "Режим одного устройства"
+
+#: app/components/pages/Settings/Settings.tsx:129:22
+msgid "Turn on if you use a single device for all players"
+msgstr "Включите, если вы используете одно устройство для всех игроков"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:63:79
+#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:410:14
+msgid "Ron"
+msgstr "Рон"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:64:81
+#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:412:14
+msgid "Tsumo"
+msgstr "Цумо"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:67:22
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
+msgid "Exhaustive draw"
+msgstr "Ничья"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:72:24
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
+msgid "Abortive draw"
+msgstr "Абортивная ничья"
+
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:82:24
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
+msgid "Nagashi mangan"
+msgstr "Нагаши манган"
+
+#: app/components/screens/EventSelect/EventSelect.tsx:48:62
+msgid "name"
+msgstr "имя"
+
+#: app/components/screens/Home/Home.tsx:98:60
+msgid "Event title"
+msgstr "Название события"
+
+#: app/components/screens/Settings/Settings.tsx:78:56
+msgid "Player name"
+msgstr "Имя игрока"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:115:31
+msgid "Call referee"
+msgstr "Вызвать судью"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:120:33
+msgid "Cancel"
+msgstr "Отмена"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:123:12
+msgid "Call referee for your table?"
+msgstr "Вызвать судью за ваш стол?"
+
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:127:10
+msgid "Referee has been requested to your table!"
+msgstr "Судья был вызван за ваш стол!"
+
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+msgid "Select nagashi"
+msgstr "Выбрать нагаши"
+
+#: app/helpers/yaku.ts:120:34 app/helpers/yaku.ts:121:39
+msgid "Opened hand"
+msgstr "Открытая рука"
+
+#: app/helpers/yaku.ts:126:34 app/helpers/yaku.ts:127:39
+msgid "Toitoi"
+msgstr "Тойтой"
+
+#: app/helpers/yaku.ts:132:34 app/helpers/yaku.ts:133:39
+msgid "Honroutou"
+msgstr "Хонрото"
+
+#: app/helpers/yaku.ts:138:34 app/helpers/yaku.ts:139:39
+msgid "Sanankou"
+msgstr "Сананко"
+
+#: app/helpers/yaku.ts:144:34 app/helpers/yaku.ts:145:39
+msgid "Sankantsu"
+msgstr "Санканцу"
+
+#: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
+msgid "Suukantsu"
+msgstr "Сууканцу"
+
+#: app/helpers/yaku.ts:156:34 app/helpers/yaku.ts:157:39
+msgid "Suuankou"
+msgstr "Сууанко"
+
+#: app/helpers/yaku.ts:162:34 app/helpers/yaku.ts:163:39
+msgid "Pinfu"
+msgstr "Пин-фу"
+
+#: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
+msgid "Iipeikou"
+msgstr "Иипейко"
+
+#: app/helpers/yaku.ts:174:34 app/helpers/yaku.ts:175:39
+msgid "Ryanpeikou"
+msgstr "Рянпейко"
+
+#: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
+msgid "Sanshoku"
+msgstr "Саншоку"
+
+#: app/helpers/yaku.ts:186:34 app/helpers/yaku.ts:187:39
+msgid "Sanshoku doukou"
+msgstr "Саншоку доко"
+
+#: app/helpers/yaku.ts:192:34 app/helpers/yaku.ts:193:39
+msgid "Ittsu"
+msgstr "Иццу"
+
+#: app/helpers/yaku.ts:198:34
+msgid "Yakuhai x1"
+msgstr "Якухай 1"
+
+#: app/helpers/yaku.ts:199:39
+msgid "Yakuhai"
+msgstr "Якухай"
+
+#: app/helpers/yaku.ts:204:34
+msgid "Yakuhai x2"
+msgstr "Якухай 2"
+
+#: app/helpers/yaku.ts:205:39
+msgid "x2"
+msgstr "х2"
+
+#: app/helpers/yaku.ts:210:34
+msgid "Yakuhai x3"
+msgstr "Якухай 3"
+
+#: app/helpers/yaku.ts:211:39
+msgid "x3"
+msgstr "х3"
+
+#: app/helpers/yaku.ts:216:34
+msgid "Yakuhai x4"
+msgstr "Якухай 4"
+
+#: app/helpers/yaku.ts:217:39
+msgid "x4"
+msgstr "х4"
+
+#: app/helpers/yaku.ts:222:34 app/helpers/yaku.ts:223:39
+msgid "Shousangen"
+msgstr "Шосанген"
+
+#: app/helpers/yaku.ts:228:34 app/helpers/yaku.ts:229:39
+msgid "Daisangen"
+msgstr "Дайсанген"
+
+#: app/helpers/yaku.ts:234:34 app/helpers/yaku.ts:235:39
+msgid "Shousuushii"
+msgstr "Шосуши"
+
+#: app/helpers/yaku.ts:240:34 app/helpers/yaku.ts:241:39
+msgid "Daisuushii"
+msgstr "Дайсуши"
+
+#: app/helpers/yaku.ts:246:34 app/helpers/yaku.ts:247:39
+msgid "Tsuuiisou"
+msgstr "Цуисо"
+
+#: app/helpers/yaku.ts:252:34 app/helpers/yaku.ts:253:39
+msgid "Tanyao"
+msgstr "Тан-яо"
+
+#: app/helpers/yaku.ts:258:34 app/helpers/yaku.ts:259:39
+msgid "Chanta"
+msgstr "Чанта"
+
+#: app/helpers/yaku.ts:264:34 app/helpers/yaku.ts:265:39
+msgid "Junchan"
+msgstr "Джунчан"
+
+#: app/helpers/yaku.ts:270:34 app/helpers/yaku.ts:271:39
+msgid "Chinroutou"
+msgstr "Чинрото"
+
+#: app/helpers/yaku.ts:276:34 app/helpers/yaku.ts:277:39
+msgid "Honitsu"
+msgstr "Хоницу"
+
+#: app/helpers/yaku.ts:282:34 app/helpers/yaku.ts:283:39
+msgid "Chinitsu"
+msgstr "Чиницу"
+
+#: app/helpers/yaku.ts:288:34 app/helpers/yaku.ts:289:39
+msgid "Chuuren poutou"
+msgstr "Чууренпото"
+
+#: app/helpers/yaku.ts:294:34 app/helpers/yaku.ts:295:39
+msgid "Ryuuiisou"
+msgstr "Рюисо"
+
+#: app/helpers/yaku.ts:300:34 app/helpers/yaku.ts:301:39
+msgid "Chiitoitsu"
+msgstr "Чиитойцу"
+
+#: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
+msgid "Kokushi musou"
+msgstr "Кокушимусо"
+
+#: app/helpers/yaku.ts:312:34 app/helpers/yaku.ts:313:39
+msgid "Riichi"
+msgstr "Риичи"
+
+#: app/helpers/yaku.ts:318:34
+msgid "Daburu riichi"
+msgstr "Дабл-риичи"
+
+#: app/helpers/yaku.ts:319:39
+msgid "Daburu"
+msgstr "Дабури"
+
+#: app/helpers/yaku.ts:324:34 app/helpers/yaku.ts:325:39
+msgid "Ippatsu"
+msgstr "Иппацу"
+
+#: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
+msgid "Menzentsumo"
+msgstr "Мензенцумо"
+
+#: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
+msgid "Haitei"
+msgstr "Хайтей"
+
+#: app/helpers/yaku.ts:342:34
+msgid "Rinshan kaihou"
+msgstr "Риншан кайхо"
+
+#: app/helpers/yaku.ts:343:39
+msgid "Rinshan"
+msgstr "Риншан"
+
+#: app/helpers/yaku.ts:348:34 app/helpers/yaku.ts:349:39
+msgid "Tenhou"
+msgstr "Тенхо"
+
+#: app/helpers/yaku.ts:354:34 app/helpers/yaku.ts:355:39
+msgid "Chiihou"
+msgstr "Чихо"
+
+#: app/helpers/yaku.ts:360:34
+msgid "Houtei raoyui"
+msgstr "Хотей раоюй"
+
+#: app/helpers/yaku.ts:361:39
+msgid "Houtei"
+msgstr "Хотей"
+
+#: app/helpers/yaku.ts:366:34 app/helpers/yaku.ts:367:39
+msgid "Chankan"
+msgstr "Чанкан"
+
+#: app/helpers/yaku.ts:372:34 app/helpers/yaku.ts:373:39
+msgid "Renhou"
+msgstr "Ренхо"
+
+#: app/helpers/yaku.ts:378:34 app/helpers/yaku.ts:379:39
+msgid "Open riichi"
+msgstr "Опен риичи"
+
+#: app/store/selectors/round.ts:33:12
+msgid "yakuman"
+msgstr "якуман"
+
+#: app/store/selectors/round.ts:45:10
+msgid "Pao from: %1"
+msgstr "Пао с: %1"
+
+#: app/store/selectors/round.ts:49:10
+msgid "Honba: %1"
+msgstr "Хонба: %1"
+
+#: app/store/selectors/round.ts:53:10
+msgid "Tempai: %1"
+msgstr "Темпай: %1"
+
+#: app/store/selectors/round.ts:67:10
+msgid "Riichi bets: %1"
+msgstr "Ставок риичи: %1"
+
+#: app/store/selectors/round.ts:71:19
+msgid "dora %1"
+msgstr "дора %1"
+
+#: app/store/selectors/round.ts:91:14
+msgid "Ron, %1"
+msgstr "Рон, %1"
+
+#: app/store/selectors/round.ts:92:14
+msgid "%1 ← %2"
+msgstr "%1 ← %2"
+
+#: app/store/selectors/round.ts:119:14
+msgid "Multiron, from %1"
+msgstr "Мультирон с %1"
+
+#: app/store/selectors/round.ts:149:14
+msgid "Tsumo, %1"
+msgstr "Цумо, %1"
+
+#: app/store/selectors/table.ts:414:14
+msgid "Draw"
+msgstr "Ничья"
+
+#: app/store/selectors/table.ts:416:14
+msgid "Abort"
+msgstr "Абортивная ничья"
+
+#: app/store/selectors/table.ts:420:14
+msgid "Nagashi"
+msgstr "Нагаши манган"
+
+#~ msgid "Call"
+#~ msgstr "Вызвать"
+
+#~ msgid "Dora"
+#~ msgstr "Дора"
+
+#~ msgid "Fu"
+#~ msgstr "Фу"
+
+#~ msgid "Han from yaku"
+#~ msgstr "Хан из яку"
+
+#~ msgid "Log out"
+#~ msgstr "Выйти из системы"
+
+#~ msgid "Loser"
+#~ msgstr "Проигравший"
+
+#~ msgid "Pantheon: log in"
+#~ msgstr "Pantheon: вход в систему"
+
+#~ msgid "Penalty"
+#~ msgstr "Штраф"
+
+#~ msgid "Red fives"
+#~ msgstr "Акадоры"
+
+#~ msgid "Select tempai"
+#~ msgstr "Выбрать темпай"
+
+#~ msgid "Ura dora"
+#~ msgstr "Урадора"
+
+#~ msgid "Winner"
+#~ msgstr "Победитель"
+
+#~ msgid "empty outcome"
+#~ msgstr "пустой исход"
+
+#~ msgid "something goes wrong, please contact your administrator"
+#~ msgstr "что-то пошло не так, свяжитесь с администратором системы"
+
+#~ msgid "type to find someone"
+#~ msgstr "начните вводить чтобы найти игроков"
+
+#~ msgid "wrong outcome for paoSelect"
+#~ msgstr "неверный исход для выбора пао"

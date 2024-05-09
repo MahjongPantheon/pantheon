@@ -1,0 +1,43 @@
+.wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height: 20px;
+}
+
+.riichiWithLabel {
+  display: flex;
+  gap: 5px;
+}
+
+.points {
+  font-weight: 600;
+}
+
+.pointsActive {
+  color: var(--color-action);
+}
+
+.pointsIdle {
+  color: var(--color-text-primary);
+}
+
+.pointsNegative {
+  color: var(--color-danger);
+}
+
+.pointsPositive {
+  color: var(--color-success);
+}
+
+.inlineRiichi {
+  width: 60px;
+}
+
+.penalty {
+  font-size: var(--font-sm);
+  padding: 4px;
+  border-radius: 4px;
+  background-color: var(--color-danger);
+  color: var(--color-text-contrast);
+}

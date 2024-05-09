@@ -1,0 +1,41 @@
+.wrapper {
+}
+
+.switchWrapper {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: scroll;
+  scrollbar-width: none;
+  scroll-snap-type: y mandatory;
+  white-space: nowrap;
+  position: relative;
+  max-width: 100%;
+  display: inline-block;
+
+  &:after {
+    content: '';
+    right: 0;
+    margin-left: 30px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(251, 251, 251, 1) 0%, rgba(251, 251, 251, 0) 100%);
+    position: absolute;
+  }
+}
+
+.option {
+  display: inline-block;
+  scroll-snap-align: start;
+  user-select: none;
+  padding: 8px;
+  vertical-align: middle;
+  border-right: 1px solid var(--border-color);
+
+  &:last-child {
+    border-right: 0;
+  }
+}
+
+.optionSelected {
+  background-color: var(--color-action);
+  color: var(--color-text-contrast);
+}

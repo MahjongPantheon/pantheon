@@ -1,0 +1,63 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionTitle {
+  font-size: var(--font-lg);
+}
+
+.themesList {
+  display: flex;
+  gap: 8px;
+}
+
+.theme {
+  width: 68px;
+}
+
+.selected .visualInner {
+  border: 2px solid var(--color-action);
+}
+
+.selected .themeName {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-action);
+}
+
+.visual {
+  height: 46px;
+  width: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.themeName {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.visualInner {
+  border: 1px solid var(--color-text-primary);
+  border-radius: 8px;
+  padding: 9px 8px;
+}
+
+.secondaryColor {
+  height: 8px;
+  width: 48px;
+  border-radius: 2px;
+}
+
+.textColor,
+.primaryColor {
+  height: 4px;
+  width: 24px;
+  margin-top: 4px;
+  border-radius: 2px;
+}

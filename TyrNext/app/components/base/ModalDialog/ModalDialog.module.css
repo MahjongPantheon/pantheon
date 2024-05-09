@@ -1,0 +1,31 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  max-width: 80%;
+  border: 1px solid var(--border-color);
+  background-color: var(--page-bg);
+  border-radius: 8px;
+  box-shadow: 4px 4px 18px 0 rgba(0, 0, 0, 0.25);
+  color: var(--color-text-primary);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}

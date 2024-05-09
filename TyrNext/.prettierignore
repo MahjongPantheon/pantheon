@@ -1,0 +1,4 @@
+dev-dist/
+app/clients/proto/*
+app/i18n/*.json
+app/index.html
