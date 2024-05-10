@@ -18,6 +18,7 @@
 import * as React from 'react';
 import {
   Accordion,
+  ActionIcon,
   Alert,
   Avatar,
   Badge,
@@ -27,13 +28,14 @@ import {
   List,
   Space,
   Text,
+  Tooltip,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useEvent } from '../hooks/useEvent';
 import { useI18n } from '../hooks/i18n';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { IconAward, IconExclamationCircle } from '@tabler/icons-react';
+import { IconAward, IconExclamationCircle, IconInfoCircle } from '@tabler/icons-react';
 import { yakuNameMap } from '../helpers/yaku';
 import bestHand from '../../assets/img/bestHand.png';
 import bestFu from '../../assets/img/bestFu.png';
@@ -125,7 +127,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     return null;
   }
 
-  const achDataByKey = achievementsData.reduce(
+  const achDataByKey = achievementsData.achievements.reduce(
     (acc, val) => {
       try {
         acc[val.achievementId] = JSON.parse(val.achievementData);
@@ -799,10 +801,23 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           events?.[0].title,
         ])}
       />
-      <h2 style={{ display: 'flex', gap: '20px' }}>
-        {events?.[0] && <EventTypeIcon event={events[0]} />}
-        {events?.[0]?.title} - {i18n._t('Achievements')}
-      </h2>
+      <Group position='apart'>
+        <h2 style={{ display: 'flex', gap: '20px' }}>
+          {events?.[0] && <EventTypeIcon event={events[0]} />}
+          {events?.[0]?.title} - {i18n._t('Achievements')}
+        </h2>
+        <Tooltip
+          events={{ hover: true, focus: true, touch: true }}
+          openDelay={500}
+          position='bottom'
+          withArrow
+          label={i18n._t('Last update: %1', [achievementsData?.lastUpdate])}
+        >
+          <ActionIcon size={24} color='gray' variant='light'>
+            <IconInfoCircle />
+          </ActionIcon>
+        </Tooltip>
+      </Group>
       <Divider size='xs' />
       <Space h='md' />
       <Accordion chevronPosition='right' variant='contained' multiple={true}>

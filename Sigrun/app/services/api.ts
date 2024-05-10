@@ -228,9 +228,7 @@ export class ApiService {
     this._analytics?.track(Analytics.LOAD_STARTED, {
       method: 'GetEventAdmins',
     });
-    return GetAchievements({ eventId, achievementsList }, this._clientConfMimir).then(
-      (r) => r.achievements
-    );
+    return GetAchievements({ eventId, achievementsList }, this._clientConfMimir);
   }
 
   getSuperadminFlag(personId?: number) {

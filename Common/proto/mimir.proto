@@ -433,6 +433,7 @@ message EventsGetAchievementsPayload {
 
 message EventsGetAchievementsResponse {
   repeated Achievement achievements = 1;
+  string last_update = 2;
 }
 
 message EventsUpdatePlayersLocalIdsPayload {

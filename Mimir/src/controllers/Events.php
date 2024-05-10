@@ -712,15 +712,18 @@ class EventsController extends Controller
             $this->_meta->isEventAdmin();
 
         $result = [];
+        $lastUpdate = null;
         if (!$eventList[0]->getHideAchievements() || $isAdmin) {
-            $table = AchievementsPrimitive::findByEventId($this->_ds, [$eventId])[0]->getData();
+            $achievements = AchievementsPrimitive::findByEventId($this->_ds, [$eventId])[0];
+            $table = $achievements->getData();
+            $lastUpdate = DateHelper::getLocalDate($achievements->getLastUpdate(), $eventList[0]->getTimezone());
             foreach ($achievementsList as $ach) {
                 $result[$ach] = $table[$ach];
             }
         }
 
         $this->_log->info('Successfully received achievements list for event ids# ' . $eventId);
-        return $result;
+        return [$result, $lastUpdate];
     }
 
     /**

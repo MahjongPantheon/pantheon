@@ -1450,16 +1450,17 @@ final class TwirpServer implements Mimir
      */
     public function GetAchievements(array $ctx, EventsGetAchievementsPayload $req): EventsGetAchievementsResponse
     {
-        $ret = $this->_eventsController->getAchievements(
+        [$result, $lastUpdate] = $this->_eventsController->getAchievements(
             $req->getEventId(),
             iterator_to_array($req->getAchievementsList())
         );
         return (new EventsGetAchievementsResponse())
+            ->setLastUpdate($lastUpdate)
             ->setAchievements(array_map(function ($id, $ach) {
                 return (new Achievement())
                     ->setAchievementId($id)
                     ->setAchievementData(json_encode($ach) ?: '');
-            }, array_keys($ret), array_values($ret)));
+            }, array_keys($result), array_values($result)));
     }
 
     /**

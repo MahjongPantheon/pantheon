@@ -304,6 +304,7 @@ export interface EventsGetAchievementsPayload {
 
 export interface EventsGetAchievementsResponse {
   achievements: protoAtoms.Achievement[];
+  lastUpdate: string;
 }
 
 export interface EventsUpdatePlayersLocalIdsPayload {
@@ -7458,6 +7459,7 @@ export const EventsGetAchievementsResponse = {
   ): EventsGetAchievementsResponse {
     return {
       achievements: [],
+      lastUpdate: "",
       ...msg,
     };
   },
@@ -7476,6 +7478,9 @@ export const EventsGetAchievementsResponse = {
         protoAtoms.Achievement._writeMessage,
       );
     }
+    if (msg.lastUpdate) {
+      writer.writeString(2, msg.lastUpdate);
+    }
     return writer;
   },
 
@@ -7493,6 +7498,10 @@ export const EventsGetAchievementsResponse = {
           const m = protoAtoms.Achievement.initialize();
           reader.readMessage(m, protoAtoms.Achievement._readMessage);
           msg.achievements.push(m);
+          break;
+        }
+        case 2: {
+          msg.lastUpdate = reader.readString();
           break;
         }
         default: {
@@ -13394,6 +13403,7 @@ export const EventsGetAchievementsResponseJSON = {
   ): EventsGetAchievementsResponse {
     return {
       achievements: [],
+      lastUpdate: "",
       ...msg,
     };
   },
@@ -13409,6 +13419,9 @@ export const EventsGetAchievementsResponseJSON = {
       json["achievements"] = msg.achievements.map(
         protoAtoms.AchievementJSON._writeMessage,
       );
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
     }
     return json;
   },
@@ -13427,6 +13440,10 @@ export const EventsGetAchievementsResponseJSON = {
         protoAtoms.AchievementJSON._readMessage(m, item);
         msg.achievements.push(m);
       }
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
     }
     return msg;
   },

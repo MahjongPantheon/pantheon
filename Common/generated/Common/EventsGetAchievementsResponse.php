@@ -17,6 +17,10 @@ class EventsGetAchievementsResponse extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated .common.Achievement achievements = 1;</code>
      */
     private $achievements;
+    /**
+     * Generated from protobuf field <code>string last_update = 2;</code>
+     */
+    protected $last_update = '';
 
     /**
      * Constructor.
@@ -25,6 +29,7 @@ class EventsGetAchievementsResponse extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type array<\Common\Achievement>|\Google\Protobuf\Internal\RepeatedField $achievements
+     *     @type string $last_update
      * }
      */
     public function __construct($data = NULL) {
@@ -50,6 +55,28 @@ class EventsGetAchievementsResponse extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Achievement::class);
         $this->achievements = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 2;</code>
+     * @return string
+     */
+    public function getLastUpdate()
+    {
+        return $this->last_update;
+    }
+
+    /**
+     * Generated from protobuf field <code>string last_update = 2;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setLastUpdate($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->last_update = $var;
 
         return $this;
     }
