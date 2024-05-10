@@ -155,13 +155,13 @@
 }
 
 .common {
-  --font-sm: 12px;
-  --font-md: 15px;
-  --font-lg: 18px;
+  --font-sm: 14px;
+  --font-md: 18px;
+  --font-lg: 22px;
 
-  --size-sm: 16px;
-  --size-md: 24px;
-  --size-lg: 32px;
+  --size-sm: 18px;
+  --size-md: 26px;
+  --size-lg: 34px;
 
   --font-header: 36px;
 

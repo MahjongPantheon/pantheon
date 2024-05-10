@@ -26,7 +26,7 @@
 }
 
 .tabContent {
-  height: calc(100vh - 126px);
+  height: calc(100svh - 126px);
   position: relative;
 }
 

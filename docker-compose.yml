@@ -99,7 +99,6 @@ services:
           - tyr.pantheon.internal
   tyrnext:
     build: ./TyrNext
-    image: ghcr.io/mahjongpantheon/pantheon-tyr:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:

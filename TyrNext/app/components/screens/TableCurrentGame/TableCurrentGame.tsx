@@ -108,6 +108,7 @@ export const TableCurrentGame = ({ state, dispatch }: IComponentProps) => {
         }
         onGotoGameLog={showActionButtons ? () => dispatch({ type: SHOW_GAME_LOG }) : undefined}
         rulesetConfig={state.gameConfig?.rulesetConfig ?? {}}
+        topRowUpsideDown={!state.settings.singleDeviceMode}
       />
       {callRefereeConfirmationShown && (
         <ModalDialog
