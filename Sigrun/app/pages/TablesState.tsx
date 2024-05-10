@@ -187,7 +187,7 @@ function Table({
         {table.status === SessionStatus.SESSION_STATUS_FINISHED ||
         table.status === SessionStatus.SESSION_STATUS_PREFINISHED ? (
           <Badge variant='filled' color='green' size='xl' radius='sm' pl={8} pr={8}>
-            <IconCheck style={{ marginTop: '2px' }} />
+            <IconCheck style={{ marginTop: '6px' }} />
           </Badge>
         ) : (
           <Badge variant='filled' color='grape' size='xl' radius='sm' pl={8} pr={8}>

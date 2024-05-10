@@ -1458,7 +1458,7 @@ final class TwirpServer implements Mimir
             ->setLastUpdate($lastUpdate)
             ->setAchievements(array_map(function ($id, $ach) {
                 return (new Achievement())
-                    ->setAchievementId($id)
+                    ->setAchievementId((string)$id)
                     ->setAchievementData(json_encode($ach) ?: '');
             }, array_keys($result), array_values($result)));
     }

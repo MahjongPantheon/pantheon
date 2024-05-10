@@ -9,8 +9,8 @@ import {
   IconAward,
   IconChartBar,
   IconChartLine,
+  IconClipboardData,
   IconDeviceMobileShare,
-  IconDeviceWatchStats,
   IconLanguageHiragana,
   IconList,
   IconListCheck,
@@ -107,7 +107,7 @@ export const MainMenu = ({
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
                 <MainMenuLink
                   href={`/event/${globals.data.eventId?.join('.')}/tablesState`}
-                  icon={<IconDeviceWatchStats size={24} />}
+                  icon={<IconClipboardData size={24} />}
                   text={showLabels ? i18n._pt('Event menu', 'Tables state') : ''}
                   title={i18n._pt('Event menu', 'Tables state')}
                   onClick={closeMenu}
