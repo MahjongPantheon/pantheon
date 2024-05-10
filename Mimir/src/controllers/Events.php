@@ -1253,4 +1253,40 @@ class EventsController extends Controller
         $this->_log->info('Successfully got starting timer for event #' . $eventId);
         return $event[0]->getNextGameStartTime() - time();
     }
+
+    /**
+     * @param int $eventId
+     * @return bool success
+     * @throws BadActionException
+     */
+    public function recalcAchievements($eventId)
+    {
+        $this->_log->info('Rebuilding achievements for event #' . $eventId);
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to rebuild achievements for this event");
+        }
+
+        $success = JobsQueuePrimitive::scheduleRebuildAchievements($this->_ds, $eventId);
+
+        $this->_log->info('Scheduled rebuild of achievements for event #' . $eventId);
+        return $success;
+    }
+
+    /**
+     * @param int $eventId
+     * @return bool success
+     * @throws BadActionException
+     */
+    public function recalcPlayerStats($eventId)
+    {
+        $this->_log->info('Rebuilding player stats for event #' . $eventId);
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to rebuild player stats for this event");
+        }
+
+        $success = JobsQueuePrimitive::scheduleRebuildPlayerStats($this->_ds, $eventId);
+
+        $this->_log->info('Scheduled rebuild of player stats for event #' . $eventId);
+        return $success;
+    }
 }

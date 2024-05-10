@@ -445,6 +445,10 @@ export interface CallRefereePayload {
   eventId: number;
 }
 
+export interface RecalcPayload {
+  eventId: number;
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -1250,6 +1254,30 @@ export async function CallReferee(
   const response = await PBrequest(
     "/common.Mimir/CallReferee",
     CallRefereePayload.encode(callRefereePayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function RecalcAchievements(
+  recalcPayload: RecalcPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/RecalcAchievements",
+    RecalcPayload.encode(recalcPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function RecalcPlayerStats(
+  recalcPayload: RecalcPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/RecalcPlayerStats",
+    RecalcPayload.encode(recalcPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
@@ -2075,6 +2103,30 @@ export async function CallRefereeJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+export async function RecalcAchievementsJSON(
+  recalcPayload: RecalcPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/RecalcAchievements",
+    RecalcPayloadJSON.encode(recalcPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
+export async function RecalcPlayerStatsJSON(
+  recalcPayload: RecalcPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/RecalcPlayerStats",
+    RecalcPayloadJSON.encode(recalcPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 //========================================//
 //                 Mimir                  //
 //========================================//
@@ -2416,6 +2468,18 @@ export interface Mimir<Context = unknown> {
     | protoAtoms.GenericSuccessResponse;
   CallReferee: (
     callRefereePayload: CallRefereePayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  RecalcAchievements: (
+    recalcPayload: RecalcPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  RecalcPlayerStats: (
+    recalcPayload: RecalcPayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
@@ -3207,6 +3271,24 @@ export function createMimir<Context>(service: Mimir<Context>) {
         name: "CallReferee",
         handler: service.CallReferee,
         input: { protobuf: CallRefereePayload, json: CallRefereePayloadJSON },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      RecalcAchievements: {
+        name: "RecalcAchievements",
+        handler: service.RecalcAchievements,
+        input: { protobuf: RecalcPayload, json: RecalcPayloadJSON },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      RecalcPlayerStats: {
+        name: "RecalcPlayerStats",
+        handler: service.RecalcPlayerStats,
+        input: { protobuf: RecalcPayload, json: RecalcPayloadJSON },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
@@ -9761,6 +9843,74 @@ export const CallRefereePayload = {
   },
 };
 
+export const RecalcPayload = {
+  /**
+   * Serializes RecalcPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<RecalcPayload>): Uint8Array {
+    return RecalcPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes RecalcPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): RecalcPayload {
+    return RecalcPayload._readMessage(
+      RecalcPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes RecalcPayload with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<RecalcPayload>): RecalcPayload {
+    return {
+      eventId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<RecalcPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: RecalcPayload,
+    reader: protoscript.BinaryReader,
+  ): RecalcPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -15367,6 +15517,59 @@ export const CallRefereePayloadJSON = {
     if (_tableIndex_) {
       msg.tableIndex = protoscript.parseNumber(_tableIndex_);
     }
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    return msg;
+  },
+};
+
+export const RecalcPayloadJSON = {
+  /**
+   * Serializes RecalcPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<RecalcPayload>): string {
+    return JSON.stringify(RecalcPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes RecalcPayload from JSON.
+   */
+  decode: function (json: string): RecalcPayload {
+    return RecalcPayloadJSON._readMessage(
+      RecalcPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes RecalcPayload with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<RecalcPayload>): RecalcPayload {
+    return {
+      eventId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<RecalcPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: RecalcPayload, json: any): RecalcPayload {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = protoscript.parseNumber(_eventId_);

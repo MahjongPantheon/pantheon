@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 19:38Z\n"
+"POT-Creation-Date: 2024-05-10 20:35Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -84,7 +84,7 @@ msgstr ""
 "Alle angezeigten Zeiten und Datumsangaben werden der ausgewählten Zeitzone "
 "angepasst."
 
-#: app/components/MainMenu.tsx:171:17
+#: app/components/MainMenu.tsx:202:17
 msgid "All events"
 msgstr "Events"
 
@@ -209,6 +209,8 @@ msgid ""
 msgstr ""
 "Sitzplan konnte nicht erstellt werden: Spielerzahl kein vielfaches von Vier"
 
+#: app/components/RecalcAchievementsModal.tsx:49:12
+#: app/components/RecalcPlayerStatsModal.tsx:49:12
 #: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:251:14
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -276,7 +278,7 @@ msgstr "Stadt"
 msgid "Collect riichi bets by atamahane"
 msgstr "Riichieinsätze nach Atamahane verteilen"
 
-#: app/components/MainMenu.tsx:164:18
+#: app/components/MainMenu.tsx:195:18
 msgid "Common actions"
 msgstr "Zuletzt genutzt"
 
@@ -326,7 +328,7 @@ msgstr ""
 msgid "Daisuushii"
 msgstr ""
 
-#: app/components/MainMenu.tsx:128:24 app/pages/OwnedEvents.tsx:373:38
+#: app/components/MainMenu.tsx:129:24 app/pages/OwnedEvents.tsx:373:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Gefahrenzone"
@@ -355,7 +357,7 @@ msgstr "Event :: %1 bearbeiten"
 msgid "Edit event settings"
 msgstr "Eventeinstellungen bearbeiten"
 
-#: app/components/MainMenu.tsx:218:19
+#: app/components/MainMenu.tsx:249:19
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
@@ -436,7 +438,7 @@ msgstr "Manuelles Festlegen der Sitzordnung"
 msgid "Event title"
 msgstr "Eventname"
 
-#: app/components/MainMenu.tsx:77:22
+#: app/components/MainMenu.tsx:78:22
 msgid "Event: %1"
 msgstr ""
 
@@ -576,7 +578,7 @@ msgstr "Spieler such und hinzufügen..."
 msgid "Find replacement player by name..."
 msgstr "Ersatzspieler suchen..."
 
-#: app/components/MainMenu.tsx:145:24 app/pages/OwnedEvents.tsx:384:34
+#: app/components/MainMenu.tsx:176:24 app/pages/OwnedEvents.tsx:384:34
 #: app/pages/OwnedEvents.tsx:392:28
 msgid "Finish event"
 msgstr "Event beenden"
@@ -848,7 +850,7 @@ msgstr ""
 msgid "Kuitan"
 msgstr ""
 
-#: app/components/MainMenu.tsx:250:18
+#: app/components/MainMenu.tsx:281:18
 msgid "Language"
 msgstr "Sprache"
 
@@ -893,7 +895,7 @@ msgstr "Abmelden"
 msgid "Manage current games"
 msgstr "Aktuelle Spiele bearbeiten"
 
-#: app/components/MainMenu.tsx:110:25 app/pages/OwnedEvents.tsx:351:33
+#: app/components/MainMenu.tsx:111:25 app/pages/OwnedEvents.tsx:351:33
 msgid "Manage games"
 msgstr "Spiele bearbeiten"
 
@@ -905,7 +907,7 @@ msgstr "Meine Events bearbeiten"
 msgid "Manage penalties"
 msgstr "Strafeinstellungen bearbeiten"
 
-#: app/components/MainMenu.tsx:98:25 app/pages/OwnedEvents.tsx:361:34
+#: app/components/MainMenu.tsx:99:25 app/pages/OwnedEvents.tsx:361:34
 #: app/pages/OwnedEvents.tsx:363:33
 msgid "Manage players"
 msgstr "Spieler bearbeiten"
@@ -958,7 +960,7 @@ msgstr "Mehrlinienfeld. Markdown Syntax wird unterstützt."
 msgid "Multiple yakumans"
 msgstr "Mehrfach Yakuman"
 
-#: app/components/MainMenu.tsx:178:19
+#: app/components/MainMenu.tsx:209:19
 msgid "My events"
 msgstr "Meine Events"
 
@@ -999,7 +1001,7 @@ msgstr "Nicht gestartet"
 msgid "Nothing found"
 msgstr "Keine Ergebnisse"
 
-#: app/components/MainMenu.tsx:226:19
+#: app/components/MainMenu.tsx:257:19
 msgid "Notifications"
 msgstr ""
 
@@ -1094,11 +1096,11 @@ msgstr ""
 msgid "Open Pantheon bot"
 msgstr "Pantheon Bot öffnen"
 
-#: app/components/MainMenu.tsx:242:17
+#: app/components/MainMenu.tsx:273:17
 msgid "Open assistant"
 msgstr "Mobile App öffnen"
 
-#: app/components/MainMenu.tsx:84:21
+#: app/components/MainMenu.tsx:85:21
 msgid "Open event page"
 msgstr "Öffne Eventseite"
 
@@ -1150,7 +1152,7 @@ msgstr "Honba werden nach Atamahaneregel bezahlt"
 msgid "Payments and scores"
 msgstr "Punkte und Bezahlen"
 
-#: app/components/MainMenu.tsx:104:25 app/pages/OwnedEvents.tsx:357:33
+#: app/components/MainMenu.tsx:105:25 app/pages/OwnedEvents.tsx:357:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Strafen"
@@ -1284,7 +1286,7 @@ msgstr "Bitte Spielername eintragen um den Account zu löschen"
 msgid "Please wait unit seating is ready"
 msgstr "Bitte warten bis die Sitzordnung bereit ist"
 
-#: app/components/MainMenu.tsx:117:27 app/pages/OwnedEvents.tsx:344:35
+#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:344:35
 msgid "Predefined seating"
 msgstr "Manuelle Sitzordnung"
 
@@ -1325,10 +1327,55 @@ msgstr "Bereit zur Bestätigung"
 msgid "Really reset timer?"
 msgstr "Den Timer wirklich zurücksetzen?"
 
-#: app/components/MainMenu.tsx:134:24 app/pages/OwnedEvents.tsx:376:36
+#: app/components/MainMenu.tsx:135:24 app/pages/OwnedEvents.tsx:376:36
 #: app/pages/OwnedEvents.tsx:380:30
 msgid "Rebuild scoring"
 msgstr "Punktestand neuberechnen"
+
+#: app/components/RecalcAchievementsModal.tsx:59:12
+#: app/components/RecalcPlayerStatsModal.tsx:59:12
+msgid "Recalculate"
+msgstr ""
+
+#: app/components/MainMenu.tsx:146:24
+#, fuzzy
+msgid "Recalculate achievements"
+msgstr "Ergebnisansicht und Auszeichnungen ausblenden"
+
+#: app/components/RecalcAchievementsModal.tsx:42:10
+msgid ""
+"Recalculate achievements for event \"%1\" (id #%2)? Recalculation will be "
+"scheduled and will be completed in several minutes"
+msgstr ""
+
+#: app/components/MainMenu.tsx:161:24
+msgid "Recalculate players stats"
+msgstr ""
+
+#: app/components/RecalcPlayerStatsModal.tsx:42:10
+msgid ""
+"Recalculate stats for all players in event \"%1\" (id #%2)? Recalculation "
+"will be scheduled and will be completed in several minutes"
+msgstr ""
+
+#: app/components/RecalcAchievementsModal.tsx:19:20
+msgid "Recalculation of achievements was successfully scheduled. Please wait."
+msgstr ""
+
+#: app/components/RecalcPlayerStatsModal.tsx:19:20
+msgid "Recalculation of players stats was successfully scheduled. Please wait."
+msgstr ""
+
+#: app/components/RecalcAchievementsModal.tsx:26:18
+#: app/components/RecalcPlayerStatsModal.tsx:26:18
+msgid "Recalculation schedule failed"
+msgstr ""
+
+#: app/components/RecalcAchievementsModal.tsx:18:18
+#: app/components/RecalcPlayerStatsModal.tsx:18:18
+#, fuzzy
+msgid "Recalculation scheduled"
+msgstr "Runde ist geplant"
 
 #: app/pages/ProfileResetPassword.tsx:32:16
 #: app/pages/ProfileResetPasswordConfirm.tsx:212:37
@@ -1344,7 +1391,7 @@ msgstr "Daten aktualisieren [%1]"
 msgid "Register new account"
 msgstr "Neuen Account erstellen"
 
-#: app/components/MainMenu.tsx:202:19 app/pages/ProfileManageAdmin.tsx:321:21
+#: app/components/MainMenu.tsx:233:19 app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr "Spieler anmelden"
 
@@ -1592,7 +1639,7 @@ msgstr "Runde ist geplant"
 msgid "Session started"
 msgstr "Runde gestartet"
 
-#: app/components/MainMenu.tsx:90:21 app/pages/OwnedEvents.tsx:369:33
+#: app/components/MainMenu.tsx:91:21 app/pages/OwnedEvents.tsx:369:33
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -1643,21 +1690,26 @@ msgstr "Ergebnisansicht und Auszeichnungen einblenden"
 msgid "Show user avatar"
 msgstr "Profilbild anzeigen"
 
-#: app/components/MainMenu.tsx:186:19
+#: app/components/MainMenu.tsx:217:19
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: app/components/MainMenu.tsx:234:19
+#: app/components/MainMenu.tsx:265:19
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: app/components/MainMenu.tsx:194:19
+#: app/components/MainMenu.tsx:225:19
 msgid "Sign up"
 msgstr "Konto anmelden"
 
 #: app/pages/OwnedEventsEdit/UmaSelect.tsx:37:61
 msgid "Simple rank-based"
 msgstr "Rang basiert"
+
+#: app/components/RecalcAchievementsModal.tsx:27:20
+#: app/components/RecalcPlayerStatsModal.tsx:27:20
+msgid "Something went wrong. Contact pantheon service administrator"
+msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:247:21
 msgid "Start timer"
@@ -1716,7 +1768,7 @@ msgstr ""
 msgid "System ID"
 msgstr "System ID"
 
-#: app/components/MainMenu.tsx:210:19 app/pages/SystemStats.tsx:164:16
+#: app/components/MainMenu.tsx:241:19 app/pages/SystemStats.tsx:164:16
 msgid "System stats"
 msgstr "Systeminformationen"
 
@@ -1839,11 +1891,11 @@ msgstr ""
 "Startwert des Timers. Nach Ablauf der Zeit, werden die Einstellungen für "
 "Matchende angewendet(siehe unten)."
 
-#: app/components/MainMenu.tsx:301:18
+#: app/components/MainMenu.tsx:332:18
 msgid "Toggle color scheme"
 msgstr "Farbschema"
 
-#: app/components/MainMenu.tsx:292:18
+#: app/components/MainMenu.tsx:323:18
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 

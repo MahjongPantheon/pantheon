@@ -155,6 +155,10 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc CallReferee (CallRefereePayload)
     returns (GenericSuccessResponse);
+  rpc RecalcAchievements (RecalcPayload)
+    returns (GenericSuccessResponse);
+  rpc RecalcPlayerStats (RecalcPayload)
+    returns (GenericSuccessResponse);
 }
 
 message EventsGetRulesetsPayload {
@@ -572,4 +576,8 @@ message ForceFinishGamePayload {
 message CallRefereePayload {
   int32 table_index = 1;
   int32 event_id = 2;
+}
+
+message RecalcPayload {
+  int32 event_id = 1;
 }

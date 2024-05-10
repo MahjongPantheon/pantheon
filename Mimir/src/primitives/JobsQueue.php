@@ -175,4 +175,39 @@ class JobsQueuePrimitive extends Primitive
         $this->_jobName = $jobName;
         return $this;
     }
+
+    /**
+     * @param DataSource $ds
+     * @param int $eventId
+     * @return bool success
+     */
+    public static function scheduleRebuildAchievements(DataSource $ds, $eventId)
+    {
+        try {
+            $query = "insert into jobs_queue (created_at, job_name, job_arguments) VALUES (now(), 'achievements', '{\"eventId\":$eventId}')";
+            $ds->table(self::$_table)->rawQuery($query)->findOne();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param int $eventId
+     * @return bool success
+     */
+    public static function scheduleRebuildPlayerStats(DataSource $ds, $eventId)
+    {
+        try {
+            $query = <<<QUERY
+insert into jobs_queue (created_at, job_name, job_arguments)
+select now(), 'playerStats', '{"playerId":' || player_id || ',"eventId":' || event_id || '}' from event_registered_players where event_id = {$eventId}
+QUERY;
+            $ds->table(self::$_table)->rawQuery($query)->findOne();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

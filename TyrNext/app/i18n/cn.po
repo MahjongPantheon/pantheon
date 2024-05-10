@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-09 18:51Z\n"
+"POT-Creation-Date: 2024-05-10 20:35Z\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -46,15 +46,15 @@ msgstr "中途流局"
 msgid "Abortive draw"
 msgstr "中途流局"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:115:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
 msgid "Call referee"
 msgstr "呼叫裁判"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:123:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
 msgid "Call referee for your table?"
 msgstr "叫裁判到你的桌子来吗？"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:120:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
 msgid "Cancel"
 msgstr "取消"
 
@@ -180,7 +180,8 @@ msgid "Houtei raoyui"
 msgstr "河底捞鱼"
 
 #: app/components/pages/Login/LoginError.tsx:39:12
-msgid "If in doubt, contact the tournament administrator for further instructions."
+msgid ""
+"If in doubt, contact the tournament administrator for further instructions."
 msgstr "如有疑问，请联系赛事管理员"
 
 #: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
@@ -310,7 +311,7 @@ msgstr "如需选择/取消 役：立直，请返回确认立直玩家"
 msgid "Previous game"
 msgstr "上一场对局"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:127:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
 msgid "Referee has been requested to your table!"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-09 18:55Z\n"
+"POT-Creation-Date: 2024-05-10 20:35Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,19 +261,19 @@ msgstr ""
 msgid "Player name"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:115:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
 msgid "Call referee"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:120:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
 msgid "Cancel"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:123:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
 msgid "Call referee for your table?"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:127:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
 msgid "Referee has been requested to your table!"
 msgstr ""
 

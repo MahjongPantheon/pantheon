@@ -1843,6 +1843,30 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param array $ctx
+     * @param \Common\RecalcPayload $req
+     * @return GenericSuccessResponse
+     * @throws BadActionException
+     */
+    public function RecalcAchievements(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse
+    {
+        return (new GenericSuccessResponse())
+            ->setSuccess($this->_eventsController->recalcAchievements($req->getEventId()));
+    }
+
+    /**
+     * @param array $ctx
+     * @param \Common\RecalcPayload $req
+     * @return GenericSuccessResponse
+     * @throws BadActionException
+     */
+    public function RecalcPlayerStats(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse
+    {
+        return (new GenericSuccessResponse())
+            ->setSuccess($this->_eventsController->recalcPlayerStats($req->getEventId()));
+    }
+
+    /**
      * Check of rights for access by external service.
      *
      * @param string $token

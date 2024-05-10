@@ -15,6 +15,7 @@ import {
   IconMoonStars,
   IconNotification,
   IconOlympics,
+  IconRefresh,
   IconRefreshAlert,
   IconScript,
   IconSun,
@@ -138,6 +139,36 @@ export const MainMenu = ({
                   rebuildScoring(parseInt((match ? params : paramsEdit)?.id ?? '', 10));
                 }}
                 icon={<IconRefreshAlert />}
+              />
+            )}
+            {eventData && !eventData.finished && (
+              <NavLink
+                label={i18n._t('Recalculate achievements')}
+                styles={{ label: { fontSize: '18px', color: 'red' } }}
+                icon={<IconRefresh />}
+                onClick={() => {
+                  closeMenu?.();
+                  modals.setRecalcAchievementsModalData({
+                    id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                    title: eventData?.title ?? '',
+                  });
+                  modals.showRecalcAchievementsModal();
+                }}
+              />
+            )}
+            {eventData && !eventData.finished && (
+              <NavLink
+                label={i18n._t('Recalculate players stats')}
+                styles={{ label: { fontSize: '18px', color: 'red' } }}
+                icon={<IconRefresh />}
+                onClick={() => {
+                  closeMenu?.();
+                  modals.setRecalcPlayerStatsModalData({
+                    id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                    title: eventData?.title ?? '',
+                  });
+                  modals.showRecalcPlayerStatsModal();
+                }}
               />
             )}
             {eventData && !eventData.finished && (

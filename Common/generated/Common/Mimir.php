@@ -606,4 +606,22 @@ interface Mimir
      * @throws \Twirp\Error
      */
     public function CallReferee(array $ctx, \Common\CallRefereePayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/RecalcAchievements</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function RecalcAchievements(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/RecalcPlayerStats</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function RecalcPlayerStats(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse;
 }

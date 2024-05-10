@@ -24,6 +24,20 @@ export const modals = {
   setStopEventModalData: ({ id, title }: { id: number; title: string }) => {},
   showStopEventModal: () => {},
   hideStopEventModal: () => {},
+
+  recalcAchievementsModalShown: false,
+  recalcAchievementsModalData: { id: 0, title: '' },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setRecalcAchievementsModalData: ({ id, title }: { id: number; title: string }) => {},
+  showRecalcAchievementsModal: () => {},
+  hideRecalcAchievementsModal: () => {},
+
+  recalcPlayerStatsModalShown: false,
+  recalcPlayerStatsModalData: { id: 0, title: '' },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setRecalcPlayerStatsModalData: ({ id, title }: { id: number; title: string }) => {},
+  showRecalcPlayerStatsModal: () => {},
+  hideRecalcPlayerStatsModal: () => {},
 };
 
 export const modalsCtx = createContext(modals);

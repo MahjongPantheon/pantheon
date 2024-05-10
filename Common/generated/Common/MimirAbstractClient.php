@@ -1596,6 +1596,52 @@ abstract class MimirAbstractClient
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function RecalcAchievements(array $ctx, \Common\RecalcPayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'RecalcAchievements');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/RecalcAchievements';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/RecalcAchievements';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function RecalcPlayerStats(array $ctx, \Common\RecalcPayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'RecalcPlayerStats');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/RecalcPlayerStats';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/RecalcPlayerStats';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
      * Common code to make a request to the remote twirp service.
      */
     abstract protected function doRequest(array $ctx, string $url, Message $in, Message $out): void;

@@ -40,6 +40,8 @@ import {
   MakeSwissSeating,
   NotifyPlayersSessionStartsSoon,
   RebuildScoring,
+  RecalcAchievements,
+  RecalcPlayerStats,
   RegisterPlayer,
   ResetSeating,
   StartTimer,
@@ -304,6 +306,16 @@ export class ApiService {
   finishEvent(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'FinishEvent' });
     return FinishEvent({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  recalcAchievements(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RecalcAchievements' });
+    return RecalcAchievements({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  recalcPlayerStats(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RecalcPlayerStats' });
+    return RecalcPlayerStats({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   getEventForEdit(id: number) {

@@ -49,6 +49,8 @@ import { MainMenu } from './components/MainMenu';
 import { useRoute } from 'wouter';
 import { Event } from './clients/proto/atoms.pb';
 import { fontLoader } from './helpers/fontLoader';
+import { RecalcAchievementsModal } from './components/RecalcAchievementsModal';
+import { RecalcPlayerStatsModal } from './components/RecalcPlayerStatsModal';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
@@ -80,6 +82,22 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [stopEventModalShown, { close: hideStopEventModal, open: showStopEventModal }] =
     useDisclosure(false);
   const [stopEventModalData, setStopEventModalData] = useState({ id: 0, title: '' });
+  const [
+    recalcAchievementsModalShown,
+    { close: hideRecalcAchievementsModal, open: showRecalcAchievementsModal },
+  ] = useDisclosure(false);
+  const [recalcAchievementsModalData, setRecalcAchievementsModalData] = useState({
+    id: 0,
+    title: '',
+  });
+  const [
+    recalcPlayerStatsModalShown,
+    { close: hideRecalcPlayerStatsModal, open: showRecalcPlayerStatsModal },
+  ] = useDisclosure(false);
+  const [recalcPlayerStatsModalData, setRecalcPlayerStatsModalData] = useState({
+    id: 0,
+    title: '',
+  });
 
   const storage = useStorage();
   const api = useApi();
@@ -168,6 +186,18 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             stopEventModalData,
             stopEventModalShown,
             hideStopEventModal,
+
+            showRecalcAchievementsModal,
+            setRecalcAchievementsModalData,
+            recalcAchievementsModalData,
+            recalcAchievementsModalShown,
+            hideRecalcAchievementsModal,
+
+            showRecalcPlayerStatsModal,
+            setRecalcPlayerStatsModalData,
+            recalcPlayerStatsModalData,
+            recalcPlayerStatsModalShown,
+            hideRecalcPlayerStatsModal,
           }}
         >
           <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
@@ -374,6 +404,8 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                   </Container>
                   {children}
                   <StopEventModal />
+                  <RecalcAchievementsModal />
+                  <RecalcPlayerStatsModal />
                   <Notifications autoClose={4000} />
                 </AppShell>
               </MantineProvider>
