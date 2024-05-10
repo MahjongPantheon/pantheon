@@ -154,6 +154,58 @@
   --avatar-fg-pink: #cf8cae;
 }
 
+.themeOled {
+  --page-bg: var(--full-black);
+  --element-bg: var(--blue-accent-darkest);
+  --element-highlight: var(--gray-accent-darker);
+  --panels-bg: var(--full-black);
+
+  --color-text-primary: var(--gray-primary);
+  --color-text-slight: var(--gray-accent-darker);
+  --color-text-contrast: var(--gray-accent-light);
+
+  --border-color: var(--gray-accent-darker);
+  --border-color-disabled: var(--gray-accent-darkest);
+  --button-text: var(--color-text-primary);
+
+  --color-success: var(--green-accent-light);
+  --color-danger: var(--red-accent-light);
+
+  --color-action: var(--blue-accent-darkbright);
+  --color-highlight-primary: var(--blue-primary);
+
+  --color-riichi-point: var(--red-primary);
+  --riichi-fill-color: var(--gray-accent-light);
+
+  --wind-bg-color-east: var(--red-accent-dark);
+  --wind-bg-color-south: var(--yellow-accent-dark);
+  --wind-bg-color-west: var(--green-accent-dark);
+  --wind-bg-color-north: var(--blue-accent-dark);
+
+  --avatar-bg-red: #643535;
+  --avatar-fg-red: #c79494;
+  --avatar-bg-orange: #784421;
+  --avatar-fg-orange: #dca57f;
+  --avatar-bg-yellow: #755b24;
+  --avatar-fg-yellow: #d9bc82;
+  --avatar-bg-green: #35644c;
+  --avatar-fg-green: #95c6ad;
+  --avatar-bg-lime: #436435;
+  --avatar-fg-lime: #a4c695;
+  --avatar-bg-teal: #376260;
+  --avatar-fg-teal: #97c4c3;
+  --avatar-bg-cyan: #3a5a5f;
+  --avatar-fg-cyan: #9abcc1;
+  --avatar-bg-blue: #304d69;
+  --avatar-fg-blue: #8faecc;
+  --avatar-bg-purple: #473d5c;
+  --avatar-fg-purple: #a79dbd;
+  --avatar-bg-grape: #5b2d6c;
+  --avatar-fg-grape: #bc8ccf;
+  --avatar-bg-pink: #6c2d4d;
+  --avatar-fg-pink: #cf8cae;
+}
+
 .common {
   --font-sm: 14px;
   --font-md: 18px;
@@ -171,6 +223,7 @@
   --gray-accent-darker: #666;
   --gray-accent-darkest: #333;
   --black: #222;
+  --full-black: #000;
 
   --red-primary: #d32b2b;
   --red-accent-dark: #845252;

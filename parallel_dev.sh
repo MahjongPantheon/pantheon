@@ -7,6 +7,11 @@ make dev_tyr &
 TYR_PID=$!
 echo $TYR_PID
 
+echo 'Starting TyrNext dev';
+make dev_tyrnext &
+TYRNEXT_PID=$!
+echo $TYRNEXT_PID
+
 echo 'Starting Forseti dev';
 make dev_forseti &
 FORSETI_PID=$!
@@ -27,12 +32,15 @@ make dev_skirnir &
 SKIRNIR_PID=$!
 echo $SKIRNIR_PID
 
-trap "TRAPPED_SIGNAL=true; make tyr_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop;" SIGTERM  SIGINT
+trap "TRAPPED_SIGNAL=true; make tyr_stop; make tyrnext_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop;" SIGTERM  SIGINT
 
 while :
 do
     kill -0 $TYR_PID 2> /dev/null
     TYR_STATUS=$?
+
+    kill -0 $TYRNEXT_PID 2> /dev/null
+    TYRNEXT_STATUS=$?
 
     kill -0 $FORSETI_PID 2> /dev/null
     FORSETI_STATUS=$?
@@ -47,7 +55,7 @@ do
     SKIRNIR_STATUS=$?
 
     if [ "$TRAPPED_SIGNAL" = "false" ]; then
-        if [ $TYR_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ]; then
+        if [ $TYR_STATUS -ne 0 ] || [ $TYRNEXT_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ]; then
             if [ $FORSETI_STATUS -eq 0 ]; then
                 kill -15 $FORSETI_PID;
                 wait $FORSETI_PID;
@@ -55,6 +63,10 @@ do
             if [ $TYR_STATUS -eq 0 ]; then
                 kill -15 $TYR_PID;
                 wait $TYR_PID;
+            fi
+            if [ $TYRNEXT_STATUS -eq 0 ]; then
+                kill -15 $TYRNEXT_PID;
+                wait $TYRNEXT_PID;
             fi
             if [ $SIGRUN_STATUS -eq 0 ]; then
                 kill -15 $SIGRUN_PID;
@@ -71,7 +83,7 @@ do
             exit 1;
         fi
     else
-       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ]; then
+       if [ $TYR_STATUS -ne 0 ] && [ $TYRNEXT_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ]; then
             exit 0;
        fi
     fi

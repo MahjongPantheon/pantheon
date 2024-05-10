@@ -41,7 +41,15 @@ const junkmatTheme = {
   textColor: '#E6E6E6',
 } as Theme;
 
-export const themes = [dayTheme, nightTheme, junkmatTheme];
+const oledTheme = {
+  name: 'oled',
+  backgroundColor: '#000',
+  primaryColor: '#5f9be0',
+  secondaryColor: '#a4b2c8',
+  textColor: '#E6E6E6',
+} as Theme;
+
+export const themes = [dayTheme, nightTheme, junkmatTheme, oledTheme];
 
 export type Theme = {
   name: string;

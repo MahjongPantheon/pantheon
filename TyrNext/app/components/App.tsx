@@ -156,6 +156,7 @@ export const App = (props: IProps) => {
     currentThemeName === 'day' ? themes.themeDay : null,
     currentThemeName === 'night' ? themes.themeNight : null,
     currentThemeName === 'junkmat' ? themes.themeJunkmat : null,
+    currentThemeName === 'oled' ? themes.themeOled : null,
   ];
 
   return (
