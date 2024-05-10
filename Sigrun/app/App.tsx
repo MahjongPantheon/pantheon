@@ -28,6 +28,7 @@ import { Achievements } from './pages/Achievements';
 import { EventRulesOverview } from './pages/EventRulesOverview';
 import { RegisteredPlayers } from './pages/RegisteredPlayers';
 import './App.css';
+import { TablesState } from './pages/TablesState';
 
 export function App() {
   return (
@@ -43,6 +44,7 @@ export function App() {
         component={RatingTable}
       />
       <Route path='/event/:eventId/playersList' component={RegisteredPlayers} />
+      <Route path='/event/:eventId/tablesState' component={TablesState} />
       <Route path='/event/:eventId/player/:playerId' component={PlayerStats} />
       <Route path='/event/:eventId/games' component={RecentGames} />
       <Route path='/event/:eventId/games/page/:page' component={RecentGames} />

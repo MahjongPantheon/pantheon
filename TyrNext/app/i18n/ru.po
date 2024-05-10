@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-10 21:27Z\n"
 "PO-Revision-Date: 2024-05-09 21:58+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -265,7 +265,7 @@ msgstr "На данный момент ни один стол не играет"
 msgid "Nobody selected"
 msgstr "Никто не выбран"
 
-#: app/components/App.tsx:182:35
+#: app/components/App.tsx:183:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "ОК"
@@ -310,7 +310,7 @@ msgstr "Пин-фу"
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: app/components/App.tsx:184:16
+#: app/components/App.tsx:185:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "Пожалуйста, вернитесь назад и нажмите кнопку риичи для выигравшего"
 

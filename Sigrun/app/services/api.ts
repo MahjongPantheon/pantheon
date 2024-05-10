@@ -29,6 +29,7 @@ import {
   GetPlayer,
   GetPlayerStats,
   GetRatingTable,
+  GetTablesState,
   GetTimerState,
 } from '../clients/proto/mimir.pb';
 import {
@@ -256,5 +257,10 @@ export class ApiService {
   authorize(email: string, password: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'Authorize' });
     return Authorize({ email, password }, this._clientConfFrey);
+  }
+
+  getTablesState(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTablesState' });
+    return GetTablesState({ eventId }, this._clientConfMimir);
   }
 }

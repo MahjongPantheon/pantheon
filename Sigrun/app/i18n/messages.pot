@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-10 21:27Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,108 +127,114 @@ msgstr ""
 msgid "Hands value"
 msgstr ""
 
-#: app/components/MainMenu.tsx:64:37
+#: app/components/MainMenu.tsx:65:37
 msgid "Current event"
 msgstr ""
 
-#: app/components/MainMenu.tsx:73:40
-#: app/components/MainMenu.tsx:74:28
+#: app/components/MainMenu.tsx:74:40
+#: app/components/MainMenu.tsx:75:28
 msgid "Edit event in admin panel"
 msgstr ""
 
-#: app/components/MainMenu.tsx:81:36
-#: app/components/MainMenu.tsx:82:24
+#: app/components/MainMenu.tsx:82:36
+#: app/components/MainMenu.tsx:83:24
 msgctxt "Event menu"
 msgid "Description"
 msgstr ""
 
-#: app/components/MainMenu.tsx:88:36
-#: app/components/MainMenu.tsx:89:24
+#: app/components/MainMenu.tsx:89:36
+#: app/components/MainMenu.tsx:90:24
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr ""
 
-#: app/components/MainMenu.tsx:95:36
-#: app/components/MainMenu.tsx:96:24
+#: app/components/MainMenu.tsx:96:36
+#: app/components/MainMenu.tsx:97:24
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr ""
 
-#: app/components/MainMenu.tsx:102:36
-#: app/components/MainMenu.tsx:103:24
+#: app/components/MainMenu.tsx:103:36
+#: app/components/MainMenu.tsx:104:24
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr ""
 
-#: app/components/MainMenu.tsx:110:38
+#: app/components/MainMenu.tsx:111:38
+#: app/components/MainMenu.tsx:112:26
+msgctxt "Event menu"
+msgid "Tables state"
+msgstr ""
+
+#: app/components/MainMenu.tsx:120:38
 msgctxt "Event menu"
 msgid "Registered players"
 msgstr ""
 
-#: app/components/MainMenu.tsx:111:26
+#: app/components/MainMenu.tsx:121:26
 msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr ""
 
-#: app/components/MainMenu.tsx:119:38
-#: app/components/MainMenu.tsx:120:26
+#: app/components/MainMenu.tsx:129:38
+#: app/components/MainMenu.tsx:130:26
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr ""
 
-#: app/components/MainMenu.tsx:128:38
-#: app/components/MainMenu.tsx:129:26
+#: app/components/MainMenu.tsx:138:38
+#: app/components/MainMenu.tsx:139:26
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr ""
 
-#: app/components/MainMenu.tsx:138:40
-#: app/components/MainMenu.tsx:139:28
+#: app/components/MainMenu.tsx:148:40
+#: app/components/MainMenu.tsx:149:28
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr ""
 
-#: app/components/MainMenu.tsx:153:33
+#: app/components/MainMenu.tsx:163:33
 msgid "Common actions"
 msgstr ""
 
-#: app/components/MainMenu.tsx:159:32
-#: app/components/MainMenu.tsx:160:20
+#: app/components/MainMenu.tsx:169:32
+#: app/components/MainMenu.tsx:170:20
 msgid "To events list"
-msgstr ""
-
-#: app/components/MainMenu.tsx:168:34
-#: app/components/MainMenu.tsx:169:22
-msgid "Edit my profile"
 msgstr ""
 
 #: app/components/MainMenu.tsx:178:34
 #: app/components/MainMenu.tsx:179:22
-msgid "Sign in"
+msgid "Edit my profile"
 msgstr ""
 
 #: app/components/MainMenu.tsx:188:34
 #: app/components/MainMenu.tsx:189:22
+msgid "Sign in"
+msgstr ""
+
+#: app/components/MainMenu.tsx:198:34
+#: app/components/MainMenu.tsx:199:22
 msgid "Sign up"
 msgstr ""
 
-#: app/components/MainMenu.tsx:197:32
-#: app/components/MainMenu.tsx:198:20
+#: app/components/MainMenu.tsx:207:32
+#: app/components/MainMenu.tsx:208:20
 msgid "Open assistant"
 msgstr ""
 
-#: app/components/MainMenu.tsx:210:33
-#: app/components/MainMenu.tsx:211:20
+#: app/components/MainMenu.tsx:220:33
+#: app/components/MainMenu.tsx:221:20
 msgid "Language"
-msgstr ""
-
-#: app/components/MainMenu.tsx:253:33
-#: app/components/MainMenu.tsx:254:20
-msgid "Toggle dimmed colors"
 msgstr ""
 
 #: app/components/MainMenu.tsx:263:33
 #: app/components/MainMenu.tsx:264:20
+msgid "Toggle dimmed colors"
+msgstr ""
+
+#: app/components/MainMenu.tsx:273:33
+#: app/components/MainMenu.tsx:274:20
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -1569,6 +1575,22 @@ msgstr ""
 
 #: app/pages/SeriesRating.tsx:132:22
 msgid "Last series"
+msgstr ""
+
+#: app/pages/TablesState.tsx:75:29
+msgid "Tables state is not available for aggregated events"
+msgstr ""
+
+#: app/pages/TablesState.tsx:108:19
+msgid "Tables state"
+msgstr ""
+
+#: app/pages/TablesState.tsx:109:22
+msgid "Current tables state for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+
+#: app/pages/TablesState.tsx:120:10
+msgid "Total: %1 / Still playing: %2 / Finished: %3"
 msgstr ""
 
 #: app/pages/Timer.tsx:125:29

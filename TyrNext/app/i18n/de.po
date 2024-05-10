@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-10 21:27Z\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -263,7 +263,7 @@ msgstr "Keine anderen laufenden Spiele"
 msgid "Nobody selected"
 msgstr ""
 
-#: app/components/App.tsx:182:35
+#: app/components/App.tsx:183:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr ""
@@ -308,7 +308,7 @@ msgstr ""
 msgid "Player name"
 msgstr "Spielername"
 
-#: app/components/App.tsx:184:16
+#: app/components/App.tsx:185:16
 #, fuzzy
 msgid "Please return back and press riichi button for the winner"
 msgstr ""

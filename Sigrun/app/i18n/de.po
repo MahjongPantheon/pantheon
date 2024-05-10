@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-10 21:27Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -221,7 +221,7 @@ msgstr ""
 msgid "Achievements"
 msgstr "Auszeichnungen"
 
-#: app/components/MainMenu.tsx:119:38 app/components/MainMenu.tsx:120:26
+#: app/components/MainMenu.tsx:129:38 app/components/MainMenu.tsx:130:26
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr "Auszeichnungen"
@@ -454,7 +454,7 @@ msgstr "Spiel Vorschau schließen"
 msgid "Collect riichi bets by atamahane"
 msgstr "Riichieinsätze nach Atamahane verteilen"
 
-#: app/components/MainMenu.tsx:153:33
+#: app/components/MainMenu.tsx:163:33
 msgid "Common actions"
 msgstr "Zuletzt genutzt"
 
@@ -484,9 +484,15 @@ msgstr "Details konnten nicht abgerufen werden"
 msgid "Count of session in game series."
 msgstr "Anzahl von Matches in der Serie."
 
-#: app/components/MainMenu.tsx:64:37
+#: app/components/MainMenu.tsx:65:37
 msgid "Current event"
 msgstr "Aktuelles Event"
+
+#: app/pages/TablesState.tsx:109:22
+#, fuzzy
+msgid "Current tables state for the event \"%1\" provided by Mahjong Pantheon"
+msgstr ""
+"Serienwertung des Turniers \"%1\" von Mahjong Pantheon zur Verfügung gestellt"
 
 #: app/helpers/yaku.ts:74:34
 msgid "Daburu riichi"
@@ -508,7 +514,7 @@ msgstr "In Ron gespielt:"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: app/components/MainMenu.tsx:81:36 app/components/MainMenu.tsx:82:24
+#: app/components/MainMenu.tsx:82:36 app/components/MainMenu.tsx:83:24
 msgctxt "Event menu"
 msgid "Description"
 msgstr "Beschreibung"
@@ -546,11 +552,11 @@ msgstr "Unentschieden: %1"
 msgid "Draws: "
 msgstr "Unentschieden:"
 
-#: app/components/MainMenu.tsx:73:40 app/components/MainMenu.tsx:74:28
+#: app/components/MainMenu.tsx:74:40 app/components/MainMenu.tsx:75:28
 msgid "Edit event in admin panel"
 msgstr "Event im Adminbereich bearbeiten"
 
-#: app/components/MainMenu.tsx:168:34 app/components/MainMenu.tsx:169:22
+#: app/components/MainMenu.tsx:178:34 app/components/MainMenu.tsx:179:22
 msgid "Edit my profile"
 msgstr "Profil bearbeiten"
 
@@ -860,7 +866,7 @@ msgstr ""
 msgid "Kuitan"
 msgstr ""
 
-#: app/components/MainMenu.tsx:210:33 app/components/MainMenu.tsx:211:20
+#: app/components/MainMenu.tsx:220:33 app/components/MainMenu.tsx:221:20
 msgid "Language"
 msgstr "Sprache"
 
@@ -976,7 +982,7 @@ msgstr ""
 "Kein Multiron, erster Spieler nach dem Spieler der hineingespielt hat, "
 "bekommt den Gewinn."
 
-#: app/components/MainMenu.tsx:197:32 app/components/MainMenu.tsx:198:20
+#: app/components/MainMenu.tsx:207:32 app/components/MainMenu.tsx:208:20
 msgid "Open assistant"
 msgstr "Mobile App öffnen"
 
@@ -1071,7 +1077,7 @@ msgstr "Spieler Statistiken"
 msgid "Players having a required minimum of games"
 msgstr "Spieler haben das Spielanzahlminimum erreicht"
 
-#: app/components/MainMenu.tsx:111:26
+#: app/components/MainMenu.tsx:121:26
 msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "Zum Event angemeldete Spieler"
@@ -1095,7 +1101,7 @@ msgstr "Ranglistenpunkte"
 msgid "Rating table"
 msgstr "Rangliste"
 
-#: app/components/MainMenu.tsx:102:36 app/components/MainMenu.tsx:103:24
+#: app/components/MainMenu.tsx:103:36 app/components/MainMenu.tsx:104:24
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr "Rangliste"
@@ -1113,7 +1119,7 @@ msgstr ""
 msgid "Recent games"
 msgstr "Letzte Spiele"
 
-#: app/components/MainMenu.tsx:95:36 app/components/MainMenu.tsx:96:24
+#: app/components/MainMenu.tsx:96:36 app/components/MainMenu.tsx:97:24
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr "Letzte Spiele"
@@ -1122,7 +1128,7 @@ msgstr "Letzte Spiele"
 msgid "Registered players"
 msgstr "Angemeldete Spieler"
 
-#: app/components/MainMenu.tsx:110:38
+#: app/components/MainMenu.tsx:120:38
 msgctxt "Event menu"
 msgid "Registered players"
 msgstr "Angemeldete Spieler"
@@ -1195,7 +1201,7 @@ msgstr "gewonnene Hände:"
 msgid "Rules overview"
 msgstr "Regelübersicht"
 
-#: app/components/MainMenu.tsx:88:36 app/components/MainMenu.tsx:89:24
+#: app/components/MainMenu.tsx:89:36 app/components/MainMenu.tsx:90:24
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr "Regelübersicht"
@@ -1264,7 +1270,7 @@ msgstr "Länge der Serie"
 msgid "Series rating"
 msgstr "Serienwertung"
 
-#: app/components/MainMenu.tsx:128:38 app/components/MainMenu.tsx:129:26
+#: app/components/MainMenu.tsx:138:38 app/components/MainMenu.tsx:139:26
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr "Serienwertung"
@@ -1294,11 +1300,11 @@ msgstr ""
 msgid "Shousuushii"
 msgstr ""
 
-#: app/components/MainMenu.tsx:178:34 app/components/MainMenu.tsx:179:22
+#: app/components/MainMenu.tsx:188:34 app/components/MainMenu.tsx:189:22
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: app/components/MainMenu.tsx:188:34 app/components/MainMenu.tsx:189:22
+#: app/components/MainMenu.tsx:198:34 app/components/MainMenu.tsx:199:22
 msgid "Sign up"
 msgstr "Konto erstellen"
 
@@ -1330,6 +1336,22 @@ msgstr ""
 #: app/helpers/yaku.ts:190:34 app/helpers/yaku.ts:271:34
 msgid "Suukantsu"
 msgstr ""
+
+#: app/pages/TablesState.tsx:108:19
+#, fuzzy
+msgid "Tables state"
+msgstr "Platzierungsstatistiken"
+
+#: app/components/MainMenu.tsx:111:38 app/components/MainMenu.tsx:112:26
+#, fuzzy
+msgctxt "Event menu"
+msgid "Tables state"
+msgstr "Platzierungsstatistiken"
+
+#: app/pages/TablesState.tsx:75:29
+#, fuzzy
+msgid "Tables state is not available for aggregated events"
+msgstr "Time ist für zusammengefasste Events nicht verfügbar"
 
 #: app/helpers/yaku.ts:98:34
 msgid "Tanyao"
@@ -1394,7 +1416,7 @@ msgstr "Timer"
 msgid "Timer & seating"
 msgstr "Timer & Sitzplan"
 
-#: app/components/MainMenu.tsx:138:40 app/components/MainMenu.tsx:139:28
+#: app/components/MainMenu.tsx:148:40 app/components/MainMenu.tsx:149:28
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr "Timer & Sitzplan"
@@ -1421,7 +1443,7 @@ msgstr ""
 msgid "To damaten hands: "
 msgstr "In Damaten Hände:"
 
-#: app/components/MainMenu.tsx:159:32 app/components/MainMenu.tsx:160:20
+#: app/components/MainMenu.tsx:169:32 app/components/MainMenu.tsx:170:20
 msgid "To events list"
 msgstr "Events"
 
@@ -1433,11 +1455,11 @@ msgstr "In Hände mit Riichi:"
 msgid "To open hands: "
 msgstr "In offene Hände:i"
 
-#: app/components/MainMenu.tsx:263:33 app/components/MainMenu.tsx:264:20
+#: app/components/MainMenu.tsx:273:33 app/components/MainMenu.tsx:274:20
 msgid "Toggle color scheme"
 msgstr "Farbschema"
 
-#: app/components/MainMenu.tsx:253:33 app/components/MainMenu.tsx:254:20
+#: app/components/MainMenu.tsx:263:33 app/components/MainMenu.tsx:264:20
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 
@@ -1457,6 +1479,10 @@ msgstr "Gesamtpunkte gewonnen:"
 #: app/components/PlayerStatsListing.tsx:281:20
 msgid "Total points lost: "
 msgstr "Verlorene Gesamtpunkte:"
+
+#: app/pages/TablesState.tsx:120:10
+msgid "Total: %1 / Still playing: %2 / Finished: %3"
+msgstr ""
 
 #: app/components/EventTypeIcon.tsx:44:69
 msgid "Tournament"

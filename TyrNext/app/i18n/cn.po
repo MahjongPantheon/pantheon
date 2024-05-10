@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-10 21:27Z\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -257,7 +257,7 @@ msgstr "目前没有桌子在游戏中"
 msgid "Nobody selected"
 msgstr ""
 
-#: app/components/App.tsx:182:35
+#: app/components/App.tsx:183:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr ""
@@ -302,7 +302,7 @@ msgstr "平和"
 msgid "Player name"
 msgstr "玩家名"
 
-#: app/components/App.tsx:184:16
+#: app/components/App.tsx:185:16
 #, fuzzy
 msgid "Please return back and press riichi button for the winner"
 msgstr "如需选择/取消 役：立直，请返回确认立直玩家"

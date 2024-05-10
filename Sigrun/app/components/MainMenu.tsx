@@ -10,6 +10,7 @@ import {
   IconChartBar,
   IconChartLine,
   IconDeviceMobileShare,
+  IconDeviceWatchStats,
   IconLanguageHiragana,
   IconList,
   IconListCheck,
@@ -103,6 +104,15 @@ export const MainMenu = ({
                 title={i18n._pt('Event menu', 'Rating table')}
                 onClick={closeMenu}
               />
+              {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
+                <MainMenuLink
+                  href={`/event/${globals.data.eventId?.join('.')}/tablesState`}
+                  icon={<IconDeviceWatchStats size={24} />}
+                  text={showLabels ? i18n._pt('Event menu', 'Tables state') : ''}
+                  title={i18n._pt('Event menu', 'Tables state')}
+                  onClick={closeMenu}
+                />
+              )}
               {globals.data.type === EventType.EVENT_TYPE_ONLINE && (
                 <MainMenuLink
                   href={`/event/${globals.data.eventId?.[0]}/playersList`}

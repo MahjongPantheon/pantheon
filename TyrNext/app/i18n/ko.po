@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-10 21:27Z\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -263,7 +263,7 @@ msgstr "진행 중인 대국이 없습니다"
 msgid "Nobody selected"
 msgstr "아무도 선택되지 않았습니다"
 
-#: app/components/App.tsx:182:35
+#: app/components/App.tsx:183:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "확인"
@@ -308,7 +308,7 @@ msgstr "핑후"
 msgid "Player name"
 msgstr "작사 명"
 
-#: app/components/App.tsx:184:16
+#: app/components/App.tsx:185:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
 
