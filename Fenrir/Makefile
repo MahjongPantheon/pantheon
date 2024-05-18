@@ -49,19 +49,13 @@ autofix:
 run:
 	env | sort
 	CI=true ./node_modules/.bin/playwright test
-	@if [ "$(TESTINY_API_KEY)" != "" ]; then \
-		testiny-importer testrun --confirm \
-			--duplicates folder_title \
-			--project PNTN \
-			--junit ./test-results/junit-report.xml ; \
-	fi
 
 .PHONY: docker_run
 docker_run: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c "export TESTINY_API_KEY=\"$(TESTINY_API_KEY)\" && cd /var/www/html/Fenrir && make run" ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make run' ; \
 	fi
 
 PHONY: docker_deps

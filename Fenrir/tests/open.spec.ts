@@ -1,4 +1,7 @@
 import { test, expect } from '@playwright/test';
+import { withScreenshotsOnTestFail } from './utils/screenshots';
+
+withScreenshotsOnTestFail();
 
 test('Opens assistant', async ({ page }) => {
   await page.goto(process.env.TYR_URL!);

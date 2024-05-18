@@ -33,6 +33,7 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['list'],
+    ['github'],
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
     [
       'junit',

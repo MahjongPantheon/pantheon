@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 import * as uuid from 'uuid';
 import { getLastMail } from './utils/mail';
 import * as process from 'process';
+import { withScreenshotsOnTestFail } from './utils/screenshots';
+
+withScreenshotsOnTestFail();
 
 test('Register link from assistant', async ({ page, context }) => {
   await page.goto(process.env.TYR_URL!);
