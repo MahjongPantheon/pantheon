@@ -16,20 +16,16 @@
  */
 
 import { IAppState } from '../interfaces';
-import { memoize } from '../../primitives/memoize';
+import { memoize } from '../../helpers/memoize';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
-function _getHan(state: IAppState, user?: number) {
+function _getHan(state: IAppState, user: number) {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return outcome.han;
     case RoundOutcome.ROUND_OUTCOME_RON:
-      const selected = user ?? state.multironCurrentWinner;
-      if (!selected) {
-        return 0; // data not loaded yet
-      }
-      return outcome.wins[selected].han;
+      return outcome.wins[user].han;
     default:
       return 0;
   }
@@ -37,7 +33,7 @@ function _getHan(state: IAppState, user?: number) {
 
 export const getHan = memoize(_getHan);
 
-function _getFu(state: IAppState, user?: number) {
+function _getFu(state: IAppState, user: number) {
   const outcome = state.currentOutcome;
   let han: number;
   let fu: number;
@@ -51,12 +47,8 @@ function _getFu(state: IAppState, user?: number) {
       }
       return fu;
     case RoundOutcome.ROUND_OUTCOME_RON:
-      const selected = user ?? state.multironCurrentWinner;
-      if (!selected) {
-        return 0; // data not loaded yet
-      }
-      fu = outcome.wins[selected].fu;
-      han = outcome.wins[selected].han + outcome.wins[selected].dora;
+      fu = outcome.wins[user].fu;
+      han = outcome.wins[user].han + outcome.wins[user].dora;
       if (han >= 5) {
         fu = 0;
       }
@@ -68,16 +60,13 @@ function _getFu(state: IAppState, user?: number) {
 
 export const getFu = memoize(_getFu);
 
-function _getPossibleFu(state: IAppState) {
+function _getPossibleFu(state: IAppState, user: number) {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return outcome.possibleFu;
     case RoundOutcome.ROUND_OUTCOME_RON:
-      if (!state.multironCurrentWinner) {
-        return []; // data not loaded yet
-      }
-      return outcome.wins[state.multironCurrentWinner].possibleFu;
+      return outcome.wins[user].possibleFu;
     default:
       return [];
   }
@@ -85,17 +74,13 @@ function _getPossibleFu(state: IAppState) {
 
 export const getPossibleFu = memoize(_getPossibleFu);
 
-function _getDora(state: IAppState, user?: number): number {
+function _getDora(state: IAppState, user: number): number {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return outcome.dora;
     case RoundOutcome.ROUND_OUTCOME_RON:
-      const selected = user ?? state.multironCurrentWinner;
-      if (!selected) {
-        return 0; // data not loaded yet
-      }
-      return outcome.wins[selected].dora;
+      return outcome.wins[user].dora;
     default:
       return 0;
   }

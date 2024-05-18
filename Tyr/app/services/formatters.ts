@@ -15,14 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { YakuId } from '../primitives/yaku';
+import { YakuId } from '../helpers/yaku';
 import {
   getLosingUsers,
   getNagashiUsers,
   getPaoUsers,
   getRiichiUsers,
   getWinningUsers,
-} from '../store/selectors/mimirSelectors';
+} from '../store/selectors/mimir';
 import { IAppState } from '../store/interfaces';
 import { getDora, getFu, getHan } from '../store/selectors/hanFu';
 import { getSelectedYaku } from '../store/selectors/yaku';
@@ -38,8 +38,8 @@ import {
   RoundOutcome,
   TsumoResult,
 } from '../clients/proto/atoms.pb';
-import { AppOutcomeRon } from '../interfaces/app';
-import { unpack } from '../primitives/yaku-compat';
+import { AppOutcomeRon } from '../helpers/interfaces';
+import { unpack } from '../helpers/yakuCompatibility';
 
 export function formatRoundToTwirp(state: IAppState): Round | undefined {
   switch (state.currentOutcome?.selectedOutcome) {
@@ -51,7 +51,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
           winnerId: win.winner,
           paoPlayerId: win.paoPlayerId,
           han: win.han + win.dora,
-          fu: getFu(state, win.winner),
+          fu: getFu(state, win.winner!),
           dora: win.dora,
           uradora: 0, // win.uradora,
           kandora: 0, // win.kandora,
@@ -95,14 +95,18 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
           riichiBets: getRiichiUsers(state).map((player) => player.id),
           winnerId: getWinningUsers(state)[0].id,
           paoPlayerId: (getPaoUsers(state)[0] || { id: null }).id,
-          han: getHan(state) + getDora(state),
-          fu: getFu(state),
-          dora: getDora(state),
+          han:
+            getHan(state, state.currentOutcome.winner!) +
+            getDora(state, state.currentOutcome.winner!),
+          fu: getFu(state, state.currentOutcome.winner!),
+          dora: getDora(state, state.currentOutcome.winner!),
           uradora: 0, // TODO
           kandora: 0, // TODO
           kanuradora: 0, // TODO
-          yaku: getSelectedYaku(state).filter((y) => y > 0),
-          openHand: getSelectedYaku(state).includes(YakuId.__OPENHAND),
+          yaku: getSelectedYaku(state)[state.currentOutcome.winner!].filter((y) => y > 0),
+          openHand: getSelectedYaku(state)[state.currentOutcome.winner!].includes(
+            YakuId.__OPENHAND
+          ),
         } as TsumoResult,
       };
     case RoundOutcome.ROUND_OUTCOME_DRAW:

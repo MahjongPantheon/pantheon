@@ -16,7 +16,7 @@
  */
 
 import debounce from 'lodash.debounce';
-import { env } from '../env';
+import { env } from '../helpers/env';
 
 let OSName = 'Unknown OS';
 if (navigator.appVersion.includes('Win')) OSName = 'Windows';

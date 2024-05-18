@@ -21,12 +21,12 @@ import { App } from './components/App';
 import { Store } from './store';
 import { I18nService } from './services/i18n';
 import { IAppState } from './store/interfaces';
-import { observe } from './scripts/dimensionsObserver';
-import { registerFrontErrorHandler } from './scripts/logFrontError';
+import { registerFrontErrorHandler } from './helpers/logFrontError';
 import { Storage } from '../../Common/storage';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
-import { env } from './env';
+import { env } from './helpers/env';
 import { registerSW } from 'virtual:pwa-register';
+import './index.css';
 
 registerSW({ immediate: true });
 
@@ -40,7 +40,6 @@ if (window.location.search.startsWith('?clear')) {
   window.location.replace(window.location.protocol + '//' + window.location.host);
 }
 
-observe();
 registerFrontErrorHandler();
 
 const i18nService = new I18nService(storage);

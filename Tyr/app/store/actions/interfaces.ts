@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { YakuId } from '../../primitives/yaku';
+import { YakuId } from '../../helpers/yaku';
 import { RemoteError } from '../../services/remoteError';
 import { IAppState } from '../interfaces';
 import { AuthAuthorizeResponse } from '../../clients/proto/frey.pb';
@@ -57,7 +57,7 @@ export const REMOVE_YAKU = 'REMOVE_YAKU';
 export const TOGGLE_RIICHI = 'TOGGLE_RIICHI';
 export const TOGGLE_WINNER = 'TOGGLE_WINNER';
 export const TOGGLE_LOSER = 'TOGGLE_LOSER';
-export const TOGGLE_PAO = 'TOGGLE_PAO';
+export const SELECT_PAO = 'SELECT_PAO';
 export const TOGGLE_DEADHAND = 'TOGGLE_DEADHAND';
 export const TOGGLE_NAGASHI = 'TOGGLE_NAGASHI';
 export const LOGIN_INIT = 'LOGIN_INIT';
@@ -108,7 +108,6 @@ export const EVENTS_GET_LIST_SUCCESS = 'EVENTS_GET_LIST_SUCCESS';
 export const EVENTS_GET_LIST_FAIL = 'EVENTS_GET_LIST_FAIL';
 export const SELECT_EVENT = 'SELECT_EVENT';
 export const INIT_BLANK_OUTCOME = 'INIT_BLANK_OUTCOME';
-export const SELECT_MULTIRON_WINNER = 'SELECT_MULTIRON_WINNER';
 export const RANDOMIZE_NEWGAME_PLAYERS = 'RANDOMIZE_NEWGAME_PLAYERS';
 export const CLEAR_NEWGAME_PLAYERS = 'CLEAR_NEWGAME_PLAYERS';
 export const SET_NEWGAME_PLAYERS = 'SET_NEWGAME_PLAYERS';
@@ -125,7 +124,6 @@ export const SETTINGS_SAVE_LANG = 'SETTINGS_SAVE_LANG';
 export const SETTINGS_SAVE_SINGLE_DEVICE_MODE = 'SETTINGS_SAVE_SINGLE_DEVICE_MODE';
 export const UPDATE_STATE_SETTINGS = 'UPDATE_STATE_SETTINGS';
 export const SET_STATE_SETTINGS = 'SET_STATE_SETTINGS';
-export const SET_SELECT_HAND_TAB = 'SET_SELECT_HAND_TAB';
 export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 export const HISTORY_INIT = 'HISTORY_INIT';
@@ -242,9 +240,12 @@ interface ToggleLoserAction {
   payload: number;
 }
 
-interface TogglePaoAction {
-  type: typeof TOGGLE_PAO;
-  payload: number;
+interface SelectPaoAction {
+  type: typeof SELECT_PAO;
+  payload: {
+    paoId: number;
+    winnerId: number;
+  };
 }
 
 interface ToggleDeadhandAction {
@@ -485,13 +486,6 @@ interface InitBlankOutcomeAction {
   payload: RoundOutcome;
 }
 
-interface SelectMultironWinnerAction {
-  type: typeof SELECT_MULTIRON_WINNER;
-  payload: {
-    winner: number;
-  };
-}
-
 interface RandomizeNewgamePlayersAction {
   type: typeof RANDOMIZE_NEWGAME_PLAYERS;
 }
@@ -565,11 +559,6 @@ interface SetStateSettingsAction {
   payload: { [key: string]: any } | undefined;
 }
 
-interface SetSelectHandTabAction {
-  type: typeof SET_SELECT_HAND_TAB;
-  payload: 'yaku' | 'total' | undefined;
-}
-
 interface TrackArbitraryEventAction {
   type: typeof TRACK_ARBITRARY_EVENT;
   payload: [string, { [key: string]: any }];
@@ -615,7 +604,7 @@ export type AppActionTypes =
   | ToggleRiichiAction
   | ToggleWinnerAction
   | ToggleLoserAction
-  | TogglePaoAction
+  | SelectPaoAction
   | ToggleDeadhandAction
   | ToggleNagashiAction
   | LoginActionSuccess
@@ -662,7 +651,6 @@ export type AppActionTypes =
   | AddRoundActionSuccess
   | AddRoundActionFail
   | InitBlankOutcomeAction
-  | SelectMultironWinnerAction
   | RandomizeNewgamePlayersAction
   | ClearNewgamePlayersAction
   | SelectNewgameNorthAction
@@ -679,7 +667,6 @@ export type AppActionTypes =
   | SettingsSaveThemeAction
   | UpdateStateSettingsAction
   | SetStateSettingsAction
-  | SetSelectHandTabAction
   | TrackArbitraryEventAction
   | TrackScreenEnterAction
   | EventsGetListActionInit

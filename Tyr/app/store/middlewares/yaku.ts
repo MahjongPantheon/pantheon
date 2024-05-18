@@ -22,7 +22,7 @@ import {
   REMOVE_YAKU,
   TOGGLE_RIICHI_NOTIFICATION,
 } from '../actions/interfaces';
-import { YakuId } from '../../primitives/yaku';
+import { YakuId } from '../../helpers/yaku';
 import { IAppState } from '../interfaces';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
 

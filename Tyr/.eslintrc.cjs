@@ -31,7 +31,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  extends: ['prettier'],
+  extends: ['prettier', 'plugin:storybook/recommended'],
   plugins: ['react', '@typescript-eslint', 'unused-imports'],
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],

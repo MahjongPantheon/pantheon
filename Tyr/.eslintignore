@@ -3,7 +3,7 @@ node_modules/
 webpack.*.js
 typings.d.ts
 *.spec.ts
-app/primitives/memoize.ts
+app/helpers/memoize.ts
 app/clients/proto/*
 dist/
 dev-dist/

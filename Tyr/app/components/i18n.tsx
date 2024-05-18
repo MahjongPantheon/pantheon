@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as React from 'react';
 import { I18nService } from '../services/i18n';
+import { createContext } from 'react';
 
 // we'll always fit it with service in runtime, ignore error
 // @ts-expect-error
-export const i18n = React.createContext<I18nService>(null);
+export const i18n = createContext<I18nService>(null);

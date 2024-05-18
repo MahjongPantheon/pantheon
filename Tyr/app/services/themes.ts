@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export const supportedThemes = ['day', 'night'];
+export const supportedThemes = ['day', 'night', 'junkmat'];
 
 const dayTheme = {
   name: 'day',
@@ -33,7 +33,23 @@ const nightTheme = {
   textColor: '#E6E6E6',
 } as Theme;
 
-export const themes = [dayTheme, nightTheme];
+const junkmatTheme = {
+  name: 'junkmat',
+  backgroundColor: '#31582f',
+  primaryColor: '#5f9be0',
+  secondaryColor: '#a4b2c8',
+  textColor: '#E6E6E6',
+} as Theme;
+
+const oledTheme = {
+  name: 'oled',
+  backgroundColor: '#000',
+  primaryColor: '#5f9be0',
+  secondaryColor: '#a4b2c8',
+  textColor: '#E6E6E6',
+} as Theme;
+
+export const themes = [dayTheme, nightTheme, junkmatTheme, oledTheme];
 
 export type Theme = {
   name: string;

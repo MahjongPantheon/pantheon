@@ -23,12 +23,12 @@ import {
   LoseOutcomeProps,
   WinOutcomeProps,
   WinProps,
-} from '../../interfaces/app';
-import { YakuId } from '../../primitives/yaku';
-import { addYakuToList, limits, pack, unpack } from '../../primitives/yaku-compat';
-import { getFixedFu, getHan } from '../../primitives/yaku-values';
-import { Graph } from '../../primitives/graph';
-import { Yaku } from '../../interfaces/common';
+  Yaku,
+} from '../../helpers/interfaces';
+import { YakuId } from '../../helpers/yaku';
+import { addYakuToList, limits, pack, unpack } from '../../helpers/yakuCompatibility';
+import { getFixedFu, getHan } from '../../helpers/yakuValues';
+import { Graph } from '../../helpers/graph';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 /**
