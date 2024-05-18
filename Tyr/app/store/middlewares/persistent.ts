@@ -77,7 +77,11 @@ export const persistentMw =
         });
         break;
       case SETTINGS_SAVE_THEME:
-        storage.setTheme(action.payload);
+        if (['day', 'night'].includes(action.payload)) {
+          storage.setTheme(action.payload).deleteThemeVariant();
+        } else {
+          storage.setThemeVariant(action.payload);
+        }
         next(action);
         break;
       case SELECT_EVENT:
@@ -94,7 +98,7 @@ export const persistentMw =
         break;
       case UPDATE_STATE_SETTINGS:
         const data = {
-          currentTheme: storage.getTheme(),
+          currentTheme: storage.getThemeVariant() ?? storage.getTheme(),
           currentLang: storage.getLang(),
           singleDeviceMode: storage.getSingleDeviceMode(),
         };

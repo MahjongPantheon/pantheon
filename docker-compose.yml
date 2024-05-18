@@ -97,24 +97,6 @@ services:
         aliases:
           - tyr.pantheon.local
           - tyr.pantheon.internal
-  tyrnext:
-    build: ./TyrNext
-    env_file:
-      - ./Env/${ENV_FILENAME:-.env.production}
-    ports:
-      - "127.0.0.1:4023:80"
-    depends_on:
-      - frey
-      - mimir
-    volumes:
-      - ./TyrNext:/var/www/html/TyrNext
-      - ./TyrNext-dist:/var/www/html/TyrNext-dist
-      - ./Common:/var/www/html/Common
-    networks:
-      internal_net:
-        aliases:
-          - tyrnext.pantheon.local
-          - tyrnext.pantheon.internal
   forseti:
     build: ./Forseti
     image: ghcr.io/mahjongpantheon/pantheon-forseti:latest

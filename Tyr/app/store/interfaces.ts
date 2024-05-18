@@ -15,9 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AppOutcome } from '../interfaces/app';
-import { Yaku } from '../interfaces/common';
-import { Graph } from '../primitives/graph';
+import { AppOutcome, Yaku } from '../helpers/interfaces';
+import { Graph } from '../helpers/graph';
 import { RemoteError } from '../services/remoteError';
 import {
   GameConfig,
@@ -35,7 +34,6 @@ export type AppScreen =
   | 'eventSelector'
   | 'overview'
   | 'currentGame'
-  | 'outcomeSelect'
   | 'playersSelect'
   | 'otherTable'
   | 'otherTablesList'
@@ -46,7 +44,6 @@ export type AppScreen =
   | 'lastResults'
   | 'gameLog'
   | 'login'
-  | 'paoSelect'
   | 'settings'
   | 'nagashiSelect'
   | 'donate';
@@ -89,7 +86,7 @@ export interface IAppState {
   currentEventId?: number;
   players?: PlayerInSession[]; // e-s-w-n
   mapIdToPlayer: { [key: number]: PlayerInSession };
-  multironCurrentWinner?: number;
+  selectedWinner?: number;
   isLoggedIn: boolean;
   gameConfig?: GameConfig;
   sessionState?: SessionState;
@@ -130,8 +127,6 @@ export interface IAppState {
 
   overviewDiffBy?: number;
   overviewViewShift?: number;
-
-  currentSelectHandTab?: 'yaku' | 'total';
 
   showAdditionalTableInfo: boolean;
 

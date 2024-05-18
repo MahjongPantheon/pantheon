@@ -19,80 +19,94 @@ import {
   getAllowedYaku as getAllowedYakuCompat,
   limits,
   unpack,
-} from '../../primitives/yaku-compat';
+} from '../../helpers/yakuCompatibility';
 import { IAppState } from '../interfaces';
-import { YakuId } from '../../primitives/yaku';
-import { WinProps } from '../../interfaces/app';
+import { YakuId } from '../../helpers/yaku';
+import { WinProps, Yaku } from '../../helpers/interfaces';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { memoize } from '../../helpers/memoize';
+import { getWinningUsers, hasYaku } from './mimir';
+import { filterAllowed, yakuCommon, yakumans, yakuRare } from '../../helpers/yakuLists';
 
-export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuId[] {
+export function getRequiredYaku(state: IAppState): Record<number, YakuId[]> {
   const outcome = state.currentOutcome;
   if (!outcome) {
-    return [];
+    return {};
   }
 
-  const existingYaku: YakuId[] = getSelectedYaku(state);
   switch (outcome.selectedOutcome) {
     case RoundOutcome.ROUND_OUTCOME_TSUMO:
       if (outcome.winner && outcome.riichiBets.includes(outcome.winner)) {
-        return [YakuId.RIICHI, YakuId.MENZENTSUMO].filter((y) => !existingYaku.includes(y));
+        return {
+          [outcome.winner]: [YakuId.RIICHI, YakuId.MENZENTSUMO],
+        };
       }
       break;
     case RoundOutcome.ROUND_OUTCOME_RON:
-      const winner = currentWinner ?? state.multironCurrentWinner;
-      if (!winner) {
-        throw new Error('No winner selected');
-      }
-      if (outcome.riichiBets.includes(winner)) {
-        return [YakuId.RIICHI].filter((y) => !existingYaku.includes(y));
-      }
-      break;
+      const users = getWinningUsers(state);
+      return users.reduce(
+        (acc, user) => {
+          acc[user.id] = outcome.riichiBets.includes(user.id) ? [YakuId.RIICHI] : [];
+          return acc;
+        },
+        {} as Record<number, YakuId[]>
+      );
     default:
-      return [];
+      return {};
   }
 
-  return [];
+  return {};
 }
 
-export function getSelectedYaku(state: IAppState): YakuId[] {
+export function getSelectedYaku(state: IAppState): Record<number, YakuId[]> {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case RoundOutcome.ROUND_OUTCOME_TSUMO:
-      return unpack(outcome.yaku);
+      return { [outcome.winner!]: unpack(outcome.yaku) };
     case RoundOutcome.ROUND_OUTCOME_RON:
-      if (!state.multironCurrentWinner) {
-        throw new Error('No winner selected');
-      }
-      return unpack(outcome.wins[state.multironCurrentWinner].yaku);
+      const users = getWinningUsers(state);
+      return users.reduce(
+        (acc: Record<number, YakuId[]>, p) => {
+          acc[p.id] = unpack(outcome.wins[p.id].yaku);
+          return acc;
+        },
+        {} as Record<number, YakuId[]>
+      );
     default:
-      return [];
+      return {};
   }
 }
 
-export function getAllowedYaku(state: IAppState): YakuId[] {
+export function getAllowedYaku(state: IAppState): Record<number, YakuId[]> {
   let yakuList;
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case RoundOutcome.ROUND_OUTCOME_TSUMO:
       yakuList = unpack(outcome.yaku);
-      return _excludeYaku(
-        state,
-        outcome.winner,
-        yakuList,
-        getAllowedYakuCompat(state.yakuList, yakuList),
-        [YakuId.HOUTEI, YakuId.CHANKAN, YakuId.RENHOU]
-      );
+      return {
+        [outcome.winner!]: _excludeYaku(
+          state,
+          outcome.winner,
+          yakuList,
+          getAllowedYakuCompat(state.yakuList, yakuList),
+          [YakuId.HOUTEI, YakuId.CHANKAN, YakuId.RENHOU]
+        ),
+      };
     case RoundOutcome.ROUND_OUTCOME_RON:
-      if (!state.multironCurrentWinner) {
-        throw new Error('No winner selected');
-      }
-      yakuList = unpack(outcome.wins[state.multironCurrentWinner].yaku);
-      return _excludeYaku(
-        state,
-        state.multironCurrentWinner,
-        yakuList,
-        getAllowedYakuCompat(state.yakuList, yakuList),
-        [YakuId.MENZENTSUMO, YakuId.HAITEI, YakuId.TENHOU, YakuId.CHIHOU]
+      const users = getWinningUsers(state);
+      return users.reduce(
+        (acc, user) => {
+          yakuList = unpack(outcome.wins[user.id].yaku);
+          acc[user.id] = _excludeYaku(
+            state,
+            user.id,
+            yakuList,
+            getAllowedYakuCompat(state.yakuList, yakuList),
+            [YakuId.MENZENTSUMO, YakuId.HAITEI, YakuId.TENHOU, YakuId.CHIHOU]
+          );
+          return acc;
+        },
+        {} as Record<number, YakuId[]>
       );
     default:
       return [];
@@ -158,21 +172,24 @@ function _excludeYaku(
   });
 }
 
-export function yakumanInYaku(state: IAppState): boolean {
+export function yakumanInYaku(state: IAppState): Record<number, boolean> {
   const outcome = state.currentOutcome;
   if (!outcome) {
-    return false;
+    return {};
   }
 
   switch (outcome.selectedOutcome) {
     case RoundOutcome.ROUND_OUTCOME_TSUMO:
-      return _hasYakumanInYakuList(outcome);
+      return { [outcome.winner!]: _hasYakumanInYakuList(outcome) };
     case RoundOutcome.ROUND_OUTCOME_RON:
-      if (!state.multironCurrentWinner) {
-        return false; // data not loaded yet
-      }
-      const props = outcome.wins[state.multironCurrentWinner];
-      return _hasYakumanInYakuList(props);
+      const users = getWinningUsers(state);
+      return users.reduce(
+        (acc, user) => {
+          acc[user.id] = _hasYakumanInYakuList(outcome.wins[user.id]);
+          return acc;
+        },
+        {} as Record<number, boolean>
+      );
     default:
       throw new Error('No yaku may exist on this outcome');
   }
@@ -187,4 +204,42 @@ function _hasYakumanInYakuList(props: WinProps): boolean {
   }
 
   return false;
+}
+
+function _getYakuList(state: IAppState): { [id: number]: Yaku[] } {
+  if (!state.gameConfig) {
+    return {};
+  }
+
+  const yakuList: { [key: number]: Yaku[] } = {};
+  const allowedYaku = [...state.gameConfig.rulesetConfig.allowedYaku, YakuId.__OPENHAND];
+  for (const user of getWinningUsers(state)) {
+    const simple = filterAllowed(yakuCommon, allowedYaku);
+    const rare = filterAllowed(yakuRare, allowedYaku);
+    const yakuman = filterAllowed(yakumans, allowedYaku);
+    yakuList[user.id] = simple.concat(rare).concat(yakuman);
+  }
+
+  return yakuList;
+}
+
+export const getYakuList = memoize(_getYakuList);
+
+export function getDisabledYaku(state: IAppState): Record<number, Array<number>> {
+  const yakuList = getYakuList(state);
+  const allowedYaku = getAllowedYaku(state);
+  const users = getWinningUsers(state);
+
+  return users.reduce(
+    (acc: Record<number, Array<number>>, p) => {
+      acc[p.id] = [];
+      for (const yaku of yakuList[p.id]) {
+        if (!allowedYaku[p.id].includes(yaku.id) && !hasYaku(state, yaku.id)[p.id]) {
+          acc[p.id].push(yaku.id);
+        }
+      }
+      return acc;
+    },
+    {} as Record<number, Array<number>>
+  );
 }

@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  user-select: none;
+  justify-content: center;
+}
+
+.tableIndex {
+  padding-bottom: 10px;
+}
+
+.rotateButtons {
+  display: flex;
+  gap: 20px;
+}
+
+.callRefereeButton {
+  width: 32px;
+  height: 32px;
+}
+
+.roundIndex {
+  font-size: 36px;
+}
+
+.sticks {
+  display: flex;
+  gap: 10px;
+}
+
+.timer {
+  font-size: 32px;
+}
+
+.gamesLeft {
+  text-align: center;
+  font-size: 22px;
+  color: var(--color-danger);
+}

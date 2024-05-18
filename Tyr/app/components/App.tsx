@@ -15,41 +15,46 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as React from 'react';
-import { useEffect } from 'react';
-import '../styles/base.css';
-import '../styles/themes.css';
-import '../styles/variables.css';
+import { useEffect, useState } from 'react';
+import styles from './App.module.css';
+import themes from './themes.module.css';
 import { IAppState } from '../store/interfaces';
 import {
   AppActionTypes,
+  GO_TO_CURRENT_GAME,
   HISTORY_INIT,
   INIT_STATE,
   SELECT_EVENT,
   SETTINGS_SAVE_LANG,
   STARTUP_WITH_AUTH,
   TOGGLE_RIICHI_NOTIFICATION,
+  UPDATE_CURRENT_GAMES_INIT,
 } from '../store/actions/interfaces';
 import { Dispatch } from 'redux';
 import { IComponentProps } from './IComponentProps';
-import { HomeScreen } from './screens/home/HomeScreen';
-import { SettingsScreen } from './screens/settings/SettingsScreen';
-import { NewGameScreen } from './screens/new-game/NewGameScreen';
-import { SearchPlayerScreen } from './screens/search-players/SearchPlayerScreen';
-import { TableScreen } from './screens/table/TableScreen';
-import { SelectHandScreen } from './screens/select-hand/SelectHandScreen';
+import { Home } from './screens/Home/Home';
+import { Settings } from './screens/Settings/Settings';
+import { NewGame } from './screens/NewGame/NewGame';
+import { SearchPlayerScreen } from './screens/SearchPlayers/SearchPlayerScreen';
+import { SelectHand } from './screens/SelectHand/SelectHand';
 import { I18nService } from '../services/i18n';
-import { GameResultScreen } from './screens/game-result/GameResultScreen';
-import { LoginScreen } from './screens/login/LoginScreen';
-import { LogScreen } from './screens/log/LogScreen';
-import { DonateScreen } from './screens/donate/DonateScreen';
-import { EventSelectScreen } from './screens/event-select/EventSelectScreen';
-import { OtherTablesList } from './screens/other-tables-list/OtherTablesListScreen';
+import { GameResultScreen } from './screens/GameResult/GameResultScreen';
+import { Login } from './screens/Login/Login';
+import { Log } from './screens/Log/Log';
+import { Donate } from './screens/Donate/Donate';
+import { EventSelect } from './screens/EventSelect/EventSelect';
+import { OtherTablesList } from './screens/OtherTablesList/OtherTablesList';
 import { i18n } from './i18n';
 import { IStorage } from '../../../Common/storage';
 import { v4 } from 'uuid';
-import { fontLoader } from '../scripts/fontLoader';
-import { ModalDialog } from './general/modal-dialog/ModalDialog';
+import { fontLoader } from '../helpers/fontLoader';
+import { ModalDialog } from './base/ModalDialog/ModalDialog';
+import clsx from 'classnames';
+import { TableCurrentGame } from './screens/TableCurrentGame/TableCurrentGame';
+import { TableSelectPlayers } from './screens/TableSelectPlayers/TableSelectPlayers';
+import { TableNagashiSelect } from './screens/TableNagashiSelect/TableNagashiSelect';
+import { OtherTableView } from './screens/OtherTableView/OtherTableView';
+import { TableRoundPreview } from './screens/TableRoundPreview/TableRoundPreview';
 
 interface IProps {
   state: IAppState;
@@ -58,48 +63,51 @@ interface IProps {
   i18nService: I18nService;
 }
 
-const CurrentScreen: React.FC<IComponentProps> = (props) => {
+const CurrentScreen = (props: IComponentProps) => {
   const { state } = props;
 
   switch (state.currentScreen) {
     case 'login':
-      return <LoginScreen {...props} />;
+      return <Login {...props} />;
     case 'eventSelector':
-      return <EventSelectScreen {...props} />;
+      return <EventSelect {...props} />;
     case 'overview':
-      return <HomeScreen {...props} />;
+      return <Home {...props} />;
     case 'settings':
-      return <SettingsScreen {...props} />;
+      return <Settings {...props} />;
     case 'newGame':
-      return <NewGameScreen {...props} />;
+      return <NewGame {...props} />;
     case 'searchPlayer':
       return <SearchPlayerScreen {...props} />;
     case 'currentGame':
-    case 'outcomeSelect':
+      return <TableCurrentGame {...props} />;
     case 'playersSelect':
-    case 'confirmation':
+      return <TableSelectPlayers {...props} />;
     case 'nagashiSelect':
-    case 'paoSelect':
+      return <TableNagashiSelect {...props} />;
+    case 'confirmation':
+      return <TableRoundPreview {...props} />;
     case 'otherTable':
-      return <TableScreen {...props} />;
+      return <OtherTableView {...props} />;
     case 'handSelect':
-      return <SelectHandScreen {...props} />;
+      return <SelectHand {...props} />;
     case 'lastResults':
       return <GameResultScreen {...props} />;
     case 'gameLog':
-      return <LogScreen {...props} />;
+      return <Log {...props} />;
     case 'otherTablesList':
       return <OtherTablesList {...props} />;
     case 'donate':
-      return <DonateScreen {...props} />;
+      return <Donate {...props} />;
   }
 
   return null;
 };
 
-export const App: React.FC<IProps> = (props: IProps) => {
+export const App = (props: IProps) => {
   const { state, dispatch, storage, i18nService } = props;
   const currentThemeName = state.settings.currentTheme ?? 'day';
+  const [firstStart, setFirstStart] = useState(true);
 
   useEffect(() => {
     dispatch({ type: INIT_STATE });
@@ -125,7 +133,17 @@ export const App: React.FC<IProps> = (props: IProps) => {
         sessionId: sid,
       },
     });
+
+    // goto game screen if there is one
+    props.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
   }, []);
+
+  useEffect(() => {
+    if (state.currentSessionHash && firstStart) {
+      props.dispatch({ type: GO_TO_CURRENT_GAME });
+      setFirstStart(false);
+    }
+  }, [state.currentSessionHash, firstStart]);
 
   const curDate = new Date();
   const haveNySpecs =
@@ -134,11 +152,26 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   const isInStandaloneMode = 'standalone' in window.navigator && window.navigator.standalone;
 
+  const themeStyle = [
+    currentThemeName === 'day' ? themes.themeDay : null,
+    currentThemeName === 'night' ? themes.themeNight : null,
+    currentThemeName === 'junkmat' ? themes.themeJunkmat : null,
+    currentThemeName === 'oled' ? themes.themeOled : null,
+  ];
+
   return (
-    <div id='screen' className={`App theme-${currentThemeName}${haveNySpecs ? ' newyear' : ''}`}>
-      <div className={`AppWrap ${isInStandaloneMode ? 'pwafix' : ''}`}>
+    <div
+      id='screen'
+      className={clsx(
+        styles.App,
+        themes.common,
+        ...themeStyle,
+        haveNySpecs ? styles.newyear : null
+      )}
+    >
+      <div className={clsx(styles.AppWrap, isInStandaloneMode ? styles.pwafix : null)}>
         <i18n.Provider value={i18nService}>
-          <CurrentScreen state={state} dispatch={dispatch} />
+          <CurrentScreen state={state} dispatch={dispatch} newyear={haveNySpecs} />
           {state.riichiNotificationShown && (
             <ModalDialog
               onClose={() => {

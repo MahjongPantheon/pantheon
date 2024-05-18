@@ -26,7 +26,7 @@ import langJp from '../i18n/jp.json';
 import langDe from '../i18n/de.json';
 import langKo from '../i18n/ko.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ema', 'jp', 'ko', 'cn', 'ru', 'de'];
+export const supportedLanguages = ['en', 'ru', 'de', 'ko', 'jp', 'cn', 'ema'] as const;
 const langs = {
   ema: langEma,
   jp: langJp,
@@ -93,7 +93,7 @@ export class I18nService {
     // See also app.component.ts where this item is set
     const lang = this.storage.getLang();
     if (lang) {
-      if (!supportedLanguages.includes(lang)) {
+      if (!supportedLanguages.includes(lang as (typeof supportedLanguages)[number])) {
         this.storage.deleteLang();
         // pass further if wrong lang is contained in local storage
       } else {
@@ -103,7 +103,7 @@ export class I18nService {
     }
 
     for (const navlang of window.navigator.languages) {
-      if (supportedLanguages.includes(navlang)) {
+      if (supportedLanguages.includes(navlang as (typeof supportedLanguages)[number])) {
         this.i18nController.setLocale(navlang, onReady, onError);
         return;
       }

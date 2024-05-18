@@ -30,8 +30,7 @@ import {
   GOTO_EVENT_SELECT,
   GO_TO_DONATE,
 } from '../actions/interfaces';
-import { winnerHasYakuWithPao } from '../util';
-import { AppOutcome } from '../../interfaces/app';
+import { AppOutcome } from '../../helpers/interfaces';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export function screenManageReducer(state: IAppState, action: AppActionTypes): IAppState {
@@ -58,7 +57,6 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
         players: undefined,
         mapIdToPlayer: {},
         currentSessionHash: '',
-        multironCurrentWinner: undefined,
         gameOverviewReady: true,
       };
     case START_NEW_GAME:
@@ -112,9 +110,6 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
       switch (state.currentScreen) {
         case 'currentGame':
         case 'overview':
-          nextScreen = 'outcomeSelect';
-          break;
-        case 'outcomeSelect':
           if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_NAGASHI) {
             nextScreen = 'nagashiSelect';
           } else {
@@ -140,18 +135,11 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           switch (state.currentOutcome?.selectedOutcome) {
             case RoundOutcome.ROUND_OUTCOME_RON:
             case RoundOutcome.ROUND_OUTCOME_TSUMO:
-              if (winnerHasYakuWithPao(state.currentOutcome, state.gameConfig)) {
-                nextScreen = 'paoSelect';
-              } else {
-                nextScreen = 'confirmation';
-              }
+              nextScreen = 'confirmation';
               break;
             default:
               nextScreen = 'confirmation';
           }
-          break;
-        case 'paoSelect':
-          nextScreen = 'confirmation';
           break;
         case 'nagashiSelect':
           nextScreen = 'playersSelect';
@@ -186,10 +174,6 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
       let prevScreen: AppScreen = state.currentScreen;
       let currentOutcome: AppOutcome | undefined = state.currentOutcome;
       switch (state.currentScreen) {
-        case 'outcomeSelect':
-          prevScreen = 'currentGame';
-          currentOutcome = undefined;
-          break;
         case 'otherTablesList':
         case 'newGame':
         case 'currentGame':
@@ -214,7 +198,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_NAGASHI) {
             prevScreen = 'nagashiSelect';
           } else {
-            prevScreen = 'outcomeSelect';
+            prevScreen = 'currentGame';
             currentOutcome = undefined;
           }
           break;
@@ -225,11 +209,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           switch (state.currentOutcome?.selectedOutcome) {
             case RoundOutcome.ROUND_OUTCOME_RON:
             case RoundOutcome.ROUND_OUTCOME_TSUMO:
-              if (winnerHasYakuWithPao(state.currentOutcome, state.gameConfig)) {
-                prevScreen = 'paoSelect';
-              } else {
-                prevScreen = 'handSelect';
-              }
+              prevScreen = 'handSelect';
               break;
             case RoundOutcome.ROUND_OUTCOME_DRAW:
             case RoundOutcome.ROUND_OUTCOME_ABORT:
@@ -240,11 +220,8 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
             default:
           }
           break;
-        case 'paoSelect':
-          prevScreen = 'handSelect';
-          break;
         case 'nagashiSelect':
-          prevScreen = 'outcomeSelect';
+          prevScreen = 'currentGame';
           break;
         case 'otherTable':
           prevScreen = 'otherTablesList';

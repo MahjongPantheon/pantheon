@@ -20,9 +20,7 @@ import { initialState } from '../state';
 import {
   AppActionTypes,
   INIT_STATE,
-  SELECT_MULTIRON_WINNER,
   SET_CREDENTIALS,
-  SET_SELECT_HAND_TAB,
   SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
@@ -42,11 +40,6 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
         ...state,
         currentPlayerId: action.payload.personId,
         analyticsSession: action.payload.sessionId,
-      };
-    case SELECT_MULTIRON_WINNER:
-      return {
-        ...state,
-        multironCurrentWinner: action.payload.winner,
       };
     case SETTINGS_SAVE_THEME:
       return {
@@ -81,11 +74,6 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
           currentTheme: (action.payload ?? state.settings)['currentTheme'],
           singleDeviceMode: (action.payload ?? state.settings)['singleDeviceMode'],
         },
-      };
-    case SET_SELECT_HAND_TAB:
-      return {
-        ...state,
-        currentSelectHandTab: action.payload,
       };
     case TOGGLE_OVERVIEW_DIFFBY:
       return {

@@ -24,11 +24,9 @@ import {
   GOTO_PREV_SCREEN,
   INIT_REQUIRED_YAKU,
   INIT_STATE,
-  SELECT_MULTIRON_WINNER,
   START_NEW_GAME,
   UPDATE_STATE_SETTINGS,
   ADD_YAKU,
-  SET_SELECT_HAND_TAB,
   SHOW_LAST_RESULTS,
   GET_LAST_RESULTS_INIT,
   GET_ALL_PLAYERS_SUCCESS,
@@ -39,9 +37,7 @@ import {
   GET_GAME_OVERVIEW_INIT,
 } from '../actions/interfaces';
 import { AppScreen, IAppState } from '../interfaces';
-import { getWinningUsers } from '../selectors/mimirSelectors';
-import { YakuId } from '../../primitives/yaku';
-import { getFirstWinnerWithPao } from '../selectors/paoSelectors';
+import { YakuId } from '../../helpers/yaku';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
 
 export const screenManageMw =
@@ -79,23 +75,13 @@ export const screenManageMw =
                 [RoundOutcome.ROUND_OUTCOME_RON, RoundOutcome.ROUND_OUTCOME_TSUMO] as RoundOutcome[]
               ).includes(state.currentOutcome.selectedOutcome)
             ) {
-              const currentWinnerId = getWinningUsers(state)[0].id;
-              mw.dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
-              mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
               mw.dispatch({ type: INIT_REQUIRED_YAKU });
-
               if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
                 mw.dispatch({
                   type: ADD_YAKU,
-                  payload: { id: YakuId.MENZENTSUMO, winner: currentWinnerId },
+                  payload: { id: YakuId.MENZENTSUMO, winner: state.currentOutcome?.winner },
                 });
               }
-            }
-            break;
-          case 'paoSelect':
-            const currentWinnerId = getFirstWinnerWithPao(state);
-            if (currentWinnerId) {
-              mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
             }
             break;
           default:
@@ -103,22 +89,7 @@ export const screenManageMw =
         break;
       case GOTO_PREV_SCREEN:
         next(action);
-
-        state = mw.getState();
-        currentScreen = state.currentScreen;
-
-        switch (currentScreen) {
-          case 'handSelect':
-            mw.dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
-            break;
-          case 'paoSelect':
-            const currentWinnerId = getFirstWinnerWithPao(state);
-            if (currentWinnerId) {
-              mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
-            }
-            break;
-          default:
-        }
+        currentScreen = mw.getState().currentScreen;
         break;
       case START_NEW_GAME:
         next(action);

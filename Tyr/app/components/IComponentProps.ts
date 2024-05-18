@@ -21,4 +21,5 @@ import { Dispatch } from 'redux';
 export interface IComponentProps {
   state: IAppState;
   dispatch: Dispatch;
+  newyear: boolean;
 }

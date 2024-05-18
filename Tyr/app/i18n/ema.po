@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 19:38Z\n"
+"POT-Creation-Date: 2024-05-10 21:27Z\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,546 +14,517 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: app/components/screens/table/base/TableInfo.tsx:114:22
+#: app/components/base/TableStatus/TableStatus.tsx:91:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "%1 deal left"
 msgstr[1] "%1 deals left"
 
-#: app/components/screens/log/view/RoundSelectors.ts:36:15
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:78:9
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:104:28
+msgid "%1 fu"
+msgstr ""
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:39:12
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:77:9
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:92:14
+#: app/store/selectors/round.ts:92:14
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:524:14
+#: app/store/selectors/table.ts:416:14
 msgid "Abort"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:178:14
-#: app/components/screens/table/TableHelper.ts:166:15
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:72:24
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr ""
 
-#: app/components/screens/table/TableScreen.tsx:90:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
 msgid "Call referee"
 msgstr ""
 
-#: app/components/screens/table/TableScreen.tsx:98:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
 msgid "Call referee for your table?"
 msgstr ""
 
-#: app/components/screens/table/TableScreen.tsx:95:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
 msgid "Cancel"
 msgstr ""
 
-#: app/primitives/yaku.ts:366:34 app/primitives/yaku.ts:367:39
+#: app/helpers/yaku.ts:366:34 app/helpers/yaku.ts:367:39
 msgid "Chankan"
 msgstr "Robbing a Kong"
 
-#: app/primitives/yaku.ts:258:34 app/primitives/yaku.ts:259:39
+#: app/helpers/yaku.ts:258:34 app/helpers/yaku.ts:259:39
 msgid "Chanta"
 msgstr "Outside Hand"
 
-#: app/primitives/yaku.ts:354:34 app/primitives/yaku.ts:355:39
+#: app/helpers/yaku.ts:354:34 app/helpers/yaku.ts:355:39
 msgid "Chiihou"
 msgstr "Blessing of Earth"
 
-#: app/primitives/yaku.ts:300:34 app/primitives/yaku.ts:301:39
+#: app/helpers/yaku.ts:300:34 app/helpers/yaku.ts:301:39
 msgid "Chiitoitsu"
 msgstr "Seven pairs"
 
-#: app/primitives/yaku.ts:282:34 app/primitives/yaku.ts:283:39
+#: app/helpers/yaku.ts:282:34 app/helpers/yaku.ts:283:39
 msgid "Chinitsu"
 msgstr "Full Flush"
 
-#: app/primitives/yaku.ts:270:34 app/primitives/yaku.ts:271:39
+#: app/helpers/yaku.ts:270:34 app/helpers/yaku.ts:271:39
 msgid "Chinroutou"
 msgstr "All Terminals"
 
-#: app/components/screens/log/view/RoundSelectors.ts:191:14
-#: app/components/screens/table/TableHelper.ts:155:13
-#: app/components/screens/table/TableHelper.ts:526:14
+#: app/components/base/Player/Player.tsx:59:58
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:22
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
+#: app/store/selectors/table.ts:418:14
 msgid "Chombo"
 msgstr ""
 
-#: app/primitives/yaku.ts:288:34 app/primitives/yaku.ts:289:39
+#: app/helpers/yaku.ts:288:34 app/helpers/yaku.ts:289:39
 msgid "Chuuren poutou"
 msgstr "Nine Gates"
 
-#: app/components/screens/new-game/NewGameScreenView.tsx:68:23
+#: app/components/pages/NewGame/NewGame.tsx:72:14
 msgid "Clear players"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:125:20
+#: app/components/pages/Home/Home.tsx:70:14
 msgid "Current game"
 msgstr ""
 
-#: app/primitives/yaku.ts:319:39
+#: app/helpers/yaku.ts:319:39
 msgid "Daburu"
 msgstr "Double"
 
-#: app/primitives/yaku.ts:318:34
+#: app/helpers/yaku.ts:318:34
 msgid "Daburu riichi"
 msgstr "Double Riichi"
 
-#: app/primitives/yaku.ts:228:34 app/primitives/yaku.ts:229:39
+#: app/helpers/yaku.ts:228:34 app/helpers/yaku.ts:229:39
 msgid "Daisangen"
 msgstr "Big Three Dragons"
 
-#: app/primitives/yaku.ts:240:34 app/primitives/yaku.ts:241:39
+#: app/helpers/yaku.ts:240:34 app/helpers/yaku.ts:241:39
 msgid "Daisuushii"
 msgstr "Big Four Winds"
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:89:76
-msgid "Dora"
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:123:22
+msgid "Dora %1"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:522:14
+#: app/store/selectors/table.ts:414:14
 msgid "Draw"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:44:23
+#: app/components/pages/Login/LoginError.tsx:27:23
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:47:24
+#: app/components/pages/Login/Login.tsx:33:24
 msgid "Email"
 msgstr ""
 
-#: app/components/screens/home/HomeScreen.tsx:95:55
+#: app/components/screens/Home/Home.tsx:98:60
 msgid "Event title"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:166:14
-#: app/components/screens/table/TableHelper.ts:149:13
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:67:22
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:84:12
-#: app/components/screens/login/LoginErrorView.tsx:50:16
+#: app/components/pages/Login/Login.tsx:56:12
+#: app/components/pages/Login/LoginError.tsx:33:16
 msgid "Forgot password?"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:121:76
-msgid "Fu"
-msgstr ""
-
-#: app/components/screens/log/view/LogScreenView.tsx:109:28
+#: app/components/pages/LogView/LogView.tsx:81:46
 msgid "Game log"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:93:14
+#: app/components/pages/Settings/Settings.tsx:104:10
 msgid "Go to personal area"
 msgstr ""
 
-#: app/primitives/yaku.ts:336:34 app/primitives/yaku.ts:337:39
+#: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
 msgid "Haitei"
 msgstr "Bottom of the Sea"
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:85:16
-msgid "Han from yaku"
-msgstr ""
-
-#: app/components/screens/log/view/RoundSelectors.ts:49:10
+#: app/store/selectors/round.ts:49:10
 msgid "Honba: %1"
 msgstr ""
 
-#: app/primitives/yaku.ts:276:34 app/primitives/yaku.ts:277:39
+#: app/helpers/yaku.ts:276:34 app/helpers/yaku.ts:277:39
 msgid "Honitsu"
 msgstr "Half Flush"
 
-#: app/primitives/yaku.ts:132:34 app/primitives/yaku.ts:133:39
+#: app/helpers/yaku.ts:132:34 app/helpers/yaku.ts:133:39
 msgid "Honroutou"
 msgstr "All Terms and Honours"
 
-#: app/primitives/yaku.ts:361:39
+#: app/helpers/yaku.ts:361:39
 msgid "Houtei"
 msgstr "Bottom of the River"
 
-#: app/primitives/yaku.ts:360:34
+#: app/helpers/yaku.ts:360:34
 msgid "Houtei raoyui"
 msgstr "Bottom of the River"
 
-#: app/components/screens/login/LoginErrorView.tsx:56:12
+#: app/components/pages/Login/LoginError.tsx:39:12
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/primitives/yaku.ts:168:34 app/primitives/yaku.ts:169:39
+#: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
 msgid "Iipeikou"
 msgstr "Pure Double Chow"
 
-#: app/primitives/yaku.ts:324:34 app/primitives/yaku.ts:325:39
+#: app/helpers/yaku.ts:324:34 app/helpers/yaku.ts:325:39
 msgid "Ippatsu"
 msgstr "Ippatsu"
 
-#: app/primitives/yaku.ts:192:34 app/primitives/yaku.ts:193:39
+#: app/helpers/yaku.ts:192:34 app/helpers/yaku.ts:193:39
 msgid "Ittsu"
 msgstr "Pure Straight"
 
-#: app/primitives/yaku.ts:264:34 app/primitives/yaku.ts:265:39
+#: app/helpers/yaku.ts:264:34 app/helpers/yaku.ts:265:39
 msgid "Junchan"
 msgstr "Terminals in All Sets"
 
-#: app/primitives/yaku.ts:306:34 app/primitives/yaku.ts:307:39
+#: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
 msgid "Kokushi musou"
 msgstr "Thirteen Orphans"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:100:57
+#: app/components/pages/Settings/Settings.tsx:110:45
 msgid "Language"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:64:12
+#: app/components/pages/Login/Login.tsx:48:12
 msgid "Log in"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:40:15
+#: app/components/pages/Login/LoginError.tsx:23:15
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:425:22
-msgid "Loser"
-msgstr ""
-
-#: app/primitives/yaku.ts:330:34 app/primitives/yaku.ts:331:39
+#: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
 msgid "Menzentsumo"
 msgstr "Fully Concealed Hand"
 
-#: app/components/screens/log/view/RoundSelectors.ts:119:14
+#: app/store/selectors/round.ts:119:14
 msgid "Multiron, from %1"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:528:14
+#: app/store/selectors/table.ts:420:14
 msgid "Nagashi"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:204:14
-#: app/components/screens/table/TableHelper.ts:176:15
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:82:24
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:118:20
+#: app/components/pages/Home/Home.tsx:65:14
 msgid "New game"
 msgstr ""
 
-#: app/components/screens/game-result/GameResultScreenView.tsx:93:56
+#: app/components/pages/GameResult/GameResult.tsx:61:44
 msgid "No games found"
 msgstr ""
 
-#: app/components/screens/log/view/LogScreenView.tsx:62:12
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:141:18
+msgid "No pao"
+msgstr ""
+
+#: app/components/pages/LogView/LogView.tsx:37:62
 msgid "No results found"
 msgstr ""
 
-#: app/components/screens/other-tables-list/OtherTablesListView.tsx:55:14
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:42:42
 msgid "No tables are playing right now"
 msgstr ""
 
-#: app/components/App.tsx:150:35
-#: app/components/screens/login/LoginErrorView.tsx:61:12
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:92:30
+msgid "Nobody selected"
+msgstr ""
+
+#: app/components/App.tsx:183:35
+#: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr ""
 
-#: app/primitives/yaku.ts:378:34 app/primitives/yaku.ts:379:39
+#: app/helpers/yaku.ts:378:34 app/helpers/yaku.ts:379:39
 msgid "Open riichi"
 msgstr "Open Riichi"
 
-#: app/primitives/yaku.ts:120:34 app/primitives/yaku.ts:121:39
+#: app/helpers/yaku.ts:120:34 app/helpers/yaku.ts:121:39
 msgid "Opened hand"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:137:20
+#: app/components/pages/Home/Home.tsx:80:14
 msgid "Other playing tables"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:38:49
+#: app/components/pages/Login/LoginError.tsx:21:38
 msgid "Pantheon"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:42:55
-msgid "Pantheon: log in"
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:89:19
+msgid "Pao"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:45:10
+#: app/store/selectors/round.ts:45:10
 msgid "Pao from: %1"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:53:24
+#: app/components/pages/Login/Login.tsx:40:24
 msgid "Password"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:48:14
+#: app/components/pages/Login/LoginError.tsx:31:14
 msgid "Password check has failed"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:221:16
-msgid "Penalty"
-msgstr ""
-
-#: app/primitives/yaku.ts:162:34 app/primitives/yaku.ts:163:39
+#: app/helpers/yaku.ts:162:34 app/helpers/yaku.ts:163:39
 msgid "Pinfu"
 msgstr "Pinfu"
 
-#: app/components/screens/settings/SettingsScreen.tsx:81:58
+#: app/components/screens/Settings/Settings.tsx:78:56
 msgid "Player name"
 msgstr ""
 
-#: app/components/App.tsx:152:16
+#: app/components/App.tsx:185:16
 msgid "Please return back and press riichi button for the winner"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:131:20
+#: app/components/pages/Home/Home.tsx:75:14
 msgid "Previous game"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:22
-msgid "Red fives"
-msgstr ""
-
-#: app/components/screens/table/TableScreen.tsx:102:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
 msgid "Referee has been requested to your table!"
 msgstr ""
 
-#: app/primitives/yaku.ts:372:34 app/primitives/yaku.ts:373:39
+#: app/helpers/yaku.ts:372:34 app/helpers/yaku.ts:373:39
 msgid "Renhou"
 msgstr "Blessing of Man"
 
-#: app/primitives/yaku.ts:312:34 app/primitives/yaku.ts:313:39
+#: app/helpers/yaku.ts:312:34 app/helpers/yaku.ts:313:39
 msgid "Riichi"
 msgstr "Riichi"
 
-#: app/components/screens/log/view/RoundSelectors.ts:67:10
+#: app/store/selectors/round.ts:67:10
 msgid "Riichi bets: %1"
 msgstr ""
 
-#: app/primitives/yaku.ts:343:39
+#: app/helpers/yaku.ts:343:39
 msgid "Rinshan"
 msgstr "After a Kong"
 
-#: app/primitives/yaku.ts:342:34
+#: app/helpers/yaku.ts:342:34
 msgid "Rinshan kaihou"
 msgstr "After a Kong"
 
-#: app/components/screens/table/TableHelper.ts:137:13
-#: app/components/screens/table/TableHelper.ts:518:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:63:79
+#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:410:14
 msgid "Ron"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:91:14
+#: app/store/selectors/round.ts:91:14
 msgid "Ron, %1"
 msgstr ""
 
-#: app/primitives/yaku.ts:174:34 app/primitives/yaku.ts:175:39
+#: app/helpers/yaku.ts:174:34 app/helpers/yaku.ts:175:39
 msgid "Ryanpeikou"
 msgstr "Twice Pure Double Chow"
 
-#: app/primitives/yaku.ts:294:34 app/primitives/yaku.ts:295:39
+#: app/helpers/yaku.ts:294:34 app/helpers/yaku.ts:295:39
 msgid "Ryuuiisou"
 msgstr "All Green"
 
-#: app/primitives/yaku.ts:138:34 app/primitives/yaku.ts:139:39
+#: app/helpers/yaku.ts:138:34 app/helpers/yaku.ts:139:39
 msgid "Sanankou"
 msgstr "Three Concealed Pungs"
 
-#: app/primitives/yaku.ts:144:34 app/primitives/yaku.ts:145:39
+#: app/helpers/yaku.ts:144:34 app/helpers/yaku.ts:145:39
 msgid "Sankantsu"
 msgstr "Three Kongs"
 
-#: app/primitives/yaku.ts:180:34 app/primitives/yaku.ts:181:39
+#: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
 msgid "Sanshoku"
 msgstr "Mixed Triple Chow"
 
-#: app/primitives/yaku.ts:186:34 app/primitives/yaku.ts:187:39
+#: app/helpers/yaku.ts:186:34 app/helpers/yaku.ts:187:39
 msgid "Sanshoku doukou"
 msgstr "Triple Pung"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:154:16
+#: app/components/pages/Settings/Settings.tsx:107:10
 msgid "Select another event"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:84:66
+#: app/components/pages/EventSelect/EventSelect.tsx:42:55
 msgid "Select event"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:499:16
-msgid "Select pao"
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+msgid "Select nagashi"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:504:16
-msgid "Select tempai"
-msgstr ""
-
-#: app/primitives/yaku.ts:222:34 app/primitives/yaku.ts:223:39
+#: app/helpers/yaku.ts:222:34 app/helpers/yaku.ts:223:39
 msgid "Shousangen"
 msgstr "Little Three Dragons"
 
-#: app/primitives/yaku.ts:234:34 app/primitives/yaku.ts:235:39
+#: app/helpers/yaku.ts:234:34 app/helpers/yaku.ts:235:39
 msgid "Shousuushii"
 msgstr "Little Four Winds"
 
-#: app/components/screens/new-game/NewGameScreenView.tsx:72:23
+#: app/components/pages/NewGame/NewGame.tsx:81:14
 msgid "Shuffle players"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:75:12
+#: app/components/pages/Login/Login.tsx:53:12
 msgid "Sign up"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:162:57
+#: app/components/pages/Settings/Settings.tsx:128:16
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/screens/new-game/NewGameScreenView.tsx:79:23
+#: app/components/pages/NewGame/NewGame.tsx:91:14
 msgid "Start game"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:143:20
+#: app/components/pages/Home/Home.tsx:90:14
 msgid "Statistics"
 msgstr ""
 
-#: app/primitives/yaku.ts:156:34 app/primitives/yaku.ts:157:39
+#: app/helpers/yaku.ts:156:34 app/helpers/yaku.ts:157:39
 msgid "Suuankou"
 msgstr "Four Concealed Pungs"
 
-#: app/primitives/yaku.ts:150:34 app/primitives/yaku.ts:151:39
+#: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
 msgid "Suukantsu"
 msgstr "Four Kongs"
 
-#: app/components/screens/table/base/TableInfo.tsx:122:59
+#: app/components/base/TableStatus/TableStatus.tsx:42:45
 msgid "Table #%1"
 msgstr ""
 
-#: app/primitives/yaku.ts:252:34 app/primitives/yaku.ts:253:39
+#: app/helpers/yaku.ts:252:34 app/helpers/yaku.ts:253:39
 msgid "Tanyao"
 msgstr "All Simples"
 
-#: app/components/screens/log/view/RoundSelectors.ts:53:10
+#: app/store/selectors/round.ts:53:10
 msgid "Tempai: %1"
 msgstr ""
 
-#: app/primitives/yaku.ts:348:34 app/primitives/yaku.ts:349:39
+#: app/helpers/yaku.ts:348:34 app/helpers/yaku.ts:349:39
 msgid "Tenhou"
 msgstr "Blessing of Heaven"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:116:57
+#: app/components/base/ThemeSelector/ThemeSelector.tsx:18:45
 msgid "Theme"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:101:16
-msgid "There is no events you participate in right now"
+#: app/components/pages/EventSelect/EventSelect.tsx:56:14
+msgid "There are no events you participate in right now"
 msgstr ""
 
-#: app/primitives/yaku.ts:126:34 app/primitives/yaku.ts:127:39
+#: app/helpers/yaku.ts:126:34 app/helpers/yaku.ts:127:39
 msgid "Toitoi"
 msgstr "All Pungs"
 
-#: app/components/screens/table/TableHelper.ts:143:13
-#: app/components/screens/table/TableHelper.ts:520:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:64:81
+#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:412:14
 msgid "Tsumo"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:149:14
+#: app/store/selectors/round.ts:149:14
 msgid "Tsumo, %1"
 msgstr ""
 
-#: app/primitives/yaku.ts:246:34 app/primitives/yaku.ts:247:39
+#: app/helpers/yaku.ts:246:34 app/helpers/yaku.ts:247:39
 msgid "Tsuuiisou"
 msgstr "All Honours"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:164:18
+#: app/components/pages/Settings/Settings.tsx:129:22
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:53:16
+#: app/components/pages/Login/LoginError.tsx:36:16
 msgid "Unexpected server error"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:99:22
-msgid "Ura dora"
-msgstr ""
-
-#: app/components/screens/table/TableHelper.ts:422:22
-#: app/components/screens/table/TableHelper.ts:435:22
-msgid "Winner"
-msgstr ""
-
-#: app/primitives/yaku.ts:199:39
+#: app/helpers/yaku.ts:199:39
 msgid "Yakuhai"
 msgstr "Yakuhai"
 
-#: app/primitives/yaku.ts:198:34
+#: app/helpers/yaku.ts:198:34
 msgid "Yakuhai x1"
 msgstr "Yakuhai x1"
 
-#: app/primitives/yaku.ts:204:34
+#: app/helpers/yaku.ts:204:34
 msgid "Yakuhai x2"
 msgstr "Yakuhai x2"
 
-#: app/primitives/yaku.ts:210:34
+#: app/helpers/yaku.ts:210:34
 msgid "Yakuhai x3"
 msgstr "Yakuhai x3"
 
-#: app/primitives/yaku.ts:216:34
+#: app/helpers/yaku.ts:216:34
 msgid "Yakuhai x4"
 msgstr "Yakuhai x4"
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:128:68
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
 msgid "Yakuman"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:71:19
+#: app/store/selectors/round.ts:71:19
 msgid "dora %1"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:413:25
-msgid "empty outcome"
+#: app/components/pages/PlayersSearch/PlayersSearch.tsx:45:24
+msgid "find player..."
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreen.tsx:56:58
+#: app/components/screens/EventSelect/EventSelect.tsx:48:62
 msgid "name"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:31:83
+#: app/components/pages/Login/LoginError.tsx:14:83
 msgctxt "Name of registration link"
 msgid "register"
 msgstr ""
 
-#: app/components/general/dropdown/PlayerDropdown.tsx:41:60
+#: app/components/pages/NewGame/NewGame.tsx:46:26
+#: app/components/pages/NewGame/NewGame.tsx:52:26
+#: app/components/pages/NewGame/NewGame.tsx:58:26
+#: app/components/pages/NewGame/NewGame.tsx:64:26
 msgid "select player"
 msgstr ""
 
-#: app/components/general/number-select/NumberSelect.tsx:100:13
-msgid "something goes wrong, please contact your administrator"
-msgstr ""
-
-#: app/components/general/search-input/SearchInput.tsx:82:24
-msgid "type to find someone"
-msgstr ""
-
-#: app/components/screens/table/TableHelper.ts:440:27
-msgid "wrong outcome for paoSelect"
-msgstr ""
-
-#: app/primitives/yaku.ts:205:39
+#: app/helpers/yaku.ts:205:39
 msgid "x2"
 msgstr ""
 
-#: app/primitives/yaku.ts:211:39
+#: app/helpers/yaku.ts:211:39
 msgid "x3"
 msgstr ""
 
-#: app/primitives/yaku.ts:217:39
+#: app/helpers/yaku.ts:217:39
 msgid "x4"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:33:12
+#: app/store/selectors/round.ts:33:12
 msgid "yakuman"
 msgstr "役满"

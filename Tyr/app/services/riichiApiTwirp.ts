@@ -40,7 +40,7 @@ import { ClientConfiguration } from 'twirpscript';
 import { SessionStatus } from '../clients/proto/atoms.pb';
 
 import { handleReleaseTag } from './releaseTags';
-import { env } from '../env';
+import { env } from '../helpers/env';
 
 export class RiichiApiTwirpService implements IRiichiApi {
   private _authToken: string | null = null;

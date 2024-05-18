@@ -27,7 +27,7 @@ import {
   TOGGLE_DEADHAND,
   TOGGLE_LOSER,
   TOGGLE_NAGASHI,
-  TOGGLE_PAO,
+  SELECT_PAO,
   TOGGLE_RIICHI,
   TOGGLE_WINNER,
 } from '../actions/interfaces';
@@ -41,22 +41,27 @@ import {
   modifyWinOutcomeCommons,
   removeYakuFromProps,
 } from './util';
-import { AppOutcome } from '../../interfaces/app';
+import { AppOutcome } from '../../helpers/interfaces';
 import { getRequiredYaku } from '../selectors/yaku';
-import { YakuId } from '../../primitives/yaku';
+import { YakuId } from '../../helpers/yaku';
 import { PlayerInSession, RoundOutcome } from '../../clients/proto/atoms.pb';
 
 /**
  * Get id of player who is dealer in this round
  */
 function getDealerId(outcome: AppOutcome, playersList: PlayerInSession[]): number {
-  return playersList[(outcome.roundIndex - 1) % 4].id;
+  let players = [playersList[0], playersList[1], playersList[2], playersList[3]];
+  for (let i = 1; i < outcome.roundIndex; i++) {
+    players = [players.pop()!].concat(players);
+  }
+
+  return players[0].id;
 }
 
 function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: number) {
   let stateUpdated = state;
   let winProps;
-  yakuToAdd.forEach((yId) => {
+  yakuToAdd?.forEach((yId) => {
     switch (stateUpdated.currentOutcome?.selectedOutcome) {
       case RoundOutcome.ROUND_OUTCOME_TSUMO:
         winProps = addYakuToProps(
@@ -112,19 +117,23 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
     case ADD_YAKU:
       return addYakuList(
         state,
-        [action.payload.id].concat(getRequiredYaku(state)),
+        [action.payload.id].concat(getRequiredYaku(state)[action.payload.winner!] ?? []),
         action.payload.winner
       );
     case INIT_REQUIRED_YAKU:
       switch (state.currentOutcome?.selectedOutcome) {
         case RoundOutcome.ROUND_OUTCOME_TSUMO:
-          return addYakuList(state, getRequiredYaku(state), state.multironCurrentWinner);
+          return addYakuList(
+            state,
+            getRequiredYaku(state)[state.currentOutcome.winner!],
+            state.currentOutcome.winner
+          );
         case RoundOutcome.ROUND_OUTCOME_RON:
           let stateModified = state;
           Object.keys(state.currentOutcome.wins).forEach((pId) => {
             stateModified = addYakuList(
               stateModified,
-              getRequiredYaku(state, parseInt(pId, 10)),
+              getRequiredYaku(state)[parseInt(pId.toString(), 10)],
               parseInt(pId, 10)
             );
           });
@@ -133,13 +142,14 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
           return state;
       }
     case REMOVE_YAKU:
-      if (getRequiredYaku(state).includes(action.payload.id)) {
-        // do not allow to disable required yaku
-        return state;
-      }
-
       switch (state.currentOutcome?.selectedOutcome) {
         case RoundOutcome.ROUND_OUTCOME_TSUMO:
+          if (
+            (getRequiredYaku(state)[state.currentOutcome.winner!] ?? []).includes(action.payload.id)
+          ) {
+            // do not allow to disable required yaku
+            return state;
+          }
           winProps = removeYakuFromProps(
             state.currentOutcome,
             state.currentOutcome.selectedOutcome,
@@ -151,6 +161,10 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
           }
           break;
         case RoundOutcome.ROUND_OUTCOME_RON:
+          if ((getRequiredYaku(state)[action.payload.winner!] ?? []).includes(action.payload.id)) {
+            // do not allow to disable required yaku
+            return state;
+          }
           winProps = removeYakuFromProps(
             state.currentOutcome.wins[action.payload.winner!],
             state.currentOutcome.selectedOutcome,
@@ -273,27 +287,21 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
         default:
           throw new Error('No losers exist on this outcome');
       }
-    case TOGGLE_PAO:
-      playerId = action.payload;
+    case SELECT_PAO:
+      const { paoId, winnerId } = action.payload;
       switch (state.currentOutcome?.selectedOutcome) {
         case RoundOutcome.ROUND_OUTCOME_TSUMO:
           return modifyWinOutcome(state, {
-            paoPlayerId: state.currentOutcome.paoPlayerId === playerId ? undefined : playerId,
+            paoPlayerId: paoId,
           });
         case RoundOutcome.ROUND_OUTCOME_RON:
-          if (state.multironCurrentWinner) {
-            return modifyWinOutcome(
-              state,
-              {
-                paoPlayerId:
-                  state.currentOutcome.wins[state.multironCurrentWinner].paoPlayerId === playerId
-                    ? undefined
-                    : playerId,
-              },
-              () => state.multironCurrentWinner
-            );
-          }
-          return state;
+          return modifyWinOutcome(
+            state,
+            {
+              paoPlayerId: paoId,
+            },
+            () => winnerId
+          );
         default:
           throw new Error('No pao exist on this outcome');
       }

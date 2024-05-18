@@ -71,10 +71,10 @@ import {
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
-import { makeYakuGraph } from '../../primitives/yaku-compat';
+import { makeYakuGraph } from '../../helpers/yakuCompatibility';
 import { modifyArray } from './util';
-import { defaultPlayer } from '../selectors/screenNewGameSelectors';
-import { rand } from '../../primitives/rand';
+import { defaultPlayer } from '../selectors/newGame';
+import { rand } from '../../helpers/rand';
 import { initialState } from '../state';
 import { PlayerInSession, RegisteredPlayer } from '../../clients/proto/atoms.pb';
 

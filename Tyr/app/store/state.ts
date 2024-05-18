@@ -23,10 +23,10 @@ import {
   AppOutcomeAbort,
   AppOutcomeChombo,
   AppOutcomeNagashi,
-} from '../interfaces/app';
-import { getFixedFu } from '../primitives/yaku-values';
+} from '../helpers/interfaces';
+import { getFixedFu } from '../helpers/yakuValues';
 import { IAppState } from './interfaces';
-import { defaultPlayer } from './selectors/screenNewGameSelectors';
+import { defaultPlayer } from './selectors/newGame';
 import { RoundOutcome } from '../clients/proto/atoms.pb';
 
 export const initialState: IAppState = {
@@ -56,7 +56,6 @@ export const initialState: IAppState = {
   currentPlayerId: undefined,
   players: undefined, // e-s-w-n,
   mapIdToPlayer: {},
-  multironCurrentWinner: undefined,
   isLoggedIn: false,
   gameConfig: undefined,
   tableIndex: undefined,
@@ -66,7 +65,6 @@ export const initialState: IAppState = {
   currentOtherTablePlayers: [],
   isIos: false,
   showAdditionalTableInfo: false,
-  currentSelectHandTab: undefined,
 
   // preloaders flags
   loading: {
