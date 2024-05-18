@@ -42,18 +42,35 @@ export const TablePrimaryView = (props: IProps) => {
   const [newGameOpen, setNewGameOpen] = useState(false);
   const [componentsReady, setComponentsReady] = useState(false);
 
+  const [toimen, setToimen] = useState(props.toimen);
+  const [kamicha, setKamicha] = useState(props.kamicha);
+  const [self, setSelf] = useState(props.self);
+  const [shimocha, setShimocha] = useState(props.shimocha);
+
+  // This weird magic is for nicer animations during player side switch on other table
+  // We keep old props until the screen is faded out to avoid content blinking
   useEffect(() => {
-    setComponentsReady(true);
-  }, []);
+    setComponentsReady(false);
+    const timeout = setTimeout(() => {
+      setToimen(props.toimen);
+      setKamicha(props.kamicha);
+      setSelf(props.self);
+      setShimocha(props.shimocha);
+      setTimeout(() => {
+        setComponentsReady(true);
+      }, 0);
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [props.toimen.id, props.kamicha.id, props.shimocha.id, props.self.id]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.mainArea}>
         <FourSidedScreen
-          sideUp={<PlayerPlace upsideDown={props.topRowUpsideDown} {...props.toimen} />}
-          sideLeft={<PlayerPlace {...props.kamicha} />}
-          sideDown={<PlayerPlace {...props.self} />}
-          sideRight={<PlayerPlace {...props.shimocha} />}
+          sideUp={<PlayerPlace upsideDown={props.topRowUpsideDown} {...toimen} />}
+          sideLeft={<PlayerPlace {...kamicha} />}
+          sideDown={<PlayerPlace {...self} />}
+          sideRight={<PlayerPlace {...shimocha} />}
           center={<TableStatus {...centerDims} {...props.tableStatus} />}
           onDimensionChange={setCenterDims}
           ready={componentsReady}

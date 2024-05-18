@@ -57,67 +57,74 @@ export const FourSidedScreen = ({
   }, []);
 
   useEffect(() => {
-    let centerHPaddings = 0;
-    let centerVPaddings = 0;
-    {
-      const { left, right, top, bottom } = refUp.current!.getBoundingClientRect();
-      setSideTopLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
-      setSideTopTop('-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px');
-      centerVPaddings += bottom - top;
-    }
-    {
-      const { left, right, top, bottom } = refLeft.current!.getBoundingClientRect();
-      setSideLeftTop('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
-      setSideLeftLeft(
-        '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
-      );
-      centerHPaddings += right - left;
-    }
-    {
-      const { left, right, top, bottom } = refRight.current!.getBoundingClientRect();
-      setSideRightTop('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
-      setSideRightRight(
-        '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
-      );
-      centerHPaddings += right - left;
-    }
-    {
-      const { right, left, bottom, top } = refDown.current!.getBoundingClientRect();
-      setSideBottomLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
-      centerVPaddings += bottom - top;
-    }
-    {
-      setSideCenterHeight('calc(100% - ' + (centerVPaddings + 20) + 'px)');
-      setSideCenterWidth('calc(100% - ' + (centerHPaddings + 20) + 'px)');
-      const ref = refCenter.current!;
-      setTimeout(() => {
-        const { left, right, top, bottom } = ref.getBoundingClientRect();
-        setSideCenterLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
-        setSideCenterTop('calc(50% - ' + Math.round((bottom - top) / 2) + 'px)');
-        setUnhide(true);
-        onDimensionChange?.({ height: bottom - top, width: right - left });
-      }, 0);
+    if (!ready) {
+      setUnhide(false);
+    } else {
+      let centerHPaddings = 0;
+      let centerVPaddings = 0;
+      {
+        const { left, right, top, bottom } = refUp.current!.getBoundingClientRect();
+        setSideTopLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        setSideTopTop(
+          '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
+        );
+        centerVPaddings += bottom - top;
+      }
+      {
+        const { left, right, top, bottom } = refLeft.current!.getBoundingClientRect();
+        setSideLeftTop('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        setSideLeftLeft(
+          '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
+        );
+        centerHPaddings += right - left;
+      }
+      {
+        const { left, right, top, bottom } = refRight.current!.getBoundingClientRect();
+        setSideRightTop('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        setSideRightRight(
+          '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
+        );
+        centerHPaddings += right - left;
+      }
+      {
+        const { right, left, bottom, top } = refDown.current!.getBoundingClientRect();
+        setSideBottomLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        centerVPaddings += bottom - top;
+      }
+      {
+        setSideCenterHeight('calc(100% - ' + (centerVPaddings + 20) + 'px)');
+        setSideCenterWidth('calc(100% - ' + (centerHPaddings + 20) + 'px)');
+        const ref = refCenter.current!;
+
+        setTimeout(() => {
+          const { left, right, top, bottom } = ref.getBoundingClientRect();
+          setSideCenterLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+          setSideCenterTop('calc(50% - ' + Math.round((bottom - top) / 2) + 'px)');
+          setUnhide(true);
+          onDimensionChange?.({ height: bottom - top, width: right - left });
+        }, 0);
+      }
     }
   }, [innerHeight, innerWidth, ready]);
 
   return (
-    <div className={styles.screenBase}>
+    <div className={clsx(styles.screenBase, unhide ? styles.screenBaseUnhide : null)}>
       <div
-        className={clsx(styles.sideUp, unhide ? styles.unhide : null)}
+        className={clsx(styles.sideUp)}
         style={{ top: sideTopTop, left: sideTopLeft }}
         ref={refUp}
       >
         {sideUp}
       </div>
       <div
-        className={clsx(styles.sideLeft, unhide ? styles.unhide : null)}
+        className={clsx(styles.sideLeft)}
         style={{ top: sideLeftTop, left: sideLeftLeft }}
         ref={refLeft}
       >
         {sideLeft}
       </div>
       <div
-        className={clsx(styles.center, unhide ? styles.unhide : null)}
+        className={clsx(styles.center)}
         style={{
           top: sideCenterTop,
           right: sideCenterLeft,
@@ -129,17 +136,13 @@ export const FourSidedScreen = ({
         {center}
       </div>
       <div
-        className={clsx(styles.sideRight, unhide ? styles.unhide : null)}
+        className={clsx(styles.sideRight)}
         style={{ top: sideRightTop, right: sideRightRight }}
         ref={refRight}
       >
         {sideRight}
       </div>
-      <div
-        className={clsx(styles.sideBottom, unhide ? styles.unhide : null)}
-        style={{ left: sideBottomLeft }}
-        ref={refDown}
-      >
+      <div className={clsx(styles.sideBottom)} style={{ left: sideBottomLeft }} ref={refDown}>
         {sideDown}
       </div>
     </div>

@@ -357,8 +357,6 @@ export function getOtherTablePlayerData(
   const playerIndex = (playerOffsets[who] + (state.overviewViewShift ?? 0)) % 4;
   const player =
     state.currentOtherTablePlayers?.[(playerOffsets[who] + (state.overviewViewShift ?? 0)) % 4];
-  // const playerIndex =
-  //   (state.currentOtherTablePlayers?.findIndex((p) => p.id === player?.id) ?? 0) % 4;
   const currentWind = (['e', 's', 'w', 'n'] as const)[
     (8 + playerIndex - ((state.currentOtherTable?.state?.roundIndex ?? 1) - 1)) % 4
   ];

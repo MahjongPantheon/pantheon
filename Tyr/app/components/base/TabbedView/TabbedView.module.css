@@ -25,6 +25,10 @@
   background-color: var(--page-bg);
 }
 
+.tabHeadStrip {
+  display: contents;
+}
+
 .tabContent {
   height: calc(100svh - 126px);
   position: relative;

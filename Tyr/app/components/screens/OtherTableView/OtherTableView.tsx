@@ -33,7 +33,7 @@ export const OtherTableView = ({ state, dispatch }: IComponentProps) => {
     !state.currentOtherTable ||
     !state.currentOtherTablePlayers ||
     state.currentOtherTablePlayers.length !== 4 ||
-    state.loading.addRound ||
+    state.loading.otherTable ||
     state.loading.overview;
 
   if (isLoading) {

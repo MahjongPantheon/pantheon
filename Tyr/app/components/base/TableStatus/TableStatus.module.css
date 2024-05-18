@@ -35,6 +35,7 @@
 }
 
 .gamesLeft {
-  font-size: 26px;
+  text-align: center;
+  font-size: 22px;
   color: var(--color-danger);
 }
