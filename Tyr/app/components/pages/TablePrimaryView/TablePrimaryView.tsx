@@ -63,6 +63,13 @@ export const TablePrimaryView = (props: IProps) => {
     return () => clearTimeout(timeout);
   }, [props.toimen.id, props.kamicha.id, props.shimocha.id, props.self.id]);
 
+  useEffect(() => {
+    setToimen(props.toimen);
+    setKamicha(props.kamicha);
+    setSelf(props.self);
+    setShimocha(props.shimocha);
+  }, [props.self.points, props.shimocha.points, props.kamicha.points, props.toimen.points]);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.mainArea}>
