@@ -24,6 +24,7 @@ jobs:
         run: make e2e
         env:
           ENV_FILENAME: .env.e2e
+          TESTINY_API_KEY: ${{ secrets.TESTINY_API_KEY }}
 
       - uses: actions/upload-artifact@v4
         if: always()

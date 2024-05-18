@@ -27,6 +27,8 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash ;\
 
 RUN npm install -g yarn && chown -R root:root /usr/lib/node_modules/
 
+RUN npm install -g @testiny/cli
+
 # Cleaning up
 RUN mkdir /www && \
     apt-get remove -y tzdata && \
