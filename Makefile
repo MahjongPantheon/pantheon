@@ -415,7 +415,7 @@ e2e:
 e2e_dev: export ENV_FILENAME=.env.development
 e2e_dev:
 	@${COMPOSE_COMMAND} up fenrir -d
-	cd Fenrir && ${MAKE} docker_run
+	cd Fenrir && ${MAKE} docker_deps && ${MAKE} docker_run
 
 .PHONY: e2e_build_tyr
 e2e_build_tyr: export NODE_ENV=development

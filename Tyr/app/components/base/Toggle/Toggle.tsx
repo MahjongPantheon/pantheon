@@ -26,12 +26,14 @@ export const Toggle = ({
   children,
   selected,
   disabled,
+  testId,
 }: {
   style?: CSSProperties;
   size?: 'sm' | 'md' | 'lg' | 'fullwidth';
   onChange?: (newValue: boolean) => void;
   disabled?: boolean;
   selected?: boolean;
+  testId?: string;
 } & PropsWithChildren) => {
   size ??= 'md';
 
@@ -51,6 +53,7 @@ export const Toggle = ({
     <button
       style={style}
       disabled={disabled}
+      data-testid={testId}
       className={clsx(styles.toggleBase, ...classes, selected ? styles.checked : null)}
       onClick={handleChange}
     >

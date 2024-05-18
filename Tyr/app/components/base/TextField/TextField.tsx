@@ -9,12 +9,14 @@ export const TextField = ({
   variant,
   size,
   onChange,
+  testId,
 }: {
   initialValue?: string;
   placeholder?: string;
   type?: 'text' | 'password';
   variant?: 'underline' | 'contained';
   size?: 'sm' | 'md' | 'lg' | 'fullwidth';
+  testId?: string;
   onChange?:
     | ((e: ChangeEvent<HTMLInputElement>) => boolean)
     | ((e: ChangeEvent<HTMLInputElement>) => void);
@@ -45,6 +47,7 @@ export const TextField = ({
 
   return (
     <input
+      data-testid={testId}
       type={type}
       placeholder={placeholder}
       value={currentValue}

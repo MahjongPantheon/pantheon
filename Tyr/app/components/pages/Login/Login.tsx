@@ -44,15 +44,15 @@ export const Login = ({ onSubmit, onSignupClick, onRecoveryClick }: IProps) => {
         />
       </div>
       <div className={styles.loginFormButtons}>
-        <Button variant='primary' size='fullwidth' data-testid='button_login' type='submit'>
+        <Button variant='primary' size='fullwidth' testId='button_login' type='submit'>
           {loc._t('Log in')}
         </Button>
       </div>
       <div className={styles.loginFormButtons}>
-        <Button variant='contained' size='md' onClick={onSignupClick} data-testid='button_signup'>
+        <Button variant='contained' size='md' onClick={onSignupClick} testId='button_signup'>
           {loc._t('Sign up')}
         </Button>
-        <Button variant='contained' size='md' onClick={onRecoveryClick} data-testid='button_forgot'>
+        <Button variant='contained' size='md' onClick={onRecoveryClick} testId='button_forgot'>
           {loc._t('Forgot password?')}
         </Button>
       </div>

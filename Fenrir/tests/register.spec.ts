@@ -7,7 +7,7 @@ test('Register link from assistant', async ({ page, context }) => {
   await page.goto(process.env.TYR_URL!);
   const [newTab] = await Promise.all([
     context.waitForEvent('page'),
-    page.getByTestId('button_signup').click(),
+    page.getByTestId('button_signup').click({ timeout: 10_000 }),
   ]);
   await expect(newTab.getByRole('heading', { name: 'Register new account' })).toBeVisible();
 });

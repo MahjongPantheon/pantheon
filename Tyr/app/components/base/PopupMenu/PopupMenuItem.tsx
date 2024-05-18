@@ -18,6 +18,7 @@ export const PopupMenuItem = ({
   variant ??= 'normal';
   return (
     <div
+      data-testid='popup_menu_item'
       className={clsx(styles.menuItem, variant === 'primary' && styles.menuItemPrimary)}
       onClick={onClick}
     >

@@ -29,6 +29,7 @@ export const Button = ({
   style,
   type,
   disabled,
+  testId,
 }: {
   variant?: 'primary' | 'outline' | 'contained' | 'light';
   size?: 'sm' | 'md' | 'lg' | 'fullwidth';
@@ -38,6 +39,7 @@ export const Button = ({
   style?: CSSProperties;
   type?: 'submit';
   disabled?: boolean;
+  testId?: string;
 } & PropsWithChildren) => {
   variant ??= 'contained';
   size ??= 'md';
@@ -66,6 +68,7 @@ export const Button = ({
         disabled={disabled}
         className={clsx(styles.buttonBase, ...classes)}
         onClick={onClick}
+        data-testid={testId}
       >
         {icon && <div className={styles.leftIcon}>{icon}</div>}
         {children}

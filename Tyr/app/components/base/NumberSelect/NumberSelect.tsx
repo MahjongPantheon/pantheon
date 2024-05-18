@@ -12,12 +12,18 @@ export const NumberSelect = ({
   onChange,
   style,
   disabled,
+  testId,
 }: {
   options: Array<{ label: string; value: number }>;
   selectedIndex?: number;
   onChange?: (index: number) => void;
   style?: CSSProperties;
   disabled?: boolean;
+  testId?: {
+    arrowUp?: string;
+    arrowDown?: string;
+    dropdownSelector?: string;
+  };
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -42,16 +48,22 @@ export const NumberSelect = ({
           className={styles.less}
           onClick={onLess}
           style={{ opacity: selectedIndex === 0 || disabled ? '30%' : '100%' }}
+          data-testid={testId?.arrowDown}
         >
           <ArrowDown />
         </div>
-        <div className={styles.numberWrapper} onClick={() => (disabled ? null : setMenuOpen(true))}>
+        <div
+          className={styles.numberWrapper}
+          onClick={() => (disabled ? null : setMenuOpen(true))}
+          data-testid={testId?.dropdownSelector}
+        >
           {selectedIndex === undefined ? '--' : options[selectedIndex].label}
         </div>
         <div
           className={styles.more}
           onClick={onMore}
           style={{ opacity: selectedIndex === options.length - 1 || disabled ? '30%' : '100%' }}
+          data-testid={testId?.arrowUp}
         >
           <ArrowUp />
         </div>
