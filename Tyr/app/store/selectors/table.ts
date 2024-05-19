@@ -489,17 +489,7 @@ function getPaymentsInfo(state: IAppState): PaymentInfo[] {
   return result;
 }
 
-export function getArrows(
-  state: IAppState
-): Omit<ResultArrowsProps, 'width' | 'height'> | undefined {
-  if (
-    state.currentScreen !== 'confirmation' ||
-    state.changesOverview === undefined ||
-    state.loading.overview
-  ) {
-    return undefined;
-  }
-
+export function getArrows(state: IAppState): Omit<ResultArrowsProps, 'width' | 'height'> {
   // todo hide for showAdditionalTableInfo
 
   // todo we get only one pao player from server, need to be fixed for multiron
@@ -507,7 +497,7 @@ export function getArrows(
 
   const paoPlayersByWinners: number[] = [];
   if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
-    if (state.currentOutcome.winner && state.changesOverview.round.tsumo?.paoPlayerId) {
+    if (state.currentOutcome.winner && state.changesOverview?.round.tsumo?.paoPlayerId) {
       paoPlayersByWinners[state.currentOutcome.winner] =
         state.changesOverview.round.tsumo?.paoPlayerId;
     }

@@ -32,16 +32,17 @@ export const TableRoundPreview = ({ state, dispatch }: IComponentProps) => {
   const loc = useContext(i18n);
   const isLoading =
     state.loading.events ||
-    (state.currentScreen === 'overview' &&
-      (!state.gameOverviewReady || !state.players || state.players.length !== 4)) ||
-    state.loading.addRound ||
+    state.loading.players ||
+    !state.players ||
+    state.players.length !== 4 ||
+    !state.changesOverview ||
     state.loading.overview;
-  const arrows = getArrows(state);
 
-  if (isLoading || !arrows) {
+  if (isLoading) {
     return <Loader />;
   }
 
+  const arrows = getArrows(state);
   const self = { onPlayerClick: () => {}, ...(getPlayerData('self', state) ?? {}) };
   const shimocha = { onPlayerClick: () => {}, ...(getPlayerData('shimocha', state) ?? {}) };
   const toimen = { onPlayerClick: () => {}, ...(getPlayerData('toimen', state) ?? {}) };
