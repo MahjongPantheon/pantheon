@@ -47,9 +47,11 @@ export const EventSelect = (props: IComponentProps) => {
 
   const playerName = props.state.currentPlayerDisplayName ?? loc._t('name');
 
-  return props.state.loading.events ? (
-    <Loader />
-  ) : (
+  if (props.state.loading.events || !props.state.currentPlayerId) {
+    return <Loader />;
+  }
+
+  return (
     <EventSelectPage
       player={{
         playerName,
