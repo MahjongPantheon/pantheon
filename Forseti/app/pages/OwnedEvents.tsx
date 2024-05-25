@@ -36,7 +36,6 @@ import {
   Menu,
 } from '@mantine/core';
 import {
-  IconEyeOff,
   IconEye,
   IconTool,
   IconRefreshAlert,
@@ -49,6 +48,8 @@ import {
   IconScript,
   IconTimelineEventPlus,
   IconExternalLink,
+  IconSquare,
+  IconSquareCheckFilled,
 } from '@tabler/icons-react';
 import { Redirect, useLocation, Link } from 'wouter';
 import { useApi } from '../hooks/api';
@@ -421,30 +422,24 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       <Menu.Label>{i18n._t('Visibility management')}</Menu.Label>
                       <Menu.Item
                         title={i18n._t('Toggle visibility in ratings global list')}
-                        icon={event.isListed ? <IconEye /> : <IconEyeOff />}
+                        icon={event.isListed ? <IconSquareCheckFilled /> : <IconSquare />}
                         onClick={() => toggleVisibility(event.id)}
                       >
-                        {event.isListed
-                          ? i18n._t('Event shown in global list; hide?')
-                          : i18n._t('Event not shown in global list; show?')}
+                        {i18n._t('Event visible in global list')}
                       </Menu.Item>
                       <Menu.Item
                         title={i18n._t('Toggle visibility of rating table')}
-                        icon={event.isRatingShown ? <IconEye /> : <IconEyeOff />}
+                        icon={event.isRatingShown ? <IconSquareCheckFilled /> : <IconSquare />}
                         onClick={() => onToggleResults(event.id)}
                       >
-                        {event.isRatingShown
-                          ? i18n._t('Rating table: visible; hide?')
-                          : i18n._t('Rating table: hidden; show?')}
+                        {i18n._t('Rating table visible')}
                       </Menu.Item>
                       <Menu.Item
                         title={i18n._t('Toggle visibility of achievements')}
-                        icon={event.achievementsShown ? <IconEye /> : <IconEyeOff />}
+                        icon={event.achievementsShown ? <IconSquareCheckFilled /> : <IconSquare />}
                         onClick={() => onToggleAchievements(event.id)}
                       >
-                        {event.achievementsShown
-                          ? i18n._t('Achievements: visible; hide?')
-                          : i18n._t('Achievements: hidden; show?')}
+                        {i18n._t('Achievements visible')}
                       </Menu.Item>
                     </Menu.Dropdown>
                   </Menu>

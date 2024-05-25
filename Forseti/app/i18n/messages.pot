@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:01Z\n"
+"POT-Creation-Date: 2024-05-25 00:13Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,41 +47,41 @@ msgid "Open event page"
 msgstr ""
 
 #: app/components/MainMenu.tsx:91:21
-#: app/pages/OwnedEvents.tsx:369:33
+#: app/pages/OwnedEvents.tsx:373:33
 msgid "Settings"
 msgstr ""
 
 #: app/components/MainMenu.tsx:99:25
-#: app/pages/OwnedEvents.tsx:361:34
-#: app/pages/OwnedEvents.tsx:363:33
+#: app/pages/OwnedEvents.tsx:365:34
+#: app/pages/OwnedEvents.tsx:367:33
 msgid "Manage players"
 msgstr ""
 
 #: app/components/MainMenu.tsx:105:25
-#: app/pages/OwnedEvents.tsx:357:33
+#: app/pages/OwnedEvents.tsx:361:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr ""
 
 #: app/components/MainMenu.tsx:111:25
-#: app/pages/OwnedEvents.tsx:351:33
+#: app/pages/OwnedEvents.tsx:355:33
 msgid "Manage games"
 msgstr ""
 
 #: app/components/MainMenu.tsx:118:27
-#: app/pages/OwnedEvents.tsx:344:35
+#: app/pages/OwnedEvents.tsx:348:35
 msgid "Predefined seating"
 msgstr ""
 
 #: app/components/MainMenu.tsx:129:24
-#: app/pages/OwnedEvents.tsx:373:38
+#: app/pages/OwnedEvents.tsx:377:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr ""
 
 #: app/components/MainMenu.tsx:135:24
-#: app/pages/OwnedEvents.tsx:376:36
-#: app/pages/OwnedEvents.tsx:380:30
+#: app/pages/OwnedEvents.tsx:380:36
+#: app/pages/OwnedEvents.tsx:384:30
 msgid "Rebuild scoring"
 msgstr ""
 
@@ -94,8 +94,8 @@ msgid "Recalculate players stats"
 msgstr ""
 
 #: app/components/MainMenu.tsx:176:24
-#: app/pages/OwnedEvents.tsx:384:34
-#: app/pages/OwnedEvents.tsx:392:28
+#: app/pages/OwnedEvents.tsx:388:34
+#: app/pages/OwnedEvents.tsx:396:28
 msgid "Finish event"
 msgstr ""
 
@@ -183,7 +183,7 @@ msgstr ""
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
 #: app/components/StopEventModal.tsx:36:12
-#: app/pages/OwnedEvents.tsx:251:14
+#: app/pages/OwnedEvents.tsx:255:14
 msgid "Cancel"
 msgstr ""
 
@@ -201,12 +201,12 @@ msgid "Recalculate stats for all players in event \"%1\" (id #%2)? Recalculation
 msgstr ""
 
 #: app/components/StopEventModal.tsx:29:10
-#: app/pages/OwnedEvents.tsx:244:12
+#: app/pages/OwnedEvents.tsx:248:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 
 #: app/components/StopEventModal.tsx:46:12
-#: app/pages/OwnedEvents.tsx:261:14
+#: app/pages/OwnedEvents.tsx:265:14
 msgid "Stop event"
 msgstr ""
 
@@ -396,7 +396,7 @@ msgstr ""
 #: app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14
-#: app/pages/OwnedEvents.tsx:93:14
+#: app/pages/OwnedEvents.tsx:97:14
 #: app/pages/OwnedEventsEdit/index.tsx:189:18
 #: app/pages/OwnedEventsEdit/index.tsx:220:18
 #: app/pages/Penalties.tsx:73:18
@@ -592,7 +592,7 @@ msgid "Failed to notify players"
 msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:27
-#: app/pages/OwnedEvents.tsx:197:27
+#: app/pages/OwnedEvents.tsx:201:27
 msgid "Failed to toggle results visibility"
 msgstr ""
 
@@ -808,107 +808,95 @@ msgstr ""
 msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:89:16
+#: app/pages/OwnedEvents.tsx:93:16
 msgid "Manage my events"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:218:27
+#: app/pages/OwnedEvents.tsx:222:27
 msgid "Failed to toggle achievements visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:287:30
+#: app/pages/OwnedEvents.tsx:291:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:299:30
+#: app/pages/OwnedEvents.tsx:303:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:311:30
+#: app/pages/OwnedEvents.tsx:315:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:321:30
+#: app/pages/OwnedEvents.tsx:325:30
 msgid "Open event page in new tab"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:335:48
+#: app/pages/OwnedEvents.tsx:339:48
 msgid "Actions"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:338:38
+#: app/pages/OwnedEvents.tsx:342:38
 msgid "Event management"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:342:36
+#: app/pages/OwnedEvents.tsx:346:36
 msgid "Manage predefined seating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:349:34
+#: app/pages/OwnedEvents.tsx:353:34
 msgid "Manage current games"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:355:34
+#: app/pages/OwnedEvents.tsx:359:34
 #: app/pages/Penalties.tsx:52:16
 msgid "Manage penalties"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:367:34
+#: app/pages/OwnedEvents.tsx:371:34
 msgid "Edit event settings"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:400:24
+#: app/pages/OwnedEvents.tsx:404:24
 msgid "Event finished"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:407:32
+#: app/pages/OwnedEvents.tsx:411:32
 msgid "Visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:421:36
+#: app/pages/OwnedEvents.tsx:425:36
 msgid "Visibility management"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:423:32
+#: app/pages/OwnedEvents.tsx:427:32
 msgid "Toggle visibility in ratings global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:428:29
-msgid "Event shown in global list; hide?"
+#: app/pages/OwnedEvents.tsx:431:26
+msgid "Event visible in global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:429:29
-msgid "Event not shown in global list; show?"
-msgstr ""
-
-#: app/pages/OwnedEvents.tsx:432:32
+#: app/pages/OwnedEvents.tsx:434:32
 msgid "Toggle visibility of rating table"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:437:29
-msgid "Rating table: visible; hide?"
-msgstr ""
-
-#: app/pages/OwnedEvents.tsx:438:29
-msgid "Rating table: hidden; show?"
+#: app/pages/OwnedEvents.tsx:438:26
+msgid "Rating table visible"
 msgstr ""
 
 #: app/pages/OwnedEvents.tsx:441:32
 msgid "Toggle visibility of achievements"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:446:29
-msgid "Achievements: visible; hide?"
+#: app/pages/OwnedEvents.tsx:445:26
+msgid "Achievements visible"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:447:29
-msgid "Achievements: hidden; show?"
-msgstr ""
-
-#: app/pages/OwnedEvents.tsx:457:18
+#: app/pages/OwnedEvents.tsx:455:18
 msgid "Create new event"
 msgstr ""
 

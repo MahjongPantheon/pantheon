@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:01Z\n"
-"PO-Revision-Date: 2024-05-25 03:03+0300\n"
+"POT-Creation-Date: 2024-05-25 00:13Z\n"
+"PO-Revision-Date: 2024-05-25 03:14+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -49,35 +49,35 @@ msgstr "Cобытие: %1"
 msgid "Open event page"
 msgstr "Открыть страницу события"
 
-#: app/components/MainMenu.tsx:91:21 app/pages/OwnedEvents.tsx:369:33
+#: app/components/MainMenu.tsx:91:21 app/pages/OwnedEvents.tsx:373:33
 msgid "Settings"
 msgstr "Настройки"
 
-#: app/components/MainMenu.tsx:99:25 app/pages/OwnedEvents.tsx:361:34
-#: app/pages/OwnedEvents.tsx:363:33
+#: app/components/MainMenu.tsx:99:25 app/pages/OwnedEvents.tsx:365:34
+#: app/pages/OwnedEvents.tsx:367:33
 msgid "Manage players"
 msgstr "Управление игроками"
 
-#: app/components/MainMenu.tsx:105:25 app/pages/OwnedEvents.tsx:357:33
+#: app/components/MainMenu.tsx:105:25 app/pages/OwnedEvents.tsx:361:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Штрафы"
 
-#: app/components/MainMenu.tsx:111:25 app/pages/OwnedEvents.tsx:351:33
+#: app/components/MainMenu.tsx:111:25 app/pages/OwnedEvents.tsx:355:33
 msgid "Manage games"
 msgstr "Управление играми"
 
-#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:344:35
+#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:348:35
 msgid "Predefined seating"
 msgstr "Предопределенная рассадка"
 
-#: app/components/MainMenu.tsx:129:24 app/pages/OwnedEvents.tsx:373:38
+#: app/components/MainMenu.tsx:129:24 app/pages/OwnedEvents.tsx:377:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Зона особого внимания"
 
-#: app/components/MainMenu.tsx:135:24 app/pages/OwnedEvents.tsx:376:36
-#: app/pages/OwnedEvents.tsx:380:30
+#: app/components/MainMenu.tsx:135:24 app/pages/OwnedEvents.tsx:380:36
+#: app/pages/OwnedEvents.tsx:384:30
 msgid "Rebuild scoring"
 msgstr "Перестроить скоринг"
 
@@ -89,8 +89,8 @@ msgstr "Пересчитать номинации"
 msgid "Recalculate players stats"
 msgstr "Пересчитать статистику игроков"
 
-#: app/components/MainMenu.tsx:176:24 app/pages/OwnedEvents.tsx:384:34
-#: app/pages/OwnedEvents.tsx:392:28
+#: app/components/MainMenu.tsx:176:24 app/pages/OwnedEvents.tsx:388:34
+#: app/pages/OwnedEvents.tsx:396:28
 msgid "Finish event"
 msgstr "Завершить событие"
 
@@ -179,7 +179,7 @@ msgstr ""
 
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
-#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:251:14
+#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:255:14
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -201,11 +201,11 @@ msgstr ""
 "Пересчитать статистику всех игроков в событии \"%1\" (id #%2)? Пересчет "
 "будет запланирован и выполнен в ближайшие минуты"
 
-#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:244:12
+#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:248:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr "Завершить событие \"%1\" (id #%2)? Отменить это действие невозможно!"
 
-#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:261:14
+#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:265:14
 msgid "Stop event"
 msgstr "Завершить событие"
 
@@ -387,7 +387,7 @@ msgstr "Конфигурация предопределенной рассадк
 
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
-#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:93:14
+#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:97:14
 #: app/pages/OwnedEventsEdit/index.tsx:189:18
 #: app/pages/OwnedEventsEdit/index.tsx:220:18 app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18 app/pages/PlayersManage/index.tsx:87:18
@@ -601,7 +601,7 @@ msgstr "Не удалось запустить таймер"
 msgid "Failed to notify players"
 msgstr "Не удалось оповестить игроков"
 
-#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:197:27
+#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:201:27
 msgid "Failed to toggle results visibility"
 msgstr "Не удалось переключить видимость результатов"
 
@@ -830,106 +830,94 @@ msgstr ""
 "Вы не сможете отменять последние раунды после того, как результаты "
 "подтверждены. Подтвердить результаты?"
 
-#: app/pages/OwnedEvents.tsx:89:16
+#: app/pages/OwnedEvents.tsx:93:16
 msgid "Manage my events"
 msgstr "Мои события"
 
-#: app/pages/OwnedEvents.tsx:218:27
+#: app/pages/OwnedEvents.tsx:222:27
 msgid "Failed to toggle achievements visibility"
 msgstr "Не удалось переключить видимость номинаций"
 
-#: app/pages/OwnedEvents.tsx:287:30
+#: app/pages/OwnedEvents.tsx:291:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr "Локальный рейтинг"
 
-#: app/pages/OwnedEvents.tsx:299:30
+#: app/pages/OwnedEvents.tsx:303:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr "Турнир"
 
-#: app/pages/OwnedEvents.tsx:311:30
+#: app/pages/OwnedEvents.tsx:315:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr "Онлайн-событие"
 
-#: app/pages/OwnedEvents.tsx:321:30
+#: app/pages/OwnedEvents.tsx:325:30
 msgid "Open event page in new tab"
 msgstr "Открыть в новой вкладке"
 
-#: app/pages/OwnedEvents.tsx:335:48
+#: app/pages/OwnedEvents.tsx:339:48
 msgid "Actions"
 msgstr "Действия"
 
-#: app/pages/OwnedEvents.tsx:338:38
+#: app/pages/OwnedEvents.tsx:342:38
 msgid "Event management"
 msgstr "Управление событием"
 
-#: app/pages/OwnedEvents.tsx:342:36
+#: app/pages/OwnedEvents.tsx:346:36
 msgid "Manage predefined seating"
 msgstr "Предопределенная рассадка"
 
-#: app/pages/OwnedEvents.tsx:349:34
+#: app/pages/OwnedEvents.tsx:353:34
 msgid "Manage current games"
 msgstr "Управление играми"
 
-#: app/pages/OwnedEvents.tsx:355:34 app/pages/Penalties.tsx:52:16
+#: app/pages/OwnedEvents.tsx:359:34 app/pages/Penalties.tsx:52:16
 msgid "Manage penalties"
 msgstr "Штрафы"
 
-#: app/pages/OwnedEvents.tsx:367:34
+#: app/pages/OwnedEvents.tsx:371:34
 msgid "Edit event settings"
 msgstr "Настройки события"
 
-#: app/pages/OwnedEvents.tsx:400:24
+#: app/pages/OwnedEvents.tsx:404:24
 msgid "Event finished"
 msgstr "Событие завершено"
 
-#: app/pages/OwnedEvents.tsx:407:32
+#: app/pages/OwnedEvents.tsx:411:32
 msgid "Visibility"
 msgstr "Видимость"
 
-#: app/pages/OwnedEvents.tsx:421:36
+#: app/pages/OwnedEvents.tsx:425:36
 msgid "Visibility management"
 msgstr "Управление видимостью"
 
-#: app/pages/OwnedEvents.tsx:423:32
+#: app/pages/OwnedEvents.tsx:427:32
 msgid "Toggle visibility in ratings global list"
 msgstr "Переключить видимость события в глобальном списке событий"
 
-#: app/pages/OwnedEvents.tsx:428:29
-msgid "Event shown in global list; hide?"
-msgstr "Событие видно в общем списке; скрыть?"
+#: app/pages/OwnedEvents.tsx:431:26
+msgid "Event visible in global list"
+msgstr "Событие видно в общем списке"
 
-#: app/pages/OwnedEvents.tsx:429:29
-msgid "Event not shown in global list; show?"
-msgstr "Событие скрыто из общего списка; показать?"
-
-#: app/pages/OwnedEvents.tsx:432:32
+#: app/pages/OwnedEvents.tsx:434:32
 msgid "Toggle visibility of rating table"
 msgstr "Переключить видимость таблицы результатов для всех"
 
-#: app/pages/OwnedEvents.tsx:437:29
-msgid "Rating table: visible; hide?"
-msgstr "Рейтинговая таблица: видна; скрыть?"
-
-#: app/pages/OwnedEvents.tsx:438:29
-msgid "Rating table: hidden; show?"
-msgstr "Рейтинговая таблица: скрыта; показать?"
+#: app/pages/OwnedEvents.tsx:438:26
+msgid "Rating table visible"
+msgstr "Рейтинговая таблица видна"
 
 #: app/pages/OwnedEvents.tsx:441:32
 msgid "Toggle visibility of achievements"
 msgstr "Переключить видимость номинаций для всех"
 
-#: app/pages/OwnedEvents.tsx:446:29
-msgid "Achievements: visible; hide?"
-msgstr "Номинации: видны; скрыть?"
+#: app/pages/OwnedEvents.tsx:445:26
+msgid "Achievements visible"
+msgstr "Номинации видны"
 
-#: app/pages/OwnedEvents.tsx:447:29
-msgid "Achievements: hidden; show?"
-msgstr "Номинации: скрыты; показать?"
-
-#: app/pages/OwnedEvents.tsx:457:18
+#: app/pages/OwnedEvents.tsx:455:18
 msgid "Create new event"
 msgstr "Создать новое событие"
 
@@ -2219,3 +2207,12 @@ msgstr "Срез данных"
 #: app/pages/SystemStats.tsx:228:18
 msgid "Subsystem"
 msgstr "Подсистема"
+
+#~ msgid "Achievements: hidden; show?"
+#~ msgstr "Номинации: скрыты; показать?"
+
+#~ msgid "Event not shown in global list; show?"
+#~ msgstr "Событие скрыто из общего списка; показать?"
+
+#~ msgid "Rating table: hidden; show?"
+#~ msgstr "Рейтинговая таблица: скрыта; показать?"

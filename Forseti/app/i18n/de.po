@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:01Z\n"
+"POT-Creation-Date: 2024-05-25 00:13Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -65,19 +65,16 @@ msgstr "Ein Strafgrund muss eingetragen werden"
 msgid "Abortive draw, riichi: %1"
 msgstr "Abgebrochenes Unentschieden, Riichi: %1"
 
-#: app/pages/OwnedEvents.tsx:447:29
-msgid "Achievements: hidden; show?"
-msgstr ""
-
-#: app/pages/OwnedEvents.tsx:446:29
-msgid "Achievements: visible; hide?"
-msgstr ""
+#: app/pages/OwnedEvents.tsx:445:26
+#, fuzzy
+msgid "Achievements visible"
+msgstr "Auszeichnungen konnte nicht ein/ausgeblendet werden"
 
 #: app/pages/ProfileResetPasswordConfirm.tsx:91:18
 msgid "Action required"
 msgstr "Aktion benötigt"
 
-#: app/pages/OwnedEvents.tsx:335:48
+#: app/pages/OwnedEvents.tsx:339:48
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -219,7 +216,7 @@ msgstr ""
 
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
-#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:251:14
+#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:255:14
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -312,7 +309,7 @@ msgstr "Anzahl von Spielen in einer Serie. 0 deaktiviert Serienfunktion."
 msgid "Country"
 msgstr "Land"
 
-#: app/pages/OwnedEvents.tsx:457:18
+#: app/pages/OwnedEvents.tsx:455:18
 msgid "Create new event"
 msgstr "Neues Event erstellen"
 
@@ -336,7 +333,7 @@ msgstr ""
 msgid "Daisuushii"
 msgstr ""
 
-#: app/components/MainMenu.tsx:129:24 app/pages/OwnedEvents.tsx:373:38
+#: app/components/MainMenu.tsx:129:24 app/pages/OwnedEvents.tsx:377:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Gefahrenzone"
@@ -361,7 +358,7 @@ msgstr "Unentschieden, Tenpai: %1, Riichi: %2"
 msgid "Edit event :: %1"
 msgstr "Event :: %1 bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:367:34
+#: app/pages/OwnedEvents.tsx:371:34
 msgid "Edit event settings"
 msgstr "Eventeinstellungen bearbeiten"
 
@@ -417,7 +414,7 @@ msgstr "Uma teilen"
 
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
-#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:93:14
+#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:97:14
 #: app/pages/OwnedEventsEdit/index.tsx:189:18
 #: app/pages/OwnedEventsEdit/index.tsx:220:18 app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18 app/pages/PlayersManage/index.tsx:87:18
@@ -426,17 +423,13 @@ msgstr "Uma teilen"
 msgid "Error has occurred"
 msgstr "Unerwarteter Fehler"
 
-#: app/pages/OwnedEvents.tsx:400:24
+#: app/pages/OwnedEvents.tsx:404:24
 msgid "Event finished"
 msgstr "Event ist beendet"
 
-#: app/pages/OwnedEvents.tsx:338:38
+#: app/pages/OwnedEvents.tsx:342:38
 msgid "Event management"
 msgstr "Eventeinstellungen bearbeiten"
-
-#: app/pages/OwnedEvents.tsx:429:29
-msgid "Event not shown in global list; show?"
-msgstr ""
 
 #: app/pages/EventPrescript.tsx:161:36
 msgid "Event script"
@@ -446,14 +439,14 @@ msgstr "Sitzordnung"
 msgid "Event script filling instruction"
 msgstr "Manuelles Festlegen der Sitzordnung"
 
-#: app/pages/OwnedEvents.tsx:428:29
-#, fuzzy
-msgid "Event shown in global list; hide?"
-msgstr "In globaler Rangliste anzeigen"
-
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:72:18
 msgid "Event title"
 msgstr "Eventname"
+
+#: app/pages/OwnedEvents.tsx:431:26
+#, fuzzy
+msgid "Event visible in global list"
+msgstr "In globaler Rangliste anzeigen"
 
 #: app/components/MainMenu.tsx:78:22
 msgid "Event: %1"
@@ -567,11 +560,11 @@ msgstr "Bearbeitungseinstellungen konnten nicht gespeichert werden."
 msgid "Failed to start timer"
 msgstr "Timer konnte nicht gestartet werden"
 
-#: app/pages/OwnedEvents.tsx:218:27
+#: app/pages/OwnedEvents.tsx:222:27
 msgid "Failed to toggle achievements visibility"
 msgstr "Auszeichnungen konnte nicht ein/ausgeblendet werden"
 
-#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:197:27
+#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:201:27
 msgid "Failed to toggle results visibility"
 msgstr "Ergebnisansicht konnte nicht ein/ausgeschaltet werden"
 
@@ -595,8 +588,8 @@ msgstr "Spieler such und hinzufügen..."
 msgid "Find replacement player by name..."
 msgstr "Ersatzspieler suchen..."
 
-#: app/components/MainMenu.tsx:176:24 app/pages/OwnedEvents.tsx:384:34
-#: app/pages/OwnedEvents.tsx:392:28
+#: app/components/MainMenu.tsx:176:24 app/pages/OwnedEvents.tsx:388:34
+#: app/pages/OwnedEvents.tsx:396:28
 msgid "Finish event"
 msgstr "Event beenden"
 
@@ -895,7 +888,7 @@ msgstr "Lokale IDs"
 msgid "Local event settings"
 msgstr "Einstellungen für Klubrangliste"
 
-#: app/pages/OwnedEvents.tsx:287:30
+#: app/pages/OwnedEvents.tsx:291:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr "Klubrangliste"
@@ -908,24 +901,24 @@ msgstr "Einloggen"
 msgid "Logout"
 msgstr "Abmelden"
 
-#: app/pages/OwnedEvents.tsx:349:34
+#: app/pages/OwnedEvents.tsx:353:34
 msgid "Manage current games"
 msgstr "Aktuelle Spiele bearbeiten"
 
-#: app/components/MainMenu.tsx:111:25 app/pages/OwnedEvents.tsx:351:33
+#: app/components/MainMenu.tsx:111:25 app/pages/OwnedEvents.tsx:355:33
 msgid "Manage games"
 msgstr "Spiele bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:89:16
+#: app/pages/OwnedEvents.tsx:93:16
 msgid "Manage my events"
 msgstr "Meine Events bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:355:34 app/pages/Penalties.tsx:52:16
+#: app/pages/OwnedEvents.tsx:359:34 app/pages/Penalties.tsx:52:16
 msgid "Manage penalties"
 msgstr "Strafeinstellungen bearbeiten"
 
-#: app/components/MainMenu.tsx:99:25 app/pages/OwnedEvents.tsx:361:34
-#: app/pages/OwnedEvents.tsx:363:33
+#: app/components/MainMenu.tsx:99:25 app/pages/OwnedEvents.tsx:365:34
+#: app/pages/OwnedEvents.tsx:367:33
 msgid "Manage players"
 msgstr "Spieler bearbeiten"
 
@@ -933,7 +926,7 @@ msgstr "Spieler bearbeiten"
 msgid "Manage players in event"
 msgstr "Eventspieler bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:342:36
+#: app/pages/OwnedEvents.tsx:346:36
 msgid "Manage predefined seating"
 msgstr "Sitzordnung manuell festlegen"
 
@@ -1091,7 +1084,7 @@ msgstr "Numerische ID eines Benutzerkontos"
 msgid "Oka bonus"
 msgstr "Oka Bonus"
 
-#: app/pages/OwnedEvents.tsx:311:30
+#: app/pages/OwnedEvents.tsx:315:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr "Online Event"
@@ -1121,7 +1114,7 @@ msgstr "Mobile App öffnen"
 msgid "Open event page"
 msgstr "Öffne Eventseite"
 
-#: app/pages/OwnedEvents.tsx:321:30
+#: app/pages/OwnedEvents.tsx:325:30
 msgid "Open event page in new tab"
 msgstr "Eventseite in neuem Tab öffnen"
 
@@ -1169,7 +1162,7 @@ msgstr "Honba werden nach Atamahaneregel bezahlt"
 msgid "Payments and scores"
 msgstr "Punkte und Bezahlen"
 
-#: app/components/MainMenu.tsx:105:25 app/pages/OwnedEvents.tsx:357:33
+#: app/components/MainMenu.tsx:105:25 app/pages/OwnedEvents.tsx:361:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Strafen"
@@ -1303,7 +1296,7 @@ msgstr "Bitte Spielername eintragen um den Account zu löschen"
 msgid "Please wait unit seating is ready"
 msgstr "Bitte warten bis die Sitzordnung bereit ist"
 
-#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:344:35
+#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:348:35
 msgid "Predefined seating"
 msgstr "Manuelle Sitzordnung"
 
@@ -1336,12 +1329,8 @@ msgstr "Zufälliger Sitzplan"
 msgid "Randomize seating by wind"
 msgstr "Winde zufällig zuteilen"
 
-#: app/pages/OwnedEvents.tsx:438:29
-msgid "Rating table: hidden; show?"
-msgstr ""
-
-#: app/pages/OwnedEvents.tsx:437:29
-msgid "Rating table: visible; hide?"
+#: app/pages/OwnedEvents.tsx:438:26
+msgid "Rating table visible"
 msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:110:22
@@ -1352,8 +1341,8 @@ msgstr "Bereit zur Bestätigung"
 msgid "Really reset timer?"
 msgstr "Den Timer wirklich zurücksetzen?"
 
-#: app/components/MainMenu.tsx:135:24 app/pages/OwnedEvents.tsx:376:36
-#: app/pages/OwnedEvents.tsx:380:30
+#: app/components/MainMenu.tsx:135:24 app/pages/OwnedEvents.tsx:380:36
+#: app/pages/OwnedEvents.tsx:384:30
 msgid "Rebuild scoring"
 msgstr "Punktestand neuberechnen"
 
@@ -1664,7 +1653,7 @@ msgstr "Runde ist geplant"
 msgid "Session started"
 msgstr "Runde gestartet"
 
-#: app/components/MainMenu.tsx:91:21 app/pages/OwnedEvents.tsx:369:33
+#: app/components/MainMenu.tsx:91:21 app/pages/OwnedEvents.tsx:373:33
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -1752,11 +1741,11 @@ msgstr "Timer und Runde starten"
 msgid "Step of arbitrary penalty scores"
 msgstr "Schrittweite bei Strafen"
 
-#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:261:14
+#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:265:14
 msgid "Stop event"
 msgstr "Event beenden"
 
-#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:244:12
+#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:248:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 "Event beenden \"%1\" (id #%2)? Diese Aktion kann nicht rückgängig gemacht "
@@ -1924,7 +1913,7 @@ msgstr "Farbschema"
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 
-#: app/pages/OwnedEvents.tsx:423:32
+#: app/pages/OwnedEvents.tsx:427:32
 msgid "Toggle visibility in ratings global list"
 msgstr "In der globalen Rangliste ein/ausblenden"
 
@@ -1932,7 +1921,7 @@ msgstr "In der globalen Rangliste ein/ausblenden"
 msgid "Toggle visibility of achievements"
 msgstr "Auszeichnungen ein/ausblenden"
 
-#: app/pages/OwnedEvents.tsx:432:32
+#: app/pages/OwnedEvents.tsx:434:32
 msgid "Toggle visibility of rating table"
 msgstr "Rangliste ein/ausblenden"
 
@@ -1944,7 +1933,7 @@ msgstr ""
 msgid "Tonpuusen"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:299:30
+#: app/pages/OwnedEvents.tsx:303:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr "Turnier"
@@ -2025,11 +2014,11 @@ msgstr "Sitzplan nach Schweizer System für die nächste Runde verwenden?"
 msgid "Use yakitori rule"
 msgstr "Verwende die Yakitori-Regel"
 
-#: app/pages/OwnedEvents.tsx:407:32
+#: app/pages/OwnedEvents.tsx:411:32
 msgid "Visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:421:36
+#: app/pages/OwnedEvents.tsx:425:36
 #, fuzzy
 msgid "Visibility management"
 msgstr "Eventeinstellungen bearbeiten"
