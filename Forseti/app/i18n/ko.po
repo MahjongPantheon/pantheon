@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-25 00:01Z\n"
 "PO-Revision-Date: 2024-04-20 10:57+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -64,6 +64,14 @@ msgstr "벌부 사유는 필수 입력 사항입니다"
 #: app/pages/GamesControl/GamesList.tsx:401:12
 msgid "Abortive draw, riichi: %1"
 msgstr "도중유국, 리치: %1"
+
+#: app/pages/OwnedEvents.tsx:447:29
+msgid "Achievements: hidden; show?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:446:29
+msgid "Achievements: visible; hide?"
+msgstr ""
 
 #: app/pages/ProfileResetPasswordConfirm.tsx:91:18
 msgid "Action required"
@@ -303,7 +311,7 @@ msgstr "시리즈에 표시되는 대국 수. 시리즈를 비활성화하려면
 msgid "Country"
 msgstr "국가"
 
-#: app/pages/OwnedEvents.tsx:440:18
+#: app/pages/OwnedEvents.tsx:457:18
 msgid "Create new event"
 msgstr "신규 이벤트 생성"
 
@@ -423,6 +431,10 @@ msgstr "이벤트 종료됨"
 msgid "Event management"
 msgstr "이벤트 관리"
 
+#: app/pages/OwnedEvents.tsx:429:29
+msgid "Event not shown in global list; show?"
+msgstr ""
+
 #: app/pages/EventPrescript.tsx:161:36
 msgid "Event script"
 msgstr "이벤트 스크립트"
@@ -430,6 +442,11 @@ msgstr "이벤트 스크립트"
 #: app/pages/EventPrescript.tsx:131:37
 msgid "Event script filling instruction"
 msgstr "이벤트 스크립트 작성법"
+
+#: app/pages/OwnedEvents.tsx:428:29
+#, fuzzy
+msgid "Event shown in global list; hide?"
+msgstr "공개 이벤트"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:72:18
 msgid "Event title"
@@ -1295,6 +1312,14 @@ msgstr "임의 좌석"
 msgid "Randomize seating by wind"
 msgstr "바람에 따라 임의 좌석을 설정"
 
+#: app/pages/OwnedEvents.tsx:438:29
+msgid "Rating table: hidden; show?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:437:29
+msgid "Rating table: visible; hide?"
+msgstr ""
+
 #: app/pages/GamesControl/TournamentControls.tsx:110:22
 msgid "Ready to approve"
 msgstr "승인 준비됨"
@@ -1867,15 +1892,15 @@ msgstr "다크모드 전환"
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 
-#: app/pages/OwnedEvents.tsx:405:28
+#: app/pages/OwnedEvents.tsx:423:32
 msgid "Toggle visibility in ratings global list"
 msgstr "전체 이벤트 목록에서 표시 여부 전환"
 
-#: app/pages/OwnedEvents.tsx:425:28
+#: app/pages/OwnedEvents.tsx:441:32
 msgid "Toggle visibility of achievements"
 msgstr "업적 공개 여부 전환"
 
-#: app/pages/OwnedEvents.tsx:415:28
+#: app/pages/OwnedEvents.tsx:432:32
 msgid "Toggle visibility of rating table"
 msgstr "순위표 표시 여부 전환"
 
@@ -1967,6 +1992,15 @@ msgstr "다음 대국에 스위스 자리를 사용하시겠습니까?"
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:220:22
 msgid "Use yakitori rule"
 msgstr "야키토리 규칙 사용"
+
+#: app/pages/OwnedEvents.tsx:407:32
+msgid "Visibility"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:421:36
+#, fuzzy
+msgid "Visibility management"
+msgstr "이벤트 관리"
 
 #: app/pages/ProfileManage.tsx:329:18
 msgid "What will NOT be deleted:"

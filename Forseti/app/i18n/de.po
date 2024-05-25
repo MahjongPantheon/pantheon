@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 20:35Z\n"
+"POT-Creation-Date: 2024-05-25 00:01Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -64,6 +64,14 @@ msgstr "Ein Strafgrund muss eingetragen werden"
 #: app/pages/GamesControl/GamesList.tsx:401:12
 msgid "Abortive draw, riichi: %1"
 msgstr "Abgebrochenes Unentschieden, Riichi: %1"
+
+#: app/pages/OwnedEvents.tsx:447:29
+msgid "Achievements: hidden; show?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:446:29
+msgid "Achievements: visible; hide?"
+msgstr ""
 
 #: app/pages/ProfileResetPasswordConfirm.tsx:91:18
 msgid "Action required"
@@ -304,7 +312,7 @@ msgstr "Anzahl von Spielen in einer Serie. 0 deaktiviert Serienfunktion."
 msgid "Country"
 msgstr "Land"
 
-#: app/pages/OwnedEvents.tsx:440:18
+#: app/pages/OwnedEvents.tsx:457:18
 msgid "Create new event"
 msgstr "Neues Event erstellen"
 
@@ -426,6 +434,10 @@ msgstr "Event ist beendet"
 msgid "Event management"
 msgstr "Eventeinstellungen bearbeiten"
 
+#: app/pages/OwnedEvents.tsx:429:29
+msgid "Event not shown in global list; show?"
+msgstr ""
+
 #: app/pages/EventPrescript.tsx:161:36
 msgid "Event script"
 msgstr "Sitzordnung"
@@ -433,6 +445,11 @@ msgstr "Sitzordnung"
 #: app/pages/EventPrescript.tsx:131:37
 msgid "Event script filling instruction"
 msgstr "Manuelles Festlegen der Sitzordnung"
+
+#: app/pages/OwnedEvents.tsx:428:29
+#, fuzzy
+msgid "Event shown in global list; hide?"
+msgstr "In globaler Rangliste anzeigen"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:72:18
 msgid "Event title"
@@ -1319,6 +1336,14 @@ msgstr "Zufälliger Sitzplan"
 msgid "Randomize seating by wind"
 msgstr "Winde zufällig zuteilen"
 
+#: app/pages/OwnedEvents.tsx:438:29
+msgid "Rating table: hidden; show?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:437:29
+msgid "Rating table: visible; hide?"
+msgstr ""
+
 #: app/pages/GamesControl/TournamentControls.tsx:110:22
 msgid "Ready to approve"
 msgstr "Bereit zur Bestätigung"
@@ -1899,15 +1924,15 @@ msgstr "Farbschema"
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 
-#: app/pages/OwnedEvents.tsx:405:28
+#: app/pages/OwnedEvents.tsx:423:32
 msgid "Toggle visibility in ratings global list"
 msgstr "In der globalen Rangliste ein/ausblenden"
 
-#: app/pages/OwnedEvents.tsx:425:28
+#: app/pages/OwnedEvents.tsx:441:32
 msgid "Toggle visibility of achievements"
 msgstr "Auszeichnungen ein/ausblenden"
 
-#: app/pages/OwnedEvents.tsx:415:28
+#: app/pages/OwnedEvents.tsx:432:32
 msgid "Toggle visibility of rating table"
 msgstr "Rangliste ein/ausblenden"
 
@@ -1999,6 +2024,15 @@ msgstr "Sitzplan nach Schweizer System für die nächste Runde verwenden?"
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:220:22
 msgid "Use yakitori rule"
 msgstr "Verwende die Yakitori-Regel"
+
+#: app/pages/OwnedEvents.tsx:407:32
+msgid "Visibility"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:421:36
+#, fuzzy
+msgid "Visibility management"
+msgstr "Eventeinstellungen bearbeiten"
 
 #: app/pages/ProfileManage.tsx:329:18
 msgid "What will NOT be deleted:"

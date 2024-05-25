@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 21:27Z\n"
+"POT-Creation-Date: 2024-05-25 00:01Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -864,19 +864,51 @@ msgstr ""
 msgid "Event finished"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:405:28
+#: app/pages/OwnedEvents.tsx:407:32
+msgid "Visibility"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:421:36
+msgid "Visibility management"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:423:32
 msgid "Toggle visibility in ratings global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:415:28
+#: app/pages/OwnedEvents.tsx:428:29
+msgid "Event shown in global list; hide?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:429:29
+msgid "Event not shown in global list; show?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:432:32
 msgid "Toggle visibility of rating table"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:425:28
+#: app/pages/OwnedEvents.tsx:437:29
+msgid "Rating table: visible; hide?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:438:29
+msgid "Rating table: hidden; show?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:441:32
 msgid "Toggle visibility of achievements"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:440:18
+#: app/pages/OwnedEvents.tsx:446:29
+msgid "Achievements: visible; hide?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:447:29
+msgid "Achievements: hidden; show?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:457:18
 msgid "Create new event"
 msgstr ""
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 21:27Z\n"
+"POT-Creation-Date: 2024-05-25 00:01Z\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -38,11 +38,11 @@ msgstr ""
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/store/selectors/table.ts:416:14
+#: app/store/selectors/table.ts:414:14
 msgid "Abort"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:72:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:24
 #: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr ""
@@ -84,9 +84,9 @@ msgid "Chinroutou"
 msgstr "All Terminals"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:22
 #: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
-#: app/store/selectors/table.ts:418:14
+#: app/store/selectors/table.ts:416:14
 msgid "Chombo"
 msgstr ""
 
@@ -122,7 +122,7 @@ msgstr "Big Four Winds"
 msgid "Dora %1"
 msgstr ""
 
-#: app/store/selectors/table.ts:414:14
+#: app/store/selectors/table.ts:412:14
 msgid "Draw"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 msgid "Event title"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:67:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:73:22
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr ""
@@ -225,11 +225,11 @@ msgstr "Fully Concealed Hand"
 msgid "Multiron, from %1"
 msgstr ""
 
-#: app/store/selectors/table.ts:420:14
+#: app/store/selectors/table.ts:418:14
 msgid "Nagashi"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:82:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:88:24
 #: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
 msgstr ""
@@ -335,8 +335,8 @@ msgstr "After a Kong"
 msgid "Rinshan kaihou"
 msgstr "After a Kong"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:63:79
-#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:410:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:69:79
+#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr ""
 
@@ -444,8 +444,8 @@ msgstr ""
 msgid "Toitoi"
 msgstr "All Pungs"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:64:81
-#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:412:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:70:81
+#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr ""
 

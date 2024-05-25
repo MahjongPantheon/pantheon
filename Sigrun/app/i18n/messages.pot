@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 21:27Z\n"
+"POT-Creation-Date: 2024-05-25 00:01Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1577,19 +1577,19 @@ msgstr ""
 msgid "Last series"
 msgstr ""
 
-#: app/pages/TablesState.tsx:75:29
+#: app/pages/TablesState.tsx:76:29
 msgid "Tables state is not available for aggregated events"
 msgstr ""
 
-#: app/pages/TablesState.tsx:108:19
+#: app/pages/TablesState.tsx:109:19
 msgid "Tables state"
 msgstr ""
 
-#: app/pages/TablesState.tsx:109:22
+#: app/pages/TablesState.tsx:110:22
 msgid "Current tables state for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: app/pages/TablesState.tsx:120:10
+#: app/pages/TablesState.tsx:121:10
 msgid "Total: %1 / Still playing: %2 / Finished: %3"
 msgstr ""
 

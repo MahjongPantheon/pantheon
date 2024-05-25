@@ -401,36 +401,53 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </Badge>
                   )}
 
-                  <ActionIcon
-                    title={i18n._t('Toggle visibility in ratings global list')}
-                    loading={visibilityLoading[event.id]}
-                    variant='filled'
-                    size='lg'
-                    color='gray'
-                    onClick={() => toggleVisibility(event.id)}
-                  >
-                    {event.isListed ? <IconEye /> : <IconEyeOff />}
-                  </ActionIcon>
-                  <ActionIcon
-                    title={i18n._t('Toggle visibility of rating table')}
-                    loading={resultsLoading[event.id]}
-                    variant='filled'
-                    size='lg'
-                    color='yellow'
-                    onClick={() => onToggleResults(event.id)}
-                  >
-                    {event.isRatingShown ? <IconEye /> : <IconEyeOff />}
-                  </ActionIcon>
-                  <ActionIcon
-                    title={i18n._t('Toggle visibility of achievements')}
-                    loading={achievementsLoading[event.id]}
-                    variant='filled'
-                    size='lg'
-                    color='yellow'
-                    onClick={() => onToggleAchievements(event.id)}
-                  >
-                    {event.achievementsShown ? <IconEye /> : <IconEyeOff />}
-                  </ActionIcon>
+                  <Menu shadow='md' width={200}>
+                    <Menu.Target>
+                      <ActionIcon
+                        title={i18n._t('Visibility')}
+                        loading={
+                          visibilityLoading[event.id] ||
+                          resultsLoading[event.id] ||
+                          achievementsLoading[event.id]
+                        }
+                        variant='filled'
+                        size='lg'
+                        color='gray'
+                      >
+                        <IconEye />
+                      </ActionIcon>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      <Menu.Label>{i18n._t('Visibility management')}</Menu.Label>
+                      <Menu.Item
+                        title={i18n._t('Toggle visibility in ratings global list')}
+                        icon={event.isListed ? <IconEye /> : <IconEyeOff />}
+                        onClick={() => toggleVisibility(event.id)}
+                      >
+                        {event.isListed
+                          ? i18n._t('Event shown in global list; hide?')
+                          : i18n._t('Event not shown in global list; show?')}
+                      </Menu.Item>
+                      <Menu.Item
+                        title={i18n._t('Toggle visibility of rating table')}
+                        icon={event.isRatingShown ? <IconEye /> : <IconEyeOff />}
+                        onClick={() => onToggleResults(event.id)}
+                      >
+                        {event.isRatingShown
+                          ? i18n._t('Rating table: visible; hide?')
+                          : i18n._t('Rating table: hidden; show?')}
+                      </Menu.Item>
+                      <Menu.Item
+                        title={i18n._t('Toggle visibility of achievements')}
+                        icon={event.achievementsShown ? <IconEye /> : <IconEyeOff />}
+                        onClick={() => onToggleAchievements(event.id)}
+                      >
+                        {event.achievementsShown
+                          ? i18n._t('Achievements: visible; hide?')
+                          : i18n._t('Achievements: hidden; show?')}
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
                 </Group>
               </Group>
             );
