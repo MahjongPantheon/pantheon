@@ -26,7 +26,6 @@ export const TableSelectPlayerStatus = (props: IProps) => {
     <div className={styles.wrapper}>
       <div className={styles.mainArea}>
         <FourSidedScreen
-          ready={true}
           sideUp={
             <PlayerPlace
               upsideDown={props.topRowUpsideDown}
