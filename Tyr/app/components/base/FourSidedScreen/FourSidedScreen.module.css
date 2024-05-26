@@ -1,53 +1,61 @@
-.screenBase {
-  position: relative;
-  display: block;
-  width: 100%;
+.centerArea {
+  position: fixed;
+  left: -50%;
+  top: -50%;
   height: 100%;
-  transition: all 0.1s ease-out;
-  opacity: 0.01;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.screenBaseUnhide {
-  opacity: 1;
-}
-
-.sideUp,
-.sideLeft,
-.sideRight,
-.sideBottom,
-.center {
-  position: absolute;
-  pointer-events: none;
-  & > * {
-    pointer-events: all;
-  }
-}
-
-.sideUp {
-  top: 0;
-  left: 0;
+.topArea {
   transform: rotate(180deg);
+  transform-origin: top;
+  position: fixed;
+  left: -50%;
+  top: 100%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.sideLeft {
-  top: 0;
-  left: 0;
+.leftArea {
   transform: rotate(90deg);
-}
-
-.center {
+  transform-origin: top;
+  position: fixed;
+  left: -25%;
   top: 0;
-  right: 0;
+  height: calc(100% - 16px);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
-.sideRight {
+.rightArea {
+  transform: rotate(-90deg);
+  transform-origin: top;
+  position: fixed;
+  left: -75%;
   top: 0;
-  right: 0;
-  transform: rotate(270deg);
+  height: calc(100% - 16px);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.sideBottom {
-  bottom: 0;
-  left: 0;
-  transform: rotate(0deg);
+.bottomArea {
+  position: fixed;
+  left: -50%;
+  top: -100%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
