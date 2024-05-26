@@ -40,11 +40,28 @@ export const TablePrimaryView = (props: IProps) => {
   const loc = useContext(i18n);
   const [centerDims, setCenterDims] = useState({ width: 0, height: 0 });
   const [newGameOpen, setNewGameOpen] = useState(false);
+  const [componentsReady, setComponentsReady] = useState(false);
 
   const [toimen, setToimen] = useState(props.toimen);
   const [kamicha, setKamicha] = useState(props.kamicha);
   const [self, setSelf] = useState(props.self);
   const [shimocha, setShimocha] = useState(props.shimocha);
+
+  // This weird magic is for nicer animations during player side switch on other table
+  // We keep old props until the screen is faded out to avoid content blinking
+  useEffect(() => {
+    setComponentsReady(false);
+    const timeout = setTimeout(() => {
+      setToimen(props.toimen);
+      setKamicha(props.kamicha);
+      setSelf(props.self);
+      setShimocha(props.shimocha);
+      setTimeout(() => {
+        setComponentsReady(true);
+      }, 0);
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [props.toimen.id, props.kamicha.id, props.shimocha.id, props.self.id]);
 
   useEffect(() => {
     setToimen(props.toimen);
@@ -63,6 +80,7 @@ export const TablePrimaryView = (props: IProps) => {
           sideRight={<PlayerPlace {...shimocha} />}
           center={<TableStatus {...centerDims} {...props.tableStatus} />}
           onDimensionChange={setCenterDims}
+          ready={componentsReady}
         />
         {!!props.onAddNewGame && (
           <PopupMenu isOpen={newGameOpen} onClose={() => setNewGameOpen(false)}>

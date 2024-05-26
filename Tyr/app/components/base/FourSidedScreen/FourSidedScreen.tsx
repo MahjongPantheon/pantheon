@@ -1,4 +1,5 @@
 import { ReactElement, createRef, useEffect, useState } from 'react';
+import clsx from 'classnames';
 import styles from './FourSidedScreen.module.css';
 
 type IProps = {
@@ -8,6 +9,7 @@ type IProps = {
   sideRight: ReactElement;
   center: ReactElement;
   onDimensionChange?: (center: { width: number; height: number }) => void;
+  ready?: boolean;
 };
 
 export const FourSidedScreen = ({
@@ -17,9 +19,32 @@ export const FourSidedScreen = ({
   sideRight,
   center,
   onDimensionChange,
+  ready,
 }: IProps) => {
+  const [unhide, setUnhide] = useState(false);
   const [innerHeight, setInnerHeight] = useState(0);
   const [innerWidth, setInnerWidth] = useState(0);
+
+  const [sideLeftTop, setSideLeftTop] = useState('0');
+  const [sideLeftLeft, setSideLeftLeft] = useState('0');
+
+  const [sideTopTop, setSideTopTop] = useState('0');
+  const [sideTopLeft, setSideTopLeft] = useState('0');
+
+  const [sideRightTop, setSideRightTop] = useState('0');
+  const [sideRightRight, setSideRightRight] = useState('0');
+
+  const [sideBottomLeft, setSideBottomLeft] = useState('0');
+
+  const [sideCenterTop, setSideCenterTop] = useState('0');
+  const [sideCenterLeft, setSideCenterLeft] = useState('0');
+  const [sideCenterWidth, setSideCenterWidth] = useState('0');
+  const [sideCenterHeight, setSideCenterHeight] = useState('0');
+
+  const refUp = createRef<HTMLDivElement>();
+  const refLeft = createRef<HTMLDivElement>();
+  const refRight = createRef<HTMLDivElement>();
+  const refDown = createRef<HTMLDivElement>();
   const refCenter = createRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -32,72 +57,94 @@ export const FourSidedScreen = ({
   }, []);
 
   useEffect(() => {
-    const { left, right, top, bottom } = refCenter.current!.getBoundingClientRect();
-    onDimensionChange?.({ height: bottom - top, width: right - left });
-  }, [innerHeight, innerWidth]);
+    if (!ready) {
+      setUnhide(false);
+    } else {
+      let centerHPaddings = 0;
+      let centerVPaddings = 0;
+      {
+        const { left, right, top, bottom } = refUp.current!.getBoundingClientRect();
+        setSideTopLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        setSideTopTop(
+          '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
+        );
+        centerVPaddings += bottom - top;
+      }
+      {
+        const { left, right, top, bottom } = refLeft.current!.getBoundingClientRect();
+        setSideLeftTop('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        setSideLeftLeft(
+          '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
+        );
+        centerHPaddings += right - left;
+      }
+      {
+        const { left, right, top, bottom } = refRight.current!.getBoundingClientRect();
+        setSideRightTop('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        setSideRightRight(
+          '-' + (Math.round((bottom - top) / 2) - Math.round((right - left) / 2)) + 'px'
+        );
+        centerHPaddings += right - left;
+      }
+      {
+        const { right, left, bottom, top } = refDown.current!.getBoundingClientRect();
+        setSideBottomLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+        centerVPaddings += bottom - top;
+      }
+      {
+        setSideCenterHeight('calc(100% - ' + (centerVPaddings + 20) + 'px)');
+        setSideCenterWidth('calc(100% - ' + (centerHPaddings + 20) + 'px)');
+        const ref = refCenter.current!;
+
+        setTimeout(() => {
+          const { left, right, top, bottom } = ref.getBoundingClientRect();
+          setSideCenterLeft('calc(50% - ' + Math.round((right - left) / 2) + 'px)');
+          setSideCenterTop('calc(50% - ' + Math.round((bottom - top) / 2) + 'px)');
+          setUnhide(true);
+          onDimensionChange?.({ height: bottom - top, width: right - left });
+        }, 0);
+      }
+    }
+  }, [innerHeight, innerWidth, ready]);
 
   return (
-    <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>
-      <foreignObject
-        id='center'
-        className='node'
-        x='50%'
-        y='50%'
-        width='60%'
-        height='60%'
-        style={{ overflow: 'visible' }}
+    <div className={clsx(styles.screenBase, unhide ? styles.screenBaseUnhide : null)}>
+      <div
+        className={clsx(styles.sideUp)}
+        style={{ top: sideTopTop, left: sideTopLeft }}
+        ref={refUp}
       >
-        <div ref={refCenter} className={styles.centerArea}>
-          {center}
-        </div>
-      </foreignObject>
-      <foreignObject
-        id='top'
-        className='node'
-        x='50%'
-        y='0'
-        width='100%'
-        height='25%'
-        style={{ overflow: 'visible' }}
+        {sideUp}
+      </div>
+      <div
+        className={clsx(styles.sideLeft)}
+        style={{ top: sideLeftTop, left: sideLeftLeft }}
+        ref={refLeft}
       >
-        <div className={styles.topArea}>{sideUp}</div>
-      </foreignObject>
-
-      <foreignObject
-        id='left'
-        className='node'
-        x='-25%'
-        y='50%'
-        width='100%'
-        height='25vw'
-        style={{ overflow: 'visible' }}
+        {sideLeft}
+      </div>
+      <div
+        className={clsx(styles.center)}
+        style={{
+          top: sideCenterTop,
+          right: sideCenterLeft,
+          width: sideCenterWidth,
+          height: sideCenterHeight,
+        }}
+        ref={refCenter}
       >
-        <div className={styles.leftArea}>{sideLeft}</div>
-      </foreignObject>
-
-      <foreignObject
-        id='right'
-        className='node'
-        x='25%'
-        y='50%'
-        width='100%'
-        height='25vw'
-        style={{ overflow: 'visible' }}
+        {center}
+      </div>
+      <div
+        className={clsx(styles.sideRight)}
+        style={{ top: sideRightTop, right: sideRightRight }}
+        ref={refRight}
       >
-        <div className={styles.rightArea}>{sideRight}</div>
-      </foreignObject>
-
-      <foreignObject
-        id='bottom'
-        className='node'
-        x='50%'
-        y='75%'
-        width='100%'
-        height='25%'
-        style={{ overflow: 'visible' }}
-      >
-        <div className={styles.bottomArea}>{sideDown}</div>
-      </foreignObject>
-    </svg>
+        {sideRight}
+      </div>
+      <div className={clsx(styles.sideBottom)} style={{ left: sideBottomLeft }} ref={refDown}>
+        {sideDown}
+      </div>
+    </div>
   );
 };
