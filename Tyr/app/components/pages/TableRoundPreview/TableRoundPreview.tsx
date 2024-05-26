@@ -2,7 +2,7 @@ import { FourSidedScreen } from '../../base/FourSidedScreen/FourSidedScreen';
 import { PlayerPlace, IProps as PlayerProps } from '../../base/PlayerPlace/PlayerPlace';
 import { ResultArrows } from '../../base/ResultArrows/ResultArrows';
 import { ResultArrowsProps } from '../../base/ResultArrows/ResultArrowsProps';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../../base/Button/Button';
 import { BottomPanel } from '../../base/BottomPanel/BottomPanel';
 
@@ -24,6 +24,11 @@ export type IProps = {
 
 export const TableRoundPreview = (props: IProps) => {
   const [centerDims, setCenterDims] = useState({ width: 0, height: 0 });
+  const [componentsReady, setComponentsReady] = useState(false);
+
+  useEffect(() => {
+    setComponentsReady(true);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -35,6 +40,7 @@ export const TableRoundPreview = (props: IProps) => {
           sideRight={<PlayerPlace {...props.shimocha} />}
           center={<ResultArrows {...centerDims} arrows={props.results.arrows} />}
           onDimensionChange={setCenterDims}
+          ready={componentsReady}
         />
       </div>
       <BottomPanel>
