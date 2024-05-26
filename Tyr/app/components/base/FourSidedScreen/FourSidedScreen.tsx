@@ -56,9 +56,7 @@ export const FourSidedScreen = ({
         className='node'
         x='50%'
         y='0'
-        width='100%'
-        height='25%'
-        style={{ overflow: 'visible' }}
+        style={{ overflow: 'visible', height: '25%', width: '100%' }}
       >
         <div className={styles.topArea}>{sideUp}</div>
       </foreignObject>
@@ -66,11 +64,9 @@ export const FourSidedScreen = ({
       <foreignObject
         id='left'
         className='node'
-        x='-25%'
+        x='0%'
         y='50%'
-        width='100%'
-        height='25vw'
-        style={{ overflow: 'visible' }}
+        style={{ overflow: 'visible', height: '25vw', width: '100%' }}
       >
         <div className={styles.leftArea}>{sideLeft}</div>
       </foreignObject>
@@ -78,11 +74,9 @@ export const FourSidedScreen = ({
       <foreignObject
         id='right'
         className='node'
-        x='25%'
+        x='100%'
         y='50%'
-        width='100%'
-        height='25vw'
-        style={{ overflow: 'visible' }}
+        style={{ overflow: 'visible', height: '25vw', width: '100%' }}
       >
         <div className={styles.rightArea}>{sideRight}</div>
       </foreignObject>
@@ -91,10 +85,8 @@ export const FourSidedScreen = ({
         id='bottom'
         className='node'
         x='50%'
-        y='75%'
-        width='100%'
-        height='25%'
-        style={{ overflow: 'visible' }}
+        y='100%'
+        style={{ overflow: 'visible', height: '25%', width: '100%' }}
       >
         <div className={styles.bottomArea}>{sideDown}</div>
       </foreignObject>
