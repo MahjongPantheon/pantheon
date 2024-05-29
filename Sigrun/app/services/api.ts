@@ -133,7 +133,7 @@ export class ApiService {
   getRatingTable(
     eventIds: number[],
     order: 'asc' | 'desc',
-    orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score',
+    orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'chips',
     onlyMinGames: boolean
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, {

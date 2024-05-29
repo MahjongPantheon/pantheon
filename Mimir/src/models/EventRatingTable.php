@@ -316,6 +316,21 @@ class EventRatingTableModel extends Model
                     }
                 });
                 break;
+            case 'chips':
+                usort($playersHistoryItems, function (
+                    PlayerHistoryPrimitive $el1,
+                    PlayerHistoryPrimitive $el2
+                ) {
+                    if (abs($el1->getChips() - $el2->getChips()) < 0.0001) {
+                        return ($el2->getRating() - $el1->getRating()) > 0 ? 1 : -1; // lower rating is worse, so invert
+                    }
+                    if ($el1->getChips() - $el2->getChips() < 0) {
+                        return -1; // usort casts return result to int, so pass explicit int here.
+                    } else {
+                        return 1;
+                    }
+                });
+                break;
             default:
                 throw new InvalidParametersException("Parameter orderBy should be either 'name', 'rating' or 'avg_place'");
         }
