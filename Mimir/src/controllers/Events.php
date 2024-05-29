@@ -651,7 +651,7 @@ class EventsController extends Controller
      * Get rating table for event
      *
      * @param array $eventIdList
-     * @param string $orderBy either 'name', 'rating', 'avg_place' or 'avg_score'
+     * @param string $orderBy either 'name', 'rating', 'avg_place', 'avg_score' or 'chips'
      * @param string $order either 'asc' or 'desc'
      * @param bool $onlyWithMinGames output only players having a required minimum of played games
      * @throws InvalidParametersException

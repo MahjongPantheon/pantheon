@@ -60,7 +60,7 @@ import { authCtx } from '../hooks/auth';
 export const RatingTable: React.FC<{
   params: {
     eventId: string;
-    orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team';
+    orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
   };
 }> = ({ params: { eventId, orderBy, minGamesSelector } }) => {
@@ -72,6 +72,7 @@ export const RatingTable: React.FC<{
     avg_place: 'asc',
     avg_score: 'desc',
     team: 'desc',
+    chips: 'desc',
   }[orderBy] as 'asc' | 'desc';
   const api = useApi();
   const i18n = useI18n();
@@ -235,6 +236,36 @@ export const RatingTable: React.FC<{
                 >
                   {i18n._t('Rating')}
                 </Badge>
+                {events?.[0]?.withChips && (
+                  <Badge
+                    size='lg'
+                    color='orange'
+                    radius='sm'
+                    variant={orderBy === 'chips' ? 'filled' : 'light'}
+                    component={'a'}
+                    pl={5}
+                    pr={5}
+                    leftSection={
+                      <Box mt={7}>
+                        <IconSortDescending2 size='1rem' />
+                      </Box>
+                    }
+                    href={`/event/${eventId}/order/chips${
+                      minGamesSelector === 'min' ? '/filter/min' : ''
+                    }`}
+                    onClick={(e) => {
+                      navigate(
+                        `/event/${eventId}/order/chips${
+                          minGamesSelector === 'min' ? '/filter/min' : ''
+                        }`
+                      );
+                      e.preventDefault();
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {i18n._t('Chips')}
+                  </Badge>
+                )}
               </Group>
               <Group spacing='md' grow={!largeScreen}>
                 <Badge
