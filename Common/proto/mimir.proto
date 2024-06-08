@@ -81,7 +81,7 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc ToggleListed (GenericEventPayload)
     returns (GenericSuccessResponse);
-  rpc GetTablesState (GenericEventPayload)
+  rpc GetTablesState (EventsGetTablesStatePayload)
     returns (EventsGetTablesStateResponse);
   rpc StartTimer (GenericEventPayload)
     returns (GenericSuccessResponse);
@@ -408,6 +408,11 @@ message EventsGetEventForEditResponse {
 message EventsUpdateEventPayload {
   int32 id = 1;
   EventData event = 2;
+}
+
+message EventsGetTablesStatePayload {
+  int32 event_id = 1;
+  bool omit_last_round = 2;
 }
 
 message EventsGetTablesStateResponse {

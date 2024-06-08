@@ -747,7 +747,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetTablesState(array $ctx, \Common\GenericEventPayload $in): \Common\EventsGetTablesStateResponse
+    public function GetTablesState(array $ctx, \Common\EventsGetTablesStatePayload $in): \Common\EventsGetTablesStateResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');

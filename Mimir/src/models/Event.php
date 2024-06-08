@@ -100,10 +100,11 @@ class EventModel extends Model
     /**
      * Find out currently playing tables state
      * @param integer $eventId
+     * @param bool $omitLastRound
      * @return array
      * @throws \Exception
      */
-    public function getTablesState($eventId)
+    public function getTablesState($eventId, $omitLastRound = false)
     {
         $event = EventPrimitive::findById($this->_ds, [$eventId])[0];
         if ($event->getIsFinished()) {
@@ -143,7 +144,7 @@ class EventModel extends Model
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
         ], 0, intval($tablesCount));
-        return $this->_formatTablesState($lastGames, $reggedPlayers, true);
+        return $this->_formatTablesState($lastGames, $reggedPlayers, $omitLastRound);
     }
 
     /**

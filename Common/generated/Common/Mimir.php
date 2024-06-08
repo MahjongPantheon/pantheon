@@ -281,7 +281,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function GetTablesState(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetTablesStateResponse;
+    public function GetTablesState(array $ctx, \Common\EventsGetTablesStatePayload $req): \Common\EventsGetTablesStateResponse;
 
     /**
      *

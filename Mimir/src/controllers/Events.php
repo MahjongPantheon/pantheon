@@ -441,14 +441,15 @@ class EventsController extends Controller
      * Get tables state in tournament
      *
      * @param int $eventId
+     * @param bool $omitLastRound
      * @throws \Exception
      * @return array
      */
-    public function getTablesState($eventId)
+    public function getTablesState($eventId, $omitLastRound = false)
     {
         $this->_log->info('Getting tables state for event #' . $eventId);
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))
-            ->getTablesState($eventId);
+            ->getTablesState($eventId, $omitLastRound);
         $this->_log->info('Successfully got tables state for event #' . $eventId);
         return $data;
     }

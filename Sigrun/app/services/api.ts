@@ -261,6 +261,6 @@ export class ApiService {
 
   getTablesState(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTablesState' });
-    return GetTablesState({ eventId }, this._clientConfMimir);
+    return GetTablesState({ eventId, omitLastRound: true }, this._clientConfMimir);
   }
 }
