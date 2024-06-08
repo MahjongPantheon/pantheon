@@ -198,7 +198,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getTablesState(eventId: number) {
-    return GetTablesState({ eventId }, this._clientConfMimir).then((v) =>
+    return GetTablesState({ eventId, omitLastRound: true }, this._clientConfMimir).then((v) =>
       v.tables.filter((t) => t.status === SessionStatus.SESSION_STATUS_INPROGRESS)
     );
   }

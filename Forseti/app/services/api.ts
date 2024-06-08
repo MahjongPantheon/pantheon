@@ -165,7 +165,9 @@ export class ApiService {
 
   getTablesState(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTablesState' });
-    return GetTablesState({ eventId }, this._clientConfMimir).then((v) => v.tables);
+    return GetTablesState({ eventId, omitLastRound: false }, this._clientConfMimir).then(
+      (v) => v.tables
+    );
   }
 
   quickAuthorize() {

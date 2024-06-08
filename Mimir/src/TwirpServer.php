@@ -24,6 +24,7 @@ use Common\DoraSummary;
 use Common\DrawResult;
 use Common\Event;
 use Common\EventData;
+use Common\EventsGetTablesStatePayload;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
 use Common\PrescriptedTable;
@@ -1376,9 +1377,9 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetTablesState(array $ctx, GenericEventPayload $req): EventsGetTablesStateResponse
+    public function GetTablesState(array $ctx, EventsGetTablesStatePayload $req): EventsGetTablesStateResponse
     {
-        $ret = $this->_eventsController->getTablesState($req->getEventId());
+        $ret = $this->_eventsController->getTablesState($req->getEventId(), $req->getOmitLastRound());
         return (new EventsGetTablesStateResponse())
             ->setTables(array_map(function ($table) {
                 $state = (new TableState())

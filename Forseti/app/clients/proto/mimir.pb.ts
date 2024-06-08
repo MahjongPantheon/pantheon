@@ -277,6 +277,11 @@ export interface EventsUpdateEventPayload {
   event: protoAtoms.EventData;
 }
 
+export interface EventsGetTablesStatePayload {
+  eventId: number;
+  omitLastRound: boolean;
+}
+
 export interface EventsGetTablesStateResponse {
   tables: protoAtoms.TableState[];
 }
@@ -804,12 +809,12 @@ export async function ToggleListed(
 }
 
 export async function GetTablesState(
-  genericEventPayload: protoAtoms.GenericEventPayload,
+  eventsGetTablesStatePayload: EventsGetTablesStatePayload,
   config?: ClientConfiguration,
 ): Promise<EventsGetTablesStateResponse> {
   const response = await PBrequest(
     "/common.Mimir/GetTablesState",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    EventsGetTablesStatePayload.encode(eventsGetTablesStatePayload),
     config,
   );
   return EventsGetTablesStateResponse.decode(response);
@@ -1642,12 +1647,12 @@ export async function ToggleListedJSON(
 }
 
 export async function GetTablesStateJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
+  eventsGetTablesStatePayload: EventsGetTablesStatePayload,
   config?: ClientConfiguration,
 ): Promise<EventsGetTablesStateResponse> {
   const response = await JSONrequest(
     "/common.Mimir/GetTablesState",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    EventsGetTablesStatePayloadJSON.encode(eventsGetTablesStatePayload),
     config,
   );
   return EventsGetTablesStateResponseJSON.decode(response);
@@ -2265,7 +2270,7 @@ export interface Mimir<Context = unknown> {
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   GetTablesState: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
+    eventsGetTablesStatePayload: EventsGetTablesStatePayload,
     context: Context,
   ) => Promise<EventsGetTablesStateResponse> | EventsGetTablesStateResponse;
   StartTimer: (
@@ -2842,8 +2847,8 @@ export function createMimir<Context>(service: Mimir<Context>) {
         name: "GetTablesState",
         handler: service.GetTablesState,
         input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
+          protobuf: EventsGetTablesStatePayload,
+          json: EventsGetTablesStatePayloadJSON,
         },
         output: {
           protobuf: EventsGetTablesStateResponse,
@@ -7094,6 +7099,84 @@ export const EventsUpdateEventPayload = {
         }
         case 2: {
           reader.readMessage(msg.event, protoAtoms.EventData._readMessage);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventsGetTablesStatePayload = {
+  /**
+   * Serializes EventsGetTablesStatePayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<EventsGetTablesStatePayload>): Uint8Array {
+    return EventsGetTablesStatePayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes EventsGetTablesStatePayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): EventsGetTablesStatePayload {
+    return EventsGetTablesStatePayload._readMessage(
+      EventsGetTablesStatePayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes EventsGetTablesStatePayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetTablesStatePayload>,
+  ): EventsGetTablesStatePayload {
+    return {
+      eventId: 0,
+      omitLastRound: false,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetTablesStatePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.omitLastRound) {
+      writer.writeBool(2, msg.omitLastRound);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetTablesStatePayload,
+    reader: protoscript.BinaryReader,
+  ): EventsGetTablesStatePayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.omitLastRound = reader.readBool();
           break;
         }
         default: {
@@ -13183,6 +13266,72 @@ export const EventsUpdateEventPayloadJSON = {
     const _event_ = json["event"];
     if (_event_) {
       protoAtoms.EventDataJSON._readMessage(msg.event, _event_);
+    }
+    return msg;
+  },
+};
+
+export const EventsGetTablesStatePayloadJSON = {
+  /**
+   * Serializes EventsGetTablesStatePayload to JSON.
+   */
+  encode: function (msg: PartialDeep<EventsGetTablesStatePayload>): string {
+    return JSON.stringify(EventsGetTablesStatePayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes EventsGetTablesStatePayload from JSON.
+   */
+  decode: function (json: string): EventsGetTablesStatePayload {
+    return EventsGetTablesStatePayloadJSON._readMessage(
+      EventsGetTablesStatePayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes EventsGetTablesStatePayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetTablesStatePayload>,
+  ): EventsGetTablesStatePayload {
+    return {
+      eventId: 0,
+      omitLastRound: false,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetTablesStatePayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.omitLastRound) {
+      json["omitLastRound"] = msg.omitLastRound;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetTablesStatePayload,
+    json: any,
+  ): EventsGetTablesStatePayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _omitLastRound_ = json["omitLastRound"] ?? json["omit_last_round"];
+    if (_omitLastRound_) {
+      msg.omitLastRound = _omitLastRound_;
     }
     return msg;
   },

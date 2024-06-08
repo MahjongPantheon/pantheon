@@ -3416,7 +3416,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GenericEventPayload();
+            $in = new \Common\EventsGetTablesStatePayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->GetTablesState($ctx, $in);
@@ -3453,7 +3453,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GenericEventPayload();
+            $in = new \Common\EventsGetTablesStatePayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->GetTablesState($ctx, $in);
