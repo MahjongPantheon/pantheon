@@ -143,7 +143,7 @@ class EventModel extends Model
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
         ], 0, intval($tablesCount));
-        return $this->_formatTablesState($lastGames, $reggedPlayers);
+        return $this->_formatTablesState($lastGames, $reggedPlayers, true);
     }
 
     /**
@@ -216,10 +216,11 @@ class EventModel extends Model
     /**
      * @param SessionPrimitive[] $lastGames
      * @param array $reggedPlayers
+     * @param bool $omitLastRound
      * @throws \Exception
      * @return array
      */
-    protected function _formatTablesState($lastGames, $reggedPlayers)
+    protected function _formatTablesState($lastGames, $reggedPlayers, $omitLastRound = false)
     {
         $output = [];
         $playerIdMap = [];
@@ -243,8 +244,12 @@ class EventModel extends Model
                 if (empty($gId)) {
                     throw new InvalidParametersException('Attempted to use deidented primitive');
                 }
-                $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$gId]);
-                $lastRound = MultiRoundHelper::findLastRound($rounds);
+
+                $lastRound = null;
+                if (!$omitLastRound) {
+                    $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$gId]);
+                    $lastRound = MultiRoundHelper::findLastRound($rounds);
+                }
 
                 $output [] = [
                     'status' => $game->getStatus(),
