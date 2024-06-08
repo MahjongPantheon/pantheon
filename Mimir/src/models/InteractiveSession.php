@@ -526,11 +526,15 @@ class InteractiveSessionModel extends Model
     {
         /** @var string $trackerUrl */
         $trackerUrl = $this->_config->getStringValue('trackerUrl');
-        $out = '';
         if (!empty($trackerUrl)) {
-            $out = file_get_contents(sprintf($trackerUrl, $gameHashcode));
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, sprintf($trackerUrl, $gameHashcode));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 10);
+            curl_exec($ch);
+            curl_close($ch);
         }
 
-        return !empty($out);
+        return true;
     }
 }
