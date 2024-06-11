@@ -54,7 +54,7 @@
     "resolve-url-loader": "^5.0.0",
     "ts-jest": "^29.1.2",
     "uuid": "^9.0.1",
-    "vite-plugin-pwa": "^0.19.7",
+    "vite-plugin-pwa": "^0.20.0",
     "wouter": "^2.12.1"
   },
   "scripts": {}
