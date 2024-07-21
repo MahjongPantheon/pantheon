@@ -47,6 +47,8 @@
     font-size: calc(var(--font-md));
     height: var(--size-md);
     width: var(--size-md);
+    min-height: var(--size-md);
+    min-width: var(--size-md);
     border-radius: var(--size-md);
   }
 }
@@ -60,6 +62,8 @@
     font-size: calc(var(--font-sm));
     height: var(--size-sm);
     width: var(--size-sm);
+    min-height: var(--size-sm);
+    min-width: var(--size-sm);
     border-radius: var(--size-sm);
   }
 }
@@ -73,6 +77,8 @@
     font-size: calc(var(--font-lg));
     height: var(--size-lg);
     width: var(--size-lg);
+    min-height: var(--size-lg);
+    min-width: var(--size-lg);
     border-radius: var(--size-lg);
   }
 }
