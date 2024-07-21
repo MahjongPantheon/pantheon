@@ -58,9 +58,10 @@ export const ScrollableSwitch = ({ options }: IProps) => {
         onMouseLeave={mouseLeave}
         onMouseMove={mouseMove}
       >
-        {options.map(({ label, onSelect, selected }) => {
+        {options.map(({ label, onSelect, selected }, idx) => {
           return (
             <div
+              key={`label_${idx}`}
               className={clsx(styles.option, selected && styles.optionSelected)}
               onClick={onElementClick(onSelect)}
               onMouseUp={(e) => e.preventDefault()}

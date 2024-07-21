@@ -24,25 +24,57 @@ PHONY: deps
 deps:
 	if [ -e "`which yarn`" ]; then yarn; else npm install; fi
 
-PHONY: lint
-lint:
-	make -k -j4 typecheck eslint prettier
-
 PHONY: eslint
 eslint:
+	echo "======= Forseti: eslint ======"
 	./node_modules/.bin/eslint . --ext .js,.ts,.tsx
+
+PHONY: docker_eslint
+docker_eslint: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Forseti container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make eslint' ; \
+	fi
 
 PHONY: prettier
 prettier:
+	echo "======= Forseti: prettier ======"
 	./node_modules/.bin/prettier -c ./app
+
+PHONY: docker_prettier
+docker_prettier: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Forseti container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make prettier' ; \
+	fi
 
 PHONY: typecheck
 typecheck:
+	echo "======= Forseti: typecheck ======"
 	./node_modules/.bin/tsc --project tsconfig.json --noEmit
+
+PHONY: docker_typecheck
+docker_typecheck: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Forseti container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make typecheck' ; \
+	fi
 
 PHONY: test
 test:
+	echo "======= Forseti: test ======"
 	./node_modules/.bin/vitest --run
+
+PHONY: docker_test
+docker_test: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Forseti container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make test' ; \
+	fi
 
 PHONY: autofix
 autofix:
@@ -111,22 +143,6 @@ docker_deps: get_docker_id
 		echo "${RED}Forseti container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make deps' ; \
-	fi
-
-PHONY: docker_lint
-docker_lint: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Forseti container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make lint' ; \
-	fi
-
-PHONY: docker_test
-docker_test: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Forseti container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make test' ; \
 	fi
 
 PHONY: docker_autofix

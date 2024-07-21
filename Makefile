@@ -239,20 +239,136 @@ dump_users:
 dump_last_mail:
 	cd Hermod && ${MAKE} docker_last_mail
 
-.PHONY: check
-check:
-	cd Mimir && ${MAKE} docker_check
-	cd Frey && ${MAKE} docker_check
-	cd Frey && ${MAKE} docker_check_common
-	cd Tyr && ${MAKE} docker_lint
-	cd Tyr && ${MAKE} docker_unit
-	cd Forseti && ${MAKE} docker_lint
-	cd Sigrun && ${MAKE} docker_lint
-	cd Hugin && ${MAKE} docker_check
-	cd Gullveig && ${MAKE} docker_check
-	cd Bragi && ${MAKE} docker_lint
-	cd Skirnir && ${MAKE} docker_lint
-	cd Fenrir && ${MAKE} docker_lint
+.PHONY: bragi_eslint
+bragi_eslint:
+	cd Bragi && ${MAKE} docker_eslint > ../tmp/bragi_eslint.log 2>&1
+
+.PHONY: bragi_prettier
+bragi_prettier:
+	cd Bragi && ${MAKE} docker_prettier > ../tmp/bragi_prettier.log 2>&1
+
+.PHONY: bragi_typecheck
+bragi_typecheck:
+	cd Bragi && ${MAKE} docker_typecheck > ../tmp/bragi_typecheck.log 2>&1
+
+.PHONY: forseti_eslint
+forseti_eslint:
+	cd Forseti && ${MAKE} docker_eslint > ../tmp/forseti_eslint.log 2>&1
+
+.PHONY: forseti_prettier
+forseti_prettier:
+	cd Forseti && ${MAKE} docker_prettier > ../tmp/forseti_prettier.log 2>&1
+
+.PHONY: forseti_typecheck
+forseti_typecheck:
+	cd Forseti && ${MAKE} docker_typecheck > ../tmp/forseti_typecheck.log 2>&1
+
+.PHONY: frey_lint
+frey_lint:
+	cd Frey && ${MAKE} docker_lint > ../tmp/frey_lint.log 2>&1
+
+.PHONY: frey_analyze
+frey_analyze:
+	cd Frey && ${MAKE} docker_analyze > ../tmp/frey_analyze.log 2>&1
+
+.PHONY: frey_lint_common
+frey_lint_common:
+	cd Frey && ${MAKE} docker_lint_common > ../tmp/frey_lint_common.log 2>&1
+
+.PHONY: gullveig_lint
+gullveig_lint:
+	cd Gullveig && ${MAKE} docker_lint > ../tmp/gullveig_lint.log 2>&1
+
+.PHONY: gullveig_analyze
+gullveig_analyze:
+	cd Gullveig && ${MAKE} docker_analyze > ../tmp/gullveig_analyze.log 2>&1
+
+.PHONY: hugin_lint
+hugin_lint:
+	cd Hugin && ${MAKE} docker_lint > ../tmp/hugin_lint.log 2>&1
+
+.PHONY: hugin_analyze
+hugin_analyze:
+	cd Hugin && ${MAKE} docker_analyze > ../tmp/hugin_analyze.log 2>&1
+
+.PHONY: mimir_lint
+mimir_lint:
+	cd Mimir && ${MAKE} docker_lint > ../tmp/mimir_lint.log 2>&1
+
+.PHONY: mimir_analyze
+mimir_analyze:
+	cd Mimir && ${MAKE} docker_analyze > ../tmp/mimir_analyze.log 2>&1
+
+.PHONY: skirnir_eslint
+skirnir_eslint:
+	cd Skirnir && ${MAKE} docker_eslint > ../tmp/skirnir_eslint.log 2>&1
+
+.PHONY: skirnir_prettier
+skirnir_prettier:
+	cd Skirnir && ${MAKE} docker_prettier > ../tmp/skirnir_prettier.log 2>&1
+
+.PHONY: skirnir_typecheck
+skirnir_typecheck:
+	cd Skirnir && ${MAKE} docker_typecheck > ../tmp/skirnir_typecheck.log 2>&1
+
+.PHONY: sigrun_eslint
+sigrun_eslint:
+	cd Sigrun && ${MAKE} docker_eslint > ../tmp/sigrun_eslint.log 2>&1
+
+.PHONY: sigrun_prettier
+sigrun_prettier:
+	cd Sigrun && ${MAKE} docker_prettier > ../tmp/sigrun_prettier.log 2>&1
+
+.PHONY: sigrun_typecheck
+sigrun_typecheck:
+	cd Sigrun && ${MAKE} docker_typecheck > ../tmp/sigrun_typecheck.log 2>&1
+
+.PHONY: tyr_eslint
+tyr_eslint:
+	cd Tyr && ${MAKE} docker_eslint > ../tmp/tyr_eslint.log 2>&1
+
+.PHONY: tyr_prettier
+tyr_prettier:
+	cd Tyr && ${MAKE} docker_prettier > ../tmp/tyr_prettier.log 2>&1
+
+.PHONY: tyr_typecheck
+tyr_typecheck:
+	cd Tyr && ${MAKE} docker_typecheck > ../tmp/tyr_typecheck.log 2>&1
+
+.PHONY: fenrir_eslint
+fenrir_eslint:
+	cd Fenrir && ${MAKE} docker_eslint > ../tmp/fenrir_eslint.log 2>&1
+
+.PHONY: fenrir_prettier
+fenrir_prettier:
+	cd Fenrir && ${MAKE} docker_prettier > ../tmp/fenrir_prettier.log 2>&1
+
+.PHONY: fenrir_typecheck
+fenrir_typecheck:
+	cd Fenrir && ${MAKE} docker_typecheck > ../tmp/fenrir_typecheck.log 2>&1
+
+.PHONY: lint
+lint:
+	${MAKE} -j16 bragi_eslint bragi_prettier bragi_typecheck \
+		forseti_eslint forseti_prettier forseti_typecheck \
+		frey_lint frey_analyze frey_lint_common \
+		gullveig_lint gullveig_analyze \
+		hugin_lint hugin_analyze \
+		mimir_lint mimir_analyze \
+		skirnir_eslint skirnir_prettier skirnir_typecheck \
+		sigrun_eslint sigrun_prettier sigrun_typecheck \
+		tyr_eslint tyr_prettier tyr_typecheck \
+		fenrir_eslint fenrir_prettier fenrir_typecheck || { \
+			LINT_RESULT=$$? ;\
+			cat tmp/* ;\
+			exit $$LINT_RESULT ;\
+		}
+
+.PHONY: test
+test:
+	cd Tyr && ${MAKE} docker_test
+	cd Frey && ${MAKE} docker_test
+	cd Mimir && ${MAKE} docker_test
 
 .PHONY: autofix
 autofix:

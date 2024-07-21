@@ -38,6 +38,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
+    'react/jsx-key': 'error',
     'unused-imports/no-unused-imports': 'error',
     'array-callback-return': ['error'],
     'getter-return': ['error'],
