@@ -25,21 +25,44 @@ deps:
 	yarn
 	yarn playwright install --with-deps
 
-PHONY: lint
-lint:
-	make -k -j4 typecheck eslint prettier
-
 PHONY: eslint
 eslint:
+	echo "======= Fenrir: eslint ======"
 	./node_modules/.bin/eslint --ext .js,.ts,.tsx .
+
+PHONY: docker_eslint
+docker_eslint: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Fenrir container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make eslint' ; \
+	fi
 
 PHONY: prettier
 prettier:
+	echo "======= Fenrir: prettier ======"
 	./node_modules/.bin/prettier -c ./tests
+
+PHONY: docker_prettier
+docker_prettier: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Fenrir container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make prettier' ; \
+	fi
 
 PHONY: typecheck
 typecheck:
+	echo "======= Fenrir: typecheck ======"
 	./node_modules/.bin/tsc --project tsconfig.json --noEmit
+
+PHONY: docker_typecheck
+docker_typecheck: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Fenrir container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make typecheck' ; \
+	fi
 
 PHONY: autofix
 autofix:
@@ -64,14 +87,6 @@ docker_deps: get_docker_id
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make deps' ; \
-	fi
-
-PHONY: docker_lint
-docker_lint: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Fenrir container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make lint' ; \
 	fi
 
 PHONY: docker_autofix
