@@ -14,8 +14,9 @@ type IProps = {
 export const SelectList = ({ items, currentSelection, onSelect }: IProps) => {
   return (
     <div className={styles.wrapper}>
-      {items.map((item) => (
+      {items.map((item, idx) => (
         <div
+          key={`listItem_${idx}`}
           className={clsx(styles.listItem, currentSelection === item.id ? styles.selected : null)}
           onClick={() => onSelect(item.id)}
         >
