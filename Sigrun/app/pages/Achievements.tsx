@@ -57,6 +57,7 @@ import andYourRiichiBet from '../../assets/img/andYourRiichiBet.png';
 import covetousKnight from '../../assets/img/covetousKnight.png';
 import ninja from '../../assets/img/ninja.png';
 import needMoreGold from '../../assets/img/needMoreGold.png';
+import riichiNomi from '../../assets/img/riichiNomi.png';
 import { Meta } from '../components/Meta';
 import { useContext } from 'react';
 import { authCtx } from '../hooks/auth';
@@ -767,7 +768,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     },
     {
       id: Achievement.RIICHI_NOMI,
-      image: ninja, // TODO add image
+      image: riichiNomi,
       label: i18n._t('Riichi Nomi'),
       description: i18n._t('Given for winning the largest number riichi nomi hands.'),
       content: achDataByKey[Achievement.RIICHI_NOMI] ? (
