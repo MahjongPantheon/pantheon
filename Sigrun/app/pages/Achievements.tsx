@@ -768,7 +768,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     {
       id: Achievement.RIICHI_NOMI,
       image: ninja, // TODO add image
-      label: i18n._t('Riichi Nomi'), // TODO add i18n
+      label: i18n._t('Riichi Nomi'),
       description: i18n._t('Given for winning the largest number riichi nomi hands.'),
       content: achDataByKey[Achievement.RIICHI_NOMI] ? (
         <Group align='flex-start' position='apart' pl={20}>
