@@ -778,9 +778,12 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               (item: { name: string; count: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
                   <b>{item.name}</b>:{' '}
-                  {i18n._npt('Achievements badge', ['%1 riichi nomi hand', '%1 riichi nomi hands'], item.count, [
-                    item.count || '0',
-                  ])}
+                  {i18n._npt(
+                    'Achievements badge',
+                    ['%1 riichi nomi hand', '%1 riichi nomi hands'],
+                    item.count,
+                    [item.count || '0']
+                  )}
                 </List.Item>
               )
             )}
