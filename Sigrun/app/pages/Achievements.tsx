@@ -57,6 +57,7 @@ import andYourRiichiBet from '../../assets/img/andYourRiichiBet.png';
 import covetousKnight from '../../assets/img/covetousKnight.png';
 import ninja from '../../assets/img/ninja.png';
 import needMoreGold from '../../assets/img/needMoreGold.png';
+import riichiNomi from '../../assets/img/riichiNomi.png';
 import { Meta } from '../components/Meta';
 import { useContext } from 'react';
 import { authCtx } from '../hooks/auth';
@@ -83,6 +84,7 @@ enum Achievement {
   COVETOUS_KNIGHT = 'covetousKnight',
   NINJA = 'ninja',
   NEED_MORE_GOLD = 'needMoreGold',
+  RIICHI_NOMI = 'riichiNomi',
 }
 
 const fullList: Achievement[] = [
@@ -106,6 +108,7 @@ const fullList: Achievement[] = [
   Achievement.COVETOUS_KNIGHT,
   Achievement.NINJA,
   Achievement.NEED_MORE_GOLD,
+  Achievement.RIICHI_NOMI,
 ];
 
 export const Achievements: React.FC<{ params: { eventId: string } }> = ({
@@ -747,6 +750,40 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
                 <List.Item key={`li_${idx}`}>
                   <b>{item.title}</b>:{' '}
                   {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
+                </List.Item>
+              )
+            )}
+          </List>
+          <Badge
+            color='teal'
+            pl={22}
+            leftSection={<IconAward style={{ marginTop: '10px' }} />}
+            variant='filled'
+            size='xl'
+          />
+        </Group>
+      ) : (
+        <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
+      ),
+    },
+    {
+      id: Achievement.RIICHI_NOMI,
+      image: riichiNomi,
+      label: i18n._t('Riichi Nomi'),
+      description: i18n._t('Given for winning the largest number riichi nomi hands.'),
+      content: achDataByKey[Achievement.RIICHI_NOMI] ? (
+        <Group align='flex-start' position='apart' pl={20}>
+          <List>
+            {achDataByKey[Achievement.RIICHI_NOMI].map(
+              (item: { name: string; count: number }, idx: number) => (
+                <List.Item key={`li_${idx}`}>
+                  <b>{item.name}</b>:{' '}
+                  {i18n._npt(
+                    'Achievements badge',
+                    ['%1 riichi nomi hand', '%1 riichi nomi hands'],
+                    item.count,
+                    [item.count || '0']
+                  )}
                 </List.Item>
               )
             )}
