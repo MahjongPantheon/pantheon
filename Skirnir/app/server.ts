@@ -1,10 +1,12 @@
 import fs from 'node:fs';
 import process from 'node:process';
+import { get } from 'https';
 import type { Bot } from 'grammy';
 
 // Module-scoped queue, acceptable because bot process must be single.
 const queue: Array<{ id: string; message: string }> = [];
 let isRunning = false;
+let TRACKER_URL: string | undefined;
 
 // Need to add artificial delay to meet telegram antiflood requirements (around ~30rps)
 function _sendNext(bot: Bot) {
@@ -15,11 +17,18 @@ function _sendNext(bot: Bot) {
 
   isRunning = true;
   const { id, message } = queue.shift()!;
-  bot?.api
-    .sendMessage(id, message, {
-      parse_mode: 'HTML',
-    })
-    .catch((e) => console.error('Rejected sendMessage: ', e));
+  if (id === 'TRACKER') {
+    // send a notification to external tracker, if configured
+    if (TRACKER_URL) {
+      get(TRACKER_URL.replace('%s', message));
+    }
+  } else {
+    bot?.api
+      .sendMessage(id, message, {
+        parse_mode: 'HTML',
+      })
+      .catch((e) => console.error('Rejected sendMessage: ', e));
+  }
 
   setTimeout(() => _sendNext(bot), 100);
 }
@@ -40,6 +49,7 @@ if (fs.existsSync('./node_modules')) {
         path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
       })?.parsed;
 
+      TRACKER_URL = out?.TRACKER_URL;
       const TOKEN = out?.BOT_TOKEN ?? '';
       let bot: Bot;
 
