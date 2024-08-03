@@ -36,7 +36,6 @@ return [
     'cookieDomain' => getenv('COOKIE_DOMAIN'),
     'gullveigUrl' => getenv('GULLVEIG_URL_INTERNAL'),
     'mimirUrl' => getenv('MIMIR_URL_INTERNAL'),
-    'trackerUrl' => getenv('TRACKER_URL') ?: null,
     'userinfoHook' => getenv('USERINFO_HOOK') ?: null,
     'userinfoHookApiKey' => getenv('USERINFO_HOOK_API_KEY') ?: '',
 
