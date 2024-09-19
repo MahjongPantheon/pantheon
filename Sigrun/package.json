@@ -31,9 +31,9 @@
     "express": "^4.19.2",
     "i18n-dialect": "https://github.com/ctizen/i18n-dialect#2.0.2",
     "i18n-proto": "^1.0.5",
-    "jsdom": "^23.2.0",
+    "jsdom": "^24.1.1",
     "lodash.debounce": "^4.0.8",
-    "pm2": "^5.3.1",
+    "pm2": "^5.4.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
@@ -44,7 +44,7 @@
     "strip-markdown": "^6.0.0",
     "twirpscript": "^0.0.69",
     "uuid": "^9.0.1",
-    "vite-plugin-pwa": "^0.19.7",
+    "vite-plugin-pwa": "^0.20.1",
     "wouter": "2.12.1"
   },
   "devDependencies": {
