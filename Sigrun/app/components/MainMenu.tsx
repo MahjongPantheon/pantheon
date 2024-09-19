@@ -22,7 +22,7 @@ import {
   IconUserPlus,
   IconUsers,
 } from '@tabler/icons-react';
-import { EventType } from '../clients/proto/atoms.pb';
+import { EventType, PlatformType } from '../clients/proto/atoms.pb';
 import { FlagEn, FlagKo, FlagRu, FlagDe } from '../helpers/flags';
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
@@ -151,6 +151,7 @@ export const MainMenu = ({
                   />
                 )}
               {globals.data.type === EventType.EVENT_TYPE_ONLINE &&
+                globals.data.platformType === PlatformType.PLATFORM_TYPE_TENHOUNET &&
                 globals.data.eventId?.length === 1 && (
                   <AddOnlineReplayLink showLabel={showLabels} onClick={closeMenu} />
                 )}

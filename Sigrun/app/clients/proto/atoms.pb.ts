@@ -172,9 +172,9 @@ export interface Event {
   hasSeries: boolean;
   withChips: boolean;
   minGamesCount: number;
-  platformId: number;
   achievementsShown: boolean;
   withYakitori: boolean;
+  platformId: PlatformType;
 }
 
 export interface MyEvent {
@@ -2232,9 +2232,9 @@ export const Event = {
       hasSeries: false,
       withChips: false,
       minGamesCount: 0,
-      platformId: 0,
       achievementsShown: false,
       withYakitori: false,
+      platformId: PlatformType._fromInt(0),
       ...msg,
     };
   },
@@ -2285,14 +2285,14 @@ export const Event = {
     if (msg.minGamesCount) {
       writer.writeInt32(13, msg.minGamesCount);
     }
-    if (msg.platformId) {
-      writer.writeInt32(14, msg.platformId);
-    }
     if (msg.achievementsShown) {
       writer.writeBool(15, msg.achievementsShown);
     }
     if (msg.withYakitori) {
       writer.writeBool(16, msg.withYakitori);
+    }
+    if (msg.platformId && PlatformType._toInt(msg.platformId)) {
+      writer.writeEnum(17, PlatformType._toInt(msg.platformId));
     }
     return writer;
   },
@@ -2356,16 +2356,16 @@ export const Event = {
           msg.minGamesCount = reader.readInt32();
           break;
         }
-        case 14: {
-          msg.platformId = reader.readInt32();
-          break;
-        }
         case 15: {
           msg.achievementsShown = reader.readBool();
           break;
         }
         case 16: {
           msg.withYakitori = reader.readBool();
+          break;
+        }
+        case 17: {
+          msg.platformId = PlatformType._fromInt(reader.readEnum());
           break;
         }
         default: {
@@ -9455,9 +9455,9 @@ export const EventJSON = {
       hasSeries: false,
       withChips: false,
       minGamesCount: 0,
-      platformId: 0,
       achievementsShown: false,
       withYakitori: false,
+      platformId: PlatformType._fromInt(0),
       ...msg,
     };
   },
@@ -9506,14 +9506,14 @@ export const EventJSON = {
     if (msg.minGamesCount) {
       json["minGamesCount"] = msg.minGamesCount;
     }
-    if (msg.platformId) {
-      json["platformId"] = msg.platformId;
-    }
     if (msg.achievementsShown) {
       json["achievementsShown"] = msg.achievementsShown;
     }
     if (msg.withYakitori) {
       json["withYakitori"] = msg.withYakitori;
+    }
+    if (msg.platformId && PlatformTypeJSON._toInt(msg.platformId)) {
+      json["platformId"] = msg.platformId;
     }
     return json;
   },
@@ -9575,10 +9575,6 @@ export const EventJSON = {
     if (_minGamesCount_) {
       msg.minGamesCount = protoscript.parseNumber(_minGamesCount_);
     }
-    const _platformId_ = json["platformId"] ?? json["platform_id"];
-    if (_platformId_) {
-      msg.platformId = protoscript.parseNumber(_platformId_);
-    }
     const _achievementsShown_ =
       json["achievementsShown"] ?? json["achievements_shown"];
     if (_achievementsShown_) {
@@ -9587,6 +9583,10 @@ export const EventJSON = {
     const _withYakitori_ = json["withYakitori"] ?? json["with_yakitori"];
     if (_withYakitori_) {
       msg.withYakitori = _withYakitori_;
+    }
+    const _platformId_ = json["platformId"] ?? json["platform_id"];
+    if (_platformId_) {
+      msg.platformId = PlatformType._fromInt(_platformId_);
     }
     return msg;
   },

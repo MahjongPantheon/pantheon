@@ -40,7 +40,7 @@ import { NavigationProgress } from '@mantine/nprogress';
 import { EmotionCache } from '@emotion/css';
 import { Meta } from './components/Meta';
 import { useIsomorphicState } from './hooks/useIsomorphicState';
-import { PersonEx } from './clients/proto/atoms.pb';
+import { PersonEx, PlatformType } from './clients/proto/atoms.pb';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { MainMenu } from './components/MainMenu';
 import * as React from 'react';
@@ -154,6 +154,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     hasSeries: false,
     withChips: false,
     minGamesCount: 0,
+    platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
   });
   const setData = (newData: Partial<Globals>) => {
     setDataInt((old) => ({ ...old, ...newData }));

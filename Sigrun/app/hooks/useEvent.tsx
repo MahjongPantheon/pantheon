@@ -19,6 +19,7 @@ import { useContext, useEffect } from 'react';
 import { globalsCtx } from './globals';
 import { useIsomorphicState } from './useIsomorphicState';
 import { useApi } from './api';
+import { PlatformType } from '../clients/proto/atoms.pb';
 
 export const useEvent = (eventIdListStr: string | null) => {
   const globals = useContext(globalsCtx);
@@ -55,6 +56,7 @@ export const useEvent = (eventIdListStr: string | null) => {
         withChips: false,
         loading: false,
         minGamesCount: 0,
+        platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
       });
     } else {
       if (events) {
@@ -69,6 +71,7 @@ export const useEvent = (eventIdListStr: string | null) => {
           withChips: events[0]?.withChips,
           loading: false,
           minGamesCount: events[0]?.minGamesCount,
+          platformType: events[0]?.platformId,
         });
       } else {
         // data is requested but still loading
@@ -82,6 +85,7 @@ export const useEvent = (eventIdListStr: string | null) => {
           withChips: false,
           loading: true,
           minGamesCount: 0,
+          platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
         });
       }
     }

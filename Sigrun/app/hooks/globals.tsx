@@ -16,7 +16,7 @@
  */
 
 import { createContext } from 'react';
-import { EventType } from '../clients/proto/atoms.pb';
+import { EventType, PlatformType } from '../clients/proto/atoms.pb';
 
 export type Globals = {
   eventId: number[] | null;
@@ -29,6 +29,7 @@ export type Globals = {
   loading: boolean;
   withChips: boolean;
   minGamesCount: number;
+  platformType: PlatformType;
 };
 export const globals: { data: Globals; setData: (data: Partial<Globals>) => void } = {
   data: {
@@ -42,6 +43,7 @@ export const globals: { data: Globals; setData: (data: Partial<Globals>) => void
     loading: false,
     withChips: false,
     minGamesCount: 0,
+    platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
   },
   setData: () => {},
 };

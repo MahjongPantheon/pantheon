@@ -66,10 +66,6 @@ class Event extends \Google\Protobuf\Internal\Message
      */
     protected $min_games_count = 0;
     /**
-     * Generated from protobuf field <code>int32 platform_id = 14;</code>
-     */
-    protected $platform_id = 0;
-    /**
      * Generated from protobuf field <code>bool achievements_shown = 15;</code>
      */
     protected $achievements_shown = false;
@@ -77,6 +73,10 @@ class Event extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool with_yakitori = 16;</code>
      */
     protected $with_yakitori = false;
+    /**
+     * Generated from protobuf field <code>.common.PlatformType platform_id = 17;</code>
+     */
+    protected $platform_id = 0;
 
     /**
      * Constructor.
@@ -97,9 +97,9 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type bool $has_series
      *     @type bool $with_chips
      *     @type int $min_games_count
-     *     @type int $platform_id
      *     @type bool $achievements_shown
      *     @type bool $with_yakitori
+     *     @type int $platform_id
      * }
      */
     public function __construct($data = NULL) {
@@ -394,28 +394,6 @@ class Event extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 platform_id = 14;</code>
-     * @return int
-     */
-    public function getPlatformId()
-    {
-        return $this->platform_id;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 platform_id = 14;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setPlatformId($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->platform_id = $var;
-
-        return $this;
-    }
-
-    /**
      * Generated from protobuf field <code>bool achievements_shown = 15;</code>
      * @return bool
      */
@@ -455,6 +433,28 @@ class Event extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->with_yakitori = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.common.PlatformType platform_id = 17;</code>
+     * @return int
+     */
+    public function getPlatformId()
+    {
+        return $this->platform_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>.common.PlatformType platform_id = 17;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setPlatformId($var)
+    {
+        GPBUtil::checkEnum($var, \Common\PlatformType::class);
+        $this->platform_id = $var;
 
         return $this;
     }
