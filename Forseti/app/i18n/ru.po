@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 13:04Z\n"
-"PO-Revision-Date: 2024-09-19 16:07+0300\n"
+"POT-Creation-Date: 2024-09-19 23:25Z\n"
+"PO-Revision-Date: 2024-09-20 02:27+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: app/components/AppHeader.tsx:111:24 app/components/AppHeader.tsx:123:24
 msgid "Open menu"
@@ -58,95 +58,95 @@ msgstr "Настройки"
 msgid "Manage players"
 msgstr "Управление игроками"
 
-#: app/components/MainMenu.tsx:103:25 app/pages/OwnedEvents.tsx:358:33
+#: app/components/MainMenu.tsx:105:29 app/pages/OwnedEvents.tsx:358:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Штрафы"
 
-#: app/components/MainMenu.tsx:109:25 app/pages/OwnedEvents.tsx:352:33
+#: app/components/MainMenu.tsx:111:29 app/pages/OwnedEvents.tsx:352:33
 msgid "Manage games"
 msgstr "Управление играми"
 
-#: app/components/MainMenu.tsx:116:27 app/pages/OwnedEvents.tsx:345:35
+#: app/components/MainMenu.tsx:120:27 app/pages/OwnedEvents.tsx:345:35
 msgid "Predefined seating"
 msgstr "Предопределенная рассадка"
 
-#: app/components/MainMenu.tsx:127:24 app/pages/OwnedEvents.tsx:374:38
+#: app/components/MainMenu.tsx:131:24 app/pages/OwnedEvents.tsx:374:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Зона особого внимания"
 
-#: app/components/MainMenu.tsx:133:24 app/pages/OwnedEvents.tsx:377:36
+#: app/components/MainMenu.tsx:137:24 app/pages/OwnedEvents.tsx:377:36
 #: app/pages/OwnedEvents.tsx:381:30
 msgid "Rebuild scoring"
 msgstr "Перестроить скоринг"
 
-#: app/components/MainMenu.tsx:144:24
+#: app/components/MainMenu.tsx:148:24
 msgid "Recalculate achievements"
 msgstr "Пересчитать номинации"
 
-#: app/components/MainMenu.tsx:159:24
+#: app/components/MainMenu.tsx:163:24
 msgid "Recalculate players stats"
 msgstr "Пересчитать статистику игроков"
 
-#: app/components/MainMenu.tsx:174:24 app/pages/OwnedEvents.tsx:385:34
+#: app/components/MainMenu.tsx:178:24 app/pages/OwnedEvents.tsx:385:34
 #: app/pages/OwnedEvents.tsx:393:28
 msgid "Finish event"
 msgstr "Завершить событие"
 
-#: app/components/MainMenu.tsx:193:18
+#: app/components/MainMenu.tsx:197:18
 msgid "Common actions"
 msgstr "Общие действия"
 
-#: app/components/MainMenu.tsx:200:17
+#: app/components/MainMenu.tsx:204:17
 msgid "All events"
 msgstr "К списку всех событий"
 
-#: app/components/MainMenu.tsx:207:19
+#: app/components/MainMenu.tsx:211:19
 msgid "My events"
 msgstr "Мои события"
 
-#: app/components/MainMenu.tsx:215:19
+#: app/components/MainMenu.tsx:219:19
 msgid "Sign in"
 msgstr "Войти"
 
-#: app/components/MainMenu.tsx:223:19
+#: app/components/MainMenu.tsx:227:19
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
-#: app/components/MainMenu.tsx:231:19 app/pages/ProfileManageAdmin.tsx:321:21
+#: app/components/MainMenu.tsx:235:19 app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr "Зарегистрировать игрока"
 
-#: app/components/MainMenu.tsx:239:19 app/pages/SystemStats.tsx:164:16
+#: app/components/MainMenu.tsx:243:19 app/pages/SystemStats.tsx:164:16
 msgid "System stats"
 msgstr "Системная статистика"
 
-#: app/components/MainMenu.tsx:247:19
+#: app/components/MainMenu.tsx:251:19
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
-#: app/components/MainMenu.tsx:255:19
+#: app/components/MainMenu.tsx:259:19
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: app/components/MainMenu.tsx:263:19
+#: app/components/MainMenu.tsx:267:19
 msgid "Sign out"
 msgstr "Выйти"
 
-#: app/components/MainMenu.tsx:271:17
+#: app/components/MainMenu.tsx:275:17
 msgid "Open assistant"
 msgstr "Открыть ассистент"
 
-#: app/components/MainMenu.tsx:279:18
+#: app/components/MainMenu.tsx:283:18
 msgid "Language"
 msgstr "Язык"
 
-#: app/components/MainMenu.tsx:321:18
+#: app/components/MainMenu.tsx:325:18
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 
-#: app/components/MainMenu.tsx:330:18
+#: app/components/MainMenu.tsx:334:18
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
@@ -470,6 +470,10 @@ msgstr "Обновить скрипт"
 #: app/pages/GamesControl/Confirmation.tsx:78:20
 msgid "Confirm"
 msgstr "Подтвердить"
+
+#: app/pages/GamesControl/GamesList.tsx:107:30
+msgid "Table # %1"
+msgstr "Стол № %1"
 
 #: app/pages/GamesControl/GamesList.tsx:123:30
 msgid "Current round"
@@ -1794,11 +1798,13 @@ msgstr "Некорректное имя"
 
 #: app/pages/ProfileManage.tsx:94:13
 msgid ""
-"You have provided your tenhou login string instead of your username. You "
-"should NEVER give anyone your login string!"
+"Tenhou.net usernames can't be longer than 8 symbols. If you provided a login "
+"string instead, please note that you should NEVER do this again, in any "
+"service other than tenhou.net."
 msgstr ""
-"Вы ввели ваш логин для Tenhou.net вместо имени пользователя. Вам не следует "
-"НИКОГДА и никому передавать ваш логин!"
+"Идентификаторы Tenhou.net не могут быть длиннее 8 символов. Если вы ввели "
+"свой пароль для входа, постарайтесь больше НИКОГДА так не делать нигде, "
+"кроме самого tenhou.net."
 
 #: app/pages/ProfileManage.tsx:153:13
 msgid "Failed to update profile. Is your connection stable?"
@@ -2225,5 +2231,9 @@ msgstr "Подсистема"
 #~ msgid "Rating table: hidden; show?"
 #~ msgstr "Рейтинговая таблица: скрыта; показать?"
 
-#~ msgid "Table # %1"
-#~ msgstr "Стол № %1"
+#~ msgid ""
+#~ "You have provided your tenhou login string instead of your username. You "
+#~ "should NEVER give anyone your login string!"
+#~ msgstr ""
+#~ "Вы ввели ваш логин для Tenhou.net вместо имени пользователя. Вам не "
+#~ "следует НИКОГДА и никому передавать ваш логин!"

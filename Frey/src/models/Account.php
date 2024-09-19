@@ -270,6 +270,10 @@ class AccountModel extends Model
             throw new InvalidParametersException('Title cannot be empty', 407);
         }
 
+        if (!empty($tenhouId) && mb_strlen(trim($tenhouId), 'UTF-8') > 8) {
+            throw new InvalidParametersException('Tenhou ID cannot be longer that 8 symbols', 410);
+        }
+
         $superadminOtherEdit = !empty($this->_authorizedPerson) && $this->_authorizedPerson->getIsSuperadmin() && $this->_authorizedPerson->getId() !== $id;
         if ($superadminOtherEdit) {
             if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {

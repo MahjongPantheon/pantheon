@@ -2535,9 +2535,9 @@ i18n-proto@^1.0.5:
   resolved "https://registry.yarnpkg.com/i18n-proto/-/i18n-proto-1.0.5.tgz#5688a311022b46ca25612a15d53bee649930da0d"
   integrity sha512-GTfRkYXsLKH0geFb4JRP/KBFXN6YM6PpXkpuG2lEWrwAF6bGLaDSJfh/kwc3vqtIqEmvnQ+7fL6cgIcupKtROA==
 
-"i18n-stex@https://github.com/ctizen/stex#2.1.1":
-  version "2.1.1"
-  resolved "https://github.com/ctizen/stex#901fd13dba9b3060c1c190e96618fe231cf3f252"
+"i18n-stex@https://github.com/ctizen/stex#2.1.2":
+  version "2.1.2"
+  resolved "https://github.com/ctizen/stex#0b763d09939daef502510d78edccb94e4056f918"
   dependencies:
     "@types/glob" "^8.1.0"
     cli "^1.0.1"

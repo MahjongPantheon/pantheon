@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 13:04Z\n"
+"POT-Creation-Date: 2024-09-19 23:25Z\n"
 "PO-Revision-Date: 2024-04-20 10:57+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -87,7 +87,7 @@ msgid ""
 "All dates and time will be displayed according to the selected timezone."
 msgstr "모든 날짜 및 시간은 선택한 시간대에 맞춰 표시됨"
 
-#: app/components/MainMenu.tsx:200:17
+#: app/components/MainMenu.tsx:204:17
 msgid "All events"
 msgstr "모든 이벤트"
 
@@ -282,7 +282,7 @@ msgstr "도시"
 msgid "Collect riichi bets by atamahane"
 msgstr "선오름에 따른 리치봉 지급"
 
-#: app/components/MainMenu.tsx:193:18
+#: app/components/MainMenu.tsx:197:18
 msgid "Common actions"
 msgstr "일반 동작"
 
@@ -332,7 +332,7 @@ msgstr "대삼원"
 msgid "Daisuushii"
 msgstr "대사희"
 
-#: app/components/MainMenu.tsx:127:24 app/pages/OwnedEvents.tsx:374:38
+#: app/components/MainMenu.tsx:131:24 app/pages/OwnedEvents.tsx:374:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "위험 지역"
@@ -361,7 +361,7 @@ msgstr "이벤트 수정 :: %1"
 msgid "Edit event settings"
 msgstr "이벤트 설정 수정"
 
-#: app/components/MainMenu.tsx:247:19
+#: app/components/MainMenu.tsx:251:19
 msgid "Edit profile"
 msgstr "내 프로필 수정"
 
@@ -591,7 +591,7 @@ msgstr "이벤트에 추가할 작사 검색"
 msgid "Find replacement player by name..."
 msgstr "교체 작사 검색"
 
-#: app/components/MainMenu.tsx:174:24 app/pages/OwnedEvents.tsx:385:34
+#: app/components/MainMenu.tsx:178:24 app/pages/OwnedEvents.tsx:385:34
 #: app/pages/OwnedEvents.tsx:393:28
 msgid "Finish event"
 msgstr "이벤트 종료"
@@ -854,7 +854,7 @@ msgstr "국사무쌍"
 msgid "Kuitan"
 msgstr "쿠이탕"
 
-#: app/components/MainMenu.tsx:279:18
+#: app/components/MainMenu.tsx:283:18
 msgid "Language"
 msgstr "언어"
 
@@ -904,7 +904,7 @@ msgstr "로그아웃"
 msgid "Manage current games"
 msgstr "현재 대국 관리"
 
-#: app/components/MainMenu.tsx:109:25 app/pages/OwnedEvents.tsx:352:33
+#: app/components/MainMenu.tsx:111:29 app/pages/OwnedEvents.tsx:352:33
 msgid "Manage games"
 msgstr "대국 관리"
 
@@ -968,7 +968,7 @@ msgstr "여러 줄 입력 가능. 마크다운 문법 지원됨"
 msgid "Multiple yakumans"
 msgstr "역만 중첩"
 
-#: app/components/MainMenu.tsx:207:19
+#: app/components/MainMenu.tsx:211:19
 msgid "My events"
 msgstr "내 이벤트"
 
@@ -1014,7 +1014,7 @@ msgstr "시작되지 않음"
 msgid "Nothing found"
 msgstr "검색 결과 없음"
 
-#: app/components/MainMenu.tsx:255:19
+#: app/components/MainMenu.tsx:259:19
 msgid "Notifications"
 msgstr "알림 설정"
 
@@ -1108,7 +1108,7 @@ msgstr ""
 msgid "Open Pantheon bot"
 msgstr "Pantheon 봇"
 
-#: app/components/MainMenu.tsx:271:17
+#: app/components/MainMenu.tsx:275:17
 msgid "Open assistant"
 msgstr "Pantheon으로 이동"
 
@@ -1164,7 +1164,7 @@ msgstr "선오름에 따른 본장 지급"
 msgid "Payments and scores"
 msgstr "점수와 보너스"
 
-#: app/components/MainMenu.tsx:103:25 app/pages/OwnedEvents.tsx:358:33
+#: app/components/MainMenu.tsx:105:29 app/pages/OwnedEvents.tsx:358:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "벌부"
@@ -1294,7 +1294,7 @@ msgstr "계정 삭제를 진행하시려면 작사 호칭을 입력해주십시�
 msgid "Please wait unit seating is ready"
 msgstr "좌석이 준비되는 동안 대기하여 주십시오"
 
-#: app/components/MainMenu.tsx:116:27 app/pages/OwnedEvents.tsx:345:35
+#: app/components/MainMenu.tsx:120:27 app/pages/OwnedEvents.tsx:345:35
 msgid "Predefined seating"
 msgstr "사전 정의 좌석"
 
@@ -1338,7 +1338,7 @@ msgstr "승인 준비됨"
 msgid "Really reset timer?"
 msgstr "정말 타이머를 초기화하시겠습니까?"
 
-#: app/components/MainMenu.tsx:133:24 app/pages/OwnedEvents.tsx:377:36
+#: app/components/MainMenu.tsx:137:24 app/pages/OwnedEvents.tsx:377:36
 #: app/pages/OwnedEvents.tsx:381:30
 msgid "Rebuild scoring"
 msgstr "점수 재설정"
@@ -1348,7 +1348,7 @@ msgstr "점수 재설정"
 msgid "Recalculate"
 msgstr ""
 
-#: app/components/MainMenu.tsx:144:24
+#: app/components/MainMenu.tsx:148:24
 #, fuzzy
 msgid "Recalculate achievements"
 msgstr "결과표와 업적을 숨김"
@@ -1359,7 +1359,7 @@ msgid ""
 "scheduled and will be completed in several minutes"
 msgstr ""
 
-#: app/components/MainMenu.tsx:159:24
+#: app/components/MainMenu.tsx:163:24
 msgid "Recalculate players stats"
 msgstr ""
 
@@ -1402,7 +1402,7 @@ msgstr "데이터 새로고침 [%1]"
 msgid "Register new account"
 msgstr "신규 회원가입"
 
-#: app/components/MainMenu.tsx:231:19 app/pages/ProfileManageAdmin.tsx:321:21
+#: app/components/MainMenu.tsx:235:19 app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr "작사 등록"
 
@@ -1698,15 +1698,15 @@ msgstr "결과표와 업적을 표시"
 msgid "Show user avatar"
 msgstr "사용자 아바타 표시"
 
-#: app/components/MainMenu.tsx:215:19
+#: app/components/MainMenu.tsx:219:19
 msgid "Sign in"
 msgstr "로그인"
 
-#: app/components/MainMenu.tsx:263:19
+#: app/components/MainMenu.tsx:267:19
 msgid "Sign out"
 msgstr "로그아웃"
 
-#: app/components/MainMenu.tsx:223:19
+#: app/components/MainMenu.tsx:227:19
 msgid "Sign up"
 msgstr "회원가입"
 
@@ -1773,9 +1773,13 @@ msgstr "대회 첫 대국에 스위스 좌석를 사용할 수 없습니다"
 msgid "System ID"
 msgstr "시스템 ID"
 
-#: app/components/MainMenu.tsx:239:19 app/pages/SystemStats.tsx:164:16
+#: app/components/MainMenu.tsx:243:19 app/pages/SystemStats.tsx:164:16
 msgid "System stats"
 msgstr "시스템 통계"
+
+#: app/pages/GamesControl/GamesList.tsx:107:30
+msgid "Table # %1"
+msgstr "제 #%1 탁"
 
 #: app/helpers/yaku.ts:98:34
 msgid "Tanyao"
@@ -1809,6 +1813,13 @@ msgstr "천화"
 #: app/pages/ProfileManage.tsx:251:22 app/pages/ProfileManageAdmin.tsx:277:26
 msgid "Tenhou ID"
 msgstr "천봉 ID"
+
+#: app/pages/ProfileManage.tsx:94:13
+msgid ""
+"Tenhou.net usernames can't be longer than 8 symbols. If you provided a login "
+"string instead, please note that you should NEVER do this again, in any "
+"service other than tenhou.net."
+msgstr ""
 
 #: app/pages/ProfileManage.tsx:335:14
 msgid ""
@@ -1886,11 +1897,11 @@ msgid ""
 "(see below)."
 msgstr "타이머의 시작 값. 타이머가 종료될 경우 하기의 대국 종료 규칙이 적용됨"
 
-#: app/components/MainMenu.tsx:330:18
+#: app/components/MainMenu.tsx:334:18
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:321:18
+#: app/components/MainMenu.tsx:325:18
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 
@@ -2078,14 +2089,6 @@ msgstr ""
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "이 대국을 강제로 종료하려고 합니다. 계속하시겠습니까?"
 
-#: app/pages/ProfileManage.tsx:94:13
-msgid ""
-"You have provided your tenhou login string instead of your username. You "
-"should NEVER give anyone your login string!"
-msgstr ""
-"천봉 사용자 명 대신 로그인 문자열을 제공하셨습니다. 절대로 다른 사람에게 로그"
-"인 문자열을 알려주면 안 됩니다!"
-
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:22
 msgid ""
 "You should prepare the tournament script yourself. No automated seating "
@@ -2160,5 +2163,9 @@ msgstr "텔레그램 ID"
 msgid "show / hide"
 msgstr "표시 / 숨김"
 
-#~ msgid "Table # %1"
-#~ msgstr "제 #%1 탁"
+#~ msgid ""
+#~ "You have provided your tenhou login string instead of your username. You "
+#~ "should NEVER give anyone your login string!"
+#~ msgstr ""
+#~ "천봉 사용자 명 대신 로그인 문자열을 제공하셨습니다. 절대로 다른 사람에게 "
+#~ "로그인 문자열을 알려주면 안 됩니다!"

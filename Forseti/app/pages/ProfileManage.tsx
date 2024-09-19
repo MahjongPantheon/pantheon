@@ -90,9 +90,9 @@ export const ProfileManage: React.FC = () => {
     validate: {
       title: (value: string) => (value.trim().toLowerCase() ? null : i18n._t('Invalid title')),
       tenhouId: (value: string) =>
-        value.trim().match(/^ID[a-z0-9]+-[a-z0-9]+$/i)
+        value.length > 8
           ? i18n._t(
-              'You have provided your tenhou login string instead of your username. You should NEVER give anyone your login string!'
+              "Tenhou.net usernames can't be longer than 8 symbols. If you provided a login string instead, please note that you should NEVER do this again, in any service other than tenhou.net."
             )
           : null,
     },

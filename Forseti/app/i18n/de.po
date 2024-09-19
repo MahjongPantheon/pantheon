@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 13:04Z\n"
+"POT-Creation-Date: 2024-09-19 23:25Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -89,7 +89,7 @@ msgstr ""
 "Alle angezeigten Zeiten und Datumsangaben werden der ausgewählten Zeitzone "
 "angepasst."
 
-#: app/components/MainMenu.tsx:200:17
+#: app/components/MainMenu.tsx:204:17
 msgid "All events"
 msgstr "Events"
 
@@ -283,7 +283,7 @@ msgstr "Stadt"
 msgid "Collect riichi bets by atamahane"
 msgstr "Riichieinsätze nach Atamahane verteilen"
 
-#: app/components/MainMenu.tsx:193:18
+#: app/components/MainMenu.tsx:197:18
 msgid "Common actions"
 msgstr "Zuletzt genutzt"
 
@@ -333,7 +333,7 @@ msgstr ""
 msgid "Daisuushii"
 msgstr ""
 
-#: app/components/MainMenu.tsx:127:24 app/pages/OwnedEvents.tsx:374:38
+#: app/components/MainMenu.tsx:131:24 app/pages/OwnedEvents.tsx:374:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Gefahrenzone"
@@ -362,7 +362,7 @@ msgstr "Event :: %1 bearbeiten"
 msgid "Edit event settings"
 msgstr "Eventeinstellungen bearbeiten"
 
-#: app/components/MainMenu.tsx:247:19
+#: app/components/MainMenu.tsx:251:19
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
@@ -600,7 +600,7 @@ msgstr "Spieler such und hinzufügen..."
 msgid "Find replacement player by name..."
 msgstr "Ersatzspieler suchen..."
 
-#: app/components/MainMenu.tsx:174:24 app/pages/OwnedEvents.tsx:385:34
+#: app/components/MainMenu.tsx:178:24 app/pages/OwnedEvents.tsx:385:34
 #: app/pages/OwnedEvents.tsx:393:28
 msgid "Finish event"
 msgstr "Event beenden"
@@ -872,7 +872,7 @@ msgstr ""
 msgid "Kuitan"
 msgstr ""
 
-#: app/components/MainMenu.tsx:279:18
+#: app/components/MainMenu.tsx:283:18
 msgid "Language"
 msgstr "Sprache"
 
@@ -921,7 +921,7 @@ msgstr "Abmelden"
 msgid "Manage current games"
 msgstr "Aktuelle Spiele bearbeiten"
 
-#: app/components/MainMenu.tsx:109:25 app/pages/OwnedEvents.tsx:352:33
+#: app/components/MainMenu.tsx:111:29 app/pages/OwnedEvents.tsx:352:33
 msgid "Manage games"
 msgstr "Spiele bearbeiten"
 
@@ -986,7 +986,7 @@ msgstr "Mehrlinienfeld. Markdown Syntax wird unterstützt."
 msgid "Multiple yakumans"
 msgstr "Mehrfach Yakuman"
 
-#: app/components/MainMenu.tsx:207:19
+#: app/components/MainMenu.tsx:211:19
 msgid "My events"
 msgstr "Meine Events"
 
@@ -1032,7 +1032,7 @@ msgstr "Nicht gestartet"
 msgid "Nothing found"
 msgstr "Keine Ergebnisse"
 
-#: app/components/MainMenu.tsx:255:19
+#: app/components/MainMenu.tsx:259:19
 msgid "Notifications"
 msgstr ""
 
@@ -1127,7 +1127,7 @@ msgstr ""
 msgid "Open Pantheon bot"
 msgstr "Pantheon Bot öffnen"
 
-#: app/components/MainMenu.tsx:271:17
+#: app/components/MainMenu.tsx:275:17
 msgid "Open assistant"
 msgstr "Mobile App öffnen"
 
@@ -1183,7 +1183,7 @@ msgstr "Honba werden nach Atamahaneregel bezahlt"
 msgid "Payments and scores"
 msgstr "Punkte und Bezahlen"
 
-#: app/components/MainMenu.tsx:103:25 app/pages/OwnedEvents.tsx:358:33
+#: app/components/MainMenu.tsx:105:29 app/pages/OwnedEvents.tsx:358:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Strafen"
@@ -1318,7 +1318,7 @@ msgstr "Bitte Spielername eintragen um den Account zu löschen"
 msgid "Please wait unit seating is ready"
 msgstr "Bitte warten bis die Sitzordnung bereit ist"
 
-#: app/components/MainMenu.tsx:116:27 app/pages/OwnedEvents.tsx:345:35
+#: app/components/MainMenu.tsx:120:27 app/pages/OwnedEvents.tsx:345:35
 msgid "Predefined seating"
 msgstr "Manuelle Sitzordnung"
 
@@ -1363,7 +1363,7 @@ msgstr "Bereit zur Bestätigung"
 msgid "Really reset timer?"
 msgstr "Den Timer wirklich zurücksetzen?"
 
-#: app/components/MainMenu.tsx:133:24 app/pages/OwnedEvents.tsx:377:36
+#: app/components/MainMenu.tsx:137:24 app/pages/OwnedEvents.tsx:377:36
 #: app/pages/OwnedEvents.tsx:381:30
 msgid "Rebuild scoring"
 msgstr "Punktestand neuberechnen"
@@ -1373,7 +1373,7 @@ msgstr "Punktestand neuberechnen"
 msgid "Recalculate"
 msgstr ""
 
-#: app/components/MainMenu.tsx:144:24
+#: app/components/MainMenu.tsx:148:24
 #, fuzzy
 msgid "Recalculate achievements"
 msgstr "Ergebnisansicht und Auszeichnungen ausblenden"
@@ -1384,7 +1384,7 @@ msgid ""
 "scheduled and will be completed in several minutes"
 msgstr ""
 
-#: app/components/MainMenu.tsx:159:24
+#: app/components/MainMenu.tsx:163:24
 msgid "Recalculate players stats"
 msgstr ""
 
@@ -1427,7 +1427,7 @@ msgstr "Daten aktualisieren [%1]"
 msgid "Register new account"
 msgstr "Neuen Account erstellen"
 
-#: app/components/MainMenu.tsx:231:19 app/pages/ProfileManageAdmin.tsx:321:21
+#: app/components/MainMenu.tsx:235:19 app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr "Spieler anmelden"
 
@@ -1726,15 +1726,15 @@ msgstr "Ergebnisansicht und Auszeichnungen einblenden"
 msgid "Show user avatar"
 msgstr "Profilbild anzeigen"
 
-#: app/components/MainMenu.tsx:215:19
+#: app/components/MainMenu.tsx:219:19
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: app/components/MainMenu.tsx:263:19
+#: app/components/MainMenu.tsx:267:19
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: app/components/MainMenu.tsx:223:19
+#: app/components/MainMenu.tsx:227:19
 msgid "Sign up"
 msgstr "Konto anmelden"
 
@@ -1804,9 +1804,13 @@ msgstr ""
 msgid "System ID"
 msgstr "System ID"
 
-#: app/components/MainMenu.tsx:239:19 app/pages/SystemStats.tsx:164:16
+#: app/components/MainMenu.tsx:243:19 app/pages/SystemStats.tsx:164:16
 msgid "System stats"
 msgstr "Systeminformationen"
+
+#: app/pages/GamesControl/GamesList.tsx:107:30
+msgid "Table # %1"
+msgstr "Tisch # %1"
 
 #: app/helpers/yaku.ts:98:34
 msgid "Tanyao"
@@ -1838,6 +1842,13 @@ msgstr ""
 #: app/pages/ProfileManage.tsx:251:22 app/pages/ProfileManageAdmin.tsx:277:26
 msgid "Tenhou ID"
 msgstr "Tenhou ID"
+
+#: app/pages/ProfileManage.tsx:94:13
+msgid ""
+"Tenhou.net usernames can't be longer than 8 symbols. If you provided a login "
+"string instead, please note that you should NEVER do this again, in any "
+"service other than tenhou.net."
+msgstr ""
 
 #: app/pages/ProfileManage.tsx:335:14
 msgid ""
@@ -1919,11 +1930,11 @@ msgstr ""
 "Startwert des Timers. Nach Ablauf der Zeit, werden die Einstellungen für "
 "Matchende angewendet(siehe unten)."
 
-#: app/components/MainMenu.tsx:330:18
+#: app/components/MainMenu.tsx:334:18
 msgid "Toggle color scheme"
 msgstr "Farbschema"
 
-#: app/components/MainMenu.tsx:321:18
+#: app/components/MainMenu.tsx:325:18
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 
@@ -2113,14 +2124,6 @@ msgstr ""
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "Das Spiel wird jetzt beendet. Fortfahren?"
 
-#: app/pages/ProfileManage.tsx:94:13
-msgid ""
-"You have provided your tenhou login string instead of your username. You "
-"should NEVER give anyone your login string!"
-msgstr ""
-"Tenhou login string statt Benutzername eingegeben. Bitte niemals den login "
-"string weitergeben!"
-
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:22
 msgid ""
 "You should prepare the tournament script yourself. No automated seating "
@@ -2195,5 +2198,9 @@ msgstr "Deine Telegram ID"
 msgid "show / hide"
 msgstr "anzeigen /ausblenden"
 
-#~ msgid "Table # %1"
-#~ msgstr "Tisch # %1"
+#~ msgid ""
+#~ "You have provided your tenhou login string instead of your username. You "
+#~ "should NEVER give anyone your login string!"
+#~ msgstr ""
+#~ "Tenhou login string statt Benutzername eingegeben. Bitte niemals den "
+#~ "login string weitergeben!"

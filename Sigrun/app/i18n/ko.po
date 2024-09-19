@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 13:04Z\n"
+"POT-Creation-Date: 2024-09-19 22:54Z\n"
 "PO-Revision-Date: 2024-04-12 22:46+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -455,7 +455,7 @@ msgstr "대국 미리보기 닫기"
 msgid "Collect riichi bets by atamahane"
 msgstr "선오름에 따른 리치봉 지급"
 
-#: app/components/MainMenu.tsx:163:33
+#: app/components/MainMenu.tsx:164:33
 msgid "Common actions"
 msgstr "일반 동작"
 
@@ -556,7 +556,7 @@ msgstr "유국: "
 msgid "Edit event in admin panel"
 msgstr "관리자 패널에서 이벤트 편집"
 
-#: app/components/MainMenu.tsx:178:34 app/components/MainMenu.tsx:179:22
+#: app/components/MainMenu.tsx:179:34 app/components/MainMenu.tsx:180:22
 msgid "Edit my profile"
 msgstr "내 프로필 수정"
 
@@ -865,7 +865,7 @@ msgstr "국사무쌍"
 msgid "Kuitan"
 msgstr "쿠이탕"
 
-#: app/components/MainMenu.tsx:220:33 app/components/MainMenu.tsx:221:20
+#: app/components/MainMenu.tsx:221:33 app/components/MainMenu.tsx:222:20
 msgid "Language"
 msgstr "언어"
 
@@ -978,7 +978,7 @@ msgstr ""
 "다가화 상황 발생 시 좌석 순서에 따라 첫번째 작사만 론 화료가 가능함. 비활성 "
 "시 론을 선언한 모든 작사가 화료하게 됨"
 
-#: app/components/MainMenu.tsx:207:32 app/components/MainMenu.tsx:208:20
+#: app/components/MainMenu.tsx:208:32 app/components/MainMenu.tsx:209:20
 msgid "Open assistant"
 msgstr "Pantheon으로 이동"
 
@@ -1292,15 +1292,15 @@ msgstr "소삼원"
 msgid "Shousuushii"
 msgstr "소사희"
 
-#: app/components/MainMenu.tsx:188:34 app/components/MainMenu.tsx:189:22
+#: app/components/MainMenu.tsx:189:34 app/components/MainMenu.tsx:190:22
 msgid "Sign in"
 msgstr "로그인"
 
-#: app/components/MainMenu.tsx:198:34 app/components/MainMenu.tsx:199:22
+#: app/components/MainMenu.tsx:199:34 app/components/MainMenu.tsx:200:22
 msgid "Sign up"
 msgstr "회원가입"
 
-#: app/Layout.tsx:344:38
+#: app/Layout.tsx:345:38
 msgid ""
 "Sigrun is the statistics viewer for riichi mahjong club games and "
 "tournaments powered by Mahjong Pantheon system. It provides game logs, "
@@ -1310,7 +1310,7 @@ msgstr ""
 "계 서비스입니다. 본 서비스를 통해 대국 로그, 작사 통계, 순위표 및 업적 목록"
 "을 확인할 수 있습니다."
 
-#: app/Layout.tsx:343:32
+#: app/Layout.tsx:344:32
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: 리치 마작 점수 및 통계"
 
@@ -1434,7 +1434,7 @@ msgstr "타이머의 시작 값. 타이머가 종료될 경우 하기의 대국 
 msgid "To damaten hands: "
 msgstr "다마텐 상대: "
 
-#: app/components/MainMenu.tsx:169:32 app/components/MainMenu.tsx:170:20
+#: app/components/MainMenu.tsx:170:32 app/components/MainMenu.tsx:171:20
 msgid "To events list"
 msgstr "이벤트 목록"
 
@@ -1446,11 +1446,11 @@ msgstr "리치 상대: "
 msgid "To open hands: "
 msgstr "비멘젠 상대: "
 
-#: app/components/MainMenu.tsx:273:33 app/components/MainMenu.tsx:274:20
+#: app/components/MainMenu.tsx:274:33 app/components/MainMenu.tsx:275:20
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:263:33 app/components/MainMenu.tsx:264:20
+#: app/components/MainMenu.tsx:264:33 app/components/MainMenu.tsx:265:20
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 

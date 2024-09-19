@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 13:04Z\n"
+"POT-Creation-Date: 2024-09-19 23:25Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,47 +194,47 @@ msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr ""
 
-#: app/components/MainMenu.tsx:163:33
+#: app/components/MainMenu.tsx:164:33
 msgid "Common actions"
 msgstr ""
 
-#: app/components/MainMenu.tsx:169:32
-#: app/components/MainMenu.tsx:170:20
+#: app/components/MainMenu.tsx:170:32
+#: app/components/MainMenu.tsx:171:20
 msgid "To events list"
 msgstr ""
 
-#: app/components/MainMenu.tsx:178:34
-#: app/components/MainMenu.tsx:179:22
+#: app/components/MainMenu.tsx:179:34
+#: app/components/MainMenu.tsx:180:22
 msgid "Edit my profile"
 msgstr ""
 
-#: app/components/MainMenu.tsx:188:34
-#: app/components/MainMenu.tsx:189:22
+#: app/components/MainMenu.tsx:189:34
+#: app/components/MainMenu.tsx:190:22
 msgid "Sign in"
 msgstr ""
 
-#: app/components/MainMenu.tsx:198:34
-#: app/components/MainMenu.tsx:199:22
+#: app/components/MainMenu.tsx:199:34
+#: app/components/MainMenu.tsx:200:22
 msgid "Sign up"
 msgstr ""
 
-#: app/components/MainMenu.tsx:207:32
-#: app/components/MainMenu.tsx:208:20
+#: app/components/MainMenu.tsx:208:32
+#: app/components/MainMenu.tsx:209:20
 msgid "Open assistant"
 msgstr ""
 
-#: app/components/MainMenu.tsx:220:33
-#: app/components/MainMenu.tsx:221:20
+#: app/components/MainMenu.tsx:221:33
+#: app/components/MainMenu.tsx:222:20
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:263:33
-#: app/components/MainMenu.tsx:264:20
+#: app/components/MainMenu.tsx:264:33
+#: app/components/MainMenu.tsx:265:20
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:273:33
-#: app/components/MainMenu.tsx:274:20
+#: app/components/MainMenu.tsx:274:33
+#: app/components/MainMenu.tsx:275:20
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -697,11 +697,11 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
-#: app/Layout.tsx:343:32
+#: app/Layout.tsx:344:32
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr ""
 
-#: app/Layout.tsx:344:38
+#: app/Layout.tsx:345:38
 msgid "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list."
 msgstr ""
 
