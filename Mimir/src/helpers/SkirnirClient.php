@@ -104,6 +104,15 @@ class SkirnirClient
     }
 
     /**
+     * @param string $sessionHash
+     * @return void
+     */
+    public function trackSession($sessionHash)
+    {
+        $this->_sendMessage(['TRACKER'], $sessionHash);
+    }
+
+    /**
      * @param int[] $playerIds
      * @param int $eventId
      * @param array $diff
@@ -129,6 +138,7 @@ class SkirnirClient
         if (empty($diffMsg)) {
             $diffMsg []= 'No changes';
         }
+
         $this->_sendMessage(
             $ids,
             "[<b>$eventTitle</b>]\n✍️ New hand has been recorded. Score changes:\n" .

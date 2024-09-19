@@ -104,7 +104,10 @@ export function GamesList({
                       color='lime'
                       size='lg'
                       variant='filled'
-                      title={i18n._t('Table # %1', [t.tableIndex])}
+                      title={i18n._t('Table # %1', [`${t.tableIndex} -- ${t.sessionHash}`])}
+                      onClick={() => {
+                        navigator.clipboard.writeText(t.sessionHash);
+                      }}
                     >
                       #{t.tableIndex}
                     </ActionIcon>

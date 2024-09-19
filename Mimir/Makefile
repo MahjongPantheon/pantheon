@@ -59,16 +59,43 @@ deps: hooks
 
 .PHONY: lint
 lint:
+	echo "======= Hugin: lint (php codestyle) ======"
 	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src tests www
+
+.PHONY: docker_lint
+docker_lint: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Mimir container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make lint' ; \
+	fi
+
+.PHONY: analyze
+analyze:
+	echo "======= Mimir: lint (php static analyzer) ======"
 	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
-.PHONY: unit
-unit:
+.PHONY: docker_analyze
+docker_analyze: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Mimir container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make analyze' ; \
+	fi
+
+.PHONY: test
+test:
 	php bin/unit.php
 
-check: lint unit
+.PHONY: docker_test
+docker_test: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Mimir container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make test' ; \
+	fi
 
 .PHONY: autofix
 autofix:
@@ -126,30 +153,6 @@ docker_deps: get_docker_id
 		echo "${RED}Mimir container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make deps' ; \
-	fi
-
-.PHONY: docker_lint
-docker_lint: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Mimir container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make lint' ; \
-	fi
-
-.PHONY: docker_unit
-docker_unit: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Mimir container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make unit' ; \
-	fi
-
-.PHONY: docker_check
-docker_check: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Mimir container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make check' ; \
 	fi
 
 .PHONY: docker_autofix

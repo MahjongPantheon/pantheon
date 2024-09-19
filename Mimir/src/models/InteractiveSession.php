@@ -106,7 +106,8 @@ class InteractiveSessionModel extends Model
             $newSession->save();
         }
 
-        $this->_trackUpdate($newSession->getRepresentationalHash());
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->trackSession($newSession->getRepresentationalHash());
         return $newSession->getRepresentationalHash();
     }
 
@@ -375,6 +376,7 @@ class InteractiveSessionModel extends Model
                 return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
             }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $session->getEventId())));
 
+            $skirnir->trackSession($session->getRepresentationalHash());
             $skirnir->messageHandRecorded($playerIds, $session->getEventId(), $diff);
 
             if ($data && $data['_isFinished'] && !$session->getEvent()->getSyncEnd()) {
@@ -388,7 +390,6 @@ class InteractiveSessionModel extends Model
             }
 
             if ($data) {
-                $this->_trackUpdate($gameHashcode);
                 return $data;
             }
         }
@@ -514,27 +515,6 @@ class InteractiveSessionModel extends Model
         if (!empty($lastRound)) {
             $session[0]->rollback($lastRound); // this also does session save & drop round
         }
-        return true;
-    }
-
-    /**
-     * Send event to predefined tracker about new data in game
-     * @param string $gameHashcode
-     * @return bool
-     */
-    protected function _trackUpdate(string $gameHashcode)
-    {
-        /** @var string $trackerUrl */
-        $trackerUrl = $this->_config->getStringValue('trackerUrl');
-        if (!empty($trackerUrl)) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, sprintf($trackerUrl, $gameHashcode));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 10);
-            curl_exec($ch);
-            curl_close($ch);
-        }
-
         return true;
     }
 }

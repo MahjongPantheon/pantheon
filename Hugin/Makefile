@@ -81,16 +81,31 @@ deps: hooks
 
 .PHONY: lint
 lint:
+	echo "======= Hugin: lint (php codestyle) ======"
 	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src www
+
+.PHONY: docker_lint
+docker_lint: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make lint' ; \
+	fi
+
+.PHONY: analyze
+analyze:
+	echo "======= Hugin: lint (php static analyzer) ======"
 	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
-.PHONY: unit
-unit:
-	#php bin/unit.php
-
-check: lint unit
+.PHONY: docker_analyze
+docker_analyze: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make analyze' ; \
+	fi
 
 .PHONY: autofix
 autofix:
@@ -123,14 +138,6 @@ docker_deps: get_docker_id
   	else \
   		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make deps' ; \
   	fi
-
-.PHONY: docker_check
-docker_check: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make check' ; \
-	fi
 
 .PHONY: docker_autofix
 docker_autofix: get_docker_id
