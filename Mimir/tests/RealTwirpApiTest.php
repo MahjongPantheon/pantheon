@@ -34,6 +34,7 @@ use Common\GamesEndGamePayload;
 use Common\GamesStartGamePayload;
 use Common\GenericEventPayload;
 use Common\MyEvent;
+use Common\PlatformType;
 use Common\PlayersGetMyEventsPayload;
 use Common\RulesetConfig;
 
@@ -401,6 +402,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             ->setIsPrescripted(false)
             ->setIsTeam(false)
             ->setSeriesLength(3)
+            ->setPlatformId(PlatformType::PLATFORM_TYPE_UNSPECIFIED)
             ->setRulesetConfig(\Common\Ruleset::instance('ema')->rules())
             ->setTimezone('Asia/Novisibirsk'))->getEventId();
 

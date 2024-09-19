@@ -317,6 +317,9 @@ final class TwirpServer implements Mimir
         if (!empty($ret['lobbyId'])) {
             $data->setLobbyId($ret['lobbyId']);
         }
+        if (!empty($ret['platformId'])) {
+            $data->setPlatformId($ret['platformId']);
+        }
         return $data;
     }
 
@@ -1312,7 +1315,8 @@ final class TwirpServer implements Mimir
                 $req->getIsRatingShown(),
                 $req->getAchievementsShown(),
                 $req->getAllowViewOtherTables(),
-                $req->getRulesetConfig(),
+                $req->getPlatformId(),
+                $req->getRulesetConfig()
             ));
     }
 
@@ -1343,6 +1347,7 @@ final class TwirpServer implements Mimir
                 $ev->getIsRatingShown(),
                 $ev->getAchievementsShown(),
                 $ev->getAllowViewOtherTables(),
+                $ev->getPlatformId(),
                 $ev->getRulesetConfig(),
             ));
     }

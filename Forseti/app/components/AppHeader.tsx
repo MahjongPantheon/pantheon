@@ -49,24 +49,13 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export const AppHeader: React.FC<{
-  isLoggedIn: boolean;
-  isSuperadmin: boolean;
   eventData: Event | null;
   title?: string;
   dark: boolean;
   toggleColorScheme: () => void;
   toggleDimmed: () => void;
   saveLang: (lang: string) => void;
-}> = ({
-  title,
-  isSuperadmin,
-  isLoggedIn,
-  eventData,
-  dark,
-  toggleColorScheme,
-  toggleDimmed,
-  saveLang,
-}) => {
+}> = ({ title, eventData, dark, toggleColorScheme, toggleDimmed, saveLang }) => {
   const { classes } = useStyles();
   const i18n = useI18n();
 
@@ -104,8 +93,6 @@ export const AppHeader: React.FC<{
           />
           <MainMenu
             title={title}
-            isLoggedIn={isLoggedIn}
-            isSuperadmin={isSuperadmin}
             dark={dark}
             closeMenu={closeMenu}
             toggleColorScheme={toggleColorScheme}

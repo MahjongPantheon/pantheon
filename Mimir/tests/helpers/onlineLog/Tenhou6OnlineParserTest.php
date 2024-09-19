@@ -18,9 +18,9 @@
 
 namespace helpers\onlineLog;
 
+use Common\PlatformType;
 use Mimir\DataSource;
 use Mimir\EventPrimitive;
-use Mimir\PlatformTypeId;
 use Mimir\PlayerPrimitive;
 use Mimir\PlayerRegistrationPrimitive;
 use Mimir\SessionPrimitive;
@@ -120,7 +120,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
         $content = file_get_contents(__DIR__ . '/testdata/format6/tensoul_usual.json');
         $this->_session->setReplayHash("231014-84c11a6f-b3f7-4363-966e-25f37886cfbf");
         list($success, $results, $rounds) = (new Tenhou6OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content, false, PlatformTypeId::Majsoul->value);
+            ->parseToSession($this->_session, $content, false, PlatformType::PLATFORM_TYPE_MAHJONGSOUL);
 
         $this->assertTrue($success);
         $this->assertEquals(
@@ -410,7 +410,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
         $content = file_get_contents(__DIR__ . '/testdata/format6/tensoul_with_same_nicknames.json');
         $this->_session->setReplayHash("240122-8211b2d1-2b15-499e-a845-e1095c1b964a");
 
-        $this->_event->setPlatformId(PlatformTypeId::Majsoul->value);
+        $this->_event->setPlatformId(PlatformType::PLATFORM_TYPE_MAHJONGSOUL);
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [5]);
@@ -421,7 +421,7 @@ class Tenhou6OnlineParserTest extends \PHPUnit\Framework\TestCase
         }
 
         list($success, $results, $rounds) = (new Tenhou6OnlineParser($this->_ds))
-            ->parseToSession($this->_session, $content, false, PlatformTypeId::Majsoul->value);
+            ->parseToSession($this->_session, $content, false, PlatformType::PLATFORM_TYPE_MAHJONGSOUL);
 
         $this->assertTrue($success);
         $this->assertEquals(

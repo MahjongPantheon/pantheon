@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\PlatformType;
+
 class Formatters
 {
     /**
@@ -33,7 +35,7 @@ class Formatters
     {
         $currentPlatformId = $session->getEvent()->getPlatformId();
         if ($currentPlatformId === -1 || $currentPlatformId === 0) {
-            $currentPlatformId = PlatformTypeId::Tenhou->value;
+            $currentPlatformId = PlatformType::PLATFORM_TYPE_TENHOUNET;
         }
         return [
             'hash' => $session->getRepresentationalHash(),

@@ -17,6 +17,7 @@
  */
 namespace Mimir;
 
+use Common\PlatformType;
 use Common\Uma;
 
 require_once __DIR__ . '/../../src/Ruleset.php';
@@ -160,7 +161,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             time(),
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Xml->value
         );
         $this->assertIsObject($result);
@@ -184,7 +185,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($this->_event->getId(), $session->getEventId());
         $this->assertEquals(SessionPrimitive::STATUS_FINISHED, $session->getStatus());
         $this->assertEquals($this->_gameId, $session->getReplayHash());
-        $this->assertEquals($this->_gameLink, $session->getReplayLink(PlatformTypeId::Tenhou->value));
+        $this->assertEquals($this->_gameLink, $session->getReplayLink(PlatformType::PLATFORM_TYPE_TENHOUNET));
 
         $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session->getId()]);
         $this->assertEquals(9, count($rounds));

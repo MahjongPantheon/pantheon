@@ -31,12 +31,11 @@ import { useApi } from '../hooks/api';
 import { useRoute } from 'wouter';
 import { useContext } from 'react';
 import { modalsCtx } from '../hooks/modals';
+import { authCtx } from '../hooks/auth';
 
 type MainMenuProps = {
   title?: string;
   closeMenu?: () => void;
-  isLoggedIn: boolean;
-  isSuperadmin: boolean;
   dark: boolean;
   toggleColorScheme: () => void;
   toggleDimmed: () => void;
@@ -47,8 +46,6 @@ type MainMenuProps = {
 export const MainMenu = ({
   title,
   closeMenu,
-  isLoggedIn,
-  isSuperadmin,
   dark,
   toggleColorScheme,
   toggleDimmed,
@@ -58,6 +55,7 @@ export const MainMenu = ({
   const i18n = useI18n();
   const api = useApi();
   const modals = useContext(modalsCtx);
+  const { isLoggedIn, isSuperadmin } = useContext(authCtx);
   const [match, params] = useRoute('/event/:id/:subpath');
   const [matchEdit, paramsEdit] = useRoute('/ownedEvents/edit/:id');
   const rebuildScoring = (eid: number) => {

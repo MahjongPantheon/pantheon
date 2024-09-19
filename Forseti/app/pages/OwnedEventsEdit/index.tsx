@@ -32,7 +32,13 @@ import { RulesetSettings } from './RulesetSettings';
 import { YakuSettings } from './YakuSettings';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { EventCustom, FormFields } from './types';
-import { EndingPolicy, EventType, RulesetConfig, UmaType } from '../../clients/proto/atoms.pb';
+import {
+  EndingPolicy,
+  EventType,
+  PlatformType,
+  RulesetConfig,
+  UmaType,
+} from '../../clients/proto/atoms.pb';
 import { TopActionButton } from '../../components/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
@@ -81,6 +87,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         minGames: 0, // local/online
         lobbyId: 0, // online
         allowViewOtherTables: false,
+        platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
       },
       ruleset: {
         gameExpirationTime: 0, // online

@@ -17,6 +17,7 @@
  */
 namespace models;
 
+use Common\PlatformType;
 use Mimir\Config;
 use Mimir\DataSource;
 use Mimir\EventPrimitive;
@@ -24,7 +25,6 @@ use Mimir\EventRatingTableModel;
 use Mimir\InvalidParametersException;
 use Mimir\Meta;
 use Mimir\OnlineSessionModel;
-use Mimir\PlatformTypeId;
 use Mimir\PlayerPrimitive;
 use Mimir\PlayerRegistrationPrimitive;
 use Mimir\PlayerStatModel;
@@ -39,7 +39,6 @@ require_once __DIR__ . '/../../src/models/OnlineSession.php';
 require_once __DIR__ . '/../../src/models/PlayerStat.php';
 require_once __DIR__ . '/../../src/models/Event.php';
 require_once __DIR__ . '/../../src/models/EventRatingTable.php';
-require_once __DIR__ . '/../../src/models/PlatformTypeId.php';
 require_once __DIR__ . '/../../src/models/ReplayContentType.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
@@ -111,7 +110,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
             ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'))
-            ->setPlatformId(PlatformTypeId::Majsoul->value);
+            ->setPlatformId(PlatformType::PLATFORM_TYPE_MAHJONGSOUL);
         $this->_event->save();
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/tensoul_usual.json');
         $this->_gameId = '231014-84c11a6f-b3f7-4363-966e-25f37886cfbf';
@@ -147,7 +146,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             1697303093,
             $this->_gameContent,
-            PlatformTypeId::Majsoul->value,
+            PlatformType::PLATFORM_TYPE_MAHJONGSOUL,
             ReplayContentType::Json->value
         );
         $this->assertIsObject($result);
@@ -172,7 +171,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($this->_event->getId(), $session->getEventId());
         $this->assertEquals(SessionPrimitive::STATUS_FINISHED, $session->getStatus());
         $this->assertEquals($this->_gameId, $session->getReplayHash());
-        $this->assertEquals($this->_gameLink, $session->getReplayLink(PlatformTypeId::Majsoul->value));
+        $this->assertEquals($this->_gameLink, $session->getReplayLink(PlatformType::PLATFORM_TYPE_MAHJONGSOUL));
 
         $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session->getId()]);
         $this->assertEquals(8, count($rounds));
@@ -200,7 +199,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             strtotime("-11 years"),
             $this->_gameContent,
-            PlatformTypeId::Majsoul->value,
+            PlatformType::PLATFORM_TYPE_MAHJONGSOUL,
             ReplayContentType::Json->value
         );
     }
@@ -225,7 +224,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             1697303093,
             $this->_gameContent,
-            PlatformTypeId::Majsoul->value,
+            PlatformType::PLATFORM_TYPE_MAHJONGSOUL,
             ReplayContentType::Json->value
         );
     }
@@ -250,7 +249,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             1697303093,
             $this->_gameContent,
-            PlatformTypeId::Majsoul->value,
+            PlatformType::PLATFORM_TYPE_MAHJONGSOUL,
             ReplayContentType::Json->value
         );
     }
@@ -272,7 +271,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             1688893135,
             $this->_gameContent,
-            PlatformTypeId::Majsoul->value,
+            PlatformType::PLATFORM_TYPE_MAHJONGSOUL,
             ReplayContentType::Json->value
         );
 
@@ -304,7 +303,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             1709367289,
             $this->_gameContent,
-            PlatformTypeId::Majsoul->value,
+            PlatformType::PLATFORM_TYPE_MAHJONGSOUL,
             ReplayContentType::Json->value
         );
 

@@ -17,6 +17,7 @@
  */
 namespace models;
 
+use Common\PlatformType;
 use Mimir\Config;
 use Mimir\DataSource;
 use Mimir\EventPrimitive;
@@ -24,7 +25,6 @@ use Mimir\EventRatingTableModel;
 use Mimir\InvalidParametersException;
 use Mimir\Meta;
 use Mimir\OnlineSessionModel;
-use Mimir\PlatformTypeId;
 use Mimir\PlayerPrimitive;
 use Mimir\PlayerRegistrationPrimitive;
 use Mimir\PlayerStatModel;
@@ -135,7 +135,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1496401200,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
         $this->assertIsObject($result);
@@ -159,7 +159,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($this->_event->getId(), $session->getEventId());
         $this->assertEquals(SessionPrimitive::STATUS_FINISHED, $session->getStatus());
         $this->assertEquals($this->_gameId, $session->getReplayHash());
-        $this->assertEquals($this->_gameLink, $session->getReplayLink(PlatformTypeId::Tenhou->value));
+        $this->assertEquals($this->_gameLink, $session->getReplayLink(PlatformType::PLATFORM_TYPE_TENHOUNET));
 
         $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session->getId()]);
         $this->assertEquals(9, count($rounds));
@@ -180,7 +180,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017111116gm-00a9-0000-3d8458bf',
             1510405200,
             $gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
         $this->assertIsObject($result);
@@ -201,7 +201,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1496401200,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -223,7 +223,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1496401200,
             $content,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -243,7 +243,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1496401200,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -261,7 +261,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             strtotime("-11 years"),
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -278,7 +278,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1496401200,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
         $this->assertIsObject($result);
@@ -288,7 +288,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1496401200,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -309,7 +309,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1496401200,
             $content,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -329,7 +329,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             $this->_gameId,
             1697303093,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -351,7 +351,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1697303093,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }
@@ -373,7 +373,7 @@ class Tenhou6OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             '2017060214gm-00a9-0000-40a46a1c',
             1697303093,
             $this->_gameContent,
-            PlatformTypeId::Tenhou->value,
+            PlatformType::PLATFORM_TYPE_TENHOUNET,
             ReplayContentType::Json->value
         );
     }

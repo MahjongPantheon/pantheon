@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\PlatformType;
+
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Event.php';
@@ -157,7 +159,7 @@ class EventRatingTableModel extends Model
         }
 
         $soulNicknames = [];
-        if ($mainEvent->getPlatformId() === PlatformTypeId::Majsoul->value) {
+        if ($mainEvent->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL) {
             $soulNicknames = $this->_ds->remote()->getMajsoulNicknames(array_map(function (PlayerHistoryPrimitive $el) {
                 return (int)$el->getPlayerId();
             }, $playerHistoryItemsSummed));
@@ -169,7 +171,7 @@ class EventRatingTableModel extends Model
                 'title'         => $playerItems[$el->getPlayerId()]->getDisplayName(),
                 'has_avatar'    => $playerItems[$el->getPlayerId()]->getHasAvatar(),
                 'last_update'    => $playerItems[$el->getPlayerId()]->getLastUpdate(),
-                'tenhou_id'     => $mainEvent->getPlatformId() === PlatformTypeId::Majsoul->value
+                'tenhou_id'     => $mainEvent->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL
                     ? ($soulNicknames[(int)$el->getPlayerId()] ?? '')
                     : $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),

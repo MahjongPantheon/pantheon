@@ -178,7 +178,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <actionButtonCtx.Provider value={actionButtonRef}>
-      <authCtx.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      <authCtx.Provider value={{ isLoggedIn, setIsLoggedIn, isSuperadmin, setIsSuperadmin }}>
         <modalsCtx.Provider
           value={{
             showStopEventModal,
@@ -366,10 +366,8 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                   header={
                     <AppHeader
                       title={title}
-                      isSuperadmin={isSuperadmin}
                       eventData={eventData}
                       dark={dark}
-                      isLoggedIn={isLoggedIn}
                       toggleColorScheme={toggleColorScheme}
                       toggleDimmed={toggleDimmed}
                       saveLang={saveLang}
@@ -381,8 +379,6 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                         <Navbar.Section grow component={ScrollArea} mx='-xs' px='xs'>
                           <MainMenu
                             title={title}
-                            isLoggedIn={isLoggedIn}
-                            isSuperadmin={isSuperadmin}
                             dark={dark}
                             toggleColorScheme={toggleColorScheme}
                             toggleDimmed={toggleDimmed}

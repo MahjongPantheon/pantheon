@@ -907,7 +907,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param int $platformId
+     * @param int|null $platformId
      * @return EventPrimitive
      */
     public function setPlatformId($platformId)
