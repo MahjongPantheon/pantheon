@@ -26,7 +26,7 @@ import {
 import { FlagEn, FlagRu, FlagKo, FlagDe } from '../helpers/flags';
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
-import { Event } from '../clients/proto/atoms.pb';
+import { Event, EventType } from '../clients/proto/atoms.pb';
 import { useApi } from '../hooks/api';
 import { useRoute } from 'wouter';
 import { useContext } from 'react';
@@ -97,18 +97,22 @@ export const MainMenu = ({
                   text={i18n._t('Manage players')}
                   onClick={closeMenu}
                 />
-                <MainMenuLink
-                  href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
-                  icon={<IconAlertOctagon size={18} />}
-                  text={i18n._t('Penalties')}
-                  onClick={closeMenu}
-                />
-                <MainMenuLink
-                  href={`/event/${(match ? params : paramsEdit)?.id}/games`}
-                  icon={<IconOlympics size={18} />}
-                  text={i18n._t('Manage games')}
-                  onClick={closeMenu}
-                />
+                {eventData.type !== EventType.EVENT_TYPE_ONLINE && (
+                  <>
+                    <MainMenuLink
+                      href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
+                      icon={<IconAlertOctagon size={18} />}
+                      text={i18n._t('Penalties')}
+                      onClick={closeMenu}
+                    />
+                    <MainMenuLink
+                      href={`/event/${(match ? params : paramsEdit)?.id}/games`}
+                      icon={<IconOlympics size={18} />}
+                      text={i18n._t('Manage games')}
+                      onClick={closeMenu}
+                    />
+                  </>
+                )}
                 {eventData?.isPrescripted && (
                   <MainMenuLink
                     href={`/event/${(match ? params : paramsEdit)?.id}/prescript`}
