@@ -25,5 +25,5 @@ docker_last_mail: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Hermod container is not running, can't run seeding.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'php83 /var/www/html/Hermod/prettify_email.php'; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'php81 /var/www/html/Hermod/prettify_email.php'; \
 	fi
