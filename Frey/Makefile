@@ -73,16 +73,50 @@ deps: hooks
 
 .PHONY: lint
 lint:
+	echo "======= Frey: lint (php codestyle) ======"
 	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src tests www
+
+docker_lint: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make lint' ; \
+	fi
+
+.PHONY: analyze
+analyze:
+	echo "======= Frey: lint (php static analyzer) ======"
 	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
-.PHONY: unit
-unit:
+docker_analyze: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make analyze' ; \
+	fi
+
+.PHONY: test
+test:
+	echo "======= Frey: test ======"
 	php bin/unit.php
 
-check: lint unit
+.PHONY: docker_test
+docker_test: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make test' ; \
+	fi
+
+.PHONY: docker_lint_common
+docker_lint_common: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make lint' ; \
+	fi
 
 .PHONY: autofix
 autofix:
@@ -107,22 +141,6 @@ docker_deps: get_docker_id
   	else \
   		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
   	fi
-
-.PHONY: docker_check
-docker_check: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make check' ; \
-	fi
-
-.PHONY: docker_check_common
-docker_check_common: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make lint' ; \
-	fi
 
 .PHONY: docker_proto_gen
 docker_proto_gen: get_docker_id

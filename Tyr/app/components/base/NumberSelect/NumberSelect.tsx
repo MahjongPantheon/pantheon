@@ -28,17 +28,24 @@ export const NumberSelect = ({
   const [menuOpen, setMenuOpen] = useState(false);
 
   const onLess = useCallback(() => {
-    if (selectedIndex === undefined) {
+    if (selectedIndex === undefined || selectedIndex === 0 || disabled) {
       return;
     }
     onChange?.(selectedIndex > 0 ? selectedIndex - 1 : 0);
-  }, [selectedIndex]);
+  }, [selectedIndex, disabled]);
 
   const onMore = useCallback(() => {
-    if (selectedIndex === undefined) {
+    if (selectedIndex === undefined || selectedIndex === options.length - 1 || disabled) {
       return;
     }
     onChange?.(selectedIndex < options.length - 1 ? selectedIndex + 1 : options.length - 1);
+  }, [selectedIndex, options, disabled]);
+
+  const onOpenMenu = useCallback(() => {
+    if (selectedIndex === undefined) {
+      return;
+    }
+    setMenuOpen(true);
   }, [selectedIndex]);
 
   return (
@@ -54,7 +61,7 @@ export const NumberSelect = ({
         </div>
         <div
           className={styles.numberWrapper}
-          onClick={() => (disabled ? null : setMenuOpen(true))}
+          onClick={onOpenMenu}
           data-testid={testId?.dropdownSelector}
         >
           {selectedIndex === undefined ? '--' : options[selectedIndex].label}

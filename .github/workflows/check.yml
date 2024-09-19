@@ -19,8 +19,11 @@ jobs:
       - name: Apply db migrations
         run: make migrate
 
-      - name: Run all tests
-        run: make check
+      - name: Run all code checks
+        run: make lint
+
+      - name: Run all unit tests
+        run: make test
 
       - name: Stop containers
         if: always()

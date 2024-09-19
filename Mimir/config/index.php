@@ -33,7 +33,6 @@ return [
     'verboseLog' => null,
     'cookieDomain' => getenv('COOKIE_DOMAIN'),
     'serverDefaultTimezone' => 'UTC',
-    'trackerUrl' => getenv('TRACKER_URL') ?: null,
 
     // ---------- not intended for local override! ------------
     'api' => [

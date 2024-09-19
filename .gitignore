@@ -9,6 +9,7 @@
 *.code-workspace
 .phpunit.result.cache
 php-errors.log
+tmp/*.log
 
 .env.e2e
 

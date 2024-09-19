@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:13Z\n"
+"POT-Creation-Date: 2024-07-30 15:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,18 +53,18 @@ msgid "Recent games"
 msgstr ""
 
 #: app/components/AppFooter.tsx:80:20
-#: app/pages/Achievements.tsx:779:35
+#: app/pages/Achievements.tsx:812:35
 #: app/pages/EventList.tsx:116:67
-#: app/pages/RatingTable.tsx:129:35
-#: app/pages/RatingTable.tsx:144:20
-#: app/pages/RatingTable.tsx:146:22
-#: app/pages/RatingTable.tsx:157:33
+#: app/pages/RatingTable.tsx:130:35
+#: app/pages/RatingTable.tsx:145:20
+#: app/pages/RatingTable.tsx:147:22
+#: app/pages/RatingTable.tsx:158:33
 msgid "Rating table"
 msgstr ""
 
 #: app/components/AppFooter.tsx:91:20
-#: app/pages/Achievements.tsx:799:42
-#: app/pages/Achievements.tsx:807:35
+#: app/pages/Achievements.tsx:832:42
+#: app/pages/Achievements.tsx:840:35
 msgid "Achievements"
 msgstr ""
 
@@ -404,13 +404,13 @@ msgid "Average points lost: "
 msgstr ""
 
 #: app/components/RatingGraph.tsx:161:21
-#: app/pages/RatingTable.tsx:430:32
-#: app/pages/RatingTable.tsx:489:7
+#: app/pages/RatingTable.tsx:461:32
+#: app/pages/RatingTable.tsx:520:7
 msgid "Games played"
 msgstr ""
 
 #: app/components/RatingGraph.tsx:171:21
-#: app/pages/RatingTable.tsx:236:20
+#: app/pages/RatingTable.tsx:237:20
 msgid "Rating"
 msgstr ""
 
@@ -705,302 +705,318 @@ msgstr ""
 msgid "Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list."
 msgstr ""
 
-#: app/pages/Achievements.tsx:148:14
+#: app/pages/Achievements.tsx:150:14
 msgid "Best hand"
 msgstr ""
 
-#: app/pages/Achievements.tsx:149:20
+#: app/pages/Achievements.tsx:151:20
 msgid "Given for collecting the hand with biggest han count (independent of cost)."
 msgstr ""
 
-#: app/pages/Achievements.tsx:166:14
-#: app/pages/Achievements.tsx:433:23
+#: app/pages/Achievements.tsx:168:14
+#: app/pages/Achievements.tsx:435:23
 msgctxt "Achievements badge"
 msgid "%1 han"
 msgstr ""
 
-#: app/pages/Achievements.tsx:170:32
-#: app/pages/Achievements.tsx:196:32
-#: app/pages/Achievements.tsx:224:32
-#: app/pages/Achievements.tsx:255:32
-#: app/pages/Achievements.tsx:286:32
-#: app/pages/Achievements.tsx:317:32
-#: app/pages/Achievements.tsx:348:32
-#: app/pages/Achievements.tsx:379:32
-#: app/pages/Achievements.tsx:411:32
-#: app/pages/Achievements.tsx:447:32
-#: app/pages/Achievements.tsx:478:32
-#: app/pages/Achievements.tsx:507:32
-#: app/pages/Achievements.tsx:538:32
-#: app/pages/Achievements.tsx:569:32
-#: app/pages/Achievements.tsx:600:32
-#: app/pages/Achievements.tsx:631:32
-#: app/pages/Achievements.tsx:667:32
-#: app/pages/Achievements.tsx:701:32
-#: app/pages/Achievements.tsx:732:32
-#: app/pages/Achievements.tsx:763:32
+#: app/pages/Achievements.tsx:172:32
+#: app/pages/Achievements.tsx:198:32
+#: app/pages/Achievements.tsx:226:32
+#: app/pages/Achievements.tsx:257:32
+#: app/pages/Achievements.tsx:288:32
+#: app/pages/Achievements.tsx:319:32
+#: app/pages/Achievements.tsx:350:32
+#: app/pages/Achievements.tsx:381:32
+#: app/pages/Achievements.tsx:413:32
+#: app/pages/Achievements.tsx:449:32
+#: app/pages/Achievements.tsx:480:32
+#: app/pages/Achievements.tsx:509:32
+#: app/pages/Achievements.tsx:540:32
+#: app/pages/Achievements.tsx:571:32
+#: app/pages/Achievements.tsx:602:32
+#: app/pages/Achievements.tsx:633:32
+#: app/pages/Achievements.tsx:669:32
+#: app/pages/Achievements.tsx:703:32
+#: app/pages/Achievements.tsx:734:32
+#: app/pages/Achievements.tsx:765:32
+#: app/pages/Achievements.tsx:796:32
 msgid "Couldn't get nomination details"
 msgstr ""
 
-#: app/pages/Achievements.tsx:176:14
+#: app/pages/Achievements.tsx:178:14
 msgid "Over 9000 fu"
 msgstr ""
 
-#: app/pages/Achievements.tsx:177:20
+#: app/pages/Achievements.tsx:179:20
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr ""
 
-#: app/pages/Achievements.tsx:192:14
+#: app/pages/Achievements.tsx:194:14
 msgctxt "Achievements badge"
 msgid "%1 fu"
 msgstr ""
 
-#: app/pages/Achievements.tsx:202:14
+#: app/pages/Achievements.tsx:204:14
 msgid "I saw them dancing"
 msgstr ""
 
-#: app/pages/Achievements.tsx:203:20
+#: app/pages/Achievements.tsx:205:20
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr ""
 
-#: app/pages/Achievements.tsx:218:14
+#: app/pages/Achievements.tsx:220:14
 msgctxt "Achievements badge"
 msgid "%1 tsumo"
 msgstr ""
 
-#: app/pages/Achievements.tsx:230:14
+#: app/pages/Achievements.tsx:232:14
 msgid "Die Hard"
 msgstr ""
 
-#: app/pages/Achievements.tsx:231:20
+#: app/pages/Achievements.tsx:233:20
 msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:246:14
-#: app/pages/Achievements.tsx:277:14
+#: app/pages/Achievements.tsx:248:14
+#: app/pages/Achievements.tsx:279:14
 msgctxt "Achievements badge"
 msgid "%1 feed"
 msgid_plural "%1 feeds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:261:14
+#: app/pages/Achievements.tsx:263:14
 msgid "Brave minesweeper"
 msgstr ""
 
-#: app/pages/Achievements.tsx:262:20
+#: app/pages/Achievements.tsx:264:20
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:292:14
+#: app/pages/Achievements.tsx:294:14
 msgid "Guest of honors"
 msgstr ""
 
-#: app/pages/Achievements.tsx:293:20
+#: app/pages/Achievements.tsx:295:20
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:301:20
+#: app/pages/Achievements.tsx:303:20
 msgctxt "Achievements badge"
 msgid "%1 yakuhai"
 msgid_plural "%1 yakuhais"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:323:14
+#: app/pages/Achievements.tsx:325:14
 msgid "The great dealer"
 msgstr ""
 
-#: app/pages/Achievements.tsx:324:20
+#: app/pages/Achievements.tsx:326:20
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:339:14
-#: app/pages/Achievements.tsx:716:20
+#: app/pages/Achievements.tsx:341:14
+#: app/pages/Achievements.tsx:718:20
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:354:14
+#: app/pages/Achievements.tsx:356:14
 msgid "The 1k Flash"
 msgstr ""
 
-#: app/pages/Achievements.tsx:355:20
+#: app/pages/Achievements.tsx:357:20
 msgid "Given for the most of 1/30 wins during tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:370:14
+#: app/pages/Achievements.tsx:372:14
 msgctxt "Achievements badge"
 msgid "%1 quickest hand"
 msgid_plural "%1 quickest hands"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:385:14
+#: app/pages/Achievements.tsx:387:14
 msgid "Jewelry included"
 msgstr ""
 
-#: app/pages/Achievements.tsx:386:20
+#: app/pages/Achievements.tsx:388:20
 msgid "Given for collecting a yakuman during tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:400:20
+#: app/pages/Achievements.tsx:402:20
 msgid "No yakumans have been collected"
 msgstr ""
 
-#: app/pages/Achievements.tsx:417:14
+#: app/pages/Achievements.tsx:419:14
 msgid "This can't be your wait"
 msgstr ""
 
-#: app/pages/Achievements.tsx:418:20
+#: app/pages/Achievements.tsx:420:20
 msgid "Given for feeding into largest hand during tournament (but not while in riichi)."
 msgstr ""
 
-#: app/pages/Achievements.tsx:429:23
+#: app/pages/Achievements.tsx:431:23
 msgctxt "Achievements badge"
 msgid "%1 han, %2 fu"
 msgstr ""
 
-#: app/pages/Achievements.tsx:453:14
+#: app/pages/Achievements.tsx:455:14
 msgid "Honored donor"
 msgstr ""
 
-#: app/pages/Achievements.tsx:454:20
+#: app/pages/Achievements.tsx:456:20
 msgid "Given for losing largest amount of points as riichi bets."
 msgstr ""
 
-#: app/pages/Achievements.tsx:462:20
+#: app/pages/Achievements.tsx:464:20
 msgctxt "Achievements badge"
 msgid "%1 bet"
 msgid_plural "%1 bets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:484:14
+#: app/pages/Achievements.tsx:486:14
 msgid "Just as planned"
 msgstr ""
 
-#: app/pages/Achievements.tsx:485:20
+#: app/pages/Achievements.tsx:487:20
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:493:20
+#: app/pages/Achievements.tsx:495:20
 msgctxt "Achievements badge"
 msgid "%1 ippatsu"
 msgstr ""
 
-#: app/pages/Achievements.tsx:513:14
+#: app/pages/Achievements.tsx:515:14
 msgid "Careful planning"
 msgstr ""
 
-#: app/pages/Achievements.tsx:514:20
+#: app/pages/Achievements.tsx:516:20
 msgid "Given for the smallest average cost of opponents hand that player has dealt."
 msgstr ""
 
-#: app/pages/Achievements.tsx:524:20
-#: app/pages/Achievements.tsx:617:20
-#: app/pages/Achievements.tsx:749:20
+#: app/pages/Achievements.tsx:526:20
+#: app/pages/Achievements.tsx:619:20
+#: app/pages/Achievements.tsx:751:20
 msgctxt "Achievements badge"
 msgid "%1 points"
 msgstr ""
 
-#: app/pages/Achievements.tsx:544:14
+#: app/pages/Achievements.tsx:546:14
 msgid "Dora lord"
 msgstr ""
 
-#: app/pages/Achievements.tsx:545:20
+#: app/pages/Achievements.tsx:547:20
 msgid "Given for the largest average count of dora in player's hand."
 msgstr ""
 
-#: app/pages/Achievements.tsx:553:20
+#: app/pages/Achievements.tsx:555:20
 msgctxt "Achievements badge"
 msgid "%1 dora"
 msgid_plural "%1 dora"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:575:14
+#: app/pages/Achievements.tsx:577:14
 msgid "Gotta Catch'Em All"
 msgstr ""
 
-#: app/pages/Achievements.tsx:576:20
+#: app/pages/Achievements.tsx:578:20
 msgid "Given for the largest amount of unique yaku collected during the tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:586:20
+#: app/pages/Achievements.tsx:588:20
 msgctxt "Achievements badge"
 msgid "%1 yaku"
 msgstr ""
 
-#: app/pages/Achievements.tsx:606:14
+#: app/pages/Achievements.tsx:608:14
 msgid "The favorite apprentice of ASAPIN"
 msgstr ""
 
-#: app/pages/Achievements.tsx:607:20
+#: app/pages/Achievements.tsx:609:20
 msgid "Given for the largest amount of points received as ryuukyoku (draw) payments."
 msgstr ""
 
-#: app/pages/Achievements.tsx:637:14
+#: app/pages/Achievements.tsx:639:14
 msgid "And your riichi bet, please"
 msgstr ""
 
-#: app/pages/Achievements.tsx:638:20
+#: app/pages/Achievements.tsx:640:20
 msgid "Given for collecting the largest amount of other players' riichi bets during the tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:648:20
-#: app/pages/Achievements.tsx:682:20
+#: app/pages/Achievements.tsx:650:20
+#: app/pages/Achievements.tsx:684:20
 msgctxt "Achievements badge"
 msgid "%1 riichi bet"
 msgid_plural "%1 riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:673:14
+#: app/pages/Achievements.tsx:675:14
 msgid "The Covetous Knight"
 msgstr ""
 
-#: app/pages/Achievements.tsx:674:20
+#: app/pages/Achievements.tsx:676:20
 msgid "Given for losing the smallest number of riichi bets."
 msgstr ""
 
-#: app/pages/Achievements.tsx:707:14
+#: app/pages/Achievements.tsx:709:14
 msgid "Ninja"
 msgstr ""
 
-#: app/pages/Achievements.tsx:708:20
+#: app/pages/Achievements.tsx:710:20
 msgid "Given for winning the largest number of hands with damaten."
 msgstr ""
 
-#: app/pages/Achievements.tsx:738:14
+#: app/pages/Achievements.tsx:740:14
 msgid "We need more gold"
 msgstr ""
 
-#: app/pages/Achievements.tsx:739:20
+#: app/pages/Achievements.tsx:741:20
 msgid "Given for having biggest score in the end of the session across the tournament."
 msgstr ""
 
-#: app/pages/Achievements.tsx:782:12
+#: app/pages/Achievements.tsx:771:14
+msgid "Riichi Nomi"
+msgstr ""
+
+#: app/pages/Achievements.tsx:772:20
+msgid "Given for winning the largest number riichi nomi hands."
+msgstr ""
+
+#: app/pages/Achievements.tsx:780:20
+msgctxt "Achievements badge"
+msgid "%1 riichi nomi hand"
+msgid_plural "%1 riichi nomi hands"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/pages/Achievements.tsx:815:12
 msgid "Achievements are hidden by tournament administrator"
 msgstr ""
 
-#: app/pages/Achievements.tsx:791:29
+#: app/pages/Achievements.tsx:824:29
 msgid "Achievements are not available for aggregated events"
 msgstr ""
 
-#: app/pages/Achievements.tsx:800:22
+#: app/pages/Achievements.tsx:833:22
 msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: app/pages/Achievements.tsx:814:18
+#: app/pages/Achievements.tsx:847:18
 #: app/pages/PlayerStats.tsx:112:18
 msgid "Last update: %1"
 msgstr ""
 
 #: app/pages/EventInfo.tsx:54:20
-#: app/pages/RatingTable.tsx:146:51
+#: app/pages/RatingTable.tsx:147:51
 #: app/pages/RecentGames.tsx:85:49
 msgid "Aggregated event"
 msgstr ""
@@ -1469,66 +1485,67 @@ msgstr ""
 msgid "Close game preview"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:132:12
+#: app/pages/RatingTable.tsx:133:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:149:24
+#: app/pages/RatingTable.tsx:150:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:174:18
+#: app/pages/RatingTable.tsx:175:18
 msgid "Save as CSV"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:207:22
-#: app/pages/RatingTable.tsx:484:21
+#: app/pages/RatingTable.tsx:208:22
+#: app/pages/RatingTable.tsx:515:21
 msgid "Team"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:266:20
-msgid "Average score"
-msgstr ""
-
-#: app/pages/RatingTable.tsx:294:20
-#: app/pages/RatingTable.tsx:487:7
-msgid "Average place"
-msgstr ""
-
-#: app/pages/RatingTable.tsx:324:24
-msgid "All players"
-msgstr ""
-
-#: app/pages/RatingTable.tsx:334:30
-msgid "Players having a required minimum of games"
-msgstr ""
-
-#: app/pages/RatingTable.tsx:342:24
-msgid "With min games"
-msgstr ""
-
-#: app/pages/RatingTable.tsx:441:34
-#: app/pages/RatingTable.tsx:485:24
+#: app/pages/RatingTable.tsx:266:22
+#: app/pages/RatingTable.tsx:472:34
+#: app/pages/RatingTable.tsx:516:24
 msgid "Chips"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:481:7
+#: app/pages/RatingTable.tsx:297:20
+msgid "Average score"
+msgstr ""
+
+#: app/pages/RatingTable.tsx:325:20
+#: app/pages/RatingTable.tsx:518:7
+msgid "Average place"
+msgstr ""
+
+#: app/pages/RatingTable.tsx:355:24
+msgid "All players"
+msgstr ""
+
+#: app/pages/RatingTable.tsx:365:30
+msgid "Players having a required minimum of games"
+msgstr ""
+
+#: app/pages/RatingTable.tsx:373:24
+msgid "With min games"
+msgstr ""
+
+#: app/pages/RatingTable.tsx:512:7
 msgid "Place"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:482:7
+#: app/pages/RatingTable.tsx:513:7
 msgid "Player ID"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:483:7
+#: app/pages/RatingTable.tsx:514:7
 msgid "Player name"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:486:7
+#: app/pages/RatingTable.tsx:517:7
 msgid "Rating points"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:488:7
+#: app/pages/RatingTable.tsx:519:7
 msgid "Average points"
 msgstr ""
 
