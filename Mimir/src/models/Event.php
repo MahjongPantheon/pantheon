@@ -17,6 +17,7 @@
  */
 namespace Mimir;
 
+use Common\PlatformType;
 use Common\Ruleset;
 use Common\RulesetConfig;
 
@@ -393,7 +394,7 @@ class EventModel extends Model
         $useSoulNicknames = false;
         if ($eventId) {
             $event = EventPrimitive::findById($ds, [$eventId]);
-            $useSoulNicknames = $event[0]->getPlatformId() === PlatformTypeId::Majsoul->value;
+            $useSoulNicknames = $event[0]->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL;
             if ($useSoulNicknames) {
                 $soulNicknames = $ds->remote()->getMajsoulNicknames(array_map(function (PlayerPrimitive $el) {
                     return (int)$el->getId();

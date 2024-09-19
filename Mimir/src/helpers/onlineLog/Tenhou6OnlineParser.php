@@ -18,12 +18,13 @@
 
 namespace Mimir;
 
+use Common\PlatformType;
+
 require_once __DIR__ . '/../../exceptions/Parser.php';
 require_once __DIR__ . '/../../helpers/YakuMap.php';
 require_once __DIR__ . '/../../primitives/Round.php';
 require_once __DIR__ . '/../../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../../models/Tenhou6Model.php';
-require_once __DIR__ . '/../../models/PlatformTypeId.php';
 
 /**
  * @Author Steven Vch. <unstatik@staremax.com>
@@ -227,7 +228,7 @@ class Tenhou6OnlineParser
      */
     protected function _getParsedPlayerKey(Tenhou6Model $tenhou6Model, $tokenUnItem): string
     {
-        if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+        if ($tenhou6Model->getPlatformId() === PlatformType::PLATFORM_TYPE_TENHOUNET) {
             return rawurldecode((string)$tokenUnItem['player_name']);
         } else {
             return rawurldecode((string)$tokenUnItem['player_name']) . '-' . $tokenUnItem['account_id'];
@@ -248,7 +249,7 @@ class Tenhou6OnlineParser
     protected function _tokenUN(Tenhou6Model $tenhou6Model, SessionPrimitive $session): void
     {
         if (count($this->_players) == 0) {
-            if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+            if ($tenhou6Model->getPlatformId() === PlatformType::PLATFORM_TYPE_TENHOUNET) {
                 $parsedPlayers = [
                     $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[0]) => 1,
                     $this->_getParsedPlayerKey($tenhou6Model, $tenhou6Model->getTokenUN()[1]) => 1,
@@ -270,7 +271,7 @@ class Tenhou6OnlineParser
                 $playersLookup = array_keys($parsedPlayers);
             }
 
-            if (PlatformTypeId::Tenhou->value === $tenhou6Model->getPlatformId() && !empty($parsedPlayers['NoName'])) {
+            if (PlatformType::PLATFORM_TYPE_TENHOUNET === $tenhou6Model->getPlatformId() && !empty($parsedPlayers['NoName'])) {
                 throw new ParseException('"NoName" players are not allowed in replays');
             }
 
@@ -282,11 +283,16 @@ class Tenhou6OnlineParser
                 }, $players);
                 $missedPlayers = array_diff($playersLookup, $registeredPlayers);
                 $missedPlayers = join(', ', $missedPlayers);
-                $platformName = PlatformTypeId::tryFrom($tenhou6Model->getPlatformId());
-                if (is_null($platformName)) {
-                    $platformName = PlatformTypeId::Tenhou;
+                switch ($tenhou6Model->getPlatformId()) {
+                    case PlatformType::PLATFORM_TYPE_MAHJONGSOUL:
+                        $platformName = 'Mahjongsoul';
+                        break;
+                    case PlatformType::PLATFORM_TYPE_TENHOUNET:
+                    default:
+                        $platformName = 'Tenhou';
+                        break;
                 }
-                throw new ParseException('Not all ' . $platformName->name . ' nicknames were registered in the system: ' . $missedPlayers);
+                throw new ParseException('Not all ' . $platformName . ' nicknames were registered in the system: ' . $missedPlayers);
             }
 
             if ($session->getEvent()->getAllowPlayerAppend()) {
@@ -342,11 +348,11 @@ class Tenhou6OnlineParser
      */
     private function loadPlayers(Tenhou6Model $tenhou6Model, $parsedPlayers): array
     {
-        if ($tenhou6Model->getPlatformId() === PlatformTypeId::Tenhou->value) {
+        if ($tenhou6Model->getPlatformId() === PlatformType::PLATFORM_TYPE_TENHOUNET) {
             return PlayerPrimitive::findByTenhouId($this->_ds, array_keys($parsedPlayers));
         }
 
-        if ($tenhou6Model->getPlatformId() === PlatformTypeId::Majsoul->value) {
+        if ($tenhou6Model->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL) {
             return PlayerPrimitive::findMajsoulAccounts($this->_ds, $tenhou6Model->getTokenUN());
         }
 

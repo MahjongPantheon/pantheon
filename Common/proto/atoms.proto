@@ -502,6 +502,7 @@ message EventData {
   bool is_rating_shown = 16;
   bool achievements_shown = 17;
   bool allow_view_other_tables = 18;
+  PlatformType platform_id = 19;
 }
 
 message TableState {
@@ -589,6 +590,12 @@ enum EndingPolicy {
   ENDING_POLICY_EP_UNSPECIFIED = 0;
   ENDING_POLICY_EP_ONE_MORE_HAND = 1;
   ENDING_POLICY_EP_END_AFTER_HAND = 2;
+}
+
+enum PlatformType {
+  PLATFORM_TYPE_UNSPECIFIED = 0;
+  PLATFORM_TYPE_TENHOUNET = 1;
+  PLATFORM_TYPE_MAHJONGSOUL = 2;
 }
 
 message RulesetConfig {

@@ -48,6 +48,11 @@ export type EndingPolicy =
   | "ENDING_POLICY_EP_ONE_MORE_HAND"
   | "ENDING_POLICY_EP_END_AFTER_HAND";
 
+export type PlatformType =
+  | "PLATFORM_TYPE_UNSPECIFIED"
+  | "PLATFORM_TYPE_TENHOUNET"
+  | "PLATFORM_TYPE_MAHJONGSOUL";
+
 export interface AccessRules {
   rules: Record<string, AccessRules.Rules["value"] | undefined>;
 }
@@ -509,6 +514,7 @@ export interface EventData {
   isRatingShown: boolean;
   achievementsShown: boolean;
   allowViewOtherTables: boolean;
+  platformId: PlatformType;
 }
 
 export interface TableState {
@@ -968,6 +974,52 @@ export const EndingPolicy = {
         return 1;
       }
       case "ENDING_POLICY_EP_END_AFTER_HAND": {
+        return 2;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
+export const PlatformType = {
+  PLATFORM_TYPE_UNSPECIFIED: "PLATFORM_TYPE_UNSPECIFIED",
+  PLATFORM_TYPE_TENHOUNET: "PLATFORM_TYPE_TENHOUNET",
+  PLATFORM_TYPE_MAHJONGSOUL: "PLATFORM_TYPE_MAHJONGSOUL",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): PlatformType {
+    switch (i) {
+      case 0: {
+        return "PLATFORM_TYPE_UNSPECIFIED";
+      }
+      case 1: {
+        return "PLATFORM_TYPE_TENHOUNET";
+      }
+      case 2: {
+        return "PLATFORM_TYPE_MAHJONGSOUL";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as PlatformType;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: PlatformType): number {
+    switch (i) {
+      case "PLATFORM_TYPE_UNSPECIFIED": {
+        return 0;
+      }
+      case "PLATFORM_TYPE_TENHOUNET": {
+        return 1;
+      }
+      case "PLATFORM_TYPE_MAHJONGSOUL": {
         return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -6298,6 +6350,7 @@ export const EventData = {
       isRatingShown: false,
       achievementsShown: false,
       allowViewOtherTables: false,
+      platformId: PlatformType._fromInt(0),
       ...msg,
     };
   },
@@ -6356,6 +6409,9 @@ export const EventData = {
     }
     if (msg.allowViewOtherTables) {
       writer.writeBool(18, msg.allowViewOtherTables);
+    }
+    if (msg.platformId && PlatformType._toInt(msg.platformId)) {
+      writer.writeEnum(19, PlatformType._toInt(msg.platformId));
     }
     return writer;
   },
@@ -6432,6 +6488,10 @@ export const EventData = {
         }
         case 18: {
           msg.allowViewOtherTables = reader.readBool();
+          break;
+        }
+        case 19: {
+          msg.platformId = PlatformType._fromInt(reader.readEnum());
           break;
         }
         default: {
@@ -8318,6 +8378,52 @@ export const EndingPolicyJSON = {
         return 1;
       }
       case "ENDING_POLICY_EP_END_AFTER_HAND": {
+        return 2;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
+export const PlatformTypeJSON = {
+  PLATFORM_TYPE_UNSPECIFIED: "PLATFORM_TYPE_UNSPECIFIED",
+  PLATFORM_TYPE_TENHOUNET: "PLATFORM_TYPE_TENHOUNET",
+  PLATFORM_TYPE_MAHJONGSOUL: "PLATFORM_TYPE_MAHJONGSOUL",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): PlatformType {
+    switch (i) {
+      case 0: {
+        return "PLATFORM_TYPE_UNSPECIFIED";
+      }
+      case 1: {
+        return "PLATFORM_TYPE_TENHOUNET";
+      }
+      case 2: {
+        return "PLATFORM_TYPE_MAHJONGSOUL";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as PlatformType;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: PlatformType): number {
+    switch (i) {
+      case "PLATFORM_TYPE_UNSPECIFIED": {
+        return 0;
+      }
+      case "PLATFORM_TYPE_TENHOUNET": {
+        return 1;
+      }
+      case "PLATFORM_TYPE_MAHJONGSOUL": {
         return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -12921,6 +13027,7 @@ export const EventDataJSON = {
       isRatingShown: false,
       achievementsShown: false,
       allowViewOtherTables: false,
+      platformId: PlatformType._fromInt(0),
       ...msg,
     };
   },
@@ -12984,6 +13091,9 @@ export const EventDataJSON = {
     }
     if (msg.allowViewOtherTables) {
       json["allowViewOtherTables"] = msg.allowViewOtherTables;
+    }
+    if (msg.platformId && PlatformTypeJSON._toInt(msg.platformId)) {
+      json["platformId"] = msg.platformId;
     }
     return json;
   },
@@ -13057,6 +13167,10 @@ export const EventDataJSON = {
       json["allowViewOtherTables"] ?? json["allow_view_other_tables"];
     if (_allowViewOtherTables_) {
       msg.allowViewOtherTables = _allowViewOtherTables_;
+    }
+    const _platformId_ = json["platformId"] ?? json["platform_id"];
+    if (_platformId_) {
+      msg.platformId = PlatformType._fromInt(_platformId_);
     }
     return msg;
   },

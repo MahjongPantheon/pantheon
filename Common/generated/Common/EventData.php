@@ -83,6 +83,10 @@ class EventData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool allow_view_other_tables = 18;</code>
      */
     protected $allow_view_other_tables = false;
+    /**
+     * Generated from protobuf field <code>.common.PlatformType platform_id = 19;</code>
+     */
+    protected $platform_id = 0;
 
     /**
      * Constructor.
@@ -109,6 +113,7 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     @type bool $is_rating_shown
      *     @type bool $achievements_shown
      *     @type bool $allow_view_other_tables
+     *     @type int $platform_id
      * }
      */
     public function __construct($data = NULL) {
@@ -496,6 +501,28 @@ class EventData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->allow_view_other_tables = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.common.PlatformType platform_id = 19;</code>
+     * @return int
+     */
+    public function getPlatformId()
+    {
+        return $this->platform_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>.common.PlatformType platform_id = 19;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setPlatformId($var)
+    {
+        GPBUtil::checkEnum($var, \Common\PlatformType::class);
+        $this->platform_id = $var;
 
         return $this;
     }

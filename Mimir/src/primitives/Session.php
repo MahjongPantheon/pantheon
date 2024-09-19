@@ -18,6 +18,7 @@
 namespace Mimir;
 
 use Common\EndingPolicy;
+use Common\PlatformType;
 
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
@@ -666,11 +667,11 @@ class SessionPrimitive extends Primitive
             return $defaultReplayLink;
         }
 
-        if ($platformId === PlatformTypeId::Tenhou->value) {
+        if ($platformId === PlatformType::PLATFORM_TYPE_TENHOUNET) {
             return base64_decode('aHR0cDovL3RlbmhvdS5uZXQv') . '0/?log=' . $this->_replayHash;
         }
 
-        if ($platformId === PlatformTypeId::Majsoul->value) {
+        if ($platformId === PlatformType::PLATFORM_TYPE_MAHJONGSOUL) {
             return base64_decode('aHR0cHM6Ly9tYWhqb25nc291bC5nYW1lLnlvLXN0YXIuY29t') . '/?paipu=' . $this->_replayHash;
         }
 

@@ -17,6 +17,7 @@
  */
 namespace Mimir;
 
+use Common\PlatformType;
 use Common\Ruleset;
 use Common\RulesetConfig;
 use Common\TwirpError;
@@ -49,6 +50,7 @@ class EventsController extends Controller
      * @param bool $isRatingShown If event rating table is publicly accessible
      * @param bool $achievementsShown If event achievements page is publicly accessible
      * @param bool $allowViewOtherTables If other tables can be viewed during ongoing game
+     * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -71,6 +73,7 @@ class EventsController extends Controller
         $isRatingShown,
         $achievementsShown,
         $allowViewOtherTables,
+        $platformId,
         $rulesetConfig
     ) {
         $this->_log->info('Creating new event...');
@@ -104,6 +107,10 @@ class EventsController extends Controller
             ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
             ->setStatHost($statHost)
         ;
+
+        if ($this->_meta->isSuperadmin()) {
+            $event->setPlatformId($platformId === PlatformType::PLATFORM_TYPE_UNSPECIFIED ? null : $platformId);
+        }
 
         switch ($type) {
             case 'club':
@@ -191,11 +198,12 @@ class EventsController extends Controller
      * @param bool $isRatingShown If event rating table is publicly accessible
      * @param bool $achievementsShown If event achievements page is publicly accessible
      * @param bool $allowViewOtherTables If other tables can be viewed during ongoing game
+     * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
+     * @return bool
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @return bool
      */
     public function updateEvent(
         $id,
@@ -213,6 +221,7 @@ class EventsController extends Controller
         $isRatingShown,
         $achievementsShown,
         $allowViewOtherTables,
+        $platformId,
         $rulesetConfig
     ) {
         $this->_log->info('Updating event with id #' . $id);
@@ -244,6 +253,10 @@ class EventsController extends Controller
             ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
             ->setRulesetConfig(new Ruleset($rulesetConfig))
         ;
+
+        if ($this->_meta->isSuperadmin()) {
+            $event->setPlatformId($platformId === PlatformType::PLATFORM_TYPE_UNSPECIFIED ? null : $platformId);
+        }
 
         if ($event->getSyncStart()) { // Should be a tournament
             $event
@@ -314,6 +327,7 @@ class EventsController extends Controller
             'allowViewOtherTables' => (bool)$event->getAllowViewOtherTables(),
             'achievementsShown' => !$event->getHideAchievements(),
             'isFinished' => (bool)$event->getIsFinished(),
+            'platformId' => $event->getPlatformId()
         ];
 
         $this->_log->info('Successfully got event settings for event #' . $id);
@@ -406,7 +420,7 @@ class EventsController extends Controller
         }
 
         $soulNicknames = [];
-        $useSoulNicknames = $eventList[0]->getPlatformId() === PlatformTypeId::Majsoul->value;
+        $useSoulNicknames = $eventList[0]->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL;
         if ($useSoulNicknames) {
             $soulNicknames = $this->_ds->remote()->getMajsoulNicknames(array_map(function (PlayerPrimitive $el) {
                 return (int)$el->getId();

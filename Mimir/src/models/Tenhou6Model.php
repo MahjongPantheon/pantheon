@@ -18,6 +18,8 @@
 
 namespace Mimir;
 
+use Common\PlatformType;
+
 /**
  * @Author Steven Vch. <unstatik@staremax.com>
  */
@@ -518,7 +520,7 @@ class Tenhou6Model
     {
         $this->_replayHash = $parsedContent->ref;
         $playerMappings = null;
-        if ($this->getPlatformId() == PlatformTypeId::Majsoul->value) {
+        if ($this->getPlatformId() == PlatformType::PLATFORM_TYPE_MAHJONGSOUL) {
             if (!property_exists($parsedContent, 'playerMapping')) {
                 throw new ParseException('Tensoul replay format not allowed without player mappings');
             }
@@ -1213,7 +1215,7 @@ class Tenhou6Model
      */
     public function setTokenUN($tokenUN, $playerMapping): void
     {
-        if ($this->getPlatformId() === PlatformTypeId::Majsoul->value) {
+        if ($this->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL) {
             $this->_tokenUN = [];
             foreach ($playerMapping as $playerItem) {
                 array_push($this->_tokenUN, [

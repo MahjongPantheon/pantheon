@@ -17,16 +17,20 @@
 
 import { I18nService } from '../../services/i18n';
 import * as React from 'react';
-import { Checkbox, NumberInput, Text, TextInput } from '@mantine/core';
+import { Checkbox, NumberInput, Select, Text, TextInput } from '@mantine/core';
 import {
   IconChartHistogram,
   IconCoins,
   IconHourglass,
+  IconAffiliateFilled,
   IconNumbers,
   IconUsers,
   IconUserX,
 } from '@tabler/icons-react';
 import { FormHandle } from './types';
+import { authCtx } from '../../hooks/auth';
+import { useContext } from 'react';
+import { PlatformType } from '../../clients/proto/atoms.pb';
 
 type OnlineSettingsProps = {
   form: FormHandle;
@@ -34,17 +38,40 @@ type OnlineSettingsProps = {
 };
 
 export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) => {
+  const { isSuperadmin } = useContext(authCtx);
   return (
     <>
       <Text>
         {i18n._t(
-          'Please note: you should set up the rating accordingly to tournament settings in Tenhou.net, otherwise expect errors on replay submit!'
+          'Please note: you should set up the rating accordingly to tournament settings in game platform, otherwise expect errors on replay submit!'
         )}
       </Text>
+      {isSuperadmin && (
+        <Select
+          icon={<IconAffiliateFilled size='1rem' />}
+          label={i18n._t('Event platform')}
+          description={i18n._t('External gaming platform for the tournament')}
+          data={[
+            {
+              value: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+              label: i18n._t('Not selected'),
+            },
+            {
+              value: PlatformType.PLATFORM_TYPE_TENHOUNET,
+              label: 'Tenhou.net',
+            },
+            {
+              value: PlatformType.PLATFORM_TYPE_MAHJONGSOUL,
+              label: 'MahjongSoul',
+            },
+          ]}
+          {...form.getInputProps('event.platformId')}
+        />
+      )}
       <TextInput
         withAsterisk
         icon={<IconUsers size='1rem' />}
-        label={i18n._t('Tenhou Lobby ID')}
+        label={i18n._t('Lobby ID')}
         {...form.getInputProps('event.lobbyId')}
       />
       <Checkbox
