@@ -16,7 +16,7 @@
     "i18n-proto": "^1.0.5",
     "twirpscript": "^0.0.69",
     "typescript": "5.3.3",
-    "vite": "^5.0.12",
+    "vite": "^5.2.14",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.0.4"
   },
