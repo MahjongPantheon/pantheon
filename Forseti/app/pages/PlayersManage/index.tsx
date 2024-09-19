@@ -70,7 +70,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
       .then(([conf, [eventData], playersList, admins]) => {
         setEvent(eventData);
         setConfig(conf);
-        setPlayers(playersList);
+        setPlayers(playersList.sort((a, b) => a.title.localeCompare(b.title)));
         setLocalIdsWarn(playersList.some((p) => !p.localId));
         setEventAdmins(
           admins.reduce(

@@ -39,6 +39,8 @@ export const Avatar = ({ playerName, id, hasAvatar, lastUpdate, size }: IProps) 
         borderRadius: size,
         height: `${size}px`,
         width: `${size}px`,
+        minHeight: `${size}px`,
+        minWidth: `${size}px`,
       }}
       title={`#${id}`}
     >
