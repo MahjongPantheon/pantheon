@@ -607,6 +607,7 @@ export class ApiService {
       let notifications = {};
       try {
         notifications = JSON.parse(r.notifications);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         notifications = {};
       }

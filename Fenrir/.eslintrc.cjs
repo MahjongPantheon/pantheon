@@ -86,7 +86,6 @@ module.exports = {
         objectLiteralTypeAssertions: 'allow',
       },
     ],
-    '@typescript-eslint/member-delimiter-style': ['error'],
     '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
     '@typescript-eslint/no-extra-non-null-assertion': ['error'],
     '@typescript-eslint/no-extraneous-class': ['error'],
