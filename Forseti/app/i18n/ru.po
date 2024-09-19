@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:13Z\n"
-"PO-Revision-Date: 2024-05-25 03:14+0300\n"
+"POT-Creation-Date: 2024-09-19 13:04Z\n"
+"PO-Revision-Date: 2024-09-19 16:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -18,13 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: app/components/AppHeader.tsx:124:24 app/components/AppHeader.tsx:136:24
+#: app/components/AppHeader.tsx:111:24 app/components/AppHeader.tsx:123:24
 msgid "Open menu"
 msgstr "Меню"
 
-#: app/components/AppHeader.tsx:132:18
+#: app/components/AppHeader.tsx:119:18
 msgid "Menu"
 msgstr "Меню"
 
@@ -41,112 +41,112 @@ msgstr ""
 msgid "Select an avatar"
 msgstr "Выберите аватар"
 
-#: app/components/MainMenu.tsx:78:22
+#: app/components/MainMenu.tsx:76:22
 msgid "Event: %1"
 msgstr "Cобытие: %1"
 
-#: app/components/MainMenu.tsx:85:21
+#: app/components/MainMenu.tsx:83:21
 msgid "Open event page"
 msgstr "Открыть страницу события"
 
-#: app/components/MainMenu.tsx:91:21 app/pages/OwnedEvents.tsx:373:33
+#: app/components/MainMenu.tsx:89:21 app/pages/OwnedEvents.tsx:370:33
 msgid "Settings"
 msgstr "Настройки"
 
-#: app/components/MainMenu.tsx:99:25 app/pages/OwnedEvents.tsx:365:34
-#: app/pages/OwnedEvents.tsx:367:33
+#: app/components/MainMenu.tsx:97:25 app/pages/OwnedEvents.tsx:362:34
+#: app/pages/OwnedEvents.tsx:364:33
 msgid "Manage players"
 msgstr "Управление игроками"
 
-#: app/components/MainMenu.tsx:105:25 app/pages/OwnedEvents.tsx:361:33
+#: app/components/MainMenu.tsx:103:25 app/pages/OwnedEvents.tsx:358:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Штрафы"
 
-#: app/components/MainMenu.tsx:111:25 app/pages/OwnedEvents.tsx:355:33
+#: app/components/MainMenu.tsx:109:25 app/pages/OwnedEvents.tsx:352:33
 msgid "Manage games"
 msgstr "Управление играми"
 
-#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:348:35
+#: app/components/MainMenu.tsx:116:27 app/pages/OwnedEvents.tsx:345:35
 msgid "Predefined seating"
 msgstr "Предопределенная рассадка"
 
-#: app/components/MainMenu.tsx:129:24 app/pages/OwnedEvents.tsx:377:38
+#: app/components/MainMenu.tsx:127:24 app/pages/OwnedEvents.tsx:374:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Зона особого внимания"
 
-#: app/components/MainMenu.tsx:135:24 app/pages/OwnedEvents.tsx:380:36
-#: app/pages/OwnedEvents.tsx:384:30
+#: app/components/MainMenu.tsx:133:24 app/pages/OwnedEvents.tsx:377:36
+#: app/pages/OwnedEvents.tsx:381:30
 msgid "Rebuild scoring"
 msgstr "Перестроить скоринг"
 
-#: app/components/MainMenu.tsx:146:24
+#: app/components/MainMenu.tsx:144:24
 msgid "Recalculate achievements"
 msgstr "Пересчитать номинации"
 
-#: app/components/MainMenu.tsx:161:24
+#: app/components/MainMenu.tsx:159:24
 msgid "Recalculate players stats"
 msgstr "Пересчитать статистику игроков"
 
-#: app/components/MainMenu.tsx:176:24 app/pages/OwnedEvents.tsx:388:34
-#: app/pages/OwnedEvents.tsx:396:28
+#: app/components/MainMenu.tsx:174:24 app/pages/OwnedEvents.tsx:385:34
+#: app/pages/OwnedEvents.tsx:393:28
 msgid "Finish event"
 msgstr "Завершить событие"
 
-#: app/components/MainMenu.tsx:195:18
+#: app/components/MainMenu.tsx:193:18
 msgid "Common actions"
 msgstr "Общие действия"
 
-#: app/components/MainMenu.tsx:202:17
+#: app/components/MainMenu.tsx:200:17
 msgid "All events"
 msgstr "К списку всех событий"
 
-#: app/components/MainMenu.tsx:209:19
+#: app/components/MainMenu.tsx:207:19
 msgid "My events"
 msgstr "Мои события"
 
-#: app/components/MainMenu.tsx:217:19
+#: app/components/MainMenu.tsx:215:19
 msgid "Sign in"
 msgstr "Войти"
 
-#: app/components/MainMenu.tsx:225:19
+#: app/components/MainMenu.tsx:223:19
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
-#: app/components/MainMenu.tsx:233:19 app/pages/ProfileManageAdmin.tsx:321:21
+#: app/components/MainMenu.tsx:231:19 app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr "Зарегистрировать игрока"
 
-#: app/components/MainMenu.tsx:241:19 app/pages/SystemStats.tsx:164:16
+#: app/components/MainMenu.tsx:239:19 app/pages/SystemStats.tsx:164:16
 msgid "System stats"
 msgstr "Системная статистика"
 
-#: app/components/MainMenu.tsx:249:19
+#: app/components/MainMenu.tsx:247:19
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
-#: app/components/MainMenu.tsx:257:19
+#: app/components/MainMenu.tsx:255:19
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: app/components/MainMenu.tsx:265:19
+#: app/components/MainMenu.tsx:263:19
 msgid "Sign out"
 msgstr "Выйти"
 
-#: app/components/MainMenu.tsx:273:17
+#: app/components/MainMenu.tsx:271:17
 msgid "Open assistant"
 msgstr "Открыть ассистент"
 
-#: app/components/MainMenu.tsx:281:18
+#: app/components/MainMenu.tsx:279:18
 msgid "Language"
 msgstr "Язык"
 
-#: app/components/MainMenu.tsx:323:18
+#: app/components/MainMenu.tsx:321:18
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 
-#: app/components/MainMenu.tsx:332:18
+#: app/components/MainMenu.tsx:330:18
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
@@ -179,7 +179,7 @@ msgstr ""
 
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
-#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:255:14
+#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:252:14
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -201,11 +201,11 @@ msgstr ""
 "Пересчитать статистику всех игроков в событии \"%1\" (id #%2)? Пересчет "
 "будет запланирован и выполнен в ближайшие минуты"
 
-#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:248:12
+#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:245:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr "Завершить событие \"%1\" (id #%2)? Отменить это действие невозможно!"
 
-#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:265:14
+#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:262:14
 msgid "Stop event"
 msgstr "Завершить событие"
 
@@ -387,9 +387,9 @@ msgstr "Конфигурация предопределенной рассадк
 
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
-#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:97:14
-#: app/pages/OwnedEventsEdit/index.tsx:189:18
-#: app/pages/OwnedEventsEdit/index.tsx:220:18 app/pages/Penalties.tsx:73:18
+#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:94:14
+#: app/pages/OwnedEventsEdit/index.tsx:196:18
+#: app/pages/OwnedEventsEdit/index.tsx:227:18 app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18 app/pages/PlayersManage/index.tsx:87:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
@@ -471,56 +471,52 @@ msgstr "Обновить скрипт"
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: app/pages/GamesControl/GamesList.tsx:107:30
-msgid "Table # %1"
-msgstr "Стол № %1"
-
-#: app/pages/GamesControl/GamesList.tsx:120:30
+#: app/pages/GamesControl/GamesList.tsx:123:30
 msgid "Current round"
 msgstr "Текущий раунд"
 
-#: app/pages/GamesControl/GamesList.tsx:182:30
+#: app/pages/GamesControl/GamesList.tsx:185:30
 msgid "Cancel last played round"
 msgstr "Отменить последний сыгранный раунд"
 
-#: app/pages/GamesControl/GamesList.tsx:183:29
+#: app/pages/GamesControl/GamesList.tsx:186:29
 msgid "Cancel round"
 msgstr "Отменить раздачу"
 
-#: app/pages/GamesControl/GamesList.tsx:184:32
-#: app/pages/GamesControl/GamesList.tsx:199:32
+#: app/pages/GamesControl/GamesList.tsx:187:32
+#: app/pages/GamesControl/GamesList.tsx:202:32
 msgid "This action can't be undone. Continue?"
 msgstr "Это действие не может быть отменено. Продолжить?"
 
-#: app/pages/GamesControl/GamesList.tsx:197:30
+#: app/pages/GamesControl/GamesList.tsx:200:30
 msgid "Remove the game as it never existed"
 msgstr "Удалить игру, как будто ее никогда не было"
 
-#: app/pages/GamesControl/GamesList.tsx:198:29
+#: app/pages/GamesControl/GamesList.tsx:201:29
 msgid "Remove game"
 msgstr "Удалить игру"
 
-#: app/pages/GamesControl/GamesList.tsx:214:30
+#: app/pages/GamesControl/GamesList.tsx:217:30
 msgid "Forcefully finish the game"
 msgstr "Досрочно завершить игру"
 
-#: app/pages/GamesControl/GamesList.tsx:215:29
+#: app/pages/GamesControl/GamesList.tsx:218:29
 msgid "Force finish game"
 msgstr "Завершить досрочно"
 
-#: app/pages/GamesControl/GamesList.tsx:216:32
+#: app/pages/GamesControl/GamesList.tsx:219:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "Вы собираетесь досрочно завершить игру. Продолжить?"
 
-#: app/pages/GamesControl/GamesList.tsx:229:30
+#: app/pages/GamesControl/GamesList.tsx:232:30
 msgid "Remove game results"
 msgstr "Удалить результаты игры"
 
-#: app/pages/GamesControl/GamesList.tsx:230:29
+#: app/pages/GamesControl/GamesList.tsx:233:29
 msgid "Cancel results"
 msgstr "Удалить результаты"
 
-#: app/pages/GamesControl/GamesList.tsx:231:32
+#: app/pages/GamesControl/GamesList.tsx:234:32
 msgid ""
 "This will only remove the game results, but you will need to cancel last "
 "round separately. Continue?"
@@ -528,52 +524,52 @@ msgstr ""
 "Это действие только удалит результаты из БД, отменить последний раунд "
 "потребуется отдельным действием. Продолжить?"
 
-#: app/pages/GamesControl/GamesList.tsx:264:20
+#: app/pages/GamesControl/GamesList.tsx:267:20
 msgid "Session is ready to start"
 msgstr "Игровая сессия готова"
 
-#: app/pages/GamesControl/GamesList.tsx:276:20
+#: app/pages/GamesControl/GamesList.tsx:279:20
 msgid "Session in progress"
 msgstr "Игровая сессия в процессе"
 
-#: app/pages/GamesControl/GamesList.tsx:289:18
+#: app/pages/GamesControl/GamesList.tsx:292:18
 msgid "Session finished, but not confirmed"
 msgstr "Сессия завершена, но результаты не подтверждены"
 
-#: app/pages/GamesControl/GamesList.tsx:301:18
+#: app/pages/GamesControl/GamesList.tsx:304:18
 msgid "Session finished"
 msgstr "Сессия завершена"
 
-#: app/pages/GamesControl/GamesList.tsx:313:18
+#: app/pages/GamesControl/GamesList.tsx:316:18
 msgid "Session cancelled"
 msgstr "Сессия отменена"
 
-#: app/pages/GamesControl/GamesList.tsx:325:18
+#: app/pages/GamesControl/GamesList.tsx:328:18
 msgid "Session is scheduled"
 msgstr "Сессия запланирована"
 
-#: app/pages/GamesControl/GamesList.tsx:360:12
-#: app/pages/GamesControl/GamesList.tsx:371:9
+#: app/pages/GamesControl/GamesList.tsx:363:12
+#: app/pages/GamesControl/GamesList.tsx:374:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "Рон, %1 с %2 (%3), риичи: %4"
 
-#: app/pages/GamesControl/GamesList.tsx:382:12
+#: app/pages/GamesControl/GamesList.tsx:385:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Цумо, %1 (%2), риичи: %3"
 
-#: app/pages/GamesControl/GamesList.tsx:390:12
+#: app/pages/GamesControl/GamesList.tsx:393:12
 msgid "Chombo, %1"
 msgstr "Чомбо, %1"
 
-#: app/pages/GamesControl/GamesList.tsx:394:12
+#: app/pages/GamesControl/GamesList.tsx:397:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Ничья, темпай: %1, риичи: %2"
 
-#: app/pages/GamesControl/GamesList.tsx:401:12
+#: app/pages/GamesControl/GamesList.tsx:404:12
 msgid "Abortive draw, riichi: %1"
 msgstr "Абортивная ничья, риичи: %1"
 
-#: app/pages/GamesControl/GamesList.tsx:407:12
+#: app/pages/GamesControl/GamesList.tsx:410:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "Нагаши манган, нагаши: %1, темпай: %2, риичи: %3"
 
@@ -601,7 +597,7 @@ msgstr "Не удалось запустить таймер"
 msgid "Failed to notify players"
 msgstr "Не удалось оповестить игроков"
 
-#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:201:27
+#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:198:27
 msgid "Failed to toggle results visibility"
 msgstr "Не удалось переключить видимость результатов"
 
@@ -830,94 +826,94 @@ msgstr ""
 "Вы не сможете отменять последние раунды после того, как результаты "
 "подтверждены. Подтвердить результаты?"
 
-#: app/pages/OwnedEvents.tsx:93:16
+#: app/pages/OwnedEvents.tsx:90:16
 msgid "Manage my events"
 msgstr "Мои события"
 
-#: app/pages/OwnedEvents.tsx:222:27
+#: app/pages/OwnedEvents.tsx:219:27
 msgid "Failed to toggle achievements visibility"
 msgstr "Не удалось переключить видимость номинаций"
 
-#: app/pages/OwnedEvents.tsx:291:30
+#: app/pages/OwnedEvents.tsx:288:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr "Локальный рейтинг"
 
-#: app/pages/OwnedEvents.tsx:303:30
+#: app/pages/OwnedEvents.tsx:300:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr "Турнир"
 
-#: app/pages/OwnedEvents.tsx:315:30
+#: app/pages/OwnedEvents.tsx:312:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr "Онлайн-событие"
 
-#: app/pages/OwnedEvents.tsx:325:30
+#: app/pages/OwnedEvents.tsx:322:30
 msgid "Open event page in new tab"
 msgstr "Открыть в новой вкладке"
 
-#: app/pages/OwnedEvents.tsx:339:48
+#: app/pages/OwnedEvents.tsx:336:48
 msgid "Actions"
 msgstr "Действия"
 
-#: app/pages/OwnedEvents.tsx:342:38
+#: app/pages/OwnedEvents.tsx:339:38
 msgid "Event management"
 msgstr "Управление событием"
 
-#: app/pages/OwnedEvents.tsx:346:36
+#: app/pages/OwnedEvents.tsx:343:36
 msgid "Manage predefined seating"
 msgstr "Предопределенная рассадка"
 
-#: app/pages/OwnedEvents.tsx:353:34
+#: app/pages/OwnedEvents.tsx:350:34
 msgid "Manage current games"
 msgstr "Управление играми"
 
-#: app/pages/OwnedEvents.tsx:359:34 app/pages/Penalties.tsx:52:16
+#: app/pages/OwnedEvents.tsx:356:34 app/pages/Penalties.tsx:52:16
 msgid "Manage penalties"
 msgstr "Штрафы"
 
-#: app/pages/OwnedEvents.tsx:371:34
+#: app/pages/OwnedEvents.tsx:368:34
 msgid "Edit event settings"
 msgstr "Настройки события"
 
-#: app/pages/OwnedEvents.tsx:404:24
+#: app/pages/OwnedEvents.tsx:401:24
 msgid "Event finished"
 msgstr "Событие завершено"
 
-#: app/pages/OwnedEvents.tsx:411:32
+#: app/pages/OwnedEvents.tsx:408:32
 msgid "Visibility"
 msgstr "Видимость"
 
-#: app/pages/OwnedEvents.tsx:425:36
+#: app/pages/OwnedEvents.tsx:422:36
 msgid "Visibility management"
 msgstr "Управление видимостью"
 
-#: app/pages/OwnedEvents.tsx:427:32
+#: app/pages/OwnedEvents.tsx:424:32
 msgid "Toggle visibility in ratings global list"
 msgstr "Переключить видимость события в глобальном списке событий"
 
-#: app/pages/OwnedEvents.tsx:431:26
+#: app/pages/OwnedEvents.tsx:428:26
 msgid "Event visible in global list"
 msgstr "Событие видно в общем списке"
 
-#: app/pages/OwnedEvents.tsx:434:32
+#: app/pages/OwnedEvents.tsx:431:32
 msgid "Toggle visibility of rating table"
 msgstr "Переключить видимость таблицы результатов для всех"
 
-#: app/pages/OwnedEvents.tsx:438:26
+#: app/pages/OwnedEvents.tsx:435:26
 msgid "Rating table visible"
 msgstr "Рейтинговая таблица видна"
 
-#: app/pages/OwnedEvents.tsx:441:32
+#: app/pages/OwnedEvents.tsx:438:32
 msgid "Toggle visibility of achievements"
 msgstr "Переключить видимость номинаций для всех"
 
-#: app/pages/OwnedEvents.tsx:445:26
+#: app/pages/OwnedEvents.tsx:442:26
 msgid "Achievements visible"
 msgstr "Номинации видны"
 
-#: app/pages/OwnedEvents.tsx:455:18
+#: app/pages/OwnedEvents.tsx:452:18
 msgid "Create new event"
 msgstr "Создать новое событие"
 
@@ -1027,30 +1023,30 @@ msgstr ""
 "процессе игры за своим столом. Настоятельно рекомендуется не включать эту "
 "настройку для турнирных событий."
 
-#: app/pages/OwnedEventsEdit/index.tsx:62:18
+#: app/pages/OwnedEventsEdit/index.tsx:68:18
 msgid "Edit event :: %1"
 msgstr "Редактирование события :: %1"
 
-#: app/pages/OwnedEventsEdit/index.tsx:64:18
+#: app/pages/OwnedEventsEdit/index.tsx:70:18
 msgid "New event"
 msgstr "Новое событие"
 
-#: app/pages/OwnedEventsEdit/index.tsx:183:29
+#: app/pages/OwnedEventsEdit/index.tsx:190:29
 msgid "Failed to fetch event data"
 msgstr "Не удалось получить данные события"
 
-#: app/pages/OwnedEventsEdit/index.tsx:215:27
+#: app/pages/OwnedEventsEdit/index.tsx:222:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
 
-#: app/pages/OwnedEventsEdit/index.tsx:278:32
+#: app/pages/OwnedEventsEdit/index.tsx:285:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
 msgid "Changes saved!"
 msgstr "Изменения сохранены!"
 
-#: app/pages/OwnedEventsEdit/index.tsx:278:60
+#: app/pages/OwnedEventsEdit/index.tsx:285:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1058,52 +1054,64 @@ msgid "Save changes"
 msgstr "Сохранить изменения"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:35:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:78:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:105:16
 msgid "Series length"
 msgstr "Длина серии"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:79:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:106:22
 msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr ""
 "Количество сессий в одной серии. Поставьте 0, чтобы отключить игровые серии."
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:46:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:89:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:116:16
 msgid "Minimal games count"
 msgstr "Минимальное число игр"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:47:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:90:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:117:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr ""
 "Минимальное число сыгранных игр для того, чтобы игрок попал в рейтинговую "
 "таблицу."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:40:10
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:45:10
 msgid ""
 "Please note: you should set up the rating accordingly to tournament settings "
-"in Tenhou.net, otherwise expect errors on replay submit!"
+"in game platform, otherwise expect errors on replay submit!"
 msgstr ""
 "Внимание: рейтинг должен быть настроен аналогично настройкам турнира на "
-"Tenhou.net, в ином случае ожидайте ошибок при внесении игр!"
+"игровой платформе, в ином случае ожидайте ошибок при внесении игр!"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:47:16
-msgid "Tenhou Lobby ID"
-msgstr "ID лобби на Tenhou.net"
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:52:18
+msgid "Event platform"
+msgstr "Игровая платформа"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:51:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:24
+msgid "External gaming platform for the tournament"
+msgstr "Внешняя игровая платформа для проведения онлайн-турнира"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:22
+msgid "Not selected"
+msgstr "Не выбрано"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:74:16
+msgid "Lobby ID"
+msgstr "ID лобби"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:78:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
 msgid "Team tournament"
 msgstr "Командный турнир"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:84:16
 msgid "Game expiration time (in hours)"
 msgstr "Время истечения игры (в часах)"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:58:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
 "be added to the rating. Set to 0 to disable expiration."
@@ -1112,11 +1120,11 @@ msgstr ""
 "действительной и может быть внесена в рейтинг. Выставьте 0, чтобы выключить "
 "истечение игр."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:67:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:94:16
 msgid "Chips value"
 msgstr "Стоимость чипа"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:68:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:95:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net. Set to 0 to disable chips."
@@ -1124,24 +1132,24 @@ msgstr ""
 "Количество очков, которое выдается за каждый чип. Чипы должны быть настроены "
 "на Tenhou.net. Выставьте 0, чтобы выключить чипы."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:100:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:127:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
 msgid "Fixed score applied to replacement player"
 msgstr "Фиксированное число итоговых очков у игрока замены"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:101:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:128:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
 "of session results."
 msgstr "Фиксированное число очков, применямое независимо от результатов игры."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:110:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:137:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
 msgid "Fixed uma for replacement player"
 msgstr "Фиксированная ума для игрока замены"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:111:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
@@ -2216,3 +2224,6 @@ msgstr "Подсистема"
 
 #~ msgid "Rating table: hidden; show?"
 #~ msgstr "Рейтинговая таблица: скрыта; показать?"
+
+#~ msgid "Table # %1"
+#~ msgstr "Стол № %1"

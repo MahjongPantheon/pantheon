@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:13Z\n"
+"POT-Creation-Date: 2024-09-19 13:04Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/components/AppHeader.tsx:124:24
-#: app/components/AppHeader.tsx:136:24
+#: app/components/AppHeader.tsx:111:24
+#: app/components/AppHeader.tsx:123:24
 msgid "Open menu"
 msgstr ""
 
-#: app/components/AppHeader.tsx:132:18
+#: app/components/AppHeader.tsx:119:18
 msgid "Menu"
 msgstr ""
 
@@ -38,122 +38,122 @@ msgstr ""
 msgid "Select an avatar"
 msgstr ""
 
-#: app/components/MainMenu.tsx:78:22
+#: app/components/MainMenu.tsx:76:22
 msgid "Event: %1"
 msgstr ""
 
-#: app/components/MainMenu.tsx:85:21
+#: app/components/MainMenu.tsx:83:21
 msgid "Open event page"
 msgstr ""
 
-#: app/components/MainMenu.tsx:91:21
-#: app/pages/OwnedEvents.tsx:373:33
+#: app/components/MainMenu.tsx:89:21
+#: app/pages/OwnedEvents.tsx:370:33
 msgid "Settings"
 msgstr ""
 
-#: app/components/MainMenu.tsx:99:25
-#: app/pages/OwnedEvents.tsx:365:34
-#: app/pages/OwnedEvents.tsx:367:33
+#: app/components/MainMenu.tsx:97:25
+#: app/pages/OwnedEvents.tsx:362:34
+#: app/pages/OwnedEvents.tsx:364:33
 msgid "Manage players"
 msgstr ""
 
-#: app/components/MainMenu.tsx:105:25
-#: app/pages/OwnedEvents.tsx:361:33
+#: app/components/MainMenu.tsx:103:25
+#: app/pages/OwnedEvents.tsx:358:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr ""
 
-#: app/components/MainMenu.tsx:111:25
-#: app/pages/OwnedEvents.tsx:355:33
+#: app/components/MainMenu.tsx:109:25
+#: app/pages/OwnedEvents.tsx:352:33
 msgid "Manage games"
 msgstr ""
 
-#: app/components/MainMenu.tsx:118:27
-#: app/pages/OwnedEvents.tsx:348:35
+#: app/components/MainMenu.tsx:116:27
+#: app/pages/OwnedEvents.tsx:345:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/components/MainMenu.tsx:129:24
-#: app/pages/OwnedEvents.tsx:377:38
+#: app/components/MainMenu.tsx:127:24
+#: app/pages/OwnedEvents.tsx:374:38
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr ""
 
-#: app/components/MainMenu.tsx:135:24
-#: app/pages/OwnedEvents.tsx:380:36
-#: app/pages/OwnedEvents.tsx:384:30
+#: app/components/MainMenu.tsx:133:24
+#: app/pages/OwnedEvents.tsx:377:36
+#: app/pages/OwnedEvents.tsx:381:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/components/MainMenu.tsx:146:24
+#: app/components/MainMenu.tsx:144:24
 msgid "Recalculate achievements"
 msgstr ""
 
-#: app/components/MainMenu.tsx:161:24
+#: app/components/MainMenu.tsx:159:24
 msgid "Recalculate players stats"
 msgstr ""
 
-#: app/components/MainMenu.tsx:176:24
-#: app/pages/OwnedEvents.tsx:388:34
-#: app/pages/OwnedEvents.tsx:396:28
+#: app/components/MainMenu.tsx:174:24
+#: app/pages/OwnedEvents.tsx:385:34
+#: app/pages/OwnedEvents.tsx:393:28
 msgid "Finish event"
 msgstr ""
 
-#: app/components/MainMenu.tsx:195:18
+#: app/components/MainMenu.tsx:193:18
 msgid "Common actions"
 msgstr ""
 
-#: app/components/MainMenu.tsx:202:17
+#: app/components/MainMenu.tsx:200:17
 msgid "All events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:209:19
+#: app/components/MainMenu.tsx:207:19
 msgid "My events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:217:19
+#: app/components/MainMenu.tsx:215:19
 msgid "Sign in"
 msgstr ""
 
-#: app/components/MainMenu.tsx:225:19
+#: app/components/MainMenu.tsx:223:19
 msgid "Sign up"
 msgstr ""
 
-#: app/components/MainMenu.tsx:233:19
+#: app/components/MainMenu.tsx:231:19
 #: app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr ""
 
-#: app/components/MainMenu.tsx:241:19
+#: app/components/MainMenu.tsx:239:19
 #: app/pages/SystemStats.tsx:164:16
 msgid "System stats"
 msgstr ""
 
-#: app/components/MainMenu.tsx:249:19
+#: app/components/MainMenu.tsx:247:19
 msgid "Edit profile"
 msgstr ""
 
-#: app/components/MainMenu.tsx:257:19
+#: app/components/MainMenu.tsx:255:19
 msgid "Notifications"
 msgstr ""
 
-#: app/components/MainMenu.tsx:265:19
+#: app/components/MainMenu.tsx:263:19
 msgid "Sign out"
 msgstr ""
 
-#: app/components/MainMenu.tsx:273:17
+#: app/components/MainMenu.tsx:271:17
 msgid "Open assistant"
 msgstr ""
 
-#: app/components/MainMenu.tsx:281:18
+#: app/components/MainMenu.tsx:279:18
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:323:18
+#: app/components/MainMenu.tsx:321:18
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:332:18
+#: app/components/MainMenu.tsx:330:18
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -183,7 +183,7 @@ msgstr ""
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
 #: app/components/StopEventModal.tsx:36:12
-#: app/pages/OwnedEvents.tsx:255:14
+#: app/pages/OwnedEvents.tsx:252:14
 msgid "Cancel"
 msgstr ""
 
@@ -201,12 +201,12 @@ msgid "Recalculate stats for all players in event \"%1\" (id #%2)? Recalculation
 msgstr ""
 
 #: app/components/StopEventModal.tsx:29:10
-#: app/pages/OwnedEvents.tsx:248:12
+#: app/pages/OwnedEvents.tsx:245:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 
 #: app/components/StopEventModal.tsx:46:12
-#: app/pages/OwnedEvents.tsx:265:14
+#: app/pages/OwnedEvents.tsx:262:14
 msgid "Stop event"
 msgstr ""
 
@@ -396,9 +396,9 @@ msgstr ""
 #: app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14
-#: app/pages/OwnedEvents.tsx:97:14
-#: app/pages/OwnedEventsEdit/index.tsx:189:18
-#: app/pages/OwnedEventsEdit/index.tsx:220:18
+#: app/pages/OwnedEvents.tsx:94:14
+#: app/pages/OwnedEventsEdit/index.tsx:196:18
+#: app/pages/OwnedEventsEdit/index.tsx:227:18
 #: app/pages/Penalties.tsx:73:18
 #: app/pages/Penalties.tsx:119:18
 #: app/pages/PlayersManage/index.tsx:87:18
@@ -465,105 +465,101 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:107:30
-msgid "Table # %1"
-msgstr ""
-
-#: app/pages/GamesControl/GamesList.tsx:120:30
+#: app/pages/GamesControl/GamesList.tsx:123:30
 msgid "Current round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:182:30
+#: app/pages/GamesControl/GamesList.tsx:185:30
 msgid "Cancel last played round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:183:29
+#: app/pages/GamesControl/GamesList.tsx:186:29
 msgid "Cancel round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:184:32
-#: app/pages/GamesControl/GamesList.tsx:199:32
+#: app/pages/GamesControl/GamesList.tsx:187:32
+#: app/pages/GamesControl/GamesList.tsx:202:32
 msgid "This action can't be undone. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:197:30
+#: app/pages/GamesControl/GamesList.tsx:200:30
 msgid "Remove the game as it never existed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:198:29
+#: app/pages/GamesControl/GamesList.tsx:201:29
 msgid "Remove game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:214:30
+#: app/pages/GamesControl/GamesList.tsx:217:30
 msgid "Forcefully finish the game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:215:29
+#: app/pages/GamesControl/GamesList.tsx:218:29
 msgid "Force finish game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:216:32
+#: app/pages/GamesControl/GamesList.tsx:219:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:229:30
+#: app/pages/GamesControl/GamesList.tsx:232:30
 msgid "Remove game results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:230:29
+#: app/pages/GamesControl/GamesList.tsx:233:29
 msgid "Cancel results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:231:32
+#: app/pages/GamesControl/GamesList.tsx:234:32
 msgid "This will only remove the game results, but you will need to cancel last round separately. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:264:20
+#: app/pages/GamesControl/GamesList.tsx:267:20
 msgid "Session is ready to start"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:276:20
+#: app/pages/GamesControl/GamesList.tsx:279:20
 msgid "Session in progress"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:289:18
+#: app/pages/GamesControl/GamesList.tsx:292:18
 msgid "Session finished, but not confirmed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:301:18
+#: app/pages/GamesControl/GamesList.tsx:304:18
 msgid "Session finished"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:313:18
+#: app/pages/GamesControl/GamesList.tsx:316:18
 msgid "Session cancelled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:325:18
+#: app/pages/GamesControl/GamesList.tsx:328:18
 msgid "Session is scheduled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:360:12
-#: app/pages/GamesControl/GamesList.tsx:371:9
+#: app/pages/GamesControl/GamesList.tsx:363:12
+#: app/pages/GamesControl/GamesList.tsx:374:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:382:12
+#: app/pages/GamesControl/GamesList.tsx:385:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:390:12
+#: app/pages/GamesControl/GamesList.tsx:393:12
 msgid "Chombo, %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:394:12
+#: app/pages/GamesControl/GamesList.tsx:397:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:401:12
+#: app/pages/GamesControl/GamesList.tsx:404:12
 msgid "Abortive draw, riichi: %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:407:12
+#: app/pages/GamesControl/GamesList.tsx:410:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr ""
 
@@ -592,7 +588,7 @@ msgid "Failed to notify players"
 msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:27
-#: app/pages/OwnedEvents.tsx:201:27
+#: app/pages/OwnedEvents.tsx:198:27
 msgid "Failed to toggle results visibility"
 msgstr ""
 
@@ -808,95 +804,95 @@ msgstr ""
 msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:93:16
+#: app/pages/OwnedEvents.tsx:90:16
 msgid "Manage my events"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:222:27
+#: app/pages/OwnedEvents.tsx:219:27
 msgid "Failed to toggle achievements visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:291:30
+#: app/pages/OwnedEvents.tsx:288:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:303:30
+#: app/pages/OwnedEvents.tsx:300:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:315:30
+#: app/pages/OwnedEvents.tsx:312:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:325:30
+#: app/pages/OwnedEvents.tsx:322:30
 msgid "Open event page in new tab"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:339:48
+#: app/pages/OwnedEvents.tsx:336:48
 msgid "Actions"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:342:38
+#: app/pages/OwnedEvents.tsx:339:38
 msgid "Event management"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:346:36
+#: app/pages/OwnedEvents.tsx:343:36
 msgid "Manage predefined seating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:353:34
+#: app/pages/OwnedEvents.tsx:350:34
 msgid "Manage current games"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:359:34
+#: app/pages/OwnedEvents.tsx:356:34
 #: app/pages/Penalties.tsx:52:16
 msgid "Manage penalties"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:371:34
+#: app/pages/OwnedEvents.tsx:368:34
 msgid "Edit event settings"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:404:24
+#: app/pages/OwnedEvents.tsx:401:24
 msgid "Event finished"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:411:32
+#: app/pages/OwnedEvents.tsx:408:32
 msgid "Visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:425:36
+#: app/pages/OwnedEvents.tsx:422:36
 msgid "Visibility management"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:427:32
+#: app/pages/OwnedEvents.tsx:424:32
 msgid "Toggle visibility in ratings global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:431:26
+#: app/pages/OwnedEvents.tsx:428:26
 msgid "Event visible in global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:434:32
+#: app/pages/OwnedEvents.tsx:431:32
 msgid "Toggle visibility of rating table"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:438:26
+#: app/pages/OwnedEvents.tsx:435:26
 msgid "Rating table visible"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:441:32
+#: app/pages/OwnedEvents.tsx:438:32
 msgid "Toggle visibility of achievements"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:445:26
+#: app/pages/OwnedEvents.tsx:442:26
 msgid "Achievements visible"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:455:18
+#: app/pages/OwnedEvents.tsx:452:18
 msgid "Create new event"
 msgstr ""
 
@@ -974,23 +970,23 @@ msgstr ""
 msgid "If checked, players will be able to see other tables state even if they are currently in game. It is strongly recommended to keep this checkbox disabled for all tournament events."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:62:18
+#: app/pages/OwnedEventsEdit/index.tsx:68:18
 msgid "Edit event :: %1"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:64:18
+#: app/pages/OwnedEventsEdit/index.tsx:70:18
 msgid "New event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:183:29
+#: app/pages/OwnedEventsEdit/index.tsx:190:29
 msgid "Failed to fetch event data"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:215:27
+#: app/pages/OwnedEventsEdit/index.tsx:222:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:278:32
+#: app/pages/OwnedEventsEdit/index.tsx:285:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32
@@ -998,7 +994,7 @@ msgstr ""
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:278:60
+#: app/pages/OwnedEventsEdit/index.tsx:285:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1006,70 +1002,82 @@ msgid "Save changes"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:35:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:78:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:105:16
 msgid "Series length"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:79:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:106:22
 msgid "Count of session in game series. Set to 0 to disable series functionality."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:46:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:89:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:116:16
 msgid "Minimal games count"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:47:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:90:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:117:22
 msgid "Minimal count of games the player should play to get into the rating table."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:40:10
-msgid "Please note: you should set up the rating accordingly to tournament settings in Tenhou.net, otherwise expect errors on replay submit!"
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:45:10
+msgid "Please note: you should set up the rating accordingly to tournament settings in game platform, otherwise expect errors on replay submit!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:47:16
-msgid "Tenhou Lobby ID"
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:52:18
+msgid "Event platform"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:51:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:24
+msgid "External gaming platform for the tournament"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:22
+msgid "Not selected"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:74:16
+msgid "Lobby ID"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:78:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
 msgid "Team tournament"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:84:16
 msgid "Game expiration time (in hours)"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:58:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:22
 msgid "Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:67:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:94:16
 msgid "Chips value"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:68:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:95:22
 msgid "Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:100:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:127:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
 msgid "Fixed score applied to replacement player"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:101:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:128:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
 msgid "Fixed amount of result score applied for each replacement player regardless of session results."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:110:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:137:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
 msgid "Fixed uma for replacement player"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:111:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
 msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
