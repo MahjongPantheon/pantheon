@@ -131,7 +131,7 @@ init_test_db:
 .PHONY: clean_test_db
 clean_test_db:
 	while read p; do \
-		PGPASSWORD=pgpass psql -hdb -U frey frey_unit -c "DROP TABLE \"$$p\""; \
+		PGPASSWORD=pgpass psql -hdb.pantheon.internal -U frey frey_unit -c "DROP TABLE \"$$p\""; \
 	done < ./data/tablelist.txt || true
 
 .PHONY: docker_deps

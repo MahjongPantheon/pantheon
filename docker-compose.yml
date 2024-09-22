@@ -134,7 +134,7 @@ services:
       - ./Common:/var/www/html/Common
     environment:
       PHINX_DB_PORT: 5432
-      PHINX_DB_HOST: db
+      PHINX_DB_HOST: db.pantheon.internal
     networks:
       internal_net:
         aliases:
@@ -156,7 +156,7 @@ services:
       - ./Common:/var/www/html/Common
     environment:
       PHINX_DB_FREY_PORT: 5432
-      PHINX_DB_FREY_HOST: db
+      PHINX_DB_FREY_HOST: db.pantheon.internal
     networks:
       internal_net:
         aliases:
@@ -204,7 +204,7 @@ services:
       - muninvolume01:/var/lib/munin/spool
     environment:
       PHINX_DB_HUGIN_PORT: 5432
-      PHINX_DB_HUGIN_HOST: db
+      PHINX_DB_HUGIN_HOST: db.pantheon.internal
     networks:
       internal_net:
         aliases:
