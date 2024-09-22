@@ -17,7 +17,7 @@ nginx -g "daemon off;" 2>&1 &
 NGINX_PID=$!
 
 echo 'Starting PHP-FPM';
-php-fpm81 -R -F 2>&1 &
+php-fpm83 -R -F 2>&1 &
 PHP_FPM_PID=$!
 
 echo 'Starting Memcached';
