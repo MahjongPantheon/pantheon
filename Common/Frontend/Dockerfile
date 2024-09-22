@@ -1,4 +1,4 @@
-FROM alpine:3.19.2
+FROM alpine:3.20.3
 
 ENV TIMEZONE            Europe/Berlin
 ENV PHP_MEMORY_LIMIT    512M
