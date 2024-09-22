@@ -63,7 +63,7 @@ services:
           - db.pantheon.local
           - db.pantheon.internal
   pgadmin:
-    image: docker.io/dpage/pgadmin4:7.3
+    image: docker.io/dpage/pgadmin4:8.11
     ports:
       - "127.0.0.1:5632:80"
     environment:
