@@ -1,4 +1,6 @@
 parameters:
+  universalObjectCratesClasses:
+    - XMLReader
   checkMissingIterableValueType: false
   reportUnmatchedIgnoredErrors: false
   scanDirectories:

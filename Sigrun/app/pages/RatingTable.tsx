@@ -95,7 +95,7 @@ export const RatingTable: React.FC<{
       return api.getRatingTable(
         eventIds,
         order ?? 'desc',
-        orderBy === 'team' ? 'rating' : orderBy ?? 'rating',
+        orderBy === 'team' ? 'rating' : (orderBy ?? 'rating'),
         minGamesSelector === 'min'
       );
     },

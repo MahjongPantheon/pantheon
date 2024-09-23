@@ -23,7 +23,7 @@ import { Isomorphic } from './hooks/isomorphic';
 import staticLocationHook from 'wouter/static-location';
 import { Layout } from './components/Layout';
 import React from 'react';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, HelmetServerState } from 'react-helmet-async';
 import { JSDOM } from 'jsdom';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
@@ -48,7 +48,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   const locHook = staticLocationHook(url);
   (global as any).JSDOM = JSDOM;
 
-  const helmetContext: { helmet?: { title: any; meta: any; link: any } } = {};
+  const helmetContext: { helmet?: HelmetServerState } = {};
 
   // First pass to collect effects
   ReactDOMServer.renderToString(

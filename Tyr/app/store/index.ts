@@ -61,6 +61,7 @@ export class Store {
     const analyticsService = new Analytics();
     const riichiService = new RiichiApiTwirpService();
     const middleware = applyMiddleware(
+      // @ts-expect-error Legacy redux middlewares don't work well with new typescript inference
       logging(`⇨ [middlewares]`),
       apiClient(riichiService),
       analytics(analyticsService),

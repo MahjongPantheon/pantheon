@@ -112,7 +112,7 @@ init_test_db:
 clean_test_db:
 	echo "Cleaning test db..."
 	while read p; do \
-		PGPASSWORD=pgpass psql -hdb -p5432 -U mimir mimir_unit -c "DROP TABLE $$p"; \
+		PGPASSWORD=pgpass psql -hdb.pantheon.internal -p5432 -U mimir mimir_unit -c "DROP TABLE $$p"; \
 	done < ./data/tablelist.txt || true
 
 .PHONY: enable_debug
@@ -120,7 +120,7 @@ enable_debug:
 	@echo -ne "zend_extension=xdebug.so\n \
 		xdebug.mode=debug\n \
 		xdebug.client_host=172.17.0.1\n \
-		xdebug.client_port=9001\n" > /etc/php81/conf.d/50_xdebug.ini
+		xdebug.client_port=9001\n" > /etc/php83/conf.d/50_xdebug.ini
 	$(shell kill -SIGUSR2 `ps ax | grep php-fpm | grep master | awk '{print $$1}'`)
 
 .PHONY: docker_enable_debug

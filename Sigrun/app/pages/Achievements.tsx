@@ -134,6 +134,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     (acc, val) => {
       try {
         acc[val.achievementId] = JSON.parse(val.achievementData);
+        // eslint-disable-next-line  @typescript-eslint/no-unused-vars
       } catch (e) {
         acc[val.achievementId] = null;
       }

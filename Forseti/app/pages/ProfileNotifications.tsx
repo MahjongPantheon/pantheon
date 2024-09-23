@@ -57,7 +57,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
     api.getNotificationsSettings(personId).then((resp) => {
       setIsLoading(false);
       form.setValues({
-        id: resp.id ? resp.id : id ?? '',
+        id: resp.id ? resp.id : (id ?? ''),
         notifications: resp.notifications,
       });
     });
