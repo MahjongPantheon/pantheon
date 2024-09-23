@@ -11,7 +11,7 @@ networks:
     driver: bridge
     attachable: true
 services:
-  hermod:
+  hermod.pantheon.internal:
     build: ./Hermod
     image: ghcr.io/mahjongpantheon/pantheon-hermod:latest
     hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
@@ -28,7 +28,7 @@ services:
         aliases:
           - hermod.pantheon.local
           - hermod.pantheon.internal
-  skirnir:
+  skirnir.pantheon.internal:
     build: ./Skirnir
     image: ghcr.io/mahjongpantheon/pantheon-skirnir:latest
     env_file:
@@ -45,7 +45,7 @@ services:
         aliases:
           - skirnir.pantheon.local
           - skirnir.pantheon.internal
-  db:
+  db.pantheon.internal:
     build: ./Database
     image: ghcr.io/mahjongpantheon/pantheon-database:latest
     env_file:
@@ -62,7 +62,7 @@ services:
         aliases:
           - db.pantheon.local
           - db.pantheon.internal
-  pgadmin:
+  pgadmin.pantheon.internal:
     image: docker.io/dpage/pgadmin4:8.11
     ports:
       - "127.0.0.1:5632:80"
@@ -77,7 +77,7 @@ services:
         aliases:
           - pga.pantheon.local
           - pga.pantheon.internal
-  tyr:
+  tyr.pantheon.internal:
     build: ./Tyr
     image: ghcr.io/mahjongpantheon/pantheon-tyr:latest
     env_file:
@@ -86,8 +86,8 @@ services:
       - "127.0.0.1:4003:80"
       - "127.0.0.1:49492:4949"
     depends_on:
-      - frey
-      - mimir
+      - frey.pantheon.internal
+      - mimir.pantheon.internal
     volumes:
       - ./Tyr:/var/www/html/Tyr
       - ./Tyr-dist:/var/www/html/Tyr-dist
@@ -97,7 +97,7 @@ services:
         aliases:
           - tyr.pantheon.local
           - tyr.pantheon.internal
-  forseti:
+  forseti.pantheon.internal:
     build: ./Forseti
     image: ghcr.io/mahjongpantheon/pantheon-forseti:latest
     env_file:
@@ -106,8 +106,8 @@ services:
       - "127.0.0.1:4007:80"
       - "127.0.0.1:49493:4949"
     depends_on:
-      - frey
-      - mimir
+      - frey.pantheon.internal
+      - mimir.pantheon.internal
     volumes:
       - ./Forseti:/var/www/html/Forseti
       - ./Forseti-dist:/var/www/html/Forseti-dist
@@ -117,7 +117,7 @@ services:
         aliases:
           - forseti.pantheon.local
           - forseti.pantheon.internal
-  mimir:
+  mimir.pantheon.internal:
     build: ./Mimir
     image: ghcr.io/mahjongpantheon/pantheon-mimir:latest
     env_file:
@@ -126,9 +126,9 @@ services:
       - "127.0.0.1:4001:80"
       - "127.0.0.1:49494:4949"
     depends_on:
-      - frey
-      - db
-      - skirnir
+      - frey.pantheon.internal
+      - db.pantheon.internal
+      - skirnir.pantheon.internal
     volumes:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
@@ -140,7 +140,7 @@ services:
         aliases:
           - mimir.pantheon.local
           - mimir.pantheon.internal
-  frey:
+  frey.pantheon.internal:
     build: ./Frey
     image: ghcr.io/mahjongpantheon/pantheon-frey:latest
     env_file:
@@ -149,8 +149,8 @@ services:
       - "127.0.0.1:4004:80"
       - "127.0.0.1:49495:4949"
     depends_on:
-      - db
-      - hermod
+      - db.pantheon.internal
+      - hermod.pantheon.internal
     volumes:
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
@@ -162,7 +162,7 @@ services:
         aliases:
           - frey.pantheon.local
           - frey.pantheon.internal
-  sigrun:
+  sigrun.pantheon.internal:
     build: ./Sigrun
     image: ghcr.io/mahjongpantheon/pantheon-sigrun:latest
     env_file:
@@ -171,8 +171,8 @@ services:
       - "127.0.0.1:4002:80"
       - "127.0.0.1:49496:4949"
     depends_on:
-      - frey
-      - mimir
+      - frey.pantheon.internal
+      - mimir.pantheon.internal
     volumes:
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
@@ -182,7 +182,7 @@ services:
         aliases:
           - sigrun.pantheon.local
           - sigrun.pantheon.internal
-  hugin:
+  hugin.pantheon.internal:
     build: ./Hugin
     image: ghcr.io/mahjongpantheon/pantheon-hugin:latest
     env_file:
@@ -191,13 +191,13 @@ services:
       - "127.0.0.1:4010:80"
       - "127.0.0.1:49497:4949"
     depends_on:
-      - db
-      - hermod
-      - tyr
-      - forseti
-      - mimir
-      - frey
-      - sigrun
+      - db.pantheon.internal
+      - hermod.pantheon.internal
+      - tyr.pantheon.internal
+      - forseti.pantheon.internal
+      - mimir.pantheon.internal
+      - frey.pantheon.internal
+      - sigrun.pantheon.internal
     volumes:
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
@@ -212,7 +212,7 @@ services:
           - munin.pantheon.local
           - hugin.pantheon.internal
           - munin.pantheon.internal
-  gullveig:
+  gullveig.pantheon.internal:
     build: ./Gullveig
     image: ghcr.io/mahjongpantheon/pantheon-gullveig:latest
     env_file:
@@ -229,7 +229,7 @@ services:
         aliases:
           - gullveig.pantheon.local
           - gullveig.pantheon.internal
-  bragi:
+  bragi.pantheon.internal:
     build: ./Bragi
     image: ghcr.io/mahjongpantheon/pantheon-bragi:latest
     env_file:
@@ -246,7 +246,7 @@ services:
         aliases:
           - bragi.pantheon.local
           - bragi.pantheon.internal
-  fenrir:
+  fenrir.pantheon.internal:
     build: ./Fenrir
     image: ghcr.io/mahjongpantheon/pantheon-fenrir:latest
     profiles:
@@ -256,15 +256,15 @@ services:
     ports:
       - "127.0.0.1:4017:80"
     depends_on:
-      - db
-      - hermod
-      - tyr
-      - forseti
-      - mimir
-      - frey
-      - sigrun
-      - gullveig
-      - skirnir
+      - db.pantheon.internal
+      - hermod.pantheon.internal
+      - tyr.pantheon.internal
+      - forseti.pantheon.internal
+      - mimir.pantheon.internal
+      - frey.pantheon.internal
+      - sigrun.pantheon.internal
+      - gullveig.pantheon.internal
+      - skirnir.pantheon.internal
     volumes:
       - ./Fenrir:/var/www/html/Fenrir
       - ./Common:/var/www/html/Common

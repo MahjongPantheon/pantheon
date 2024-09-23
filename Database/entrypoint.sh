@@ -87,4 +87,4 @@ sed -i '/^port =/d' "$PGDATA"/postgresql.conf
 { echo; echo "port = 5432"; } >> "$PGDATA"/postgresql.conf
 
 echo 'Starting PostgreSQL':
-su-exec postgres postgres -D "$PGDATA" -o "-c listen_addresses='*'"
+su-exec postgres postgres -D "$PGDATA" -c "listen_addresses=*"
