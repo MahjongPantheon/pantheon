@@ -530,7 +530,7 @@ e2e:
 .PHONY: e2e_local
 e2e_dev: export ENV_FILENAME=.env.development
 e2e_dev:
-	@${COMPOSE_COMMAND} up fenrir -d
+	@${COMPOSE_COMMAND} up fenrir.pantheon.internal -d
 	cd Fenrir && ${MAKE} docker_deps && ${MAKE} docker_run
 
 .PHONY: e2e_build_tyr
