@@ -28,7 +28,7 @@ deps:
 PHONY: eslint
 eslint:
 	echo "======= Fenrir: eslint ======"
-	./node_modules/.bin/eslint --ext .js,.ts,.tsx .
+	./node_modules/.bin/eslint .
 
 PHONY: docker_eslint
 docker_eslint: get_docker_id
@@ -66,7 +66,7 @@ docker_typecheck: get_docker_id
 
 PHONY: autofix
 autofix:
-	./node_modules/.bin/eslint . --ext .js,.ts,.tsx --fix
+	./node_modules/.bin/eslint . --fix
 	./node_modules/.bin/prettier -w ./tests
 
 run:
