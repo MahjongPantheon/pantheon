@@ -30,7 +30,7 @@ import { I18nProvider, useI18n } from '../hooks/i18n';
 import '../App.css';
 import { useState, ReactNode, useEffect } from 'react';
 import { NavigationProgress } from '@mantine/nprogress';
-import { EmotionCache } from '@emotion/css';
+import { EmotionCache } from '@emotion/utils';
 import { Meta } from './Meta';
 import * as React from 'react';
 import { Hero } from './Hero';

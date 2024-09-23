@@ -37,7 +37,7 @@ import { useCallback, useState, ReactNode, useEffect } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
-import { EmotionCache } from '@emotion/css';
+import { EmotionCache } from '@emotion/utils';
 import { Meta } from './components/Meta';
 import { useIsomorphicState } from './hooks/useIsomorphicState';
 import { PersonEx, PlatformType } from './clients/proto/atoms.pb';
