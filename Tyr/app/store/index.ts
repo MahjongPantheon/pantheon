@@ -15,14 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  createStore,
-  applyMiddleware,
-  Store as ReduxStore,
-  compose,
-  Reducer,
-  Dispatch,
-} from 'redux';
+import { createStore, applyMiddleware, Store as ReduxStore, compose, Reducer } from 'redux';
 import { screenManageReducer } from './reducers/screenManageReducer';
 import { apiClient } from './middlewares/apiClient';
 import { mimirReducer } from './reducers/mimirReducer';

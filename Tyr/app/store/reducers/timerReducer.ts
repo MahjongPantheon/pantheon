@@ -29,8 +29,8 @@ export function timerReducer(state: IAppState, action: AppActionTypes): IAppStat
           secondsRemaining: action.payload.secondsRemaining ?? 0,
           autostartSecondsRemaining: action.payload.autostartSecondsRemaining ?? 0,
           autostartLastUpdateSecondsRemaining: action.payload.autostartLastUpdateTimestamp
-            ? action.payload.autostartSecondsRemaining ?? 0
-            : state.timer?.autostartLastUpdateSecondsRemaining ?? 0,
+            ? (action.payload.autostartSecondsRemaining ?? 0)
+            : (state.timer?.autostartLastUpdateSecondsRemaining ?? 0),
           autostartLastUpdateTimestamp:
             action.payload.autostartLastUpdateTimestamp ??
             state.timer?.autostartLastUpdateTimestamp ??
@@ -38,8 +38,8 @@ export function timerReducer(state: IAppState, action: AppActionTypes): IAppStat
           lastUpdateTimestamp:
             action.payload.lastUpdateTimestamp ?? state.timer?.lastUpdateTimestamp ?? 0,
           lastUpdateSecondsRemaining: action.payload.lastUpdateTimestamp
-            ? action.payload.secondsRemaining ?? 0
-            : state.timer?.lastUpdateSecondsRemaining ?? 0,
+            ? (action.payload.secondsRemaining ?? 0)
+            : (state.timer?.lastUpdateSecondsRemaining ?? 0),
         },
       };
     default:
