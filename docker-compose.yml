@@ -1,6 +1,6 @@
 name: pantheon
 volumes:
-  datavolume01: {}
+  datavolume02: {}
   backupvolume01: {}
   configvolume01: {}
   muninvolume01: {}
@@ -54,7 +54,7 @@ services:
       - "5532:5432"
       - "127.0.0.1:49498:4949"
     volumes:
-      - datavolume01:/var/lib/postgresql/data
+      - datavolume02:/var/lib/postgresql/data
       - configvolume01:/var/lib/postgresql/.ssh
       - backupvolume01:/var/lib/postgresql/backup
     networks:
