@@ -477,7 +477,9 @@ prod_stop_all:
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
-	@${COMPOSE_COMMAND} down forseti frey hermod hugin mimir sigrun tyr gullveig bragi skirnir
+	@${COMPOSE_COMMAND} down forseti.pantheon.internal frey.pantheon.internal hermod.pantheon.internal \
+    hugin.pantheon.internal mimir.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal \
+    gullveig.pantheon.internal bragi.pantheon.internal skirnir.pantheon.internal
 
 .PHONY: prod_restart
 prod_restart:
