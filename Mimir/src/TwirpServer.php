@@ -25,6 +25,7 @@ use Common\DrawResult;
 use Common\Event;
 use Common\EventData;
 use Common\EventsGetTablesStatePayload;
+use Common\PlatformType;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
 use Common\PrescriptedTable;
@@ -318,7 +319,11 @@ final class TwirpServer implements Mimir
             $data->setLobbyId($ret['lobbyId']);
         }
         if (!empty($ret['platformId'])) {
-            $data->setPlatformId($ret['platformId']);
+            if ($ret['platformId'] !== -1) {
+                $data->setPlatformId($ret['platformId']);
+            } else {
+                $data->setPlatformId(PlatformType::PLATFORM_TYPE_UNSPECIFIED);
+            }
         }
         return $data;
     }
