@@ -1214,7 +1214,7 @@ class EventsController extends Controller
             $item->drop();
         }
 
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, 'finished', 0, null, 'id', 'asc');
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], 'finished', 0, null, 'id', 'asc');
         foreach ($sessions as $session) {
             $session->recreateHistory();
         }

@@ -58,8 +58,16 @@ class EventRatingTableModel extends Model
 
         /** @var PlayerHistoryPrimitive[] $playersHistoryItemsCombined */
         $playersHistoryItemsCombined = [];
-        /** @var PlayerPrimitive[] $playerItems */
-        $playerItems = [];
+
+        $historyItems = array_reduce(PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds), function ($acc, PlayerHistoryPrimitive $item) {
+            if (empty($acc[$item->getEventId()])) {
+                $acc[$item->getEventId()] = [];
+            }
+            $acc[$item->getEventId()] []= $item;
+            return $acc;
+        }, []);
+
+        $tmpFakeItems = $isAdmin ? $this->_getFakePrefinishedItems($eventIds) : [];
 
         /* Algorithm is kinda complicated when we want to get rating table for several events,
          * so here is its description step by step:
@@ -82,18 +90,15 @@ class EventRatingTableModel extends Model
             }
 
             if (!$event->getHideResults() || $isAdmin) {
-                /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
-                $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eId);
-                foreach ($tmpPlayersHistoryItems as $item) {
+                foreach ($historyItems[$eId] as $item) {
                     // php kludge: keys should be string, not numeric (to overwrite values)
                     $playersHistoryItems['id' . $item->getPlayerId()] = $item;
                 }
 
                 if ($isAdmin) {
                     // Include fake player history items made of prefinished games results
-                    $tmpFakeItems = $this->_getFakePrefinishedItems($event);
                     $fakeItems = [];
-                    foreach ($tmpFakeItems as $item) {
+                    foreach ($tmpFakeItems[$eId] as $item) {
                         // php kludge: keys should be string, not numeric (to overwrite values)
                         $fakeItems['id' . $item->getPlayerId()] = $item;
                     }
@@ -101,14 +106,11 @@ class EventRatingTableModel extends Model
                     // Warning: don't ever call ->save() on these items!
                 }
 
-                $playersHistoryItems = array_values($playersHistoryItems);
-                /* We use '+' operator here, because we want to keep keys (player id) and we know, that
-                 * merged arrays can't have different values for same keys. */
-                $playerItems = $playerItems + $this->_getPlayers($playersHistoryItems);
-
-                $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, $playersHistoryItems);
+                $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, array_values($playersHistoryItems));
             }
         }
+
+        $playerItems = $this->_getPlayers($playersHistoryItemsCombined);
 
         /** @var PlayerHistoryPrimitive[] $playerHistoryItemsSummed */
         $playerHistoryItemsSummed = [];
@@ -223,25 +225,25 @@ class EventRatingTableModel extends Model
     /**
      * For games that should end synchronously, make fake history items
      * to properly display rating table for tournament administrators.
-     * These history items are not intended to be SAVED!
+     * These history items are NOT intended to be SAVED!
      *
-     * @param EventPrimitive $event
+     * @param int[] $eventIds
      * @return PlayerHistoryPrimitive[]
      * @throws \Exception
      */
-    protected function _getFakePrefinishedItems(EventPrimitive $event)
+    protected function _getFakePrefinishedItems($eventIds)
     {
-        $eId = $event->getId();
-        if (empty($eId)) {
-            throw new InvalidParametersException('Attempted to use deidented primitive');
-        }
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eId, SessionPrimitive::STATUS_PREFINISHED);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventIds, SessionPrimitive::STATUS_PREFINISHED);
         $historyItems = [];
 
         foreach ($sessions as $session) {
+            if (empty($historyItems[$session->getEventId()])) {
+                $historyItems[$session->getEventId()] = [];
+            }
+
             $sessionResults = $session->getSessionResults();
             foreach ($sessionResults as $sessionResult) {
-                $historyItems []= PlayerHistoryPrimitive::makeNewHistoryItem(
+                $historyItems[$session->getEventId()] []= PlayerHistoryPrimitive::makeNewHistoryItem(
                     $this->_ds,
                     $sessionResult->getPlayer(),
                     $session,

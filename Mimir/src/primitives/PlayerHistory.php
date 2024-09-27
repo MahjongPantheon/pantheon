@@ -137,17 +137,20 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param int $eventId
+     * @param int[] $eventIds
      * @throws \Exception
      * @return PlayerHistoryPrimitive[]
      */
-    public static function findLastByEvent(DataSource $ds, $eventId)
+    public static function findLastByEvent(DataSource $ds, $eventIds)
     {
         // 1) select ids of latest player history items
         $orm = $ds->table(static::$_table);
         $orm->selectExpr('max(id)', 'mx')
-            ->where('event_id', $eventId)
-            ->groupBy('player_id');
+            ->select('player_id')
+            ->select('event_id')
+            ->whereIn('event_id', $eventIds)
+            ->groupBy('player_id')
+            ->groupBy('event_id');
         $ids = array_map(function ($el) {
             return $el['mx'];
         }, $orm->findArray());

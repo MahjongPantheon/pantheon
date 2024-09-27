@@ -136,7 +136,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $ratings[0]['games_played']);
         $this->assertEquals(4, $ratings[0]['id']);
 
-        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, $this->_event->getId(), SessionPrimitive::STATUS_FINISHED);
+        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, [$this->_event->getId()], SessionPrimitive::STATUS_FINISHED);
         $this->assertEquals(1, count($sessionPrimitive));
         $session = $sessionPrimitive[0];
         $this->assertEquals($this->_event->getId(), $session->getEventId());
@@ -179,7 +179,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $ratings[0]['games_played']);
         $this->assertEquals(4, $ratings[0]['id']);
 
-        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, $this->_event->getId(), SessionPrimitive::STATUS_FINISHED);
+        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, [$this->_event->getId()], SessionPrimitive::STATUS_FINISHED);
         $this->assertEquals(1, count($sessionPrimitive));
         $session = $sessionPrimitive[0];
         $this->assertEquals($this->_event->getId(), $session->getEventId());

@@ -45,7 +45,7 @@ class SeatingController extends Controller
         $this->_log->info('Creating new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
 
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
@@ -100,7 +100,7 @@ class SeatingController extends Controller
         $this->_log->info('Creating new swiss seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
 
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
@@ -201,7 +201,7 @@ class SeatingController extends Controller
         $this->_log->info('Creating new interval seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
 
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
@@ -269,7 +269,7 @@ class SeatingController extends Controller
         $this->_log->info('Creating new prescripted seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
 
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
@@ -464,7 +464,7 @@ class SeatingController extends Controller
         }
 
         $events[0]->setGamesStatus(EventPrimitive::GS_STARTED)->save();
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_INPROGRESS);
         foreach ($sessions as $session) {
             $session->drop();
         }
@@ -534,7 +534,7 @@ class SeatingController extends Controller
         $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$eventId]);
 
         // First step is adding players that already played games
-        $histories = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
+        $histories = PlayerHistoryPrimitive::findLastByEvent($this->_ds, [$eventId]);
         foreach ($histories as $h) {
             if (!in_array($h->getPlayerId(), $ignoredPlayerIds)) {
                 $playersMap[$h->getPlayerId()] = $h->getRating();

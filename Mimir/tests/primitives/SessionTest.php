@@ -98,7 +98,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findByEventAndStatus($this->_ds, $this->_event->getId(), $newSession->getStatus());
+        $sessionCopy = SessionPrimitive::findByEventAndStatus($this->_ds, [$this->_event->getId()], $newSession->getStatus());
         $this->assertEquals(1, count($sessionCopy));
         $this->assertEquals('hash', $sessionCopy[0]->getReplayHash());
         $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!

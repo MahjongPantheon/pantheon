@@ -165,7 +165,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $ratings[0]['id']);
         $this->assertEquals(44, $ratings[3]['id']);
 
-        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, $this->_event->getId(), SessionPrimitive::STATUS_FINISHED);
+        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, [$this->_event->getId()], SessionPrimitive::STATUS_FINISHED);
         $this->assertEquals(1, count($sessionPrimitive));
         $session = $sessionPrimitive[0];
         $this->assertEquals($this->_event->getId(), $session->getEventId());

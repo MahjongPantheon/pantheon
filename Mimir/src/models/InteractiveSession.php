@@ -159,7 +159,7 @@ class InteractiveSessionModel extends Model
             throw new AuthFailedException('Only administrators are allowed to finalize sessions');
         }
 
-        $games = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, 'prefinished');
+        $games = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], 'prefinished');
         if (empty($games)) {
             return 0;
         }

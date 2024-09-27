@@ -53,7 +53,7 @@ class EventModel extends Model
         $startRating = $event[0]->getRulesetConfig()->rules()->getStartRating();
 
         // get data from primitives, and some raw data
-        $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
+        $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, [$eventId]);
         $seatings = $this->_ds->table('session_player')
             ->join('session', 'session.id = session_player.session_id')
             ->select('session_player.order')
@@ -140,7 +140,7 @@ class EventModel extends Model
             $tablesCount = count($reggedPlayers) / 4;
         }
 
-        $lastGames = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, [
+        $lastGames = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], [
             SessionPrimitive::STATUS_FINISHED,
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
