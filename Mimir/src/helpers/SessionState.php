@@ -46,10 +46,6 @@ class SessionState
      */
     protected $_penalties = [];
     /**
-     * @var array
-     */
-    protected $_extraPenaltyLog = [];
-    /**
      * @var int
      */
     protected $_round = 1; // 1e-4s
@@ -449,17 +445,6 @@ class SessionState
     }
 
     /**
-     * @param int|null $id
-     * @param int $penaltyAmount - total points amount to be subtracted from player score
-     *
-     * @return void
-     */
-    public function applyYakitoriPenalty($id, int $penaltyAmount): void
-    {
-        $this->_scores[$id] -= $penaltyAmount;
-    }
-
-    /**
      * @param RoundPrimitive $round
      * @throws \Exception
      * @return array
@@ -685,37 +670,6 @@ class SessionState
                 }
             }
         }
-    }
-
-    /**
-     * Add extra penalty points for player in current game
-     * Used for penalties that are not related to main game process. Do not use this to apply chombo!
-     *
-     * @param int $playerId
-     * @param int $amount
-     * @param string $reason
-     *
-     * @return void
-     */
-    public function addPenalty(int $playerId, int $amount, string $reason): void
-    {
-        if (empty($this->_penalties[$playerId])) {
-            $this->_penalties[$playerId] = 0;
-        }
-        $this->_penalties[$playerId] -= $amount;
-        $this->_extraPenaltyLog []= [
-            'who' => $playerId,
-            'amount' => $amount,
-            'reason' => $reason
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getPenaltiesLog()
-    {
-        return $this->_extraPenaltyLog;
     }
 
     /**

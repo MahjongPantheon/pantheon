@@ -70,6 +70,7 @@ class EventFinishedGamesModel extends Model
 
         $sessionResults = $this->_getSessionResults($sessionIds); // 1st level: session id, 2nd level: player id
         $rounds = $this->_getRounds($sessionIds); // 1st level: session id, 2nd level: numeric index with no meaning
+        $penalties = $this->_getPenalties($sessionIds); // 1st level: session id
 
         $result = [
             'games' => [],
@@ -78,7 +79,7 @@ class EventFinishedGamesModel extends Model
         ];
 
         foreach ($games as $session) {
-            $result['games'][] = Formatters::formatGameResults($session, $sessionResults, $rounds);
+            $result['games'][] = Formatters::formatGameResults($session, $sessionResults, $penalties[$session->getId()], $rounds);
         }
 
         return $result;
@@ -108,8 +109,19 @@ class EventFinishedGamesModel extends Model
             }
         }
 
+        $penalties = array_map(function(PenaltyPrimitive $pp) {
+            if (empty($pp->getId())) {
+                throw new InvalidParametersException('Attempted to use deidented primitive');
+            }
+            return [
+                'who' => $pp->getPlayerId(),
+                'amount' => $pp->getAmount(),
+                'reason' => $pp->getReason(),
+            ];
+        }, PenaltyPrimitive::findBySessionId($this->_ds, [$session->getId()]));
+
         return [
-            'games' => [Formatters::formatGameResults($session, $sessionResults, $rounds, $replacements)],
+            'games' => [Formatters::formatGameResults($session, $sessionResults, $penalties, $rounds, $replacements)],
             'players' => EventModel::getPlayersOfGames($this->_ds, [$session], $session->getEventId(), $replacements)
         ];
     }
@@ -133,6 +145,31 @@ class EventFinishedGamesModel extends Model
         }
 
         return $result;
+    }
+
+    /**
+     * @param int[] $sessionIds
+     * @return array
+     * @throws InvalidParametersException
+     */
+    protected function _getPenalties(array $sessionIds)
+    {
+        return array_reduce(PenaltyPrimitive::findBySessionId($this->_ds, $sessionIds), function ($acc, $item) {
+            if (empty($item->getId())) {
+                throw new InvalidParametersException('Attempted to use deidented primitive');
+            }
+
+            if (empty($acc[$item->getSessionId()])) {
+                $acc[$item->getSessionId()] = [];
+            }
+
+            $acc[$item->getSessionId()] []= [
+                'who' => $item->getPlayerId(),
+                'amount' => $item->getAmount(),
+                'reason' => $item->getReason()
+            ];
+            return $acc;
+        }, []);
     }
 
     /**

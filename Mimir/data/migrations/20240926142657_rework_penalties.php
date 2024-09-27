@@ -23,6 +23,7 @@ class ReworkPenalties extends AbstractMigration
             ->addIndex('cancelled', ['name' => 'penalty_cancelled'])
 
             ->addForeignKey('event_id', 'event')
+            ->addForeignKey('session_id', 'session')
 
             ->save();
     }

@@ -140,6 +140,54 @@ class PenaltyPrimitive extends Primitive
     }
 
     /**
+     * @param DataSource $ds
+     * @param int[] $ids
+     * @return PenaltyPrimitive[]
+     * @throws \Exception
+     */
+    public static function findById(DataSource $ds, $ids)
+    {
+        return self::_findBy($ds, 'id', $ids);
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param int[] $eventIds
+     * @return PenaltyPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEventId(DataSource $ds, $eventIds)
+    {
+        return self::_findBy($ds, 'eventId', $eventIds);
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param int[] $sessionIds
+     * @return PenaltyPrimitive[]
+     * @throws \Exception
+     */
+    public static function findBySessionId(DataSource $ds, $sessionIds)
+    {
+        return self::_findBy($ds, 'sessionId', $sessionIds);
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param int $eventId
+     * @param int $playerId
+     * @return PenaltyPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEventAndPlayer(DataSource $ds, $eventId, $playerId)
+    {
+        return self::_findBySeveral($ds, [
+            'player_id'  => [$playerId],
+            'event_id'   => [$eventId]
+        ]);
+    }
+
+    /**
      * @return int|null
      */
     public function getId()

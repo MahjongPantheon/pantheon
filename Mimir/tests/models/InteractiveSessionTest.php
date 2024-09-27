@@ -332,7 +332,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
     public function testAddPenalty()
     {
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
-        $hash = $session->startGame(
+        $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
                 return $p->getId();
@@ -344,14 +344,20 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $success = $session->addPenalty($this->_event->getId(), $playerId, 100, 'Just like that');
         $this->assertTrue($success);
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
-        $this->assertEquals([$playerId => -100], $sessionPrimitive->getCurrentState()->getPenalties());
+        $penaltyPrimitives = PenaltyPrimitive::findByEventId($this->_ds, [$this->_event->getId()]);
+        $this->assertEquals(1, count($penaltyPrimitives));
+        $this->assertEquals(100, $penaltyPrimitives[0]->getAmount());
+        $this->assertEquals($playerId, $penaltyPrimitives[0]->getPlayerId());
 
         $success = $session->addPenalty($this->_event->getId(), $playerId, 200, 'Just like that');
         $this->assertTrue($success);
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
-        $this->assertEquals([$playerId => -300], $sessionPrimitive->getCurrentState()->getPenalties());
+        $penaltyPrimitivesCopy = PenaltyPrimitive::findByEventId($this->_ds, [$this->_event->getId()]);
+        $this->assertEquals(2, count($penaltyPrimitivesCopy));
+        $this->assertEquals(100, $penaltyPrimitivesCopy[0]->getAmount());
+        $this->assertEquals(200, $penaltyPrimitivesCopy[1]->getAmount());
+        $this->assertEquals($playerId, $penaltyPrimitivesCopy[0]->getPlayerId());
+        $this->assertEquals($playerId, $penaltyPrimitivesCopy[1]->getPlayerId());
     }
 
     // Negative tests

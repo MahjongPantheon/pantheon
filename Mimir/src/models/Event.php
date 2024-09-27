@@ -257,7 +257,16 @@ class EventModel extends Model
                     'status' => $game->getStatus(),
                     'may_definalize' => DateHelper::mayDefinalizeGame($game),
                     'hash' => $game->getRepresentationalHash(),
-                    'penalties' => $game->getCurrentState()->getPenaltiesLog(),
+                    'penalties' => array_map(function(PenaltyPrimitive $pp) {
+                        if (empty($pp->getId())) {
+                            throw new InvalidParametersException('Attempted to use deidented primitive');
+                        }
+                        return [
+                            'who' => $pp->getPlayerId(),
+                            'amount' => $pp->getAmount(),
+                            'reason' => $pp->getReason(),
+                        ];
+                    }, PenaltyPrimitive::findBySessionId($this->_ds, [$game->getId()])),
                     'table_index' => $game->getTableIndex(),
                     'last_round_detailed' => $lastRound ? Formatters::formatRound($lastRound, $game) : null,
                     'last_round' => $lastRound ? $this->_formatLastRound($lastRound, $game) : [],

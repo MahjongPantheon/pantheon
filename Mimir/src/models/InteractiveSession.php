@@ -409,25 +409,38 @@ class InteractiveSessionModel extends Model
     public function addPenalty($eventId, $playerId, $amount, $reason)
     {
         if (!$this->_meta->isEventAdminById($eventId)) {
+            // TODO: support referees
             throw new AuthFailedException('Only administrators are allowed to add penalties');
         }
 
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
-        if (empty($session)) {
-            throw new InvalidParametersException("Couldn't find session in DB");
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException("The event could not be found in the database.");
         }
 
-        if (!$session->getEvent()->getUsePenalty()) {
+        if (!$event[0]->getUsePenalty()) {
             throw new InvalidParametersException('This event doesn\'t support adding penalties');
         }
 
-        if (!in_array($playerId, $session->getPlayersIds())) {
-            throw new InvalidParametersException("This player does not play this game");
+        if (empty(PlayerPrimitive::findById($this->_ds, [$playerId]))) {
+            throw new InvalidParametersException("The player could not be found in the database.");
         }
 
-        // TODO: save extra penalties in extra table, so round rollback would not affect them
-        $session->getCurrentState()->addPenalty($playerId, $amount, $reason);
-        return $session->save();
+        $item = (new PenaltyPrimitive($this->_ds))
+            ->setEventId($eventId)
+            ->setPlayerId($playerId)
+            ->setCreatedAt(date('Y-m-d H:i:s'))
+            ->setAmount($amount)
+            ->setReason($reason)
+            ->setAssignedBy($this->_meta->getCurrentPersonId());
+
+        // Set session id if penalty occurred during the session
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        if (!empty($session)) {
+            $item->setSessionId($session->getId());
+        }
+
+        return $item->save();
     }
 
     /**
