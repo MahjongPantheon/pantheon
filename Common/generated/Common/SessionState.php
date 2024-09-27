@@ -38,10 +38,6 @@ class SessionState extends \Google\Protobuf\Internal\Message
      */
     protected $finished = false;
     /**
-     * Generated from protobuf field <code>repeated .common.Penalty penalties = 7;</code>
-     */
-    private $penalties;
-    /**
      * Generated from protobuf field <code>bool last_hand_started = 8;</code>
      */
     protected $last_hand_started = false;
@@ -58,7 +54,6 @@ class SessionState extends \Google\Protobuf\Internal\Message
      *     @type int $honba_count
      *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
      *     @type bool $finished
-     *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $penalties
      *     @type bool $last_hand_started
      * }
      */
@@ -195,28 +190,6 @@ class SessionState extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->finished = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated .common.Penalty penalties = 7;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getPenalties()
-    {
-        return $this->penalties;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated .common.Penalty penalties = 7;</code>
-     * @param array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setPenalties($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Penalty::class);
-        $this->penalties = $arr;
 
         return $this;
     }

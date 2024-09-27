@@ -248,6 +248,10 @@ export interface Penalty {
   who: number;
   amount: number;
   reason?: string | null | undefined;
+  assignedBy: number;
+  createdAt: string;
+  isCancelled: boolean;
+  cancellationReason?: string | null | undefined;
 }
 
 export interface RonResult {
@@ -348,7 +352,6 @@ export interface GameResult {
   replayLink: string;
   players: number[];
   finalResults: FinalResultOfSession[];
-  penaltyLogs: Penalty[];
   rounds: Round[];
 }
 
@@ -523,7 +526,6 @@ export interface TableState {
   status: SessionStatus;
   mayDefinalize: boolean;
   sessionHash: string;
-  penaltyLogs: Penalty[];
   tableIndex?: number | null | undefined;
   lastRound?: Round | null | undefined;
   currentRoundIndex: number;
@@ -577,7 +579,6 @@ export interface SessionState {
   honbaCount: number;
   scores: IntermediateResultOfSession[];
   finished: boolean;
-  penalties: Penalty[];
   lastHandStarted: boolean;
 }
 
@@ -3127,6 +3128,10 @@ export const Penalty = {
       who: 0,
       amount: 0,
       reason: undefined,
+      assignedBy: 0,
+      createdAt: "",
+      isCancelled: false,
+      cancellationReason: undefined,
       ...msg,
     };
   },
@@ -3146,6 +3151,18 @@ export const Penalty = {
     }
     if (msg.reason != undefined) {
       writer.writeString(3, msg.reason);
+    }
+    if (msg.assignedBy) {
+      writer.writeInt32(4, msg.assignedBy);
+    }
+    if (msg.createdAt) {
+      writer.writeString(5, msg.createdAt);
+    }
+    if (msg.isCancelled) {
+      writer.writeBool(6, msg.isCancelled);
+    }
+    if (msg.cancellationReason != undefined) {
+      writer.writeString(7, msg.cancellationReason);
     }
     return writer;
   },
@@ -3170,6 +3187,22 @@ export const Penalty = {
         }
         case 3: {
           msg.reason = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.assignedBy = reader.readInt32();
+          break;
+        }
+        case 5: {
+          msg.createdAt = reader.readString();
+          break;
+        }
+        case 6: {
+          msg.isCancelled = reader.readBool();
+          break;
+        }
+        case 7: {
+          msg.cancellationReason = reader.readString();
           break;
         }
         default: {
@@ -4331,7 +4364,6 @@ export const GameResult = {
       replayLink: "",
       players: [],
       finalResults: [],
-      penaltyLogs: [],
       rounds: [],
       ...msg,
     };
@@ -4361,13 +4393,6 @@ export const GameResult = {
         5,
         msg.finalResults as any,
         FinalResultOfSession._writeMessage,
-      );
-    }
-    if (msg.penaltyLogs?.length) {
-      writer.writeRepeatedMessage(
-        6,
-        msg.penaltyLogs as any,
-        Penalty._writeMessage,
       );
     }
     if (msg.rounds?.length) {
@@ -4410,12 +4435,6 @@ export const GameResult = {
           const m = FinalResultOfSession.initialize();
           reader.readMessage(m, FinalResultOfSession._readMessage);
           msg.finalResults.push(m);
-          break;
-        }
-        case 6: {
-          const m = Penalty.initialize();
-          reader.readMessage(m, Penalty._readMessage);
-          msg.penaltyLogs.push(m);
           break;
         }
         case 7: {
@@ -6551,7 +6570,6 @@ export const TableState = {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
       sessionHash: "",
-      penaltyLogs: [],
       tableIndex: undefined,
       lastRound: undefined,
       currentRoundIndex: 0,
@@ -6576,13 +6594,6 @@ export const TableState = {
     }
     if (msg.sessionHash) {
       writer.writeString(3, msg.sessionHash);
-    }
-    if (msg.penaltyLogs?.length) {
-      writer.writeRepeatedMessage(
-        4,
-        msg.penaltyLogs as any,
-        Penalty._writeMessage,
-      );
     }
     if (msg.tableIndex != undefined) {
       writer.writeInt32(5, msg.tableIndex);
@@ -6630,12 +6641,6 @@ export const TableState = {
         }
         case 3: {
           msg.sessionHash = reader.readString();
-          break;
-        }
-        case 4: {
-          const m = Penalty.initialize();
-          reader.readMessage(m, Penalty._readMessage);
-          msg.penaltyLogs.push(m);
           break;
         }
         case 5: {
@@ -7281,7 +7286,6 @@ export const SessionState = {
       honbaCount: 0,
       scores: [],
       finished: false,
-      penalties: [],
       lastHandStarted: false,
       ...msg,
     };
@@ -7315,13 +7319,6 @@ export const SessionState = {
     }
     if (msg.finished) {
       writer.writeBool(6, msg.finished);
-    }
-    if (msg.penalties?.length) {
-      writer.writeRepeatedMessage(
-        7,
-        msg.penalties as any,
-        Penalty._writeMessage,
-      );
     }
     if (msg.lastHandStarted) {
       writer.writeBool(8, msg.lastHandStarted);
@@ -7363,12 +7360,6 @@ export const SessionState = {
         }
         case 6: {
           msg.finished = reader.readBool();
-          break;
-        }
-        case 7: {
-          const m = Penalty.initialize();
-          reader.readMessage(m, Penalty._readMessage);
-          msg.penalties.push(m);
           break;
         }
         case 8: {
@@ -10279,6 +10270,10 @@ export const PenaltyJSON = {
       who: 0,
       amount: 0,
       reason: undefined,
+      assignedBy: 0,
+      createdAt: "",
+      isCancelled: false,
+      cancellationReason: undefined,
       ...msg,
     };
   },
@@ -10296,6 +10291,18 @@ export const PenaltyJSON = {
     }
     if (msg.reason != undefined) {
       json["reason"] = msg.reason;
+    }
+    if (msg.assignedBy) {
+      json["assignedBy"] = msg.assignedBy;
+    }
+    if (msg.createdAt) {
+      json["createdAt"] = msg.createdAt;
+    }
+    if (msg.isCancelled) {
+      json["isCancelled"] = msg.isCancelled;
+    }
+    if (msg.cancellationReason != undefined) {
+      json["cancellationReason"] = msg.cancellationReason;
     }
     return json;
   },
@@ -10315,6 +10322,23 @@ export const PenaltyJSON = {
     const _reason_ = json["reason"];
     if (_reason_) {
       msg.reason = _reason_;
+    }
+    const _assignedBy_ = json["assignedBy"] ?? json["assigned_by"];
+    if (_assignedBy_) {
+      msg.assignedBy = protoscript.parseNumber(_assignedBy_);
+    }
+    const _createdAt_ = json["createdAt"] ?? json["created_at"];
+    if (_createdAt_) {
+      msg.createdAt = _createdAt_;
+    }
+    const _isCancelled_ = json["isCancelled"] ?? json["is_cancelled"];
+    if (_isCancelled_) {
+      msg.isCancelled = _isCancelled_;
+    }
+    const _cancellationReason_ =
+      json["cancellationReason"] ?? json["cancellation_reason"];
+    if (_cancellationReason_) {
+      msg.cancellationReason = _cancellationReason_;
     }
     return msg;
   },
@@ -11286,7 +11310,6 @@ export const GameResultJSON = {
       replayLink: "",
       players: [],
       finalResults: [],
-      penaltyLogs: [],
       rounds: [],
       ...msg,
     };
@@ -11315,9 +11338,6 @@ export const GameResultJSON = {
       json["finalResults"] = msg.finalResults.map(
         FinalResultOfSessionJSON._writeMessage,
       );
-    }
-    if (msg.penaltyLogs?.length) {
-      json["penaltyLogs"] = msg.penaltyLogs.map(PenaltyJSON._writeMessage);
     }
     if (msg.rounds?.length) {
       json["rounds"] = msg.rounds.map(RoundJSON._writeMessage);
@@ -11351,14 +11371,6 @@ export const GameResultJSON = {
         const m = FinalResultOfSessionJSON.initialize();
         FinalResultOfSessionJSON._readMessage(m, item);
         msg.finalResults.push(m);
-      }
-    }
-    const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
-    if (_penaltyLogs_) {
-      for (const item of _penaltyLogs_) {
-        const m = PenaltyJSON.initialize();
-        PenaltyJSON._readMessage(m, item);
-        msg.penaltyLogs.push(m);
       }
     }
     const _rounds_ = json["rounds"];
@@ -13237,7 +13249,6 @@ export const TableStateJSON = {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
       sessionHash: "",
-      penaltyLogs: [],
       tableIndex: undefined,
       lastRound: undefined,
       currentRoundIndex: 0,
@@ -13262,9 +13273,6 @@ export const TableStateJSON = {
     }
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
-    }
-    if (msg.penaltyLogs?.length) {
-      json["penaltyLogs"] = msg.penaltyLogs.map(PenaltyJSON._writeMessage);
     }
     if (msg.tableIndex != undefined) {
       json["tableIndex"] = msg.tableIndex;
@@ -13302,14 +13310,6 @@ export const TableStateJSON = {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
-    }
-    const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
-    if (_penaltyLogs_) {
-      for (const item of _penaltyLogs_) {
-        const m = PenaltyJSON.initialize();
-        PenaltyJSON._readMessage(m, item);
-        msg.penaltyLogs.push(m);
-      }
     }
     const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
@@ -13845,7 +13845,6 @@ export const SessionStateJSON = {
       honbaCount: 0,
       scores: [],
       finished: false,
-      penalties: [],
       lastHandStarted: false,
       ...msg,
     };
@@ -13877,9 +13876,6 @@ export const SessionStateJSON = {
     }
     if (msg.finished) {
       json["finished"] = msg.finished;
-    }
-    if (msg.penalties?.length) {
-      json["penalties"] = msg.penalties.map(PenaltyJSON._writeMessage);
     }
     if (msg.lastHandStarted) {
       json["lastHandStarted"] = msg.lastHandStarted;
@@ -13918,14 +13914,6 @@ export const SessionStateJSON = {
     const _finished_ = json["finished"];
     if (_finished_) {
       msg.finished = _finished_;
-    }
-    const _penalties_ = json["penalties"];
-    if (_penalties_) {
-      for (const item of _penalties_) {
-        const m = PenaltyJSON.initialize();
-        PenaltyJSON._readMessage(m, item);
-        msg.penalties.push(m);
-      }
     }
     const _lastHandStarted_ =
       json["lastHandStarted"] ?? json["last_hand_started"];

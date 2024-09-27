@@ -155,10 +155,16 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc CallReferee (CallRefereePayload)
     returns (GenericSuccessResponse);
-  rpc RecalcAchievements (RecalcPayload)
+  rpc RecalcAchievements (GenericEventPayload)
     returns (GenericSuccessResponse);
-  rpc RecalcPlayerStats (RecalcPayload)
+  rpc RecalcPlayerStats (GenericEventPayload)
     returns (GenericSuccessResponse);
+  rpc ListPenalties (GenericEventPayload)
+    returns (PenaltiesResponse);
+  rpc CancelPenalty (CancelPenaltyPayload)
+    returns (GenericSuccessResponse);
+  rpc ListMyPenalties (GenericEventPayload)
+    returns (PenaltiesResponse);
 }
 
 message EventsGetRulesetsPayload {
@@ -583,6 +589,10 @@ message CallRefereePayload {
   int32 event_id = 2;
 }
 
-message RecalcPayload {
-  int32 event_id = 1;
+message PenaltiesResponse {
+  repeated Penalty penalties = 1;
+}
+
+message CancelPenaltyPayload {
+  int32 penalty_id = 1;
 }
