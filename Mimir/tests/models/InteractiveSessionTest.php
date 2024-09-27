@@ -492,7 +492,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         // Check that user history items exist in db
         /** @var PlayerHistoryPrimitive[] $items */
         $items = array_map(function (PlayerPrimitive $player) {
-            return PlayerHistoryPrimitive::findLastByEvent(
+            return PlayerHistoryPrimitive::findLastByEventAndPlayer(
                 $this->_ds,
                 $this->_event->getId(),
                 $player->getId()
