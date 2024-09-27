@@ -456,6 +456,7 @@ export interface PenaltiesResponse {
 
 export interface CancelPenaltyPayload {
   penaltyId: number;
+  reason?: string | null | undefined;
 }
 
 //========================================//
@@ -10155,6 +10156,7 @@ export const CancelPenaltyPayload = {
   ): CancelPenaltyPayload {
     return {
       penaltyId: 0,
+      reason: undefined,
       ...msg,
     };
   },
@@ -10168,6 +10170,9 @@ export const CancelPenaltyPayload = {
   ): protoscript.BinaryWriter {
     if (msg.penaltyId) {
       writer.writeInt32(1, msg.penaltyId);
+    }
+    if (msg.reason != undefined) {
+      writer.writeString(2, msg.reason);
     }
     return writer;
   },
@@ -10184,6 +10189,10 @@ export const CancelPenaltyPayload = {
       switch (field) {
         case 1: {
           msg.penaltyId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.reason = reader.readString();
           break;
         }
         default: {
@@ -15964,6 +15973,7 @@ export const CancelPenaltyPayloadJSON = {
   ): CancelPenaltyPayload {
     return {
       penaltyId: 0,
+      reason: undefined,
       ...msg,
     };
   },
@@ -15978,6 +15988,9 @@ export const CancelPenaltyPayloadJSON = {
     if (msg.penaltyId) {
       json["penaltyId"] = msg.penaltyId;
     }
+    if (msg.reason != undefined) {
+      json["reason"] = msg.reason;
+    }
     return json;
   },
 
@@ -15991,6 +16004,10 @@ export const CancelPenaltyPayloadJSON = {
     const _penaltyId_ = json["penaltyId"] ?? json["penalty_id"];
     if (_penaltyId_) {
       msg.penaltyId = protoscript.parseNumber(_penaltyId_);
+    }
+    const _reason_ = json["reason"];
+    if (_reason_) {
+      msg.reason = _reason_;
     }
     return msg;
   },

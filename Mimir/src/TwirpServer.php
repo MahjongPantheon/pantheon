@@ -1861,7 +1861,7 @@ final class TwirpServer implements Mimir
      * @return GenericSuccessResponse
      * @throws BadActionException
      */
-    public function RecalcAchievements(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse
+    public function RecalcAchievements(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->recalcAchievements($req->getEventId()));
@@ -1873,10 +1873,47 @@ final class TwirpServer implements Mimir
      * @return GenericSuccessResponse
      * @throws BadActionException
      */
-    public function RecalcPlayerStats(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse
+    public function RecalcPlayerStats(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->recalcPlayerStats($req->getEventId()));
+    }
+
+    /**
+     * @param array $ctx
+     * @param GenericEventPayload $req
+     * @return \Common\PenaltiesResponse
+     * @throws BadActionException
+     */
+    public function ListPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse
+    {
+        return (new \Common\PenaltiesResponse())
+            ->setPenalties($this->_eventsController->listPenalties($req->getEventId()));
+    }
+
+    /**
+     * @param array $ctx
+     * @param \Common\CancelPenaltyPayload $req
+     * @return \Common\GenericSuccessResponse
+     * @throws InvalidParametersException
+     * @throws BadActionException
+     */
+    public function CancelPenalty(array $ctx, \Common\CancelPenaltyPayload $req): \Common\GenericSuccessResponse
+    {
+        return (new \Common\GenericSuccessResponse())
+            ->setSuccess($this->_eventsController->cancelPenalty($req->getPenaltyId(), $req->getReason()));
+    }
+
+    /**
+     * @param array $ctx
+     * @param GenericEventPayload $req
+     * @return \Common\PenaltiesResponse
+     * @throws InvalidParametersException
+     */
+    public function ListMyPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse
+    {
+        return (new \Common\PenaltiesResponse())
+            ->setPenalties($this->_eventsController->listMyPenalties($req->getEventId()));
     }
 
     /**

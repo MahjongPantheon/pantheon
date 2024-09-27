@@ -17,6 +17,7 @@
  */
 namespace Mimir;
 
+use Common\Penalty;
 use Common\PlatformType;
 use Common\Ruleset;
 use Common\RulesetConfig;
@@ -1303,5 +1304,96 @@ class EventsController extends Controller
 
         $this->_log->info('Scheduled rebuild of player stats for event #' . $eventId);
         return $success;
+    }
+
+    /**
+     * @param int $eventId
+     * @return \Common\Penalty[]
+     * @throws BadActionException
+     * @throws \Exception
+     */
+    public function listPenalties($eventId)
+    {
+        $this->_log->info('Listing penalties for event #' . $eventId);
+
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to list all penalties for this event");
+        }
+
+        $penalties = array_map(function (PenaltyPrimitive $p) {
+            return (new Penalty())
+                ->setWho($p->getPlayerId())
+                ->setAmount($p->getAmount())
+                ->setReason($p->getReason())
+                ->setCreatedAt($p->getCreatedAt())
+                ->setAssignedBy($p->getAssignedBy())
+                ->setIsCancelled($p->getCancelled())
+                ->setCancellationReason($p->getCancelledReason());
+        }, PenaltyPrimitive::findByEventId($this->_ds, [$eventId]));
+
+        $this->_log->info('Listed penalties for event #' . $eventId);
+
+        return $penalties;
+    }
+
+    /**
+     * @param int $penaltyId
+     * @param ?string $reason
+     * @return bool
+     * @throws BadActionException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function cancelPenalty($penaltyId, $reason)
+    {
+        $this->_log->info('Cancelling penalty #' . $penaltyId);
+
+        $penalty = PenaltyPrimitive::findById($this->_ds, [$penaltyId]);
+
+        if (empty($penalty)) {
+            throw new InvalidParametersException('Penalty id#' . $penaltyId . ' not found in DB');
+        }
+
+        if (!$this->_meta->isEventAdminById($penalty[0]->getEventId())) {
+            throw new BadActionException("You don't have enough privileges to cancel penalties for this event");
+        }
+
+        $success = $penalty[0]
+            ->setCancelled(true)
+            ->setCancelledReason($reason)
+            ->save();
+        $this->_log->info('Cancelled penalty #' . $penaltyId);
+        return $success;
+    }
+
+    /**
+     * @param int $eventId
+     * @return \Common\Penalty[]
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function listMyPenalties($eventId)
+    {
+        $this->_log->info('Listing player penalties for event #' . $eventId);
+
+        $playerId = $this->_meta->getCurrentPersonId();
+        if (empty($playerId)) {
+            throw new InvalidParametersException('Can\'t get penalties for unregistered player');
+        }
+
+        $penalties = array_map(function (PenaltyPrimitive $p) {
+            return (new Penalty())
+                ->setWho($p->getPlayerId())
+                ->setAmount($p->getAmount())
+                ->setReason($p->getReason())
+                ->setCreatedAt($p->getCreatedAt())
+                ->setAssignedBy($p->getAssignedBy())
+                ->setIsCancelled($p->getCancelled())
+                ->setCancellationReason($p->getCancelledReason());
+        }, PenaltyPrimitive::findByEventAndPlayer($this->_ds, $eventId, $playerId));
+
+        $this->_log->info('Listed player penalties for event #' . $eventId);
+
+        return $penalties;
     }
 }

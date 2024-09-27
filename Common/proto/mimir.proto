@@ -595,4 +595,5 @@ message PenaltiesResponse {
 
 message CancelPenaltyPayload {
   int32 penalty_id = 1;
+  optional string reason = 2;
 }

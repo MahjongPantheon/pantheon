@@ -17,6 +17,10 @@ class CancelPenaltyPayload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 penalty_id = 1;</code>
      */
     protected $penalty_id = 0;
+    /**
+     * Generated from protobuf field <code>optional string reason = 2;</code>
+     */
+    protected $reason = null;
 
     /**
      * Constructor.
@@ -25,6 +29,7 @@ class CancelPenaltyPayload extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $penalty_id
+     *     @type string $reason
      * }
      */
     public function __construct($data = NULL) {
@@ -50,6 +55,38 @@ class CancelPenaltyPayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->penalty_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string reason = 2;</code>
+     * @return string
+     */
+    public function getReason()
+    {
+        return isset($this->reason) ? $this->reason : '';
+    }
+
+    public function hasReason()
+    {
+        return isset($this->reason);
+    }
+
+    public function clearReason()
+    {
+        unset($this->reason);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string reason = 2;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setReason($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->reason = $var;
 
         return $this;
     }
