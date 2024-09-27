@@ -225,6 +225,8 @@ export interface PlayerInRating {
   teamName?: string | null | undefined;
   hasAvatar: boolean;
   lastUpdate: string;
+  penaltiesAmount: number;
+  penaltiesCount: number;
 }
 
 export interface Player {
@@ -2768,6 +2770,8 @@ export const PlayerInRating = {
       teamName: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      penaltiesAmount: 0,
+      penaltiesCount: 0,
       ...msg,
     };
   },
@@ -2814,6 +2818,12 @@ export const PlayerInRating = {
     }
     if (msg.lastUpdate) {
       writer.writeString(12, msg.lastUpdate);
+    }
+    if (msg.penaltiesAmount) {
+      writer.writeFloat(13, msg.penaltiesAmount);
+    }
+    if (msg.penaltiesCount) {
+      writer.writeInt32(14, msg.penaltiesCount);
     }
     return writer;
   },
@@ -2874,6 +2884,14 @@ export const PlayerInRating = {
         }
         case 12: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 13: {
+          msg.penaltiesAmount = reader.readFloat();
+          break;
+        }
+        case 14: {
+          msg.penaltiesCount = reader.readInt32();
           break;
         }
         default: {
@@ -9953,6 +9971,8 @@ export const PlayerInRatingJSON = {
       teamName: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      penaltiesAmount: 0,
+      penaltiesCount: 0,
       ...msg,
     };
   },
@@ -9999,6 +10019,12 @@ export const PlayerInRatingJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.penaltiesAmount) {
+      json["penaltiesAmount"] = msg.penaltiesAmount;
+    }
+    if (msg.penaltiesCount) {
+      json["penaltiesCount"] = msg.penaltiesCount;
     }
     return json;
   },
@@ -10054,6 +10080,15 @@ export const PlayerInRatingJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _penaltiesAmount_ =
+      json["penaltiesAmount"] ?? json["penalties_amount"];
+    if (_penaltiesAmount_) {
+      msg.penaltiesAmount = protoscript.parseDouble(_penaltiesAmount_);
+    }
+    const _penaltiesCount_ = json["penaltiesCount"] ?? json["penalties_count"];
+    if (_penaltiesCount_) {
+      msg.penaltiesCount = protoscript.parseNumber(_penaltiesCount_);
     }
     return msg;
   },

@@ -211,6 +211,8 @@ message PlayerInRating {
   optional string team_name = 10;
   bool has_avatar = 11;
   string last_update = 12;
+  float penalties_amount = 13;
+  int32 penalties_count = 14;
 }
 
 message Player {

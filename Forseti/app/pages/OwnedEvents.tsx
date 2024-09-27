@@ -282,6 +282,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                 <Group sx={{ flex: 1, flexWrap: 'nowrap' }}>
                   {event.type === EventType.EVENT_TYPE_LOCAL && (
                     <Tooltip
+                      events={{ hover: true, touch: true, focus: true }}
                       openDelay={500}
                       position='bottom'
                       withArrow
@@ -294,6 +295,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                   )}
                   {event.type === EventType.EVENT_TYPE_TOURNAMENT && (
                     <Tooltip
+                      events={{ hover: true, touch: true, focus: true }}
                       openDelay={500}
                       position='bottom'
                       withArrow
@@ -306,6 +308,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                   )}
                   {event.type === EventType.EVENT_TYPE_ONLINE && (
                     <Tooltip
+                      events={{ hover: true, touch: true, focus: true }}
                       openDelay={500}
                       position='bottom'
                       withArrow

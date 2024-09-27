@@ -61,6 +61,14 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string last_update = 12;</code>
      */
     protected $last_update = '';
+    /**
+     * Generated from protobuf field <code>float penalties_amount = 13;</code>
+     */
+    protected $penalties_amount = 0.0;
+    /**
+     * Generated from protobuf field <code>int32 penalties_count = 14;</code>
+     */
+    protected $penalties_count = 0;
 
     /**
      * Constructor.
@@ -80,6 +88,8 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      *     @type string $team_name
      *     @type bool $has_avatar
      *     @type string $last_update
+     *     @type float $penalties_amount
+     *     @type int $penalties_count
      * }
      */
     public function __construct($data = NULL) {
@@ -357,6 +367,50 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->last_update = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float penalties_amount = 13;</code>
+     * @return float
+     */
+    public function getPenaltiesAmount()
+    {
+        return $this->penalties_amount;
+    }
+
+    /**
+     * Generated from protobuf field <code>float penalties_amount = 13;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setPenaltiesAmount($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->penalties_amount = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 penalties_count = 14;</code>
+     * @return int
+     */
+    public function getPenaltiesCount()
+    {
+        return $this->penalties_count;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 penalties_count = 14;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setPenaltiesCount($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->penalties_count = $var;
 
         return $this;
     }

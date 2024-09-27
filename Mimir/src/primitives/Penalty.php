@@ -158,7 +158,7 @@ class PenaltyPrimitive extends Primitive
      */
     public static function findByEventId(DataSource $ds, $eventIds)
     {
-        return self::_findBy($ds, 'eventId', $eventIds);
+        return self::_findBy($ds, 'event_id', $eventIds);
     }
 
     /**
@@ -169,7 +169,7 @@ class PenaltyPrimitive extends Primitive
      */
     public static function findBySessionId(DataSource $ds, $sessionIds)
     {
-        return self::_findBy($ds, 'sessionId', $sessionIds);
+        return self::_findBy($ds, 'session_id', $sessionIds);
     }
 
     /**

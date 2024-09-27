@@ -28,6 +28,7 @@ require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Round.php';
+require_once __DIR__ . '/../primitives/Penalty.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
 class EventRatingTableModel extends Model
@@ -158,15 +159,15 @@ class EventRatingTableModel extends Model
         /** @var (int|float)[] $penalties */
         $penalties = array_reduce(PenaltyPrimitive::findByEventId($this->_ds, $eventIds), function ($acc, PenaltyPrimitive $item) {
             if (empty($acc[$item->getPlayerId()])) {
-                $acc[$item->getPlayerId()] = ['amount' => 0, 'total' => 0];
+                $acc[$item->getPlayerId()] = ['amount' => 0, 'count' => 0];
             }
             $acc[$item->getPlayerId()]['amount'] += $item->getAmount();
-            $acc[$item->getPlayerId()]['total'] ++;
+            $acc[$item->getPlayerId()]['count'] ++;
             return $acc;
         }, []);
 
         $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $penalties, $mainEvent, $teams, $startRating, $soulNicknames) {
-            $penalty = ['amount' => 0, 'total' => 0];
+            $penalty = ['amount' => 0, 'count' => 0];
             if (!empty($penalties[(int)$el->getPlayerId()])) {
                 $penalty = $penalties[(int)$el->getPlayerId()];
             }
@@ -180,7 +181,7 @@ class EventRatingTableModel extends Model
                     ? ($soulNicknames[(int)$el->getPlayerId()] ?? '')
                     : $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'          => (float)$el->getRating() - $penalty['amount'],
-                'total_penalties' => $penalty['total'],
+                'penalties'       => ['count' => $penalty['count'], 'amount' => $penalty['amount']],
                 'chips'           => (int)$el->getChips(),
                 'team_name'       => empty($teams[$el->getPlayerId()]) ? '' : $teams[$el->getPlayerId()],
                 'winner_zone'     => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
@@ -192,7 +193,7 @@ class EventRatingTableModel extends Model
             ];
         }, $playerHistoryItemsSummed);
 
-        // Now we have all the data and we need just to apply some sorting
+        // Now we have all the data and all modifications applied, and we need just to apply some sorting
 
         $this->_sortItems($startRating, $orderBy, $playerItems, $data);
 

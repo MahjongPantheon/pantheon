@@ -946,6 +946,8 @@ final class TwirpServer implements Mimir
                     ->setLastUpdate($player['last_update'])
                     ->setRating((float)$player['rating'])
                     ->setTenhouId($player['tenhou_id'])
+                    ->setPenaltiesAmount($player['penalties']['amount'])
+                    ->setPenaltiesCount($player['penalties']['count'])
                     ->setChips($player['chips'])
                     ->setTeamName($player['team_name'])
                     ->setWinnerZone($player['winner_zone'])

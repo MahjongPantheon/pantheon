@@ -28,6 +28,7 @@ require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Round.php';
+require_once __DIR__ . '/../primitives/Penalty.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
 class EventFinishedGamesModel extends Model
