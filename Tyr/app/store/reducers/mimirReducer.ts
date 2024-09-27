@@ -46,6 +46,9 @@ import {
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_PENALTIES_FAIL,
+  GET_PENALTIES_INIT,
+  GET_PENALTIES_SUCCESS,
   GET_USERINFO_FAIL,
   GET_USERINFO_INIT,
   GET_USERINFO_SUCCESS,
@@ -645,6 +648,35 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       return {
         ...state,
         historyInitialized: true,
+      };
+    case GET_PENALTIES_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          penalties: true,
+        },
+      };
+    case GET_PENALTIES_SUCCESS:
+      return {
+        ...state,
+        penalties: action.payload.penalties,
+        loading: {
+          ...state.loading,
+          penalties: false,
+        },
+      };
+    case GET_PENALTIES_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          penalties: false,
+        },
+        penaltiesError: {
+          details: action.payload,
+          message: action.payload.message,
+        },
       };
     default:
       return state;

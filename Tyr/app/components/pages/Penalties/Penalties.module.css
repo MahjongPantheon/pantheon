@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 580px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item {
+  font-size: 12px;
+}
+
+.itemCancelled {
+  text-decoration: line-through;
+}
+
+

@@ -30,6 +30,7 @@ import {
   GetSessionOverview,
   GetTablesState,
   GetTimerState,
+  ListMyPenalties,
   PreviewRound,
   StartGame,
 } from '../clients/proto/mimir.pb';
@@ -37,7 +38,7 @@ import { IRiichiApi } from './IRiichiApi';
 import { Authorize, GetPersonalInfo, QuickAuthorize } from '../clients/proto/frey.pb';
 import { formatRoundToTwirp } from './formatters';
 import { ClientConfiguration } from 'twirpscript';
-import { SessionStatus } from '../clients/proto/atoms.pb';
+import { Penalty, SessionStatus } from '../clients/proto/atoms.pb';
 
 import { handleReleaseTag } from './releaseTags';
 import { env } from '../helpers/env';
@@ -222,5 +223,9 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
   callReferee(eventId: number, tableIndex: number): Promise<boolean> {
     return CallReferee({ eventId, tableIndex }, this._clientConfMimir).then((v) => v.success);
+  }
+
+  getPenalties(eventId: number): Promise<Penalty[]> {
+    return ListMyPenalties({ eventId }, this._clientConfMimir).then((v) => v.penalties);
   }
 }

@@ -19,16 +19,17 @@ import { AppScreen, IAppState } from '../interfaces';
 import {
   AppActionTypes,
   GO_TO_CURRENT_GAME,
+  GO_TO_DONATE,
+  GO_TO_PENALTIES,
+  GOTO_EVENT_SELECT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
   RESET_STATE,
   SEARCH_PLAYER,
-  SHOW_LAST_RESULTS,
   SHOW_GAME_LOG,
+  SHOW_LAST_RESULTS,
   START_NEW_GAME,
-  GOTO_EVENT_SELECT,
-  GO_TO_DONATE,
 } from '../actions/interfaces';
 import { AppOutcome } from '../../helpers/interfaces';
 import { RoundOutcome } from '../../clients/proto/atoms.pb';
@@ -47,7 +48,6 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           dealer: 0,
           scores: [],
           finished: false,
-          penalties: [],
           roundIndex: 1,
           riichiCount: 0,
           honbaCount: 0,
@@ -79,6 +79,11 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
       return {
         ...state,
         currentScreen: 'donate',
+      };
+    case GO_TO_PENALTIES:
+      return {
+        ...state,
+        currentScreen: 'penalties',
       };
     case SEARCH_PLAYER:
       return {
@@ -180,6 +185,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
         case 'eventSelector':
         case 'settings':
         case 'donate':
+        case 'penalties':
           if (state.currentEventId) {
             prevScreen = 'overview';
           }

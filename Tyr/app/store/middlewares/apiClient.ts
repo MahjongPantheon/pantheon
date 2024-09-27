@@ -49,6 +49,9 @@ import {
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_RELOAD,
   GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_PENALTIES_FAIL,
+  GET_PENALTIES_INIT,
+  GET_PENALTIES_SUCCESS,
   GET_USERINFO_FAIL,
   GET_USERINFO_INIT,
   GET_USERINFO_SUCCESS,
@@ -203,6 +206,12 @@ export const apiClient =
       case CALL_REFEREE:
         callReferee(mw.getState().tableIndex, mw.getState().currentEventId, api);
         next(action);
+        break;
+      case GET_PENALTIES_INIT:
+        if (!eventId || !personId) {
+          return;
+        }
+        getPenalties(eventId, api, next);
         break;
       default:
         return next(action);
@@ -479,4 +488,12 @@ function startupWithAuth(
       dispatchToStore({ type: FORCE_LOGOUT, payload: undefined });
       dispatchToStore({ type: RESET_LOGIN_ERROR }); // this resets error screen
     });
+}
+
+function getPenalties(eventId: number, api: IRiichiApi, next: Dispatch<AppActionTypes>) {
+  next({ type: GET_PENALTIES_INIT });
+  api
+    .getPenalties(eventId)
+    .then((penalties) => next({ type: GET_PENALTIES_SUCCESS, payload: penalties }))
+    .catch((error: RemoteError) => next({ type: GET_PENALTIES_FAIL, payload: error }));
 }
