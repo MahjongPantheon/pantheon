@@ -441,6 +441,9 @@ class InteractiveSessionModel extends Model
             $item->setSessionId($session->getId());
         }
 
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messagePenaltyApplied($playerId, $eventId, $amount, $reason);
+
         return $item->save();
     }
 

@@ -199,6 +199,28 @@ class SkirnirClient
     }
 
     /**
+     * @param int $playerId
+     * @param int $eventId
+     * @param float $amount
+     * @param string $reason
+     * @return void
+     * @throws InvalidParametersException
+     */
+    public function messagePenaltyApplied($playerId, $eventId, $amount, $reason)
+    {
+        $settings = $this->_fetchNotificationSettings([$playerId]);
+        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        if ($disabledForEvent) {
+            return;
+        }
+        $ids = $this->_getFilteredIdsByPermissions(Notifications::PenaltyApplied, $settings);
+        $this->_sendMessage(
+            $ids,
+            "[<b>$eventTitle</b>]\n⚠ A penalty of $amount points has been assigned to you. Reason: $reason\n"
+        );
+    }
+
+    /**
      * @param string $type
      * @param array $settings
      * @return array
