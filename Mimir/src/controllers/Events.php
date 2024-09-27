@@ -1362,6 +1362,9 @@ class EventsController extends Controller
             ->setCancelled(true)
             ->setCancelledReason($reason)
             ->save();
+
+        $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
+        $skirnir->messagePenaltyCancelled($penalty[0]->getPlayerId(), $penalty[0]->getEventId(), $penalty[0]->getAmount(), $penalty[0]->getCancelledReason());
         $this->_log->info('Cancelled penalty #' . $penaltyId);
         return $success;
     }
