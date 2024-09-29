@@ -82,7 +82,11 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
             <Group>
               <PlayerAvatar size='sm' p={playersListFull[p.who]} />
               <Text>{playersListFull[p.who].title}</Text>
-              {!p.isCancelled && <Badge color='red'>{p.amount}</Badge>}
+              {!p.isCancelled && (
+                <Badge color={p.amount > 0 ? 'red' : 'yellow'} variant='filled'>
+                  {p.amount > 0 ? p.amount : i18n._t('Notice')}
+                </Badge>
+              )}
               <Text style={p.isCancelled ? { textDecoration: 'line-through' } : undefined}>
                 {p.reason}
               </Text>

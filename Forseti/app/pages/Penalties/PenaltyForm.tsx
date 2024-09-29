@@ -63,7 +63,6 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
 
     validate: {
       player: (value: number) => (value > 0 ? null : i18n._t('Please select player')),
-      amount: (value: number) => (value > 0 ? null : i18n._t('Please select penalty amount')),
       reason: (value: string) =>
         value.trim() !== '' ? null : i18n._t('A reason for penalty is mandatory'),
     },
@@ -118,16 +117,15 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
       />
       <Space h='lg' />
       <NumberInput
-        withAsterisk
         {...form.getInputProps('amount')}
         icon={<IconAlertOctagon size='1rem' />}
         label={i18n._t('Penalty amount')}
         description={i18n._t(
-          'The penalty applies to the rating table in this event by subtracting the suggested amount of points from player rating'
+          'The penalty applies to the rating table in this event by subtracting the suggested amount of points from player rating. If the amount is zero, the penalty is treated as a notice.'
         )}
-        defaultValue={eventConfig?.rulesetConfig.minPenalty}
+        defaultValue={0}
         step={eventConfig?.rulesetConfig.penaltyStep}
-        min={eventConfig?.rulesetConfig.minPenalty}
+        min={0}
         max={eventConfig?.rulesetConfig.maxPenalty}
       />
       <Space h='lg' />
