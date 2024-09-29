@@ -229,7 +229,7 @@ class EventRatingTableModel extends Model
      * These history items are NOT intended to be SAVED!
      *
      * @param int[] $eventIds
-     * @return PlayerHistoryPrimitive[]
+     * @return PlayerHistoryPrimitive[][]
      * @throws \Exception
      */
     protected function _getFakePrefinishedItems($eventIds)
@@ -323,7 +323,7 @@ class EventRatingTableModel extends Model
                 });
                 break;
             case 'avg_score':
-                usort($ratingLines, function ($el1, $el2) use ($startRating) {
+                usort($ratingLines, function ($el1, $el2) {
                     if (abs($el1['avg_score'] - $el2['avg_score']) < 0.0001) {
                         return ($el2['avg_place'] - $el1['avg_place']) > 0 ? 1 : -1; // lower avg place is better, so invert
                     }

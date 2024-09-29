@@ -66,6 +66,7 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
   return (
     <>
       <Text style={{ fontWeight: 'bold' }}>{i18n._t('Current penalties')}</Text>
+      {penaltiesList.length === 0 && <Text>{i18n._t('No penalties assigned yet')}</Text>}
       {penaltiesList.map((p, idx) => (
         <Group
           key={`ev_${p.id}`}

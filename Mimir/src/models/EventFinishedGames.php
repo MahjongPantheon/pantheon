@@ -110,7 +110,7 @@ class EventFinishedGamesModel extends Model
             }
         }
 
-        $penalties = array_map(function(PenaltyPrimitive $pp) {
+        $penalties = array_map(function (PenaltyPrimitive $pp) {
             if (empty($pp->getId())) {
                 throw new InvalidParametersException('Attempted to use deidented primitive');
             }
@@ -119,7 +119,7 @@ class EventFinishedGamesModel extends Model
                 'amount' => $pp->getAmount(),
                 'reason' => $pp->getReason(),
             ];
-        }, PenaltyPrimitive::findBySessionId($this->_ds, [$session->getId()]));
+        }, PenaltyPrimitive::findBySessionId($this->_ds, [$session->getId() ?? 0]));
 
         return [
             'games' => [Formatters::formatGameResults($session, $sessionResults, $penalties, $rounds, $replacements)],

@@ -660,7 +660,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
     case GET_PENALTIES_SUCCESS:
       return {
         ...state,
-        penalties: action.payload.penalties,
+        penalties: action.payload,
         loading: {
           ...state.loading,
           penalties: false,

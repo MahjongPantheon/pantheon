@@ -15,7 +15,7 @@ export const Penalties = ({
 }: {
   onBackClick: () => void;
   // should be compatible with Penalty item from proto
-  penaltiesList: Array<{
+  penaltiesList?: Array<{
     amount: number;
     reason?: string | null | undefined;
     isCancelled: boolean;
@@ -44,15 +44,22 @@ export const Penalties = ({
     <div className={styles.wrapper}>
       <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
       <div className={styles.heading}>{loc._t('Your penalties in current event')}</div>
+      <hr className={styles.separator} />
       <div className={styles.content}>
-        {penaltiesList.length > 0 ? (
-          penaltiesList.map((p) => (
-            <div className={clsx(styles.item, p.isCancelled ? styles.itemCancelled : null)}>
-              <b>-{p.amount}</b>: {p.reason}
+        {(penaltiesList?.length ?? 0) > 0 ? (
+          penaltiesList?.map((p, idx) => (
+            <div
+              key={`pen_${idx}`}
+              className={clsx(styles.item, p.isCancelled ? styles.itemCancelled : null)}
+            >
+              <b>{p.amount > 0 ? `-${p.amount}` : loc._t('Notice')}</b>
+              <span>{p.reason}</span>
             </div>
           ))
         ) : (
-          <div className={styles.item}>{loc._t("You don't have any penalties in this event")}</div>
+          <div className={styles.item} style={{ textAlign: 'center', marginTop: '20px' }}>
+            {loc._t("You don't have any penalties in this event 🎉")}
+          </div>
         )}
       </div>
     </div>

@@ -433,7 +433,7 @@ class InteractiveSessionModel extends Model
             ->setCreatedAt(date('Y-m-d H:i:s'))
             ->setAmount($amount)
             ->setReason($reason)
-            ->setAssignedBy($this->_meta->getCurrentPersonId());
+            ->setAssignedBy($this->_meta->getCurrentPersonId() ?? 0);
 
         // Set session id if penalty occurred during the session
         $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);

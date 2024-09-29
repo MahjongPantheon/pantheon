@@ -1322,12 +1322,12 @@ class EventsController extends Controller
 
         $penalties = array_map(function (PenaltyPrimitive $p) {
             $penalty = (new Penalty())
-                ->setId($p->getId())
+                ->setId($p->getId() ?? 0)
                 ->setWho($p->getPlayerId())
                 ->setAmount($p->getAmount())
                 ->setCreatedAt($p->getCreatedAt())
                 ->setAssignedBy($p->getAssignedBy())
-                ->setIsCancelled($p->getCancelled());
+                ->setIsCancelled($p->getCancelled() === 1);
             if ($p->getReason()) {
                 $penalty->setReason($p->getReason());
             }
@@ -1339,7 +1339,7 @@ class EventsController extends Controller
 
         $referees = array_map(function (PlayerPrimitive $p) {
             return (new Player())
-                ->setId($p->getId())
+                ->setId($p->getId() ?? 0)
                 ->setTitle($p->getDisplayName())
                 ->setHasAvatar($p->getHasAvatar())
                 ->setLastUpdate($p->getLastUpdate())
@@ -1376,12 +1376,17 @@ class EventsController extends Controller
         }
 
         $success = $penalty[0]
-            ->setCancelled(true)
+            ->setCancelled(1)
             ->setCancelledReason($reason)
             ->save();
 
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
-        $skirnir->messagePenaltyCancelled($penalty[0]->getPlayerId(), $penalty[0]->getEventId(), $penalty[0]->getAmount(), $penalty[0]->getCancelledReason());
+        $skirnir->messagePenaltyCancelled(
+            $penalty[0]->getPlayerId(),
+            $penalty[0]->getEventId(),
+            $penalty[0]->getAmount(),
+            $penalty[0]->getCancelledReason() ?? ''
+        );
         $this->_log->info('Cancelled penalty #' . $penaltyId);
         return $success;
     }
@@ -1402,17 +1407,23 @@ class EventsController extends Controller
         }
 
         $penalties = array_map(function (PenaltyPrimitive $p) {
-            return (new Penalty())
+            $penalty = (new Penalty())
+                ->setId($p->getId() ?? 0)
                 ->setWho($p->getPlayerId())
                 ->setAmount($p->getAmount())
-                ->setReason($p->getReason())
                 ->setCreatedAt($p->getCreatedAt())
                 ->setAssignedBy($p->getAssignedBy())
-                ->setIsCancelled($p->getCancelled())
-                ->setCancellationReason($p->getCancelledReason());
+                ->setIsCancelled($p->getCancelled() === 1);
+            if ($p->getReason()) {
+                $penalty->setReason($p->getReason());
+            }
+            if ($p->getCancelledReason()) {
+                $penalty->setCancellationReason($p->getCancelledReason());
+            }
+            return $penalty;
         }, PenaltyPrimitive::findByEventAndPlayer($this->_ds, $eventId, $playerId));
 
-        $this->_log->info('Listed player penalties for event #' . $eventId);
+        $this->_log->info('Listed ' . count($penalties) . ' player penalties for event #' . $eventId);
 
         return $penalties;
     }

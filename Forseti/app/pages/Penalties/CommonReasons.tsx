@@ -16,9 +16,9 @@
  */
 
 import * as React from 'react';
-import { ActionIcon, Button, MantineColor, Popover, Stack, Text, TextInput } from '@mantine/core';
+import { ActionIcon, Button, MantineColor, Popover, Stack, Text } from '@mantine/core';
 import { CSSProperties, useState } from 'react';
-import { IconArrowRight, IconQuestionMark } from '@tabler/icons-react';
+import { IconQuestionMark } from '@tabler/icons-react';
 import { useI18n } from '../../hooks/i18n';
 
 export function CommonReasons({

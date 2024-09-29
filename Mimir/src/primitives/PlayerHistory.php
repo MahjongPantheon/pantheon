@@ -370,7 +370,7 @@ class PlayerHistoryPrimitive extends Primitive
      */
     public static function makeNewHistoryItem(DataSource $ds, PlayerPrimitive $player, SessionPrimitive $session, $ratingDelta, $place, $chips = null)
     {
-        $previousItem = self::findLastByEventAndPlayer($ds, $session->getEventId(), $player->getId());
+        $previousItem = self::findLastByEventAndPlayer($ds, $session->getEventId(), $player->getId() ?? 0);
 
         if (empty($previousItem)) {
             // This may happen if player has just started to participate in event and has no previous results

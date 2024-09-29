@@ -765,7 +765,6 @@ final class TwirpServer implements Mimir
                 ->setDate($game['date'])
                 ->setReplayLink($game['replay_link'])
                 ->setPlayers($game['players'])
-                ->setPenaltyLogs(self::_toPenaltiesLog($game['penalties']))
                 ->setFinalResults(array_map(function ($result) {
                     return (new FinalResultOfSession())
                         ->setPlayerId($result['player_id'])
@@ -1117,7 +1116,6 @@ final class TwirpServer implements Mimir
                 ->setHonbaCount($ret['state']['honba'])
                 ->setScores(self::_makeScores($ret['state']['scores']))
                 ->setFinished($ret['state']['finished'])
-                ->setPenalties(self::_makePenalties($ret['state']['penalties']))
                 ->setLastHandStarted($ret['state']['lastHandStarted']));
         if (!empty($ret['table_index'])) {
             $overview->setTableIndex($ret['table_index']);
@@ -1398,7 +1396,6 @@ final class TwirpServer implements Mimir
                     ->setStatus(self::_toTableStatus($table['status']))
                     ->setMayDefinalize($table['may_definalize'])
                     ->setSessionHash($table['hash'])
-                    ->setPenaltyLogs(self::_toPenaltiesLog($table['penalties']))
                     ->setCurrentRoundIndex($table['current_round'])
                     ->setScores(self::_makeScores($table['scores']))
                     ->setPlayers(self::_toRegisteredPlayers($table['players']));
@@ -1869,7 +1866,7 @@ final class TwirpServer implements Mimir
 
     /**
      * @param array $ctx
-     * @param \Common\RecalcPayload $req
+     * @param \Common\GenericEventPayload $req
      * @return GenericSuccessResponse
      * @throws BadActionException
      */
@@ -1881,7 +1878,7 @@ final class TwirpServer implements Mimir
 
     /**
      * @param array $ctx
-     * @param GenericEventPayload $req
+     * @param \Common\GenericEventPayload $req
      * @return \Common\PenaltiesResponse
      * @throws BadActionException
      */

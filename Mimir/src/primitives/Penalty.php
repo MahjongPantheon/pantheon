@@ -221,12 +221,12 @@ class PenaltyPrimitive extends Primitive
     public function getPlayer(): PlayerPrimitive
     {
         if (empty($this->_player)) {
-            [$p] = PlayerPrimitive::findById($this->_ds, [$this->_playerId]);
-            if (empty($p) || empty($p->getId())) {
+            $p = PlayerPrimitive::findById($this->_ds, [$this->_playerId]);
+            if (empty($p) || empty($p[0]->getId())) {
                 throw new InvalidParametersException('Attempted to assign deidented primitive');
             }
-            $this->_player = $p;
-            $this->_playerId = $p->getId();
+            $this->_player = $p[0];
+            $this->_playerId = $p[0]->getId();
         }
 
         return $this->_player;
@@ -239,7 +239,7 @@ class PenaltyPrimitive extends Primitive
     public function setPlayer(PlayerPrimitive $player): PenaltyPrimitive
     {
         $this->_player = $player;
-        $this->_playerId = $player->getId();
+        $this->_playerId = $player->getId() ?? 0;
         return $this;
     }
 
@@ -269,12 +269,12 @@ class PenaltyPrimitive extends Primitive
     public function getEvent(): EventPrimitive
     {
         if (empty($this->_event)) {
-            [$e] = EventPrimitive::findById($this->_ds, [$this->_eventId]);
-            if (empty($e) || empty($e->getId())) {
+            $e = EventPrimitive::findById($this->_ds, [$this->_eventId]);
+            if (empty($e) || empty($e[0]->getId())) {
                 throw new InvalidParametersException('Attempted to assign deidented primitive');
             }
-            $this->_event = $e;
-            $this->_eventId = $e->getId();
+            $this->_event = $e[0];
+            $this->_eventId = $e[0]->getId();
         }
 
         return $this->_event;
@@ -287,7 +287,7 @@ class PenaltyPrimitive extends Primitive
     public function setEvent(EventPrimitive $event): PenaltyPrimitive
     {
         $this->_event = $event;
-        $this->_eventId = $event->getId();
+        $this->_eventId = $event->getId() ?? 0;
         return $this;
     }
 
@@ -416,5 +416,4 @@ class PenaltyPrimitive extends Primitive
         $this->_cancelledReason = $cancelledReason;
         return $this;
     }
-
 }

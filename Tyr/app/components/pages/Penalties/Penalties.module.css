@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 580px;
+  padding: 15px;
 }
 
 .heading {
@@ -14,11 +15,38 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  margin-top: 10px;
+}
+
+.separator {
+  width: 10%;
+  height: 2px;
+  border-radius: 2px;
+  border: 0;
+  background-color: var(--color-text-primary);
+  opacity: 0.3;
+  align-self: center;
+  margin: 10px;
 }
 
 .item {
   font-size: 12px;
+  display: flex;
+  padding: 5px 10px;
+
+  &:nth-child(2n + 1) {
+    background-color: var(--panels-bg);
+  }
+}
+
+.item > b {
+  font-size: 12px;
+}
+
+.item > span {
+  font-size: 12px;
+  flex: 1;
+  text-align: center;
 }
 
 .itemCancelled {
