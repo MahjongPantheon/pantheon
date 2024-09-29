@@ -17,6 +17,10 @@ class PenaltiesResponse extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated .common.Penalty penalties = 1;</code>
      */
     private $penalties;
+    /**
+     * Generated from protobuf field <code>repeated .common.Player referees = 2;</code>
+     */
+    private $referees;
 
     /**
      * Constructor.
@@ -25,6 +29,7 @@ class PenaltiesResponse extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $penalties
+     *     @type array<\Common\Player>|\Google\Protobuf\Internal\RepeatedField $referees
      * }
      */
     public function __construct($data = NULL) {
@@ -50,6 +55,28 @@ class PenaltiesResponse extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Penalty::class);
         $this->penalties = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .common.Player referees = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getReferees()
+    {
+        return $this->referees;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .common.Player referees = 2;</code>
+     * @param array<\Common\Player>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setReferees($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Player::class);
+        $this->referees = $arr;
 
         return $this;
     }

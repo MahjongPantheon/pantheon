@@ -1887,8 +1887,10 @@ final class TwirpServer implements Mimir
      */
     public function ListPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse
     {
+        [$penalties, $referees] = $this->_eventsController->listPenalties($req->getEventId());
         return (new \Common\PenaltiesResponse())
-            ->setPenalties($this->_eventsController->listPenalties($req->getEventId()));
+            ->setPenalties($penalties)
+            ->setReferees($referees);
     }
 
     /**

@@ -591,6 +591,7 @@ message CallRefereePayload {
 
 message PenaltiesResponse {
   repeated Penalty penalties = 1;
+  repeated Player referees = 2;
 }
 
 message CancelPenaltyPayload {

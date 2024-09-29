@@ -252,6 +252,7 @@ export interface Penalty {
   createdAt: string;
   isCancelled: boolean;
   cancellationReason?: string | null | undefined;
+  id: number;
 }
 
 export interface RonResult {
@@ -3132,6 +3133,7 @@ export const Penalty = {
       createdAt: "",
       isCancelled: false,
       cancellationReason: undefined,
+      id: 0,
       ...msg,
     };
   },
@@ -3163,6 +3165,9 @@ export const Penalty = {
     }
     if (msg.cancellationReason != undefined) {
       writer.writeString(7, msg.cancellationReason);
+    }
+    if (msg.id) {
+      writer.writeInt32(8, msg.id);
     }
     return writer;
   },
@@ -3203,6 +3208,10 @@ export const Penalty = {
         }
         case 7: {
           msg.cancellationReason = reader.readString();
+          break;
+        }
+        case 8: {
+          msg.id = reader.readInt32();
           break;
         }
         default: {
@@ -10274,6 +10283,7 @@ export const PenaltyJSON = {
       createdAt: "",
       isCancelled: false,
       cancellationReason: undefined,
+      id: 0,
       ...msg,
     };
   },
@@ -10303,6 +10313,9 @@ export const PenaltyJSON = {
     }
     if (msg.cancellationReason != undefined) {
       json["cancellationReason"] = msg.cancellationReason;
+    }
+    if (msg.id) {
+      json["id"] = msg.id;
     }
     return json;
   },
@@ -10339,6 +10352,10 @@ export const PenaltyJSON = {
       json["cancellationReason"] ?? json["cancellation_reason"];
     if (_cancellationReason_) {
       msg.cancellationReason = _cancellationReason_;
+    }
+    const _id_ = json["id"];
+    if (_id_) {
+      msg.id = protoscript.parseNumber(_id_);
     }
     return msg;
   },

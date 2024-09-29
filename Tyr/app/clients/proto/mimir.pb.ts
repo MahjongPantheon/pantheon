@@ -452,6 +452,7 @@ export interface CallRefereePayload {
 
 export interface PenaltiesResponse {
   penalties: protoAtoms.Penalty[];
+  referees: protoAtoms.Player[];
 }
 
 export interface CancelPenaltyPayload {
@@ -10080,6 +10081,7 @@ export const PenaltiesResponse = {
   initialize: function (msg?: Partial<PenaltiesResponse>): PenaltiesResponse {
     return {
       penalties: [],
+      referees: [],
       ...msg,
     };
   },
@@ -10096,6 +10098,13 @@ export const PenaltiesResponse = {
         1,
         msg.penalties as any,
         protoAtoms.Penalty._writeMessage,
+      );
+    }
+    if (msg.referees?.length) {
+      writer.writeRepeatedMessage(
+        2,
+        msg.referees as any,
+        protoAtoms.Player._writeMessage,
       );
     }
     return writer;
@@ -10115,6 +10124,12 @@ export const PenaltiesResponse = {
           const m = protoAtoms.Penalty.initialize();
           reader.readMessage(m, protoAtoms.Penalty._readMessage);
           msg.penalties.push(m);
+          break;
+        }
+        case 2: {
+          const m = protoAtoms.Player.initialize();
+          reader.readMessage(m, protoAtoms.Player._readMessage);
+          msg.referees.push(m);
           break;
         }
         default: {
@@ -15909,6 +15924,7 @@ export const PenaltiesResponseJSON = {
   initialize: function (msg?: Partial<PenaltiesResponse>): PenaltiesResponse {
     return {
       penalties: [],
+      referees: [],
       ...msg,
     };
   },
@@ -15924,6 +15940,9 @@ export const PenaltiesResponseJSON = {
       json["penalties"] = msg.penalties.map(
         protoAtoms.PenaltyJSON._writeMessage,
       );
+    }
+    if (msg.referees?.length) {
+      json["referees"] = msg.referees.map(protoAtoms.PlayerJSON._writeMessage);
     }
     return json;
   },
@@ -15941,6 +15960,14 @@ export const PenaltiesResponseJSON = {
         const m = protoAtoms.PenaltyJSON.initialize();
         protoAtoms.PenaltyJSON._readMessage(m, item);
         msg.penalties.push(m);
+      }
+    }
+    const _referees_ = json["referees"];
+    if (_referees_) {
+      for (const item of _referees_) {
+        const m = protoAtoms.PlayerJSON.initialize();
+        protoAtoms.PlayerJSON._readMessage(m, item);
+        msg.referees.push(m);
       }
     }
     return msg;

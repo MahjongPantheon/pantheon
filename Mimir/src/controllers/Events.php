@@ -19,6 +19,7 @@ namespace Mimir;
 
 use Common\Penalty;
 use Common\PlatformType;
+use Common\Player;
 use Common\Ruleset;
 use Common\RulesetConfig;
 use Common\TwirpError;
@@ -1308,9 +1309,8 @@ class EventsController extends Controller
 
     /**
      * @param int $eventId
-     * @return \Common\Penalty[]
+     * @return array [\Common\Penalty[], \Common\Player[]]
      * @throws BadActionException
-     * @throws \Exception
      */
     public function listPenalties($eventId)
     {
@@ -1321,19 +1321,36 @@ class EventsController extends Controller
         }
 
         $penalties = array_map(function (PenaltyPrimitive $p) {
-            return (new Penalty())
+            $penalty = (new Penalty())
+                ->setId($p->getId())
                 ->setWho($p->getPlayerId())
                 ->setAmount($p->getAmount())
-                ->setReason($p->getReason())
                 ->setCreatedAt($p->getCreatedAt())
                 ->setAssignedBy($p->getAssignedBy())
-                ->setIsCancelled($p->getCancelled())
-                ->setCancellationReason($p->getCancelledReason());
+                ->setIsCancelled($p->getCancelled());
+            if ($p->getReason()) {
+                $penalty->setReason($p->getReason());
+            }
+            if ($p->getCancelledReason()) {
+                $penalty->setCancellationReason($p->getCancelledReason());
+            }
+            return $penalty;
         }, PenaltyPrimitive::findByEventId($this->_ds, [$eventId]));
+
+        $referees = array_map(function (PlayerPrimitive $p) {
+            return (new Player())
+                ->setId($p->getId())
+                ->setTitle($p->getDisplayName())
+                ->setHasAvatar($p->getHasAvatar())
+                ->setLastUpdate($p->getLastUpdate())
+                ->setTenhouId($p->getTenhouId());
+        }, PlayerPrimitive::findById($this->_ds, array_map(function (Penalty $p) {
+            return $p->getAssignedBy();
+        }, $penalties)));
 
         $this->_log->info('Listed penalties for event #' . $eventId);
 
-        return $penalties;
+        return [$penalties, $referees];
     }
 
     /**

@@ -238,6 +238,7 @@ message Penalty {
   string created_at = 5;
   bool is_cancelled = 6;
   optional string cancellation_reason = 7;
+  int32 id = 8;
 }
 
 message RonResult {
