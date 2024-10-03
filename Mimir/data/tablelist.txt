@@ -12,3 +12,4 @@ yaku
 event
 game_platforms
 jobs_queue
+penalty
