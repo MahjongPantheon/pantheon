@@ -76,7 +76,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
                 ->setPlace3(-5000)
                 ->setPlace4(-15000))
             ->setOka(0)
-            ->setChomboPenalty(20000)
+            ->setChomboAmount(20000)
             ->setEqualizeUma(false)
             ->setReplacementPlayerOverrideUma(0)
             ->setReplacementPlayerFixedPoints(-30000);

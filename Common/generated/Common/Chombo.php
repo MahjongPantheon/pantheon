@@ -9,22 +9,18 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>common.IntermediateResultOfSession</code>
+ * Generated from protobuf message <code>common.Chombo</code>
  */
-class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
+class Chombo extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>int32 player_id = 1;</code>
      */
     protected $player_id = 0;
     /**
-     * Generated from protobuf field <code>int32 score = 2;</code>
+     * Generated from protobuf field <code>float amount = 2;</code>
      */
-    protected $score = 0;
-    /**
-     * Generated from protobuf field <code>int32 chombo_count = 4;</code>
-     */
-    protected $chombo_count = 0;
+    protected $amount = 0.0;
 
     /**
      * Constructor.
@@ -33,8 +29,7 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $player_id
-     *     @type int $score
-     *     @type int $chombo_count
+     *     @type float $amount
      * }
      */
     public function __construct($data = NULL) {
@@ -65,45 +60,23 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 score = 2;</code>
-     * @return int
+     * Generated from protobuf field <code>float amount = 2;</code>
+     * @return float
      */
-    public function getScore()
+    public function getAmount()
     {
-        return $this->score;
+        return $this->amount;
     }
 
     /**
-     * Generated from protobuf field <code>int32 score = 2;</code>
-     * @param int $var
+     * Generated from protobuf field <code>float amount = 2;</code>
+     * @param float $var
      * @return $this
      */
-    public function setScore($var)
+    public function setAmount($var)
     {
-        GPBUtil::checkInt32($var);
-        $this->score = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 chombo_count = 4;</code>
-     * @return int
-     */
-    public function getChomboCount()
-    {
-        return $this->chombo_count;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 chombo_count = 4;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setChomboCount($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->chombo_count = $var;
+        GPBUtil::checkFloat($var);
+        $this->amount = $var;
 
         return $this;
     }

@@ -470,6 +470,21 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param float[] $chomboList
+     * @return array
+     */
+    protected static function _formatChombo($chomboList)
+    {
+        $list = [];
+        foreach ($chomboList as $playerId => $amount) {
+            $list []= (new \Common\Chombo())
+                ->setPlayerId($playerId)
+                ->setAmount($amount);
+        }
+        return $list;
+    }
+
+    /**
      * @param array $players
      * @return Player[]
      */
@@ -1116,7 +1131,8 @@ final class TwirpServer implements Mimir
                 ->setHonbaCount($ret['state']['honba'])
                 ->setScores(self::_makeScores($ret['state']['scores']))
                 ->setFinished($ret['state']['finished'])
-                ->setLastHandStarted($ret['state']['lastHandStarted']));
+                ->setLastHandStarted($ret['state']['lastHandStarted'])
+                ->setChombo(self::_formatChombo($ret['state']['chombo'])));
         if (!empty($ret['table_index'])) {
             $overview->setTableIndex($ret['table_index']);
         }
@@ -1186,7 +1202,6 @@ final class TwirpServer implements Mimir
         }
         return (new GamesAddRoundResponse())
             ->setScores(self::_makeScores($ret['_scores']))
-            ->setExtraPenaltyLogs(self::_toPenaltiesLog($ret['_extraPenaltyLog']))
             ->setRound($ret['_round'])
             ->setHonba($ret['_honba'])
             ->setRiichiBets($ret['_riichiBets'])
@@ -1854,7 +1869,7 @@ final class TwirpServer implements Mimir
 
     /**
      * @param array $ctx
-     * @param \Common\RecalcPayload $req
+     * @param \Common\GenericEventPayload $req
      * @return GenericSuccessResponse
      * @throws BadActionException
      */

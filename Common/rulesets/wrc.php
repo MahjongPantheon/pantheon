@@ -40,7 +40,7 @@ return (new RulesetConfig())
         Y_OPENRIICHI
     ]))
     ->setChipsValue(0)
-    ->setChomboPenalty(20000)
+    ->setChomboAmount(20000)
     ->setDoubleronHonbaAtamahane(false)
     ->setDoubleronRiichiAtamahane(false)
     ->setEndingPolicy(EndingPolicy::ENDING_POLICY_EP_END_AFTER_HAND)

@@ -41,6 +41,10 @@ class SessionState extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool last_hand_started = 8;</code>
      */
     protected $last_hand_started = false;
+    /**
+     * Generated from protobuf field <code>repeated .common.Chombo chombo = 9;</code>
+     */
+    private $chombo;
 
     /**
      * Constructor.
@@ -55,6 +59,7 @@ class SessionState extends \Google\Protobuf\Internal\Message
      *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
      *     @type bool $finished
      *     @type bool $last_hand_started
+     *     @type array<\Common\Chombo>|\Google\Protobuf\Internal\RepeatedField $chombo
      * }
      */
     public function __construct($data = NULL) {
@@ -212,6 +217,28 @@ class SessionState extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->last_hand_started = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .common.Chombo chombo = 9;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getChombo()
+    {
+        return $this->chombo;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .common.Chombo chombo = 9;</code>
+     * @param array<\Common\Chombo>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setChombo($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Chombo::class);
+        $this->chombo = $arr;
 
         return $this;
     }

@@ -47,6 +47,7 @@ export const initialState: IAppState = {
     riichiCount: 0,
     honbaCount: 0,
     lastHandStarted: false,
+    chombo: [],
   },
 
   currentPlayerDisplayName: undefined,

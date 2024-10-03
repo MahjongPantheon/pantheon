@@ -327,7 +327,6 @@ message GamesAddRoundPayload {
 
 message GamesAddRoundResponse {
   repeated IntermediateResultOfSession scores = 1;
-  repeated Penalty extra_penalty_logs = 2;
   // current round number
   int32 round = 3;
   int32 honba = 4;

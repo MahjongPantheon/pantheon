@@ -102,9 +102,9 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      */
     protected $chips_value = 0;
     /**
-     * Generated from protobuf field <code>int32 chombo_penalty = 23;</code>
+     * Generated from protobuf field <code>int32 chombo_amount = 23;</code>
      */
-    protected $chombo_penalty = 0;
+    protected $chombo_amount = 0;
     /**
      * Generated from protobuf field <code>int32 game_expiration_time = 24;</code>
      */
@@ -190,7 +190,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      *     @type bool $with_nagashi_mangan
      *     @type bool $with_winning_dealer_honba_skipped
      *     @type int $chips_value
-     *     @type int $chombo_penalty
+     *     @type int $chombo_amount
      *     @type int $game_expiration_time
      *     @type int $goal_points
      *     @type int $max_penalty
@@ -717,23 +717,23 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 chombo_penalty = 23;</code>
+     * Generated from protobuf field <code>int32 chombo_amount = 23;</code>
      * @return int
      */
-    public function getChomboPenalty()
+    public function getChomboAmount()
     {
-        return $this->chombo_penalty;
+        return $this->chombo_amount;
     }
 
     /**
-     * Generated from protobuf field <code>int32 chombo_penalty = 23;</code>
+     * Generated from protobuf field <code>int32 chombo_amount = 23;</code>
      * @param int $var
      * @return $this
      */
-    public function setChomboPenalty($var)
+    public function setChomboAmount($var)
     {
         GPBUtil::checkInt32($var);
-        $this->chombo_penalty = $var;
+        $this->chombo_amount = $var;
 
         return $this;
     }

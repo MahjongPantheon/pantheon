@@ -176,7 +176,6 @@ export interface GamesAddRoundPayload {
 
 export interface GamesAddRoundResponse {
   scores: protoAtoms.IntermediateResultOfSession[];
-  extraPenaltyLogs: protoAtoms.Penalty[];
   /**
    * current round number
    */
@@ -5965,7 +5964,6 @@ export const GamesAddRoundResponse = {
   ): GamesAddRoundResponse {
     return {
       scores: [],
-      extraPenaltyLogs: [],
       round: 0,
       honba: 0,
       riichiBets: 0,
@@ -5990,13 +5988,6 @@ export const GamesAddRoundResponse = {
         1,
         msg.scores as any,
         protoAtoms.IntermediateResultOfSession._writeMessage,
-      );
-    }
-    if (msg.extraPenaltyLogs?.length) {
-      writer.writeRepeatedMessage(
-        2,
-        msg.extraPenaltyLogs as any,
-        protoAtoms.Penalty._writeMessage,
       );
     }
     if (msg.round) {
@@ -6043,12 +6034,6 @@ export const GamesAddRoundResponse = {
             protoAtoms.IntermediateResultOfSession._readMessage,
           );
           msg.scores.push(m);
-          break;
-        }
-        case 2: {
-          const m = protoAtoms.Penalty.initialize();
-          reader.readMessage(m, protoAtoms.Penalty._readMessage);
-          msg.extraPenaltyLogs.push(m);
           break;
         }
         case 3: {
@@ -12400,7 +12385,6 @@ export const GamesAddRoundResponseJSON = {
   ): GamesAddRoundResponse {
     return {
       scores: [],
-      extraPenaltyLogs: [],
       round: 0,
       honba: 0,
       riichiBets: 0,
@@ -12423,11 +12407,6 @@ export const GamesAddRoundResponseJSON = {
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
         protoAtoms.IntermediateResultOfSessionJSON._writeMessage,
-      );
-    }
-    if (msg.extraPenaltyLogs?.length) {
-      json["extraPenaltyLogs"] = msg.extraPenaltyLogs.map(
-        protoAtoms.PenaltyJSON._writeMessage,
       );
     }
     if (msg.round) {
@@ -12470,15 +12449,6 @@ export const GamesAddRoundResponseJSON = {
         const m = protoAtoms.IntermediateResultOfSessionJSON.initialize();
         protoAtoms.IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
-      }
-    }
-    const _extraPenaltyLogs_ =
-      json["extraPenaltyLogs"] ?? json["extra_penalty_logs"];
-    if (_extraPenaltyLogs_) {
-      for (const item of _extraPenaltyLogs_) {
-        const m = protoAtoms.PenaltyJSON.initialize();
-        protoAtoms.PenaltyJSON._readMessage(m, item);
-        msg.extraPenaltyLogs.push(m);
       }
     }
     const _round_ = json["round"];

@@ -42,9 +42,9 @@ class SessionState
      */
     protected $_chips = [];
     /**
-     * @var float[] { player_id => penalty_score }
+     * @var float[] { player_id => chombo_amount }
      */
-    protected $_penalties = [];
+    protected $_chombo = [];
     /**
      * @var int
      */
@@ -374,9 +374,9 @@ class SessionState
     /**
      * @return float[]
      */
-    public function getPenalties()
+    public function getChombo()
     {
-        return $this->_penalties;
+        return $this->_chombo;
     }
 
     /**
@@ -621,10 +621,10 @@ class SessionState
             $this->getScores()
         );
 
-        if (empty($this->_penalties[$round->getLoserId()])) {
-            $this->_penalties[$round->getLoserId()] = 0;
+        if (empty($this->_chombo[$round->getLoserId()])) {
+            $this->_chombo[$round->getLoserId()] = 0;
         }
-        $this->_penalties[$round->getLoserId()] -= $this->_rules->rules()->getChomboPenalty();
+        $this->_chombo[$round->getLoserId()] -= $this->_rules->rules()->getChomboAmount();
         return PointsCalc::lastPaymentsInfo();
     }
 

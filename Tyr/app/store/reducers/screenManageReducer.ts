@@ -52,6 +52,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           riichiCount: 0,
           honbaCount: 0,
           lastHandStarted: false,
+          chombo: [],
         },
         currentOutcome: undefined,
         players: undefined,

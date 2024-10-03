@@ -462,7 +462,7 @@ message DoraSummary {
 message IntermediateResultOfSession {
   int32 player_id = 1;
   int32 score = 2;
-  optional int32 penalty_score = 3;
+  int32 chombo_count = 4;
 }
 
 message PaymentLogItem {
@@ -561,6 +561,11 @@ message PrescriptedTable {
   repeated RegisteredPlayer players = 1; // should be 4 elements
 }
 
+message Chombo {
+  int32 player_id = 1;
+  float amount = 2;
+}
+
 message SessionState {
   int32 dealer = 1;
   int32 round_index = 2;
@@ -569,6 +574,7 @@ message SessionState {
   repeated IntermediateResultOfSession scores = 5;
   bool finished = 6;
   bool last_hand_started = 8;
+  repeated Chombo chombo = 9;
 }
 
 message Uma {
@@ -625,7 +631,7 @@ message RulesetConfig {
   bool with_nagashi_mangan = 20;
   bool with_winning_dealer_honba_skipped = 21;
   int32 chips_value = 22;
-  int32 chombo_penalty = 23;
+  int32 chombo_amount = 23;
   int32 game_expiration_time = 24;
   int32 goal_points = 25;
   int32 max_penalty = 26;

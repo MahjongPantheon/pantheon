@@ -156,7 +156,7 @@ class EventRatingTableModel extends Model
         $startRating = $mainEvent->getRulesetConfig()->rules()->getStartRating();
 
         // arbitrary penalties
-        /** @var (int|float)[] $penalties */
+        /** @var (int|float)[][] $penalties */
         $penalties = array_reduce(PenaltyPrimitive::findByEventId($this->_ds, $eventIds), function ($acc, PenaltyPrimitive $item) {
             if (empty($acc[$item->getPlayerId()])) {
                 $acc[$item->getPlayerId()] = ['amount' => 0, 'count' => 0];
@@ -167,9 +167,11 @@ class EventRatingTableModel extends Model
         }, []);
 
         $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $penalties, $mainEvent, $teams, $startRating, $soulNicknames) {
-            $penalty = ['amount' => 0, 'count' => 0];
+            $penaltyAmount = 0;
+            $penaltyCount = 0;
             if (!empty($penalties[(int)$el->getPlayerId()])) {
-                $penalty = $penalties[(int)$el->getPlayerId()];
+                $penaltyAmount = $penalties[(int)$el->getPlayerId()]['amount'];
+                $penaltyCount = $penalties[(int)$el->getPlayerId()]['count'];
             }
 
             return [
@@ -180,8 +182,8 @@ class EventRatingTableModel extends Model
                 'tenhou_id'       => $mainEvent->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL
                     ? ($soulNicknames[(int)$el->getPlayerId()] ?? '')
                     : $playerItems[$el->getPlayerId()]->getTenhouId(),
-                'rating'          => (float)$el->getRating() - $penalty['amount'],
-                'penalties'       => ['count' => $penalty['count'], 'amount' => $penalty['amount']],
+                'rating'          => (float)$el->getRating() - $penaltyAmount,
+                'penalties'       => ['count' => $penaltyCount, 'amount' => $penaltyAmount],
                 'chips'           => (int)$el->getChips(),
                 'team_name'       => empty($teams[$el->getPlayerId()]) ? '' : $teams[$el->getPlayerId()],
                 'winner_zone'     => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),

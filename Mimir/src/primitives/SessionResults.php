@@ -429,8 +429,8 @@ class SessionResultsPrimitive extends Primitive
         }
 
         // final chombing
-        if (!empty($results->getPenalties()[$this->_playerId])) {
-            $this->_ratingDelta += $results->getPenalties()[$this->_playerId];
+        if (!empty($results->getChombo()[$this->_playerId])) {
+            $this->_ratingDelta += $results->getChombo()[$this->_playerId];
         }
 
         // apply yakitori after everything

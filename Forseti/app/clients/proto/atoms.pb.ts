@@ -474,7 +474,7 @@ export interface DoraSummary {
 export interface IntermediateResultOfSession {
   playerId: number;
   score: number;
-  penaltyScore?: number | null | undefined;
+  chomboCount: number;
 }
 
 export interface PaymentLogItem {
@@ -573,6 +573,11 @@ export interface PrescriptedTable {
   players: RegisteredPlayer[];
 }
 
+export interface Chombo {
+  playerId: number;
+  amount: number;
+}
+
 export interface SessionState {
   dealer: number;
   roundIndex: number;
@@ -581,6 +586,7 @@ export interface SessionState {
   scores: IntermediateResultOfSession[];
   finished: boolean;
   lastHandStarted: boolean;
+  chombo: Chombo[];
 }
 
 export interface Uma {
@@ -619,7 +625,7 @@ export interface RulesetConfig {
   withNagashiMangan: boolean;
   withWinningDealerHonbaSkipped: boolean;
   chipsValue: number;
-  chomboPenalty: number;
+  chomboAmount: number;
   gameExpirationTime: number;
   goalPoints: number;
   maxPenalty: number;
@@ -5948,7 +5954,7 @@ export const IntermediateResultOfSession = {
     return {
       playerId: 0,
       score: 0,
-      penaltyScore: undefined,
+      chomboCount: 0,
       ...msg,
     };
   },
@@ -5966,8 +5972,8 @@ export const IntermediateResultOfSession = {
     if (msg.score) {
       writer.writeInt32(2, msg.score);
     }
-    if (msg.penaltyScore != undefined) {
-      writer.writeInt32(3, msg.penaltyScore);
+    if (msg.chomboCount) {
+      writer.writeInt32(4, msg.chomboCount);
     }
     return writer;
   },
@@ -5990,8 +5996,8 @@ export const IntermediateResultOfSession = {
           msg.score = reader.readInt32();
           break;
         }
-        case 3: {
-          msg.penaltyScore = reader.readInt32();
+        case 4: {
+          msg.chomboCount = reader.readInt32();
           break;
         }
         default: {
@@ -7263,6 +7269,82 @@ export const PrescriptedTable = {
   },
 };
 
+export const Chombo = {
+  /**
+   * Serializes Chombo to protobuf.
+   */
+  encode: function (msg: PartialDeep<Chombo>): Uint8Array {
+    return Chombo._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes Chombo from protobuf.
+   */
+  decode: function (bytes: ByteSource): Chombo {
+    return Chombo._readMessage(
+      Chombo.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes Chombo with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<Chombo>): Chombo {
+    return {
+      playerId: 0,
+      amount: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<Chombo>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.playerId) {
+      writer.writeInt32(1, msg.playerId);
+    }
+    if (msg.amount) {
+      writer.writeFloat(2, msg.amount);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: Chombo,
+    reader: protoscript.BinaryReader,
+  ): Chombo {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.amount = reader.readFloat();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const SessionState = {
   /**
    * Serializes SessionState to protobuf.
@@ -7296,6 +7378,7 @@ export const SessionState = {
       scores: [],
       finished: false,
       lastHandStarted: false,
+      chombo: [],
       ...msg,
     };
   },
@@ -7331,6 +7414,9 @@ export const SessionState = {
     }
     if (msg.lastHandStarted) {
       writer.writeBool(8, msg.lastHandStarted);
+    }
+    if (msg.chombo?.length) {
+      writer.writeRepeatedMessage(9, msg.chombo as any, Chombo._writeMessage);
     }
     return writer;
   },
@@ -7373,6 +7459,12 @@ export const SessionState = {
         }
         case 8: {
           msg.lastHandStarted = reader.readBool();
+          break;
+        }
+        case 9: {
+          const m = Chombo.initialize();
+          reader.readMessage(m, Chombo._readMessage);
+          msg.chombo.push(m);
           break;
         }
         default: {
@@ -7606,7 +7698,7 @@ export const RulesetConfig = {
       withNagashiMangan: false,
       withWinningDealerHonbaSkipped: false,
       chipsValue: 0,
-      chomboPenalty: 0,
+      chomboAmount: 0,
       gameExpirationTime: 0,
       goalPoints: 0,
       maxPenalty: 0,
@@ -7698,8 +7790,8 @@ export const RulesetConfig = {
     if (msg.chipsValue) {
       writer.writeInt32(22, msg.chipsValue);
     }
-    if (msg.chomboPenalty) {
-      writer.writeInt32(23, msg.chomboPenalty);
+    if (msg.chomboAmount) {
+      writer.writeInt32(23, msg.chomboAmount);
     }
     if (msg.gameExpirationTime) {
       writer.writeInt32(24, msg.gameExpirationTime);
@@ -7845,7 +7937,7 @@ export const RulesetConfig = {
           break;
         }
         case 23: {
-          msg.chomboPenalty = reader.readInt32();
+          msg.chomboAmount = reader.readInt32();
           break;
         }
         case 24: {
@@ -12704,7 +12796,7 @@ export const IntermediateResultOfSessionJSON = {
     return {
       playerId: 0,
       score: 0,
-      penaltyScore: undefined,
+      chomboCount: 0,
       ...msg,
     };
   },
@@ -12722,8 +12814,8 @@ export const IntermediateResultOfSessionJSON = {
     if (msg.score) {
       json["score"] = msg.score;
     }
-    if (msg.penaltyScore != undefined) {
-      json["penaltyScore"] = msg.penaltyScore;
+    if (msg.chomboCount) {
+      json["chomboCount"] = msg.chomboCount;
     }
     return json;
   },
@@ -12743,9 +12835,9 @@ export const IntermediateResultOfSessionJSON = {
     if (_score_) {
       msg.score = protoscript.parseNumber(_score_);
     }
-    const _penaltyScore_ = json["penaltyScore"] ?? json["penalty_score"];
-    if (_penaltyScore_) {
-      msg.penaltyScore = protoscript.parseNumber(_penaltyScore_);
+    const _chomboCount_ = json["chomboCount"] ?? json["chombo_count"];
+    if (_chomboCount_) {
+      msg.chomboCount = protoscript.parseNumber(_chomboCount_);
     }
     return msg;
   },
@@ -13833,6 +13925,62 @@ export const PrescriptedTableJSON = {
   },
 };
 
+export const ChomboJSON = {
+  /**
+   * Serializes Chombo to JSON.
+   */
+  encode: function (msg: PartialDeep<Chombo>): string {
+    return JSON.stringify(ChomboJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes Chombo from JSON.
+   */
+  decode: function (json: string): Chombo {
+    return ChomboJSON._readMessage(ChomboJSON.initialize(), JSON.parse(json));
+  },
+
+  /**
+   * Initializes Chombo with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<Chombo>): Chombo {
+    return {
+      playerId: 0,
+      amount: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (msg: PartialDeep<Chombo>): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.playerId) {
+      json["playerId"] = msg.playerId;
+    }
+    if (msg.amount) {
+      json["amount"] = msg.amount;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: Chombo, json: any): Chombo {
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = protoscript.parseNumber(_playerId_);
+    }
+    const _amount_ = json["amount"];
+    if (_amount_) {
+      msg.amount = protoscript.parseDouble(_amount_);
+    }
+    return msg;
+  },
+};
+
 export const SessionStateJSON = {
   /**
    * Serializes SessionState to JSON.
@@ -13863,6 +14011,7 @@ export const SessionStateJSON = {
       scores: [],
       finished: false,
       lastHandStarted: false,
+      chombo: [],
       ...msg,
     };
   },
@@ -13896,6 +14045,9 @@ export const SessionStateJSON = {
     }
     if (msg.lastHandStarted) {
       json["lastHandStarted"] = msg.lastHandStarted;
+    }
+    if (msg.chombo?.length) {
+      json["chombo"] = msg.chombo.map(ChomboJSON._writeMessage);
     }
     return json;
   },
@@ -13936,6 +14088,14 @@ export const SessionStateJSON = {
       json["lastHandStarted"] ?? json["last_hand_started"];
     if (_lastHandStarted_) {
       msg.lastHandStarted = _lastHandStarted_;
+    }
+    const _chombo_ = json["chombo"];
+    if (_chombo_) {
+      for (const item of _chombo_) {
+        const m = ChomboJSON.initialize();
+        ChomboJSON._readMessage(m, item);
+        msg.chombo.push(m);
+      }
     }
     return msg;
   },
@@ -14136,7 +14296,7 @@ export const RulesetConfigJSON = {
       withNagashiMangan: false,
       withWinningDealerHonbaSkipped: false,
       chipsValue: 0,
-      chomboPenalty: 0,
+      chomboAmount: 0,
       gameExpirationTime: 0,
       goalPoints: 0,
       maxPenalty: 0,
@@ -14234,8 +14394,8 @@ export const RulesetConfigJSON = {
     if (msg.chipsValue) {
       json["chipsValue"] = msg.chipsValue;
     }
-    if (msg.chomboPenalty) {
-      json["chomboPenalty"] = msg.chomboPenalty;
+    if (msg.chomboAmount) {
+      json["chomboAmount"] = msg.chomboAmount;
     }
     if (msg.gameExpirationTime) {
       json["gameExpirationTime"] = msg.gameExpirationTime;
@@ -14386,9 +14546,9 @@ export const RulesetConfigJSON = {
     if (_chipsValue_) {
       msg.chipsValue = protoscript.parseNumber(_chipsValue_);
     }
-    const _chomboPenalty_ = json["chomboPenalty"] ?? json["chombo_penalty"];
-    if (_chomboPenalty_) {
-      msg.chomboPenalty = protoscript.parseNumber(_chomboPenalty_);
+    const _chomboAmount_ = json["chomboAmount"] ?? json["chombo_amount"];
+    if (_chomboAmount_) {
+      msg.chomboAmount = protoscript.parseNumber(_chomboAmount_);
     }
     const _gameExpirationTime_ =
       json["gameExpirationTime"] ?? json["game_expiration_time"];

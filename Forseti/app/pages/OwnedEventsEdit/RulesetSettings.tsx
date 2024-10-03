@@ -196,10 +196,10 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         onChange={(e) => {
           form.setFieldValue('ruleset.extraChomboPayments', e.target.checked);
           if (e.target.checked) {
-            lastChomboPaymentValue = form.getTransformedValues().ruleset.chomboPenalty;
-            form.setFieldValue('ruleset.chomboPenalty', 0);
+            lastChomboPaymentValue = form.getTransformedValues().ruleset.chomboAmount;
+            form.setFieldValue('ruleset.chomboAmount', 0);
           } else {
-            form.setFieldValue('ruleset.chomboPenalty', lastChomboPaymentValue);
+            form.setFieldValue('ruleset.chomboAmount', lastChomboPaymentValue);
           }
         }}
       />
@@ -212,7 +212,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           )}
           defaultValue={20000}
           min={0}
-          {...form.getInputProps('ruleset.chomboPenalty')}
+          {...form.getInputProps('ruleset.chomboAmount')}
         />
       )}
       <Checkbox
