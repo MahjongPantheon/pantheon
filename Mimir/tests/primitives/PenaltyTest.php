@@ -23,7 +23,6 @@ use Mimir\PenaltyPrimitive;
 use Mimir\PlayerPrimitive;
 
 require_once __DIR__ . '/../../src/Ruleset.php';
-require_once __DIR__ . '/../../src/primitives/Session.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/Penalty.php';
@@ -69,7 +68,6 @@ class PenaltyPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setReason('Test')
             ->setCreatedAt(date('Y-m-d H:i:s'));
 
-        $this->assertEquals($this->_session->getId(), $item->getSessionId());
         $this->assertEquals($this->_players[0]->getId(), $item->getPlayerId());
         $this->assertEquals($this->_players[3]->getId(), $item->getAssignedBy());
         $this->assertTrue($this->_players[0] === $item->getPlayer());

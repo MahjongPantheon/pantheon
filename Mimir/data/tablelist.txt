@@ -1,5 +1,6 @@
 phinxlog
 round
+penalty
 player_history
 session_player
 session_results
@@ -12,4 +13,3 @@ yaku
 event
 game_platforms
 jobs_queue
-penalty
