@@ -80,7 +80,7 @@ class EventFinishedGamesModel extends Model
         ];
 
         foreach ($games as $session) {
-            $result['games'][] = Formatters::formatGameResults($session, $sessionResults, $penalties[$session->getId()], $rounds);
+            $result['games'][] = Formatters::formatGameResults($session, $sessionResults, empty($penalties[$session->getId()]) ? [] : $penalties[$session->getId()], $rounds);
         }
 
         return $result;
