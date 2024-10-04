@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 23:25Z\n"
+"POT-Creation-Date: 2024-10-04 21:11Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,122 +38,126 @@ msgstr ""
 msgid "Select an avatar"
 msgstr ""
 
-#: app/components/MainMenu.tsx:76:22
+#: app/components/MainMenu.tsx:78:22
 msgid "Event: %1"
 msgstr ""
 
-#: app/components/MainMenu.tsx:83:21
+#: app/components/MainMenu.tsx:85:21
 msgid "Open event page"
 msgstr ""
 
-#: app/components/MainMenu.tsx:89:21
-#: app/pages/OwnedEvents.tsx:370:33
+#: app/components/MainMenu.tsx:92:23
+#: app/pages/OwnedEvents.tsx:369:35
 msgid "Settings"
 msgstr ""
 
-#: app/components/MainMenu.tsx:97:25
-#: app/pages/OwnedEvents.tsx:362:34
-#: app/pages/OwnedEvents.tsx:364:33
+#: app/components/MainMenu.tsx:100:23
+msgid "Manage privileges"
+msgstr ""
+
+#: app/components/MainMenu.tsx:110:27
+#: app/pages/OwnedEvents.tsx:360:34
+#: app/pages/OwnedEvents.tsx:362:33
 msgid "Manage players"
 msgstr ""
 
-#: app/components/MainMenu.tsx:105:29
-#: app/pages/OwnedEvents.tsx:358:33
+#: app/components/MainMenu.tsx:119:29
+#: app/pages/OwnedEvents.tsx:356:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr ""
 
-#: app/components/MainMenu.tsx:111:29
-#: app/pages/OwnedEvents.tsx:352:33
+#: app/components/MainMenu.tsx:125:29
+#: app/pages/OwnedEvents.tsx:350:33
 msgid "Manage games"
 msgstr ""
 
-#: app/components/MainMenu.tsx:120:27
-#: app/pages/OwnedEvents.tsx:345:35
+#: app/components/MainMenu.tsx:134:27
+#: app/pages/OwnedEvents.tsx:343:35
 msgid "Predefined seating"
 msgstr ""
 
-#: app/components/MainMenu.tsx:131:24
-#: app/pages/OwnedEvents.tsx:374:38
+#: app/components/MainMenu.tsx:145:24
+#: app/pages/OwnedEvents.tsx:375:42
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr ""
 
-#: app/components/MainMenu.tsx:137:24
-#: app/pages/OwnedEvents.tsx:377:36
-#: app/pages/OwnedEvents.tsx:381:30
+#: app/components/MainMenu.tsx:151:24
+#: app/pages/OwnedEvents.tsx:378:40
+#: app/pages/OwnedEvents.tsx:382:34
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/components/MainMenu.tsx:148:24
+#: app/components/MainMenu.tsx:162:24
 msgid "Recalculate achievements"
 msgstr ""
 
-#: app/components/MainMenu.tsx:163:24
+#: app/components/MainMenu.tsx:177:24
 msgid "Recalculate players stats"
 msgstr ""
 
-#: app/components/MainMenu.tsx:178:24
-#: app/pages/OwnedEvents.tsx:385:34
-#: app/pages/OwnedEvents.tsx:393:28
+#: app/components/MainMenu.tsx:192:24
+#: app/pages/OwnedEvents.tsx:387:38
+#: app/pages/OwnedEvents.tsx:395:32
 msgid "Finish event"
 msgstr ""
 
-#: app/components/MainMenu.tsx:197:18
+#: app/components/MainMenu.tsx:211:18
 msgid "Common actions"
 msgstr ""
 
-#: app/components/MainMenu.tsx:204:17
+#: app/components/MainMenu.tsx:218:17
 msgid "All events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:211:19
+#: app/components/MainMenu.tsx:225:19
 msgid "My events"
 msgstr ""
 
-#: app/components/MainMenu.tsx:219:19
+#: app/components/MainMenu.tsx:233:19
 msgid "Sign in"
 msgstr ""
 
-#: app/components/MainMenu.tsx:227:19
+#: app/components/MainMenu.tsx:241:19
 msgid "Sign up"
 msgstr ""
 
-#: app/components/MainMenu.tsx:235:19
+#: app/components/MainMenu.tsx:249:19
 #: app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr ""
 
-#: app/components/MainMenu.tsx:243:19
-#: app/pages/SystemStats.tsx:164:16
+#: app/components/MainMenu.tsx:257:19
+#: app/pages/SystemStats.tsx:165:16
 msgid "System stats"
 msgstr ""
 
-#: app/components/MainMenu.tsx:251:19
+#: app/components/MainMenu.tsx:265:19
 msgid "Edit profile"
 msgstr ""
 
-#: app/components/MainMenu.tsx:259:19
+#: app/components/MainMenu.tsx:273:19
 msgid "Notifications"
 msgstr ""
 
-#: app/components/MainMenu.tsx:267:19
+#: app/components/MainMenu.tsx:281:19
 msgid "Sign out"
 msgstr ""
 
-#: app/components/MainMenu.tsx:275:17
+#: app/components/MainMenu.tsx:289:17
 msgid "Open assistant"
 msgstr ""
 
-#: app/components/MainMenu.tsx:283:18
+#: app/components/MainMenu.tsx:297:18
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:325:18
+#: app/components/MainMenu.tsx:339:18
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:334:18
+#: app/components/MainMenu.tsx:348:18
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -183,7 +187,7 @@ msgstr ""
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
 #: app/components/StopEventModal.tsx:36:12
-#: app/pages/OwnedEvents.tsx:252:14
+#: app/pages/OwnedEvents.tsx:247:14
 msgid "Cancel"
 msgstr ""
 
@@ -201,12 +205,12 @@ msgid "Recalculate stats for all players in event \"%1\" (id #%2)? Recalculation
 msgstr ""
 
 #: app/components/StopEventModal.tsx:29:10
-#: app/pages/OwnedEvents.tsx:245:12
+#: app/pages/OwnedEvents.tsx:240:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 
 #: app/components/StopEventModal.tsx:46:12
-#: app/pages/OwnedEvents.tsx:262:14
+#: app/pages/OwnedEvents.tsx:257:14
 msgid "Stop event"
 msgstr ""
 
@@ -396,14 +400,19 @@ msgstr ""
 #: app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
 #: app/pages/GamesControl/index.tsx:90:14
-#: app/pages/OwnedEvents.tsx:94:14
+#: app/pages/OwnedEvents.tsx:93:14
 #: app/pages/OwnedEventsEdit/index.tsx:196:18
 #: app/pages/OwnedEventsEdit/index.tsx:227:18
-#: app/pages/Penalties.tsx:73:18
-#: app/pages/Penalties.tsx:119:18
-#: app/pages/PlayersManage/index.tsx:87:18
+#: app/pages/Penalties.tsx:89:18
+#: app/pages/Penalties/PenaltyForm.tsx:91:18
+#: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
+#: app/pages/PrivilegesManage/index.tsx:60:18
+#: app/pages/PrivilegesManage/ManagementTab.tsx:64:18
+#: app/pages/PrivilegesManage/ManagementTab.tsx:81:18
+#: app/pages/PrivilegesManage/ManagementTab.tsx:118:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:191:28
 msgid "Error has occurred"
 msgstr ""
 
@@ -462,6 +471,7 @@ msgid "Update script"
 msgstr ""
 
 #: app/pages/GamesControl/Confirmation.tsx:78:20
+#: app/pages/Penalties/CancelConfirmation.tsx:81:14
 msgid "Confirm"
 msgstr ""
 
@@ -592,7 +602,7 @@ msgid "Failed to notify players"
 msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:27
-#: app/pages/OwnedEvents.tsx:198:27
+#: app/pages/OwnedEvents.tsx:193:27
 msgid "Failed to toggle results visibility"
 msgstr ""
 
@@ -808,95 +818,95 @@ msgstr ""
 msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:90:16
+#: app/pages/OwnedEvents.tsx:89:16
 msgid "Manage my events"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:219:27
+#: app/pages/OwnedEvents.tsx:214:27
 msgid "Failed to toggle achievements visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:288:30
+#: app/pages/OwnedEvents.tsx:284:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:300:30
+#: app/pages/OwnedEvents.tsx:297:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:312:30
+#: app/pages/OwnedEvents.tsx:310:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:322:30
+#: app/pages/OwnedEvents.tsx:320:30
 msgid "Open event page in new tab"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:336:48
+#: app/pages/OwnedEvents.tsx:334:48
 msgid "Actions"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:339:38
+#: app/pages/OwnedEvents.tsx:337:38
 msgid "Event management"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:343:36
+#: app/pages/OwnedEvents.tsx:341:36
 msgid "Manage predefined seating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:350:34
+#: app/pages/OwnedEvents.tsx:348:34
 msgid "Manage current games"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:356:34
-#: app/pages/Penalties.tsx:52:16
+#: app/pages/OwnedEvents.tsx:354:34
+#: app/pages/Penalties.tsx:45:16
 msgid "Manage penalties"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:368:34
+#: app/pages/OwnedEvents.tsx:367:36
 msgid "Edit event settings"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:401:24
+#: app/pages/OwnedEvents.tsx:405:24
 msgid "Event finished"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:408:32
+#: app/pages/OwnedEvents.tsx:412:32
 msgid "Visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:422:36
+#: app/pages/OwnedEvents.tsx:426:36
 msgid "Visibility management"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:424:32
+#: app/pages/OwnedEvents.tsx:429:34
 msgid "Toggle visibility in ratings global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:428:26
+#: app/pages/OwnedEvents.tsx:433:28
 msgid "Event visible in global list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:431:32
+#: app/pages/OwnedEvents.tsx:437:32
 msgid "Toggle visibility of rating table"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:435:26
+#: app/pages/OwnedEvents.tsx:441:26
 msgid "Rating table visible"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:438:32
+#: app/pages/OwnedEvents.tsx:444:32
 msgid "Toggle visibility of achievements"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:442:26
+#: app/pages/OwnedEvents.tsx:448:26
 msgid "Achievements visible"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:452:18
+#: app/pages/OwnedEvents.tsx:458:18
 msgid "Create new event"
 msgstr ""
 
@@ -1434,71 +1444,141 @@ msgstr ""
 msgid "Pao rule enabled for:"
 msgstr ""
 
-#: app/pages/Penalties.tsx:92:54
+#: app/pages/Penalties/CancelConfirmation.tsx:42:5
+msgid "Penalty applied by mistake"
+msgstr ""
+
+#: app/pages/Penalties/CancelConfirmation.tsx:43:5
+msgid "Penalty not approved by lead referee"
+msgstr ""
+
+#: app/pages/Penalties/CancelConfirmation.tsx:63:14
+msgid "Enter a reason for cancellation and confirm it."
+msgstr ""
+
+#: app/pages/Penalties/CancelConfirmation.tsx:79:20
+msgid "Confirm cancellation"
+msgstr ""
+
+#: app/pages/Penalties/CommonReasons.tsx:39:5
+msgid "Being late for a session"
+msgstr ""
+
+#: app/pages/Penalties/CommonReasons.tsx:40:5
+msgid "Too much noise during the game"
+msgstr ""
+
+#: app/pages/Penalties/CommonReasons.tsx:41:5
+msgid "Another rules violation after notice"
+msgstr ""
+
+#: app/pages/Penalties/CommonReasons.tsx:42:5
+msgid "Arguing with referee"
+msgstr ""
+
+#: app/pages/Penalties/CommonReasons.tsx:43:5
+msgid "Texting or speaking by phone during the game"
+msgstr ""
+
+#: app/pages/Penalties/CommonReasons.tsx:62:14
+msgid "Common reasons for the penalty"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:68:45
+msgid "Current penalties"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:69:45
+msgid "No penalties assigned yet"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:88:46
+msgid "Notice"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:96:32
+msgid "Assigned by:"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:102:18
+msgid "Cancelled: "
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:110:20
+msgid "Cancel penalty"
+msgstr ""
+
+#: app/pages/Penalties/PenaltyForm.tsx:65:54
 msgid "Please select player"
 msgstr ""
 
-#: app/pages/Penalties.tsx:93:54
-msgid "Please select penalty amount"
-msgstr ""
-
-#: app/pages/Penalties.tsx:95:38
+#: app/pages/Penalties/PenaltyForm.tsx:67:38
 msgid "A reason for penalty is mandatory"
 msgstr ""
 
-#: app/pages/Penalties.tsx:114:27
+#: app/pages/Penalties/PenaltyForm.tsx:86:27
 msgid "Failed to apply penalty: server error or network unreachable"
 msgstr ""
 
-#: app/pages/Penalties.tsx:140:18
+#: app/pages/Penalties/PenaltyForm.tsx:108:45
+msgid "Add a penalty"
+msgstr ""
+
+#: app/pages/Penalties/PenaltyForm.tsx:112:16
 msgid "Select player"
 msgstr ""
 
-#: app/pages/Penalties.tsx:142:24
+#: app/pages/Penalties/PenaltyForm.tsx:114:22
 msgid "This is a player to be penalized"
 msgstr ""
 
-#: app/pages/Penalties.tsx:151:18
+#: app/pages/Penalties/PenaltyForm.tsx:122:16
 msgid "Penalty amount"
 msgstr ""
 
-#: app/pages/Penalties.tsx:152:24
-msgid "The points you enter here will be subtracted from player score after uma is applied when session ends. Please note: the penalty can be only applied during the session. If session is already ended, apply penalty in the next session."
+#: app/pages/Penalties/PenaltyForm.tsx:123:22
+msgid "The penalty applies to the rating table in this event by subtracting the suggested amount of points from player rating. If the amount is zero, the penalty is treated as a notice."
 msgstr ""
 
-#: app/pages/Penalties.tsx:164:18
+#: app/pages/Penalties/PenaltyForm.tsx:137:18
 msgid "Penalty reason"
 msgstr ""
 
-#: app/pages/Penalties.tsx:168:28
+#: app/pages/Penalties/PenaltyForm.tsx:143:18
+msgid "Common reasons for penalties"
+msgstr ""
+
+#: app/pages/Penalties/PenaltyForm.tsx:154:28
+#: app/pages/Penalties/PenaltyForm.tsx:158:22
 msgid "Penalty applied!"
 msgstr ""
 
-#: app/pages/Penalties.tsx:168:58
+#: app/pages/Penalties/PenaltyForm.tsx:154:58
+#: app/pages/Penalties/PenaltyForm.tsx:158:52
 msgid "Apply penalty"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:54:16
+#: app/pages/PlayersManage/index.tsx:53:16
 msgid "Manage players in event"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:116:14
+#: app/pages/PlayersManage/index.tsx:105:14
 msgid "Players"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:121:20
+#: app/pages/PlayersManage/index.tsx:110:20
 msgid "Setup local identifiers of players to be used in predefined event script"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:131:14
+#: app/pages/PlayersManage/index.tsx:120:14
 msgid "Local IDs"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:135:20
+#: app/pages/PlayersManage/index.tsx:124:20
 msgid "Setup team name for each player (for team events)"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:139:14
+#: app/pages/PlayersManage/index.tsx:128:14
 msgid "Team names"
 msgstr ""
 
@@ -1506,53 +1586,73 @@ msgstr ""
 msgid "Local ID"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:176:16
+#: app/pages/PlayersManage/ManagementTab.tsx:129:16
 msgid "Select replacement player for %1"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:181:24
+#: app/pages/PlayersManage/ManagementTab.tsx:134:24
 msgid "Find replacement player by name..."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:197:30
+#: app/pages/PlayersManage/ManagementTab.tsx:150:30
 msgid "Find and add player by name..."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:228:28
+#: app/pages/PlayersManage/ManagementTab.tsx:181:28
 msgid "Replace player with someone else"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:244:28
+#: app/pages/PlayersManage/ManagementTab.tsx:197:28
 msgid "Replaced by %1"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:251:37
-#: app/pages/PlayersManage/ManagementTab.tsx:252:32
+#: app/pages/PlayersManage/ManagementTab.tsx:204:37
+#: app/pages/PlayersManage/ManagementTab.tsx:205:32
 msgid "Remove replacement"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:270:27
-msgid "Player is event administrator. Click to revoke privileges."
-msgstr ""
-
-#: app/pages/PlayersManage/ManagementTab.tsx:271:27
-msgid "Player is a regular user. Click to promote to event admin."
-msgstr ""
-
-#: app/pages/PlayersManage/ManagementTab.tsx:286:27
+#: app/pages/PlayersManage/ManagementTab.tsx:223:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:287:27
+#: app/pages/PlayersManage/ManagementTab.tsx:224:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:300:28
+#: app/pages/PlayersManage/ManagementTab.tsx:237:28
 msgid "Remove player from event"
 msgstr ""
 
 #: app/pages/PlayersManage/TeamNamesTab.tsx:99:24
 msgid "Team:"
+msgstr ""
+
+#: app/pages/PrivilegesManage/index.tsx:43:16
+msgid "Manage privileges in event"
+msgstr ""
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:92:27
+msgid "Event referees list"
+msgstr ""
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:98:26
+msgid "Find and add referee by name..."
+msgstr ""
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:151:28
+msgid "Remove referee from event"
+msgstr ""
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:165:27
+msgid "Event administrators list"
+msgstr ""
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:171:26
+msgid "Find and add administrator by name..."
+msgstr ""
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:224:28
+msgid "Remove administrator from event"
 msgstr ""
 
 #: app/pages/ProfileConfirm.tsx:33:16
@@ -1589,7 +1689,7 @@ msgid "Login to your account"
 msgstr ""
 
 #: app/pages/ProfileLogin.tsx:46:63
-#: app/pages/ProfileManageAdmin.tsx:87:63
+#: app/pages/ProfileManageAdmin.tsx:88:63
 #: app/pages/ProfileResetPassword.tsx:42:63
 #: app/pages/ProfileSignup.tsx:57:63
 msgid "Invalid email"
@@ -1630,7 +1730,7 @@ msgid "Manage your account"
 msgstr ""
 
 #: app/pages/ProfileManage.tsx:91:70
-#: app/pages/ProfileManageAdmin.tsx:88:70
+#: app/pages/ProfileManageAdmin.tsx:89:70
 #: app/pages/ProfileSignup.tsx:58:70
 msgid "Invalid title"
 msgstr ""
@@ -1746,35 +1846,35 @@ msgstr ""
 msgid "Please type in your title to proceed with removal"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:56:18
+#: app/pages/ProfileManageAdmin.tsx:58:18
 msgid "Update player account"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:58:18
+#: app/pages/ProfileManageAdmin.tsx:60:18
 #: app/pages/ProfileSignup.tsx:43:16
 #: app/pages/ProfileSignup.tsx:151:16
 msgid "Register new account"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:120:24
-#: app/pages/ProfileManageAdmin.tsx:157:24
+#: app/pages/ProfileManageAdmin.tsx:121:24
+#: app/pages/ProfileManageAdmin.tsx:158:24
 #: app/pages/ProfileSignup.tsx:103:20
 msgid "Success"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:121:26
+#: app/pages/ProfileManageAdmin.tsx:122:26
 msgid "Player was successfully registered"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:133:15
+#: app/pages/ProfileManageAdmin.tsx:134:15
 msgid "Failed to register player. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:158:26
+#: app/pages/ProfileManageAdmin.tsx:159:26
 msgid "Player details were successfully saved"
 msgstr ""
 
-#: app/pages/ProfileManageAdmin.tsx:172:15
+#: app/pages/ProfileManageAdmin.tsx:173:15
 msgid "Failed to update player details. Is your connection stable?"
 msgstr ""
 
@@ -1974,22 +2074,22 @@ msgstr ""
 msgid "show / hide"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:212:39
+#: app/pages/SystemStats.tsx:211:39
 msgid "Last 24h"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:215:39
+#: app/pages/SystemStats.tsx:214:39
 msgid "Last 30d"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:218:39
+#: app/pages/SystemStats.tsx:217:39
 msgid "Last 12mon"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:222:18
+#: app/pages/SystemStats.tsx:221:18
 msgid "Data slice"
 msgstr ""
 
-#: app/pages/SystemStats.tsx:228:18
+#: app/pages/SystemStats.tsx:227:18
 msgid "Subsystem"
 msgstr ""

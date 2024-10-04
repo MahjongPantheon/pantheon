@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:01Z\n"
+"POT-Creation-Date: 2024-10-04 21:11Z\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -97,7 +97,7 @@ msgstr "九蓮宝燈"
 msgid "Clear players"
 msgstr "プレイヤーをクリア"
 
-#: app/components/pages/Home/Home.tsx:70:14
+#: app/components/pages/Home/Home.tsx:78:14
 msgid "Current game"
 msgstr "今の対局"
 
@@ -133,7 +133,7 @@ msgstr "このユーザーは存在しません (%1)"
 msgid "Email"
 msgstr "メール"
 
-#: app/components/screens/Home/Home.tsx:98:60
+#: app/components/screens/Home/Home.tsx:103:60
 msgid "Event title"
 msgstr "イベント"
 
@@ -141,6 +141,10 @@ msgstr "イベント"
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "流局"
+
+#: app/components/pages/Penalties/Penalties.tsx:37:12
+msgid "Failed to load penalties. Connection issues?"
+msgstr ""
 
 #: app/components/pages/Login/Login.tsx:56:12
 #: app/components/pages/Login/LoginError.tsx:33:16
@@ -233,7 +237,7 @@ msgstr "流し"
 msgid "Nagashi mangan"
 msgstr "流し満貫"
 
-#: app/components/pages/Home/Home.tsx:65:14
+#: app/components/pages/Home/Home.tsx:73:14
 msgid "New game"
 msgstr "対局開始"
 
@@ -257,7 +261,11 @@ msgstr "現在、テーブルでのゲームはありません"
 msgid "Nobody selected"
 msgstr "誰も選択しませんでした"
 
-#: app/components/App.tsx:183:35
+#: app/components/pages/Penalties/Penalties.tsx:55:51
+msgid "Notice"
+msgstr ""
+
+#: app/components/App.tsx:186:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr ""
@@ -270,7 +278,7 @@ msgstr "オープン立直"
 msgid "Opened hand"
 msgstr "<副露ある>"
 
-#: app/components/pages/Home/Home.tsx:80:14
+#: app/components/pages/Home/Home.tsx:88:14
 msgid "Other playing tables"
 msgstr "他のプレイヤーの対局"
 
@@ -302,11 +310,11 @@ msgstr "平和"
 msgid "Player name"
 msgstr "玩家名"
 
-#: app/components/App.tsx:185:16
+#: app/components/App.tsx:188:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "役：立直 を選択/解除する場合は、立直プレーヤーの確認に戻ってください"
 
-#: app/components/pages/Home/Home.tsx:75:14
+#: app/components/pages/Home/Home.tsx:83:14
 msgid "Previous game"
 msgstr "前の対局"
 
@@ -403,7 +411,7 @@ msgstr "シングルデバイスモード"
 msgid "Start game"
 msgstr "ゲーム開始"
 
-#: app/components/pages/Home/Home.tsx:90:14
+#: app/components/pages/Home/Home.tsx:98:14
 msgid "Statistics"
 msgstr "統計"
 
@@ -487,6 +495,14 @@ msgstr "役牌 x4"
 #: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
 msgid "Yakuman"
 msgstr "役満"
+
+#: app/components/pages/Penalties/Penalties.tsx:61:14
+msgid "You don't have any penalties in this event 🎉"
+msgstr ""
+
+#: app/components/pages/Penalties/Penalties.tsx:46:40
+msgid "Your penalties in current event"
+msgstr ""
 
 #: app/store/selectors/round.ts:71:19
 msgid "dora %1"

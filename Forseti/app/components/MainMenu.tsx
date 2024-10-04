@@ -103,12 +103,14 @@ export const MainMenu = ({
             )}
             {eventData && !eventData.finished && (
               <>
-                <MainMenuLink
-                  href={`/event/${eventId}/players`}
-                  icon={<IconFriends size={18} />}
-                  text={i18n._t('Manage players')}
-                  onClick={closeMenu}
-                />
+                {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                  <MainMenuLink
+                    href={`/event/${eventId}/players`}
+                    icon={<IconFriends size={18} />}
+                    text={i18n._t('Manage players')}
+                    onClick={closeMenu}
+                  />
+                )}
                 {eventData.type !== EventType.EVENT_TYPE_ONLINE && (
                   <>
                     <MainMenuLink
