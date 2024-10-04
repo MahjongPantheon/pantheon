@@ -425,4 +425,9 @@ class FreyClientMock implements IFreyClient
         }
         return [];
     }
+
+    public function getEventReferees(int $eventId): array
+    {
+        return [];
+    }
 }

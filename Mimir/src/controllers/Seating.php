@@ -215,7 +215,10 @@ class SeatingController extends Controller
 
         $currentRatingTable = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
             ->getRatingTable(
-                $eventList, [], 'rating', 'desc',
+                $eventList,
+                [],
+                'rating',
+                'desc',
                 $this->_meta->isEventAdminById($eventId) || $this->_meta->isEventRefereeById($eventId)
             );
 

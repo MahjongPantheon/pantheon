@@ -501,8 +501,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException("Couldn't find session in DB");
         }
 
-        if (
-            !$this->_meta->isEventAdminById($session[0]->getEventId()) &&
+        if (!$this->_meta->isEventAdminById($session[0]->getEventId()) &&
             !$this->_meta->isEventRefereeById($session[0]->getEventId())
         ) {
             throw new AuthFailedException('Only administrators are allowed to drop last round');

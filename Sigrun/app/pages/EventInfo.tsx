@@ -108,31 +108,33 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
               </Group>
             ))}
           </Group>
-          <Group style={{ fontSize: 'small' }}>
-            <Text c='dimmed'>{i18n._t('Event referees: ')}</Text>
-            {referees?.map((referee, idx) => (
-              <Group key={`ref_${idx}`}>
-                <PlayerAvatar
-                  size='xs'
-                  p={{
-                    title: referee.personName,
-                    id: referee.personId,
-                    hasAvatar: referee.hasAvatar,
-                    lastUpdate: referee.lastUpdate,
-                  }}
-                />
-                <Anchor
-                  href={`/event/${eventId}/player/${referee.personId}`}
-                  onClick={(e) => {
-                    navigate(`/event/${eventId}/player/${referee.personId}`);
-                    e.preventDefault();
-                  }}
-                >
-                  {referee.personName}
-                </Anchor>
-              </Group>
-            ))}
-          </Group>
+          {(referees?.length ?? 0) > 0 && (
+            <Group style={{ fontSize: 'small' }}>
+              <Text c='dimmed'>{i18n._t('Event referees: ')}</Text>
+              {referees?.map((referee, idx) => (
+                <Group key={`ref_${idx}`}>
+                  <PlayerAvatar
+                    size='xs'
+                    p={{
+                      title: referee.personName,
+                      id: referee.personId,
+                      hasAvatar: referee.hasAvatar,
+                      lastUpdate: referee.lastUpdate,
+                    }}
+                  />
+                  <Anchor
+                    href={`/event/${eventId}/player/${referee.personId}`}
+                    onClick={(e) => {
+                      navigate(`/event/${eventId}/player/${referee.personId}`);
+                      e.preventDefault();
+                    }}
+                  >
+                    {referee.personName}
+                  </Anchor>
+                </Group>
+              ))}
+            </Group>
+          )}
         </>
       )}
     </Container>
