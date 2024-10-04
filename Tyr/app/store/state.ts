@@ -43,11 +43,11 @@ export const initialState: IAppState = {
     dealer: 0,
     scores: [],
     finished: false,
-    penalties: [],
     roundIndex: 1,
     riichiCount: 0,
     honbaCount: 0,
     lastHandStarted: false,
+    chombo: [],
   },
 
   currentPlayerDisplayName: undefined,
@@ -76,6 +76,7 @@ export const initialState: IAppState = {
     players: false,
     addRound: false,
     events: false,
+    penalties: false,
   },
 
   eventsList: [],
@@ -84,6 +85,8 @@ export const initialState: IAppState = {
   gameOverviewReady: false,
 
   historyInitialized: false,
+
+  penalties: [],
 };
 
 export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutcome {

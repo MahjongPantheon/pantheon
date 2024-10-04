@@ -137,27 +137,37 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param int $eventId
-     * @param int $playerId  omit this to get list of last results for all players
+     * @param int[] $eventIds
      * @throws \Exception
      * @return PlayerHistoryPrimitive[]
      */
-    public static function findLastByEvent(DataSource $ds, $eventId, $playerId = null)
+    public static function findLastByEvent(DataSource $ds, $eventIds)
     {
-        if (!$playerId) {
-            // 1) select ids of latest player history items
-            $orm = $ds->table(static::$_table);
-            $orm->selectExpr('max(id)', 'mx')
-                ->where('event_id', $eventId)
-                ->groupBy('player_id');
-            $ids = array_map(function ($el) {
-                return $el['mx'];
-            }, $orm->findArray());
+        // 1) select ids of latest player history items
+        $orm = $ds->table(static::$_table);
+        $orm->selectExpr('max(id)', 'mx')
+            ->select('player_id')
+            ->select('event_id')
+            ->whereIn('event_id', $eventIds)
+            ->groupBy('player_id')
+            ->groupBy('event_id');
+        $ids = array_map(function ($el) {
+            return $el['mx'];
+        }, $orm->findArray());
 
-            // 2) return id-indexed search results
-            return self::findById($ds, $ids);
-        }
+        // 2) return id-indexed search results
+        return self::findById($ds, $ids);
+    }
 
+    /**
+     * @param DataSource $ds
+     * @param int $eventId
+     * @param int $playerId
+     * @throws \Exception
+     * @return PlayerHistoryPrimitive[]
+     */
+    public static function findLastByEventAndPlayer(DataSource $ds, $eventId, $playerId)
+    {
         return self::_findBySeveral($ds, [
             'player_id'  => [$playerId],
             'event_id'   => [$eventId]
@@ -360,7 +370,7 @@ class PlayerHistoryPrimitive extends Primitive
      */
     public static function makeNewHistoryItem(DataSource $ds, PlayerPrimitive $player, SessionPrimitive $session, $ratingDelta, $place, $chips = null)
     {
-        $previousItem = self::findLastByEvent($ds, $session->getEventId(), $player->getId());
+        $previousItem = self::findLastByEventAndPlayer($ds, $session->getEventId(), $player->getId() ?? 0);
 
         if (empty($previousItem)) {
             // This may happen if player has just started to participate in event and has no previous results

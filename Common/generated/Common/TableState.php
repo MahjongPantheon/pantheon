@@ -26,10 +26,6 @@ class TableState extends \Google\Protobuf\Internal\Message
      */
     protected $session_hash = '';
     /**
-     * Generated from protobuf field <code>repeated .common.Penalty penalty_logs = 4;</code>
-     */
-    private $penalty_logs;
-    /**
      * Generated from protobuf field <code>optional int32 table_index = 5;</code>
      */
     protected $table_index = null;
@@ -59,7 +55,6 @@ class TableState extends \Google\Protobuf\Internal\Message
      *     @type int $status
      *     @type bool $may_definalize
      *     @type string $session_hash
-     *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $penalty_logs
      *     @type int $table_index
      *     @type \Common\Round $last_round
      *     @type int $current_round_index
@@ -134,28 +129,6 @@ class TableState extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->session_hash = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated .common.Penalty penalty_logs = 4;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getPenaltyLogs()
-    {
-        return $this->penalty_logs;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated .common.Penalty penalty_logs = 4;</code>
-     * @param array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setPenaltyLogs($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Penalty::class);
-        $this->penalty_logs = $arr;
 
         return $this;
     }

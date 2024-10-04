@@ -245,7 +245,7 @@ class SessionPrimitive extends Primitive
      * Find sessions by state (indexed search, paginated)
      *
      * @param DataSource $ds
-     * @param integer $eventId
+     * @param integer[] $eventIds
      * @param string|string[] $status
      * @param integer $offset
      * @param integer $limit
@@ -260,7 +260,7 @@ class SessionPrimitive extends Primitive
      */
     public static function findByEventAndStatus(
         DataSource $ds,
-        $eventId,
+        $eventIds,
         $status,
         $offset = 0,
         $limit = null,
@@ -270,7 +270,7 @@ class SessionPrimitive extends Primitive
 
         return self::_findBySeveral(
             $ds,
-            ['status' => (array)$status, 'event_id' => [$eventId]],
+            ['status' => (array)$status, 'event_id' => $eventIds],
             [
                 'limit' => $limit, 'offset'  => $offset,
                 'order' => $order, 'orderBy' => $orderBy

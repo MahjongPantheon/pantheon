@@ -74,7 +74,7 @@ export function getPlayerData(
 
   let points: number | string = player.score;
   let pointsMode = PlayerPointsMode.IDLE;
-  let penaltyPoints = state.sessionState?.penalties.find((p) => p.who === player.id)?.amount;
+  let penaltyPoints = state.sessionState?.chombo.find((p) => p.playerId === player.id)?.amount;
 
   if (state.overviewDiffBy) {
     const diffByPlayer = state.players?.find((x) => x.id === state.overviewDiffBy);
@@ -367,8 +367,8 @@ export function getOtherTablePlayerData(
 
   let points: number | string = player.score;
   let pointsMode = PlayerPointsMode.IDLE;
-  let penaltyPoints = state.currentOtherTable?.state?.penalties.find(
-    (p) => p.who === player.id
+  let penaltyPoints = state.currentOtherTable?.state?.chombo.find(
+    (p) => p.playerId === player.id
   )?.amount;
 
   if (state.overviewDiffBy) {

@@ -235,7 +235,7 @@ class GamesController extends Controller
                 'honba'     => $session[0]->getCurrentState()->getHonba(),
                 'scores'    => $session[0]->getCurrentState()->getScores(),
                 'finished'  => $session[0]->getCurrentState()->isFinished(),
-                'penalties' => $session[0]->getCurrentState()->getPenalties(),
+                'chombo'    => $session[0]->getCurrentState()->getChombo(),
                 'lastHandStarted' => $session[0]->getCurrentState()->lastHandStarted(),
             ]
         ];

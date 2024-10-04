@@ -48,7 +48,7 @@ class EventSeriesModel extends Model
             throw new InvalidParametersException('Attempted to use deidented primitive');
         }
 
-        $gamesRaw = SessionPrimitive::findByEventAndStatus($this->_ds, $eId, SessionPrimitive::STATUS_FINISHED);
+        $gamesRaw = SessionPrimitive::findByEventAndStatus($this->_ds, [$eId], SessionPrimitive::STATUS_FINISHED);
 
         $games = [];
         foreach ($gamesRaw as $game) {

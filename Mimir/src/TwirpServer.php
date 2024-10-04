@@ -470,6 +470,21 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param float[] $chomboList
+     * @return array
+     */
+    protected static function _formatChombo($chomboList)
+    {
+        $list = [];
+        foreach ($chomboList as $playerId => $amount) {
+            $list []= (new \Common\Chombo())
+                ->setPlayerId($playerId)
+                ->setAmount($amount);
+        }
+        return $list;
+    }
+
+    /**
      * @param array $players
      * @return Player[]
      */
@@ -765,7 +780,6 @@ final class TwirpServer implements Mimir
                 ->setDate($game['date'])
                 ->setReplayLink($game['replay_link'])
                 ->setPlayers($game['players'])
-                ->setPenaltyLogs(self::_toPenaltiesLog($game['penalties']))
                 ->setFinalResults(array_map(function ($result) {
                     return (new FinalResultOfSession())
                         ->setPlayerId($result['player_id'])
@@ -946,6 +960,8 @@ final class TwirpServer implements Mimir
                     ->setLastUpdate($player['last_update'])
                     ->setRating((float)$player['rating'])
                     ->setTenhouId($player['tenhou_id'])
+                    ->setPenaltiesAmount($player['penalties']['amount'])
+                    ->setPenaltiesCount($player['penalties']['count'])
                     ->setChips($player['chips'])
                     ->setTeamName($player['team_name'])
                     ->setWinnerZone($player['winner_zone'])
@@ -1115,8 +1131,8 @@ final class TwirpServer implements Mimir
                 ->setHonbaCount($ret['state']['honba'])
                 ->setScores(self::_makeScores($ret['state']['scores']))
                 ->setFinished($ret['state']['finished'])
-                ->setPenalties(self::_makePenalties($ret['state']['penalties']))
-                ->setLastHandStarted($ret['state']['lastHandStarted']));
+                ->setLastHandStarted($ret['state']['lastHandStarted'])
+                ->setChombo(self::_formatChombo($ret['state']['chombo'])));
         if (!empty($ret['table_index'])) {
             $overview->setTableIndex($ret['table_index']);
         }
@@ -1186,7 +1202,6 @@ final class TwirpServer implements Mimir
         }
         return (new GamesAddRoundResponse())
             ->setScores(self::_makeScores($ret['_scores']))
-            ->setExtraPenaltyLogs(self::_toPenaltiesLog($ret['_extraPenaltyLog']))
             ->setRound($ret['_round'])
             ->setHonba($ret['_honba'])
             ->setRiichiBets($ret['_riichiBets'])
@@ -1396,7 +1411,6 @@ final class TwirpServer implements Mimir
                     ->setStatus(self::_toTableStatus($table['status']))
                     ->setMayDefinalize($table['may_definalize'])
                     ->setSessionHash($table['hash'])
-                    ->setPenaltyLogs(self::_toPenaltiesLog($table['penalties']))
                     ->setCurrentRoundIndex($table['current_round'])
                     ->setScores(self::_makeScores($table['scores']))
                     ->setPlayers(self::_toRegisteredPlayers($table['players']));
@@ -1855,11 +1869,11 @@ final class TwirpServer implements Mimir
 
     /**
      * @param array $ctx
-     * @param \Common\RecalcPayload $req
+     * @param \Common\GenericEventPayload $req
      * @return GenericSuccessResponse
      * @throws BadActionException
      */
-    public function RecalcAchievements(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse
+    public function RecalcAchievements(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->recalcAchievements($req->getEventId()));
@@ -1867,14 +1881,53 @@ final class TwirpServer implements Mimir
 
     /**
      * @param array $ctx
-     * @param \Common\RecalcPayload $req
+     * @param \Common\GenericEventPayload $req
      * @return GenericSuccessResponse
      * @throws BadActionException
      */
-    public function RecalcPlayerStats(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse
+    public function RecalcPlayerStats(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_eventsController->recalcPlayerStats($req->getEventId()));
+    }
+
+    /**
+     * @param array $ctx
+     * @param \Common\GenericEventPayload $req
+     * @return \Common\PenaltiesResponse
+     * @throws BadActionException
+     */
+    public function ListPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse
+    {
+        [$penalties, $referees] = $this->_eventsController->listPenalties($req->getEventId());
+        return (new \Common\PenaltiesResponse())
+            ->setPenalties($penalties)
+            ->setReferees($referees);
+    }
+
+    /**
+     * @param array $ctx
+     * @param \Common\CancelPenaltyPayload $req
+     * @return \Common\GenericSuccessResponse
+     * @throws InvalidParametersException
+     * @throws BadActionException
+     */
+    public function CancelPenalty(array $ctx, \Common\CancelPenaltyPayload $req): \Common\GenericSuccessResponse
+    {
+        return (new \Common\GenericSuccessResponse())
+            ->setSuccess($this->_eventsController->cancelPenalty($req->getPenaltyId(), $req->getReason()));
+    }
+
+    /**
+     * @param array $ctx
+     * @param GenericEventPayload $req
+     * @return \Common\PenaltiesResponse
+     * @throws InvalidParametersException
+     */
+    public function ListMyPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse
+    {
+        return (new \Common\PenaltiesResponse())
+            ->setPenalties($this->_eventsController->listMyPenalties($req->getEventId()));
     }
 
     /**

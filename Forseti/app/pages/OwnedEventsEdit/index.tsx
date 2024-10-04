@@ -108,7 +108,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         withNagashiMangan: false,
         playAdditionalRounds: false,
         equalizeUma: false,
-        chomboPenalty: 20000,
+        chomboAmount: 20000,
         goalPoints: 30000,
         maxPenalty: 20000,
         minPenalty: 100,

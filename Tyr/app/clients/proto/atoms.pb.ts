@@ -225,6 +225,8 @@ export interface PlayerInRating {
   teamName?: string | null | undefined;
   hasAvatar: boolean;
   lastUpdate: string;
+  penaltiesAmount: number;
+  penaltiesCount: number;
 }
 
 export interface Player {
@@ -246,6 +248,11 @@ export interface Penalty {
   who: number;
   amount: number;
   reason?: string | null | undefined;
+  assignedBy: number;
+  createdAt: string;
+  isCancelled: boolean;
+  cancellationReason?: string | null | undefined;
+  id: number;
 }
 
 export interface RonResult {
@@ -346,7 +353,6 @@ export interface GameResult {
   replayLink: string;
   players: number[];
   finalResults: FinalResultOfSession[];
-  penaltyLogs: Penalty[];
   rounds: Round[];
 }
 
@@ -468,7 +474,7 @@ export interface DoraSummary {
 export interface IntermediateResultOfSession {
   playerId: number;
   score: number;
-  penaltyScore?: number | null | undefined;
+  chomboCount: number;
 }
 
 export interface PaymentLogItem {
@@ -521,7 +527,6 @@ export interface TableState {
   status: SessionStatus;
   mayDefinalize: boolean;
   sessionHash: string;
-  penaltyLogs: Penalty[];
   tableIndex?: number | null | undefined;
   lastRound?: Round | null | undefined;
   currentRoundIndex: number;
@@ -568,6 +573,11 @@ export interface PrescriptedTable {
   players: RegisteredPlayer[];
 }
 
+export interface Chombo {
+  playerId: number;
+  amount: number;
+}
+
 export interface SessionState {
   dealer: number;
   roundIndex: number;
@@ -575,8 +585,8 @@ export interface SessionState {
   honbaCount: number;
   scores: IntermediateResultOfSession[];
   finished: boolean;
-  penalties: Penalty[];
   lastHandStarted: boolean;
+  chombo: Chombo[];
 }
 
 export interface Uma {
@@ -615,7 +625,7 @@ export interface RulesetConfig {
   withNagashiMangan: boolean;
   withWinningDealerHonbaSkipped: boolean;
   chipsValue: number;
-  chomboPenalty: number;
+  chomboAmount: number;
   gameExpirationTime: number;
   goalPoints: number;
   maxPenalty: number;
@@ -2768,6 +2778,8 @@ export const PlayerInRating = {
       teamName: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      penaltiesAmount: 0,
+      penaltiesCount: 0,
       ...msg,
     };
   },
@@ -2814,6 +2826,12 @@ export const PlayerInRating = {
     }
     if (msg.lastUpdate) {
       writer.writeString(12, msg.lastUpdate);
+    }
+    if (msg.penaltiesAmount) {
+      writer.writeFloat(13, msg.penaltiesAmount);
+    }
+    if (msg.penaltiesCount) {
+      writer.writeInt32(14, msg.penaltiesCount);
     }
     return writer;
   },
@@ -2874,6 +2892,14 @@ export const PlayerInRating = {
         }
         case 12: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 13: {
+          msg.penaltiesAmount = reader.readFloat();
+          break;
+        }
+        case 14: {
+          msg.penaltiesCount = reader.readInt32();
           break;
         }
         default: {
@@ -3109,6 +3135,11 @@ export const Penalty = {
       who: 0,
       amount: 0,
       reason: undefined,
+      assignedBy: 0,
+      createdAt: "",
+      isCancelled: false,
+      cancellationReason: undefined,
+      id: 0,
       ...msg,
     };
   },
@@ -3128,6 +3159,21 @@ export const Penalty = {
     }
     if (msg.reason != undefined) {
       writer.writeString(3, msg.reason);
+    }
+    if (msg.assignedBy) {
+      writer.writeInt32(4, msg.assignedBy);
+    }
+    if (msg.createdAt) {
+      writer.writeString(5, msg.createdAt);
+    }
+    if (msg.isCancelled) {
+      writer.writeBool(6, msg.isCancelled);
+    }
+    if (msg.cancellationReason != undefined) {
+      writer.writeString(7, msg.cancellationReason);
+    }
+    if (msg.id) {
+      writer.writeInt32(8, msg.id);
     }
     return writer;
   },
@@ -3152,6 +3198,26 @@ export const Penalty = {
         }
         case 3: {
           msg.reason = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.assignedBy = reader.readInt32();
+          break;
+        }
+        case 5: {
+          msg.createdAt = reader.readString();
+          break;
+        }
+        case 6: {
+          msg.isCancelled = reader.readBool();
+          break;
+        }
+        case 7: {
+          msg.cancellationReason = reader.readString();
+          break;
+        }
+        case 8: {
+          msg.id = reader.readInt32();
           break;
         }
         default: {
@@ -4313,7 +4379,6 @@ export const GameResult = {
       replayLink: "",
       players: [],
       finalResults: [],
-      penaltyLogs: [],
       rounds: [],
       ...msg,
     };
@@ -4343,13 +4408,6 @@ export const GameResult = {
         5,
         msg.finalResults as any,
         FinalResultOfSession._writeMessage,
-      );
-    }
-    if (msg.penaltyLogs?.length) {
-      writer.writeRepeatedMessage(
-        6,
-        msg.penaltyLogs as any,
-        Penalty._writeMessage,
       );
     }
     if (msg.rounds?.length) {
@@ -4392,12 +4450,6 @@ export const GameResult = {
           const m = FinalResultOfSession.initialize();
           reader.readMessage(m, FinalResultOfSession._readMessage);
           msg.finalResults.push(m);
-          break;
-        }
-        case 6: {
-          const m = Penalty.initialize();
-          reader.readMessage(m, Penalty._readMessage);
-          msg.penaltyLogs.push(m);
           break;
         }
         case 7: {
@@ -5902,7 +5954,7 @@ export const IntermediateResultOfSession = {
     return {
       playerId: 0,
       score: 0,
-      penaltyScore: undefined,
+      chomboCount: 0,
       ...msg,
     };
   },
@@ -5920,8 +5972,8 @@ export const IntermediateResultOfSession = {
     if (msg.score) {
       writer.writeInt32(2, msg.score);
     }
-    if (msg.penaltyScore != undefined) {
-      writer.writeInt32(3, msg.penaltyScore);
+    if (msg.chomboCount) {
+      writer.writeInt32(4, msg.chomboCount);
     }
     return writer;
   },
@@ -5944,8 +5996,8 @@ export const IntermediateResultOfSession = {
           msg.score = reader.readInt32();
           break;
         }
-        case 3: {
-          msg.penaltyScore = reader.readInt32();
+        case 4: {
+          msg.chomboCount = reader.readInt32();
           break;
         }
         default: {
@@ -6533,7 +6585,6 @@ export const TableState = {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
       sessionHash: "",
-      penaltyLogs: [],
       tableIndex: undefined,
       lastRound: undefined,
       currentRoundIndex: 0,
@@ -6558,13 +6609,6 @@ export const TableState = {
     }
     if (msg.sessionHash) {
       writer.writeString(3, msg.sessionHash);
-    }
-    if (msg.penaltyLogs?.length) {
-      writer.writeRepeatedMessage(
-        4,
-        msg.penaltyLogs as any,
-        Penalty._writeMessage,
-      );
     }
     if (msg.tableIndex != undefined) {
       writer.writeInt32(5, msg.tableIndex);
@@ -6612,12 +6656,6 @@ export const TableState = {
         }
         case 3: {
           msg.sessionHash = reader.readString();
-          break;
-        }
-        case 4: {
-          const m = Penalty.initialize();
-          reader.readMessage(m, Penalty._readMessage);
-          msg.penaltyLogs.push(m);
           break;
         }
         case 5: {
@@ -7231,6 +7269,82 @@ export const PrescriptedTable = {
   },
 };
 
+export const Chombo = {
+  /**
+   * Serializes Chombo to protobuf.
+   */
+  encode: function (msg: PartialDeep<Chombo>): Uint8Array {
+    return Chombo._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes Chombo from protobuf.
+   */
+  decode: function (bytes: ByteSource): Chombo {
+    return Chombo._readMessage(
+      Chombo.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes Chombo with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<Chombo>): Chombo {
+    return {
+      playerId: 0,
+      amount: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<Chombo>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.playerId) {
+      writer.writeInt32(1, msg.playerId);
+    }
+    if (msg.amount) {
+      writer.writeFloat(2, msg.amount);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: Chombo,
+    reader: protoscript.BinaryReader,
+  ): Chombo {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.amount = reader.readFloat();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const SessionState = {
   /**
    * Serializes SessionState to protobuf.
@@ -7263,8 +7377,8 @@ export const SessionState = {
       honbaCount: 0,
       scores: [],
       finished: false,
-      penalties: [],
       lastHandStarted: false,
+      chombo: [],
       ...msg,
     };
   },
@@ -7298,15 +7412,11 @@ export const SessionState = {
     if (msg.finished) {
       writer.writeBool(6, msg.finished);
     }
-    if (msg.penalties?.length) {
-      writer.writeRepeatedMessage(
-        7,
-        msg.penalties as any,
-        Penalty._writeMessage,
-      );
-    }
     if (msg.lastHandStarted) {
       writer.writeBool(8, msg.lastHandStarted);
+    }
+    if (msg.chombo?.length) {
+      writer.writeRepeatedMessage(9, msg.chombo as any, Chombo._writeMessage);
     }
     return writer;
   },
@@ -7347,14 +7457,14 @@ export const SessionState = {
           msg.finished = reader.readBool();
           break;
         }
-        case 7: {
-          const m = Penalty.initialize();
-          reader.readMessage(m, Penalty._readMessage);
-          msg.penalties.push(m);
-          break;
-        }
         case 8: {
           msg.lastHandStarted = reader.readBool();
+          break;
+        }
+        case 9: {
+          const m = Chombo.initialize();
+          reader.readMessage(m, Chombo._readMessage);
+          msg.chombo.push(m);
           break;
         }
         default: {
@@ -7588,7 +7698,7 @@ export const RulesetConfig = {
       withNagashiMangan: false,
       withWinningDealerHonbaSkipped: false,
       chipsValue: 0,
-      chomboPenalty: 0,
+      chomboAmount: 0,
       gameExpirationTime: 0,
       goalPoints: 0,
       maxPenalty: 0,
@@ -7680,8 +7790,8 @@ export const RulesetConfig = {
     if (msg.chipsValue) {
       writer.writeInt32(22, msg.chipsValue);
     }
-    if (msg.chomboPenalty) {
-      writer.writeInt32(23, msg.chomboPenalty);
+    if (msg.chomboAmount) {
+      writer.writeInt32(23, msg.chomboAmount);
     }
     if (msg.gameExpirationTime) {
       writer.writeInt32(24, msg.gameExpirationTime);
@@ -7827,7 +7937,7 @@ export const RulesetConfig = {
           break;
         }
         case 23: {
-          msg.chomboPenalty = reader.readInt32();
+          msg.chomboAmount = reader.readInt32();
           break;
         }
         case 24: {
@@ -9953,6 +10063,8 @@ export const PlayerInRatingJSON = {
       teamName: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      penaltiesAmount: 0,
+      penaltiesCount: 0,
       ...msg,
     };
   },
@@ -9999,6 +10111,12 @@ export const PlayerInRatingJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.penaltiesAmount) {
+      json["penaltiesAmount"] = msg.penaltiesAmount;
+    }
+    if (msg.penaltiesCount) {
+      json["penaltiesCount"] = msg.penaltiesCount;
     }
     return json;
   },
@@ -10054,6 +10172,15 @@ export const PlayerInRatingJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _penaltiesAmount_ =
+      json["penaltiesAmount"] ?? json["penalties_amount"];
+    if (_penaltiesAmount_) {
+      msg.penaltiesAmount = protoscript.parseDouble(_penaltiesAmount_);
+    }
+    const _penaltiesCount_ = json["penaltiesCount"] ?? json["penalties_count"];
+    if (_penaltiesCount_) {
+      msg.penaltiesCount = protoscript.parseNumber(_penaltiesCount_);
     }
     return msg;
   },
@@ -10244,6 +10371,11 @@ export const PenaltyJSON = {
       who: 0,
       amount: 0,
       reason: undefined,
+      assignedBy: 0,
+      createdAt: "",
+      isCancelled: false,
+      cancellationReason: undefined,
+      id: 0,
       ...msg,
     };
   },
@@ -10261,6 +10393,21 @@ export const PenaltyJSON = {
     }
     if (msg.reason != undefined) {
       json["reason"] = msg.reason;
+    }
+    if (msg.assignedBy) {
+      json["assignedBy"] = msg.assignedBy;
+    }
+    if (msg.createdAt) {
+      json["createdAt"] = msg.createdAt;
+    }
+    if (msg.isCancelled) {
+      json["isCancelled"] = msg.isCancelled;
+    }
+    if (msg.cancellationReason != undefined) {
+      json["cancellationReason"] = msg.cancellationReason;
+    }
+    if (msg.id) {
+      json["id"] = msg.id;
     }
     return json;
   },
@@ -10280,6 +10427,27 @@ export const PenaltyJSON = {
     const _reason_ = json["reason"];
     if (_reason_) {
       msg.reason = _reason_;
+    }
+    const _assignedBy_ = json["assignedBy"] ?? json["assigned_by"];
+    if (_assignedBy_) {
+      msg.assignedBy = protoscript.parseNumber(_assignedBy_);
+    }
+    const _createdAt_ = json["createdAt"] ?? json["created_at"];
+    if (_createdAt_) {
+      msg.createdAt = _createdAt_;
+    }
+    const _isCancelled_ = json["isCancelled"] ?? json["is_cancelled"];
+    if (_isCancelled_) {
+      msg.isCancelled = _isCancelled_;
+    }
+    const _cancellationReason_ =
+      json["cancellationReason"] ?? json["cancellation_reason"];
+    if (_cancellationReason_) {
+      msg.cancellationReason = _cancellationReason_;
+    }
+    const _id_ = json["id"];
+    if (_id_) {
+      msg.id = protoscript.parseNumber(_id_);
     }
     return msg;
   },
@@ -11251,7 +11419,6 @@ export const GameResultJSON = {
       replayLink: "",
       players: [],
       finalResults: [],
-      penaltyLogs: [],
       rounds: [],
       ...msg,
     };
@@ -11280,9 +11447,6 @@ export const GameResultJSON = {
       json["finalResults"] = msg.finalResults.map(
         FinalResultOfSessionJSON._writeMessage,
       );
-    }
-    if (msg.penaltyLogs?.length) {
-      json["penaltyLogs"] = msg.penaltyLogs.map(PenaltyJSON._writeMessage);
     }
     if (msg.rounds?.length) {
       json["rounds"] = msg.rounds.map(RoundJSON._writeMessage);
@@ -11316,14 +11480,6 @@ export const GameResultJSON = {
         const m = FinalResultOfSessionJSON.initialize();
         FinalResultOfSessionJSON._readMessage(m, item);
         msg.finalResults.push(m);
-      }
-    }
-    const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
-    if (_penaltyLogs_) {
-      for (const item of _penaltyLogs_) {
-        const m = PenaltyJSON.initialize();
-        PenaltyJSON._readMessage(m, item);
-        msg.penaltyLogs.push(m);
       }
     }
     const _rounds_ = json["rounds"];
@@ -12640,7 +12796,7 @@ export const IntermediateResultOfSessionJSON = {
     return {
       playerId: 0,
       score: 0,
-      penaltyScore: undefined,
+      chomboCount: 0,
       ...msg,
     };
   },
@@ -12658,8 +12814,8 @@ export const IntermediateResultOfSessionJSON = {
     if (msg.score) {
       json["score"] = msg.score;
     }
-    if (msg.penaltyScore != undefined) {
-      json["penaltyScore"] = msg.penaltyScore;
+    if (msg.chomboCount) {
+      json["chomboCount"] = msg.chomboCount;
     }
     return json;
   },
@@ -12679,9 +12835,9 @@ export const IntermediateResultOfSessionJSON = {
     if (_score_) {
       msg.score = protoscript.parseNumber(_score_);
     }
-    const _penaltyScore_ = json["penaltyScore"] ?? json["penalty_score"];
-    if (_penaltyScore_) {
-      msg.penaltyScore = protoscript.parseNumber(_penaltyScore_);
+    const _chomboCount_ = json["chomboCount"] ?? json["chombo_count"];
+    if (_chomboCount_) {
+      msg.chomboCount = protoscript.parseNumber(_chomboCount_);
     }
     return msg;
   },
@@ -13202,7 +13358,6 @@ export const TableStateJSON = {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
       sessionHash: "",
-      penaltyLogs: [],
       tableIndex: undefined,
       lastRound: undefined,
       currentRoundIndex: 0,
@@ -13227,9 +13382,6 @@ export const TableStateJSON = {
     }
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
-    }
-    if (msg.penaltyLogs?.length) {
-      json["penaltyLogs"] = msg.penaltyLogs.map(PenaltyJSON._writeMessage);
     }
     if (msg.tableIndex != undefined) {
       json["tableIndex"] = msg.tableIndex;
@@ -13267,14 +13419,6 @@ export const TableStateJSON = {
     const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
-    }
-    const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
-    if (_penaltyLogs_) {
-      for (const item of _penaltyLogs_) {
-        const m = PenaltyJSON.initialize();
-        PenaltyJSON._readMessage(m, item);
-        msg.penaltyLogs.push(m);
-      }
     }
     const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
@@ -13781,6 +13925,62 @@ export const PrescriptedTableJSON = {
   },
 };
 
+export const ChomboJSON = {
+  /**
+   * Serializes Chombo to JSON.
+   */
+  encode: function (msg: PartialDeep<Chombo>): string {
+    return JSON.stringify(ChomboJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes Chombo from JSON.
+   */
+  decode: function (json: string): Chombo {
+    return ChomboJSON._readMessage(ChomboJSON.initialize(), JSON.parse(json));
+  },
+
+  /**
+   * Initializes Chombo with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<Chombo>): Chombo {
+    return {
+      playerId: 0,
+      amount: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (msg: PartialDeep<Chombo>): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.playerId) {
+      json["playerId"] = msg.playerId;
+    }
+    if (msg.amount) {
+      json["amount"] = msg.amount;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: Chombo, json: any): Chombo {
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = protoscript.parseNumber(_playerId_);
+    }
+    const _amount_ = json["amount"];
+    if (_amount_) {
+      msg.amount = protoscript.parseDouble(_amount_);
+    }
+    return msg;
+  },
+};
+
 export const SessionStateJSON = {
   /**
    * Serializes SessionState to JSON.
@@ -13810,8 +14010,8 @@ export const SessionStateJSON = {
       honbaCount: 0,
       scores: [],
       finished: false,
-      penalties: [],
       lastHandStarted: false,
+      chombo: [],
       ...msg,
     };
   },
@@ -13843,11 +14043,11 @@ export const SessionStateJSON = {
     if (msg.finished) {
       json["finished"] = msg.finished;
     }
-    if (msg.penalties?.length) {
-      json["penalties"] = msg.penalties.map(PenaltyJSON._writeMessage);
-    }
     if (msg.lastHandStarted) {
       json["lastHandStarted"] = msg.lastHandStarted;
+    }
+    if (msg.chombo?.length) {
+      json["chombo"] = msg.chombo.map(ChomboJSON._writeMessage);
     }
     return json;
   },
@@ -13884,18 +14084,18 @@ export const SessionStateJSON = {
     if (_finished_) {
       msg.finished = _finished_;
     }
-    const _penalties_ = json["penalties"];
-    if (_penalties_) {
-      for (const item of _penalties_) {
-        const m = PenaltyJSON.initialize();
-        PenaltyJSON._readMessage(m, item);
-        msg.penalties.push(m);
-      }
-    }
     const _lastHandStarted_ =
       json["lastHandStarted"] ?? json["last_hand_started"];
     if (_lastHandStarted_) {
       msg.lastHandStarted = _lastHandStarted_;
+    }
+    const _chombo_ = json["chombo"];
+    if (_chombo_) {
+      for (const item of _chombo_) {
+        const m = ChomboJSON.initialize();
+        ChomboJSON._readMessage(m, item);
+        msg.chombo.push(m);
+      }
     }
     return msg;
   },
@@ -14096,7 +14296,7 @@ export const RulesetConfigJSON = {
       withNagashiMangan: false,
       withWinningDealerHonbaSkipped: false,
       chipsValue: 0,
-      chomboPenalty: 0,
+      chomboAmount: 0,
       gameExpirationTime: 0,
       goalPoints: 0,
       maxPenalty: 0,
@@ -14194,8 +14394,8 @@ export const RulesetConfigJSON = {
     if (msg.chipsValue) {
       json["chipsValue"] = msg.chipsValue;
     }
-    if (msg.chomboPenalty) {
-      json["chomboPenalty"] = msg.chomboPenalty;
+    if (msg.chomboAmount) {
+      json["chomboAmount"] = msg.chomboAmount;
     }
     if (msg.gameExpirationTime) {
       json["gameExpirationTime"] = msg.gameExpirationTime;
@@ -14346,9 +14546,9 @@ export const RulesetConfigJSON = {
     if (_chipsValue_) {
       msg.chipsValue = protoscript.parseNumber(_chipsValue_);
     }
-    const _chomboPenalty_ = json["chomboPenalty"] ?? json["chombo_penalty"];
-    if (_chomboPenalty_) {
-      msg.chomboPenalty = protoscript.parseNumber(_chomboPenalty_);
+    const _chomboAmount_ = json["chomboAmount"] ?? json["chombo_amount"];
+    if (_chomboAmount_) {
+      msg.chomboAmount = protoscript.parseNumber(_chomboAmount_);
     }
     const _gameExpirationTime_ =
       json["gameExpirationTime"] ?? json["game_expiration_time"];

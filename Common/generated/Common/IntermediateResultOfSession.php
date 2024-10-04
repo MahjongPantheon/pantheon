@@ -22,9 +22,9 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
      */
     protected $score = 0;
     /**
-     * Generated from protobuf field <code>optional int32 penalty_score = 3;</code>
+     * Generated from protobuf field <code>int32 chombo_count = 4;</code>
      */
-    protected $penalty_score = null;
+    protected $chombo_count = 0;
 
     /**
      * Constructor.
@@ -34,7 +34,7 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
      *
      *     @type int $player_id
      *     @type int $score
-     *     @type int $penalty_score
+     *     @type int $chombo_count
      * }
      */
     public function __construct($data = NULL) {
@@ -87,33 +87,23 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>optional int32 penalty_score = 3;</code>
+     * Generated from protobuf field <code>int32 chombo_count = 4;</code>
      * @return int
      */
-    public function getPenaltyScore()
+    public function getChomboCount()
     {
-        return isset($this->penalty_score) ? $this->penalty_score : 0;
-    }
-
-    public function hasPenaltyScore()
-    {
-        return isset($this->penalty_score);
-    }
-
-    public function clearPenaltyScore()
-    {
-        unset($this->penalty_score);
+        return $this->chombo_count;
     }
 
     /**
-     * Generated from protobuf field <code>optional int32 penalty_score = 3;</code>
+     * Generated from protobuf field <code>int32 chombo_count = 4;</code>
      * @param int $var
      * @return $this
      */
-    public function setPenaltyScore($var)
+    public function setChomboCount($var)
     {
         GPBUtil::checkInt32($var);
-        $this->penalty_score = $var;
+        $this->chombo_count = $var;
 
         return $this;
     }

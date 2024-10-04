@@ -48,7 +48,7 @@ kill:
 		cd ../Hugin && ${MAKE} kill ; \
 		cd ../Skirnir && ${MAKE} kill ; \
 		cd ../Database && ${MAKE} kill ; \
-		docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume01' | awk '{print $$2}'` ; \
+		docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume02' | awk '{print $$2}'` ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'backupvolume01' | awk '{print $$2}'` ; \
 		docker volume rm `docker volume ls | grep 'pantheon' | grep 'configvolume01' | awk '{print $$2}'` ; \
 	fi

@@ -176,7 +176,6 @@ export interface GamesAddRoundPayload {
 
 export interface GamesAddRoundResponse {
   scores: protoAtoms.IntermediateResultOfSession[];
-  extraPenaltyLogs: protoAtoms.Penalty[];
   /**
    * current round number
    */
@@ -450,8 +449,14 @@ export interface CallRefereePayload {
   eventId: number;
 }
 
-export interface RecalcPayload {
-  eventId: number;
+export interface PenaltiesResponse {
+  penalties: protoAtoms.Penalty[];
+  referees: protoAtoms.Player[];
+}
+
+export interface CancelPenaltyPayload {
+  penaltyId: number;
+  reason?: string | null | undefined;
 }
 
 //========================================//
@@ -1265,27 +1270,63 @@ export async function CallReferee(
 }
 
 export async function RecalcAchievements(
-  recalcPayload: RecalcPayload,
+  genericEventPayload: protoAtoms.GenericEventPayload,
   config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/RecalcAchievements",
-    RecalcPayload.encode(recalcPayload),
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function RecalcPlayerStats(
-  recalcPayload: RecalcPayload,
+  genericEventPayload: protoAtoms.GenericEventPayload,
   config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/RecalcPlayerStats",
-    RecalcPayload.encode(recalcPayload),
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function ListPenalties(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<PenaltiesResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/ListPenalties",
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config,
+  );
+  return PenaltiesResponse.decode(response);
+}
+
+export async function CancelPenalty(
+  cancelPenaltyPayload: CancelPenaltyPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/CancelPenalty",
+    CancelPenaltyPayload.encode(cancelPenaltyPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function ListMyPenalties(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<PenaltiesResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/ListMyPenalties",
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config,
+  );
+  return PenaltiesResponse.decode(response);
 }
 
 //========================================//
@@ -2109,27 +2150,63 @@ export async function CallRefereeJSON(
 }
 
 export async function RecalcAchievementsJSON(
-  recalcPayload: RecalcPayload,
+  genericEventPayload: protoAtoms.GenericEventPayload,
   config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/RecalcAchievements",
-    RecalcPayloadJSON.encode(recalcPayload),
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function RecalcPlayerStatsJSON(
-  recalcPayload: RecalcPayload,
+  genericEventPayload: protoAtoms.GenericEventPayload,
   config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/RecalcPlayerStats",
-    RecalcPayloadJSON.encode(recalcPayload),
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
+export async function ListPenaltiesJSON(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<PenaltiesResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/ListPenalties",
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    config,
+  );
+  return PenaltiesResponseJSON.decode(response);
+}
+
+export async function CancelPenaltyJSON(
+  cancelPenaltyPayload: CancelPenaltyPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/CancelPenalty",
+    CancelPenaltyPayloadJSON.encode(cancelPenaltyPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
+export async function ListMyPenaltiesJSON(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<PenaltiesResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/ListMyPenalties",
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    config,
+  );
+  return PenaltiesResponseJSON.decode(response);
 }
 
 //========================================//
@@ -2478,17 +2555,31 @@ export interface Mimir<Context = unknown> {
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   RecalcAchievements: (
-    recalcPayload: RecalcPayload,
+    genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   RecalcPlayerStats: (
-    recalcPayload: RecalcPayload,
+    genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
+  ListPenalties: (
+    genericEventPayload: protoAtoms.GenericEventPayload,
+    context: Context,
+  ) => Promise<PenaltiesResponse> | PenaltiesResponse;
+  CancelPenalty: (
+    cancelPenaltyPayload: CancelPenaltyPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  ListMyPenalties: (
+    genericEventPayload: protoAtoms.GenericEventPayload,
+    context: Context,
+  ) => Promise<PenaltiesResponse> | PenaltiesResponse;
 }
 
 export function createMimir<Context>(service: Mimir<Context>) {
@@ -3284,7 +3375,10 @@ export function createMimir<Context>(service: Mimir<Context>) {
       RecalcAchievements: {
         name: "RecalcAchievements",
         handler: service.RecalcAchievements,
-        input: { protobuf: RecalcPayload, json: RecalcPayloadJSON },
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
@@ -3293,11 +3387,44 @@ export function createMimir<Context>(service: Mimir<Context>) {
       RecalcPlayerStats: {
         name: "RecalcPlayerStats",
         handler: service.RecalcPlayerStats,
-        input: { protobuf: RecalcPayload, json: RecalcPayloadJSON },
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
         },
+      },
+      ListPenalties: {
+        name: "ListPenalties",
+        handler: service.ListPenalties,
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
+        output: { protobuf: PenaltiesResponse, json: PenaltiesResponseJSON },
+      },
+      CancelPenalty: {
+        name: "CancelPenalty",
+        handler: service.CancelPenalty,
+        input: {
+          protobuf: CancelPenaltyPayload,
+          json: CancelPenaltyPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      ListMyPenalties: {
+        name: "ListMyPenalties",
+        handler: service.ListMyPenalties,
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
+        output: { protobuf: PenaltiesResponse, json: PenaltiesResponseJSON },
       },
     },
   } as const;
@@ -5837,7 +5964,6 @@ export const GamesAddRoundResponse = {
   ): GamesAddRoundResponse {
     return {
       scores: [],
-      extraPenaltyLogs: [],
       round: 0,
       honba: 0,
       riichiBets: 0,
@@ -5862,13 +5988,6 @@ export const GamesAddRoundResponse = {
         1,
         msg.scores as any,
         protoAtoms.IntermediateResultOfSession._writeMessage,
-      );
-    }
-    if (msg.extraPenaltyLogs?.length) {
-      writer.writeRepeatedMessage(
-        2,
-        msg.extraPenaltyLogs as any,
-        protoAtoms.Penalty._writeMessage,
       );
     }
     if (msg.round) {
@@ -5915,12 +6034,6 @@ export const GamesAddRoundResponse = {
             protoAtoms.IntermediateResultOfSession._readMessage,
           );
           msg.scores.push(m);
-          break;
-        }
-        case 2: {
-          const m = protoAtoms.Penalty.initialize();
-          reader.readMessage(m, protoAtoms.Penalty._readMessage);
-          msg.extraPenaltyLogs.push(m);
           break;
         }
         case 3: {
@@ -9926,33 +10039,34 @@ export const CallRefereePayload = {
   },
 };
 
-export const RecalcPayload = {
+export const PenaltiesResponse = {
   /**
-   * Serializes RecalcPayload to protobuf.
+   * Serializes PenaltiesResponse to protobuf.
    */
-  encode: function (msg: PartialDeep<RecalcPayload>): Uint8Array {
-    return RecalcPayload._writeMessage(
+  encode: function (msg: PartialDeep<PenaltiesResponse>): Uint8Array {
+    return PenaltiesResponse._writeMessage(
       msg,
       new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes RecalcPayload from protobuf.
+   * Deserializes PenaltiesResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): RecalcPayload {
-    return RecalcPayload._readMessage(
-      RecalcPayload.initialize(),
+  decode: function (bytes: ByteSource): PenaltiesResponse {
+    return PenaltiesResponse._readMessage(
+      PenaltiesResponse.initialize(),
       new protoscript.BinaryReader(bytes),
     );
   },
 
   /**
-   * Initializes RecalcPayload with all fields set to their default value.
+   * Initializes PenaltiesResponse with all fields set to their default value.
    */
-  initialize: function (msg?: Partial<RecalcPayload>): RecalcPayload {
+  initialize: function (msg?: Partial<PenaltiesResponse>): PenaltiesResponse {
     return {
-      eventId: 0,
+      penalties: [],
+      referees: [],
       ...msg,
     };
   },
@@ -9961,11 +10075,22 @@ export const RecalcPayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RecalcPayload>,
+    msg: PartialDeep<PenaltiesResponse>,
     writer: protoscript.BinaryWriter,
   ): protoscript.BinaryWriter {
-    if (msg.eventId) {
-      writer.writeInt32(1, msg.eventId);
+    if (msg.penalties?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.penalties as any,
+        protoAtoms.Penalty._writeMessage,
+      );
+    }
+    if (msg.referees?.length) {
+      writer.writeRepeatedMessage(
+        2,
+        msg.referees as any,
+        protoAtoms.Player._writeMessage,
+      );
     }
     return writer;
   },
@@ -9974,14 +10099,100 @@ export const RecalcPayload = {
    * @private
    */
   _readMessage: function (
-    msg: RecalcPayload,
+    msg: PenaltiesResponse,
     reader: protoscript.BinaryReader,
-  ): RecalcPayload {
+  ): PenaltiesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.eventId = reader.readInt32();
+          const m = protoAtoms.Penalty.initialize();
+          reader.readMessage(m, protoAtoms.Penalty._readMessage);
+          msg.penalties.push(m);
+          break;
+        }
+        case 2: {
+          const m = protoAtoms.Player.initialize();
+          reader.readMessage(m, protoAtoms.Player._readMessage);
+          msg.referees.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const CancelPenaltyPayload = {
+  /**
+   * Serializes CancelPenaltyPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<CancelPenaltyPayload>): Uint8Array {
+    return CancelPenaltyPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes CancelPenaltyPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): CancelPenaltyPayload {
+    return CancelPenaltyPayload._readMessage(
+      CancelPenaltyPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes CancelPenaltyPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<CancelPenaltyPayload>,
+  ): CancelPenaltyPayload {
+    return {
+      penaltyId: 0,
+      reason: undefined,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<CancelPenaltyPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.penaltyId) {
+      writer.writeInt32(1, msg.penaltyId);
+    }
+    if (msg.reason != undefined) {
+      writer.writeString(2, msg.reason);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: CancelPenaltyPayload,
+    reader: protoscript.BinaryReader,
+  ): CancelPenaltyPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.penaltyId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.reason = reader.readString();
           break;
         }
         default: {
@@ -12174,7 +12385,6 @@ export const GamesAddRoundResponseJSON = {
   ): GamesAddRoundResponse {
     return {
       scores: [],
-      extraPenaltyLogs: [],
       round: 0,
       honba: 0,
       riichiBets: 0,
@@ -12197,11 +12407,6 @@ export const GamesAddRoundResponseJSON = {
     if (msg.scores?.length) {
       json["scores"] = msg.scores.map(
         protoAtoms.IntermediateResultOfSessionJSON._writeMessage,
-      );
-    }
-    if (msg.extraPenaltyLogs?.length) {
-      json["extraPenaltyLogs"] = msg.extraPenaltyLogs.map(
-        protoAtoms.PenaltyJSON._writeMessage,
       );
     }
     if (msg.round) {
@@ -12244,15 +12449,6 @@ export const GamesAddRoundResponseJSON = {
         const m = protoAtoms.IntermediateResultOfSessionJSON.initialize();
         protoAtoms.IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.scores.push(m);
-      }
-    }
-    const _extraPenaltyLogs_ =
-      json["extraPenaltyLogs"] ?? json["extra_penalty_logs"];
-    if (_extraPenaltyLogs_) {
-      for (const item of _extraPenaltyLogs_) {
-        const m = protoAtoms.PenaltyJSON.initialize();
-        protoAtoms.PenaltyJSON._readMessage(m, item);
-        msg.extraPenaltyLogs.push(m);
       }
     }
     const _round_ = json["round"];
@@ -15674,30 +15870,31 @@ export const CallRefereePayloadJSON = {
   },
 };
 
-export const RecalcPayloadJSON = {
+export const PenaltiesResponseJSON = {
   /**
-   * Serializes RecalcPayload to JSON.
+   * Serializes PenaltiesResponse to JSON.
    */
-  encode: function (msg: PartialDeep<RecalcPayload>): string {
-    return JSON.stringify(RecalcPayloadJSON._writeMessage(msg));
+  encode: function (msg: PartialDeep<PenaltiesResponse>): string {
+    return JSON.stringify(PenaltiesResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes RecalcPayload from JSON.
+   * Deserializes PenaltiesResponse from JSON.
    */
-  decode: function (json: string): RecalcPayload {
-    return RecalcPayloadJSON._readMessage(
-      RecalcPayloadJSON.initialize(),
+  decode: function (json: string): PenaltiesResponse {
+    return PenaltiesResponseJSON._readMessage(
+      PenaltiesResponseJSON.initialize(),
       JSON.parse(json),
     );
   },
 
   /**
-   * Initializes RecalcPayload with all fields set to their default value.
+   * Initializes PenaltiesResponse with all fields set to their default value.
    */
-  initialize: function (msg?: Partial<RecalcPayload>): RecalcPayload {
+  initialize: function (msg?: Partial<PenaltiesResponse>): PenaltiesResponse {
     return {
-      eventId: 0,
+      penalties: [],
+      referees: [],
       ...msg,
     };
   },
@@ -15706,11 +15903,16 @@ export const RecalcPayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<RecalcPayload>,
+    msg: PartialDeep<PenaltiesResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.eventId) {
-      json["eventId"] = msg.eventId;
+    if (msg.penalties?.length) {
+      json["penalties"] = msg.penalties.map(
+        protoAtoms.PenaltyJSON._writeMessage,
+      );
+    }
+    if (msg.referees?.length) {
+      json["referees"] = msg.referees.map(protoAtoms.PlayerJSON._writeMessage);
     }
     return json;
   },
@@ -15718,10 +15920,91 @@ export const RecalcPayloadJSON = {
   /**
    * @private
    */
-  _readMessage: function (msg: RecalcPayload, json: any): RecalcPayload {
-    const _eventId_ = json["eventId"] ?? json["event_id"];
-    if (_eventId_) {
-      msg.eventId = protoscript.parseNumber(_eventId_);
+  _readMessage: function (
+    msg: PenaltiesResponse,
+    json: any,
+  ): PenaltiesResponse {
+    const _penalties_ = json["penalties"];
+    if (_penalties_) {
+      for (const item of _penalties_) {
+        const m = protoAtoms.PenaltyJSON.initialize();
+        protoAtoms.PenaltyJSON._readMessage(m, item);
+        msg.penalties.push(m);
+      }
+    }
+    const _referees_ = json["referees"];
+    if (_referees_) {
+      for (const item of _referees_) {
+        const m = protoAtoms.PlayerJSON.initialize();
+        protoAtoms.PlayerJSON._readMessage(m, item);
+        msg.referees.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
+export const CancelPenaltyPayloadJSON = {
+  /**
+   * Serializes CancelPenaltyPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<CancelPenaltyPayload>): string {
+    return JSON.stringify(CancelPenaltyPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes CancelPenaltyPayload from JSON.
+   */
+  decode: function (json: string): CancelPenaltyPayload {
+    return CancelPenaltyPayloadJSON._readMessage(
+      CancelPenaltyPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes CancelPenaltyPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<CancelPenaltyPayload>,
+  ): CancelPenaltyPayload {
+    return {
+      penaltyId: 0,
+      reason: undefined,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<CancelPenaltyPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.penaltyId) {
+      json["penaltyId"] = msg.penaltyId;
+    }
+    if (msg.reason != undefined) {
+      json["reason"] = msg.reason;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: CancelPenaltyPayload,
+    json: any,
+  ): CancelPenaltyPayload {
+    const _penaltyId_ = json["penaltyId"] ?? json["penalty_id"];
+    if (_penaltyId_) {
+      msg.penaltyId = protoscript.parseNumber(_penaltyId_);
+    }
+    const _reason_ = json["reason"];
+    if (_reason_) {
+      msg.reason = _reason_;
     }
     return msg;
   },

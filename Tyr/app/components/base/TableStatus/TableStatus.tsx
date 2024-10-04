@@ -5,7 +5,7 @@ import RiichiIcon from '../../../img/icons/riichi-small.svg?react';
 import HonbaIcon from '../../../img/icons/honba.svg?react';
 import RotateCcwIcon from '../../../img/icons/rotate-ccw.svg?react';
 import RotateCwIcon from '../../../img/icons/rotate-cw.svg?react';
-import CallRefereeIcon from '../../../img/icons/call-referee.svg?react';
+import CallRefereeIcon from '../../../img/icons/warning-icon.svg?react';
 import { formatTime, getTimeRemaining } from '../../../store/selectors/overview';
 import { roundToString } from '../../../helpers/roundToString';
 import styles from './TableStatus.module.css';

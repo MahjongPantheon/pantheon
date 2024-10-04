@@ -126,7 +126,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setGamesPlayed(1)
             ->save();
 
-        $itemCopy = PlayerHistoryPrimitive::findLastByEvent(
+        $itemCopy = PlayerHistoryPrimitive::findLastByEventAndPlayer(
             $this->_ds,
             $this->_event->getId(),
             $this->_players[0]->getId()
@@ -167,7 +167,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
         $items = PlayerHistoryPrimitive::findLastByEvent(
             $this->_ds,
-            $this->_event->getId()
+            [$this->_event->getId()]
         );
 
         $this->assertTrue($items[0] instanceof PlayerHistoryPrimitive);

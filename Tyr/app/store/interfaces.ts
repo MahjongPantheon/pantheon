@@ -21,6 +21,7 @@ import { RemoteError } from '../services/remoteError';
 import {
   GameConfig,
   MyEvent,
+  Penalty,
   PlayerInSession,
   RegisteredPlayer,
   RoundState,
@@ -46,7 +47,8 @@ export type AppScreen =
   | 'login'
   | 'settings'
   | 'nagashiSelect'
-  | 'donate';
+  | 'donate'
+  | 'penalties';
 
 export type LoadingSet = {
   games: boolean;
@@ -57,6 +59,7 @@ export type LoadingSet = {
   players: boolean;
   addRound: boolean;
   events: boolean;
+  penalties: boolean;
 };
 
 export type TimerData = {
@@ -149,6 +152,9 @@ export interface IAppState {
   historyInitialized: boolean;
 
   riichiNotificationShown?: boolean;
+
+  penalties: Penalty[];
+  penaltiesError?: ErrorState;
 }
 
 export type TimerStorage = {

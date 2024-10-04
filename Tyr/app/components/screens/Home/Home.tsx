@@ -20,6 +20,7 @@ import {
   GET_OTHER_TABLES_LIST_INIT,
   GO_TO_CURRENT_GAME,
   GO_TO_DONATE,
+  GO_TO_PENALTIES,
   OPEN_SETTINGS,
   SHOW_LAST_RESULTS,
   START_NEW_GAME,
@@ -95,6 +96,10 @@ export const Home = (props: IComponentProps) => {
     props.dispatch({ type: GO_TO_DONATE });
   };
 
+  const onPenaltiesClick = () => {
+    props.dispatch({ type: GO_TO_PENALTIES });
+  };
+
   const playerName = props.state.gameConfig?.eventTitle ?? loc._t('Event title');
 
   // Show donate button only for russian locale and only for primary instance.
@@ -103,6 +108,8 @@ export const Home = (props: IComponentProps) => {
     props.state.settings.currentLang === 'ru' &&
     (window.location.host.startsWith('localhost') ||
       window.location.host === 'assist.riichimahjong.org');
+
+  const showPenalties = props.state.gameConfig?.syncStart; // only show for tournaments
 
   return (
     <HomePage
@@ -119,8 +126,10 @@ export const Home = (props: IComponentProps) => {
         props.state.gameConfig?.allowViewOtherTables || !props.state.currentSessionHash
       }
       showDonate={showDonate}
+      showPenalties={showPenalties}
       hasStat={!!props.state.gameConfig?.eventStatHost}
       onDonateClick={onDonateClick}
+      onPenaltiesClick={onPenaltiesClick}
       onSettingClick={onSettingClick}
       onRefreshClick={onRefreshClick}
       onOtherTablesClick={onOtherTablesClick}

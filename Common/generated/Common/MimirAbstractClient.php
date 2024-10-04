@@ -1598,7 +1598,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function RecalcAchievements(array $ctx, \Common\RecalcPayload $in): \Common\GenericSuccessResponse
+    public function RecalcAchievements(array $ctx, \Common\GenericEventPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -1621,7 +1621,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function RecalcPlayerStats(array $ctx, \Common\RecalcPayload $in): \Common\GenericSuccessResponse
+    public function RecalcPlayerStats(array $ctx, \Common\GenericEventPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -1634,6 +1634,75 @@ abstract class MimirAbstractClient
             $url = $url.'/common.Mimir/RecalcPlayerStats';
         } else {
             $url = $url.'/'.$this->prefix.'/common.Mimir/RecalcPlayerStats';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function ListPenalties(array $ctx, \Common\GenericEventPayload $in): \Common\PenaltiesResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'ListPenalties');
+
+        $out = new \Common\PenaltiesResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/ListPenalties';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/ListPenalties';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function CancelPenalty(array $ctx, \Common\CancelPenaltyPayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'CancelPenalty');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/CancelPenalty';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/CancelPenalty';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function ListMyPenalties(array $ctx, \Common\GenericEventPayload $in): \Common\PenaltiesResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'ListMyPenalties');
+
+        $out = new \Common\PenaltiesResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/ListMyPenalties';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/ListMyPenalties';
         }
 
         $this->doRequest($ctx, $url, $in, $out);

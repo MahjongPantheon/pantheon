@@ -20,6 +20,7 @@ import {
   CurrentSession,
   GameConfig,
   MyEvent,
+  Penalty,
   PersonEx,
   RegisteredPlayer,
   RoundState,
@@ -53,4 +54,5 @@ export interface IRiichiApi {
   quickAuthorize(): Promise<boolean>;
   callReferee(eventId: number, tableIndex: number): Promise<boolean>;
   authorize(email: string, password: string): Promise<AuthAuthorizeResponse>;
+  getPenalties(eventId: number): Promise<Penalty[]>;
 }

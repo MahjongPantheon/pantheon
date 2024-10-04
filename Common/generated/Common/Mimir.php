@@ -614,7 +614,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function RecalcAchievements(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse;
+    public function RecalcAchievements(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
@@ -623,5 +623,32 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function RecalcPlayerStats(array $ctx, \Common\RecalcPayload $req): \Common\GenericSuccessResponse;
+    public function RecalcPlayerStats(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/ListPenalties</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function ListPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/CancelPenalty</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function CancelPenalty(array $ctx, \Common\CancelPenaltyPayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/ListMyPenalties</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function ListMyPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse;
 }

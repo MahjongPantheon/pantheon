@@ -428,11 +428,13 @@ class SessionResultsPrimitive extends Primitive
             $this->_ratingDelta += $this->_chips * $rules->rules()->getChipsValue();
         }
 
-        if (!empty($results->getPenalties()[$this->_playerId])) { // final chombing
-            $this->_ratingDelta += $results->getPenalties()[$this->_playerId];
+        // final chombing
+        if (!empty($results->getChombo()[$this->_playerId])) {
+            $this->_ratingDelta += $results->getChombo()[$this->_playerId];
         }
 
-        if ($rules->rules()->getWithYakitori()) { // apply yakitori after everything
+        // apply yakitori after everything
+        if ($rules->rules()->getWithYakitori()) {
             if ($results->getYakitori()[$this->_playerId]) {
                 $this->_ratingDelta -= $rules->rules()->getYakitoriPenalty();
             }

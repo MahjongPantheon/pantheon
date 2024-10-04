@@ -18,6 +18,7 @@
 import {
   AddPenalty,
   CancelGame,
+  CancelPenalty,
   CreateEvent,
   DefinalizeGame,
   DropLastRound,
@@ -34,6 +35,7 @@ import {
   GetRulesets,
   GetTablesState,
   GetTimezones,
+  ListPenalties,
   MakeIntervalSeating,
   MakePrescriptedSeating,
   MakeShuffledSeating,
@@ -363,11 +365,21 @@ export class ApiService {
     return GetGameConfig({ eventId }, this._clientConfMimir);
   }
 
+  getPenalties(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ListPenalties' });
+    return ListPenalties({ eventId }, this._clientConfMimir);
+  }
+
   addPenalty(eventId: number, playerId: number, amount: number, reason: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'AddPenalty' });
     return AddPenalty({ eventId, playerId, amount, reason }, this._clientConfMimir).then(
       (r) => r.success
     );
+  }
+
+  cancelPenalty(penaltyId: number, reason: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CancelPenalty' });
+    return CancelPenalty({ penaltyId, reason }, this._clientConfMimir).then((r) => r.success);
   }
 
   updateSeatingFlag(playerId: number, eventId: number, ignoreSeating: boolean) {

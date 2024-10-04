@@ -55,6 +55,7 @@ import { TableSelectPlayers } from './screens/TableSelectPlayers/TableSelectPlay
 import { TableNagashiSelect } from './screens/TableNagashiSelect/TableNagashiSelect';
 import { OtherTableView } from './screens/OtherTableView/OtherTableView';
 import { TableRoundPreview } from './screens/TableRoundPreview/TableRoundPreview';
+import { Penalties } from './screens/Penalties/Penalties';
 
 interface IProps {
   state: IAppState;
@@ -99,6 +100,8 @@ const CurrentScreen = (props: IComponentProps) => {
       return <OtherTablesList {...props} />;
     case 'donate':
       return <Donate {...props} />;
+    case 'penalties':
+      return <Penalties {...props} />;
   }
 
   return null;

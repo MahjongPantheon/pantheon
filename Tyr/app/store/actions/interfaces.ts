@@ -23,6 +23,7 @@ import {
   CurrentSession,
   GameConfig,
   MyEvent,
+  Penalty,
   PersonEx,
   RegisteredPlayer,
   RoundOutcome,
@@ -42,6 +43,7 @@ export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const GO_TO_CURRENT_GAME = 'GO_TO_CURRENT_GAME';
 export const GO_TO_DONATE = 'GO_TO_DONATE';
+export const GO_TO_PENALTIES = 'GO_TO_PENALTIES';
 export const GOTO_EVENT_SELECT = 'GOTO_EVENT_SELECT';
 export const SEARCH_PLAYER = 'SEARCH_PLAYER';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
@@ -129,6 +131,9 @@ export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 export const HISTORY_INIT = 'HISTORY_INIT';
 export const CALL_REFEREE = 'CALL_REFEREE';
 export const TOGGLE_RIICHI_NOTIFICATION = 'TOGGLE_RIICHI_NOTIFICATION';
+export const GET_PENALTIES_INIT = 'GET_PENALTIES_INIT';
+export const GET_PENALTIES_SUCCESS = 'GET_PENALTIES_SUCCESS';
+export const GET_PENALTIES_FAIL = 'GET_PENALTIES_FAIL';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -158,6 +163,10 @@ interface GoToCurrentGameAction {
 
 interface GoToDonateAction {
   type: typeof GO_TO_DONATE;
+}
+
+interface GoToPenaltiesAction {
+  type: typeof GO_TO_PENALTIES;
 }
 
 interface GoToEventSelectAction {
@@ -582,6 +591,20 @@ interface ToggleRiichiNotificationAction {
   payload: boolean;
 }
 
+interface GetPenaltiesInit {
+  type: typeof GET_PENALTIES_INIT;
+}
+
+interface GetPenaltiesSuccess {
+  type: typeof GET_PENALTIES_SUCCESS;
+  payload: Penalty[];
+}
+
+interface GetPenaltiesFail {
+  type: typeof GET_PENALTIES_FAIL;
+  payload: RemoteError;
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -590,6 +613,7 @@ export type AppActionTypes =
   | GoToCurrentGameAction
   | GoToEventSelectAction
   | GoToDonateAction
+  | GoToPenaltiesAction
   | SearchPlayerAction
   | ShowLastResultsAction
   | ShowGameLogAction
@@ -675,4 +699,7 @@ export type AppActionTypes =
   | SelectEventAction
   | HistoryInitAction
   | CallRefereeAction
+  | GetPenaltiesInit
+  | GetPenaltiesSuccess
+  | GetPenaltiesFail
   | ToggleRiichiNotificationAction;

@@ -28,6 +28,7 @@ require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Round.php';
+require_once __DIR__ . '/../primitives/Penalty.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
 class EventRatingTableModel extends Model
@@ -49,13 +50,25 @@ class EventRatingTableModel extends Model
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
         }
 
+        $eventIds = array_filter(array_map(function (EventPrimitive $e) {
+            return $e->getId();
+        }, $eventList));
+
         $mainEvent = $eventList[0];
         $minGamesCount = $mainEvent->getMinGamesCount();
 
         /** @var PlayerHistoryPrimitive[] $playersHistoryItemsCombined */
         $playersHistoryItemsCombined = [];
-        /** @var PlayerPrimitive[] $playerItems */
-        $playerItems = [];
+
+        $historyItems = array_reduce(PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds), function ($acc, PlayerHistoryPrimitive $item) {
+            if (empty($acc[$item->getEventId()])) {
+                $acc[$item->getEventId()] = [];
+            }
+            $acc[$item->getEventId()] []= $item;
+            return $acc;
+        }, []);
+
+        $tmpFakeItems = $isAdmin ? $this->_getFakePrefinishedItems($eventIds) : [];
 
         /* Algorithm is kinda complicated when we want to get rating table for several events,
          * so here is its description step by step:
@@ -78,18 +91,15 @@ class EventRatingTableModel extends Model
             }
 
             if (!$event->getHideResults() || $isAdmin) {
-                /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
-                $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eId);
-                foreach ($tmpPlayersHistoryItems as $item) {
+                foreach ($historyItems[$eId] as $item) {
                     // php kludge: keys should be string, not numeric (to overwrite values)
                     $playersHistoryItems['id' . $item->getPlayerId()] = $item;
                 }
 
                 if ($isAdmin) {
                     // Include fake player history items made of prefinished games results
-                    $tmpFakeItems = $this->_getFakePrefinishedItems($event);
                     $fakeItems = [];
-                    foreach ($tmpFakeItems as $item) {
+                    foreach ($tmpFakeItems[$eId] as $item) {
                         // php kludge: keys should be string, not numeric (to overwrite values)
                         $fakeItems['id' . $item->getPlayerId()] = $item;
                     }
@@ -97,15 +107,13 @@ class EventRatingTableModel extends Model
                     // Warning: don't ever call ->save() on these items!
                 }
 
-                $playersHistoryItems = array_values($playersHistoryItems);
-                /* We use '+' operator here, because we want to keep keys (player id) and we know, that
-                 * merged arrays can't have different values for same keys. */
-                $playerItems = $playerItems + $this->_getPlayers($playersHistoryItems);
-
-                $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, $playersHistoryItems);
+                $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, array_values($playersHistoryItems));
             }
         }
 
+        $playerItems = $this->_getPlayers($playersHistoryItemsCombined);
+
+        /** @var PlayerHistoryPrimitive[] $playerHistoryItemsSummed */
         $playerHistoryItemsSummed = [];
         foreach ($playerItems as $player) {
             $itemsByPlayer = array_values(
@@ -133,26 +141,6 @@ class EventRatingTableModel extends Model
             array_push($playerHistoryItemsSummed, $newItem);
         }
 
-        $startRating = $mainEvent->getRulesetConfig()->rules()->getStartRating();
-        $this->_sortItems($startRating, $orderBy, $playerItems, $playerHistoryItemsSummed);
-
-        if ($order === 'desc') {
-            $playerHistoryItemsSummed = array_reverse($playerHistoryItemsSummed);
-        }
-
-        if ($mainEvent->getSortByGames()) {
-            $this->_stableSort(
-                $playerHistoryItemsSummed,
-                function (PlayerHistoryPrimitive $el1, PlayerHistoryPrimitive $el2) {
-                    if ($el1->getGamesPlayed() == $el2->getGamesPlayed()) {
-                        return 0;
-                    }
-
-                    return $el1->getGamesPlayed() < $el2->getGamesPlayed() ? 1 : -1; // swap for desc sort
-                }
-            );
-        }
-
         $teams = [];
         foreach ($playerRegs as $reg) {
             $teams[$reg['id']] = $reg['team_name'];
@@ -165,26 +153,68 @@ class EventRatingTableModel extends Model
             }, $playerHistoryItemsSummed));
         }
 
-        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $teams, $startRating, $soulNicknames) {
+        $startRating = $mainEvent->getRulesetConfig()->rules()->getStartRating();
+
+        // arbitrary penalties
+        /** @var (int|float)[][] $penalties */
+        $penalties = array_reduce(PenaltyPrimitive::findByEventId($this->_ds, $eventIds), function ($acc, PenaltyPrimitive $item) {
+            if (empty($acc[$item->getPlayerId()])) {
+                $acc[$item->getPlayerId()] = ['amount' => 0, 'count' => 0];
+            }
+            $acc[$item->getPlayerId()]['amount'] += $item->getAmount();
+            $acc[$item->getPlayerId()]['count'] ++;
+            return $acc;
+        }, []);
+
+        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $penalties, $mainEvent, $teams, $startRating, $soulNicknames) {
+            $penaltyAmount = 0;
+            $penaltyCount = 0;
+            if (!empty($penalties[(int)$el->getPlayerId()])) {
+                $penaltyAmount = $penalties[(int)$el->getPlayerId()]['amount'];
+                $penaltyCount = $penalties[(int)$el->getPlayerId()]['count'];
+            }
+
             return [
-                'id'            => (int)$el->getPlayerId(),
-                'title'         => $playerItems[$el->getPlayerId()]->getDisplayName(),
-                'has_avatar'    => $playerItems[$el->getPlayerId()]->getHasAvatar(),
-                'last_update'    => $playerItems[$el->getPlayerId()]->getLastUpdate(),
-                'tenhou_id'     => $mainEvent->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL
+                'id'              => (int)$el->getPlayerId(),
+                'title'           => $playerItems[$el->getPlayerId()]->getDisplayName(),
+                'has_avatar'      => $playerItems[$el->getPlayerId()]->getHasAvatar(),
+                'last_update'     => $playerItems[$el->getPlayerId()]->getLastUpdate(),
+                'tenhou_id'       => $mainEvent->getPlatformId() === PlatformType::PLATFORM_TYPE_MAHJONGSOUL
                     ? ($soulNicknames[(int)$el->getPlayerId()] ?? '')
                     : $playerItems[$el->getPlayerId()]->getTenhouId(),
-                'rating'        => (float)$el->getRating(),
-                'chips'         => (int)$el->getChips(),
-                'team_name'     => empty($teams[$el->getPlayerId()]) ? '' : $teams[$el->getPlayerId()],
-                'winner_zone'   => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
-                'avg_place'     => round($el->getAvgPlace(), 4),
-                'avg_score'     => $el->getGamesPlayed() == 0
+                'rating'          => (float)$el->getRating() - $penaltyAmount,
+                'penalties'       => ['count' => $penaltyCount, 'amount' => $penaltyAmount],
+                'chips'           => (int)$el->getChips(),
+                'team_name'       => empty($teams[$el->getPlayerId()]) ? '' : $teams[$el->getPlayerId()],
+                'winner_zone'     => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
+                'avg_place'       => round($el->getAvgPlace(), 4),
+                'avg_score'       => $el->getGamesPlayed() == 0
                     ? 0
                     : round($el->getAvgScore($startRating), 4),
-                'games_played'  => (int)$el->getGamesPlayed()
+                'games_played'    => (int)$el->getGamesPlayed()
             ];
         }, $playerHistoryItemsSummed);
+
+        // Now we have all the data and all modifications applied, and we need just to apply some sorting
+
+        $this->_sortItems($startRating, $orderBy, $playerItems, $data);
+
+        if ($order === 'desc') {
+            $data = array_reverse($data);
+        }
+
+        if ($mainEvent->getSortByGames()) {
+            $this->_stableSort(
+                $data,
+                function ($el1, $el2) {
+                    if ($el1['games_played'] == $el2['games_played']) {
+                        return 0;
+                    }
+
+                    return $el1['games_played'] < $el2['games_played'] ? 1 : -1; // swap for desc sort
+                }
+            );
+        }
 
         if ($onlyMinGames) {
             $data = array_filter($data, function ($el) use ($minGamesCount) {
@@ -198,25 +228,25 @@ class EventRatingTableModel extends Model
     /**
      * For games that should end synchronously, make fake history items
      * to properly display rating table for tournament administrators.
-     * These history items are not intended to be SAVED!
+     * These history items are NOT intended to be SAVED!
      *
-     * @param EventPrimitive $event
-     * @return PlayerHistoryPrimitive[]
+     * @param int[] $eventIds
+     * @return PlayerHistoryPrimitive[][]
      * @throws \Exception
      */
-    protected function _getFakePrefinishedItems(EventPrimitive $event)
+    protected function _getFakePrefinishedItems($eventIds)
     {
-        $eId = $event->getId();
-        if (empty($eId)) {
-            throw new InvalidParametersException('Attempted to use deidented primitive');
-        }
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eId, SessionPrimitive::STATUS_PREFINISHED);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventIds, SessionPrimitive::STATUS_PREFINISHED);
         $historyItems = [];
 
         foreach ($sessions as $session) {
+            if (empty($historyItems[$session->getEventId()])) {
+                $historyItems[$session->getEventId()] = [];
+            }
+
             $sessionResults = $session->getSessionResults();
             foreach ($sessionResults as $sessionResult) {
-                $historyItems []= PlayerHistoryPrimitive::makeNewHistoryItem(
+                $historyItems[$session->getEventId()] []= PlayerHistoryPrimitive::makeNewHistoryItem(
                     $this->_ds,
                     $sessionResult->getPlayer(),
                     $session,
@@ -253,35 +283,29 @@ class EventRatingTableModel extends Model
      * @param float $startRating
      * @param string $orderBy
      * @param PlayerPrimitive[] $playerItems
-     * @param PlayerHistoryPrimitive[] $playersHistoryItems
-     *
-     * @throws InvalidParametersException
+     * @param array $ratingLines
      *
      * @return void
+     *@throws InvalidParametersException
+     *
      */
-    protected function _sortItems(float $startRating, string $orderBy, &$playerItems, &$playersHistoryItems): void
+    protected function _sortItems(float $startRating, string $orderBy, &$playerItems, &$ratingLines): void
     {
         switch ($orderBy) {
             case 'name':
-                usort($playersHistoryItems, function (
-                    PlayerHistoryPrimitive $el1,
-                    PlayerHistoryPrimitive $el2
-                ) use (&$playerItems) {
+                usort($ratingLines, function ($el1, $el2) use (&$playerItems) {
                     return strcmp(
-                        $playerItems[$el1->getPlayerId()]->getDisplayName(),
-                        $playerItems[$el2->getPlayerId()]->getDisplayName()
+                        $playerItems[$el1['id']]->getDisplayName(),
+                        $playerItems[$el2['id']]->getDisplayName()
                     );
                 });
                 break;
             case 'rating':
-                usort($playersHistoryItems, function (
-                    PlayerHistoryPrimitive $el1,
-                    PlayerHistoryPrimitive $el2
-                ) {
-                    if (abs($el1->getRating() - $el2->getRating()) < 0.0001) {
-                        return ($el2->getAvgPlace() - $el1->getAvgPlace()) > 0 ? 1 : -1; // lower avg place is better, so invert
+                usort($ratingLines, function ($el1, $el2) {
+                    if (abs($el1['rating'] - $el2['rating']) < 0.0001) {
+                        return ($el2['avg_place'] - $el1['avg_place']) > 0 ? 1 : -1; // lower avg place is better, so invert
                     }
-                    if ($el1->getRating() - $el2->getRating() < 0) { // higher rating is better
+                    if ($el1['rating'] - $el2['rating'] < 0) { // higher rating is better
                         return -1;  // usort casts return result to int, so pass explicit int here.
                     } else {
                         return 1;
@@ -289,14 +313,11 @@ class EventRatingTableModel extends Model
                 });
                 break;
             case 'avg_place':
-                usort($playersHistoryItems, function (
-                    PlayerHistoryPrimitive $el1,
-                    PlayerHistoryPrimitive $el2
-                ) {
-                    if (abs($el1->getAvgPlace() - $el2->getAvgPlace()) < 0.0001) { // floats need epsilon
-                        return ($el2->getRating() - $el1->getRating()) > 0 ? 1 : -1; // lower rating is worse, so invert
+                usort($ratingLines, function ($el1, $el2) {
+                    if (abs($el1['avg_place'] - $el2['avg_place']) < 0.0001) { // floats need epsilon
+                        return ($el2['rating'] - $el1['rating']) > 0 ? 1 : -1; // lower rating is worse, so invert
                     }
-                    if ($el1->getAvgPlace() - $el2->getAvgPlace() < 0) { // higher avg place is worse
+                    if ($el1['avg_place'] - $el2['avg_place'] < 0) { // higher avg place is worse
                         return -1; // usort casts return result to int, so pass explicit int here.
                     } else {
                         return 1;
@@ -304,14 +325,11 @@ class EventRatingTableModel extends Model
                 });
                 break;
             case 'avg_score':
-                usort($playersHistoryItems, function (
-                    PlayerHistoryPrimitive $el1,
-                    PlayerHistoryPrimitive $el2
-                ) use ($startRating) {
-                    if (abs($el1->getAvgScore($startRating) - $el2->getAvgScore($startRating)) < 0.0001) {
-                        return ($el2->getAvgPlace() - $el1->getAvgPlace()) > 0 ? 1 : -1; // lower avg place is better, so invert
+                usort($ratingLines, function ($el1, $el2) {
+                    if (abs($el1['avg_score'] - $el2['avg_score']) < 0.0001) {
+                        return ($el2['avg_place'] - $el1['avg_place']) > 0 ? 1 : -1; // lower avg place is better, so invert
                     }
-                    if ($el1->getAvgScore($startRating) - $el2->getAvgScore($startRating) < 0) { // higher rating is better
+                    if ($el1['avg_score'] - $el2['avg_score'] < 0) { // higher rating is better
                         return -1;  // usort casts return result to int, so pass explicit int here.
                     } else {
                         return 1;
@@ -319,14 +337,11 @@ class EventRatingTableModel extends Model
                 });
                 break;
             case 'chips':
-                usort($playersHistoryItems, function (
-                    PlayerHistoryPrimitive $el1,
-                    PlayerHistoryPrimitive $el2
-                ) {
-                    if (abs($el1->getChips() - $el2->getChips()) < 0.0001) {
-                        return ($el2->getRating() - $el1->getRating()) > 0 ? 1 : -1; // lower rating is worse, so invert
+                usort($ratingLines, function ($el1, $el2) {
+                    if (abs($el1['chips'] - $el2['chips']) < 0.0001) {
+                        return ($el2['rating'] - $el1['rating']) > 0 ? 1 : -1; // lower rating is worse, so invert
                     }
-                    if ($el1->getChips() - $el2->getChips() < 0) {
+                    if ($el1['chips'] - $el2['chips'] < 0) {
                         return -1; // usort casts return result to int, so pass explicit int here.
                     } else {
                         return 1;

@@ -36,6 +36,7 @@ import {
   Center,
   LoadingOverlay,
   Box,
+  Tooltip,
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { PlayerAvatar } from '../components/PlayerAvatar';
@@ -425,6 +426,22 @@ export const RatingTable: React.FC<{
                         )}
                         {events?.[0]?.isTeam && player.teamName && <Text>{player.teamName}</Text>}
                       </Stack>
+                      {player.penaltiesCount > 0 && (
+                        <Tooltip
+                          events={{ hover: true, touch: true, focus: true }}
+                          openDelay={200}
+                          position='bottom'
+                          withArrow
+                          label={i18n._t('Penalties count: %1; total penalties amount: %2', [
+                            player.penaltiesCount,
+                            player.penaltiesAmount,
+                          ])}
+                        >
+                          <IconExclamationCircle
+                            color={isDark ? theme.colors.dark[4] : theme.colors.gray[4]}
+                          />
+                        </Tooltip>
+                      )}
                     </Group>
                     <Group spacing={2} grow={!largeScreen}>
                       <Badge

@@ -196,7 +196,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           description={i18n._t(
             'Amount of penalty applied in the end of the session after uma bonus.'
           )}
-          value={config.rulesetConfig.chomboPenalty}
+          value={config.rulesetConfig.chomboAmount}
           onChange={() => {}}
         />
       )}

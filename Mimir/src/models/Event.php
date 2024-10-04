@@ -31,6 +31,7 @@ require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/EventPrescript.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Round.php';
+require_once __DIR__ . '/../primitives/Penalty.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
 class EventModel extends Model
@@ -53,7 +54,7 @@ class EventModel extends Model
         $startRating = $event[0]->getRulesetConfig()->rules()->getStartRating();
 
         // get data from primitives, and some raw data
-        $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
+        $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, [$eventId]);
         $seatings = $this->_ds->table('session_player')
             ->join('session', 'session.id = session_player.session_id')
             ->select('session_player.order')
@@ -140,7 +141,7 @@ class EventModel extends Model
             $tablesCount = count($reggedPlayers) / 4;
         }
 
-        $lastGames = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, [
+        $lastGames = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], [
             SessionPrimitive::STATUS_FINISHED,
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
@@ -257,7 +258,16 @@ class EventModel extends Model
                     'status' => $game->getStatus(),
                     'may_definalize' => DateHelper::mayDefinalizeGame($game),
                     'hash' => $game->getRepresentationalHash(),
-                    'penalties' => $game->getCurrentState()->getPenaltiesLog(),
+                    'penalties' => array_map(function (PenaltyPrimitive $pp) {
+                        if (empty($pp->getId())) {
+                            throw new InvalidParametersException('Attempted to use deidented primitive');
+                        }
+                        return [
+                            'who' => $pp->getPlayerId(),
+                            'amount' => $pp->getAmount(),
+                            'reason' => $pp->getReason(),
+                        ];
+                    }, PenaltyPrimitive::findBySessionId($this->_ds, [$game->getId() ?? 0])),
                     'table_index' => $game->getTableIndex(),
                     'last_round_detailed' => $lastRound ? Formatters::formatRound($lastRound, $game) : null,
                     'last_round' => $lastRound ? $this->_formatLastRound($lastRound, $game) : [],

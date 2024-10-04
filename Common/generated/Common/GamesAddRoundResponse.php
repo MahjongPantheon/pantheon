@@ -18,10 +18,6 @@ class GamesAddRoundResponse extends \Google\Protobuf\Internal\Message
      */
     private $scores;
     /**
-     * Generated from protobuf field <code>repeated .common.Penalty extra_penalty_logs = 2;</code>
-     */
-    private $extra_penalty_logs;
-    /**
      * current round number
      *
      * Generated from protobuf field <code>int32 round = 3;</code>
@@ -77,7 +73,6 @@ class GamesAddRoundResponse extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
-     *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $extra_penalty_logs
      *     @type int $round
      *           current round number
      *     @type int $honba
@@ -121,28 +116,6 @@ class GamesAddRoundResponse extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\IntermediateResultOfSession::class);
         $this->scores = $arr;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated .common.Penalty extra_penalty_logs = 2;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getExtraPenaltyLogs()
-    {
-        return $this->extra_penalty_logs;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated .common.Penalty extra_penalty_logs = 2;</code>
-     * @param array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setExtraPenaltyLogs($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Penalty::class);
-        $this->extra_penalty_logs = $arr;
 
         return $this;
     }

@@ -31,7 +31,7 @@ class Formatters
      * @throws \Exception
      *
      */
-    public static function formatGameResults(SessionPrimitive $session, array $sessionResults, array $rounds, $replacements = [])
+    public static function formatGameResults(SessionPrimitive $session, array $sessionResults, array $penalties, array $rounds, $replacements = [])
     {
         $currentPlatformId = $session->getEvent()->getPlatformId();
         if ($currentPlatformId === -1 || $currentPlatformId === 0) {
@@ -50,7 +50,7 @@ class Formatters
                     'place'         => (int) $el->getPlace()
                 ];
             }, $sessionResults[$session->getId()]),
-            'penalties' => $session->getCurrentState()->getPenaltiesLog(),
+            'penalties' => $penalties,
             'rounds' => array_map(function ($round) use ($session, $replacements) {
                 return self::formatRound($round, $session, $replacements);
             }, $rounds[$session->getId()]),
