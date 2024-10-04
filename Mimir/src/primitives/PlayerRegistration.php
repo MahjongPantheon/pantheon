@@ -154,7 +154,7 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param int $playerId
+     * @param int[] $playerIds
      * @param int $eventId
      *
      * @return self[]
@@ -163,12 +163,12 @@ class PlayerRegistrationPrimitive extends Primitive
      *
      * @psalm-return array<array-key, self>
      */
-    public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId)
+    public static function findByPlayerAndEvent(DataSource $ds, $playerIds, int $eventId)
     {
         return self::_findBySeveral($ds, [
-            'player_id' => [$playerId],
+            'player_id' => $playerIds,
             'event_id'  => [$eventId]
-        ], ['onlyLast' => true]);
+        ]);
     }
 
     /**

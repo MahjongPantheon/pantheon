@@ -921,12 +921,13 @@ class SessionPrimitive extends Primitive
 
     /**
      * Generate session results
+     * @param bool $useSavedReplacements
      * @throws \Exception
      * @return bool
      */
-    protected function _finalizeGame()
+    protected function _finalizeGame($useSavedReplacements = false)
     {
-        $sessionResults = $this->getSessionResults();
+        $sessionResults = $this->getSessionResults($useSavedReplacements);
 
         return array_reduce($sessionResults, function ($acc, SessionResultsPrimitive $result) {
             $playerHistoryItem = PlayerHistoryPrimitive::makeNewHistoryItem(
@@ -949,15 +950,16 @@ class SessionPrimitive extends Primitive
      */
     public function recreateHistory()
     {
-        $this->_finalizeGame();
+        $this->_finalizeGame(true);
     }
 
     /**
      * Get a list on unsaved session results primitives
+     * @param bool $useSavedReplacements
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public function getSessionResults()
+    public function getSessionResults($useSavedReplacements = false)
     {
         if ($this->getEvent()->getRulesetConfig()->rules()->getRiichiGoesToWinner()) {
             $placesMap = SessionResultsPrimitive::calcPlacesMap($this->getCurrentState()->getScores(), $this->getPlayersIds());
@@ -984,6 +986,24 @@ class SessionPrimitive extends Primitive
                     $this->getCurrentState()->giveRiichiBetsToPlayer($player->getId(), $riichiBetAmount);
                 }
             }
+        }
+
+        if (!$useSavedReplacements) {
+            // save replacements to session state for possible recalculations
+            $players = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->getPlayersIds(), $this->_eventId);
+            $replacements = array_reduce(
+                $players,
+                function ($acc, PlayerRegistrationPrimitive $reg) {
+                    if ($reg->getReplacementPlayerId()) {
+                        $acc[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
+                    }
+                    return $acc;
+                },
+                []
+            );
+
+            $this->getCurrentState()->setReplacements($replacements);
+            $this->save();
         }
 
         return array_map(function (PlayerPrimitive $player) {

@@ -87,6 +87,11 @@ class SessionState
      * @var array
      */
     protected $_yakitori = [];
+    /**
+     * Saved current replacements for proper recalculations
+     * @var array
+     */
+    protected $_replacements = [];
 
     /**
      * SessionState constructor.
@@ -332,6 +337,24 @@ class SessionState
     public function setScores(array $scores)
     {
         $this->_scores = $scores;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReplacements()
+    {
+        return $this->_replacements;
+    }
+
+    /**
+     * @param array $replacements
+     * @return SessionState
+     */
+    public function setReplacements(array $replacements)
+    {
+        $this->_replacements = $replacements;
         return $this;
     }
 
