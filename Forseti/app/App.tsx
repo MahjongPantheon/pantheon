@@ -35,6 +35,7 @@ import { ProfileManageAdmin } from './pages/ProfileManageAdmin';
 import { SystemStats } from './pages/SystemStats';
 import './App.css';
 import { ProfileNotifications } from './pages/ProfileNotifications';
+import { PrivilegesManage } from './pages/PrivilegesManage';
 
 export const App = () => {
   return (
@@ -59,6 +60,7 @@ export const App = () => {
 
       <Route path='/ownedEvents/new' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/edit/:id' component={OwnedEventsEdit} />
+      <Route path='/ownedEvents/privileges/:id' component={PrivilegesManage} />
       <Route path='/ownedEvents/:page' component={OwnedEvents} />
       <Route path='/ownedEvents' component={OwnedEvents} />
 

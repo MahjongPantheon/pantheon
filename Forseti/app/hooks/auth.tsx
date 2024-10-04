@@ -17,10 +17,17 @@
 
 import { createContext } from 'react';
 
+export enum PrivilegesLevel {
+  NOBODY = 0,
+  REFEREE = 1,
+  ADMIN = 2,
+  SUPERADMIN = 3,
+}
+
 export const auth = {
   isLoggedIn: false,
   setIsLoggedIn: (_val: boolean) => {},
-  isSuperadmin: false,
-  setIsSuperadmin: (_val: boolean) => {},
+  privilegesLevel: PrivilegesLevel.NOBODY,
+  setPrivilegesLevel: (_val: PrivilegesLevel) => {},
 };
 export const authCtx = createContext(auth);

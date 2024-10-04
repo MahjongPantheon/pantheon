@@ -41,7 +41,7 @@ import {
   IconUserPlus,
 } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
-import { createRef, useCallback, useEffect, useState } from 'react';
+import { createRef, useCallback, useContext, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
 import { usePageTitle } from '../hooks/pageTitle';
 import { notifications } from '@mantine/notifications';
@@ -49,8 +49,10 @@ import { TopActionButton } from '../components/TopActionButton';
 import { useStorage } from '../hooks/storage';
 import { FileUploadButton } from '../components/FileUploadButton';
 import { env } from '../env';
+import { authCtx, PrivilegesLevel } from '../hooks/auth';
 
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
+  const { privilegesLevel } = useContext(authCtx);
   const i18n = useI18n();
   if (id) {
     usePageTitle(i18n._t('Update player account'));
@@ -60,7 +62,6 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
   const api = useApi();
   api.setEventId(0);
   const storage = useStorage();
-  const [isSuperadmin, setIsSuperadmin] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
@@ -183,21 +184,20 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       setIsLoading(false);
       return;
     }
-    api.getSuperadminFlag(personId).then((flag) => {
-      setIsSuperadmin(flag);
-      if (!flag || !id) {
-        setIsLoading(false);
-        return;
-      }
 
-      if (id) {
-        api.getPersonalInfo(parseInt(id, 10)).then((player) => {
-          form.setValues(player);
-          setPlayerEditId(player.id);
-          setIsLoading(false);
-        });
-      }
-    });
+    if (privilegesLevel !== PrivilegesLevel.SUPERADMIN || !id) {
+      setIsLoading(false);
+      return;
+    }
+
+    if (id) {
+      api.getPersonalInfo(parseInt(id, 10)).then((player) => {
+        form.setValues(player);
+        setPlayerEditId(player.id);
+        setIsLoading(false);
+      });
+    }
+
     api.getCountries().then((respCountries) => {
       setCountries(respCountries.countries.map((v) => ({ value: v.code, label: v.name })));
     });
@@ -214,7 +214,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
     }
   }
 
-  if (!isLoading && !isSuperadmin) {
+  if (!isLoading && privilegesLevel !== PrivilegesLevel.SUPERADMIN) {
     return <Redirect to='/' />;
   }
 

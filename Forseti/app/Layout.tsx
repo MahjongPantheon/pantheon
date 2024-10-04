@@ -32,7 +32,7 @@ import {
 } from '@mantine/core';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { AppHeader } from './components/AppHeader';
-import { authCtx } from './hooks/auth';
+import { authCtx, PrivilegesLevel } from './hooks/auth';
 import { modalsCtx } from './hooks/modals';
 import { actionButtonCtx, actionButtonRef } from './hooks/actionButton';
 import { useApi } from './hooks/api';
@@ -141,11 +141,23 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [matchEdit, paramsEdit] = useRoute('/ownedEvents/edit/:id');
   const id = (match ? params : paramsEdit)?.id;
   const personId = storage.getPersonId();
-  const [isSuperadmin, setIsSuperadmin] = useState(false);
+  const [privilegesLevel, setPrivilegesLevel] = useState(PrivilegesLevel.NOBODY);
   const [eventData, setEventData] = useState<Event | null>(null);
 
   useEffect(() => {
-    api.getSuperadminFlag(personId!).then((flag) => setIsSuperadmin(flag));
+    Promise.all([
+      api.getSuperadminFlag(personId!),
+      api.getIsEventReferee(personId!, parseInt(id ?? '0', 10)),
+      api.getIsEventAdmin(personId!, parseInt(id ?? '0', 10)),
+    ]).then(([isSuperadmin, isReferee, isAdmin]) => {
+      if (isSuperadmin) {
+        setPrivilegesLevel(PrivilegesLevel.SUPERADMIN);
+      } else if (isAdmin) {
+        setPrivilegesLevel(PrivilegesLevel.ADMIN);
+      } else if (isReferee) {
+        setPrivilegesLevel(PrivilegesLevel.REFEREE);
+      }
+    });
 
     if (!match && !matchEdit) {
       return;
@@ -178,7 +190,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <actionButtonCtx.Provider value={actionButtonRef}>
-      <authCtx.Provider value={{ isLoggedIn, setIsLoggedIn, isSuperadmin, setIsSuperadmin }}>
+      <authCtx.Provider value={{ isLoggedIn, setIsLoggedIn, privilegesLevel, setPrivilegesLevel }}>
         <modalsCtx.Provider
           value={{
             showStopEventModal,

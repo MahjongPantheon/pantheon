@@ -322,7 +322,7 @@ class GamesController extends Controller
         if (empty($session)) {
             throw new TwirpError(ErrorCode::NotFound, "Couldn't find session in DB");
         }
-        if (!$this->_meta->isEventAdminById($session[0]->getEventId())) {
+        if (!$this->_meta->isEventAdminById($session[0]->getEventId()) && !$this->_meta->isEventRefereeById($session[0]->getEventId())) {
             throw new TwirpError(ErrorCode::NotFound, "This action is allowed only for event administrators");
         }
         $success = $session[0]->finish();

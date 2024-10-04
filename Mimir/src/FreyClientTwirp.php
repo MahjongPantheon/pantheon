@@ -476,6 +476,32 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
+     *  Get all event referees
+     *  Format: [[rule_id => int, id => int, name => string], ...]
+     *
+     * @param int $eventId
+     * @return array
+     */
+    public function getEventReferees(int $eventId): array
+    {
+        $rules = $this->_client->GetEventReferees(
+            $this->_ctx,
+            (new \Common\AccessGetEventRefereesPayload())
+                ->setEventId($eventId)
+        )->getReferees()->getIterator();
+
+        return array_map(function (\Common\EventReferee $rule) {
+            return [
+                'rule_id' => $rule->getRuleId(),
+                'id' => $rule->getPersonId(),
+                'name' => $rule->getPersonName(),
+                'has_avatar' => $rule->getHasAvatar(),
+                'last_update' => $rule->getLastUpdate(),
+            ];
+        }, iterator_to_array($rules));
+    }
+
+    /**
      *  Client method to receive super-admin flag. Intended to be used only in Mimir
      *  to determine if used has super-admin privileges independently of any event.
      *  Cached for 10 minutes.

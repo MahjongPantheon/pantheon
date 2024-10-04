@@ -28,7 +28,7 @@ import {
   IconUserX,
 } from '@tabler/icons-react';
 import { FormHandle } from './types';
-import { authCtx } from '../../hooks/auth';
+import { authCtx, PrivilegesLevel } from '../../hooks/auth';
 import { useContext } from 'react';
 import { PlatformType } from '../../clients/proto/atoms.pb';
 
@@ -38,7 +38,7 @@ type OnlineSettingsProps = {
 };
 
 export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) => {
-  const { isSuperadmin } = useContext(authCtx);
+  const { privilegesLevel } = useContext(authCtx);
   return (
     <>
       <Text>
@@ -46,7 +46,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
           'Please note: you should set up the rating accordingly to tournament settings in game platform, otherwise expect errors on replay submit!'
         )}
       </Text>
-      {isSuperadmin && (
+      {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
         <Select
           icon={<IconAffiliateFilled size='1rem' />}
           label={i18n._t('Event platform')}

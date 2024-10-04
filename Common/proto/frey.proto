@@ -59,6 +59,8 @@ service Frey {
     returns (PersonsGetGroupsResponse);
   rpc GetEventAdmins(AccessGetEventAdminsPayload)
     returns (AccessGetEventAdminsResponse);
+  rpc GetEventReferees(AccessGetEventRefereesPayload)
+    returns (AccessGetEventRefereesResponse);
   rpc GetMajsoulNicknames(PersonsGetMajsoulNicknamesPayload)
     returns (PersonsGetMajsoulNicknamesResponse);
 
@@ -231,6 +233,14 @@ message AccessGetEventAdminsPayload {
 
 message AccessGetEventAdminsResponse {
   repeated EventAdmin admins = 1;
+}
+
+message AccessGetEventRefereesPayload {
+  int32 event_id = 1;
+}
+
+message AccessGetEventRefereesResponse {
+  repeated EventReferee referees = 1;
 }
 
 message AccessGetSuperadminFlagPayload {

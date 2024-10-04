@@ -494,6 +494,29 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function GetEventReferees(array $ctx, \Common\AccessGetEventRefereesPayload $in): \Common\AccessGetEventRefereesResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Frey');
+        $ctx = Context::withMethodName($ctx, 'GetEventReferees');
+
+        $out = new \Common\AccessGetEventRefereesResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Frey/GetEventReferees';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetEventReferees';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function GetMajsoulNicknames(array $ctx, \Common\PersonsGetMajsoulNicknamesPayload $in): \Common\PersonsGetMajsoulNicknamesResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');

@@ -23,15 +23,15 @@ import {
   IconUserCircle,
   IconUserPlus,
 } from '@tabler/icons-react';
-import { FlagEn, FlagRu, FlagKo, FlagDe } from '../helpers/flags';
+import { FlagDe, FlagEn, FlagKo, FlagRu } from '../helpers/flags';
 import * as React from 'react';
+import { useContext } from 'react';
 import { useI18n } from '../hooks/i18n';
 import { Event, EventType } from '../clients/proto/atoms.pb';
 import { useApi } from '../hooks/api';
 import { useRoute } from 'wouter';
-import { useContext } from 'react';
 import { modalsCtx } from '../hooks/modals';
-import { authCtx } from '../hooks/auth';
+import { authCtx, PrivilegesLevel } from '../hooks/auth';
 
 type MainMenuProps = {
   title?: string;
@@ -55,19 +55,21 @@ export const MainMenu = ({
   const i18n = useI18n();
   const api = useApi();
   const modals = useContext(modalsCtx);
-  const { isLoggedIn, isSuperadmin } = useContext(authCtx);
+  const { isLoggedIn, privilegesLevel } = useContext(authCtx);
   const [match, params] = useRoute('/event/:id/:subpath');
   const [matchEdit, paramsEdit] = useRoute('/ownedEvents/edit/:id');
+  const [matchPrivileges, paramsPrivileges] = useRoute('/ownedEvents/privileges/:id');
   const rebuildScoring = (eid: number) => {
     api.rebuildScoring(eid).then(() => {
       window.location.reload();
     });
   };
+  const eventId = (match ? params : matchEdit ? paramsEdit : paramsPrivileges)?.id;
 
   return (
     <Stack justify='space-between' style={{ height: '100%' }}>
       <Stack spacing={0}>
-        {(match || matchEdit) && (
+        {(match || matchEdit || matchPrivileges) && (
           <>
             <Divider
               size='xs'
@@ -78,21 +80,31 @@ export const MainMenu = ({
             />
             <MainMenuLink
               external={ExternalTarget.SIGRUN}
-              href={`${env.urls.sigrun}/event/${(match ? params : paramsEdit)?.id}/info`}
+              href={`${env.urls.sigrun}/event/${eventId}/info`}
               icon={<IconExternalLink size={18} />}
               text={i18n._t('Open event page')}
               onClick={closeMenu}
             />
-            <MainMenuLink
-              href={`/ownedEvents/edit/${(match ? params : paramsEdit)?.id}`}
-              icon={<IconTool size={18} />}
-              text={i18n._t('Settings')}
-              onClick={closeMenu}
-            />
+            {privilegesLevel >= PrivilegesLevel.ADMIN && (
+              <MainMenuLink
+                href={`/ownedEvents/edit/${eventId}`}
+                icon={<IconTool size={18} />}
+                text={i18n._t('Settings')}
+                onClick={closeMenu}
+              />
+            )}
+            {privilegesLevel >= PrivilegesLevel.ADMIN && (
+              <MainMenuLink
+                href={`/ownedEvents/privileges/${eventId}`}
+                icon={<IconTool size={18} />}
+                text={i18n._t('Manage privileges')}
+                onClick={closeMenu}
+              />
+            )}
             {eventData && !eventData.finished && (
               <>
                 <MainMenuLink
-                  href={`/event/${(match ? params : paramsEdit)?.id}/players`}
+                  href={`/event/${eventId}/players`}
                   icon={<IconFriends size={18} />}
                   text={i18n._t('Manage players')}
                   onClick={closeMenu}
@@ -100,22 +112,22 @@ export const MainMenu = ({
                 {eventData.type !== EventType.EVENT_TYPE_ONLINE && (
                   <>
                     <MainMenuLink
-                      href={`event/${(match ? params : paramsEdit)?.id}/penalties`}
+                      href={`event/${eventId}/penalties`}
                       icon={<IconAlertOctagon size={18} />}
                       text={i18n._t('Penalties')}
                       onClick={closeMenu}
                     />
                     <MainMenuLink
-                      href={`/event/${(match ? params : paramsEdit)?.id}/games`}
+                      href={`/event/${eventId}/games`}
                       icon={<IconOlympics size={18} />}
                       text={i18n._t('Manage games')}
                       onClick={closeMenu}
                     />
                   </>
                 )}
-                {eventData?.isPrescripted && (
+                {eventData?.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
                   <MainMenuLink
-                    href={`/event/${(match ? params : paramsEdit)?.id}/prescript`}
+                    href={`/event/${eventId}/prescript`}
                     icon={<IconScript size={18} />}
                     text={i18n._t('Predefined seating')}
                     onClick={closeMenu}
@@ -123,7 +135,7 @@ export const MainMenu = ({
                 )}
               </>
             )}
-            {eventData && !eventData.finished && (
+            {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
               <Divider
                 size='xs'
                 mt={10}
@@ -132,18 +144,18 @@ export const MainMenu = ({
                 labelPosition='center'
               />
             )}
-            {isSuperadmin && eventData && !eventData.finished && (
+            {privilegesLevel === PrivilegesLevel.SUPERADMIN && eventData && !eventData.finished && (
               <NavLink
                 label={i18n._t('Rebuild scoring')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
                 onClick={() => {
                   closeMenu?.();
-                  rebuildScoring(parseInt((match ? params : paramsEdit)?.id ?? '', 10));
+                  rebuildScoring(parseInt(eventId ?? '', 10));
                 }}
                 icon={<IconRefreshAlert />}
               />
             )}
-            {eventData && !eventData.finished && (
+            {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
               <NavLink
                 label={i18n._t('Recalculate achievements')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
@@ -151,14 +163,14 @@ export const MainMenu = ({
                 onClick={() => {
                   closeMenu?.();
                   modals.setRecalcAchievementsModalData({
-                    id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                    id: parseInt(eventId ?? '', 10),
                     title: eventData?.title ?? '',
                   });
                   modals.showRecalcAchievementsModal();
                 }}
               />
             )}
-            {eventData && !eventData.finished && (
+            {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
               <NavLink
                 label={i18n._t('Recalculate players stats')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
@@ -166,14 +178,14 @@ export const MainMenu = ({
                 onClick={() => {
                   closeMenu?.();
                   modals.setRecalcPlayerStatsModalData({
-                    id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                    id: parseInt(eventId ?? '', 10),
                     title: eventData?.title ?? '',
                   });
                   modals.showRecalcPlayerStatsModal();
                 }}
               />
             )}
-            {eventData && !eventData.finished && (
+            {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
               <NavLink
                 label={i18n._t('Finish event')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
@@ -181,7 +193,7 @@ export const MainMenu = ({
                 onClick={() => {
                   closeMenu?.();
                   modals.setStopEventModalData({
-                    id: parseInt((match ? params : paramsEdit)?.id ?? '', 10),
+                    id: parseInt(eventId ?? '', 10),
                     title: eventData?.title ?? '',
                   });
                   modals.showStopEventModal();
@@ -228,7 +240,7 @@ export const MainMenu = ({
             onClick={closeMenu}
           />
         )}
-        {isSuperadmin && (
+        {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
           <MainMenuLink
             href='/profile/signupAdmin'
             icon={<IconUserPlus size={18} />}
@@ -236,7 +248,7 @@ export const MainMenu = ({
             onClick={closeMenu}
           />
         )}
-        {isSuperadmin && (
+        {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
           <MainMenuLink
             href='/stats'
             icon={<IconChartArea size={18} />}

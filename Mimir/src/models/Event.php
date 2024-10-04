@@ -117,7 +117,10 @@ class EventModel extends Model
         $currentlyPlayedSession = $personId
             ? SessionPrimitive::findByPlayerAndEvent($this->_ds, $personId, $eventId, SessionPrimitive::STATUS_INPROGRESS)
             : [];
-        $canViewOtherTables = $event->getAllowViewOtherTables() || count($currentlyPlayedSession) === 0 || $this->_meta->isEventAdminById($eventId);
+        $canViewOtherTables = $event->getAllowViewOtherTables() ||
+            count($currentlyPlayedSession) === 0 ||
+            $this->_meta->isEventAdminById($eventId) ||
+            $this->_meta->isEventRefereeById($eventId);
 
         if (!$canViewOtherTables) {
             throw new BadActionException('This is not allowed for this event');

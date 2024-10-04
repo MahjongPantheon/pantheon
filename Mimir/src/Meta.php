@@ -232,6 +232,25 @@ class Meta
         return false;
     }
 
+    /**
+     * @param int $eventId
+     * @return bool
+     */
+    public function isEventRefereeById($eventId)
+    {
+        if ($this->_superadmin) {
+            return true;
+        }
+        if (empty($this->_currentPersonId)) {
+            return false;
+        }
+        $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
+        if ($this->_accessRules['REFEREE_FOR_EVENT']) {
+            return true;
+        }
+        return false;
+    }
+
     public function getSelectedLocale(): string
     {
         return $this->_selectedLocale;

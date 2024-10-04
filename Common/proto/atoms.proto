@@ -45,6 +45,14 @@ message EventAdmin {
   string last_update = 5;
 }
 
+message EventReferee {
+  int32 rule_id = 1;
+  int32 person_id = 2;
+  string person_name = 3;
+  bool has_avatar = 4;
+  string last_update = 5;
+}
+
 message RuleListItem {
   string default = 1;
   string type = 2;

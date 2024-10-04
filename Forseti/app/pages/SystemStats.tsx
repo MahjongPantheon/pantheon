@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { usePageTitle } from '../hooks/pageTitle';
@@ -37,6 +37,7 @@ import { useStorage } from '../hooks/storage';
 import { HuginData } from '../clients/proto/hugin.pb';
 import { Link, Redirect } from 'wouter';
 import LineGraph from '../components/LineGraph';
+import { authCtx, PrivilegesLevel } from '../hooks/auth';
 
 const opts = {
   type: 'line',
@@ -123,7 +124,7 @@ const subsystems: Subsystems[] = ['all', 'Sigrun', 'Bragi', 'Forseti', 'Tyr'];
 
 export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params: { period } }) => {
   period = period ?? 'lastday';
-  const [isSuperadmin, setIsSuperadmin] = useState(false);
+  const { privilegesLevel } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
   const storage = useStorage();
@@ -169,25 +170,23 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
       setIsLoading(false);
       return;
     }
-    api.getSuperadminFlag(personId).then((flag) => {
-      setIsSuperadmin(flag);
-      if (!flag) {
+
+    if (privilegesLevel !== PrivilegesLevel.SUPERADMIN) {
+      setIsLoading(false);
+    } else {
+      (period === 'lastyear'
+        ? api.getLastYearStats()
+        : period === 'lastmonth'
+          ? api.getLastMonthStats()
+          : api.getLastDayStats()
+      ).then((st) => {
+        setStats(st);
         setIsLoading(false);
-      } else {
-        (period === 'lastyear'
-          ? api.getLastYearStats()
-          : period === 'lastmonth'
-            ? api.getLastMonthStats()
-            : api.getLastDayStats()
-        ).then((st) => {
-          setStats(st);
-          setIsLoading(false);
-        });
-      }
-    });
+      });
+    }
   }, [personId, period]);
 
-  if (!isLoading && (!personId || !isSuperadmin)) {
+  if (!isLoading && (!personId || privilegesLevel !== PrivilegesLevel.SUPERADMIN)) {
     return <Redirect to='/' />;
   }
 

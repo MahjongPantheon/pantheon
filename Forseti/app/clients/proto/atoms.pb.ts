@@ -87,6 +87,14 @@ export interface EventAdmin {
   lastUpdate: string;
 }
 
+export interface EventReferee {
+  ruleId: number;
+  personId: number;
+  personName: string;
+  hasAvatar: boolean;
+  lastUpdate: string;
+}
+
 export interface RuleListItem {
   default: string;
   type: string;
@@ -1314,6 +1322,106 @@ export const EventAdmin = {
     msg: EventAdmin,
     reader: protoscript.BinaryReader,
   ): EventAdmin {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.ruleId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.personId = reader.readInt32();
+          break;
+        }
+        case 3: {
+          msg.personName = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.hasAvatar = reader.readBool();
+          break;
+        }
+        case 5: {
+          msg.lastUpdate = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventReferee = {
+  /**
+   * Serializes EventReferee to protobuf.
+   */
+  encode: function (msg: PartialDeep<EventReferee>): Uint8Array {
+    return EventReferee._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes EventReferee from protobuf.
+   */
+  decode: function (bytes: ByteSource): EventReferee {
+    return EventReferee._readMessage(
+      EventReferee.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes EventReferee with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<EventReferee>): EventReferee {
+    return {
+      ruleId: 0,
+      personId: 0,
+      personName: "",
+      hasAvatar: false,
+      lastUpdate: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventReferee>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.ruleId) {
+      writer.writeInt32(1, msg.ruleId);
+    }
+    if (msg.personId) {
+      writer.writeInt32(2, msg.personId);
+    }
+    if (msg.personName) {
+      writer.writeString(3, msg.personName);
+    }
+    if (msg.hasAvatar) {
+      writer.writeBool(4, msg.hasAvatar);
+    }
+    if (msg.lastUpdate) {
+      writer.writeString(5, msg.lastUpdate);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventReferee,
+    reader: protoscript.BinaryReader,
+  ): EventReferee {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -8779,6 +8887,91 @@ export const EventAdminJSON = {
    * @private
    */
   _readMessage: function (msg: EventAdmin, json: any): EventAdmin {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
+    if (_ruleId_) {
+      msg.ruleId = protoscript.parseNumber(_ruleId_);
+    }
+    const _personId_ = json["personId"] ?? json["person_id"];
+    if (_personId_) {
+      msg.personId = protoscript.parseNumber(_personId_);
+    }
+    const _personName_ = json["personName"] ?? json["person_name"];
+    if (_personName_) {
+      msg.personName = _personName_;
+    }
+    const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
+    if (_hasAvatar_) {
+      msg.hasAvatar = _hasAvatar_;
+    }
+    const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
+    if (_lastUpdate_) {
+      msg.lastUpdate = _lastUpdate_;
+    }
+    return msg;
+  },
+};
+
+export const EventRefereeJSON = {
+  /**
+   * Serializes EventReferee to JSON.
+   */
+  encode: function (msg: PartialDeep<EventReferee>): string {
+    return JSON.stringify(EventRefereeJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes EventReferee from JSON.
+   */
+  decode: function (json: string): EventReferee {
+    return EventRefereeJSON._readMessage(
+      EventRefereeJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes EventReferee with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<EventReferee>): EventReferee {
+    return {
+      ruleId: 0,
+      personId: 0,
+      personName: "",
+      hasAvatar: false,
+      lastUpdate: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventReferee>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.ruleId) {
+      json["ruleId"] = msg.ruleId;
+    }
+    if (msg.personId) {
+      json["personId"] = msg.personId;
+    }
+    if (msg.personName) {
+      json["personName"] = msg.personName;
+    }
+    if (msg.hasAvatar) {
+      json["hasAvatar"] = msg.hasAvatar;
+    }
+    if (msg.lastUpdate) {
+      json["lastUpdate"] = msg.lastUpdate;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: EventReferee, json: any): EventReferee {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = protoscript.parseNumber(_ruleId_);

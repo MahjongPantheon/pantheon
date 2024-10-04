@@ -127,6 +127,14 @@ export interface AccessGetEventAdminsResponse {
   admins: protoAtoms.EventAdmin[];
 }
 
+export interface AccessGetEventRefereesPayload {
+  eventId: number;
+}
+
+export interface AccessGetEventRefereesResponse {
+  referees: protoAtoms.EventReferee[];
+}
+
 export interface AccessGetSuperadminFlagPayload {
   personId: number;
 }
@@ -648,6 +656,18 @@ export async function GetEventAdmins(
     config,
   );
   return AccessGetEventAdminsResponse.decode(response);
+}
+
+export async function GetEventReferees(
+  accessGetEventRefereesPayload: AccessGetEventRefereesPayload,
+  config?: ClientConfiguration,
+): Promise<AccessGetEventRefereesResponse> {
+  const response = await PBrequest(
+    "/common.Frey/GetEventReferees",
+    AccessGetEventRefereesPayload.encode(accessGetEventRefereesPayload),
+    config,
+  );
+  return AccessGetEventRefereesResponse.decode(response);
 }
 
 export async function GetMajsoulNicknames(
@@ -1225,6 +1245,18 @@ export async function GetEventAdminsJSON(
   return AccessGetEventAdminsResponseJSON.decode(response);
 }
 
+export async function GetEventRefereesJSON(
+  accessGetEventRefereesPayload: AccessGetEventRefereesPayload,
+  config?: ClientConfiguration,
+): Promise<AccessGetEventRefereesResponse> {
+  const response = await JSONrequest(
+    "/common.Frey/GetEventReferees",
+    AccessGetEventRefereesPayloadJSON.encode(accessGetEventRefereesPayload),
+    config,
+  );
+  return AccessGetEventRefereesResponseJSON.decode(response);
+}
+
 export async function GetMajsoulNicknamesJSON(
   personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload,
   config?: ClientConfiguration,
@@ -1673,6 +1705,10 @@ export interface Frey<Context = unknown> {
     accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
     context: Context,
   ) => Promise<AccessGetEventAdminsResponse> | AccessGetEventAdminsResponse;
+  GetEventReferees: (
+    accessGetEventRefereesPayload: AccessGetEventRefereesPayload,
+    context: Context,
+  ) => Promise<AccessGetEventRefereesResponse> | AccessGetEventRefereesResponse;
   GetMajsoulNicknames: (
     personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload,
     context: Context,
@@ -2044,6 +2080,18 @@ export function createFrey<Context>(service: Frey<Context>) {
         output: {
           protobuf: AccessGetEventAdminsResponse,
           json: AccessGetEventAdminsResponseJSON,
+        },
+      },
+      GetEventReferees: {
+        name: "GetEventReferees",
+        handler: service.GetEventReferees,
+        input: {
+          protobuf: AccessGetEventRefereesPayload,
+          json: AccessGetEventRefereesPayloadJSON,
+        },
+        output: {
+          protobuf: AccessGetEventRefereesResponse,
+          json: AccessGetEventRefereesResponseJSON,
         },
       },
       GetMajsoulNicknames: {
@@ -4128,6 +4176,156 @@ export const AccessGetEventAdminsResponse = {
           const m = protoAtoms.EventAdmin.initialize();
           reader.readMessage(m, protoAtoms.EventAdmin._readMessage);
           msg.admins.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const AccessGetEventRefereesPayload = {
+  /**
+   * Serializes AccessGetEventRefereesPayload to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<AccessGetEventRefereesPayload>,
+  ): Uint8Array {
+    return AccessGetEventRefereesPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes AccessGetEventRefereesPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): AccessGetEventRefereesPayload {
+    return AccessGetEventRefereesPayload._readMessage(
+      AccessGetEventRefereesPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes AccessGetEventRefereesPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<AccessGetEventRefereesPayload>,
+  ): AccessGetEventRefereesPayload {
+    return {
+      eventId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<AccessGetEventRefereesPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: AccessGetEventRefereesPayload,
+    reader: protoscript.BinaryReader,
+  ): AccessGetEventRefereesPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const AccessGetEventRefereesResponse = {
+  /**
+   * Serializes AccessGetEventRefereesResponse to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<AccessGetEventRefereesResponse>,
+  ): Uint8Array {
+    return AccessGetEventRefereesResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes AccessGetEventRefereesResponse from protobuf.
+   */
+  decode: function (bytes: ByteSource): AccessGetEventRefereesResponse {
+    return AccessGetEventRefereesResponse._readMessage(
+      AccessGetEventRefereesResponse.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes AccessGetEventRefereesResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<AccessGetEventRefereesResponse>,
+  ): AccessGetEventRefereesResponse {
+    return {
+      referees: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<AccessGetEventRefereesResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.referees?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.referees as any,
+        protoAtoms.EventReferee._writeMessage,
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: AccessGetEventRefereesResponse,
+    reader: protoscript.BinaryReader,
+  ): AccessGetEventRefereesResponse {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = protoAtoms.EventReferee.initialize();
+          reader.readMessage(m, protoAtoms.EventReferee._readMessage);
+          msg.referees.push(m);
           break;
         }
         default: {
@@ -10416,6 +10614,130 @@ export const AccessGetEventAdminsResponseJSON = {
         const m = protoAtoms.EventAdminJSON.initialize();
         protoAtoms.EventAdminJSON._readMessage(m, item);
         msg.admins.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
+export const AccessGetEventRefereesPayloadJSON = {
+  /**
+   * Serializes AccessGetEventRefereesPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<AccessGetEventRefereesPayload>): string {
+    return JSON.stringify(AccessGetEventRefereesPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes AccessGetEventRefereesPayload from JSON.
+   */
+  decode: function (json: string): AccessGetEventRefereesPayload {
+    return AccessGetEventRefereesPayloadJSON._readMessage(
+      AccessGetEventRefereesPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes AccessGetEventRefereesPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<AccessGetEventRefereesPayload>,
+  ): AccessGetEventRefereesPayload {
+    return {
+      eventId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<AccessGetEventRefereesPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: AccessGetEventRefereesPayload,
+    json: any,
+  ): AccessGetEventRefereesPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    return msg;
+  },
+};
+
+export const AccessGetEventRefereesResponseJSON = {
+  /**
+   * Serializes AccessGetEventRefereesResponse to JSON.
+   */
+  encode: function (msg: PartialDeep<AccessGetEventRefereesResponse>): string {
+    return JSON.stringify(
+      AccessGetEventRefereesResponseJSON._writeMessage(msg),
+    );
+  },
+
+  /**
+   * Deserializes AccessGetEventRefereesResponse from JSON.
+   */
+  decode: function (json: string): AccessGetEventRefereesResponse {
+    return AccessGetEventRefereesResponseJSON._readMessage(
+      AccessGetEventRefereesResponseJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes AccessGetEventRefereesResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<AccessGetEventRefereesResponse>,
+  ): AccessGetEventRefereesResponse {
+    return {
+      referees: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<AccessGetEventRefereesResponse>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.referees?.length) {
+      json["referees"] = msg.referees.map(
+        protoAtoms.EventRefereeJSON._writeMessage,
+      );
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: AccessGetEventRefereesResponse,
+    json: any,
+  ): AccessGetEventRefereesResponse {
+    const _referees_ = json["referees"];
+    if (_referees_) {
+      for (const item of _referees_) {
+        const m = protoAtoms.EventRefereeJSON.initialize();
+        protoAtoms.EventRefereeJSON._readMessage(m, item);
+        msg.referees.push(m);
       }
     }
     return msg;
