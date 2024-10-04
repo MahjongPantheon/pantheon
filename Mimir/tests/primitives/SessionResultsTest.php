@@ -122,6 +122,8 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $player = $this->_players[0];
         $this->_regs[$player->getId()]->setReplacementPlayerId(true);
         $this->_regs[$player->getId()]->save();
+        $this->_session->getCurrentState()->setReplacements([$player->getId() => true]);
+        $this->_session->save();
 
         $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($player)
@@ -134,6 +136,10 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $result->save();
 
         $this->assertEquals(-30000, $result->getRatingDelta());
+
+        // cleanup for following tests
+        $this->_session->getCurrentState()->setReplacements([]);
+        $this->_session->save();
     }
 
     public function testUmaRule()

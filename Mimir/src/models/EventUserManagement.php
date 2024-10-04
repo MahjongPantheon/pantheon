@@ -65,7 +65,7 @@ class EventUserManagementModel extends Model
             $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $eId);
         }
 
-        $regItemOld = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        $regItemOld = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, [$playerId], $eventId);
         if (count($regItemOld) > 0) {
             throw new InvalidParametersException('Player already registered to this event');
         }
@@ -92,7 +92,7 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to unregister players to event');
         }
 
-        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, [$playerId], $eventId);
         if (empty($regItem)) {
             return false;
         }
@@ -116,7 +116,7 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 
-        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, [$playerId], $eventId);
         if (empty($regItem)) {
             throw new EntityNotFoundException('Player is not registered for this event');
         }
@@ -141,7 +141,7 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 
-        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, [$playerId], $eventId);
         if (empty($regItem)) {
             throw new EntityNotFoundException('Player is not registered for this event');
         }

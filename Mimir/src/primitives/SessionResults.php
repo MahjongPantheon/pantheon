@@ -422,7 +422,7 @@ class SessionResultsPrimitive extends Primitive
             throw new InvalidParametersException('No player place found');
         }
 
-        $this->_ratingDelta = $this->_calcRatingDelta($rules, $results->getScores());
+        $this->_ratingDelta = $this->_calcRatingDelta($rules, $results->getScores(), $results->getReplacements());
 
         if ($withChips) {
             $this->_ratingDelta += $this->_chips * $rules->rules()->getChipsValue();
@@ -507,23 +507,17 @@ class SessionResultsPrimitive extends Primitive
      *
      * @param \Common\Ruleset $rules
      * @param int[] $allScores
+     * @param array $replacements
      *
      * @return float|int
-     * @throws InvalidParametersException
      */
-    protected function _calcRatingDelta(\Common\Ruleset $rules, array $allScores)
+    protected function _calcRatingDelta(\Common\Ruleset $rules, array $allScores, array $replacements)
     {
-        $reg = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
-        if (empty($reg)) {
-            throw new InvalidParametersException('No player/event id pair found (' .
-                $this->_playerId . '/' . $this->_eventId . '), can\'t calculate delta');
-        }
-
-        $score = ($reg[0]->getReplacementPlayerId() && $rules->rules()->getReplacementPlayerFixedPoints() !== false)
+        $score = (!empty($replacements[$this->_playerId]) && $rules->rules()->getReplacementPlayerFixedPoints() !== false)
             ? $rules->rules()->getReplacementPlayerFixedPoints()
             : $this->_score - $rules->rules()->getStartPoints();
 
-        $uma = ($reg[0]->getReplacementPlayerId() && $rules->rules()->getReplacementPlayerOverrideUma() !== false)
+        $uma = (!empty($replacements[$this->_playerId]) && $rules->rules()->getReplacementPlayerOverrideUma() !== false)
             ? $rules->rules()->getReplacementPlayerOverrideUma()
             : $rules->uma($allScores)[$this->_place - 1];
 
