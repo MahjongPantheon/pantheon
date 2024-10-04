@@ -73,7 +73,7 @@ class PointsCalc
         int $riichiBetsCount,
         ?int $paoPlayerId,
         ?int $closestWinner = null,
-        int $totalRiichiInRound = 0
+        int $totalRiichiInRound = 0,
     ): array {
         self::resetPaymentsInfo();
         $pointsDiff = self::_calcPoints($rules, $han, $fu, false, $isDealer);
@@ -84,10 +84,19 @@ class PointsCalc
 
         if (!empty($paoPlayerId) && $paoPlayerId != $loserId) {
             $currentScores[$winnerId] += $pointsDiff['winner'];
-            $currentScores[$loserId] += ($pointsDiff['loser'] ?? 0) / 2;
-            $currentScores[$paoPlayerId] += ($pointsDiff['loser'] ?? 0) / 2;
-            self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = $pointsDiff['winner'] / 2;
-            self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $paoPlayerId] = $pointsDiff['winner'] / 2;
+            if ($pointsDiff['winner'] === 64000 || $pointsDiff['winner'] === 96000) {
+                // in case of double yakuman for dealer or non-dealer, only one yakuman can be counted as pao
+                // TODO: this is a workaround, improve it someday to support pao from several players (e.g. daisangen+suukantsu)
+                $currentScores[$loserId] += 3 * ($pointsDiff['loser'] ?? 0) / 4;
+                $currentScores[$paoPlayerId] += ($pointsDiff['loser'] ?? 0) / 4;
+                self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = 3 * $pointsDiff['winner'] / 4;
+                self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $paoPlayerId] = $pointsDiff['winner'] / 4;
+            } else {
+                $currentScores[$loserId] += ($pointsDiff['loser'] ?? 0) / 2;
+                $currentScores[$paoPlayerId] += ($pointsDiff['loser'] ?? 0) / 2;
+                self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = $pointsDiff['winner'] / 2;
+                self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $paoPlayerId] = $pointsDiff['winner'] / 2;
+            }
         } else {
             $currentScores[$winnerId] += $pointsDiff['winner'];
             $currentScores[$loserId] += $pointsDiff['loser'] ?? 0;
