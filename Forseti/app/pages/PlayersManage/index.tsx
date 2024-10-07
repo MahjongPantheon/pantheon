@@ -47,7 +47,6 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
   const [isLoading, setIsLoading] = useState(true);
   const [localIdsWarn, setLocalIdsWarn] = useState(false);
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]); // user_id -> rule_id; zero means no access rights.
-  const [eventAdmins, setEventAdmins] = useState<Record<number, number>>({});
   const [config, setConfig] = useState<GameConfig>();
   const [event, setEvent] = useState<Event>();
   api.setEventId(eventId);
@@ -65,22 +64,12 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
       api.getGameConfig(eventId),
       api.getEventsById([eventId]),
       api.getAllPlayers(eventId),
-      api.getEventAdmins(eventId),
     ])
-      .then(([conf, [eventData], playersList, admins]) => {
+      .then(([conf, [eventData], playersList]) => {
         setEvent(eventData);
         setConfig(conf);
         setPlayers(playersList.sort((a, b) => a.title.localeCompare(b.title)));
         setLocalIdsWarn(playersList.some((p) => !p.localId));
-        setEventAdmins(
-          admins.reduce(
-            (acc, row) => {
-              acc[row.personId] = row.ruleId;
-              return acc;
-            },
-            {} as Record<number, number>
-          )
-        );
       })
       .catch((err: Error) => {
         notifications.show({
@@ -144,8 +133,6 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
           <ManagementTab
             players={players}
             setPlayers={setPlayers}
-            eventAdmins={eventAdmins}
-            setEventAdmins={setEventAdmins}
             eventId={eventId}
             config={config}
             event={event}

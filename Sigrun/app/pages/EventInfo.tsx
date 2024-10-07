@@ -40,6 +40,12 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
     () => api.getEventAdmins(parseInt(eventId, 10)),
     [eventId]
   );
+  const [referees] = useIsomorphicState(
+    [],
+    'EventInfo_referees_' + eventId,
+    () => api.getEventReferees(parseInt(eventId, 10)),
+    [eventId]
+  );
   if (!events) {
     return null;
   }
@@ -76,31 +82,60 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
         );
       })}
       {events?.length === 1 && (
-        <Group style={{ fontSize: 'small' }}>
-          <Text c='dimmed'>{i18n._t('Event administrators: ')}</Text>
-          {admins?.map((admin, idx) => (
-            <Group key={`adm_${idx}`}>
-              <PlayerAvatar
-                size='xs'
-                p={{
-                  title: admin.personName,
-                  id: admin.personId,
-                  hasAvatar: admin.hasAvatar,
-                  lastUpdate: admin.lastUpdate,
-                }}
-              />
-              <Anchor
-                href={`/event/${eventId}/player/${admin.personId}`}
-                onClick={(e) => {
-                  navigate(`/event/${eventId}/player/${admin.personId}`);
-                  e.preventDefault();
-                }}
-              >
-                {admin.personName}
-              </Anchor>
+        <>
+          <Group style={{ fontSize: 'small' }}>
+            <Text c='dimmed'>{i18n._t('Event administrators: ')}</Text>
+            {admins?.map((admin, idx) => (
+              <Group key={`adm_${idx}`}>
+                <PlayerAvatar
+                  size='xs'
+                  p={{
+                    title: admin.personName,
+                    id: admin.personId,
+                    hasAvatar: admin.hasAvatar,
+                    lastUpdate: admin.lastUpdate,
+                  }}
+                />
+                <Anchor
+                  href={`/event/${eventId}/player/${admin.personId}`}
+                  onClick={(e) => {
+                    navigate(`/event/${eventId}/player/${admin.personId}`);
+                    e.preventDefault();
+                  }}
+                >
+                  {admin.personName}
+                </Anchor>
+              </Group>
+            ))}
+          </Group>
+          {(referees?.length ?? 0) > 0 && (
+            <Group style={{ fontSize: 'small' }}>
+              <Text c='dimmed'>{i18n._t('Event referees: ')}</Text>
+              {referees?.map((referee, idx) => (
+                <Group key={`ref_${idx}`}>
+                  <PlayerAvatar
+                    size='xs'
+                    p={{
+                      title: referee.personName,
+                      id: referee.personId,
+                      hasAvatar: referee.hasAvatar,
+                      lastUpdate: referee.lastUpdate,
+                    }}
+                  />
+                  <Anchor
+                    href={`/event/${eventId}/player/${referee.personId}`}
+                    onClick={(e) => {
+                      navigate(`/event/${eventId}/player/${referee.personId}`);
+                      e.preventDefault();
+                    }}
+                  >
+                    {referee.personName}
+                  </Anchor>
+                </Group>
+              ))}
             </Group>
-          ))}
-        </Group>
+          )}
+        </>
       )}
     </Container>
   );

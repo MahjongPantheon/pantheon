@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:01Z\n"
-"PO-Revision-Date: 2024-05-09 21:58+0300\n"
+"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"PO-Revision-Date: 2024-10-05 00:18+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: app/components/base/TableStatus/TableStatus.tsx:91:16
 msgid "%1 deal left"
@@ -105,7 +105,7 @@ msgstr "Чууренпото"
 msgid "Clear players"
 msgstr "Очистить"
 
-#: app/components/pages/Home/Home.tsx:70:14
+#: app/components/pages/Home/Home.tsx:78:14
 msgid "Current game"
 msgstr "Текущая игра"
 
@@ -141,7 +141,7 @@ msgstr "E-mail не зарегистрирован в базе данных Pant
 msgid "Email"
 msgstr "Email"
 
-#: app/components/screens/Home/Home.tsx:98:60
+#: app/components/screens/Home/Home.tsx:103:60
 msgid "Event title"
 msgstr "Название события"
 
@@ -149,6 +149,10 @@ msgstr "Название события"
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "Ничья"
+
+#: app/components/pages/Penalties/Penalties.tsx:37:12
+msgid "Failed to load penalties. Connection issues?"
+msgstr "Не удалось загрузить штрафы. Проблемы с сетью?"
 
 #: app/components/pages/Login/Login.tsx:56:12
 #: app/components/pages/Login/LoginError.tsx:33:16
@@ -241,7 +245,7 @@ msgstr "Нагаши манган"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/pages/Home/Home.tsx:65:14
+#: app/components/pages/Home/Home.tsx:73:14
 msgid "New game"
 msgstr "Новая игра"
 
@@ -265,7 +269,11 @@ msgstr "На данный момент ни один стол не играет"
 msgid "Nobody selected"
 msgstr "Никто не выбран"
 
-#: app/components/App.tsx:183:35
+#: app/components/pages/Penalties/Penalties.tsx:55:51
+msgid "Notice"
+msgstr "Предупреждение"
+
+#: app/components/App.tsx:186:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "ОК"
@@ -278,7 +286,7 @@ msgstr "Опен риичи"
 msgid "Opened hand"
 msgstr "Открытая рука"
 
-#: app/components/pages/Home/Home.tsx:80:14
+#: app/components/pages/Home/Home.tsx:88:14
 msgid "Other playing tables"
 msgstr "Другие столы"
 
@@ -310,11 +318,11 @@ msgstr "Пин-фу"
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: app/components/App.tsx:185:16
+#: app/components/App.tsx:188:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "Пожалуйста, вернитесь назад и нажмите кнопку риичи для выигравшего"
 
-#: app/components/pages/Home/Home.tsx:75:14
+#: app/components/pages/Home/Home.tsx:83:14
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
@@ -411,7 +419,7 @@ msgstr "Режим одного устройства"
 msgid "Start game"
 msgstr "Начать игру"
 
-#: app/components/pages/Home/Home.tsx:90:14
+#: app/components/pages/Home/Home.tsx:98:14
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -495,6 +503,14 @@ msgstr "Якухай 4"
 #: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
 msgid "Yakuman"
 msgstr "Якуман"
+
+#: app/components/pages/Penalties/Penalties.tsx:61:14
+msgid "You don't have any penalties in this event 🎉"
+msgstr "У вас нет ни одного штрафа 🎉"
+
+#: app/components/pages/Penalties/Penalties.tsx:46:40
+msgid "Your penalties in current event"
+msgstr "Ваши штрафы в текущем событии"
 
 #: app/store/selectors/round.ts:71:19
 msgid "dora %1"

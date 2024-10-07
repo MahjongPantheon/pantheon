@@ -179,6 +179,22 @@ class AccessController extends Controller
     }
 
     /**
+     * Get all event referees
+     * Format: [[rule_id => int, id => int, name => string], ...]
+     *
+     * @param int $eventId
+     * @return array
+     */
+    public function getEventReferees($eventId)
+    {
+        $this->_logStart(__METHOD__, [$eventId]);
+        $admins = $this->_getModel()
+            ->getEventReferees($eventId);
+        $this->_logSuccess(__METHOD__, [$eventId]);
+        return $admins;
+    }
+
+    /**
      * Get all access rules for group.
      * - Method results are not cached!
      * - To be used in admin panel, but not in client side!
@@ -418,13 +434,20 @@ class AccessController extends Controller
     public function getOwnedEventIds($personId)
     {
         $this->_logStart(__METHOD__, [$personId]);
-        $rules = $this->_getModel()
-            ->getAllPersonRulesOfType($personId, InternalRules::ADMIN_EVENT);
-        $events = array_keys(array_filter($rules, function ($rule) {
-            return !!$rule['value'];
-        }));
+        $eventsAdmin = array_keys(array_filter(
+            $this->_getModel()->getAllPersonRulesOfType($personId, InternalRules::ADMIN_EVENT),
+            function ($rule) {
+                return !!$rule['value'];
+            }
+        ));
+        $eventsReferee = array_keys(array_filter(
+            $this->_getModel()->getAllPersonRulesOfType($personId, InternalRules::REFEREE_FOR_EVENT),
+            function ($rule) {
+                return !!$rule['value'];
+            }
+        ));
         $this->_logSuccess(__METHOD__, [$personId]);
-        return $events;
+        return array_merge($eventsAdmin, $eventsReferee);
     }
 
     /**

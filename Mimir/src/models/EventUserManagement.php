@@ -112,7 +112,7 @@ class EventUserManagementModel extends Model
      */
     public function updateSeatingFlag(int $playerId, int $eventId, int $ignoreSeating)
     {
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 
@@ -137,7 +137,7 @@ class EventUserManagementModel extends Model
      */
     public function updateReplacement(int $playerId, int $eventId, int $replacementId)
     {
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 

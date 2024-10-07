@@ -903,7 +903,7 @@ class EventsController extends Controller
         }
 
         // Check we have rights to register player modify timer for this event
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new BadActionException("You don't have enough privileges to modify timer for this event");
         }
 
@@ -934,7 +934,7 @@ class EventsController extends Controller
         }
 
         // Check we have rights to hide results for this event
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new BadActionException("You don't have enough privileges to hide results for this event");
         }
 
@@ -961,7 +961,7 @@ class EventsController extends Controller
         }
 
         // Check we have rights to hide achievements for this event
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new BadActionException("You don't have enough privileges to hide achievements for this event");
         }
 
@@ -1234,7 +1234,7 @@ class EventsController extends Controller
     public function initStartingTimer($eventId)
     {
         $this->_log->info('Setting starting timer for event #' . $eventId);
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new BadActionException("You don't have enough privileges to init starting timer for this event");
         }
 
@@ -1316,7 +1316,7 @@ class EventsController extends Controller
     {
         $this->_log->info('Listing penalties for event #' . $eventId);
 
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new BadActionException("You don't have enough privileges to list all penalties for this event");
         }
 
@@ -1371,7 +1371,9 @@ class EventsController extends Controller
             throw new InvalidParametersException('Penalty id#' . $penaltyId . ' not found in DB');
         }
 
-        if (!$this->_meta->isEventAdminById($penalty[0]->getEventId())) {
+        if (!$this->_meta->isEventAdminById($penalty[0]->getEventId()) &&
+            !$this->_meta->isEventRefereeById($penalty[0]->getEventId())
+        ) {
             throw new BadActionException("You don't have enough privileges to cancel penalties for this event");
         }
 

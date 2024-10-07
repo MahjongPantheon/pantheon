@@ -35,6 +35,7 @@ import {
 import {
   Authorize,
   GetEventAdmins,
+  GetEventReferees,
   GetOwnedEventIds,
   GetPersonalInfo,
   GetSuperadminFlag,
@@ -205,6 +206,13 @@ export class ApiService {
       method: 'GetEventAdmins',
     });
     return GetEventAdmins({ eventId }, this._clientConfFrey).then((r) => r.admins);
+  }
+
+  getEventReferees(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, {
+      method: 'GetEventReferees',
+    });
+    return GetEventReferees({ eventId }, this._clientConfFrey).then((r) => r.referees);
   }
 
   getPersonalInfo(personId?: number) {

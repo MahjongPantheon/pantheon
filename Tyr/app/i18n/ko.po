@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:01Z\n"
+"POT-Creation-Date: 2024-10-04 21:11Z\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -103,7 +103,7 @@ msgstr "구련보등"
 msgid "Clear players"
 msgstr "작사 초기화"
 
-#: app/components/pages/Home/Home.tsx:70:14
+#: app/components/pages/Home/Home.tsx:78:14
 msgid "Current game"
 msgstr "현재 대국"
 
@@ -139,7 +139,7 @@ msgstr "다음 사용자가 존재하지 않습니다 (%1)"
 msgid "Email"
 msgstr "이메일"
 
-#: app/components/screens/Home/Home.tsx:98:60
+#: app/components/screens/Home/Home.tsx:103:60
 msgid "Event title"
 msgstr "이벤트"
 
@@ -147,6 +147,10 @@ msgstr "이벤트"
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "유국"
+
+#: app/components/pages/Penalties/Penalties.tsx:37:12
+msgid "Failed to load penalties. Connection issues?"
+msgstr ""
 
 #: app/components/pages/Login/Login.tsx:56:12
 #: app/components/pages/Login/LoginError.tsx:33:16
@@ -239,7 +243,7 @@ msgstr "유국만관"
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
-#: app/components/pages/Home/Home.tsx:65:14
+#: app/components/pages/Home/Home.tsx:73:14
 msgid "New game"
 msgstr "신규 대국"
 
@@ -263,7 +267,11 @@ msgstr "진행 중인 대국이 없습니다"
 msgid "Nobody selected"
 msgstr "아무도 선택되지 않았습니다"
 
-#: app/components/App.tsx:183:35
+#: app/components/pages/Penalties/Penalties.tsx:55:51
+msgid "Notice"
+msgstr ""
+
+#: app/components/App.tsx:186:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "확인"
@@ -276,7 +284,7 @@ msgstr "오픈 리치"
 msgid "Opened hand"
 msgstr "비멘젠"
 
-#: app/components/pages/Home/Home.tsx:80:14
+#: app/components/pages/Home/Home.tsx:88:14
 msgid "Other playing tables"
 msgstr "대국 관전"
 
@@ -308,11 +316,11 @@ msgstr "핑후"
 msgid "Player name"
 msgstr "작사 명"
 
-#: app/components/App.tsx:185:16
+#: app/components/App.tsx:188:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
 
-#: app/components/pages/Home/Home.tsx:75:14
+#: app/components/pages/Home/Home.tsx:83:14
 msgid "Previous game"
 msgstr "이전 대국"
 
@@ -409,7 +417,7 @@ msgstr "단일 기기 모드"
 msgid "Start game"
 msgstr "대국 시작"
 
-#: app/components/pages/Home/Home.tsx:90:14
+#: app/components/pages/Home/Home.tsx:98:14
 msgid "Statistics"
 msgstr "통계"
 
@@ -493,6 +501,14 @@ msgstr "역패 x4"
 #: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
 msgid "Yakuman"
 msgstr "역만"
+
+#: app/components/pages/Penalties/Penalties.tsx:61:14
+msgid "You don't have any penalties in this event 🎉"
+msgstr ""
+
+#: app/components/pages/Penalties/Penalties.tsx:46:40
+msgid "Your penalties in current event"
+msgstr ""
 
 #: app/store/selectors/round.ts:71:19
 msgid "dora %1"

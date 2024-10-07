@@ -303,9 +303,11 @@ class SkirnirClient
      */
     protected function _fetchReferees($eventId)
     {
+        $admins = $this->_ds->remote()->getEventAdmins($eventId);
+        $referees = $this->_ds->remote()->getEventReferees($eventId);
         return array_map(function ($item) {
             return (int)$item['id'];
-        }, $this->_ds->remote()->getEventAdmins($eventId));
+        }, array_merge($admins, $referees));
     }
 
     /**

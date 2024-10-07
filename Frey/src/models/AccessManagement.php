@@ -226,6 +226,28 @@ class AccessManagementModel extends Model
     }
 
     /**
+     * @param int $eventId
+     * @return array
+     * @throws \Exception
+     */
+    public function getEventReferees($eventId)
+    {
+        $personRules = PersonAccessPrimitive::findByEvent($this->_db, [$eventId]);
+        $admins = array_values(array_filter($personRules, function ($rule) {
+            return $rule->getAclName() === AccessRules::REFEREE_FOR_EVENT && $rule->getEventId() !== null;
+        }));
+        return array_map(function (PersonAccessPrimitive $rule) {
+            return [
+                'rule_id' => $rule->getId(),
+                'id' => $rule->getPersonId(),
+                'name' => $rule->getPerson()->getTitle(),
+                'has_avatar' => $rule->getPerson()->getHasAvatar(),
+                'last_update' => $rule->getPerson()->getLastUpdate(),
+            ];
+        }, $admins);
+    }
+
+    /**
      * Get access rules for person.
      * - eventId may be null to get system-wide rules.
      * - Method results are not cached!

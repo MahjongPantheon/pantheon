@@ -71,7 +71,7 @@ final class TwirpServer implements Frey
         } elseif (is_integer($value)) {
             return (new \Common\RuleValue())->setNumberValue($value);
         } else {
-            return (new \Common\RuleValue())->setStringValue($value);
+            return (new \Common\RuleValue())->setStringValue($value ?? '');
         }
     }
 
@@ -459,6 +459,24 @@ final class TwirpServer implements Frey
                         ->setLastUpdate($rule['last_update'])
                         ->setRuleId($rule['rule_id']);
                 }, $this->_accessController->getEventAdmins($req->getEventId())));
+        } catch (\Exception $e) {
+            $this->_syslog->error($e);
+            throw $e;
+        }
+    }
+
+    public function GetEventReferees(array $ctx, \Common\AccessGetEventRefereesPayload $req): \Common\AccessGetEventRefereesResponse
+    {
+        try {
+            return (new \Common\AccessGetEventRefereesResponse())
+                ->setReferees(array_map(function ($rule) {
+                    return (new \Common\EventReferee())
+                        ->setPersonId($rule['id'])
+                        ->setPersonName($rule['name'])
+                        ->setHasAvatar($rule['has_avatar'])
+                        ->setLastUpdate($rule['last_update'])
+                        ->setRuleId($rule['rule_id']);
+                }, $this->_accessController->getEventReferees($req->getEventId())));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;

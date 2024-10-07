@@ -71,8 +71,8 @@ export const MainMenu = ({
                     external={ExternalTarget.FORSETI}
                     href={`${env.urls.forseti}/ownedEvents/edit/${globals.data.eventId?.[0]}`}
                     icon={<IconAdjustmentsAlt size={20} />}
-                    text={showLabels ? i18n._t('Edit event in admin panel') : ''}
-                    title={i18n._t('Edit event in admin panel')}
+                    text={showLabels ? i18n._t('Event admin panel') : ''}
+                    title={i18n._t('Event admin panel')}
                     onClick={closeMenu}
                   />
                 )}

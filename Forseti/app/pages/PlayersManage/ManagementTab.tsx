@@ -33,38 +33,24 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import {
-  IconArmchair,
-  IconArmchairOff,
-  IconUserX,
-  IconBadgeOff,
-  IconBadge,
-  IconReplace,
-  IconX,
-} from '@tabler/icons-react';
+import { IconArmchair, IconArmchairOff, IconUserX, IconReplace, IconX } from '@tabler/icons-react';
 import { PlayerSelector } from './PlayerSelector';
 import { useDisclosure } from '@mantine/hooks';
 import { Filler } from '../../helpers/filler';
-import { useStorage } from '../../hooks/storage';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 
 export const ManagementTab: React.FC<{
   eventId: number;
   players: RegisteredPlayer[];
   setPlayers: (players: RegisteredPlayer[]) => void;
-  eventAdmins: Record<number, number>;
-  setEventAdmins: (eventAdmins: Record<number, number>) => void;
   config?: GameConfig;
   event?: Event;
-}> = ({ eventId, players, setPlayers, eventAdmins, setEventAdmins, config, event }) => {
-  const storage = useStorage();
-  const personId = storage.getPersonId()!;
+}> = ({ eventId, players, setPlayers, config, event }) => {
   const api = useApi();
   const i18n = useI18n();
   const [replacementDlgOpened, replacementDlgCtrl] = useDisclosure(false);
   const [replPlayerData, setReplPlayerData] = useState<RegisteredPlayer | null>(null);
   const [includeSeatingLoading, setIncludeSeatingLoading] = useState<Record<number, boolean>>({});
-  const [adminsLoading, setAdminsLoading] = useState<Record<number, boolean>>({});
   const [unregisterLoading, setUnregisterLoading] = useState<Record<number, boolean>>({});
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
@@ -86,39 +72,6 @@ export const ManagementTab: React.FC<{
       .finally(() => {
         setIncludeSeatingLoading({ ...includeSeatingLoading, [playerId]: false });
       });
-  };
-
-  const toggleAdmin = (playerId: number) => {
-    setAdminsLoading({ ...adminsLoading, [playerId]: true });
-    if (eventAdmins[playerId]) {
-      api
-        .removeEventAdmin(eventAdmins[playerId])
-        .then((r) => {
-          if (r) {
-            setEventAdmins({
-              ...eventAdmins,
-              [playerId]: 0,
-            });
-          }
-        })
-        .finally(() => {
-          setAdminsLoading({ ...adminsLoading, [playerId]: false });
-        });
-    } else {
-      api
-        .addEventAdmin(playerId, eventId)
-        .then((ruleId) => {
-          if (ruleId) {
-            setEventAdmins({
-              ...eventAdmins,
-              [playerId]: ruleId,
-            });
-          }
-        })
-        .finally(() => {
-          setAdminsLoading({ ...adminsLoading, [playerId]: false });
-        });
-    }
   };
 
   const unregisterPlayer = (playerId: number) => {
@@ -263,22 +216,6 @@ export const ManagementTab: React.FC<{
                 )}
               </Group>
               <Group>
-                {personId !== p.id && (
-                  <ActionIcon
-                    title={
-                      eventAdmins[p.id]
-                        ? i18n._t('Player is event administrator. Click to revoke privileges.')
-                        : i18n._t('Player is a regular user. Click to promote to event admin.')
-                    }
-                    loading={adminsLoading[p.id]}
-                    variant={eventAdmins[p.id] ? 'filled' : 'outline'}
-                    size='lg'
-                    color={eventAdmins[p.id] ? 'pink' : 'gray'}
-                    onClick={() => toggleAdmin(p.id)}
-                  >
-                    {eventAdmins[p.id] ? <IconBadge /> : <IconBadgeOff />}
-                  </ActionIcon>
-                )}
                 {mayUseSeatingIgnore && (
                   <ActionIcon
                     title={

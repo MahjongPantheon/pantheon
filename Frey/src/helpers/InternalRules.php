@@ -38,6 +38,7 @@ class InternalRules
     const ADD_USER = 'ADD_USER';
     const ADMIN_EVENT = 'ADMIN_EVENT';
     const EDIT_EVENT = 'EDIT_EVENT';
+    const REFEREE_FOR_EVENT = 'REFEREE_FOR_EVENT';
 
     public static function isInternal(string $name): bool
     {
@@ -121,6 +122,7 @@ class InternalRules
                 self::EDIT_PERSON => _t('Edit personal data (non-private)'),
                 self::ADD_USER => _t('Invite person to event'),
                 self::ADMIN_EVENT => _t('Use games administration features in event'),
+                self::REFEREE_FOR_EVENT => _t('Use referee features in event'),
                 self::EDIT_EVENT => _t('Edit event settings'),
             ];
         }
@@ -162,6 +164,7 @@ class InternalRules
                 self::ADD_USER => '0',
                 self::ADMIN_EVENT => '0',
                 self::EDIT_EVENT => '0',
+                self::REFEREE_FOR_EVENT => '0',
             ];
         }
         return self::$_defaults;
@@ -202,6 +205,7 @@ class InternalRules
                 self::ADD_USER => 'bool',
                 self::ADMIN_EVENT => 'bool',
                 self::EDIT_EVENT => 'bool',
+                self::REFEREE_FOR_EVENT => 'bool',
             ];
         }
         return self::$_types;

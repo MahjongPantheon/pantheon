@@ -11,6 +11,7 @@ class AccessRules
 {
     const ADD_USER = 'ADD_USER';
     const ADMIN_EVENT = 'ADMIN_EVENT';
+    const REFEREE_FOR_EVENT = 'REFEREE_FOR_EVENT';
     const EDIT_EVENT = 'EDIT_EVENT';
 
     public static function isInternal(string $name): bool
@@ -70,6 +71,7 @@ class AccessRules
             self::$_translations = [
                 self::ADD_USER => _t('Invite person to event'),
                 self::ADMIN_EVENT => _t('Use games administration features in event'),
+                self::REFEREE_FOR_EVENT => _t('Use referee features in event'),
                 self::EDIT_EVENT => _t('Edit event settings'),
             ];
         }
@@ -85,6 +87,7 @@ class AccessRules
             self::$_defaults = [
                 self::ADD_USER => '0',
                 self::ADMIN_EVENT => '0',
+                self::REFEREE_FOR_EVENT => '0',
                 self::EDIT_EVENT => '0',
             ];
         }
@@ -100,6 +103,7 @@ class AccessRules
             self::$_types = [
                 self::ADD_USER => 'bool',
                 self::ADMIN_EVENT => 'bool',
+                self::REFEREE_FOR_EVENT => 'bool',
                 self::EDIT_EVENT => 'bool',
             ];
         }

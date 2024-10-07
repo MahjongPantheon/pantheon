@@ -178,6 +178,15 @@ interface Frey
     /**
      *
      *
+     * Generated from protobuf method <code>common.Frey/GetEventReferees</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function GetEventReferees(array $ctx, \Common\AccessGetEventRefereesPayload $req): \Common\AccessGetEventRefereesResponse;
+
+    /**
+     *
+     *
      * Generated from protobuf method <code>common.Frey/GetMajsoulNicknames</code>
      *
      * @throws \Twirp\Error

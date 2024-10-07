@@ -214,7 +214,13 @@ class SeatingController extends Controller
         }
 
         $currentRatingTable = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
-            ->getRatingTable($eventList, [], 'rating', 'desc', $this->_meta->isEventAdminById($eventId));
+            ->getRatingTable(
+                $eventList,
+                [],
+                'rating',
+                'desc',
+                $this->_meta->isEventAdminById($eventId) || $this->_meta->isEventRefereeById($eventId)
+            );
 
         // In rare cases we want to exclude players from seating
         $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$eventId]);
@@ -502,7 +508,7 @@ class SeatingController extends Controller
      */
     protected function _checkIfAllowed(int $eventId): void
     {
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
         }
         $event = EventPrimitive::findById($this->_ds, [$eventId]);

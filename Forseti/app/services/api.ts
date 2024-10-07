@@ -78,6 +78,8 @@ import {
   UpdatePersonalInfo,
   GetNotificationsSettings,
   SetNotificationsSettings,
+  GetRuleValue,
+  GetEventReferees,
 } from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
@@ -267,7 +269,7 @@ export class ApiService {
     ).then((resp) => resp.success);
   }
 
-  getOwnedEventIds(personId: number) {
+  getManagedEventIds(personId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetOwnedEventIds' });
     return GetOwnedEventIds({ personId }, this._clientConfFrey).then((r) => r.eventIds);
   }
@@ -290,6 +292,11 @@ export class ApiService {
   getEventAdmins(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventAdmins' });
     return GetEventAdmins({ eventId }, this._clientConfFrey).then((r) => r.admins);
+  }
+
+  getEventReferees(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventReferees' });
+    return GetEventReferees({ eventId }, this._clientConfFrey).then((r) => r.referees);
   }
 
   rebuildScoring(eventId: number) {
@@ -420,6 +427,39 @@ export class ApiService {
   }
 
   removeEventAdmin(ruleId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'DeleteRuleForPerson' });
+    return DeleteRuleForPerson({ ruleId }, this._clientConfFrey).then((r) => r.success);
+  }
+
+  getIsEventReferee(playerId: number, eventId: number) {
+    return GetRuleValue(
+      { personId: playerId, eventId, ruleName: 'REFEREE_FOR_EVENT' },
+      this._clientConfFrey
+    ).then((v) => v.value.boolValue);
+  }
+
+  getIsEventAdmin(playerId: number, eventId: number) {
+    return GetRuleValue(
+      { personId: playerId, eventId, ruleName: 'ADMIN_EVENT' },
+      this._clientConfFrey
+    ).then((v) => v.value.boolValue);
+  }
+
+  addEventReferee(playerId: number, eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'AddRuleForPerson' });
+    return AddRuleForPerson(
+      {
+        personId: playerId,
+        eventId,
+        ruleName: 'REFEREE_FOR_EVENT',
+        ruleType: 'bool',
+        ruleValue: { boolValue: true },
+      },
+      this._clientConfFrey
+    ).then((r) => r.ruleId);
+  }
+
+  removeEventReferee(ruleId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'DeleteRuleForPerson' });
     return DeleteRuleForPerson({ ruleId }, this._clientConfFrey).then((r) => r.success);
   }

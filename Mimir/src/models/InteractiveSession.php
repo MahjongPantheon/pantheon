@@ -140,7 +140,7 @@ class InteractiveSessionModel extends Model
     public function cancelGame(string $gameHash)
     {
         $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
-        if (!$this->_meta->isEventAdminById($session->getEventId())) {
+        if (!$this->_meta->isEventAdminById($session->getEventId()) && !$this->_meta->isEventRefereeById($session->getEventId())) {
             throw new AuthFailedException('Only administrators are allowed to cancel games');
         }
         return $session->setStatus(SessionPrimitive::STATUS_CANCELLED)->save();
@@ -156,7 +156,7 @@ class InteractiveSessionModel extends Model
      */
     public function finalizeSessions(int $eventId)
     {
-        if (!$this->_meta->isEventAdminById($eventId)) {
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to finalize sessions');
         }
 
@@ -209,7 +209,7 @@ class InteractiveSessionModel extends Model
         }
 
         $session = $games[0];
-        if (!$this->_meta->isEventAdminById($session->getEventId())) {
+        if (!$this->_meta->isEventAdminById($session->getEventId()) && !$this->_meta->isEventRefereeById($session->getEventId())) {
             throw new AuthFailedException('Only administrators are allowed to definalize sessions');
         }
         $sessionId = $session->getId();
@@ -409,8 +409,7 @@ class InteractiveSessionModel extends Model
      */
     public function addPenalty($eventId, $playerId, $amount, $reason)
     {
-        if (!$this->_meta->isEventAdminById($eventId)) {
-            // TODO: support referees
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to add penalties');
         }
 
@@ -502,7 +501,9 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException("Couldn't find session in DB");
         }
 
-        if (!$this->_meta->isEventAdminById($session[0]->getEventId())) {
+        if (!$this->_meta->isEventAdminById($session[0]->getEventId()) &&
+            !$this->_meta->isEventRefereeById($session[0]->getEventId())
+        ) {
             throw new AuthFailedException('Only administrators are allowed to drop last round');
         }
 

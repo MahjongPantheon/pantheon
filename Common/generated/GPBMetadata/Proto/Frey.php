@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-•S
+õT
 proto/frey.protocommon"d
 AuthRequestRegistrationPayload
 email (	
@@ -93,7 +93,11 @@ send_email ("7
 AccessGetEventAdminsPayload
 event_id ("B
 AccessGetEventAdminsResponse"
-admins (2.common.EventAdmin"3
+admins (2.common.EventAdmin"1
+AccessGetEventRefereesPayload
+event_id ("H
+AccessGetEventRefereesResponse&
+referees (2.common.EventReferee"3
 AccessGetSuperadminFlagPayload
 	person_id ("3
 AccessGetSuperadminFlagResponse
@@ -276,7 +280,7 @@ account_id ("B
 &PersonsSetNotificationsSettingsPayload
 	person_id (
 telegram_id (	
-notifications (	2ã"
+notifications (	2Æ#
 Freyf
 RequestRegistration&.common.AuthRequestRegistrationPayload\'.common.AuthRequestRegistrationResponsef
 ApproveRegistration&.common.AuthApproveRegistrationPayload\'.common.AuthApproveRegistrationResponseH
@@ -295,7 +299,8 @@ account_id ("B
 FindByMajsoulAccountId&.common.PersonsFindByMajsoulIdsPayload&.common.PersonsFindByTenhouIdsResponseT
 FindByTitle!.common.PersonsFindByTitlePayload".common.PersonsFindByTitleResponseN
 	GetGroups.common.PersonsGetGroupsPayload .common.PersonsGetGroupsResponse[
-GetEventAdmins#.common.AccessGetEventAdminsPayload$.common.AccessGetEventAdminsResponsel
+GetEventAdmins#.common.AccessGetEventAdminsPayload$.common.AccessGetEventAdminsResponsea
+GetEventReferees%.common.AccessGetEventRefereesPayload&.common.AccessGetEventRefereesResponsel
 GetMajsoulNicknames).common.PersonsGetMajsoulNicknamesPayload*.common.PersonsGetMajsoulNicknamesResponsed
 GetSuperadminFlag&.common.AccessGetSuperadminFlagPayload\'.common.AccessGetSuperadminFlagResponsea
 GetOwnedEventIds%.common.AccessGetOwnedEventIdsPayload&.common.AccessGetOwnedEventIdsResponseU

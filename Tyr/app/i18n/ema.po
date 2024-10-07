@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-25 00:01Z\n"
+"POT-Creation-Date: 2024-10-04 21:11Z\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -98,7 +98,7 @@ msgstr "Nine Gates"
 msgid "Clear players"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:70:14
+#: app/components/pages/Home/Home.tsx:78:14
 msgid "Current game"
 msgstr ""
 
@@ -134,13 +134,17 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: app/components/screens/Home/Home.tsx:98:60
+#: app/components/screens/Home/Home.tsx:103:60
 msgid "Event title"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:73:22
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
+msgstr ""
+
+#: app/components/pages/Penalties/Penalties.tsx:37:12
+msgid "Failed to load penalties. Connection issues?"
 msgstr ""
 
 #: app/components/pages/Login/Login.tsx:56:12
@@ -234,7 +238,7 @@ msgstr ""
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:65:14
+#: app/components/pages/Home/Home.tsx:73:14
 msgid "New game"
 msgstr ""
 
@@ -258,7 +262,11 @@ msgstr ""
 msgid "Nobody selected"
 msgstr ""
 
-#: app/components/App.tsx:183:35
+#: app/components/pages/Penalties/Penalties.tsx:55:51
+msgid "Notice"
+msgstr ""
+
+#: app/components/App.tsx:186:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr ""
@@ -271,7 +279,7 @@ msgstr "Open Riichi"
 msgid "Opened hand"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:80:14
+#: app/components/pages/Home/Home.tsx:88:14
 msgid "Other playing tables"
 msgstr ""
 
@@ -303,11 +311,11 @@ msgstr "Pinfu"
 msgid "Player name"
 msgstr ""
 
-#: app/components/App.tsx:185:16
+#: app/components/App.tsx:188:16
 msgid "Please return back and press riichi button for the winner"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:75:14
+#: app/components/pages/Home/Home.tsx:83:14
 msgid "Previous game"
 msgstr ""
 
@@ -404,7 +412,7 @@ msgstr ""
 msgid "Start game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:90:14
+#: app/components/pages/Home/Home.tsx:98:14
 msgid "Statistics"
 msgstr ""
 
@@ -487,6 +495,14 @@ msgstr "Yakuhai x4"
 
 #: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
 msgid "Yakuman"
+msgstr ""
+
+#: app/components/pages/Penalties/Penalties.tsx:61:14
+msgid "You don't have any penalties in this event 🎉"
+msgstr ""
+
+#: app/components/pages/Penalties/Penalties.tsx:46:40
+msgid "Your penalties in current event"
 msgstr ""
 
 #: app/store/selectors/round.ts:71:19

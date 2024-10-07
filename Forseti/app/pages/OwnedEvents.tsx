@@ -16,48 +16,49 @@
  */
 
 import * as React from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { usePageTitle } from '../hooks/pageTitle';
 import {
-  Group,
+  ActionIcon,
+  Avatar,
+  Badge,
+  Button,
   Center,
   Container,
-  Stack,
-  ActionIcon,
-  Tooltip,
-  Avatar,
+  Group,
+  Menu,
+  Modal,
   Pagination,
   Space,
-  Badge,
-  useMantineTheme,
-  useMantineColorScheme,
-  Modal,
+  Stack,
   Text,
-  Button,
-  Menu,
+  Tooltip,
+  useMantineColorScheme,
+  useMantineTheme,
 } from '@mantine/core';
 import {
-  IconEye,
-  IconTool,
-  IconRefreshAlert,
-  IconHandStop,
-  IconFriends,
-  IconTournament,
-  IconNetwork,
   IconAlertOctagon,
-  IconOlympics,
-  IconScript,
-  IconTimelineEventPlus,
   IconExternalLink,
+  IconEye,
+  IconFriends,
+  IconHandStop,
+  IconMilitaryRank,
+  IconNetwork,
+  IconOlympics,
+  IconRefreshAlert,
+  IconScript,
   IconSquare,
   IconSquareCheckFilled,
+  IconTimelineEventPlus,
+  IconTool,
+  IconTournament,
 } from '@tabler/icons-react';
-import { Redirect, useLocation, Link } from 'wouter';
+import { Link, Redirect, useLocation } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
-import { useCallback, useContext, useEffect, useState } from 'react';
 import { useStorage } from '../hooks/storage';
 import { Event, EventType } from '../clients/proto/atoms.pb';
-import { authCtx } from '../hooks/auth';
+import { authCtx, PrivilegesLevel } from '../hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
 import { TopActionButton } from '../components/TopActionButton';
@@ -69,7 +70,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const EVENTS_PERPAGE = 30;
   const api = useApi();
   api.setEventId(0);
-  const { isLoggedIn } = useContext(authCtx);
+  const { isLoggedIn, privilegesLevel } = useContext(authCtx);
   const i18n = useI18n();
   const storage = useStorage();
   const theme = useMantineTheme();
@@ -80,7 +81,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const [stopEventData, setStopEventData] = useState({ id: 0, title: '' });
   const [currentPage, setCurrentPage] = useState(parseInt(page ?? '1', 10));
   const [isLoading, setIsLoading] = useState(true);
-  const [isSuperadmin, setIsSuperadmin] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [events, setEvents] = useState<Event[]>([]);
   const [visibilityLoading, setVisibilityLoading] = useState<Record<number, boolean>>({});
@@ -106,12 +106,8 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
       nprogress.reset();
       nprogress.start();
       setIsLoading(true);
-      Promise.all([
-        api.getOwnedEventIds(storage.getPersonId()!),
-        api.getSuperadminFlag(storage.getPersonId()!),
-      ])
-        .then(([eventsList, superadmin]) => {
-          setIsSuperadmin(superadmin);
+      Promise.all([api.getManagedEventIds(storage.getPersonId()!)])
+        .then(([eventsList]) => {
           const pageOffset = (pageToLoad - 1) * EVENTS_PERPAGE;
           if (eventsList.includes(-1)) {
             // -1 === global privileges
@@ -340,19 +336,27 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Menu.Target>
                       <Menu.Dropdown>
                         <Menu.Label>{i18n._t('Event management')}</Menu.Label>
-                        {event.isPrescripted && (
+                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
                           <MenuItemLink
-                            href={`/event/${event.id}/prescript`}
-                            title={i18n._t('Manage predefined seating')}
-                            icon={<IconScript />}
-                            text={i18n._t('Predefined seating')}
+                            href={`/ownedEvents/edit/${event.id}`}
+                            title={i18n._t('Edit event settings')}
+                            icon={<IconTool />}
+                            text={i18n._t('Settings')}
+                          />
+                        )}
+                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                          <MenuItemLink
+                            href={`/ownedEvents/privileges/${event.id}`}
+                            title={i18n._t('Manage administrators and referees in event')}
+                            icon={<IconMilitaryRank />}
+                            text={i18n._t('Manage privileges')}
                           />
                         )}
                         <MenuItemLink
-                          href={`/event/${event.id}/games`}
-                          title={i18n._t('Manage current games')}
-                          icon={<IconOlympics />}
-                          text={i18n._t('Manage games')}
+                          href={`/event/${event.id}/players`}
+                          title={i18n._t('Manage players')}
+                          icon={<IconFriends />}
+                          text={i18n._t('Manage players')}
                         />
                         <MenuItemLink
                           href={`/event/${event.id}/penalties`}
@@ -361,40 +365,46 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                           text={i18n._t('Penalties')}
                         />
                         <MenuItemLink
-                          href={`/event/${event.id}/players`}
-                          title={i18n._t('Manage players')}
-                          icon={<IconFriends />}
-                          text={i18n._t('Manage players')}
+                          href={`/event/${event.id}/games`}
+                          title={i18n._t('Manage current games')}
+                          icon={<IconOlympics />}
+                          text={i18n._t('Manage games')}
                         />
-                        <MenuItemLink
-                          href={`/ownedEvents/edit/${event.id}`}
-                          title={i18n._t('Edit event settings')}
-                          icon={<IconTool />}
-                          text={i18n._t('Settings')}
-                        />
-
-                        <Menu.Divider />
-                        <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
-                        {isSuperadmin && (
-                          <Menu.Item
-                            title={i18n._t('Rebuild scoring')}
-                            onClick={() => rebuildScoring(event.id)}
-                            icon={<IconRefreshAlert />}
-                          >
-                            {i18n._t('Rebuild scoring')}
-                          </Menu.Item>
+                        {event.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
+                          <MenuItemLink
+                            href={`/event/${event.id}/prescript`}
+                            title={i18n._t('Manage predefined seating')}
+                            icon={<IconScript />}
+                            text={i18n._t('Predefined seating')}
+                          />
                         )}
-                        <Menu.Item
-                          title={i18n._t('Finish event')}
-                          color='red'
-                          icon={<IconHandStop />}
-                          onClick={() => {
-                            setStopEventData({ id: event.id, title: event.title });
-                            stopEventModalOpen();
-                          }}
-                        >
-                          {i18n._t('Finish event')}
-                        </Menu.Item>
+                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                          <>
+                            <Menu.Divider />
+                            <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
+                            {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
+                              <Menu.Item
+                                title={i18n._t('Rebuild scoring')}
+                                onClick={() => rebuildScoring(event.id)}
+                                icon={<IconRefreshAlert />}
+                              >
+                                {i18n._t('Rebuild scoring')}
+                              </Menu.Item>
+                            )}
+
+                            <Menu.Item
+                              title={i18n._t('Finish event')}
+                              color='red'
+                              icon={<IconHandStop />}
+                              onClick={() => {
+                                setStopEventData({ id: event.id, title: event.title });
+                                stopEventModalOpen();
+                              }}
+                            >
+                              {i18n._t('Finish event')}
+                            </Menu.Item>
+                          </>
+                        )}
                       </Menu.Dropdown>
                     </Menu>
                   )}
@@ -423,13 +433,15 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </Menu.Target>
                     <Menu.Dropdown>
                       <Menu.Label>{i18n._t('Visibility management')}</Menu.Label>
-                      <Menu.Item
-                        title={i18n._t('Toggle visibility in ratings global list')}
-                        icon={event.isListed ? <IconSquareCheckFilled /> : <IconSquare />}
-                        onClick={() => toggleVisibility(event.id)}
-                      >
-                        {i18n._t('Event visible in global list')}
-                      </Menu.Item>
+                      {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                        <Menu.Item
+                          title={i18n._t('Toggle visibility in ratings global list')}
+                          icon={event.isListed ? <IconSquareCheckFilled /> : <IconSquare />}
+                          onClick={() => toggleVisibility(event.id)}
+                        >
+                          {i18n._t('Event visible in global list')}
+                        </Menu.Item>
+                      )}
                       <Menu.Item
                         title={i18n._t('Toggle visibility of rating table')}
                         icon={event.isRatingShown ? <IconSquareCheckFilled /> : <IconSquare />}
