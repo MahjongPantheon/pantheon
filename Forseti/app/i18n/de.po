@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 21:11Z\n"
+"POT-Creation-Date: 2024-10-07 17:15Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -65,7 +65,7 @@ msgstr "Ein Strafgrund muss eingetragen werden"
 msgid "Abortive draw, riichi: %1"
 msgstr "Abgebrochenes Unentschieden, Riichi: %1"
 
-#: app/pages/OwnedEvents.tsx:448:26
+#: app/pages/OwnedEvents.tsx:458:26
 #, fuzzy
 msgid "Achievements visible"
 msgstr "Auszeichnungen konnte nicht ein/ausgeblendet werden"
@@ -74,7 +74,7 @@ msgstr "Auszeichnungen konnte nicht ein/ausgeblendet werden"
 msgid "Action required"
 msgstr "Aktion benötigt"
 
-#: app/pages/OwnedEvents.tsx:334:48
+#: app/pages/OwnedEvents.tsx:336:48
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -82,6 +82,10 @@ msgstr "Aktionen"
 #, fuzzy
 msgid "Add a penalty"
 msgstr "Strafe anwenden"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:259:14
+msgid "Administrator privileges include everything a referee can do plus:"
+msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:65:16
 msgid "Agariyame"
@@ -94,7 +98,7 @@ msgstr ""
 "Alle angezeigten Zeiten und Datumsangaben werden der ausgewählten Zeitzone "
 "angepasst."
 
-#: app/components/MainMenu.tsx:218:17
+#: app/components/MainMenu.tsx:219:17
 msgid "All events"
 msgstr "Events"
 
@@ -239,7 +243,7 @@ msgstr ""
 
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
-#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:247:14
+#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:249:14
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -265,7 +269,7 @@ msgstr "Runde abbrechen"
 msgid "Cancelled: "
 msgstr "Abbrechen"
 
-#: app/pages/OwnedEventsEdit/index.tsx:285:32
+#: app/pages/OwnedEventsEdit/index.tsx:290:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
@@ -316,7 +320,7 @@ msgstr "Stadt"
 msgid "Collect riichi bets by atamahane"
 msgstr "Riichieinsätze nach Atamahane verteilen"
 
-#: app/components/MainMenu.tsx:211:18
+#: app/components/MainMenu.tsx:212:18
 msgid "Common actions"
 msgstr "Zuletzt genutzt"
 
@@ -357,7 +361,7 @@ msgstr "Anzahl von Spielen in einer Serie. 0 deaktiviert Serienfunktion."
 msgid "Country"
 msgstr "Land"
 
-#: app/pages/OwnedEvents.tsx:458:18
+#: app/pages/OwnedEvents.tsx:468:18
 msgid "Create new event"
 msgstr "Neues Event erstellen"
 
@@ -386,7 +390,7 @@ msgstr ""
 msgid "Daisuushii"
 msgstr ""
 
-#: app/components/MainMenu.tsx:145:24 app/pages/OwnedEvents.tsx:375:42
+#: app/components/MainMenu.tsx:146:24 app/pages/OwnedEvents.tsx:385:42
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Gefahrenzone"
@@ -411,11 +415,11 @@ msgstr "Unentschieden, Tenpai: %1, Riichi: %2"
 msgid "Edit event :: %1"
 msgstr "Event :: %1 bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:367:36
+#: app/pages/OwnedEvents.tsx:343:36
 msgid "Edit event settings"
 msgstr "Eventeinstellungen bearbeiten"
 
-#: app/components/MainMenu.tsx:265:19
+#: app/components/MainMenu.tsx:266:19
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
@@ -471,7 +475,7 @@ msgstr "Uma teilen"
 
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
-#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:93:14
+#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:95:14
 #: app/pages/OwnedEventsEdit/index.tsx:196:18
 #: app/pages/OwnedEventsEdit/index.tsx:227:18 app/pages/Penalties.tsx:89:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
@@ -479,22 +483,22 @@ msgstr "Uma teilen"
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
-#: app/pages/PrivilegesManage/ManagementTab.tsx:64:18
-#: app/pages/PrivilegesManage/ManagementTab.tsx:81:18
-#: app/pages/PrivilegesManage/ManagementTab.tsx:118:28
-#: app/pages/PrivilegesManage/ManagementTab.tsx:191:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
+#: app/pages/PrivilegesManage/ManagementTab.tsx:82:18
+#: app/pages/PrivilegesManage/ManagementTab.tsx:119:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:192:28
 msgid "Error has occurred"
 msgstr "Unerwarteter Fehler"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:165:27
+#: app/pages/PrivilegesManage/ManagementTab.tsx:166:27
 msgid "Event administrators list"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:405:24
+#: app/pages/OwnedEvents.tsx:415:24
 msgid "Event finished"
 msgstr "Event ist beendet"
 
-#: app/pages/OwnedEvents.tsx:337:38
+#: app/pages/OwnedEvents.tsx:339:38
 msgid "Event management"
 msgstr "Eventeinstellungen bearbeiten"
 
@@ -503,7 +507,7 @@ msgstr "Eventeinstellungen bearbeiten"
 msgid "Event platform"
 msgstr "Sitzordnung"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:92:27
+#: app/pages/PrivilegesManage/ManagementTab.tsx:93:27
 msgid "Event referees list"
 msgstr ""
 
@@ -519,12 +523,12 @@ msgstr "Manuelles Festlegen der Sitzordnung"
 msgid "Event title"
 msgstr "Eventname"
 
-#: app/pages/OwnedEvents.tsx:433:28
+#: app/pages/OwnedEvents.tsx:443:28
 #, fuzzy
 msgid "Event visible in global list"
 msgstr "In globaler Rangliste anzeigen"
 
-#: app/components/MainMenu.tsx:78:22
+#: app/components/MainMenu.tsx:79:22
 msgid "Event: %1"
 msgstr ""
 
@@ -643,11 +647,11 @@ msgstr "Bearbeitungseinstellungen konnten nicht gespeichert werden."
 msgid "Failed to start timer"
 msgstr "Timer konnte nicht gestartet werden"
 
-#: app/pages/OwnedEvents.tsx:214:27
+#: app/pages/OwnedEvents.tsx:216:27
 msgid "Failed to toggle achievements visibility"
 msgstr "Auszeichnungen konnte nicht ein/ausgeblendet werden"
 
-#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:193:27
+#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:195:27
 msgid "Failed to toggle results visibility"
 msgstr "Ergebnisansicht konnte nicht ein/ausgeschaltet werden"
 
@@ -663,7 +667,7 @@ msgstr "Änderung konnte nicht gespeichert werden."
 msgid "File is too big"
 msgstr "Datei ist zu gross"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:171:26
+#: app/pages/PrivilegesManage/ManagementTab.tsx:172:26
 #, fuzzy
 msgid "Find and add administrator by name..."
 msgstr "Spieler such und hinzufügen..."
@@ -672,7 +676,7 @@ msgstr "Spieler such und hinzufügen..."
 msgid "Find and add player by name..."
 msgstr "Spieler such und hinzufügen..."
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:98:26
+#: app/pages/PrivilegesManage/ManagementTab.tsx:99:26
 #, fuzzy
 msgid "Find and add referee by name..."
 msgstr "Spieler such und hinzufügen..."
@@ -681,9 +685,14 @@ msgstr "Spieler such und hinzufügen..."
 msgid "Find replacement player by name..."
 msgstr "Ersatzspieler suchen..."
 
-#: app/components/MainMenu.tsx:192:24 app/pages/OwnedEvents.tsx:387:38
-#: app/pages/OwnedEvents.tsx:395:32
+#: app/components/MainMenu.tsx:193:24 app/pages/OwnedEvents.tsx:397:38
+#: app/pages/OwnedEvents.tsx:405:32
 msgid "Finish event"
+msgstr "Event beenden"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:271:27
+#, fuzzy
+msgid "Finish event."
 msgstr "Event beenden"
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
@@ -872,6 +881,12 @@ msgstr ""
 "Wenn Osten den ersten Platz nach der letzten Hand im Match hält, endet das "
 "Spiel."
 
+#: app/pages/PrivilegesManage/ManagementTab.tsx:275:14
+msgid ""
+"If the same person is added to both referees and administrators lists, the "
+"widest privileges are applied, so the person will have administrator rights."
+msgstr ""
+
 #: app/helpers/yaku.ts:110:34
 msgid "Iipeikou"
 msgstr ""
@@ -953,7 +968,7 @@ msgstr ""
 msgid "Kuitan"
 msgstr ""
 
-#: app/components/MainMenu.tsx:297:18
+#: app/components/MainMenu.tsx:298:18
 msgid "Language"
 msgstr "Sprache"
 
@@ -985,7 +1000,7 @@ msgstr "Lokale IDs"
 msgid "Local event settings"
 msgstr "Einstellungen für Klubrangliste"
 
-#: app/pages/OwnedEvents.tsx:284:30
+#: app/pages/OwnedEvents.tsx:286:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr "Klubrangliste"
@@ -998,24 +1013,46 @@ msgstr "Einloggen"
 msgid "Logout"
 msgstr "Abmelden"
 
-#: app/pages/OwnedEvents.tsx:348:34
+#: app/pages/OwnedEvents.tsx:351:36
+#, fuzzy
+msgid "Manage administrators and referees in event"
+msgstr "Spieler aus dem Event entfernen"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:252:18
+msgid ""
+"Manage arbitrary penalties: adding a penalty, cancelling a penalty. Also "
+"referees get all the notifications from \"Call referee\" button in mobile "
+"assistant."
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:370:34
 msgid "Manage current games"
 msgstr "Aktuelle Spiele bearbeiten"
 
-#: app/components/MainMenu.tsx:125:29 app/pages/OwnedEvents.tsx:350:33
+#: app/pages/PrivilegesManage/ManagementTab.tsx:262:18
+msgid "Manage event settings: rename event, change yaku settings, etc."
+msgstr ""
+
+#: app/components/MainMenu.tsx:126:29 app/pages/OwnedEvents.tsx:372:33
 msgid "Manage games"
 msgstr "Spiele bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:89:16
+#: app/pages/PrivilegesManage/ManagementTab.tsx:247:18
+msgid ""
+"Manage games: starting and resetting tournament timer, cancelling rounds and "
+"games, control seatings."
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:91:16
 msgid "Manage my events"
 msgstr "Meine Events bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:354:34 app/pages/Penalties.tsx:45:16
+#: app/pages/OwnedEvents.tsx:364:34 app/pages/Penalties.tsx:45:16
 msgid "Manage penalties"
 msgstr "Strafeinstellungen bearbeiten"
 
-#: app/components/MainMenu.tsx:110:27 app/pages/OwnedEvents.tsx:360:34
-#: app/pages/OwnedEvents.tsx:362:33
+#: app/components/MainMenu.tsx:111:27 app/pages/OwnedEvents.tsx:358:34
+#: app/pages/OwnedEvents.tsx:360:33
 msgid "Manage players"
 msgstr "Spieler bearbeiten"
 
@@ -1023,11 +1060,15 @@ msgstr "Spieler bearbeiten"
 msgid "Manage players in event"
 msgstr "Eventspieler bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:341:36
+#: app/pages/PrivilegesManage/ManagementTab.tsx:265:18
+msgid "Manage players in event: add, remove and exclude for seating."
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:377:36
 msgid "Manage predefined seating"
 msgstr "Sitzordnung manuell festlegen"
 
-#: app/components/MainMenu.tsx:100:23
+#: app/components/MainMenu.tsx:101:23 app/pages/OwnedEvents.tsx:353:35
 #, fuzzy
 msgid "Manage privileges"
 msgstr "Spieler bearbeiten"
@@ -1036,6 +1077,10 @@ msgstr "Spieler bearbeiten"
 #, fuzzy
 msgid "Manage privileges in event"
 msgstr "Eventspieler bearbeiten"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:268:18
+msgid "Manage privileges: assign referees and other administrators."
+msgstr ""
 
 #: app/pages/ProfileManage.tsx:61:16
 msgid "Manage your account"
@@ -1077,7 +1122,7 @@ msgstr "Mehrlinienfeld. Markdown Syntax wird unterstützt."
 msgid "Multiple yakumans"
 msgstr "Mehrfach Yakuman"
 
-#: app/components/MainMenu.tsx:225:19
+#: app/components/MainMenu.tsx:226:19
 msgid "My events"
 msgstr "Meine Events"
 
@@ -1122,6 +1167,11 @@ msgstr "Nicht gestartet"
 msgid "Not started"
 msgstr "Nicht gestartet"
 
+#: app/pages/PrivilegesManage/ManagementTab.tsx:240:27
+#, fuzzy
+msgid "Notes on privileges"
+msgstr "Spieler bearbeiten"
+
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:105:25
 #: app/pages/ProfileManage.tsx:231:29 app/pages/ProfileManageAdmin.tsx:257:27
 msgid "Nothing found"
@@ -1131,7 +1181,7 @@ msgstr "Keine Ergebnisse"
 msgid "Notice"
 msgstr ""
 
-#: app/components/MainMenu.tsx:273:19
+#: app/components/MainMenu.tsx:274:19
 msgid "Notifications"
 msgstr ""
 
@@ -1204,7 +1254,7 @@ msgstr "Numerische ID eines Benutzerkontos"
 msgid "Oka bonus"
 msgstr "Oka Bonus"
 
-#: app/pages/OwnedEvents.tsx:310:30
+#: app/pages/OwnedEvents.tsx:312:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr "Online Event"
@@ -1226,15 +1276,15 @@ msgstr ""
 msgid "Open Pantheon bot"
 msgstr "Pantheon Bot öffnen"
 
-#: app/components/MainMenu.tsx:289:17
+#: app/components/MainMenu.tsx:290:17
 msgid "Open assistant"
 msgstr "Mobile App öffnen"
 
-#: app/components/MainMenu.tsx:85:21
+#: app/components/MainMenu.tsx:86:21
 msgid "Open event page"
 msgstr "Öffne Eventseite"
 
-#: app/pages/OwnedEvents.tsx:320:30
+#: app/pages/OwnedEvents.tsx:322:30
 msgid "Open event page in new tab"
 msgstr "Eventseite in neuem Tab öffnen"
 
@@ -1282,7 +1332,7 @@ msgstr "Honba werden nach Atamahaneregel bezahlt"
 msgid "Payments and scores"
 msgstr "Punkte und Bezahlen"
 
-#: app/components/MainMenu.tsx:119:29 app/pages/OwnedEvents.tsx:356:33
+#: app/components/MainMenu.tsx:120:29 app/pages/OwnedEvents.tsx:366:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Strafen"
@@ -1415,7 +1465,7 @@ msgstr "Bitte Spielername eintragen um den Account zu löschen"
 msgid "Please wait unit seating is ready"
 msgstr "Bitte warten bis die Sitzordnung bereit ist"
 
-#: app/components/MainMenu.tsx:134:27 app/pages/OwnedEvents.tsx:343:35
+#: app/components/MainMenu.tsx:135:27 app/pages/OwnedEvents.tsx:379:35
 msgid "Predefined seating"
 msgstr "Manuelle Sitzordnung"
 
@@ -1436,6 +1486,12 @@ msgstr ""
 msgid "Primary timezone for event"
 msgstr "Zeitzone des Events"
 
+#: app/pages/PrivilegesManage/ManagementTab.tsx:280:14
+msgid ""
+"Privileges are updated with delay of up to 10 minutes, so be careful with it "
+"as privileges assigned by mistake won't be revoked for 10 minutes."
+msgstr ""
+
 #: app/pages/ProfileLogin.tsx:97:14
 msgid "Proceed with sign in"
 msgstr "Anmelden"
@@ -1448,7 +1504,7 @@ msgstr "Zufälliger Sitzplan"
 msgid "Randomize seating by wind"
 msgstr "Winde zufällig zuteilen"
 
-#: app/pages/OwnedEvents.tsx:441:26
+#: app/pages/OwnedEvents.tsx:451:26
 msgid "Rating table visible"
 msgstr ""
 
@@ -1460,8 +1516,8 @@ msgstr "Bereit zur Bestätigung"
 msgid "Really reset timer?"
 msgstr "Den Timer wirklich zurücksetzen?"
 
-#: app/components/MainMenu.tsx:151:24 app/pages/OwnedEvents.tsx:378:40
-#: app/pages/OwnedEvents.tsx:382:34
+#: app/components/MainMenu.tsx:152:24 app/pages/OwnedEvents.tsx:388:40
+#: app/pages/OwnedEvents.tsx:392:34
 msgid "Rebuild scoring"
 msgstr "Punktestand neuberechnen"
 
@@ -1470,9 +1526,14 @@ msgstr "Punktestand neuberechnen"
 msgid "Recalculate"
 msgstr ""
 
-#: app/components/MainMenu.tsx:162:24
+#: app/components/MainMenu.tsx:163:24
 #, fuzzy
 msgid "Recalculate achievements"
+msgstr "Ergebnisansicht und Auszeichnungen ausblenden"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:270:27
+#, fuzzy
+msgid "Recalculate achievements and player stats."
 msgstr "Ergebnisansicht und Auszeichnungen ausblenden"
 
 #: app/components/RecalcAchievementsModal.tsx:42:10
@@ -1481,7 +1542,7 @@ msgid ""
 "scheduled and will be completed in several minutes"
 msgstr ""
 
-#: app/components/MainMenu.tsx:177:24
+#: app/components/MainMenu.tsx:178:24
 msgid "Recalculate players stats"
 msgstr ""
 
@@ -1515,6 +1576,11 @@ msgstr "Runde ist geplant"
 msgid "Recover password"
 msgstr "Passwort zurücksetzen"
 
+#: app/pages/PrivilegesManage/ManagementTab.tsx:244:14
+#, fuzzy
+msgid "Referee privileges include:"
+msgstr "Eventspieler bearbeiten"
+
 #: app/pages/GamesControl/index.tsx:349:16
 msgid "Refresh data [%1]"
 msgstr "Daten aktualisieren [%1]"
@@ -1524,7 +1590,7 @@ msgstr "Daten aktualisieren [%1]"
 msgid "Register new account"
 msgstr "Neuen Account erstellen"
 
-#: app/components/MainMenu.tsx:249:19 app/pages/ProfileManageAdmin.tsx:321:21
+#: app/components/MainMenu.tsx:250:19 app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr "Spieler anmelden"
 
@@ -1532,7 +1598,7 @@ msgstr "Spieler anmelden"
 msgid "Registration done!"
 msgstr "Anmeldung abgeschlossen!"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:224:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:225:28
 #, fuzzy
 msgid "Remove administrator from event"
 msgstr "Spieler aus dem Event entfernen"
@@ -1553,7 +1619,7 @@ msgstr "Account löschen"
 msgid "Remove player from event"
 msgstr "Spieler aus dem Event entfernen"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:151:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:152:28
 #, fuzzy
 msgid "Remove referee from event"
 msgstr "Spieler aus dem Event entfernen"
@@ -1678,7 +1744,7 @@ msgstr ""
 msgid "Sanshoku doukou"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:285:60
+#: app/pages/OwnedEventsEdit/index.tsx:290:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1782,7 +1848,7 @@ msgstr "Runde ist geplant"
 msgid "Session started"
 msgstr "Runde gestartet"
 
-#: app/components/MainMenu.tsx:92:23 app/pages/OwnedEvents.tsx:369:35
+#: app/components/MainMenu.tsx:93:23 app/pages/OwnedEvents.tsx:345:35
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -1833,15 +1899,15 @@ msgstr "Ergebnisansicht und Auszeichnungen einblenden"
 msgid "Show user avatar"
 msgstr "Profilbild anzeigen"
 
-#: app/components/MainMenu.tsx:233:19
+#: app/components/MainMenu.tsx:234:19
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: app/components/MainMenu.tsx:281:19
+#: app/components/MainMenu.tsx:282:19
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: app/components/MainMenu.tsx:241:19
+#: app/components/MainMenu.tsx:242:19
 msgid "Sign up"
 msgstr "Konto anmelden"
 
@@ -1870,11 +1936,11 @@ msgstr "Timer und Runde starten"
 msgid "Step of arbitrary penalty scores"
 msgstr "Schrittweite bei Strafen"
 
-#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:257:14
+#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:259:14
 msgid "Stop event"
 msgstr "Event beenden"
 
-#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:240:12
+#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:242:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 "Event beenden \"%1\" (id #%2)? Diese Aktion kann nicht rückgängig gemacht "
@@ -1911,7 +1977,7 @@ msgstr ""
 msgid "System ID"
 msgstr "System ID"
 
-#: app/components/MainMenu.tsx:257:19 app/pages/SystemStats.tsx:165:16
+#: app/components/MainMenu.tsx:258:19 app/pages/SystemStats.tsx:165:16
 msgid "System stats"
 msgstr "Systeminformationen"
 
@@ -2037,23 +2103,23 @@ msgstr ""
 "Startwert des Timers. Nach Ablauf der Zeit, werden die Einstellungen für "
 "Matchende angewendet(siehe unten)."
 
-#: app/components/MainMenu.tsx:348:18
+#: app/components/MainMenu.tsx:349:18
 msgid "Toggle color scheme"
 msgstr "Farbschema"
 
-#: app/components/MainMenu.tsx:339:18
+#: app/components/MainMenu.tsx:340:18
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 
-#: app/pages/OwnedEvents.tsx:429:34
+#: app/pages/OwnedEvents.tsx:439:34
 msgid "Toggle visibility in ratings global list"
 msgstr "In der globalen Rangliste ein/ausblenden"
 
-#: app/pages/OwnedEvents.tsx:444:32
+#: app/pages/OwnedEvents.tsx:454:32
 msgid "Toggle visibility of achievements"
 msgstr "Auszeichnungen ein/ausblenden"
 
-#: app/pages/OwnedEvents.tsx:437:32
+#: app/pages/OwnedEvents.tsx:447:32
 msgid "Toggle visibility of rating table"
 msgstr "Rangliste ein/ausblenden"
 
@@ -2069,7 +2135,7 @@ msgstr ""
 msgid "Too much noise during the game"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:297:30
+#: app/pages/OwnedEvents.tsx:299:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr "Turnier"
@@ -2150,11 +2216,11 @@ msgstr "Sitzplan nach Schweizer System für die nächste Runde verwenden?"
 msgid "Use yakitori rule"
 msgstr "Verwende die Yakitori-Regel"
 
-#: app/pages/OwnedEvents.tsx:412:32
+#: app/pages/OwnedEvents.tsx:422:32
 msgid "Visibility"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:426:36
+#: app/pages/OwnedEvents.tsx:436:36
 #, fuzzy
 msgid "Visibility management"
 msgstr "Eventeinstellungen bearbeiten"

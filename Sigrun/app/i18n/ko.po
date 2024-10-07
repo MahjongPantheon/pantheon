@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 21:11Z\n"
+"POT-Creation-Date: 2024-10-07 17:15Z\n"
 "PO-Revision-Date: 2024-04-12 22:46+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -552,10 +552,6 @@ msgstr "유국: %1"
 msgid "Draws: "
 msgstr "유국: "
 
-#: app/components/MainMenu.tsx:74:40 app/components/MainMenu.tsx:75:28
-msgid "Edit event in admin panel"
-msgstr "관리자 패널에서 이벤트 편집"
-
 #: app/components/MainMenu.tsx:179:34 app/components/MainMenu.tsx:180:22
 msgid "Edit my profile"
 msgstr "내 프로필 수정"
@@ -568,6 +564,11 @@ msgstr "특별 유국인 \"유국만관\" 결과가 활성화됨"
 msgid "Equalize uma"
 msgstr "동점 동일 우마"
 
+#: app/components/MainMenu.tsx:74:40 app/components/MainMenu.tsx:75:28
+#, fuzzy
+msgid "Event admin panel"
+msgstr "관리자 패널에서 이벤트 편집"
+
 #: app/pages/EventInfo.tsx:87:31
 msgid "Event administrators: "
 msgstr "관리자: "
@@ -576,7 +577,7 @@ msgstr "관리자: "
 msgid "Event list"
 msgstr "이벤트 목록"
 
-#: app/pages/EventInfo.tsx:112:31
+#: app/pages/EventInfo.tsx:113:33
 msgid "Event referees: "
 msgstr ""
 

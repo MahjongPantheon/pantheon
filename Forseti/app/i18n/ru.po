@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 21:11Z\n"
-"PO-Revision-Date: 2024-10-05 00:16+0300\n"
+"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"PO-Revision-Date: 2024-10-07 20:20+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -41,116 +41,116 @@ msgstr ""
 msgid "Select an avatar"
 msgstr "Выберите аватар"
 
-#: app/components/MainMenu.tsx:78:22
+#: app/components/MainMenu.tsx:79:22
 msgid "Event: %1"
 msgstr "Cобытие: %1"
 
-#: app/components/MainMenu.tsx:85:21
+#: app/components/MainMenu.tsx:86:21
 msgid "Open event page"
 msgstr "Открыть страницу события"
 
-#: app/components/MainMenu.tsx:92:23 app/pages/OwnedEvents.tsx:369:35
+#: app/components/MainMenu.tsx:93:23 app/pages/OwnedEvents.tsx:345:35
 msgid "Settings"
 msgstr "Настройки"
 
-#: app/components/MainMenu.tsx:100:23
+#: app/components/MainMenu.tsx:101:23 app/pages/OwnedEvents.tsx:353:35
 msgid "Manage privileges"
 msgstr "Управление привилегиями"
 
-#: app/components/MainMenu.tsx:110:27 app/pages/OwnedEvents.tsx:360:34
-#: app/pages/OwnedEvents.tsx:362:33
+#: app/components/MainMenu.tsx:111:27 app/pages/OwnedEvents.tsx:358:34
+#: app/pages/OwnedEvents.tsx:360:33
 msgid "Manage players"
 msgstr "Управление игроками"
 
-#: app/components/MainMenu.tsx:119:29 app/pages/OwnedEvents.tsx:356:33
+#: app/components/MainMenu.tsx:120:29 app/pages/OwnedEvents.tsx:366:33
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
 msgid "Penalties"
 msgstr "Штрафы"
 
-#: app/components/MainMenu.tsx:125:29 app/pages/OwnedEvents.tsx:350:33
+#: app/components/MainMenu.tsx:126:29 app/pages/OwnedEvents.tsx:372:33
 msgid "Manage games"
 msgstr "Управление играми"
 
-#: app/components/MainMenu.tsx:134:27 app/pages/OwnedEvents.tsx:343:35
+#: app/components/MainMenu.tsx:135:27 app/pages/OwnedEvents.tsx:379:35
 msgid "Predefined seating"
 msgstr "Предопределенная рассадка"
 
-#: app/components/MainMenu.tsx:145:24 app/pages/OwnedEvents.tsx:375:42
+#: app/components/MainMenu.tsx:146:24 app/pages/OwnedEvents.tsx:385:42
 #: app/pages/ProfileManage.tsx:288:29
 msgid "Danger zone"
 msgstr "Зона особого внимания"
 
-#: app/components/MainMenu.tsx:151:24 app/pages/OwnedEvents.tsx:378:40
-#: app/pages/OwnedEvents.tsx:382:34
+#: app/components/MainMenu.tsx:152:24 app/pages/OwnedEvents.tsx:388:40
+#: app/pages/OwnedEvents.tsx:392:34
 msgid "Rebuild scoring"
 msgstr "Перестроить скоринг"
 
-#: app/components/MainMenu.tsx:162:24
+#: app/components/MainMenu.tsx:163:24
 msgid "Recalculate achievements"
 msgstr "Пересчитать номинации"
 
-#: app/components/MainMenu.tsx:177:24
+#: app/components/MainMenu.tsx:178:24
 msgid "Recalculate players stats"
 msgstr "Пересчитать статистику игроков"
 
-#: app/components/MainMenu.tsx:192:24 app/pages/OwnedEvents.tsx:387:38
-#: app/pages/OwnedEvents.tsx:395:32
+#: app/components/MainMenu.tsx:193:24 app/pages/OwnedEvents.tsx:397:38
+#: app/pages/OwnedEvents.tsx:405:32
 msgid "Finish event"
 msgstr "Завершить событие"
 
-#: app/components/MainMenu.tsx:211:18
+#: app/components/MainMenu.tsx:212:18
 msgid "Common actions"
 msgstr "Общие действия"
 
-#: app/components/MainMenu.tsx:218:17
+#: app/components/MainMenu.tsx:219:17
 msgid "All events"
 msgstr "К списку всех событий"
 
-#: app/components/MainMenu.tsx:225:19
+#: app/components/MainMenu.tsx:226:19
 msgid "My events"
 msgstr "Мои события"
 
-#: app/components/MainMenu.tsx:233:19
+#: app/components/MainMenu.tsx:234:19
 msgid "Sign in"
 msgstr "Войти"
 
-#: app/components/MainMenu.tsx:241:19
+#: app/components/MainMenu.tsx:242:19
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
-#: app/components/MainMenu.tsx:249:19 app/pages/ProfileManageAdmin.tsx:321:21
+#: app/components/MainMenu.tsx:250:19 app/pages/ProfileManageAdmin.tsx:321:21
 msgid "Register player"
 msgstr "Зарегистрировать игрока"
 
-#: app/components/MainMenu.tsx:257:19 app/pages/SystemStats.tsx:165:16
+#: app/components/MainMenu.tsx:258:19 app/pages/SystemStats.tsx:165:16
 msgid "System stats"
 msgstr "Системная статистика"
 
-#: app/components/MainMenu.tsx:265:19
+#: app/components/MainMenu.tsx:266:19
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
-#: app/components/MainMenu.tsx:273:19
+#: app/components/MainMenu.tsx:274:19
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: app/components/MainMenu.tsx:281:19
+#: app/components/MainMenu.tsx:282:19
 msgid "Sign out"
 msgstr "Выйти"
 
-#: app/components/MainMenu.tsx:289:17
+#: app/components/MainMenu.tsx:290:17
 msgid "Open assistant"
 msgstr "Открыть ассистент"
 
-#: app/components/MainMenu.tsx:297:18
+#: app/components/MainMenu.tsx:298:18
 msgid "Language"
 msgstr "Язык"
 
-#: app/components/MainMenu.tsx:339:18
+#: app/components/MainMenu.tsx:340:18
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 
-#: app/components/MainMenu.tsx:348:18
+#: app/components/MainMenu.tsx:349:18
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
@@ -183,7 +183,7 @@ msgstr ""
 
 #: app/components/RecalcAchievementsModal.tsx:49:12
 #: app/components/RecalcPlayerStatsModal.tsx:49:12
-#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:247:14
+#: app/components/StopEventModal.tsx:36:12 app/pages/OwnedEvents.tsx:249:14
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -205,11 +205,11 @@ msgstr ""
 "Пересчитать статистику всех игроков в событии \"%1\" (id #%2)? Пересчет "
 "будет запланирован и выполнен в ближайшие минуты"
 
-#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:240:12
+#: app/components/StopEventModal.tsx:29:10 app/pages/OwnedEvents.tsx:242:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr "Завершить событие \"%1\" (id #%2)? Отменить это действие невозможно!"
 
-#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:257:14
+#: app/components/StopEventModal.tsx:46:12 app/pages/OwnedEvents.tsx:259:14
 msgid "Stop event"
 msgstr "Завершить событие"
 
@@ -391,7 +391,7 @@ msgstr "Конфигурация предопределенной рассадк
 
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:77:18
-#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:93:14
+#: app/pages/GamesControl/index.tsx:90:14 app/pages/OwnedEvents.tsx:95:14
 #: app/pages/OwnedEventsEdit/index.tsx:196:18
 #: app/pages/OwnedEventsEdit/index.tsx:227:18 app/pages/Penalties.tsx:89:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
@@ -399,10 +399,10 @@ msgstr "Конфигурация предопределенной рассадк
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
-#: app/pages/PrivilegesManage/ManagementTab.tsx:64:18
-#: app/pages/PrivilegesManage/ManagementTab.tsx:81:18
-#: app/pages/PrivilegesManage/ManagementTab.tsx:118:28
-#: app/pages/PrivilegesManage/ManagementTab.tsx:191:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
+#: app/pages/PrivilegesManage/ManagementTab.tsx:82:18
+#: app/pages/PrivilegesManage/ManagementTab.tsx:119:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:192:28
 msgid "Error has occurred"
 msgstr "Произошла ошибка"
 
@@ -612,7 +612,7 @@ msgstr "Не удалось запустить таймер"
 msgid "Failed to notify players"
 msgstr "Не удалось оповестить игроков"
 
-#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:193:27
+#: app/pages/GamesControl/index.tsx:181:27 app/pages/OwnedEvents.tsx:195:27
 msgid "Failed to toggle results visibility"
 msgstr "Не удалось переключить видимость результатов"
 
@@ -841,94 +841,98 @@ msgstr ""
 "Вы не сможете отменять последние раунды после того, как результаты "
 "подтверждены. Подтвердить результаты?"
 
-#: app/pages/OwnedEvents.tsx:89:16
+#: app/pages/OwnedEvents.tsx:91:16
 msgid "Manage my events"
 msgstr "Мои события"
 
-#: app/pages/OwnedEvents.tsx:214:27
+#: app/pages/OwnedEvents.tsx:216:27
 msgid "Failed to toggle achievements visibility"
 msgstr "Не удалось переключить видимость номинаций"
 
-#: app/pages/OwnedEvents.tsx:284:30
+#: app/pages/OwnedEvents.tsx:286:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
 msgid "Local rating"
 msgstr "Локальный рейтинг"
 
-#: app/pages/OwnedEvents.tsx:297:30
+#: app/pages/OwnedEvents.tsx:299:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
 msgid "Tournament"
 msgstr "Турнир"
 
-#: app/pages/OwnedEvents.tsx:310:30
+#: app/pages/OwnedEvents.tsx:312:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
 msgid "Online event"
 msgstr "Онлайн-событие"
 
-#: app/pages/OwnedEvents.tsx:320:30
+#: app/pages/OwnedEvents.tsx:322:30
 msgid "Open event page in new tab"
 msgstr "Открыть в новой вкладке"
 
-#: app/pages/OwnedEvents.tsx:334:48
+#: app/pages/OwnedEvents.tsx:336:48
 msgid "Actions"
 msgstr "Действия"
 
-#: app/pages/OwnedEvents.tsx:337:38
+#: app/pages/OwnedEvents.tsx:339:38
 msgid "Event management"
 msgstr "Управление событием"
 
-#: app/pages/OwnedEvents.tsx:341:36
-msgid "Manage predefined seating"
-msgstr "Предопределенная рассадка"
-
-#: app/pages/OwnedEvents.tsx:348:34
-msgid "Manage current games"
-msgstr "Управление играми"
-
-#: app/pages/OwnedEvents.tsx:354:34 app/pages/Penalties.tsx:45:16
-msgid "Manage penalties"
-msgstr "Штрафы"
-
-#: app/pages/OwnedEvents.tsx:367:36
+#: app/pages/OwnedEvents.tsx:343:36
 msgid "Edit event settings"
 msgstr "Настройки события"
 
-#: app/pages/OwnedEvents.tsx:405:24
+#: app/pages/OwnedEvents.tsx:351:36
+msgid "Manage administrators and referees in event"
+msgstr "Управление судьями и администраторами события"
+
+#: app/pages/OwnedEvents.tsx:364:34 app/pages/Penalties.tsx:45:16
+msgid "Manage penalties"
+msgstr "Штрафы"
+
+#: app/pages/OwnedEvents.tsx:370:34
+msgid "Manage current games"
+msgstr "Управление играми"
+
+#: app/pages/OwnedEvents.tsx:377:36
+msgid "Manage predefined seating"
+msgstr "Предопределенная рассадка"
+
+#: app/pages/OwnedEvents.tsx:415:24
 msgid "Event finished"
 msgstr "Событие завершено"
 
-#: app/pages/OwnedEvents.tsx:412:32
+#: app/pages/OwnedEvents.tsx:422:32
 msgid "Visibility"
 msgstr "Видимость"
 
-#: app/pages/OwnedEvents.tsx:426:36
+#: app/pages/OwnedEvents.tsx:436:36
 msgid "Visibility management"
 msgstr "Управление видимостью"
 
-#: app/pages/OwnedEvents.tsx:429:34
+#: app/pages/OwnedEvents.tsx:439:34
 msgid "Toggle visibility in ratings global list"
 msgstr "Переключить видимость события в глобальном списке событий"
 
-#: app/pages/OwnedEvents.tsx:433:28
+#: app/pages/OwnedEvents.tsx:443:28
 msgid "Event visible in global list"
 msgstr "Событие видно в общем списке"
 
-#: app/pages/OwnedEvents.tsx:437:32
+#: app/pages/OwnedEvents.tsx:447:32
 msgid "Toggle visibility of rating table"
 msgstr "Переключить видимость таблицы результатов для всех"
 
-#: app/pages/OwnedEvents.tsx:441:26
+#: app/pages/OwnedEvents.tsx:451:26
 msgid "Rating table visible"
 msgstr "Рейтинговая таблица видна"
 
-#: app/pages/OwnedEvents.tsx:444:32
+#: app/pages/OwnedEvents.tsx:454:32
 msgid "Toggle visibility of achievements"
 msgstr "Переключить видимость номинаций для всех"
 
-#: app/pages/OwnedEvents.tsx:448:26
+#: app/pages/OwnedEvents.tsx:458:26
 msgid "Achievements visible"
 msgstr "Номинации видны"
 
-#: app/pages/OwnedEvents.tsx:458:18
+#: app/pages/OwnedEvents.tsx:468:18
 msgid "Create new event"
 msgstr "Создать новое событие"
 
@@ -1054,14 +1058,14 @@ msgstr "Не удалось получить данные события"
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
 
-#: app/pages/OwnedEventsEdit/index.tsx:285:32
+#: app/pages/OwnedEventsEdit/index.tsx:290:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
 msgid "Changes saved!"
 msgstr "Изменения сохранены!"
 
-#: app/pages/OwnedEventsEdit/index.tsx:285:60
+#: app/pages/OwnedEventsEdit/index.tsx:290:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1785,29 +1789,99 @@ msgstr "Команда:"
 msgid "Manage privileges in event"
 msgstr "Управление привилегиями в событии"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:92:27
+#: app/pages/PrivilegesManage/ManagementTab.tsx:93:27
 msgid "Event referees list"
 msgstr "Список судей"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:98:26
+#: app/pages/PrivilegesManage/ManagementTab.tsx:99:26
 msgid "Find and add referee by name..."
 msgstr "Найти и добавить судью по имени..."
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:151:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:152:28
 msgid "Remove referee from event"
 msgstr "Удалить судью из события"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:165:27
+#: app/pages/PrivilegesManage/ManagementTab.tsx:166:27
 msgid "Event administrators list"
 msgstr "Список администраторов"
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:171:26
+#: app/pages/PrivilegesManage/ManagementTab.tsx:172:26
 msgid "Find and add administrator by name..."
 msgstr "Найти и добавить администратора по имени..."
 
-#: app/pages/PrivilegesManage/ManagementTab.tsx:224:28
+#: app/pages/PrivilegesManage/ManagementTab.tsx:225:28
 msgid "Remove administrator from event"
 msgstr "Удалить администратора из события"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:240:27
+msgid "Notes on privileges"
+msgstr "Примечания"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:244:14
+msgid "Referee privileges include:"
+msgstr "Привилегии судьи включают:"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:247:18
+msgid ""
+"Manage games: starting and resetting tournament timer, cancelling rounds and "
+"games, control seatings."
+msgstr ""
+"Управление играми: старт и сброс таймера, отмена раздач и игр, управление "
+"рассадками."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:252:18
+msgid ""
+"Manage arbitrary penalties: adding a penalty, cancelling a penalty. Also "
+"referees get all the notifications from \"Call referee\" button in mobile "
+"assistant."
+msgstr ""
+"Управление штрафами: назначение и отмена штрафа. Также судьи получают "
+"уведомления по кнопке \"Вызвать судью\" в ассистенте."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:259:14
+msgid "Administrator privileges include everything a referee can do plus:"
+msgstr "Привилегии администратора включают все привилегии судьи плюс:"
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:262:18
+msgid "Manage event settings: rename event, change yaku settings, etc."
+msgstr ""
+"Управление настройками события: переименование, управление настройками яку, "
+"и.т.д."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:265:18
+msgid "Manage players in event: add, remove and exclude for seating."
+msgstr ""
+"Управление игроками в событии: добавление, удаление, исключение из рассадки."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:268:18
+msgid "Manage privileges: assign referees and other administrators."
+msgstr "Управление привилегиями: назначение судей и других администраторов."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:270:27
+msgid "Recalculate achievements and player stats."
+msgstr "Пересчет номинаций и статистики игрока."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:271:27
+msgid "Finish event."
+msgstr "Завершение события."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:275:14
+msgid ""
+"If the same person is added to both referees and administrators lists, the "
+"widest privileges are applied, so the person will have administrator rights."
+msgstr ""
+"Если один и тот же человек добавлен как в список судей, так и в список "
+"администраторов, он получит наиболее широкие привилегии, т.е. привилегии "
+"администратора."
+
+#: app/pages/PrivilegesManage/ManagementTab.tsx:280:14
+msgid ""
+"Privileges are updated with delay of up to 10 minutes, so be careful with it "
+"as privileges assigned by mistake won't be revoked for 10 minutes."
+msgstr ""
+"Привилегии могут обновляться с задержкой до 10 минут, поэтому будьте "
+"осторожны - привилегии, назначенные по ошибке, не будут отозваны в течение "
+"10 минут."
 
 #: app/pages/ProfileConfirm.tsx:33:16
 msgid "Confirm your email"

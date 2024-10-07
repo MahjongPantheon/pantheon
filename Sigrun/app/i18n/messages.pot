@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 21:11Z\n"
+"POT-Creation-Date: 2024-10-07 17:15Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,7 +133,7 @@ msgstr ""
 
 #: app/components/MainMenu.tsx:74:40
 #: app/components/MainMenu.tsx:75:28
-msgid "Edit event in admin panel"
+msgid "Event admin panel"
 msgstr ""
 
 #: app/components/MainMenu.tsx:82:36
@@ -1029,7 +1029,7 @@ msgstr ""
 msgid "Event administrators: "
 msgstr ""
 
-#: app/pages/EventInfo.tsx:112:31
+#: app/pages/EventInfo.tsx:113:33
 msgid "Event referees: "
 msgstr ""
 

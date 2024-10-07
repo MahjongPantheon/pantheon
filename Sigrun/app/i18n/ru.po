@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 21:11Z\n"
-"PO-Revision-Date: 2024-10-05 00:17+0300\n"
+"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"PO-Revision-Date: 2024-10-07 20:16+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -129,7 +129,7 @@ msgid "Current event"
 msgstr "Текущее событие"
 
 #: app/components/MainMenu.tsx:74:40 app/components/MainMenu.tsx:75:28
-msgid "Edit event in admin panel"
+msgid "Event admin panel"
 msgstr "Админка события"
 
 #: app/components/MainMenu.tsx:82:36 app/components/MainMenu.tsx:83:24
@@ -1013,7 +1013,7 @@ msgstr "Описание события \"%1\", предоставленное �
 msgid "Event administrators: "
 msgstr "Администраторы события: "
 
-#: app/pages/EventInfo.tsx:112:31
+#: app/pages/EventInfo.tsx:113:33
 msgid "Event referees: "
 msgstr "Судьи:"
 

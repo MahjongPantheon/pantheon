@@ -65,7 +65,6 @@ import { TopActionButton } from '../components/TopActionButton';
 import { MenuItemLink } from '../components/MenuItemLink';
 import { env } from '../env';
 import { notifications } from '@mantine/notifications';
-import { MainMenuLink } from '../components/MainMenuLink';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
