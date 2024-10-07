@@ -158,6 +158,9 @@ class EventRatingTableModel extends Model
         // arbitrary penalties
         /** @var (int|float)[][] $penalties */
         $penalties = array_reduce(PenaltyPrimitive::findByEventId($this->_ds, $eventIds), function ($acc, PenaltyPrimitive $item) {
+            if ($item->getCancelled()) {
+                return $acc;
+            }
             if (empty($acc[$item->getPlayerId()])) {
                 $acc[$item->getPlayerId()] = ['amount' => 0, 'count' => 0];
             }
