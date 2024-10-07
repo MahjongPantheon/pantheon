@@ -42,6 +42,7 @@ import {
   IconEye,
   IconFriends,
   IconHandStop,
+  IconMilitaryRank,
   IconNetwork,
   IconOlympics,
   IconRefreshAlert,
@@ -64,6 +65,7 @@ import { TopActionButton } from '../components/TopActionButton';
 import { MenuItemLink } from '../components/MenuItemLink';
 import { env } from '../env';
 import { notifications } from '@mantine/notifications';
+import { MainMenuLink } from '../components/MainMenuLink';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -335,19 +337,27 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Menu.Target>
                       <Menu.Dropdown>
                         <Menu.Label>{i18n._t('Event management')}</Menu.Label>
-                        {event.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
+                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
                           <MenuItemLink
-                            href={`/event/${event.id}/prescript`}
-                            title={i18n._t('Manage predefined seating')}
-                            icon={<IconScript />}
-                            text={i18n._t('Predefined seating')}
+                            href={`/ownedEvents/edit/${event.id}`}
+                            title={i18n._t('Edit event settings')}
+                            icon={<IconTool />}
+                            text={i18n._t('Settings')}
+                          />
+                        )}
+                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                          <MenuItemLink
+                            href={`/ownedEvents/privileges/${event.id}`}
+                            title={i18n._t('Manage administrators and referees in event')}
+                            icon={<IconMilitaryRank />}
+                            text={i18n._t('Manage privileges')}
                           />
                         )}
                         <MenuItemLink
-                          href={`/event/${event.id}/games`}
-                          title={i18n._t('Manage current games')}
-                          icon={<IconOlympics />}
-                          text={i18n._t('Manage games')}
+                          href={`/event/${event.id}/players`}
+                          title={i18n._t('Manage players')}
+                          icon={<IconFriends />}
+                          text={i18n._t('Manage players')}
                         />
                         <MenuItemLink
                           href={`/event/${event.id}/penalties`}
@@ -356,17 +366,17 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                           text={i18n._t('Penalties')}
                         />
                         <MenuItemLink
-                          href={`/event/${event.id}/players`}
-                          title={i18n._t('Manage players')}
-                          icon={<IconFriends />}
-                          text={i18n._t('Manage players')}
+                          href={`/event/${event.id}/games`}
+                          title={i18n._t('Manage current games')}
+                          icon={<IconOlympics />}
+                          text={i18n._t('Manage games')}
                         />
-                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                        {event.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
                           <MenuItemLink
-                            href={`/ownedEvents/edit/${event.id}`}
-                            title={i18n._t('Edit event settings')}
-                            icon={<IconTool />}
-                            text={i18n._t('Settings')}
+                            href={`/event/${event.id}/prescript`}
+                            title={i18n._t('Manage predefined seating')}
+                            icon={<IconScript />}
+                            text={i18n._t('Predefined seating')}
                           />
                         )}
                         {privilegesLevel >= PrivilegesLevel.ADMIN && (

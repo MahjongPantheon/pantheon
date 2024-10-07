@@ -29,6 +29,7 @@ import {
   useMantineColorScheme,
   useMantineTheme,
   Title,
+  List,
 } from '@mantine/core';
 import { IconUserX } from '@tabler/icons-react';
 import { PlayerSelector } from '../PlayersManage/PlayerSelector';
@@ -234,6 +235,53 @@ export const ManagementTab: React.FC<{
             </Group>
           ))}
         </Stack>
+        <Filler h='100px' />
+        <Space h='xl' />
+        <Title order={5}>{i18n._t('Notes on privileges')}</Title>
+        <Space h='xl' />
+        <List>
+          <List.Item>
+            {i18n._t('Referee privileges include:')}
+            <List>
+              <List.Item>
+                {i18n._t(
+                  'Manage games: starting and resetting tournament timer, cancelling rounds and games, control seatings.'
+                )}
+              </List.Item>
+              <List.Item>
+                {i18n._t(
+                  'Manage arbitrary penalties: adding a penalty, cancelling a penalty. Also referees get all the notifications from "Call referee" button in mobile assistant.'
+                )}
+              </List.Item>
+            </List>
+          </List.Item>
+          <List.Item>
+            {i18n._t('Administrator privileges include everything a referee can do plus:')}
+            <List>
+              <List.Item>
+                {i18n._t('Manage event settings: rename event, change yaku settings, etc.')}
+              </List.Item>
+              <List.Item>
+                {i18n._t('Manage players in event: add, remove and exclude for seating.')}
+              </List.Item>
+              <List.Item>
+                {i18n._t('Manage privileges: assign referees and other administrators.')}
+              </List.Item>
+              <List.Item>{i18n._t('Recalculate achievements and player stats.')}</List.Item>
+              <List.Item>{i18n._t('Finish event.')}</List.Item>
+            </List>
+          </List.Item>
+          <List.Item>
+            {i18n._t(
+              'If the same person is added to both referees and administrators lists, the widest privileges are applied, so the person will have administrator rights.'
+            )}
+          </List.Item>
+          <List.Item>
+            {i18n._t(
+              "Privileges are updated with delay of up to 10 minutes, so be careful with it as privileges assigned by mistake won't be revoked for 10 minutes."
+            )}
+          </List.Item>
+        </List>
         <Filler h='150px' />
       </Container>
     </>

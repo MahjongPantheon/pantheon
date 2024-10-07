@@ -166,7 +166,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn || privilegesLevel < PrivilegesLevel.ADMIN) {
       return;
     }
     nprogress.reset();
@@ -202,7 +202,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         setIsLoading(false);
         nprogress.complete();
       });
-  }, [isLoggedIn]);
+  }, [isLoggedIn, privilegesLevel]);
 
   const submitForm = (vals: FormFields) => {
     setIsSaving(true);

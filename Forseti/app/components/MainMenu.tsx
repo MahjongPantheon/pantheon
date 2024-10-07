@@ -12,6 +12,7 @@ import {
   IconList,
   IconLogin,
   IconLogout,
+  IconMilitaryRank,
   IconMoonStars,
   IconNotification,
   IconOlympics,
@@ -96,7 +97,7 @@ export const MainMenu = ({
             {privilegesLevel >= PrivilegesLevel.ADMIN && (
               <MainMenuLink
                 href={`/ownedEvents/privileges/${eventId}`}
-                icon={<IconTool size={18} />}
+                icon={<IconMilitaryRank size={18} />}
                 text={i18n._t('Manage privileges')}
                 onClick={closeMenu}
               />
