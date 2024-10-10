@@ -68,24 +68,26 @@ export const PrivilegesManage: React.FC<{ params: { id: string } }> = ({ params:
       });
   }, [isLoggedIn]);
 
-  if (!storage.getPersonId()) {
+  if (!isLoading && !storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
   }
 
-  if (privilegesLevel < PrivilegesLevel.ADMIN) {
-    return <Redirect to='/profile' />;
+  if (!isLoading && privilegesLevel < PrivilegesLevel.ADMIN) {
+    return <Redirect to='/profile/manage' />;
   }
 
   return (
-    <Container>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
-      <ManagementTab
-        eventAdmins={eventAdmins}
-        setEventAdmins={setEventAdmins}
-        eventReferees={eventReferees}
-        setEventReferees={setEventReferees}
-        eventId={eventId}
-      />
-    </Container>
+    !isLoading && (
+      <Container>
+        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+        <ManagementTab
+          eventAdmins={eventAdmins}
+          setEventAdmins={setEventAdmins}
+          eventReferees={eventReferees}
+          setEventReferees={setEventReferees}
+          eventId={eventId}
+        />
+      </Container>
+    )
   );
 };

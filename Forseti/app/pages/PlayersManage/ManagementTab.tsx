@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { useApi } from '../../hooks/api';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useI18n } from '../../hooks/i18n';
 import { GameConfig, RegisteredPlayer, Event, EventType } from '../../clients/proto/atoms.pb';
 import {
@@ -38,6 +38,7 @@ import { PlayerSelector } from './PlayerSelector';
 import { useDisclosure } from '@mantine/hooks';
 import { Filler } from '../../helpers/filler';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
+import { authCtx, PrivilegesLevel } from '../../hooks/auth';
 
 export const ManagementTab: React.FC<{
   eventId: number;
@@ -48,6 +49,7 @@ export const ManagementTab: React.FC<{
 }> = ({ eventId, players, setPlayers, config, event }) => {
   const api = useApi();
   const i18n = useI18n();
+  const { privilegesLevel } = useContext(authCtx);
   const [replacementDlgOpened, replacementDlgCtrl] = useDisclosure(false);
   const [replPlayerData, setReplPlayerData] = useState<RegisteredPlayer | null>(null);
   const [includeSeatingLoading, setIncludeSeatingLoading] = useState<Record<number, boolean>>({});
@@ -114,7 +116,7 @@ export const ManagementTab: React.FC<{
     });
   };
 
-  const showAddRemove = !event?.tournamentStarted;
+  const showAddRemove = !event?.tournamentStarted && privilegesLevel >= PrivilegesLevel.ADMIN;
   const showReplace = event?.type !== EventType.EVENT_TYPE_LOCAL;
   const mayUseSeatingIgnore =
     (config?.syncStart === true || event?.type === EventType.EVENT_TYPE_ONLINE) &&

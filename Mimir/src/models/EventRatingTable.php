@@ -189,11 +189,11 @@ class EventRatingTableModel extends Model
                 'penalties'       => ['count' => $penaltyCount, 'amount' => $penaltyAmount],
                 'chips'           => (int)$el->getChips(),
                 'team_name'       => empty($teams[$el->getPlayerId()]) ? '' : $teams[$el->getPlayerId()],
-                'winner_zone'     => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
+                'winner_zone'     => ((float)$el->getRating() - $penaltyAmount) >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
                 'avg_place'       => round($el->getAvgPlace(), 4),
                 'avg_score'       => $el->getGamesPlayed() == 0
                     ? 0
-                    : round($el->getAvgScore($startRating), 4),
+                    : round($el->getAvgScore($startRating, $penaltyAmount), 4),
                 'games_played'    => (int)$el->getGamesPlayed()
             ];
         }, $playerHistoryItemsSummed);

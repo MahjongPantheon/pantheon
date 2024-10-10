@@ -94,17 +94,17 @@ export const MainMenu = ({
                 onClick={closeMenu}
               />
             )}
-            {privilegesLevel >= PrivilegesLevel.ADMIN && (
-              <MainMenuLink
-                href={`/ownedEvents/privileges/${eventId}`}
-                icon={<IconMilitaryRank size={18} />}
-                text={i18n._t('Manage privileges')}
-                onClick={closeMenu}
-              />
-            )}
             {eventData && !eventData.finished && (
               <>
                 {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                  <MainMenuLink
+                    href={`/ownedEvents/privileges/${eventId}`}
+                    icon={<IconMilitaryRank size={18} />}
+                    text={i18n._t('Manage privileges')}
+                    onClick={closeMenu}
+                  />
+                )}
+                {privilegesLevel >= PrivilegesLevel.REFEREE && (
                   <MainMenuLink
                     href={`/event/${eventId}/players`}
                     icon={<IconFriends size={18} />}
