@@ -478,7 +478,7 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @param float $startRating
-     * @param int $penaltyAmount
+     * @param float $penaltyAmount
      * @return float
      */
     public function getAvgScore(float $startRating, $penaltyAmount)

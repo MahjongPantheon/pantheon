@@ -167,6 +167,9 @@ class SessionState
         $instance = new self($rules, $playersIds);
 
         foreach ($ret as $key => $value) {
+            if ($key === '_isFinished') { // deprecated field, left for compatibility
+                continue;
+            }
             $instance->$key = $value;
         }
 

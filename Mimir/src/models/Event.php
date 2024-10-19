@@ -148,7 +148,7 @@ class EventModel extends Model
             SessionPrimitive::STATUS_FINISHED,
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
-        ], 0, intval($tablesCount));
+        ], 0, intval($tablesCount), 'end_date');
         return $this->_formatTablesState($lastGames, $reggedPlayers, $omitLastRound);
     }
 

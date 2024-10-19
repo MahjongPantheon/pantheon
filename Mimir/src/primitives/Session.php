@@ -1032,14 +1032,21 @@ class SessionPrimitive extends Primitive
 
     /**
      * Check if current session is chronologically last for all its players.
+     * Exclude cancelled games, as they're not counted
      * @return bool
      * @throws \Exception
      */
     public function isLastForPlayers()
     {
         $last = $this->_ds->table(self::REL_USER)
+            ->join(
+                self::$_table,
+                self::$_table . '.id = ' . self::REL_USER . '.session_id ' .
+                'AND ' . self::$_table . ".event_id = " . $this->_eventId . ' '.
+                'AND ' . self::$_table . ".status != 'cancelled'"
+            )
             ->whereIn('player_id', $this->getPlayersIds())
-            ->orderByDesc('id')
+            ->orderByDesc(self::REL_USER . '.id')
             ->limit(4)
             ->findArray();
 
