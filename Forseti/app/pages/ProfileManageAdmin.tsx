@@ -52,7 +52,7 @@ import { env } from '../env';
 import { authCtx, PrivilegesLevel } from '../hooks/auth';
 
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
-  const { privilegesLevel } = useContext(authCtx);
+  const { privilegesLevel, isLoggedIn } = useContext(authCtx);
   const i18n = useI18n();
   if (id) {
     usePageTitle(i18n._t('Update player account'));
@@ -185,7 +185,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       return;
     }
 
-    if (privilegesLevel !== PrivilegesLevel.SUPERADMIN || !id) {
+    if (isLoggedIn && (privilegesLevel !== PrivilegesLevel.SUPERADMIN || !id)) {
       setIsLoading(false);
       return;
     }
