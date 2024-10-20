@@ -927,7 +927,25 @@ class SessionPrimitive extends Primitive
      */
     protected function _finalizeGame($useSavedReplacements = false)
     {
-        $sessionResults = $this->getSessionResults($useSavedReplacements);
+        if (!$useSavedReplacements) {
+            // save replacements to session state for possible recalculations
+            $players = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->getPlayersIds(), $this->_eventId);
+            $replacements = array_reduce(
+                $players,
+                function ($acc, PlayerRegistrationPrimitive $reg) {
+                    if ($reg->getReplacementPlayerId()) {
+                        $acc[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
+                    }
+                    return $acc;
+                },
+                []
+            );
+
+            $this->getCurrentState()->setReplacements($replacements);
+            $this->save();
+        }
+
+        $sessionResults = $this->getSessionResults();
 
         return array_reduce($sessionResults, function ($acc, SessionResultsPrimitive $result) {
             $playerHistoryItem = PlayerHistoryPrimitive::makeNewHistoryItem(
@@ -955,11 +973,10 @@ class SessionPrimitive extends Primitive
 
     /**
      * Get a list on unsaved session results primitives
-     * @param bool $useSavedReplacements
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public function getSessionResults($useSavedReplacements = false)
+    public function getSessionResults()
     {
         if ($this->getEvent()->getRulesetConfig()->rules()->getRiichiGoesToWinner()) {
             $placesMap = SessionResultsPrimitive::calcPlacesMap($this->getCurrentState()->getScores(), $this->getPlayersIds());
@@ -986,24 +1003,6 @@ class SessionPrimitive extends Primitive
                     $this->getCurrentState()->giveRiichiBetsToPlayer($player->getId(), $riichiBetAmount);
                 }
             }
-        }
-
-        if (!$useSavedReplacements) {
-            // save replacements to session state for possible recalculations
-            $players = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->getPlayersIds(), $this->_eventId);
-            $replacements = array_reduce(
-                $players,
-                function ($acc, PlayerRegistrationPrimitive $reg) {
-                    if ($reg->getReplacementPlayerId()) {
-                        $acc[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
-                    }
-                    return $acc;
-                },
-                []
-            );
-
-            $this->getCurrentState()->setReplacements($replacements);
-            $this->save();
         }
 
         return array_map(function (PlayerPrimitive $player) {
