@@ -142,22 +142,26 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const id = (match ? params : paramsEdit)?.id;
   const personId = storage.getPersonId();
   const [privilegesLevel, setPrivilegesLevel] = useState(PrivilegesLevel.NOBODY);
+  const [privilegesLoading, setPrivilegesLoading] = useState(true);
   const [eventData, setEventData] = useState<Event | null>(null);
 
   useEffect(() => {
+    setPrivilegesLoading(true);
     Promise.all([
       api.getSuperadminFlag(personId!),
       api.getIsEventReferee(personId!, parseInt(id ?? '0', 10)),
       api.getIsEventAdmin(personId!, parseInt(id ?? '0', 10)),
-    ]).then(([isSuperadmin, isReferee, isAdmin]) => {
-      if (isSuperadmin) {
-        setPrivilegesLevel(PrivilegesLevel.SUPERADMIN);
-      } else if (isAdmin) {
-        setPrivilegesLevel(PrivilegesLevel.ADMIN);
-      } else if (isReferee) {
-        setPrivilegesLevel(PrivilegesLevel.REFEREE);
-      }
-    });
+    ])
+      .then(([isSuperadmin, isReferee, isAdmin]) => {
+        if (isSuperadmin) {
+          setPrivilegesLevel(PrivilegesLevel.SUPERADMIN);
+        } else if (isAdmin) {
+          setPrivilegesLevel(PrivilegesLevel.ADMIN);
+        } else if (isReferee) {
+          setPrivilegesLevel(PrivilegesLevel.REFEREE);
+        }
+      })
+      .finally(() => setPrivilegesLoading(false));
 
     if (!match && !matchEdit) {
       return;
@@ -190,7 +194,15 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <actionButtonCtx.Provider value={actionButtonRef}>
-      <authCtx.Provider value={{ isLoggedIn, setIsLoggedIn, privilegesLevel, setPrivilegesLevel }}>
+      <authCtx.Provider
+        value={{
+          isLoggedIn,
+          setIsLoggedIn,
+          privilegesLevel,
+          setPrivilegesLevel,
+          privilegesLoading,
+        }}
+      >
         <modalsCtx.Provider
           value={{
             showStopEventModal,

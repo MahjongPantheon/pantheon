@@ -47,7 +47,7 @@ import { Redirect, useLocation } from 'wouter';
 import { useStorage } from '../../hooks/storage';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
-  const { isLoggedIn, privilegesLevel } = useContext(authCtx);
+  const { isLoggedIn, privilegesLevel, privilegesLoading } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
   api.setEventId(0);
@@ -166,9 +166,6 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   };
 
   useEffect(() => {
-    if (!isLoggedIn || privilegesLevel < PrivilegesLevel.ADMIN) {
-      return;
-    }
     nprogress.reset();
     nprogress.start();
     setIsLoading(true);
@@ -239,7 +236,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   }
 
   // Referees can't edit events, so redirect them to games management
-  if (privilegesLevel < PrivilegesLevel.ADMIN) {
+  if (id && !privilegesLoading && privilegesLevel < PrivilegesLevel.ADMIN) {
     return <Redirect to={`/event/${id}/games`} />;
   }
 

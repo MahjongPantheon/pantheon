@@ -29,5 +29,6 @@ export const auth = {
   setIsLoggedIn: (_val: boolean) => {},
   privilegesLevel: PrivilegesLevel.NOBODY,
   setPrivilegesLevel: (_val: PrivilegesLevel) => {},
+  privilegesLoading: false,
 };
 export const authCtx = createContext(auth);
