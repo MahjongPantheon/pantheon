@@ -184,6 +184,15 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to update players\' teams');
         }
 
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event #' . $eventId . ' was not found in DB');
+        }
+
+        if (!$event[0]->getIsTeam()) {
+            throw new InvalidParametersException('Event #' . $eventId . ' is not a team tournament');
+        }
+
         return PlayerRegistrationPrimitive::updateTeamNames($this->_ds, $eventId, $teamMap);
     }
 }
