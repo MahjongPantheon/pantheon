@@ -65,7 +65,7 @@ export async function createServer(app, env) {
   app.use((await import('express')).json());
 
   app.get('/robots.txt', (req, res) => {
-    res.send(`User-agent: *\n` + `Allow: /\n`);
+    res.send(`User-agent: *\nAllow: /\n\nUser-agent: MJ12bot\nDisallow: /\n`);
   })
 
   app.get('/eid:eventId', (req, res) => {
