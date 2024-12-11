@@ -12,6 +12,8 @@ Pantheon can be run in production or in development mode. Please don't use devel
 
 ### Production build
 
+⚠ For the detailed guide of setting up Pantheon on clean VPS, refer to [Production Setup Guide](./docs/technical/production-setup.md). Brief instructions on production setup are listed below.
+
 Clone the pantheon repository to your own server. Make sure repo folder is not accessible for the outer world.
 
 To deploy pantheon on your own VPS or personal environment on production mode:
