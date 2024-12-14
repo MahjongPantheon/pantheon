@@ -5,7 +5,9 @@ RUN apk update && \
     apk add --update tzdata && \
     apk add --update \
     su-exec \
+    bash \
     curl \
+    tar \
     make \
     memcached \
     font-dejavu-sans-mono-nerd \
@@ -46,7 +48,6 @@ RUN apk update && \
     php83-xmlwriter \
     php83-xmlreader \
     postfix \
-    prometheus \
     opendkim \
     net-tools \
     findutils \
@@ -57,7 +58,6 @@ RUN apk update && \
     rsyslog \
     musl \
     musl-utils \
-    bash \
     opendkim-utils \
     mailx && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
@@ -109,6 +109,9 @@ RUN mkdir /www && \
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && ln -sf /dev/stderr /var/log/php83/error.log
+
+COPY bin/install_prometheus.sh /install_prometheus.sh
+RUN bash /install_prometheus.sh
 
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)

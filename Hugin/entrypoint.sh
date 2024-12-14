@@ -20,6 +20,14 @@ echo 'Starting Memcached';
 memcached -u user 2>&1 &
 MC_PID=$!
 
+echo 'Starting Prometheus';
+/usr/local/bin/prometheus \
+  --config.file=/etc/prometheus/prometheus.yml \
+  --storage.tsdb.path=/var/lib/prometheus \
+  --web.console.templates=/etc/prometheus/consoles \
+  --web.console.libraries=/etc/prometheus/console_libraries \
+  --web.listen-address=0.0.0.0:9090
+
 trap "TRAPPED_SIGNAL=true; kill -15 $NGINX_PID; kill -15 $PHP_FPM_PID; kill -15 $MC_PID" SIGTERM  SIGINT
 
 while :
