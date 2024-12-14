@@ -21,12 +21,15 @@ tar -xvzf node_exporter.tar.gz
 rm prometheus.tar.gz
 rm node_exporter.tar.gz
 
-cp prometheus*/prometheus /usr/local/bin/prometheus
-cp prometheus*/promtool /usr/local/bin/promtool
+mv prometheus*/prometheus /usr/local/bin/
+mv prometheus*/promtool /usr/local/bin/
 mkdir -p /etc/prometheus
-cp prometheus*/prometheus.yml /etc/prometheus/prometheus.yml
+mv prometheus*/prometheus.yml /etc/prometheus/
 mkdir -p /var/lib/prometheus
 
-cp -r prometheus*/consoles/ /etc/prometheus/consoles/
-cp -r prometheus*/console_libraries/ /etc/prometheus/console_libraries/
+mv prometheus*/consoles/ /etc/prometheus/
+mv prometheus*/console_libraries/ /etc/prometheus/
 
+mv node_exporter*/node_exporter /usr/local/bin/
+
+cat /prometheus_partial_config.conf >> /etc/prometheus/prometheus.yml

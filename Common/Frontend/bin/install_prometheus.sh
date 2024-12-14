@@ -16,3 +16,5 @@ fi
 
 tar -xvzf node_exporter.tar.gz
 rm node_exporter.tar.gz
+
+mv node_exporter*/node_exporter /usr/local/bin/

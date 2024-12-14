@@ -18,6 +18,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4009:80"
+      - "127.0.0.1:9105:9105"
     volumes:
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
@@ -33,6 +34,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4015:80"
+      - "127.0.0.1:9109:9109"
     volumes:
       - ./Skirnir:/var/www/html/Skirnir
       - ./Skirnir-dist:/var/www/html/Skirnir-dist
@@ -49,6 +51,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "5532:5432"
+      - "127.0.0.1:9111:9111"
     volumes:
       - datavolume02:/var/lib/postgresql/data
       - configvolume01:/var/lib/postgresql/.ssh
@@ -80,6 +83,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4003:80"
+      - "127.0.0.1:9110:9110"
     depends_on:
       - frey.pantheon.internal
       - mimir.pantheon.internal
@@ -99,6 +103,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4007:80"
+      - "127.0.0.1:9102:9102"
     depends_on:
       - frey.pantheon.internal
       - mimir.pantheon.internal
@@ -118,6 +123,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4001:80"
+      - "127.0.0.1:9107:9107"
     depends_on:
       - frey.pantheon.internal
       - db.pantheon.internal
@@ -140,6 +146,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4004:80"
+      - "127.0.0.1:9103:9103"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal
@@ -161,6 +168,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4002:80"
+      - "127.0.0.1:9108:9108"
     depends_on:
       - frey.pantheon.internal
       - mimir.pantheon.internal
@@ -180,7 +188,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4010:80"
-      - "127.0.0.1:9090:8080"
+      - "127.0.0.1:9106:9106"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal
@@ -188,7 +196,10 @@ services:
       - forseti.pantheon.internal
       - mimir.pantheon.internal
       - frey.pantheon.internal
+      - gullveig.pantheon.internal
       - sigrun.pantheon.internal
+      - bragi.pantheon.internal
+      - skirnir.pantheon.internal
     volumes:
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
@@ -199,7 +210,9 @@ services:
       internal_net:
         aliases:
           - hugin.pantheon.local
+          - munin.pantheon.local
           - hugin.pantheon.internal
+          - munin.pantheon.internal
   gullveig.pantheon.internal:
     build: ./Gullveig
     image: ghcr.io/mahjongpantheon/pantheon-gullveig:latest
@@ -207,6 +220,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4012:80"
+      - "127.0.0.1:9104:9104"
     volumes:
       - ./Gullveig:/var/www/html/Gullveig
       - ./Common:/var/www/html/Common
@@ -223,6 +237,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4008:80"
+      - "127.0.0.1:9101:9101"
     volumes:
       - ./Bragi:/var/www/html/Bragi
       - ./Bragi-dist:/var/www/html/Bragi-dist

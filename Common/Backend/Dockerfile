@@ -111,6 +111,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php83/error.log
 
 COPY bin/install_prometheus.sh /install_prometheus.sh
+COPY bin/prometheus_partial_config.conf /prometheus_partial_config.conf
 RUN bash /install_prometheus.sh
 
 # ------------ Local user init (for make & build tasks) --------
