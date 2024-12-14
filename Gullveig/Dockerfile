@@ -1,4 +1,4 @@
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest
 
 ENV PHP_IDE_CONFIG serverName=pantheon_gullveig
 ENV MAX_UPLOAD 1M

@@ -1,4 +1,4 @@
-FROM ghcr.io/mahjongpantheon/pantheon-frontend-common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v2:latest
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

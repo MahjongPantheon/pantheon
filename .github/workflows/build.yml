@@ -34,8 +34,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-backend-common:latest
-            ghcr.io/mahjongpantheon/pantheon-backend-common:${{ github.sha }}
+            ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest
+            ghcr.io/mahjongpantheon/pantheon-backend-common-v2:${{ github.sha }}
 
       - name: Build and push [Frontend common]
         uses: docker/build-push-action@v6
@@ -44,8 +44,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-frontend-common:latest
-            ghcr.io/mahjongpantheon/pantheon-frontend-common:${{ github.sha }}
+            ghcr.io/mahjongpantheon/pantheon-frontend-common-v2:latest
+            ghcr.io/mahjongpantheon/pantheon-frontend-common-v2:${{ github.sha }}
 
       - name: Build and push [Database]
         uses: docker/build-push-action@v6

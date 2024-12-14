@@ -1,4 +1,4 @@
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest
 
 ENV PGDATA              /var/lib/postgresql/data
 ENV POSTGRES_PASSWORD   pgpass
