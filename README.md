@@ -104,7 +104,6 @@ First, please add the following entries to your `/etc/hosts` file so you could a
 127.0.0.1   hermod.pantheon.local
 127.0.0.1   hugin.pantheon.local
 127.0.0.1   mimir.pantheon.local
-127.0.0.1   munin.pantheon.local
 127.0.0.1   sigrun.pantheon.local
 127.0.0.1   skirnir.pantheon.local
 127.0.0.1   tyr.pantheon.local

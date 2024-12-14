@@ -3,12 +3,8 @@
 export HOME=/home/user
 echo "export PS1=\"|\033[1;31m Gullveig container \033[0m~> \$PWD (\\u) \\$ \"" > /etc/profile.d/external.sh
 
-chown -R munin /var/lib/munin/spool
-
 mkdir -p /var/storage/files/avatars
 chown nobody /var/storage/files/avatars
-
-munin-node
 
 TRAPPED_SIGNAL=false
 

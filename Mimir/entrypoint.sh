@@ -6,8 +6,6 @@ echo "export PS1=\"|\033[1;31m Mimir container \033[0m~> \$PWD (\\u) \\$ \"" > /
 # -l 0 for verbosity
 crond -b -l 8 -L /tmp/cronlogs
 
-munin-node
-
 TRAPPED_SIGNAL=false
 
 echo 'Starting NGINX';

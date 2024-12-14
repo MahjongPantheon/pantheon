@@ -1,13 +1,5 @@
 FROM ghcr.io/mahjongpantheon/pantheon-backend-common:latest
 
-RUN echo "host_name hermod" >> /etc/munin/munin-node.conf
-
-RUN ln -s /usr/lib/munin/plugins/processes /etc/munin/plugins/processes && \
-  ln -s /usr/lib/munin/plugins/proc_pri /etc/munin/plugins/proc_pri && \
-  ln -s /usr/lib/munin/plugins/postfix_mailqueue /etc/munin/plugins/postfix_mailqueue && \
-  ln -s /usr/lib/munin/plugins/threads /etc/munin/plugins/threads && \
-  ln -s /usr/lib/munin/plugins/vmstat /etc/munin/plugins/vmstat
-
 COPY       /configs/supervisord.conf     /etc/supervisord.conf
 COPY       /configs/rsyslog*.conf        /etc/
 COPY       /configs/opendkim.conf        /etc/opendkim/opendkim.conf

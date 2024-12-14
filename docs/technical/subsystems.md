@@ -13,4 +13,4 @@
 - **Bragi** is this landing page with information about the system
 - **Gullveig** is a simple storage for user generated content (at the moment, mostly user avatars).
 - **Hermod** is a pantheon mail service (optional, may be replaced with external IMAP service).
-- **Hugin** is a monitoring service, which includes munin setup and also collects errors from all pantheon frontends.
+- **Hugin** is a monitoring service, which includes prometheus setup and also collects errors from all pantheon frontends.

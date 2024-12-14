@@ -364,28 +364,6 @@ server {
 server {
     listen 80;
 
-    server_name munin.riichimahjong.org;
-
-    location / {
-          gzip on;
-          gzip_proxied any;
-          auth_basic           "Restricted area";
-          auth_basic_user_file conf.d/htpasswd;
-          proxy_pass http://127.0.0.1:4010/;
-          proxy_set_header Host munin.pantheon.internal;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location /.well-known/ {
-        root /srv/__pantheon/Hugin/www;
-    }
-}
-
-server {
-    listen 80;
-
     server_name storage.riichimahjong.org;
 
     location /.well-known/ {
