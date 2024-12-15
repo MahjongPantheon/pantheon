@@ -144,6 +144,7 @@ class EventsController extends Controller
 
             $lastProc = $this->_redis->get(self::LAST_PROC_ID);
             for ($i = $lastProc; $i <= $newId; $i++) {
+                /** @var array $data */
                 $data = $this->_redis->get(self::EV . $i);
                 if (!$data) {
                     continue;
