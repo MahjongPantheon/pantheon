@@ -30,7 +30,7 @@ echo 'Starting Prometheus';
 PR_PID=$!
 
 echo 'Starting Node Exporter for Prometheus';
-/usr/local/bin/node_exporter --web.listen-address=:9106 2>&1 &
+/usr/local/bin/node_exporter --web.listen-address=:9100 2>&1 &
 NX_PID=$!
 
 trap "TRAPPED_SIGNAL=true; kill -15 $NGINX_PID; kill -15 $PHP_FPM_PID; kill -15 $MC_PID; kill -15 $PR_PID; kill -15 $NX_PID" SIGTERM  SIGINT

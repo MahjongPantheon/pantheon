@@ -4,6 +4,7 @@ volumes:
   backupvolume01: {}
   configvolume01: {}
   gullveigstorage01: {}
+  grafanastorage01: {}
   pgadmindata:
 networks:
   internal_net:
@@ -188,7 +189,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4010:80"
-      - "127.0.0.1:9106:9106"
+      - "127.0.0.1:9100:9100"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal
@@ -288,3 +289,15 @@ services:
         aliases:
           - cadvisor.pantheon.local
           - cadvisor.pantheon.internal
+  grafana.pantheon.internal:
+    image: grafana/grafana-oss:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:80"
+    volumes:
+      - 'grafanastorage01:/var/lib/grafana'
+    networks:
+      internal_net:
+        aliases:
+          - grafana.pantheon.local
+          - grafana.pantheon.internal

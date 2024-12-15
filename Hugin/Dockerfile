@@ -18,6 +18,10 @@ COPY hugin-docker.nginx.conf /etc/nginx/http.d/hugin.conf
 # Copy cron defs
 COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
 
+COPY config/install_prometheus.sh /install_prometheus.sh
+COPY config/prometheus_partial_config.conf /prometheus_partial_config.conf
+RUN bash /install_prometheus.sh
+
 # Folders init
 RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Hugin
