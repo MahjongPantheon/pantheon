@@ -17,11 +17,7 @@ echo 'Starting PM2';
 cd /var/www/html/Sigrun-dist && NODE_ENV=production pm2-runtime server.js -i 8 2>&1 &
 PM2_PID=$!
 
-echo 'Starting Node Exporter for Prometheus';
-/usr/local/bin/node_exporter --web.listen-address=:9108 2>&1 &
-NX_PID=$!
-
-trap "TRAPPED_SIGNAL=true; kill -15 $NGINX_PID; kill -15 $PM2_PID; kill -15 $NX_PID" SIGTERM  SIGINT
+trap "TRAPPED_SIGNAL=true; kill -15 $NGINX_PID; kill -15 $PM2_PID" SIGTERM  SIGINT
 
 while :
 do
@@ -31,11 +27,8 @@ do
     kill -0 $PM2_PID 2> /dev/null
     PM2_STATUS=$?
 
-    kill -0 $NX_PID 2> /dev/null
-    NX_STATUS=$?
-
     if [ "$TRAPPED_SIGNAL" = "false" ]; then
-        if [ $NGINX_STATUS -ne 0 ] || [ $PM2_STATUS -ne 0 ] || [ $NX_STATUS -ne 0 ]; then
+        if [ $NGINX_STATUS -ne 0 ] || [ $PM2_STATUS -ne 0 ]; then
             if [ $NGINX_STATUS -eq 0 ]; then
                 kill -15 $NGINX_PID;
                 wait $NGINX_PID;
@@ -44,14 +37,10 @@ do
                 kill -15 $PM2_PID;
                 wait $PM2_PID;
             fi
-            if [ $NX_STATUS -eq 0 ]; then
-                kill -15 $NX_PID;
-                wait $NX_PID;
-            fi
             exit 1;
         fi
     else
-       if [ $NGINX_STATUS -ne 0 ] && [ $PM2_STATUS -ne 0 ] && [ $NX_STATUS -ne 0 ]; then
+       if [ $NGINX_STATUS -ne 0 ] && [ $PM2_STATUS -ne 0 ]; then
             exit 0;
        fi
     fi

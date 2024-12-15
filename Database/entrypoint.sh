@@ -6,8 +6,6 @@ echo "export PS1=\"|\033[1;31m Database container \033[0m~> \$PWD (\\u) \\$ \"" 
 # -l 0 for verbosity
 crond -b -l 8 -L /tmp/cronlogs
 
-/usr/local/bin/node_exporter --web.listen-address=:9111 2>&1 &
-
 if [ ! -f "/var/lib/postgresql/.ssh/id_rsa.pub" ]; then
   su-exec postgres ssh-keygen -q -N "" -f /var/lib/postgresql/.ssh/id_rsa -t rsa
   su-exec postgres echo "StrictHostKeyChecking no" > /var/lib/postgresql/.ssh/config
