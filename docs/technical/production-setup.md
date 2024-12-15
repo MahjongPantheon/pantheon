@@ -405,8 +405,8 @@ server {
           gzip_proxied any;
           auth_basic           "Restricted area";
           auth_basic_user_file conf.d/htpasswd;
-          proxy_pass http://127.0.0.1:80/;
-          proxy_set_header Host grafana.pantheon.internal;
+          proxy_pass http://127.0.0.1:3000/;
+          proxy_set_header Host $host;
           proxy_pass_header    Set-Cookie;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header REMOTE_ADDR $remote_addr;
