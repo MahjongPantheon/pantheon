@@ -50,8 +50,8 @@ class MetricsController extends Controller
         $data = json_decode($input, true);
         $registry = $this->_getRegistry();
         foreach ($data as $item) {
-            $gauge = $registry->getOrRegisterGauge('pantheon', $item[self::METRIC_NAME_KEY], '', [$item[self::METRIC_SOURCE_KEY]]);
-            $gauge->set($item[self::METRIC_VALUE_KEY]);
+            $gauge = $registry->getOrRegisterGauge('pantheon', $item[self::METRIC_NAME_KEY], '', ['service']);
+            $gauge->set($item[self::METRIC_VALUE_KEY], [$item[self::METRIC_SOURCE_KEY]]);
         }
 
         return 'ok';

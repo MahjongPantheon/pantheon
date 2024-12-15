@@ -20,7 +20,7 @@ try {
 
     $sysErrors = $db->table('session')
         ->rawQuery("SELECT COUNT(*) as cnt from sys_errors")
-        ->findArray()['cnt'];
+        ->findOne()['cnt'];
 
     $options = [
         'http' => [

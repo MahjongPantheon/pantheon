@@ -20,7 +20,7 @@ try {
 
     $registeredUsers = $db->table('session')
         ->rawQuery("SELECT COUNT(*) as cnt from person")
-        ->findArray()['cnt'];
+        ->findOne()['cnt'];
 
     $options = [
         'http' => [

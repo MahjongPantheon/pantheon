@@ -20,13 +20,13 @@ try {
 
     $playedGames = $db->table('session')
         ->rawQuery("SELECT COUNT(*) as cnt from session WHERE status = 'inprogress'")
-        ->findArray()['cnt'];
+        ->findOne()['cnt'];
     $staleGames = $db->table('session')
         ->rawQuery("SELECT COUNT(*) as cnt from session WHERE status = 'inprogress' AND start_date < NOW() - INTERVAL '1' DAY")
-        ->findArray()['cnt'];
+        ->findOne()['cnt'];
     $playedRounds = $db->table('round')
-        ->rawQuery("SELECT COUNT(*) from round WHERE end_date > NOW() - INTERVAL '1' MINUTE")
-        ->findArray()['cnt'];
+        ->rawQuery("SELECT COUNT(*) as cnt from round WHERE end_date > NOW() - INTERVAL '1' MINUTE")
+        ->findOne()['cnt'];
 
     $options = [
         'http' => [
