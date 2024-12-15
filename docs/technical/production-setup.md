@@ -108,10 +108,15 @@ sudo chown certbotrunner /srv/__pantheon/Mimir/www/.well-known
 sudo chown certbotrunner /srv/__pantheon/Frey/www/.well-known
 sudo chown certbotrunner /srv/__pantheon/Hugin/www/.well-known
 
-# Also make a directory for pgadmin root to issue the certificate
+# Make a directory for pgadmin root to issue the certificate
 sudo mkdir /srv/pgadmin
 sudo mkdir /srv/pgadmin/.well-known
 sudo chown certbotrunner /srv/pgadmin/.well-known
+
+# Make a directory for grafana root to issue the certificate
+sudo mkdir /srv/grafana
+sudo mkdir /srv/grafana/.well-known
+sudo chown certbotrunner /srv/grafana/.well-known
 ```
 
 ### Scripts for letsencrypt SSL certificates setup
@@ -135,6 +140,7 @@ certbot \
     -w /srv/__pantheon/Bragi-dist -d riichimahjong.org \
     -w /srv/__pantheon/Bragi-dist -d riichi.top \
     -w /srv/pgadmin -d database.riichimahjong.org \
+    -w /srv/grafana -d monitoring.riichimahjong.org \
     -w /srv/__pantheon/Tyr-dist -d assist.riichimahjong.org \
     -w /srv/__pantheon/Forseti-dist -d manage.riichimahjong.org \
     -w /srv/__pantheon/Mimir/www -d gameapi.riichimahjong.org \
@@ -199,6 +205,9 @@ You may note that most of these actions are already automated by certbot. If thi
 with updating your nginx configs on host.
 
 ### Environment variables for Pantheon
+
+Run `make pull` to fetch prebuilt pantheon containers from registry. Alternatively, you might want to run `make container`
+to build the containers right on your server (not recommended in general).
 
 Create a production environment file for Pantheon called `/srv/__pantheon/Env/.env.production`. You can use
 `.env.example.production` as a starting point. Then call `make prod_start` in pantheon folder as user to fetch and
@@ -382,6 +391,30 @@ server {
     }
 }
 
+server {
+    listen 80;
+
+    server_name monitoring.riichimahjong.org;
+
+    location /.well-known/ {
+        root /srv/grafana;
+    }
+
+    location / {
+          gzip on;
+          gzip_proxied any;
+          auth_basic           "Restricted area";
+          auth_basic_user_file conf.d/htpasswd;
+          proxy_pass http://127.0.0.1:80/;
+          proxy_set_header Host grafana.pantheon.internal;
+          proxy_pass_header    Set-Cookie;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header REMOTE_ADDR $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
 # This one can be omitted, if you don't want pantheon landing page to be hosted anywhere
 server {
     listen 80;
@@ -551,6 +584,20 @@ git push -u origin main
 ```
 
 Now the backups are set up and will be performed once an hour.
+
+### Monitoring
+
+Pantheon comes with Prometheus installed inside Hugin service, and also offers cAdvisor and Grafana containers in its
+`docker-compose.yml` file. Note that migrating prometheus data from one host to another is not supported (yet?), so
+it's gonna be a clear setup.
+
+No setup is required for Prometheus itself and for cAdvisor. To set up Grafana, get to `https://monitoring.riichimahjong.org`
+and use `admin` as login and password. After first login, it will ask you to change your password.
+
+In Grafana, you should create new Data Source first, select "Prometheus" there. Use `http://hugin.pantheon.internal:9090`
+as prometheus host name.
+
+After it's done, you can import one or more dashboard configurations from `Hugin/dashboards` to Grafana, and that should be it.
 
 ### Miscellaneous
 

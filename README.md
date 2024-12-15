@@ -108,6 +108,7 @@ First, please add the following entries to your `/etc/hosts` file so you could a
 127.0.0.1   skirnir.pantheon.local
 127.0.0.1   tyr.pantheon.local
 127.0.0.1   pga.pantheon.local
+127.0.0.1   grafana.pantheon.local
 ```
 
 Second, make sure your **local port 80** is not used by any other software (like nginx, apache or another web server).
@@ -156,6 +157,11 @@ Services will be available at:
   - Frey database port: `5432`
   - Frey database user: `frey`
   - Frey database password: `pgpass`
+- http://grafana.pantheon.local for grafana monitoring, which is also run for convenience.
+  - Login: `admin`
+  - Password: `admin` (Grafana will ask to change it on first login)
+  - Set up Prometheus data source with `http://hugin.pantheon.internal:9090` as prometheus host
+  - Import some dashboards from `Hugin/dashboards` to view the results
 
 **Mimir** and **Frey** use [twirp](https://github.com/twitchtv/twirp) interface to communicate with other services.
 See protocol description files in `Common` folder. 
