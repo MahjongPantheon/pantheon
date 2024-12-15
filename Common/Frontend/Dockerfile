@@ -30,9 +30,6 @@ RUN apk update && \
     protoc && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-COPY bin/install_prometheus.sh /install_prometheus.sh
-RUN bash /install_prometheus.sh
-
 RUN npm install -g i18n-stex i18n-po-json i18n-json-po yarn pm2 && chown -R root:root /usr/local/lib/node_modules/
 
 # ------------ Local user init (for make & build tasks) --------
