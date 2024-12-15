@@ -20,6 +20,7 @@ return [
     // ---------- may be overridden in local settings -----------
     'db'        => require __DIR__ . '/db.php',
     'verbose'   => getenv('VERBOSE') === 'true',
+    'huginUrl'  => getenv('HUGIN_URL_INTERNAL'),
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC'
 ];

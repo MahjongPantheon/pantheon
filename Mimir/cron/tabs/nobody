@@ -1,1 +1,2 @@
 * * * * * php /var/www/html/Mimir/cron/scheduler.php
+* * * * * php /var/www/html/Mimir/cron/send_stats.php

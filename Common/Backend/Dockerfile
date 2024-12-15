@@ -37,6 +37,7 @@ RUN apk update && \
     php83-pecl-ast \
     php83-pecl-protobuf \
     php83-pecl-memcached \
+    php-pecl-redis \
     php83-pgsql \
     php83-phar \
     php83-phpdbg \
@@ -48,6 +49,7 @@ RUN apk update && \
     php83-xmlwriter \
     php83-xmlreader \
     postfix \
+    redis \
     opendkim \
     net-tools \
     findutils \
