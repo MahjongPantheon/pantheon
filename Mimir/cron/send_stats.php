@@ -27,6 +27,18 @@ try {
     $playedRounds = $db->table('round')
         ->rawQuery("SELECT COUNT(*) as cnt from round WHERE end_date > NOW() - INTERVAL '1' MINUTE")
         ->findOne()['cnt'];
+    $jobsQueueSize = $db->table('jobs_queue')
+        ->rawQuery("SELECT COUNT(*) as cnt from jobs_queue")
+        ->findOne()['cnt'];
+    $eventsCount = $db->table('event')
+        ->rawQuery("SELECT COUNT(*) as cnt from event")
+        ->findOne()['cnt'];
+    $emptyEventsCount = $db->table('event')
+        ->rawQuery("SELECT COUNT(DISTINCT event.id) as cnt from event LEFT JOIN session ON session.event_id = event.id WHERE session.id IS NULL")
+        ->findOne()['cnt'];
+    $achievementsCount = $db->table('achievements')
+        ->rawQuery("SELECT COUNT(DISTINCT achievements.id) as cnt from achievements JOIN session ON session.event_id = achievements.event_id")
+        ->findOne()['cnt'];
 
     $options = [
         'http' => [
@@ -35,6 +47,10 @@ try {
                 ['m' => 'played_games', 'v' => $playedGames , 's' => 'mimir'],
                 ['m' => 'stale_games', 'v' => $staleGames , 's' => 'mimir'],
                 ['m' => 'played_rounds', 'v' => $playedRounds , 's' => 'mimir'],
+                ['m' => 'jobs_queue', 'v' => $jobsQueueSize, 's' => 'mimir'],
+                ['m' => 'events_total_count', 'v' => $eventsCount, 's' => 'mimir'],
+                ['m' => 'events_empty_count', 'v' => $emptyEventsCount, 's' => 'mimir'],
+                ['m' => 'achievement_entries', 'v' => $achievementsCount, 's' => 'mimir'],
             ]),
             'header'=>  "Content-Type: application/json\r\n"
         ]
