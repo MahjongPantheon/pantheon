@@ -4,7 +4,6 @@ namespace Frey;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/helpers/Config.php';
-require_once __DIR__ . '/../src/helpers/Meta.php';
 require_once __DIR__ . '/../src/helpers/Db.php';
 
 if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
