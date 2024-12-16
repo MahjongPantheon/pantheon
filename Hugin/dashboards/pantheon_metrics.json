@@ -60,7 +60,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
           },
           "custom": {
             "axisBorderShow": false,
@@ -71,7 +72,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 16,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -86,7 +87,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -134,6 +135,10 @@
       "pluginVersion": "11.4.0",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
           "expr": "rate(pantheon_played_rounds[$__rate_interval])",
@@ -142,11 +147,7 @@
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "Rounds finished recently",
@@ -171,7 +172,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 25,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -186,7 +187,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -239,8 +240,8 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "rate(pantheon_played_games[$__rate_interval])",
+          "editorMode": "code",
+          "expr": "pantheon_played_games - pantheon_stale_games",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
@@ -260,7 +261,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "semi-dark-orange",
+            "mode": "fixed"
           },
           "custom": {
             "axisBorderShow": false,
@@ -271,7 +273,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 16,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -280,13 +282,13 @@
             },
             "insertNulls": false,
             "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
+            "lineWidth": 2,
+            "pointSize": 6,
             "scaleDistribution": {
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -300,7 +302,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "orange",
                 "value": null
               },
               {
@@ -334,19 +336,19 @@
       "pluginVersion": "11.4.0",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "rate(pantheon_stale_games[$__rate_interval])",
+          "expr": "pantheon_stale_games",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "Stale games",
@@ -360,7 +362,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed"
           },
           "custom": {
             "axisBorderShow": false,
@@ -371,7 +374,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 20,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -386,7 +389,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -434,22 +437,22 @@
       "pluginVersion": "11.4.0",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "rate(pantheon_registered_users[$__rate_interval])",
+          "expr": "pantheon_registered_users",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
-      "title": "Users registered recently",
+      "title": "Registered users count",
       "type": "timeseries"
     }
   ],
@@ -459,13 +462,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Pantheon service",
   "uid": "be71b9xpmt3b4c",
-  "version": 5,
+  "version": 10,
   "weekStart": ""
 }
