@@ -24,9 +24,6 @@ try {
     $staleGames = $db->table('session')
         ->rawQuery("SELECT COUNT(*) as cnt from session WHERE status = 'inprogress' AND start_date < NOW() - INTERVAL '1' DAY")
         ->findOne()['cnt'];
-    $playedRounds = $db->table('round')
-        ->rawQuery("SELECT COUNT(*) as cnt from round WHERE end_date > NOW() - INTERVAL '1' MINUTE")
-        ->findOne()['cnt'];
     $jobsQueueSize = $db->table('jobs_queue')
         ->rawQuery("SELECT COUNT(*) as cnt from jobs_queue")
         ->findOne()['cnt'];
@@ -46,7 +43,6 @@ try {
             'content' => json_encode([
                 ['m' => 'played_games', 'v' => $playedGames , 's' => 'mimir'],
                 ['m' => 'stale_games', 'v' => $staleGames , 's' => 'mimir'],
-                ['m' => 'played_rounds', 'v' => $playedRounds , 's' => 'mimir'],
                 ['m' => 'jobs_queue', 'v' => $jobsQueueSize, 's' => 'mimir'],
                 ['m' => 'events_total_count', 'v' => $eventsCount, 's' => 'mimir'],
                 ['m' => 'events_empty_count', 'v' => $emptyEventsCount, 's' => 'mimir'],
