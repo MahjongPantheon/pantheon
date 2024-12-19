@@ -289,6 +289,22 @@ services:
         aliases:
           - cadvisor.pantheon.local
           - cadvisor.pantheon.internal
+  dbwatcher.pantheon.internal:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    user: root
+    ports:
+      - 9187:9187
+    environment:
+      - DATA_SOURCE_URI=db.pantheon.internal/postgres?sslmode=disable
+      - DATA_SOURCE_USER=postgres
+      - DATA_SOURCE_PASS=pgpass
+    depends_on:
+      - db.pantheon.internal
+    networks:
+      internal_net:
+        aliases:
+          - dbwatcher.pantheon.local
+          - dbwatcher.pantheon.internal
   grafana.pantheon.internal:
     image: grafana/grafana-oss:latest
     restart: unless-stopped
