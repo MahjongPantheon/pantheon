@@ -112,7 +112,7 @@ export const apiClient =
           .then((events) =>
             mw.dispatch({
               type: EVENTS_GET_LIST_SUCCESS,
-              payload: events,
+              payload: events.filter((e) => !e.isOnline),
             })
           )
           .catch((err) => mw.dispatch({ type: EVENTS_GET_LIST_FAIL, payload: err }));
