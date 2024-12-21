@@ -5,6 +5,7 @@ volumes:
   configvolume01: {}
   gullveigstorage01: {}
   grafanastorage01: {}
+  prometheusdata:
   pgadmindata:
 networks:
   internal_net:
@@ -204,6 +205,7 @@ services:
     volumes:
       - ./Hugin:/var/www/html/Hugin
       - ./Common:/var/www/html/Common
+      - prometheusdata:/var/lib/prometheus
     environment:
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db.pantheon.internal
