@@ -15,6 +15,7 @@ import { i18n } from '../../i18n';
 import { TableStatus } from '../../base/TableStatus/TableStatus';
 import styles from './TablePrimaryView.module.css';
 import { TableStatus as TableStatusProps } from '../../../helpers/interfaces';
+import { EndingPolicy } from '../../../clients/proto/atoms.pb';
 
 export type IProps = {
   toimen: PlayerProps;
@@ -33,6 +34,7 @@ export type IProps = {
   rulesetConfig: {
     withNagashiMangan?: boolean;
     withAbortives?: boolean;
+    endingPolicy?: EndingPolicy;
   };
 };
 
@@ -61,7 +63,13 @@ export const TablePrimaryView = (props: IProps) => {
           sideLeft={<PlayerPlace {...kamicha} />}
           sideDown={<PlayerPlace {...self} />}
           sideRight={<PlayerPlace {...shimocha} />}
-          center={<TableStatus {...centerDims} {...props.tableStatus} />}
+          center={
+            <TableStatus
+              {...centerDims}
+              {...props.tableStatus}
+              endingPolicy={props.rulesetConfig.endingPolicy}
+            />
+          }
           onDimensionChange={setCenterDims}
         />
         {!!props.onAddNewGame && (
