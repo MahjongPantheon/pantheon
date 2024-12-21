@@ -287,6 +287,15 @@ class SkirnirClient
     protected function _fetchNotificationSettings($playerIds)
     {
         $players = PlayerPrimitive::findById($this->_ds, $playerIds, true);
+        $players = array_filter(array_map(function ($id) use (&$players) {
+            // Re-sort players to match request order - important!
+            foreach ($players as $p) {
+                if ($p->getId() == $id) {
+                    return $p;
+                }
+            }
+            return null;
+        }, $playerIds));
         return array_values(array_filter(array_map(function ($p) {
             return [
                 'id' => $p->getId(),
