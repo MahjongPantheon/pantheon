@@ -73,7 +73,7 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
   return (
     <div style={{ position: 'relative', height: `${yakuStatsHeight}px` }}>
       <BarGraph
-        data={{ datasets: [{ data: yakuStats }] }}
+        data={{ datasets: [{ data: yakuStats, minBarLength: 25 }] }}
         options={{
           maintainAspectRatio: false,
           backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
