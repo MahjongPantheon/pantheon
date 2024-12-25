@@ -22,5 +22,6 @@ ChartJS.register(
 );
 ChartJS.defaults.font.size = 16;
 ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
+ChartJS.defaults.datasets.bar.minBarLength = 25;
 
 export default BarGraph;
