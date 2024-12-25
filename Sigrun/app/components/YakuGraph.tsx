@@ -60,20 +60,20 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
 
   const yakuStats = [...yaku.entries()]
     .map(([key, value]) => {
-      return { x: value, y: yakuNameMap.get(key) };
+      return { x: value, y: yakuNameMap.get(key) + ` (${value})` };
     })
     .filter((v) => v.x > 0)
     .sort((a, b) => b.x - a.x);
 
   if (totalYakuhai > 0) {
-    yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') });
+    yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') + ` (${totalYakuhai})` });
   }
 
   const yakuStatsHeight = 40 + 24 * yakuStats.length;
   return (
     <div style={{ position: 'relative', height: `${yakuStatsHeight}px` }}>
       <BarGraph
-        data={{ datasets: [{ data: yakuStats, minBarLength: 25 }] }}
+        data={{ datasets: [{ data: yakuStats }] }}
         options={{
           maintainAspectRatio: false,
           backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
@@ -82,7 +82,11 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
           font: { size: 16, family: '"PT Sans Narrow", Arial' },
           plugins: {
             legend: { display: false },
+            tooltip: {
+              enabled: false,
+            },
           },
+          events: [],
           indexAxis: 'y',
           // grouped: false,
           scales: {
