@@ -56,6 +56,7 @@ class Ruleset
             case 'wrc':
             case 'jpmlA':
             case 'tenhounet':
+            case 'rrc':
                 return new Ruleset(require __DIR__ . '/' . $rulesetName . '.php');
             default:
                 throw new \Exception('Ruleset not found');

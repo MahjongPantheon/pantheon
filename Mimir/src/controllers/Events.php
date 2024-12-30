@@ -1106,6 +1106,11 @@ class EventsController extends Controller
                 'originalRules' => \Common\Ruleset::instance('wrc')->rules()
             ],
             [
+                'id' => 'rrc',
+                'description' => 'Russian Riichi Community rules',
+                'originalRules' => \Common\Ruleset::instance('rrc')->rules()
+            ],
+            [
                 'id' => 'tenhounet',
                 'description' => 'Tenhou.net compatible rules',
                 'originalRules' => \Common\Ruleset::instance('tenhounet')->rules()
