@@ -48,7 +48,8 @@ export type AppScreen =
   | 'settings'
   | 'nagashiSelect'
   | 'donate'
-  | 'penalties';
+  | 'penalties'
+  | 'congrats';
 
 export type LoadingSet = {
   games: boolean;

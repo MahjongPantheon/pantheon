@@ -1,0 +1,16 @@
+.wrapper {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 580px;
+}
+
+.meme,
+.disclaimer {
+  padding: 15px;
+  font-size: 12px;
+}
+
+.meme img {
+  width: 100%;
+}

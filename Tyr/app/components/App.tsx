@@ -56,6 +56,7 @@ import { TableNagashiSelect } from './screens/TableNagashiSelect/TableNagashiSel
 import { OtherTableView } from './screens/OtherTableView/OtherTableView';
 import { TableRoundPreview } from './screens/TableRoundPreview/TableRoundPreview';
 import { Penalties } from './screens/Penalties/Penalties';
+import { Congrats } from './screens/Congrats/Congrats';
 
 interface IProps {
   state: IAppState;
@@ -100,6 +101,8 @@ const CurrentScreen = (props: IComponentProps) => {
       return <OtherTablesList {...props} />;
     case 'donate':
       return <Donate {...props} />;
+    case 'congrats':
+      return <Congrats {...props} />;
     case 'penalties':
       return <Penalties {...props} />;
   }

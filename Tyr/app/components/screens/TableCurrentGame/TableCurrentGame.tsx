@@ -19,9 +19,10 @@ import { IComponentProps } from '../../IComponentProps';
 
 import { Loader } from '../../base/Loader/Loader';
 import { i18n } from '../../i18n';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   CALL_REFEREE,
+  CONGRATS_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   INIT_BLANK_OUTCOME,
@@ -48,6 +49,10 @@ export const TableCurrentGame = ({ state, dispatch }: IComponentProps) => {
   const loc = useContext(i18n);
   const [callRefereeConfirmationShown, setCallRefereeConfirmationShown] = useState(false);
   const [callRefereeNotificationShown, setCallRefereeNotificationShown] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => dispatch({ type: CONGRATS_INIT }), 100);
+  }, []);
 
   function onCallRefereeClick() {
     dispatch({ type: CALL_REFEREE });
