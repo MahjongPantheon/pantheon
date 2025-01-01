@@ -34,7 +34,6 @@ export interface IStorage {
   getSingleDeviceMode(): boolean;
   getDimmed(): boolean;
   getThemeVariant(): string | null;
-  getCongratsShown(): boolean;
 
   setAuthToken(token: string): IStorage;
   setPersonId(id: number): IStorage;
@@ -45,7 +44,6 @@ export interface IStorage {
   setSingleDeviceMode(enabled: boolean): IStorage;
   setDimmed(enabled: boolean): IStorage;
   setThemeVariant(variant: string): IStorage;
-  setCongratsShown(enabled: boolean): IStorage;
 
   deleteAuthToken(): IStorage;
   deletePersonId(): IStorage;
@@ -55,7 +53,6 @@ export interface IStorage {
   deleteTheme(): IStorage;
   deleteSingleDeviceMode(): IStorage;
   deleteThemeVariant(): IStorage;
-  deleteCongratsShown(): IStorage;
 }
 
 // These should be same as in Common/Storage.php cookie interface
@@ -68,7 +65,6 @@ const THEME_KEY = "thm";
 const DIMMED_KEY = "dim";
 const THVAR_KEY = "thv";
 const SINGLE_DEVICE_MODE_KEY = "sdm";
-const CONGRATS_SHOWN = "csn";
 
 export class Storage implements IStorage {
   private strategy?: StorageStrategy;
@@ -111,10 +107,6 @@ export class Storage implements IStorage {
 
   public getSingleDeviceMode(): boolean {
     return !!this.get(SINGLE_DEVICE_MODE_KEY, "int");
-  }
-
-  public getCongratsShown(): boolean {
-    return !!this.get(CONGRATS_SHOWN, "int");
   }
 
   public setAuthToken(token: string): IStorage {
@@ -166,11 +158,6 @@ export class Storage implements IStorage {
     return this;
   }
 
-  public setCongratsShown(enabled: boolean): IStorage {
-    this.set(CONGRATS_SHOWN, "int", enabled ? 1 : 0);
-    return this;
-  }
-
   public deleteAuthToken(): IStorage {
     this.delete(AUTH_TOKEN_KEY);
     return this;
@@ -208,11 +195,6 @@ export class Storage implements IStorage {
 
   public deleteThemeVariant(): IStorage {
     this.delete(THVAR_KEY);
-    return this;
-  }
-
-  public deleteCongratsShown(): IStorage {
-    this.delete(CONGRATS_SHOWN);
     return this;
   }
 

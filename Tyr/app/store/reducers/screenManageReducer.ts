@@ -18,7 +18,6 @@
 import { AppScreen, IAppState } from '../interfaces';
 import {
   AppActionTypes,
-  CONGRATS_SHOW,
   GO_TO_CURRENT_GAME,
   GO_TO_DONATE,
   GO_TO_PENALTIES,
@@ -108,11 +107,6 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
         ...state,
         currentScreen: 'settings',
       };
-    case CONGRATS_SHOW:
-      return {
-        ...state,
-        currentScreen: 'congrats',
-      };
     case GOTO_NEXT_SCREEN:
       if (!state.gameConfig) {
         return state;
@@ -192,7 +186,6 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
         case 'eventSelector':
         case 'settings':
         case 'donate':
-        case 'congrats':
         case 'penalties':
           if (state.currentEventId) {
             prevScreen = 'overview';

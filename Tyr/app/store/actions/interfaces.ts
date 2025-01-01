@@ -134,8 +134,6 @@ export const TOGGLE_RIICHI_NOTIFICATION = 'TOGGLE_RIICHI_NOTIFICATION';
 export const GET_PENALTIES_INIT = 'GET_PENALTIES_INIT';
 export const GET_PENALTIES_SUCCESS = 'GET_PENALTIES_SUCCESS';
 export const GET_PENALTIES_FAIL = 'GET_PENALTIES_FAIL';
-export const CONGRATS_INIT = 'CONGRATS_INIT';
-export const CONGRATS_SHOW = 'CONGRATS_SHOW';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -607,14 +605,6 @@ interface GetPenaltiesFail {
   payload: RemoteError;
 }
 
-interface CongratsInitAction {
-  type: typeof CONGRATS_INIT;
-}
-
-interface CongratsShowAction {
-  type: typeof CONGRATS_SHOW;
-}
-
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -712,6 +702,4 @@ export type AppActionTypes =
   | GetPenaltiesInit
   | GetPenaltiesSuccess
   | GetPenaltiesFail
-  | ToggleRiichiNotificationAction
-  | CongratsInitAction
-  | CongratsShowAction;
+  | ToggleRiichiNotificationAction;

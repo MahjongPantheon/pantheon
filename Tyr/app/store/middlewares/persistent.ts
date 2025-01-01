@@ -18,8 +18,6 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
-  CONGRATS_SHOW,
-  CONGRATS_INIT,
   FORCE_LOGOUT,
   LOGIN_FAIL,
   LOGIN_INIT,
@@ -107,26 +105,8 @@ export const persistentMw =
 
         mw.dispatch({ type: SET_STATE_SETTINGS, payload: data });
         break;
-      case CONGRATS_INIT:
-        if (storage.getLang() !== 'ru') {
-          // only show for local ru folks as it's not translated (same as donations), so here we just disable it
-          storage.setCongratsShown(true);
-        } else if (
-          !storage.getCongratsShown() &&
-          matchDate() &&
-          Math.floor(Math.random() * 10) % 3 === 0
-        ) {
-          storage.setCongratsShown(true);
-          mw.dispatch({ type: CONGRATS_SHOW });
-        }
-        break;
       default:
     }
 
     return next(action);
   };
-
-function matchDate() {
-  const date = new Date(Date.now());
-  return date.getMonth() === 0 && date.getDate() === 1 && date.getHours() < 3;
-}
