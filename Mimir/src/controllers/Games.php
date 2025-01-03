@@ -312,8 +312,8 @@ class GamesController extends Controller
      * Add extra time for particular games.
      * Only for tournament events
      *
-     * @param $sessionHashList
-     * @param $extraTime
+     * @param array $sessionHashList
+     * @param int $extraTime
      * @return bool
      * @throws \Exception
      */

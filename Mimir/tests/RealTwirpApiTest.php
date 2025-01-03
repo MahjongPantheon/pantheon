@@ -29,10 +29,9 @@ use Common\EventsRegisterPlayerPayload;
 use Common\EventsUnregisterPlayerPayload;
 use Common\EventsUpdateEventPayload;
 use Common\EventType;
-use Common\GamesCancelGamePayload;
-use Common\GamesEndGamePayload;
 use Common\GamesStartGamePayload;
 use Common\GenericEventPayload;
+use Common\GenericSessionPayload;
 use Common\MyEvent;
 use Common\PlatformType;
 use Common\PlayersGetMyEventsPayload;
@@ -576,7 +575,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('inprogress', $sessions[0]->getStatus());
 
         $this->assertTrue(
-            $this->_client->EndGame([], (new GamesEndGamePayload())->setSessionHash($hash))->getSuccess()
+            $this->_client->EndGame([], (new GenericSessionPayload())->setSessionHash($hash))->getSuccess()
         );
 
         $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
@@ -616,7 +615,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('inprogress', $sessions[0]->getStatus());
 
         $this->assertTrue(
-            $this->_client->CancelGame([], (new GamesCancelGamePayload())->setSessionHash($hash))->getSuccess()
+            $this->_client->CancelGame([], (new GenericSessionPayload())->setSessionHash($hash))->getSuccess()
         );
 
         $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
