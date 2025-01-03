@@ -658,6 +658,10 @@ export interface GenericEventPayload {
   eventId: number;
 }
 
+export interface GenericSessionPayload {
+  sessionHash: string;
+}
+
 //========================================//
 //        Protobuf Encode / Decode        //
 //========================================//
@@ -8262,6 +8266,76 @@ export const GenericEventPayload = {
   },
 };
 
+export const GenericSessionPayload = {
+  /**
+   * Serializes GenericSessionPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<GenericSessionPayload>): Uint8Array {
+    return GenericSessionPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes GenericSessionPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): GenericSessionPayload {
+    return GenericSessionPayload._readMessage(
+      GenericSessionPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes GenericSessionPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GenericSessionPayload>,
+  ): GenericSessionPayload {
+    return {
+      sessionHash: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GenericSessionPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.sessionHash) {
+      writer.writeString(1, msg.sessionHash);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GenericSessionPayload,
+    reader: protoscript.BinaryReader,
+  ): GenericSessionPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.sessionHash = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -14924,6 +14998,64 @@ export const GenericEventPayloadJSON = {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    return msg;
+  },
+};
+
+export const GenericSessionPayloadJSON = {
+  /**
+   * Serializes GenericSessionPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<GenericSessionPayload>): string {
+    return JSON.stringify(GenericSessionPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes GenericSessionPayload from JSON.
+   */
+  decode: function (json: string): GenericSessionPayload {
+    return GenericSessionPayloadJSON._readMessage(
+      GenericSessionPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes GenericSessionPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GenericSessionPayload>,
+  ): GenericSessionPayload {
+    return {
+      sessionHash: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GenericSessionPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.sessionHash) {
+      json["sessionHash"] = msg.sessionHash;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GenericSessionPayload,
+    json: any,
+  ): GenericSessionPayload {
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
+    if (_sessionHash_) {
+      msg.sessionHash = _sessionHash_;
     }
     return msg;
   },

@@ -665,3 +665,7 @@ message GenericSuccessResponse {
 message GenericEventPayload {
   int32 event_id = 1;
 }
+
+message GenericSessionPayload {
+  string session_hash = 1;
+}

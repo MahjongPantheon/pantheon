@@ -309,6 +309,27 @@ class GamesController extends Controller
     }
 
     /**
+     * Add extra time for particular games.
+     * Only for tournament events
+     *
+     * @param $sessionHashList
+     * @param $extraTime
+     * @return bool
+     * @throws \Exception
+     */
+    public function addExtraTime($sessionHashList, $extraTime)
+    {
+        $this->_log->info('Adding extra time for sessions #' . implode(', ', $sessionHashList));
+        $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, $sessionHashList);
+        $success = true;
+        foreach ($sessions as $session) {
+            $success = $success && $session->setExtraTime($extraTime + $session->getExtraTime())->save();
+        }
+        $this->_log->info('Added extra time for sessions #' . implode(', ', $sessionHashList));
+        return $success;
+    }
+
+    /**
      * Forcefully finish game (for club events)
      *
      * @param string $sessionHash

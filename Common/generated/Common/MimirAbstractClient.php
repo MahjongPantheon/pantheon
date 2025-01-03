@@ -287,7 +287,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetGame(array $ctx, \Common\EventsGetGamePayload $in): \Common\EventsGetGameResponse
+    public function GetGame(array $ctx, \Common\GenericSessionPayload $in): \Common\EventsGetGameResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -402,7 +402,30 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetSessionOverview(array $ctx, \Common\GamesGetSessionOverviewPayload $in): \Common\GamesGetSessionOverviewResponse
+    public function GetTimerStateForSession(array $ctx, \Common\GenericSessionPayload $in): \Common\EventsGetTimerStateResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'GetTimerStateForSession');
+
+        $out = new \Common\EventsGetTimerStateResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/GetTimerStateForSession';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/GetTimerStateForSession';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function GetSessionOverview(array $ctx, \Common\GenericSessionPayload $in): \Common\GamesGetSessionOverviewResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -563,7 +586,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetAllRounds(array $ctx, \Common\PlayersGetAllRoundsPayload $in): \Common\PlayersGetAllRoundsResponse
+    public function GetAllRounds(array $ctx, \Common\GenericSessionPayload $in): \Common\PlayersGetAllRoundsResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -586,7 +609,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetLastRoundByHash(array $ctx, \Common\PlayersGetLastRoundByHashPayload $in): \Common\PlayersGetLastRoundByHashResponse
+    public function GetLastRoundByHash(array $ctx, \Common\GenericSessionPayload $in): \Common\PlayersGetLastRoundByHashResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -1000,13 +1023,13 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function StartGame(array $ctx, \Common\GamesStartGamePayload $in): \Common\GamesStartGameResponse
+    public function StartGame(array $ctx, \Common\GamesStartGamePayload $in): \Common\GenericSessionPayload
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
         $ctx = Context::withMethodName($ctx, 'StartGame');
 
-        $out = new \Common\GamesStartGameResponse();
+        $out = new \Common\GenericSessionPayload();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -1023,7 +1046,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function EndGame(array $ctx, \Common\GamesEndGamePayload $in): \Common\GenericSuccessResponse
+    public function EndGame(array $ctx, \Common\GenericSessionPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -1046,7 +1069,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function CancelGame(array $ctx, \Common\GamesCancelGamePayload $in): \Common\GenericSuccessResponse
+    public function CancelGame(array $ctx, \Common\GenericSessionPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -1115,7 +1138,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function DefinalizeGame(array $ctx, \Common\GamesDefinalizeGamePayload $in): \Common\GenericSuccessResponse
+    public function DefinalizeGame(array $ctx, \Common\GenericSessionPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -1161,13 +1184,13 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddPenaltyGame(array $ctx, \Common\GamesAddPenaltyGamePayload $in): \Common\GamesAddPenaltyGameResponse
+    public function AddPenaltyGame(array $ctx, \Common\GamesAddPenaltyGamePayload $in): \Common\GenericSessionPayload
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
         $ctx = Context::withMethodName($ctx, 'AddPenaltyGame');
 
-        $out = new \Common\GamesAddPenaltyGameResponse();
+        $out = new \Common\GenericSessionPayload();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -1506,7 +1529,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ForceFinishGame(array $ctx, \Common\ForceFinishGamePayload $in): \Common\GenericSuccessResponse
+    public function ForceFinishGame(array $ctx, \Common\GenericSessionPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
@@ -1680,6 +1703,29 @@ abstract class MimirAbstractClient
             $url = $url.'/common.Mimir/CancelPenalty';
         } else {
             $url = $url.'/'.$this->prefix.'/common.Mimir/CancelPenalty';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function AddExtraTime(array $ctx, \Common\AddExtraTimePayload $in): \Common\GenericSuccessResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'AddExtraTime');
+
+        $out = new \Common\GenericSuccessResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/AddExtraTime';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/AddExtraTime';
         }
 
         $this->doRequest($ctx, $url, $in, $out);

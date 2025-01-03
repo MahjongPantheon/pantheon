@@ -17,6 +17,7 @@ require_once __DIR__ . '/exceptions/AccessDenied.php';
 
 use Common\AbortResult;
 use Common\Achievement;
+use Common\AddExtraTimePayload;
 use Common\ChomboResult;
 use Common\Country;
 use Common\CurrentSession;
@@ -25,6 +26,7 @@ use Common\DrawResult;
 use Common\Event;
 use Common\EventData;
 use Common\EventsGetTablesStatePayload;
+use Common\GenericSessionPayload;
 use Common\PlatformType;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
@@ -999,7 +1001,7 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws TwirpError
      */
-    public function GetGame(array $ctx, EventsGetGamePayload $req): EventsGetGameResponse
+    public function GetGame(array $ctx, GenericSessionPayload $req): EventsGetGameResponse
     {
         $ret = $this->_eventsController->getGame($req->getSessionHash());
         return (new EventsGetGameResponse())
@@ -1103,7 +1105,7 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws EntityNotFoundException
      */
-    public function GetSessionOverview(array $ctx, GamesGetSessionOverviewPayload $req): GamesGetSessionOverviewResponse
+    public function GetSessionOverview(array $ctx, GenericSessionPayload $req): GamesGetSessionOverviewResponse
     {
         $ret = $this->_gamesController->getSessionOverview($req->getSessionHash());
         $overview = (new GamesGetSessionOverviewResponse())
@@ -1269,7 +1271,7 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetAllRounds(array $ctx, PlayersGetAllRoundsPayload $req): PlayersGetAllRoundsResponse
+    public function GetAllRounds(array $ctx, GenericSessionPayload $req): PlayersGetAllRoundsResponse
     {
         $ret = $this->_playersController->getAllRoundsByHash($req->getSessionHash());
         return (new PlayersGetAllRoundsResponse())
@@ -1280,7 +1282,7 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function GetLastRoundByHash(array $ctx, PlayersGetLastRoundByHashPayload $req): PlayersGetLastRoundByHashResponse
+    public function GetLastRoundByHash(array $ctx, GenericSessionPayload $req): PlayersGetLastRoundByHashResponse
     {
         $ret = $this->_playersController->getLastRoundByHashcode($req->getSessionHash());
         if (empty($ret)) {
@@ -1544,9 +1546,9 @@ final class TwirpServer implements Mimir
      * @throws InvalidUserException
      * @throws DatabaseException
      */
-    public function StartGame(array $ctx, GamesStartGamePayload $req): GamesStartGameResponse
+    public function StartGame(array $ctx, GamesStartGamePayload $req): GenericSessionPayload
     {
-        return (new GamesStartGameResponse())
+        return (new GenericSessionPayload())
             ->setSessionHash($this->_gamesController->start(
                 $req->getEventId(),
                 iterator_to_array($req->getPlayers())
@@ -1556,7 +1558,7 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function EndGame(array $ctx, GamesEndGamePayload $req): GenericSuccessResponse
+    public function EndGame(array $ctx, GenericSessionPayload $req): GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->end($req->getSessionHash()));
@@ -1565,7 +1567,7 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function CancelGame(array $ctx, GamesCancelGamePayload $req): GenericSuccessResponse
+    public function CancelGame(array $ctx, GenericSessionPayload $req): GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->cancel($req->getSessionHash()));
@@ -1595,7 +1597,7 @@ final class TwirpServer implements Mimir
     /**
      * @throws Exception
      */
-    public function DefinalizeGame(array $ctx, GamesDefinalizeGamePayload $req): GenericSuccessResponse
+    public function DefinalizeGame(array $ctx, GenericSessionPayload $req): GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->definalizeGame($req->getSessionHash()));
@@ -1619,10 +1621,10 @@ final class TwirpServer implements Mimir
      * @throws DatabaseException
      * @throws InvalidUserException
      */
-    public function AddPenaltyGame(array $ctx, GamesAddPenaltyGamePayload $req): GamesAddPenaltyGameResponse
+    public function AddPenaltyGame(array $ctx, GamesAddPenaltyGamePayload $req): GenericSessionPayload
     {
-        return (new GamesAddPenaltyGameResponse())
-            ->setHash($this->_gamesController->addPenaltyGame(
+        return (new GenericSessionPayload())
+            ->setSessionHash($this->_gamesController->addPenaltyGame(
                 $req->getEventId(),
                 iterator_to_array($req->getPlayers())
             ));
@@ -1833,11 +1835,11 @@ final class TwirpServer implements Mimir
 
     /**
      * @param array $ctx
-     * @param \Common\ForceFinishGamePayload $req
+     * @param GenericSessionPayload $req
      * @return GenericSuccessResponse
      * @throws \Exception
      */
-    public function ForceFinishGame(array $ctx, \Common\ForceFinishGamePayload $req): \Common\GenericSuccessResponse
+    public function ForceFinishGame(array $ctx, GenericSessionPayload $req): \Common\GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
             ->setSuccess($this->_gamesController->forceFinishGame($req->getSessionHash()));
@@ -1944,5 +1946,40 @@ final class TwirpServer implements Mimir
         }
 
         throw new AccessDeniedException('This action is not allowed for you');
+    }
+
+    /**
+     * @param array $ctx
+     * @param GenericSessionPayload $req
+     * @return EventsGetTimerStateResponse
+     * @throws InvalidParametersException
+     */
+    public function GetTimerStateForSession(array $ctx, GenericSessionPayload $req): EventsGetTimerStateResponse
+    {
+        $ret = $this->_eventsController->getTimerStateForSession($req->getSessionHash());
+        if (empty($ret)) {
+            return new EventsGetTimerStateResponse(); // not using timer -> not setting fields
+        }
+        return (new EventsGetTimerStateResponse())
+            ->setStarted($ret['started'])
+            ->setFinished($ret['finished'])
+            ->setTimeRemaining($ret['time_remaining'] ?? 0)
+            ->setWaitingForTimer($ret['waiting_for_timer'])
+            ->setHaveAutostart($ret['have_autostart'])
+            ->setHideSeatingAfter($ret['hide_seating_after'])
+            ->setAutostartTimer($ret['autostart_timer']);
+    }
+
+    /**
+     * @param array $ctx
+     * @param AddExtraTimePayload $req
+     * @return GenericSuccessResponse
+     * @throws Exception
+     */
+    public function AddExtraTime(array $ctx, AddExtraTimePayload $req): GenericSuccessResponse
+    {
+        $ret = $this->_gamesController->addExtraTime(iterator_to_array($req->getSessionHashList()), $req->getExtraTime());
+        return (new GenericSuccessResponse())
+            ->setSuccess($ret);
     }
 }
