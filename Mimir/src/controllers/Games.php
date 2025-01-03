@@ -321,6 +321,18 @@ class GamesController extends Controller
     {
         $this->_log->info('Adding extra time for sessions #' . implode(', ', $sessionHashList));
         $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, $sessionHashList);
+
+        $eventIds = array_unique(array_map(function ($session) {
+            return $session->getEventId();
+        }, $sessions));
+        if (count($eventIds) > 1) {
+            throw new TwirpError(ErrorCode::InvalidArgument, 'Setting extra time is not available for session in multiple events');
+        }
+
+        if (!$this->_meta->isEventAdminById($eventIds[0]) && !$this->_meta->isEventRefereeById($eventIds[0])) {
+            throw new TwirpError(ErrorCode::NotFound, "This action is allowed only for event administrators");
+        }
+
         $success = true;
         foreach ($sessions as $session) {
             $success = $success && $session->setExtraTime($extraTime + $session->getExtraTime())->save();

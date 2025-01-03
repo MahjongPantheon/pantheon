@@ -142,15 +142,6 @@ interface Mimir
     /**
      *
      *
-     * Generated from protobuf method <code>common.Mimir/GetTimerStateForSession</code>
-     *
-     * @throws \Twirp\Error
-     */
-    public function GetTimerStateForSession(array $ctx, \Common\GenericSessionPayload $req): \Common\EventsGetTimerStateResponse;
-
-    /**
-     *
-     *
      * Generated from protobuf method <code>common.Mimir/GetSessionOverview</code>
      *
      * @throws \Twirp\Error
@@ -669,4 +660,13 @@ interface Mimir
      * @throws \Twirp\Error
      */
     public function ListMyPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/GetCurrentStateForPlayer</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function GetCurrentStateForPlayer(array $ctx, \Common\GetCurrentStatePayload $req): \Common\GetCurrentStateResponse;
 }

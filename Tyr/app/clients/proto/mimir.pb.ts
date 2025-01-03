@@ -111,8 +111,16 @@ export interface PlayersGetCurrentSessionsPayload {
   eventId: number;
 }
 
+export interface CurrentSession {
+  sessionHash: string;
+  status: string;
+  tableIndex?: number | null | undefined;
+  players: protoAtoms.PlayerInSession[];
+  timerState: EventsGetTimerStateResponse;
+}
+
 export interface PlayersGetCurrentSessionsResponse {
-  sessions: protoAtoms.CurrentSession[];
+  sessions: CurrentSession[];
 }
 
 export interface EventsGetAllRegisteredPlayersPayload {
@@ -424,6 +432,16 @@ export interface AddExtraTimePayload {
   extraTime: number;
 }
 
+export interface GetCurrentStatePayload {
+  eventId: number;
+  playerId: number;
+}
+
+export interface GetCurrentStateResponse {
+  sessions: CurrentSession[];
+  config: protoAtoms.GameConfig;
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -593,18 +611,6 @@ export async function GetTimerState(
   const response = await PBrequest(
     "/common.Mimir/GetTimerState",
     protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
-  );
-  return EventsGetTimerStateResponse.decode(response);
-}
-
-export async function GetTimerStateForSession(
-  genericSessionPayload: protoAtoms.GenericSessionPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetTimerStateResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/GetTimerStateForSession",
-    protoAtoms.GenericSessionPayload.encode(genericSessionPayload),
     config,
   );
   return EventsGetTimerStateResponse.decode(response);
@@ -1318,6 +1324,18 @@ export async function ListMyPenalties(
   return PenaltiesResponse.decode(response);
 }
 
+export async function GetCurrentStateForPlayer(
+  getCurrentStatePayload: GetCurrentStatePayload,
+  config?: ClientConfiguration,
+): Promise<GetCurrentStateResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/GetCurrentStateForPlayer",
+    GetCurrentStatePayload.encode(getCurrentStatePayload),
+    config,
+  );
+  return GetCurrentStateResponse.decode(response);
+}
+
 //========================================//
 //           Mimir JSON Client            //
 //========================================//
@@ -1489,18 +1507,6 @@ export async function GetTimerStateJSON(
   const response = await JSONrequest(
     "/common.Mimir/GetTimerState",
     protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
-  );
-  return EventsGetTimerStateResponseJSON.decode(response);
-}
-
-export async function GetTimerStateForSessionJSON(
-  genericSessionPayload: protoAtoms.GenericSessionPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetTimerStateResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/GetTimerStateForSession",
-    protoAtoms.GenericSessionPayloadJSON.encode(genericSessionPayload),
     config,
   );
   return EventsGetTimerStateResponseJSON.decode(response);
@@ -2220,6 +2226,18 @@ export async function ListMyPenaltiesJSON(
   return PenaltiesResponseJSON.decode(response);
 }
 
+export async function GetCurrentStateForPlayerJSON(
+  getCurrentStatePayload: GetCurrentStatePayload,
+  config?: ClientConfiguration,
+): Promise<GetCurrentStateResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/GetCurrentStateForPlayer",
+    GetCurrentStatePayloadJSON.encode(getCurrentStatePayload),
+    config,
+  );
+  return GetCurrentStateResponseJSON.decode(response);
+}
+
 //========================================//
 //                 Mimir                  //
 //========================================//
@@ -2283,10 +2301,6 @@ export interface Mimir<Context = unknown> {
     | EventsGetAllRegisteredPlayersResponse;
   GetTimerState: (
     genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
-  ) => Promise<EventsGetTimerStateResponse> | EventsGetTimerStateResponse;
-  GetTimerStateForSession: (
-    genericSessionPayload: protoAtoms.GenericSessionPayload,
     context: Context,
   ) => Promise<EventsGetTimerStateResponse> | EventsGetTimerStateResponse;
   GetSessionOverview: (
@@ -2605,6 +2619,10 @@ export interface Mimir<Context = unknown> {
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
   ) => Promise<PenaltiesResponse> | PenaltiesResponse;
+  GetCurrentStateForPlayer: (
+    getCurrentStatePayload: GetCurrentStatePayload,
+    context: Context,
+  ) => Promise<GetCurrentStateResponse> | GetCurrentStateResponse;
 }
 
 export function createMimir<Context>(service: Mimir<Context>) {
@@ -2773,18 +2791,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         input: {
           protobuf: protoAtoms.GenericEventPayload,
           json: protoAtoms.GenericEventPayloadJSON,
-        },
-        output: {
-          protobuf: EventsGetTimerStateResponse,
-          json: EventsGetTimerStateResponseJSON,
-        },
-      },
-      GetTimerStateForSession: {
-        name: "GetTimerStateForSession",
-        handler: service.GetTimerStateForSession,
-        input: {
-          protobuf: protoAtoms.GenericSessionPayload,
-          json: protoAtoms.GenericSessionPayloadJSON,
         },
         output: {
           protobuf: EventsGetTimerStateResponse,
@@ -3474,6 +3480,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
           json: protoAtoms.GenericEventPayloadJSON,
         },
         output: { protobuf: PenaltiesResponse, json: PenaltiesResponseJSON },
+      },
+      GetCurrentStateForPlayer: {
+        name: "GetCurrentStateForPlayer",
+        handler: service.GetCurrentStateForPlayer,
+        input: {
+          protobuf: GetCurrentStatePayload,
+          json: GetCurrentStatePayloadJSON,
+        },
+        output: {
+          protobuf: GetCurrentStateResponse,
+          json: GetCurrentStateResponseJSON,
+        },
       },
     },
   } as const;
@@ -5005,6 +5023,119 @@ export const PlayersGetCurrentSessionsPayload = {
   },
 };
 
+export const CurrentSession = {
+  /**
+   * Serializes CurrentSession to protobuf.
+   */
+  encode: function (msg: PartialDeep<CurrentSession>): Uint8Array {
+    return CurrentSession._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes CurrentSession from protobuf.
+   */
+  decode: function (bytes: ByteSource): CurrentSession {
+    return CurrentSession._readMessage(
+      CurrentSession.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes CurrentSession with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<CurrentSession>): CurrentSession {
+    return {
+      sessionHash: "",
+      status: "",
+      tableIndex: undefined,
+      players: [],
+      timerState: EventsGetTimerStateResponse.initialize(),
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<CurrentSession>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.sessionHash) {
+      writer.writeString(1, msg.sessionHash);
+    }
+    if (msg.status) {
+      writer.writeString(2, msg.status);
+    }
+    if (msg.tableIndex != undefined) {
+      writer.writeInt32(3, msg.tableIndex);
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        4,
+        msg.players as any,
+        protoAtoms.PlayerInSession._writeMessage,
+      );
+    }
+    if (msg.timerState) {
+      writer.writeMessage(
+        5,
+        msg.timerState,
+        EventsGetTimerStateResponse._writeMessage,
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: CurrentSession,
+    reader: protoscript.BinaryReader,
+  ): CurrentSession {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.sessionHash = reader.readString();
+          break;
+        }
+        case 2: {
+          msg.status = reader.readString();
+          break;
+        }
+        case 3: {
+          msg.tableIndex = reader.readInt32();
+          break;
+        }
+        case 4: {
+          const m = protoAtoms.PlayerInSession.initialize();
+          reader.readMessage(m, protoAtoms.PlayerInSession._readMessage);
+          msg.players.push(m);
+          break;
+        }
+        case 5: {
+          reader.readMessage(
+            msg.timerState,
+            EventsGetTimerStateResponse._readMessage,
+          );
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const PlayersGetCurrentSessionsResponse = {
   /**
    * Serializes PlayersGetCurrentSessionsResponse to protobuf.
@@ -5051,7 +5182,7 @@ export const PlayersGetCurrentSessionsResponse = {
       writer.writeRepeatedMessage(
         1,
         msg.sessions as any,
-        protoAtoms.CurrentSession._writeMessage,
+        CurrentSession._writeMessage,
       );
     }
     return writer;
@@ -5068,8 +5199,8 @@ export const PlayersGetCurrentSessionsResponse = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          const m = protoAtoms.CurrentSession.initialize();
-          reader.readMessage(m, protoAtoms.CurrentSession._readMessage);
+          const m = CurrentSession.initialize();
+          reader.readMessage(m, CurrentSession._readMessage);
           msg.sessions.push(m);
           break;
         }
@@ -9628,6 +9759,168 @@ export const AddExtraTimePayload = {
   },
 };
 
+export const GetCurrentStatePayload = {
+  /**
+   * Serializes GetCurrentStatePayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<GetCurrentStatePayload>): Uint8Array {
+    return GetCurrentStatePayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes GetCurrentStatePayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): GetCurrentStatePayload {
+    return GetCurrentStatePayload._readMessage(
+      GetCurrentStatePayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes GetCurrentStatePayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GetCurrentStatePayload>,
+  ): GetCurrentStatePayload {
+    return {
+      eventId: 0,
+      playerId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GetCurrentStatePayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.playerId) {
+      writer.writeInt32(2, msg.playerId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GetCurrentStatePayload,
+    reader: protoscript.BinaryReader,
+  ): GetCurrentStatePayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const GetCurrentStateResponse = {
+  /**
+   * Serializes GetCurrentStateResponse to protobuf.
+   */
+  encode: function (msg: PartialDeep<GetCurrentStateResponse>): Uint8Array {
+    return GetCurrentStateResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes GetCurrentStateResponse from protobuf.
+   */
+  decode: function (bytes: ByteSource): GetCurrentStateResponse {
+    return GetCurrentStateResponse._readMessage(
+      GetCurrentStateResponse.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes GetCurrentStateResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GetCurrentStateResponse>,
+  ): GetCurrentStateResponse {
+    return {
+      sessions: [],
+      config: protoAtoms.GameConfig.initialize(),
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GetCurrentStateResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.sessions?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.sessions as any,
+        CurrentSession._writeMessage,
+      );
+    }
+    if (msg.config) {
+      writer.writeMessage(2, msg.config, protoAtoms.GameConfig._writeMessage);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GetCurrentStateResponse,
+    reader: protoscript.BinaryReader,
+  ): GetCurrentStateResponse {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = CurrentSession.initialize();
+          reader.readMessage(m, CurrentSession._readMessage);
+          msg.sessions.push(m);
+          break;
+        }
+        case 2: {
+          reader.readMessage(msg.config, protoAtoms.GameConfig._readMessage);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -10924,6 +11217,105 @@ export const PlayersGetCurrentSessionsPayloadJSON = {
   },
 };
 
+export const CurrentSessionJSON = {
+  /**
+   * Serializes CurrentSession to JSON.
+   */
+  encode: function (msg: PartialDeep<CurrentSession>): string {
+    return JSON.stringify(CurrentSessionJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes CurrentSession from JSON.
+   */
+  decode: function (json: string): CurrentSession {
+    return CurrentSessionJSON._readMessage(
+      CurrentSessionJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes CurrentSession with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<CurrentSession>): CurrentSession {
+    return {
+      sessionHash: "",
+      status: "",
+      tableIndex: undefined,
+      players: [],
+      timerState: EventsGetTimerStateResponseJSON.initialize(),
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<CurrentSession>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.sessionHash) {
+      json["sessionHash"] = msg.sessionHash;
+    }
+    if (msg.status) {
+      json["status"] = msg.status;
+    }
+    if (msg.tableIndex != undefined) {
+      json["tableIndex"] = msg.tableIndex;
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(
+        protoAtoms.PlayerInSessionJSON._writeMessage,
+      );
+    }
+    if (msg.timerState) {
+      const _timerState_ = EventsGetTimerStateResponseJSON._writeMessage(
+        msg.timerState,
+      );
+      if (Object.keys(_timerState_).length > 0) {
+        json["timerState"] = _timerState_;
+      }
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: CurrentSession, json: any): CurrentSession {
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
+    if (_sessionHash_) {
+      msg.sessionHash = _sessionHash_;
+    }
+    const _status_ = json["status"];
+    if (_status_) {
+      msg.status = _status_;
+    }
+    const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
+    if (_tableIndex_) {
+      msg.tableIndex = protoscript.parseNumber(_tableIndex_);
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = protoAtoms.PlayerInSessionJSON.initialize();
+        protoAtoms.PlayerInSessionJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
+    }
+    const _timerState_ = json["timerState"] ?? json["timer_state"];
+    if (_timerState_) {
+      EventsGetTimerStateResponseJSON._readMessage(
+        msg.timerState,
+        _timerState_,
+      );
+    }
+    return msg;
+  },
+};
+
 export const PlayersGetCurrentSessionsResponseJSON = {
   /**
    * Serializes PlayersGetCurrentSessionsResponse to JSON.
@@ -10966,9 +11358,7 @@ export const PlayersGetCurrentSessionsResponseJSON = {
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.sessions?.length) {
-      json["sessions"] = msg.sessions.map(
-        protoAtoms.CurrentSessionJSON._writeMessage,
-      );
+      json["sessions"] = msg.sessions.map(CurrentSessionJSON._writeMessage);
     }
     return json;
   },
@@ -10983,8 +11373,8 @@ export const PlayersGetCurrentSessionsResponseJSON = {
     const _sessions_ = json["sessions"];
     if (_sessions_) {
       for (const item of _sessions_) {
-        const m = protoAtoms.CurrentSessionJSON.initialize();
-        protoAtoms.CurrentSessionJSON._readMessage(m, item);
+        const m = CurrentSessionJSON.initialize();
+        CurrentSessionJSON._readMessage(m, item);
         msg.sessions.push(m);
       }
     }
@@ -14909,6 +15299,145 @@ export const AddExtraTimePayloadJSON = {
     const _extraTime_ = json["extraTime"] ?? json["extra_time"];
     if (_extraTime_) {
       msg.extraTime = protoscript.parseNumber(_extraTime_);
+    }
+    return msg;
+  },
+};
+
+export const GetCurrentStatePayloadJSON = {
+  /**
+   * Serializes GetCurrentStatePayload to JSON.
+   */
+  encode: function (msg: PartialDeep<GetCurrentStatePayload>): string {
+    return JSON.stringify(GetCurrentStatePayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes GetCurrentStatePayload from JSON.
+   */
+  decode: function (json: string): GetCurrentStatePayload {
+    return GetCurrentStatePayloadJSON._readMessage(
+      GetCurrentStatePayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes GetCurrentStatePayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GetCurrentStatePayload>,
+  ): GetCurrentStatePayload {
+    return {
+      eventId: 0,
+      playerId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GetCurrentStatePayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.playerId) {
+      json["playerId"] = msg.playerId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GetCurrentStatePayload,
+    json: any,
+  ): GetCurrentStatePayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = protoscript.parseNumber(_playerId_);
+    }
+    return msg;
+  },
+};
+
+export const GetCurrentStateResponseJSON = {
+  /**
+   * Serializes GetCurrentStateResponse to JSON.
+   */
+  encode: function (msg: PartialDeep<GetCurrentStateResponse>): string {
+    return JSON.stringify(GetCurrentStateResponseJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes GetCurrentStateResponse from JSON.
+   */
+  decode: function (json: string): GetCurrentStateResponse {
+    return GetCurrentStateResponseJSON._readMessage(
+      GetCurrentStateResponseJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes GetCurrentStateResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GetCurrentStateResponse>,
+  ): GetCurrentStateResponse {
+    return {
+      sessions: [],
+      config: protoAtoms.GameConfigJSON.initialize(),
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GetCurrentStateResponse>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.sessions?.length) {
+      json["sessions"] = msg.sessions.map(CurrentSessionJSON._writeMessage);
+    }
+    if (msg.config) {
+      const _config_ = protoAtoms.GameConfigJSON._writeMessage(msg.config);
+      if (Object.keys(_config_).length > 0) {
+        json["config"] = _config_;
+      }
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GetCurrentStateResponse,
+    json: any,
+  ): GetCurrentStateResponse {
+    const _sessions_ = json["sessions"];
+    if (_sessions_) {
+      for (const item of _sessions_) {
+        const m = CurrentSessionJSON.initialize();
+        CurrentSessionJSON._readMessage(m, item);
+        msg.sessions.push(m);
+      }
+    }
+    const _config_ = json["config"];
+    if (_config_) {
+      protoAtoms.GameConfigJSON._readMessage(msg.config, _config_);
     }
     return msg;
   },

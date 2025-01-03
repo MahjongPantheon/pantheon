@@ -158,8 +158,6 @@ final class MimirServer implements RequestHandlerInterface
                 return $this->handleGetAllRegisteredPlayers($ctx, $req);
             case 'GetTimerState':
                 return $this->handleGetTimerState($ctx, $req);
-            case 'GetTimerStateForSession':
-                return $this->handleGetTimerStateForSession($ctx, $req);
             case 'GetSessionOverview':
                 return $this->handleGetSessionOverview($ctx, $req);
             case 'GetPlayerStats':
@@ -276,6 +274,8 @@ final class MimirServer implements RequestHandlerInterface
                 return $this->handleAddExtraTime($ctx, $req);
             case 'ListMyPenalties':
                 return $this->handleListMyPenalties($ctx, $req);
+            case 'GetCurrentStateForPlayer':
+                return $this->handleGetCurrentStateForPlayer($ctx, $req);
 
             default:
                 return $this->writeError($ctx, $this->noRouteError($req));
@@ -1758,113 +1758,6 @@ final class MimirServer implements RequestHandlerInterface
 
             if ($out === null) {
                 return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetTimerState. null responses are not supported'));
-            }
-
-            $ctx = $this->hook->responsePrepared($ctx);
-        } catch (GPBDecodeException $e) {
-            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
-        } catch (\Throwable $e) {
-            return $this->writeError($ctx, $e);
-        }
-
-        $data = $out->serializeToString();
-
-        $body = $this->streamFactory->createStream($data);
-
-        $resp = $this->responseFactory
-            ->createResponse(200)
-            ->withHeader('Content-Type', 'application/protobuf')
-            ->withBody($body);
-
-        $this->callResponseSent($ctx);
-
-        return $resp;
-    }
-    private function handleGetTimerStateForSession(array $ctx, ServerRequestInterface $req): ResponseInterface
-    {
-        $header = $req->getHeaderLine('Content-Type');
-        $i = strpos($header, ';');
-
-        if ($i === false) {
-            $i = strlen($header);
-        }
-
-        $respHeaders = [];
-        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
-
-        switch (trim(strtolower(substr($header, 0, $i)))) {
-            case 'application/json':
-                $resp = $this->handleGetTimerStateForSessionJson($ctx, $req);
-                break;
-
-            case 'application/protobuf':
-                $resp = $this->handleGetTimerStateForSessionProtobuf($ctx, $req);
-                break;
-
-            default:
-                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
-
-                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
-        }
-
-        foreach ($respHeaders as $key => $value) {
-            $resp = $resp->withHeader($key, $value);
-        }
-
-        return $resp;
-    }
-
-    private function handleGetTimerStateForSessionJson(array $ctx, ServerRequestInterface $req): ResponseInterface
-    {
-        $ctx = Context::withMethodName($ctx, 'GetTimerStateForSession');
-
-        try {
-            $ctx = $this->hook->requestRouted($ctx);
-
-            $in = new \Common\GenericSessionPayload();
-            $in->mergeFromJsonString((string)$req->getBody(), true);
-
-            $out = $this->svc->GetTimerStateForSession($ctx, $in);
-
-            if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetTimerStateForSession. null responses are not supported'));
-            }
-
-            $ctx = $this->hook->responsePrepared($ctx);
-        } catch (GPBDecodeException $e) {
-            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
-        } catch (\Throwable $e) {
-            return $this->writeError($ctx, $e);
-        }
-
-        $data = $out->serializeToJsonString();
-
-        $body = $this->streamFactory->createStream($data);
-
-        $resp = $this->responseFactory
-            ->createResponse(200)
-            ->withHeader('Content-Type', 'application/json')
-            ->withBody($body);
-
-        $this->callResponseSent($ctx);
-
-        return $resp;
-    }
-
-    private function handleGetTimerStateForSessionProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
-    {
-        $ctx = Context::withMethodName($ctx, 'GetTimerStateForSession');
-
-        try {
-            $ctx = $this->hook->requestRouted($ctx);
-
-            $in = new \Common\GenericSessionPayload();
-            $in->mergeFromString((string)$req->getBody());
-
-            $out = $this->svc->GetTimerStateForSession($ctx, $in);
-
-            if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetTimerStateForSession. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);
@@ -8071,6 +7964,113 @@ final class MimirServer implements RequestHandlerInterface
 
             if ($out === null) {
                 return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling ListMyPenalties. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/protobuf')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+    private function handleGetCurrentStateForPlayer(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $header = $req->getHeaderLine('Content-Type');
+        $i = strpos($header, ';');
+
+        if ($i === false) {
+            $i = strlen($header);
+        }
+
+        $respHeaders = [];
+        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
+
+        switch (trim(strtolower(substr($header, 0, $i)))) {
+            case 'application/json':
+                $resp = $this->handleGetCurrentStateForPlayerJson($ctx, $req);
+                break;
+
+            case 'application/protobuf':
+                $resp = $this->handleGetCurrentStateForPlayerProtobuf($ctx, $req);
+                break;
+
+            default:
+                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
+
+                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
+        }
+
+        foreach ($respHeaders as $key => $value) {
+            $resp = $resp->withHeader($key, $value);
+        }
+
+        return $resp;
+    }
+
+    private function handleGetCurrentStateForPlayerJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'GetCurrentStateForPlayer');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\GetCurrentStatePayload();
+            $in->mergeFromJsonString((string)$req->getBody(), true);
+
+            $out = $this->svc->GetCurrentStateForPlayer($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetCurrentStateForPlayer. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToJsonString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+
+    private function handleGetCurrentStateForPlayerProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'GetCurrentStateForPlayer');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\GetCurrentStatePayload();
+            $in->mergeFromString((string)$req->getBody());
+
+            $out = $this->svc->GetCurrentStateForPlayer($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetCurrentStateForPlayer. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

@@ -21,7 +21,8 @@ import {
   CallReferee,
   GetAllRegisteredPlayers,
   GetAllRounds,
-  GetCurrentSessions,
+  GetCurrentStateForPlayer,
+  GetCurrentStateResponse,
   GetGameConfig,
   GetLastResults,
   GetLastRound,
@@ -29,7 +30,6 @@ import {
   GetMyEvents,
   GetSessionOverview,
   GetTablesState,
-  GetTimerState,
   ListMyPenalties,
   PreviewRound,
   StartGame,
@@ -116,13 +116,6 @@ export class RiichiApiTwirpService implements IRiichiApi {
     return GetGameConfig({ eventId }, this._clientConfMimir);
   }
 
-  getTimerState(eventId: number) {
-    return GetTimerState({ eventId }, this._clientConfMimir).then((val) => ({
-      ...val,
-      autostartTimer: false, // TODO: fix this in https://github.com/MahjongPantheon/pantheon/issues/282
-    }));
-  }
-
   getLastResults(playerId: number, eventId: number) {
     return GetLastResults(
       {
@@ -143,10 +136,8 @@ export class RiichiApiTwirpService implements IRiichiApi {
     return GetSessionOverview({ sessionHash: sessionHashcode }, this._clientConfMimir);
   }
 
-  getCurrentGames(playerId: number, eventId: number) {
-    return GetCurrentSessions({ playerId, eventId }, this._clientConfMimir).then(
-      (resp) => resp.sessions
-    );
+  getCurrentState(playerId: number, eventId: number): Promise<GetCurrentStateResponse> {
+    return GetCurrentStateForPlayer({ playerId, eventId }, this._clientConfMimir);
   }
 
   getUserInfo(personIds: number[]) {

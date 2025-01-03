@@ -27,6 +27,8 @@ use Common\Event;
 use Common\EventData;
 use Common\EventsGetTablesStatePayload;
 use Common\GenericSessionPayload;
+use Common\GetCurrentStatePayload;
+use Common\GetCurrentStateResponse;
 use Common\PlatformType;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
@@ -528,6 +530,26 @@ final class TwirpServer implements Mimir
             }
             return $reg;
         }, $players);
+    }
+
+    /**
+     * @param array $timerState
+     * @return EventsGetTimerStateResponse
+     */
+    protected static function _toTimerState(array $timerState): EventsGetTimerStateResponse
+    {
+        $ret = new EventsGetTimerStateResponse();
+        if (!empty($timerState)) {
+            $ret
+                ->setStarted($timerState['started'])
+                ->setFinished($timerState['finished'])
+                ->setTimeRemaining($timerState['time_remaining'] ?? 0)
+                ->setWaitingForTimer($timerState['waiting_for_timer'])
+                ->setHaveAutostart($timerState['have_autostart'])
+                ->setHideSeatingAfter($timerState['hide_seating_after'])
+                ->setAutostartTimer($timerState['autostart_timer']);
+        }
+        return $ret;
     }
 
     /**
@@ -1064,6 +1086,7 @@ final class TwirpServer implements Mimir
                 if (!empty($session['table_index'])) {
                     $sess->setTableIndex($session['table_index']);
                 }
+                $sess->setTimerState(self::_toTimerState($session['timer_state']));
                 return $sess;
             }, $this->_playersController->getCurrentSessions(
                 $req->getPlayerId(),
@@ -1950,28 +1973,6 @@ final class TwirpServer implements Mimir
 
     /**
      * @param array $ctx
-     * @param GenericSessionPayload $req
-     * @return EventsGetTimerStateResponse
-     * @throws InvalidParametersException
-     */
-    public function GetTimerStateForSession(array $ctx, GenericSessionPayload $req): EventsGetTimerStateResponse
-    {
-        $ret = $this->_eventsController->getTimerStateForSession($req->getSessionHash());
-        if (empty($ret)) {
-            return new EventsGetTimerStateResponse(); // not using timer -> not setting fields
-        }
-        return (new EventsGetTimerStateResponse())
-            ->setStarted($ret['started'])
-            ->setFinished($ret['finished'])
-            ->setTimeRemaining($ret['time_remaining'] ?? 0)
-            ->setWaitingForTimer($ret['waiting_for_timer'])
-            ->setHaveAutostart($ret['have_autostart'])
-            ->setHideSeatingAfter($ret['hide_seating_after'])
-            ->setAutostartTimer($ret['autostart_timer']);
-    }
-
-    /**
-     * @param array $ctx
      * @param AddExtraTimePayload $req
      * @return GenericSuccessResponse
      * @throws Exception
@@ -1981,5 +1982,22 @@ final class TwirpServer implements Mimir
         $ret = $this->_gamesController->addExtraTime(iterator_to_array($req->getSessionHashList()), $req->getExtraTime());
         return (new GenericSuccessResponse())
             ->setSuccess($ret);
+    }
+
+    /**
+     * @param array $ctx
+     * @param GetCurrentStatePayload $req
+     * @return GetCurrentStateResponse
+     * @throws Exception
+     */
+    public function GetCurrentStateForPlayer(array $ctx, GetCurrentStatePayload $req): GetCurrentStateResponse
+    {
+        $gameConfig = $this->GetGameConfig($ctx, (new GenericEventPayload())->setEventId($req->getEventId()));
+        $currentSessions = $this->GetCurrentSessions($ctx, (new PlayersGetCurrentSessionsPayload())
+            ->setPlayerId($req->getPlayerId())
+            ->setEventId($req->getEventId()));
+        return (new GetCurrentStateResponse())
+            ->setSessions($currentSessions->getSessions())
+            ->setConfig($gameConfig);
     }
 }

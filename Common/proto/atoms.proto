@@ -387,13 +387,6 @@ message PlayerInSession {
   bool yakitori = 8;
 }
 
-message CurrentSession {
-  string session_hash = 1;
-  string status = 2;
-  optional int32 table_index = 3;
-  repeated PlayerInSession players = 4;
-}
-
 message RegisteredPlayer {
   int32 id = 1;
   string title = 2;

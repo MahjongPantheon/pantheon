@@ -402,29 +402,6 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetTimerStateForSession(array $ctx, \Common\GenericSessionPayload $in): \Common\EventsGetTimerStateResponse
-    {
-        $ctx = Context::withPackageName($ctx, 'common');
-        $ctx = Context::withServiceName($ctx, 'Mimir');
-        $ctx = Context::withMethodName($ctx, 'GetTimerStateForSession');
-
-        $out = new \Common\EventsGetTimerStateResponse();
-
-        $url = $this->addr;
-        if (empty($this->prefix)) {
-            $url = $url.'/common.Mimir/GetTimerStateForSession';
-        } else {
-            $url = $url.'/'.$this->prefix.'/common.Mimir/GetTimerStateForSession';
-        }
-
-        $this->doRequest($ctx, $url, $in, $out);
-
-        return $out;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function GetSessionOverview(array $ctx, \Common\GenericSessionPayload $in): \Common\GamesGetSessionOverviewResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
@@ -1749,6 +1726,29 @@ abstract class MimirAbstractClient
             $url = $url.'/common.Mimir/ListMyPenalties';
         } else {
             $url = $url.'/'.$this->prefix.'/common.Mimir/ListMyPenalties';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function GetCurrentStateForPlayer(array $ctx, \Common\GetCurrentStatePayload $in): \Common\GetCurrentStateResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'GetCurrentStateForPlayer');
+
+        $out = new \Common\GetCurrentStateResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/GetCurrentStateForPlayer';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/GetCurrentStateForPlayer';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
