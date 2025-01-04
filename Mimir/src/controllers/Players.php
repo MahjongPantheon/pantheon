@@ -168,7 +168,7 @@ class PlayersController extends Controller
                 'hashcode'    => $session->getRepresentationalHash(),
                 'status'      => $session->getStatus(),
                 'table_index' => $session->getTableIndex(),
-                'timer_state' => $timerState[$session->getRepresentationalHash()],
+                'timer_state' => $timerState[$session->getRepresentationalHash()] ?? null,
                 'players'     => array_map(function (PlayerPrimitive $p, $score) use (&$regData) {
                     return [
                         'id'            => $p->getId(),

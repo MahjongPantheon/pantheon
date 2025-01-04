@@ -1086,7 +1086,9 @@ final class TwirpServer implements Mimir
                 if (!empty($session['table_index'])) {
                     $sess->setTableIndex($session['table_index']);
                 }
-                $sess->setTimerState(self::_toTimerState($session['timer_state']));
+                if (!empty($session['timer_state'])) {
+                    $sess->setTimerState(self::_toTimerState($session['timer_state']));
+                }
                 return $sess;
             }, $this->_playersController->getCurrentSessions(
                 $req->getPlayerId(),
