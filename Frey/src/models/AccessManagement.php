@@ -339,6 +339,13 @@ class AccessManagementModel extends Model
             }
         } else if ($ruleName === InternalRules::CREATE_EVENT && $registration) {
             // do nothing - this is adding CREATE_EVENT rights for all newly registered users
+        } else if ($ruleName === InternalRules::REFEREE_FOR_EVENT) {
+            $hasAccess = $this->_authorizedPerson && ($this->_authorizedPerson->getIsSuperadmin() || (
+                !empty($this->_currentAccess[InternalRules::ADMIN_EVENT]) && $this->_currentAccess[InternalRules::ADMIN_EVENT] == true
+            ));
+            if (!$hasAccess) {
+                throw new AccessDeniedException('You are not allowed to add referees in this event');
+            }
         } else {
             $this->_checkAccessRightsWithInternal(InternalRules::ADD_RULE_FOR_PERSON, $eventId);
         }
@@ -617,7 +624,14 @@ class AccessManagementModel extends Model
                 !empty($this->_currentAccess[InternalRules::ADMIN_EVENT]) && $this->_currentAccess[InternalRules::ADMIN_EVENT] == true
             );
             if (!$hasAccess) {
-                throw new AccessDeniedException('You are not allowed to add anyone to administrators in this event');
+                throw new AccessDeniedException('You are not allowed to remove administrators in this event');
+            }
+        } else if ($rules[0]->getAclName() === InternalRules::REFEREE_FOR_EVENT) {
+            $hasAccess = $this->_authorizedPerson && ($this->_authorizedPerson->getIsSuperadmin() || (
+                !empty($this->_currentAccess[InternalRules::ADMIN_EVENT]) && $this->_currentAccess[InternalRules::ADMIN_EVENT] == true
+            ));
+            if (!$hasAccess) {
+                throw new AccessDeniedException('You are not allowed to remove referees in this event');
             }
         } else {
             if (empty($rules[0]->getEventId())) { // systemwide
