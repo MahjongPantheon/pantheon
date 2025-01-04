@@ -45,6 +45,10 @@ class TableState extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated .common.RegisteredPlayer players = 9;</code>
      */
     private $players;
+    /**
+     * Generated from protobuf field <code>optional int32 extra_time = 10;</code>
+     */
+    protected $extra_time = null;
 
     /**
      * Constructor.
@@ -60,6 +64,7 @@ class TableState extends \Google\Protobuf\Internal\Message
      *     @type int $current_round_index
      *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
      *     @type array<\Common\RegisteredPlayer>|\Google\Protobuf\Internal\RepeatedField $players
+     *     @type int $extra_time
      * }
      */
     public function __construct($data = NULL) {
@@ -259,6 +264,38 @@ class TableState extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\RegisteredPlayer::class);
         $this->players = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional int32 extra_time = 10;</code>
+     * @return int
+     */
+    public function getExtraTime()
+    {
+        return isset($this->extra_time) ? $this->extra_time : 0;
+    }
+
+    public function hasExtraTime()
+    {
+        return isset($this->extra_time);
+    }
+
+    public function clearExtraTime()
+    {
+        unset($this->extra_time);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional int32 extra_time = 10;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setExtraTime($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->extra_time = $var;
 
         return $this;
     }

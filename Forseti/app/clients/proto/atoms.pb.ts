@@ -533,6 +533,7 @@ export interface TableState {
   currentRoundIndex: number;
   scores: IntermediateResultOfSession[];
   players: RegisteredPlayer[];
+  extraTime?: number | null | undefined;
 }
 
 export interface Achievement {
@@ -6597,6 +6598,7 @@ export const TableState = {
       currentRoundIndex: 0,
       scores: [],
       players: [],
+      extraTime: undefined,
       ...msg,
     };
   },
@@ -6639,6 +6641,9 @@ export const TableState = {
         msg.players as any,
         RegisteredPlayer._writeMessage,
       );
+    }
+    if (msg.extraTime != undefined) {
+      writer.writeInt32(10, msg.extraTime);
     }
     return writer;
   },
@@ -6688,6 +6693,10 @@ export const TableState = {
           const m = RegisteredPlayer.initialize();
           reader.readMessage(m, RegisteredPlayer._readMessage);
           msg.players.push(m);
+          break;
+        }
+        case 10: {
+          msg.extraTime = reader.readInt32();
           break;
         }
         default: {
@@ -13444,6 +13453,7 @@ export const TableStateJSON = {
       currentRoundIndex: 0,
       scores: [],
       players: [],
+      extraTime: undefined,
       ...msg,
     };
   },
@@ -13481,6 +13491,9 @@ export const TableStateJSON = {
     }
     if (msg.players?.length) {
       json["players"] = msg.players.map(RegisteredPlayerJSON._writeMessage);
+    }
+    if (msg.extraTime != undefined) {
+      json["extraTime"] = msg.extraTime;
     }
     return json;
   },
@@ -13530,6 +13543,10 @@ export const TableStateJSON = {
         RegisteredPlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
+    }
+    const _extraTime_ = json["extraTime"] ?? json["extra_time"];
+    if (_extraTime_) {
+      msg.extraTime = protoscript.parseNumber(_extraTime_);
     }
     return msg;
   },

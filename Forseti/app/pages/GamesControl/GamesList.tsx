@@ -55,10 +55,12 @@ import { useI18n } from '../../hooks/i18n';
 import { Confirmation } from './Confirmation';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { useState } from 'react';
+import { EventsGetTimerStateResponse } from '../../clients/proto/mimir.pb';
 
 type GamesListProps = {
   tablesState: TableState[];
   eventConfig: GameConfig | null;
+  timerState: EventsGetTimerStateResponse | null;
   onCancelLastRound: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
   onRemoveGame?: (hash: string) => void;
   onDefinalizeGame?: (hash: string) => void;
@@ -69,6 +71,7 @@ type GamesListProps = {
 export function GamesList({
   tablesState,
   eventConfig,
+  timerState,
   onDefinalizeGame,
   onRemoveGame,
   onCancelLastRound,
@@ -177,44 +180,53 @@ export function GamesList({
                   })}
                 </Stack>
                 <Box style={{ flex: 1 }}>
+                  {t.extraTime && (
+                    <Text size='sm' weight='bold'>
+                      {i18n._t('Extra minutes: %1', [t.extraTime / 60])}
+                    </Text>
+                  )}
                   <Text size='sm'>
                     {t.lastRound && <Box>{formatRound(t.lastRound, players, i18n)}</Box>}
                   </Text>
                 </Box>
               </Group>
               <Group position='right'>
-                {eventConfig?.syncStart && t.status === SessionStatus.SESSION_STATUS_INPROGRESS && (
-                  <Confirmation
-                    icon={<IconClockHour3 />}
-                    title={i18n._t('Add extra time for this table')}
-                    text={i18n._t('Add extra time')}
-                    warning={
-                      <>
-                        <Select
-                          label={i18n._t('Select extra time')}
-                          value={extraTime}
-                          onChange={setExtraTime}
-                          data={[
-                            { value: '60', label: i18n._t('1 minute') },
-                            { value: '120', label: i18n._t('2 minutes') },
-                            { value: '180', label: i18n._t('3 minutes') },
-                            { value: '240', label: i18n._t('4 minutes') },
-                            { value: '300', label: i18n._t('5 minutes') },
-                            { value: '420', label: i18n._t('7 minutes') },
-                          ]}
-                        />
-                        <Space h='md' />
-                        <Text>{i18n._t('Add selected amount of extra time for this table?')}</Text>
-                      </>
-                    }
-                    color='orange'
-                    onCancel={() => setExtraTime('60')}
-                    onConfirm={() => {
-                      onAddExtraTime?.(t.sessionHash, parseInt(extraTime ?? '60', 10));
-                    }}
-                    i18n={i18n}
-                  />
-                )}
+                {eventConfig?.syncStart &&
+                  t.status === SessionStatus.SESSION_STATUS_INPROGRESS &&
+                  !timerState?.waitingForTimer && (
+                    <Confirmation
+                      icon={<IconClockHour3 />}
+                      title={i18n._t('Add extra time for this table')}
+                      text={i18n._t('Add extra time')}
+                      warning={
+                        <>
+                          <Select
+                            label={i18n._t('Select extra time')}
+                            value={extraTime}
+                            onChange={setExtraTime}
+                            data={[
+                              { value: '60', label: i18n._t('1 minute') },
+                              { value: '120', label: i18n._t('2 minutes') },
+                              { value: '180', label: i18n._t('3 minutes') },
+                              { value: '240', label: i18n._t('4 minutes') },
+                              { value: '300', label: i18n._t('5 minutes') },
+                              { value: '420', label: i18n._t('7 minutes') },
+                            ]}
+                          />
+                          <Space h='md' />
+                          <Text>
+                            {i18n._t('Add selected amount of extra time for this table?')}
+                          </Text>
+                        </>
+                      }
+                      color='orange'
+                      onCancel={() => setExtraTime('60')}
+                      onConfirm={() => {
+                        onAddExtraTime?.(t.sessionHash, parseInt(extraTime ?? '60', 10));
+                      }}
+                      i18n={i18n}
+                    />
+                  )}
 
                 {(t.status === SessionStatus.SESSION_STATUS_INPROGRESS ||
                   (eventConfig?.syncStart &&

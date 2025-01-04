@@ -35,6 +35,7 @@ import {
   GetPrescriptedEventConfig,
   GetRulesets,
   GetTablesState,
+  GetTimerState,
   GetTimezones,
   ListPenalties,
   MakeIntervalSeating,
@@ -371,6 +372,11 @@ export class ApiService {
   getGameConfig(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetGameConfig' });
     return GetGameConfig({ eventId }, this._clientConfMimir);
+  }
+
+  getTimerState(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTimerState' });
+    return GetTimerState({ eventId }, this._clientConfMimir);
   }
 
   getPenalties(eventId: number) {

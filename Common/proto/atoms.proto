@@ -521,6 +521,7 @@ message TableState {
   int32 current_round_index = 7;
   repeated IntermediateResultOfSession scores = 8;
   repeated RegisteredPlayer players = 9;
+  optional int32 extra_time = 10;
 }
 
 message Achievement {

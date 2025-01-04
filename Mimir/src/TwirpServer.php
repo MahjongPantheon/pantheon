@@ -1436,6 +1436,7 @@ final class TwirpServer implements Mimir
                     ->setStatus(self::_toTableStatus($table['status']))
                     ->setMayDefinalize($table['may_definalize'])
                     ->setSessionHash($table['hash'])
+                    ->setExtraTime($table['extra_time'])
                     ->setCurrentRoundIndex($table['current_round'])
                     ->setScores(self::_makeScores($table['scores']))
                     ->setPlayers(self::_toRegisteredPlayers($table['players']));

@@ -37,6 +37,7 @@ import { TopActionButton } from '../../components/TopActionButton';
 import { IconRefresh } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
 import { useStorage } from '../../hooks/storage';
+import { EventsGetTimerStateResponse } from '../../clients/proto/mimir.pb';
 
 const DEFAULT_SECS_UNTIL_RELOAD = 60;
 export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
@@ -48,6 +49,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const [isLoading, setIsLoading] = useState(false);
   const [seatingLoading, setSeatingLoading] = useState(false);
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
+  const [timerState, setTimerState] = useState<null | EventsGetTimerStateResponse>(null);
   const [tablesState, setTablesState] = useState<TableState[]>([]);
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]);
   const [secsUntilReload, setSecsUntilReload] = useState(DEFAULT_SECS_UNTIL_RELOAD);
@@ -66,11 +68,13 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       api.getGameConfig(eventId),
       api.getTablesState(eventId),
       api.getAllPlayers(eventId),
+      api.getTimerState(eventId),
     ])
-      .then(([config, tables, regs]) => {
+      .then(([config, tables, regs, tState]) => {
         setEventConfig(config);
         setTablesState(tables);
         setPlayers(regs);
+        setTimerState(tState);
       })
       .catch((err: Error) => {
         notifications.show({
@@ -94,12 +98,15 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   }, []);
 
   const doReloadConfigAndTables = useCallback(() => {
-    return Promise.all([api.getGameConfig(eventId), api.getTablesState(eventId)]).then(
-      ([cfg, tables]) => {
-        setEventConfig(cfg);
-        setTablesState(tables);
-      }
-    );
+    return Promise.all([
+      api.getGameConfig(eventId),
+      api.getTablesState(eventId),
+      api.getTimerState(eventId),
+    ]).then(([cfg, tables, tState]) => {
+      setEventConfig(cfg);
+      setTablesState(tables);
+      setTimerState(tState);
+    });
   }, []);
 
   const doReloadConfigOnly = useCallback(() => {
@@ -366,6 +373,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       <GamesList
         tablesState={tablesState}
         eventConfig={eventConfig}
+        timerState={timerState}
         onCancelLastRound={onCancelRound}
         onDefinalizeGame={eventConfig?.syncStart ? undefined : onDefinalize}
         onRemoveGame={eventConfig?.syncStart ? undefined : onRemoveGame}
