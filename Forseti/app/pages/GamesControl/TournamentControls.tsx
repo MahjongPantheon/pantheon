@@ -67,7 +67,7 @@ type TournamentControlsProps = {
   makeNextPredefinedSeating: (rndSeats: boolean) => void;
   startTimer: () => void;
   notifyPlayers: () => void;
-  resetTimer: () => void;
+  addExtraTime: (amount: number) => void;
   approveResults: () => void;
   resetSeating: () => void;
   seatingLoading: boolean;
@@ -84,12 +84,13 @@ export function TournamentControls({
   approveResults,
   startTimer,
   notifyPlayers,
-  resetTimer,
+  addExtraTime,
   resetSeating,
   seatingLoading,
 }: TournamentControlsProps) {
   const i18n = useI18n();
   const [interval, setInterval] = useState<string | null>('1');
+  const [extraTime, setExtraTime] = useState<string | null>('60');
   const [rndSeats, setRndSeats] = useState(false);
   const currentStage = determineStage(tablesState, players, eventConfig, seatingLoading);
 
@@ -257,12 +258,30 @@ export function TournamentControls({
             <Confirmation
               disabled={tablesState.length === 0}
               i18n={i18n}
-              title={i18n._t('Reset the timer to initial value')}
-              text={i18n._t('Reset timer')}
-              warning={i18n._t('Really reset timer?')}
+              title={i18n._t('Add extra time')}
+              text={i18n._t('Add extra time')}
+              warning={
+                <>
+                  <Select
+                    label={i18n._t('Select extra time')}
+                    value={extraTime}
+                    onChange={setExtraTime}
+                    data={[
+                      { value: '60', label: i18n._t('1 minute') },
+                      { value: '120', label: i18n._t('2 minutes') },
+                      { value: '180', label: i18n._t('3 minutes') },
+                      { value: '240', label: i18n._t('4 minutes') },
+                      { value: '300', label: i18n._t('5 minutes') },
+                      { value: '420', label: i18n._t('7 minutes') },
+                    ]}
+                  />
+                  <Space h='md' />
+                  <Text>{i18n._t('Add selected amount of extra time for all tables?')}</Text>
+                </>
+              }
               icon={<IconSquareX />}
               color='orange'
-              onConfirm={resetTimer}
+              onConfirm={() => addExtraTime(parseInt(extraTime ?? '60', 10))}
             />
             <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
               {eventConfig?.hideResults

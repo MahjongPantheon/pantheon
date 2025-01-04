@@ -16,6 +16,7 @@
  */
 
 import {
+  AddExtraTime,
   AddPenalty,
   CancelGame,
   CancelPenalty,
@@ -520,6 +521,13 @@ export class ApiService {
   startTimer(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'StartTimer' });
     return StartTimer({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  addExtraTime(sessionHashList: string[], extraTime: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'AddExtraTime' });
+    return AddExtraTime({ sessionHashList, extraTime }, this._clientConfMimir).then(
+      (r) => r.success
+    );
   }
 
   notifyPlayers(eventId: number) {

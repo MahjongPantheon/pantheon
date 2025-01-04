@@ -162,6 +162,33 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, []);
 
+  const onAddExtraTime = useCallback((extraTime: number) => {
+    api
+      .addExtraTime(
+        tablesState.map((t) => t.sessionHash),
+        extraTime
+      )
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to add extra time'));
+        }
+      })
+      .then(doReloadConfigAndTables)
+      .catch(errHandler);
+  }, []);
+
+  const onAddExtraTimeForTable = useCallback((hash: string, extraTime: number) => {
+    api
+      .addExtraTime([hash], extraTime)
+      .then((r) => {
+        if (!r) {
+          throw new Error(i18n._t('Failed to add extra time'));
+        }
+      })
+      .then(doReloadConfigAndTables)
+      .catch(errHandler);
+  }, []);
+
   const notifyPlayers = useCallback(() => {
     api
       .notifyPlayers(eventId)
@@ -326,7 +353,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
           eventConfig={eventConfig}
           startTimer={onStartTimer}
           notifyPlayers={notifyPlayers}
-          resetTimer={onStartTimer}
+          addExtraTime={onAddExtraTime}
           toggleResults={onToggleResults}
           approveResults={onApproveResults}
           makeIntervalSeating={onMakeIntervalSeating}
@@ -343,6 +370,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         onDefinalizeGame={eventConfig?.syncStart ? undefined : onDefinalize}
         onRemoveGame={eventConfig?.syncStart ? undefined : onRemoveGame}
         onForceFinish={eventConfig?.syncStart ? undefined : onForceFinish}
+        onAddExtraTime={onAddExtraTimeForTable}
       />
       <TopActionButton
         color='green'
