@@ -17,7 +17,6 @@
 
 import { IAppState } from '../store/interfaces';
 import {
-  CurrentSession,
   GameConfig,
   MyEvent,
   Penalty,
@@ -28,9 +27,9 @@ import {
   TableState,
 } from '../clients/proto/atoms.pb';
 import {
-  EventsGetTimerStateResponse,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
+  GetCurrentStateResponse,
 } from '../clients/proto/mimir.pb';
 import { AuthAuthorizeResponse } from '../clients/proto/frey.pb';
 
@@ -39,11 +38,10 @@ export interface IRiichiApi {
   startGame(eventId: number, playerIds: number[]): Promise<string>;
   getMyEvents(): Promise<MyEvent[]>;
   getGameConfig(eventId: number): Promise<GameConfig>;
-  getTimerState(eventId: number): Promise<EventsGetTimerStateResponse>;
   getLastResults(playerId: number, eventId: number): Promise<SessionHistoryResult[]>;
   getAllPlayers(eventId: number): Promise<RegisteredPlayer[]>;
   getGameOverview(sessionHashcode: string): Promise<GamesGetSessionOverviewResponse>;
-  getCurrentGames(playerId: number, eventId: number): Promise<CurrentSession[]>;
+  getCurrentState(playerId: number, eventId: number): Promise<GetCurrentStateResponse>;
   getUserInfo(personIds: number[]): Promise<PersonEx[]>;
   getChangesOverview(state: IAppState): Promise<RoundState>;
   getLastRoundByHash(sessionHashcode: string): Promise<RoundState>;

@@ -48,6 +48,7 @@ class SessionPrimitive extends Primitive
         'table_index'           => '_tableIndex',
         'start_date'            => '_startDate',
         'end_date'              => '_endDate',
+        'extra_time'            => '_extraTime',
         '::session_player'      => '_playersIds', // external many-to-many relation
         'status'                => '_status',
         'intermediate_results'  => '_current',
@@ -69,6 +70,7 @@ class SessionPrimitive extends Primitive
             '_tableIndex'   => $this->_integerTransform(true),
             '_startDate'    => $this->_stringTransform(true),
             '_endDate'      => $this->_stringTransform(true),
+            '_extraTime'    => $this->_integerTransform(),
             '_status'       => $this->_stringTransform(true),
             '_current'      => [
                 'serialize' => function (SessionState $obj = null) {
@@ -133,6 +135,12 @@ class SessionPrimitive extends Primitive
      * @var string
      */
     protected $_endDate;
+
+    /**
+     * Extra time for the table used for timer prolongation
+     * @var int
+     */
+    protected $_extraTime;
 
     /**
      * ordered list of player ids, east to north.
@@ -584,6 +592,24 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @param int $extraTime additional time in seconds
+     * @return $this
+     */
+    public function setExtraTime(int $extraTime)
+    {
+        $this->_extraTime = $extraTime;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExtraTime()
+    {
+        return $this->_extraTime;
+    }
+
+    /**
      * @param \Mimir\PlayerPrimitive[] $players
      * @return $this
      */
@@ -769,7 +795,7 @@ class SessionPrimitive extends Primitive
             case EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND:
                 $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
                     $lastTimer + (
-                        $this->getEvent()->getGameDuration() * 60
+                        $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime()
                     ) < time()
                 );
 
@@ -801,7 +827,7 @@ class SessionPrimitive extends Primitive
 
                 $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
                     $lastTimer + (
-                        $this->getEvent()->getGameDuration() * 60
+                        $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime()
                     ) < time()
                 );
 

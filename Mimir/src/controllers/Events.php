@@ -826,6 +826,8 @@ class EventsController extends Controller
     }
 
     /**
+     * Event-wide timer state
+     *
      * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception

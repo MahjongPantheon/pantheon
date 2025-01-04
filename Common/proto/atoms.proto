@@ -387,13 +387,6 @@ message PlayerInSession {
   bool yakitori = 8;
 }
 
-message CurrentSession {
-  string session_hash = 1;
-  string status = 2;
-  optional int32 table_index = 3;
-  repeated PlayerInSession players = 4;
-}
-
 message RegisteredPlayer {
   int32 id = 1;
   string title = 2;
@@ -528,6 +521,7 @@ message TableState {
   int32 current_round_index = 7;
   repeated IntermediateResultOfSession scores = 8;
   repeated RegisteredPlayer players = 9;
+  optional int32 extra_time = 10;
 }
 
 message Achievement {
@@ -664,4 +658,8 @@ message GenericSuccessResponse {
 
 message GenericEventPayload {
   int32 event_id = 1;
+}
+
+message GenericSessionPayload {
+  string session_hash = 1;
 }

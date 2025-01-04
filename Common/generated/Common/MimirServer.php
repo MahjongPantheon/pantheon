@@ -270,8 +270,12 @@ final class MimirServer implements RequestHandlerInterface
                 return $this->handleListPenalties($ctx, $req);
             case 'CancelPenalty':
                 return $this->handleCancelPenalty($ctx, $req);
+            case 'AddExtraTime':
+                return $this->handleAddExtraTime($ctx, $req);
             case 'ListMyPenalties':
                 return $this->handleListMyPenalties($ctx, $req);
+            case 'GetCurrentStateForPlayer':
+                return $this->handleGetCurrentStateForPlayer($ctx, $req);
 
             default:
                 return $this->writeError($ctx, $this->noRouteError($req));
@@ -1282,7 +1286,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\EventsGetGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->GetGame($ctx, $in);
@@ -1319,7 +1323,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\EventsGetGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->GetGame($ctx, $in);
@@ -1817,7 +1821,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesGetSessionOverviewPayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->GetSessionOverview($ctx, $in);
@@ -1854,7 +1858,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesGetSessionOverviewPayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->GetSessionOverview($ctx, $in);
@@ -2566,7 +2570,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PlayersGetAllRoundsPayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->GetAllRounds($ctx, $in);
@@ -2603,7 +2607,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PlayersGetAllRoundsPayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->GetAllRounds($ctx, $in);
@@ -2673,7 +2677,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PlayersGetLastRoundByHashPayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->GetLastRoundByHash($ctx, $in);
@@ -2710,7 +2714,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\PlayersGetLastRoundByHashPayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->GetLastRoundByHash($ctx, $in);
@@ -4706,7 +4710,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesEndGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->EndGame($ctx, $in);
@@ -4743,7 +4747,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesEndGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->EndGame($ctx, $in);
@@ -4813,7 +4817,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesCancelGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->CancelGame($ctx, $in);
@@ -4850,7 +4854,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesCancelGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->CancelGame($ctx, $in);
@@ -5134,7 +5138,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesDefinalizeGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->DefinalizeGame($ctx, $in);
@@ -5171,7 +5175,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\GamesDefinalizeGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->DefinalizeGame($ctx, $in);
@@ -6953,7 +6957,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\ForceFinishGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
             $out = $this->svc->ForceFinishGame($ctx, $in);
@@ -6990,7 +6994,7 @@ final class MimirServer implements RequestHandlerInterface
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Common\ForceFinishGamePayload();
+            $in = new \Common\GenericSessionPayload();
             $in->mergeFromString((string)$req->getBody());
 
             $out = $this->svc->ForceFinishGame($ctx, $in);
@@ -7768,6 +7772,113 @@ final class MimirServer implements RequestHandlerInterface
 
         return $resp;
     }
+    private function handleAddExtraTime(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $header = $req->getHeaderLine('Content-Type');
+        $i = strpos($header, ';');
+
+        if ($i === false) {
+            $i = strlen($header);
+        }
+
+        $respHeaders = [];
+        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
+
+        switch (trim(strtolower(substr($header, 0, $i)))) {
+            case 'application/json':
+                $resp = $this->handleAddExtraTimeJson($ctx, $req);
+                break;
+
+            case 'application/protobuf':
+                $resp = $this->handleAddExtraTimeProtobuf($ctx, $req);
+                break;
+
+            default:
+                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
+
+                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
+        }
+
+        foreach ($respHeaders as $key => $value) {
+            $resp = $resp->withHeader($key, $value);
+        }
+
+        return $resp;
+    }
+
+    private function handleAddExtraTimeJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'AddExtraTime');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\AddExtraTimePayload();
+            $in->mergeFromJsonString((string)$req->getBody(), true);
+
+            $out = $this->svc->AddExtraTime($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling AddExtraTime. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToJsonString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+
+    private function handleAddExtraTimeProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'AddExtraTime');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\AddExtraTimePayload();
+            $in->mergeFromString((string)$req->getBody());
+
+            $out = $this->svc->AddExtraTime($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling AddExtraTime. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/protobuf')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
     private function handleListMyPenalties(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
         $header = $req->getHeaderLine('Content-Type');
@@ -7853,6 +7964,113 @@ final class MimirServer implements RequestHandlerInterface
 
             if ($out === null) {
                 return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling ListMyPenalties. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request proto'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/protobuf')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+    private function handleGetCurrentStateForPlayer(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $header = $req->getHeaderLine('Content-Type');
+        $i = strpos($header, ';');
+
+        if ($i === false) {
+            $i = strlen($header);
+        }
+
+        $respHeaders = [];
+        $ctx[Context::RESPONSE_HEADER] = &$respHeaders;
+
+        switch (trim(strtolower(substr($header, 0, $i)))) {
+            case 'application/json':
+                $resp = $this->handleGetCurrentStateForPlayerJson($ctx, $req);
+                break;
+
+            case 'application/protobuf':
+                $resp = $this->handleGetCurrentStateForPlayerProtobuf($ctx, $req);
+                break;
+
+            default:
+                $msg = sprintf('unexpected Content-Type: "%s"', $req->getHeaderLine('Content-Type'));
+
+                return $this->writeError($ctx, $this->badRouteError($msg, $req->getMethod(), $req->getUri()->getPath()));
+        }
+
+        foreach ($respHeaders as $key => $value) {
+            $resp = $resp->withHeader($key, $value);
+        }
+
+        return $resp;
+    }
+
+    private function handleGetCurrentStateForPlayerJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'GetCurrentStateForPlayer');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\GetCurrentStatePayload();
+            $in->mergeFromJsonString((string)$req->getBody(), true);
+
+            $out = $this->svc->GetCurrentStateForPlayer($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetCurrentStateForPlayer. null responses are not supported'));
+            }
+
+            $ctx = $this->hook->responsePrepared($ctx);
+        } catch (GPBDecodeException $e) {
+            return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'failed to parse request json'));
+        } catch (\Throwable $e) {
+            return $this->writeError($ctx, $e);
+        }
+
+        $data = $out->serializeToJsonString();
+
+        $body = $this->streamFactory->createStream($data);
+
+        $resp = $this->responseFactory
+            ->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($body);
+
+        $this->callResponseSent($ctx);
+
+        return $resp;
+    }
+
+    private function handleGetCurrentStateForPlayerProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    {
+        $ctx = Context::withMethodName($ctx, 'GetCurrentStateForPlayer');
+
+        try {
+            $ctx = $this->hook->requestRouted($ctx);
+
+            $in = new \Common\GetCurrentStatePayload();
+            $in->mergeFromString((string)$req->getBody());
+
+            $out = $this->svc->GetCurrentStateForPlayer($ctx, $in);
+
+            if ($out === null) {
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling GetCurrentStateForPlayer. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

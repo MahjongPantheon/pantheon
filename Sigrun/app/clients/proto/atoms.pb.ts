@@ -399,13 +399,6 @@ export interface PlayerInSession {
   yakitori: boolean;
 }
 
-export interface CurrentSession {
-  sessionHash: string;
-  status: string;
-  tableIndex?: number | null | undefined;
-  players: PlayerInSession[];
-}
-
 export interface RegisteredPlayer {
   id: number;
   title: string;
@@ -540,6 +533,7 @@ export interface TableState {
   currentRoundIndex: number;
   scores: IntermediateResultOfSession[];
   players: RegisteredPlayer[];
+  extraTime?: number | null | undefined;
 }
 
 export interface Achievement {
@@ -656,6 +650,10 @@ export interface GenericSuccessResponse {
 
 export interface GenericEventPayload {
   eventId: number;
+}
+
+export interface GenericSessionPayload {
+  sessionHash: string;
 }
 
 //========================================//
@@ -5015,104 +5013,6 @@ export const PlayerInSession = {
   },
 };
 
-export const CurrentSession = {
-  /**
-   * Serializes CurrentSession to protobuf.
-   */
-  encode: function (msg: PartialDeep<CurrentSession>): Uint8Array {
-    return CurrentSession._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes CurrentSession from protobuf.
-   */
-  decode: function (bytes: ByteSource): CurrentSession {
-    return CurrentSession._readMessage(
-      CurrentSession.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes CurrentSession with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<CurrentSession>): CurrentSession {
-    return {
-      sessionHash: "",
-      status: "",
-      tableIndex: undefined,
-      players: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<CurrentSession>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.sessionHash) {
-      writer.writeString(1, msg.sessionHash);
-    }
-    if (msg.status) {
-      writer.writeString(2, msg.status);
-    }
-    if (msg.tableIndex != undefined) {
-      writer.writeInt32(3, msg.tableIndex);
-    }
-    if (msg.players?.length) {
-      writer.writeRepeatedMessage(
-        4,
-        msg.players as any,
-        PlayerInSession._writeMessage,
-      );
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: CurrentSession,
-    reader: protoscript.BinaryReader,
-  ): CurrentSession {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.sessionHash = reader.readString();
-          break;
-        }
-        case 2: {
-          msg.status = reader.readString();
-          break;
-        }
-        case 3: {
-          msg.tableIndex = reader.readInt32();
-          break;
-        }
-        case 4: {
-          const m = PlayerInSession.initialize();
-          reader.readMessage(m, PlayerInSession._readMessage);
-          msg.players.push(m);
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
 export const RegisteredPlayer = {
   /**
    * Serializes RegisteredPlayer to protobuf.
@@ -6698,6 +6598,7 @@ export const TableState = {
       currentRoundIndex: 0,
       scores: [],
       players: [],
+      extraTime: undefined,
       ...msg,
     };
   },
@@ -6740,6 +6641,9 @@ export const TableState = {
         msg.players as any,
         RegisteredPlayer._writeMessage,
       );
+    }
+    if (msg.extraTime != undefined) {
+      writer.writeInt32(10, msg.extraTime);
     }
     return writer;
   },
@@ -6789,6 +6693,10 @@ export const TableState = {
           const m = RegisteredPlayer.initialize();
           reader.readMessage(m, RegisteredPlayer._readMessage);
           msg.players.push(m);
+          break;
+        }
+        case 10: {
+          msg.extraTime = reader.readInt32();
           break;
         }
         default: {
@@ -8250,6 +8158,76 @@ export const GenericEventPayload = {
       switch (field) {
         case 1: {
           msg.eventId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const GenericSessionPayload = {
+  /**
+   * Serializes GenericSessionPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<GenericSessionPayload>): Uint8Array {
+    return GenericSessionPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes GenericSessionPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): GenericSessionPayload {
+    return GenericSessionPayload._readMessage(
+      GenericSessionPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes GenericSessionPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GenericSessionPayload>,
+  ): GenericSessionPayload {
+    return {
+      sessionHash: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GenericSessionPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.sessionHash) {
+      writer.writeString(1, msg.sessionHash);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GenericSessionPayload,
+    reader: protoscript.BinaryReader,
+  ): GenericSessionPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.sessionHash = reader.readString();
           break;
         }
         default: {
@@ -12082,87 +12060,6 @@ export const PlayerInSessionJSON = {
   },
 };
 
-export const CurrentSessionJSON = {
-  /**
-   * Serializes CurrentSession to JSON.
-   */
-  encode: function (msg: PartialDeep<CurrentSession>): string {
-    return JSON.stringify(CurrentSessionJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes CurrentSession from JSON.
-   */
-  decode: function (json: string): CurrentSession {
-    return CurrentSessionJSON._readMessage(
-      CurrentSessionJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes CurrentSession with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<CurrentSession>): CurrentSession {
-    return {
-      sessionHash: "",
-      status: "",
-      tableIndex: undefined,
-      players: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<CurrentSession>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.sessionHash) {
-      json["sessionHash"] = msg.sessionHash;
-    }
-    if (msg.status) {
-      json["status"] = msg.status;
-    }
-    if (msg.tableIndex != undefined) {
-      json["tableIndex"] = msg.tableIndex;
-    }
-    if (msg.players?.length) {
-      json["players"] = msg.players.map(PlayerInSessionJSON._writeMessage);
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: CurrentSession, json: any): CurrentSession {
-    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
-    if (_sessionHash_) {
-      msg.sessionHash = _sessionHash_;
-    }
-    const _status_ = json["status"];
-    if (_status_) {
-      msg.status = _status_;
-    }
-    const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
-    if (_tableIndex_) {
-      msg.tableIndex = protoscript.parseNumber(_tableIndex_);
-    }
-    const _players_ = json["players"];
-    if (_players_) {
-      for (const item of _players_) {
-        const m = PlayerInSessionJSON.initialize();
-        PlayerInSessionJSON._readMessage(m, item);
-        msg.players.push(m);
-      }
-    }
-    return msg;
-  },
-};
-
 export const RegisteredPlayerJSON = {
   /**
    * Serializes RegisteredPlayer to JSON.
@@ -13556,6 +13453,7 @@ export const TableStateJSON = {
       currentRoundIndex: 0,
       scores: [],
       players: [],
+      extraTime: undefined,
       ...msg,
     };
   },
@@ -13593,6 +13491,9 @@ export const TableStateJSON = {
     }
     if (msg.players?.length) {
       json["players"] = msg.players.map(RegisteredPlayerJSON._writeMessage);
+    }
+    if (msg.extraTime != undefined) {
+      json["extraTime"] = msg.extraTime;
     }
     return json;
   },
@@ -13642,6 +13543,10 @@ export const TableStateJSON = {
         RegisteredPlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
+    }
+    const _extraTime_ = json["extraTime"] ?? json["extra_time"];
+    if (_extraTime_) {
+      msg.extraTime = protoscript.parseNumber(_extraTime_);
     }
     return msg;
   },
@@ -14924,6 +14829,64 @@ export const GenericEventPayloadJSON = {
     const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    return msg;
+  },
+};
+
+export const GenericSessionPayloadJSON = {
+  /**
+   * Serializes GenericSessionPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<GenericSessionPayload>): string {
+    return JSON.stringify(GenericSessionPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes GenericSessionPayload from JSON.
+   */
+  decode: function (json: string): GenericSessionPayload {
+    return GenericSessionPayloadJSON._readMessage(
+      GenericSessionPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes GenericSessionPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GenericSessionPayload>,
+  ): GenericSessionPayload {
+    return {
+      sessionHash: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GenericSessionPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.sessionHash) {
+      json["sessionHash"] = msg.sessionHash;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GenericSessionPayload,
+    json: any,
+  ): GenericSessionPayload {
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
+    if (_sessionHash_) {
+      msg.sessionHash = _sessionHash_;
     }
     return msg;
   },

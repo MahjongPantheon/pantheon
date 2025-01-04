@@ -16,6 +16,7 @@
  */
 
 import {
+  AddExtraTime,
   AddPenalty,
   CancelGame,
   CancelPenalty,
@@ -34,6 +35,7 @@ import {
   GetPrescriptedEventConfig,
   GetRulesets,
   GetTablesState,
+  GetTimerState,
   GetTimezones,
   ListPenalties,
   MakeIntervalSeating,
@@ -372,6 +374,11 @@ export class ApiService {
     return GetGameConfig({ eventId }, this._clientConfMimir);
   }
 
+  getTimerState(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTimerState' });
+    return GetTimerState({ eventId }, this._clientConfMimir);
+  }
+
   getPenalties(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ListPenalties' });
     return ListPenalties({ eventId }, this._clientConfMimir);
@@ -520,6 +527,13 @@ export class ApiService {
   startTimer(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'StartTimer' });
     return StartTimer({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  addExtraTime(sessionHashList: string[], extraTime: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'AddExtraTime' });
+    return AddExtraTime({ sessionHashList, extraTime }, this._clientConfMimir).then(
+      (r) => r.success
+    );
   }
 
   notifyPlayers(eventId: number) {

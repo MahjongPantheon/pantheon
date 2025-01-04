@@ -41,7 +41,7 @@ service Mimir {
     returns (EventsGetRatingTableResponse);
   rpc GetLastGames (EventsGetLastGamesPayload)
     returns (EventsGetLastGamesResponse);
-  rpc GetGame (EventsGetGamePayload)
+  rpc GetGame (GenericSessionPayload)
     returns (EventsGetGameResponse);
   rpc GetGamesSeries (GenericEventPayload)
     returns (EventsGetGamesSeriesResponse);
@@ -51,7 +51,7 @@ service Mimir {
     returns (EventsGetAllRegisteredPlayersResponse);
   rpc GetTimerState (GenericEventPayload)
     returns (EventsGetTimerStateResponse);
-  rpc GetSessionOverview (GamesGetSessionOverviewPayload)
+  rpc GetSessionOverview (GenericSessionPayload)
     returns (GamesGetSessionOverviewResponse);
   rpc GetPlayerStats (PlayersGetPlayerStatsPayload)
     returns (PlayersGetPlayerStatsResponse);
@@ -65,9 +65,9 @@ service Mimir {
     returns (PlayersGetLastResultsResponse);
   rpc GetLastRound (PlayersGetLastRoundPayload)
     returns (PlayersGetLastRoundResponse);
-  rpc GetAllRounds (PlayersGetAllRoundsPayload)
+  rpc GetAllRounds (GenericSessionPayload)
     returns (PlayersGetAllRoundsResponse);
-  rpc GetLastRoundByHash (PlayersGetLastRoundByHashPayload)
+  rpc GetLastRoundByHash (GenericSessionPayload)
     returns (PlayersGetLastRoundByHashResponse);
   rpc GetEventForEdit (EventsGetEventForEditPayload)
     returns (EventsGetEventForEditResponse);
@@ -104,21 +104,21 @@ service Mimir {
   rpc UpdatePlayersTeams (EventsUpdatePlayersTeamsPayload)
     returns (GenericSuccessResponse);
   rpc StartGame (GamesStartGamePayload)
-    returns (GamesStartGameResponse);
-  rpc EndGame (GamesEndGamePayload)
+    returns (GenericSessionPayload);
+  rpc EndGame (GenericSessionPayload)
     returns (GenericSuccessResponse);
-  rpc CancelGame (GamesCancelGamePayload)
+  rpc CancelGame (GenericSessionPayload)
     returns (GenericSuccessResponse);
   rpc FinalizeSession (GenericEventPayload)
     returns (GenericSuccessResponse);
   rpc DropLastRound (GamesDropLastRoundPayload)
     returns (GenericSuccessResponse);
-  rpc DefinalizeGame (GamesDefinalizeGamePayload)
+  rpc DefinalizeGame (GenericSessionPayload)
     returns (GenericSuccessResponse);
   rpc AddPenalty (GamesAddPenaltyPayload)
     returns (GenericSuccessResponse);
   rpc AddPenaltyGame (GamesAddPenaltyGamePayload)
-    returns (GamesAddPenaltyGameResponse);
+    returns (GenericSessionPayload);
   rpc GetPlayer (PlayersGetPlayerPayload)
     returns (PlayersGetPlayerResponse);
   rpc GetCurrentSeating (GenericEventPayload)
@@ -147,7 +147,7 @@ service Mimir {
     returns (EventsGetStartingTimerResponse);
   rpc ClearStatCache (ClearStatCachePayload)
     returns (GenericSuccessResponse);
-  rpc ForceFinishGame (ForceFinishGamePayload)
+  rpc ForceFinishGame (GenericSessionPayload)
     returns (GenericSuccessResponse);
   rpc AddTypedOnlineReplay (TypedGamesAddOnlineReplayPayload)
     returns (GamesAddOnlineReplayResponse);
@@ -163,8 +163,12 @@ service Mimir {
     returns (PenaltiesResponse);
   rpc CancelPenalty (CancelPenaltyPayload)
     returns (GenericSuccessResponse);
+  rpc AddExtraTime (AddExtraTimePayload)
+    returns (GenericSuccessResponse);
   rpc ListMyPenalties (GenericEventPayload)
     returns (PenaltiesResponse);
+  rpc GetCurrentStateForPlayer (GetCurrentStatePayload)
+    returns (GetCurrentStateResponse);
 }
 
 message EventsGetRulesetsPayload {
@@ -248,10 +252,6 @@ message EventsGetLastGamesResponse {
   int32 total_games = 3;
 }
 
-message EventsGetGamePayload {
-  string session_hash = 1;
-}
-
 message EventsGetGameResponse {
   GameResult game = 1;
   repeated Player players = 2;
@@ -264,6 +264,14 @@ message EventsGetGamesSeriesResponse {
 message PlayersGetCurrentSessionsPayload {
   int32 player_id = 1;
   int32 event_id = 2;
+}
+
+message CurrentSession {
+  string session_hash = 1;
+  string status = 2;
+  optional int32 table_index = 3;
+  repeated PlayerInSession players = 4;
+  EventsGetTimerStateResponse timer_state = 5;
 }
 
 message PlayersGetCurrentSessionsResponse {
@@ -286,10 +294,6 @@ message EventsGetTimerStateResponse {
   bool have_autostart = 5;
   bool autostart_timer = 6;
   int32 hide_seating_after = 8;
-}
-
-message GamesGetSessionOverviewPayload {
-  string session_hash = 1;
 }
 
 message GamesGetSessionOverviewResponse {
@@ -384,16 +388,8 @@ message PlayersGetLastRoundResponse {
   RoundState round = 1;
 }
 
-message PlayersGetAllRoundsPayload {
-  string session_hash = 1;
-}
-
 message PlayersGetAllRoundsResponse {
   repeated RoundState rounds = 1;
-}
-
-message PlayersGetLastRoundByHashPayload {
-  string session_hash = 1;
 }
 
 message PlayersGetLastRoundByHashResponse {
@@ -471,25 +467,9 @@ message GamesStartGamePayload {
   repeated int32 players = 2; // ids list, e-s-w-n
 }
 
-message GamesStartGameResponse {
-  string session_hash = 1;
-}
-
-message GamesEndGamePayload {
-  string session_hash = 1;
-}
-
-message GamesCancelGamePayload {
-  string session_hash = 1;
-}
-
 message GamesDropLastRoundPayload {
   string session_hash = 1;
   repeated IntermediateResultOfSession intermediate_results = 2;
-}
-
-message GamesDefinalizeGamePayload {
-  string session_hash = 1;
 }
 
 message GamesAddPenaltyPayload {
@@ -502,10 +482,6 @@ message GamesAddPenaltyPayload {
 message GamesAddPenaltyGamePayload {
   int32 event_id = 1;
   repeated int32 players = 2; // ids, e-s-w-n
-}
-
-message GamesAddPenaltyGameResponse {
-  string hash = 1;
 }
 
 message PlayersGetPlayerPayload {
@@ -579,10 +555,6 @@ message TypedGamesAddOnlineReplayPayload {
   string content = 6;
 }
 
-message ForceFinishGamePayload {
-  string session_hash = 1;
-}
-
 message CallRefereePayload {
   int32 table_index = 1;
   int32 event_id = 2;
@@ -596,4 +568,19 @@ message PenaltiesResponse {
 message CancelPenaltyPayload {
   int32 penalty_id = 1;
   optional string reason = 2;
+}
+
+message AddExtraTimePayload {
+  repeated string session_hash_list = 1;
+  int32 extra_time = 2;
+}
+
+message GetCurrentStatePayload {
+  int32 event_id = 1;
+  int32 player_id = 2;
+}
+
+message GetCurrentStateResponse {
+  repeated CurrentSession sessions = 1;
+  GameConfig config = 2;
 }

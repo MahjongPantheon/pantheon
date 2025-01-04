@@ -28,6 +28,7 @@ export function Confirmation({
   warning,
   color,
   onConfirm,
+  onCancel,
   i18n,
   disabled,
 }: {
@@ -37,6 +38,7 @@ export function Confirmation({
   warning: React.ReactNode;
   color: MantineColor;
   onConfirm: () => void;
+  onCancel?: () => void;
   i18n: I18nService;
   disabled?: boolean;
 }) {
@@ -50,6 +52,7 @@ export function Confirmation({
       shadow='md'
       opened={opened}
       onChange={setOpened}
+      onClose={onCancel}
     >
       <Popover.Target>
         <Button

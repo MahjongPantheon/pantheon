@@ -9,14 +9,18 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>common.RecalcPayload</code>
+ * Generated from protobuf message <code>common.GetCurrentStatePayload</code>
  */
-class RecalcPayload extends \Google\Protobuf\Internal\Message
+class GetCurrentStatePayload extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>int32 event_id = 1;</code>
      */
     protected $event_id = 0;
+    /**
+     * Generated from protobuf field <code>int32 player_id = 2;</code>
+     */
+    protected $player_id = 0;
 
     /**
      * Constructor.
@@ -25,6 +29,7 @@ class RecalcPayload extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $event_id
+     *     @type int $player_id
      * }
      */
     public function __construct($data = NULL) {
@@ -50,6 +55,28 @@ class RecalcPayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->event_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 player_id = 2;</code>
+     * @return int
+     */
+    public function getPlayerId()
+    {
+        return $this->player_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 player_id = 2;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setPlayerId($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->player_id = $var;
 
         return $this;
     }

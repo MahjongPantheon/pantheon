@@ -196,14 +196,14 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         mapIdToPlayer,
         yakuList: makeYakuGraph(action.payload.gameConfig.rulesetConfig.withMultiYakumans),
         timer: {
+          // setting zero timer, it will be set separately by SET_TIMER if required
           ...state.timer,
-          secondsRemaining: action.payload.timerState.timeRemaining || 0,
-          lastUpdateSecondsRemaining: action.payload.timerState.timeRemaining || 0,
+          secondsRemaining: 0,
+          lastUpdateSecondsRemaining: 0,
           lastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
-          waiting: action.payload.timerState.waitingForTimer,
-          // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
-          autostartSecondsRemaining: 0, // action.payload.timerState.autostartTimer || 0,
-          autostartLastUpdateSecondsRemaining: 0, // action.payload.timerState.autostartTimer || 0,
+          waiting: false,
+          autostartSecondsRemaining: 0,
+          autostartLastUpdateSecondsRemaining: 0,
           autostartLastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
         },
         loading: {
