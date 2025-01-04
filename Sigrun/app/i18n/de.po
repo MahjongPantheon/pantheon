@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"POT-Creation-Date: 2025-01-04 23:29+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -1629,7 +1629,7 @@ msgstr "Yakitori Strafe"
 msgid "Yaku allowed"
 msgstr "Erlaubte Yaku"
 
-#: app/components/YakuGraph.tsx:96:23
+#: app/components/YakuGraph.tsx:100:23
 msgid "Yaku collected over all time"
 msgstr "Gesammelte Yakus"
 

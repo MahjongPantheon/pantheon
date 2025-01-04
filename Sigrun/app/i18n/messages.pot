@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2024 
+# Copyright (C) 2025 
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"POT-Creation-Date: 2025-01-04 23:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -426,7 +426,7 @@ msgstr ""
 msgid "Yakuhai: total"
 msgstr ""
 
-#: app/components/YakuGraph.tsx:96:23
+#: app/components/YakuGraph.tsx:100:23
 msgid "Yaku collected over all time"
 msgstr ""
 

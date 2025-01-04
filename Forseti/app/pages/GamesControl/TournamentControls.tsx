@@ -39,6 +39,7 @@ import { useState } from 'react';
 import { Confirmation } from './Confirmation';
 import {
   IconArrowsRandom,
+  IconClockHour3,
   IconEyeCheck,
   IconLineHeight,
   IconNotification,
@@ -279,7 +280,7 @@ export function TournamentControls({
                   <Text>{i18n._t('Add selected amount of extra time for all tables?')}</Text>
                 </>
               }
-              icon={<IconSquareX />}
+              icon={<IconClockHour3 />}
               color='orange'
               onConfirm={() => addExtraTime(parseInt(extraTime ?? '60', 10))}
             />

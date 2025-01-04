@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"POT-Creation-Date: 2025-01-04 23:29+0100\n"
 "PO-Revision-Date: 2024-10-05 00:18+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.5\n"
 
-#: app/components/base/TableStatus/TableStatus.tsx:91:16
+#: app/components/base/TableStatus/TableStatus.tsx:96:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "Осталась %1 раздача"
@@ -49,7 +49,7 @@ msgstr "%1 ← %2"
 msgid "Abort"
 msgstr "Абортивная ничья"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:86:24
 #: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr "Абортивная ничья"
@@ -91,7 +91,7 @@ msgid "Chinroutou"
 msgstr "Чинрото"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
 #: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
 msgid "Chombo"
@@ -145,7 +145,7 @@ msgstr "Email"
 msgid "Event title"
 msgstr "Название события"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:73:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:81:22
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "Ничья"
@@ -240,7 +240,7 @@ msgstr "Мультирон с %1"
 msgid "Nagashi"
 msgstr "Нагаши манган"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:88:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:24
 #: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
@@ -350,7 +350,7 @@ msgstr "Риншан"
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:69:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:79
 #: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr "Рон"
@@ -431,7 +431,7 @@ msgstr "Сууанко"
 msgid "Suukantsu"
 msgstr "Сууканцу"
 
-#: app/components/base/TableStatus/TableStatus.tsx:42:45
+#: app/components/base/TableStatus/TableStatus.tsx:47:45
 msgid "Table #%1"
 msgstr "Стол №%1"
 
@@ -459,7 +459,7 @@ msgstr "На данный момент нет активных событий, �
 msgid "Toitoi"
 msgstr "Тойтой"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:70:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:81
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr "Цумо"

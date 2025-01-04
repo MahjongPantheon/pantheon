@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"POT-Creation-Date: 2025-01-04 23:29+0100\n"
 "PO-Revision-Date: 2024-04-12 22:46+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -1602,7 +1602,7 @@ msgstr "야키토리 벌부"
 msgid "Yaku allowed"
 msgstr "허용 역"
 
-#: app/components/YakuGraph.tsx:96:23
+#: app/components/YakuGraph.tsx:100:23
 msgid "Yaku collected over all time"
 msgstr "역 완성 횟수"
 
