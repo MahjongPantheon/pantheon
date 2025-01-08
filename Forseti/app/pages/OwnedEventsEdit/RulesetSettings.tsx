@@ -172,19 +172,16 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <NumberInput
         label={i18n._t('Max arbitrary penalty score')}
         defaultValue={20000}
-        min={0}
         {...form.getInputProps('ruleset.maxPenalty')}
       />
       <NumberInput
         label={i18n._t('Min arbitrary penalty score')}
         defaultValue={100}
-        min={0}
         {...form.getInputProps('ruleset.minPenalty')}
       />
       <NumberInput
         label={i18n._t('Step of arbitrary penalty scores')}
         defaultValue={100}
-        min={0}
         {...form.getInputProps('ruleset.penaltyStep')}
       />
       <Checkbox

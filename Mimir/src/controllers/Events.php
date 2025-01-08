@@ -122,7 +122,7 @@ class EventsController extends Controller
                     ->setSyncStart(0)
                     ->setSyncEnd(0)
                     ->setUseTimer(0)
-                    ->setUsePenalty(0)
+                    ->setUsePenalty(1)
                     ->setIsTeam(0)
                     ->setIsPrescripted(0)
                     ;

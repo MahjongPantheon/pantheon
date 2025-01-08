@@ -125,7 +125,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
         )}
         defaultValue={0}
         step={eventConfig?.rulesetConfig.penaltyStep}
-        min={0}
+        min={eventConfig?.rulesetConfig.minPenalty}
         max={eventConfig?.rulesetConfig.maxPenalty}
       />
       <Space h='lg' />

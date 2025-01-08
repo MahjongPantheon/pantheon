@@ -180,7 +180,7 @@ export function GamesList({
                   })}
                 </Stack>
                 <Box style={{ flex: 1 }}>
-                  {t.extraTime && (
+                  {!!t.extraTime && (
                     <Text size='sm' weight='bold'>
                       {i18n._t('Extra minutes: %1', [t.extraTime / 60])}
                     </Text>
