@@ -541,13 +541,13 @@ final class TwirpServer implements Mimir
         $ret = new EventsGetTimerStateResponse();
         if (!empty($timerState)) {
             $ret
-                ->setStarted($timerState['started'])
-                ->setFinished($timerState['finished'])
+                ->setStarted($timerState['started'] ?? false)
+                ->setFinished($timerState['finished'] ?? false)
                 ->setTimeRemaining($timerState['time_remaining'] ?? 0)
-                ->setWaitingForTimer($timerState['waiting_for_timer'])
-                ->setHaveAutostart($timerState['have_autostart'])
-                ->setHideSeatingAfter($timerState['hide_seating_after'])
-                ->setAutostartTimer($timerState['autostart_timer']);
+                ->setWaitingForTimer($timerState['waiting_for_timer'] ?? false)
+                ->setHaveAutostart($timerState['have_autostart'] ?? false)
+                ->setHideSeatingAfter($timerState['hide_seating_after'] ?? false)
+                ->setAutostartTimer($timerState['autostart_timer'] ?? false);
         }
         return $ret;
     }
