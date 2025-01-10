@@ -46,11 +46,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
       <Title order={4}>{i18n._t('Yaku allowed')}</Title>
       <SimpleGrid
         spacing='lg'
-        cols={3}
-        breakpoints={[
-          { maxWidth: '48rem', cols: 2 },
-          { maxWidth: '36rem', cols: 1 },
-        ]}
+        cols={{base: 3, '48rem': 2, '36rem': 1 }}
       >
         {yakuList.map((y, idx) => (
           <Checkbox
@@ -64,11 +60,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
       <Title order={4}>{i18n._t('Pao rule enabled for:')}</Title>
       <SimpleGrid
         spacing='lg'
-        cols={3}
-        breakpoints={[
-          { maxWidth: '48rem', cols: 2 },
-          { maxWidth: '36rem', cols: 1 },
-        ]}
+        cols={{base: 3, '48rem': 2, '36rem': 1 }}
       >
         {yakuWithPao.map((y, idx) => (
           <Checkbox

@@ -25,13 +25,12 @@ import useLocation from 'wouter/use-location';
 import { Layout } from './Layout';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
-import { createEmotionCache } from '@mantine/core';
 import { registerFrontErrorHandler } from './helpers/logFrontError';
 import { env } from './env';
 import { HelmetProvider } from 'react-helmet-async';
 import { fontLoader } from './helpers/fontLoader';
+
 registerFrontErrorHandler();
-const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
 const storageStrategy = new StorageStrategyClient(env.cookieDomain);
 storage.setStrategy(storageStrategy);
 i18n.init(
@@ -60,7 +59,7 @@ if (import.meta.env.MODE === 'development') {
       <HelmetProvider>
         <Isomorphic.Provider value={isomorphicCtxValue}>
           <Router hook={useLocation}>
-            <Layout cache={cache}>
+            <Layout>
               <App />
             </Layout>
           </Router>
@@ -75,7 +74,7 @@ if (import.meta.env.MODE === 'development') {
       <HelmetProvider>
         <Isomorphic.Provider value={isomorphicCtxValue}>
           <Router hook={useLocation}>
-            <Layout cache={cache}>
+            <Layout>
               <App />
             </Layout>
           </Router>

@@ -105,7 +105,7 @@ export const GameListing: React.FC<GameListingProps> = ({
               e.preventDefault();
             }}
           >
-            <Button leftIcon={<IconShare size={rem(15)} />} size='xs' variant='light'>
+            <Button leftSection={<IconShare size={rem(15)} />} size='xs' variant='light'>
               {i18n._t('Game link')}
             </Button>
           </Anchor>
@@ -141,7 +141,7 @@ export const GameListing: React.FC<GameListingProps> = ({
               {winds[idx]}
             </Badge>
             <Group style={{ maxWidth: '230px' }}>
-              <Stack spacing={0}>
+              <Stack gap={0}>
                 <Anchor
                   href={`/event/${eventId}/player/${result.playerId}`}
                   onClick={(e) => {
@@ -152,7 +152,7 @@ export const GameListing: React.FC<GameListingProps> = ({
                   {players[result.playerId]?.title}
                 </Anchor>
                 {isOnline && <Text c='dimmed'>{players[result.playerId]?.tenhouId}</Text>}
-                <Group spacing={2} mt={10}>
+                <Group gap={2} mt={10}>
                   <Badge
                     w={75}
                     size='lg'
@@ -183,7 +183,7 @@ export const GameListing: React.FC<GameListingProps> = ({
             </a>
           </>
         )}
-        <Group spacing={2} style={{ marginRight: largeScreen ? '200px' : 0 }}>
+        <Group gap={2} style={{ marginRight: largeScreen ? '200px' : 0 }}>
           <Badge h={30} size='md' color='red' radius='sm' variant='outline'>
             {i18n._t('Ron: %1', [outcomes.ron || '0'])}
           </Badge>

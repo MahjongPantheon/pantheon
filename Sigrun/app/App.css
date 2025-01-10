@@ -55,7 +55,7 @@ body {
 .newyear::after {
   content: '';
   display: block;
-  position: absolute;
+  position: fixed;
   top: 48px;
   z-index: 10000;
   left: 0;

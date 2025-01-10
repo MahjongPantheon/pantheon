@@ -90,7 +90,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
       />
       <Space h='md' />
       <Divider size='xs' />
-      <Stack justify='flex-start' spacing='0'>
+      <Stack justify='flex-start' gap='0'>
         {(events?.events ?? []).map((e, idx) => {
           const desc = useRemarkSync(e.description, {
             remarkPlugins: [strip as any],
@@ -118,7 +118,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
                 </ActionIcon>
               </a>
               <Stack
-                spacing={0}
+                gap={0}
                 style={{ flex: 1, maxWidth: largeScreen ? 'calc(100% - 150px)' : '100%' }}
               >
                 <a

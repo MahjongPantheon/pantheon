@@ -17,7 +17,6 @@
 
 import { Avatar, MantineColor, MantineSize } from '@mantine/core';
 import { crc32 } from '@foxglove/crc';
-import * as React from 'react';
 import { env } from '../env';
 
 export const PlayerAvatar = ({

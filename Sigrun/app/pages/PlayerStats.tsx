@@ -97,7 +97,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           [player.title, events?.[0].title]
         )}
       />
-      <Group position='apart'>
+      <Group justify='space-between'>
         <h2>
           <Group>
             <PlayerAvatar p={player} />
@@ -144,7 +144,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Space h='md' />
       {selectedGame && (
         <>
-          <Group position='apart'>
+          <Group justify='space-between'>
             <Anchor
               href={`/event/${eventId}/game/${selectedGame.tables[0].sessionHash}`}
               onClick={(e) => {
@@ -212,13 +212,13 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           <Space h='md' />
           <Divider size='xs' />
           <Space h='md' />
-          <Stack spacing={0}>
+          <Stack gap={0}>
             {selectedGame.tables
               // .sort((a, b) => a.place - b.place)
               .map((seat, idx) => (
                 <Group grow key={`pl_${idx}`}>
                   <DataCmp
-                    spacing='xs'
+                    gap='xs'
                     style={{
                       padding: '10px',
                       backgroundColor:
@@ -248,7 +248,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                         }}
                       />
                       {seat.playerId === player.id ? (
-                        <Text weight='bold'>{seat.title}</Text>
+                        <Text fw={700}>{seat.title}</Text>
                       ) : (
                         <Anchor
                           href={`/event/${eventId}/player/${seat.playerId}`}
@@ -261,7 +261,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                         </Anchor>
                       )}
                     </Group>
-                    <Group spacing={2} grow={!largeScreen}>
+                    <Group gap={2} grow={!largeScreen}>
                       <Badge w={65} size='lg' color='cyan' radius='sm' style={{ padding: 0 }}>
                         {seat.score}
                       </Badge>
@@ -285,7 +285,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           <Space h='md' />
         </>
       )}
-      <DataCmp spacing={0} grow={largeScreen ? true : undefined}>
+      <DataCmp gap={0} grow={largeScreen ? true : undefined}>
         <PlayerStatsListing playerStats={playerStats} playerId={playerId} />
       </DataCmp>
       <Space h='md' />

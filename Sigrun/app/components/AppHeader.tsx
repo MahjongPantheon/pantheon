@@ -18,16 +18,16 @@
 import {
   ActionIcon,
   Anchor,
+  AppShell,
   Button,
   Container,
-  createStyles,
   Drawer,
   Group,
-  Header,
+  useMantineColorScheme,
 } from '@mantine/core';
+import { createStyles } from '@mantine/emotion';
 import { IconList } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
-import * as React from 'react';
 import { useContext } from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { authCtx } from '../hooks/auth';
@@ -55,19 +55,15 @@ const useStyles = createStyles(() => ({
 }));
 
 interface AppHeaderProps {
-  dark: boolean;
   isLoggedIn: boolean;
-  toggleColorScheme: () => void;
-  toggleDimmed: () => void;
   saveLang: (lang: string) => void;
+  toggleDimmed: () => void;
 }
 
 export function AppHeader({
-  dark,
   isLoggedIn,
-  toggleColorScheme,
-  toggleDimmed,
   saveLang,
+  toggleDimmed,
 }: AppHeaderProps) {
   const { classes } = useStyles();
   const i18n = useI18n();
@@ -77,9 +73,10 @@ export function AppHeader({
   const largeScreen = useMediaQuery('(min-width: 640px)');
   const veryLargeScreen = useMediaQuery('(min-width: 1024px)');
   const matchedEventId = location.match(/\/event\/([^/]+)\//);
+  const isDark = useMantineColorScheme().colorScheme === 'dark';
 
   return (
-    <Header height={44} className={classes.header} pl={veryLargeScreen ? 350 : 0} mb={120}>
+    <AppShell.Header className={classes.header} pl={veryLargeScreen ? 350 : 0} mb={120}>
       {!veryLargeScreen && (
         <Drawer
           size='sm'
@@ -96,18 +93,16 @@ export function AppHeader({
           styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
         >
           <Drawer.CloseButton
-            size='xl'
+            size='lg'
             pos='absolute'
-            style={{ right: 0, backgroundColor: dark ? '#1a1b1e' : '#fff' }}
+            style={{ right: 0, top: 3, backgroundColor: isDark ? '#242424' : '#fff' }}
           />
           <MainMenu
             closeMenu={closeMenu}
             isLoggedIn={isLoggedIn}
             saveLang={saveLang}
             toggleDimmed={toggleDimmed}
-            toggleColorScheme={toggleColorScheme}
             showLabels={true}
-            dark={dark}
           />
         </Drawer>
       )}
@@ -119,7 +114,7 @@ export function AppHeader({
                 title={i18n._t('Open menu')}
                 variant='filled'
                 color='green'
-                leftIcon={<IconList size='2rem' />}
+                leftSection={<IconList size='2rem' />}
                 size='lg'
                 style={{ height: '44px' }}
                 onClick={() => (menuOpened ? closeMenu() : openMenu())}
@@ -140,7 +135,7 @@ export function AppHeader({
             ))}
         </div>
         {auth.userInfo && (
-          <Group position='right' h={44}>
+          <Group justify='flex-end' h={44}>
             <div className={classes.userTitle}>
               {matchedEventId ? (
                 <Anchor
@@ -160,6 +155,6 @@ export function AppHeader({
           </Group>
         )}
       </Container>
-    </Header>
+    </AppShell.Header>
   );
 }

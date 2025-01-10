@@ -22,16 +22,14 @@ import { StorageStrategyServer } from '../../Common/storageStrategyServer';
 import { Isomorphic } from './hooks/isomorphic';
 import staticLocationHook from 'wouter/static-location';
 import { Layout } from './Layout';
-import React from 'react';
 import { HelmetProvider, HelmetServerState } from 'react-helmet-async';
 import { JSDOM } from 'jsdom';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
-import { createEmotionCache } from '@mantine/core';
-import { createStylesServer } from '@mantine/ssr';
+import createEmotionServer from '@emotion/server/create-instance';
+import { emotionCache } from 'emotion/cache';
 
-const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
-const stylesServer = createStylesServer(cache);
+const stylesServer = createEmotionServer(emotionCache);
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
   const storageStrategy = new StorageStrategyServer();
@@ -55,7 +53,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <HelmetProvider context={helmetContext}>
         <Router hook={locHook}>
-          <Layout cache={cache}>
+          <Layout>
             <App />
           </Layout>
         </Router>
@@ -72,7 +70,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <HelmetProvider context={helmetContext}>
         <Router hook={locHook}>
-          <Layout cache={cache}>
+          <Layout>
             <App />
           </Layout>
         </Router>

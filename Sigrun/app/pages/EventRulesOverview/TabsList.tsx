@@ -35,25 +35,25 @@ type TabsProps = {
 export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
   return (
     <>
-      <Tabs.Tab value='ruleset_tuning' icon={<IconAdjustments size='0.8rem' />}>
+      <Tabs.Tab value='ruleset_tuning' leftSection={<IconAdjustments size='0.8rem' />}>
         {i18n._t('Ruleset details')}
       </Tabs.Tab>
       {eventType === EventType.EVENT_TYPE_LOCAL && (
-        <Tabs.Tab value={EventType.EVENT_TYPE_LOCAL} icon={<IconFriends size='0.8rem' />}>
+        <Tabs.Tab value={EventType.EVENT_TYPE_LOCAL} leftSection={<IconFriends size='0.8rem' />}>
           {i18n._t('Local event settings')}
         </Tabs.Tab>
       )}
       {eventType === EventType.EVENT_TYPE_TOURNAMENT && (
-        <Tabs.Tab value={EventType.EVENT_TYPE_TOURNAMENT} icon={<IconTournament size='0.8rem' />}>
+        <Tabs.Tab value={EventType.EVENT_TYPE_TOURNAMENT} leftSection={<IconTournament size='0.8rem' />}>
           {i18n._t('Tournament settings')}
         </Tabs.Tab>
       )}
       {eventType === EventType.EVENT_TYPE_ONLINE && (
-        <Tabs.Tab value={EventType.EVENT_TYPE_ONLINE} icon={<IconNetwork size='0.8rem' />}>
+        <Tabs.Tab value={EventType.EVENT_TYPE_ONLINE} leftSection={<IconNetwork size='0.8rem' />}>
           {i18n._t('Online event settings')}
         </Tabs.Tab>
       )}
-      <Tabs.Tab value='yaku_tuning' icon={<IconListCheck size='0.8rem' />}>
+      <Tabs.Tab value='yaku_tuning' leftSection={<IconListCheck size='0.8rem' />}>
         {i18n._t('Yaku settings')}
       </Tabs.Tab>
     </>

@@ -153,7 +153,7 @@ export const RatingTable: React.FC<{
           ])}
         />
         {events?.map((event, eid) => (
-          <DataCmp position='apart' key={`ev_${eid}`}>
+          <DataCmp justify='space-between' key={`ev_${eid}`}>
             <h2 style={{ display: 'flex', gap: '20px' }}>
               {event && <EventTypeIcon event={event} />}
               {event?.title} - {i18n._t('Rating table')}
@@ -162,7 +162,7 @@ export const RatingTable: React.FC<{
               <Button
                 variant='light'
                 size='xs'
-                leftIcon={<IconDownload size='1.1rem' />}
+                leftSection={<IconDownload size='1.1rem' />}
                 onClick={() => {
                   downloadCsv(
                     i18n,
@@ -183,8 +183,8 @@ export const RatingTable: React.FC<{
         <Space h='md' />
         <DataCmp grow={largeScreen ? true : undefined}>
           <Stack>
-            <DataCmp position='right' spacing='md'>
-              <Group spacing='md' grow={!largeScreen}>
+            <DataCmp justify='flex-end' gap='md'>
+              <Group gap='md' grow={!largeScreen}>
                 {globals.data.isTeam && (
                   <Badge
                     size='lg'
@@ -268,7 +268,7 @@ export const RatingTable: React.FC<{
                   </Badge>
                 )}
               </Group>
-              <Group spacing='md' grow={!largeScreen}>
+              <Group gap='md' grow={!largeScreen}>
                 <Badge
                   size='lg'
                   color='green'
@@ -336,8 +336,8 @@ export const RatingTable: React.FC<{
             <Space h='md' />
             <DataCmp grow={largeScreen ? true : undefined}>
               <Stack>
-                <DataCmp position='right' spacing='md'>
-                  <Group spacing='md' grow={!largeScreen}>
+                <DataCmp justify='flex-end' gap='md'>
+                  <Group gap='md' grow={!largeScreen}>
                     <Badge
                       size='lg'
                       color='lime'
@@ -383,19 +383,19 @@ export const RatingTable: React.FC<{
         <Divider size='xs' />
         <Space h='md' />
         <Box pos='relative'>
-          <LoadingOverlay visible={playersLoading} overlayBlur={2} />
+          <LoadingOverlay visible={playersLoading} overlayProps={{ blur: 2 }} />
           {orderBy === 'team' && (
-            <Stack justify='flex-start' spacing='0'>
+            <Stack justify='flex-start' gap='0'>
               <TeamTable players={players} events={events} />
             </Stack>
           )}
           {orderBy !== 'team' && (
-            <Stack justify='flex-start' spacing='0'>
+            <Stack justify='flex-start' gap='0'>
               {(players ?? []).map((player, idx) => {
                 return (
                   <DataCmp
                     key={`pl_${idx}`}
-                    spacing='xs'
+                    gap='xs'
                     style={{
                       padding: '10px',
                       backgroundColor:
@@ -411,7 +411,7 @@ export const RatingTable: React.FC<{
                         {idx + 1}
                       </Badge>
                       <PlayerAvatar p={player} />
-                      <Stack spacing={2}>
+                      <Stack gap={2}>
                         <Anchor
                           href={`/event/${eventId}/player/${player.id}`}
                           onClick={(e) => {
@@ -443,7 +443,7 @@ export const RatingTable: React.FC<{
                         </Tooltip>
                       )}
                     </Group>
-                    <Group spacing={2} grow={!largeScreen}>
+                    <Group gap={2} grow={!largeScreen}>
                       <Badge
                         w={75}
                         size='lg'

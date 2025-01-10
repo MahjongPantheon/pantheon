@@ -100,8 +100,8 @@ export const RecentGames: React.FC<{
         <Divider size='xs' />
         <Space h='md' />
         <Box pos='relative'>
-          <LoadingOverlay visible={gamesLoading} overlayBlur={2} />
-          <Stack spacing={0}>
+          <LoadingOverlay visible={gamesLoading} overlayProps={{ blur: 2 }} />
+          <Stack gap={0}>
             {games?.games?.map((game, idx) => (
               <Fragment key={`gm_${idx}`}>
                 <GameListing

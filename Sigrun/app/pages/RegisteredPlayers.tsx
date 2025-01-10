@@ -97,13 +97,13 @@ export const RegisteredPlayers: React.FC<{
         {event?.title} - {i18n._t('Registered players')}
       </h2>
       <Box pos='relative'>
-        <LoadingOverlay visible={playersLoading} overlayBlur={2} />
-        <Stack justify='flex-start' spacing='0'>
+        <LoadingOverlay visible={playersLoading} overlayProps={{ blur: 2 }} />
+        <Stack justify='flex-start' gap='0'>
           {(players ?? []).map((player, idx) => {
             return (
               <DataCmp
                 key={`pl_${idx}`}
-                spacing='xs'
+                gap='xs'
                 style={{
                   padding: '10px',
                   backgroundColor:
@@ -119,7 +119,7 @@ export const RegisteredPlayers: React.FC<{
                     {idx + 1}
                   </Badge>
                   <PlayerAvatar p={player} />
-                  <Stack spacing={2}>
+                  <Stack gap={2}>
                     <Anchor
                       href={`/event/${eventId}/player/${player.id}`}
                       onClick={(e) => {
