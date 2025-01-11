@@ -44,11 +44,7 @@ export function AppFooter() {
           <Group style={{ display: largeScreen ? 'inherit' : 'none' }} align='flex-start'>
             {globals.data.eventId && (
               <Stack gap={0}>
-                <Anchor
-                  c='gray'
-                  size='xs'
-                  href={`/event/${globals.data.eventId?.join('.')}/info`}
-                >
+                <Anchor c='gray' size='xs' href={`/event/${globals.data.eventId?.join('.')}/info`}>
                   {i18n._t('Description')}
                 </Anchor>
                 {globals.data.eventId?.length === 1 && (
@@ -64,11 +60,7 @@ export function AppFooter() {
             )}
             {globals.data.eventId && (
               <Stack gap={0}>
-                <Anchor
-                  c='gray'
-                  size='xs'
-                  href={`/event/${globals.data.eventId?.join('.')}/games`}
-                >
+                <Anchor c='gray' size='xs' href={`/event/${globals.data.eventId?.join('.')}/games`}>
                   {i18n._t('Recent games')}
                 </Anchor>
                 <Anchor

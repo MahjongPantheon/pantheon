@@ -882,7 +882,7 @@ interface AccordionLabelProps {
 
 function AccordionLabel({ label, image, description }: AccordionLabelProps) {
   return (
-    <Group wrap="nowrap">
+    <Group wrap='nowrap'>
       <Avatar src={image} radius='xl' size='lg' />
       <div>
         <Text>{label}</Text>

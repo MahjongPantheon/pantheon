@@ -15,15 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  AppShell,
-  MantineProvider,
-  ScrollArea,
-  createTheme,
-} from '@mantine/core';
-import {
-  MantineEmotionProvider,
-} from '@mantine/emotion';
+import { AppShell, MantineProvider, ScrollArea, createTheme } from '@mantine/core';
+import { MantineEmotionProvider } from '@mantine/emotion';
 import { AppHeader } from './components/AppHeader';
 import { AnalyticsProvider, useAnalytics } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
@@ -154,9 +147,7 @@ export function Layout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <MantineProvider
-      theme={useDimmed ? dimmedTheme : defaultTheme}
-    >
+    <MantineProvider theme={useDimmed ? dimmedTheme : defaultTheme}>
       <MantineEmotionProvider>
         <AnalyticsProvider>
           <modalsCtx.Provider value={{ onlineModalShown, showOnlineModal, hideOnlineModal }}>
@@ -191,7 +182,7 @@ export function Layout({ children }: { children: ReactNode }) {
                           breakpoint: 'md',
                         }}
                         footer={{
-                          height: veryLargeScreen ? 0 : 60
+                          height: veryLargeScreen ? 0 : 60,
                         }}
                         classNames={{
                           main: haveNySpecs ? 'newyear' : '',
@@ -203,32 +194,26 @@ export function Layout({ children }: { children: ReactNode }) {
                           toggleDimmed={toggleDimmed}
                         />
 
-                        {
-                          veryLargeScreen ?
-                            <AppShell.Navbar p="xs">
-                              <ScrollArea.Autosize mx="-xs" px="xs">
-                                <MainMenu
-                                  isLoggedIn={isLoggedIn}
-                                  saveLang={saveLang}
-                                  toggleDimmed={toggleDimmed}
-                                  showLabels={showLabels}
-                                />
-                              </ScrollArea.Autosize>
-                            </AppShell.Navbar> :
-                            undefined
-                        }
+                        {veryLargeScreen ? (
+                          <AppShell.Navbar p='xs'>
+                            <ScrollArea.Autosize mx='-xs' px='xs'>
+                              <MainMenu
+                                isLoggedIn={isLoggedIn}
+                                saveLang={saveLang}
+                                toggleDimmed={toggleDimmed}
+                                showLabels={showLabels}
+                              />
+                            </ScrollArea.Autosize>
+                          </AppShell.Navbar>
+                        ) : undefined}
 
-                        <AppShell.Main>
-                          {children}
-                        </AppShell.Main>
+                        <AppShell.Main>{children}</AppShell.Main>
 
-                        {veryLargeScreen ? undefined :
-                          <AppShell.Footer
-                            style={{ display: 'flex', alignItems: 'center' }}
-                          >
+                        {veryLargeScreen ? undefined : (
+                          <AppShell.Footer style={{ display: 'flex', alignItems: 'center' }}>
                             <AppFooter />
                           </AppShell.Footer>
-                        }
+                        )}
 
                         <AddOnlineReplayModal />
                       </AppShell>

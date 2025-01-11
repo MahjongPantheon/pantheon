@@ -1,9 +1,9 @@
-import { MantineColor, MantineColorScheme, MantineThemeColorsOverride, MantineThemeOverride } from "@mantine/core";
+import { MantineThemeColorsOverride, MantineThemeOverride } from '@mantine/core';
 
 export const themeOptions: MantineThemeOverride = {
   primaryColor: 'blue',
   fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
-}
+};
 
 export const dimmedColors: MantineThemeColorsOverride = {
   red: [
@@ -138,7 +138,7 @@ export const dimmedColors: MantineThemeColorsOverride = {
     '#481E33',
     '#240F1A',
   ],
-}; 
+};
 
 export function getThemeOptions(isDimmed = false): MantineThemeOverride {
   if (isDimmed) {

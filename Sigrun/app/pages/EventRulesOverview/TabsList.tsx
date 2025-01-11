@@ -44,7 +44,10 @@ export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
         </Tabs.Tab>
       )}
       {eventType === EventType.EVENT_TYPE_TOURNAMENT && (
-        <Tabs.Tab value={EventType.EVENT_TYPE_TOURNAMENT} leftSection={<IconTournament size='0.8rem' />}>
+        <Tabs.Tab
+          value={EventType.EVENT_TYPE_TOURNAMENT}
+          leftSection={<IconTournament size='0.8rem' />}
+        >
           {i18n._t('Tournament settings')}
         </Tabs.Tab>
       )}

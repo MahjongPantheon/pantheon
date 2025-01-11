@@ -25,9 +25,8 @@ import {
 import { EventType, PlatformType } from '../clients/proto/atoms.pb';
 import { FlagEn, FlagKo, FlagRu, FlagDe } from '../helpers/flags';
 import { useI18n } from '../hooks/i18n';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AddOnlineReplayLink } from './AddOnlineReplayLink';
-import { useStorage } from 'hooks/storage';
 
 type MainMenuProps = {
   closeMenu?: () => void;
@@ -44,15 +43,11 @@ export const MainMenu = ({
   toggleDimmed,
   showLabels,
 }: MainMenuProps) => {
-  const storage = useStorage();
   const i18n = useI18n();
   const globals = useContext(globalsCtx);
   const auth = useContext(authCtx);
-  const [useDimmed, setUseDimmed] = useState<boolean>(storage.getDimmed());
   const { toggleColorScheme } = useMantineColorScheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
-
-
 
   return (
     <>

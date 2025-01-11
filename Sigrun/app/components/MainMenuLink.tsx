@@ -40,7 +40,7 @@ export const MainMenuLink = ({
     <Anchor
       style={{ borderLeft: '10px solid ' + color, marginBottom: '2px', textDecoration: 'none' }}
       href={href}
-      c={ isDark ? 'gray' : 'dark' }
+      c={isDark ? 'gray' : 'dark'}
       onClick={
         external
           ? undefined
@@ -53,7 +53,12 @@ export const MainMenuLink = ({
       target={external ? '_blank' : undefined}
       title={title ?? text}
     >
-      <NavLink styles={{ label: { fontSize: '18px' } }} leftSection={icon} label={text} component='button' />
+      <NavLink
+        styles={{ label: { fontSize: '18px' } }}
+        leftSection={icon}
+        label={text}
+        component='button'
+      />
     </Anchor>
   );
 };

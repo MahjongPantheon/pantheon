@@ -60,11 +60,7 @@ interface AppHeaderProps {
   toggleDimmed: () => void;
 }
 
-export function AppHeader({
-  isLoggedIn,
-  saveLang,
-  toggleDimmed,
-}: AppHeaderProps) {
+export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps) {
   const { classes } = useStyles();
   const i18n = useI18n();
   const [location, navigate] = useLocation();
