@@ -84,7 +84,9 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
       {events?.length === 1 && (
         <>
           <Group style={{ fontSize: 'small' }}>
-            <Text c='dimmed'>{i18n._t('Event administrators: ')}</Text>
+            <Text c='dimmed' fz='13'>
+              {i18n._t('Event administrators: ')}
+            </Text>
             {admins?.map((admin, idx) => (
               <Group key={`adm_${idx}`}>
                 <PlayerAvatar
@@ -98,6 +100,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
                 />
                 <Anchor
                   href={`/event/${eventId}/player/${admin.personId}`}
+                  fz='13'
                   onClick={(e) => {
                     navigate(`/event/${eventId}/player/${admin.personId}`);
                     e.preventDefault();
@@ -110,7 +113,9 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
           </Group>
           {(referees?.length ?? 0) > 0 && (
             <Group style={{ fontSize: 'small' }}>
-              <Text c='dimmed'>{i18n._t('Event referees: ')}</Text>
+              <Text c='dimmed' fz='13'>
+                {i18n._t('Event referees: ')}
+              </Text>
               {referees?.map((referee, idx) => (
                 <Group key={`ref_${idx}`}>
                   <PlayerAvatar
@@ -124,6 +129,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
                   />
                   <Anchor
                     href={`/event/${eventId}/player/${referee.personId}`}
+                    fz='13'
                     onClick={(e) => {
                       navigate(`/event/${eventId}/player/${referee.personId}`);
                       e.preventDefault();

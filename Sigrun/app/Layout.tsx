@@ -17,6 +17,7 @@
 
 import { AppShell, MantineProvider, ScrollArea, createTheme } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
+import { Main } from 'Main';
 import { AppHeader } from './components/AppHeader';
 import { AnalyticsProvider, useAnalytics } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
@@ -196,18 +197,18 @@ export function Layout({ children }: { children: ReactNode }) {
 
                         {veryLargeScreen ? (
                           <AppShell.Navbar p='xs'>
-                            <ScrollArea.Autosize mx='-xs' px='xs'>
+                            <ScrollArea scrollbars='y'>
                               <MainMenu
                                 isLoggedIn={isLoggedIn}
                                 saveLang={saveLang}
                                 toggleDimmed={toggleDimmed}
                                 showLabels={showLabels}
                               />
-                            </ScrollArea.Autosize>
+                            </ScrollArea>
                           </AppShell.Navbar>
                         ) : undefined}
 
-                        <AppShell.Main>{children}</AppShell.Main>
+                        <Main children={children}></Main>
 
                         {veryLargeScreen ? undefined : (
                           <AppShell.Footer style={{ display: 'flex', alignItems: 'center' }}>

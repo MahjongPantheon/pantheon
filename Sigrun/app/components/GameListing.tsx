@@ -17,7 +17,7 @@
 
 import { GameResult, Player } from '../clients/proto/atoms.pb';
 import { CSSProperties } from 'react';
-import { Anchor, Badge, Button, Group, List, rem, Stack, Text } from '@mantine/core';
+import { Anchor, Badge, Button, Group, List, Stack, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PlayerAvatar } from './PlayerAvatar';
 import * as React from 'react';
@@ -30,6 +30,7 @@ import { YakitoriIndicator } from './YakitoriIndicator';
 type GameListingProps = {
   eventId: string;
   isOnline: boolean;
+  isDimmed: boolean;
   withYakitori: boolean;
   game: GameResult;
   players: Record<number, Player>;
@@ -39,6 +40,7 @@ type GameListingProps = {
 export const GameListing: React.FC<GameListingProps> = ({
   eventId,
   isOnline,
+  isDimmed,
   withYakitori,
   game,
   players,
@@ -105,7 +107,7 @@ export const GameListing: React.FC<GameListingProps> = ({
               e.preventDefault();
             }}
           >
-            <Button leftSection={<IconShare size={rem(15)} />} size='xs' variant='light'>
+            <Button leftSection={<IconShare size={16} />} size='xs' variant='light'>
               {i18n._t('Game link')}
             </Button>
           </Anchor>
@@ -121,7 +123,8 @@ export const GameListing: React.FC<GameListingProps> = ({
               pr={0}
               pl={5}
               size='lg'
-              color='blue'
+              color={isDimmed ? '#edf2f7' : '#e3fafc'}
+              c={isDimmed ? '#40678c' : '#228be6'}
               radius='xl'
               style={{ fontSize: '16px' }}
               rightSection={
@@ -163,7 +166,14 @@ export const GameListing: React.FC<GameListingProps> = ({
                   >
                     {result.ratingDelta}
                   </Badge>
-                  <Badge w={65} size='lg' color='cyan' radius='sm' style={{ padding: 0 }}>
+                  <Badge
+                    w={65}
+                    size='lg'
+                    color={isDimmed ? '#edf2f7' : '#e3fafc'}
+                    c={isDimmed ? '#40678c' : '#228be6'}
+                    radius='sm'
+                    style={{ padding: 0 }}
+                  >
                     {result.score}
                   </Badge>
                   {yakitori && yakitori[result.playerId] && <YakitoriIndicator />}

@@ -235,7 +235,7 @@ function formatTimer(finished: boolean, timeRemaining: number, small: boolean) {
       : '0' + (timeRemaining % 60).toString();
 
   return (
-    <Text size={small ? 'sm' : 'md'}>
+    <Text fz={small ? 100 : 240}>
       {minutes}:{seconds}
     </Text>
   );

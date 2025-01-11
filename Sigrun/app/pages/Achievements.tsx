@@ -160,13 +160,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <List.Item key={`li_${idx}`}>{name}</List.Item>
             ))}
           </List>
-          <Badge
-            color='teal'
-            pl={8}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          >
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._pt('Achievements badge', '%1 han', [achDataByKey[Achievement.BEST_HAND].han])}
           </Badge>
         </Group>
@@ -186,13 +180,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <List.Item key={`li_${idx}`}>{name}</List.Item>
             ))}
           </List>
-          <Badge
-            color='teal'
-            pl={8}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          >
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._pt('Achievements badge', '%1 fu', [achDataByKey[Achievement.BEST_FU].fu])}
           </Badge>
         </Group>
@@ -212,13 +200,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <List.Item key={`li_${idx}`}>{name}</List.Item>
             ))}
           </List>
-          <Badge
-            color='teal'
-            pl={8}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          >
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._pt('Achievements badge', '%1 tsumo', [
               achDataByKey[Achievement.BEST_TSUMOIST].tsumo,
             ])}
@@ -240,13 +222,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <List.Item key={`li_${idx}`}>{name}</List.Item>
             ))}
           </List>
-          <Badge
-            color='teal'
-            pl={8}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          >
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
               'Achievements badge',
               ['%1 feed', '%1 feeds'],
@@ -271,13 +247,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <List.Item key={`li_${idx}`}>{name}</List.Item>
             ))}
           </List>
-          <Badge
-            color='teal'
-            pl={8}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          >
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
               'Achievements badge',
               ['%1 feed', '%1 feeds'],
@@ -309,13 +279,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -333,13 +297,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <List.Item key={`li_${idx}`}>{name}</List.Item>
             ))}
           </List>
-          <Badge
-            color='teal'
-            pl={8}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          >
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
               'Achievements badge',
               ['%1 win', '%1 wins'],
@@ -364,13 +322,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <List.Item key={`li_${idx}`}>{name}</List.Item>
             ))}
           </List>
-          <Badge
-            color='teal'
-            pl={8}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          >
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
               'Achievements badge',
               ['%1 quickest hand', '%1 quickest hands'],
@@ -403,13 +355,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           ) : (
             <Text>{i18n._t('No yakumans have been collected')}</Text>
           )}
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -439,13 +385,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -470,13 +410,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -499,13 +433,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -530,13 +458,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -561,13 +483,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -592,13 +508,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -623,13 +533,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -659,13 +563,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -693,13 +591,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -724,13 +616,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -755,13 +641,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -789,13 +669,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               )
             )}
           </List>
-          <Badge
-            color='teal'
-            pl={22}
-            leftSection={<IconAward style={{ marginTop: '10px' }} />}
-            variant='filled'
-            size='xl'
-          />
+          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>

@@ -39,6 +39,7 @@ import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
+import { useStorage } from 'hooks/storage';
 
 const PERPAGE = 10;
 export const RecentGames: React.FC<{
@@ -49,8 +50,10 @@ export const RecentGames: React.FC<{
 }> = ({ params: { eventId, page } }) => {
   page = page ?? '1';
   const api = useApi();
+  const storage = useStorage();
   const i18n = useI18n();
   const largeScreen = useMediaQuery('(min-width: 768px)');
+  const isDimmed = storage.getDimmed();
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
@@ -107,6 +110,7 @@ export const RecentGames: React.FC<{
                 <GameListing
                   showShareLink={true}
                   isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
+                  isDimmed={isDimmed}
                   withYakitori={events?.[0]?.withYakitori}
                   eventId={eventId}
                   game={game}
