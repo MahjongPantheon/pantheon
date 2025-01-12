@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-04 23:29+0100\n"
+"POT-Creation-Date: 2025-01-13 00:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -402,8 +402,8 @@ msgstr ""
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14
 #: app/pages/OwnedEvents.tsx:94:14
-#: app/pages/OwnedEventsEdit/index.tsx:193:18
-#: app/pages/OwnedEventsEdit/index.tsx:224:18
+#: app/pages/OwnedEventsEdit/index.tsx:194:18
+#: app/pages/OwnedEventsEdit/index.tsx:225:18
 #: app/pages/Penalties.tsx:89:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
@@ -493,43 +493,43 @@ msgid "Add extra time for this table"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:200:29
-#: app/pages/GamesControl/TournamentControls.tsx:261:22
-#: app/pages/GamesControl/TournamentControls.tsx:262:21
+#: app/pages/GamesControl/TournamentControls.tsx:262:22
+#: app/pages/GamesControl/TournamentControls.tsx:263:21
 msgid "Add extra time"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:204:36
-#: app/pages/GamesControl/TournamentControls.tsx:266:28
+#: app/pages/GamesControl/TournamentControls.tsx:267:28
 msgid "Select extra time"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:208:53
-#: app/pages/GamesControl/TournamentControls.tsx:270:45
+#: app/pages/GamesControl/TournamentControls.tsx:271:45
 msgid "1 minute"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:209:54
-#: app/pages/GamesControl/TournamentControls.tsx:271:46
+#: app/pages/GamesControl/TournamentControls.tsx:272:46
 msgid "2 minutes"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:210:54
-#: app/pages/GamesControl/TournamentControls.tsx:272:46
+#: app/pages/GamesControl/TournamentControls.tsx:273:46
 msgid "3 minutes"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:211:54
-#: app/pages/GamesControl/TournamentControls.tsx:273:46
+#: app/pages/GamesControl/TournamentControls.tsx:274:46
 msgid "4 minutes"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:212:54
-#: app/pages/GamesControl/TournamentControls.tsx:274:46
+#: app/pages/GamesControl/TournamentControls.tsx:275:46
 msgid "5 minutes"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:213:54
-#: app/pages/GamesControl/TournamentControls.tsx:275:46
+#: app/pages/GamesControl/TournamentControls.tsx:276:46
 msgid "7 minutes"
 msgstr ""
 
@@ -697,175 +697,175 @@ msgstr ""
 msgid "Refresh data [%1]"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:99:28
+#: app/pages/GamesControl/TournamentControls.tsx:100:28
 msgid "Current status"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:106:22
+#: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:107:22
+#: app/pages/GamesControl/TournamentControls.tsx:108:22
 msgid "Not started"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:108:22
+#: app/pages/GamesControl/TournamentControls.tsx:109:22
 msgid "Seating..."
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:109:22
+#: app/pages/GamesControl/TournamentControls.tsx:110:22
 msgid "Seating ready"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:110:22
+#: app/pages/GamesControl/TournamentControls.tsx:111:22
 msgid "Session started"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:111:22
+#: app/pages/GamesControl/TournamentControls.tsx:112:22
 msgid "Ready to approve"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:116:14
+#: app/pages/GamesControl/TournamentControls.tsx:117:14
 msgid "Can't generate seating: count of registered players is not divisible by 4"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:123:19
+#: app/pages/GamesControl/TournamentControls.tsx:124:19
 msgid "Show results table and achievements"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:124:19
+#: app/pages/GamesControl/TournamentControls.tsx:125:19
 msgid "Hide results table and achievements"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:128:22
+#: app/pages/GamesControl/TournamentControls.tsx:129:22
 msgid "Use random seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:129:21
+#: app/pages/GamesControl/TournamentControls.tsx:130:21
 msgid "Random seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:130:24
+#: app/pages/GamesControl/TournamentControls.tsx:131:24
 msgid "Use random seating for next session?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:140:21
+#: app/pages/GamesControl/TournamentControls.tsx:141:21
 msgid "Interval seating can't be used for first session in tournament"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:141:21
+#: app/pages/GamesControl/TournamentControls.tsx:142:21
 msgid "Use interval seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:143:21
+#: app/pages/GamesControl/TournamentControls.tsx:144:21
 msgid "Interval seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:147:28
+#: app/pages/GamesControl/TournamentControls.tsx:148:28
 msgid "Select interval"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:160:26
+#: app/pages/GamesControl/TournamentControls.tsx:161:26
 msgid "Use interval seating for next session?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:174:21
+#: app/pages/GamesControl/TournamentControls.tsx:175:21
 msgid "Swiss seating can't be used for first session in tournament"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:175:21
+#: app/pages/GamesControl/TournamentControls.tsx:176:21
 msgid "Use swiss seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:177:21
+#: app/pages/GamesControl/TournamentControls.tsx:178:21
 msgid "Swiss seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:178:24
+#: app/pages/GamesControl/TournamentControls.tsx:179:24
 msgid "Use swiss seating for next session?"
-msgstr ""
-
-#: app/pages/GamesControl/TournamentControls.tsx:189:19
-#: app/pages/GamesControl/TournamentControls.tsx:288:19
-#: app/pages/GamesControl/TournamentControls.tsx:309:19
-msgid "Show results table"
 msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:190:19
 #: app/pages/GamesControl/TournamentControls.tsx:289:19
 #: app/pages/GamesControl/TournamentControls.tsx:310:19
+msgid "Show results table"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:191:19
+#: app/pages/GamesControl/TournamentControls.tsx:290:19
+#: app/pages/GamesControl/TournamentControls.tsx:311:19
 msgid "Hide results table"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:194:22
+#: app/pages/GamesControl/TournamentControls.tsx:195:22
 msgid "Generate seating for next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:195:21
+#: app/pages/GamesControl/TournamentControls.tsx:196:21
 msgid "Next seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:199:28
+#: app/pages/GamesControl/TournamentControls.tsx:200:28
 msgid "Randomize seating by wind"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:204:26
+#: app/pages/GamesControl/TournamentControls.tsx:205:26
 msgid "Apply seating for next session?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:216:17
+#: app/pages/GamesControl/TournamentControls.tsx:217:17
 msgid "Please wait unit seating is ready"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:223:22
+#: app/pages/GamesControl/TournamentControls.tsx:224:22
 msgid "Reset generated seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:224:21
+#: app/pages/GamesControl/TournamentControls.tsx:225:21
 msgid "Reset seating"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:225:24
+#: app/pages/GamesControl/TournamentControls.tsx:226:24
 msgid "This will remove generated seating. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:234:24
+#: app/pages/GamesControl/TournamentControls.tsx:235:24
 msgid "Notify players to come to their tables"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:235:23
+#: app/pages/GamesControl/TournamentControls.tsx:236:23
 msgid "Notify players"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:236:26
+#: app/pages/GamesControl/TournamentControls.tsx:237:26
 msgid "Notify all subscribed players to come to their tables? This will send a message through notification service."
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:247:22
+#: app/pages/GamesControl/TournamentControls.tsx:248:22
 msgid "Start timer and sessions"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:248:21
+#: app/pages/GamesControl/TournamentControls.tsx:249:21
 msgid "Start timer"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:249:24
+#: app/pages/GamesControl/TournamentControls.tsx:250:24
 msgid "Start timer and game sessions?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:279:26
+#: app/pages/GamesControl/TournamentControls.tsx:280:26
 msgid "Add selected amount of extra time for all tables?"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:298:22
+#: app/pages/GamesControl/TournamentControls.tsx:299:22
 msgid "Approve session results and go on to next session"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:299:21
+#: app/pages/GamesControl/TournamentControls.tsx:300:21
 msgid "Approve sessions"
 msgstr ""
 
-#: app/pages/GamesControl/TournamentControls.tsx:300:24
+#: app/pages/GamesControl/TournamentControls.tsx:301:24
 msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
 msgstr ""
 
@@ -1047,15 +1047,15 @@ msgstr ""
 msgid "New event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:187:29
+#: app/pages/OwnedEventsEdit/index.tsx:188:29
 msgid "Failed to fetch event data"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:219:27
+#: app/pages/OwnedEventsEdit/index.tsx:220:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:287:32
+#: app/pages/OwnedEventsEdit/index.tsx:288:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32
@@ -1063,7 +1063,7 @@ msgstr ""
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:287:60
+#: app/pages/OwnedEventsEdit/index.tsx:288:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1111,7 +1111,7 @@ msgid "Lobby ID"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:78:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:76:16
 msgid "Team tournament"
 msgstr ""
 
@@ -1132,22 +1132,22 @@ msgid "Amount of points given for each chip. Chips should be set up in tournamen
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:127:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:89:16
 msgid "Fixed score applied to replacement player"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:128:22
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:90:22
 msgid "Fixed amount of result score applied for each replacement player regardless of session results."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:137:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:99:16
 msgid "Fixed uma for replacement player"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:100:22
 msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
 
@@ -1315,43 +1315,43 @@ msgstr ""
 msgid "Max arbitrary penalty score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:179:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:178:16
 msgid "Min arbitrary penalty score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:185:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:183:16
 msgid "Step of arbitrary penalty scores"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:188:16
 msgid "Pay chombo as reverse mangan"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:192:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:189:22
 msgid "Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:209:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:206:18
 msgid "Amount of chombo penalty"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:210:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:207:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:219:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:16
 msgid "Yakitori"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:220:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:217:22
 msgid "Use yakitori rule"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:226:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:223:18
 msgid "Yakitori penalty"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:227:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:224:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr ""
 
@@ -1407,11 +1407,19 @@ msgstr ""
 msgid "When time is out, finish current hand, play one more, and then interrup the session"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:73:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
+msgid "Chombo in last round ends game"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:70:22
+msgid "If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:80:16
 msgid "Seating is defined in advance"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:81:22
 msgid "You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set."
 msgstr ""
 

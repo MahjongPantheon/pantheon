@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-04 23:29+0100\n"
+"POT-Creation-Date: 2025-01-13 00:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1094,22 +1094,22 @@ msgid "Amount of points given for each chip. Chips should be set up in tournamen
 msgstr ""
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:88:16
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:79:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:87:16
 msgid "Fixed score applied to replacement player"
 msgstr ""
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:89:22
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:80:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:88:22
 msgid "Fixed amount of result score applied for each replacement player regardless of session results."
 msgstr ""
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:98:16
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:89:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:97:16
 msgid "Fixed uma for replacement player"
 msgstr ""
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:99:22
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:90:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:98:22
 msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
 
@@ -1357,15 +1357,23 @@ msgstr ""
 msgid "When time is out, finish current hand, play one more, and then interrup the session"
 msgstr ""
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:67:24
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:68:16
+msgid "Chombo in last round ends game"
+msgstr ""
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:69:22
+msgid "If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game"
+msgstr ""
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:75:24
 msgid "Team tournament"
 msgstr ""
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:69:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:77:16
 msgid "Seating is defined in advance"
 msgstr ""
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:70:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:78:22
 msgid "You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set."
 msgstr ""
 

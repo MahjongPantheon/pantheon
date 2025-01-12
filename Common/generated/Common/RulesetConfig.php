@@ -161,6 +161,10 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 yakitori_penalty = 37;</code>
      */
     protected $yakitori_penalty = 0;
+    /**
+     * Generated from protobuf field <code>bool chombo_ends_game = 38;</code>
+     */
+    protected $chombo_ends_game = false;
 
     /**
      * Constructor.
@@ -205,6 +209,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $yaku_with_pao
      *     @type bool $with_yakitori
      *     @type int $yakitori_penalty
+     *     @type bool $chombo_ends_game
      * }
      */
     public function __construct($data = NULL) {
@@ -1042,6 +1047,28 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->yakitori_penalty = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool chombo_ends_game = 38;</code>
+     * @return bool
+     */
+    public function getChomboEndsGame()
+    {
+        return $this->chombo_ends_game;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool chombo_ends_game = 38;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setChomboEndsGame($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->chombo_ends_game = $var;
 
         return $this;
     }
