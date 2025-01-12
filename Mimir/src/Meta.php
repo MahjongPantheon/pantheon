@@ -207,7 +207,7 @@ class Meta
         if ($this->_superadmin) {
             return true;
         }
-        if (!empty($this->_accessRules['ADMIN_EVENT']) && $this->_accessRules['ADMIN_EVENT']) {
+        if (!empty($this->_accessRules['ADMIN_EVENT'])) {
             return true;
         }
         return false;
@@ -226,7 +226,7 @@ class Meta
             return false;
         }
         $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
-        if ($this->_accessRules['ADMIN_EVENT']) {
+        if (!empty($this->_accessRules['ADMIN_EVENT'])) {
             return true;
         }
         return false;
@@ -245,7 +245,7 @@ class Meta
             return false;
         }
         $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
-        if ($this->_accessRules['REFEREE_FOR_EVENT']) {
+        if (!empty($this->_accessRules['REFEREE_FOR_EVENT'])) {
             return true;
         }
         return false;

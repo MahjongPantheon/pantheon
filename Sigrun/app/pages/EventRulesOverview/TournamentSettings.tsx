@@ -64,6 +64,14 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
         </Stack>
         <Space h='md' />
       </Radio.Group>
+      <Checkbox
+        label={i18n._t('Chombo in last round ends game')}
+        description={i18n._t(
+          'If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game'
+        )}
+        checked={config.rulesetConfig.chomboEndsGame}
+        onChange={() => {}}
+      />
       <Checkbox label={i18n._t('Team tournament')} checked={config.isTeam} onChange={() => {}} />
       <Checkbox
         label={i18n._t('Seating is defined in advance')}

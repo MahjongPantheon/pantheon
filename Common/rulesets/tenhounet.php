@@ -64,4 +64,5 @@ return (new RulesetConfig())
     ->setWithLeadingDealerGameOver(true)
     ->setWithMultiYakumans(true)
     ->setWithNagashiMangan(true)
+    ->setChomboEndsGame(false)
     ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU]);

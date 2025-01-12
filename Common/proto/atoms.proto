@@ -648,6 +648,7 @@ message RulesetConfig {
   repeated int32 yaku_with_pao = 35;
   bool with_yakitori = 36;
   int32 yakitori_penalty = 37;
+  bool chombo_ends_game = 38;
 }
 
 // Generics

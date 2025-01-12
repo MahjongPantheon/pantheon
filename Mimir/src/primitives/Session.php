@@ -813,6 +813,13 @@ class SessionPrimitive extends Primitive
                 } else {
                     $this->getCurrentState()->update($round);
                     $success = $this->save();
+                    if ($noTimeLeft &&
+                        $this->getCurrentState()->lastHandStarted() &&
+                        $round->getOutcome() === 'chombo' &&
+                        $this->getEvent()->getRulesetConfig()->rules()->getChomboEndsGame()
+                    ) {
+                        $this->getCurrentState()->forceFinish();
+                    }
                 }
 
                 if ($this->getCurrentState()->isFinished()) {
@@ -832,7 +839,10 @@ class SessionPrimitive extends Primitive
                 );
 
                 // should finish game if it's in red zone, except case when chombo was made
-                if ($noTimeLeft && $round->getOutcome() !== 'chombo') {
+                if ($noTimeLeft && (
+                    $round->getOutcome() !== 'chombo' ||
+                    $this->getEvent()->getRulesetConfig()->rules()->getChomboEndsGame()
+                )) {
                     $this->getCurrentState()->forceFinish();
                 }
 

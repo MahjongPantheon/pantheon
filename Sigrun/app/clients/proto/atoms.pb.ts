@@ -642,6 +642,7 @@ export interface RulesetConfig {
   yakuWithPao: number[];
   withYakitori: boolean;
   yakitoriPenalty: number;
+  chomboEndsGame: boolean;
 }
 
 export interface GenericSuccessResponse {
@@ -7729,6 +7730,7 @@ export const RulesetConfig = {
       yakuWithPao: [],
       withYakitori: false,
       yakitoriPenalty: 0,
+      chomboEndsGame: false,
       ...msg,
     };
   },
@@ -7850,6 +7852,9 @@ export const RulesetConfig = {
     }
     if (msg.yakitoriPenalty) {
       writer.writeInt32(37, msg.yakitoriPenalty);
+    }
+    if (msg.chomboEndsGame) {
+      writer.writeBool(38, msg.chomboEndsGame);
     }
     return writer;
   },
@@ -8018,6 +8023,10 @@ export const RulesetConfig = {
         }
         case 37: {
           msg.yakitoriPenalty = reader.readInt32();
+          break;
+        }
+        case 38: {
+          msg.chomboEndsGame = reader.readBool();
           break;
         }
         default: {
@@ -14409,6 +14418,7 @@ export const RulesetConfigJSON = {
       yakuWithPao: [],
       withYakitori: false,
       yakitoriPenalty: 0,
+      chomboEndsGame: false,
       ...msg,
     };
   },
@@ -14536,6 +14546,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.yakitoriPenalty) {
       json["yakitoriPenalty"] = msg.yakitoriPenalty;
+    }
+    if (msg.chomboEndsGame) {
+      json["chomboEndsGame"] = msg.chomboEndsGame;
     }
     return json;
   },
@@ -14713,6 +14726,10 @@ export const RulesetConfigJSON = {
       json["yakitoriPenalty"] ?? json["yakitori_penalty"];
     if (_yakitoriPenalty_) {
       msg.yakitoriPenalty = protoscript.parseNumber(_yakitoriPenalty_);
+    }
+    const _chomboEndsGame_ = json["chomboEndsGame"] ?? json["chombo_ends_game"];
+    if (_chomboEndsGame_) {
+      msg.chomboEndsGame = _chomboEndsGame_;
     }
     return msg;
   },

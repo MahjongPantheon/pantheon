@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-04 23:29+0100\n"
+"POT-Creation-Date: 2025-01-13 00:05+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -442,6 +442,10 @@ msgstr "Shuugi"
 msgid "Chips value"
 msgstr "Shuugi Wert"
 
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:68:16
+msgid "Chombo in last round ends game"
+msgstr ""
+
 #: app/components/PlayerStatsListing.tsx:118:16
 msgid "Chombo penalties: "
 msgstr "Chombo Strafen:"
@@ -605,7 +609,7 @@ msgid "Final game score"
 msgstr "Endergebnis des Spiels"
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:99:22
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:90:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:98:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
 "of session results."
@@ -614,7 +618,7 @@ msgstr ""
 "zugewiesen wird."
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:89:22
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:80:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:88:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
 "of session results."
@@ -623,12 +627,12 @@ msgstr ""
 "zugewiesen wird."
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:88:16
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:79:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:87:16
 msgid "Fixed score applied to replacement player"
 msgstr "Fixe Punktzahl für Ersatzspieler"
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:98:16
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:89:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:97:16
 msgid "Fixed uma for replacement player"
 msgstr "Uma für Ersatzspieler"
 
@@ -829,6 +833,12 @@ msgid ""
 msgstr ""
 "Wenn Osten den ersten Platz nach der letzten Hand im Match hält, endet das "
 "Spiel."
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:69:22
+msgid ""
+"If this is set, chombo will not allow players to play one more hand if time "
+"is out and it is final hand of the game"
+msgstr ""
 
 #: app/helpers/yaku.ts:110:34
 msgid "Iipeikou"
@@ -1282,7 +1292,7 @@ msgstr "Startpunktzahl die alle Spieler am Anfang des Ratings bekommen"
 msgid "Score:"
 msgstr "Punkte:"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:69:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:77:16
 msgid "Seating is defined in advance"
 msgstr "Sitzordnung wird im Vorhinein festgelegt"
 
@@ -1393,7 +1403,7 @@ msgstr "Tanyao gilt bei geöffneter Hand."
 msgid "Team"
 msgstr "Team"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:67:24
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:75:24
 msgid "Team tournament"
 msgstr "Team Turnier"
 
@@ -1657,7 +1667,7 @@ msgstr ""
 msgid "Yakuhai: total"
 msgstr "Yakuhai: total"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:70:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:78:22
 msgid ""
 "You should prepare the tournament script yourself. No automated seating "
 "functionality is available when this flag is set."
