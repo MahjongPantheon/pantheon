@@ -207,7 +207,7 @@ class Meta
         if ($this->_superadmin) {
             return true;
         }
-        if ($this->_accessRules['ADMIN_EVENT']) {
+        if (!empty($this->_accessRules['ADMIN_EVENT']) && $this->_accessRules['ADMIN_EVENT']) {
             return true;
         }
         return false;
