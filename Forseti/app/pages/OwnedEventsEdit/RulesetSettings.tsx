@@ -160,6 +160,14 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         min={0}
         {...form.getInputProps('ruleset.oka')}
       />
+      <NumberInput
+        icon={<IconCash size='1rem' />}
+        label={i18n._t('Honba Value')}
+        description={i18n._t('Value of one honba stick')}
+        defaultValue={300}
+        min={0}
+        {...form.getInputProps('ruleset.honbaValue')}
+      />
       <UmaSelect form={form} i18n={i18n} />
       <Checkbox
         label={i18n._t('Equalize uma')}

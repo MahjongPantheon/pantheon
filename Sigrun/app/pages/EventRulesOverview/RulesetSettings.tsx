@@ -170,6 +170,14 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
         value={config.rulesetConfig.oka}
         onChange={() => {}}
       />
+      <NumberInput
+        hideControls
+        icon={<IconCash size='1rem' />}
+        label={i18n._t('Honba Value')}
+        description={i18n._t('Value of one honba stick')}
+        value={config.rulesetConfig.honbaValue}
+        onChange={() => {}}
+      />
       <UmaSelect config={config} i18n={i18n} />
       <Checkbox
         label={i18n._t('Equalize uma')}
