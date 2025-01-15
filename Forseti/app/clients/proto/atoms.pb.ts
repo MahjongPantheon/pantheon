@@ -643,6 +643,7 @@ export interface RulesetConfig {
   withYakitori: boolean;
   yakitoriPenalty: number;
   chomboEndsGame: boolean;
+  honbaValue: number;
 }
 
 export interface GenericSuccessResponse {
@@ -7731,6 +7732,7 @@ export const RulesetConfig = {
       withYakitori: false,
       yakitoriPenalty: 0,
       chomboEndsGame: false,
+      honbaValue: 0,
       ...msg,
     };
   },
@@ -7855,6 +7857,9 @@ export const RulesetConfig = {
     }
     if (msg.chomboEndsGame) {
       writer.writeBool(38, msg.chomboEndsGame);
+    }
+    if (msg.honbaValue) {
+      writer.writeInt32(39, msg.honbaValue);
     }
     return writer;
   },
@@ -8027,6 +8032,10 @@ export const RulesetConfig = {
         }
         case 38: {
           msg.chomboEndsGame = reader.readBool();
+          break;
+        }
+        case 39: {
+          msg.honbaValue = reader.readInt32();
           break;
         }
         default: {
@@ -14419,6 +14428,7 @@ export const RulesetConfigJSON = {
       withYakitori: false,
       yakitoriPenalty: 0,
       chomboEndsGame: false,
+      honbaValue: 0,
       ...msg,
     };
   },
@@ -14549,6 +14559,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.chomboEndsGame) {
       json["chomboEndsGame"] = msg.chomboEndsGame;
+    }
+    if (msg.honbaValue) {
+      json["honbaValue"] = msg.honbaValue;
     }
     return json;
   },
@@ -14730,6 +14743,10 @@ export const RulesetConfigJSON = {
     const _chomboEndsGame_ = json["chomboEndsGame"] ?? json["chombo_ends_game"];
     if (_chomboEndsGame_) {
       msg.chomboEndsGame = _chomboEndsGame_;
+    }
+    const _honbaValue_ = json["honbaValue"] ?? json["honba_value"];
+    if (_honbaValue_) {
+      msg.honbaValue = protoscript.parseNumber(_honbaValue_);
     }
     return msg;
   },
