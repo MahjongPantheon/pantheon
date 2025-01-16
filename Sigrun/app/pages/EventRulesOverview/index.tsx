@@ -75,7 +75,7 @@ export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
         <Divider size='xs' />
         <Space h='md' />
         <Tabs defaultValue='ruleset_tuning'>
-          <Tabs.List position='left'>
+          <Tabs.List justify='flex-start'>
             <TabsList i18n={i18n} eventType={event.type} />
           </Tabs.List>
           <Tabs.Panel value='ruleset_tuning' pt='xs'>

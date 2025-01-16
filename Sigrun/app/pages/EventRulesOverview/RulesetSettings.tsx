@@ -38,7 +38,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
     <Stack>
       <NumberInput
         hideControls
-        icon={<IconArrowBadgeDownFilled size='1rem' />}
+        leftSection={<IconArrowBadgeDownFilled size='1rem' />}
         label={i18n._t('Initial rating')}
         description={i18n._t('Score given to all players in the beginning of the rating')}
         value={config.rulesetConfig.startRating}
@@ -46,7 +46,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
       />
       <NumberInput
         hideControls
-        icon={<IconCash size='1rem' />}
+        leftSection={<IconCash size='1rem' />}
         label={i18n._t('Initial points')}
         description={i18n._t(
           'Amount of points given to every player in the beginning of every session'
@@ -94,7 +94,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
       {config.rulesetConfig.playAdditionalRounds && (
         <NumberInput
           hideControls
-          icon={<IconTargetArrow size='1rem' />}
+          leftSection={<IconTargetArrow size='1rem' />}
           label={i18n._t('Goal score')}
           description={i18n._t('Amount of score player should get to end the game.')}
           value={config.rulesetConfig.goalPoints}
@@ -164,7 +164,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
       />
       <NumberInput
         hideControls
-        icon={<IconMountain size='1rem' />}
+        leftSection={<IconMountain size='1rem' />}
         label={i18n._t('Oka bonus')}
         description={i18n._t('Amount of points given to player at 1st place')}
         value={config.rulesetConfig.oka}
@@ -191,7 +191,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
       {!config.rulesetConfig.extraChomboPayments && (
         <NumberInput
           hideControls
-          icon={<IconHandStop size='1rem' />}
+          leftSection={<IconHandStop size='1rem' />}
           label={i18n._t('Amount of chombo penalty')}
           description={i18n._t(
             'Amount of penalty applied in the end of the session after uma bonus.'
@@ -208,7 +208,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
       />
       {config.rulesetConfig.withYakitori && (
         <NumberInput
-          icon={<IconHandStop size='1rem' />}
+          leftSection={<IconHandStop size='1rem' />}
           label={i18n._t('Yakitori penalty')}
           description={i18n._t("Amount of penalty applied to those who didn't win once in game.")}
           value={config.rulesetConfig.yakitoriPenalty}

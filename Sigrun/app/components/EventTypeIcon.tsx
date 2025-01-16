@@ -15,9 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Avatar, MantineNumberSize, Tooltip } from '@mantine/core';
+import { Avatar, MantineSize, Tooltip } from '@mantine/core';
 import { IconFriends, IconNetwork, IconTournament } from '@tabler/icons-react';
-import * as React from 'react';
 import { EventType, Event } from '../clients/proto/atoms.pb';
 import { useI18n } from '../hooks/i18n';
 
@@ -28,7 +27,7 @@ export const EventTypeIcon = ({
 }: {
   event: Event;
   iconSize?: number;
-  size?: MantineNumberSize;
+  size?: MantineSize;
 }) => {
   const i18n = useI18n();
   return (

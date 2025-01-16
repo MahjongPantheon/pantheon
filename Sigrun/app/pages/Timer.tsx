@@ -42,13 +42,12 @@ import { useI18n } from '../hooks/i18n';
 import { Meta } from '../components/Meta';
 import { useMediaQuery } from '@mantine/hooks';
 
-let largeScreen = false;
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
   const i18n = useI18n();
   const [, setSoundPlayed] = useState(false);
   const [, setCurrentTimer] = useState(0);
-  largeScreen = useMediaQuery('(min-width: 768px)');
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
   const [showSeating, setShowSeating] = useState(false);
   const [timerWaiting, setTimerWaiting] = useState(false);
@@ -197,9 +196,9 @@ function Table({ index, table }: { index: number; table: PlayerSeating[] }) {
       <Badge variant='filled' size='xl' radius='sm' pl={8} pr={8}>
         {index}
       </Badge>
-      <Stack spacing={0}>
+      <Stack gap={0}>
         {table.map((seat, idx) => (
-          <Group key={`st_${idx}`} position='apart' style={{ alignItems: 'flex-start' }}>
+          <Group key={`st_${idx}`} justify='space-between' style={{ alignItems: 'flex-start' }}>
             <Badge size='xl' radius='sm' p={5} color={colors[idx]}>
               {winds[idx]}
             </Badge>
@@ -236,7 +235,7 @@ function formatTimer(finished: boolean, timeRemaining: number, small: boolean) {
       : '0' + (timeRemaining % 60).toString();
 
   return (
-    <Text size={small ? 100 : 240}>
+    <Text fz={small ? 100 : 240}>
       {minutes}:{seconds}
     </Text>
   );

@@ -67,19 +67,19 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
         </SimpleGrid>
       )}
       {config.rulesetConfig.umaType === UmaType.UMA_TYPE_UMA_COMPLEX && (
-        <Group align='flex-end'>
+        <Group justify='flex-end'>
           <Stack w='20%'>
             <Center>{i18n._t('Place / Session result')}</Center>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('1st')}
             </Text>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('2nd')}
             </Text>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('3rd')}
             </Text>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('4th')}
             </Text>
           </Stack>

@@ -18,7 +18,6 @@
 import { Group, ActionIcon, Container, Anchor, Stack } from '@mantine/core';
 import { IconArrowBarToUp } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
-import * as React from 'react';
 import { useContext } from 'react';
 import { globalsCtx } from '../hooks/globals';
 import { useMediaQuery } from '@mantine/hooks';
@@ -32,10 +31,10 @@ export function AppFooter() {
   return (
     <>
       <Container style={{ flex: 1 }}>
-        <Group position='apart'>
+        <Group justify='space-between'>
           <ActionIcon
             variant='subtle'
-            color='blue'
+            c='blue'
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             title={i18n._t('Back to top')}
             mt={0}
@@ -44,17 +43,13 @@ export function AppFooter() {
           </ActionIcon>
           <Group style={{ display: largeScreen ? 'inherit' : 'none' }} align='flex-start'>
             {globals.data.eventId && (
-              <Stack spacing={0}>
-                <Anchor
-                  color='gray'
-                  size='xs'
-                  href={`/event/${globals.data.eventId?.join('.')}/info`}
-                >
+              <Stack gap={0}>
+                <Anchor c='gray' size='xs' href={`/event/${globals.data.eventId?.join('.')}/info`}>
                   {i18n._t('Description')}
                 </Anchor>
                 {globals.data.eventId?.length === 1 && (
                   <Anchor
-                    color='gray'
+                    c='gray'
                     size='xs'
                     href={`/event/${globals.data.eventId?.join('.')}/rules`}
                   >
@@ -64,16 +59,12 @@ export function AppFooter() {
               </Stack>
             )}
             {globals.data.eventId && (
-              <Stack spacing={0}>
-                <Anchor
-                  color='gray'
-                  size='xs'
-                  href={`/event/${globals.data.eventId?.join('.')}/games`}
-                >
+              <Stack gap={0}>
+                <Anchor c='gray' size='xs' href={`/event/${globals.data.eventId?.join('.')}/games`}>
                   {i18n._t('Recent games')}
                 </Anchor>
                 <Anchor
-                  color='gray'
+                  c='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
                 >
@@ -81,10 +72,10 @@ export function AppFooter() {
                 </Anchor>
               </Stack>
             )}
-            <Stack spacing={0}>
+            <Stack gap={0}>
               {globals.data.eventId?.length === 1 && (
                 <Anchor
-                  color='gray'
+                  c='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId.join('.')}/achievements`}
                 >
@@ -93,7 +84,7 @@ export function AppFooter() {
               )}
               {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
                 <Anchor
-                  color='gray'
+                  c='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId.join('.')}/seriesRating`}
                 >
@@ -101,11 +92,11 @@ export function AppFooter() {
                 </Anchor>
               )}
             </Stack>
-            <Stack spacing={0}>
+            <Stack gap={0}>
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
                 globals.data.eventId?.length === 1 && (
                   <Anchor
-                    color='gray'
+                    c='gray'
                     size='xs'
                     href={`/event/${globals.data.eventId.join('.')}/timer`}
                   >

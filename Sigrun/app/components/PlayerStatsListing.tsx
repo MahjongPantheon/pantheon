@@ -48,7 +48,7 @@ export const PlayerStatsListing = ({
     <>
       <List>
         <List.Item>
-          <Text weight='bold'>{i18n._t('Common stats')}</Text>
+          <Text fw={700}>{i18n._t('Common stats')}</Text>
           <List>
             <List.Item>
               {i18n._t('Games played: ')}
@@ -61,7 +61,7 @@ export const PlayerStatsListing = ({
           </List>
         </List.Item>
         <List.Item>
-          <Text weight='bold'>{i18n._t('Places stats')}</Text>
+          <Text fw={700}>{i18n._t('Places stats')}</Text>
           <List>
             {playerStats?.placesSummary
               ?.sort((a, b) => a.place - b.place)
@@ -78,7 +78,7 @@ export const PlayerStatsListing = ({
           </List>
         </List.Item>
         <List.Item>
-          <Text weight='bold'>{i18n._t('Final game score')}</Text>
+          <Text fw={700}>{i18n._t('Final game score')}</Text>
           <List>
             <List.Item>
               {i18n._t('Minimum: ')}
@@ -95,7 +95,7 @@ export const PlayerStatsListing = ({
           </List>
         </List.Item>
         <List.Item>
-          <Text weight='bold'>{i18n._t('Misc stats')}</Text>
+          <Text fw={700}>{i18n._t('Misc stats')}</Text>
           <List>
             <List.Item>
               {i18n._t('Draws: ')}

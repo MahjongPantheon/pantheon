@@ -83,7 +83,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
               {idx + 1}
             </Badge>
             <PlayerAvatar p={item.player} />
-            <Group spacing={2}>
+            <Group gap={2}>
               <Anchor
                 href={`/event/${events[0].id}/player/${item.player.id}`}
                 onClick={(e) => {
@@ -94,8 +94,8 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
                 {item.player.title}
               </Anchor>
             </Group>
-            <Stack spacing='xs' w='100%'>
-              <Stack spacing={0}>
+            <Stack gap='xs' w='100%'>
+              <Stack gap={0}>
                 <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
                   <Badge color='blue' size='sm' radius={0}>
                     {i18n._t('Best series')}
@@ -126,7 +126,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
                   ))}
                 </Box>
               </Stack>
-              <Stack spacing={0}>
+              <Stack gap={0}>
                 <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
                   <Badge color='blue' size='sm' radius={0}>
                     {i18n._t('Last series')}

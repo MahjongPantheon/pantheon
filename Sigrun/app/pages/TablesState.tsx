@@ -180,7 +180,7 @@ function Table({
         backgroundColor: isDark ? theme.colors.dark[6] : theme.colors.gray[2],
       }}
     >
-      <Stack spacing={10}>
+      <Stack gap={10}>
         <Badge variant='filled' size='xl' radius='sm' pl={8} pr={8}>
           {index}
         </Badge>
@@ -195,9 +195,9 @@ function Table({
           </Badge>
         )}
       </Stack>
-      <Stack spacing={0}>
+      <Stack gap={0}>
         {table.players.map((seat, idx) => (
-          <Group key={`st_${idx}`} position='apart' style={{ alignItems: 'flex-start' }}>
+          <Group key={`st_${idx}`} justify='space-between' style={{ alignItems: 'flex-start' }}>
             <Badge size='xl' radius='sm' p={5} color={colors[idx]}>
               {winds[idx]}
             </Badge>

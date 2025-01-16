@@ -44,6 +44,7 @@ import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconInfoCircle, IconX } from '@tabler/icons-react';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
+import { useStorage } from 'hooks/storage';
 
 const HandsGraph = React.lazy(() => import('../components/HandsGraph'));
 const YakuGraph = React.lazy(() => import('../components/YakuGraph'));
@@ -54,6 +55,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
 }) => {
   const winds = ['東', '南', '西', '北'];
   const api = useApi();
+  const storage = useStorage();
   const i18n = useI18n();
   const [, navigate] = useLocation();
   const events = useEvent(eventId);
@@ -61,6 +63,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
   const DataCmp = largeScreen ? Group : Stack;
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
+  const isDimmed = storage.getDimmed();
 
   const [lastSelectionX, setLastSelectionX] = useState<number | null>(null);
   const [lastSelectionHash, setLastSelectionHash] = useState<string | null>(null);
@@ -97,7 +100,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           [player.title, events?.[0].title]
         )}
       />
-      <Group position='apart'>
+      <Group justify='space-between'>
         <h2>
           <Group>
             <PlayerAvatar p={player} />
@@ -144,7 +147,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Space h='md' />
       {selectedGame && (
         <>
-          <Group position='apart'>
+          <Group justify='space-between'>
             <Anchor
               href={`/event/${eventId}/game/${selectedGame.tables[0].sessionHash}`}
               onClick={(e) => {
@@ -212,80 +215,86 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
           <Space h='md' />
           <Divider size='xs' />
           <Space h='md' />
-          <Stack spacing={0}>
-            {selectedGame.tables
-              // .sort((a, b) => a.place - b.place)
-              .map((seat, idx) => (
-                <Group grow key={`pl_${idx}`}>
-                  <DataCmp
-                    spacing='xs'
-                    style={{
-                      padding: '10px',
-                      backgroundColor:
-                        idx % 2
-                          ? isDark
-                            ? theme.colors.dark[7]
-                            : theme.colors.gray[1]
-                          : 'transparent',
-                    }}
-                  >
-                    <Group style={{ flex: 1 }}>
-                      <Badge
-                        w={50}
-                        size='xl'
-                        color='blue'
-                        radius='sm'
-                        style={{ padding: 0, fontSize: '22px' }}
-                      >
-                        {winds[idx]}
-                      </Badge>
-                      <PlayerAvatar
-                        p={{
-                          title: seat.title,
-                          id: seat.playerId,
-                          hasAvatar: seat.hasAvatar,
-                          lastUpdate: seat.lastUpdate,
+          <Stack gap={0}>
+            {selectedGame.tables.map((seat, idx) => (
+              <Group grow key={`pl_${idx}`}>
+                <DataCmp
+                  gap='xs'
+                  style={{
+                    padding: '10px',
+                    backgroundColor:
+                      idx % 2
+                        ? isDark
+                          ? theme.colors.dark[7]
+                          : theme.colors.gray[1]
+                        : 'transparent',
+                  }}
+                >
+                  <Group style={{ flex: 1 }}>
+                    <Badge
+                      w={50}
+                      size='xl'
+                      color={isDimmed ? '#edf2f7' : '#e7f5ff'}
+                      c={isDimmed ? '#40678c' : '#228be6'}
+                      radius='sm'
+                      style={{ padding: 0, fontSize: '22px' }}
+                    >
+                      {winds[idx]}
+                    </Badge>
+                    <PlayerAvatar
+                      p={{
+                        title: seat.title,
+                        id: seat.playerId,
+                        hasAvatar: seat.hasAvatar,
+                        lastUpdate: seat.lastUpdate,
+                      }}
+                    />
+                    {seat.playerId === player.id ? (
+                      <Text fw={700}>{seat.title}</Text>
+                    ) : (
+                      <Anchor
+                        href={`/event/${eventId}/player/${seat.playerId}`}
+                        onClick={(e) => {
+                          navigate(`/event/${eventId}/player/${seat.playerId}`);
+                          e.preventDefault();
                         }}
-                      />
-                      {seat.playerId === player.id ? (
-                        <Text weight='bold'>{seat.title}</Text>
-                      ) : (
-                        <Anchor
-                          href={`/event/${eventId}/player/${seat.playerId}`}
-                          onClick={(e) => {
-                            navigate(`/event/${eventId}/player/${seat.playerId}`);
-                            e.preventDefault();
-                          }}
-                        >
-                          {seat.title}
-                        </Anchor>
-                      )}
-                    </Group>
-                    <Group spacing={2} grow={!largeScreen}>
-                      <Badge w={65} size='lg' color='cyan' radius='sm' style={{ padding: 0 }}>
-                        {seat.score}
-                      </Badge>
-                      <Badge
-                        w={75}
-                        size='lg'
-                        variant='filled'
-                        color={seat.ratingDelta > 0 ? 'lime' : 'red'}
-                        radius='sm'
-                        style={{ padding: 0 }}
                       >
-                        {seat.ratingDelta}
-                      </Badge>
-                    </Group>
-                  </DataCmp>
-                </Group>
-              ))}
+                        {seat.title}
+                      </Anchor>
+                    )}
+                  </Group>
+                  <Group gap={2} grow={!largeScreen}>
+                    <Badge
+                      w={65}
+                      size='lg'
+                      color={isDimmed ? '#edf2f7' : '#e3fafc'}
+                      c={isDimmed ? '#40678c' : '#228be6'}
+                      radius='sm'
+                      style={{ padding: 0 }}
+                    >
+                      {seat.score}
+                    </Badge>
+                    <Badge
+                      w={75}
+                      size='lg'
+                      variant='filled'
+                      color={seat.ratingDelta > 0 ? 'lime' : 'red'}
+                      radius='sm'
+                      style={{ padding: 0 }}
+                    >
+                      {seat.ratingDelta}
+                    </Badge>
+                  </Group>
+                </DataCmp>
+              </Group>
+            ))}
           </Stack>
           <Space h='md' />
           <Divider size='xs' />
           <Space h='md' />
         </>
       )}
-      <DataCmp spacing={0} grow={largeScreen ? true : undefined}>
+      <DataCmp gap={0} grow={largeScreen ? true : undefined}>
         <PlayerStatsListing playerStats={playerStats} playerId={playerId} />
       </DataCmp>
       <Space h='md' />

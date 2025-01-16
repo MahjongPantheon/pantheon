@@ -21,6 +21,7 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
 import { YakuStat } from '../clients/proto/atoms.pb';
 import { useMemo } from 'react';
+
 const BarGraph = React.lazy(() => import('./BarGraph'));
 
 export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {

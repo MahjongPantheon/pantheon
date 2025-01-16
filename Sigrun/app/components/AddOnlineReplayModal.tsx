@@ -9,9 +9,9 @@ import {
   Modal,
   Space,
   TextInput,
+  useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import * as React from 'react';
 import { modalsCtx } from '../hooks/modals';
 
 export const AddOnlineReplayModal = () => {
@@ -24,6 +24,7 @@ export const AddOnlineReplayModal = () => {
   const i18n = useI18n();
   const globals = useContext(globalsCtx);
   const theme = useMantineTheme();
+  const isDark = useMantineColorScheme().colorScheme === 'dark';
 
   const tryAddOnline = () => {
     if (!onlineLink.match(/^https?:\/\/[^\/]+\/\d\/\?log=\d+gm-[0-9a-f]+-\d+-[0-9a-f]+/i)) {
@@ -51,7 +52,7 @@ export const AddOnlineReplayModal = () => {
       opened={modals.onlineModalShown}
       onClose={modals.hideOnlineModal}
       overlayProps={{
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
+        color: isDark ? theme.colors.dark[9] : theme.colors.gray[2],
         opacity: 0.55,
         blur: 3,
       }}
@@ -68,7 +69,7 @@ export const AddOnlineReplayModal = () => {
         withAsterisk
       />
       <Space h='md' />
-      <Group position='right'>
+      <Group justify='flex-end'>
         <Button onClick={tryAddOnline}>{i18n._t('Add replay')}</Button>
       </Group>
     </Modal>

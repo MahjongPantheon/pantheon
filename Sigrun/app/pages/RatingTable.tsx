@@ -57,6 +57,7 @@ import { globalsCtx } from '../hooks/globals';
 import { TeamTable } from '../components/TeamTable';
 import { Meta } from '../components/Meta';
 import { authCtx } from '../hooks/auth';
+import { useStorage } from 'hooks/storage';
 
 export const RatingTable: React.FC<{
   params: {
@@ -76,12 +77,14 @@ export const RatingTable: React.FC<{
     chips: 'desc',
   }[orderBy] as 'asc' | 'desc';
   const api = useApi();
+  const storage = useStorage();
   const i18n = useI18n();
   const events = useEvent(eventId);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
+  const isDimmed = storage.getDimmed();
   const DataCmp = largeScreen ? Group : Stack;
   const auth = useContext(authCtx);
   const globals = useContext(globalsCtx);
@@ -153,7 +156,7 @@ export const RatingTable: React.FC<{
           ])}
         />
         {events?.map((event, eid) => (
-          <DataCmp position='apart' key={`ev_${eid}`}>
+          <DataCmp justify='space-between' key={`ev_${eid}`}>
             <h2 style={{ display: 'flex', gap: '20px' }}>
               {event && <EventTypeIcon event={event} />}
               {event?.title} - {i18n._t('Rating table')}
@@ -162,7 +165,7 @@ export const RatingTable: React.FC<{
               <Button
                 variant='light'
                 size='xs'
-                leftIcon={<IconDownload size='1.1rem' />}
+                leftSection={<IconDownload size='1.1rem' />}
                 onClick={() => {
                   downloadCsv(
                     i18n,
@@ -183,8 +186,8 @@ export const RatingTable: React.FC<{
         <Space h='md' />
         <DataCmp grow={largeScreen ? true : undefined}>
           <Stack>
-            <DataCmp position='right' spacing='md'>
-              <Group spacing='md' grow={!largeScreen}>
+            <DataCmp justify='flex-end' gap='md'>
+              <Group gap='md' grow={!largeScreen}>
                 {globals.data.isTeam && (
                   <Badge
                     size='lg'
@@ -268,7 +271,7 @@ export const RatingTable: React.FC<{
                   </Badge>
                 )}
               </Group>
-              <Group spacing='md' grow={!largeScreen}>
+              <Group gap='md' grow={!largeScreen}>
                 <Badge
                   size='lg'
                   color='green'
@@ -299,8 +302,9 @@ export const RatingTable: React.FC<{
                 </Badge>
                 <Badge
                   size='lg'
-                  color='cyan'
                   radius='sm'
+                  color={isDimmed ? '#edf2f7' : '#e3fafc'}
+                  c={isDimmed ? '#40678c' : '#228be6'}
                   variant={orderBy === 'avg_place' ? 'filled' : 'light'}
                   component={'a'}
                   pl={5}
@@ -336,8 +340,8 @@ export const RatingTable: React.FC<{
             <Space h='md' />
             <DataCmp grow={largeScreen ? true : undefined}>
               <Stack>
-                <DataCmp position='right' spacing='md'>
-                  <Group spacing='md' grow={!largeScreen}>
+                <DataCmp justify='flex-end' gap='md'>
+                  <Group gap='md' grow={!largeScreen}>
                     <Badge
                       size='lg'
                       color='lime'
@@ -383,19 +387,19 @@ export const RatingTable: React.FC<{
         <Divider size='xs' />
         <Space h='md' />
         <Box pos='relative'>
-          <LoadingOverlay visible={playersLoading} overlayBlur={2} />
+          <LoadingOverlay visible={playersLoading} overlayProps={{ blur: 2 }} />
           {orderBy === 'team' && (
-            <Stack justify='flex-start' spacing='0'>
+            <Stack justify='flex-start' gap='0'>
               <TeamTable players={players} events={events} />
             </Stack>
           )}
           {orderBy !== 'team' && (
-            <Stack justify='flex-start' spacing='0'>
+            <Stack justify='flex-start' gap='0'>
               {(players ?? []).map((player, idx) => {
                 return (
                   <DataCmp
                     key={`pl_${idx}`}
-                    spacing='xs'
+                    gap='xs'
                     style={{
                       padding: '10px',
                       backgroundColor:
@@ -407,11 +411,18 @@ export const RatingTable: React.FC<{
                     }}
                   >
                     <Group style={{ flex: 1 }}>
-                      <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
+                      <Badge
+                        w={50}
+                        size='xl'
+                        color={isDimmed ? '#edf2f7' : '#e7f5ff'}
+                        c={isDimmed ? '#40678c' : '#228be6'}
+                        radius='sm'
+                        style={{ padding: 0 }}
+                      >
                         {idx + 1}
                       </Badge>
                       <PlayerAvatar p={player} />
-                      <Stack spacing={2}>
+                      <Stack gap={2}>
                         <Anchor
                           href={`/event/${eventId}/player/${player.id}`}
                           onClick={(e) => {
@@ -443,7 +454,7 @@ export const RatingTable: React.FC<{
                         </Tooltip>
                       )}
                     </Group>
-                    <Group spacing={2} grow={!largeScreen}>
+                    <Group gap={2} grow={!largeScreen}>
                       <Badge
                         w={75}
                         size='lg'
@@ -467,7 +478,8 @@ export const RatingTable: React.FC<{
                       <Badge
                         w={45}
                         size='lg'
-                        color='cyan'
+                        color={isDimmed ? '#edf2f7' : '#e3fafc'}
+                        c={isDimmed ? '#40678c' : '#228be6'}
                         variant={orderBy === 'avg_place' ? 'filled' : 'light'}
                         radius='sm'
                         style={{ padding: 0 }}
@@ -478,7 +490,8 @@ export const RatingTable: React.FC<{
                         title={i18n._t('Games played')}
                         w={45}
                         size='lg'
-                        color='gray'
+                        color='#f8f9fa'
+                        c='#868e96'
                         radius='sm'
                         style={{ padding: 0 }}
                       >

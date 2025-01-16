@@ -25,6 +25,7 @@ import { EventType, Player } from '../clients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
+import { useStorage } from 'hooks/storage';
 
 export const Game: React.FC<{
   params: {
@@ -33,7 +34,9 @@ export const Game: React.FC<{
   };
 }> = ({ params: { eventId, sessionHash } }) => {
   const api = useApi();
+  const storage = useStorage();
   const i18n = useI18n();
+  const isDimmed = storage.getDimmed();
   const events = useEvent(eventId);
   // Note: session is not checked against particular event;
   // Player can request any eventId but with proper hash the session will be retrieved correctly
@@ -76,6 +79,7 @@ export const Game: React.FC<{
         <GameListing
           showShareLink={false}
           isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
+          isDimmed={isDimmed}
           eventId={events?.[0]?.id.toString()}
           withYakitori={events?.[0]?.withYakitori}
           game={game.game}
