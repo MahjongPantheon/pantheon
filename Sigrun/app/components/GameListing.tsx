@@ -17,7 +17,16 @@
 
 import { GameResult, Player } from '../clients/proto/atoms.pb';
 import { CSSProperties } from 'react';
-import { Anchor, Badge, Button, Group, List, Stack, Text } from '@mantine/core';
+import {
+  Anchor,
+  Badge,
+  Button,
+  Group,
+  List,
+  Stack,
+  Text,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PlayerAvatar } from './PlayerAvatar';
 import * as React from 'react';
@@ -26,6 +35,7 @@ import { useI18n } from '../hooks/i18n';
 import { makeLog } from '../helpers/gameLog';
 import { IconShare } from '@tabler/icons-react';
 import { YakitoriIndicator } from './YakitoriIndicator';
+import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
 
 type GameListingProps = {
   eventId: string;
@@ -52,6 +62,7 @@ export const GameListing: React.FC<GameListingProps> = ({
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const DataCmp = largeScreen ? Group : Stack;
   const winds = ['東', '南', '西', '北'];
+  const isDark = useMantineColorScheme().colorScheme === 'dark';
 
   const outcomes = { ron: 0, tsumo: 0, draw: 0, chombo: 0, nagashi: 0 };
   const yakitori = withYakitori
@@ -123,8 +134,8 @@ export const GameListing: React.FC<GameListingProps> = ({
               pr={0}
               pl={5}
               size='lg'
-              color={isDimmed ? '#edf2f7' : '#e3fafc'}
-              c={isDimmed ? '#40678c' : '#228be6'}
+              color={calcDimmedBackground(isDimmed, isDark)}
+              c={calcDimmedText(isDimmed, isDark)}
               radius='xl'
               style={{ fontSize: '16px' }}
               rightSection={
@@ -169,8 +180,8 @@ export const GameListing: React.FC<GameListingProps> = ({
                   <Badge
                     w={65}
                     size='lg'
-                    color={isDimmed ? '#edf2f7' : '#e3fafc'}
-                    c={isDimmed ? '#40678c' : '#228be6'}
+                    color={calcDimmedBackground(isDimmed, isDark)}
+                    c={calcDimmedText(isDimmed, isDark)}
                     radius='sm'
                     style={{ padding: 0 }}
                   >

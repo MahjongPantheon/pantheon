@@ -58,6 +58,7 @@ import { TeamTable } from '../components/TeamTable';
 import { Meta } from '../components/Meta';
 import { authCtx } from '../hooks/auth';
 import { useStorage } from 'hooks/storage';
+import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
 
 export const RatingTable: React.FC<{
   params: {
@@ -303,8 +304,8 @@ export const RatingTable: React.FC<{
                 <Badge
                   size='lg'
                   radius='sm'
-                  color={isDimmed ? '#edf2f7' : '#e3fafc'}
-                  c={isDimmed ? '#40678c' : '#228be6'}
+                  color={calcDimmedBackground(isDimmed, isDark)}
+                  c={calcDimmedText(isDimmed, isDark)}
                   variant={orderBy === 'avg_place' ? 'filled' : 'light'}
                   component={'a'}
                   pl={5}
@@ -414,8 +415,8 @@ export const RatingTable: React.FC<{
                       <Badge
                         w={50}
                         size='xl'
-                        color={isDimmed ? '#edf2f7' : '#e7f5ff'}
-                        c={isDimmed ? '#40678c' : '#228be6'}
+                        color={calcDimmedBackground(isDimmed, isDark, '#e7f5ff')}
+                        c={calcDimmedText(isDimmed, isDark)}
                         radius='sm'
                         style={{ padding: 0 }}
                       >
@@ -478,8 +479,8 @@ export const RatingTable: React.FC<{
                       <Badge
                         w={45}
                         size='lg'
-                        color={isDimmed ? '#edf2f7' : '#e3fafc'}
-                        c={isDimmed ? '#40678c' : '#228be6'}
+                        color={calcDimmedBackground(isDimmed, isDark)}
+                        c={calcDimmedText(isDimmed, isDark)}
                         variant={orderBy === 'avg_place' ? 'filled' : 'light'}
                         radius='sm'
                         style={{ padding: 0 }}
@@ -490,8 +491,8 @@ export const RatingTable: React.FC<{
                         title={i18n._t('Games played')}
                         w={45}
                         size='lg'
-                        color='#f8f9fa'
-                        c='#868e96'
+                        color={calcDimmedBackground(isDimmed, isDark, '#f8f9fa')}
+                        c={calcDimmedText(isDimmed, isDark, '#868e96')}
                         radius='sm'
                         style={{ padding: 0 }}
                       >

@@ -147,3 +147,23 @@ export function getThemeOptions(isDimmed = false): MantineThemeOverride {
 
   return themeOptions;
 }
+
+export function calcDimmedBackground(
+  isDimmed = false,
+  isDark = false,
+  specialColor?: string
+): string {
+  if (!isDark) {
+    return isDimmed ? '#edf2f7' : (specialColor ?? '#e3fafc');
+  }
+
+  return isDimmed ? '#14283a' : '#14283a';
+}
+
+export function calcDimmedText(isDimmed = false, isDark = false, specialColor?: string): string {
+  if (!isDark) {
+    return isDimmed ? '#40678c' : (specialColor ?? '#228be6');
+  }
+
+  return isDimmed ? '#40678c' : '#228be6';
+}
