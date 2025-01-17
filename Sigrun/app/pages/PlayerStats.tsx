@@ -45,6 +45,7 @@ import { IconChevronLeft, IconChevronRight, IconInfoCircle, IconX } from '@table
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
 import { useStorage } from 'hooks/storage';
+import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
 
 const HandsGraph = React.lazy(() => import('../components/HandsGraph'));
 const YakuGraph = React.lazy(() => import('../components/YakuGraph'));
@@ -234,8 +235,8 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                     <Badge
                       w={50}
                       size='xl'
-                      color={isDimmed ? '#edf2f7' : '#e7f5ff'}
-                      c={isDimmed ? '#40678c' : '#228be6'}
+                      color={calcDimmedBackground(isDimmed, isDark, '#e7f5ff')}
+                      c={calcDimmedText(isDimmed, isDark)}
                       radius='sm'
                       style={{ padding: 0, fontSize: '22px' }}
                     >
@@ -267,8 +268,8 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                     <Badge
                       w={65}
                       size='lg'
-                      color={isDimmed ? '#edf2f7' : '#e3fafc'}
-                      c={isDimmed ? '#40678c' : '#228be6'}
+                      color={calcDimmedBackground(isDimmed, isDark)}
+                      c={calcDimmedText(isDimmed, isDark)}
                       radius='sm'
                       style={{ padding: 0 }}
                     >
