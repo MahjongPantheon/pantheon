@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 00:05+0100\n"
+"POT-Creation-Date: 2025-01-18 22:37+0100\n"
 "PO-Revision-Date: 2024-04-12 22:46+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -20,25 +20,25 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: app/pages/Achievements.tsx:466:20
+#: app/pages/Achievements.tsx:406:20
 msgctxt "Achievements badge"
 msgid "%1 bet"
 msgid_plural "%1 bets"
 msgstr[0] "리치봉 %1 개"
 
-#: app/pages/Achievements.tsx:557:20
+#: app/pages/Achievements.tsx:479:20
 msgctxt "Achievements badge"
 msgid "%1 dora"
 msgid_plural "%1 dora"
 msgstr[0] "도라 %1 개"
 
-#: app/pages/Achievements.tsx:250:14 app/pages/Achievements.tsx:281:14
+#: app/pages/Achievements.tsx:226:14 app/pages/Achievements.tsx:251:14
 msgctxt "Achievements badge"
 msgid "%1 feed"
 msgid_plural "%1 feeds"
 msgstr[0] "방총 %1 회"
 
-#: app/pages/Achievements.tsx:196:14
+#: app/pages/Achievements.tsx:184:14
 msgctxt "Achievements badge"
 msgid "%1 fu"
 msgstr "%1 부"
@@ -47,7 +47,7 @@ msgstr "%1 부"
 msgid "%1 han"
 msgstr "%1 판"
 
-#: app/pages/Achievements.tsx:170:14 app/pages/Achievements.tsx:437:23
+#: app/pages/Achievements.tsx:164:14 app/pages/Achievements.tsx:383:23
 msgctxt "Achievements badge"
 msgid "%1 han"
 msgstr "%1 판"
@@ -56,58 +56,58 @@ msgstr "%1 판"
 msgid "%1 han, %2 fu"
 msgstr "%1 판 %2 부"
 
-#: app/pages/Achievements.tsx:433:23
+#: app/pages/Achievements.tsx:379:23
 msgctxt "Achievements badge"
 msgid "%1 han, %2 fu"
 msgstr "%1 판, %2 부"
 
-#: app/pages/Achievements.tsx:497:20
+#: app/pages/Achievements.tsx:431:20
 msgctxt "Achievements badge"
 msgid "%1 ippatsu"
 msgstr "일발 %1 회"
 
-#: app/pages/Achievements.tsx:528:20 app/pages/Achievements.tsx:621:20
-#: app/pages/Achievements.tsx:753:20
+#: app/pages/Achievements.tsx:456:20 app/pages/Achievements.tsx:531:20
+#: app/pages/Achievements.tsx:639:20
 msgctxt "Achievements badge"
 msgid "%1 points"
 msgstr "%1 점"
 
-#: app/pages/Achievements.tsx:374:14
+#: app/pages/Achievements.tsx:326:14
 msgctxt "Achievements badge"
 msgid "%1 quickest hand"
 msgid_plural "%1 quickest hands"
 msgstr[0] "빠른 화료 %1 회"
 
-#: app/pages/Achievements.tsx:652:20 app/pages/Achievements.tsx:686:20
+#: app/pages/Achievements.tsx:556:20 app/pages/Achievements.tsx:584:20
 msgctxt "Achievements badge"
 msgid "%1 riichi bet"
 msgid_plural "%1 riichi bets"
 msgstr[0] "리치봉 %1 개"
 
-#: app/pages/Achievements.tsx:782:20
+#: app/pages/Achievements.tsx:662:20
 msgctxt "Achievements badge"
 msgid "%1 riichi nomi hand"
 msgid_plural "%1 riichi nomi hands"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:222:14
+#: app/pages/Achievements.tsx:204:14
 msgctxt "Achievements badge"
 msgid "%1 tsumo"
 msgstr "쯔모 %1 회"
 
-#: app/pages/Achievements.tsx:343:14 app/pages/Achievements.tsx:720:20
+#: app/pages/Achievements.tsx:301:14 app/pages/Achievements.tsx:612:20
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
 msgstr[0] "화료 %1 회"
 
-#: app/pages/Achievements.tsx:590:20
+#: app/pages/Achievements.tsx:506:20
 msgctxt "Achievements badge"
 msgid "%1 yaku"
 msgstr "역 %1 개"
 
-#: app/pages/Achievements.tsx:305:20
+#: app/pages/Achievements.tsx:275:20
 msgctxt "Achievements badge"
 msgid "%1 yakuhai"
 msgid_plural "%1 yakuhais"
@@ -217,38 +217,38 @@ msgctxt "Multiron inner log item"
 msgid "<li>%1 - %2, %3</li>"
 msgstr "<li>%1 - %2, %3</li>"
 
-#: app/components/AppFooter.tsx:91:20 app/pages/Achievements.tsx:837:42
-#: app/pages/Achievements.tsx:845:35
+#: app/components/AppFooter.tsx:82:20 app/pages/Achievements.tsx:711:42
+#: app/pages/Achievements.tsx:719:35
 msgid "Achievements"
 msgstr "업적"
 
-#: app/components/MainMenu.tsx:129:38 app/components/MainMenu.tsx:130:26
+#: app/components/MainMenu.tsx:126:38 app/components/MainMenu.tsx:127:26
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr "업적"
 
-#: app/pages/Achievements.tsx:820:12
+#: app/pages/Achievements.tsx:694:12
 msgid "Achievements are hidden by tournament administrator"
 msgstr "업적이 관리자에 의해 숨겨졌습니다"
 
-#: app/pages/Achievements.tsx:829:29
+#: app/pages/Achievements.tsx:703:29
 msgid "Achievements are not available for aggregated events"
 msgstr "통합 이벤트에서는 업적을 사용 할 수 없습니다"
 
-#: app/pages/Achievements.tsx:838:22
+#: app/pages/Achievements.tsx:712:22
 msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 업적 목록"
 
-#: app/components/AddOnlineReplayModal.tsx:58:14
+#: app/components/AddOnlineReplayModal.tsx:59:14
 msgid "Add online game"
 msgstr "온라인 대국 추가"
 
-#: app/components/AddOnlineReplayLink.tsx:23:26
+#: app/components/AddOnlineReplayLink.tsx:22:26
 msgctxt "Event menu"
 msgid "Add online game"
 msgstr "온라인 대국 추가"
 
-#: app/components/AddOnlineReplayModal.tsx:72:41
+#: app/components/AddOnlineReplayModal.tsx:73:41
 msgid "Add replay"
 msgstr "패보 추가"
 
@@ -256,12 +256,12 @@ msgstr "패보 추가"
 msgid "Agariyame"
 msgstr "아가리야메"
 
-#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:148:51
-#: app/pages/RecentGames.tsx:85:49
+#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:152:51
+#: app/pages/RecentGames.tsx:88:49
 msgid "Aggregated event"
 msgstr "통합 이벤트"
 
-#: app/pages/RatingTable.tsx:356:24
+#: app/pages/RatingTable.tsx:361:24
 msgid "All players"
 msgstr "전체 작사"
 
@@ -318,7 +318,7 @@ msgstr "대국 1위 작사에게 주어지는 오카 점수"
 msgid "Amount of score player should get to end the game."
 msgstr "대국 종료를 위해 도달해야 하는 점수"
 
-#: app/pages/Achievements.tsx:641:14
+#: app/pages/Achievements.tsx:545:14
 msgid "And your riichi bet, please"
 msgstr "이제 이 리치봉은 제 겁니다"
 
@@ -334,11 +334,11 @@ msgstr "평균 실점: "
 msgid "Average dora per hand: "
 msgstr "화료 당 평균 도라 수: "
 
-#: app/pages/RatingTable.tsx:326:20 app/pages/RatingTable.tsx:535:7
+#: app/pages/RatingTable.tsx:331:20 app/pages/RatingTable.tsx:549:7
 msgid "Average place"
 msgstr "평균 순위"
 
-#: app/pages/RatingTable.tsx:536:7
+#: app/pages/RatingTable.tsx:550:7
 msgid "Average points"
 msgstr "평균 점수"
 
@@ -346,7 +346,7 @@ msgstr "평균 점수"
 msgid "Average points lost: "
 msgstr "평균 실점: "
 
-#: app/pages/RatingTable.tsx:298:20
+#: app/pages/RatingTable.tsx:302:20
 msgid "Average score"
 msgstr "평균 점수"
 
@@ -362,7 +362,7 @@ msgstr "평균: "
 msgid "Avg place:"
 msgstr "평균 순위:"
 
-#: app/components/AppFooter.tsx:40:20
+#: app/components/AppFooter.tsx:39:20
 msgid "Back to top"
 msgstr "맨 위로 이동"
 
@@ -386,7 +386,7 @@ msgstr "화료 실패: "
 msgid "Bets won: "
 msgstr "화료 성공: "
 
-#: app/pages/Achievements.tsx:265:14
+#: app/pages/Achievements.tsx:241:14
 msgid "Brave minesweeper"
 msgstr "지뢰제거반"
 
@@ -398,7 +398,7 @@ msgstr "론: "
 msgid "By tsumo: "
 msgstr "쯔모: "
 
-#: app/pages/Achievements.tsx:517:14
+#: app/pages/Achievements.tsx:445:14
 msgid "Careful planning"
 msgstr "살살 때려주세요"
 
@@ -426,8 +426,8 @@ msgstr "청일색"
 msgid "Chinroutou"
 msgstr "청노두"
 
-#: app/pages/RatingTable.tsx:267:22 app/pages/RatingTable.tsx:489:34
-#: app/pages/RatingTable.tsx:533:24
+#: app/pages/RatingTable.tsx:271:22 app/pages/RatingTable.tsx:503:34
+#: app/pages/RatingTable.tsx:547:24
 msgid "Chips"
 msgstr "칩"
 
@@ -443,7 +443,7 @@ msgstr ""
 msgid "Chombo penalties: "
 msgstr "촌보 벌부: "
 
-#: app/components/GameListing.tsx:198:16
+#: app/components/GameListing.tsx:220:16
 msgid "Chombo: %1"
 msgstr "촌보: %1"
 
@@ -451,7 +451,7 @@ msgstr "촌보: %1"
 msgid "Chuuren poutou"
 msgstr "구련보등"
 
-#: app/pages/PlayerStats.tsx:202:24
+#: app/pages/PlayerStats.tsx:206:24
 msgid "Close game preview"
 msgstr "대국 미리보기 닫기"
 
@@ -459,11 +459,11 @@ msgstr "대국 미리보기 닫기"
 msgid "Collect riichi bets by atamahane"
 msgstr "선오름에 따른 리치봉 지급"
 
-#: app/components/MainMenu.tsx:164:33
+#: app/components/MainMenu.tsx:161:33
 msgid "Common actions"
 msgstr "일반 동작"
 
-#: app/components/PlayerStatsListing.tsx:51:32
+#: app/components/PlayerStatsListing.tsx:51:27
 msgid "Common stats"
 msgstr "일반 통계"
 
@@ -471,17 +471,17 @@ msgstr "일반 통계"
 msgid "Complex position-based"
 msgstr "복잡한 위치 기반"
 
-#: app/pages/Achievements.tsx:174:32 app/pages/Achievements.tsx:200:32
-#: app/pages/Achievements.tsx:228:32 app/pages/Achievements.tsx:259:32
-#: app/pages/Achievements.tsx:290:32 app/pages/Achievements.tsx:321:32
-#: app/pages/Achievements.tsx:352:32 app/pages/Achievements.tsx:383:32
-#: app/pages/Achievements.tsx:415:32 app/pages/Achievements.tsx:451:32
-#: app/pages/Achievements.tsx:482:32 app/pages/Achievements.tsx:511:32
-#: app/pages/Achievements.tsx:542:32 app/pages/Achievements.tsx:573:32
-#: app/pages/Achievements.tsx:604:32 app/pages/Achievements.tsx:635:32
-#: app/pages/Achievements.tsx:671:32 app/pages/Achievements.tsx:705:32
-#: app/pages/Achievements.tsx:736:32 app/pages/Achievements.tsx:767:32
-#: app/pages/Achievements.tsx:801:32
+#: app/pages/Achievements.tsx:168:32 app/pages/Achievements.tsx:188:32
+#: app/pages/Achievements.tsx:210:32 app/pages/Achievements.tsx:235:32
+#: app/pages/Achievements.tsx:260:32 app/pages/Achievements.tsx:285:32
+#: app/pages/Achievements.tsx:310:32 app/pages/Achievements.tsx:335:32
+#: app/pages/Achievements.tsx:361:32 app/pages/Achievements.tsx:391:32
+#: app/pages/Achievements.tsx:416:32 app/pages/Achievements.tsx:439:32
+#: app/pages/Achievements.tsx:464:32 app/pages/Achievements.tsx:489:32
+#: app/pages/Achievements.tsx:514:32 app/pages/Achievements.tsx:539:32
+#: app/pages/Achievements.tsx:569:32 app/pages/Achievements.tsx:597:32
+#: app/pages/Achievements.tsx:622:32 app/pages/Achievements.tsx:647:32
+#: app/pages/Achievements.tsx:675:32
 msgid "Couldn't get nomination details"
 msgstr "후보 정보를 불러올 수 없습니다"
 
@@ -490,7 +490,7 @@ msgstr "후보 정보를 불러올 수 없습니다"
 msgid "Count of session in game series."
 msgstr "시리즈에 표시되는 대국 수"
 
-#: app/components/MainMenu.tsx:65:37
+#: app/components/MainMenu.tsx:62:37
 msgid "Current event"
 msgstr "현재 이벤트"
 
@@ -515,11 +515,11 @@ msgstr "대사희"
 msgid "Deal-ins to ron: "
 msgstr "방총: "
 
-#: app/components/AppFooter.tsx:53:20
+#: app/components/AppFooter.tsx:48:20
 msgid "Description"
 msgstr "이벤트 소개"
 
-#: app/components/MainMenu.tsx:82:36 app/components/MainMenu.tsx:83:24
+#: app/components/MainMenu.tsx:79:36 app/components/MainMenu.tsx:80:24
 msgctxt "Event menu"
 msgid "Description"
 msgstr "이벤트 소개"
@@ -528,7 +528,7 @@ msgstr "이벤트 소개"
 msgid "Description of the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 소개"
 
-#: app/pages/Achievements.tsx:234:14
+#: app/pages/Achievements.tsx:216:14
 msgid "Die Hard"
 msgstr "그건 제 잔상입니다만"
 
@@ -544,11 +544,11 @@ msgstr "오라스에 인한 대국 종료시 종료"
 msgid "Dora collected: "
 msgstr "전체 도라 수: "
 
-#: app/pages/Achievements.tsx:548:14
+#: app/pages/Achievements.tsx:470:14
 msgid "Dora lord"
 msgstr "도라 대마왕"
 
-#: app/components/GameListing.tsx:194:14
+#: app/components/GameListing.tsx:216:14
 msgid "Draw: %1"
 msgstr "유국: %1"
 
@@ -556,7 +556,7 @@ msgstr "유국: %1"
 msgid "Draws: "
 msgstr "유국: "
 
-#: app/components/MainMenu.tsx:179:34 app/components/MainMenu.tsx:180:22
+#: app/components/MainMenu.tsx:176:34 app/components/MainMenu.tsx:177:22
 msgid "Edit my profile"
 msgstr "내 프로필 수정"
 
@@ -568,12 +568,12 @@ msgstr "특별 유국인 \"유국만관\" 결과가 활성화됨"
 msgid "Equalize uma"
 msgstr "동점 동일 우마"
 
-#: app/components/MainMenu.tsx:74:40 app/components/MainMenu.tsx:75:28
+#: app/components/MainMenu.tsx:71:40 app/components/MainMenu.tsx:72:28
 #, fuzzy
 msgid "Event admin panel"
 msgstr "관리자 패널에서 이벤트 편집"
 
-#: app/pages/EventInfo.tsx:87:31
+#: app/pages/EventInfo.tsx:88:16
 msgid "Event administrators: "
 msgstr "관리자: "
 
@@ -581,7 +581,7 @@ msgstr "관리자: "
 msgid "Event list"
 msgstr "이벤트 목록"
 
-#: app/pages/EventInfo.tsx:113:33
+#: app/pages/EventInfo.tsx:117:18
 msgid "Event referees: "
 msgstr ""
 
@@ -593,7 +593,7 @@ msgstr "검색"
 msgid "Filter events..."
 msgstr "이벤트 검색"
 
-#: app/components/PlayerStatsListing.tsx:81:32
+#: app/components/PlayerStatsListing.tsx:81:27
 msgid "Final game score"
 msgstr "최종 점수"
 
@@ -629,16 +629,12 @@ msgstr "대국 시간"
 msgid "Game expiration time (in hours)"
 msgstr "대국 만료 기간 (시간)"
 
-#: app/components/GameListing.tsx:109:16
-msgid "Game link"
-msgstr "대국 링크"
-
-#: app/pages/Game.tsx:63:44
+#: app/pages/Game.tsx:66:44
 msgid "Game preview"
 msgstr "대국 미리보기"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:478:32
-#: app/pages/RatingTable.tsx:537:7
+#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:491:32
+#: app/pages/RatingTable.tsx:551:7
 msgid "Games played"
 msgstr "총 대국 수"
 
@@ -646,7 +642,7 @@ msgstr "총 대국 수"
 msgid "Games played: "
 msgstr "총 대국 수: "
 
-#: app/pages/Achievements.tsx:390:20
+#: app/pages/Achievements.tsx:342:20
 msgid "Given for collecting a yakuman during tournament."
 msgstr "역만을 화료한 작사."
 
@@ -655,88 +651,88 @@ msgid ""
 "Given for collecting the hand with biggest han count (independent of cost)."
 msgstr "타점과 무관하게 가장 높은 판수를 화료한 작사."
 
-#: app/pages/Achievements.tsx:181:20
+#: app/pages/Achievements.tsx:175:20
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr "가장 높은 부수로 화료한 작사."
 
-#: app/pages/Achievements.tsx:642:20
+#: app/pages/Achievements.tsx:546:20
 msgid ""
 "Given for collecting the largest amount of other players' riichi bets during "
 "the tournament."
 msgstr "타가의 리치봉을 가장 많이 회수한 작사."
 
-#: app/pages/Achievements.tsx:207:20
+#: app/pages/Achievements.tsx:195:20
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr "단일 대국동안 가장 많은 쯔모 화료를 기록한 작사."
 
-#: app/pages/Achievements.tsx:297:20
+#: app/pages/Achievements.tsx:267:20
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr "가장 많은 역패 화료를 기록한 작사."
 
-#: app/pages/Achievements.tsx:422:20
+#: app/pages/Achievements.tsx:368:20
 msgid ""
 "Given for feeding into largest hand during tournament (but not while in "
 "riichi)."
 msgstr "가장 높은 판수로 방총을 기록한 작사."
 
-#: app/pages/Achievements.tsx:489:20
+#: app/pages/Achievements.tsx:423:20
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr "가장 많은 일발 역을 화료한 작사."
 
-#: app/pages/Achievements.tsx:743:20
+#: app/pages/Achievements.tsx:629:20
 msgid ""
 "Given for having biggest score in the end of the session across the "
 "tournament."
 msgstr "단일 대국에서 가장 높은 종료 점수를 기록한 작사."
 
-#: app/pages/Achievements.tsx:328:20
+#: app/pages/Achievements.tsx:292:20
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr "가장 많은 친 화료를 기록한 작사."
 
-#: app/pages/Achievements.tsx:266:20
+#: app/pages/Achievements.tsx:242:20
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "가장 많은 수의 방총을 기록한 작사."
 
-#: app/pages/Achievements.tsx:458:20
+#: app/pages/Achievements.tsx:398:20
 msgid "Given for losing largest amount of points as riichi bets."
 msgstr "가장 많은 리치봉을 공탁해서 잃은 작사."
 
-#: app/pages/Achievements.tsx:678:20
+#: app/pages/Achievements.tsx:576:20
 msgid "Given for losing the smallest number of riichi bets."
 msgstr "리치봉을 가장 적게 잃은 작사."
 
-#: app/pages/Achievements.tsx:235:20
+#: app/pages/Achievements.tsx:217:20
 msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr "가장 적은 수의 방총을 기록한 작사."
 
-#: app/pages/Achievements.tsx:611:20
+#: app/pages/Achievements.tsx:521:20
 msgid ""
 "Given for the largest amount of points received as ryuukyoku (draw) payments."
 msgstr "가장 많은 유국 텐파이료(텐값)를 받은 작사."
 
-#: app/pages/Achievements.tsx:580:20
+#: app/pages/Achievements.tsx:496:20
 msgid ""
 "Given for the largest amount of unique yaku collected during the tournament."
 msgstr "가장 많은 수의 개별 역을 기록한 작사."
 
-#: app/pages/Achievements.tsx:549:20
+#: app/pages/Achievements.tsx:471:20
 msgid "Given for the largest average count of dora in player's hand."
 msgstr "화료 시 가장 많은 평균 도라 수를 기록한 작사."
 
-#: app/pages/Achievements.tsx:359:20
+#: app/pages/Achievements.tsx:317:20
 msgid "Given for the most of 1/30 wins during tournament."
 msgstr "가장 많은 1판 30부 화료를 기록한 작사."
 
-#: app/pages/Achievements.tsx:518:20
+#: app/pages/Achievements.tsx:446:20
 msgid ""
 "Given for the smallest average cost of opponents hand that player has dealt."
 msgstr "가장 낮은 평균 방총 타점을 기록한 작사."
 
-#: app/pages/Achievements.tsx:712:20
+#: app/pages/Achievements.tsx:604:20
 msgid "Given for winning the largest number of hands with damaten."
 msgstr "가장 많은 다마텐 화료를 기록한 작사."
 
-#: app/pages/Achievements.tsx:774:20
+#: app/pages/Achievements.tsx:654:20
 msgid "Given for winning the largest number riichi nomi hands."
 msgstr ""
 
@@ -744,11 +740,11 @@ msgstr ""
 msgid "Goal score"
 msgstr "목표 점수"
 
-#: app/pages/Achievements.tsx:579:14
+#: app/pages/Achievements.tsx:495:14
 msgid "Gotta Catch'Em All"
 msgstr "수집가"
 
-#: app/pages/Achievements.tsx:296:14
+#: app/pages/Achievements.tsx:266:14
 msgid "Guest of honors"
 msgstr "\"귀족\""
 
@@ -776,7 +772,7 @@ msgstr ""
 msgid "Honitsu"
 msgstr "혼일색"
 
-#: app/pages/Achievements.tsx:457:14
+#: app/pages/Achievements.tsx:397:14
 msgid "Honored donor"
 msgstr "닥치고 내 리치봉 가져가"
 
@@ -792,7 +788,7 @@ msgstr "하저로어"
 msgid "How game sessions should end during the tournament"
 msgstr "대회 중 대국이 종료되는 방법"
 
-#: app/pages/Achievements.tsx:206:14
+#: app/pages/Achievements.tsx:194:14
 msgid "I saw them dancing"
 msgstr "혼자서도 잘 해요"
 
@@ -852,7 +848,7 @@ msgstr "일발"
 msgid "Ittsu"
 msgstr "일기통관"
 
-#: app/pages/Achievements.tsx:389:14
+#: app/pages/Achievements.tsx:341:14
 msgid "Jewelry included"
 msgstr "반짝반짝"
 
@@ -860,7 +856,7 @@ msgstr "반짝반짝"
 msgid "Junchan"
 msgstr "준찬타"
 
-#: app/pages/Achievements.tsx:488:14
+#: app/pages/Achievements.tsx:422:14
 msgid "Just as planned"
 msgstr "계획대로"
 
@@ -880,16 +876,16 @@ msgstr "국사무쌍"
 msgid "Kuitan"
 msgstr "쿠이탕"
 
-#: app/components/MainMenu.tsx:221:33 app/components/MainMenu.tsx:222:20
+#: app/components/MainMenu.tsx:218:33 app/components/MainMenu.tsx:219:20
 msgid "Language"
 msgstr "언어"
 
-#: app/pages/RecentGames.tsx:83:20 app/pages/RecentGames.tsx:85:22
-#: app/pages/RecentGames.tsx:96:31
+#: app/pages/RecentGames.tsx:86:20 app/pages/RecentGames.tsx:88:22
+#: app/pages/RecentGames.tsx:99:31
 msgid "Last games"
 msgstr "최근 대국"
 
-#: app/pages/RecentGames.tsx:88:24
+#: app/pages/RecentGames.tsx:91:24
 msgid "Last games of the event \"%1\", page %2, provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 최근 대국, 페이지 %2"
 
@@ -897,7 +893,7 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 최근 대국, �
 msgid "Last series"
 msgstr "최근 시리즈"
 
-#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:112:18
+#: app/pages/Achievements.tsx:726:18 app/pages/PlayerStats.tsx:116:18
 msgid "Last update: %1"
 msgstr "마지막 업데이트: %1"
 
@@ -909,7 +905,7 @@ msgstr "Mahjong Pantheon에 등록된 모든 이벤트 목록"
 msgid "Local event settings"
 msgstr "로컬 이벤트 설정"
 
-#: app/components/EventTypeIcon.tsx:42:18
+#: app/components/EventTypeIcon.tsx:41:18
 msgid "Local rating"
 msgstr "로컬 이벤트"
 
@@ -921,7 +917,7 @@ msgstr "패배 통계"
 msgid "Maximum: "
 msgstr "최대: "
 
-#: app/components/AppHeader.tsx:127:18
+#: app/components/AppHeader.tsx:118:18
 msgid "Menu"
 msgstr "메뉴"
 
@@ -944,7 +940,7 @@ msgstr "최소 대국 수"
 msgid "Minimum: "
 msgstr "최소: "
 
-#: app/components/PlayerStatsListing.tsx:98:32
+#: app/components/PlayerStatsListing.tsx:98:27
 msgid "Misc stats"
 msgstr "기타 통계"
 
@@ -956,19 +952,19 @@ msgstr "역만 중첩"
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
-#: app/components/GameListing.tsx:203:16
+#: app/components/GameListing.tsx:225:16
 msgid "Nagashi: %1"
 msgstr "유국만관: %1"
 
-#: app/pages/PlayerStats.tsx:180:24
+#: app/pages/PlayerStats.tsx:184:24
 msgid "Next game"
 msgstr "다음 대국"
 
-#: app/pages/Achievements.tsx:711:14
+#: app/pages/Achievements.tsx:603:14
 msgid "Ninja"
 msgstr "닌자"
 
-#: app/pages/Achievements.tsx:404:20
+#: app/pages/Achievements.tsx:356:20
 msgid "No yakumans have been collected"
 msgstr "기록된 역만이 없습니다"
 
@@ -976,11 +972,11 @@ msgstr "기록된 역만이 없습니다"
 msgid "Oka bonus"
 msgstr "오카 보너스"
 
-#: app/components/EventTypeIcon.tsx:68:18
+#: app/components/EventTypeIcon.tsx:67:18
 msgid "Online event"
 msgstr "온라인 이벤트"
 
-#: app/pages/EventRulesOverview/TabsList.tsx:53:12
+#: app/pages/EventRulesOverview/TabsList.tsx:56:12
 msgid "Online event settings"
 msgstr "온라인 이벤트 설정"
 
@@ -993,11 +989,11 @@ msgstr ""
 "다가화 상황 발생 시 좌석 순서에 따라 첫번째 작사만 론 화료가 가능함. 비활성 "
 "시 론을 선언한 모든 작사가 화료하게 됨"
 
-#: app/components/MainMenu.tsx:208:32 app/components/MainMenu.tsx:209:20
+#: app/components/MainMenu.tsx:205:32 app/components/MainMenu.tsx:206:20
 msgid "Open assistant"
 msgstr "Pantheon으로 이동"
 
-#: app/components/AppHeader.tsx:119:24 app/components/AppHeader.tsx:131:24
+#: app/components/AppHeader.tsx:110:24 app/components/AppHeader.tsx:122:24
 msgid "Open menu"
 msgstr "메뉴 열기"
 
@@ -1009,11 +1005,11 @@ msgstr "오픈 리치"
 msgid "Otherwise"
 msgstr "기타"
 
-#: app/pages/Achievements.tsx:180:14
+#: app/pages/Achievements.tsx:174:14
 msgid "Over 9000 fu"
 msgstr "호오! 부수력이 올라갔군요"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:64:25
+#: app/pages/EventRulesOverview/YakuSettings.tsx:57:25
 msgid "Pao rule enabled for:"
 msgstr "책임지불(파오) 해당 역:"
 
@@ -1041,7 +1037,7 @@ msgstr "점수와 보너스"
 msgid "Penalties"
 msgstr "벌부"
 
-#: app/pages/RatingTable.tsx:435:34
+#: app/pages/RatingTable.tsx:447:34
 msgid "Penalties count: %1; total penalties amount: %2"
 msgstr ""
 
@@ -1049,7 +1045,7 @@ msgstr ""
 msgid "Pinfu"
 msgstr "핑후"
 
-#: app/pages/RatingTable.tsx:529:7
+#: app/pages/RatingTable.tsx:543:7
 msgid "Place"
 msgstr "순위"
 
@@ -1057,7 +1053,7 @@ msgstr "순위"
 msgid "Place / Session result"
 msgstr "대국 결과"
 
-#: app/components/PlayerStatsListing.tsx:64:32
+#: app/components/PlayerStatsListing.tsx:64:27
 msgid "Places stats"
 msgstr "순위 통계"
 
@@ -1069,69 +1065,69 @@ msgstr "남입 / 서입"
 msgid "Play only east rounds"
 msgstr "동장전만 진행함"
 
-#: app/pages/RatingTable.tsx:530:7
+#: app/pages/RatingTable.tsx:544:7
 msgid "Player ID"
 msgstr "작사 ID"
 
-#: app/pages/RatingTable.tsx:531:7
+#: app/pages/RatingTable.tsx:545:7
 msgid "Player name"
 msgstr "작사 이름"
 
-#: app/pages/PlayerStats.tsx:95:22
+#: app/pages/PlayerStats.tsx:99:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%2\"의 작사 %1의 통계"
 
-#: app/pages/PlayerStats.tsx:94:37
+#: app/pages/PlayerStats.tsx:98:37
 msgid "Player stats"
 msgstr "작사 통계"
 
-#: app/pages/RatingTable.tsx:366:30
+#: app/pages/RatingTable.tsx:371:30
 msgid "Players having a required minimum of games"
 msgstr "최소 대국 수를 채운 작사"
 
-#: app/components/MainMenu.tsx:121:26
+#: app/components/MainMenu.tsx:118:26
 msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "이벤트 등록 작사 목록"
 
-#: app/pages/PlayerStats.tsx:162:24
+#: app/pages/PlayerStats.tsx:166:24
 msgid "Previous game"
 msgstr "이전 대국"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:238:20
+#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:242:20
 msgid "Rating"
 msgstr "점수"
 
-#: app/pages/RatingTable.tsx:534:7
+#: app/pages/RatingTable.tsx:548:7
 msgid "Rating points"
 msgstr "점수"
 
-#: app/components/AppFooter.tsx:80:20 app/pages/Achievements.tsx:817:35
-#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:131:35
-#: app/pages/RatingTable.tsx:146:20 app/pages/RatingTable.tsx:148:22
-#: app/pages/RatingTable.tsx:159:33
+#: app/components/AppFooter.tsx:71:20 app/pages/Achievements.tsx:691:35
+#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:135:35
+#: app/pages/RatingTable.tsx:150:20 app/pages/RatingTable.tsx:152:22
+#: app/pages/RatingTable.tsx:163:33
 msgid "Rating table"
 msgstr "순위표"
 
-#: app/components/MainMenu.tsx:103:36 app/components/MainMenu.tsx:104:24
+#: app/components/MainMenu.tsx:100:36 app/components/MainMenu.tsx:101:24
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr "순위표"
 
-#: app/pages/RatingTable.tsx:134:12
+#: app/pages/RatingTable.tsx:138:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "관리자에 의해 순위표가 숨겨졌습니다"
 
-#: app/pages/RatingTable.tsx:151:24
+#: app/pages/RatingTable.tsx:155:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 순위표"
 
-#: app/components/AppFooter.tsx:73:20
+#: app/components/AppFooter.tsx:64:20
 msgid "Recent games"
 msgstr "최근 대국"
 
-#: app/components/MainMenu.tsx:96:36 app/components/MainMenu.tsx:97:24
+#: app/components/MainMenu.tsx:93:36 app/components/MainMenu.tsx:94:24
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr "최근 대국"
@@ -1140,7 +1136,7 @@ msgstr "최근 대국"
 msgid "Registered players"
 msgstr "등록 작사 목록"
 
-#: app/components/MainMenu.tsx:120:38
+#: app/components/MainMenu.tsx:117:38
 msgctxt "Event menu"
 msgid "Registered players"
 msgstr "등록 작사 목록"
@@ -1153,7 +1149,7 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 등록 작사 �
 msgid "Renhou"
 msgstr "인화"
 
-#: app/components/AddOnlineReplayModal.tsx:30:22
+#: app/components/AddOnlineReplayModal.tsx:31:22
 msgid "Replay link is invalid. Please check if you copied it correctly"
 msgstr "패보 링크가 유효하지 않습니다. 제대로 복사되었는지 확인하세요"
 
@@ -1161,7 +1157,7 @@ msgstr "패보 링크가 유효하지 않습니다. 제대로 복사되었는지
 msgid "Riichi"
 msgstr "리치"
 
-#: app/pages/Achievements.tsx:773:14
+#: app/pages/Achievements.tsx:653:14
 msgid "Riichi Nomi"
 msgstr ""
 
@@ -1193,7 +1189,7 @@ msgstr "리치 마작 이벤트 목록"
 msgid "Rinshan kaihou"
 msgstr "영상개화"
 
-#: app/components/GameListing.tsx:188:14
+#: app/components/GameListing.tsx:210:14
 msgid "Ron: %1"
 msgstr "론: %1"
 
@@ -1209,13 +1205,13 @@ msgstr "전체 국 수: "
 msgid "Rounds won: "
 msgstr "화료: "
 
-#: app/components/AppFooter.tsx:61:22
+#: app/components/AppFooter.tsx:56:22
 #: app/pages/EventRulesOverview/index.tsx:66:44
 #: app/pages/EventRulesOverview/index.tsx:73:35
 msgid "Rules overview"
 msgstr "규칙 개요"
 
-#: app/components/MainMenu.tsx:89:36 app/components/MainMenu.tsx:90:24
+#: app/components/MainMenu.tsx:86:36 app/components/MainMenu.tsx:87:24
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr "규칙 개요"
@@ -1256,7 +1252,7 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/pages/RatingTable.tsx:176:18
+#: app/pages/RatingTable.tsx:180:18
 msgid "Save as CSV"
 msgstr "CSV로 저장"
 
@@ -1277,12 +1273,12 @@ msgstr "사전 설정 좌석"
 msgid "Series length"
 msgstr "시리즈 길이"
 
-#: app/components/AppFooter.tsx:100:20 app/pages/SeriesRating.tsx:68:42
+#: app/components/AppFooter.tsx:91:20 app/pages/SeriesRating.tsx:68:42
 #: app/pages/SeriesRating.tsx:75:31
 msgid "Series rating"
 msgstr "시리즈 순위"
 
-#: app/components/MainMenu.tsx:138:38 app/components/MainMenu.tsx:139:26
+#: app/components/MainMenu.tsx:135:38 app/components/MainMenu.tsx:136:26
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr "시리즈 순위"
@@ -1311,15 +1307,15 @@ msgstr "소삼원"
 msgid "Shousuushii"
 msgstr "소사희"
 
-#: app/components/MainMenu.tsx:189:34 app/components/MainMenu.tsx:190:22
+#: app/components/MainMenu.tsx:186:34 app/components/MainMenu.tsx:187:22
 msgid "Sign in"
 msgstr "로그인"
 
-#: app/components/MainMenu.tsx:199:34 app/components/MainMenu.tsx:200:22
+#: app/components/MainMenu.tsx:196:34 app/components/MainMenu.tsx:197:22
 msgid "Sign up"
 msgstr "회원가입"
 
-#: app/Layout.tsx:345:38
+#: app/Layout.tsx:177:38
 msgid ""
 "Sigrun is the statistics viewer for riichi mahjong club games and "
 "tournaments powered by Mahjong Pantheon system. It provides game logs, "
@@ -1329,7 +1325,7 @@ msgstr ""
 "계 서비스입니다. 본 서비스를 통해 대국 로그, 작사 통계, 순위표 및 업적 목록"
 "을 확인할 수 있습니다."
 
-#: app/Layout.tsx:344:32
+#: app/Layout.tsx:176:32
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: 리치 마작 점수 및 통계"
 
@@ -1337,7 +1333,7 @@ msgstr "Sigrun: 리치 마작 점수 및 통계"
 msgid "Simple rank-based"
 msgstr "단순 순위 기반"
 
-#: app/pages/Game.tsx:64:24
+#: app/pages/Game.tsx:67:24
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 단일 대국 미리보기"
 
@@ -1354,7 +1350,7 @@ msgstr "스깡쯔"
 msgid "Tables state"
 msgstr "순위 통계"
 
-#: app/components/MainMenu.tsx:111:38 app/components/MainMenu.tsx:112:26
+#: app/components/MainMenu.tsx:108:38 app/components/MainMenu.tsx:109:26
 #, fuzzy
 msgctxt "Event menu"
 msgid "Tables state"
@@ -1377,7 +1373,7 @@ msgstr ""
 "비멘젠 상태로 탕야오 화료 시 1판 인정. 비활성 시 비멘젠 탕야오를 인정하지 않"
 "음"
 
-#: app/pages/RatingTable.tsx:209:22 app/pages/RatingTable.tsx:532:21
+#: app/pages/RatingTable.tsx:213:22 app/pages/RatingTable.tsx:546:21
 msgid "Team"
 msgstr "팀"
 
@@ -1394,19 +1390,19 @@ msgid ""
 "Tenhou Lobby ID. Please contact event administrator for proper link to lobby."
 msgstr "천봉 로비 ID. 정확한 로비 링크는 관리자에게 문의하세요."
 
-#: app/pages/Achievements.tsx:358:14
+#: app/pages/Achievements.tsx:316:14
 msgid "The 1k Flash"
 msgstr "티끌 모아 태산"
 
-#: app/pages/Achievements.tsx:677:14
+#: app/pages/Achievements.tsx:575:14
 msgid "The Covetous Knight"
 msgstr "욕심쟁이"
 
-#: app/pages/Achievements.tsx:610:14
+#: app/pages/Achievements.tsx:520:14
 msgid "The favorite apprentice of ASAPIN"
 msgstr "노텐이 뭐죠"
 
-#: app/pages/Achievements.tsx:327:14
+#: app/pages/Achievements.tsx:291:14
 msgid "The great dealer"
 msgstr "오야는 위대해"
 
@@ -1418,28 +1414,28 @@ msgstr ""
 "사가리치, 사개깡, 사풍연타, 구종구패 등으로 인한 유국을 기록하는 별도의 \"도"
 "중유국\" 결과가 활성화됨"
 
-#: app/pages/Achievements.tsx:421:14
+#: app/pages/Achievements.tsx:367:14
 msgid "This can't be your wait"
 msgstr "이게 네 대기패일 리 없어"
 
-#: app/pages/Timer.tsx:153:19
+#: app/pages/Timer.tsx:152:19
 msgid "Timer"
 msgstr "타이머"
 
-#: app/components/AppFooter.tsx:112:22
+#: app/components/AppFooter.tsx:103:22
 msgid "Timer & seating"
 msgstr "타이머 및 좌석"
 
-#: app/components/MainMenu.tsx:148:40 app/components/MainMenu.tsx:149:28
+#: app/components/MainMenu.tsx:145:40 app/components/MainMenu.tsx:146:28
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr "타이머 및 좌석"
 
-#: app/pages/Timer.tsx:125:29
+#: app/pages/Timer.tsx:124:29
 msgid "Timer is not available for aggregated events"
 msgstr "통합 이벤트에서는 타이머를 사용 할 수 없습니다"
 
-#: app/pages/Timer.tsx:154:22
+#: app/pages/Timer.tsx:153:22
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 타이머 페이지"
 
@@ -1453,7 +1449,7 @@ msgstr "타이머의 시작 값. 타이머가 종료될 경우 하기의 대국 
 msgid "To damaten hands: "
 msgstr "다마텐 상대: "
 
-#: app/components/MainMenu.tsx:170:32 app/components/MainMenu.tsx:171:20
+#: app/components/MainMenu.tsx:167:32 app/components/MainMenu.tsx:168:20
 msgid "To events list"
 msgstr "이벤트 목록"
 
@@ -1465,11 +1461,11 @@ msgstr "리치 상대: "
 msgid "To open hands: "
 msgstr "비멘젠 상대: "
 
-#: app/components/MainMenu.tsx:274:33 app/components/MainMenu.tsx:275:20
+#: app/components/MainMenu.tsx:271:33 app/components/MainMenu.tsx:272:20
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:264:33 app/components/MainMenu.tsx:265:20
+#: app/components/MainMenu.tsx:261:33 app/components/MainMenu.tsx:262:20
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 
@@ -1494,11 +1490,11 @@ msgstr "총 실점: "
 msgid "Total: %1 / Still playing: %2 / Finished: %3"
 msgstr ""
 
-#: app/components/EventTypeIcon.tsx:55:18
+#: app/components/EventTypeIcon.tsx:54:18
 msgid "Tournament"
 msgstr "대회"
 
-#: app/pages/EventRulesOverview/TabsList.tsx:48:12
+#: app/pages/EventRulesOverview/TabsList.tsx:51:12
 msgid "Tournament settings"
 msgstr "대회 설정"
 
@@ -1506,7 +1502,7 @@ msgstr "대회 설정"
 msgid "Tsumo payments: "
 msgstr "쯔모 지불: "
 
-#: app/components/GameListing.tsx:191:14
+#: app/components/GameListing.tsx:213:14
 msgid "Tsumo: %1"
 msgstr "쯔모: %1"
 
@@ -1538,15 +1534,15 @@ msgstr "4위 우마 벌부"
 msgid "Use yakitori rule"
 msgstr "야키토리 규칙 사용"
 
-#: app/pages/Game.tsx:71:35
+#: app/pages/Game.tsx:74:35
 msgid "View game"
 msgstr "대국 보기"
 
-#: app/pages/PlayerStats.tsx:155:16
+#: app/pages/PlayerStats.tsx:159:16
 msgid "View selected game details"
 msgstr "해당 대국 세부내용 보기"
 
-#: app/pages/Achievements.tsx:742:14
+#: app/pages/Achievements.tsx:628:14
 msgid "We need more gold"
 msgstr "우린 부자가 될 거야"
 
@@ -1580,7 +1576,7 @@ msgstr "승리 통계"
 msgid "With damaten: "
 msgstr "다마텐화료: "
 
-#: app/pages/RatingTable.tsx:374:24
+#: app/pages/RatingTable.tsx:379:24
 msgid "With min games"
 msgstr "최소 대국 수 달성"
 
@@ -1612,11 +1608,11 @@ msgstr "야키토리 벌부"
 msgid "Yaku allowed"
 msgstr "허용 역"
 
-#: app/components/YakuGraph.tsx:100:23
+#: app/components/YakuGraph.tsx:101:23
 msgid "Yaku collected over all time"
 msgstr "역 완성 횟수"
 
-#: app/pages/EventRulesOverview/TabsList.tsx:57:10
+#: app/pages/EventRulesOverview/TabsList.tsx:60:10
 msgid "Yaku settings"
 msgstr "역 설정"
 
@@ -1636,7 +1632,7 @@ msgstr "역패 x3"
 msgid "Yakuhai x4"
 msgstr "역패 x4"
 
-#: app/components/YakuGraph.tsx:69:42
+#: app/components/YakuGraph.tsx:70:42
 msgid "Yakuhai: total"
 msgstr "역패: 총합"
 
@@ -1668,3 +1664,6 @@ msgstr "없음"
 #: app/helpers/gameLog.ts:156:12
 msgid "yakuman!"
 msgstr "역만!"
+
+#~ msgid "Game link"
+#~ msgstr "대국 링크"

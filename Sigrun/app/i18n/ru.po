@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 00:05+0100\n"
+"POT-Creation-Date: 2025-01-18 22:37+0100\n"
 "PO-Revision-Date: 2025-01-13 02:08+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.5\n"
 
-#: app/pages/Achievements.tsx:466:20
+#: app/pages/Achievements.tsx:406:20
 msgctxt "Achievements badge"
 msgid "%1 bet"
 msgid_plural "%1 bets"
@@ -28,7 +28,7 @@ msgstr[0] "%1 ставка"
 msgstr[1] "%1 ставки"
 msgstr[2] "%1 ставок"
 
-#: app/pages/Achievements.tsx:557:20
+#: app/pages/Achievements.tsx:479:20
 msgctxt "Achievements badge"
 msgid "%1 dora"
 msgid_plural "%1 dora"
@@ -36,7 +36,7 @@ msgstr[0] "%1 дора"
 msgstr[1] "%1 доры"
 msgstr[2] "%1 дор"
 
-#: app/pages/Achievements.tsx:250:14 app/pages/Achievements.tsx:281:14
+#: app/pages/Achievements.tsx:226:14 app/pages/Achievements.tsx:251:14
 msgctxt "Achievements badge"
 msgid "%1 feed"
 msgid_plural "%1 feeds"
@@ -44,7 +44,7 @@ msgstr[0] "%1 наброс"
 msgstr[1] "%1 наброса"
 msgstr[2] "%1 набросов"
 
-#: app/pages/Achievements.tsx:196:14
+#: app/pages/Achievements.tsx:184:14
 msgctxt "Achievements badge"
 msgid "%1 fu"
 msgstr "%1 фу"
@@ -53,7 +53,7 @@ msgstr "%1 фу"
 msgid "%1 han"
 msgstr "%1 хан"
 
-#: app/pages/Achievements.tsx:170:14 app/pages/Achievements.tsx:437:23
+#: app/pages/Achievements.tsx:164:14 app/pages/Achievements.tsx:383:23
 msgctxt "Achievements badge"
 msgid "%1 han"
 msgstr "%1 хан"
@@ -62,23 +62,23 @@ msgstr "%1 хан"
 msgid "%1 han, %2 fu"
 msgstr "%1 хан, %2 фу"
 
-#: app/pages/Achievements.tsx:433:23
+#: app/pages/Achievements.tsx:379:23
 msgctxt "Achievements badge"
 msgid "%1 han, %2 fu"
 msgstr "%1 хан, %2 фу"
 
-#: app/pages/Achievements.tsx:497:20
+#: app/pages/Achievements.tsx:431:20
 msgctxt "Achievements badge"
 msgid "%1 ippatsu"
 msgstr "%1 иппацу"
 
-#: app/pages/Achievements.tsx:528:20 app/pages/Achievements.tsx:621:20
-#: app/pages/Achievements.tsx:753:20
+#: app/pages/Achievements.tsx:456:20 app/pages/Achievements.tsx:531:20
+#: app/pages/Achievements.tsx:639:20
 msgctxt "Achievements badge"
 msgid "%1 points"
 msgstr "%1 очков"
 
-#: app/pages/Achievements.tsx:374:14
+#: app/pages/Achievements.tsx:326:14
 msgctxt "Achievements badge"
 msgid "%1 quickest hand"
 msgid_plural "%1 quickest hands"
@@ -86,7 +86,7 @@ msgstr[0] "%1 самая быстрая рука"
 msgstr[1] "%1 самых быстрых руки"
 msgstr[2] "%1 самых быстрых рук"
 
-#: app/pages/Achievements.tsx:652:20 app/pages/Achievements.tsx:686:20
+#: app/pages/Achievements.tsx:556:20 app/pages/Achievements.tsx:584:20
 msgctxt "Achievements badge"
 msgid "%1 riichi bet"
 msgid_plural "%1 riichi bets"
@@ -94,7 +94,7 @@ msgstr[0] "%1 риичи палочка"
 msgstr[1] "%1 риичи палочки"
 msgstr[2] "%1 риичи палочек"
 
-#: app/pages/Achievements.tsx:782:20
+#: app/pages/Achievements.tsx:662:20
 msgctxt "Achievements badge"
 msgid "%1 riichi nomi hand"
 msgid_plural "%1 riichi nomi hands"
@@ -102,12 +102,12 @@ msgstr[0] "%1 рука с риичи-номи"
 msgstr[1] "%1 руки с риичи-номи"
 msgstr[2] "%1 рук с риичи-номи"
 
-#: app/pages/Achievements.tsx:222:14
+#: app/pages/Achievements.tsx:204:14
 msgctxt "Achievements badge"
 msgid "%1 tsumo"
 msgstr "%1 цумо"
 
-#: app/pages/Achievements.tsx:343:14 app/pages/Achievements.tsx:720:20
+#: app/pages/Achievements.tsx:301:14 app/pages/Achievements.tsx:612:20
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
@@ -115,12 +115,12 @@ msgstr[0] "%1 победа"
 msgstr[1] "%1 победы"
 msgstr[2] "%1 побед"
 
-#: app/pages/Achievements.tsx:590:20
+#: app/pages/Achievements.tsx:506:20
 msgctxt "Achievements badge"
 msgid "%1 yaku"
 msgstr "%1 яку"
 
-#: app/pages/Achievements.tsx:305:20
+#: app/pages/Achievements.tsx:275:20
 msgctxt "Achievements badge"
 msgid "%1 yakuhai"
 msgid_plural "%1 yakuhais"
@@ -232,40 +232,40 @@ msgctxt "Multiron inner log item"
 msgid "<li>%1 - %2, %3</li>"
 msgstr "<li>%1 - %2, %3</li>"
 
-#: app/components/AppFooter.tsx:91:20 app/pages/Achievements.tsx:837:42
-#: app/pages/Achievements.tsx:845:35
+#: app/components/AppFooter.tsx:82:20 app/pages/Achievements.tsx:711:42
+#: app/pages/Achievements.tsx:719:35
 msgid "Achievements"
 msgstr "Номинации"
 
-#: app/components/MainMenu.tsx:129:38 app/components/MainMenu.tsx:130:26
+#: app/components/MainMenu.tsx:126:38 app/components/MainMenu.tsx:127:26
 msgctxt "Event menu"
 msgid "Achievements"
 msgstr "Номинации"
 
-#: app/pages/Achievements.tsx:820:12
+#: app/pages/Achievements.tsx:694:12
 msgid "Achievements are hidden by tournament administrator"
 msgstr "Номинации были скрыты администратором турнира"
 
-#: app/pages/Achievements.tsx:829:29
+#: app/pages/Achievements.tsx:703:29
 msgid "Achievements are not available for aggregated events"
 msgstr "Для агрегированных событий номинации недоступны"
 
-#: app/pages/Achievements.tsx:838:22
+#: app/pages/Achievements.tsx:712:22
 msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Список номинаций для события \"%1\", предоставленные системой Mahjong "
 "Pantheon"
 
-#: app/components/AddOnlineReplayModal.tsx:58:14
+#: app/components/AddOnlineReplayModal.tsx:59:14
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
 
-#: app/components/AddOnlineReplayLink.tsx:23:26
+#: app/components/AddOnlineReplayLink.tsx:22:26
 msgctxt "Event menu"
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
 
-#: app/components/AddOnlineReplayModal.tsx:72:41
+#: app/components/AddOnlineReplayModal.tsx:73:41
 msgid "Add replay"
 msgstr "Добавить игру"
 
@@ -273,12 +273,12 @@ msgstr "Добавить игру"
 msgid "Agariyame"
 msgstr "Агарияме"
 
-#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:148:51
-#: app/pages/RecentGames.tsx:85:49
+#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:152:51
+#: app/pages/RecentGames.tsx:88:49
 msgid "Aggregated event"
 msgstr "Агрегированное событие"
 
-#: app/pages/RatingTable.tsx:356:24
+#: app/pages/RatingTable.tsx:361:24
 msgid "All players"
 msgstr "Все игроки"
 
@@ -341,7 +341,7 @@ msgstr "Количество бонусных очков за первое ме�
 msgid "Amount of score player should get to end the game."
 msgstr "Количество очков, которое нужно набрать для завершения игры."
 
-#: app/pages/Achievements.tsx:641:14
+#: app/pages/Achievements.tsx:545:14
 msgid "And your riichi bet, please"
 msgstr "И Ваша риичи палочка"
 
@@ -357,11 +357,11 @@ msgstr "Средняя величина наброса: "
 msgid "Average dora per hand: "
 msgstr "Среднее количество дор в руке: "
 
-#: app/pages/RatingTable.tsx:326:20 app/pages/RatingTable.tsx:535:7
+#: app/pages/RatingTable.tsx:331:20 app/pages/RatingTable.tsx:549:7
 msgid "Average place"
 msgstr "Среднее место"
 
-#: app/pages/RatingTable.tsx:536:7
+#: app/pages/RatingTable.tsx:550:7
 msgid "Average points"
 msgstr "Средние очки"
 
@@ -369,7 +369,7 @@ msgstr "Средние очки"
 msgid "Average points lost: "
 msgstr "Среднее число потерянных очков: "
 
-#: app/pages/RatingTable.tsx:298:20
+#: app/pages/RatingTable.tsx:302:20
 msgid "Average score"
 msgstr "Средние очки"
 
@@ -385,7 +385,7 @@ msgstr "Среднее: "
 msgid "Avg place:"
 msgstr "Ср. место:"
 
-#: app/components/AppFooter.tsx:40:20
+#: app/components/AppFooter.tsx:39:20
 msgid "Back to top"
 msgstr "К началу"
 
@@ -409,7 +409,7 @@ msgstr "Потерянных ставок: "
 msgid "Bets won: "
 msgstr "Выигравших ставок: "
 
-#: app/pages/Achievements.tsx:265:14
+#: app/pages/Achievements.tsx:241:14
 msgid "Brave minesweeper"
 msgstr "Бравый сапёр"
 
@@ -421,7 +421,7 @@ msgstr "По рон: "
 msgid "By tsumo: "
 msgstr "По цумо: "
 
-#: app/pages/Achievements.tsx:517:14
+#: app/pages/Achievements.tsx:445:14
 msgid "Careful planning"
 msgstr "Точный расчет"
 
@@ -449,8 +449,8 @@ msgstr "Чиницу"
 msgid "Chinroutou"
 msgstr "Чинрото"
 
-#: app/pages/RatingTable.tsx:267:22 app/pages/RatingTable.tsx:489:34
-#: app/pages/RatingTable.tsx:533:24
+#: app/pages/RatingTable.tsx:271:22 app/pages/RatingTable.tsx:503:34
+#: app/pages/RatingTable.tsx:547:24
 msgid "Chips"
 msgstr "Чипы"
 
@@ -466,7 +466,7 @@ msgstr "Чомбо в последней раздаче завершает иг�
 msgid "Chombo penalties: "
 msgstr "Штрафов чомбо: "
 
-#: app/components/GameListing.tsx:198:16
+#: app/components/GameListing.tsx:220:16
 msgid "Chombo: %1"
 msgstr "Чомбо: %1"
 
@@ -474,7 +474,7 @@ msgstr "Чомбо: %1"
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
 
-#: app/pages/PlayerStats.tsx:202:24
+#: app/pages/PlayerStats.tsx:206:24
 msgid "Close game preview"
 msgstr "Закрыть предпросмотр"
 
@@ -482,11 +482,11 @@ msgstr "Закрыть предпросмотр"
 msgid "Collect riichi bets by atamahane"
 msgstr "Риичи по атамахане"
 
-#: app/components/MainMenu.tsx:164:33
+#: app/components/MainMenu.tsx:161:33
 msgid "Common actions"
 msgstr "Общие действия"
 
-#: app/components/PlayerStatsListing.tsx:51:32
+#: app/components/PlayerStatsListing.tsx:51:27
 msgid "Common stats"
 msgstr "Общая статистика"
 
@@ -494,17 +494,17 @@ msgstr "Общая статистика"
 msgid "Complex position-based"
 msgstr "Сложный, на основе позиций всех игроков"
 
-#: app/pages/Achievements.tsx:174:32 app/pages/Achievements.tsx:200:32
-#: app/pages/Achievements.tsx:228:32 app/pages/Achievements.tsx:259:32
-#: app/pages/Achievements.tsx:290:32 app/pages/Achievements.tsx:321:32
-#: app/pages/Achievements.tsx:352:32 app/pages/Achievements.tsx:383:32
-#: app/pages/Achievements.tsx:415:32 app/pages/Achievements.tsx:451:32
-#: app/pages/Achievements.tsx:482:32 app/pages/Achievements.tsx:511:32
-#: app/pages/Achievements.tsx:542:32 app/pages/Achievements.tsx:573:32
-#: app/pages/Achievements.tsx:604:32 app/pages/Achievements.tsx:635:32
-#: app/pages/Achievements.tsx:671:32 app/pages/Achievements.tsx:705:32
-#: app/pages/Achievements.tsx:736:32 app/pages/Achievements.tsx:767:32
-#: app/pages/Achievements.tsx:801:32
+#: app/pages/Achievements.tsx:168:32 app/pages/Achievements.tsx:188:32
+#: app/pages/Achievements.tsx:210:32 app/pages/Achievements.tsx:235:32
+#: app/pages/Achievements.tsx:260:32 app/pages/Achievements.tsx:285:32
+#: app/pages/Achievements.tsx:310:32 app/pages/Achievements.tsx:335:32
+#: app/pages/Achievements.tsx:361:32 app/pages/Achievements.tsx:391:32
+#: app/pages/Achievements.tsx:416:32 app/pages/Achievements.tsx:439:32
+#: app/pages/Achievements.tsx:464:32 app/pages/Achievements.tsx:489:32
+#: app/pages/Achievements.tsx:514:32 app/pages/Achievements.tsx:539:32
+#: app/pages/Achievements.tsx:569:32 app/pages/Achievements.tsx:597:32
+#: app/pages/Achievements.tsx:622:32 app/pages/Achievements.tsx:647:32
+#: app/pages/Achievements.tsx:675:32
 msgid "Couldn't get nomination details"
 msgstr "Не удалось получить данные номинаций"
 
@@ -513,7 +513,7 @@ msgstr "Не удалось получить данные номинаций"
 msgid "Count of session in game series."
 msgstr "Количество сессий в одной серии."
 
-#: app/components/MainMenu.tsx:65:37
+#: app/components/MainMenu.tsx:62:37
 msgid "Current event"
 msgstr "Текущее событие"
 
@@ -538,11 +538,11 @@ msgstr "Дайсуши"
 msgid "Deal-ins to ron: "
 msgstr "Набросов в рон: "
 
-#: app/components/AppFooter.tsx:53:20
+#: app/components/AppFooter.tsx:48:20
 msgid "Description"
 msgstr "Описание"
 
-#: app/components/MainMenu.tsx:82:36 app/components/MainMenu.tsx:83:24
+#: app/components/MainMenu.tsx:79:36 app/components/MainMenu.tsx:80:24
 msgctxt "Event menu"
 msgid "Description"
 msgstr "Описание"
@@ -551,7 +551,7 @@ msgstr "Описание"
 msgid "Description of the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Описание события \"%1\", предоставленное системой Mahjong Pantheon"
 
-#: app/pages/Achievements.tsx:234:14
+#: app/pages/Achievements.tsx:216:14
 msgid "Die Hard"
 msgstr "Крепкий орешек"
 
@@ -567,11 +567,11 @@ msgstr "Не прерывать игру до тех пор, пока она н�
 msgid "Dora collected: "
 msgstr "Собрано дор: "
 
-#: app/pages/Achievements.tsx:548:14
+#: app/pages/Achievements.tsx:470:14
 msgid "Dora lord"
 msgstr "Повелитель дор"
 
-#: app/components/GameListing.tsx:194:14
+#: app/components/GameListing.tsx:216:14
 msgid "Draw: %1"
 msgstr "Ничья: %1"
 
@@ -579,7 +579,7 @@ msgstr "Ничья: %1"
 msgid "Draws: "
 msgstr "Ничьих: "
 
-#: app/components/MainMenu.tsx:179:34 app/components/MainMenu.tsx:180:22
+#: app/components/MainMenu.tsx:176:34 app/components/MainMenu.tsx:177:22
 msgid "Edit my profile"
 msgstr "Редактировать мой профиль"
 
@@ -591,11 +591,11 @@ msgstr "Включить возможность записи исхода \"На
 msgid "Equalize uma"
 msgstr "Выравнивание умы"
 
-#: app/components/MainMenu.tsx:74:40 app/components/MainMenu.tsx:75:28
+#: app/components/MainMenu.tsx:71:40 app/components/MainMenu.tsx:72:28
 msgid "Event admin panel"
 msgstr "Админка события"
 
-#: app/pages/EventInfo.tsx:87:31
+#: app/pages/EventInfo.tsx:88:16
 msgid "Event administrators: "
 msgstr "Администраторы события: "
 
@@ -603,7 +603,7 @@ msgstr "Администраторы события: "
 msgid "Event list"
 msgstr "Список событий"
 
-#: app/pages/EventInfo.tsx:113:33
+#: app/pages/EventInfo.tsx:117:18
 msgid "Event referees: "
 msgstr "Судьи:"
 
@@ -615,7 +615,7 @@ msgstr "Отфильтровать"
 msgid "Filter events..."
 msgstr "Фильтр по событиям..."
 
-#: app/components/PlayerStatsListing.tsx:81:32
+#: app/components/PlayerStatsListing.tsx:81:27
 msgid "Final game score"
 msgstr "Финальный счет игры"
 
@@ -653,16 +653,12 @@ msgstr "Длительность сессии"
 msgid "Game expiration time (in hours)"
 msgstr "Время истечения игры (в часах)"
 
-#: app/components/GameListing.tsx:109:16
-msgid "Game link"
-msgstr "Ссылка на игру"
-
-#: app/pages/Game.tsx:63:44
+#: app/pages/Game.tsx:66:44
 msgid "Game preview"
 msgstr "Просмотр игры"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:478:32
-#: app/pages/RatingTable.tsx:537:7
+#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:491:32
+#: app/pages/RatingTable.tsx:551:7
 msgid "Games played"
 msgstr "Сыграно игр"
 
@@ -670,7 +666,7 @@ msgstr "Сыграно игр"
 msgid "Games played: "
 msgstr "Сыграно игр: "
 
-#: app/pages/Achievements.tsx:390:20
+#: app/pages/Achievements.tsx:342:20
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Дается за сбор якумана на турнире."
 
@@ -679,25 +675,25 @@ msgid ""
 "Given for collecting the hand with biggest han count (independent of cost)."
 msgstr "Дается за сбор руки с наибольшим число хан (независимо от стоимости)"
 
-#: app/pages/Achievements.tsx:181:20
+#: app/pages/Achievements.tsx:175:20
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
 
-#: app/pages/Achievements.tsx:642:20
+#: app/pages/Achievements.tsx:546:20
 msgid ""
 "Given for collecting the largest amount of other players' riichi bets during "
 "the tournament."
 msgstr "Дается за сбор максимального числа чужих риичи палочек."
 
-#: app/pages/Achievements.tsx:207:20
+#: app/pages/Achievements.tsx:195:20
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
 
-#: app/pages/Achievements.tsx:297:20
+#: app/pages/Achievements.tsx:267:20
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr "Дается за сбор максимального числа якухаев за турнир."
 
-#: app/pages/Achievements.tsx:422:20
+#: app/pages/Achievements.tsx:368:20
 msgid ""
 "Given for feeding into largest hand during tournament (but not while in "
 "riichi)."
@@ -705,65 +701,65 @@ msgstr ""
 "Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
 "риичи)."
 
-#: app/pages/Achievements.tsx:489:20
+#: app/pages/Achievements.tsx:423:20
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr "Дается за максимальное число побед с иппацу за турнир."
 
-#: app/pages/Achievements.tsx:743:20
+#: app/pages/Achievements.tsx:629:20
 msgid ""
 "Given for having biggest score in the end of the session across the "
 "tournament."
 msgstr ""
 "Дается за максимальное число набранных очков в конце игры в рамках турнира."
 
-#: app/pages/Achievements.tsx:328:20
+#: app/pages/Achievements.tsx:292:20
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
 
-#: app/pages/Achievements.tsx:266:20
+#: app/pages/Achievements.tsx:242:20
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "Дается за максимальное число набросов в рон за турнир."
 
-#: app/pages/Achievements.tsx:458:20
+#: app/pages/Achievements.tsx:398:20
 msgid "Given for losing largest amount of points as riichi bets."
 msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
 
-#: app/pages/Achievements.tsx:678:20
+#: app/pages/Achievements.tsx:576:20
 msgid "Given for losing the smallest number of riichi bets."
 msgstr "Дается за потерю минимального числа очков за счет риичи-ставок."
 
-#: app/pages/Achievements.tsx:235:20
+#: app/pages/Achievements.tsx:217:20
 msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr "Дается за минимальное число набросов в рон за турнир."
 
-#: app/pages/Achievements.tsx:611:20
+#: app/pages/Achievements.tsx:521:20
 msgid ""
 "Given for the largest amount of points received as ryuukyoku (draw) payments."
 msgstr "Дается за максимальную сумму, полученную за счет темпаев."
 
-#: app/pages/Achievements.tsx:580:20
+#: app/pages/Achievements.tsx:496:20
 msgid ""
 "Given for the largest amount of unique yaku collected during the tournament."
 msgstr "Дается за самое большое число разнообразных яку за турнир."
 
-#: app/pages/Achievements.tsx:549:20
+#: app/pages/Achievements.tsx:471:20
 msgid "Given for the largest average count of dora in player's hand."
 msgstr "Дается за максимальное среднее число дор в руке."
 
-#: app/pages/Achievements.tsx:359:20
+#: app/pages/Achievements.tsx:317:20
 msgid "Given for the most of 1/30 wins during tournament."
 msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
 
-#: app/pages/Achievements.tsx:518:20
+#: app/pages/Achievements.tsx:446:20
 msgid ""
 "Given for the smallest average cost of opponents hand that player has dealt."
 msgstr "Дается за минимальную среднюю величину наброса."
 
-#: app/pages/Achievements.tsx:712:20
+#: app/pages/Achievements.tsx:604:20
 msgid "Given for winning the largest number of hands with damaten."
 msgstr "Дается за максимальное число побед из даматена."
 
-#: app/pages/Achievements.tsx:774:20
+#: app/pages/Achievements.tsx:654:20
 msgid "Given for winning the largest number riichi nomi hands."
 msgstr "Дается за максимальное число побед c риичи-номи."
 
@@ -771,11 +767,11 @@ msgstr "Дается за максимальное число побед c ри�
 msgid "Goal score"
 msgstr "Целевое количество очков"
 
-#: app/pages/Achievements.tsx:579:14
+#: app/pages/Achievements.tsx:495:14
 msgid "Gotta Catch'Em All"
 msgstr "Собери их всех"
 
-#: app/pages/Achievements.tsx:296:14
+#: app/pages/Achievements.tsx:266:14
 msgid "Guest of honors"
 msgstr "Довакин aka The mother of dragons"
 
@@ -803,7 +799,7 @@ msgstr ""
 msgid "Honitsu"
 msgstr "Хоницу"
 
-#: app/pages/Achievements.tsx:457:14
+#: app/pages/Achievements.tsx:397:14
 msgid "Honored donor"
 msgstr "Почетный донор"
 
@@ -819,7 +815,7 @@ msgstr "Хотей раоюй"
 msgid "How game sessions should end during the tournament"
 msgstr "Как игровые сессии завершаются во время турнира"
 
-#: app/pages/Achievements.tsx:206:14
+#: app/pages/Achievements.tsx:194:14
 msgid "I saw them dancing"
 msgstr "Задолбал!"
 
@@ -886,7 +882,7 @@ msgstr "Иппацу"
 msgid "Ittsu"
 msgstr "Иццу"
 
-#: app/pages/Achievements.tsx:389:14
+#: app/pages/Achievements.tsx:341:14
 msgid "Jewelry included"
 msgstr "Якуман-мастер"
 
@@ -894,7 +890,7 @@ msgstr "Якуман-мастер"
 msgid "Junchan"
 msgstr "Джунчан"
 
-#: app/pages/Achievements.tsx:488:14
+#: app/pages/Achievements.tsx:422:14
 msgid "Just as planned"
 msgstr "Как и планировалось"
 
@@ -914,16 +910,16 @@ msgstr "Кокуши мусо"
 msgid "Kuitan"
 msgstr "Куитан"
 
-#: app/components/MainMenu.tsx:221:33 app/components/MainMenu.tsx:222:20
+#: app/components/MainMenu.tsx:218:33 app/components/MainMenu.tsx:219:20
 msgid "Language"
 msgstr "Язык"
 
-#: app/pages/RecentGames.tsx:83:20 app/pages/RecentGames.tsx:85:22
-#: app/pages/RecentGames.tsx:96:31
+#: app/pages/RecentGames.tsx:86:20 app/pages/RecentGames.tsx:88:22
+#: app/pages/RecentGames.tsx:99:31
 msgid "Last games"
 msgstr "Последние игры"
 
-#: app/pages/RecentGames.tsx:88:24
+#: app/pages/RecentGames.tsx:91:24
 msgid "Last games of the event \"%1\", page %2, provided by Mahjong Pantheon"
 msgstr ""
 "Последние игры события \"%1\", страница %2, предоставлено системой Mahjong "
@@ -933,7 +929,7 @@ msgstr ""
 msgid "Last series"
 msgstr "Текущая серия"
 
-#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:112:18
+#: app/pages/Achievements.tsx:726:18 app/pages/PlayerStats.tsx:116:18
 msgid "Last update: %1"
 msgstr "Последнее обновление: %1"
 
@@ -945,7 +941,7 @@ msgstr "Список событий, зарегистрированных в с�
 msgid "Local event settings"
 msgstr "Настройки локального рейтинга"
 
-#: app/components/EventTypeIcon.tsx:42:18
+#: app/components/EventTypeIcon.tsx:41:18
 msgid "Local rating"
 msgstr "Локальный рейтинг"
 
@@ -957,7 +953,7 @@ msgstr "Статистика потерь"
 msgid "Maximum: "
 msgstr "Максимум: "
 
-#: app/components/AppHeader.tsx:127:18
+#: app/components/AppHeader.tsx:118:18
 msgid "Menu"
 msgstr "Меню"
 
@@ -982,7 +978,7 @@ msgstr "Минимальное число игр"
 msgid "Minimum: "
 msgstr "Минимум: "
 
-#: app/components/PlayerStatsListing.tsx:98:32
+#: app/components/PlayerStatsListing.tsx:98:27
 msgid "Misc stats"
 msgstr "Дополнительная статистика"
 
@@ -994,19 +990,19 @@ msgstr "Суммирование якуманов"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/GameListing.tsx:203:16
+#: app/components/GameListing.tsx:225:16
 msgid "Nagashi: %1"
 msgstr "Нагаши манган: %1"
 
-#: app/pages/PlayerStats.tsx:180:24
+#: app/pages/PlayerStats.tsx:184:24
 msgid "Next game"
 msgstr "Следующая игра"
 
-#: app/pages/Achievements.tsx:711:14
+#: app/pages/Achievements.tsx:603:14
 msgid "Ninja"
 msgstr "Ниндзя"
 
-#: app/pages/Achievements.tsx:404:20
+#: app/pages/Achievements.tsx:356:20
 msgid "No yakumans have been collected"
 msgstr "Ни одного якумана собрано не было"
 
@@ -1014,11 +1010,11 @@ msgstr "Ни одного якумана собрано не было"
 msgid "Oka bonus"
 msgstr "Ока"
 
-#: app/components/EventTypeIcon.tsx:68:18
+#: app/components/EventTypeIcon.tsx:67:18
 msgid "Online event"
 msgstr "Онлайн-рейтинг"
 
-#: app/pages/EventRulesOverview/TabsList.tsx:53:12
+#: app/pages/EventRulesOverview/TabsList.tsx:56:12
 msgid "Online event settings"
 msgstr "Настройки онлайн-события"
 
@@ -1031,11 +1027,11 @@ msgstr ""
 "Только первый игрок по ходу раздачи считается победителем по рон. Если "
 "галочка не отмечена, все игроки, объявившие рон, считаются победителями."
 
-#: app/components/MainMenu.tsx:208:32 app/components/MainMenu.tsx:209:20
+#: app/components/MainMenu.tsx:205:32 app/components/MainMenu.tsx:206:20
 msgid "Open assistant"
 msgstr "Ассистент"
 
-#: app/components/AppHeader.tsx:119:24 app/components/AppHeader.tsx:131:24
+#: app/components/AppHeader.tsx:110:24 app/components/AppHeader.tsx:122:24
 msgid "Open menu"
 msgstr "Меню"
 
@@ -1047,11 +1043,11 @@ msgstr "Опен риичи"
 msgid "Otherwise"
 msgstr "Прочие ситуации"
 
-#: app/pages/Achievements.tsx:180:14
+#: app/pages/Achievements.tsx:174:14
 msgid "Over 9000 fu"
 msgstr "Over 9000 fu"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:64:25
+#: app/pages/EventRulesOverview/YakuSettings.tsx:57:25
 msgid "Pao rule enabled for:"
 msgstr "Пао разрешено для:"
 
@@ -1079,7 +1075,7 @@ msgstr "Выплаты и очки"
 msgid "Penalties"
 msgstr "Штрафы"
 
-#: app/pages/RatingTable.tsx:435:34
+#: app/pages/RatingTable.tsx:447:34
 msgid "Penalties count: %1; total penalties amount: %2"
 msgstr "Количество штрафов: %1; общий размер штрафов: %2"
 
@@ -1087,7 +1083,7 @@ msgstr "Количество штрафов: %1; общий размер штр�
 msgid "Pinfu"
 msgstr "Пин-фу"
 
-#: app/pages/RatingTable.tsx:529:7
+#: app/pages/RatingTable.tsx:543:7
 msgid "Place"
 msgstr "Место"
 
@@ -1095,7 +1091,7 @@ msgstr "Место"
 msgid "Place / Session result"
 msgstr "Место / результат"
 
-#: app/components/PlayerStatsListing.tsx:64:32
+#: app/components/PlayerStatsListing.tsx:64:27
 msgid "Places stats"
 msgstr "Статистика по местам"
 
@@ -1107,72 +1103,72 @@ msgstr "Дополнительные раунды"
 msgid "Play only east rounds"
 msgstr "Играть только восточные раунды"
 
-#: app/pages/RatingTable.tsx:530:7
+#: app/pages/RatingTable.tsx:544:7
 msgid "Player ID"
 msgstr "ID игрока"
 
-#: app/pages/RatingTable.tsx:531:7
+#: app/pages/RatingTable.tsx:545:7
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: app/pages/PlayerStats.tsx:95:22
+#: app/pages/PlayerStats.tsx:99:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 "Статистика игрока %1 в событии \"%2\", предоставленная системой Mahjong "
 "Pantheon"
 
-#: app/pages/PlayerStats.tsx:94:37
+#: app/pages/PlayerStats.tsx:98:37
 msgid "Player stats"
 msgstr "Статистика игрока"
 
-#: app/pages/RatingTable.tsx:366:30
+#: app/pages/RatingTable.tsx:371:30
 msgid "Players having a required minimum of games"
 msgstr "Игроки, сыгравшие минимальное количество игр"
 
-#: app/components/MainMenu.tsx:121:26
+#: app/components/MainMenu.tsx:118:26
 msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "Игроки, зарегистрированные в событии"
 
-#: app/pages/PlayerStats.tsx:162:24
+#: app/pages/PlayerStats.tsx:166:24
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:238:20
+#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:242:20
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: app/pages/RatingTable.tsx:534:7
+#: app/pages/RatingTable.tsx:548:7
 msgid "Rating points"
 msgstr "Рейтинговые очки"
 
-#: app/components/AppFooter.tsx:80:20 app/pages/Achievements.tsx:817:35
-#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:131:35
-#: app/pages/RatingTable.tsx:146:20 app/pages/RatingTable.tsx:148:22
-#: app/pages/RatingTable.tsx:159:33
+#: app/components/AppFooter.tsx:71:20 app/pages/Achievements.tsx:691:35
+#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:135:35
+#: app/pages/RatingTable.tsx:150:20 app/pages/RatingTable.tsx:152:22
+#: app/pages/RatingTable.tsx:163:33
 msgid "Rating table"
 msgstr "Рейтинг"
 
-#: app/components/MainMenu.tsx:103:36 app/components/MainMenu.tsx:104:24
+#: app/components/MainMenu.tsx:100:36 app/components/MainMenu.tsx:101:24
 msgctxt "Event menu"
 msgid "Rating table"
 msgstr "Рейтинг"
 
-#: app/pages/RatingTable.tsx:134:12
+#: app/pages/RatingTable.tsx:138:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "Рейтинговая таблица была скрыта администратором турнира"
 
-#: app/pages/RatingTable.tsx:151:24
+#: app/pages/RatingTable.tsx:155:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Рейтинговая таблица события \"%1\", предоставленная системой Mahjong Pantheon"
 
-#: app/components/AppFooter.tsx:73:20
+#: app/components/AppFooter.tsx:64:20
 msgid "Recent games"
 msgstr "Последние игры"
 
-#: app/components/MainMenu.tsx:96:36 app/components/MainMenu.tsx:97:24
+#: app/components/MainMenu.tsx:93:36 app/components/MainMenu.tsx:94:24
 msgctxt "Event menu"
 msgid "Recent games"
 msgstr "Последние игры"
@@ -1181,7 +1177,7 @@ msgstr "Последние игры"
 msgid "Registered players"
 msgstr "Зарегистрированные игроки"
 
-#: app/components/MainMenu.tsx:120:38
+#: app/components/MainMenu.tsx:117:38
 msgctxt "Event menu"
 msgid "Registered players"
 msgstr "Зарегистрированные игроки"
@@ -1196,7 +1192,7 @@ msgstr ""
 msgid "Renhou"
 msgstr "Ренхо"
 
-#: app/components/AddOnlineReplayModal.tsx:30:22
+#: app/components/AddOnlineReplayModal.tsx:31:22
 msgid "Replay link is invalid. Please check if you copied it correctly"
 msgstr "Ссылка на игру некорректна. Проверьте правильно ли вы ее скопировали"
 
@@ -1204,7 +1200,7 @@ msgstr "Ссылка на игру некорректна. Проверьте п
 msgid "Riichi"
 msgstr "Риичи"
 
-#: app/pages/Achievements.tsx:773:14
+#: app/pages/Achievements.tsx:653:14
 msgid "Riichi Nomi"
 msgstr "Риичи-номи"
 
@@ -1236,7 +1232,7 @@ msgstr "Список турниров и рейтингов"
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/components/GameListing.tsx:188:14
+#: app/components/GameListing.tsx:210:14
 msgid "Ron: %1"
 msgstr "Рон: %1"
 
@@ -1252,13 +1248,13 @@ msgstr "Сыграно раундов: "
 msgid "Rounds won: "
 msgstr "Выиграно раундов: "
 
-#: app/components/AppFooter.tsx:61:22
+#: app/components/AppFooter.tsx:56:22
 #: app/pages/EventRulesOverview/index.tsx:66:44
 #: app/pages/EventRulesOverview/index.tsx:73:35
 msgid "Rules overview"
 msgstr "Обзор правил"
 
-#: app/components/MainMenu.tsx:89:36 app/components/MainMenu.tsx:90:24
+#: app/components/MainMenu.tsx:86:36 app/components/MainMenu.tsx:87:24
 msgctxt "Event menu"
 msgid "Rules overview"
 msgstr "Обзор правил"
@@ -1299,7 +1295,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/pages/RatingTable.tsx:176:18
+#: app/pages/RatingTable.tsx:180:18
 msgid "Save as CSV"
 msgstr "Экспорт в CSV"
 
@@ -1321,12 +1317,12 @@ msgstr "Предопределенная рассадка"
 msgid "Series length"
 msgstr "Длина серии"
 
-#: app/components/AppFooter.tsx:100:20 app/pages/SeriesRating.tsx:68:42
+#: app/components/AppFooter.tsx:91:20 app/pages/SeriesRating.tsx:68:42
 #: app/pages/SeriesRating.tsx:75:31
 msgid "Series rating"
 msgstr "Рейтинг по сериям игр"
 
-#: app/components/MainMenu.tsx:138:38 app/components/MainMenu.tsx:139:26
+#: app/components/MainMenu.tsx:135:38 app/components/MainMenu.tsx:136:26
 msgctxt "Event menu"
 msgid "Series rating"
 msgstr "Рейтинг по сериям игр"
@@ -1356,15 +1352,15 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
-#: app/components/MainMenu.tsx:189:34 app/components/MainMenu.tsx:190:22
+#: app/components/MainMenu.tsx:186:34 app/components/MainMenu.tsx:187:22
 msgid "Sign in"
 msgstr "Войти в систему"
 
-#: app/components/MainMenu.tsx:199:34 app/components/MainMenu.tsx:200:22
+#: app/components/MainMenu.tsx:196:34 app/components/MainMenu.tsx:197:22
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
-#: app/Layout.tsx:345:38
+#: app/Layout.tsx:177:38
 msgid ""
 "Sigrun is the statistics viewer for riichi mahjong club games and "
 "tournaments powered by Mahjong Pantheon system. It provides game logs, "
@@ -1374,7 +1370,7 @@ msgstr ""
 "риичи-маджонг в системе Mahjong Pantheon. Предоставляет историю игр, "
 "статистику игроков с графиками, рейтинговые таблицы и списки номинаций."
 
-#: app/Layout.tsx:344:32
+#: app/Layout.tsx:176:32
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: рейтинги и статистика в риичи-маджонге"
 
@@ -1382,7 +1378,7 @@ msgstr "Sigrun: рейтинги и статистика в риичи-мадж�
 msgid "Simple rank-based"
 msgstr "Простой, на основе текущего места"
 
-#: app/pages/Game.tsx:64:24
+#: app/pages/Game.tsx:67:24
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Просмотр одиночной игры в событии \"%1\", предоставленный системой Mahjong "
@@ -1400,7 +1396,7 @@ msgstr "Сууканцу"
 msgid "Tables state"
 msgstr "Состояние столов"
 
-#: app/components/MainMenu.tsx:111:38 app/components/MainMenu.tsx:112:26
+#: app/components/MainMenu.tsx:108:38 app/components/MainMenu.tsx:109:26
 msgctxt "Event menu"
 msgid "Tables state"
 msgstr "Состояние столов"
@@ -1421,7 +1417,7 @@ msgstr ""
 "Тан-яо стоит 1 хан на открытой руке. Если не проставлено, тан-яо не работает "
 "на открытой руке."
 
-#: app/pages/RatingTable.tsx:209:22 app/pages/RatingTable.tsx:532:21
+#: app/pages/RatingTable.tsx:213:22 app/pages/RatingTable.tsx:546:21
 msgid "Team"
 msgstr "Команда"
 
@@ -1440,19 +1436,19 @@ msgstr ""
 "ID лобби на Tenhou. Свяжитесь с администратором события для получения ссылки "
 "на лобби."
 
-#: app/pages/Achievements.tsx:358:14
+#: app/pages/Achievements.tsx:316:14
 msgid "The 1k Flash"
 msgstr "Мистер Хэнки"
 
-#: app/pages/Achievements.tsx:677:14
+#: app/pages/Achievements.tsx:575:14
 msgid "The Covetous Knight"
 msgstr "Скупой рыцарь"
 
-#: app/pages/Achievements.tsx:610:14
+#: app/pages/Achievements.tsx:520:14
 msgid "The favorite apprentice of ASAPIN"
 msgstr "Любимый ученик Асапина"
 
-#: app/pages/Achievements.tsx:327:14
+#: app/pages/Achievements.tsx:291:14
 msgid "The great dealer"
 msgstr "Восточный мастер"
 
@@ -1464,28 +1460,28 @@ msgstr ""
 "Включить отдельный исход \"Абортивная ничья\" для специальных ситуаций (4 "
 "риичи, 4 кана, одинаковый ветер в сбросе на первом круге, кюсюкюхай)."
 
-#: app/pages/Achievements.tsx:421:14
+#: app/pages/Achievements.tsx:367:14
 msgid "This can't be your wait"
 msgstr "Он не может на это ждать"
 
-#: app/pages/Timer.tsx:153:19
+#: app/pages/Timer.tsx:152:19
 msgid "Timer"
 msgstr "Таймер"
 
-#: app/components/AppFooter.tsx:112:22
+#: app/components/AppFooter.tsx:103:22
 msgid "Timer & seating"
 msgstr "Таймер и рассадка"
 
-#: app/components/MainMenu.tsx:148:40 app/components/MainMenu.tsx:149:28
+#: app/components/MainMenu.tsx:145:40 app/components/MainMenu.tsx:146:28
 msgctxt "Event menu"
 msgid "Timer & seating"
 msgstr "Таймер и рассадка"
 
-#: app/pages/Timer.tsx:125:29
+#: app/pages/Timer.tsx:124:29
 msgid "Timer is not available for aggregated events"
 msgstr "Для агрегированных событий таймер недоступен"
 
-#: app/pages/Timer.tsx:154:22
+#: app/pages/Timer.tsx:153:22
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Страница таймера в событии \"%1\", предоставленная системой Mahjong Pantheon"
@@ -1502,7 +1498,7 @@ msgstr ""
 msgid "To damaten hands: "
 msgstr "В даматен: "
 
-#: app/components/MainMenu.tsx:170:32 app/components/MainMenu.tsx:171:20
+#: app/components/MainMenu.tsx:167:32 app/components/MainMenu.tsx:168:20
 msgid "To events list"
 msgstr "К списку событий"
 
@@ -1514,11 +1510,11 @@ msgstr "В руки с риичи: "
 msgid "To open hands: "
 msgstr "В открытые руки: "
 
-#: app/components/MainMenu.tsx:274:33 app/components/MainMenu.tsx:275:20
+#: app/components/MainMenu.tsx:271:33 app/components/MainMenu.tsx:272:20
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
-#: app/components/MainMenu.tsx:264:33 app/components/MainMenu.tsx:265:20
+#: app/components/MainMenu.tsx:261:33 app/components/MainMenu.tsx:262:20
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 
@@ -1543,11 +1539,11 @@ msgstr "Всего очков потеряно: "
 msgid "Total: %1 / Still playing: %2 / Finished: %3"
 msgstr "Всего: %1 / Сейчас играют: %2 / Закончили: %3"
 
-#: app/components/EventTypeIcon.tsx:55:18
+#: app/components/EventTypeIcon.tsx:54:18
 msgid "Tournament"
 msgstr "Турнир"
 
-#: app/pages/EventRulesOverview/TabsList.tsx:48:12
+#: app/pages/EventRulesOverview/TabsList.tsx:51:12
 msgid "Tournament settings"
 msgstr "Настройки турнира"
 
@@ -1555,7 +1551,7 @@ msgstr "Настройки турнира"
 msgid "Tsumo payments: "
 msgstr "Выплаты по цумо: "
 
-#: app/components/GameListing.tsx:191:14
+#: app/components/GameListing.tsx:213:14
 msgid "Tsumo: %1"
 msgstr "Цумо: %1"
 
@@ -1587,15 +1583,15 @@ msgstr "Ума за 4 место"
 msgid "Use yakitori rule"
 msgstr "Использовать правило якитори"
 
-#: app/pages/Game.tsx:71:35
+#: app/pages/Game.tsx:74:35
 msgid "View game"
 msgstr "Посмотреть реплей"
 
-#: app/pages/PlayerStats.tsx:155:16
+#: app/pages/PlayerStats.tsx:159:16
 msgid "View selected game details"
 msgstr "Подробнее об игре"
 
-#: app/pages/Achievements.tsx:742:14
+#: app/pages/Achievements.tsx:628:14
 msgid "We need more gold"
 msgstr "Нужно больше золота"
 
@@ -1632,7 +1628,7 @@ msgstr "Статистика по победам"
 msgid "With damaten: "
 msgstr "В даматене: "
 
-#: app/pages/RatingTable.tsx:374:24
+#: app/pages/RatingTable.tsx:379:24
 msgid "With min games"
 msgstr "С минимумом игр"
 
@@ -1664,11 +1660,11 @@ msgstr "Штраф за якитори"
 msgid "Yaku allowed"
 msgstr "Разрешенные яку"
 
-#: app/components/YakuGraph.tsx:100:23
+#: app/components/YakuGraph.tsx:101:23
 msgid "Yaku collected over all time"
 msgstr "Собранные яку за все время"
 
-#: app/pages/EventRulesOverview/TabsList.tsx:57:10
+#: app/pages/EventRulesOverview/TabsList.tsx:60:10
 msgid "Yaku settings"
 msgstr "Настройки яку"
 
@@ -1688,7 +1684,7 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/components/YakuGraph.tsx:69:42
+#: app/components/YakuGraph.tsx:70:42
 msgid "Yakuhai: total"
 msgstr "Якухай: всего"
 
@@ -1720,3 +1716,6 @@ msgstr "нет"
 #: app/helpers/gameLog.ts:156:12
 msgid "yakuman!"
 msgstr "якуман!"
+
+#~ msgid "Game link"
+#~ msgstr "Ссылка на игру"
