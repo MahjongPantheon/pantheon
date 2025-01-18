@@ -18,9 +18,9 @@
 import { GameResult, Player } from '../clients/proto/atoms.pb';
 import { CSSProperties } from 'react';
 import {
+  ActionIcon,
   Anchor,
   Badge,
-  Button,
   Group,
   List,
   Stack,
@@ -36,7 +36,6 @@ import { makeLog } from '../helpers/gameLog';
 import { IconShare } from '@tabler/icons-react';
 import { YakitoriIndicator } from './YakitoriIndicator';
 import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
-import { ActionIcon } from '@mantine/core';
 
 type GameListingProps = {
   eventId: string;
