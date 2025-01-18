@@ -18,9 +18,9 @@
 import { GameResult, Player } from '../clients/proto/atoms.pb';
 import { CSSProperties } from 'react';
 import {
+  ActionIcon,
   Anchor,
   Badge,
-  Button,
   Group,
   List,
   Stack,
@@ -118,9 +118,9 @@ export const GameListing: React.FC<GameListingProps> = ({
               e.preventDefault();
             }}
           >
-            <Button leftSection={<IconShare size={16} />} size='xs' variant='light'>
-              {i18n._t('Game link')}
-            </Button>
+            <ActionIcon size='md' variant='light'>
+              <IconShare size={16} />
+            </ActionIcon>
           </Anchor>
         )}
       </div>
@@ -204,7 +204,7 @@ export const GameListing: React.FC<GameListingProps> = ({
             </a>
           </>
         )}
-        <Group gap={2} style={{ marginRight: largeScreen ? '200px' : 0 }}>
+        <Group gap={2}>
           <Badge h={30} size='md' color='red' radius='sm' variant='outline'>
             {i18n._t('Ron: %1', [outcomes.ron || '0'])}
           </Badge>
