@@ -19,6 +19,7 @@ import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { Checkbox, NumberInput, Stack, Title } from '@mantine/core';
 import {
+  IconBrandStackoverflow,
   IconArrowBadgeDownFilled,
   IconCash,
   IconHandStop,
@@ -159,6 +160,14 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         defaultValue={20000}
         min={0}
         {...form.getInputProps('ruleset.oka')}
+      />
+      <NumberInput
+        icon={<IconBrandStackoverflow size='1rem' />}
+        label={i18n._t('Honba Value')}
+        description={i18n._t('Value of one honba stick')}
+        defaultValue={300}
+        min={0}
+        {...form.getInputProps('ruleset.honbaValue')}
       />
       <UmaSelect form={form} i18n={i18n} />
       <Checkbox

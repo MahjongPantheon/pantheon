@@ -18,6 +18,7 @@
 import * as React from 'react';
 import { Checkbox, NumberInput, Stack, Title } from '@mantine/core';
 import {
+  IconBrandStackoverflow,
   IconArrowBadgeDownFilled,
   IconCash,
   IconHandStop,
@@ -168,6 +169,14 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
         label={i18n._t('Oka bonus')}
         description={i18n._t('Amount of points given to player at 1st place')}
         value={config.rulesetConfig.oka}
+        onChange={() => {}}
+      />
+      <NumberInput
+        hideControls
+        leftSection={<IconBrandStackoverflow size='1rem' />}
+        label={i18n._t('Honba Value')}
+        description={i18n._t('Value of one honba stick')}
+        value={config.rulesetConfig.honbaValue}
         onChange={() => {}}
       />
       <UmaSelect config={config} i18n={i18n} />

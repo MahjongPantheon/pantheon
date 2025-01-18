@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Mimir;
 
 use Common\EndingPolicy;
@@ -76,6 +77,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
                 ->setPlace3(-5000)
                 ->setPlace4(-15000))
             ->setOka(0)
+            ->setHonbaValue(300)
             ->setChomboAmount(20000)
             ->setEqualizeUma(false)
             ->setReplacementPlayerOverrideUma(0)

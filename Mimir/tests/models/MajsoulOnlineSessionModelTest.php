@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace models;
 
 use Common\PlatformType;
@@ -291,6 +292,7 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 
         $this->_event->getRulesetConfig()->rules()->setStartPoints(30000);
         $this->_event->getRulesetConfig()->rules()->setOka(0);
+        $this->_event->getRulesetConfig()->rules()->setHonbaValue(300);
         $this->_event->getRulesetConfig()->rules()->getUma()->setPlace1(30000);
         $this->_event->getRulesetConfig()->rules()->getUma()->setPlace2(10000);
         $this->_event->getRulesetConfig()->rules()->getUma()->setPlace3(-10000);
