@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 00:05+0100\n"
+"POT-Creation-Date: 2025-01-18 23:29+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -229,6 +229,11 @@ msgstr "Punkteanzahl die erreicht werden müssen damit das Spiel enden kann."
 msgid "Another rules violation after notice"
 msgstr ""
 
+#: app/pages/Penalties/PenaltiesList.tsx:131:45
+#, fuzzy
+msgid "Applied chombo penalties"
+msgstr "Höhe der Strafe für Chombo"
+
 #: app/pages/Penalties/PenaltyForm.tsx:154:58
 #: app/pages/Penalties/PenaltyForm.tsx:158:52
 msgid "Apply penalty"
@@ -250,7 +255,7 @@ msgstr "Runde bestätigen"
 msgid "Arguing with referee"
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:96:32
+#: app/pages/Penalties/PenaltiesList.tsx:109:32
 msgid "Assigned by:"
 msgstr ""
 
@@ -299,7 +304,7 @@ msgstr "Abbrechen"
 msgid "Cancel last played round"
 msgstr "Letzte gespielte Runde abbrechen"
 
-#: app/pages/Penalties/PenaltiesList.tsx:110:20
+#: app/pages/Penalties/PenaltiesList.tsx:123:20
 #, fuzzy
 msgid "Cancel penalty"
 msgstr "Spielergebnis abbrechen"
@@ -312,7 +317,7 @@ msgstr "Spielergebnis abbrechen"
 msgid "Cancel round"
 msgstr "Runde abbrechen"
 
-#: app/pages/Penalties/PenaltiesList.tsx:102:18
+#: app/pages/Penalties/PenaltiesList.tsx:115:18
 #, fuzzy
 msgid "Cancelled: "
 msgstr "Abbrechen"
@@ -354,6 +359,12 @@ msgstr "Shuugi Wert"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
 msgid "Chombo in last round ends game"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:157:10
+msgid ""
+"Chombo penalties can be cancelled with round cancellation in Games Control "
+"page if game is not finished yet."
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:445:12
@@ -417,7 +428,7 @@ msgstr "Land"
 msgid "Create new event"
 msgstr "Neues Event erstellen"
 
-#: app/pages/Penalties/PenaltiesList.tsx:68:45
+#: app/pages/Penalties/PenaltiesList.tsx:81:45
 #, fuzzy
 msgid "Current penalties"
 msgstr "Aktueller Status"
@@ -529,7 +540,7 @@ msgstr "Uma teilen"
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14 app/pages/OwnedEvents.tsx:94:14
 #: app/pages/OwnedEventsEdit/index.tsx:194:18
-#: app/pages/OwnedEventsEdit/index.tsx:225:18 app/pages/Penalties.tsx:89:18
+#: app/pages/OwnedEventsEdit/index.tsx:225:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -1115,7 +1126,7 @@ msgstr ""
 msgid "Manage my events"
 msgstr "Meine Events bearbeiten"
 
-#: app/pages/OwnedEvents.tsx:363:34 app/pages/Penalties.tsx:45:16
+#: app/pages/OwnedEvents.tsx:363:34 app/pages/Penalties.tsx:47:16
 msgid "Manage penalties"
 msgstr "Strafeinstellungen bearbeiten"
 
@@ -1214,11 +1225,15 @@ msgstr "Nächster Sitzplan"
 msgid "Next session index"
 msgstr "Nächste Rundennummer"
 
+#: app/pages/Penalties/PenaltiesList.tsx:132:42
+msgid "No chombo penalties assigned yet"
+msgstr ""
+
 #: app/pages/EventPrescript.tsx:176:37
 msgid "No errors found"
 msgstr "Keine Fehler gefunden"
 
-#: app/pages/Penalties/PenaltiesList.tsx:69:45
+#: app/pages/Penalties/PenaltiesList.tsx:82:45
 msgid "No penalties assigned yet"
 msgstr ""
 
@@ -1245,7 +1260,7 @@ msgstr "Spieler bearbeiten"
 msgid "Nothing found"
 msgstr "Keine Ergebnisse"
 
-#: app/pages/Penalties/PenaltiesList.tsx:88:46
+#: app/pages/Penalties/PenaltiesList.tsx:101:46
 msgid "Notice"
 msgstr ""
 

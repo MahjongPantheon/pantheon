@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-18 22:37+0100\n"
+"POT-Creation-Date: 2025-01-18 23:29+0100\n"
 "PO-Revision-Date: 2025-01-13 02:08+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -466,7 +466,7 @@ msgstr "Чомбо в последней раздаче завершает иг�
 msgid "Chombo penalties: "
 msgstr "Штрафов чомбо: "
 
-#: app/components/GameListing.tsx:220:16
+#: app/components/GameListing.tsx:219:16
 msgid "Chombo: %1"
 msgstr "Чомбо: %1"
 
@@ -571,7 +571,7 @@ msgstr "Собрано дор: "
 msgid "Dora lord"
 msgstr "Повелитель дор"
 
-#: app/components/GameListing.tsx:216:14
+#: app/components/GameListing.tsx:215:14
 msgid "Draw: %1"
 msgstr "Ничья: %1"
 
@@ -990,7 +990,7 @@ msgstr "Суммирование якуманов"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/GameListing.tsx:225:16
+#: app/components/GameListing.tsx:224:16
 msgid "Nagashi: %1"
 msgstr "Нагаши манган: %1"
 
@@ -1232,7 +1232,7 @@ msgstr "Список турниров и рейтингов"
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/components/GameListing.tsx:210:14
+#: app/components/GameListing.tsx:209:14
 msgid "Ron: %1"
 msgstr "Рон: %1"
 
@@ -1551,7 +1551,7 @@ msgstr "Настройки турнира"
 msgid "Tsumo payments: "
 msgstr "Выплаты по цумо: "
 
-#: app/components/GameListing.tsx:213:14
+#: app/components/GameListing.tsx:212:14
 msgid "Tsumo: %1"
 msgstr "Цумо: %1"
 

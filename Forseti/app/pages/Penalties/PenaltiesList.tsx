@@ -19,17 +19,28 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
-import { Badge, Group, Stack, Text, useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import {
+  Badge,
+  Divider,
+  Group,
+  Space,
+  Stack,
+  Text,
+  useMantineColorScheme,
+  useMantineTheme,
+} from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { CancelConfirmation } from './CancelConfirmation';
-import { Penalty, Player } from '../../clients/proto/atoms.pb';
+import { Chombo, Penalty, Player } from '../../clients/proto/atoms.pb';
 
 type PenaltiesListProps = {
   penaltiesList: Penalty[];
   setPenaltiesList: (list: Penalty[]) => void;
   playersListFull: Record<number, Player>;
   refereesList: Record<number, Player>;
+  chomboList: Chombo[];
+  chomboPlayersList: Record<number, Player>;
 };
 
 export const PenaltiesList: React.FC<PenaltiesListProps> = ({
@@ -37,6 +48,8 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
   setPenaltiesList,
   playersListFull,
   refereesList,
+  chomboList,
+  chomboPlayersList,
 }) => {
   const api = useApi();
   const i18n = useI18n();
@@ -113,6 +126,38 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
           />
         </Group>
       ))}
+      <Space h={20} />
+      <Divider h={20} />
+      <Text style={{ fontWeight: 'bold' }}>{i18n._t('Applied chombo penalties')}</Text>
+      {chomboList.length === 0 && <Text>{i18n._t('No chombo penalties assigned yet')}</Text>}
+      {chomboList.map((chombo, idx) => (
+        <Group
+          key={`cl_${idx}`}
+          style={{
+            flex: 1,
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            padding: '10px',
+            backgroundColor:
+              idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
+          }}
+        >
+          <Stack spacing='4px' style={{ flex: 1 }}>
+            <Group>
+              <PlayerAvatar size='sm' p={chomboPlayersList[chombo.playerId]} />
+              <Text>{chomboPlayersList[chombo.playerId].title}</Text>
+              <Badge color='red' variant='filled'>
+                {-chombo.amount}
+              </Badge>
+            </Group>
+          </Stack>
+        </Group>
+      ))}
+      <Text size={'xs'}>
+        {i18n._t(
+          'Chombo penalties can be cancelled with round cancellation in Games Control page if game is not finished yet.'
+        )}
+      </Text>
     </>
   );
 };

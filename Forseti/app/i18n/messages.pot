@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-18 22:37+0100\n"
+"POT-Creation-Date: 2025-01-18 23:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -404,7 +404,7 @@ msgstr ""
 #: app/pages/OwnedEvents.tsx:94:14
 #: app/pages/OwnedEventsEdit/index.tsx:194:18
 #: app/pages/OwnedEventsEdit/index.tsx:225:18
-#: app/pages/Penalties.tsx:89:18
+#: app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -913,7 +913,7 @@ msgid "Manage administrators and referees in event"
 msgstr ""
 
 #: app/pages/OwnedEvents.tsx:363:34
-#: app/pages/Penalties.tsx:45:16
+#: app/pages/Penalties.tsx:47:16
 msgid "Manage penalties"
 msgstr ""
 
@@ -1547,28 +1547,40 @@ msgstr ""
 msgid "Common reasons for the penalty"
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:68:45
+#: app/pages/Penalties/PenaltiesList.tsx:81:45
 msgid "Current penalties"
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:69:45
+#: app/pages/Penalties/PenaltiesList.tsx:82:45
 msgid "No penalties assigned yet"
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:88:46
+#: app/pages/Penalties/PenaltiesList.tsx:101:46
 msgid "Notice"
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:96:32
+#: app/pages/Penalties/PenaltiesList.tsx:109:32
 msgid "Assigned by:"
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:102:18
+#: app/pages/Penalties/PenaltiesList.tsx:115:18
 msgid "Cancelled: "
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:110:20
+#: app/pages/Penalties/PenaltiesList.tsx:123:20
 msgid "Cancel penalty"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:131:45
+msgid "Applied chombo penalties"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:132:42
+msgid "No chombo penalties assigned yet"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:157:10
+msgid "Chombo penalties can be cancelled with round cancellation in Games Control page if game is not finished yet."
 msgstr ""
 
 #: app/pages/Penalties/PenaltyForm.tsx:65:54

@@ -17,6 +17,7 @@
  */
 namespace Mimir;
 
+use Common\Chombo;
 use Common\Penalty;
 use Common\PlatformType;
 use Common\Player;
@@ -1312,6 +1313,48 @@ class EventsController extends Controller
 
         $this->_log->info('Scheduled rebuild of player stats for event #' . $eventId);
         return $success;
+    }
+
+    /**
+     * @param int $eventId
+     * @return array
+     * @throws BadActionException
+     * @throws TwirpError
+     */
+    public function listChombos($eventId)
+    {
+        $this->_log->info('Listing chombos for event #' . $eventId);
+
+        if (!$this->_meta->isEventAdminById($eventId) && !$this->_meta->isEventRefereeById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to list all chombo for this event");
+        }
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new TwirpError(ErrorCode::NotFound, 'Event id#' . $eventId . ' not found in DB');
+        }
+
+        $chomboRounds = RoundPrimitive::findChomboInEvent($this->_ds, $eventId);
+        $chombos = array_map(function (RoundPrimitive $round) use (&$event) {
+            return (new Chombo())
+                ->setPlayerId($round->getLoserId())
+                ->setAmount($event[0]->getRulesetConfig()->rules()->getChomboAmount());
+        }, $chomboRounds);
+
+        $playerIds = array_map(function (RoundPrimitive $round) {
+            return $round->getLoserId();
+        }, $chomboRounds);
+        $players = array_map(function (PlayerPrimitive $p) {
+            return (new Player())
+                ->setId($p->getId() ?? 0)
+                ->setTitle($p->getDisplayName())
+                ->setHasAvatar($p->getHasAvatar())
+                ->setLastUpdate($p->getLastUpdate())
+                ->setTenhouId($p->getTenhouId());
+        }, PlayerPrimitive::findById($this->_ds, $playerIds));
+
+        $this->_log->info('Listed chombos for event #' . $eventId);
+        return [$chombos, $players];
     }
 
     /**

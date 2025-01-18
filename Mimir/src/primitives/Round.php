@@ -251,6 +251,18 @@ class RoundPrimitive extends Primitive
         return self::_mergeMultiRoundsBySession($ds, $rounds);
     }
 
+    /**
+     * @param DataSource $ds
+     * @param int $eventId
+     * @return RoundPrimitive[]
+     * @throws \Exception
+     */
+    public static function findChomboInEvent(DataSource $ds, $eventId)
+    {
+        $rounds = self::_findBySeveral($ds, ['event_id' => [$eventId], 'outcome' => ['chombo']]);
+        return self::_mergeMultiRoundsBySession($ds, $rounds);
+    }
+
     // Warning: other foreign key search methods should implement multi-rounds logic,
     // or it will ruin all object model.
 

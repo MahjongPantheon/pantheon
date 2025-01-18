@@ -664,6 +664,15 @@ interface Mimir
     /**
      *
      *
+     * Generated from protobuf method <code>common.Mimir/ListChombo</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function ListChombo(array $ctx, \Common\GenericEventPayload $req): \Common\ChomboResponse;
+
+    /**
+     *
+     *
      * Generated from protobuf method <code>common.Mimir/GetCurrentStateForPlayer</code>
      *
      * @throws \Twirp\Error
