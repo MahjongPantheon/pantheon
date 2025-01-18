@@ -18,6 +18,7 @@ require_once __DIR__ . '/exceptions/AccessDenied.php';
 use Common\AbortResult;
 use Common\Achievement;
 use Common\AddExtraTimePayload;
+use Common\ChomboResponse;
 use Common\ChomboResult;
 use Common\Country;
 use Common\CurrentSession;
@@ -2002,5 +2003,20 @@ final class TwirpServer implements Mimir
         return (new GetCurrentStateResponse())
             ->setSessions($currentSessions->getSessions())
             ->setConfig($gameConfig);
+    }
+
+    /**
+     * @param array $ctx
+     * @param GenericEventPayload $req
+     * @return ChomboResponse
+     * @throws BadActionException
+     * @throws TwirpError
+     */
+    public function ListChombo(array $ctx, GenericEventPayload $req): \Common\ChomboResponse
+    {
+        [$chombos, $players] = $this->_eventsController->listChombos($req->getEventId());
+        return (new ChomboResponse())
+            ->setChombos($chombos)
+            ->setPlayers($players);
     }
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 00:05+0100\n"
+"POT-Creation-Date: 2025-01-18 23:29+0100\n"
 "PO-Revision-Date: 2024-04-20 10:57+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -228,6 +228,11 @@ msgstr "대국 종료를 위해 도달해야 하는 점수"
 msgid "Another rules violation after notice"
 msgstr ""
 
+#: app/pages/Penalties/PenaltiesList.tsx:131:45
+#, fuzzy
+msgid "Applied chombo penalties"
+msgstr "촌보 벌부값"
+
 #: app/pages/Penalties/PenaltyForm.tsx:154:58
 #: app/pages/Penalties/PenaltyForm.tsx:158:52
 msgid "Apply penalty"
@@ -249,7 +254,7 @@ msgstr "대국 승인"
 msgid "Arguing with referee"
 msgstr ""
 
-#: app/pages/Penalties/PenaltiesList.tsx:96:32
+#: app/pages/Penalties/PenaltiesList.tsx:109:32
 msgid "Assigned by:"
 msgstr ""
 
@@ -298,7 +303,7 @@ msgstr "취소"
 msgid "Cancel last played round"
 msgstr "이전 국 취소"
 
-#: app/pages/Penalties/PenaltiesList.tsx:110:20
+#: app/pages/Penalties/PenaltiesList.tsx:123:20
 #, fuzzy
 msgid "Cancel penalty"
 msgstr "결과 취소"
@@ -311,7 +316,7 @@ msgstr "결과 취소"
 msgid "Cancel round"
 msgstr "국 취소"
 
-#: app/pages/Penalties/PenaltiesList.tsx:102:18
+#: app/pages/Penalties/PenaltiesList.tsx:115:18
 #, fuzzy
 msgid "Cancelled: "
 msgstr "취소"
@@ -353,6 +358,12 @@ msgstr "칩 가치"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
 msgid "Chombo in last round ends game"
+msgstr ""
+
+#: app/pages/Penalties/PenaltiesList.tsx:157:10
+msgid ""
+"Chombo penalties can be cancelled with round cancellation in Games Control "
+"page if game is not finished yet."
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:445:12
@@ -416,7 +427,7 @@ msgstr "국가"
 msgid "Create new event"
 msgstr "신규 이벤트 생성"
 
-#: app/pages/Penalties/PenaltiesList.tsx:68:45
+#: app/pages/Penalties/PenaltiesList.tsx:81:45
 #, fuzzy
 msgid "Current penalties"
 msgstr "현재 상태"
@@ -526,7 +537,7 @@ msgstr "동점 동일 우마"
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14 app/pages/OwnedEvents.tsx:94:14
 #: app/pages/OwnedEventsEdit/index.tsx:194:18
-#: app/pages/OwnedEventsEdit/index.tsx:225:18 app/pages/Penalties.tsx:89:18
+#: app/pages/OwnedEventsEdit/index.tsx:225:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -1098,7 +1109,7 @@ msgstr ""
 msgid "Manage my events"
 msgstr "내 이벤트 관리"
 
-#: app/pages/OwnedEvents.tsx:363:34 app/pages/Penalties.tsx:45:16
+#: app/pages/OwnedEvents.tsx:363:34 app/pages/Penalties.tsx:47:16
 msgid "Manage penalties"
 msgstr "벌부 관리"
 
@@ -1196,11 +1207,15 @@ msgstr "다음 좌석"
 msgid "Next session index"
 msgstr "다음 대국 인덱스"
 
+#: app/pages/Penalties/PenaltiesList.tsx:132:42
+msgid "No chombo penalties assigned yet"
+msgstr ""
+
 #: app/pages/EventPrescript.tsx:176:37
 msgid "No errors found"
 msgstr "오류가 발견되지 않았습니다"
 
-#: app/pages/Penalties/PenaltiesList.tsx:69:45
+#: app/pages/Penalties/PenaltiesList.tsx:82:45
 msgid "No penalties assigned yet"
 msgstr ""
 
@@ -1227,7 +1242,7 @@ msgstr "작사 관리"
 msgid "Nothing found"
 msgstr "검색 결과 없음"
 
-#: app/pages/Penalties/PenaltiesList.tsx:88:46
+#: app/pages/Penalties/PenaltiesList.tsx:101:46
 msgid "Notice"
 msgstr ""
 

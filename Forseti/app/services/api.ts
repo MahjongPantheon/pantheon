@@ -37,6 +37,7 @@ import {
   GetTablesState,
   GetTimerState,
   GetTimezones,
+  ListChombo,
   ListPenalties,
   MakeIntervalSeating,
   MakePrescriptedSeating,
@@ -382,6 +383,11 @@ export class ApiService {
   getPenalties(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ListPenalties' });
     return ListPenalties({ eventId }, this._clientConfMimir);
+  }
+
+  getChombo(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ListChombo' });
+    return ListChombo({ eventId }, this._clientConfMimir);
   }
 
   addPenalty(eventId: number, playerId: number, amount: number, reason: string) {

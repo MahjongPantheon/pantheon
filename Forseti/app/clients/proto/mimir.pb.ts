@@ -442,6 +442,11 @@ export interface GetCurrentStateResponse {
   config: protoAtoms.GameConfig;
 }
 
+export interface ChomboResponse {
+  chombos: protoAtoms.Chombo[];
+  players: protoAtoms.Player[];
+}
+
 //========================================//
 //         Mimir Protobuf Client          //
 //========================================//
@@ -1322,6 +1327,18 @@ export async function ListMyPenalties(
     config,
   );
   return PenaltiesResponse.decode(response);
+}
+
+export async function ListChombo(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<ChomboResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/ListChombo",
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config,
+  );
+  return ChomboResponse.decode(response);
 }
 
 export async function GetCurrentStateForPlayer(
@@ -2226,6 +2243,18 @@ export async function ListMyPenaltiesJSON(
   return PenaltiesResponseJSON.decode(response);
 }
 
+export async function ListChomboJSON(
+  genericEventPayload: protoAtoms.GenericEventPayload,
+  config?: ClientConfiguration,
+): Promise<ChomboResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/ListChombo",
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    config,
+  );
+  return ChomboResponseJSON.decode(response);
+}
+
 export async function GetCurrentStateForPlayerJSON(
   getCurrentStatePayload: GetCurrentStatePayload,
   config?: ClientConfiguration,
@@ -2619,6 +2648,10 @@ export interface Mimir<Context = unknown> {
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
   ) => Promise<PenaltiesResponse> | PenaltiesResponse;
+  ListChombo: (
+    genericEventPayload: protoAtoms.GenericEventPayload,
+    context: Context,
+  ) => Promise<ChomboResponse> | ChomboResponse;
   GetCurrentStateForPlayer: (
     getCurrentStatePayload: GetCurrentStatePayload,
     context: Context,
@@ -3480,6 +3513,15 @@ export function createMimir<Context>(service: Mimir<Context>) {
           json: protoAtoms.GenericEventPayloadJSON,
         },
         output: { protobuf: PenaltiesResponse, json: PenaltiesResponseJSON },
+      },
+      ListChombo: {
+        name: "ListChombo",
+        handler: service.ListChombo,
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON,
+        },
+        output: { protobuf: ChomboResponse, json: ChomboResponseJSON },
       },
       GetCurrentStateForPlayer: {
         name: "GetCurrentStateForPlayer",
@@ -9921,6 +9963,94 @@ export const GetCurrentStateResponse = {
   },
 };
 
+export const ChomboResponse = {
+  /**
+   * Serializes ChomboResponse to protobuf.
+   */
+  encode: function (msg: PartialDeep<ChomboResponse>): Uint8Array {
+    return ChomboResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes ChomboResponse from protobuf.
+   */
+  decode: function (bytes: ByteSource): ChomboResponse {
+    return ChomboResponse._readMessage(
+      ChomboResponse.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes ChomboResponse with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<ChomboResponse>): ChomboResponse {
+    return {
+      chombos: [],
+      players: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<ChomboResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.chombos?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.chombos as any,
+        protoAtoms.Chombo._writeMessage,
+      );
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        2,
+        msg.players as any,
+        protoAtoms.Player._writeMessage,
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: ChomboResponse,
+    reader: protoscript.BinaryReader,
+  ): ChomboResponse {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = protoAtoms.Chombo.initialize();
+          reader.readMessage(m, protoAtoms.Chombo._readMessage);
+          msg.chombos.push(m);
+          break;
+        }
+        case 2: {
+          const m = protoAtoms.Player.initialize();
+          reader.readMessage(m, protoAtoms.Player._readMessage);
+          msg.players.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
@@ -15438,6 +15568,75 @@ export const GetCurrentStateResponseJSON = {
     const _config_ = json["config"];
     if (_config_) {
       protoAtoms.GameConfigJSON._readMessage(msg.config, _config_);
+    }
+    return msg;
+  },
+};
+
+export const ChomboResponseJSON = {
+  /**
+   * Serializes ChomboResponse to JSON.
+   */
+  encode: function (msg: PartialDeep<ChomboResponse>): string {
+    return JSON.stringify(ChomboResponseJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes ChomboResponse from JSON.
+   */
+  decode: function (json: string): ChomboResponse {
+    return ChomboResponseJSON._readMessage(
+      ChomboResponseJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes ChomboResponse with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<ChomboResponse>): ChomboResponse {
+    return {
+      chombos: [],
+      players: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<ChomboResponse>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.chombos?.length) {
+      json["chombos"] = msg.chombos.map(protoAtoms.ChomboJSON._writeMessage);
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(protoAtoms.PlayerJSON._writeMessage);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: ChomboResponse, json: any): ChomboResponse {
+    const _chombos_ = json["chombos"];
+    if (_chombos_) {
+      for (const item of _chombos_) {
+        const m = protoAtoms.ChomboJSON.initialize();
+        protoAtoms.ChomboJSON._readMessage(m, item);
+        msg.chombos.push(m);
+      }
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = protoAtoms.PlayerJSON.initialize();
+        protoAtoms.PlayerJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
     }
     return msg;
   },

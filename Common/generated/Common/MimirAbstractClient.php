@@ -1736,6 +1736,29 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
+    public function ListChombo(array $ctx, \Common\GenericEventPayload $in): \Common\ChomboResponse
+    {
+        $ctx = Context::withPackageName($ctx, 'common');
+        $ctx = Context::withServiceName($ctx, 'Mimir');
+        $ctx = Context::withMethodName($ctx, 'ListChombo');
+
+        $out = new \Common\ChomboResponse();
+
+        $url = $this->addr;
+        if (empty($this->prefix)) {
+            $url = $url.'/common.Mimir/ListChombo';
+        } else {
+            $url = $url.'/'.$this->prefix.'/common.Mimir/ListChombo';
+        }
+
+        $this->doRequest($ctx, $url, $in, $out);
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function GetCurrentStateForPlayer(array $ctx, \Common\GetCurrentStatePayload $in): \Common\GetCurrentStateResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');

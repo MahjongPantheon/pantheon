@@ -167,6 +167,8 @@ service Mimir {
     returns (GenericSuccessResponse);
   rpc ListMyPenalties (GenericEventPayload)
     returns (PenaltiesResponse);
+  rpc ListChombo (GenericEventPayload)
+    returns (ChomboResponse);
   rpc GetCurrentStateForPlayer (GetCurrentStatePayload)
     returns (GetCurrentStateResponse);
 }
@@ -583,4 +585,9 @@ message GetCurrentStatePayload {
 message GetCurrentStateResponse {
   repeated CurrentSession sessions = 1;
   GameConfig config = 2;
+}
+
+message ChomboResponse {
+  repeated Chombo chombos = 1;
+  repeated Player players = 2;
 }
