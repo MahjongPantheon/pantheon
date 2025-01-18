@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-18 23:33+0100\n"
-"PO-Revision-Date: 2025-01-19 01:32+0300\n"
+"POT-Creation-Date: 2025-01-19 00:26+0100\n"
+"PO-Revision-Date: 2025-01-19 02:27+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -29,7 +29,7 @@ msgstr "1 минута"
 msgid "1 player with score less than starting"
 msgstr "1 игрок в минусе"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:147:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:148:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "Руки стоимостью в 13+ хан считаются якуманом, а не санбайманом."
 
@@ -132,7 +132,7 @@ msgstr "Добавить выбранное количество времени 
 msgid "Administrator privileges include everything a referee can do plus:"
 msgstr "Привилегии администратора включают все привилегии судьи плюс:"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:65:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:66:16
 msgid "Agariyame"
 msgstr "Агарияме"
 
@@ -150,7 +150,7 @@ msgstr "К списку всех событий"
 msgid "All player stats and achievements"
 msgstr "Вся статистика игрока и его достижения"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:139:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:140:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -170,11 +170,11 @@ msgstr ""
 msgid "All your played games and events"
 msgstr "Все ваши сыгранные игры и события"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:111:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:112:16
 msgid "Allow abortive draws"
 msgstr "Разрешить абортивные ничьи"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:82:16
 msgid "Allow bankruptcy"
 msgstr "Банкротство"
 
@@ -190,17 +190,17 @@ msgstr "Разрешить просмотр других столов во вр�
 msgid "Already registered?"
 msgstr "Уже зарегистрированы?"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:206:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:215:18
 msgid "Amount of chombo penalty"
 msgstr "Размер штрафа чомбо"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:207:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr ""
 "Количество очков, вычитаемое из очков игрока за каждый штраф чомбо после "
 "окончания игры."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:224:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:233:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr ""
 "Количество очков, вычитаемое из очков игрока, который ни разу не выиграл за "
@@ -214,16 +214,16 @@ msgstr ""
 "Количество очков, которое выдается за каждый чип. Чипы должны быть настроены "
 "на Tenhou.net. Выставьте 0, чтобы выключить чипы."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:52:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:53:22
 msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "Количество игровых очков у каждого игрока в начале игры"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:158:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:159:22
 msgid "Amount of points given to player at 1st place"
 msgstr "Количество бонусных очков за первое место в игре"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:96:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:97:24
 msgid "Amount of score player should get to end the game."
 msgstr "Количество очков, которое нужно набрать для завершения игры."
 
@@ -260,7 +260,7 @@ msgstr "Споры с судьей"
 msgid "Assigned by:"
 msgstr "Назначено:"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:105:16
 msgid "Atamahane"
 msgstr "Атамахане"
 
@@ -323,7 +323,7 @@ msgstr "Отменить раздачу"
 msgid "Cancelled: "
 msgstr "Отменено:"
 
-#: app/pages/OwnedEventsEdit/index.tsx:288:32
+#: app/pages/OwnedEventsEdit/index.tsx:289:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
@@ -382,7 +382,7 @@ msgstr "Чууренпото"
 msgid "City"
 msgstr "Город"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:138:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:139:16
 msgid "Collect riichi bets by atamahane"
 msgstr "Риичи по атамахане"
 
@@ -463,7 +463,7 @@ msgstr "Зона особого внимания"
 msgid "Data slice"
 msgstr "Срез данных"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:72:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:73:16
 msgid "Disable renchans"
 msgstr "Выключить ренчаны"
 
@@ -499,7 +499,7 @@ msgstr "Email подтвержден"
 msgid "Email has been sent"
 msgstr "E-mail отправлен"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:119:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:120:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "Включить возможность записи исхода \"Нагаши манган\""
 
@@ -531,15 +531,15 @@ msgstr "Введите сложный пароль"
 msgid "Enter your e-mail address"
 msgstr "Введите ваш адрес e-mail"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:165:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:16
 msgid "Equalize uma"
 msgstr "Выравнивание умы"
 
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14 app/pages/OwnedEvents.tsx:94:14
-#: app/pages/OwnedEventsEdit/index.tsx:194:18
-#: app/pages/OwnedEventsEdit/index.tsx:225:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:195:18
+#: app/pages/OwnedEventsEdit/index.tsx:226:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -642,7 +642,7 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Не удалось удалить результаты"
 
-#: app/pages/OwnedEventsEdit/index.tsx:188:29
+#: app/pages/OwnedEventsEdit/index.tsx:189:29
 msgid "Failed to fetch event data"
 msgstr "Не удалось получить данные события"
 
@@ -700,7 +700,7 @@ msgid "Failed to save event script: server error or network unreachable"
 msgstr ""
 "Не удалось сохранить скрипт рассадки: ошибка сервера или сеть недоступна"
 
-#: app/pages/OwnedEventsEdit/index.tsx:220:27
+#: app/pages/OwnedEventsEdit/index.tsx:221:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
 
@@ -802,7 +802,7 @@ msgstr[0] "Найдена %1 ошибка"
 msgstr[1] "Найдено %1 ошибки"
 msgstr[2] "Найдено %1 ошибок"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:58:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:59:25
 msgid "Game duration"
 msgstr "Длительность сессии"
 
@@ -827,7 +827,7 @@ msgstr "К странице входа"
 msgid "Go to Signup page"
 msgstr "К странице регистрации"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:95:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:96:18
 msgid "Goal score"
 msgstr "Целевое количество очков"
 
@@ -835,7 +835,7 @@ msgstr "Целевое количество очков"
 msgid "Haitei"
 msgstr "Хайтей"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:152:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "Руки стоимостью в 4/30 и 3/60 округляются до мангана."
 
@@ -849,7 +849,11 @@ msgstr "Скрыть таблицу результатов"
 msgid "Hide results table and achievements"
 msgstr "Скрыть таблицу результатов и номинации"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:132:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:166:16
+msgid "Honba Value"
+msgstr "Выплаты по хонбе"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:133:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -897,7 +901,7 @@ msgstr ""
 "процессе игры за своим столом. Настоятельно рекомендуется не включать эту "
 "настройку для турнирных событий."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:166:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:175:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -933,7 +937,7 @@ msgstr ""
 "аватар. Если галочка отмечена, но аватар не загружен, будет показан круг с "
 "инициалами."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:87:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:88:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -943,7 +947,7 @@ msgstr ""
 "в западных раундах (в ханчане) или в южных раундах (в тонпусене), до тех пор "
 "пока кто-либо не наберет заданное число очков"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:66:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:67:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
@@ -982,11 +986,11 @@ msgstr ""
 "называются \"локальными идентификаторами\" (Local ID). Они сохраняются между "
 "играми, администратор может их задать на странице \"Управление игроками\"."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:51:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:52:16
 msgid "Initial points"
 msgstr "Начальные очки"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:43:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:44:16
 msgid "Initial rating"
 msgstr "Начальный рейтинг"
 
@@ -1034,11 +1038,11 @@ msgstr "Иццу"
 msgid "Junchan"
 msgstr "Джунчан"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:146:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:147:16
 msgid "Kazoe yakuman"
 msgstr "Казое якуман"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:151:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:152:16
 msgid "Kiriage mangan"
 msgstr "Кириаге манган"
 
@@ -1172,7 +1176,7 @@ msgstr "Управление привилегиями: назначение су
 msgid "Manage your account"
 msgstr "Управление профилем"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:173:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:182:16
 msgid "Max arbitrary penalty score"
 msgstr "Максимальный штраф"
 
@@ -1184,7 +1188,7 @@ msgstr "Меню"
 msgid "Menzentsumo"
 msgstr "Мензенцумо"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:178:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:187:16
 msgid "Min arbitrary penalty score"
 msgstr "Минимальный штраф"
 
@@ -1213,7 +1217,7 @@ msgstr "Суммирование якуманов"
 msgid "My events"
 msgstr "Мои события"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:118:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:119:16
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
@@ -1340,7 +1344,7 @@ msgstr "Уведомлять, когда вас вызвали за стол к�
 msgid "Numerical identifier of your user profile."
 msgstr "Числовой идентификатор вашего пользователя."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:157:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:158:16
 msgid "Oka bonus"
 msgstr "Ока"
 
@@ -1353,7 +1357,7 @@ msgstr "Онлайн-событие"
 msgid "Online event settings"
 msgstr "Настройки онлайн-события"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:105:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:106:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1402,11 +1406,11 @@ msgstr "Не удалось восстановить пароль"
 msgid "Password successfully updated"
 msgstr "Пароль успешно обновлен"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:188:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:197:16
 msgid "Pay chombo as reverse mangan"
 msgstr "Чомбо как обратный манган"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:189:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:198:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
@@ -1414,16 +1418,16 @@ msgstr ""
 "Выплата штрафа чомбо производится на месте в размере обратного мангана. Если "
 "не отмечено, штраф чомбо будет вычтен из очков игрока после умы в конце игры."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:131:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:132:16
 msgid "Pay for honba by atamahane"
 msgstr "Хонба по атамахане"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:144:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:145:25
 msgid "Payments and scores"
 msgstr "Выплаты и очки"
 
 #: app/components/MainMenu.tsx:120:29 app/pages/OwnedEvents.tsx:365:33
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:180:25
 msgid "Penalties"
 msgstr "Штрафы"
 
@@ -1460,11 +1464,11 @@ msgstr "Пин-фу"
 msgid "Place / Session result"
 msgstr "Место / результат"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:86:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:87:16
 msgid "Play additional rounds"
 msgstr "Дополнительные раунды"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:61:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:62:22
 msgid "Play only east rounds"
 msgstr "Играть только восточные раунды"
 
@@ -1752,15 +1756,15 @@ msgstr "Сбросить пароль"
 msgid "Riichi"
 msgstr "Риичи"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:122:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:123:25
 msgid "Riichi and honba"
 msgstr "Риичи и хонба"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:124:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:125:16
 msgid "Riichi goes to winner"
 msgstr "Риичи уходит победителю"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:125:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:126:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1777,7 +1781,7 @@ msgstr "Риншан кайхо"
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "Рон, %1 с %2 (%3), риичи: %4"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:102:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:25
 msgid "Round outcomes"
 msgstr "Исходы раздач"
 
@@ -1819,14 +1823,14 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/pages/OwnedEventsEdit/index.tsx:288:60
+#: app/pages/OwnedEventsEdit/index.tsx:289:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:44:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:45:22
 msgid "Score given to all players in the beginning of the rating"
 msgstr ""
 "Количество рейтинговых очков, изначально даваемое каждому новому игроку"
@@ -2015,7 +2019,7 @@ msgstr "Запустить таймер и игры?"
 msgid "Start timer and sessions"
 msgstr "Запустить игры и таймер"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:183:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:192:16
 msgid "Step of arbitrary penalty scores"
 msgstr "Шаг штрафа"
 
@@ -2129,7 +2133,7 @@ msgstr ""
 "Имя игрока будет заменено на [Deleted account ####] во всех местах, где оно "
 "встречалось."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:112:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:113:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -2220,7 +2224,7 @@ msgstr "Переключить видимость таблицы результ�
 msgid "Toitoi"
 msgstr "Тойтой"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:60:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:61:16
 msgid "Tonpuusen"
 msgstr "Тонпусены"
 
@@ -2305,9 +2309,13 @@ msgstr "Использовать швейцарскую рассадку для 
 msgid "Use swiss seating for next session?"
 msgstr "Использовать швейцарскую рассадку для следующей сессии?"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:217:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:226:22
 msgid "Use yakitori rule"
 msgstr "Использовать правило якитори"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:167:22
+msgid "Value of one honba stick"
+msgstr "Сколько стоит один индикатор зонбы"
 
 #: app/pages/OwnedEvents.tsx:421:32
 msgid "Visibility"
@@ -2325,11 +2333,11 @@ msgstr "Что НЕ будет удалено:"
 msgid "What will be deleted:"
 msgstr "Что будет удалено:"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:82:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:83:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "Когда игрок уходит в минус по очкам, игра немедленно завершается"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:73:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:74:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
@@ -2350,11 +2358,11 @@ msgstr ""
 "Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
 "прервать игру"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:225:16
 msgid "Yakitori"
 msgstr "Якитори"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:223:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:232:18
 msgid "Yakitori penalty"
 msgstr "Штраф за якитори"
 

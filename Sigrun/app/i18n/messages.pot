@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-18 23:39+0100\n"
+"POT-Creation-Date: 2025-01-19 00:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1109,199 +1109,207 @@ msgstr ""
 msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:42:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:43:16
 msgid "Initial rating"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:43:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:44:22
 msgid "Score given to all players in the beginning of the rating"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:50:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:51:16
 msgid "Initial points"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:51:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:52:22
 msgid "Amount of points given to every player in the beginning of every session"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:57:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:58:25
 msgid "Game duration"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:59:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:16
 msgid "Tonpuusen"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:61:22
 msgid "Play only east rounds"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:65:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:66:16
 msgid "Agariyame"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:66:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:67:22
 msgid "If the dealer holds the 1st place after last hand in session, the game ends regardless of his winning hand or tempai."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:74:16
 msgid "Disable renchans"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:74:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:75:22
 msgid "When dealer wins, or stays tempai after draw, seat winds will be changed. Honba is added only after draw."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:82:16
 msgid "Allow bankruptcy"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:82:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:83:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:87:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:88:16
 msgid "Play additional rounds"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:88:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:22
 msgid "If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:98:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:99:18
 msgid "Goal score"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:99:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:24
 msgid "Amount of score player should get to end the game."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:104:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:105:25
 msgid "Round outcomes"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:106:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:107:16
 msgid "Atamahane"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:107:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:108:22
 msgid "Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:114:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:115:16
 msgid "Allow abortive draws"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:115:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:116:22
 msgid "There will be a separate \"Abortive draw\" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:122:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:123:16
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:123:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:124:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:127:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:128:25
 msgid "Riichi and honba"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:129:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:130:16
 msgid "Riichi goes to winner"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:130:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:22
 msgid "Riichi left on table in case of draw in the end of the session will be given to session winner"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:137:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:16
 msgid "Pay for honba by atamahane"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:139:22
 msgid "Honba payments will be given only to the first winner. If not checked, payment will be given to all winners."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:145:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:16
 msgid "Collect riichi bets by atamahane"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:22
 msgid "All riichi bets on the table will be given to the first winner. If not checked, winning riichi bets will always be given back, lost bets would be given to the first winner."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:152:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:153:25
 msgid "Payments and scores"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:154:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:155:16
 msgid "Kazoe yakuman"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:155:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:156:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:160:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:16
 msgid "Kiriage mangan"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:168:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
 msgid "Oka bonus"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
 msgid "Amount of points given to player at 1st place"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:175:16
-msgid "Equalize uma"
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:16
+msgid "Honba Value"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:176:22
-msgid "If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order."
-msgstr ""
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:182:25
-msgid "Penalties"
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:22
+msgid "Value of one honba stick"
 msgstr ""
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:184:16
-msgid "Pay chombo as reverse mangan"
+msgid "Equalize uma"
 msgstr ""
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:185:22
+msgid "If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order."
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:191:25
+msgid "Penalties"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:193:16
+msgid "Pay chombo as reverse mangan"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:194:22
 msgid "Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:18
 msgid "Amount of chombo penalty"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:196:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:205:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:213:16
 msgid "Yakitori"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:205:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:214:22
 msgid "Use yakitori rule"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:221:18
 msgid "Yakitori penalty"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:213:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:222:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr ""
 
