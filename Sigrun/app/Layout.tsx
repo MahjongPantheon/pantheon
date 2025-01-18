@@ -38,6 +38,7 @@ import { AddOnlineReplayModal } from './components/AddOnlineReplayModal';
 import { useRoute } from 'wouter';
 import { fontLoader } from './helpers/fontLoader';
 import { getThemeOptions } from 'helpers/theme';
+import { colorSchemeManager } from 'helpers/colorSchemeManager';
 import '@mantine/core/styles.css';
 import './App.css';
 
@@ -148,7 +149,10 @@ export function Layout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <MantineProvider theme={useDimmed ? dimmedTheme : defaultTheme}>
+    <MantineProvider
+      theme={useDimmed ? dimmedTheme : defaultTheme}
+      colorSchemeManager={colorSchemeManager(storage)}
+    >
       <MantineEmotionProvider>
         <AnalyticsProvider>
           <modalsCtx.Provider value={{ onlineModalShown, showOnlineModal, hideOnlineModal }}>
