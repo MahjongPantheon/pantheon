@@ -1,10 +1,10 @@
-FROM alpine:3.20.3
+FROM alpine:3.21.2
 
-ENV TIMEZONE            Europe/Berlin
-ENV PHP_MEMORY_LIMIT    512M
-ENV LANG                en_US.utf8
-ENV YARN_CACHE_FOLDER   /home/user/.yarn-cache
-ENV COMPOSER_CACHE_DIR  /home/user/.composer-cache
+ENV TIMEZONE=Europe/Berlin
+ENV PHP_MEMORY_LIMIT=512M
+ENV LANG=en_US.utf8
+ENV YARN_CACHE_FOLDER=/home/user/.yarn-cache
+ENV COMPOSER_CACHE_DIR=/home/user/.composer-cache
 
 RUN apk update && \
     apk upgrade && \

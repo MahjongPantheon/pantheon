@@ -56,8 +56,12 @@ kill:
 	fi
 
 .PHONY: container
+container: export COMPOSE_DOCKER_CLI_BUILD=1
+container: export DOCKER_BUILDKIT=1
 container:
-	cd Common/ReverseProxy && docker build -t pantheon-reverse-proxy .
+	cd Common/Backend && docker buildx build -t ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest .
+	cd Common/Frontend && docker buildx build -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v2:latest .
+	cd Common/ReverseProxy && docker buildx build -t pantheon-reverse-proxy .
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
 
@@ -416,11 +420,6 @@ prod_deps:
 	cd Hugin && ${MAKE} docker_deps
 	cd Gullveig && ${MAKE} docker_deps
 	# sigrun, skirnir and bragi should install deps after prebuild
-
-.PHONY: prod_build_basic_images
-prod_build_basic_images:
-	docker build -t docker.io/ctizen/pantheon_backend_common ./Common/Backend
-	docker build -t docker.io/ctizen/pantheon_frontend_common ./Common/Frontend
 
 .PHONY: prod_build_tyr
 prod_build_tyr: export NODE_ENV=production

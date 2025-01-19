@@ -1,8 +1,8 @@
 FROM ubuntu:22.04
 
-ENV TIMEZONE            Europe/Berlin
-ENV PHP_MEMORY_LIMIT    512M
-ENV LANG                en_US.utf8
+ENV TIMEZONE=Europe/Berlin
+ENV PHP_MEMORY_LIMIT=512M
+ENV LANG=en_US.utf8
 
 SHELL ["/bin/bash", "-c"]
 
@@ -37,7 +37,7 @@ RUN mkdir /www && \
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-ENV RUN_IN_DOCKER true
+ENV RUN_IN_DOCKER=true
 
 RUN mkdir /root/dummy && \
     cd /root/dummy && \

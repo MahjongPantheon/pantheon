@@ -1,11 +1,11 @@
 FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest
 
 # these should match auth data in dbinit.sql
-ENV PHINX_DB_NAME mimir
-ENV PHINX_DB_NAME_UNIT mimir_unit
-ENV PHINX_DB_USER mimir
-ENV PHINX_DB_PASS pgpass
-ENV PHP_IDE_CONFIG serverName=pantheon_mimir
+ENV PHINX_DB_NAME=mimir
+ENV PHINX_DB_NAME_UNIT=mimir_unit
+ENV PHINX_DB_USER=mimir
+ENV PHINX_DB_PASS=pgpass
+ENV PHP_IDE_CONFIG="serverName=pantheon_mimir"
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
