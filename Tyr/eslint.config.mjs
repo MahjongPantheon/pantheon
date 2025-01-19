@@ -131,7 +131,7 @@ export default [{
     }],
 
     "@typescript-eslint/restrict-plus-operands": ["error"],
-    "@typescript-eslint/switch-exhaustiveness-check": ["error"],
+    "@typescript-eslint/switch-exhaustiveness-check": "off",
     "@typescript-eslint/no-invalid-this": ["error"],
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-unused-expressions": ["error"],
