@@ -382,6 +382,7 @@ function getBadge(
           <IconAlarm />
         </ActionIcon>
       );
+    case SessionStatus.SESSION_STATUS_UNSPECIFIED:
     default:
       return <></>;
   }
