@@ -1,7 +1,7 @@
 FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest
 
-ENV PHP_IDE_CONFIG serverName=pantheon_gullveig
-ENV MAX_UPLOAD 1M
+ENV PHP_IDE_CONFIG="serverName=pantheon_gullveig"
+ENV MAX_UPLOAD=1M
 RUN sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|i" /etc/php83/php.ini
 
 # copy entry point

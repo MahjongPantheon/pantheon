@@ -1,7 +1,7 @@
 FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest
 
-ENV PGDATA              /var/lib/postgresql/data
-ENV POSTGRES_PASSWORD   pgpass
+ENV PGDATA=/var/lib/postgresql/data
+ENV POSTGRES_PASSWORD=pgpass
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

@@ -118,7 +118,7 @@ Second, make sure your **local port 80** is not used by any other software (like
 
 #### Installing and running
 
-Make sure you have Docker and Docker Compose installed and daemon running on your system. For debugging, please make sure all the php extensions are
+Make sure you have Docker, Docker compose plugin and Docker buildx plugin installed and daemon running on your system. For debugging, please make sure all the php extensions are
 installed as well, see Dockerfile for a complete list. 
 
 _Note: on some linux distros almost every docker-related command should be run as root. If nothing happens, or error

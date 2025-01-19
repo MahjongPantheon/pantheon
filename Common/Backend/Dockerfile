@@ -1,4 +1,4 @@
-FROM alpine:3.20.3
+FROM alpine:3.21.2
 
 RUN apk update && \
     apk upgrade && \
@@ -64,14 +64,14 @@ RUN apk update && \
     mailx && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-ENV TIMEZONE            Europe/Berlin
-ENV PHP_MEMORY_LIMIT    512M
-ENV PHP_LOGFILE         /var/log/php-errors.log
-ENV MAX_UPLOAD          50M
-ENV PHP_MAX_FILE_UPLOAD 200
-ENV PHP_MAX_POST        100M
-ENV LANG                en_US.utf8
-ENV COMPOSER_CACHE_DIR  /home/user/.composer-cache
+ENV TIMEZONE="Europe/Berlin"
+ENV PHP_MEMORY_LIMIT=512M
+ENV PHP_LOGFILE=/var/log/php-errors.log
+ENV MAX_UPLOAD=50M
+ENV PHP_MAX_FILE_UPLOAD=200
+ENV PHP_MAX_POST=100M
+ENV LANG=en_US.utf8
+ENV COMPOSER_CACHE_DIR=/home/user/.composer-cache
 
 RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
     echo "${TIMEZONE}" > /etc/timezone

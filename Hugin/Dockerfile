@@ -1,11 +1,11 @@
 FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest
 
 # these should match auth data in dbinit_hugin.sql
-ENV PHINX_DB_HUGIN_NAME hugin
-ENV PHINX_DB_HUGIN_NAME_UNIT hugin_unit
-ENV PHINX_DB_HUGIN_USER hugin
-ENV PHINX_DB_HUGIN_PASS pgpass
-ENV PHP_IDE_CONFIG serverName=pantheon_hugin
+ENV PHINX_DB_HUGIN_NAME=hugin
+ENV PHINX_DB_HUGIN_NAME_UNIT=hugin_unit
+ENV PHINX_DB_HUGIN_USER=hugin
+ENV PHINX_DB_HUGIN_PASS=pgpass
+ENV PHP_IDE_CONFIG="serverName=pantheon_hugin"
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
