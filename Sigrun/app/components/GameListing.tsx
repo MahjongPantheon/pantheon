@@ -63,6 +63,7 @@ export const GameListing: React.FC<GameListingProps> = ({
   const DataCmp = largeScreen ? Group : Stack;
   const winds = ['東', '南', '西', '北'];
   const isDark = useMantineColorScheme().colorScheme === 'dark';
+  const dateTime = game.date?.slice(0, -3) ?? '';
 
   const outcomes = { ron: 0, tsumo: 0, draw: 0, chombo: 0, nagashi: 0 };
   const yakitori = withYakitori
@@ -126,7 +127,7 @@ export const GameListing: React.FC<GameListingProps> = ({
       </div>
       {/* Players list */}
       <Stack style={{ flexGrow: 0, minWidth: '300px' }}>
-        <Text>{game.date}</Text>
+        <Text>{dateTime}</Text>
         {game.finalResults.map((result, idx) => (
           <Group key={`pl_${idx}`} style={{ alignItems: 'flex-start' }}>
             <Badge
