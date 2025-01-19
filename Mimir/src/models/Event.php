@@ -272,6 +272,7 @@ class EventModel extends Model
                         ];
                     }, PenaltyPrimitive::findBySessionId($this->_ds, [$game->getId() ?? 0])),
                     'table_index' => $game->getTableIndex(),
+                    'extra_time' => $game->getExtraTime(),
                     'last_round_detailed' => $lastRound ? Formatters::formatRound($lastRound, $game) : null,
                     'last_round' => $lastRound ? $this->_formatLastRound($lastRound, $game) : [],
                     'current_round' => $game->getCurrentState()->getRound(),

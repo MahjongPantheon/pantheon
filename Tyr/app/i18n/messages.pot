@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2024 
+# Copyright (C) 2025 
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 17:15Z\n"
+"POT-Creation-Date: 2025-01-19 00:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,18 +61,18 @@ msgid "No pao"
 msgstr ""
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
 #: app/store/selectors/round.ts:191:14
 #: app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
 msgid "Chombo"
 msgstr ""
 
-#: app/components/base/TableStatus/TableStatus.tsx:42:45
+#: app/components/base/TableStatus/TableStatus.tsx:47:45
 msgid "Table #%1"
 msgstr ""
 
-#: app/components/base/TableStatus/TableStatus.tsx:91:16
+#: app/components/base/TableStatus/TableStatus.tsx:96:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] ""
@@ -235,31 +235,31 @@ msgstr ""
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:69:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:79
 #: app/store/selectors/table.ts:145:25
 #: app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:70:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:81
 #: app/store/selectors/table.ts:142:25
 #: app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:73:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:81:22
 #: app/store/selectors/round.ts:166:14
 #: app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:86:24
 #: app/store/selectors/round.ts:178:14
 #: app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:88:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:24
 #: app/store/selectors/round.ts:204:14
 #: app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"

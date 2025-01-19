@@ -21,7 +21,7 @@ import { authCtx } from '../hooks/auth';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { usePageTitle } from '../hooks/pageTitle';
-import { GameConfig, Penalty, Player } from '../clients/proto/atoms.pb';
+import { Chombo, GameConfig, Penalty, Player } from '../clients/proto/atoms.pb';
 import { Container, LoadingOverlay, Space } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
@@ -42,6 +42,8 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
   const [playersListFull, setPlayersListFull] = useState<Record<number, Player>>({});
   const [penaltiesList, setPenaltiesList] = useState<Penalty[]>([]);
   const [refereesList, setRefereesList] = useState<Record<number, Player>>({});
+  const [chomboList, setChomboList] = useState<Chombo[]>([]);
+  const [chomboPlayersList, setChomboPlayersList] = useState<Record<number, Player>>({});
   usePageTitle(i18n._t('Manage penalties'));
 
   const reloadForm = () => {
@@ -55,8 +57,9 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
       api.getGameConfig(parseInt(id, 10)),
       api.getAllPlayers(parseInt(id, 10)),
       api.getPenalties(parseInt(id, 10)),
+      api.getChombo(parseInt(id, 10)),
     ])
-      .then(([config, players, penalties]) => {
+      .then(([config, players, penalties, chombo]) => {
         setEventConfig(config);
         setPlayersList(
           players.map((p) => ({
@@ -76,6 +79,16 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         setPenaltiesList(penalties.penalties);
         setRefereesList(
           penalties.referees.reduce(
+            (acc, p) => {
+              acc[p.id] = p;
+              return acc;
+            },
+            {} as Record<number, Player>
+          )
+        );
+        setChomboList(chombo.chombos);
+        setChomboPlayersList(
+          chombo.players.reduce(
             (acc, p) => {
               acc[p.id] = p;
               return acc;
@@ -120,6 +133,8 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         setPenaltiesList={setPenaltiesList}
         playersListFull={playersListFull}
         refereesList={refereesList}
+        chomboList={chomboList}
+        chomboPlayersList={chomboPlayersList}
       />
     </Container>
   );

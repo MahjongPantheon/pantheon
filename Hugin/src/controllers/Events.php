@@ -76,21 +76,21 @@ class EventsController extends Controller
     protected function _trackError($error, $source)
     {
 
-        if (!$this->_mc->get(self::ERR_CTR_ID)) {
-            $this->_mc->set(self::ERR_CTR_ID, 1);
-            $this->_mc->set(self::ERR_LAST_PROC_ID, 0);
+        if (!$this->_redis->get(self::ERR_CTR_ID)) {
+            $this->_redis->set(self::ERR_CTR_ID, 1);
+            $this->_redis->set(self::ERR_LAST_PROC_ID, 0);
         }
 
-        $newId = $this->_mc->increment(self::ERR_CTR_ID, 1);
-        $this->_mc->set(self::ERR_EV . $newId, [
+        $newId = $this->_redis->incr(self::ERR_CTR_ID);
+        $this->_redis->set(self::ERR_EV . $newId, [
             $source, date('Y-m-d H:i:s'), $error
         ]);
 
         // Don't query DB for each error, do it once every twenty requests
         if ($newId % 20 === 0) {
-            $lastProc = $this->_mc->get(self::ERR_LAST_PROC_ID);
+            $lastProc = $this->_redis->get(self::ERR_LAST_PROC_ID);
             for ($i = $lastProc; $i <= $newId; $i++) {
-                $data = $this->_mc->get(self::ERR_EV . $i);
+                $data = $this->_redis->get(self::ERR_EV . $i);
                 if (!$data) {
                     continue;
                 }
@@ -99,9 +99,9 @@ class EventsController extends Controller
                     ->setCreatedAt($data[1])
                     ->setError($data[2])
                     ->save();
-                $this->_mc->delete(self::ERR_EV . $i);
+                $this->_redis->del(self::ERR_EV . $i);
             }
-            $this->_mc->set(self::LAST_PROC_ID, $newId);
+            $this->_redis->set(self::LAST_PROC_ID, $newId);
         }
 
         return 'ok';
@@ -120,13 +120,13 @@ class EventsController extends Controller
             return 'malformed payload';
         }
 
-        if (!$this->_mc->get(self::CTR_ID)) {
-            $this->_mc->set(self::CTR_ID, 1);
-            $this->_mc->set(self::LAST_PROC_ID, 0);
+        if (!$this->_redis->get(self::CTR_ID)) {
+            $this->_redis->set(self::CTR_ID, 1);
+            $this->_redis->set(self::LAST_PROC_ID, 0);
         }
 
-        $newId = $this->_mc->increment(self::CTR_ID, 1);
-        $this->_mc->set(self::EV . $newId, [
+        $newId = $this->_redis->incr(self::CTR_ID);
+        $this->_redis->set(self::EV . $newId, [
             empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['REMOTE_ADDR'] : $_SERVER['HTTP_X_FORWARDED_FOR'],
             $parsed['s'], $parsed['si'], $parsed['h'],
             $parsed['o'], $parsed['d'], $parsed['sc'],
@@ -142,9 +142,10 @@ class EventsController extends Controller
             /** @phpstan-ignore-next-line */
             $reader = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-Country.mmdb');
 
-            $lastProc = $this->_mc->get(self::LAST_PROC_ID);
+            $lastProc = $this->_redis->get(self::LAST_PROC_ID);
             for ($i = $lastProc; $i <= $newId; $i++) {
-                $data = $this->_mc->get(self::EV . $i);
+                /** @var array $data */
+                $data = $this->_redis->get(self::EV . $i);
                 if (!$data) {
                     continue;
                 }
@@ -177,9 +178,9 @@ class EventsController extends Controller
                     ->setCountry($country)
                     ->setCity($city)
                     ->save();
-                $this->_mc->delete(self::EV . $i);
+                $this->_redis->del(self::EV . $i);
             }
-            $this->_mc->set(self::LAST_PROC_ID, $newId);
+            $this->_redis->set(self::LAST_PROC_ID, $newId);
         }
 
         return 'ok';

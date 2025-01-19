@@ -17,7 +17,7 @@
  */
 namespace Hugin;
 
-use Memcached;
+use Redis;
 use Monolog\Logger;
 
 abstract class Controller
@@ -38,9 +38,9 @@ abstract class Controller
     protected $_config;
 
     /**
-     * @var Memcached
+     * @var Redis
      */
-    protected $_mc;
+    protected $_redis;
 
     /**
      * Controller constructor.
@@ -49,12 +49,12 @@ abstract class Controller
      * @param Config $config
      * @throws \Exception
      */
-    public function __construct(IDb $db, Logger $log, Config $config, Memcached $mc)
+    public function __construct(IDb $db, Logger $log, Config $config, Redis $redis)
     {
         $this->_db = $db;
         $this->_log = $log;
         $this->_config = $config;
-        $this->_mc = $mc;
+        $this->_redis = $redis;
     }
 
     protected function _logStart(string $method, array $args): void

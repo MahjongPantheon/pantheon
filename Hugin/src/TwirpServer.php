@@ -25,9 +25,9 @@ use Common\GetLastYearPayload;
 use Common\GetLastYearResponse;
 use Common\Hugin;
 use Exception;
-use Memcached;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
+use Redis;
 
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/helpers/Db.php';
@@ -43,7 +43,7 @@ final class TwirpServer implements Hugin
     protected Db $_db;
     protected Logger $_syslog;
     protected Config $_config;
-    protected Memcached $_mc;
+    protected Redis $_redis;
 
     /**
      * @param string|null $configPath
@@ -57,15 +57,16 @@ final class TwirpServer implements Hugin
         $this->_db = new Db($this->_config);
         $this->_syslog = new Logger('Hugin');
         $this->_syslog->pushHandler(new ErrorLogHandler());
-        $this->_mc = new \Memcached();
-        $this->_mc->addServer('localhost', 11211);
+        $this->_redis = new Redis();
+        $this->_redis->connect('127.0.0.1');
+        $this->_redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_JSON);
 
         // + some custom handler for testing errors
         if ($this->_config->getValue('verbose')) {
             (new ErrorHandler($this->_config, $this->_syslog))->register();
         }
 
-        $this->_eventsController = new EventsController($this->_db, $this->_syslog, $this->_config, $this->_mc);
+        $this->_eventsController = new EventsController($this->_db, $this->_syslog, $this->_config, $this->_redis);
     }
 
     /**

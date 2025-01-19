@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Mimir;
 
 use Common\PlatformType;
@@ -215,6 +216,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $ruleset = \Common\Ruleset::instance('tenhounet');
         $ruleset->rules()
             ->setOka(0)
+            ->setHonbaValue(300)
             ->setStartRating(0)
             ->setStartPoints(30000)
             ->setUma((new Uma())

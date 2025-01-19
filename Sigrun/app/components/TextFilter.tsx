@@ -21,7 +21,7 @@ export const TextFilter = ({
       <TextInput
         style={{ flex: 1 }}
         placeholder={i18n._t('Filter events...')}
-        icon={<IconSearch size='1.3rem' />}
+        leftSection={<IconSearch size='1.3rem' />}
         value={search}
         onChange={(e) =>
           setSearch(e.currentTarget.value.replace(/[^\w\s0-9;!@#$%^&*()\p{L}]+/giu, ''))
@@ -40,7 +40,7 @@ export const TextFilter = ({
           )
         }
       />
-      <Button size='sm' style={{ flex: 0 }} onClick={() => onSubmit(search)}>
+      <Button size='sm' style={{ flex: 'none' }} onClick={() => onSubmit(search)}>
         {i18n._t('Filter')}
       </Button>
     </Group>

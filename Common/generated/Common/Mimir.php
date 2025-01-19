@@ -101,7 +101,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function GetGame(array $ctx, \Common\EventsGetGamePayload $req): \Common\EventsGetGameResponse;
+    public function GetGame(array $ctx, \Common\GenericSessionPayload $req): \Common\EventsGetGameResponse;
 
     /**
      *
@@ -146,7 +146,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function GetSessionOverview(array $ctx, \Common\GamesGetSessionOverviewPayload $req): \Common\GamesGetSessionOverviewResponse;
+    public function GetSessionOverview(array $ctx, \Common\GenericSessionPayload $req): \Common\GamesGetSessionOverviewResponse;
 
     /**
      *
@@ -209,7 +209,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function GetAllRounds(array $ctx, \Common\PlayersGetAllRoundsPayload $req): \Common\PlayersGetAllRoundsResponse;
+    public function GetAllRounds(array $ctx, \Common\GenericSessionPayload $req): \Common\PlayersGetAllRoundsResponse;
 
     /**
      *
@@ -218,7 +218,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function GetLastRoundByHash(array $ctx, \Common\PlayersGetLastRoundByHashPayload $req): \Common\PlayersGetLastRoundByHashResponse;
+    public function GetLastRoundByHash(array $ctx, \Common\GenericSessionPayload $req): \Common\PlayersGetLastRoundByHashResponse;
 
     /**
      *
@@ -380,7 +380,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function StartGame(array $ctx, \Common\GamesStartGamePayload $req): \Common\GamesStartGameResponse;
+    public function StartGame(array $ctx, \Common\GamesStartGamePayload $req): \Common\GenericSessionPayload;
 
     /**
      *
@@ -389,7 +389,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function EndGame(array $ctx, \Common\GamesEndGamePayload $req): \Common\GenericSuccessResponse;
+    public function EndGame(array $ctx, \Common\GenericSessionPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
@@ -398,7 +398,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function CancelGame(array $ctx, \Common\GamesCancelGamePayload $req): \Common\GenericSuccessResponse;
+    public function CancelGame(array $ctx, \Common\GenericSessionPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
@@ -425,7 +425,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function DefinalizeGame(array $ctx, \Common\GamesDefinalizeGamePayload $req): \Common\GenericSuccessResponse;
+    public function DefinalizeGame(array $ctx, \Common\GenericSessionPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
@@ -443,7 +443,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function AddPenaltyGame(array $ctx, \Common\GamesAddPenaltyGamePayload $req): \Common\GamesAddPenaltyGameResponse;
+    public function AddPenaltyGame(array $ctx, \Common\GamesAddPenaltyGamePayload $req): \Common\GenericSessionPayload;
 
     /**
      *
@@ -578,7 +578,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function ForceFinishGame(array $ctx, \Common\ForceFinishGamePayload $req): \Common\GenericSuccessResponse;
+    public function ForceFinishGame(array $ctx, \Common\GenericSessionPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
@@ -646,9 +646,36 @@ interface Mimir
     /**
      *
      *
+     * Generated from protobuf method <code>common.Mimir/AddExtraTime</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function AddExtraTime(array $ctx, \Common\AddExtraTimePayload $req): \Common\GenericSuccessResponse;
+
+    /**
+     *
+     *
      * Generated from protobuf method <code>common.Mimir/ListMyPenalties</code>
      *
      * @throws \Twirp\Error
      */
     public function ListMyPenalties(array $ctx, \Common\GenericEventPayload $req): \Common\PenaltiesResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/ListChombo</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function ListChombo(array $ctx, \Common\GenericEventPayload $req): \Common\ChomboResponse;
+
+    /**
+     *
+     *
+     * Generated from protobuf method <code>common.Mimir/GetCurrentStateForPlayer</code>
+     *
+     * @throws \Twirp\Error
+     */
+    public function GetCurrentStateForPlayer(array $ctx, \Common\GetCurrentStatePayload $req): \Common\GetCurrentStateResponse;
 }

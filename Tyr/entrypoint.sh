@@ -10,8 +10,6 @@ chown user /home/user/.yarn-cache
 mkdir /home/user/.composer-cache
 chown user /home/user/.composer-cache
 
-munin-node
-
 TRAPPED_SIGNAL=false
 
 echo 'Starting NGINX';

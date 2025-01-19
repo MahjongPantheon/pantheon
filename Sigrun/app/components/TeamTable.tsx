@@ -60,19 +60,19 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
         return (
           <DataCmp
             key={`pl_${idx}`}
-            spacing='xs'
+            gap='xs'
             style={{
               padding: '10px',
               backgroundColor:
                 idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
             }}
           >
-            <Group style={{ flex: 1 }} position='apart'>
+            <Group style={{ flex: 1 }} justify='space-between'>
               <Group style={{ flex: 1 }}>
                 <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
                   {idx + 1}
                 </Badge>
-                <Text weight='bold' style={{ flex: 1 }}>
+                <Text fw={700} style={{ flex: 1 }}>
                   <Text display='inline-flex' mr={14}>
                     {team.name}
                   </Text>
@@ -90,11 +90,11 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
               </Group>
               <Stack style={{ minWidth: '290px' }}>
                 {team.data.players.map((player, pidx) => (
-                  <Group key={`pl_${pidx}`} position='apart'>
+                  <Group key={`pl_${pidx}`} justify='space-between'>
                     <Group>
                       <PlayerAvatar p={player} />
                       <Stack
-                        spacing={2}
+                        gap={2}
                         style={{ width: largeScreen ? 'auto' : 'calc(100vw - 245px)' }}
                       >
                         <Anchor

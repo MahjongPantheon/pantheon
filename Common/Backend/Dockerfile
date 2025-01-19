@@ -5,7 +5,9 @@ RUN apk update && \
     apk add --update tzdata && \
     apk add --update \
     su-exec \
+    bash \
     curl \
+    tar \
     make \
     memcached \
     font-dejavu-sans-mono-nerd \
@@ -16,8 +18,6 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
-    munin \
-    munin-node \
     postgresql16 \
     php83-fpm \
     php83-bcmath \
@@ -37,6 +37,7 @@ RUN apk update && \
     php83-pecl-ast \
     php83-pecl-protobuf \
     php83-pecl-memcached \
+    php-pecl-redis \
     php83-pgsql \
     php83-phar \
     php83-phpdbg \
@@ -48,6 +49,7 @@ RUN apk update && \
     php83-xmlwriter \
     php83-xmlreader \
     postfix \
+    redis \
     opendkim \
     net-tools \
     findutils \
@@ -58,7 +60,6 @@ RUN apk update && \
     rsyslog \
     musl \
     musl-utils \
-    bash \
     opendkim-utils \
     mailx && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
@@ -123,13 +124,3 @@ RUN mkdir /home/user && chown user: /home/user
 COPY bin/protoc-gen-twirp_php /usr/bin/protoc-gen-twirp_php
 RUN chmod +x /usr/bin/protoc-gen-twirp_php
 
-# Munin setup
-RUN sed -i '/^allow/d' /etc/munin/munin-node.conf
-RUN echo 'allow ^.*$' >>/etc/munin/munin-node.conf
-RUN echo "ipv 4" >> /etc/munin/munin-node.conf
-
-COPY munin_plugins/00-default /etc/munin/plugin-conf.d/00-default
-COPY munin_plugins/cpubyuser /etc/munin/plugins
-COPY munin_plugins/membyuser /etc/munin/plugins
-RUN chmod +x /etc/munin/plugins/cpubyuser
-RUN chmod +x /etc/munin/plugins/membyuser

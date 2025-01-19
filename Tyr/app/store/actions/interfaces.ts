@@ -20,7 +20,6 @@ import { RemoteError } from '../../services/remoteError';
 import { IAppState } from '../interfaces';
 import { AuthAuthorizeResponse } from '../../clients/proto/frey.pb';
 import {
-  CurrentSession,
   GameConfig,
   MyEvent,
   Penalty,
@@ -32,7 +31,7 @@ import {
   TableState,
 } from '../../clients/proto/atoms.pb';
 import {
-  EventsGetTimerStateResponse,
+  CurrentSession,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
 } from '../../clients/proto/mimir.pb';
@@ -302,7 +301,6 @@ interface UpdateCurrentGamesActionSuccess {
   payload: {
     games: CurrentSession[];
     gameConfig: GameConfig;
-    timerState: EventsGetTimerStateResponse;
   };
 }
 interface UpdateCurrentGamesActionFail {

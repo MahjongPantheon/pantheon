@@ -37,7 +37,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
   return (
     <>
       <TextInput
-        icon={<IconUsers size='1rem' />}
+        leftSection={<IconUsers size='1rem' />}
         label={i18n._t(
           'Tenhou Lobby ID. Please contact event administrator for proper link to lobby.'
         )}
@@ -46,7 +46,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
       />
       <NumberInput
         hideControls
-        icon={<IconHourglass size='1rem' />}
+        leftSection={<IconHourglass size='1rem' />}
         label={i18n._t('Game expiration time (in hours)')}
         description={i18n._t(
           'Interval of time when played online game is still considered valid and can be added to the rating.'
@@ -56,7 +56,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
       />
       <NumberInput
         hideControls
-        icon={<IconCoins size='1rem' />}
+        leftSection={<IconCoins size='1rem' />}
         label={i18n._t('Chips value')}
         description={i18n._t(
           'Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net.'
@@ -66,7 +66,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
       />
       <NumberInput
         hideControls
-        icon={<IconChartHistogram size='1rem' />}
+        leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t('Count of session in game series.')}
         value={config.seriesLength}
@@ -74,7 +74,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
       />
       <NumberInput
         hideControls
-        icon={<IconNumbers size='1rem' />}
+        leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(
           'Minimal count of games the player should play to get into the rating table.'
@@ -84,7 +84,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
       />
       <NumberInput
         hideControls
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
           'Fixed amount of result score applied for each replacement player regardless of session results.'
@@ -94,7 +94,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
       />
       <NumberInput
         hideControls
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(
           'Fixed amount of rank penalty applied for each replacement player regardless of session results.'

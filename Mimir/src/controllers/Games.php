@@ -216,7 +216,7 @@ class GamesController extends Controller
                     'has_avatar' => $player->getHasAvatar(),
                     'last_update' => $player->getLastUpdate(),
                     'score' => $session[0]->getCurrentState()->getScores()[$player->getId()],
-                    'yakitori' => $session[0]->getCurrentState()->getYakitori()[$player->getId()],
+                    'yakitori' => $session[0]->getCurrentState()->getYakitori()[$player->getId()] ?? false,
                     'replaced_by' => empty($playersReg['replacements'][$player->getId()])
                         ? null
                         : [
@@ -306,6 +306,39 @@ class GamesController extends Controller
         $gameHash = (new PenaltySessionModel($this->_ds, $this->_config, $this->_meta))->addPenaltyGame($eventId, $players);
         $this->_log->info('Successfully added penalty game with players id# ' . implode(',', $players));
         return $gameHash;
+    }
+
+    /**
+     * Add extra time for particular games.
+     * Only for tournament events
+     *
+     * @param array $sessionHashList
+     * @param int $extraTime
+     * @return bool
+     * @throws \Exception
+     */
+    public function addExtraTime($sessionHashList, $extraTime)
+    {
+        $this->_log->info('Adding extra time for sessions #' . implode(', ', $sessionHashList));
+        $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, $sessionHashList);
+
+        $eventIds = array_unique(array_map(function ($session) {
+            return $session->getEventId();
+        }, $sessions));
+        if (count($eventIds) > 1) {
+            throw new TwirpError(ErrorCode::InvalidArgument, 'Setting extra time is not available for session in multiple events');
+        }
+
+        if (!$this->_meta->isEventAdminById($eventIds[0]) && !$this->_meta->isEventRefereeById($eventIds[0])) {
+            throw new TwirpError(ErrorCode::NotFound, "This action is allowed only for event administrators");
+        }
+
+        $success = true;
+        foreach ($sessions as $session) {
+            $success = $success && $session->setExtraTime($extraTime + $session->getExtraTime())->save();
+        }
+        $this->_log->info('Added extra time for sessions #' . implode(', ', $sessionHashList));
+        return $success;
     }
 
     /**

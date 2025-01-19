@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 21:11Z\n"
+"POT-Creation-Date: 2025-01-04 23:29+0100\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: app/components/base/TableStatus/TableStatus.tsx:91:16
+#: app/components/base/TableStatus/TableStatus.tsx:96:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "残り %1 局 "
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Abort"
 msgstr "途中流局"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:86:24
 #: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr "途中流局"
@@ -83,7 +83,7 @@ msgid "Chinroutou"
 msgstr "清老頭"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
 #: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
 msgid "Chombo"
@@ -137,7 +137,7 @@ msgstr "メール"
 msgid "Event title"
 msgstr "イベント"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:73:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:81:22
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "流局"
@@ -232,7 +232,7 @@ msgstr "%1 放銃 マルチロン"
 msgid "Nagashi"
 msgstr "流し"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:88:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:24
 #: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
 msgstr "流し満貫"
@@ -342,7 +342,7 @@ msgstr "嶺上"
 msgid "Rinshan kaihou"
 msgstr "嶺上開花"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:69:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:79
 #: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr "ロン"
@@ -423,7 +423,7 @@ msgstr "四暗刻"
 msgid "Suukantsu"
 msgstr "四槓子"
 
-#: app/components/base/TableStatus/TableStatus.tsx:42:45
+#: app/components/base/TableStatus/TableStatus.tsx:47:45
 msgid "Table #%1"
 msgstr "第 #%1 卓"
 
@@ -451,7 +451,7 @@ msgstr "参加しているイベントはありません"
 msgid "Toitoi"
 msgstr "対々和"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:70:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:81
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr "ツモ"

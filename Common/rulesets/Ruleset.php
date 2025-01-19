@@ -36,6 +36,10 @@ class Ruleset
         if ($this->_rulesetCurrent->getUmaType() === UmaType::UMA_TYPE_UNSPECIFIED) {
             $this->_rulesetCurrent->setUmaType(UmaType::UMA_TYPE_UMA_SIMPLE);
         }
+        // for events that where created before field honbaValue was added, this is necessary.
+        if ($this->_rulesetCurrent->getHonbaValue() == 0) {
+            $this->_rulesetCurrent->setHonbaValue(300);
+        }
     }
 
     public function rules(): RulesetConfig
@@ -56,6 +60,7 @@ class Ruleset
             case 'wrc':
             case 'jpmlA':
             case 'tenhounet':
+            case 'rrc':
                 return new Ruleset(require __DIR__ . '/' . $rulesetName . '.php');
             default:
                 throw new \Exception('Ruleset not found');

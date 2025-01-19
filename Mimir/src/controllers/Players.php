@@ -84,6 +84,73 @@ class PlayersController extends Controller
     }
 
     /**
+     * Timer state for sessions
+     *
+     * @param int $eventId
+     * @param int $playerId
+     * @param SessionPrimitive[] $sessions
+     * @return array
+     * @throws \Exception
+     */
+    public function getTimerStateForEventAndPlayer($eventId, $playerId, $sessions)
+    {
+        $this->_log->info('Getting timer for event id#' . $eventId . ' and player id #' . $playerId);
+        $events = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($events)) {
+            throw new TwirpError(ErrorCode::NotFound, 'Event #' . $eventId . ' was not found in DB');
+        }
+
+        $event = $events[0];
+        if (!$event->getUseTimer()) {
+            $this->_log->info('Timer is not used for event id#' . $eventId);
+            return [];
+        }
+
+        $timerState = [];
+        foreach ($sessions as $session) {
+            if ($event->getIsFinished()) {
+                $timerState[$session->getRepresentationalHash()] = [
+                    'started' => false,
+                    'finished' => true,
+                    'time_remaining' => [],
+                    'waiting_for_timer' => false,
+                    'have_autostart' => false,
+                    'autostart_timer' => 0,
+                    'hide_seating_after' => 0,
+                ];
+            } else {
+                if (empty($event->getLastTimer())) {
+                    // no timer started
+                    $response = [
+                        'started' => false,
+                        'finished' => false,
+                        'time_remaining' => null
+                    ];
+                } else if ($event->getLastTimer() + $event->getGameDuration() * 60 + $session->getExtraTime() > time()) {
+                    // game in progress
+                    $response = [
+                        'started' => true,
+                        'finished' => false,
+                        'time_remaining' => $event->getLastTimer() + $event->getGameDuration() * 60 + $session->getExtraTime() - time()
+                    ];
+                }
+
+                $response['waiting_for_timer'] = ($event->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
+                $response['have_autostart'] = ($event->getNextGameStartTime() > 0 && $event->getTimeToStart() > 0);
+                $response['autostart_timer'] = $event->getNextGameStartTime() - time();
+                // show seating for 10 mins after start
+                $response['hide_seating_after'] = ($event->getGameDuration() - 10) * 60;
+                $timerState[$session->getRepresentationalHash()] = $response;
+            }
+        }
+
+        $this->_log->info('Successfully got timer data for event id#' . $eventId . ' and player id #' . $playerId);
+
+        return $timerState;
+    }
+
+
+    /**
      * @param int $playerId
      * @param int $eventId
      * @throws \Exception
@@ -95,12 +162,13 @@ class PlayersController extends Controller
         $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         /** @var PlayerPrimitive[][] $regData */
         $regData = PlayerPrimitive::findPlayersForEvents($this->_ds, [$eventId]);
-
-        $result = array_map(function (SessionPrimitive $session) use (&$regData) {
+        $timerState = $this->getTimerStateForEventAndPlayer($eventId, $playerId, $sessions);
+        $result = array_map(function (SessionPrimitive $session) use (&$regData, &$timerState) {
             return [
                 'hashcode'    => $session->getRepresentationalHash(),
                 'status'      => $session->getStatus(),
                 'table_index' => $session->getTableIndex(),
+                'timer_state' => $timerState[$session->getRepresentationalHash()] ?? null,
                 'players'     => array_map(function (PlayerPrimitive $p, $score) use (&$regData) {
                     return [
                         'id'            => $p->getId(),

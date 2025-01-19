@@ -26,10 +26,11 @@ require_once __DIR__ . '/../src/controllers/Events.php';
 $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
 $config = new \Hugin\Config($cfgPath);
 $db = new \Hugin\Db($config);
-$mc = new Memcached();
-$mc->addServer('localhost', 11211);
+$redis = new Redis();
+$redis->connect('127.0.0.1');
+$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_JSON);
 $log = new Logger('Hugin');
 $log->pushHandler(new ErrorLogHandler());
-$controller = new \Hugin\EventsController($db, $log, $config, $mc);
+$controller = new \Hugin\EventsController($db, $log, $config, $redis);
 
 echo $controller->track(file_get_contents('php://input') ?: '');

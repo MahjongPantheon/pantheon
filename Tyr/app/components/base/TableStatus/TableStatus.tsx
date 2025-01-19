@@ -11,6 +11,7 @@ import { roundToString } from '../../../helpers/roundToString';
 import styles from './TableStatus.module.css';
 import { Button } from '../Button/Button';
 import { TableStatus as TableStatusProps } from '../../../helpers/interfaces';
+import { EndingPolicy } from '../../../clients/proto/atoms.pb';
 
 export const TableStatus = (props: TableStatusProps) => {
   const loc = useContext(i18n);
@@ -27,7 +28,11 @@ export const TableStatus = (props: TableStatusProps) => {
   let currentTime: string | undefined;
   if (timeRemaining !== undefined) {
     if (timeRemaining.minutes === 0 && timeRemaining.seconds === 0) {
-      gamesLeft = props.tableStatus?.lastHandStarted ? 1 : 2;
+      if (props.endingPolicy === EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND) {
+        gamesLeft = props.tableStatus?.lastHandStarted ? 1 : 2;
+      } else if (props.endingPolicy === EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND) {
+        gamesLeft = 1;
+      }
     } else {
       currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds);
     }

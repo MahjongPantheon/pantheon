@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { RoundOutcome } from '../clients/proto/atoms.pb';
+import { EndingPolicy, RoundOutcome } from '../clients/proto/atoms.pb';
 import { YakuId } from './yaku';
 import { I18nService } from '../services/i18n';
 
@@ -195,6 +195,7 @@ export type TableStatus = {
   showRotateButtons?: boolean;
   onCwRotateClick?: () => void;
   onCcwRotateClick?: () => void;
+  endingPolicy?: EndingPolicy;
 
   // from SessionState
   tableStatus: {

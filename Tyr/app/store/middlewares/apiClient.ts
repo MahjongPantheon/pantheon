@@ -75,8 +75,6 @@ import {
 import { RemoteError } from '../../services/remoteError';
 import { IAppState } from '../interfaces';
 import { IRiichiApi } from '../../services/IRiichiApi';
-import { CurrentSession, GameConfig } from '../../clients/proto/atoms.pb';
-import { EventsGetTimerStateResponse } from '../../clients/proto/mimir.pb';
 
 export const apiClient =
   (api: IRiichiApi) =>
@@ -112,7 +110,7 @@ export const apiClient =
           .then((events) =>
             mw.dispatch({
               type: EVENTS_GET_LIST_SUCCESS,
-              payload: events,
+              payload: events.filter((e) => !e.isOnline),
             })
           )
           .catch((err) => mw.dispatch({ type: EVENTS_GET_LIST_FAIL, payload: err }));
@@ -278,35 +276,26 @@ function updateCurrentGames(
 ) {
   dispatchNext({ type: UPDATE_CURRENT_GAMES_INIT });
 
-  // TODO: make single method? should become faster!
-  const promises: [
-    Promise<CurrentSession[]>,
-    Promise<GameConfig>,
-    Promise<EventsGetTimerStateResponse>,
-  ] = [
-    api.getCurrentGames(currentPersonId, eventId),
-    api.getGameConfig(eventId),
-    api.getTimerState(eventId),
-  ];
-
-  Promise.all(promises)
-    .then(([games, gameConfig, timerState]) => {
+  api
+    .getCurrentState(currentPersonId, eventId)
+    .then((resp) => {
       dispatchNext({
         type: UPDATE_CURRENT_GAMES_SUCCESS,
-        payload: { games, gameConfig, timerState },
+        payload: { games: resp.sessions, gameConfig: resp.config },
       });
-      if (games.length > 0) {
-        dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: games[0].sessionHash });
+      if (resp.sessions.length > 0) {
+        dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: resp.sessions[0].sessionHash });
+        dispatchToStore({
+          type: SET_TIMER,
+          payload: {
+            waiting: resp.sessions[0].timerState.waitingForTimer,
+            secondsRemaining: resp.sessions[0].timerState.timeRemaining,
+            // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
+            autostartSecondsRemaining: 0, // resp.sessions[0].timerState.autostartTimer,
+            haveAutostart: resp.sessions[0].timerState.haveAutostart,
+          },
+        });
       }
-      dispatchToStore({
-        type: SET_TIMER,
-        payload: {
-          waiting: timerState.waitingForTimer,
-          secondsRemaining: timerState.timeRemaining,
-          autostartSecondsRemaining: 0, // timerState.autostartTimer, // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
-          haveAutostart: timerState.haveAutostart,
-        },
-      });
     })
     .catch((e) => {
       if (e.code === 401) {

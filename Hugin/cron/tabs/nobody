@@ -1,3 +1,4 @@
 15 3 * * * php /var/www/html/Hugin/cron/aggregate_daily.php
 15 4 5 * * php /var/www/html/Hugin/cron/aggregate_monthly.php
 38 2 3 * * php /var/www/html/Hugin/cron/cleanup_errors.php
+* * * * * php /var/www/html/Hugin/cron/send_stats.php

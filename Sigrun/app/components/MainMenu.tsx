@@ -1,6 +1,6 @@
 import { globalsCtx } from '../hooks/globals';
 import { authCtx } from '../hooks/auth';
-import { Divider, Group, NavLink, Stack } from '@mantine/core';
+import { Divider, Group, NavLink, Stack, useMantineColorScheme } from '@mantine/core';
 import { ExternalTarget, MainMenuLink } from './MainMenuLink';
 import { env } from '../env';
 import {
@@ -24,7 +24,6 @@ import {
 } from '@tabler/icons-react';
 import { EventType, PlatformType } from '../clients/proto/atoms.pb';
 import { FlagEn, FlagKo, FlagRu, FlagDe } from '../helpers/flags';
-import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { useContext } from 'react';
 import { AddOnlineReplayLink } from './AddOnlineReplayLink';
@@ -34,9 +33,7 @@ type MainMenuProps = {
   isLoggedIn: boolean;
   saveLang: (lang: string) => void;
   toggleDimmed: () => void;
-  toggleColorScheme: () => void;
   showLabels: boolean;
-  dark: boolean;
 };
 
 export const MainMenu = ({
@@ -44,18 +41,18 @@ export const MainMenu = ({
   isLoggedIn,
   saveLang,
   toggleDimmed,
-  toggleColorScheme,
   showLabels,
-  dark,
 }: MainMenuProps) => {
   const i18n = useI18n();
   const globals = useContext(globalsCtx);
   const auth = useContext(authCtx);
+  const { toggleColorScheme } = useMantineColorScheme();
+  const isDark = useMantineColorScheme().colorScheme === 'dark';
 
   return (
     <>
       <Stack justify='space-between' style={{ height: '100%' }}>
-        <Stack spacing={0}>
+        <Stack gap={0}>
           {globals.data.eventId && (
             <>
               <Divider
@@ -210,14 +207,14 @@ export const MainMenu = ({
             onClick={closeMenu}
           />
         </Stack>
-        <Group mt={0} spacing={0}>
+        <Group mt={0} gap={0}>
           <NavLink
             styles={{
               label: { fontSize: '18px' },
               children: { paddingLeft: 0 },
               icon: { marginRight: showLabels ? '0.75rem' : '0' },
             }}
-            icon={<IconLanguageHiragana size={20} />}
+            leftSection={<IconLanguageHiragana size={20} />}
             label={showLabels ? i18n._t('Language') : ''}
             title={i18n._t('Language')}
           >
@@ -226,7 +223,7 @@ export const MainMenu = ({
                 saveLang('en');
                 closeMenu?.();
               }}
-              icon={<FlagEn width={24} />}
+              leftSection={<FlagEn width={24} />}
               label={showLabels ? 'en' : ''}
             />
             <NavLink
@@ -234,7 +231,7 @@ export const MainMenu = ({
                 saveLang('ru');
                 closeMenu?.();
               }}
-              icon={<FlagRu width={24} />}
+              leftSection={<FlagRu width={24} />}
               label={showLabels ? 'ru' : ''}
             />
             <NavLink
@@ -242,7 +239,7 @@ export const MainMenu = ({
                 saveLang('de');
                 closeMenu?.();
               }}
-              icon={<FlagDe width={24} />}
+              leftSection={<FlagDe width={24} />}
               label={showLabels ? 'de' : ''}
             />
             <NavLink
@@ -250,13 +247,13 @@ export const MainMenu = ({
                 saveLang('ko');
                 closeMenu?.();
               }}
-              icon={<FlagKo width={24} />}
+              leftSection={<FlagKo width={24} />}
               label={showLabels ? 'ko' : ''}
             />
           </NavLink>
           <NavLink
             styles={{ label: { fontSize: '18px' } }}
-            icon={<IconSun size={20} />}
+            leftSection={<IconSun size={20} />}
             onClick={() => {
               toggleDimmed();
               closeMenu?.();
@@ -266,7 +263,7 @@ export const MainMenu = ({
           />
           <NavLink
             styles={{ label: { fontSize: '18px' } }}
-            icon={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
+            leftSection={isDark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
             onClick={() => {
               toggleColorScheme();
               closeMenu?.();

@@ -31,7 +31,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
     <>
       <NumberInput
         hideControls
-        icon={<IconClockPlay size='1rem' />}
+        leftSection={<IconClockPlay size='1rem' />}
         label={i18n._t('Session duration in minutes')}
         description={i18n._t(
           'Timer starting value. After time runs out, session ending policy is applied (see below).'
@@ -46,7 +46,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
         onChange={() => {}}
       >
         <Space h='md' />
-        <Stack spacing='xs'>
+        <Stack gap='xs'>
           <Radio
             value={EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED}
             label={i18n._t('Do not interrupt session until it ends')}
@@ -64,6 +64,14 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
         </Stack>
         <Space h='md' />
       </Radio.Group>
+      <Checkbox
+        label={i18n._t('Chombo in last round ends game')}
+        description={i18n._t(
+          'If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game'
+        )}
+        checked={config.rulesetConfig.chomboEndsGame}
+        onChange={() => {}}
+      />
       <Checkbox label={i18n._t('Team tournament')} checked={config.isTeam} onChange={() => {}} />
       <Checkbox
         label={i18n._t('Seating is defined in advance')}
@@ -75,7 +83,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
       />
       <NumberInput
         hideControls
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
           'Fixed amount of result score applied for each replacement player regardless of session results.'
@@ -85,7 +93,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
       />
       <NumberInput
         hideControls
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(
           'Fixed amount of rank penalty applied for each replacement player regardless of session results.'

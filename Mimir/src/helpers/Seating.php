@@ -237,6 +237,7 @@ class Seating
      */
     protected static function _updatePlacesToRandom(array $seating)
     {
+        self::shuffleSeed();
         $tables = array_chunk($seating, 4, true);
         $resultSeating = [];
         foreach ($tables as $tableWithRatings) {

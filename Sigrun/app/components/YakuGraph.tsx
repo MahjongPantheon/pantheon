@@ -21,6 +21,7 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
 import { YakuStat } from '../clients/proto/atoms.pb';
 import { useMemo } from 'react';
+
 const BarGraph = React.lazy(() => import('./BarGraph'));
 
 export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
@@ -60,13 +61,13 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
 
   const yakuStats = [...yaku.entries()]
     .map(([key, value]) => {
-      return { x: value, y: yakuNameMap.get(key) };
+      return { x: value, y: yakuNameMap.get(key) + ` (${value})` };
     })
     .filter((v) => v.x > 0)
     .sort((a, b) => b.x - a.x);
 
   if (totalYakuhai > 0) {
-    yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') });
+    yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') + ` (${totalYakuhai})` });
   }
 
   const yakuStatsHeight = 40 + 24 * yakuStats.length;
@@ -82,7 +83,11 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
           font: { size: 16, family: '"PT Sans Narrow", Arial' },
           plugins: {
             legend: { display: false },
+            tooltip: {
+              enabled: false,
+            },
           },
+          events: [],
           indexAxis: 'y',
           // grouped: false,
           scales: {

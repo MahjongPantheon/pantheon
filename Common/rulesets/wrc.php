@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Common;
 
 require_once __DIR__ . '/../YakuMap.php';
@@ -34,6 +35,7 @@ return (new RulesetConfig())
     ->setEqualizeUma(true)
     ->setWithWinningDealerHonbaSkipped(false)
     ->setOka(0)
+    ->setHonbaValue(300)
     ->setReplacementPlayerFixedPoints(-15000)
     ->setReplacementPlayerOverrideUma(-15000)
     ->setAllowedYaku(YakuMap::listExcept([
@@ -64,4 +66,5 @@ return (new RulesetConfig())
     ->setWithLeadingDealerGameOver(false)
     ->setWithMultiYakumans(false)
     ->setWithNagashiMangan(false)
+    ->setChomboEndsGame(true)
     ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII]);

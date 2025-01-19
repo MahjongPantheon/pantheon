@@ -7,8 +7,6 @@ echo "export PS1=\"|\033[1;31m Bragi container \033[0m~> \$PWD (\\u) \\$ \"" > /
 mkdir /home/user/.yarn-cache
 chown user /home/user/.yarn-cache
 
-munin-node
-
 TRAPPED_SIGNAL=false
 
 echo 'Starting NGINX';
