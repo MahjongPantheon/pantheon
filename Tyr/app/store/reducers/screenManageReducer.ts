@@ -152,6 +152,9 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           break;
         case 'lastResults':
         case 'gameLog':
+        case 'otherTable':
+          nextScreen = 'overview';
+          break;
         case 'confirmation':
           nextScreen = 'overview';
           break;
