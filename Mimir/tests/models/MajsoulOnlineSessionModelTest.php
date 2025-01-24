@@ -44,6 +44,7 @@ require_once __DIR__ . '/../../src/models/ReplayContentType.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
+require_once __DIR__ . '/../../src/primitives/JobsQueue.php';
 require_once __DIR__ . '/../../src/helpers/onlineLog/Downloader.php';
 
 /**
@@ -310,6 +311,40 @@ class MajsoulOnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->assertEquals([1 => 39100, 22 => 31500, 33 => 24700, 44 => 24700], $result->getCurrentState()->getScores());
+        $this->assertIsObject($result);
+    }
+
+    public function testNagashiManganRiichiBetsBug()
+    {
+        $this->_gameContent = file_get_contents(__DIR__ . '/testdata/format6/nagashi_mangan_riichi_bets_bug.json');
+        $this->playersRegistration([
+            ['player_name' => 'TPlayer1', 'account_id' => 1],
+            ['player_name' => 'プレーヤー2', 'account_id' => 22],
+            ['player_name' => 'プレーヤー3', 'account_id' => 33],
+            ['player_name' => 'プレーヤー4', 'account_id' => 44]
+        ]);
+        $this->_gameId = '250118-02cb218e-4a14-41f0-bb4c-c6b3cf0e25bb';
+
+        $this->_event->getRulesetConfig()->rules()->setStartPoints(30000);
+        $this->_event->getRulesetConfig()->rules()->setOka(0);
+        $this->_event->getRulesetConfig()->rules()->setHonbaValue(300);
+        $this->_event->getRulesetConfig()->rules()->getUma()->setPlace1(30000);
+        $this->_event->getRulesetConfig()->rules()->getUma()->setPlace2(10000);
+        $this->_event->getRulesetConfig()->rules()->getUma()->setPlace3(-10000);
+        $this->_event->getRulesetConfig()->rules()->getUma()->setPlace4(-30000);
+        $this->_event->save();
+
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
+        $result = $session->addTypedGame(
+            $this->_event->getId(),
+            $this->_gameId,
+            1709367289,
+            $this->_gameContent,
+            PlatformType::PLATFORM_TYPE_MAHJONGSOUL,
+            ReplayContentType::Json->value
+        );
+
+        $this->assertEquals([1 => 31500, 22 => 30300, 33 => 30500, 44 => 27700], $result->getCurrentState()->getScores());
         $this->assertIsObject($result);
     }
 }

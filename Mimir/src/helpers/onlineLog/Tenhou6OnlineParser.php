@@ -24,6 +24,7 @@ require_once __DIR__ . '/../../exceptions/Parser.php';
 require_once __DIR__ . '/../../helpers/YakuMap.php';
 require_once __DIR__ . '/../../primitives/Round.php';
 require_once __DIR__ . '/../../primitives/PlayerHistory.php';
+require_once __DIR__ . '/../../primitives/JobsQueue.php';
 require_once __DIR__ . '/../../models/Tenhou6Model.php';
 
 /**
@@ -111,27 +112,7 @@ class Tenhou6OnlineParser
         foreach ($this->_roundData as $round) {
             $savedRound = RoundPrimitive::createFromData($this->_ds, $session, $round);
             $rounds [] = $savedRound;
-            if ($round['outcome'] === 'nagashi') {
-                $previousScores = end($scores);
-                /** @phpstan-ignore-next-line */
-                $nmScores = array_map('self::asInt', $round['sc']);
-                $firstPlayerId = $session->getPlayers()[0]->getId();
-                $secondPlayerId = $session->getPlayers()[1]->getId();
-                $thirdPlayerId = $session->getPlayers()[2]->getId();
-                $fourPlayerId = $session->getPlayers()[3]->getId();
-                if ($previousScores && count($previousScores) > 3) {
-                    $calculatedScores = [
-                        $firstPlayerId => $previousScores[$firstPlayerId] + $nmScores[0],
-                        $secondPlayerId => $previousScores[$secondPlayerId] + $nmScores[1],
-                        $thirdPlayerId => $previousScores[$thirdPlayerId] + $nmScores[2],
-                        $fourPlayerId => $previousScores[$fourPlayerId] + $nmScores[3]
-                    ];
-                    $success = $success && $session->updateCurrentState($savedRound);
-                    $session->getCurrentState()->setScores($calculatedScores);
-                }
-            } else {
-                $success = $success && $session->updateCurrentState($savedRound);
-            }
+            $success = $success && $session->updateCurrentState($savedRound);
             $scores [] = $session->getCurrentState()->getScores();
         }
 
