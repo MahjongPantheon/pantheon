@@ -135,7 +135,6 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
       <Suspense fallback={<Loader />}>
         <RatingGraph
           lastSelectionHash={lastSelectionHash}
-          lastSelectionX={lastSelectionX}
           setLastSelectionHash={setLastSelectionHash}
           setLastSelectionX={setLastSelectionX}
           playerStats={playerStats}
@@ -156,7 +155,7 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                 e.preventDefault();
               }}
             >
-              {i18n._t('View selected game details')}
+              {i18n._t('View selected game details')} {'#' + lastSelectionX}
             </Anchor>
             <Group>
               <ActionIcon

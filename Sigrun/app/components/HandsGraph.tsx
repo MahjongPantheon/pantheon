@@ -17,9 +17,34 @@
 
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
-import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { Paper, Text, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { HandValueStat } from '../clients/proto/atoms.pb';
+import { ChartTooltipProps } from '@mantine/charts';
+import { I18nService } from 'services/i18n';
+import { CustomizedAxisTick } from './LineGraph';
+
 const BarGraph = React.lazy(() => import('./BarGraph'));
+
+interface ChartTooltipExtendedProps extends ChartTooltipProps {
+  i18n: I18nService;
+}
+
+function ChartTooltip({ label, payload, i18n }: ChartTooltipExtendedProps) {
+  if (!payload) return null;
+
+  return (
+    <Paper px='md' py='sm' withBorder shadow='md' radius='md'>
+      <Text fw={500} mb={5}>
+        {i18n._t('%1 han', [label as string])}
+      </Text>
+      {payload.map((item: any) => (
+        <Text key={item.name} fz='sm'>
+          {i18n._t('Amount')}: {item.value}
+        </Text>
+      ))}
+    </Paper>
+  );
+}
 
 export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] }) => {
   const i18n = useI18n();
@@ -51,47 +76,42 @@ export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] 
   Object.entries(hands).forEach(([hanStr, count]) => {
     const han = parseInt(hanStr, 10);
     if (han >= 0) {
-      handValueStats.push({ x: han.toString(), y: count });
+      handValueStats.push({ x: han.toString(), count });
     } else {
       yakumanCount += count;
     }
   });
 
-  handValueStats.push({ x: '★', y: yakumanCount > 0 ? yakumanCount : 0 });
+  handValueStats.push({ x: '★', count: yakumanCount > 0 ? yakumanCount : 0 });
 
   return (
     <BarGraph
-      data={{ datasets: [{ data: handValueStats }] }}
-      options={{
-        backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        borderColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        color: isDark ? theme.colors.gray[2] : theme.colors.dark[7],
-        font: { size: 16, family: '"PT Sans Narrow", Arial' },
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: true },
-        },
-        scales: {
-          x: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
-            ticks: {
-              autoSkip: false,
-            },
-            position: 'bottom',
-            title: {
-              display: true,
-              text: i18n._t('Hands value'),
-            },
-          },
-          y: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
+      barChartProps={{ margin: { bottom: 32 } }}
+      data={handValueStats}
+      dataKey='x'
+      getBarColor={() => (isDark ? 'blue.8' : 'blue.3')}
+      gridAxis='xy'
+      h={500}
+      series={[{ name: 'count' }]}
+      textColor={isDark ? theme.colors.gray[2] : theme.colors.dark[7]}
+      tooltipProps={{
+        content: ({ label, payload }) => (
+          <ChartTooltip label={label} payload={payload} i18n={i18n} />
+        ),
+      }}
+      xAxisProps={{
+        tick: <CustomizedAxisTick />,
+        label: {
+          value: i18n._t('Hands value'),
+          offset: -20,
+          position: 'insideBottom',
+          style: {
+            fontFamily: '"PT Sans Narrow", Arial',
+            fontSize: 16,
           },
         },
       }}
+      yAxisProps={{ allowDecimals: false, tick: { fontSize: 16 } }}
     />
   );
 };

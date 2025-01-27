@@ -63,9 +63,8 @@ export default defineConfig({
           if (
             id.includes('BarGraph') ||
             id.includes('LineGraph') ||
-            id.includes('chartjs-plugin-zoom') ||
-            id.includes('react-chartjs-2') ||
-            id.includes('chart.js')
+            id.includes('@mantine/charts') ||
+            id.includes('recharts')
           ) {
             return 'graphs';
           }
