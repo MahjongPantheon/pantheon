@@ -24,6 +24,7 @@ import { PlayersGetPlayerStatsResponse } from '../clients/proto/mimir.pb';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
 import { CustomizedAxisTick } from './LineGraph';
 import { CategoricalChartState } from 'recharts/types/chart/types';
+import { Brush } from 'recharts';
 
 const LineGraph = React.lazy(() => import('./LineGraph'));
 
@@ -66,7 +67,7 @@ export const RatingGraph = ({
     if (!index) return;
 
     setLastSelectionX(index);
-    setLastSelectionHash(games?.[gamesIdx[index - 1]].tables[0].sessionHash ?? null);
+    setLastSelectionHash(games?.[gamesIdx[index - 1]]?.tables[0].sessionHash ?? null);
     if (games?.[gamesIdx[index - 1]]) {
       onSelectGame(games?.[gamesIdx[index - 1]]);
     }
@@ -74,7 +75,7 @@ export const RatingGraph = ({
 
   useEffect(() => {
     const idx =
-      playerStats?.scoreHistory?.findIndex((v) => v.tables[0].sessionHash === lastSelectionHash) ??
+      playerStats?.scoreHistory?.findIndex((v) => v?.tables[0].sessionHash === lastSelectionHash) ??
       null;
     if (idx !== null) {
       setLastSelectionX(1 + idx);
@@ -108,7 +109,7 @@ export const RatingGraph = ({
       gridAxis='xy'
       h={500}
       lineChartProps={{
-        margin: { bottom: 32, left: 24 },
+        margin: { bottom: 52, left: 24 },
         onClick: handleClick,
       }}
       series={[
@@ -124,7 +125,7 @@ export const RatingGraph = ({
         tick: <CustomizedAxisTick />,
         label: {
           value: i18n._t('Games played'),
-          offset: -20,
+          offset: -60,
           position: 'insideBottom',
           style: {
             fontFamily: '"PT Sans Narrow", Arial',
@@ -143,7 +144,16 @@ export const RatingGraph = ({
         tick: { fontSize: 16 },
       }}
       withPointLabels={true}
-    />
+    >
+      <Brush
+        dataKey='x'
+        height={30}
+        stroke={isDark ? theme.colors.blue[8] : theme.colors.blue[3]}
+        travellerWidth={10}
+        startIndex={0}
+        endIndex={points.length - 1}
+      />
+    </LineGraph>
   );
 };
 
