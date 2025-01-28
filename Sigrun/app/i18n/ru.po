@@ -304,6 +304,10 @@ msgstr "Банкротство"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
 
+#: app/components/HandsGraph.tsx:42:12
+msgid "Amount"
+msgstr ""
+
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:204:18
 msgid "Amount of chombo penalty"
 msgstr "Размер штрафа чомбо"
@@ -474,7 +478,7 @@ msgstr "Чомбо: %1"
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
 
-#: app/pages/PlayerStats.tsx:206:24
+#: app/pages/PlayerStats.tsx:205:24
 msgid "Close game preview"
 msgstr "Закрыть предпросмотр"
 
@@ -657,7 +661,7 @@ msgstr "Время истечения игры (в часах)"
 msgid "Game preview"
 msgstr "Просмотр игры"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:491:32
+#: app/components/RatingGraph.tsx:127:18 app/pages/RatingTable.tsx:491:32
 #: app/pages/RatingTable.tsx:551:7
 msgid "Games played"
 msgstr "Сыграно игр"
@@ -779,7 +783,7 @@ msgstr "Довакин aka The mother of dragons"
 msgid "Haitei"
 msgstr "Хайтей"
 
-#: app/components/HandsGraph.tsx:85:21
+#: app/components/HandsGraph.tsx:105:18
 msgid "Hands value"
 msgstr "Стоимость рук"
 
@@ -998,7 +1002,7 @@ msgstr "Нагаши манган"
 msgid "Nagashi: %1"
 msgstr "Нагаши манган: %1"
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:183:24
 msgid "Next game"
 msgstr "Следующая игра"
 
@@ -1135,11 +1139,11 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "Игроки, зарегистрированные в событии"
 
-#: app/pages/PlayerStats.tsx:166:24
+#: app/pages/PlayerStats.tsx:165:24
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:242:20
+#: app/components/RatingGraph.tsx:138:18 app/pages/RatingTable.tsx:242:20
 msgid "Rating"
 msgstr "Рейтинг"
 
@@ -1531,6 +1535,7 @@ msgid "Tonpuusen"
 msgstr "Тонпусены"
 
 #: app/components/PlayerStatsListing.tsx:191:16
+#: app/components/RatingGraph.tsx:118:18
 msgid "Total points gained: "
 msgstr "Всего набрано очков: "
 
@@ -1595,7 +1600,7 @@ msgstr "Сколько стоит один индикатор хонбы"
 msgid "View game"
 msgstr "Посмотреть реплей"
 
-#: app/pages/PlayerStats.tsx:159:16
+#: app/pages/PlayerStats.tsx:158:16
 msgid "View selected game details"
 msgstr "Подробнее об игре"
 
@@ -1668,7 +1673,7 @@ msgstr "Штраф за якитори"
 msgid "Yaku allowed"
 msgstr "Разрешенные яку"
 
-#: app/components/YakuGraph.tsx:101:23
+#: app/components/YakuGraph.tsx:91:18
 msgid "Yaku collected over all time"
 msgstr "Собранные яку за все время"
 
@@ -1692,7 +1697,7 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/components/YakuGraph.tsx:70:42
+#: app/components/YakuGraph.tsx:71:49
 msgid "Yakuhai: total"
 msgstr "Якухай: всего"
 
