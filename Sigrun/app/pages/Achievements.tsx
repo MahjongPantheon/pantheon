@@ -62,6 +62,7 @@ import { Meta } from '../components/Meta';
 import { useContext } from 'react';
 import { authCtx } from '../hooks/auth';
 import { globalsCtx } from '../hooks/globals';
+import { useMediaQuery } from '@mantine/hooks';
 
 enum Achievement {
   BEST_HAND = 'bestHand',
@@ -119,6 +120,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   const auth = useContext(authCtx);
   const globals = useContext(globalsCtx);
   const events = useEvent(eventId);
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const [achievementsData] = useIsomorphicState(
     null,
     'Achievements_' + eventId,
@@ -706,7 +708,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   }
 
   return (
-    <Container>
+    <Container p={largeScreen ? 'md' : 0}>
       <Meta
         title={`${events?.[0].title} - ${i18n._t('Achievements')} - Sigrun`}
         description={i18n._t('Achievements list for the event "%1" provided by Mahjong Pantheon', [

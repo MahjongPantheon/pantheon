@@ -25,7 +25,7 @@ import { EventType } from '../clients/proto/atoms.pb';
 
 export function AppFooter() {
   const i18n = useI18n();
-  const largeScreen = useMediaQuery('(min-width: 640px)');
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const globals = useContext(globalsCtx);
 
   return (
