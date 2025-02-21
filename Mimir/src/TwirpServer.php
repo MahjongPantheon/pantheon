@@ -1109,11 +1109,14 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param int $eventId
+     * @param ?string $sessionId
+     * @return EventsGetTimerStateResponse
      * @throws InvalidParametersException
      */
-    public function GetTimerState(array $ctx, GenericEventPayload $req): EventsGetTimerStateResponse
+    protected function _getTimer($eventId, $sessionId = null)
     {
-        $ret = $this->_eventsController->getTimerState($req->getEventId());
+        $ret = $this->_eventsController->getTimerState($eventId, $sessionId);
         if (empty($ret)) {
             return new EventsGetTimerStateResponse(); // not using timer -> not setting fields
         }
@@ -1129,11 +1132,20 @@ final class TwirpServer implements Mimir
 
     /**
      * @throws InvalidParametersException
+     */
+    public function GetTimerState(array $ctx, GenericEventPayload $req): EventsGetTimerStateResponse
+    {
+        return $this->_getTimer($req->getEventId());
+    }
+
+    /**
+     * @throws InvalidParametersException
      * @throws EntityNotFoundException
      */
     public function GetSessionOverview(array $ctx, GenericSessionPayload $req): GamesGetSessionOverviewResponse
     {
         $ret = $this->_gamesController->getSessionOverview($req->getSessionHash());
+        $timer = $this->_getTimer($ret['event_id'], $req->getSessionHash());
         $overview = (new GamesGetSessionOverviewResponse())
             ->setId($ret['id'])
             ->setEventId($ret['event_id'])
@@ -1152,6 +1164,7 @@ final class TwirpServer implements Mimir
                 }
                 return $reg;
             }, $ret['players']))
+            ->setTimerState($timer)
             ->setState((new \Common\SessionState())
                 ->setDealer($ret['state']['dealer'])
                 ->setRoundIndex($ret['state']['round'])

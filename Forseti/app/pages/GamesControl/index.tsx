@@ -169,20 +169,23 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, []);
 
-  const onAddExtraTime = useCallback((extraTime: number) => {
-    api
-      .addExtraTime(
-        tablesState.map((t) => t.sessionHash),
-        extraTime
-      )
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to add extra time'));
-        }
-      })
-      .then(doReloadConfigAndTables)
-      .catch(errHandler);
-  }, []);
+  const onAddExtraTime = useCallback(
+    (extraTime: number) => {
+      api
+        .addExtraTime(
+          tablesState.map((t) => t.sessionHash),
+          extraTime
+        )
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to add extra time'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler);
+    },
+    [tablesState]
+  );
 
   const onAddExtraTimeForTable = useCallback((hash: string, extraTime: number) => {
     api

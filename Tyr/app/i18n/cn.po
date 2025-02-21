@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-04 23:29+0100\n"
+"POT-Creation-Date: 2025-02-21 20:13+0100\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Abort"
 msgstr "中途流局"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:86:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
 #: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr "中途流局"
@@ -83,7 +83,7 @@ msgid "Chinroutou"
 msgstr "清老头"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
 #: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
 msgid "Chombo"
@@ -137,7 +137,7 @@ msgstr ""
 msgid "Event title"
 msgstr "活动名称"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:81:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "流局"
@@ -150,6 +150,10 @@ msgstr ""
 #: app/components/pages/Login/LoginError.tsx:33:16
 msgid "Forgot password?"
 msgstr "忘记密码了吗?"
+
+#: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
+msgid "Game has finished"
+msgstr ""
 
 #: app/components/pages/LogView/LogView.tsx:81:46
 msgid "Game log"
@@ -232,7 +236,7 @@ msgstr "%1 放铳 一炮多响"
 msgid "Nagashi"
 msgstr "流局"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
 #: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
 msgstr "流局满贯"
@@ -343,7 +347,7 @@ msgstr "岭上"
 msgid "Rinshan kaihou"
 msgstr "岭上开花"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
 #: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr "荣和"
@@ -454,7 +458,7 @@ msgstr "你现在没有可选择的活动或比赛"
 msgid "Toitoi"
 msgstr "对对和"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr "自摸"

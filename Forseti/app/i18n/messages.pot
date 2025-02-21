@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 00:26+0100\n"
+"POT-Creation-Date: 2025-02-21 20:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -606,28 +606,28 @@ msgstr ""
 msgid "Session is scheduled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:415:12
-#: app/pages/GamesControl/GamesList.tsx:426:9
+#: app/pages/GamesControl/GamesList.tsx:416:12
+#: app/pages/GamesControl/GamesList.tsx:427:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:437:12
+#: app/pages/GamesControl/GamesList.tsx:438:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:445:12
+#: app/pages/GamesControl/GamesList.tsx:446:12
 msgid "Chombo, %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:449:12
+#: app/pages/GamesControl/GamesList.tsx:450:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:456:12
+#: app/pages/GamesControl/GamesList.tsx:457:12
 msgid "Abortive draw, riichi: %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:462:12
+#: app/pages/GamesControl/GamesList.tsx:463:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr ""
 
@@ -651,49 +651,49 @@ msgstr ""
 msgid "Failed to start timer"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:180:27
-#: app/pages/GamesControl/index.tsx:192:27
+#: app/pages/GamesControl/index.tsx:181:29
+#: app/pages/GamesControl/index.tsx:195:27
 msgid "Failed to add extra time"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:204:27
+#: app/pages/GamesControl/index.tsx:207:27
 msgid "Failed to notify players"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:215:27
+#: app/pages/GamesControl/index.tsx:218:27
 #: app/pages/OwnedEvents.tsx:194:27
 msgid "Failed to toggle results visibility"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:227:27
+#: app/pages/GamesControl/index.tsx:230:27
 msgid "Failed to approve session results"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:240:27
+#: app/pages/GamesControl/index.tsx:243:27
 msgid "Failed to generate interval seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:256:27
+#: app/pages/GamesControl/index.tsx:259:27
 msgid "Failed to generate random seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:272:27
+#: app/pages/GamesControl/index.tsx:275:27
 msgid "Failed to generate swiss seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:288:27
+#: app/pages/GamesControl/index.tsx:291:27
 msgid "Failed to generate prescripted seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:303:27
+#: app/pages/GamesControl/index.tsx:306:27
 msgid "Failed to reset seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:315:27
+#: app/pages/GamesControl/index.tsx:318:27
 msgid "Failed to finish the game"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:385:16
+#: app/pages/GamesControl/index.tsx:388:16
 msgid "Refresh data [%1]"
 msgstr ""
 

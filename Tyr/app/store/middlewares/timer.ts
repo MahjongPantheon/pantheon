@@ -91,7 +91,8 @@ export const timerMw =
           }
 
           timerStorage.timer = timerStorage.setInterval(() => {
-            const gameEnded = !mw.getState().currentSessionHash;
+            const gameEnded =
+              !mw.getState().currentSessionHash && !mw.getState().currentOtherTableHash;
             const timerNotRequired = !mw.getState().gameConfig?.useTimer;
             if (gameEnded || timerNotRequired) {
               if (timerStorage.timer) {

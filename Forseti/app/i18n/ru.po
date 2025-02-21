@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 00:26+0100\n"
+"POT-Creation-Date: 2025-02-21 20:13+0100\n"
 "PO-Revision-Date: 2025-01-19 02:27+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -90,7 +90,7 @@ msgstr ""
 msgid "A reason for penalty is mandatory"
 msgstr "Указывать причину штрафа обязательно"
 
-#: app/pages/GamesControl/GamesList.tsx:456:12
+#: app/pages/GamesControl/GamesList.tsx:457:12
 msgid "Abortive draw, riichi: %1"
 msgstr "Абортивная ничья, риичи: %1"
 
@@ -370,7 +370,7 @@ msgstr ""
 "Штрафы чомбо могут быть отменены через отмену раунда на странице управления "
 "играми, если игра еще не завершена."
 
-#: app/pages/GamesControl/GamesList.tsx:445:12
+#: app/pages/GamesControl/GamesList.tsx:446:12
 msgid "Chombo, %1"
 msgstr "Чомбо, %1"
 
@@ -471,7 +471,7 @@ msgstr "Выключить ренчаны"
 msgid "Do not interrupt session until it ends"
 msgstr "Не прерывать игру до тех пор, пока она не закончена"
 
-#: app/pages/GamesControl/GamesList.tsx:449:12
+#: app/pages/GamesControl/GamesList.tsx:450:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Ничья, темпай: %1, риичи: %2"
 
@@ -600,8 +600,8 @@ msgstr "Внешняя игровая платформа для проведен
 msgid "Extra minutes: %1"
 msgstr "Дополнительные минуты: %1"
 
-#: app/pages/GamesControl/index.tsx:180:27
-#: app/pages/GamesControl/index.tsx:192:27
+#: app/pages/GamesControl/index.tsx:181:29
+#: app/pages/GamesControl/index.tsx:195:27
 msgid "Failed to add extra time"
 msgstr "Не удалось добавить время"
 
@@ -609,7 +609,7 @@ msgstr "Не удалось добавить время"
 msgid "Failed to apply penalty: server error or network unreachable"
 msgstr "Не удалось применить штраф: ошибка сервера или сеть недоступна"
 
-#: app/pages/GamesControl/index.tsx:227:27
+#: app/pages/GamesControl/index.tsx:230:27
 msgid "Failed to approve session results"
 msgstr "Не удалось подтвердить результаты сессий"
 
@@ -646,27 +646,27 @@ msgstr "Не удалось удалить результаты"
 msgid "Failed to fetch event data"
 msgstr "Не удалось получить данные события"
 
-#: app/pages/GamesControl/index.tsx:315:27
+#: app/pages/GamesControl/index.tsx:318:27
 msgid "Failed to finish the game"
 msgstr "Не удалось завершить игру"
 
-#: app/pages/GamesControl/index.tsx:240:27
+#: app/pages/GamesControl/index.tsx:243:27
 msgid "Failed to generate interval seating"
 msgstr "Не удалось сгенерировать интервальную рассадку"
 
-#: app/pages/GamesControl/index.tsx:288:27
+#: app/pages/GamesControl/index.tsx:291:27
 msgid "Failed to generate prescripted seating"
 msgstr "Не удалось сгенерировать предопределенную рассадку"
 
-#: app/pages/GamesControl/index.tsx:256:27
+#: app/pages/GamesControl/index.tsx:259:27
 msgid "Failed to generate random seating"
 msgstr "Не удалось сгенерировать случайную рассадку"
 
-#: app/pages/GamesControl/index.tsx:272:27
+#: app/pages/GamesControl/index.tsx:275:27
 msgid "Failed to generate swiss seating"
 msgstr "Не удалось сгенерировать швейцарскую рассадку"
 
-#: app/pages/GamesControl/index.tsx:204:27
+#: app/pages/GamesControl/index.tsx:207:27
 msgid "Failed to notify players"
 msgstr "Не удалось оповестить игроков"
 
@@ -691,7 +691,7 @@ msgstr ""
 msgid "Failed to request registration. Is your connection stable?"
 msgstr "Не удалось запросить регистрацию. Проблемы со связью?"
 
-#: app/pages/GamesControl/index.tsx:303:27
+#: app/pages/GamesControl/index.tsx:306:27
 msgid "Failed to reset seating"
 msgstr "Не удалось отменить рассадку"
 
@@ -716,7 +716,7 @@ msgstr "Не удалось запустить таймер"
 msgid "Failed to toggle achievements visibility"
 msgstr "Не удалось переключить видимость номинаций"
 
-#: app/pages/GamesControl/index.tsx:215:27 app/pages/OwnedEvents.tsx:194:27
+#: app/pages/GamesControl/index.tsx:218:27 app/pages/OwnedEvents.tsx:194:27
 msgid "Failed to toggle results visibility"
 msgstr "Не удалось переключить видимость результатов"
 
@@ -1221,7 +1221,7 @@ msgstr "Мои события"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/pages/GamesControl/GamesList.tsx:462:12
+#: app/pages/GamesControl/GamesList.tsx:463:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "Нагаши манган, нагаши: %1, темпай: %2, риичи: %3"
 
@@ -1670,7 +1670,7 @@ msgstr "Восстановление пароля"
 msgid "Referee privileges include:"
 msgstr "Привилегии судьи включают:"
 
-#: app/pages/GamesControl/index.tsx:385:16
+#: app/pages/GamesControl/index.tsx:388:16
 msgid "Refresh data [%1]"
 msgstr "Обновить данные [%1]"
 
@@ -1776,8 +1776,8 @@ msgstr ""
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/pages/GamesControl/GamesList.tsx:415:12
-#: app/pages/GamesControl/GamesList.tsx:426:9
+#: app/pages/GamesControl/GamesList.tsx:416:12
+#: app/pages/GamesControl/GamesList.tsx:427:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "Рон, %1 с %2 (%3), риичи: %4"
 
@@ -2241,7 +2241,7 @@ msgstr "Турнир"
 msgid "Tournament settings"
 msgstr "Настройки турнира"
 
-#: app/pages/GamesControl/GamesList.tsx:437:12
+#: app/pages/GamesControl/GamesList.tsx:438:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Цумо, %1 (%2), риичи: %3"
 

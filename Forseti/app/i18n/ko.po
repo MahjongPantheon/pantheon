@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 00:26+0100\n"
+"POT-Creation-Date: 2025-02-21 20:13+0100\n"
 "PO-Revision-Date: 2024-04-20 10:57+0200\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -91,7 +91,7 @@ msgstr ""
 msgid "A reason for penalty is mandatory"
 msgstr "벌부 사유는 필수 입력 사항입니다"
 
-#: app/pages/GamesControl/GamesList.tsx:456:12
+#: app/pages/GamesControl/GamesList.tsx:457:12
 msgid "Abortive draw, riichi: %1"
 msgstr "도중유국, 리치: %1"
 
@@ -366,7 +366,7 @@ msgid ""
 "page if game is not finished yet."
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:445:12
+#: app/pages/GamesControl/GamesList.tsx:446:12
 msgid "Chombo, %1"
 msgstr "촌보: %1"
 
@@ -469,7 +469,7 @@ msgstr "연장 비활성화"
 msgid "Do not interrupt session until it ends"
 msgstr "오라스에 인한 대국 종료시 종료"
 
-#: app/pages/GamesControl/GamesList.tsx:449:12
+#: app/pages/GamesControl/GamesList.tsx:450:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "유국, 텐파이: %1, 리치: %2"
 
@@ -601,8 +601,8 @@ msgstr "대회 첫 대국에 간격 좌석를 사용할 수 없습니다"
 msgid "Extra minutes: %1"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:180:27
-#: app/pages/GamesControl/index.tsx:192:27
+#: app/pages/GamesControl/index.tsx:181:29
+#: app/pages/GamesControl/index.tsx:195:27
 #, fuzzy
 msgid "Failed to add extra time"
 msgstr "타이머 시작 실패"
@@ -611,7 +611,7 @@ msgstr "타이머 시작 실패"
 msgid "Failed to apply penalty: server error or network unreachable"
 msgstr "벌부 적용 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
-#: app/pages/GamesControl/index.tsx:227:27
+#: app/pages/GamesControl/index.tsx:230:27
 msgid "Failed to approve session results"
 msgstr "대국 결과 승인 실패"
 
@@ -647,27 +647,27 @@ msgstr "대국 종료 취소 실패"
 msgid "Failed to fetch event data"
 msgstr "이벤트 데이터 불러오기 실패"
 
-#: app/pages/GamesControl/index.tsx:315:27
+#: app/pages/GamesControl/index.tsx:318:27
 msgid "Failed to finish the game"
 msgstr "대국 종료 실패"
 
-#: app/pages/GamesControl/index.tsx:240:27
+#: app/pages/GamesControl/index.tsx:243:27
 msgid "Failed to generate interval seating"
 msgstr "간격 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:288:27
+#: app/pages/GamesControl/index.tsx:291:27
 msgid "Failed to generate prescripted seating"
 msgstr "사전 정의된 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:256:27
+#: app/pages/GamesControl/index.tsx:259:27
 msgid "Failed to generate random seating"
 msgstr "임의 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:272:27
+#: app/pages/GamesControl/index.tsx:275:27
 msgid "Failed to generate swiss seating"
 msgstr "스위스 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:204:27
+#: app/pages/GamesControl/index.tsx:207:27
 msgid "Failed to notify players"
 msgstr "알림 실패"
 
@@ -691,7 +691,7 @@ msgstr "비밀번호 재설정 요청 실패. 이메일을 확인해주세요."
 msgid "Failed to request registration. Is your connection stable?"
 msgstr "회원가입 요청 실패. 연결이 안정적인가요?"
 
-#: app/pages/GamesControl/index.tsx:303:27
+#: app/pages/GamesControl/index.tsx:306:27
 msgid "Failed to reset seating"
 msgstr "좌석 초기화 실패"
 
@@ -715,7 +715,7 @@ msgstr "타이머 시작 실패"
 msgid "Failed to toggle achievements visibility"
 msgstr "업적 표시 여부 전환 실패"
 
-#: app/pages/GamesControl/index.tsx:215:27 app/pages/OwnedEvents.tsx:194:27
+#: app/pages/GamesControl/index.tsx:218:27 app/pages/OwnedEvents.tsx:194:27
 msgid "Failed to toggle results visibility"
 msgstr "결과 표시 여부 전환 실패"
 
@@ -1195,7 +1195,7 @@ msgstr "내 이벤트"
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
-#: app/pages/GamesControl/GamesList.tsx:462:12
+#: app/pages/GamesControl/GamesList.tsx:463:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "유국만관: %1, 텐파이: %2, 리치: %3"
 
@@ -1639,7 +1639,7 @@ msgstr "비밀번호 복구"
 msgid "Referee privileges include:"
 msgstr "이벤트 등록 작사 관리"
 
-#: app/pages/GamesControl/index.tsx:385:16
+#: app/pages/GamesControl/index.tsx:388:16
 msgid "Refresh data [%1]"
 msgstr "데이터 새로고침 [%1]"
 
@@ -1747,8 +1747,8 @@ msgstr ""
 msgid "Rinshan kaihou"
 msgstr "영상개화"
 
-#: app/pages/GamesControl/GamesList.tsx:415:12
-#: app/pages/GamesControl/GamesList.tsx:426:9
+#: app/pages/GamesControl/GamesList.tsx:416:12
+#: app/pages/GamesControl/GamesList.tsx:427:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "론: %1 방총: %2 (%3), 리치: %4"
 
@@ -2193,7 +2193,7 @@ msgstr "대회"
 msgid "Tournament settings"
 msgstr "대회 설정"
 
-#: app/pages/GamesControl/GamesList.tsx:437:12
+#: app/pages/GamesControl/GamesList.tsx:438:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "쯔모: %1 (%2), 리치: %3"
 

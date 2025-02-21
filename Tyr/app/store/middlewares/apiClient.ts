@@ -324,7 +324,19 @@ function getOtherTable(sessionHash: string, api: IRiichiApi, dispatch: Dispatch<
   dispatch({ type: GET_OTHER_TABLE_INIT, payload: sessionHash });
   api
     .getGameOverview(sessionHash)
-    .then((table) => dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table }))
+    .then((table) => {
+      dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table });
+      dispatch({
+        type: SET_TIMER,
+        payload: {
+          waiting: table.timerState.waitingForTimer,
+          secondsRemaining: table.timerState.timeRemaining,
+          // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
+          autostartSecondsRemaining: 0, // resp.sessions[0].timerState.autostartTimer,
+          haveAutostart: table.timerState.haveAutostart,
+        },
+      });
+    })
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 
@@ -336,7 +348,19 @@ function getOtherTableReload(
   dispatch({ type: GET_OTHER_TABLE_RELOAD });
   api
     .getGameOverview(sessionHash)
-    .then((table) => dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table }))
+    .then((table) => {
+      dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table });
+      dispatch({
+        type: SET_TIMER,
+        payload: {
+          waiting: table.timerState.waitingForTimer,
+          secondsRemaining: table.timerState.timeRemaining,
+          // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
+          autostartSecondsRemaining: 0, // resp.sessions[0].timerState.autostartTimer,
+          haveAutostart: table.timerState.haveAutostart,
+        },
+      });
+    })
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 

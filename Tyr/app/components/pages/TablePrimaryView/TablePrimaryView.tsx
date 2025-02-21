@@ -53,7 +53,13 @@ export const TablePrimaryView = (props: IProps) => {
     setKamicha(props.kamicha);
     setSelf(props.self);
     setShimocha(props.shimocha);
-  }, [props.self.points, props.shimocha.points, props.kamicha.points, props.toimen.points]);
+  }, [
+    props.self.points,
+    props.shimocha.points,
+    props.kamicha.points,
+    props.toimen.points,
+    props.self.currentWind, // to allow rotation on other tables screen
+  ]);
 
   return (
     <div className={styles.wrapper}>

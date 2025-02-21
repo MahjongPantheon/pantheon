@@ -33,6 +33,10 @@ class GamesGetSessionOverviewResponse extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.common.SessionState state = 5;</code>
      */
     protected $state = null;
+    /**
+     * Generated from protobuf field <code>.common.EventsGetTimerStateResponse timer_state = 6;</code>
+     */
+    protected $timer_state = null;
 
     /**
      * Constructor.
@@ -45,6 +49,7 @@ class GamesGetSessionOverviewResponse extends \Google\Protobuf\Internal\Message
      *     @type int $table_index
      *     @type array<\Common\PlayerInSession>|\Google\Protobuf\Internal\RepeatedField $players
      *     @type \Common\SessionState $state
+     *     @type \Common\EventsGetTimerStateResponse $timer_state
      * }
      */
     public function __construct($data = NULL) {
@@ -178,6 +183,38 @@ class GamesGetSessionOverviewResponse extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\SessionState::class);
         $this->state = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.common.EventsGetTimerStateResponse timer_state = 6;</code>
+     * @return \Common\EventsGetTimerStateResponse|null
+     */
+    public function getTimerState()
+    {
+        return $this->timer_state;
+    }
+
+    public function hasTimerState()
+    {
+        return isset($this->timer_state);
+    }
+
+    public function clearTimerState()
+    {
+        unset($this->timer_state);
+    }
+
+    /**
+     * Generated from protobuf field <code>.common.EventsGetTimerStateResponse timer_state = 6;</code>
+     * @param \Common\EventsGetTimerStateResponse $var
+     * @return $this
+     */
+    public function setTimerState($var)
+    {
+        GPBUtil::checkMessage($var, \Common\EventsGetTimerStateResponse::class);
+        $this->timer_state = $var;
 
         return $this;
     }

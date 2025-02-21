@@ -147,6 +147,7 @@ export interface GamesGetSessionOverviewResponse {
   tableIndex?: number | null | undefined;
   players: protoAtoms.PlayerInSession[];
   state: protoAtoms.SessionState;
+  timerState: EventsGetTimerStateResponse;
 }
 
 export interface PlayersGetPlayerStatsPayload {
@@ -5563,6 +5564,7 @@ export const GamesGetSessionOverviewResponse = {
       tableIndex: undefined,
       players: [],
       state: protoAtoms.SessionState.initialize(),
+      timerState: EventsGetTimerStateResponse.initialize(),
       ...msg,
     };
   },
@@ -5592,6 +5594,13 @@ export const GamesGetSessionOverviewResponse = {
     }
     if (msg.state) {
       writer.writeMessage(5, msg.state, protoAtoms.SessionState._writeMessage);
+    }
+    if (msg.timerState) {
+      writer.writeMessage(
+        6,
+        msg.timerState,
+        EventsGetTimerStateResponse._writeMessage,
+      );
     }
     return writer;
   },
@@ -5626,6 +5635,13 @@ export const GamesGetSessionOverviewResponse = {
         }
         case 5: {
           reader.readMessage(msg.state, protoAtoms.SessionState._readMessage);
+          break;
+        }
+        case 6: {
+          reader.readMessage(
+            msg.timerState,
+            EventsGetTimerStateResponse._readMessage,
+          );
           break;
         }
         default: {
@@ -11782,6 +11798,7 @@ export const GamesGetSessionOverviewResponseJSON = {
       tableIndex: undefined,
       players: [],
       state: protoAtoms.SessionStateJSON.initialize(),
+      timerState: EventsGetTimerStateResponseJSON.initialize(),
       ...msg,
     };
   },
@@ -11811,6 +11828,14 @@ export const GamesGetSessionOverviewResponseJSON = {
       const _state_ = protoAtoms.SessionStateJSON._writeMessage(msg.state);
       if (Object.keys(_state_).length > 0) {
         json["state"] = _state_;
+      }
+    }
+    if (msg.timerState) {
+      const _timerState_ = EventsGetTimerStateResponseJSON._writeMessage(
+        msg.timerState,
+      );
+      if (Object.keys(_timerState_).length > 0) {
+        json["timerState"] = _timerState_;
       }
     }
     return json;
@@ -11846,6 +11871,13 @@ export const GamesGetSessionOverviewResponseJSON = {
     const _state_ = json["state"];
     if (_state_) {
       protoAtoms.SessionStateJSON._readMessage(msg.state, _state_);
+    }
+    const _timerState_ = json["timerState"] ?? json["timer_state"];
+    if (_timerState_) {
+      EventsGetTimerStateResponseJSON._readMessage(
+        msg.timerState,
+        _timerState_,
+      );
     }
     return msg;
   },
