@@ -304,6 +304,7 @@ message GamesGetSessionOverviewResponse {
   optional int32 table_index = 3;
   repeated PlayerInSession players = 4;
   SessionState state = 5;
+  EventsGetTimerStateResponse timer_state = 6;
 }
 
 message PlayersGetPlayerStatsPayload {

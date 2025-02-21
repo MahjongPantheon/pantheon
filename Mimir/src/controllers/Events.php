@@ -830,11 +830,12 @@ class EventsController extends Controller
      * Event-wide timer state
      *
      * @param int $eventId
+     * @param ?string $sessionHash
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getTimerState($eventId)
+    public function getTimerState($eventId, $sessionHash = null)
     {
         $this->_log->info('Getting timer for event id#' . $eventId);
 
@@ -859,6 +860,14 @@ class EventsController extends Controller
             'hide_seating_after' => 0,
         ];
 
+        $extraTime = 0;
+        if ($sessionHash) {
+            $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$sessionHash]);
+            if (!empty($session)) {
+                $extraTime = $session[0]->getExtraTime();
+            }
+        }
+
         if (!$event[0]->getIsFinished()) {
             if (empty($event[0]->getLastTimer())) {
                 // no timer started
@@ -867,12 +876,12 @@ class EventsController extends Controller
                     'finished' => false,
                     'time_remaining' => null
                 ];
-            } else if ($event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 > time()) {
+            } else if ($event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 + $extraTime > time()) {
                 // game in progress
                 $response = [
                     'started' => true,
                     'finished' => false,
-                    'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 - time()
+                    'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 + $extraTime - time()
                 ];
             }
 
