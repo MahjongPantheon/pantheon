@@ -65,3 +65,9 @@ body {
   background-size: auto 16px;
   background-repeat: repeat-x;
 }
+
+/* Hack to make mantine's List.Items respect container's width and do not overlap with surroundings */
+.mantine-AppShell-root .mantine-List-itemWrapper {
+  display: inline;
+  white-space: normal;
+}

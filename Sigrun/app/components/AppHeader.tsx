@@ -66,7 +66,7 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
   const [location, navigate] = useLocation();
   const auth = useContext(authCtx);
   const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
-  const largeScreen = useMediaQuery('(min-width: 640px)');
+  const largeScreen = useMediaQuery('(min-width: 768px)');
   const veryLargeScreen = useMediaQuery('(min-width: 1024px)');
   const matchedEventId = location.match(/\/event\/([^/]+)\//);
   const isDark = useMantineColorScheme().colorScheme === 'dark';
