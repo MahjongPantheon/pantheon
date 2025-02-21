@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 00:26+0100\n"
+"POT-Creation-Date: 2025-02-21 20:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgid "No pao"
 msgstr ""
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
 #: app/store/selectors/round.ts:191:14
 #: app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
@@ -235,31 +235,31 @@ msgstr ""
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:77:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
 #: app/store/selectors/table.ts:145:25
 #: app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:78:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
 #: app/store/selectors/table.ts:142:25
 #: app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:81:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
 #: app/store/selectors/round.ts:166:14
 #: app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:86:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
 #: app/store/selectors/round.ts:178:14
 #: app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
 #: app/store/selectors/round.ts:204:14
 #: app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
@@ -271,6 +271,10 @@ msgstr ""
 
 #: app/components/screens/Home/Home.tsx:103:60
 msgid "Event title"
+msgstr ""
+
+#: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
+msgid "Game has finished"
 msgstr ""
 
 #: app/components/screens/Settings/Settings.tsx:78:56

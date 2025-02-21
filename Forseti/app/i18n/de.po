@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 00:26+0100\n"
+"POT-Creation-Date: 2025-02-21 20:13+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -91,7 +91,7 @@ msgstr ""
 msgid "A reason for penalty is mandatory"
 msgstr "Ein Strafgrund muss eingetragen werden"
 
-#: app/pages/GamesControl/GamesList.tsx:456:12
+#: app/pages/GamesControl/GamesList.tsx:457:12
 msgid "Abortive draw, riichi: %1"
 msgstr "Abgebrochenes Unentschieden, Riichi: %1"
 
@@ -367,7 +367,7 @@ msgid ""
 "page if game is not finished yet."
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:445:12
+#: app/pages/GamesControl/GamesList.tsx:446:12
 msgid "Chombo, %1"
 msgstr ""
 
@@ -470,7 +470,7 @@ msgstr "Keine renchans"
 msgid "Do not interrupt session until it ends"
 msgstr "Match nicht unterbrechen bis zum Ablauf der Zeit"
 
-#: app/pages/GamesControl/GamesList.tsx:449:12
+#: app/pages/GamesControl/GamesList.tsx:450:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Unentschieden, Tenpai: %1, Riichi: %2"
 
@@ -606,8 +606,8 @@ msgstr ""
 msgid "Extra minutes: %1"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:180:27
-#: app/pages/GamesControl/index.tsx:192:27
+#: app/pages/GamesControl/index.tsx:181:29
+#: app/pages/GamesControl/index.tsx:195:27
 #, fuzzy
 msgid "Failed to add extra time"
 msgstr "Timer konnte nicht gestartet werden"
@@ -616,7 +616,7 @@ msgstr "Timer konnte nicht gestartet werden"
 msgid "Failed to apply penalty: server error or network unreachable"
 msgstr "Fehler beim speichern der Strafe: Server oder Netzwerkfehler"
 
-#: app/pages/GamesControl/index.tsx:227:27
+#: app/pages/GamesControl/index.tsx:230:27
 msgid "Failed to approve session results"
 msgstr "Rundenergebnisse konnten nicht bestätigt werden"
 
@@ -652,27 +652,27 @@ msgstr "Spiel konnte nicht definalisiert werden"
 msgid "Failed to fetch event data"
 msgstr "Event Informationen konnten nicht abgerufen werden"
 
-#: app/pages/GamesControl/index.tsx:315:27
+#: app/pages/GamesControl/index.tsx:318:27
 msgid "Failed to finish the game"
 msgstr "Spiel konnte nicht beendet werden"
 
-#: app/pages/GamesControl/index.tsx:240:27
+#: app/pages/GamesControl/index.tsx:243:27
 msgid "Failed to generate interval seating"
 msgstr "Intervallsitzplan konnte nicht erstellt werden"
 
-#: app/pages/GamesControl/index.tsx:288:27
+#: app/pages/GamesControl/index.tsx:291:27
 msgid "Failed to generate prescripted seating"
 msgstr "Manueller Sitzplan konnte nicht erstellt werden"
 
-#: app/pages/GamesControl/index.tsx:256:27
+#: app/pages/GamesControl/index.tsx:259:27
 msgid "Failed to generate random seating"
 msgstr "Zufälliger Sitzplan konnte nicht erstellt werden"
 
-#: app/pages/GamesControl/index.tsx:272:27
+#: app/pages/GamesControl/index.tsx:275:27
 msgid "Failed to generate swiss seating"
 msgstr "Sitzplan nach Schweizer System  konnte nicht erstellt werden"
 
-#: app/pages/GamesControl/index.tsx:204:27
+#: app/pages/GamesControl/index.tsx:207:27
 msgid "Failed to notify players"
 msgstr "Spieler konnten nicht benachrichtigt werden"
 
@@ -696,7 +696,7 @@ msgstr "Passwort konnte nicht zurückgesetzt werden. Bitte Email überprüfen."
 msgid "Failed to request registration. Is your connection stable?"
 msgstr "Anmeldung nicht erfolgreich."
 
-#: app/pages/GamesControl/index.tsx:303:27
+#: app/pages/GamesControl/index.tsx:306:27
 msgid "Failed to reset seating"
 msgstr "Sitzplan konnte nicht zurückgesetzt werden"
 
@@ -724,7 +724,7 @@ msgstr "Timer konnte nicht gestartet werden"
 msgid "Failed to toggle achievements visibility"
 msgstr "Auszeichnungen konnte nicht ein/ausgeblendet werden"
 
-#: app/pages/GamesControl/index.tsx:215:27 app/pages/OwnedEvents.tsx:194:27
+#: app/pages/GamesControl/index.tsx:218:27 app/pages/OwnedEvents.tsx:194:27
 msgid "Failed to toggle results visibility"
 msgstr "Ergebnisansicht konnte nicht ein/ausgeschaltet werden"
 
@@ -1213,7 +1213,7 @@ msgstr "Meine Events"
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:462:12
+#: app/pages/GamesControl/GamesList.tsx:463:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "Nagashi Mangan, Nagashi: %1, Tenpai: %2, Riichi: %3"
 
@@ -1664,7 +1664,7 @@ msgstr "Passwort zurücksetzen"
 msgid "Referee privileges include:"
 msgstr "Eventspieler bearbeiten"
 
-#: app/pages/GamesControl/index.tsx:385:16
+#: app/pages/GamesControl/index.tsx:388:16
 msgid "Refresh data [%1]"
 msgstr "Daten aktualisieren [%1]"
 
@@ -1772,8 +1772,8 @@ msgstr ""
 msgid "Rinshan kaihou"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:415:12
-#: app/pages/GamesControl/GamesList.tsx:426:9
+#: app/pages/GamesControl/GamesList.tsx:416:12
+#: app/pages/GamesControl/GamesList.tsx:427:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "Ron, %1 von %2 (%3), Riichi: %4"
 
@@ -2225,7 +2225,7 @@ msgstr "Turnier"
 msgid "Tournament settings"
 msgstr "Einstellungen für Turniere"
 
-#: app/pages/GamesControl/GamesList.tsx:437:12
+#: app/pages/GamesControl/GamesList.tsx:438:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr ""
 

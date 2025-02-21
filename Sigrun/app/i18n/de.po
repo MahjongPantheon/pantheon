@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 00:26+0100\n"
+"POT-Creation-Date: 2025-02-21 20:14+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -450,7 +450,7 @@ msgstr ""
 msgid "Chombo penalties: "
 msgstr "Chombo Strafen:"
 
-#: app/components/GameListing.tsx:219:16
+#: app/components/GameListing.tsx:220:16
 msgid "Chombo: %1"
 msgstr ""
 
@@ -557,7 +557,7 @@ msgstr "Gesammelte Dora:"
 msgid "Dora lord"
 msgstr "Dora Lord"
 
-#: app/components/GameListing.tsx:215:14
+#: app/components/GameListing.tsx:216:14
 msgid "Draw: %1"
 msgstr "Unentschieden: %1"
 
@@ -974,7 +974,7 @@ msgstr "Mehrfach Yakuman"
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/components/GameListing.tsx:224:16
+#: app/components/GameListing.tsx:225:16
 msgid "Nagashi: %1"
 msgstr ""
 
@@ -1216,7 +1216,7 @@ msgstr "Riichi mahjong Eventliste"
 msgid "Rinshan kaihou"
 msgstr ""
 
-#: app/components/GameListing.tsx:209:14
+#: app/components/GameListing.tsx:210:14
 msgid "Ron: %1"
 msgstr ""
 
@@ -1533,7 +1533,7 @@ msgstr "Einstellungen für Turniere"
 msgid "Tsumo payments: "
 msgstr "Tsumo Zahlungen:"
 
-#: app/components/GameListing.tsx:212:14
+#: app/components/GameListing.tsx:213:14
 msgid "Tsumo: %1"
 msgstr ""
 
