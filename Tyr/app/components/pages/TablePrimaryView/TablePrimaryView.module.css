@@ -4,10 +4,25 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .mainArea {
   flex: 1;
   position: relative;
+  padding: 16px;
+}
+
+.gameFinished {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+.buttons {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  gap: 20px;
   padding: 16px;
 }

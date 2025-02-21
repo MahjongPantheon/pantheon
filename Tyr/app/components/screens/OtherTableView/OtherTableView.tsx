@@ -16,18 +16,25 @@
  */
 
 import { IComponentProps } from '../../IComponentProps';
+import { i18n } from '../../i18n';
+import { useContext } from 'react';
 
 import { Loader } from '../../base/Loader/Loader';
 import {
   GET_OTHER_TABLE_INIT,
+  GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   SHOW_GAME_LOG,
   TOGGLE_OVERVIEW_DIFFBY,
 } from '../../../store/actions/interfaces';
 import { TablePrimaryView } from '../../pages/TablePrimaryView/TablePrimaryView';
 import { getOtherTablePlayerData, getOtherTableStatus } from '../../../store/selectors/table';
+import { Button } from '../../base/Button/Button';
+import styles from '../../pages/TablePrimaryView/TablePrimaryView.module.css';
+import SaveIcon from '../../../img/icons/check.svg?react';
 
 export const OtherTableView = ({ state, dispatch }: IComponentProps) => {
+  const loc = useContext(i18n);
   const isLoading =
     state.loading.events ||
     !state.currentOtherTable ||
@@ -54,21 +61,39 @@ export const OtherTableView = ({ state, dispatch }: IComponentProps) => {
   toimen.onPlayerClick = () => dispatch({ type: TOGGLE_OVERVIEW_DIFFBY, payload: toimen.id });
   kamicha.onPlayerClick = () => dispatch({ type: TOGGLE_OVERVIEW_DIFFBY, payload: kamicha.id });
 
-  return (
-    <>
-      <TablePrimaryView
-        toimen={toimen}
-        kamicha={kamicha}
-        shimocha={shimocha}
-        self={self}
-        tableStatus={tableStatus}
-        onGoBack={() => dispatch({ type: GOTO_PREV_SCREEN })}
-        onRefresh={() =>
-          dispatch({ type: GET_OTHER_TABLE_INIT, payload: state.currentOtherTableHash })
-        }
-        onGotoGameLog={() => dispatch({ type: SHOW_GAME_LOG })}
-        rulesetConfig={state.gameConfig?.rulesetConfig ?? {}}
-      />
-    </>
-  );
+  if (state.currentOtherTable?.state.finished) {
+    return (
+      <>
+        <div className={styles.wrapper}>
+          <div className={styles.gameFinished}>{loc._t('Game has finished')}</div>
+          <div className={styles.buttons}>
+            <Button
+              variant='contained'
+              onClick={() => dispatch({ type: GOTO_NEXT_SCREEN })}
+              size='lg'
+              icon={<SaveIcon />}
+            />
+          </div>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <TablePrimaryView
+          toimen={toimen}
+          kamicha={kamicha}
+          shimocha={shimocha}
+          self={self}
+          tableStatus={tableStatus}
+          onGoBack={() => dispatch({ type: GOTO_PREV_SCREEN })}
+          onRefresh={() =>
+            dispatch({ type: GET_OTHER_TABLE_INIT, payload: state.currentOtherTableHash })
+          }
+          onGotoGameLog={() => dispatch({ type: SHOW_GAME_LOG })}
+          rulesetConfig={state.gameConfig?.rulesetConfig ?? {}}
+        />
+      </>
+    );
+  }
 };
