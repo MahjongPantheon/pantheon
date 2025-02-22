@@ -539,11 +539,29 @@ class SeatingController extends Controller
         // In rare cases we want to exclude players from seating
         $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$eventId]);
 
+        // arbitrary penalties
+        /** @var (int|float)[][] $penalties */
+        $penalties = array_reduce(PenaltyPrimitive::findByEventId($this->_ds, [$eventId]), function ($acc, PenaltyPrimitive $item) {
+            if ($item->getCancelled()) {
+                return $acc;
+            }
+            if (empty($acc[$item->getPlayerId()])) {
+                $acc[$item->getPlayerId()] = ['amount' => 0, 'count' => 0];
+            }
+            $acc[$item->getPlayerId()]['amount'] += $item->getAmount();
+            $acc[$item->getPlayerId()]['count'] ++;
+            return $acc;
+        }, []);
+
         // First step is adding players that already played games
         $histories = PlayerHistoryPrimitive::findLastByEvent($this->_ds, [$eventId]);
         foreach ($histories as $h) {
             if (!in_array($h->getPlayerId(), $ignoredPlayerIds)) {
-                $playersMap[$h->getPlayerId()] = $h->getRating();
+                $penaltyAmount = 0;
+                if (!empty($penalties[(int)$h->getPlayerId()])) {
+                    $penaltyAmount = $penalties[(int)$h->getPlayerId()]['amount'];
+                }
+                $playersMap[$h->getPlayerId()] = $h->getRating() - $penaltyAmount;
             }
         }
 
