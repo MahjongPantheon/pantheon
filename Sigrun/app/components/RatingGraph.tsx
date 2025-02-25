@@ -15,20 +15,23 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import starSvg from '../../assets/img/star.svg';
 import { PlayersGetPlayerStatsResponse } from '../clients/proto/mimir.pb';
 import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
+import { CustomizedAxisTick } from './LineGraph';
+import { CategoricalChartState } from 'recharts/types/chart/types';
+import { Brush } from 'recharts';
+
 const LineGraph = React.lazy(() => import('./LineGraph'));
 
 export const RatingGraph = ({
   playerId,
   playerStats,
   onSelectGame,
-  lastSelectionX,
   setLastSelectionX,
   lastSelectionHash,
   setLastSelectionHash,
@@ -36,7 +39,6 @@ export const RatingGraph = ({
   playerId: number;
   playerStats?: PlayersGetPlayerStatsResponse;
   onSelectGame: (game: SessionHistoryResultTable) => void;
-  lastSelectionX: number | null;
   setLastSelectionX: (x: number | null) => void;
   lastSelectionHash: string | null;
   setLastSelectionHash: (hash: string | null) => void;
@@ -58,11 +60,22 @@ export const RatingGraph = ({
 
   const gamesIdx: number[] = [];
   games?.forEach((g, idx) => gamesIdx.push(idx));
-  const chartRef = useRef();
+
+  const handleClick = (data: CategoricalChartState) => {
+    const index = data?.activeTooltipIndex;
+
+    if (!index) return;
+
+    setLastSelectionX(index);
+    setLastSelectionHash(games?.[gamesIdx[index - 1]]?.tables[0].sessionHash ?? null);
+    if (games?.[gamesIdx[index - 1]]) {
+      onSelectGame(games?.[gamesIdx[index - 1]]);
+    }
+  };
 
   useEffect(() => {
     const idx =
-      playerStats?.scoreHistory?.findIndex((v) => v.tables[0].sessionHash === lastSelectionHash) ??
+      playerStats?.scoreHistory?.findIndex((v) => v?.tables[0].sessionHash === lastSelectionHash) ??
       null;
     if (idx !== null) {
       setLastSelectionX(1 + idx);
@@ -89,96 +102,59 @@ export const RatingGraph = ({
 
   return (
     <LineGraph
-      ref={chartRef}
-      data={{ labels: ticks, datasets: [{ data: points }] }}
-      options={{
-        interaction: {
-          mode: 'nearest',
+      data={points}
+      dataKey='x'
+      dotProps={{ r: 4, stroke: isDark ? theme.colors.blue[8] : theme.colors.blue[3] }}
+      activeDotProps={{ r: 8, fill: isDark ? theme.colors.blue[8] : theme.colors.blue[3] }}
+      gridAxis='xy'
+      h={500}
+      lineChartProps={{
+        margin: { bottom: 52, left: 24 },
+        onClick: handleClick,
+      }}
+      series={[
+        {
+          name: 'y',
+          label: i18n._t('Total points gained: '),
+          color: isDark ? 'blue.8' : 'blue.3',
         },
-        backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        borderColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        color: isDark ? theme.colors.gray[2] : theme.colors.dark[7],
-        font: { size: 16, family: '"PT Sans Narrow", Arial' },
-        onClick: (e: any) => {
-          // @ts-expect-error
-          const d = getElementAtEvent(chartRef.current!, { nativeEvent: e });
-          if (d.length) {
-            const { index } = d[0];
-            setLastSelectionX(index);
-            setLastSelectionHash(games?.[gamesIdx[index - 1]].tables[0].sessionHash ?? null);
-            if (games?.[gamesIdx[index - 1]]) {
-              onSelectGame(games?.[gamesIdx[index - 1]]);
-            }
-          }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: false },
-          zoom: {
-            zoom: {
-              wheel: {
-                enabled: true,
-              },
-              pinch: {
-                enabled: true,
-              },
-              mode: 'x',
-            },
-          },
-        },
-        elements: {
-          point: {
-            radius: (context: any) =>
-              lastSelectionX && context.dataIndex === lastSelectionX ? 8 : 3,
-            hoverRadius: 8,
-            hoverBorderWidth: 1,
-            pointStyle: (context: any) => {
-              if (context.dataIndex === 0) {
-                return undefined;
-              }
-              if (
-                games?.[gamesIdx[context.dataIndex - 1]].tables.every(
-                  (v) => v.playerId === playerId || v.ratingDelta < 0
-                )
-              ) {
-                return context.dataIndex === lastSelectionX
-                  ? (window as any).__ratingStarIconBig
-                  : (window as any).__ratingStarIcon;
-              }
-              return undefined;
-            },
-          },
-          line: { tension: 0.3 },
-        },
-        scales: {
-          x: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
-            position: 'bottom',
-            title: {
-              display: true,
-              text: i18n._t('Games played'),
-            },
-          },
-          y: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
-            position: 'left',
-            title: {
-              display: true,
-              text: i18n._t('Rating'),
-            },
+      ]}
+      valueFormatter={(value) => new Intl.NumberFormat('en-US').format(value)}
+      textColor={isDark ? theme.colors.gray[2] : theme.colors.dark[7]}
+      xAxisProps={{
+        tick: <CustomizedAxisTick />,
+        label: {
+          value: i18n._t('Games played'),
+          offset: -60,
+          position: 'insideBottom',
+          style: {
+            fontFamily: '"PT Sans Narrow", Arial',
+            fontSize: 16,
           },
         },
       }}
-    />
+      yAxisProps={{
+        label: {
+          value: i18n._t('Rating'),
+          angle: -90,
+          offset: 20,
+          position: 'left',
+        },
+        allowDecimals: false,
+        tick: { fontSize: 16 },
+      }}
+      withPointLabels={true}
+    >
+      <Brush
+        dataKey='x'
+        height={30}
+        stroke={isDark ? theme.colors.blue[8] : theme.colors.blue[3]}
+        travellerWidth={10}
+        startIndex={0}
+        endIndex={points.length - 1}
+      />
+    </LineGraph>
   );
 };
-
-function getElementAtEvent(chart: any /* ChartJS*/, event: React.MouseEvent<HTMLCanvasElement>) {
-  return chart.getElementsAtEventForMode(event.nativeEvent, 'nearest', { intersect: false }, false);
-}
 
 export { RatingGraph as default }; // for React.lazy

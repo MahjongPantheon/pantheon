@@ -1,16 +1,24 @@
-import zoomPlugin from 'chartjs-plugin-zoom';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LineElement,
-  PointElement,
-  Tooltip,
-  LinearScale,
-  Title,
-} from 'chart.js';
-import { Line as LineGraph } from 'react-chartjs-2';
-ChartJS.register(LineElement, Tooltip, CategoryScale, PointElement, LinearScale, Title, zoomPlugin);
-ChartJS.defaults.font.size = 16;
-ChartJS.defaults.font.family = '"PT Sans Narrow", Arial';
+import { LineChart as LineGraph } from '@mantine/charts';
+import React from 'react';
+
+export interface XAxisTickProps {
+  x: number;
+  y: number;
+  payload: { value: string };
+}
+
+export class CustomizedAxisTick extends React.PureComponent {
+  render() {
+    const { x, y, payload } = this.props as XAxisTickProps;
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text x={0} y={0} dy={16} textAnchor='middle' fill='#666'>
+          {payload.value}
+        </text>
+      </g>
+    );
+  }
+}
 
 export default LineGraph;

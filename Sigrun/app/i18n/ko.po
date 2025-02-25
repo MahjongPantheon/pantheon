@@ -287,6 +287,10 @@ msgstr "들통 허용"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "역만 중첩을 허용, 예시: 자일색 + 대삼원"
 
+#: app/components/HandsGraph.tsx:42:12
+msgid "Amount"
+msgstr ""
+
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:204:18
 msgid "Amount of chombo penalty"
 msgstr "촌보 벌부값"
@@ -451,7 +455,7 @@ msgstr "촌보: %1"
 msgid "Chuuren poutou"
 msgstr "구련보등"
 
-#: app/pages/PlayerStats.tsx:206:24
+#: app/pages/PlayerStats.tsx:205:24
 msgid "Close game preview"
 msgstr "대국 미리보기 닫기"
 
@@ -633,7 +637,7 @@ msgstr "대국 만료 기간 (시간)"
 msgid "Game preview"
 msgstr "대국 미리보기"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:491:32
+#: app/components/RatingGraph.tsx:127:18 app/pages/RatingTable.tsx:491:32
 #: app/pages/RatingTable.tsx:551:7
 msgid "Games played"
 msgstr "총 대국 수"
@@ -752,7 +756,7 @@ msgstr "\"귀족\""
 msgid "Haitei"
 msgstr "해저로월"
 
-#: app/components/HandsGraph.tsx:85:21
+#: app/components/HandsGraph.tsx:105:18
 msgid "Hands value"
 msgstr "판수"
 
@@ -961,7 +965,7 @@ msgstr "유국만관"
 msgid "Nagashi: %1"
 msgstr "유국만관: %1"
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:183:24
 msgid "Next game"
 msgstr "다음 대국"
 
@@ -1096,11 +1100,11 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "이벤트 등록 작사 목록"
 
-#: app/pages/PlayerStats.tsx:166:24
+#: app/pages/PlayerStats.tsx:165:24
 msgid "Previous game"
 msgstr "이전 대국"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:242:20
+#: app/components/RatingGraph.tsx:138:18 app/pages/RatingTable.tsx:242:20
 msgid "Rating"
 msgstr "점수"
 
@@ -1483,6 +1487,7 @@ msgid "Tonpuusen"
 msgstr "동풍전"
 
 #: app/components/PlayerStatsListing.tsx:191:16
+#: app/components/RatingGraph.tsx:118:18
 msgid "Total points gained: "
 msgstr "총 타점: "
 
@@ -1547,7 +1552,7 @@ msgstr ""
 msgid "View game"
 msgstr "대국 보기"
 
-#: app/pages/PlayerStats.tsx:159:16
+#: app/pages/PlayerStats.tsx:158:16
 msgid "View selected game details"
 msgstr "해당 대국 세부내용 보기"
 
@@ -1617,7 +1622,7 @@ msgstr "야키토리 벌부"
 msgid "Yaku allowed"
 msgstr "허용 역"
 
-#: app/components/YakuGraph.tsx:101:23
+#: app/components/YakuGraph.tsx:91:18
 msgid "Yaku collected over all time"
 msgstr "역 완성 횟수"
 
@@ -1641,7 +1646,7 @@ msgstr "역패 x3"
 msgid "Yakuhai x4"
 msgstr "역패 x4"
 
-#: app/components/YakuGraph.tsx:70:42
+#: app/components/YakuGraph.tsx:71:49
 msgid "Yakuhai: total"
 msgstr "역패: 총합"
 

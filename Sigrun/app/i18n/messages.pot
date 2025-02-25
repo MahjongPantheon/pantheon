@@ -1,8 +1,8 @@
 # Translations template for PROJECT.
-# Copyright (C) 2025 
+# Copyright (C) 2025
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -119,7 +119,11 @@ msgstr ""
 msgid "Nagashi: %1"
 msgstr ""
 
-#: app/components/HandsGraph.tsx:85:21
+#: app/components/HandsGraph.tsx:42:12
+msgid "Amount"
+msgstr ""
+
+#: app/components/HandsGraph.tsx:105:18
 msgid "Hands value"
 msgstr ""
 
@@ -347,6 +351,7 @@ msgid "With damaten: "
 msgstr ""
 
 #: app/components/PlayerStatsListing.tsx:191:16
+#: app/components/RatingGraph.tsx:118:18
 msgid "Total points gained: "
 msgstr ""
 
@@ -399,13 +404,13 @@ msgstr ""
 msgid "Average points lost: "
 msgstr ""
 
-#: app/components/RatingGraph.tsx:161:21
+#: app/components/RatingGraph.tsx:127:18
 #: app/pages/RatingTable.tsx:491:32
 #: app/pages/RatingTable.tsx:551:7
 msgid "Games played"
 msgstr ""
 
-#: app/components/RatingGraph.tsx:171:21
+#: app/components/RatingGraph.tsx:138:18
 #: app/pages/RatingTable.tsx:242:20
 msgid "Rating"
 msgstr ""
@@ -418,11 +423,11 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: app/components/YakuGraph.tsx:70:42
+#: app/components/YakuGraph.tsx:71:49
 msgid "Yakuhai: total"
 msgstr ""
 
-#: app/components/YakuGraph.tsx:101:23
+#: app/components/YakuGraph.tsx:91:18
 msgid "Yaku collected over all time"
 msgstr ""
 
@@ -1485,19 +1490,19 @@ msgstr ""
 msgid "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:159:16
+#: app/pages/PlayerStats.tsx:158:16
 msgid "View selected game details"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:166:24
+#: app/pages/PlayerStats.tsx:165:24
 msgid "Previous game"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:183:24
 msgid "Next game"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:206:24
+#: app/pages/PlayerStats.tsx:205:24
 msgid "Close game preview"
 msgstr ""
 

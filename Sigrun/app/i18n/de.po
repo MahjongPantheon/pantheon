@@ -292,6 +292,10 @@ msgstr "Mit Tobi"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Kombinationen aus Yakuman sind erlaubt, z.B.: Tsuuisou + Daisangen"
 
+#: app/components/HandsGraph.tsx:42:12
+msgid "Amount"
+msgstr ""
+
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:204:18
 msgid "Amount of chombo penalty"
 msgstr "Höhe der Strafe für Chombo"
@@ -458,7 +462,7 @@ msgstr ""
 msgid "Chuuren poutou"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:206:24
+#: app/pages/PlayerStats.tsx:205:24
 msgid "Close game preview"
 msgstr "Spiel Vorschau schließen"
 
@@ -648,7 +652,7 @@ msgstr "Gültigkeitsdauer des Spiels(in Stunden)"
 msgid "Game preview"
 msgstr "Spielvorschau"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:491:32
+#: app/components/RatingGraph.tsx:127:18 app/pages/RatingTable.tsx:491:32
 #: app/pages/RatingTable.tsx:551:7
 msgid "Games played"
 msgstr "Anzahl an Spielen"
@@ -767,7 +771,7 @@ msgstr "Ehrengäste"
 msgid "Haitei"
 msgstr ""
 
-#: app/components/HandsGraph.tsx:85:21
+#: app/components/HandsGraph.tsx:105:18
 msgid "Hands value"
 msgstr "Wert der Hand"
 
@@ -978,7 +982,7 @@ msgstr ""
 msgid "Nagashi: %1"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:183:24
 msgid "Next game"
 msgstr "Nächstes Spiel"
 
@@ -1115,11 +1119,11 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "Zum Event angemeldete Spieler"
 
-#: app/pages/PlayerStats.tsx:166:24
+#: app/pages/PlayerStats.tsx:165:24
 msgid "Previous game"
 msgstr "Letztes Spiel"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:242:20
+#: app/components/RatingGraph.tsx:138:18 app/pages/RatingTable.tsx:242:20
 msgid "Rating"
 msgstr "Ranking"
 
@@ -1509,6 +1513,7 @@ msgid "Tonpuusen"
 msgstr ""
 
 #: app/components/PlayerStatsListing.tsx:191:16
+#: app/components/RatingGraph.tsx:118:18
 msgid "Total points gained: "
 msgstr "Gesamtpunkte gewonnen:"
 
@@ -1573,7 +1578,7 @@ msgstr ""
 msgid "View game"
 msgstr "Spiel ansehen"
 
-#: app/pages/PlayerStats.tsx:159:16
+#: app/pages/PlayerStats.tsx:158:16
 msgid "View selected game details"
 msgstr "Details für ausgewähltes Spiel"
 
@@ -1644,7 +1649,7 @@ msgstr "Yakitori Strafe"
 msgid "Yaku allowed"
 msgstr "Erlaubte Yaku"
 
-#: app/components/YakuGraph.tsx:101:23
+#: app/components/YakuGraph.tsx:91:18
 msgid "Yaku collected over all time"
 msgstr "Gesammelte Yakus"
 
@@ -1668,7 +1673,7 @@ msgstr ""
 msgid "Yakuhai x4"
 msgstr ""
 
-#: app/components/YakuGraph.tsx:70:42
+#: app/components/YakuGraph.tsx:71:49
 msgid "Yakuhai: total"
 msgstr "Yakuhai: total"
 

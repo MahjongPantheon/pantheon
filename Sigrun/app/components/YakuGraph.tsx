@@ -15,12 +15,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as React from 'react';
-import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
-import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
-import { YakuStat } from '../clients/proto/atoms.pb';
+import * as React from 'react';
 import { useMemo } from 'react';
+import { YakuStat } from '../clients/proto/atoms.pb';
+import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
+import { useI18n } from '../hooks/i18n';
+import { CustomizedAxisTick } from './LineGraph';
 
 const BarGraph = React.lazy(() => import('./BarGraph'));
 
@@ -61,58 +62,47 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
 
   const yakuStats = [...yaku.entries()]
     .map(([key, value]) => {
-      return { x: value, y: yakuNameMap.get(key) + ` (${value})` };
+      return { count: value, yaku: yakuNameMap.get(key) };
     })
-    .filter((v) => v.x > 0)
-    .sort((a, b) => b.x - a.x);
+    .filter((v) => v.count > 0)
+    .sort((a, b) => b.count - a.count);
 
   if (totalYakuhai > 0) {
-    yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') + ` (${totalYakuhai})` });
+    yakuStats.push({ count: totalYakuhai, yaku: i18n._t('Yakuhai: total') });
   }
 
   const yakuStatsHeight = 40 + 24 * yakuStats.length;
   return (
-    <div style={{ position: 'relative', height: `${yakuStatsHeight}px` }}>
-      <BarGraph
-        data={{ datasets: [{ data: yakuStats }] }}
-        options={{
-          maintainAspectRatio: false,
-          backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-          borderColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-          color: isDark ? theme.colors.gray[2] : theme.colors.dark[7],
-          font: { size: 16, family: '"PT Sans Narrow", Arial' },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              enabled: false,
-            },
+    <BarGraph
+      barChartProps={{ margin: { bottom: 32 } }}
+      data={yakuStats}
+      dataKey='yaku'
+      getBarColor={() => (isDark ? 'blue.8' : 'blue.3')}
+      gridAxis='xy'
+      h={yakuStatsHeight}
+      orientation='vertical'
+      series={[{ name: 'count' }]}
+      textColor={isDark ? theme.colors.gray[2] : theme.colors.dark[7]}
+      withTooltip={false}
+      withBarValueLabel
+      xAxisProps={{
+        tick: <CustomizedAxisTick />,
+        label: {
+          value: i18n._t('Yaku collected over all time'),
+          offset: -20,
+          position: 'insideBottom',
+          style: {
+            fontFamily: '"PT Sans Narrow", Arial',
+            fontSize: 16,
           },
-          events: [],
-          indexAxis: 'y',
-          // grouped: false,
-          scales: {
-            x: {
-              grid: {
-                color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-              },
-              position: 'bottom',
-              title: {
-                display: true,
-                text: i18n._t('Yaku collected over all time'),
-              },
-            },
-            y: {
-              ticks: {
-                autoSkip: false,
-              },
-              grid: {
-                color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-              },
-            },
-          },
-        }}
-      />
-    </div>
+        },
+      }}
+      yAxisProps={{
+        interval: 0,
+        tick: { fontSize: 16 },
+        width: 150,
+      }}
+    />
   );
 };
 

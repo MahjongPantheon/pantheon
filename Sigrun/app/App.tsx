@@ -27,8 +27,9 @@ import { Timer } from './pages/Timer';
 import { Achievements } from './pages/Achievements';
 import { EventRulesOverview } from './pages/EventRulesOverview';
 import { RegisteredPlayers } from './pages/RegisteredPlayers';
-import './App.css';
 import { TablesState } from './pages/TablesState';
+import './App.css';
+import '@mantine/charts/styles.css';
 
 export function App() {
   return (
