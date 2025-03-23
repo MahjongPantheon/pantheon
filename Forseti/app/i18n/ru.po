@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 20:13+0100\n"
-"PO-Revision-Date: 2025-01-19 02:27+0300\n"
+"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"PO-Revision-Date: 2025-03-23 23:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: app/pages/GamesControl/GamesList.tsx:208:53
 #: app/pages/GamesControl/TournamentControls.tsx:271:45
@@ -2099,8 +2099,8 @@ msgid "Tenhou"
 msgstr "Тенхо"
 
 #: app/pages/ProfileManage.tsx:251:22 app/pages/ProfileManageAdmin.tsx:277:26
-msgid "Tenhou ID"
-msgstr "Tenhou ID"
+msgid "Tenhou nickname"
+msgstr "Никнейм на Tenhou"
 
 #: app/pages/ProfileManage.tsx:94:13
 msgid ""
@@ -2507,6 +2507,9 @@ msgstr "показать / скрыть"
 
 #~ msgid "Reset timer"
 #~ msgstr "Сбросить таймер"
+
+#~ msgid "Tenhou ID"
+#~ msgstr "Tenhou ID"
 
 #~ msgid ""
 #~ "The points you enter here will be subtracted from player score after uma "

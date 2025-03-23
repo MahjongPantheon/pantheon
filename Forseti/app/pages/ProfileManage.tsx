@@ -248,7 +248,7 @@ export const ProfileManage: React.FC = () => {
             <Space h='md' />
             <TextInput
               icon={<IconIdBadge2 size='1rem' />}
-              label={i18n._t('Tenhou ID')}
+              label={i18n._t('Tenhou nickname')}
               {...form.getInputProps('tenhouId')}
             />
             <Space h='md' />

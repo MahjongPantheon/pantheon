@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 20:13+0100\n"
-"PO-Revision-Date: 2024-04-20 10:57+0200\n"
+"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"PO-Revision-Date: 2025-03-23 23:41+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Bookmarks: -1,290,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: app/pages/GamesControl/GamesList.tsx:208:53
@@ -2065,8 +2065,8 @@ msgid "Tenhou"
 msgstr "천화"
 
 #: app/pages/ProfileManage.tsx:251:22 app/pages/ProfileManageAdmin.tsx:277:26
-msgid "Tenhou ID"
-msgstr "천봉 ID"
+msgid "Tenhou nickname"
+msgstr "천봉 nickname"
 
 #: app/pages/ProfileManage.tsx:94:13
 msgid ""
@@ -2443,6 +2443,9 @@ msgstr "표시 / 숨김"
 
 #~ msgid "Reset timer"
 #~ msgstr "타이머 초기화"
+
+#~ msgid "Tenhou ID"
+#~ msgstr "천봉 ID"
 
 #~ msgid ""
 #~ "The points you enter here will be subtracted from player score after uma "

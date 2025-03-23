@@ -48,7 +48,7 @@ export const PlayerSelector: React.FC<{
         <Group noWrap>
           <Text>
             {title} [#{value}, {city}
-            {!!tenhouId && `, Tenhou ID: ${tenhouId}`}]
+            {!!tenhouId && `, Tenhou nickname: ${tenhouId}`}]
           </Text>
         </Group>
       </div>
