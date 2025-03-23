@@ -274,7 +274,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
           <Space h='md' />
           <TextInput
             icon={<IconIdBadge2 size='1rem' />}
-            description={i18n._t('Tenhou ID')}
+            description={i18n._t('Tenhou nickname')}
             {...form.getInputProps('tenhouId')}
           />
           <Space h='md' />

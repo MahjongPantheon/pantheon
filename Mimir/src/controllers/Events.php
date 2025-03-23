@@ -113,6 +113,10 @@ class EventsController extends Controller
 
         if ($this->_meta->isSuperadmin()) {
             $event->setPlatformId($platformId === PlatformType::PLATFORM_TYPE_UNSPECIFIED ? null : $platformId);
+        } else {
+            if ($type === 'online') { // online events created by users can only be tenhou-based
+                $event->setPlatformId(PlatformType::PLATFORM_TYPE_TENHOUNET);
+            }
         }
 
         switch ($type) {
@@ -259,6 +263,10 @@ class EventsController extends Controller
 
         if ($this->_meta->isSuperadmin()) {
             $event->setPlatformId($platformId === PlatformType::PLATFORM_TYPE_UNSPECIFIED ? null : $platformId);
+        } else {
+            if ($event->getIsOnline()) { // fixes online event created by users
+                $event->setPlatformId(PlatformType::PLATFORM_TYPE_TENHOUNET);
+            }
         }
 
         if ($event->getSyncStart()) { // Should be a tournament
