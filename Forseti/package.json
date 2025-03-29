@@ -35,7 +35,7 @@
     "vite": "^5.4.7",
     "vite-plugin-pwa": "^0.20.5",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.9"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
