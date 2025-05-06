@@ -70,7 +70,7 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
     yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') + ` (${totalYakuhai})` });
   }
 
-  const yakuStatsHeight = 40 + 24 * yakuStats.length;
+  const yakuStatsHeight = 40 + 24 * (yakuStats.length < 3 ? 3 : yakuStats.length);
   return (
     <div style={{ position: 'relative', height: `${yakuStatsHeight}px` }}>
       <BarGraph
