@@ -68,4 +68,4 @@ return (new RulesetConfig())
     ->setWithNagashiMangan(false)
     ->setChomboEndsGame(false)
     ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII])
-    ->setDoubleYakuman([Y_DAISANGEN, Y_SUUANKOUTANKI, Y_CHUURENPOUTOPURE, Y_KOKUSHIMUSOU13]);
+    ->setDoubleYakuman([Y_SUUANKOUTANKI, Y_CHUURENPOUTOPURE, Y_KOKUSHIMUSOU13]);

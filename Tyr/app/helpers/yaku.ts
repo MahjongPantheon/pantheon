@@ -303,8 +303,8 @@ export const yakuList: Yaku[] = [
   {
     id: YakuId.CHUURENPOUTOPURE,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t('Chuuren poutou9'),
-    shortName: (i18n: I18nService) => i18n._t('Chuuren poutou9'),
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou 9-side'),
+    shortName: (i18n: I18nService) => i18n._t('Chuuren poutou 9-side'),
   },
   {
     id: YakuId.RYUUIISOU,
@@ -327,8 +327,8 @@ export const yakuList: Yaku[] = [
   {
     id: YakuId.KOKUSHIMUSOU13,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t('Kokushi musou13'),
-    shortName: (i18n: I18nService) => i18n._t('Kokushi musou13'),
+    name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
+    shortName: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
   },
   {
     id: YakuId.RIICHI,

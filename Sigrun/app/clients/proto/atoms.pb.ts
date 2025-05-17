@@ -14580,9 +14580,6 @@ export const RulesetConfigJSON = {
     if (msg.doubleYakuman?.length) {
       json["doubleYakuman"] = msg.doubleYakuman;
     }
-    if (msg.doubleYakuman?.length) {
-      json["doubleYakuman"] = msg.doubleYakuman;
-    }
     return json;
   },
 

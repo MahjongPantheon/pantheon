@@ -36,6 +36,7 @@ import { i18n } from '../../i18n';
 import { Hand, IProps as HandProps } from '../../pages/Hand/Hand';
 import { sortByViewPriority } from '../../../helpers/yaku';
 import { getPlayerWithPao } from '../../../store/selectors/pao';
+import { enableDoubleYakuman } from '../../../helpers/yakuValues';
 
 export const SelectHand = (props: IComponentProps) => {
   const loc = useContext(i18n);
@@ -107,6 +108,8 @@ export const SelectHand = (props: IComponentProps) => {
   const allWinners = getWinningUsers(state);
   const bottomPanelText = getOutcomeName(loc, state.currentOutcome.selectedOutcome);
   const canGoNext = !!mayGoNextFromYakuSelect(state);
+
+  enableDoubleYakuman(state.gameConfig?.rulesetConfig?.doubleYakuman ?? []);
 
   const selectedYaku = getSelectedYaku(state);
   const disabledYaku = getDisabledYaku(state);

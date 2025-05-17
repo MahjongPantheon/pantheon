@@ -230,7 +230,7 @@ export const yakuList = [
   },
   {
     id: YakuId.CHUURENPOUTOPURE,
-    name: (i18n: I18nService) => i18n._t('Chuuren poutou pure'),
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou 9-side'),
   },
   {
     id: YakuId.RYUUIISOU,
@@ -242,7 +242,7 @@ export const yakuList = [
   },
   {
     id: YakuId.KOKUSHIMUSOU13,
-    name: (i18n: I18nService) => i18n._t('Kokushi musou13'),
+    name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
   },
   {
     id: YakuId.TENHOU,
@@ -298,10 +298,10 @@ export const doubleYakuman = [
   },
   {
     id: YakuId.CHUURENPOUTOPURE,
-    name: (i18n: I18nService) => i18n._t('Chuuren poutou pure'),
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou 9-side'),
   },
   {
     id: YakuId.KOKUSHIMUSOU13,
-    name: (i18n: I18nService) => i18n._t('Kokushi musou13'),
+    name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
   },
 ];

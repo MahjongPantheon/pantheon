@@ -26,7 +26,6 @@ const handValues: [Y, number, number][] = [
   [Y.SANKANTSU, 2, 2],
   [Y.SUUKANTSU, -1, -1],
   [Y.SUUANKOU, -1, 0],
-  [Y.SUUANKOUTANKI, -2, 0],
   [Y.PINFU, 1, 0],
   [Y.IIPEIKOU, 1, 0],
   [Y.RYANPEIKOU, 3, 0],
@@ -48,11 +47,9 @@ const handValues: [Y, number, number][] = [
   [Y.HONITSU, 3, 2],
   [Y.CHINITSU, 6, 5],
   [Y.CHUURENPOUTO, -1, 0],
-  [Y.CHUURENPOUTOPURE, -2, 0],
   [Y.RYUUIISOU, -1, -1],
   [Y.CHIITOITSU, 2, 0],
   [Y.KOKUSHIMUSOU, -1, 0],
-  [Y.KOKUSHIMUSOU13, -1, 0],
   [Y.RIICHI, 1, 0],
   [Y.DOUBLERIICHI, 2, 0],
   [Y.IPPATSU, 1, 0],
@@ -65,6 +62,9 @@ const handValues: [Y, number, number][] = [
   [Y.CHANKAN, 1, 1],
   [Y.RENHOU, 5, 0],
   [Y.OPENRIICHI, 1, 0],
+  [Y.SUUANKOUTANKI, -1, 0],
+  [Y.CHUURENPOUTOPURE, -1, 0],
+  [Y.KOKUSHIMUSOU13, -1, 0],
 ] as const;
 
 const openHandValues: { [key: number]: number } = {};
@@ -111,4 +111,15 @@ export function getHan(yakuList: Y[]): number {
     }
     return acc + (openHand ? openHandValues[id] : closedHandValues[id]);
   }, 0);
+}
+
+export function enableDoubleYakuman(doubleYakuman: Y[]): void {
+  doubleYakuman.forEach(id => {
+    if (openHandValues[id]) {
+      openHandValues[id] = -2;
+    }
+    if (closedHandValues[id]) {
+      closedHandValues[id] = -2;
+    }
+  });
 }

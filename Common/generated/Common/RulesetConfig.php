@@ -1114,7 +1114,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
         return $this->double_yakuman;
     }
 
-     /**
+    /**
      * Generated from protobuf field <code>repeated int32 double_yakuman = 40;</code>
      * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
