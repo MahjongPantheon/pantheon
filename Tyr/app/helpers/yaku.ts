@@ -63,6 +63,9 @@ export const enum YakuId {
   CHANKAN = 42,
   RENHOU = 43,
   OPENRIICHI = 44,
+  SUUANKOUTANKI = 45,
+  CHUURENPOUTOPURE = 46,
+  KOKUSHIMUSOU13 = 47
 }
 
 export interface YakuMap<T> {
@@ -110,6 +113,9 @@ export interface YakuMap<T> {
   [YakuId.CHANKAN]: T;
   [YakuId.RENHOU]: T;
   [YakuId.OPENRIICHI]: T;
+  [YakuId.SUUANKOUTANKI]: T;
+  [YakuId.CHUURENPOUTOPURE]: T;
+  [YakuId.KOKUSHIMUSOU13]: T;
 }
 
 // Sequence of yaku here is very important for packing and unpacking, see yakuCompatibility.ts
@@ -155,6 +161,12 @@ export const yakuList: Yaku[] = [
     yakuman: true,
     name: (i18n: I18nService) => i18n._t('Suuankou'),
     shortName: (i18n: I18nService) => i18n._t('Suuankou'),
+  },
+  {
+    id: YakuId.SUUANKOUTANKI,
+    yakuman: true,
+    name: (i18n: I18nService) => i18n._t('SuuankouTanki'),
+    shortName: (i18n: I18nService) => i18n._t('SuuankouTanki'),
   },
   {
     id: YakuId.PINFU,
@@ -289,6 +301,12 @@ export const yakuList: Yaku[] = [
     shortName: (i18n: I18nService) => i18n._t('Chuuren poutou'),
   },
   {
+    id: YakuId.CHUURENPOUTOPURE,
+    yakuman: true,
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou9'),
+    shortName: (i18n: I18nService) => i18n._t('Chuuren poutou9'),
+  },
+  {
     id: YakuId.RYUUIISOU,
     yakuman: true,
     name: (i18n: I18nService) => i18n._t('Ryuuiisou'),
@@ -305,6 +323,12 @@ export const yakuList: Yaku[] = [
     yakuman: true,
     name: (i18n: I18nService) => i18n._t('Kokushi musou'),
     shortName: (i18n: I18nService) => i18n._t('Kokushi musou'),
+  },
+  {
+    id: YakuId.KOKUSHIMUSOU13,
+    yakuman: true,
+    name: (i18n: I18nService) => i18n._t('Kokushi musou13'),
+    shortName: (i18n: I18nService) => i18n._t('Kokushi musou13'),
   },
   {
     id: YakuId.RIICHI,
@@ -417,17 +441,20 @@ const viewPriority = [
   YakuId.RINSHANKAIHOU,
   YakuId.SUUKANTSU,
   YakuId.SUUANKOU,
+  YakuId.SUUANKOUTANKI,
   YakuId.DAISANGEN,
   YakuId.SHOSUUSHII,
   YakuId.DAISUUSHII,
   YakuId.TSUUIISOU,
   YakuId.CHINROTO,
   YakuId.CHUURENPOUTO,
+  YakuId.CHUURENPOUTOPURE,
   YakuId.RYUUIISOU,
   YakuId.KOKUSHIMUSOU,
+  YakuId.KOKUSHIMUSOU13,
   YakuId.TENHOU,
   YakuId.CHIHOU,
-  YakuId.RENHOU,
+  YakuId.RENHOU
 ];
 
 export function sortByViewPriority(list: Yaku[]): Yaku[] {

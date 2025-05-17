@@ -644,6 +644,7 @@ export interface RulesetConfig {
   yakitoriPenalty: number;
   chomboEndsGame: boolean;
   honbaValue: number;
+  doubleYakuman: number[];
 }
 
 export interface GenericSuccessResponse {
@@ -7733,6 +7734,7 @@ export const RulesetConfig = {
       yakitoriPenalty: 0,
       chomboEndsGame: false,
       honbaValue: 0,
+      doubleYakuman: [],
       ...msg,
     };
   },
@@ -7860,6 +7862,9 @@ export const RulesetConfig = {
     }
     if (msg.honbaValue) {
       writer.writeInt32(39, msg.honbaValue);
+    }
+    if (msg.doubleYakuman?.length) {
+      writer.writePackedInt32(40, msg.doubleYakuman);
     }
     return writer;
   },
@@ -8036,6 +8041,14 @@ export const RulesetConfig = {
         }
         case 39: {
           msg.honbaValue = reader.readInt32();
+          break;
+        }
+        case 40: {
+          if (reader.isDelimited()) {
+            msg.doubleYakuman.push(...reader.readPackedInt32());
+          } else {
+            msg.doubleYakuman.push(reader.readInt32());
+          }
           break;
         }
         default: {
@@ -14429,6 +14442,7 @@ export const RulesetConfigJSON = {
       yakitoriPenalty: 0,
       chomboEndsGame: false,
       honbaValue: 0,
+      doubleYakuman: [],
       ...msg,
     };
   },
@@ -14562,6 +14576,12 @@ export const RulesetConfigJSON = {
     }
     if (msg.honbaValue) {
       json["honbaValue"] = msg.honbaValue;
+    }
+    if (msg.doubleYakuman?.length) {
+      json["doubleYakuman"] = msg.doubleYakuman;
+    }
+    if (msg.doubleYakuman?.length) {
+      json["doubleYakuman"] = msg.doubleYakuman;
     }
     return json;
   },
@@ -14747,6 +14767,10 @@ export const RulesetConfigJSON = {
     const _honbaValue_ = json["honbaValue"] ?? json["honba_value"];
     if (_honbaValue_) {
       msg.honbaValue = protoscript.parseNumber(_honbaValue_);
+    }
+    const _doubleYakuman_ = json["doubleYakuman"] ?? json["double_yakuman"];
+    if (_doubleYakuman_) {
+      msg.doubleYakuman = _doubleYakuman_.map(protoscript.parseNumber);
     }
     return msg;
   },

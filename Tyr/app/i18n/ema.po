@@ -424,6 +424,10 @@ msgstr ""
 msgid "Suuankou"
 msgstr "Four Concealed Pungs"
 
+#: app/helpers/yaku.ts:384:34 app/helpers/yaku.ts:385:39
+msgid "SuuankouTanki"
+msgstr "Four Concealed Pungs Tanki"
+
 #: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
 msgid "Suukantsu"
 msgstr "Four Kongs"

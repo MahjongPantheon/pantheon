@@ -431,6 +431,10 @@ msgstr "Статистика"
 msgid "Suuankou"
 msgstr "Сууанко"
 
+#: app/helpers/yaku.ts:384:34 app/helpers/yaku.ts:385:39
+msgid "SuuankouTanki"
+msgstr "Сууанко Танки"
+
 #: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
 msgid "Suukantsu"
 msgstr "Сууканцу"

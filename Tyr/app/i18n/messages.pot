@@ -336,6 +336,11 @@ msgstr ""
 msgid "Suuankou"
 msgstr ""
 
+#: app/helpers/yaku.ts:156:34
+#: app/helpers/yaku.ts:157:39
+msgid "SuuankouTanki"
+msgstr ""
+
 #: app/helpers/yaku.ts:162:34
 #: app/helpers/yaku.ts:163:39
 msgid "Pinfu"

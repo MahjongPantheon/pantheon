@@ -60,6 +60,11 @@ define('Y_YAKUHAI2', 14);
 define('Y_YAKUHAI3', 15);
 define('Y_YAKUHAI4', 16);
 define('Y_OPENRIICHI', 44);
+define('Y_SUUANKOUTANKI', 45);
+define('Y_CHUURENPOUTOPURE', 46);
+define('Y_KOKUSHIMUSOU13', 47);
+
+
 
 class YakuMap
 {
@@ -128,7 +133,10 @@ class YakuMap
             Y_YAKUHAI2,
             Y_YAKUHAI3,
             Y_YAKUHAI4,
-            Y_OPENRIICHI
+            Y_OPENRIICHI,
+            Y_SUUANKOUTANKI,
+            Y_CHUURENPOUTOPURE,
+            Y_KOKUSHIMUSOU13
         ];
     }
 
@@ -183,7 +191,10 @@ class YakuMap
             15 => _t("Yakuhai x3"),
             16 => _t("Yakuhai x4"),
             17 => _t("Yakuhai x5"),
-            44 => _t("Open riichi")
+            44 => _t("Open riichi"),
+            45 => _t("Suu ankou tanki"),
+            45 => _t("Chuuren pooto pure"),
+            46 => _t("Kokushi musou13")
         ];
     }
 
@@ -249,14 +260,14 @@ class YakuMap
             38 => Y_CHIHOU,
             39 => Y_DAISANGEN,
             40 => Y_SUUANKOU,
-            41 => Y_SUUANKOU, // tanki
+            41 => Y_SUUANKOUTANKI, // tanki
             42 => Y_TSUUIISOU,
             43 => Y_RYUUIISOU,
             44 => Y_CHINROTO,
             45 => Y_CHUURENPOUTO,
-            46 => Y_CHUURENPOUTO, // 9-machi
+            46 => Y_CHUURENPOUTOPURE, // 9-machi
             47 => Y_KOKUSHIMUSOU,
-            48 => Y_KOKUSHIMUSOU, // 13-machi
+            48 => Y_KOKUSHIMUSOU13, // 13-machi
             49 => Y_DAISUUSHII,
             50 => Y_SHOSUUSHII,
             51 => Y_SUUKANTSU

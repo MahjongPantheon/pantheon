@@ -62,6 +62,9 @@ export enum YakuId {
   CHANKAN = 42,
   RENHOU = 43,
   OPENRIICHI = 44,
+  SUUANKOUTANKI = 45,
+  CHUURENPOUTOPURE = 46,
+  KOKUSHIMUSOU13 = 47
 }
 
 export const yakuList = [
@@ -194,6 +197,10 @@ export const yakuList = [
     name: (i18n: I18nService) => i18n._t('Suuankou'),
   },
   {
+    id: YakuId.SUUANKOUTANKI,
+    name: (i18n: I18nService) => i18n._t('SuuankouTanki'),
+  },
+  {
     id: YakuId.DAISANGEN,
     name: (i18n: I18nService) => i18n._t('Daisangen'),
   },
@@ -222,12 +229,20 @@ export const yakuList = [
     name: (i18n: I18nService) => i18n._t('Chuuren poutou'),
   },
   {
+    id: YakuId.CHUURENPOUTOPURE,
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou pure'),
+  },
+  {
     id: YakuId.RYUUIISOU,
     name: (i18n: I18nService) => i18n._t('Ryuuiisou'),
   },
   {
     id: YakuId.KOKUSHIMUSOU,
     name: (i18n: I18nService) => i18n._t('Kokushi musou'),
+  },
+  {
+    id: YakuId.KOKUSHIMUSOU13,
+    name: (i18n: I18nService) => i18n._t('Kokushi musou13'),
   },
   {
     id: YakuId.TENHOU,
@@ -269,5 +284,24 @@ export const yakuWithPao = [
   {
     id: YakuId.SUUKANTSU,
     name: (i18n: I18nService) => i18n._t('Suukantsu'),
+  },
+];
+
+export const doubleYakuman = [
+  {
+    id: YakuId.DAISUUSHII,
+    name: (i18n: I18nService) => i18n._t('Daisuushii'),
+  },
+  {
+    id: YakuId.SUUANKOUTANKI,
+    name: (i18n: I18nService) => i18n._t('SuuankouTanki'),
+  },
+  {
+    id: YakuId.CHUURENPOUTOPURE,
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou pure'),
+  },
+  {
+    id: YakuId.KOKUSHIMUSOU13,
+    name: (i18n: I18nService) => i18n._t('Kokushi musou13'),
   },
 ];

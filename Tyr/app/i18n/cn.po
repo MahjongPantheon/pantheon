@@ -425,6 +425,10 @@ msgstr "统计"
 msgid "Suuankou"
 msgstr "四暗刻"
 
+#: app/helpers/yaku.ts:384:34 app/helpers/yaku.ts:385:39
+msgid "SuuankouTanki"
+msgstr "四暗刻単騎"
+
 #: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
 msgid "Suukantsu"
 msgstr "四杠子"
