@@ -172,7 +172,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     /**
      * Generated from protobuf field <code>repeated int32 double_yakuman = 40;</code>
      */
-    protected $double_yakuman;
+    private $double_yakuman;
 
     /**
      * Constructor.
