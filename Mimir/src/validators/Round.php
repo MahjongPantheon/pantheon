@@ -173,8 +173,8 @@ class RoundsHelper
 
     protected static function _checkHan(array $data, string $key): void
     {
-        if (!is_int($data[$key]) || $data[$key] == 0 || $data[$key] < -5 || $data[$key] > 32) {
-            // don't allow more that 32 han or 5x yakuman
+        if (!is_int($data[$key]) || $data[$key] == 0 || $data[$key] < -6 || $data[$key] > 32) {
+            // don't allow more that 32 han or 6x yakuman
             throw new MalformedPayloadException('Field #' . $key . ' should be valid han count, but is "' . $data[$key] . '"');
         }
     }
