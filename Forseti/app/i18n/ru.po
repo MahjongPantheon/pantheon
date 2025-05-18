@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"POT-Creation-Date: 2025-05-18 16:30Z\n"
 "PO-Revision-Date: 2025-03-23 23:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -323,34 +323,34 @@ msgstr "Отменить раздачу"
 msgid "Cancelled: "
 msgstr "Отменено:"
 
-#: app/pages/OwnedEventsEdit/index.tsx:289:32
+#: app/pages/OwnedEventsEdit/index.tsx:297:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
 msgid "Changes saved!"
 msgstr "Изменения сохранены!"
 
-#: app/helpers/yaku.ts:182:34
+#: app/helpers/yaku.ts:185:34
 msgid "Chankan"
 msgstr "Чанкан"
 
-#: app/helpers/yaku.ts:102:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chanta"
 msgstr "Чанта"
 
-#: app/helpers/yaku.ts:238:34
+#: app/helpers/yaku.ts:253:34
 msgid "Chihou"
 msgstr "Чихо"
 
-#: app/helpers/yaku.ts:90:34
+#: app/helpers/yaku.ts:93:34
 msgid "Chiitoitsu"
 msgstr "Чиитойцу"
 
-#: app/helpers/yaku.ts:218:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chinitsu"
 msgstr "Чиницу"
 
-#: app/helpers/yaku.ts:214:34 app/helpers/yaku.ts:261:34
+#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:276:34
 msgid "Chinroutou"
 msgstr "Чинрото"
 
@@ -374,9 +374,14 @@ msgstr ""
 msgid "Chombo, %1"
 msgstr "Чомбо, %1"
 
-#: app/helpers/yaku.ts:222:34
+#: app/helpers/yaku.ts:229:34
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
+
+#: app/helpers/yaku.ts:233:34 app/helpers/yaku.ts:295:34
+#, fuzzy
+msgid "Chuuren poutou 9-side"
+msgstr "Чууренпото 9-ти сторонний"
 
 #: app/pages/ProfileManage.tsx:239:22
 msgid "City"
@@ -442,15 +447,16 @@ msgstr "Текущий раунд"
 msgid "Current status"
 msgstr "Текущий статус"
 
-#: app/helpers/yaku.ts:74:34
+#: app/helpers/yaku.ts:77:34
 msgid "Daburu riichi"
 msgstr "Дабл-риичи"
 
-#: app/helpers/yaku.ts:198:34 app/helpers/yaku.ts:245:34
+#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:260:34
 msgid "Daisangen"
 msgstr "Дайсанген"
 
-#: app/helpers/yaku.ts:206:34 app/helpers/yaku.ts:249:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:264:34
+#: app/helpers/yaku.ts:287:34
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
@@ -470,6 +476,11 @@ msgstr "Выключить ренчаны"
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:53:20
 msgid "Do not interrupt session until it ends"
 msgstr "Не прерывать игру до тех пор, пока она не закончена"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:78:25
+#, fuzzy
+msgid "Double yakuman:"
+msgstr "Двойной якуман:"
 
 #: app/pages/GamesControl/GamesList.tsx:450:12
 msgid "Draw, tempai: %1, riichi: %2"
@@ -538,8 +549,8 @@ msgstr "Выравнивание умы"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14 app/pages/OwnedEvents.tsx:94:14
-#: app/pages/OwnedEventsEdit/index.tsx:195:18
-#: app/pages/OwnedEventsEdit/index.tsx:226:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:203:18
+#: app/pages/OwnedEventsEdit/index.tsx:234:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -642,7 +653,7 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Не удалось удалить результаты"
 
-#: app/pages/OwnedEventsEdit/index.tsx:189:29
+#: app/pages/OwnedEventsEdit/index.tsx:197:29
 msgid "Failed to fetch event data"
 msgstr "Не удалось получить данные события"
 
@@ -700,7 +711,7 @@ msgid "Failed to save event script: server error or network unreachable"
 msgstr ""
 "Не удалось сохранить скрипт рассадки: ошибка сервера или сеть недоступна"
 
-#: app/pages/OwnedEventsEdit/index.tsx:221:27
+#: app/pages/OwnedEventsEdit/index.tsx:229:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
 
@@ -831,7 +842,7 @@ msgstr "К странице регистрации"
 msgid "Goal score"
 msgstr "Целевое количество очков"
 
-#: app/helpers/yaku.ts:174:34
+#: app/helpers/yaku.ts:177:34
 msgid "Haitei"
 msgstr "Хайтей"
 
@@ -861,15 +872,15 @@ msgstr ""
 "Выплата по хонбе будет выдана только первому победителю по ходу игры. Если "
 "не отмечено, выплата производится всем победителям."
 
-#: app/helpers/yaku.ts:150:34
+#: app/helpers/yaku.ts:153:34
 msgid "Honitsu"
 msgstr "Хоницу"
 
-#: app/helpers/yaku.ts:154:34
+#: app/helpers/yaku.ts:157:34
 msgid "Honroutou"
 msgstr "Хонрото"
 
-#: app/helpers/yaku.ts:170:34
+#: app/helpers/yaku.ts:173:34
 msgid "Houtei raoyui"
 msgstr "Хотей"
 
@@ -972,7 +983,7 @@ msgstr ""
 "Если отмечено, чомбо в последней раздаче после истечения таймера завершит "
 "игру и не позволит сыграть еще одну раздачу"
 
-#: app/helpers/yaku.ts:110:34
+#: app/helpers/yaku.ts:113:34
 msgid "Iipeikou"
 msgstr "Иипейко"
 
@@ -1026,15 +1037,15 @@ msgstr "Некорректный адрес email"
 msgid "Invalid title"
 msgstr "Некорректное имя"
 
-#: app/helpers/yaku.ts:82:34
+#: app/helpers/yaku.ts:85:34
 msgid "Ippatsu"
 msgstr "Иппацу"
 
-#: app/helpers/yaku.ts:126:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ittsu"
 msgstr "Иццу"
 
-#: app/helpers/yaku.ts:106:34
+#: app/helpers/yaku.ts:109:34
 msgid "Junchan"
 msgstr "Джунчан"
 
@@ -1046,9 +1057,14 @@ msgstr "Казое якуман"
 msgid "Kiriage mangan"
 msgstr "Кириаге манган"
 
-#: app/helpers/yaku.ts:230:34
+#: app/helpers/yaku.ts:241:34
 msgid "Kokushi musou"
 msgstr "Кокушимусо"
+
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:299:34
+#, fuzzy
+msgid "Kokushi musou 13-side"
+msgstr "Кокушимусо 13-ти сторонний"
 
 #: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
 msgid "Kuitan"
@@ -1184,7 +1200,7 @@ msgstr "Максимальный штраф"
 msgid "Menu"
 msgstr "Меню"
 
-#: app/helpers/yaku.ts:86:34
+#: app/helpers/yaku.ts:89:34
 msgid "Menzentsumo"
 msgstr "Мензенцумо"
 
@@ -1386,7 +1402,7 @@ msgstr "Открыть в новой вкладке"
 msgid "Open menu"
 msgstr "Меню"
 
-#: app/helpers/yaku.ts:78:34
+#: app/helpers/yaku.ts:81:34
 msgid "Open riichi"
 msgstr "Опен риичи"
 
@@ -1456,7 +1472,7 @@ msgstr "Причина штрафа"
 msgid "Phone number"
 msgstr "Номер телефона"
 
-#: app/helpers/yaku.ts:94:34
+#: app/helpers/yaku.ts:97:34
 msgid "Pinfu"
 msgstr "Пин-фу"
 
@@ -1720,7 +1736,7 @@ msgstr "Удалить замену"
 msgid "Remove the game as it never existed"
 msgstr "Удалить игру, как будто ее никогда не было"
 
-#: app/helpers/yaku.ts:186:34
+#: app/helpers/yaku.ts:189:34
 msgid "Renhou"
 msgstr "Ренхо"
 
@@ -1752,7 +1768,7 @@ msgstr "Сбросить рассадку"
 msgid "Reset your password"
 msgstr "Сбросить пароль"
 
-#: app/helpers/yaku.ts:70:34
+#: app/helpers/yaku.ts:73:34
 msgid "Riichi"
 msgstr "Риичи"
 
@@ -1772,7 +1788,7 @@ msgstr ""
 "После завершения игры все ставки риичи, оставшиеся на столе, отдаются "
 "победителю в игре"
 
-#: app/helpers/yaku.ts:178:34
+#: app/helpers/yaku.ts:181:34
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
@@ -1799,31 +1815,31 @@ msgstr ""
 msgid "Ruleset tuning"
 msgstr "Настройка набора правил"
 
-#: app/helpers/yaku.ts:114:34
+#: app/helpers/yaku.ts:117:34
 msgid "Ryanpeikou"
 msgstr "Рянпейко"
 
-#: app/helpers/yaku.ts:226:34 app/helpers/yaku.ts:257:34
+#: app/helpers/yaku.ts:237:34 app/helpers/yaku.ts:272:34
 msgid "Ryuuiisou"
 msgstr "Рюисо"
 
-#: app/helpers/yaku.ts:158:34
+#: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr "Сананко"
 
-#: app/helpers/yaku.ts:166:34
+#: app/helpers/yaku.ts:169:34
 msgid "Sankantsu"
 msgstr "Санканцу"
 
-#: app/helpers/yaku.ts:118:34
+#: app/helpers/yaku.ts:121:34
 msgid "Sanshoku"
 msgstr "Саншоку"
 
-#: app/helpers/yaku.ts:122:34
+#: app/helpers/yaku.ts:125:34
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/pages/OwnedEventsEdit/index.tsx:289:60
+#: app/pages/OwnedEventsEdit/index.tsx:297:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1952,11 +1968,11 @@ msgstr ""
 msgid "Setup team name for each player (for team events)"
 msgstr "Установить имена команд для игроков (для командных турниров)"
 
-#: app/helpers/yaku.ts:162:34
+#: app/helpers/yaku.ts:165:34
 msgid "Shousangen"
 msgstr "Шосанген"
 
-#: app/helpers/yaku.ts:202:34
+#: app/helpers/yaku.ts:209:34
 msgid "Shousuushii"
 msgstr "Шосуши"
 
@@ -2040,11 +2056,16 @@ msgstr "Подсистема"
 msgid "Success"
 msgstr "Успешно"
 
-#: app/helpers/yaku.ts:194:34
+#: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
 msgstr "Сууанко"
 
-#: app/helpers/yaku.ts:190:34 app/helpers/yaku.ts:265:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:291:34
+#, fuzzy
+msgid "Suuankou Tanki"
+msgstr "Сууанко Танки"
+
+#: app/helpers/yaku.ts:193:34 app/helpers/yaku.ts:280:34
 msgid "Suukantsu"
 msgstr "Сууканцу"
 
@@ -2069,7 +2090,7 @@ msgstr "Системная статистика"
 msgid "Table # %1"
 msgstr "Стол № %1"
 
-#: app/helpers/yaku.ts:98:34
+#: app/helpers/yaku.ts:101:34
 msgid "Tanyao"
 msgstr "Тан-яо"
 
@@ -2094,7 +2115,7 @@ msgstr "Командный турнир"
 msgid "Team:"
 msgstr "Команда:"
 
-#: app/helpers/yaku.ts:234:34
+#: app/helpers/yaku.ts:249:34
 msgid "Tenhou"
 msgstr "Тенхо"
 
@@ -2220,7 +2241,7 @@ msgstr "Переключить видимость номинаций для вс
 msgid "Toggle visibility of rating table"
 msgstr "Переключить видимость таблицы результатов для всех"
 
-#: app/helpers/yaku.ts:146:34
+#: app/helpers/yaku.ts:149:34
 msgid "Toitoi"
 msgstr "Тойтой"
 
@@ -2245,7 +2266,7 @@ msgstr "Настройки турнира"
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Цумо, %1 (%2), риичи: %3"
 
-#: app/helpers/yaku.ts:210:34 app/helpers/yaku.ts:253:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:268:34
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
@@ -2374,19 +2395,19 @@ msgstr "Разрешенные яку"
 msgid "Yaku settings"
 msgstr "Настройки яку"
 
-#: app/helpers/yaku.ts:130:34
+#: app/helpers/yaku.ts:133:34
 msgid "Yakuhai x1"
 msgstr "Якухай 1"
 
-#: app/helpers/yaku.ts:134:34
+#: app/helpers/yaku.ts:137:34
 msgid "Yakuhai x2"
 msgstr "Якухай 2"
 
-#: app/helpers/yaku.ts:138:34
+#: app/helpers/yaku.ts:141:34
 msgid "Yakuhai x3"
 msgstr "Якухай 3"
 
-#: app/helpers/yaku.ts:142:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 

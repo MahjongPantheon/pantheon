@@ -165,8 +165,8 @@ export const yakuList: Yaku[] = [
   {
     id: YakuId.SUUANKOUTANKI,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t('SuuankouTanki'),
-    shortName: (i18n: I18nService) => i18n._t('SuuankouTanki'),
+    name: (i18n: I18nService) => i18n._t('Suuankou Tanki'),
+    shortName: (i18n: I18nService) => i18n._t('Suuankou Tanki'),
   },
   {
     id: YakuId.PINFU,

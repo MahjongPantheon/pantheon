@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 20:13+0100\n"
+"POT-Creation-Date: 2025-05-18 16:30Z\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -59,27 +59,27 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/helpers/yaku.ts:366:34 app/helpers/yaku.ts:367:39
+#: app/helpers/yaku.ts:390:34 app/helpers/yaku.ts:391:39
 msgid "Chankan"
 msgstr "Robbing a Kong"
 
-#: app/helpers/yaku.ts:258:34 app/helpers/yaku.ts:259:39
+#: app/helpers/yaku.ts:270:34 app/helpers/yaku.ts:271:39
 msgid "Chanta"
 msgstr "Outside Hand"
 
-#: app/helpers/yaku.ts:354:34 app/helpers/yaku.ts:355:39
+#: app/helpers/yaku.ts:378:34 app/helpers/yaku.ts:379:39
 msgid "Chiihou"
 msgstr "Blessing of Earth"
 
-#: app/helpers/yaku.ts:300:34 app/helpers/yaku.ts:301:39
+#: app/helpers/yaku.ts:318:34 app/helpers/yaku.ts:319:39
 msgid "Chiitoitsu"
 msgstr "Seven pairs"
 
-#: app/helpers/yaku.ts:282:34 app/helpers/yaku.ts:283:39
+#: app/helpers/yaku.ts:294:34 app/helpers/yaku.ts:295:39
 msgid "Chinitsu"
 msgstr "Full Flush"
 
-#: app/helpers/yaku.ts:270:34 app/helpers/yaku.ts:271:39
+#: app/helpers/yaku.ts:282:34 app/helpers/yaku.ts:283:39
 msgid "Chinroutou"
 msgstr "All Terminals"
 
@@ -90,8 +90,13 @@ msgstr "All Terminals"
 msgid "Chombo"
 msgstr ""
 
-#: app/helpers/yaku.ts:288:34 app/helpers/yaku.ts:289:39
+#: app/helpers/yaku.ts:300:34 app/helpers/yaku.ts:301:39
 msgid "Chuuren poutou"
+msgstr "Nine Gates"
+
+#: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
+#, fuzzy
+msgid "Chuuren poutou 9-side"
 msgstr "Nine Gates"
 
 #: app/components/pages/NewGame/NewGame.tsx:72:14
@@ -102,19 +107,19 @@ msgstr ""
 msgid "Current game"
 msgstr ""
 
-#: app/helpers/yaku.ts:319:39
+#: app/helpers/yaku.ts:343:39
 msgid "Daburu"
 msgstr "Double"
 
-#: app/helpers/yaku.ts:318:34
+#: app/helpers/yaku.ts:342:34
 msgid "Daburu riichi"
 msgstr "Double Riichi"
 
-#: app/helpers/yaku.ts:228:34 app/helpers/yaku.ts:229:39
+#: app/helpers/yaku.ts:240:34 app/helpers/yaku.ts:241:39
 msgid "Daisangen"
 msgstr "Big Three Dragons"
 
-#: app/helpers/yaku.ts:240:34 app/helpers/yaku.ts:241:39
+#: app/helpers/yaku.ts:252:34 app/helpers/yaku.ts:253:39
 msgid "Daisuushii"
 msgstr "Big Four Winds"
 
@@ -164,7 +169,7 @@ msgstr ""
 msgid "Go to personal area"
 msgstr ""
 
-#: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
+#: app/helpers/yaku.ts:360:34 app/helpers/yaku.ts:361:39
 msgid "Haitei"
 msgstr "Bottom of the Sea"
 
@@ -172,19 +177,19 @@ msgstr "Bottom of the Sea"
 msgid "Honba: %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:276:34 app/helpers/yaku.ts:277:39
+#: app/helpers/yaku.ts:288:34 app/helpers/yaku.ts:289:39
 msgid "Honitsu"
 msgstr "Half Flush"
 
-#: app/helpers/yaku.ts:132:34 app/helpers/yaku.ts:133:39
+#: app/helpers/yaku.ts:138:34 app/helpers/yaku.ts:139:39
 msgid "Honroutou"
 msgstr "All Terms and Honours"
 
-#: app/helpers/yaku.ts:361:39
+#: app/helpers/yaku.ts:385:39
 msgid "Houtei"
 msgstr "Bottom of the River"
 
-#: app/helpers/yaku.ts:360:34
+#: app/helpers/yaku.ts:384:34
 msgid "Houtei raoyui"
 msgstr "Bottom of the River"
 
@@ -193,24 +198,29 @@ msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
+#: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
 msgid "Iipeikou"
 msgstr "Pure Double Chow"
 
-#: app/helpers/yaku.ts:324:34 app/helpers/yaku.ts:325:39
+#: app/helpers/yaku.ts:348:34 app/helpers/yaku.ts:349:39
 msgid "Ippatsu"
 msgstr "Ippatsu"
 
-#: app/helpers/yaku.ts:192:34 app/helpers/yaku.ts:193:39
+#: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
 msgstr "Pure Straight"
 
-#: app/helpers/yaku.ts:264:34 app/helpers/yaku.ts:265:39
+#: app/helpers/yaku.ts:276:34 app/helpers/yaku.ts:277:39
 msgid "Junchan"
 msgstr "Terminals in All Sets"
 
-#: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
+#: app/helpers/yaku.ts:324:34 app/helpers/yaku.ts:325:39
 msgid "Kokushi musou"
+msgstr "Thirteen Orphans"
+
+#: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
+#, fuzzy
+msgid "Kokushi musou 13-side"
 msgstr "Thirteen Orphans"
 
 #: app/components/pages/Settings/Settings.tsx:110:45
@@ -225,7 +235,7 @@ msgstr ""
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
+#: app/helpers/yaku.ts:354:34 app/helpers/yaku.ts:355:39
 msgid "Menzentsumo"
 msgstr "Fully Concealed Hand"
 
@@ -275,11 +285,11 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: app/helpers/yaku.ts:378:34 app/helpers/yaku.ts:379:39
+#: app/helpers/yaku.ts:402:34 app/helpers/yaku.ts:403:39
 msgid "Open riichi"
 msgstr "Open Riichi"
 
-#: app/helpers/yaku.ts:120:34 app/helpers/yaku.ts:121:39
+#: app/helpers/yaku.ts:126:34 app/helpers/yaku.ts:127:39
 msgid "Opened hand"
 msgstr ""
 
@@ -307,7 +317,7 @@ msgstr ""
 msgid "Password check has failed"
 msgstr ""
 
-#: app/helpers/yaku.ts:162:34 app/helpers/yaku.ts:163:39
+#: app/helpers/yaku.ts:174:34 app/helpers/yaku.ts:175:39
 msgid "Pinfu"
 msgstr "Pinfu"
 
@@ -327,11 +337,11 @@ msgstr ""
 msgid "Referee has been requested to your table!"
 msgstr ""
 
-#: app/helpers/yaku.ts:372:34 app/helpers/yaku.ts:373:39
+#: app/helpers/yaku.ts:396:34 app/helpers/yaku.ts:397:39
 msgid "Renhou"
 msgstr "Blessing of Man"
 
-#: app/helpers/yaku.ts:312:34 app/helpers/yaku.ts:313:39
+#: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
 msgid "Riichi"
 msgstr "Riichi"
 
@@ -339,11 +349,11 @@ msgstr "Riichi"
 msgid "Riichi bets: %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:343:39
+#: app/helpers/yaku.ts:367:39
 msgid "Rinshan"
 msgstr "After a Kong"
 
-#: app/helpers/yaku.ts:342:34
+#: app/helpers/yaku.ts:366:34
 msgid "Rinshan kaihou"
 msgstr "After a Kong"
 
@@ -356,27 +366,27 @@ msgstr ""
 msgid "Ron, %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:174:34 app/helpers/yaku.ts:175:39
+#: app/helpers/yaku.ts:186:34 app/helpers/yaku.ts:187:39
 msgid "Ryanpeikou"
 msgstr "Twice Pure Double Chow"
 
-#: app/helpers/yaku.ts:294:34 app/helpers/yaku.ts:295:39
+#: app/helpers/yaku.ts:312:34 app/helpers/yaku.ts:313:39
 msgid "Ryuuiisou"
 msgstr "All Green"
 
-#: app/helpers/yaku.ts:138:34 app/helpers/yaku.ts:139:39
+#: app/helpers/yaku.ts:144:34 app/helpers/yaku.ts:145:39
 msgid "Sanankou"
 msgstr "Three Concealed Pungs"
 
-#: app/helpers/yaku.ts:144:34 app/helpers/yaku.ts:145:39
+#: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
 msgid "Sankantsu"
 msgstr "Three Kongs"
 
-#: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
+#: app/helpers/yaku.ts:192:34 app/helpers/yaku.ts:193:39
 msgid "Sanshoku"
 msgstr "Mixed Triple Chow"
 
-#: app/helpers/yaku.ts:186:34 app/helpers/yaku.ts:187:39
+#: app/helpers/yaku.ts:198:34 app/helpers/yaku.ts:199:39
 msgid "Sanshoku doukou"
 msgstr "Triple Pung"
 
@@ -392,11 +402,11 @@ msgstr ""
 msgid "Select nagashi"
 msgstr ""
 
-#: app/helpers/yaku.ts:222:34 app/helpers/yaku.ts:223:39
+#: app/helpers/yaku.ts:234:34 app/helpers/yaku.ts:235:39
 msgid "Shousangen"
 msgstr "Little Three Dragons"
 
-#: app/helpers/yaku.ts:234:34 app/helpers/yaku.ts:235:39
+#: app/helpers/yaku.ts:246:34 app/helpers/yaku.ts:247:39
 msgid "Shousuushii"
 msgstr "Little Four Winds"
 
@@ -420,15 +430,15 @@ msgstr ""
 msgid "Statistics"
 msgstr ""
 
-#: app/helpers/yaku.ts:156:34 app/helpers/yaku.ts:157:39
+#: app/helpers/yaku.ts:162:34 app/helpers/yaku.ts:163:39
 msgid "Suuankou"
 msgstr "Four Concealed Pungs"
 
-#: app/helpers/yaku.ts:384:34 app/helpers/yaku.ts:385:39
-msgid "SuuankouTanki"
+#: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
+msgid "Suuankou Tanki"
 msgstr "Four Concealed Pungs Tanki"
 
-#: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
+#: app/helpers/yaku.ts:156:34 app/helpers/yaku.ts:157:39
 msgid "Suukantsu"
 msgstr "Four Kongs"
 
@@ -436,7 +446,7 @@ msgstr "Four Kongs"
 msgid "Table #%1"
 msgstr ""
 
-#: app/helpers/yaku.ts:252:34 app/helpers/yaku.ts:253:39
+#: app/helpers/yaku.ts:264:34 app/helpers/yaku.ts:265:39
 msgid "Tanyao"
 msgstr "All Simples"
 
@@ -444,7 +454,7 @@ msgstr "All Simples"
 msgid "Tempai: %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:348:34 app/helpers/yaku.ts:349:39
+#: app/helpers/yaku.ts:372:34 app/helpers/yaku.ts:373:39
 msgid "Tenhou"
 msgstr "Blessing of Heaven"
 
@@ -456,7 +466,7 @@ msgstr ""
 msgid "There are no events you participate in right now"
 msgstr ""
 
-#: app/helpers/yaku.ts:126:34 app/helpers/yaku.ts:127:39
+#: app/helpers/yaku.ts:132:34 app/helpers/yaku.ts:133:39
 msgid "Toitoi"
 msgstr "All Pungs"
 
@@ -469,7 +479,7 @@ msgstr ""
 msgid "Tsumo, %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:246:34 app/helpers/yaku.ts:247:39
+#: app/helpers/yaku.ts:258:34 app/helpers/yaku.ts:259:39
 msgid "Tsuuiisou"
 msgstr "All Honours"
 
@@ -481,23 +491,23 @@ msgstr ""
 msgid "Unexpected server error"
 msgstr ""
 
-#: app/helpers/yaku.ts:199:39
+#: app/helpers/yaku.ts:211:39
 msgid "Yakuhai"
 msgstr "Yakuhai"
 
-#: app/helpers/yaku.ts:198:34
+#: app/helpers/yaku.ts:210:34
 msgid "Yakuhai x1"
 msgstr "Yakuhai x1"
 
-#: app/helpers/yaku.ts:204:34
+#: app/helpers/yaku.ts:216:34
 msgid "Yakuhai x2"
 msgstr "Yakuhai x2"
 
-#: app/helpers/yaku.ts:210:34
+#: app/helpers/yaku.ts:222:34
 msgid "Yakuhai x3"
 msgstr "Yakuhai x3"
 
-#: app/helpers/yaku.ts:216:34
+#: app/helpers/yaku.ts:228:34
 msgid "Yakuhai x4"
 msgstr "Yakuhai x4"
 
@@ -537,15 +547,15 @@ msgstr ""
 msgid "select player"
 msgstr ""
 
-#: app/helpers/yaku.ts:205:39
+#: app/helpers/yaku.ts:217:39
 msgid "x2"
 msgstr ""
 
-#: app/helpers/yaku.ts:211:39
+#: app/helpers/yaku.ts:223:39
 msgid "x3"
 msgstr ""
 
-#: app/helpers/yaku.ts:217:39
+#: app/helpers/yaku.ts:229:39
 msgid "x4"
 msgstr ""
 

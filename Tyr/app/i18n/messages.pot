@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"POT-Creation-Date: 2025-05-18 16:41Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -301,249 +301,259 @@ msgstr ""
 msgid "Select nagashi"
 msgstr ""
 
-#: app/helpers/yaku.ts:120:34
-#: app/helpers/yaku.ts:121:39
-msgid "Opened hand"
-msgstr ""
-
 #: app/helpers/yaku.ts:126:34
 #: app/helpers/yaku.ts:127:39
-msgid "Toitoi"
+msgid "Opened hand"
 msgstr ""
 
 #: app/helpers/yaku.ts:132:34
 #: app/helpers/yaku.ts:133:39
-msgid "Honroutou"
+msgid "Toitoi"
 msgstr ""
 
 #: app/helpers/yaku.ts:138:34
 #: app/helpers/yaku.ts:139:39
-msgid "Sanankou"
+msgid "Honroutou"
 msgstr ""
 
 #: app/helpers/yaku.ts:144:34
 #: app/helpers/yaku.ts:145:39
-msgid "Sankantsu"
+msgid "Sanankou"
 msgstr ""
 
 #: app/helpers/yaku.ts:150:34
 #: app/helpers/yaku.ts:151:39
+msgid "Sankantsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:156:34
+#: app/helpers/yaku.ts:157:39
 msgid "Suukantsu"
-msgstr ""
-
-#: app/helpers/yaku.ts:156:34
-#: app/helpers/yaku.ts:157:39
-msgid "Suuankou"
-msgstr ""
-
-#: app/helpers/yaku.ts:156:34
-#: app/helpers/yaku.ts:157:39
-msgid "SuuankouTanki"
 msgstr ""
 
 #: app/helpers/yaku.ts:162:34
 #: app/helpers/yaku.ts:163:39
-msgid "Pinfu"
+msgid "Suuankou"
 msgstr ""
 
 #: app/helpers/yaku.ts:168:34
 #: app/helpers/yaku.ts:169:39
-msgid "Iipeikou"
+msgid "Suuankou Tanki"
 msgstr ""
 
 #: app/helpers/yaku.ts:174:34
 #: app/helpers/yaku.ts:175:39
-msgid "Ryanpeikou"
+msgid "Pinfu"
 msgstr ""
 
 #: app/helpers/yaku.ts:180:34
 #: app/helpers/yaku.ts:181:39
-msgid "Sanshoku"
+msgid "Iipeikou"
 msgstr ""
 
 #: app/helpers/yaku.ts:186:34
 #: app/helpers/yaku.ts:187:39
-msgid "Sanshoku doukou"
+msgid "Ryanpeikou"
 msgstr ""
 
 #: app/helpers/yaku.ts:192:34
 #: app/helpers/yaku.ts:193:39
-msgid "Ittsu"
+msgid "Sanshoku"
 msgstr ""
 
 #: app/helpers/yaku.ts:198:34
-msgid "Yakuhai x1"
-msgstr ""
-
 #: app/helpers/yaku.ts:199:39
-msgid "Yakuhai"
+msgid "Sanshoku doukou"
 msgstr ""
 
 #: app/helpers/yaku.ts:204:34
-msgid "Yakuhai x2"
-msgstr ""
-
 #: app/helpers/yaku.ts:205:39
-msgid "x2"
+msgid "Ittsu"
 msgstr ""
 
 #: app/helpers/yaku.ts:210:34
-msgid "Yakuhai x3"
+msgid "Yakuhai x1"
 msgstr ""
 
 #: app/helpers/yaku.ts:211:39
-msgid "x3"
+msgid "Yakuhai"
 msgstr ""
 
 #: app/helpers/yaku.ts:216:34
-msgid "Yakuhai x4"
+msgid "Yakuhai x2"
 msgstr ""
 
 #: app/helpers/yaku.ts:217:39
-msgid "x4"
+msgid "x2"
 msgstr ""
 
 #: app/helpers/yaku.ts:222:34
+msgid "Yakuhai x3"
+msgstr ""
+
 #: app/helpers/yaku.ts:223:39
-msgid "Shousangen"
+msgid "x3"
 msgstr ""
 
 #: app/helpers/yaku.ts:228:34
+msgid "Yakuhai x4"
+msgstr ""
+
 #: app/helpers/yaku.ts:229:39
-msgid "Daisangen"
+msgid "x4"
 msgstr ""
 
 #: app/helpers/yaku.ts:234:34
 #: app/helpers/yaku.ts:235:39
-msgid "Shousuushii"
+msgid "Shousangen"
 msgstr ""
 
 #: app/helpers/yaku.ts:240:34
 #: app/helpers/yaku.ts:241:39
-msgid "Daisuushii"
+msgid "Daisangen"
 msgstr ""
 
 #: app/helpers/yaku.ts:246:34
 #: app/helpers/yaku.ts:247:39
-msgid "Tsuuiisou"
+msgid "Shousuushii"
 msgstr ""
 
 #: app/helpers/yaku.ts:252:34
 #: app/helpers/yaku.ts:253:39
-msgid "Tanyao"
+msgid "Daisuushii"
 msgstr ""
 
 #: app/helpers/yaku.ts:258:34
 #: app/helpers/yaku.ts:259:39
-msgid "Chanta"
+msgid "Tsuuiisou"
 msgstr ""
 
 #: app/helpers/yaku.ts:264:34
 #: app/helpers/yaku.ts:265:39
-msgid "Junchan"
+msgid "Tanyao"
 msgstr ""
 
 #: app/helpers/yaku.ts:270:34
 #: app/helpers/yaku.ts:271:39
-msgid "Chinroutou"
+msgid "Chanta"
 msgstr ""
 
 #: app/helpers/yaku.ts:276:34
 #: app/helpers/yaku.ts:277:39
-msgid "Honitsu"
+msgid "Junchan"
 msgstr ""
 
 #: app/helpers/yaku.ts:282:34
 #: app/helpers/yaku.ts:283:39
-msgid "Chinitsu"
+msgid "Chinroutou"
 msgstr ""
 
 #: app/helpers/yaku.ts:288:34
 #: app/helpers/yaku.ts:289:39
-msgid "Chuuren poutou"
+msgid "Honitsu"
 msgstr ""
 
 #: app/helpers/yaku.ts:294:34
 #: app/helpers/yaku.ts:295:39
-msgid "Ryuuiisou"
+msgid "Chinitsu"
 msgstr ""
 
 #: app/helpers/yaku.ts:300:34
 #: app/helpers/yaku.ts:301:39
-msgid "Chiitoitsu"
+msgid "Chuuren poutou"
 msgstr ""
 
 #: app/helpers/yaku.ts:306:34
 #: app/helpers/yaku.ts:307:39
-msgid "Kokushi musou"
+msgid "Chuuren poutou 9-side"
 msgstr ""
 
 #: app/helpers/yaku.ts:312:34
 #: app/helpers/yaku.ts:313:39
-msgid "Riichi"
+msgid "Ryuuiisou"
 msgstr ""
 
 #: app/helpers/yaku.ts:318:34
-msgid "Daburu riichi"
-msgstr ""
-
 #: app/helpers/yaku.ts:319:39
-msgid "Daburu"
+msgid "Chiitoitsu"
 msgstr ""
 
 #: app/helpers/yaku.ts:324:34
 #: app/helpers/yaku.ts:325:39
-msgid "Ippatsu"
+msgid "Kokushi musou"
 msgstr ""
 
 #: app/helpers/yaku.ts:330:34
 #: app/helpers/yaku.ts:331:39
-msgid "Menzentsumo"
+msgid "Kokushi musou 13-side"
 msgstr ""
 
 #: app/helpers/yaku.ts:336:34
 #: app/helpers/yaku.ts:337:39
-msgid "Haitei"
+msgid "Riichi"
 msgstr ""
 
 #: app/helpers/yaku.ts:342:34
-msgid "Rinshan kaihou"
+msgid "Daburu riichi"
 msgstr ""
 
 #: app/helpers/yaku.ts:343:39
-msgid "Rinshan"
+msgid "Daburu"
 msgstr ""
 
 #: app/helpers/yaku.ts:348:34
 #: app/helpers/yaku.ts:349:39
-msgid "Tenhou"
+msgid "Ippatsu"
 msgstr ""
 
 #: app/helpers/yaku.ts:354:34
 #: app/helpers/yaku.ts:355:39
-msgid "Chiihou"
+msgid "Menzentsumo"
 msgstr ""
 
 #: app/helpers/yaku.ts:360:34
-msgid "Houtei raoyui"
-msgstr ""
-
 #: app/helpers/yaku.ts:361:39
-msgid "Houtei"
+msgid "Haitei"
 msgstr ""
 
 #: app/helpers/yaku.ts:366:34
+msgid "Rinshan kaihou"
+msgstr ""
+
 #: app/helpers/yaku.ts:367:39
-msgid "Chankan"
+msgid "Rinshan"
 msgstr ""
 
 #: app/helpers/yaku.ts:372:34
 #: app/helpers/yaku.ts:373:39
-msgid "Renhou"
+msgid "Tenhou"
 msgstr ""
 
 #: app/helpers/yaku.ts:378:34
 #: app/helpers/yaku.ts:379:39
+msgid "Chiihou"
+msgstr ""
+
+#: app/helpers/yaku.ts:384:34
+msgid "Houtei raoyui"
+msgstr ""
+
+#: app/helpers/yaku.ts:385:39
+msgid "Houtei"
+msgstr ""
+
+#: app/helpers/yaku.ts:390:34
+#: app/helpers/yaku.ts:391:39
+msgid "Chankan"
+msgstr ""
+
+#: app/helpers/yaku.ts:396:34
+#: app/helpers/yaku.ts:397:39
+msgid "Renhou"
+msgstr ""
+
+#: app/helpers/yaku.ts:402:34
+#: app/helpers/yaku.ts:403:39
 msgid "Open riichi"
 msgstr ""
 

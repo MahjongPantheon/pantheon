@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"POT-Creation-Date: 2025-05-18 16:30Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -409,27 +409,27 @@ msgstr "Durch Tsumo:"
 msgid "Careful planning"
 msgstr "Minutiös geplant"
 
-#: app/helpers/yaku.ts:182:34
+#: app/helpers/yaku.ts:185:34
 msgid "Chankan"
 msgstr ""
 
-#: app/helpers/yaku.ts:102:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chanta"
 msgstr ""
 
-#: app/helpers/yaku.ts:238:34
+#: app/helpers/yaku.ts:253:34
 msgid "Chihou"
 msgstr ""
 
-#: app/helpers/yaku.ts:90:34
+#: app/helpers/yaku.ts:93:34
 msgid "Chiitoitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:218:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chinitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:214:34 app/helpers/yaku.ts:267:34
+#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:282:34
 msgid "Chinroutou"
 msgstr ""
 
@@ -454,8 +454,12 @@ msgstr "Chombo Strafen:"
 msgid "Chombo: %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:222:34
+#: app/helpers/yaku.ts:229:34
 msgid "Chuuren poutou"
+msgstr ""
+
+#: app/helpers/yaku.ts:233:34 app/helpers/yaku.ts:301:34
+msgid "Chuuren poutou 9-side"
 msgstr ""
 
 #: app/pages/PlayerStats.tsx:206:24
@@ -507,15 +511,16 @@ msgid "Current tables state for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Serienwertung des Turniers \"%1\" von Mahjong Pantheon zur Verfügung gestellt"
 
-#: app/helpers/yaku.ts:74:34
+#: app/helpers/yaku.ts:77:34
 msgid "Daburu riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:198:34 app/helpers/yaku.ts:251:34
+#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:266:34
 msgid "Daisangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:206:34 app/helpers/yaku.ts:255:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:270:34
+#: app/helpers/yaku.ts:293:34
 msgid "Daisuushii"
 msgstr ""
 
@@ -556,6 +561,11 @@ msgstr "Gesammelte Dora:"
 #: app/pages/Achievements.tsx:472:14
 msgid "Dora lord"
 msgstr "Dora Lord"
+
+#: app/pages/EventRulesOverview/YakuSettings.tsx:68:25
+#, fuzzy
+msgid "Double Yakuman:"
+msgstr "Mehrfach Yakuman"
 
 #: app/components/GameListing.tsx:216:14
 msgid "Draw: %1"
@@ -763,7 +773,7 @@ msgstr "Ich muss Sie alle fangen!"
 msgid "Guest of honors"
 msgstr "Ehrengäste"
 
-#: app/helpers/yaku.ts:174:34
+#: app/helpers/yaku.ts:177:34
 msgid "Haitei"
 msgstr ""
 
@@ -786,7 +796,7 @@ msgid ""
 "payment will be given to all winners."
 msgstr "Honba gehen nur an den ersten Gewinner."
 
-#: app/helpers/yaku.ts:150:34
+#: app/helpers/yaku.ts:153:34
 msgid "Honitsu"
 msgstr ""
 
@@ -794,11 +804,11 @@ msgstr ""
 msgid "Honored donor"
 msgstr "Edler Spender"
 
-#: app/helpers/yaku.ts:154:34
+#: app/helpers/yaku.ts:157:34
 msgid "Honroutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:170:34
+#: app/helpers/yaku.ts:173:34
 msgid "Houtei raoyui"
 msgstr ""
 
@@ -841,7 +851,7 @@ msgid ""
 "is out and it is final hand of the game"
 msgstr ""
 
-#: app/helpers/yaku.ts:110:34
+#: app/helpers/yaku.ts:113:34
 msgid "Iipeikou"
 msgstr ""
 
@@ -859,11 +869,11 @@ msgid ""
 "be added to the rating."
 msgstr "Gültigkeitsdauer des Online Spiels (in Stunden)"
 
-#: app/helpers/yaku.ts:82:34
+#: app/helpers/yaku.ts:85:34
 msgid "Ippatsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:126:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ittsu"
 msgstr ""
 
@@ -871,7 +881,7 @@ msgstr ""
 msgid "Jewelry included"
 msgstr "Bling Bling"
 
-#: app/helpers/yaku.ts:106:34
+#: app/helpers/yaku.ts:109:34
 msgid "Junchan"
 msgstr ""
 
@@ -887,8 +897,12 @@ msgstr ""
 msgid "Kiriage mangan"
 msgstr ""
 
-#: app/helpers/yaku.ts:230:34
+#: app/helpers/yaku.ts:241:34
 msgid "Kokushi musou"
+msgstr ""
+
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:305:34
+msgid "Kokushi musou 13-side"
 msgstr ""
 
 #: app/pages/EventRulesOverview/YakuSettings.tsx:33:16
@@ -942,7 +956,7 @@ msgstr "Maximum:"
 msgid "Menu"
 msgstr "Menü"
 
-#: app/helpers/yaku.ts:86:34
+#: app/helpers/yaku.ts:89:34
 msgid "Menzentsumo"
 msgstr ""
 
@@ -1019,7 +1033,7 @@ msgstr "Mobile App öffnen"
 msgid "Open menu"
 msgstr "Menü öffnen"
 
-#: app/helpers/yaku.ts:78:34
+#: app/helpers/yaku.ts:81:34
 msgid "Open riichi"
 msgstr ""
 
@@ -1063,7 +1077,7 @@ msgstr "Strafen"
 msgid "Penalties count: %1; total penalties amount: %2"
 msgstr ""
 
-#: app/helpers/yaku.ts:94:34
+#: app/helpers/yaku.ts:97:34
 msgid "Pinfu"
 msgstr ""
 
@@ -1172,7 +1186,7 @@ msgstr ""
 "Registrierte Spieler des Turniers \"%1\" von Mahjong Pantheon zur Verfügung "
 "gestellt"
 
-#: app/helpers/yaku.ts:186:34
+#: app/helpers/yaku.ts:189:34
 msgid "Renhou"
 msgstr ""
 
@@ -1180,7 +1194,7 @@ msgstr ""
 msgid "Replay link is invalid. Please check if you copied it correctly"
 msgstr "Replay link ist ungültig. Überprüfe ob du Ihn richtig kopiert hast"
 
-#: app/helpers/yaku.ts:70:34
+#: app/helpers/yaku.ts:73:34
 msgid "Riichi"
 msgstr ""
 
@@ -1212,7 +1226,7 @@ msgstr ""
 msgid "Riichi mahjong events list"
 msgstr "Riichi mahjong Eventliste"
 
-#: app/helpers/yaku.ts:178:34
+#: app/helpers/yaku.ts:181:34
 msgid "Rinshan kaihou"
 msgstr ""
 
@@ -1257,27 +1271,27 @@ msgstr "Regeldetails"
 msgid "Ruleset details page is not available for aggregated events"
 msgstr "Regeldetails für zusammengefasste Events nicht verfügbar"
 
-#: app/helpers/yaku.ts:114:34
+#: app/helpers/yaku.ts:117:34
 msgid "Ryanpeikou"
 msgstr ""
 
-#: app/helpers/yaku.ts:226:34 app/helpers/yaku.ts:263:34
+#: app/helpers/yaku.ts:237:34 app/helpers/yaku.ts:278:34
 msgid "Ryuuiisou"
 msgstr ""
 
-#: app/helpers/yaku.ts:158:34
+#: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:166:34
+#: app/helpers/yaku.ts:169:34
 msgid "Sankantsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:118:34
+#: app/helpers/yaku.ts:121:34
 msgid "Sanshoku"
 msgstr ""
 
-#: app/helpers/yaku.ts:122:34
+#: app/helpers/yaku.ts:125:34
 msgid "Sanshoku doukou"
 msgstr ""
 
@@ -1329,11 +1343,11 @@ msgstr "Matchdauer in Minuten"
 msgid "Session ending policy"
 msgstr "Einstellungen zum Matchende"
 
-#: app/helpers/yaku.ts:162:34
+#: app/helpers/yaku.ts:165:34
 msgid "Shousangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:202:34
+#: app/helpers/yaku.ts:209:34
 msgid "Shousuushii"
 msgstr ""
 
@@ -1366,11 +1380,15 @@ msgstr "Rang basiert"
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Spielvorschau \"%1\"  von Mahjong Pantheon zur Verfügung gestellt"
 
-#: app/helpers/yaku.ts:194:34
+#: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:190:34 app/helpers/yaku.ts:271:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:297:34
+msgid "Suuankou Tanki"
+msgstr ""
+
+#: app/helpers/yaku.ts:193:34 app/helpers/yaku.ts:286:34
 msgid "Suukantsu"
 msgstr ""
 
@@ -1390,7 +1408,7 @@ msgstr "Platzierungsstatistiken"
 msgid "Tables state is not available for aggregated events"
 msgstr "Time ist für zusammengefasste Events nicht verfügbar"
 
-#: app/helpers/yaku.ts:98:34
+#: app/helpers/yaku.ts:101:34
 msgid "Tanyao"
 msgstr ""
 
@@ -1408,7 +1426,7 @@ msgstr "Team"
 msgid "Team tournament"
 msgstr "Team Turnier"
 
-#: app/helpers/yaku.ts:234:34
+#: app/helpers/yaku.ts:249:34
 msgid "Tenhou"
 msgstr ""
 
@@ -1500,7 +1518,7 @@ msgstr "Farbschema"
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 
-#: app/helpers/yaku.ts:146:34
+#: app/helpers/yaku.ts:149:34
 msgid "Toitoi"
 msgstr ""
 
@@ -1537,7 +1555,7 @@ msgstr "Tsumo Zahlungen:"
 msgid "Tsumo: %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:210:34 app/helpers/yaku.ts:259:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:274:34
 msgid "Tsuuiisou"
 msgstr ""
 
@@ -1652,19 +1670,19 @@ msgstr "Gesammelte Yakus"
 msgid "Yaku settings"
 msgstr "Yaku Einstellungen"
 
-#: app/helpers/yaku.ts:130:34
+#: app/helpers/yaku.ts:133:34
 msgid "Yakuhai x1"
 msgstr ""
 
-#: app/helpers/yaku.ts:134:34
+#: app/helpers/yaku.ts:137:34
 msgid "Yakuhai x2"
 msgstr ""
 
-#: app/helpers/yaku.ts:138:34
+#: app/helpers/yaku.ts:141:34
 msgid "Yakuhai x3"
 msgstr ""
 
-#: app/helpers/yaku.ts:142:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x4"
 msgstr ""
 

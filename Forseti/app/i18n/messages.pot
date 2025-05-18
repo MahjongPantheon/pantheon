@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"POT-Creation-Date: 2025-05-18 16:41Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -215,181 +215,197 @@ msgstr ""
 msgid "Stop event"
 msgstr ""
 
-#: app/helpers/yaku.ts:70:34
+#: app/helpers/yaku.ts:73:34
 msgid "Riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:74:34
+#: app/helpers/yaku.ts:77:34
 msgid "Daburu riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:78:34
+#: app/helpers/yaku.ts:81:34
 msgid "Open riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:82:34
+#: app/helpers/yaku.ts:85:34
 msgid "Ippatsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:86:34
+#: app/helpers/yaku.ts:89:34
 msgid "Menzentsumo"
 msgstr ""
 
-#: app/helpers/yaku.ts:90:34
+#: app/helpers/yaku.ts:93:34
 msgid "Chiitoitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:94:34
+#: app/helpers/yaku.ts:97:34
 msgid "Pinfu"
 msgstr ""
 
-#: app/helpers/yaku.ts:98:34
+#: app/helpers/yaku.ts:101:34
 msgid "Tanyao"
 msgstr ""
 
-#: app/helpers/yaku.ts:102:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chanta"
 msgstr ""
 
-#: app/helpers/yaku.ts:106:34
+#: app/helpers/yaku.ts:109:34
 msgid "Junchan"
 msgstr ""
 
-#: app/helpers/yaku.ts:110:34
+#: app/helpers/yaku.ts:113:34
 msgid "Iipeikou"
 msgstr ""
 
-#: app/helpers/yaku.ts:114:34
+#: app/helpers/yaku.ts:117:34
 msgid "Ryanpeikou"
 msgstr ""
 
-#: app/helpers/yaku.ts:118:34
+#: app/helpers/yaku.ts:121:34
 msgid "Sanshoku"
 msgstr ""
 
-#: app/helpers/yaku.ts:122:34
+#: app/helpers/yaku.ts:125:34
 msgid "Sanshoku doukou"
 msgstr ""
 
-#: app/helpers/yaku.ts:126:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ittsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:130:34
+#: app/helpers/yaku.ts:133:34
 msgid "Yakuhai x1"
 msgstr ""
 
-#: app/helpers/yaku.ts:134:34
+#: app/helpers/yaku.ts:137:34
 msgid "Yakuhai x2"
 msgstr ""
 
-#: app/helpers/yaku.ts:138:34
+#: app/helpers/yaku.ts:141:34
 msgid "Yakuhai x3"
 msgstr ""
 
-#: app/helpers/yaku.ts:142:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x4"
 msgstr ""
 
-#: app/helpers/yaku.ts:146:34
+#: app/helpers/yaku.ts:149:34
 msgid "Toitoi"
 msgstr ""
 
-#: app/helpers/yaku.ts:150:34
+#: app/helpers/yaku.ts:153:34
 msgid "Honitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:154:34
+#: app/helpers/yaku.ts:157:34
 msgid "Honroutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:158:34
+#: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:162:34
+#: app/helpers/yaku.ts:165:34
 msgid "Shousangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:166:34
+#: app/helpers/yaku.ts:169:34
 msgid "Sankantsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:170:34
+#: app/helpers/yaku.ts:173:34
 msgid "Houtei raoyui"
 msgstr ""
 
-#: app/helpers/yaku.ts:174:34
+#: app/helpers/yaku.ts:177:34
 msgid "Haitei"
 msgstr ""
 
-#: app/helpers/yaku.ts:178:34
+#: app/helpers/yaku.ts:181:34
 msgid "Rinshan kaihou"
 msgstr ""
 
-#: app/helpers/yaku.ts:182:34
+#: app/helpers/yaku.ts:185:34
 msgid "Chankan"
 msgstr ""
 
-#: app/helpers/yaku.ts:186:34
+#: app/helpers/yaku.ts:189:34
 msgid "Renhou"
 msgstr ""
 
-#: app/helpers/yaku.ts:190:34
-#: app/helpers/yaku.ts:265:34
+#: app/helpers/yaku.ts:193:34
+#: app/helpers/yaku.ts:280:34
 msgid "Suukantsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:194:34
+#: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:198:34
-#: app/helpers/yaku.ts:245:34
+#: app/helpers/yaku.ts:201:34
+#: app/helpers/yaku.ts:291:34
+msgid "Suuankou Tanki"
+msgstr ""
+
+#: app/helpers/yaku.ts:205:34
+#: app/helpers/yaku.ts:260:34
 msgid "Daisangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:202:34
+#: app/helpers/yaku.ts:209:34
 msgid "Shousuushii"
 msgstr ""
 
-#: app/helpers/yaku.ts:206:34
-#: app/helpers/yaku.ts:249:34
+#: app/helpers/yaku.ts:213:34
+#: app/helpers/yaku.ts:264:34
+#: app/helpers/yaku.ts:287:34
 msgid "Daisuushii"
 msgstr ""
 
-#: app/helpers/yaku.ts:210:34
-#: app/helpers/yaku.ts:253:34
+#: app/helpers/yaku.ts:217:34
+#: app/helpers/yaku.ts:268:34
 msgid "Tsuuiisou"
 msgstr ""
 
-#: app/helpers/yaku.ts:214:34
-#: app/helpers/yaku.ts:261:34
+#: app/helpers/yaku.ts:221:34
+#: app/helpers/yaku.ts:276:34
 msgid "Chinroutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:218:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chinitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:222:34
+#: app/helpers/yaku.ts:229:34
 msgid "Chuuren poutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:226:34
-#: app/helpers/yaku.ts:257:34
+#: app/helpers/yaku.ts:233:34
+#: app/helpers/yaku.ts:295:34
+msgid "Chuuren poutou 9-side"
+msgstr ""
+
+#: app/helpers/yaku.ts:237:34
+#: app/helpers/yaku.ts:272:34
 msgid "Ryuuiisou"
 msgstr ""
 
-#: app/helpers/yaku.ts:230:34
+#: app/helpers/yaku.ts:241:34
 msgid "Kokushi musou"
 msgstr ""
 
-#: app/helpers/yaku.ts:234:34
+#: app/helpers/yaku.ts:245:34
+#: app/helpers/yaku.ts:299:34
+msgid "Kokushi musou 13-side"
+msgstr ""
+
+#: app/helpers/yaku.ts:249:34
 msgid "Tenhou"
 msgstr ""
 
-#: app/helpers/yaku.ts:238:34
+#: app/helpers/yaku.ts:253:34
 msgid "Chihou"
 msgstr ""
 
@@ -402,8 +418,8 @@ msgstr ""
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14
 #: app/pages/OwnedEvents.tsx:94:14
-#: app/pages/OwnedEventsEdit/index.tsx:195:18
-#: app/pages/OwnedEventsEdit/index.tsx:226:18
+#: app/pages/OwnedEventsEdit/index.tsx:203:18
+#: app/pages/OwnedEventsEdit/index.tsx:234:18
 #: app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
@@ -1047,15 +1063,15 @@ msgstr ""
 msgid "New event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:189:29
+#: app/pages/OwnedEventsEdit/index.tsx:197:29
 msgid "Failed to fetch event data"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:221:27
+#: app/pages/OwnedEventsEdit/index.tsx:229:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:289:32
+#: app/pages/OwnedEventsEdit/index.tsx:297:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32
@@ -1063,7 +1079,7 @@ msgstr ""
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:289:60
+#: app/pages/OwnedEventsEdit/index.tsx:297:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1513,6 +1529,10 @@ msgstr ""
 
 #: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
 msgid "Pao rule enabled for:"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:78:25
+msgid "Double yakuman:"
 msgstr ""
 
 #: app/pages/Penalties/CancelConfirmation.tsx:42:5

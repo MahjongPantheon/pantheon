@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 20:13+0100\n"
+"POT-Creation-Date: 2025-05-18 16:30Z\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -64,27 +64,27 @@ msgstr "심판을 호출하시겠습니까?"
 msgid "Cancel"
 msgstr "취소"
 
-#: app/helpers/yaku.ts:366:34 app/helpers/yaku.ts:367:39
+#: app/helpers/yaku.ts:390:34 app/helpers/yaku.ts:391:39
 msgid "Chankan"
 msgstr "창깡"
 
-#: app/helpers/yaku.ts:258:34 app/helpers/yaku.ts:259:39
+#: app/helpers/yaku.ts:270:34 app/helpers/yaku.ts:271:39
 msgid "Chanta"
 msgstr "찬타"
 
-#: app/helpers/yaku.ts:354:34 app/helpers/yaku.ts:355:39
+#: app/helpers/yaku.ts:378:34 app/helpers/yaku.ts:379:39
 msgid "Chiihou"
 msgstr "지화"
 
-#: app/helpers/yaku.ts:300:34 app/helpers/yaku.ts:301:39
+#: app/helpers/yaku.ts:318:34 app/helpers/yaku.ts:319:39
 msgid "Chiitoitsu"
 msgstr "치또이쯔"
 
-#: app/helpers/yaku.ts:282:34 app/helpers/yaku.ts:283:39
+#: app/helpers/yaku.ts:294:34 app/helpers/yaku.ts:295:39
 msgid "Chinitsu"
 msgstr "청일색"
 
-#: app/helpers/yaku.ts:270:34 app/helpers/yaku.ts:271:39
+#: app/helpers/yaku.ts:282:34 app/helpers/yaku.ts:283:39
 msgid "Chinroutou"
 msgstr "청노두"
 
@@ -95,8 +95,13 @@ msgstr "청노두"
 msgid "Chombo"
 msgstr "촌보"
 
-#: app/helpers/yaku.ts:288:34 app/helpers/yaku.ts:289:39
+#: app/helpers/yaku.ts:300:34 app/helpers/yaku.ts:301:39
 msgid "Chuuren poutou"
+msgstr "구련보등"
+
+#: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
+#, fuzzy
+msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
 
 #: app/components/pages/NewGame/NewGame.tsx:72:14
@@ -107,19 +112,19 @@ msgstr "작사 초기화"
 msgid "Current game"
 msgstr "현재 대국"
 
-#: app/helpers/yaku.ts:319:39
+#: app/helpers/yaku.ts:343:39
 msgid "Daburu"
 msgstr "더블"
 
-#: app/helpers/yaku.ts:318:34
+#: app/helpers/yaku.ts:342:34
 msgid "Daburu riichi"
 msgstr "더블 리치"
 
-#: app/helpers/yaku.ts:228:34 app/helpers/yaku.ts:229:39
+#: app/helpers/yaku.ts:240:34 app/helpers/yaku.ts:241:39
 msgid "Daisangen"
 msgstr "대삼원"
 
-#: app/helpers/yaku.ts:240:34 app/helpers/yaku.ts:241:39
+#: app/helpers/yaku.ts:252:34 app/helpers/yaku.ts:253:39
 msgid "Daisuushii"
 msgstr "대사희"
 
@@ -169,7 +174,7 @@ msgstr "대국 로그"
 msgid "Go to personal area"
 msgstr "계정 설정"
 
-#: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
+#: app/helpers/yaku.ts:360:34 app/helpers/yaku.ts:361:39
 msgid "Haitei"
 msgstr "해저로월"
 
@@ -177,19 +182,19 @@ msgstr "해저로월"
 msgid "Honba: %1"
 msgstr "본장: %1"
 
-#: app/helpers/yaku.ts:276:34 app/helpers/yaku.ts:277:39
+#: app/helpers/yaku.ts:288:34 app/helpers/yaku.ts:289:39
 msgid "Honitsu"
 msgstr "혼일색"
 
-#: app/helpers/yaku.ts:132:34 app/helpers/yaku.ts:133:39
+#: app/helpers/yaku.ts:138:34 app/helpers/yaku.ts:139:39
 msgid "Honroutou"
 msgstr "혼노두"
 
-#: app/helpers/yaku.ts:361:39
+#: app/helpers/yaku.ts:385:39
 msgid "Houtei"
 msgstr "하저"
 
-#: app/helpers/yaku.ts:360:34
+#: app/helpers/yaku.ts:384:34
 msgid "Houtei raoyui"
 msgstr "하저로어"
 
@@ -198,24 +203,29 @@ msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
 msgstr "궁금하신 사항은 관리자에게 문의해주세요.."
 
-#: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
+#: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
 msgid "Iipeikou"
 msgstr "이페코"
 
-#: app/helpers/yaku.ts:324:34 app/helpers/yaku.ts:325:39
+#: app/helpers/yaku.ts:348:34 app/helpers/yaku.ts:349:39
 msgid "Ippatsu"
 msgstr "일발"
 
-#: app/helpers/yaku.ts:192:34 app/helpers/yaku.ts:193:39
+#: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
 msgstr "일기통관"
 
-#: app/helpers/yaku.ts:264:34 app/helpers/yaku.ts:265:39
+#: app/helpers/yaku.ts:276:34 app/helpers/yaku.ts:277:39
 msgid "Junchan"
 msgstr "준찬타"
 
-#: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
+#: app/helpers/yaku.ts:324:34 app/helpers/yaku.ts:325:39
 msgid "Kokushi musou"
+msgstr "국사무쌍"
+
+#: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
+#, fuzzy
+msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
 #: app/components/pages/Settings/Settings.tsx:110:45
@@ -230,7 +240,7 @@ msgstr "로그인"
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "로그인에 실패했습니다. 가능성 있는 오류는:"
 
-#: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
+#: app/helpers/yaku.ts:354:34 app/helpers/yaku.ts:355:39
 msgid "Menzentsumo"
 msgstr "멘젠쯔모"
 
@@ -280,11 +290,11 @@ msgstr ""
 msgid "OK"
 msgstr "확인"
 
-#: app/helpers/yaku.ts:378:34 app/helpers/yaku.ts:379:39
+#: app/helpers/yaku.ts:402:34 app/helpers/yaku.ts:403:39
 msgid "Open riichi"
 msgstr "오픈 리치"
 
-#: app/helpers/yaku.ts:120:34 app/helpers/yaku.ts:121:39
+#: app/helpers/yaku.ts:126:34 app/helpers/yaku.ts:127:39
 msgid "Opened hand"
 msgstr "비멘젠"
 
@@ -312,7 +322,7 @@ msgstr "비밀번호"
 msgid "Password check has failed"
 msgstr "비밀번호가 틀렸습니다"
 
-#: app/helpers/yaku.ts:162:34 app/helpers/yaku.ts:163:39
+#: app/helpers/yaku.ts:174:34 app/helpers/yaku.ts:175:39
 msgid "Pinfu"
 msgstr "핑후"
 
@@ -332,11 +342,11 @@ msgstr "이전 대국"
 msgid "Referee has been requested to your table!"
 msgstr "심판이 호출되었습니다!"
 
-#: app/helpers/yaku.ts:372:34 app/helpers/yaku.ts:373:39
+#: app/helpers/yaku.ts:396:34 app/helpers/yaku.ts:397:39
 msgid "Renhou"
 msgstr "인화"
 
-#: app/helpers/yaku.ts:312:34 app/helpers/yaku.ts:313:39
+#: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
 msgid "Riichi"
 msgstr "리치"
 
@@ -344,11 +354,11 @@ msgstr "리치"
 msgid "Riichi bets: %1"
 msgstr "리치: %1"
 
-#: app/helpers/yaku.ts:343:39
+#: app/helpers/yaku.ts:367:39
 msgid "Rinshan"
 msgstr "영상"
 
-#: app/helpers/yaku.ts:342:34
+#: app/helpers/yaku.ts:366:34
 msgid "Rinshan kaihou"
 msgstr "영상개화"
 
@@ -361,27 +371,27 @@ msgstr "론"
 msgid "Ron, %1"
 msgstr "론, %1"
 
-#: app/helpers/yaku.ts:174:34 app/helpers/yaku.ts:175:39
+#: app/helpers/yaku.ts:186:34 app/helpers/yaku.ts:187:39
 msgid "Ryanpeikou"
 msgstr "량페코"
 
-#: app/helpers/yaku.ts:294:34 app/helpers/yaku.ts:295:39
+#: app/helpers/yaku.ts:312:34 app/helpers/yaku.ts:313:39
 msgid "Ryuuiisou"
 msgstr "녹일색"
 
-#: app/helpers/yaku.ts:138:34 app/helpers/yaku.ts:139:39
+#: app/helpers/yaku.ts:144:34 app/helpers/yaku.ts:145:39
 msgid "Sanankou"
 msgstr "산안커"
 
-#: app/helpers/yaku.ts:144:34 app/helpers/yaku.ts:145:39
+#: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
 msgid "Sankantsu"
 msgstr "산깡쯔"
 
-#: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
+#: app/helpers/yaku.ts:192:34 app/helpers/yaku.ts:193:39
 msgid "Sanshoku"
 msgstr "삼색동순"
 
-#: app/helpers/yaku.ts:186:34 app/helpers/yaku.ts:187:39
+#: app/helpers/yaku.ts:198:34 app/helpers/yaku.ts:199:39
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
@@ -397,11 +407,11 @@ msgstr "이벤트 선택"
 msgid "Select nagashi"
 msgstr "나가시 선택"
 
-#: app/helpers/yaku.ts:222:34 app/helpers/yaku.ts:223:39
+#: app/helpers/yaku.ts:234:34 app/helpers/yaku.ts:235:39
 msgid "Shousangen"
 msgstr "소삼원"
 
-#: app/helpers/yaku.ts:234:34 app/helpers/yaku.ts:235:39
+#: app/helpers/yaku.ts:246:34 app/helpers/yaku.ts:247:39
 msgid "Shousuushii"
 msgstr "소사희"
 
@@ -425,15 +435,16 @@ msgstr "대국 시작"
 msgid "Statistics"
 msgstr "통계"
 
-#: app/helpers/yaku.ts:156:34 app/helpers/yaku.ts:157:39
+#: app/helpers/yaku.ts:162:34 app/helpers/yaku.ts:163:39
 msgid "Suuankou"
 msgstr "스안커"
 
-#: app/helpers/yaku.ts:384:34 app/helpers/yaku.ts:385:39
-msgid "SuuankouTanki"
+#: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
+#, fuzzy
+msgid "Suuankou Tanki"
 msgstr "스안커단기"
 
-#: app/helpers/yaku.ts:150:34 app/helpers/yaku.ts:151:39
+#: app/helpers/yaku.ts:156:34 app/helpers/yaku.ts:157:39
 msgid "Suukantsu"
 msgstr "스깡쯔"
 
@@ -441,7 +452,7 @@ msgstr "스깡쯔"
 msgid "Table #%1"
 msgstr "제 #%1 탁"
 
-#: app/helpers/yaku.ts:252:34 app/helpers/yaku.ts:253:39
+#: app/helpers/yaku.ts:264:34 app/helpers/yaku.ts:265:39
 msgid "Tanyao"
 msgstr "탕야오"
 
@@ -449,7 +460,7 @@ msgstr "탕야오"
 msgid "Tempai: %1"
 msgstr "텐파이: %1"
 
-#: app/helpers/yaku.ts:348:34 app/helpers/yaku.ts:349:39
+#: app/helpers/yaku.ts:372:34 app/helpers/yaku.ts:373:39
 msgid "Tenhou"
 msgstr "천화"
 
@@ -461,7 +472,7 @@ msgstr "테마"
 msgid "There are no events you participate in right now"
 msgstr "현재 참가중인 이벤트가 없습니다"
 
-#: app/helpers/yaku.ts:126:34 app/helpers/yaku.ts:127:39
+#: app/helpers/yaku.ts:132:34 app/helpers/yaku.ts:133:39
 msgid "Toitoi"
 msgstr "또이또이"
 
@@ -474,7 +485,7 @@ msgstr "쯔모"
 msgid "Tsumo, %1"
 msgstr "쯔모, %1"
 
-#: app/helpers/yaku.ts:246:34 app/helpers/yaku.ts:247:39
+#: app/helpers/yaku.ts:258:34 app/helpers/yaku.ts:259:39
 msgid "Tsuuiisou"
 msgstr "자일색"
 
@@ -486,23 +497,23 @@ msgstr "모든 작사가 이 기기만 사용할 경우 활성화하십시오"
 msgid "Unexpected server error"
 msgstr "예기치 못한 오류가 발생했습니다"
 
-#: app/helpers/yaku.ts:199:39
+#: app/helpers/yaku.ts:211:39
 msgid "Yakuhai"
 msgstr "역패"
 
-#: app/helpers/yaku.ts:198:34
+#: app/helpers/yaku.ts:210:34
 msgid "Yakuhai x1"
 msgstr "역패 x1"
 
-#: app/helpers/yaku.ts:204:34
+#: app/helpers/yaku.ts:216:34
 msgid "Yakuhai x2"
 msgstr "역패 x2"
 
-#: app/helpers/yaku.ts:210:34
+#: app/helpers/yaku.ts:222:34
 msgid "Yakuhai x3"
 msgstr "역패 x3"
 
-#: app/helpers/yaku.ts:216:34
+#: app/helpers/yaku.ts:228:34
 msgid "Yakuhai x4"
 msgstr "역패 x4"
 
@@ -542,15 +553,15 @@ msgstr "회원가입"
 msgid "select player"
 msgstr "작사 선택"
 
-#: app/helpers/yaku.ts:205:39
+#: app/helpers/yaku.ts:217:39
 msgid "x2"
 msgstr "x2"
 
-#: app/helpers/yaku.ts:211:39
+#: app/helpers/yaku.ts:223:39
 msgid "x3"
 msgstr "x3"
 
-#: app/helpers/yaku.ts:217:39
+#: app/helpers/yaku.ts:229:39
 msgid "x4"
 msgstr "x4"
 

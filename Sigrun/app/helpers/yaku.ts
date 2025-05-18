@@ -198,7 +198,7 @@ export const yakuList = [
   },
   {
     id: YakuId.SUUANKOUTANKI,
-    name: (i18n: I18nService) => i18n._t('SuuankouTanki'),
+    name: (i18n: I18nService) => i18n._t('Suuankou Tanki'),
   },
   {
     id: YakuId.DAISANGEN,
@@ -294,7 +294,7 @@ export const doubleYakuman = [
   },
   {
     id: YakuId.SUUANKOUTANKI,
-    name: (i18n: I18nService) => i18n._t('SuuankouTanki'),
+    name: (i18n: I18nService) => i18n._t('Suuankou Tanki'),
   },
   {
     id: YakuId.CHUURENPOUTOPURE,
