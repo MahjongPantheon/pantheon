@@ -165,8 +165,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           {} as Record<string, boolean>
         ),
         doubleYakuman: currentRuleset.doubleYakuman.reduce(
-          (acc: Record<string, boolean>, val: number) => {   
-            debugger;         
+          (acc: Record<string, boolean>, val: number) => {
             acc[val] = true;
             return acc;
           },
