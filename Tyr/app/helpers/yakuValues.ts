@@ -114,7 +114,7 @@ export function getHan(yakuList: Y[]): number {
 }
 
 export function enableDoubleYakuman(doubleYakuman: Y[]): void {
-  doubleYakuman.forEach(id => {
+  doubleYakuman.forEach((id) => {
     if (openHandValues[id]) {
       openHandValues[id] = -2;
     }

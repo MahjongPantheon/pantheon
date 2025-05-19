@@ -64,7 +64,7 @@ export enum YakuId {
   OPENRIICHI = 44,
   SUUANKOUTANKI = 45,
   CHUURENPOUTOPURE = 46,
-  KOKUSHIMUSOU13 = 47
+  KOKUSHIMUSOU13 = 47,
 }
 
 export const yakuList = [

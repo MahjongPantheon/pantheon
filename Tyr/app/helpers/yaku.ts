@@ -65,7 +65,7 @@ export const enum YakuId {
   OPENRIICHI = 44,
   SUUANKOUTANKI = 45,
   CHUURENPOUTOPURE = 46,
-  KOKUSHIMUSOU13 = 47
+  KOKUSHIMUSOU13 = 47,
 }
 
 export interface YakuMap<T> {
@@ -454,7 +454,7 @@ const viewPriority = [
   YakuId.KOKUSHIMUSOU13,
   YakuId.TENHOU,
   YakuId.CHIHOU,
-  YakuId.RENHOU
+  YakuId.RENHOU,
 ];
 
 export function sortByViewPriority(list: Yaku[]): Yaku[] {

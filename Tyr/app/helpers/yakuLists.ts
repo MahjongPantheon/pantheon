@@ -57,9 +57,13 @@ export const yakumans = [
   ...yakuList.filter((y: Yaku) =>
     [YakuId.DAISANGEN, YakuId.DAISUUSHII, YakuId.SHOSUUSHII].includes(y.id)
   ),
-  ...yakuList.filter((y: Yaku) => [YakuId.SUUANKOU, YakuId.SUUANKOUTANKI, YakuId.SUUKANTSU].includes(y.id)),
+  ...yakuList.filter((y: Yaku) =>
+    [YakuId.SUUANKOU, YakuId.SUUANKOUTANKI, YakuId.SUUKANTSU].includes(y.id)
+  ),
   ...yakuList.filter((y: Yaku) =>
     [YakuId.CHINROTO, YakuId.TSUUIISOU, YakuId.KOKUSHIMUSOU, YakuId.KOKUSHIMUSOU13].includes(y.id)
   ),
-  ...yakuList.filter((y: Yaku) => [YakuId.RYUUIISOU, YakuId.CHUURENPOUTO, YakuId.CHUURENPOUTOPURE].includes(y.id)),
+  ...yakuList.filter((y: Yaku) =>
+    [YakuId.RYUUIISOU, YakuId.CHUURENPOUTO, YakuId.CHUURENPOUTOPURE].includes(y.id)
+  ),
 ];

@@ -64,7 +64,7 @@ export enum YakuId {
   OPENRIICHI = 44,
   SUUANKOUTANKI = 45,
   CHUURENPOUTOPURE = 46,
-  KOKUSHIMUSOU13 = 47
+  KOKUSHIMUSOU13 = 47,
 }
 
 export const yakuList = [
@@ -278,7 +278,7 @@ export const yakuWithPao = [
   {
     id: YakuId.SUUKANTSU,
     name: (i18n: I18nService) => i18n._t('Suukantsu'),
-  }
+  },
 ];
 
 export const doubleYakuman = [
