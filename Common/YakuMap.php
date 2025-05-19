@@ -143,7 +143,7 @@ class YakuMap
     /**
      * @return array
      *
-     * @psalm-return array{34: mixed, 19: mixed, 21: mixed, 25: mixed, 9: mixed, 35: mixed, 12: mixed, 32: mixed, 36: mixed, 8: mixed, 43: mixed, 33: mixed, 38: mixed, 30: mixed, 10: mixed, 3: mixed, 5: mixed, 11: mixed, 4: mixed, 7: mixed, 6: mixed, 23: mixed, 39: mixed, 1: mixed, 37: mixed, 27: mixed, 2: mixed, 41: mixed, 22: mixed, 42: mixed, 24: mixed, 31: mixed, 28: mixed, 26: mixed, 40: mixed, 29: mixed, 18: mixed, 20: mixed, 13: mixed, 14: mixed, 15: mixed, 16: mixed, 17: mixed, 44: mixed}
+     * @psalm-return array{34: mixed, 19: mixed, 21: mixed, 25: mixed, 9: mixed, 35: mixed, 12: mixed, 32: mixed, 36: mixed, 8: mixed, 43: mixed, 33: mixed, 38: mixed, 30: mixed, 10: mixed, 3: mixed, 5: mixed, 11: mixed, 4: mixed, 7: mixed, 6: mixed, 23: mixed, 39: mixed, 1: mixed, 37: mixed, 27: mixed, 2: mixed, 41: mixed, 22: mixed, 42: mixed, 24: mixed, 31: mixed, 28: mixed, 26: mixed, 40: mixed, 29: mixed, 18: mixed, 20: mixed, 13: mixed, 14: mixed, 15: mixed, 16: mixed, 17: mixed, 44: mixed, 45: mixed, 46: mixed, 47: mixed}
      */
     public static function getTranslations(): array
     {
@@ -193,8 +193,8 @@ class YakuMap
             17 => _t("Yakuhai x5"),
             44 => _t("Open riichi"),
             45 => _t("Suu ankou tanki"),
-            45 => _t("Chuuren pooto pure"),
-            46 => _t("Kokushi musou13")
+            46 => _t("Chuuren poutou 9-side"),
+            47 => _t("Kokushi musou 13-side")
         ];
     }
 
