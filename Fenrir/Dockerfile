@@ -6,11 +6,10 @@ ENV LANG=en_US.utf8
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && \
-    apt-get install -y tzdata && \
-    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
-    echo "${TIMEZONE}" > /etc/timezone && \
-    apt-get install -y \
+RUN apt-get update
+RUN apt-get install -y tzdata
+RUN echo "${TIMEZONE}" > /etc/timezone
+RUN apt-get install -y \
     curl \
     make \
     procps \
