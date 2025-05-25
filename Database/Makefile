@@ -1,58 +1,60 @@
+CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman'; else echo 'docker'; fi)
+
 # some coloring
 RED = $(shell echo -e '\033[1;31m')
 GREEN = $(shell echo -e '\033[1;32m')
 YELLOW = $(shell echo -e '\033[1;33m')
 NC = $(shell echo -e '\033[0m') # No Color
 
-.PHONY: get_docker_id
-get_docker_id:
-	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon-database' | awk '{print $$1}'))
+.PHONY: get_container_id
+get_container_id:
+	$(eval RUNNING_CONTAINER_ID := $(shell $(CONTAINER_COMMAND) ps | grep 'pantheon-database' | awk '{print $$1}'))
 
 .PHONY: shell
-shell: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+shell: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Database container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd / && /bin/sh -l' ; \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd / && /bin/sh -l' ; \
 	fi
 
 ,PHONY: stop
-stop: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+stop: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Database container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_ctl -D /var/lib/postgresql/data stop' ; \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_ctl -D /var/lib/postgresql/data stop' ; \
 	fi
 
 .PHONY: kill
 kill:
-	docker rmi `docker images | grep 'pantheon' | grep 'database' | awk '{print $$3}'` || exit 0
+	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'database' | awk '{print $$3}'` || exit 0
 
 .PHONY: db_export
-db_export: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+db_export: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Database container is not running, can't export db.${NC}"; \
 	else \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd frey -f /var/lib/postgresql/export/frey' ; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd mimir -f /var/lib/postgresql/export/mimir'; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar czf export.tar.gz export'; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export'; \
-    docker cp $(RUNNING_DOCKER_ID):/var/lib/postgresql/export.tar.gz ./export.tar.gz ; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export.tar.gz'; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd frey -f /var/lib/postgresql/export/frey' ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd mimir -f /var/lib/postgresql/export/mimir'; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar czf export.tar.gz export'; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export'; \
+    $(CONTAINER_COMMAND) cp $(RUNNING_CONTAINER_ID):/var/lib/postgresql/export.tar.gz ./export.tar.gz ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export.tar.gz'; \
   fi
 
 .PHONY: db_import
-db_import: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+db_import: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
     echo "${RED}Database container is not running, can't import db.${NC}"; \
 	else \
-    docker cp ./export.tar.gz $(RUNNING_DOCKER_ID):/var/lib/postgresql/export.tar.gz ; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar xf export.tar.gz'; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_restore -d frey --clean /var/lib/postgresql/export/frey' ; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres pg_restore -d mimir --clean /var/lib/postgresql/export/mimir'; \
-    docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export /var/lib/postgresql/export.tar.gz'; \
+    $(CONTAINER_COMMAND) cp ./export.tar.gz $(RUNNING_CONTAINER_ID):/var/lib/postgresql/export.tar.gz ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar xf export.tar.gz'; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_restore -d frey --clean /var/lib/postgresql/export/frey' ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_restore -d mimir --clean /var/lib/postgresql/export/mimir'; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export /var/lib/postgresql/export.tar.gz'; \
   fi
 
 .PHONY: __restore
@@ -69,25 +71,25 @@ __restore:
 	fi
 
 .PHONY: backup_dump_pubkey
-backup_dump_pubkey: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+backup_dump_pubkey: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Database container is not running, can't get pubkey.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cat /var/lib/postgresql/.ssh/id_rsa.pub' ; \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cat /var/lib/postgresql/.ssh/id_rsa.pub' ; \
 	fi
 
 .PHONY: backup_show_history
-backup_show_history: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+backup_show_history: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Database container is not running, can't get history.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres sh -c "cd /var/lib/postgresql/backup && git log --oneline | less"' ; \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres sh -c "cd /var/lib/postgresql/backup && git log --oneline | less"' ; \
 	fi
 
 .PHONY: backup_restore
-backup_restore: get_docker_id
-	if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+backup_restore: get_container_id
+	if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Database container is not running, can't rollback.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'su-exec postgres sh -c "export COMMIT=${COMMIT} && cd /var/lib/postgresql/ && make __restore"' ; \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres sh -c "export COMMIT=${COMMIT} && cd /var/lib/postgresql/ && make __restore"' ; \
 	fi

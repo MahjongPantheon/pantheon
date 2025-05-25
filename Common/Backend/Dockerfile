@@ -79,6 +79,8 @@ RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
 
+RUN chmod -R +r /etc/php83
+
 # Set environments
 RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|;*clear_env\s*=\s*no|clear_env = no|g" /etc/php83/php-fpm.d/www.conf && \

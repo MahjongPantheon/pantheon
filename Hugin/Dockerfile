@@ -13,7 +13,7 @@ RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
-COPY hugin-docker.nginx.conf /etc/nginx/http.d/hugin.conf
+COPY hugin-container.nginx.conf /etc/nginx/http.d/hugin.conf
 
 # Copy cron defs
 COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody

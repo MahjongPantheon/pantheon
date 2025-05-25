@@ -6,7 +6,7 @@ RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
-COPY bragi-docker.nginx.conf /etc/nginx/http.d/bragi.conf
+COPY bragi-container.nginx.conf /etc/nginx/http.d/bragi.conf
 
 # Folders init
 RUN mkdir -p /run/nginx

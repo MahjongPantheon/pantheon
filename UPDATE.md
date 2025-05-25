@@ -23,6 +23,8 @@ Updating infrastructure between major versions takes some effort, because someti
 
 After all the steps completed, check if everything works as expected.
 
+Replace `docker` with `podman` in the instruction above if you're using podman.
+
 ## When do I need to use this instruction?
 
 ❗ If your current revision is older or equal to the following ones, the update to last master will require the process described above:

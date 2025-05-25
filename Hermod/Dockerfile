@@ -7,11 +7,9 @@ COPY       /configs/smtp_header_checks   /etc/postfix/smtp_header_checks
 COPY       /scripts/*.sh                 /
 
 # copy nginx configs
-COPY hermod-docker.nginx.conf /etc/nginx/http.d/hermod.conf
+COPY hermod-container.nginx.conf /etc/nginx/http.d/hermod.conf
 
 RUN        chmod +x /run.sh /opendkim.sh
-
-VOLUME     [ "/var/spool/postfix", "/etc/postfix", "/etc/opendkim/keys" ]
 
 USER       root
 WORKDIR    /tmp

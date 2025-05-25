@@ -1,24 +1,26 @@
+CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman'; else echo '$(CONTAINER_COMMAND)'; fi)
+
 # some coloring
 RED = $(shell echo -e '\033[1;31m')
 GREEN = $(shell echo -e '\033[1;32m')
 YELLOW = $(shell echo -e '\033[1;33m')
 NC = $(shell echo -e '\033[0m') # No Color
 
-.PHONY: get_docker_id
-get_docker_id:
-	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon' | grep 'fenrir' | awk '{print $$1}'))
+.PHONY: get_container_id
+get_container_id:
+	$(eval RUNNING_CONTAINER_ID := $(shell $(CONTAINER_COMMAND) ps | grep 'pantheon' | grep 'fenrir' | awk '{print $$1}'))
 
 .PHONY: shell
-shell: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+shell: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running, can't get to shell.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && /bin/bash --login' ; \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && /bin/bash --login' ; \
 	fi
 
 .PHONY: kill
 kill:
-	docker rmi `docker images | grep 'pantheon' | grep 'fenrir' | awk '{print $$3}'` || exit 0
+	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'fenrir' | awk '{print $$3}'` || exit 0
 
 PHONY: deps
 deps:
@@ -30,12 +32,12 @@ eslint:
 	echo "======= Fenrir: eslint ======"
 	./node_modules/.bin/eslint .
 
-PHONY: docker_eslint
-docker_eslint: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+PHONY: container_eslint
+container_eslint: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make eslint' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make eslint' ; \
 	fi
 
 PHONY: prettier
@@ -43,12 +45,12 @@ prettier:
 	echo "======= Fenrir: prettier ======"
 	./node_modules/.bin/prettier -c ./tests
 
-PHONY: docker_prettier
-docker_prettier: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+PHONY: container_prettier
+container_prettier: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make prettier' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make prettier' ; \
 	fi
 
 PHONY: typecheck
@@ -56,12 +58,12 @@ typecheck:
 	echo "======= Fenrir: typecheck ======"
 	./node_modules/.bin/tsc --project tsconfig.json --noEmit
 
-PHONY: docker_typecheck
-docker_typecheck: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+PHONY: container_typecheck
+container_typecheck: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make typecheck' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make typecheck' ; \
 	fi
 
 PHONY: autofix
@@ -73,26 +75,26 @@ run:
 	env | sort
 	CI=true ./node_modules/.bin/playwright test
 
-.PHONY: docker_run
-docker_run: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+.PHONY: container_run
+container_run: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make run' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make run' ; \
 	fi
 
-PHONY: docker_deps
-docker_deps: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+PHONY: container_deps
+container_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make deps' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make deps' ; \
 	fi
 
-PHONY: docker_autofix
-docker_autofix: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+PHONY: container_autofix
+container_autofix: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Fenrir && make autofix' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make autofix' ; \
 	fi

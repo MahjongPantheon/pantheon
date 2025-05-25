@@ -3,6 +3,17 @@
 Pantheon service uses XDebug module for backend debugging. The module is already included
 into the container, though the IDE needs some setup before you start.
 
+### Step 0: enable debug in containers
+
+Run `make enable_debug` in the root folder.
+
+Please note: this enables debugging extension for PHP in all related containers and after this the containers
+will try to reach debugging client (like phpstorm) for every request. If the debug client is not running,
+it will retry for 5 times, adding ~200ms of delay for each retry.
+
+If you experience huge (~1.2s) delays on backend handles, that means the debugging client is not running. If you don't
+want to use debugger for a while and want to get rid of the delays, use `make disable_debug`.
+
 ### Step 1: configure debugger
 
 ![](../img/settings-debug.png)
@@ -18,9 +29,10 @@ For each php service, add new server on the Servers page, point its host to `loc
 any value. Make sure you check "Use path mappings" checkbox and fill the paths exactly as
 shown on the screenshot. Note that inside container all services are located inside
 `/var/www/html` folder. The folder itself should be pointed to the project root. Server names should be following:
-- pantheon_mimir
-- pantheon_frey
-- pantheon_hugin
+- mimir.pantheon.internal
+- frey.pantheon.internal
+- hugin.pantheon.internal
+- gullveig.pantheon.internal
 
 These server names are used by phpstorm to determine what server you're using.
 

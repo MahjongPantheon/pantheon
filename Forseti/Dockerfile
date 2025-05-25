@@ -6,7 +6,7 @@ RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
-COPY forseti-docker.nginx.conf /etc/nginx/http.d/forseti.conf
+COPY forseti-container.nginx.conf /etc/nginx/http.d/forseti.conf
 
 # Folders init
 RUN mkdir -p /run/nginx

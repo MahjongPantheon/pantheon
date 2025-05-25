@@ -6,7 +6,7 @@ RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
-COPY tyr-docker.nginx.conf /etc/nginx/http.d/tyr.conf
+COPY tyr-container.nginx.conf /etc/nginx/http.d/tyr.conf
 
 # Folders init
 RUN mkdir -p /run/nginx

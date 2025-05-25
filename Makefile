@@ -1,7 +1,8 @@
 UID := $(shell id -u $$SUDO_USER)
 UID ?= $(shell id -u $$USER)
 
-COMPOSE_COMMAND := $(shell if [ -f "`which podman-compose`" ]; then echo 'podman-compose'; else echo 'docker compose'; fi)
+CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman'; else echo 'docker'; fi)
+COMPOSE_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman compose --no-ansi --podman-run-args="--replace"'; else echo 'docker compose'; fi)
 
 # some coloring
 RED = $(shell echo -e '\033[1;31m')
@@ -14,16 +15,16 @@ NC = $(shell echo -e '\033[0m') # No Color
 .PHONY: deps
 deps:
 	@echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."
-	cd Tyr && ${MAKE} docker_deps
-	cd Mimir && ${MAKE} docker_deps
-	cd Frey && ${MAKE} docker_deps
-	cd Forseti && ${MAKE} docker_deps
-	cd Bragi && ${MAKE} docker_deps
-	cd Sigrun && ${MAKE} docker_deps
-	cd Hugin && ${MAKE} docker_deps
-	cd Gullveig && ${MAKE} docker_deps
-	cd Skirnir && ${MAKE} docker_deps
-	cd Fenrir && ${MAKE} docker_deps
+	cd Tyr && ${MAKE} container_deps
+	cd Mimir && ${MAKE} container_deps
+	cd Frey && ${MAKE} container_deps
+	cd Forseti && ${MAKE} container_deps
+	cd Bragi && ${MAKE} container_deps
+	cd Sigrun && ${MAKE} container_deps
+	cd Hugin && ${MAKE} container_deps
+	cd Gullveig && ${MAKE} container_deps
+	cd Skirnir && ${MAKE} container_deps
+	cd Fenrir && ${MAKE} container_deps
 
 .PHONY: kill_dev
 kill_dev: export ENV_FILENAME=.env.development
@@ -48,20 +49,20 @@ kill:
 		cd ../Hugin && ${MAKE} kill ; \
 		cd ../Skirnir && ${MAKE} kill ; \
 		cd ../Database && ${MAKE} kill ; \
-		docker volume rm `docker volume ls | grep 'pantheon' | grep 'datavolume02' | awk '{print $$2}'` ; \
-		docker volume rm `docker volume ls | grep 'pantheon' | grep 'backupvolume01' | awk '{print $$2}'` ; \
-		docker volume rm `docker volume ls | grep 'pantheon' | grep 'configvolume01' | awk '{print $$2}'` ; \
-		docker volume rm `docker volume ls | grep 'pantheon' | grep 'gullveigstorage01' | awk '{print $$2}'` ; \
-		docker volume rm `docker volume ls | grep 'pantheon' | grep 'grafanastorage01' | awk '{print $$2}'` ; \
+		${CONTAINER_COMMAND} volume rm `${CONTAINER_COMMAND} volume ls | grep 'pantheon' | grep 'datavolume02' | awk '{print $$2}'` ; \
+		${CONTAINER_COMMAND} volume rm `${CONTAINER_COMMAND} volume ls | grep 'pantheon' | grep 'backupvolume01' | awk '{print $$2}'` ; \
+		${CONTAINER_COMMAND} volume rm `${CONTAINER_COMMAND} volume ls | grep 'pantheon' | grep 'configvolume01' | awk '{print $$2}'` ; \
+		${CONTAINER_COMMAND} volume rm `${CONTAINER_COMMAND} volume ls | grep 'pantheon' | grep 'gullveigstorage01' | awk '{print $$2}'` ; \
+		${CONTAINER_COMMAND} volume rm `${CONTAINER_COMMAND} volume ls | grep 'pantheon' | grep 'grafanastorage01' | awk '{print $$2}'` ; \
 	fi
 
 .PHONY: container
 container: export COMPOSE_DOCKER_CLI_BUILD=1
 container: export DOCKER_BUILDKIT=1
 container:
-	cd Common/Backend && docker buildx build -t ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest .
-	cd Common/Frontend && docker buildx build -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v2:latest .
-	cd Common/ReverseProxy && docker buildx build -t pantheon-reverse-proxy .
+	cd Common/Backend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest .
+	cd Common/Frontend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v2:latest .
+	cd Common/ReverseProxy && ${CONTAINER_COMMAND} buildx build -t pantheon-reverse-proxy .
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
 
@@ -74,7 +75,7 @@ container_dev:
 reverse_proxy_start:
 	@if [ -z "`netstat -tunl | grep ':80 '`" ]; then \
 		cd Common/ReverseProxy && \
-    	docker run \
+    	${CONTAINER_COMMAND} run \
     	    -p 80:80 \
     	    --network=pantheon_internal_net \
     	    --name pantheon-reverse-proxy-container \
@@ -83,8 +84,8 @@ reverse_proxy_start:
 
 .PHONY: reverse_proxy_stop
 reverse_proxy_stop:
-	@docker stop pantheon-reverse-proxy-container || true
-	@docker rm pantheon-reverse-proxy-container || true
+	@${CONTAINER_COMMAND} stop pantheon-reverse-proxy-container || true
+	@${CONTAINER_COMMAND} rm pantheon-reverse-proxy-container || true
 
 .PHONY: pantheon_run
 pantheon_run: export ENV_FILENAME=.env.development
@@ -102,10 +103,6 @@ pantheon_run:
   	cat Env/.env.development.local >> Skirnir/.env.development ; \
 	fi
 	@${COMPOSE_COMMAND} up -d
-	@cd Mimir && ${MAKE} docker_enable_debug
-	@cd Frey && ${MAKE} docker_enable_debug
-	@cd Hugin && ${MAKE} docker_enable_debug
-	@cd Gullveig && ${MAKE} docker_enable_debug
 	@echo "----------------------------------------------------------------------------------"; \
 	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 	echo "----------------------------------------------------------------------------------"; \
@@ -118,45 +115,62 @@ pantheon_stop:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
 	${COMPOSE_COMMAND} down
 
+.PHONY: enable_debug
+enable_debug: export ENV_FILENAME=.env.development
+enable_debug:
+	@cd Mimir && ${MAKE} container_enable_debug
+	@cd Frey && ${MAKE} container_enable_debug
+	@cd Hugin && ${MAKE} container_enable_debug
+	@cd Gullveig && ${MAKE} container_enable_debug
+
+.PHONY: disable_debug
+disable_debug: export ENV_FILENAME=.env.development
+disable_debug:
+	@cd Mimir && ${MAKE} container_disable_debug
+	@cd Frey && ${MAKE} container_disable_debug
+	@cd Hugin && ${MAKE} container_disable_debug
+	@cd Gullveig && ${MAKE} container_disable_debug
+
+
 .PHONY: dev_tyr
 dev_tyr:
-	cd Tyr && ${MAKE} docker_dev
+	cd Tyr && ${MAKE} container_dev
 
 .PHONY: dev_forseti
 dev_forseti:
-	cd Forseti && ${MAKE} docker_dev
+	cd Forseti && ${MAKE} container_dev
 
 .PHONY: dev_sigrun
 dev_sigrun:
-	cd Sigrun && ${MAKE} docker_dev
+	cd Sigrun && ${MAKE} container_dev
 
 .PHONY: dev_bragi
 dev_bragi:
-	cd Bragi && ${MAKE} docker_dev
+	cd Bragi && ${MAKE} container_dev
 
 .PHONY: dev_skirnir
 dev_skirnir:
-	cd Skirnir && ${MAKE} docker_dev
+	cd Skirnir && ${MAKE} container_dev
 
 .PHONY: forseti_stop
 forseti_stop:
-	cd Forseti && ${MAKE} docker_stop
+	cd Forseti && ${MAKE} container_stop
 
 .PHONY: tyr_stop
 tyr_stop:
-	cd Tyr && ${MAKE} docker_stop
+	cd Tyr && ${MAKE} container_stop
 
 .PHONY: sigrun_stop
 sigrun_stop:
-	cd Sigrun && ${MAKE} docker_stop
+	cd Sigrun && ${MAKE} container_stop
 
 .PHONY: bragi_stop
 bragi_stop:
-	cd Bragi && ${MAKE} docker_stop
+	cd Bragi && ${MAKE} container_stop
 
 .PHONY: skirnir_stop
 skirnir_stop:
-	cd Skirnir && ${MAKE} docker_stop
+	cd Skirnir && ${MAKE} container_stop
 
 .PHONY: dev
 dev: pantheon_run
@@ -168,9 +182,9 @@ dev: pantheon_run
 
 .PHONY: migrate
 migrate:
-	cd Mimir && ${MAKE} docker_migrate
-	cd Frey && ${MAKE} docker_migrate
-	cd Hugin && ${MAKE} docker_migrate
+	cd Mimir && ${MAKE} container_migrate
+	cd Frey && ${MAKE} container_migrate
+	cd Hugin && ${MAKE} container_migrate
 
 .PHONY: shell_tyr
 shell_tyr:
@@ -224,134 +238,134 @@ shell_fenrir:
 
 .PHONY: seed
 seed:
-	cd Frey && ${MAKE} docker_seed
-	cd Mimir && ${MAKE} docker_seed
+	cd Frey && ${MAKE} container_seed
+	cd Mimir && ${MAKE} container_seed
 
 .PHONY: seed_bigevent
 seed_bigevent:
-	cd Frey && ${MAKE} docker_seed
-	cd Mimir && ${MAKE} docker_seed_bigevent
+	cd Frey && ${MAKE} container_seed
+	cd Mimir && ${MAKE} container_seed_bigevent
 
 .PHONY: seed_tournament
 seed_tournament:
-	cd Frey && ${MAKE} docker_seed
-	cd Mimir && ${MAKE} docker_seed_tournament
+	cd Frey && ${MAKE} container_seed
+	cd Mimir && ${MAKE} container_seed_tournament
 
 .PHONY: dump_users
 dump_users:
-	cd Frey && ${MAKE} docker_dump_users
+	cd Frey && ${MAKE} container_dump_users
 
 .PHONY: dump_last_mail
 dump_last_mail:
-	cd Hermod && ${MAKE} docker_last_mail
+	cd Hermod && ${MAKE} container_last_mail
 
 .PHONY: bragi_eslint
 bragi_eslint:
-	cd Bragi && ${MAKE} docker_eslint > ../tmp/bragi_eslint.log 2>&1
+	cd Bragi && ${MAKE} container_eslint > ../tmp/bragi_eslint.log 2>&1
 
 .PHONY: bragi_prettier
 bragi_prettier:
-	cd Bragi && ${MAKE} docker_prettier > ../tmp/bragi_prettier.log 2>&1
+	cd Bragi && ${MAKE} container_prettier > ../tmp/bragi_prettier.log 2>&1
 
 .PHONY: bragi_typecheck
 bragi_typecheck:
-	cd Bragi && ${MAKE} docker_typecheck > ../tmp/bragi_typecheck.log 2>&1
+	cd Bragi && ${MAKE} container_typecheck > ../tmp/bragi_typecheck.log 2>&1
 
 .PHONY: forseti_eslint
 forseti_eslint:
-	cd Forseti && ${MAKE} docker_eslint > ../tmp/forseti_eslint.log 2>&1
+	cd Forseti && ${MAKE} container_eslint > ../tmp/forseti_eslint.log 2>&1
 
 .PHONY: forseti_prettier
 forseti_prettier:
-	cd Forseti && ${MAKE} docker_prettier > ../tmp/forseti_prettier.log 2>&1
+	cd Forseti && ${MAKE} container_prettier > ../tmp/forseti_prettier.log 2>&1
 
 .PHONY: forseti_typecheck
 forseti_typecheck:
-	cd Forseti && ${MAKE} docker_typecheck > ../tmp/forseti_typecheck.log 2>&1
+	cd Forseti && ${MAKE} container_typecheck > ../tmp/forseti_typecheck.log 2>&1
 
 .PHONY: frey_lint
 frey_lint:
-	cd Frey && ${MAKE} docker_lint > ../tmp/frey_lint.log 2>&1
+	cd Frey && ${MAKE} container_lint > ../tmp/frey_lint.log 2>&1
 
 .PHONY: frey_analyze
 frey_analyze:
-	cd Frey && ${MAKE} docker_analyze > ../tmp/frey_analyze.log 2>&1
+	cd Frey && ${MAKE} container_analyze > ../tmp/frey_analyze.log 2>&1
 
 .PHONY: frey_lint_common
 frey_lint_common:
-	cd Frey && ${MAKE} docker_lint_common > ../tmp/frey_lint_common.log 2>&1
+	cd Frey && ${MAKE} container_lint_common > ../tmp/frey_lint_common.log 2>&1
 
 .PHONY: gullveig_lint
 gullveig_lint:
-	cd Gullveig && ${MAKE} docker_lint > ../tmp/gullveig_lint.log 2>&1
+	cd Gullveig && ${MAKE} container_lint > ../tmp/gullveig_lint.log 2>&1
 
 .PHONY: gullveig_analyze
 gullveig_analyze:
-	cd Gullveig && ${MAKE} docker_analyze > ../tmp/gullveig_analyze.log 2>&1
+	cd Gullveig && ${MAKE} container_analyze > ../tmp/gullveig_analyze.log 2>&1
 
 .PHONY: hugin_lint
 hugin_lint:
-	cd Hugin && ${MAKE} docker_lint > ../tmp/hugin_lint.log 2>&1
+	cd Hugin && ${MAKE} container_lint > ../tmp/hugin_lint.log 2>&1
 
 .PHONY: hugin_analyze
 hugin_analyze:
-	cd Hugin && ${MAKE} docker_analyze > ../tmp/hugin_analyze.log 2>&1
+	cd Hugin && ${MAKE} container_analyze > ../tmp/hugin_analyze.log 2>&1
 
 .PHONY: mimir_lint
 mimir_lint:
-	cd Mimir && ${MAKE} docker_lint > ../tmp/mimir_lint.log 2>&1
+	cd Mimir && ${MAKE} container_lint > ../tmp/mimir_lint.log 2>&1
 
 .PHONY: mimir_analyze
 mimir_analyze:
-	cd Mimir && ${MAKE} docker_analyze > ../tmp/mimir_analyze.log 2>&1
+	cd Mimir && ${MAKE} container_analyze > ../tmp/mimir_analyze.log 2>&1
 
 .PHONY: skirnir_eslint
 skirnir_eslint:
-	cd Skirnir && ${MAKE} docker_eslint > ../tmp/skirnir_eslint.log 2>&1
+	cd Skirnir && ${MAKE} container_eslint > ../tmp/skirnir_eslint.log 2>&1
 
 .PHONY: skirnir_prettier
 skirnir_prettier:
-	cd Skirnir && ${MAKE} docker_prettier > ../tmp/skirnir_prettier.log 2>&1
+	cd Skirnir && ${MAKE} container_prettier > ../tmp/skirnir_prettier.log 2>&1
 
 .PHONY: skirnir_typecheck
 skirnir_typecheck:
-	cd Skirnir && ${MAKE} docker_typecheck > ../tmp/skirnir_typecheck.log 2>&1
+	cd Skirnir && ${MAKE} container_typecheck > ../tmp/skirnir_typecheck.log 2>&1
 
 .PHONY: sigrun_eslint
 sigrun_eslint:
-	cd Sigrun && ${MAKE} docker_eslint > ../tmp/sigrun_eslint.log 2>&1
+	cd Sigrun && ${MAKE} container_eslint > ../tmp/sigrun_eslint.log 2>&1
 
 .PHONY: sigrun_prettier
 sigrun_prettier:
-	cd Sigrun && ${MAKE} docker_prettier > ../tmp/sigrun_prettier.log 2>&1
+	cd Sigrun && ${MAKE} container_prettier > ../tmp/sigrun_prettier.log 2>&1
 
 .PHONY: sigrun_typecheck
 sigrun_typecheck:
-	cd Sigrun && ${MAKE} docker_typecheck > ../tmp/sigrun_typecheck.log 2>&1
+	cd Sigrun && ${MAKE} container_typecheck > ../tmp/sigrun_typecheck.log 2>&1
 
 .PHONY: tyr_eslint
 tyr_eslint:
-	cd Tyr && ${MAKE} docker_eslint > ../tmp/tyr_eslint.log 2>&1
+	cd Tyr && ${MAKE} container_eslint > ../tmp/tyr_eslint.log 2>&1
 
 .PHONY: tyr_prettier
 tyr_prettier:
-	cd Tyr && ${MAKE} docker_prettier > ../tmp/tyr_prettier.log 2>&1
+	cd Tyr && ${MAKE} container_prettier > ../tmp/tyr_prettier.log 2>&1
 
 .PHONY: tyr_typecheck
 tyr_typecheck:
-	cd Tyr && ${MAKE} docker_typecheck > ../tmp/tyr_typecheck.log 2>&1
+	cd Tyr && ${MAKE} container_typecheck > ../tmp/tyr_typecheck.log 2>&1
 
 .PHONY: fenrir_eslint
 fenrir_eslint:
-	cd Fenrir && ${MAKE} docker_eslint > ../tmp/fenrir_eslint.log 2>&1
+	cd Fenrir && ${MAKE} container_eslint > ../tmp/fenrir_eslint.log 2>&1
 
 .PHONY: fenrir_prettier
 fenrir_prettier:
-	cd Fenrir && ${MAKE} docker_prettier > ../tmp/fenrir_prettier.log 2>&1
+	cd Fenrir && ${MAKE} container_prettier > ../tmp/fenrir_prettier.log 2>&1
 
 .PHONY: fenrir_typecheck
 fenrir_typecheck:
-	cd Fenrir && ${MAKE} docker_typecheck > ../tmp/fenrir_typecheck.log 2>&1
+	cd Fenrir && ${MAKE} container_typecheck > ../tmp/fenrir_typecheck.log 2>&1
 
 .PHONY: lint
 lint:
@@ -372,32 +386,32 @@ lint:
 
 .PHONY: test
 test:
-	cd Tyr && ${MAKE} docker_test
-	cd Frey && ${MAKE} docker_test
-	cd Mimir && ${MAKE} docker_test
+	cd Tyr && ${MAKE} container_test
+	cd Frey && ${MAKE} container_test
+	cd Mimir && ${MAKE} container_test
 
 .PHONY: autofix
 autofix:
-	cd Mimir && ${MAKE} docker_autofix
-	cd Frey && ${MAKE} docker_autofix
-	cd Frey && ${MAKE} docker_autofix_common
-	cd Tyr && ${MAKE} docker_autofix
-	cd Forseti && ${MAKE} docker_autofix
-	cd Sigrun && ${MAKE} docker_autofix
-	cd Hugin && ${MAKE} docker_autofix
-	cd Gullveig && ${MAKE} docker_autofix
-	cd Bragi && ${MAKE} docker_autofix
-	cd Skirnir && ${MAKE} docker_autofix
-	cd Fenrir && ${MAKE} docker_autofix
+	cd Mimir && ${MAKE} container_autofix
+	cd Frey && ${MAKE} container_autofix
+	cd Frey && ${MAKE} container_autofix_common
+	cd Tyr && ${MAKE} container_autofix
+	cd Forseti && ${MAKE} container_autofix
+	cd Sigrun && ${MAKE} container_autofix
+	cd Hugin && ${MAKE} container_autofix
+	cd Gullveig && ${MAKE} container_autofix
+	cd Bragi && ${MAKE} container_autofix
+	cd Skirnir && ${MAKE} container_autofix
+	cd Fenrir && ${MAKE} container_autofix
 
 .PHONY: proto_gen
 proto_gen:
-	cd Mimir && ${MAKE} docker_proto_gen
-	cd Frey && ${MAKE} docker_proto_gen
-	cd Forseti && ${MAKE} docker_proto_gen
-	cd Tyr && ${MAKE} docker_proto_gen
-	cd Sigrun && ${MAKE} docker_proto_gen
-	cd Hugin && ${MAKE} docker_proto_gen
+	cd Mimir && ${MAKE} container_proto_gen
+	cd Frey && ${MAKE} container_proto_gen
+	cd Forseti && ${MAKE} container_proto_gen
+	cd Tyr && ${MAKE} container_proto_gen
+	cd Sigrun && ${MAKE} container_proto_gen
+	cd Hugin && ${MAKE} container_proto_gen
 
 # Db import/export
 
@@ -413,38 +427,38 @@ db_import:
 
 .PHONY: prod_deps
 prod_deps:
-	cd Mimir && ${MAKE} docker_deps
-	cd Frey && ${MAKE} docker_deps
-	cd Tyr && ${MAKE} docker_deps
-	cd Forseti && ${MAKE} docker_deps
-	cd Hugin && ${MAKE} docker_deps
-	cd Gullveig && ${MAKE} docker_deps
+	cd Mimir && ${MAKE} container_deps
+	cd Frey && ${MAKE} container_deps
+	cd Tyr && ${MAKE} container_deps
+	cd Forseti && ${MAKE} container_deps
+	cd Hugin && ${MAKE} container_deps
+	cd Gullveig && ${MAKE} container_deps
 	# sigrun, skirnir and bragi should install deps after prebuild
 
 .PHONY: prod_build_tyr
 prod_build_tyr: export NODE_ENV=production
 prod_build_tyr: # this is for automated builds, don't run it manually
-	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+	cd Tyr && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild
 
 .PHONY: prod_build_forseti
 prod_build_forseti: export NODE_ENV=production
 prod_build_forseti: # this is for automated builds, don't run it manually
-	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+	cd Forseti && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild
 
 .PHONY: prod_build_sigrun
 prod_build_sigrun: export NODE_ENV=production
 prod_build_sigrun: # this is for automated builds, don't run it manually
-	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+	cd Sigrun && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
 .PHONY: prod_build_bragi
 prod_build_bragi: export NODE_ENV=production
 prod_build_bragi: # this is for automated builds, don't run it manually
-	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+	cd Bragi && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
 .PHONY: prod_build_skirnir
 prod_build_skirnir: export NODE_ENV=production
 prod_build_skirnir: # this is for automated builds, don't run it manually
-	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
+	cd Skirnir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps && ${MAKE} container_reload_pm2
 
 .PHONY: prod_compile
 prod_compile: export ENV_FILENAME=.env.production
@@ -458,11 +472,11 @@ prod_compile:
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
-	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
-	cd Sigrun && ${MAKE} docker_warmup
-	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
-	cd Bragi && ${MAKE} docker_warmup
-	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
+	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
+	cd Sigrun && ${MAKE} container_warmup
+	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
+	cd Bragi && ${MAKE} container_warmup
+	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
 
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
@@ -502,22 +516,22 @@ pull:
 
 .PHONY: bootstrap_admin
 bootstrap_admin:
-	cd Frey && ${MAKE} docker_seed
+	cd Frey && ${MAKE} container_seed
 
 # i18n related
 .PHONY: i18n_extract
 i18n_extract:
-	cd Tyr && ${MAKE} docker_i18n_extract
-	cd Forseti && ${MAKE} docker_i18n_extract
-	cd Sigrun && ${MAKE} docker_i18n_extract
-	cd Bragi && ${MAKE} docker_i18n_extract
+	cd Tyr && ${MAKE} container_i18n_extract
+	cd Forseti && ${MAKE} container_i18n_extract
+	cd Sigrun && ${MAKE} container_i18n_extract
+	cd Bragi && ${MAKE} container_i18n_extract
 
 .PHONY: i18n_compile
 i18n_compile:
-	cd Tyr && ${MAKE} docker_i18n_update
-	cd Forseti && ${MAKE} docker_i18n_update
-	cd Sigrun && ${MAKE} docker_i18n_update
-	cd Bragi && ${MAKE} docker_i18n_update
+	cd Tyr && ${MAKE} container_i18n_update
+	cd Forseti && ${MAKE} container_i18n_update
+	cd Sigrun && ${MAKE} container_i18n_update
+	cd Bragi && ${MAKE} container_i18n_update
 
 .PHONY: bump_release
 bump_release:
@@ -528,43 +542,43 @@ bump_release:
 .PHONY: e2e
 e2e: export ENV_FILENAME=.env.e2e
 e2e:
-	cd Fenrir && ${MAKE} docker_run
+	cd Fenrir && ${MAKE} container_run
 
 .PHONY: e2e_local
 e2e_dev: export ENV_FILENAME=.env.development
 e2e_dev:
 	@${COMPOSE_COMMAND} up fenrir.pantheon.internal -d
-	cd Fenrir && ${MAKE} docker_deps && ${MAKE} docker_run
+	cd Fenrir && ${MAKE} container_deps && ${MAKE} container_run
 
 .PHONY: e2e_build_tyr
 e2e_build_tyr: export NODE_ENV=development
 e2e_build_tyr: export ENV_FILENAME=.env.e2e
 e2e_build_tyr: # this is for automated builds, don't run it manually
-	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+	cd Tyr && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild
 
 .PHONY: e2e_build_forseti
 e2e_build_forseti: export NODE_ENV=development
 e2e_build_forseti: export ENV_FILENAME=.env.e2e
 e2e_build_forseti: # this is for automated builds, don't run it manually
-	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+	cd Forseti && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild
 
 .PHONY: e2e_build_sigrun
 e2e_build_sigrun: export NODE_ENV=development
 e2e_build_sigrun: export ENV_FILENAME=.env.e2e
 e2e_build_sigrun: # this is for automated builds, don't run it manually
-	cd Sigrun && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+	cd Sigrun && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
 .PHONY: e2e_build_bragi
 e2e_build_bragi: export NODE_ENV=development
 e2e_build_bragi: export ENV_FILENAME=.env.e2e
 e2e_build_bragi: # this is for automated builds, don't run it manually
-	cd Bragi && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps
+	cd Bragi && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
 .PHONY: e2e_build_skirnir
 e2e_build_skirnir: export NODE_ENV=development
 e2e_build_skirnir: export ENV_FILENAME=.env.e2e
 e2e_build_skirnir: # this is for automated builds, don't run it manually
-	cd Skirnir && ${MAKE} docker_deps && ${MAKE} docker_build && ${MAKE} docker_prebuild && ${MAKE} docker_prod_deps && ${MAKE} docker_reload_pm2
+	cd Skirnir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps && ${MAKE} container_reload_pm2
 
 .PHONY: e2e_compile
 e2e_compile: export ENV_FILENAME=.env.e2e
@@ -578,9 +592,9 @@ e2e_compile:
 	${MAKE} migrate
 	${MAKE} e2e_build_tyr
 	${MAKE} e2e_build_forseti
-	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} docker_reload_pm2
-	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} docker_reload_pm2
-	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} docker_reload_pm2
+	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
+	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
+	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
 
 .PHONY: e2e_run
 e2e_run: export ENV_FILENAME=.env.e2e

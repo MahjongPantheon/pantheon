@@ -6,7 +6,7 @@ RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
-COPY sigrun-docker.nginx.conf /etc/nginx/http.d/sigrun.conf
+COPY sigrun-container.nginx.conf /etc/nginx/http.d/sigrun.conf
 
 # Folders init
 RUN mkdir -p /run/nginx

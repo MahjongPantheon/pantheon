@@ -10,7 +10,7 @@ RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
-COPY gullveig-docker.nginx.conf /etc/nginx/http.d/gullveig.conf
+COPY gullveig-container.nginx.conf /etc/nginx/http.d/gullveig.conf
 
 # Folders init
 RUN mkdir -p /run/nginx

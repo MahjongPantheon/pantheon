@@ -19,10 +19,10 @@ Clone the pantheon repository to your own server. Make sure repo folder is not a
 To deploy pantheon on your own VPS or personal environment on production mode:
 
 1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
-   - Docker with compose plugin - to run containers via docker runtime
-   - Podman-docker wrapper and podman-compose - to run containers over kubernetes setup.
-     - If you're using podman, please make sure you have `ip_tables` module inserted into your kernel on the host. Otherwise, containers will fail to start.
-     - Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
+   - [recommended] Podman and podman-compose - to run containers over OCI runtime.
+     - Podman is a recommended runtime due to its better security. Also it doesn't have privileges problem with dependencies (e.g. you might need to remove `node_modules` as root when using docker).
+     - Though it's a recommended runtime, it has some gotchas to be considered to run properly. See podman notes below.
+   - Docker with compose plugin - to run containers via docker runtime.
 2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Please use included `nginx-reverse-proxy.example.conf` as reference of what host to point where. Note that `*.pantheon.internal` hosts are used to distinguish the services inside container network. Optionally, you can also point PgAdmin4 host to port 5632.
@@ -121,7 +121,7 @@ Second, make sure your **local port 80** is not used by any other software (like
 Make sure you have Docker, Docker compose plugin and Docker buildx plugin installed and daemon running on your system. For debugging, please make sure all the php extensions are
 installed as well, see Dockerfile for a complete list. 
 
-_Note: on some linux distros almost every docker-related command should be run as root. If nothing happens, or error
+_Note: on some linux distros almost every container-related command should be run as root. If nothing happens, or error
 is displayed, try adding `sudo` before `make`._
 
 1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process. 
@@ -199,6 +199,15 @@ VITE_BOT_NICKNAME=bot_nickname
 ```
 After that your users should open the bot, start the conversation and follow the link it sends. After pressing
 the confirmation button, bot will be enabled for this particular user.
+
+### Podman notes
+- Please make sure you have `ip_tables` module inserted into your kernel on the host. Otherwise, containers will fail to start.
+- Trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
+- Setting proper subuid/subgid for current user is recommended: `sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $USER`.
+- Podman setup may conflict with apparmor policies. You may want either to disable apparmor service or to allow read-write access to pantheon directory for everybody.
+- In case of any other problems you might also try resetting podman to system defaults by running `podman system reset -f`. CAUTION: This will delete all running containers, images and volumes.
+- Development environment special notes: 
+  - For dev mode, when running podman in rootless mode (which is default), make sure you set `net.ipv4.ip_unprivileged_port_start=80` in your `/etc/sysctl.conf` to allow binding on port 80, otherwise reverse proxy won't be able to start when you run `make dev`.
 
 ### Pull requests
 
