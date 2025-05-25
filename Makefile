@@ -63,8 +63,8 @@ kill:
 container: export COMPOSE_DOCKER_CLI_BUILD=1
 container: export DOCKER_BUILDKIT=1
 container:
-	cd Common/Backend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-backend-common-v2:latest .
-	cd Common/Frontend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v2:latest .
+	cd Common/Backend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-backend-common-v3:latest .
+	cd Common/Frontend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v3:latest .
 	cd Common/ReverseProxy && ${CONTAINER_COMMAND} buildx build -t pantheon-reverse-proxy .
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
