@@ -1,6 +1,9 @@
 UID := $(shell id -u $$SUDO_USER)
 UID ?= $(shell id -u $$USER)
 
+export PODMAN_COMPOSE_PROVIDER=podman-compose
+export PODMAN_COMPOSE_WARNING_LOGS=false
+
 CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman'; else echo 'docker'; fi)
 COMPOSE_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman compose --no-ansi --podman-run-args="--replace"'; else echo 'docker compose'; fi)
 
