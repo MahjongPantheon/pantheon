@@ -19,8 +19,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: 'build.yml'
 
-      - name: Reset podman
-        run: podman system reset -f
+      - name: Reset podman & disable apparmor
+        run: |
+          sudo aa-teardown || true
+          sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $USER
+          sudo systemctl disable --now apparmor.service
+          sudo rm -f /etc/containers/storage.conf || true
+          podman system reset -f
+          sudo podman system reset -f
 
       - name: Pull containers
         run: make pull

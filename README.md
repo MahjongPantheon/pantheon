@@ -201,13 +201,25 @@ After that your users should open the bot, start the conversation and follow the
 the confirmation button, bot will be enabled for this particular user.
 
 ### Podman notes
+
 - Please make sure you have `ip_tables` module inserted into your kernel on the host. Otherwise, containers will fail to start.
 - Trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
 - Setting proper subuid/subgid for current user is recommended: `sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $USER`.
 - Podman setup may conflict with apparmor policies. You may want either to disable apparmor service or to allow read-write access to pantheon directory for everybody.
+- Podman storage settings may cause errors in overlay management, so you might want to erase the config file: `sudo rm -f /etc/containers/storage.conf`.
 - In case of any other problems you might also try resetting podman to system defaults by running `podman system reset -f`. CAUTION: This will delete all running containers, images and volumes.
 - Development environment special notes: 
   - For dev mode, when running podman in rootless mode (which is default), make sure you set `net.ipv4.ip_unprivileged_port_start=80` in your `/etc/sysctl.conf` to allow binding on port 80, otherwise reverse proxy won't be able to start when you run `make dev`.
+
+Basic all-in-one script for all the notes above:
+```
+sudo aa-teardown || true
+sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $USER
+sudo systemctl disable --now apparmor.service
+sudo rm -f /etc/containers/storage.conf || true
+podman system reset -f
+sudo podman system reset -f
+```
 
 ### Pull requests
 
