@@ -1,4 +1,4 @@
-name: Build container for e2e testing
+name: Build container for e2e testing [arm64]
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   e2eBuildContainer:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-arm64
     if: |
       github.ref == 'refs/heads/master' &&
       github.repository == 'MahjongPantheon/pantheon'
@@ -21,8 +21,8 @@ jobs:
 
       - name: Build and push [Fenrir]
         run: |
-          cd ./Fenrir && podman build --format docker --platform linux/amd64 \
-            -t ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest \
-            -t ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:${{ github.sha }} \
+          cd ./Fenrir && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-fenrir-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-fenrir-arm64:${{ github.sha }} \
           .
-          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest; fi
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-fenrir-arm64:latest; fi

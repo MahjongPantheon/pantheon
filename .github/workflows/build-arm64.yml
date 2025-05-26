@@ -1,0 +1,122 @@
+name: Build project artifacts & containers [arm64]
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  buildContainers:
+    runs-on: ubuntu-latest-arm64
+    if: |
+      github.ref == 'refs/heads/master' &&
+      github.repository == 'MahjongPantheon/pantheon'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: webgtx/setup-podman-compose@v1
+
+      - name: Log in to container registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login -u "${{ github.repository_owner }}" --password-stdin ghcr.io
+
+      - name: Build and push [Backend common]
+        run: |
+          cd ./Common/Backend && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-backend-common-v3-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-backend-common-v3-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-backend-common-v3-arm64:latest; fi
+
+      - name: Build and push [Frontend common]
+        run: |
+          cd ./Common/Frontend && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-arm64:latest; fi
+
+      - name: Build and push [Database]
+        run: |
+          cd ./Database && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-database-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-database-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-database-arm64:latest; fi
+
+      - name: Build and push [Forseti]
+        run: |
+          cd ./Forseti && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-forseti-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-forseti-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-forseti-arm64:latest; fi
+
+      - name: Build and push [Frey]
+        run: |
+          cd ./Frey && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-frey-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-frey-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-frey-arm64:latest; fi
+
+      - name: Build and push [Hermod]
+        run: |
+          cd ./Hermod && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-hermod-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-hermod-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-hermod-arm64:latest; fi
+
+      - name: Build and push [Hugin]
+        run: |
+          cd ./Hugin && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-hugin-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-hugin-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-hugin-arm64:latest; fi
+
+      - name: Build and push [Gullveig]
+        run: |
+          cd ./Gullveig && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-gullveig-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-gullveig-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-gullveig-arm64:latest; fi
+
+      - name: Build and push [Mimir]
+        run: |
+          cd ./Mimir && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-mimir-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-mimir-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-mimir-arm64:latest; fi
+
+      - name: Build and push [Sigrun]
+        run: |
+          cd ./Sigrun && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-sigrun-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-sigrun-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-sigrun-arm64:latest; fi
+
+      - name: Build and push [Bragi]
+        run: |
+          cd ./Bragi && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-bragi-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-bragi-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-bragi-arm64:latest; fi
+
+      - name: Build and push [Skirnir]
+        run: |
+          cd ./Skirnir && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-skirnir-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-skirnir-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-skirnir-arm64:latest; fi
+
+      - name: Build and push [Tyr]
+        run: |
+          cd ./Tyr && podman build --format docker --platform linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-tyr-arm64:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-tyr-arm64:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-tyr-arm64:latest; fi

@@ -1,4 +1,4 @@
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-$BUILDARCH:latest
 
 # these should match auth data in dbinit_hugin.sql
 ENV PHINX_DB_HUGIN_NAME=hugin

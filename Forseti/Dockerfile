@@ -1,4 +1,4 @@
-FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v3:latest
+FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-$BUILDARCH:latest
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

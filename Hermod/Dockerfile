@@ -1,4 +1,4 @@
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-$BUILDARCH:latest
 
 COPY       /configs/supervisord.conf     /etc/supervisord.conf
 COPY       /configs/rsyslog*.conf        /etc/
