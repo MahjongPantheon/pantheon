@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
 ENV TIMEZONE=Europe/Berlin
 ENV PHP_MEMORY_LIMIT=512M
