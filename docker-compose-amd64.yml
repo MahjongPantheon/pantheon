@@ -338,7 +338,7 @@ services:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest
     profiles:
-      - donotstart
+      - e2e
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:

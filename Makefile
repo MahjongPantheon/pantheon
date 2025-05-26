@@ -557,7 +557,8 @@ e2e:
 .PHONY: e2e_local
 e2e_dev: export ENV_FILENAME=.env.development
 e2e_dev:
-	@${COMPOSE_COMMAND} up fenrir.pantheon.internal -d
+	${CONTAINER_COMMAND} pull ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH}:latest
+	@${COMPOSE_COMMAND} --profile e2e up -d
 	cd Fenrir && ${MAKE} container_deps && ${MAKE} container_run
 
 .PHONY: e2e_build_tyr
@@ -609,5 +610,5 @@ e2e_compile:
 .PHONY: e2e_run
 e2e_run: export ENV_FILENAME=.env.e2e
 e2e_run:
-	@${COMPOSE_COMMAND} up -d
-	@${COMPOSE_COMMAND} up fenrir.pantheon.internal -d
+	${CONTAINER_COMMAND} pull ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH}:latest
+	@${COMPOSE_COMMAND} --profile e2e up -d
