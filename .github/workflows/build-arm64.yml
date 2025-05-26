@@ -3,6 +3,14 @@ name: Build project artifacts & containers [arm64]
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'Hermod/**'
+      - '**/Dockerfile'
+      - '**/Makefile'
+      - '**/*.nginx.conf'
+      - '**/entrypoint.sh'
+      - 'docker-compose-amd64.yml'
+      - 'docker-compose-arm64.yml'
 
 jobs:
   buildContainers:
@@ -14,6 +22,7 @@ jobs:
       github.repository == 'MahjongPantheon/pantheon'
     steps:
       - uses: actions/checkout@v2
+      - run: apt-cache policy podman
       - uses: webgtx/setup-podman-compose@v1
 
       - name: Set up QEMU
