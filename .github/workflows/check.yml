@@ -19,6 +19,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: 'build.yml'
 
+      - name: Sleep for a while to make sure containers are stored completely
+        if: |
+          github.ref == 'refs/heads/master' &&
+          github.repository == 'MahjongPantheon/pantheon'
+        run: sleep 10
+
       - name: Print env
         run: env
 
