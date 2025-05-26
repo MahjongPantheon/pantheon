@@ -6,10 +6,18 @@ on:
 
 jobs:
   checkPr:
-    runs-on: ubuntu-latest-arm64
+    runs-on: ubuntu-latest
+    env:
+      CONTAINER_ARCH_OVERRIDE: arm64
     steps:
       - uses: actions/checkout@v2
       - uses: webgtx/setup-podman-compose@v1
+
+      - name: Print env
+        run: env
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Run container
         run: make pantheon_run

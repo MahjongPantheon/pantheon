@@ -8,13 +8,18 @@ on:
 
 jobs:
   e2eBuildContainer:
-    runs-on: ubuntu-latest-arm64
+    runs-on: ubuntu-latest
+    env:
+      CONTAINER_ARCH_OVERRIDE: arm64
     if: |
       github.ref == 'refs/heads/master' &&
       github.repository == 'MahjongPantheon/pantheon'
     steps:
       - uses: actions/checkout@v2
       - uses: webgtx/setup-podman-compose@v1
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Log in to container registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login -u "${{ github.repository_owner }}" --password-stdin ghcr.io

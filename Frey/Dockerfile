@@ -1,4 +1,4 @@
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-$BUILDARCH:latest
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-$CONTAINER_ARCH:latest
 
 # these should match auth data in dbinit_frey.sql
 ENV PHINX_DB_FREY_NAME=frey

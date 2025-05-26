@@ -1,8 +1,11 @@
+.EXPORT_ALL_VARIABLES:
+
 UID := $(shell id -u $$SUDO_USER)
 UID ?= $(shell id -u $$USER)
 
-export PODMAN_COMPOSE_PROVIDER=podman-compose
-export PODMAN_COMPOSE_WARNING_LOGS=false
+PODMAN_COMPOSE_PROVIDER := podman-compose
+PODMAN_COMPOSE_WARNING_LOGS := false
+CONTAINER_ARCH := $(shell bash bin/get_arch.sh)
 
 CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman'; else echo 'docker'; fi)
 COMPOSE_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman-compose --no-ansi --podman-run-args="--replace"'; else echo 'docker compose'; fi)
@@ -12,8 +15,6 @@ RED = $(shell echo -e '\033[1;31m')
 GREEN = $(shell echo -e '\033[1;32m')
 YELLOW = $(shell echo -e '\033[1;33m')
 NC = $(shell echo -e '\033[0m') # No Color
-
-.EXPORT_ALL_VARIABLES:
 
 .PHONY: deps
 deps:
