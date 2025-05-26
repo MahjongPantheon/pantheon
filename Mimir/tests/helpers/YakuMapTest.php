@@ -24,7 +24,7 @@ class YakuMapTest extends \PHPUnit\Framework\TestCase
     public function testFromTenhou()
     {
         $yakuList = '1,1,2,1,24,2,52,2,53,1,54,3';
-        $yakumanList = '46';
+        $yakumanList = '45';
 
         $result = \Common\YakuMap::fromTenhou($yakuList, $yakumanList);
         $expected = [
