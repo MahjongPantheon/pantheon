@@ -24,6 +24,7 @@ services:
       context: ./Hermod
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-hermod-amd64:latest
@@ -48,6 +49,7 @@ services:
       context: ./Skirnir
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-skirnir-amd64:latest
@@ -70,6 +72,7 @@ services:
       context: ./Database
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-database-amd64:latest
@@ -92,6 +95,7 @@ services:
       context: ./Frey
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-frey-amd64:latest
@@ -119,6 +123,7 @@ services:
       context: ./Mimir
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-mimir-amd64:latest
@@ -144,6 +149,7 @@ services:
           - mimir.pantheon.internal
   pgadmin.pantheon.internal:
     image: docker.io/dpage/pgadmin4:8.11
+    cgroup: host
     cap_add:
       - ALL
     ports:
@@ -164,6 +170,7 @@ services:
       context: ./Tyr
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-tyr-amd64:latest
@@ -189,6 +196,7 @@ services:
       context: ./Forseti
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-forseti-amd64:latest
@@ -214,6 +222,7 @@ services:
       context: ./Sigrun
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-sigrun-amd64:latest
@@ -239,6 +248,7 @@ services:
       context: ./Gullveig
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-gullveig-amd64:latest
@@ -261,6 +271,7 @@ services:
       context: ./Bragi
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-bragi-amd64:latest
@@ -283,6 +294,7 @@ services:
       context: ./Hugin
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-hugin-amd64:latest
@@ -321,6 +333,7 @@ services:
       context: ./Fenrir
       args:
         CONTAINER_ARCH: amd64
+    cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest
@@ -350,6 +363,7 @@ services:
           - fenrir.pantheon.internal
   cadvisor.pantheon.internal:
     image: gcr.io/cadvisor/cadvisor:latest
+    cgroup: host
     cap_add:
       - ALL
     ports:
@@ -371,6 +385,7 @@ services:
           - cadvisor.pantheon.internal
   dbwatcher.pantheon.internal:
     image: quay.io/prometheuscommunity/postgres-exporter:latest
+    cgroup: host
     cap_add:
       - ALL
     user: root
@@ -389,6 +404,7 @@ services:
           - dbwatcher.pantheon.internal
   grafana.pantheon.internal:
     image: docker.io/grafana/grafana-oss:latest
+    cgroup: host
     cap_add:
       - ALL
     restart: unless-stopped

@@ -12,9 +12,15 @@ jobs:
       - uses: webgtx/setup-podman-compose@v1
 
       - uses: NathanFirmo/wait-for-other-action@v1.0.4
+        if: |
+          github.ref == 'refs/heads/master' &&
+          github.repository == 'MahjongPantheon/pantheon'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: 'build.yml'
+
+      - name: Pull containers
+        run: make pull
 
       - name: Run container
         run: make e2e_run
