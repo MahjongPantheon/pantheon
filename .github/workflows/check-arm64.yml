@@ -21,11 +21,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: 'build-arm64.yml'
 
-      - name: Sleep for a while to make sure containers are stored completely
-        if: |
-          github.ref == 'refs/heads/master' &&
-          github.repository == 'MahjongPantheon/pantheon'
-        run: sleep 10
+      - name: Reset podman
+        run: podman system reset -f
 
       - name: Print env
         run: env

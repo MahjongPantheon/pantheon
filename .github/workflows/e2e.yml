@@ -19,6 +19,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: 'build.yml'
 
+      - name: Reset podman
+        run: podman system reset -f
+
       - name: Pull containers
         run: make pull
 
