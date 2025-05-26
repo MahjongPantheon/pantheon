@@ -22,7 +22,7 @@ RUN apt-get install -y \
 
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash ;\
      apt-get update; \
-     apt-get install -y nodejs
+     apt-get install -y nodejs npm
 
 RUN npm install -g yarn && chown -R root:root /usr/lib/node_modules/
 

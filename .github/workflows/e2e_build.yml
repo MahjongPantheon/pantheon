@@ -1,0 +1,30 @@
+name: Build container for e2e testing
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'Fenrir/**'
+
+jobs:
+  e2eBuildContainer:
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/master' &&
+      github.repository == 'MahjongPantheon/pantheon'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Log in to container registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login -u "${{ github.repository_owner }}" --password-stdin ghcr.io
+
+      - name: Build and push [Fenrir]
+        run: |
+          cd ./Fenrir && podman build --format docker --platform linux/amd64,linux/arm64 \
+            -t ghcr.io/mahjongpantheon/pantheon-fenrir:latest \
+            -t ghcr.io/mahjongpantheon/pantheon-fenrir:${{ github.sha }} \
+          .
+          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-fenrir:latest; fi

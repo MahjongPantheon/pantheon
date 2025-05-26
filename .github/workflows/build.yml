@@ -115,14 +115,6 @@ jobs:
           .
           if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-skirnir:latest; fi
 
-      - name: Build and push [Fenrir]
-        run: |
-          cd ./Fenrir && podman build --format docker --platform linux/amd64,linux/arm64 \
-            -t ghcr.io/mahjongpantheon/pantheon-fenrir:latest \
-            -t ghcr.io/mahjongpantheon/pantheon-fenrir:${{ github.sha }} \
-          .
-          if [ "${{ github.event_name }}" != "pull_request" ]; then podman push ghcr.io/mahjongpantheon/pantheon-fenrir:latest; fi
-
       - name: Build and push [Tyr]
         run: |
           cd ./Tyr && podman build --format docker --platform linux/amd64,linux/arm64 \
