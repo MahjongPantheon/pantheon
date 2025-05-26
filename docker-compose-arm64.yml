@@ -20,10 +20,13 @@ networks:
     attachable: true
 services:
   hermod.pantheon.internal:
-    build: ./Hermod
+    build:
+      context: ./Hermod
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-hermod-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-hermod-arm64:latest
     hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
@@ -41,10 +44,13 @@ services:
           - hermod.pantheon.local
           - hermod.pantheon.internal
   skirnir.pantheon.internal:
-    build: ./Skirnir
+    build:
+      context: ./Skirnir
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-skirnir-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-skirnir-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -60,10 +66,13 @@ services:
           - skirnir.pantheon.local
           - skirnir.pantheon.internal
   db.pantheon.internal:
-    build: ./Database
+    build:
+      context: ./Database
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-database-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-database-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -79,10 +88,13 @@ services:
           - db.pantheon.local
           - db.pantheon.internal
   frey.pantheon.internal:
-    build: ./Frey
+    build:
+      context: ./Frey
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-frey-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-frey-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -103,10 +115,13 @@ services:
           - frey.pantheon.local
           - frey.pantheon.internal
   mimir.pantheon.internal:
-    build: ./Mimir
+    build:
+      context: ./Mimir
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-mimir-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-mimir-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -145,10 +160,13 @@ services:
           - pga.pantheon.local
           - pga.pantheon.internal
   tyr.pantheon.internal:
-    build: ./Tyr
+    build:
+      context: ./Tyr
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-tyr-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-tyr-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -167,10 +185,13 @@ services:
           - tyr.pantheon.local
           - tyr.pantheon.internal
   forseti.pantheon.internal:
-    build: ./Forseti
+    build:
+      context: ./Forseti
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-forseti-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-forseti-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -189,10 +210,13 @@ services:
           - forseti.pantheon.local
           - forseti.pantheon.internal
   sigrun.pantheon.internal:
-    build: ./Sigrun
+    build:
+      context: ./Sigrun
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-sigrun-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-sigrun-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -211,10 +235,13 @@ services:
           - sigrun.pantheon.local
           - sigrun.pantheon.internal
   gullveig.pantheon.internal:
-    build: ./Gullveig
+    build:
+      context: ./Gullveig
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-gullveig-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-gullveig-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -230,10 +257,13 @@ services:
           - gullveig.pantheon.local
           - gullveig.pantheon.internal
   bragi.pantheon.internal:
-    build: ./Bragi
+    build:
+      context: ./Bragi
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-bragi-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-bragi-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -249,10 +279,13 @@ services:
           - bragi.pantheon.local
           - bragi.pantheon.internal
   hugin.pantheon.internal:
-    build: ./Hugin
+    build:
+      context: ./Hugin
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-hugin-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-hugin-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -284,10 +317,13 @@ services:
           - hugin.pantheon.internal
           - munin.pantheon.internal
   fenrir.pantheon.internal:
-    build: ./Fenrir
+    build:
+      context: ./Fenrir
+      args:
+        CONTAINER_ARCH: arm64
     cap_add:
       - ALL
-    image: ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH}:latest
+    image: ghcr.io/mahjongpantheon/pantheon-fenrir-arm64:latest
     profiles:
       - donotstart
     env_file:

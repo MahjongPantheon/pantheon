@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and push [Fenrir]
         run: |
-          cd ./Fenrir && podman build --format docker --platform linux/amd64 \
+          cd ./Fenrir && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:${{ github.sha }} \
           .

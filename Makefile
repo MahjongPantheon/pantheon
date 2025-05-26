@@ -7,8 +7,14 @@ PODMAN_COMPOSE_PROVIDER := podman-compose
 PODMAN_COMPOSE_WARNING_LOGS := false
 CONTAINER_ARCH := $(shell bash bin/get_arch.sh)
 
-CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman'; else echo 'docker'; fi)
-COMPOSE_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman-compose --no-ansi --podman-run-args="--replace"'; else echo 'docker compose'; fi)
+CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; \
+  then echo 'podman'; \
+  else echo 'docker'; \
+fi)
+COMPOSE_COMMAND := $(shell if [ -f "`which podman`" ]; \
+  then echo 'podman-compose --no-ansi --podman-run-args="--replace" -f docker-compose-${CONTAINER_ARCH}.yml'; \
+  else echo 'docker compose -f docker-compose-${CONTAINER_ARCH}.yml'; \
+fi)
 
 # some coloring
 RED = $(shell echo -e '\033[1;31m')

@@ -1,4 +1,5 @@
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-$CONTAINER_ARCH:latest
+ARG CONTAINER_ARCH
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-${CONTAINER_ARCH}:latest
 
 COPY       /configs/supervisord.conf     /etc/supervisord.conf
 COPY       /configs/rsyslog*.conf        /etc/

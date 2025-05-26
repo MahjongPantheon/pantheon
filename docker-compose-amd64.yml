@@ -1,0 +1,403 @@
+name: pantheon
+volumes:
+  datavolume02: {}
+  backupvolume01: {}
+  configvolume01: {}
+  gullveigstorage01: {}
+  grafanastorage01: {}
+  pfspool01:
+  pfetc01:
+  prometheusdata:
+  pgadmindata:
+networks:
+  internal_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.34.0/24"
+          gateway: "192.168.34.1"
+    attachable: true
+services:
+  hermod.pantheon.internal:
+    build:
+      context: ./Hermod
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-hermod-amd64:latest
+    hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4009:80"
+      - "127.0.0.1:9105:9105"
+    volumes:
+      - ./Hermod/www:/var/www/html/Hermod
+      - ./Hermod/opendkim_keys:/etc/opendkim/keys
+      - pfspool01:/var/spool/postfix
+      - pfetc01:/etc/postfix
+    networks:
+      internal_net:
+        aliases:
+          - hermod.pantheon.local
+          - hermod.pantheon.internal
+  skirnir.pantheon.internal:
+    build:
+      context: ./Skirnir
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-skirnir-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4015:80"
+      - "127.0.0.1:9109:9109"
+    volumes:
+      - ./Skirnir:/var/www/html/Skirnir
+      - ./Skirnir-dist:/var/www/html/Skirnir-dist
+      - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - skirnir.pantheon.local
+          - skirnir.pantheon.internal
+  db.pantheon.internal:
+    build:
+      context: ./Database
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-database-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "5532:5432"
+      - "127.0.0.1:9111:9111"
+    volumes:
+      - datavolume02:/var/lib/postgresql/data
+      - configvolume01:/var/lib/postgresql/.ssh
+      - backupvolume01:/var/lib/postgresql/backup
+    networks:
+      internal_net:
+        aliases:
+          - db.pantheon.local
+          - db.pantheon.internal
+  frey.pantheon.internal:
+    build:
+      context: ./Frey
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-frey-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4004:80"
+      - "127.0.0.1:9103:9103"
+    depends_on:
+      - db.pantheon.internal
+      - hermod.pantheon.internal
+    volumes:
+      - ./Frey:/var/www/html/Frey
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_FREY_PORT: 5432
+      PHINX_DB_FREY_HOST: db.pantheon.internal
+    networks:
+      internal_net:
+        aliases:
+          - frey.pantheon.local
+          - frey.pantheon.internal
+  mimir.pantheon.internal:
+    build:
+      context: ./Mimir
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-mimir-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4001:80"
+      - "127.0.0.1:9107:9107"
+    depends_on:
+      - frey.pantheon.internal
+      - db.pantheon.internal
+      - skirnir.pantheon.internal
+    volumes:
+      - ./Mimir:/var/www/html/Mimir
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_PORT: 5432
+      PHINX_DB_HOST: db.pantheon.internal
+    networks:
+      internal_net:
+        aliases:
+          - mimir.pantheon.local
+          - mimir.pantheon.internal
+  pgadmin.pantheon.internal:
+    image: docker.io/dpage/pgadmin4:8.11
+    cap_add:
+      - ALL
+    ports:
+      - "127.0.0.1:5632:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+    networks:
+      internal_net:
+        aliases:
+          - pga.pantheon.local
+          - pga.pantheon.internal
+  tyr.pantheon.internal:
+    build:
+      context: ./Tyr
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-tyr-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4003:80"
+      - "127.0.0.1:9110:9110"
+    depends_on:
+      - frey.pantheon.internal
+      - mimir.pantheon.internal
+    volumes:
+      - ./Tyr:/var/www/html/Tyr
+      - ./Tyr-dist:/var/www/html/Tyr-dist
+      - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - tyr.pantheon.local
+          - tyr.pantheon.internal
+  forseti.pantheon.internal:
+    build:
+      context: ./Forseti
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-forseti-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4007:80"
+      - "127.0.0.1:9102:9102"
+    depends_on:
+      - frey.pantheon.internal
+      - mimir.pantheon.internal
+    volumes:
+      - ./Forseti:/var/www/html/Forseti
+      - ./Forseti-dist:/var/www/html/Forseti-dist
+      - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - forseti.pantheon.local
+          - forseti.pantheon.internal
+  sigrun.pantheon.internal:
+    build:
+      context: ./Sigrun
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-sigrun-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4002:80"
+      - "127.0.0.1:9108:9108"
+    depends_on:
+      - frey.pantheon.internal
+      - mimir.pantheon.internal
+    volumes:
+      - ./Sigrun:/var/www/html/Sigrun
+      - ./Sigrun-dist:/var/www/html/Sigrun-dist
+      - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - sigrun.pantheon.local
+          - sigrun.pantheon.internal
+  gullveig.pantheon.internal:
+    build:
+      context: ./Gullveig
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-gullveig-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4012:80"
+      - "127.0.0.1:9104:9104"
+    volumes:
+      - ./Gullveig:/var/www/html/Gullveig
+      - ./Common:/var/www/html/Common
+      - gullveigstorage01:/var/storage
+    networks:
+      internal_net:
+        aliases:
+          - gullveig.pantheon.local
+          - gullveig.pantheon.internal
+  bragi.pantheon.internal:
+    build:
+      context: ./Bragi
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-bragi-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4008:80"
+      - "127.0.0.1:9101:9101"
+    volumes:
+      - ./Bragi:/var/www/html/Bragi
+      - ./Bragi-dist:/var/www/html/Bragi-dist
+      - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - bragi.pantheon.local
+          - bragi.pantheon.internal
+  hugin.pantheon.internal:
+    build:
+      context: ./Hugin
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-hugin-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4010:80"
+      - "127.0.0.1:9100:9100"
+    depends_on:
+      - db.pantheon.internal
+      - hermod.pantheon.internal
+      - tyr.pantheon.internal
+      - forseti.pantheon.internal
+      - mimir.pantheon.internal
+      - frey.pantheon.internal
+      - gullveig.pantheon.internal
+      - sigrun.pantheon.internal
+      - bragi.pantheon.internal
+      - skirnir.pantheon.internal
+    volumes:
+      - ./Hugin:/var/www/html/Hugin
+      - ./Common:/var/www/html/Common
+      - prometheusdata:/var/lib/prometheus
+    environment:
+      PHINX_DB_HUGIN_PORT: 5432
+      PHINX_DB_HUGIN_HOST: db.pantheon.internal
+    networks:
+      internal_net:
+        aliases:
+          - hugin.pantheon.local
+          - munin.pantheon.local
+          - hugin.pantheon.internal
+          - munin.pantheon.internal
+  fenrir.pantheon.internal:
+    build:
+      context: ./Fenrir
+      args:
+        CONTAINER_ARCH: amd64
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest
+    profiles:
+      - donotstart
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4017:80"
+    depends_on:
+      - db.pantheon.internal
+      - hermod.pantheon.internal
+      - tyr.pantheon.internal
+      - forseti.pantheon.internal
+      - mimir.pantheon.internal
+      - frey.pantheon.internal
+      - sigrun.pantheon.internal
+      - gullveig.pantheon.internal
+      - skirnir.pantheon.internal
+    volumes:
+      - ./Fenrir:/var/www/html/Fenrir
+      - ./Common:/var/www/html/Common
+    networks:
+      internal_net:
+        aliases:
+          - fenrir.pantheon.local
+          - fenrir.pantheon.internal
+  cadvisor.pantheon.internal:
+    image: gcr.io/cadvisor/cadvisor:latest
+    cap_add:
+      - ALL
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro # for docker
+      - /dev/disk/:/dev/disk:ro # this and following for podman
+      - /etc/machine-id:/etc/machine-id:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/lib/containers:/var/lib/containers:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+    networks:
+      internal_net:
+        aliases:
+          - cadvisor.pantheon.local
+          - cadvisor.pantheon.internal
+  dbwatcher.pantheon.internal:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    cap_add:
+      - ALL
+    user: root
+    ports:
+      - 9187:9187
+    environment:
+      - DATA_SOURCE_URI=db.pantheon.internal/postgres?sslmode=disable
+      - DATA_SOURCE_USER=postgres
+      - DATA_SOURCE_PASS=pgpass
+    depends_on:
+      - db.pantheon.internal
+    networks:
+      internal_net:
+        aliases:
+          - dbwatcher.pantheon.local
+          - dbwatcher.pantheon.internal
+  grafana.pantheon.internal:
+    image: docker.io/grafana/grafana-oss:latest
+    cap_add:
+      - ALL
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - 'grafanastorage01:/var/lib/grafana'
+    networks:
+      internal_net:
+        aliases:
+          - grafana.pantheon.local
+          - grafana.pantheon.internal

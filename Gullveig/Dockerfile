@@ -1,4 +1,5 @@
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-$CONTAINER_ARCH:latest
+ARG CONTAINER_ARCH
+FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-${CONTAINER_ARCH}:latest
 
 ENV PHP_IDE_CONFIG="serverName=pantheon_gullveig"
 ENV MAX_UPLOAD=1M

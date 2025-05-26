@@ -19,7 +19,7 @@ jobs:
 
       - name: Build and push [Backend common]
         run: |
-          cd ./Common/Backend && podman build --format docker --platform linux/amd64 \
+          cd ./Common/Backend && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-backend-common-v3-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-backend-common-v3-amd64:${{ github.sha }} \
           .
@@ -27,7 +27,7 @@ jobs:
 
       - name: Build and push [Frontend common]
         run: |
-          cd ./Common/Frontend && podman build --format docker --platform linux/amd64 \
+          cd ./Common/Frontend && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-amd64-amd64:${{ github.sha }} \
           .
@@ -35,7 +35,7 @@ jobs:
 
       - name: Build and push [Database]
         run: |
-          cd ./Database && podman build --format docker --platform linux/amd64 \
+          cd ./Database && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-database-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-database-amd64:${{ github.sha }} \
           .
@@ -43,7 +43,7 @@ jobs:
 
       - name: Build and push [Forseti]
         run: |
-          cd ./Forseti && podman build --format docker --platform linux/amd64 \
+          cd ./Forseti && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-forseti-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-forseti-amd64:${{ github.sha }} \
           .
@@ -51,7 +51,7 @@ jobs:
 
       - name: Build and push [Frey]
         run: |
-          cd ./Frey && podman build --format docker --platform linux/amd64 \
+          cd ./Frey && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-frey-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-frey-amd64:${{ github.sha }} \
           .
@@ -59,7 +59,7 @@ jobs:
 
       - name: Build and push [Hermod]
         run: |
-          cd ./Hermod && podman build --format docker --platform linux/amd64 \
+          cd ./Hermod && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-hermod-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-hermod-amd64:${{ github.sha }} \
           .
@@ -67,7 +67,7 @@ jobs:
 
       - name: Build and push [Hugin]
         run: |
-          cd ./Hugin && podman build --format docker --platform linux/amd64 \
+          cd ./Hugin && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-hugin-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-hugin-amd64:${{ github.sha }} \
           .
@@ -75,7 +75,7 @@ jobs:
 
       - name: Build and push [Gullveig]
         run: |
-          cd ./Gullveig && podman build --format docker --platform linux/amd64 \
+          cd ./Gullveig && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-gullveig-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-gullveig-amd64:${{ github.sha }} \
           .
@@ -83,7 +83,7 @@ jobs:
 
       - name: Build and push [Mimir]
         run: |
-          cd ./Mimir && podman build --format docker --platform linux/amd64 \
+          cd ./Mimir && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-mimir-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-mimir-amd64:${{ github.sha }} \
           .
@@ -91,7 +91,7 @@ jobs:
 
       - name: Build and push [Sigrun]
         run: |
-          cd ./Sigrun && podman build --format docker --platform linux/amd64 \
+          cd ./Sigrun && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-sigrun-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-sigrun-amd64:${{ github.sha }} \
           .
@@ -99,7 +99,7 @@ jobs:
 
       - name: Build and push [Bragi]
         run: |
-          cd ./Bragi && podman build --format docker --platform linux/amd64 \
+          cd ./Bragi && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-bragi-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-bragi-amd64:${{ github.sha }} \
           .
@@ -107,7 +107,7 @@ jobs:
 
       - name: Build and push [Skirnir]
         run: |
-          cd ./Skirnir && podman build --format docker --platform linux/amd64 \
+          cd ./Skirnir && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-skirnir-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-skirnir-amd64:${{ github.sha }} \
           .
@@ -115,7 +115,7 @@ jobs:
 
       - name: Build and push [Tyr]
         run: |
-          cd ./Tyr && podman build --format docker --platform linux/amd64 \
+          cd ./Tyr && podman build --build-arg=CONTAINER_ARCH=amd64 --format docker --platform linux/amd64 \
             -t ghcr.io/mahjongpantheon/pantheon-tyr-amd64:latest \
             -t ghcr.io/mahjongpantheon/pantheon-tyr-amd64:${{ github.sha }} \
           .
