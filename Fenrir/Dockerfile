@@ -3,43 +3,40 @@ FROM ubuntu:24.04
 ENV TIMEZONE=Europe/Berlin
 ENV PHP_MEMORY_LIMIT=512M
 ENV LANG=en_US.utf8
+ENV RUN_IN_DOCKER=true
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update
-RUN apt-get install -y tzdata
-RUN echo "${TIMEZONE}" > /etc/timezone
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
+
+RUN apt-get update
 RUN apt-get install -y \
-    curl \
     make \
     procps \
     dos2unix \
     net-tools \
     findutils \
     git \
-    nginx && \
+    nginx \
+    nodejs && \
     (rm "/tmp/"* 2>/dev/null || true)
 
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash ;\
-     apt-get update; \
-     apt-get install -y nodejs npm
+RUN chown -R root:root /usr/lib/node_modules/
 
-RUN npm install -g yarn && chown -R root:root /usr/lib/node_modules/
-
-RUN npm install -g @testiny/cli
+RUN npm install -g yarn @testiny/cli
 
 # Cleaning up
-RUN mkdir /www && \
-    apt-get remove -y tzdata && \
-    rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apt/lists/*
 
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+RUN mkdir /www
 
-ENV RUN_IN_DOCKER=true
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN mkdir /root/dummy && \
-    cd /root/dummy && \
+RUN mkdir /root/dummy
+RUN cd /root/dummy && \
     npm init -y && \
     yarn add @playwright/test && \
     yarn run playwright install --with-deps
