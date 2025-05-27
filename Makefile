@@ -66,18 +66,24 @@ kill:
 		${CONTAINER_COMMAND} volume rm `${CONTAINER_COMMAND} volume ls | grep 'pantheon' | grep 'grafanastorage01' | awk '{print $$2}'` ; \
 	fi
 
+.PHONY: build_reverse_proxy
+build_reverse_proxy: export COMPOSE_DOCKER_CLI_BUILD=1
+build_reverse_proxy: export DOCKER_BUILDKIT=1
+build_reverse_proxy:
+	cd Common/ReverseProxy && ${CONTAINER_COMMAND} buildx build -t pantheon-reverse-proxy .
+
 .PHONY: container
 container: export COMPOSE_DOCKER_CLI_BUILD=1
 container: export DOCKER_BUILDKIT=1
 container:
 	cd Common/Backend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-backend-common-v3:latest .
 	cd Common/Frontend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v3:latest .
-	cd Common/ReverseProxy && ${CONTAINER_COMMAND} buildx build -t pantheon-reverse-proxy .
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
 
 .PHONY: container_dev
 container_dev: export ENV_FILENAME=.env.development
+container_dev: build_reverse_proxy
 container_dev:
 	${MAKE} container
 
@@ -183,7 +189,7 @@ skirnir_stop:
 	cd Skirnir && ${MAKE} container_stop
 
 .PHONY: dev
-dev: pantheon_run
+dev: build_reverse_proxy pantheon_run
 	${MAKE} reverse_proxy_stop
 	${MAKE} reverse_proxy_start
 	${MAKE} deps
