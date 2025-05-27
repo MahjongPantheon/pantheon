@@ -1,4 +1,4 @@
-ARG CONTAINER_ARCH
+ARG CONTAINER_ARCH=amd64
 FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-${CONTAINER_ARCH}:latest
 
 # copy entry point

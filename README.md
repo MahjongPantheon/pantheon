@@ -19,10 +19,10 @@ Clone the pantheon repository to your own server. Make sure repo folder is not a
 To deploy pantheon on your own VPS or personal environment on production mode:
 
 1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
-   - [recommended] Podman and podman-compose - to run containers over OCI runtime.
-     - Podman is a recommended runtime due to its better security. Also it doesn't have privileges problem with dependencies (e.g. you might need to remove `node_modules` as root when using docker).
-     - Though it's a recommended runtime, it has some gotchas to be considered to run properly. See podman notes below.
-   - Docker with compose plugin - to run containers via docker runtime.
+   - [recommended] Docker with compose plugin - to run containers via docker runtime.
+   - Podman and podman-compose - to run containers over OCI runtime.
+     - Podman has better security and doesn't have privileges problem with dependencies (e.g. you might need to remove `node_modules` as root when using docker).
+     - Podman has some gotchas to be considered to run properly. See podman notes below.
 2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Please use included `nginx-reverse-proxy.example.conf` as reference of what host to point where. Note that `*.pantheon.internal` hosts are used to distinguish the services inside container network. Optionally, you can also point PgAdmin4 host to port 5632.

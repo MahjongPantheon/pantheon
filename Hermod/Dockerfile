@@ -1,4 +1,4 @@
-ARG CONTAINER_ARCH
+ARG CONTAINER_ARCH=amd64
 FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-${CONTAINER_ARCH}:latest
 
 COPY       /configs/supervisord.conf     /etc/supervisord.conf

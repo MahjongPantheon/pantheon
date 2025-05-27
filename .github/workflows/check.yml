@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: apt-cache policy podman
-      - uses: webgtx/setup-podman-compose@v1
 
       - uses: NathanFirmo/wait-for-other-action@v1.0.4
         if: |
@@ -19,17 +17,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: 'build.yml'
-
-      - name: Reset podman & disable apparmor
-        run: |
-          podman -v
-          sudo aa-teardown || true
-          sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $USER
-          sudo systemctl stop --now apparmor.service
-          sudo systemctl disable --now apparmor.service
-          sudo rm -f /etc/containers/storage.conf || true
-          podman system reset -f
-          sudo podman system reset -f
 
       - name: Print env
         run: env

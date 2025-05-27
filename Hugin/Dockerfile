@@ -1,4 +1,4 @@
-ARG CONTAINER_ARCH
+ARG CONTAINER_ARCH=amd64
 FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-${CONTAINER_ARCH}:latest
 
 # these should match auth data in dbinit_hugin.sql
