@@ -21,6 +21,7 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
    - [recommended] Docker with compose plugin - to run containers via docker runtime.
    - Podman and podman-compose - to run containers over OCI runtime.
+     - Pantheon scripts use docker detection, so if you have both docker and podman installed, docker will be used.
      - Podman has better security and doesn't have privileges problem with dependencies (e.g. you might need to remove `node_modules` as root when using docker).
      - Podman has some gotchas to be considered to run properly. See podman notes below.
 2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.

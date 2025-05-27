@@ -1,4 +1,7 @@
-CONTAINER_COMMAND := $(shell if [ -f "`which podman`" ]; then echo 'podman'; else echo '$(CONTAINER_COMMAND)'; fi)
+CONTAINER_COMMAND := $(shell if [ -f "`which docker`" ]; \
+  then echo 'docker'; \
+  else echo 'podman'; \
+fi)
 
 # some coloring
 RED = $(shell echo -e '\033[1;31m')
