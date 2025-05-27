@@ -20,26 +20,42 @@ jobs:
 
       - name: Print env
         run: env
+        env:
+          ENV_FILENAME: .env.development
 
       - name: Pull containers
         run: make pull
+        env:
+          ENV_FILENAME: .env.development
 
       - name: Run container
         run: make pantheon_run
+        env:
+          ENV_FILENAME: .env.development
 
       - name: Install project deps
         run: make deps
+        env:
+          ENV_FILENAME: .env.development
 
       - name: Apply db migrations
         run: make migrate
+        env:
+          ENV_FILENAME: .env.development
 
       - name: Run all code checks
         run: make lint
+        env:
+          ENV_FILENAME: .env.development
 
       - name: Run all unit tests
         run: make test
+        env:
+          ENV_FILENAME: .env.development
 
       - name: Stop containers
         if: always()
         run: make pantheon_stop
+        env:
+          ENV_FILENAME: .env.development
 

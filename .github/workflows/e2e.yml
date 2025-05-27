@@ -20,6 +20,8 @@ jobs:
 
       - name: Pull containers
         run: make pull
+        env:
+          ENV_FILENAME: .env.e2e
 
       - name: Run container
         run: make e2e_run
