@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -417,7 +417,7 @@ msgstr ""
 msgid "Chanta"
 msgstr ""
 
-#: app/helpers/yaku.ts:253:34
+#: app/helpers/yaku.ts:241:34
 msgid "Chihou"
 msgstr ""
 
@@ -425,11 +425,11 @@ msgstr ""
 msgid "Chiitoitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:225:34
+#: app/helpers/yaku.ts:221:34
 msgid "Chinitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:282:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:282:34
 msgid "Chinroutou"
 msgstr ""
 
@@ -454,11 +454,11 @@ msgstr "Chombo Strafen:"
 msgid "Chombo: %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:229:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chuuren poutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:233:34 app/helpers/yaku.ts:301:34
+#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:301:34
 msgid "Chuuren poutou 9-side"
 msgstr ""
 
@@ -515,11 +515,11 @@ msgstr ""
 msgid "Daburu riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:266:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:266:34
 msgid "Daisangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:270:34
+#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:270:34
 #: app/helpers/yaku.ts:293:34
 msgid "Daisuushii"
 msgstr ""
@@ -897,11 +897,11 @@ msgstr ""
 msgid "Kiriage mangan"
 msgstr ""
 
-#: app/helpers/yaku.ts:241:34
+#: app/helpers/yaku.ts:233:34
 msgid "Kokushi musou"
 msgstr ""
 
-#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:305:34
+#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:305:34
 msgid "Kokushi musou 13-side"
 msgstr ""
 
@@ -1275,7 +1275,7 @@ msgstr "Regeldetails für zusammengefasste Events nicht verfügbar"
 msgid "Ryanpeikou"
 msgstr ""
 
-#: app/helpers/yaku.ts:237:34 app/helpers/yaku.ts:278:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:278:34
 msgid "Ryuuiisou"
 msgstr ""
 
@@ -1347,7 +1347,7 @@ msgstr "Einstellungen zum Matchende"
 msgid "Shousangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:209:34
+#: app/helpers/yaku.ts:205:34
 msgid "Shousuushii"
 msgstr ""
 
@@ -1384,7 +1384,7 @@ msgstr "Spielvorschau \"%1\"  von Mahjong Pantheon zur Verfügung gestellt"
 msgid "Suuankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:297:34
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:297:34
 msgid "Suuankou Tanki"
 msgstr ""
 
@@ -1426,7 +1426,7 @@ msgstr "Team"
 msgid "Team tournament"
 msgstr "Team Turnier"
 
-#: app/helpers/yaku.ts:249:34
+#: app/helpers/yaku.ts:237:34
 msgid "Tenhou"
 msgstr ""
 
@@ -1555,7 +1555,7 @@ msgstr "Tsumo Zahlungen:"
 msgid "Tsumo: %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:274:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:274:34
 msgid "Tsuuiisou"
 msgstr ""
 

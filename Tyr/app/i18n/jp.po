@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,12 +23,12 @@ msgstr[0] "残り %1 局 "
 msgid "%1 fu"
 msgstr "%1 符"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 番 %2 符"
@@ -259,7 +259,7 @@ msgstr "対局開始"
 msgid "No games found"
 msgstr "対局が見つかりません"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:141:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:18
 msgid "No pao"
 msgstr "パオなし"
 
@@ -511,7 +511,8 @@ msgstr "役牌 x3"
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:133:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
 msgid "Yakuman"
 msgstr "役満"
 

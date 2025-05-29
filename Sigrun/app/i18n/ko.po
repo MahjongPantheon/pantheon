@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2024-04-12 22:46+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -410,7 +410,7 @@ msgstr "창깡"
 msgid "Chanta"
 msgstr "찬타"
 
-#: app/helpers/yaku.ts:253:34
+#: app/helpers/yaku.ts:241:34
 msgid "Chihou"
 msgstr "지화"
 
@@ -418,11 +418,11 @@ msgstr "지화"
 msgid "Chiitoitsu"
 msgstr "치또이쯔"
 
-#: app/helpers/yaku.ts:225:34
+#: app/helpers/yaku.ts:221:34
 msgid "Chinitsu"
 msgstr "청일색"
 
-#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:282:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:282:34
 msgid "Chinroutou"
 msgstr "청노두"
 
@@ -447,11 +447,11 @@ msgstr "촌보 벌부: "
 msgid "Chombo: %1"
 msgstr "촌보: %1"
 
-#: app/helpers/yaku.ts:229:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chuuren poutou"
 msgstr "구련보등"
 
-#: app/helpers/yaku.ts:233:34 app/helpers/yaku.ts:301:34
+#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:301:34
 #, fuzzy
 msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
@@ -508,11 +508,11 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 시리즈 순위
 msgid "Daburu riichi"
 msgstr "더블 리치"
 
-#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:266:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:266:34
 msgid "Daisangen"
 msgstr "대삼원"
 
-#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:270:34
+#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:270:34
 #: app/helpers/yaku.ts:293:34
 msgid "Daisuushii"
 msgstr "대사희"
@@ -884,11 +884,11 @@ msgstr "헤아림 역만"
 msgid "Kiriage mangan"
 msgstr "절상 만관"
 
-#: app/helpers/yaku.ts:241:34
+#: app/helpers/yaku.ts:233:34
 msgid "Kokushi musou"
 msgstr "국사무쌍"
 
-#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:305:34
+#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:305:34
 #, fuzzy
 msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
@@ -1253,7 +1253,7 @@ msgstr "통합 이벤트에서는 상세 규칙을 사용 할 수 없습니다"
 msgid "Ryanpeikou"
 msgstr "량페코"
 
-#: app/helpers/yaku.ts:237:34 app/helpers/yaku.ts:278:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:278:34
 msgid "Ryuuiisou"
 msgstr "녹일색"
 
@@ -1324,7 +1324,7 @@ msgstr "대국 종료 규칙"
 msgid "Shousangen"
 msgstr "소삼원"
 
-#: app/helpers/yaku.ts:209:34
+#: app/helpers/yaku.ts:205:34
 msgid "Shousuushii"
 msgstr "소사희"
 
@@ -1362,7 +1362,7 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 단일 대국 �
 msgid "Suuankou"
 msgstr "스안커"
 
-#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:297:34
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:297:34
 #, fuzzy
 msgid "Suuankou Tanki"
 msgstr "스안커"
@@ -1407,7 +1407,7 @@ msgstr "팀"
 msgid "Team tournament"
 msgstr "팀 대회"
 
-#: app/helpers/yaku.ts:249:34
+#: app/helpers/yaku.ts:237:34
 msgid "Tenhou"
 msgstr "천화"
 
@@ -1532,7 +1532,7 @@ msgstr "쯔모 지불: "
 msgid "Tsumo: %1"
 msgstr "쯔모: %1"
 
-#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:274:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:274:34
 msgid "Tsuuiisou"
 msgstr "자일색"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -337,7 +337,7 @@ msgstr ""
 msgid "Chanta"
 msgstr ""
 
-#: app/helpers/yaku.ts:253:34
+#: app/helpers/yaku.ts:241:34
 msgid "Chihou"
 msgstr ""
 
@@ -345,11 +345,11 @@ msgstr ""
 msgid "Chiitoitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:225:34
+#: app/helpers/yaku.ts:221:34
 msgid "Chinitsu"
 msgstr ""
 
-#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:276:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:276:34
 msgid "Chinroutou"
 msgstr ""
 
@@ -371,11 +371,11 @@ msgstr ""
 msgid "Chombo, %1"
 msgstr ""
 
-#: app/helpers/yaku.ts:229:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chuuren poutou"
 msgstr ""
 
-#: app/helpers/yaku.ts:233:34 app/helpers/yaku.ts:295:34
+#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:295:34
 msgid "Chuuren poutou 9-side"
 msgstr ""
 
@@ -449,11 +449,11 @@ msgstr "Aktueller Status"
 msgid "Daburu riichi"
 msgstr ""
 
-#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:260:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:260:34
 msgid "Daisangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:264:34
+#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:264:34
 #: app/helpers/yaku.ts:287:34
 msgid "Daisuushii"
 msgstr ""
@@ -1053,11 +1053,11 @@ msgstr ""
 msgid "Kiriage mangan"
 msgstr ""
 
-#: app/helpers/yaku.ts:241:34
+#: app/helpers/yaku.ts:233:34
 msgid "Kokushi musou"
 msgstr ""
 
-#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:299:34
+#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:299:34
 msgid "Kokushi musou 13-side"
 msgstr ""
 
@@ -1813,7 +1813,7 @@ msgstr "Regeln"
 msgid "Ryanpeikou"
 msgstr ""
 
-#: app/helpers/yaku.ts:237:34 app/helpers/yaku.ts:272:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:272:34
 msgid "Ryuuiisou"
 msgstr ""
 
@@ -1964,7 +1964,7 @@ msgstr "Teamname für Spieler festlegen(für Teamevents)"
 msgid "Shousangen"
 msgstr ""
 
-#: app/helpers/yaku.ts:209:34
+#: app/helpers/yaku.ts:205:34
 msgid "Shousuushii"
 msgstr ""
 
@@ -2054,7 +2054,7 @@ msgstr "Erfolgreich"
 msgid "Suuankou"
 msgstr ""
 
-#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:291:34
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:291:34
 msgid "Suuankou Tanki"
 msgstr ""
 
@@ -2107,7 +2107,7 @@ msgstr "Team Turnier"
 msgid "Team:"
 msgstr "Team:"
 
-#: app/helpers/yaku.ts:249:34
+#: app/helpers/yaku.ts:237:34
 msgid "Tenhou"
 msgstr ""
 
@@ -2247,7 +2247,7 @@ msgstr "Einstellungen für Turniere"
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr ""
 
-#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:268:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:268:34
 msgid "Tsuuiisou"
 msgstr ""
 

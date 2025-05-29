@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2025-02-21 22:14+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,12 +31,12 @@ msgstr[2] "Осталось %1 раздач"
 msgid "%1 fu"
 msgstr "%1 фу"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 хан"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 хан, %2 фу"
@@ -267,7 +267,7 @@ msgstr "Новая игра"
 msgid "No games found"
 msgstr "Игры не найдены"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:141:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:18
 msgid "No pao"
 msgstr "Нет пао"
 
@@ -519,7 +519,8 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:133:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
 msgid "Yakuman"
 msgstr "Якуман"
 

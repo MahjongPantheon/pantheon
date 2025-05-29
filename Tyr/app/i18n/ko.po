@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -29,12 +29,12 @@ msgstr[0] "%1 국 남음"
 msgid "%1 fu"
 msgstr "%1 부"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 판"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 판 %2 부"
@@ -265,7 +265,7 @@ msgstr "신규 대국"
 msgid "No games found"
 msgstr "대국을 찾을 수 없습니다"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:141:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:18
 msgid "No pao"
 msgstr "파오 없음"
 
@@ -517,7 +517,8 @@ msgstr "역패 x3"
 msgid "Yakuhai x4"
 msgstr "역패 x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:133:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
 msgid "Yakuman"
 msgstr "역만"
 

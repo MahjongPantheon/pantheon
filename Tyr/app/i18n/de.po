@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -29,12 +29,12 @@ msgstr[1] "Noch %1 Hände"
 msgid "%1 fu"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr ""
@@ -263,7 +263,7 @@ msgstr "Neues Spiel"
 msgid "No games found"
 msgstr "Keine Spiele gefunden"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:141:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:18
 msgid "No pao"
 msgstr ""
 
@@ -519,7 +519,8 @@ msgstr ""
 msgid "Yakuhai x4"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:132:15
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:133:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
 msgid "Yakuman"
 msgstr ""
 

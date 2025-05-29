@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 16:30Z\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2025-03-23 23:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -338,7 +338,7 @@ msgstr "Чанкан"
 msgid "Chanta"
 msgstr "Чанта"
 
-#: app/helpers/yaku.ts:253:34
+#: app/helpers/yaku.ts:241:34
 msgid "Chihou"
 msgstr "Чихо"
 
@@ -346,11 +346,11 @@ msgstr "Чихо"
 msgid "Chiitoitsu"
 msgstr "Чиитойцу"
 
-#: app/helpers/yaku.ts:225:34
+#: app/helpers/yaku.ts:221:34
 msgid "Chinitsu"
 msgstr "Чиницу"
 
-#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:276:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:276:34
 msgid "Chinroutou"
 msgstr "Чинрото"
 
@@ -374,11 +374,11 @@ msgstr ""
 msgid "Chombo, %1"
 msgstr "Чомбо, %1"
 
-#: app/helpers/yaku.ts:229:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
 
-#: app/helpers/yaku.ts:233:34 app/helpers/yaku.ts:295:34
+#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:295:34
 #, fuzzy
 msgid "Chuuren poutou 9-side"
 msgstr "Чууренпото 9-ти сторонний"
@@ -451,11 +451,11 @@ msgstr "Текущий статус"
 msgid "Daburu riichi"
 msgstr "Дабл-риичи"
 
-#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:260:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:260:34
 msgid "Daisangen"
 msgstr "Дайсанген"
 
-#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:264:34
+#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:264:34
 #: app/helpers/yaku.ts:287:34
 msgid "Daisuushii"
 msgstr "Дайсуши"
@@ -1057,11 +1057,11 @@ msgstr "Казое якуман"
 msgid "Kiriage mangan"
 msgstr "Кириаге манган"
 
-#: app/helpers/yaku.ts:241:34
+#: app/helpers/yaku.ts:233:34
 msgid "Kokushi musou"
 msgstr "Кокушимусо"
 
-#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:299:34
+#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:299:34
 #, fuzzy
 msgid "Kokushi musou 13-side"
 msgstr "Кокушимусо 13-ти сторонний"
@@ -1819,7 +1819,7 @@ msgstr "Настройка набора правил"
 msgid "Ryanpeikou"
 msgstr "Рянпейко"
 
-#: app/helpers/yaku.ts:237:34 app/helpers/yaku.ts:272:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:272:34
 msgid "Ryuuiisou"
 msgstr "Рюисо"
 
@@ -1972,7 +1972,7 @@ msgstr "Установить имена команд для игроков (дл
 msgid "Shousangen"
 msgstr "Шосанген"
 
-#: app/helpers/yaku.ts:209:34
+#: app/helpers/yaku.ts:205:34
 msgid "Shousuushii"
 msgstr "Шосуши"
 
@@ -2060,7 +2060,7 @@ msgstr "Успешно"
 msgid "Suuankou"
 msgstr "Сууанко"
 
-#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:291:34
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:291:34
 #, fuzzy
 msgid "Suuankou Tanki"
 msgstr "Сууанко Танки"
@@ -2115,7 +2115,7 @@ msgstr "Командный турнир"
 msgid "Team:"
 msgstr "Команда:"
 
-#: app/helpers/yaku.ts:249:34
+#: app/helpers/yaku.ts:237:34
 msgid "Tenhou"
 msgstr "Тенхо"
 
@@ -2266,7 +2266,7 @@ msgstr "Настройки турнира"
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Цумо, %1 (%2), риичи: %3"
 
-#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:268:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:268:34
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
