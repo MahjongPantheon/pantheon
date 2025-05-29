@@ -67,9 +67,6 @@ class MigrateRulesets extends AbstractMigration
             if (isset($changes['yakuWithPao'])) {
                 $base->rules()->setYakuWithPao(array_map('intval', $changes['yakuWithPao']));
             }
-            if (isset($changes['doubleYakuman'])) {
-                $base->rules()->setDoubleYakuman(array_map('intval', $changes['doubleYakuman']));
-            }
             if (isset($changes['doubleronHonbaAtamahane'])) {
                 $base->rules()->setDoubleronHonbaAtamahane((bool)$changes['doubleronHonbaAtamahane']);
             }

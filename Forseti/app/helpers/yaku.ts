@@ -197,10 +197,6 @@ export const yakuList = [
     name: (i18n: I18nService) => i18n._t('Suuankou'),
   },
   {
-    id: YakuId.SUUANKOUTANKI,
-    name: (i18n: I18nService) => i18n._t('Suuankou Tanki'),
-  },
-  {
     id: YakuId.DAISANGEN,
     name: (i18n: I18nService) => i18n._t('Daisangen'),
   },
@@ -229,10 +225,6 @@ export const yakuList = [
     name: (i18n: I18nService) => i18n._t('Chuuren poutou'),
   },
   {
-    id: YakuId.CHUURENPOUTOPURE,
-    name: (i18n: I18nService) => i18n._t('Chuuren poutou 9-side'),
-  },
-  {
     id: YakuId.RYUUIISOU,
     name: (i18n: I18nService) => i18n._t('Ryuuiisou'),
   },
@@ -241,16 +233,24 @@ export const yakuList = [
     name: (i18n: I18nService) => i18n._t('Kokushi musou'),
   },
   {
-    id: YakuId.KOKUSHIMUSOU13,
-    name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
-  },
-  {
     id: YakuId.TENHOU,
     name: (i18n: I18nService) => i18n._t('Tenhou'),
   },
   {
     id: YakuId.CHIHOU,
     name: (i18n: I18nService) => i18n._t('Chihou'),
+  },
+  {
+    id: YakuId.SUUANKOUTANKI,
+    name: (i18n: I18nService) => i18n._t('Suuankou Tanki'),
+  },
+  {
+    id: YakuId.CHUURENPOUTOPURE,
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou 9-side'),
+  },
+  {
+    id: YakuId.KOKUSHIMUSOU13,
+    name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
   },
 ];
 
