@@ -39,7 +39,10 @@ return (new RulesetConfig())
     ->setReplacementPlayerFixedPoints(-15000)
     ->setReplacementPlayerOverrideUma(-15000)
     ->setAllowedYaku(YakuMap::listExcept([
-        Y_OPENRIICHI
+        Y_OPENRIICHI,
+        Y_SUUANKOUTANKI,
+        Y_CHUURENPOUTOPURE,
+        Y_KOKUSHIMUSOU13
     ]))
     ->setChipsValue(0)
     ->setChomboAmount(20000)
@@ -67,4 +70,5 @@ return (new RulesetConfig())
     ->setWithMultiYakumans(false)
     ->setWithNagashiMangan(false)
     ->setChomboEndsGame(true)
-    ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII]);
+    ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII])
+    ->setDoubleYakuman([]);

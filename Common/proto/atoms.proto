@@ -650,6 +650,7 @@ message RulesetConfig {
   int32 yakitori_penalty = 37;
   bool chombo_ends_game = 38;
   int32 honba_value = 39;
+  repeated int32 double_yakuman = 40;
 }
 
 // Generics

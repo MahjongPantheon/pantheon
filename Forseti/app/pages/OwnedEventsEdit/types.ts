@@ -20,9 +20,13 @@ import { EventData, RulesetConfig } from '../../clients/proto/atoms.pb';
 
 export type EventCustom = Omit<Omit<EventData, 'rulesetConfig'>, 'autostart'>;
 
-export type RulesetConfigLocal = Omit<Omit<RulesetConfig, 'allowedYaku'>, 'yakuWithPao'> & {
+export type RulesetConfigLocal = Omit<
+  Omit<Omit<RulesetConfig, 'allowedYaku'>, 'yakuWithPao'>,
+  'doubleYakuman'
+> & {
   allowedYaku: Record<string, boolean>;
   yakuWithPao: Record<string, boolean>;
+  doubleYakuman: Record<string, boolean>;
 };
 
 export type FormFields = {

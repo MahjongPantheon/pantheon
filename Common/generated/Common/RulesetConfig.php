@@ -169,6 +169,10 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 honba_value = 39;</code>
      */
     protected $honba_value = 0;
+    /**
+     * Generated from protobuf field <code>repeated int32 double_yakuman = 40;</code>
+     */
+    private $double_yakuman;
 
     /**
      * Constructor.
@@ -215,6 +219,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      *     @type int $yakitori_penalty
      *     @type bool $chombo_ends_game
      *     @type int $honba_value
+     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $double_yakuman
      * }
      */
     public function __construct($data = NULL) {
@@ -1096,6 +1101,28 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->honba_value = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated int32 double_yakuman = 40;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getDoubleYakuman()
+    {
+        return $this->double_yakuman;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated int32 double_yakuman = 40;</code>
+     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setDoubleYakuman($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
+        $this->double_yakuman = $arr;
 
         return $this;
     }

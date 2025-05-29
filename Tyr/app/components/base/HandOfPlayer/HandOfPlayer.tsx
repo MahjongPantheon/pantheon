@@ -129,7 +129,9 @@ export const HandOfPlayer = (props: IProps) => {
         </div>
         <div className={styles.stats}>
           {props.isYakuman
-            ? loc._t('Yakuman')
+            ? props.yakuHan < -1
+              ? `${loc._t('Yakuman')} x${props.yakuHan * -1}`
+              : loc._t('Yakuman')
             : props.fuCount
               ? loc._t('%1 han %2 fu', [props.yakuHan + props.doraCount, props.fuCount])
               : loc._t('%1 han', [props.yakuHan + props.doraCount])}

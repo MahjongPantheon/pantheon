@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2025-01-19 02:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -425,27 +425,27 @@ msgstr "По цумо: "
 msgid "Careful planning"
 msgstr "Точный расчет"
 
-#: app/helpers/yaku.ts:182:34
+#: app/helpers/yaku.ts:185:34
 msgid "Chankan"
 msgstr "Чанкан"
 
-#: app/helpers/yaku.ts:102:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chanta"
 msgstr "Чанта"
 
-#: app/helpers/yaku.ts:238:34
+#: app/helpers/yaku.ts:241:34
 msgid "Chihou"
 msgstr "Чихо"
 
-#: app/helpers/yaku.ts:90:34
+#: app/helpers/yaku.ts:93:34
 msgid "Chiitoitsu"
 msgstr "Чиитойцу"
 
-#: app/helpers/yaku.ts:218:34
+#: app/helpers/yaku.ts:221:34
 msgid "Chinitsu"
 msgstr "Чиницу"
 
-#: app/helpers/yaku.ts:214:34 app/helpers/yaku.ts:267:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:282:34
 msgid "Chinroutou"
 msgstr "Чинрото"
 
@@ -470,9 +470,14 @@ msgstr "Штрафов чомбо: "
 msgid "Chombo: %1"
 msgstr "Чомбо: %1"
 
-#: app/helpers/yaku.ts:222:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
+
+#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:301:34
+#, fuzzy
+msgid "Chuuren poutou 9-side"
+msgstr "Чууренпото 9-ти сторонний"
 
 #: app/pages/PlayerStats.tsx:206:24
 msgid "Close game preview"
@@ -522,15 +527,16 @@ msgid "Current tables state for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Состояние столов в событии \"%1\", предоставленное системой Mahjong Pantheon"
 
-#: app/helpers/yaku.ts:74:34
+#: app/helpers/yaku.ts:77:34
 msgid "Daburu riichi"
 msgstr "Дабл-риичи"
 
-#: app/helpers/yaku.ts:198:34 app/helpers/yaku.ts:251:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:266:34
 msgid "Daisangen"
 msgstr "Дайсанген"
 
-#: app/helpers/yaku.ts:206:34 app/helpers/yaku.ts:255:34
+#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:270:34
+#: app/helpers/yaku.ts:293:34
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
@@ -570,6 +576,11 @@ msgstr "Собрано дор: "
 #: app/pages/Achievements.tsx:472:14
 msgid "Dora lord"
 msgstr "Повелитель дор"
+
+#: app/pages/EventRulesOverview/YakuSettings.tsx:68:25
+#, fuzzy
+msgid "Double Yakuman:"
+msgstr "Двойной якуман:"
 
 #: app/components/GameListing.tsx:216:14
 msgid "Draw: %1"
@@ -775,7 +786,7 @@ msgstr "Собери их всех"
 msgid "Guest of honors"
 msgstr "Довакин aka The mother of dragons"
 
-#: app/helpers/yaku.ts:174:34
+#: app/helpers/yaku.ts:177:34
 msgid "Haitei"
 msgstr "Хайтей"
 
@@ -799,7 +810,7 @@ msgstr ""
 "Выплата по хонбе будет выдана только первому победителю по ходу игры. Если "
 "не отмечено, выплата производится всем победителям."
 
-#: app/helpers/yaku.ts:150:34
+#: app/helpers/yaku.ts:153:34
 msgid "Honitsu"
 msgstr "Хоницу"
 
@@ -807,11 +818,11 @@ msgstr "Хоницу"
 msgid "Honored donor"
 msgstr "Почетный донор"
 
-#: app/helpers/yaku.ts:154:34
+#: app/helpers/yaku.ts:157:34
 msgid "Honroutou"
 msgstr "Хонрото"
 
-#: app/helpers/yaku.ts:170:34
+#: app/helpers/yaku.ts:173:34
 msgid "Houtei raoyui"
 msgstr "Хотей раоюй"
 
@@ -858,7 +869,7 @@ msgstr ""
 "Если отмечено, чомбо в последней раздаче после истечения таймера завершит "
 "игру и не позволит сыграть еще одну раздачу"
 
-#: app/helpers/yaku.ts:110:34
+#: app/helpers/yaku.ts:113:34
 msgid "Iipeikou"
 msgstr "Иипейко"
 
@@ -878,11 +889,11 @@ msgstr ""
 "Интервал времени, в течение которого сыгранная игра все еще считается "
 "действительной и может быть внесена в рейтинг."
 
-#: app/helpers/yaku.ts:82:34
+#: app/helpers/yaku.ts:85:34
 msgid "Ippatsu"
 msgstr "Иппацу"
 
-#: app/helpers/yaku.ts:126:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ittsu"
 msgstr "Иццу"
 
@@ -890,7 +901,7 @@ msgstr "Иццу"
 msgid "Jewelry included"
 msgstr "Якуман-мастер"
 
-#: app/helpers/yaku.ts:106:34
+#: app/helpers/yaku.ts:109:34
 msgid "Junchan"
 msgstr "Джунчан"
 
@@ -906,9 +917,14 @@ msgstr "Казое якуман"
 msgid "Kiriage mangan"
 msgstr "Кириаге манган"
 
-#: app/helpers/yaku.ts:230:34
+#: app/helpers/yaku.ts:233:34
 msgid "Kokushi musou"
 msgstr "Кокуши мусо"
+
+#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:305:34
+#, fuzzy
+msgid "Kokushi musou 13-side"
+msgstr "Кокуши мусо 13-ти сторонний"
 
 #: app/pages/EventRulesOverview/YakuSettings.tsx:33:16
 msgid "Kuitan"
@@ -961,7 +977,7 @@ msgstr "Максимум: "
 msgid "Menu"
 msgstr "Меню"
 
-#: app/helpers/yaku.ts:86:34
+#: app/helpers/yaku.ts:89:34
 msgid "Menzentsumo"
 msgstr "Мензенцумо"
 
@@ -1039,7 +1055,7 @@ msgstr "Ассистент"
 msgid "Open menu"
 msgstr "Меню"
 
-#: app/helpers/yaku.ts:78:34
+#: app/helpers/yaku.ts:81:34
 msgid "Open riichi"
 msgstr "Опен риичи"
 
@@ -1083,7 +1099,7 @@ msgstr "Штрафы"
 msgid "Penalties count: %1; total penalties amount: %2"
 msgstr "Количество штрафов: %1; общий размер штрафов: %2"
 
-#: app/helpers/yaku.ts:94:34
+#: app/helpers/yaku.ts:97:34
 msgid "Pinfu"
 msgstr "Пин-фу"
 
@@ -1192,7 +1208,7 @@ msgstr ""
 "Зарегистрированные игроки в событии \"%1\", предоставленная системой Mahjong "
 "Pantheon"
 
-#: app/helpers/yaku.ts:186:34
+#: app/helpers/yaku.ts:189:34
 msgid "Renhou"
 msgstr "Ренхо"
 
@@ -1200,7 +1216,7 @@ msgstr "Ренхо"
 msgid "Replay link is invalid. Please check if you copied it correctly"
 msgstr "Ссылка на игру некорректна. Проверьте правильно ли вы ее скопировали"
 
-#: app/helpers/yaku.ts:70:34
+#: app/helpers/yaku.ts:73:34
 msgid "Riichi"
 msgstr "Риичи"
 
@@ -1232,7 +1248,7 @@ msgstr ""
 msgid "Riichi mahjong events list"
 msgstr "Список турниров и рейтингов"
 
-#: app/helpers/yaku.ts:178:34
+#: app/helpers/yaku.ts:181:34
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
@@ -1275,27 +1291,27 @@ msgstr "Детали правил"
 msgid "Ruleset details page is not available for aggregated events"
 msgstr "Для агрегированных событий обзор правил недоступен"
 
-#: app/helpers/yaku.ts:114:34
+#: app/helpers/yaku.ts:117:34
 msgid "Ryanpeikou"
 msgstr "Рянпейко"
 
-#: app/helpers/yaku.ts:226:34 app/helpers/yaku.ts:263:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:278:34
 msgid "Ryuuiisou"
 msgstr "Рюисо"
 
-#: app/helpers/yaku.ts:158:34
+#: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr "Сананко"
 
-#: app/helpers/yaku.ts:166:34
+#: app/helpers/yaku.ts:169:34
 msgid "Sankantsu"
 msgstr "Санканцу"
 
-#: app/helpers/yaku.ts:118:34
+#: app/helpers/yaku.ts:121:34
 msgid "Sanshoku"
 msgstr "Саншоку"
 
-#: app/helpers/yaku.ts:122:34
+#: app/helpers/yaku.ts:125:34
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
@@ -1348,11 +1364,11 @@ msgstr "Длительность сессии в минутах"
 msgid "Session ending policy"
 msgstr "Политика окончания игры"
 
-#: app/helpers/yaku.ts:162:34
+#: app/helpers/yaku.ts:165:34
 msgid "Shousangen"
 msgstr "Шосанген"
 
-#: app/helpers/yaku.ts:202:34
+#: app/helpers/yaku.ts:205:34
 msgid "Shousuushii"
 msgstr "Шосуши"
 
@@ -1388,11 +1404,16 @@ msgstr ""
 "Просмотр одиночной игры в событии \"%1\", предоставленный системой Mahjong "
 "Pantheon"
 
-#: app/helpers/yaku.ts:194:34
+#: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
 msgstr "Сууанко"
 
-#: app/helpers/yaku.ts:190:34 app/helpers/yaku.ts:271:34
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:297:34
+#, fuzzy
+msgid "Suuankou Tanki"
+msgstr "Сууанко Танки"
+
+#: app/helpers/yaku.ts:193:34 app/helpers/yaku.ts:286:34
 msgid "Suukantsu"
 msgstr "Сууканцу"
 
@@ -1409,7 +1430,7 @@ msgstr "Состояние столов"
 msgid "Tables state is not available for aggregated events"
 msgstr "Для агрегированных событий состояние столов недоступно"
 
-#: app/helpers/yaku.ts:98:34
+#: app/helpers/yaku.ts:101:34
 msgid "Tanyao"
 msgstr "Таняо"
 
@@ -1429,7 +1450,7 @@ msgstr "Команда"
 msgid "Team tournament"
 msgstr "Командный турнир"
 
-#: app/helpers/yaku.ts:234:34
+#: app/helpers/yaku.ts:237:34
 msgid "Tenhou"
 msgstr "Тенхо"
 
@@ -1522,7 +1543,7 @@ msgstr "Переключить цветовую схему"
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 
-#: app/helpers/yaku.ts:146:34
+#: app/helpers/yaku.ts:149:34
 msgid "Toitoi"
 msgstr "Тойтой"
 
@@ -1559,7 +1580,7 @@ msgstr "Выплаты по цумо: "
 msgid "Tsumo: %1"
 msgstr "Цумо: %1"
 
-#: app/helpers/yaku.ts:210:34 app/helpers/yaku.ts:259:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:274:34
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
@@ -1676,19 +1697,19 @@ msgstr "Собранные яку за все время"
 msgid "Yaku settings"
 msgstr "Настройки яку"
 
-#: app/helpers/yaku.ts:130:34
+#: app/helpers/yaku.ts:133:34
 msgid "Yakuhai x1"
 msgstr "Якухай 1"
 
-#: app/helpers/yaku.ts:134:34
+#: app/helpers/yaku.ts:137:34
 msgid "Yakuhai x2"
 msgstr "Якухай 2"
 
-#: app/helpers/yaku.ts:138:34
+#: app/helpers/yaku.ts:141:34
 msgid "Yakuhai x3"
 msgstr "Якухай 3"
 
-#: app/helpers/yaku.ts:142:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 

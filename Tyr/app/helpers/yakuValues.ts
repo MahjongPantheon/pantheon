@@ -62,6 +62,9 @@ const handValues: [Y, number, number][] = [
   [Y.CHANKAN, 1, 1],
   [Y.RENHOU, 5, 0],
   [Y.OPENRIICHI, 1, 0],
+  [Y.SUUANKOUTANKI, -1, 0],
+  [Y.CHUURENPOUTOPURE, -1, 0],
+  [Y.KOKUSHIMUSOU13, -1, 0],
 ] as const;
 
 const openHandValues: { [key: number]: number } = {};
@@ -108,4 +111,15 @@ export function getHan(yakuList: Y[]): number {
     }
     return acc + (openHand ? openHandValues[id] : closedHandValues[id]);
   }, 0);
+}
+
+export function enableDoubleYakuman(doubleYakuman: Y[]): void {
+  doubleYakuman.forEach((id) => {
+    if (openHandValues[id]) {
+      openHandValues[id] = -2;
+    }
+    if (closedHandValues[id]) {
+      closedHandValues[id] = -2;
+    }
+  });
 }

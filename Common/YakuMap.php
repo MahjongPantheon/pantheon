@@ -60,6 +60,11 @@ define('Y_YAKUHAI2', 14);
 define('Y_YAKUHAI3', 15);
 define('Y_YAKUHAI4', 16);
 define('Y_OPENRIICHI', 44);
+define('Y_SUUANKOUTANKI', 45);
+define('Y_CHUURENPOUTOPURE', 46);
+define('Y_KOKUSHIMUSOU13', 47);
+
+
 
 class YakuMap
 {
@@ -128,14 +133,17 @@ class YakuMap
             Y_YAKUHAI2,
             Y_YAKUHAI3,
             Y_YAKUHAI4,
-            Y_OPENRIICHI
+            Y_OPENRIICHI,
+            Y_SUUANKOUTANKI,
+            Y_CHUURENPOUTOPURE,
+            Y_KOKUSHIMUSOU13
         ];
     }
 
     /**
      * @return array
      *
-     * @psalm-return array{34: mixed, 19: mixed, 21: mixed, 25: mixed, 9: mixed, 35: mixed, 12: mixed, 32: mixed, 36: mixed, 8: mixed, 43: mixed, 33: mixed, 38: mixed, 30: mixed, 10: mixed, 3: mixed, 5: mixed, 11: mixed, 4: mixed, 7: mixed, 6: mixed, 23: mixed, 39: mixed, 1: mixed, 37: mixed, 27: mixed, 2: mixed, 41: mixed, 22: mixed, 42: mixed, 24: mixed, 31: mixed, 28: mixed, 26: mixed, 40: mixed, 29: mixed, 18: mixed, 20: mixed, 13: mixed, 14: mixed, 15: mixed, 16: mixed, 17: mixed, 44: mixed}
+     * @psalm-return array{34: mixed, 19: mixed, 21: mixed, 25: mixed, 9: mixed, 35: mixed, 12: mixed, 32: mixed, 36: mixed, 8: mixed, 43: mixed, 33: mixed, 38: mixed, 30: mixed, 10: mixed, 3: mixed, 5: mixed, 11: mixed, 4: mixed, 7: mixed, 6: mixed, 23: mixed, 39: mixed, 1: mixed, 37: mixed, 27: mixed, 2: mixed, 41: mixed, 22: mixed, 42: mixed, 24: mixed, 31: mixed, 28: mixed, 26: mixed, 40: mixed, 29: mixed, 18: mixed, 20: mixed, 13: mixed, 14: mixed, 15: mixed, 16: mixed, 17: mixed, 44: mixed, 45: mixed, 46: mixed, 47: mixed}
      */
     public static function getTranslations(): array
     {
@@ -183,7 +191,10 @@ class YakuMap
             15 => _t("Yakuhai x3"),
             16 => _t("Yakuhai x4"),
             17 => _t("Yakuhai x5"),
-            44 => _t("Open riichi")
+            44 => _t("Open riichi"),
+            45 => _t("Suu ankou tanki"),
+            46 => _t("Chuuren poutou 9-side"),
+            47 => _t("Kokushi musou 13-side")
         ];
     }
 
@@ -249,14 +260,14 @@ class YakuMap
             38 => Y_CHIHOU,
             39 => Y_DAISANGEN,
             40 => Y_SUUANKOU,
-            41 => Y_SUUANKOU, // tanki
+            41 => Y_SUUANKOUTANKI, // tanki
             42 => Y_TSUUIISOU,
             43 => Y_RYUUIISOU,
             44 => Y_CHINROTO,
             45 => Y_CHUURENPOUTO,
-            46 => Y_CHUURENPOUTO, // 9-machi
+            46 => Y_CHUURENPOUTOPURE, // 9-machi
             47 => Y_KOKUSHIMUSOU,
-            48 => Y_KOKUSHIMUSOU, // 13-machi
+            48 => Y_KOKUSHIMUSOU13, // 13-machi
             49 => Y_DAISUUSHII,
             50 => Y_SHOSUUSHII,
             51 => Y_SUUKANTSU

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 21:33+0100\n"
+"POT-Creation-Date: 2025-05-29 17:58Z\n"
 "PO-Revision-Date: 2025-03-23 23:41+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -321,34 +321,34 @@ msgstr "국 취소"
 msgid "Cancelled: "
 msgstr "취소"
 
-#: app/pages/OwnedEventsEdit/index.tsx:289:32
+#: app/pages/OwnedEventsEdit/index.tsx:297:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
 msgid "Changes saved!"
 msgstr "저장되었습니다!"
 
-#: app/helpers/yaku.ts:182:34
+#: app/helpers/yaku.ts:185:34
 msgid "Chankan"
 msgstr "창깡"
 
-#: app/helpers/yaku.ts:102:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chanta"
 msgstr "찬타"
 
-#: app/helpers/yaku.ts:238:34
+#: app/helpers/yaku.ts:241:34
 msgid "Chihou"
 msgstr "지화"
 
-#: app/helpers/yaku.ts:90:34
+#: app/helpers/yaku.ts:93:34
 msgid "Chiitoitsu"
 msgstr "치또이쯔"
 
-#: app/helpers/yaku.ts:218:34
+#: app/helpers/yaku.ts:221:34
 msgid "Chinitsu"
 msgstr "청일색"
 
-#: app/helpers/yaku.ts:214:34 app/helpers/yaku.ts:261:34
+#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:276:34
 msgid "Chinroutou"
 msgstr "청노두"
 
@@ -370,8 +370,13 @@ msgstr ""
 msgid "Chombo, %1"
 msgstr "촌보: %1"
 
-#: app/helpers/yaku.ts:222:34
+#: app/helpers/yaku.ts:225:34
 msgid "Chuuren poutou"
+msgstr "구련보등"
+
+#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:295:34
+#, fuzzy
+msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
 
 #: app/pages/ProfileManage.tsx:239:22
@@ -440,15 +445,16 @@ msgstr "현재 국"
 msgid "Current status"
 msgstr "현재 상태"
 
-#: app/helpers/yaku.ts:74:34
+#: app/helpers/yaku.ts:77:34
 msgid "Daburu riichi"
 msgstr "더블 리치"
 
-#: app/helpers/yaku.ts:198:34 app/helpers/yaku.ts:245:34
+#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:260:34
 msgid "Daisangen"
 msgstr "대삼원"
 
-#: app/helpers/yaku.ts:206:34 app/helpers/yaku.ts:249:34
+#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:264:34
+#: app/helpers/yaku.ts:287:34
 msgid "Daisuushii"
 msgstr "대사희"
 
@@ -468,6 +474,11 @@ msgstr "연장 비활성화"
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:53:20
 msgid "Do not interrupt session until it ends"
 msgstr "오라스에 인한 대국 종료시 종료"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:78:25
+#, fuzzy
+msgid "Double yakuman:"
+msgstr "헤아림 역만:"
 
 #: app/pages/GamesControl/GamesList.tsx:450:12
 msgid "Draw, tempai: %1, riichi: %2"
@@ -536,8 +547,8 @@ msgstr "동점 동일 우마"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14 app/pages/OwnedEvents.tsx:94:14
-#: app/pages/OwnedEventsEdit/index.tsx:195:18
-#: app/pages/OwnedEventsEdit/index.tsx:226:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:203:18
+#: app/pages/OwnedEventsEdit/index.tsx:234:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -643,7 +654,7 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "대국 종료 취소 실패"
 
-#: app/pages/OwnedEventsEdit/index.tsx:189:29
+#: app/pages/OwnedEventsEdit/index.tsx:197:29
 msgid "Failed to fetch event data"
 msgstr "이벤트 데이터 불러오기 실패"
 
@@ -699,7 +710,7 @@ msgstr "좌석 초기화 실패"
 msgid "Failed to save event script: server error or network unreachable"
 msgstr "이벤트 스크립트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
-#: app/pages/OwnedEventsEdit/index.tsx:221:27
+#: app/pages/OwnedEventsEdit/index.tsx:229:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "이벤트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
@@ -829,7 +840,7 @@ msgstr "회원가입으로 이동"
 msgid "Goal score"
 msgstr "목표 점수"
 
-#: app/helpers/yaku.ts:174:34
+#: app/helpers/yaku.ts:177:34
 msgid "Haitei"
 msgstr "해저로월"
 
@@ -859,15 +870,15 @@ msgstr ""
 "본장은 좌석 순서에 따라 첫번째 작사에게만 지급됨. 비활성 시 화료한 모든 작사"
 "에게 본장 지급"
 
-#: app/helpers/yaku.ts:150:34
+#: app/helpers/yaku.ts:153:34
 msgid "Honitsu"
 msgstr "혼일색"
 
-#: app/helpers/yaku.ts:154:34
+#: app/helpers/yaku.ts:157:34
 msgid "Honroutou"
 msgstr "혼노두"
 
-#: app/helpers/yaku.ts:170:34
+#: app/helpers/yaku.ts:173:34
 msgid "Houtei raoyui"
 msgstr "하저로어"
 
@@ -953,7 +964,7 @@ msgid ""
 "is out and it is final hand of the game"
 msgstr ""
 
-#: app/helpers/yaku.ts:110:34
+#: app/helpers/yaku.ts:113:34
 msgid "Iipeikou"
 msgstr "이페코"
 
@@ -1005,15 +1016,15 @@ msgstr "유효하지 않은 이메일"
 msgid "Invalid title"
 msgstr "유효하지 않은 호칭"
 
-#: app/helpers/yaku.ts:82:34
+#: app/helpers/yaku.ts:85:34
 msgid "Ippatsu"
 msgstr "일발"
 
-#: app/helpers/yaku.ts:126:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ittsu"
 msgstr "일기통관"
 
-#: app/helpers/yaku.ts:106:34
+#: app/helpers/yaku.ts:109:34
 msgid "Junchan"
 msgstr "준찬타"
 
@@ -1025,8 +1036,13 @@ msgstr "헤아림 역만"
 msgid "Kiriage mangan"
 msgstr "절상 만관"
 
-#: app/helpers/yaku.ts:230:34
+#: app/helpers/yaku.ts:233:34
 msgid "Kokushi musou"
+msgstr "국사무쌍"
+
+#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:299:34
+#, fuzzy
+msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
 #: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
@@ -1160,7 +1176,7 @@ msgstr "최대 임의 벌부 점수"
 msgid "Menu"
 msgstr "메뉴"
 
-#: app/helpers/yaku.ts:86:34
+#: app/helpers/yaku.ts:89:34
 msgid "Menzentsumo"
 msgstr "멘젠쯔모"
 
@@ -1360,7 +1376,7 @@ msgstr "신규 탭에서 이벤트 페이지 열기"
 msgid "Open menu"
 msgstr "메뉴 열기"
 
-#: app/helpers/yaku.ts:78:34
+#: app/helpers/yaku.ts:81:34
 msgid "Open riichi"
 msgstr "오픈 리치"
 
@@ -1431,7 +1447,7 @@ msgstr "벌부 사유"
 msgid "Phone number"
 msgstr "전화번호"
 
-#: app/helpers/yaku.ts:94:34
+#: app/helpers/yaku.ts:97:34
 msgid "Pinfu"
 msgstr "핑후"
 
@@ -1691,7 +1707,7 @@ msgstr "교체 작사 삭제"
 msgid "Remove the game as it never existed"
 msgstr "대국 기록을 완전히 삭제합니다"
 
-#: app/helpers/yaku.ts:186:34
+#: app/helpers/yaku.ts:189:34
 msgid "Renhou"
 msgstr "인화"
 
@@ -1723,7 +1739,7 @@ msgstr "좌석 초기화"
 msgid "Reset your password"
 msgstr "비밀번호 재설정"
 
-#: app/helpers/yaku.ts:70:34
+#: app/helpers/yaku.ts:73:34
 msgid "Riichi"
 msgstr "리치"
 
@@ -1743,7 +1759,7 @@ msgstr ""
 "오라스의 유국으로 대국이 종료될 경우 1위 작사가 해당 국에 공탁된 리치봉을 습"
 "득함"
 
-#: app/helpers/yaku.ts:178:34
+#: app/helpers/yaku.ts:181:34
 msgid "Rinshan kaihou"
 msgstr "영상개화"
 
@@ -1769,31 +1785,31 @@ msgstr ""
 msgid "Ruleset tuning"
 msgstr "상세 규칙 설정"
 
-#: app/helpers/yaku.ts:114:34
+#: app/helpers/yaku.ts:117:34
 msgid "Ryanpeikou"
 msgstr "량페코"
 
-#: app/helpers/yaku.ts:226:34 app/helpers/yaku.ts:257:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:272:34
 msgid "Ryuuiisou"
 msgstr "녹일색"
 
-#: app/helpers/yaku.ts:158:34
+#: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr "산안커"
 
-#: app/helpers/yaku.ts:166:34
+#: app/helpers/yaku.ts:169:34
 msgid "Sankantsu"
 msgstr "산깡쯔"
 
-#: app/helpers/yaku.ts:118:34
+#: app/helpers/yaku.ts:121:34
 msgid "Sanshoku"
 msgstr "삼색동순"
 
-#: app/helpers/yaku.ts:122:34
+#: app/helpers/yaku.ts:125:34
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/pages/OwnedEventsEdit/index.tsx:289:60
+#: app/pages/OwnedEventsEdit/index.tsx:297:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1918,11 +1934,11 @@ msgstr "사전 정의된 이벤트 스크립트에서 사용할 작사의 로컬
 msgid "Setup team name for each player (for team events)"
 msgstr "각 작사의 팀명 설정 (팀 이벤트의 경우)"
 
-#: app/helpers/yaku.ts:162:34
+#: app/helpers/yaku.ts:165:34
 msgid "Shousangen"
 msgstr "소삼원"
 
-#: app/helpers/yaku.ts:202:34
+#: app/helpers/yaku.ts:205:34
 msgid "Shousuushii"
 msgstr "소사희"
 
@@ -2007,11 +2023,16 @@ msgstr "하위 시스템"
 msgid "Success"
 msgstr "성공"
 
-#: app/helpers/yaku.ts:194:34
+#: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
 msgstr "스안커"
 
-#: app/helpers/yaku.ts:190:34 app/helpers/yaku.ts:265:34
+#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:291:34
+#, fuzzy
+msgid "Suuankou Tanki"
+msgstr "스안커"
+
+#: app/helpers/yaku.ts:193:34 app/helpers/yaku.ts:280:34
 msgid "Suukantsu"
 msgstr "스깡쯔"
 
@@ -2035,7 +2056,7 @@ msgstr "시스템 통계"
 msgid "Table # %1"
 msgstr "제 #%1 탁"
 
-#: app/helpers/yaku.ts:98:34
+#: app/helpers/yaku.ts:101:34
 msgid "Tanyao"
 msgstr "탕야오"
 
@@ -2060,7 +2081,7 @@ msgstr "팀 대회"
 msgid "Team:"
 msgstr "팀:"
 
-#: app/helpers/yaku.ts:234:34
+#: app/helpers/yaku.ts:237:34
 msgid "Tenhou"
 msgstr "천화"
 
@@ -2172,7 +2193,7 @@ msgstr "업적 공개 여부 전환"
 msgid "Toggle visibility of rating table"
 msgstr "순위표 표시 여부 전환"
 
-#: app/helpers/yaku.ts:146:34
+#: app/helpers/yaku.ts:149:34
 msgid "Toitoi"
 msgstr "또이또이"
 
@@ -2197,7 +2218,7 @@ msgstr "대회 설정"
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "쯔모: %1 (%2), 리치: %3"
 
-#: app/helpers/yaku.ts:210:34 app/helpers/yaku.ts:253:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:268:34
 msgid "Tsuuiisou"
 msgstr "자일색"
 
@@ -2324,19 +2345,19 @@ msgstr "허용 역"
 msgid "Yaku settings"
 msgstr "역 설정"
 
-#: app/helpers/yaku.ts:130:34
+#: app/helpers/yaku.ts:133:34
 msgid "Yakuhai x1"
 msgstr "역패 x1"
 
-#: app/helpers/yaku.ts:134:34
+#: app/helpers/yaku.ts:137:34
 msgid "Yakuhai x2"
 msgstr "역패 x2"
 
-#: app/helpers/yaku.ts:138:34
+#: app/helpers/yaku.ts:141:34
 msgid "Yakuhai x3"
 msgstr "역패 x3"
 
-#: app/helpers/yaku.ts:142:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x4"
 msgstr "역패 x4"
 

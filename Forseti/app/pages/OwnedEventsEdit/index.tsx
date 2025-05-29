@@ -133,6 +133,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         withYakitori: false,
         yakitoriPenalty: 0,
         chomboEndsGame: false,
+        doubleYakuman: {},
       },
     },
 
@@ -157,6 +158,13 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           {} as Record<string, boolean>
         ),
         yakuWithPao: currentRuleset.yakuWithPao.reduce(
+          (acc: Record<string, boolean>, val: number) => {
+            acc[val] = true;
+            return acc;
+          },
+          {} as Record<string, boolean>
+        ),
+        doubleYakuman: currentRuleset.doubleYakuman.reduce(
           (acc: Record<string, boolean>, val: number) => {
             acc[val] = true;
             return acc;
@@ -312,6 +320,9 @@ function makeEventData(vals: FormFields) {
         .map((v) => parseInt(v, 10)),
       yakuWithPao: Object.keys(vals.ruleset.yakuWithPao)
         .filter((k) => vals.ruleset.yakuWithPao[k])
+        .map((v) => parseInt(v, 10)),
+      doubleYakuman: Object.keys(vals.ruleset.doubleYakuman)
+        .filter((k) => vals.ruleset.doubleYakuman[k])
         .map((v) => parseInt(v, 10)),
     },
   };

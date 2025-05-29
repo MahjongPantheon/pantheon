@@ -19,7 +19,7 @@ import * as React from 'react';
 import { Checkbox, SimpleGrid, Stack, Title } from '@mantine/core';
 import { GameConfig } from '../../clients/proto/atoms.pb';
 import { I18nService } from '../../services/i18n';
-import { yakuList, yakuWithPao } from '../../helpers/yaku';
+import { doubleYakuman, yakuList, yakuWithPao } from '../../helpers/yaku';
 
 type YakuSettingsProps = {
   config: GameConfig;
@@ -61,6 +61,17 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
             key={`yaku_${idx}`}
             label={y.name(i18n)}
             checked={config.rulesetConfig.yakuWithPao.includes(y.id)}
+            onChange={() => {}}
+          />
+        ))}
+      </SimpleGrid>
+      <Title order={4}>{i18n._t('Double Yakuman:')}</Title>
+      <SimpleGrid spacing='lg' cols={{ base: 3, '48rem': 2, '36rem': 1 }}>
+        {doubleYakuman.map((y, idx) => (
+          <Checkbox
+            key={`yaku_${idx}`}
+            label={y.name(i18n)}
+            checked={config.rulesetConfig.doubleYakuman.includes(y.id)}
             onChange={() => {}}
           />
         ))}
