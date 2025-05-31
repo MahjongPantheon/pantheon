@@ -293,8 +293,12 @@ export function addYakuToProps(
       han: han
         ? han
         : winProps.han,
-      fu,
-      possibleFu,
+      fu: fu
+        ? fu
+        : winProps.fu,
+      possibleFu: possibleFu
+        ? possibleFu
+        :winProps.possibleFu,
     };
   }
 
