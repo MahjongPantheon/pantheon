@@ -290,7 +290,9 @@ export function addYakuToProps(
     winProps = {
       ...winProps,
       yaku: packedList,
-      han,
+      han: han
+        ? han
+        : winProps.han,
       fu,
       possibleFu,
     };
