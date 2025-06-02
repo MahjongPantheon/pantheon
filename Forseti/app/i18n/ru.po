@@ -2336,7 +2336,7 @@ msgstr "Использовать правило якитори"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:167:22
 msgid "Value of one honba stick"
-msgstr "Сколько стоит один индикатор зонбы"
+msgstr "Сколько стоит один индикатор хонбы"
 
 #: app/pages/OwnedEvents.tsx:421:32
 msgid "Visibility"
