@@ -32,7 +32,7 @@
     "ts-jest": "^29.2.5",
     "twirpscript": "^0.0.69",
     "typescript": "5.5.4",
-    "vite": "^5.4.7",
+    "vite": "^5.4.12",
     "vite-plugin-pwa": "^0.20.5",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.1.1"
