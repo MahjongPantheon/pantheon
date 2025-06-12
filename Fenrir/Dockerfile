@@ -20,13 +20,12 @@ RUN apt-get install -y \
     findutils \
     git \
     nginx \
-    nodejs \
-    pnpm && \
+    nodejs && \
     (rm "/tmp/"* 2>/dev/null || true)
 
 RUN chown -R root:root /usr/lib/node_modules/
 
-RUN pnpm install -g @testiny/cli
+RUN npm install -g pnpm @testiny/cli
 
 # Cleaning up
 RUN rm -rf /var/lib/apt/lists/*
@@ -38,7 +37,7 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN mkdir /root/dummy
 RUN cd /root/dummy && \
-    pnpm init -y && \
+    pnpm init && \
     pnpm install @playwright/test && \
     pnpm run playwright install --with-deps
 
