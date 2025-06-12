@@ -39,7 +39,7 @@ RUN mkdir /root/dummy
 RUN cd /root/dummy && \
     pnpm init && \
     pnpm install @playwright/test && \
-    pnpm run playwright install --with-deps
+    pnpm exec playwright install --with-deps
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

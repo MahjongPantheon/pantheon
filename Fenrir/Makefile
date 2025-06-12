@@ -28,7 +28,7 @@ kill:
 PHONY: deps
 deps:
 	pnpm install
-	pnpm run playwright install --with-deps
+	pnpm exec playwright install --with-deps
 
 PHONY: eslint
 eslint:
