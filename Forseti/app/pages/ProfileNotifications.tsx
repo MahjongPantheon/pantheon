@@ -25,7 +25,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
 
   const form = useForm({
     initialValues: {
-      id: id ? id : '',
+      id: id ?? '',
       notifications: {
         // Should match defaults described in Common/Notifications.php
         // const SessionSeatingReady = 'sr';

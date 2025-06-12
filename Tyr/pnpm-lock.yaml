@@ -38,6 +38,9 @@ importers:
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
+      protoscript:
+        specifier: ^0.0.23
+        version: 0.0.23
       react-swipeable-views:
         specifier: ^0.14.0
         version: 0.14.0(react@18.3.1)
@@ -45,8 +48,8 @@ importers:
         specifier: 5.0.1
         version: 5.0.1
       twirpscript:
-        specifier: ^0.0.69
-        version: 0.0.69
+        specifier: ^0.0.72
+        version: 0.0.72
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -3841,8 +3844,8 @@ packages:
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
-  protoscript@0.0.20:
-    resolution: {integrity: sha512-NuXZgSko5o5o/ngA4/lccAHE7dY2C2ySaRTl+k45ehsjXitoQRXZ4fDAr5yIUadTAV9pZi6jQ0Ao5VQ9SBt0Ew==}
+  protoscript@0.0.23:
+    resolution: {integrity: sha512-5PB7ERq8ApyY+5T2bLLQaZHWis9ysm1PzIVX9GO5fjtGO/6EnVxFglzLouaxQPR+l2wF7XmEn+VNjlXCD1TQow==}
     hasBin: true
 
   proxy-addr@2.0.7:
@@ -4424,8 +4427,8 @@ packages:
   tween-functions@1.2.0:
     resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
 
-  twirpscript@0.0.69:
-    resolution: {integrity: sha512-BZL6hky+OpGU5fozsw0CupJMbz69nvaRQL6OerCxDnZnk7AAjnB0s8qSQk6hVHb7OXrHOZBf/L2G4ttOUTqMyQ==}
+  twirpscript@0.0.72:
+    resolution: {integrity: sha512-KpVuqkzO95wMdvmK+GzXn+g/VFFGWJmgn3s8eXfIT+DmJ1nudAU3m9F/ets2byKyN1TXd3atWRCQlQpIj4jl+w==}
     hasBin: true
 
   type-check@0.4.0:
@@ -9091,7 +9094,7 @@ snapshots:
       object-assign: 4.1.1
       react-is: 16.13.1
 
-  protoscript@0.0.20:
+  protoscript@0.0.23:
     dependencies:
       google-protobuf: 3.21.2
       prettier: 3.4.2
@@ -9763,9 +9766,9 @@ snapshots:
 
   tween-functions@1.2.0: {}
 
-  twirpscript@0.0.69:
+  twirpscript@0.0.72:
     dependencies:
-      protoscript: 0.0.20
+      protoscript: 0.0.23
 
   type-check@0.4.0:
     dependencies:

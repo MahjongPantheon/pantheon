@@ -13,6 +13,7 @@
     "@emotion/css": "^11.13.0",
     "@emotion/react": "^11.13.3",
     "@emotion/server": "^11.11.0",
+    "@emotion/cache": "^11.13.1",
     "@foxglove/crc": "^1.0.1",
     "@mantine/core": "^7.15.2",
     "@mantine/emotion": "^7.15.2",
@@ -40,9 +41,13 @@
     "react-router-dom": "^6.26.2",
     "serve-static": "^1.16.2",
     "strip-markdown": "^6.0.0",
-    "twirpscript": "^0.0.69",
+    "twirpscript": "^0.0.72",
+    "protoscript": "^0.0.23",
     "uuid": "^10.0.0",
     "wouter": "2.12.1"
+  },
+  "notes": {
+    "twirpscript": "When updating twirpscript, also protoscript must be updated to the version required by twirpscript"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",

@@ -340,9 +340,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   }, [secsUntilReload]);
 
   useEffect(() => {
-    if (!timer) {
-      timer = setInterval(reloader, 1000);
-    }
+    timer ??= setInterval(reloader, 1000);
     return () => {
       if (timer) clearInterval(timer);
     };

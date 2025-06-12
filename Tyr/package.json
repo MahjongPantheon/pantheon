@@ -19,8 +19,12 @@
     "jsdom": "^25.0.1",
     "react-swipeable-views": "^0.14.0",
     "redux": "5.0.1",
-    "twirpscript": "^0.0.69",
+    "twirpscript": "^0.0.72",
+    "protoscript": "^0.0.23",
     "typescript": "5.5.4"
+  },
+  "notes": {
+    "twirpscript": "When updating twirpscript, also protoscript must be updated to the version required by twirpscript"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^2.0.2",
