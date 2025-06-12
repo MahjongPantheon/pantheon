@@ -27,7 +27,7 @@ kill:
 
 PHONY: deps
 deps:
-	if [ -e "`which yarn`" ]; then yarn; else npm install; fi
+	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
 .PHONY: test
 test:

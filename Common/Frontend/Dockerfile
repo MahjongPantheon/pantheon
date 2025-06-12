@@ -3,7 +3,6 @@ FROM alpine:3.21.3
 ENV TIMEZONE=Europe/Berlin
 ENV PHP_MEMORY_LIMIT=512M
 ENV LANG=en_US.utf8
-ENV YARN_CACHE_FOLDER=/home/user/.yarn-cache
 ENV COMPOSER_CACHE_DIR=/home/user/.composer-cache
 
 RUN apk update && \
@@ -27,10 +26,11 @@ RUN apk update && \
     nginx \
     nodejs \
     npm \
+    pnpm \
     protoc && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-RUN npm install -g i18n-stex i18n-po-json i18n-json-po yarn pm2 && chown -R root:root /usr/local/lib/node_modules/
+RUN npm install -g i18n-stex i18n-po-json i18n-json-po pm2 && chown -R root:root /usr/local/lib/node_modules/
 
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)

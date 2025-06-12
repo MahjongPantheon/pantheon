@@ -27,7 +27,7 @@ kill:
 
 PHONY: deps
 deps:
-	if [ -e "`which yarn`" ]; then yarn; else npm install; fi
+	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
 PHONY: eslint
 eslint:
@@ -95,7 +95,7 @@ build:
 
 .PHONY: prod_deps
 prod_deps:
-	cd ../Sigrun-dist && NODE_ENV=production yarn install
+	cd ../Sigrun-dist && NODE_ENV=production pnpm install
 
 .PHONY: prebuild
 prebuild:
@@ -107,7 +107,7 @@ prebuild:
 	if [ -f .env.production ]; then cp -f .env.production ../Sigrun-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Sigrun-dist/ ; fi
 	cp -f package.json ../Sigrun-dist/
-	cp -f yarn.lock ../Sigrun-dist/
+	cp -f pnpm-lock.yaml ../Sigrun-dist/
 
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:

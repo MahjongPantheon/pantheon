@@ -20,12 +20,13 @@ RUN apt-get install -y \
     findutils \
     git \
     nginx \
-    nodejs && \
+    nodejs \
+    pnpm && \
     (rm "/tmp/"* 2>/dev/null || true)
 
 RUN chown -R root:root /usr/lib/node_modules/
 
-RUN npm install -g yarn @testiny/cli
+RUN pnpm install -g @testiny/cli
 
 # Cleaning up
 RUN rm -rf /var/lib/apt/lists/*
@@ -37,9 +38,9 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN mkdir /root/dummy
 RUN cd /root/dummy && \
-    npm init -y && \
-    yarn add @playwright/test && \
-    yarn run playwright install --with-deps
+    pnpm init -y && \
+    pnpm install @playwright/test && \
+    pnpm run playwright install --with-deps
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
