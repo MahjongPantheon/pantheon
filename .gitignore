@@ -62,7 +62,6 @@ Tyr/libpeerconnection.log
 Tyr/npm-debug.log
 Tyr/testem.log
 Tyr/typings
-Tyr/yarn-error.log
 Tyr/app/i18n/*.mo
 
 Tyr-dist/*

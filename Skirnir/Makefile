@@ -27,7 +27,7 @@ kill:
 
 PHONY: deps
 deps:
-	if [ -e "`which yarn`" ]; then yarn; else npm install; fi
+	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
 PHONY: eslint
 eslint:
@@ -91,7 +91,7 @@ build:
 
 .PHONY: prod_deps
 prod_deps:
-	cd ../Skirnir-dist && NODE_ENV=production yarn install
+	cd ../Skirnir-dist && NODE_ENV=production pnpm install
 
 .PHONY: prebuild
 prebuild:
@@ -100,7 +100,7 @@ prebuild:
 	if [ -f .env.production ]; then cp -f .env.production ../Skirnir-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Skirnir-dist/ ; fi
 	cp -f package.json ../Skirnir-dist/
-	cp -f yarn.lock ../Skirnir-dist/
+	cp -f pnpm-lock.yaml ../Skirnir-dist/
 
 dev:
 	./node_modules/.bin/nodemon app/server.ts

@@ -4,4 +4,4 @@ app/i18n
 app/clients
 node_modules
 dist
-yarn.lock
+pnpm-lock.yaml

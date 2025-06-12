@@ -27,7 +27,7 @@ kill:
 
 PHONY: deps
 deps:
-	if [ -e "`which yarn`" ]; then yarn; else npm install; fi
+	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
 PHONY: eslint
 eslint:
@@ -95,7 +95,7 @@ build:
 
 .PHONY: prod_deps
 prod_deps:
-	cd ../Bragi-dist && NODE_ENV=production yarn install
+	cd ../Bragi-dist && NODE_ENV=production pnpm install
 
 .PHONY: prebuild
 prebuild:
@@ -106,7 +106,7 @@ prebuild:
 	if [ -f .env.development ]; then cp -f .env.development ../Bragi-dist/ ; fi
 	echo `date +"%Y-%m-%d"` > ../Bragi-dist/lastbuild.txt
 	cp -f package.json ../Bragi-dist/
-	cp -f yarn.lock ../Bragi-dist/
+	cp -f pnpm-lock.yaml ../Bragi-dist/
 
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:

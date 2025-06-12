@@ -154,7 +154,7 @@ export default [{
     "coverage",
     "node_modules",
     "dist",
-    "yarn.lock",
+    "pnpm-lock.yaml",
     "server.js",
     "eslint.config.mjs",
     "vite.config.ts",

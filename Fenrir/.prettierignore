@@ -3,5 +3,5 @@ coverage
 app/i18n
 node_modules
 dist
-yarn.lock
+pnpm-lock.yaml
 *.mdx

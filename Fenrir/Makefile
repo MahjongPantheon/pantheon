@@ -27,8 +27,8 @@ kill:
 
 PHONY: deps
 deps:
-	yarn
-	yarn playwright install --with-deps
+	pnpm install
+	pnpm run playwright install --with-deps
 
 PHONY: eslint
 eslint:
