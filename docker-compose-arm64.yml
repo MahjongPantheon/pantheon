@@ -5,6 +5,7 @@ volumes:
   configvolume01: {}
   gullveigstorage01: {}
   grafanastorage01: {}
+  pnpmstore01: {}
   pfspool01:
   pfetc01:
   prometheusdata:
@@ -54,12 +55,16 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-skirnir-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4015:80"
     volumes:
       - ./Skirnir:/var/www/html/Skirnir
       - ./Skirnir-dist:/var/www/html/Skirnir-dist
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
@@ -171,6 +176,9 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-tyr-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4003:80"
     depends_on:
@@ -180,6 +188,7 @@ services:
       - ./Tyr:/var/www/html/Tyr
       - ./Tyr-dist:/var/www/html/Tyr-dist
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
@@ -196,6 +205,9 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-forseti-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4007:80"
     depends_on:
@@ -205,6 +217,7 @@ services:
       - ./Forseti:/var/www/html/Forseti
       - ./Forseti-dist:/var/www/html/Forseti-dist
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
@@ -221,6 +234,9 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-sigrun-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4002:80"
     depends_on:
@@ -230,6 +246,7 @@ services:
       - ./Sigrun:/var/www/html/Sigrun
       - ./Sigrun-dist:/var/www/html/Sigrun-dist
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
@@ -246,12 +263,16 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-gullveig-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4012:80"
     volumes:
       - ./Gullveig:/var/www/html/Gullveig
       - ./Common:/var/www/html/Common
       - gullveigstorage01:/var/storage
+      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
@@ -268,12 +289,16 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-bragi-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4008:80"
     volumes:
       - ./Bragi:/var/www/html/Bragi
       - ./Bragi-dist:/var/www/html/Bragi-dist
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
@@ -330,6 +355,9 @@ services:
       - e2e
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4017:80"
     depends_on:
@@ -345,6 +373,7 @@ services:
     volumes:
       - ./Fenrir:/var/www/html/Fenrir
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
