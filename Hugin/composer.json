@@ -8,11 +8,11 @@
   "repositories": [
     {
       "url": "https://github.com/ctizen/idiorm.git",
-      "type": "git"
+      "type": "vcs"
     },
     {
       "url": "https://github.com/ctizen/phinx.git",
-      "type": "git"
+      "type": "vcs"
     }
   ],
   "require": {

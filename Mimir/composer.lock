@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b00efe9ab90e045f16940bafccab472a",
+    "content-hash": "02abda1ca0c8ff1d557468d3e7cf4de6",
     "packages": [
         {
             "name": "ctizen/idiorm",
@@ -74,6 +74,12 @@
                 "url": "https://github.com/ctizen/phinx.git",
                 "reference": "18ea192cfe3fe35c549a2adfd0ce76f3d2576051"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ctizen/phinx/zipball/18ea192cfe3fe35c549a2adfd0ce76f3d2576051",
+                "reference": "18ea192cfe3fe35c549a2adfd0ce76f3d2576051",
+                "shasum": ""
+            },
             "require": {
                 "php": ">=5.4",
                 "symfony/config": "~2.8|~3.0",
@@ -128,6 +134,9 @@
                 "migrations",
                 "phinx"
             ],
+            "support": {
+                "source": "https://github.com/ctizen/phinx/tree/v0.8.1"
+            },
             "time": "2017-05-14T20:07:18+00:00"
         },
         {
@@ -4302,6 +4311,6 @@
         "ext-bcmath": "*",
         "ext-memcached": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
