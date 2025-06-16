@@ -32,6 +32,9 @@ postfix_open_submission_port        # Enable the submission port
 execute_post_init_scripts           # Execute any scripts found in /docker-init.db/
 
 chown -R opendkim:opendkim /etc/opendkim/keys
+chown -R postfix:postfix /var/spool/postfix/*
+chown -R postfix:postdrop /var/spool/postfix/public
+chown -R postfix:postdrop /var/spool/postfix/maildrop
 
 notice "Starting: ${emphasis}rsyslog${reset}, ${emphasis}postfix${reset}$DKIM_ENABLED"
 exec supervisord -c /etc/supervisord.conf
