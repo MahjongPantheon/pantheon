@@ -26,8 +26,15 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
   ],
+  resolve: {
+    alias: {
+      // /esm/icons/index.mjs only exports the icons statically, so no separate chunks are created
+      '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
+    },
+  },
   server: {
     port: 4008,
+    allowedHosts: ['bragi.pantheon.local']
   },
   build: {
     rollupOptions: {

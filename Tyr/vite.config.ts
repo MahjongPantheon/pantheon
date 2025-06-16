@@ -57,6 +57,7 @@ export default defineConfig({
   ],
   server: {
     port: 4003,
+    allowedHosts: ['tyr.pantheon.local']
   },
   build: {
     rollupOptions: {
