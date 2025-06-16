@@ -65,5 +65,8 @@
   "notes": {
     "twirpscript": "When updating twirpscript, also protoscript must be updated to the version required by twirpscript"
   },
+  "pnpm": {
+    "neverBuiltDependencies": []
+  },
   "scripts": {}
 }
