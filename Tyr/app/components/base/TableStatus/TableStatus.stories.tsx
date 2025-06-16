@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { TableStatus } from './TableStatus';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
 

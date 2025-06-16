@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 
 import { YakitoriIndicator } from './YakitoriIndicator';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';

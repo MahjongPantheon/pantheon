@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { BottomPanel } from './BottomPanel';
 import { Button } from '../Button/Button';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';

@@ -1,5 +1,5 @@
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { TableRoundPreview } from './TableRoundPreview';
 import { PlayerSide } from '../../base/ResultArrows/ResultArrowsProps';
 import { PlayerPointsMode } from '../../../helpers/enums';

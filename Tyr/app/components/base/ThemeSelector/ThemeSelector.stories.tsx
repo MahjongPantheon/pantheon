@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { ThemeSelector } from './ThemeSelector';
 import { themes } from '../../../services/themes';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';

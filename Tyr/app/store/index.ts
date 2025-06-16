@@ -74,6 +74,7 @@ export class Store {
     );
     const composeEnhancers =
       (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })) ||
       compose;
     this.store = createStore(

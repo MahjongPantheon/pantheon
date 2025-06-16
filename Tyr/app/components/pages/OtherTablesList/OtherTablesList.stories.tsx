@@ -1,6 +1,6 @@
 import { OtherTablesList } from './OtherTablesList';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 
 export default {
   title: 'Pages / OtherTablesList',

@@ -1,5 +1,5 @@
 import { SelectList } from './SelectList';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { Player } from '../Player/Player';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
 

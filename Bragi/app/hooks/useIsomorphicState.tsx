@@ -37,9 +37,9 @@ export const useIsomorphicState = <I, R, E extends Error>(
     requests: any[];
     __running: number;
   };
-  const [data, setData] = useState(context[key] || initial);
+  const [data, setData] = useState(context[key] ?? initial);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(context[key + '__err'] || null);
+  const [error, setError] = useState(context[key + '__err'] ?? null);
   if (context.requests) {
     context.requests.push(
       effect()

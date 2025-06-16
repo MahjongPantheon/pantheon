@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 
 import { PopupMenu } from './PopupMenu';
 import { PopupMenuItem } from './PopupMenuItem';

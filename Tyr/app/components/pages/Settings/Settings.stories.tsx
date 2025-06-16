@@ -1,5 +1,5 @@
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { Settings } from './Settings';
 import { themes } from '../../../services/themes';
 

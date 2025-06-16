@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 
 import { TextField } from './TextField';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';

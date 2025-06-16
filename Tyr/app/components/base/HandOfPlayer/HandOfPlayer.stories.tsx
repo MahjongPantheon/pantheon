@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 
 import { HandOfPlayer } from './HandOfPlayer';
 import { sortByViewPriority, YakuId, yakuList } from '../../../helpers/yaku';

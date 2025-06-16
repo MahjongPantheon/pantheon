@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 
 import { FourSidedScreen } from './FourSidedScreen';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';

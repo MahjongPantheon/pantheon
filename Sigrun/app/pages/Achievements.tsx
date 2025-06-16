@@ -229,7 +229,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               'Achievements badge',
               ['%1 feed', '%1 feeds'],
               achDataByKey[Achievement.DIE_HARD].feed,
-              [achDataByKey[Achievement.DIE_HARD].feed || '0']
+              [achDataByKey[Achievement.DIE_HARD].feed ?? '0']
             )}
           </Badge>
         </Group>
@@ -254,7 +254,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               'Achievements badge',
               ['%1 feed', '%1 feeds'],
               achDataByKey[Achievement.BRAVE_SAPPER].feed,
-              [achDataByKey[Achievement.BRAVE_SAPPER].feed || '0']
+              [achDataByKey[Achievement.BRAVE_SAPPER].feed ?? '0']
             )}
           </Badge>
         </Group>
@@ -304,7 +304,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               'Achievements badge',
               ['%1 win', '%1 wins'],
               achDataByKey[Achievement.BEST_DEALER].bestWinCount,
-              [achDataByKey[Achievement.BEST_DEALER].bestWinCount || '0']
+              [achDataByKey[Achievement.BEST_DEALER].bestWinCount ?? '0']
             )}
           </Badge>
         </Group>
@@ -329,7 +329,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               'Achievements badge',
               ['%1 quickest hand', '%1 quickest hands'],
               achDataByKey[Achievement.SHITHANDER].handsCount,
-              [achDataByKey[Achievement.SHITHANDER].handsCount || '0']
+              [achDataByKey[Achievement.SHITHANDER].handsCount ?? '0']
             )}
           </Badge>
         </Group>

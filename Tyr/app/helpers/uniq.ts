@@ -39,6 +39,7 @@ export function uniq(arr: any[], sorted: boolean | number, strings: boolean | nu
       duplicate = seenNaN;
       seenNaN = true;
     }
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     duplicate = duplicate || (lastAdded && lastAdded === elem);
     if (!duplicate && !sorted) {
       duplicate = result.includes(elem);

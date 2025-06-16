@@ -1,5 +1,5 @@
 import { ResultArrows } from './ResultArrows';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { PlayerSide } from './ResultArrowsProps';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
 

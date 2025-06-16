@@ -16,7 +16,7 @@
  */
 
 import { TabbedView } from './TabbedView';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
 
 const tabs = [

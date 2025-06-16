@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import { Button } from './Button';
 import HomeIcon from '../../../img/icons/home.svg?react';
 import LinkIcon from '../../../img/icons/link.svg?react';

@@ -32,14 +32,14 @@
     "@eslint/js": "^9.11.0",
     "@types/express": "^4.17.21",
     "@types/lodash.debounce": "^4.0.9",
-    "@typescript-eslint/eslint-plugin": "^8.6.0",
-    "@typescript-eslint/parser": "^8.6.0",
-    "eslint": "^9.11.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.36.1",
+    "@typescript-eslint/eslint-plugin": "^8.34.1",
+    "@typescript-eslint/parser": "^8.34.1",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.3.3",
-    "typescript": "5.5.4"
+    "typescript": "5.8.3"
   },
   "module": "index.ts"
 }
