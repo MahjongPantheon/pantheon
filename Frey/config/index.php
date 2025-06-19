@@ -30,7 +30,7 @@ return [
         'mode' => 'remote_api', // 'local_mta' or 'remote_api'
         'remote_url' => getenv('HERMOD_URL_INTERNAL'), // if mode set to 'remote_api', this should point to API address
         'remote_action_key' => getenv('MAIL_ACTION_KEY') ?: 'CHANGE_ME', // if mode set to 'remote_api', this should point to API auth token
-        'mailer_addr' => 'noreply@' . getenv('ALLOWED_SENDER_DOMAINS') ?: 'riichimahjong.org', // address of mailer
+        'mailer_addr' => 'noreply@' . getenv('ALLOWED_SENDER_DOMAINS') ?: 'pantheon.local', // address of mailer
         'gui_url' => getenv('FORSETI_URL') // target host handling emailed links
     ],
     'cookieDomain' => getenv('COOKIE_DOMAIN'),

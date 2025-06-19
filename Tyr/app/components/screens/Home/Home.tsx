@@ -102,12 +102,10 @@ export const Home = (props: IComponentProps) => {
 
   const playerName = props.state.gameConfig?.eventTitle ?? loc._t('Event title');
 
-  // Show donate button only for russian locale and only for primary instance.
+  // Show donate button only for russian locale.
   // TODO: make this configurable
   const showDonate =
-    props.state.settings.currentLang === 'ru' &&
-    (window.location.host.startsWith('localhost') ||
-      window.location.host === 'assist.riichimahjong.org');
+    props.state.settings.currentLang === 'ru' && window.location.host.startsWith('localhost');
 
   const showPenalties = props.state.gameConfig?.syncStart; // only show for tournaments
 

@@ -28,7 +28,7 @@ RUN mkdir -p /var/lib/postgresql/backup && chown postgres /var/lib/postgresql/ba
 # Git backups related
 RUN echo "" > /var/lib/postgresql/.gitconfig
 RUN echo "[user]" >> /var/lib/postgresql/.gitconfig
-RUN echo "    email = pantheon_backup@riichimahjong.org" >> /var/lib/postgresql/.gitconfig
+RUN echo "    email = pantheon_backup@pantheon.local" >> /var/lib/postgresql/.gitconfig
 RUN echo "    name = Pantheon Backup" >> /var/lib/postgresql/.gitconfig
 COPY ErrMailer.php /var/lib/postgresql/ErrMailer.php
 

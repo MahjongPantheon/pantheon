@@ -24,7 +24,7 @@ export const Meta = ({ title, description }: MetaProps) => {
       <meta property='twitter:title' content={title} />
       {description && <meta property='twitter:description' content={description} />}
       <link rel='icon' type='image/png' href={favicon} />
-      <link rel='help' href='https://riichimahjong.org/' />
+      <link rel='help' href={env.urls.bragi} />
     </Helmet>
   );
 };

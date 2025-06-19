@@ -148,7 +148,7 @@ Services will be available at:
 - http://frey.pantheon.local for **Frey** user management backend
 - http://forseti.pantheon.local for **Forseti** management interface
 - http://pga.pantheon.local for pgAdmin4 service, which is run for convenience. You will need to setup initial connections using following credentials:
-  - PgAdmin login: `dev@riichimahjong.org`
+  - PgAdmin login: `dev@pantheon.dev`
   - Password: `password`
   - Mimir database host: `db.pantheon.local`
   - Mimir database port: `5432`

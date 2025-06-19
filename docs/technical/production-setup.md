@@ -9,8 +9,7 @@ commands must be adjusted accordingly.
 - The service provider stated that port 25 was not blocked in any way, so nothing should prevent the system from
   sending emails.
 - Server IP was not included in any blocklists and spamlists.
-- The hostname of main instance is riichimahjong.org, so the TLD is more or less trusted. Note that less popular TLDs
-  can be the reason of issues during sending emails (check with TLD status if required).
+- Note that less popular TLDs can be the reason of issues during sending emails (check with TLD status if required).
 
 I'll use vim as editor of choice, you can use nano or any other editor as well.
 
@@ -137,19 +136,16 @@ certbot \
     --work-dir=./workdir \
     --logs-dir=./logs \
     certonly --webroot \
-    -w /srv/__pantheon/Bragi-dist -d riichimahjong.org \
-    -w /srv/__pantheon/Bragi-dist -d riichi.top \
-    -w /srv/pgadmin -d database.riichimahjong.org \
-    -w /srv/grafana -d monitoring.riichimahjong.org \
-    -w /srv/__pantheon/Tyr-dist -d assist.riichimahjong.org \
-    -w /srv/__pantheon/Forseti-dist -d manage.riichimahjong.org \
-    -w /srv/__pantheon/Mimir/www -d gameapi.riichimahjong.org \
-    -w /srv/__pantheon/Frey/www -d userapi.riichimahjong.org \
-    -w /srv/__pantheon/Sigrun-dist -d rating.riichimahjong.org \
-    -w /srv/__pantheon/Hugin/www -d syslog.riichimahjong.org \
-    -w /srv/__pantheon/Gullveig/www -d storage.riichimahjong.org \
-    -w /srv/__pantheon/Tyr-dist -d m.riichi.top \
-    -w /srv/__pantheon/Sigrun-dist -d r.riichi.top
+    -w /srv/__pantheon/Bragi-dist -d pantheon.org \
+    -w /srv/pgadmin -d database.pantheon.org \
+    -w /srv/grafana -d monitoring.pantheon.org \
+    -w /srv/__pantheon/Tyr-dist -d assist.pantheon.org \
+    -w /srv/__pantheon/Forseti-dist -d manage.pantheon.org \
+    -w /srv/__pantheon/Mimir/www -d gameapi.pantheon.org \
+    -w /srv/__pantheon/Frey/www -d userapi.pantheon.org \
+    -w /srv/__pantheon/Sigrun-dist -d rating.pantheon.org \
+    -w /srv/__pantheon/Hugin/www -d syslog.pantheon.org \
+    -w /srv/__pantheon/Gullveig/www -d storage.pantheon.org
 
 ```
 
@@ -177,10 +173,10 @@ echo "Success!"
 
 # Note that you'll need to adjust paths in /home/certbotrunner/letsencrypt/conf/live accordingly 
 # after the certificates are prepared.  
-cp /home/certbotrunner/letsencrypt/conf/live/riichimahjong.org-0001/cert.pem /etc/nginx/cert/
-cp /home/certbotrunner/letsencrypt/conf/live/riichimahjong.org-0001/chain.pem /etc/nginx/cert/
-cp /home/certbotrunner/letsencrypt/conf/live/riichimahjong.org-0001/fullchain.pem /etc/nginx/cert/
-cp /home/certbotrunner/letsencrypt/conf/live/riichimahjong.org-0001/privkey.pem /etc/nginx/cert/
+cp /home/certbotrunner/letsencrypt/conf/live/pantheon.org-0001/cert.pem /etc/nginx/cert/
+cp /home/certbotrunner/letsencrypt/conf/live/pantheon.org-0001/chain.pem /etc/nginx/cert/
+cp /home/certbotrunner/letsencrypt/conf/live/pantheon.org-0001/fullchain.pem /etc/nginx/cert/
+cp /home/certbotrunner/letsencrypt/conf/live/pantheon.org-0001/privkey.pem /etc/nginx/cert/
 systemctl reload nginx
 
 ```
@@ -228,7 +224,7 @@ directives accordingly to your domains):
  server {
     listen 80;
     
-    server_name rating.riichimahjong.org;
+    server_name rating.pantheon.org;
     if ($http_user_agent ~* "SemrushBot|Semrush|AhrefsBot|MJ12bot|YandexImages|MegaIndex.ru|BLEXbot|BLEXBot|ZoominfoBot|YaK|VelenPublicWebCrawler|SentiBot|Vagabondo|SEOkicks|SEOkicks-Robot|mtbot/1.1.0i|SeznamBot|DotBot|Cliqzbot|coccocbot|Scrap|SiteCheck-sitecrawl|MauiBot|GumGum|Clickagy|AspiegelBot|TkBot|CCBot|Qwantify|MBCrawler|serpstatbot|AwarioSmartBot|Semantici|ScholarBot|proximic|MojeekBot|GrapeshotCrawler|IAScrawler|linkdexbot|contxbot|PlurkBot|PaperLiBot|BomboraBot|Leikibot|weborama-fetcher|NTENTbot|Screaming Frog SEO Spider|admantx-usaspb|Eyeotabot|VoluumDSP-content-bot|SirdataBot|adbeat_bot|TTD-Content|admantx|Nimbostratus-Bot|Mail.RU_Bot|Quantcastboti|Onespot-ScraperBot|Taboolabot|Jobboerse|VoilaBot|Sogou|Jyxobot|Exabot|ZGrab|Proximi|Sosospider|Accoona|aiHitBot|Genieo|BecomeBot|ConveraCrawler|NerdyBot|OutclicksBot|findlinks|JikeSpider|Gigabot|CatchBot|Huaweisymantecspider|Offline Explorer|SiteSnagger|Xaldon_WebSpider|BackDoorBot|AITCSRoboti|Arachnophilia|BackRub|BlowFishi|CherryPicker|CyberSpyder|EmailCollector|Foobot|LinkScan|Openbot|Snooper|SuperBot|URLSpiderPro|MAZBot|EchoboxBot|SerendeputyBot|LivelapBot|linkfluence.com|TweetmemeBot|LinkisBot|CrowdTanglebot") { return 403; }
 
     location / {
@@ -249,7 +245,7 @@ directives accordingly to your domains):
 server {
     listen 80;
 
-    server_name gameapi.riichimahjong.org;
+    server_name gameapi.pantheon.org;
 
     location / {
           gzip on;
@@ -269,7 +265,7 @@ server {
 server {
     listen 80;
 
-    server_name userapi.riichimahjong.org;
+    server_name userapi.pantheon.org;
 
     location / {
           gzip on;
@@ -289,7 +285,7 @@ server {
  server {
     listen 80;
 
-    server_name assist.riichimahjong.org;
+    server_name assist.pantheon.org;
 
     location /.well-known/ {
         root /srv/__pantheon/Tyr-dist;
@@ -309,7 +305,7 @@ server {
 server {
     listen 80;
 
-    server_name manage.riichimahjong.org;
+    server_name manage.pantheon.org;
 
     location / {
           gzip on;
@@ -329,7 +325,7 @@ server {
 server {
     listen 80;
 
-    server_name syslog.riichimahjong.org;
+    server_name syslog.pantheon.org;
 
     location / {
           gzip on;
@@ -350,7 +346,7 @@ server {
 server {
     listen 80;
 
-    server_name database.riichimahjong.org;
+    server_name database.pantheon.org;
 
     location /.well-known/ {
         root /srv/pgadmin;
@@ -362,7 +358,7 @@ server {
           auth_basic           "Restricted area";
           auth_basic_user_file conf.d/htpasswd;
           proxy_pass http://127.0.0.1:5632/;
-          proxy_set_header Host database.riichimahjong.org; # should match server_name directive content
+          proxy_set_header Host database.pantheon.org; # should match server_name directive content
           proxy_pass_header    Set-Cookie;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -373,7 +369,7 @@ server {
 server {
     listen 80;
 
-    server_name storage.riichimahjong.org;
+    server_name storage.pantheon.org;
 
     location /.well-known/ {
         root /srv/__pantheon/Gullveig/www;
@@ -394,7 +390,7 @@ server {
 server {
     listen 80;
 
-    server_name monitoring.riichimahjong.org;
+    server_name monitoring.pantheon.org;
 
     location /.well-known/ {
         root /srv/grafana;
@@ -419,7 +415,7 @@ server {
 server {
     listen 80;
 
-    server_name riichimahjong.org;
+    server_name pantheon.org;
 
     location / {
           proxy_pass http://127.0.0.1:4008/;
@@ -469,7 +465,7 @@ sudo systemctl reload nginx # reload the configuration
 Check if everything is good by running the following:
 
 ```bash
-curl http://127.0.0.1 -H 'Host: rating.riichimahjong.org'
+curl http://127.0.0.1 -H 'Host: rating.pantheon.org'
 ```
 
 If this command outputs proper html from pantheon, you should be good to continue.
@@ -480,8 +476,8 @@ Now you will need to adjust your DNS settings in your DNS control panel and set 
 domains to new server IP. This may take some time to update everywhere.
 
 Also, to send emails, you will need to set your reverse DNS lookup to match your primary hostname
-(it should be the hostname emails are sent from, e.g. it should be `riichimahjong.org` if email
-address is `noreply@riichimahjong.org`. This is typically done through the control panel of your
+(it should be the hostname emails are sent from, e.g. it should be `pantheon.org` if email
+address is `noreply@pantheon.org`. This is typically done through the control panel of your
 hosting provider. You may need to restart your server to apply the changes, if this is the case,
 don't forget to rerun pantheon containers after restart using `make prod_start` in pantheon folder.
 
@@ -541,12 +537,12 @@ To migrate:
 To make new keys:
 - Ensure you have previously set ALLOWED_SENDER_DOMAINS variable in `Env/.env.production`. If not, set it and restart the containers using `make prod_restart`.
 - Enter Hermod container using `make shell_hermod`
-- Make a folder inside container named as your domain: `mkdir /etc/opendkim/keys/riichimahjong.org`
-- Run key generator: `opendkim-genkey -b 1024 -d riichimahjong.org -D /etc/opendkim/keys/riichimahjong.org -s default -v`
+- Make a folder inside container named as your domain: `mkdir /etc/opendkim/keys/pantheon.org`
+- Run key generator: `opendkim-genkey -b 1024 -d pantheon.org -D /etc/opendkim/keys/pantheon.org -s default -v`
 - Set proper owner for the files: `chown opendkim:opendkim /etc/opendkim/keys -R`
-- Set up a symlink for default private key: `cd /etc/opendkim/keys && ln -s riichimahjong.org/default.private riichimahjong.org.private`
+- Set up a symlink for default private key: `cd /etc/opendkim/keys && ln -s pantheon.org/default.private pantheon.org.private`
 - Ensure files `/etc/opendkim/KeyTable` and `/etc/opendkim/SigningTable` to contain your host everywhere.
-- Get public key: `cat /etc/opendkim/keys/riichimahjong.org/default.txt`
+- Get public key: `cat /etc/opendkim/keys/pantheon.org/default.txt`
 - The contents displayed should be added as a TXT record to the DNS record list of your domain. Make sure to remove the trailing comment
   and remove parentheses from the generated content. Also replace the "default._domainkey" with "mail._domainkey" to make spam filters happy.
   Resulting string should look like this:
@@ -554,7 +550,7 @@ To make new keys:
   mail._domainkey 10800 IN TXT "v=DKIM1; k=rsa; " "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5mHvWwX15ZjNxzqaz48WPGFy5YKzYuOLfbRGvhazyVx6kBtKautNFZbXOj+J8hbxo+1al3HcUKtR8jl0C2EKVNWoDjRSKMUeqggnZsVT9THFVeuwqtp0x4xjZwD+EoFuT8dxFacTY0r7oFW5zsfVWttiU19gdPSyZC2I4D0IwDrTEv+W1OfSUMxl1DfXjRw63SHIZ0VkzD37hd"
   ```
 
-- Add DMARC record to your DNS: `_dmarc 10800 IN TXT "v=DMARC1; p=reject; pct=100; rua=mailto:noreply@riichimahjong.org"`
+- Add DMARC record to your DNS: `_dmarc 10800 IN TXT "v=DMARC1; p=reject; pct=100; rua=mailto:noreply@pantheon.org"`
 - Add SPF record to your DNS: `@ 10800 IN TXT "v=spf1 a mx ip4:IP_OF_YOUR_SERVER ~all"`
 - Restart your containers to update configuration of mail agent.
 
@@ -591,7 +587,7 @@ Pantheon comes with Prometheus installed inside Hugin service, and also offers c
 `docker-compose.yml` file. Note that migrating prometheus data from one host to another is not supported (yet?), so
 it's gonna be a clear setup.
 
-No setup is required for Prometheus itself and for cAdvisor. To set up Grafana, get to `https://monitoring.riichimahjong.org`
+No setup is required for Prometheus itself and for cAdvisor. To set up Grafana, get to `https://monitoring.pantheon.org`
 and use `admin` as login and password. After first login, it will ask you to change your password.
 
 In Grafana, you should create new Data Source first, select "Prometheus" there. Use `http://hugin.pantheon.internal:9090`

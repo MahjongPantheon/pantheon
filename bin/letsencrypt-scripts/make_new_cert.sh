@@ -7,12 +7,10 @@ certbot \
     --work-dir=./workdir \
     --logs-dir=./logs \
     certonly --webroot \
-    -w /srv/assist.riichimahjong.org -d assist.riichimahjong.org \
-    -w /srv/manage.riichimahjong.org -d manage.riichimahjong.org \
-    -w /srv/gameapi.riichimahjong.org/www -d gameapi.riichimahjong.org \
-    -w /srv/userapi.riichimahjong.org/www -d userapi.riichimahjong.org \
-    -w /srv/rating.riichimahjong.org/www -d rating.riichimahjong.org \
-    -w /srv/syslog.riichimahjong.org/www -d syslog.riichimahjong.org \
-    -w /srv/storage.riichimahjong.org/www -d storage.riichimahjong.org \
-    -w /srv/assist.riichimahjong.org -d m.riichi.top \
-    -w /srv/rating.riichimahjong.org/www -d r.riichi.top
+    -w /srv/assist.pantheon.org -d assist.pantheon.org \
+    -w /srv/manage.pantheon.org -d manage.pantheon.org \
+    -w /srv/gameapi.pantheon.org/www -d gameapi.pantheon.org \
+    -w /srv/userapi.pantheon.org/www -d userapi.pantheon.org \
+    -w /srv/rating.pantheon.org/www -d rating.pantheon.org \
+    -w /srv/syslog.pantheon.org/www -d syslog.pantheon.org \
+    -w /srv/storage.pantheon.org/www -d storage.pantheon.org

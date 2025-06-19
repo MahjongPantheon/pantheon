@@ -96,7 +96,7 @@ $gitOutput
 
 $mailer = new Mailer(
     'remote_api', // remote_api or local_mta
-    'noreply@' . getenv('ALLOWED_SENDER_DOMAINS') ?: 'riichimahjong.org',
+    'noreply@' . getenv('ALLOWED_SENDER_DOMAINS') ?: 'pantheon.local',
     getenv('HERMOD_URL'),
     getenv('MAIL_ACTION_KEY') ?: 'CHANGE_ME',
 );

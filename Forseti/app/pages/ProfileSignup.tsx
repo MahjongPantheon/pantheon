@@ -268,66 +268,27 @@ export const ProfileSignup: React.FC = () => {
           </ul>
 
           <h3>Transfer Of Data</h3>
-          {env.rootHost === 'riichimahjong.org' && (
-            <>
-              <p>
-                Main instance of Pantheon is located in Germany at the moment of publishing this
-                privacy policy.
-              </p>
-              <p>
-                Your information, including Personal Data, may be transferred to — and maintained on
-                — computers located outside of your state, province, country or other governmental
-                jurisdiction where the data protection laws may differ than those from your
-                jurisdiction.
-              </p>
-              <p>
-                If you are located outside Germany and choose to provide information to us, please
-                note that we may transfer the data, including Personal Data, to Germany and process
-                it there.
-              </p>
-              <p>
-                Location of primary server may be updated. The privacy policy will be updated
-                accordingly. Primary instance server administrators will do everything to keep
-                servers inside EU. If this is impossible for some reasons, all players will be
-                notified about it not later than a month before the transfer.
-              </p>
-              <p>
-                Public user data will also be processed with{' '}
-                <a href='https://mahjong.click' target='_blank'>
-                  Mahjong portal
-                </a>
-                . Mahjong portal service is also located in EU and obeys EU privacy laws. Please
-                refer to Mahjong portal privacy policy for details. No sensitive personal data (like
-                email addresses or phone numbers) is transferred to the Mahjong portal. All
-                transerred personal data is publicly accessible on Pantheon services.
-              </p>
-            </>
-          )}
-          {env.rootHost !== 'riichimahjong.org' && (
-            <>
-              <p>
-                Location of this instance of Pantheon is up to server instance administrators. Reach
-                them for more information about server location.
-              </p>
-              <p>
-                Your information, including Personal Data, may be transferred to — and maintained on
-                — computers located outside of your state, province, country or other governmental
-                jurisdiction where the data protection laws may differ than those from your
-                jurisdiction.
-              </p>
-              <p>
-                If you are located outside the location of the current instance and choose to
-                provide information to us, please note that we may transfer the data, including
-                Personal Data, to the country where the server is located and process it there.
-              </p>
-              <p>
-                Server administrators may choose to process user data on additional servers. Please
-                contact administrators for details. No sensitive personal data (like email addresses
-                or phone numbers) is transferred to the external service. All transerred personal
-                data is publicly accessible on Pantheon services.
-              </p>
-            </>
-          )}
+          <p>
+            Location of this instance of Pantheon is up to server instance administrators. Reach
+            them for more information about server location.
+          </p>
+          <p>
+            Your information, including Personal Data, may be transferred to — and maintained on —
+            computers located outside of your state, province, country or other governmental
+            jurisdiction where the data protection laws may differ than those from your
+            jurisdiction.
+          </p>
+          <p>
+            If you are located outside the location of the current instance and choose to provide
+            information to us, please note that we may transfer the data, including Personal Data,
+            to the country where the server is located and process it there.
+          </p>
+          <p>
+            Server administrators may choose to process user data on additional servers. Please
+            contact administrators for details. No sensitive personal data (like email addresses or
+            phone numbers) is transferred to the external service. All transerred personal data is
+            publicly accessible on Pantheon services.
+          </p>
           <p>
             Your consent to this Privacy Policy followed by your submission of such information
             represents your agreement to that transfer.

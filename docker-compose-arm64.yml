@@ -155,7 +155,7 @@ services:
     ports:
       - "127.0.0.1:5632:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
+      PGADMIN_DEFAULT_EMAIL: "dev@pantheon.dev"
       PGADMIN_DEFAULT_PASSWORD: "password"
       PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
     volumes:

@@ -65,30 +65,30 @@ export async function createServer(app, env) {
   app.use((await import('express')).json());
 
   app.get('/robots.txt', (req, res) => {
-    res.send(`User-agent: *\n` + `Allow: /\n` + `Sitemap: https://riichimahjong.org/sitemap.xml\n`);
+    res.send(`User-agent: *\n` + `Allow: /\n` + `Sitemap: https://${env.ROOT_HOST}/sitemap.xml\n`);
   });
 
   app.get('/sitemap.xml', (req, res) => {
     const urls = [
-      'https://riichimahjong.org/en',
-      'https://riichimahjong.org/en/about',
-      'https://riichimahjong.org/en/codeOfConduct',
-      'https://riichimahjong.org/en/getStarted',
-      'https://riichimahjong.org/en/forPlayers',
-      'https://riichimahjong.org/en/forHosts',
-      'https://riichimahjong.org/en/reports',
-      'https://riichimahjong.org/en/seatings',
-      'https://riichimahjong.org/ru',
-      'https://riichimahjong.org/ru/about',
-      'https://riichimahjong.org/ru/codeOfConduct',
-      'https://riichimahjong.org/ru/getStarted',
-      'https://riichimahjong.org/ru/forPlayers',
-      'https://riichimahjong.org/ru/forHosts',
-      'https://riichimahjong.org/ru/howToPlay',
-      'https://riichimahjong.org/ru/yakuList',
-      'https://riichimahjong.org/ru/forHosts',
-      'https://riichimahjong.org/ru/reports',
-      'https://riichimahjong.org/ru/seatings',
+      `https://${env.ROOT_HOST}/en`,
+      `https://${env.ROOT_HOST}/en/about`,
+      `https://${env.ROOT_HOST}/en/codeOfConduct`,
+      `https://${env.ROOT_HOST}/en/getStarted`,
+      `https://${env.ROOT_HOST}/en/forPlayers`,
+      `https://${env.ROOT_HOST}/en/forHosts`,
+      `https://${env.ROOT_HOST}/en/reports`,
+      `https://${env.ROOT_HOST}/en/seatings`,
+      `https://${env.ROOT_HOST}/ru`,
+      `https://${env.ROOT_HOST}/ru/about`,
+      `https://${env.ROOT_HOST}/ru/codeOfConduct`,
+      `https://${env.ROOT_HOST}/ru/getStarted`,
+      `https://${env.ROOT_HOST}/ru/forPlayers`,
+      `https://${env.ROOT_HOST}/ru/forHosts`,
+      `https://${env.ROOT_HOST}/ru/howToPlay`,
+      `https://${env.ROOT_HOST}/ru/yakuList`,
+      `https://${env.ROOT_HOST}/ru/forHosts`,
+      `https://${env.ROOT_HOST}/ru/reports`,
+      `https://${env.ROOT_HOST}/ru/seatings`,
     ];
     fs.readFile('./lastbuild.txt', { encoding: 'utf-8' }, (err, lastUpdate) => {
       if (err) {

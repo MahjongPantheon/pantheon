@@ -1,5 +1,6 @@
 import { Meta } from '../components/Meta';
 import { Link } from 'wouter';
+import { env } from '../env';
 
 <Meta title='Tournaments - Mahjong Pantheon'
       description='How to host a tournament using Mahjong Pantheon' />
@@ -12,7 +13,7 @@ import { Link } from 'wouter';
   automatic seating generator, but players can't be added or removed any time.
 - There is automatic seating generation and also a predefined seating mode.
 - The winner is defined by summary score of all games played.
-- Main address of admin panel - <a href='https://manage.riichimahjong.org' target='_blank'>https://manage.riichimahjong.org</a>.
+- Main address of admin panel - <a href={env.urls.sigrun} target='_blank'>{env.urls.sigrun}</a>.
   The list of events you are an administrator at will be there. Use "Actions" menu to get to the management page
   you need. When in particular event management mode, you can navigate between event management pages using menu
   in left column.
@@ -91,8 +92,8 @@ import { Link } from 'wouter';
 - The system may work both in tournament mode and club rating mode. In club mode, there is no timer or automatic
   seating generator, but players can be added or removed any time.
 - The winner is defined by summary score of all games played.
-- Main address of mobile assistant - <a href='https://assist.riichimahjong.org' target='_blank'>https://assist.riichimahjong.org</a>.
-- Main address of admin panel - <a href='https://manage.riichimahjong.org' target='_blank'>https://manage.riichimahjong.org</a>. The list of
+- Main address of mobile assistant - <a href={env.urls.tyr} target='_blank'>{env.urls.tyr}</a>.
+- Main address of admin panel - <a href={env.urls.forseti} target='_blank'>{env.urls.forseti}</a>. The list of
   events you are an administrator at will be there. Use "Actions" menu to get to the management page you need.
   When in particular event management mode, you can navigate between event management pages using menu in left column.
 - Default settings (can be changed by tournament administrator):

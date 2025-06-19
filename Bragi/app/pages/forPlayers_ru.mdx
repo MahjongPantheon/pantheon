@@ -2,6 +2,7 @@ import { Meta } from '../components/Meta';
 import { IconPlayerSkipBack, IconSettings } from '@tabler/icons-react';
 import { Center } from '@mantine/core';
 import { Link } from 'wouter';
+import { env } from '../env';
 
 <Meta title='Инструкция к мобильному ассистенту - Mahjong Pantheon'
       description='Как начать играть используя систему Mahjong Pantheon' />
@@ -10,7 +11,7 @@ import { Link } from 'wouter';
 
 Если вы еще не зарегистрированы в системе, пожалуйста прочтите <Link to='/getStarted'>эту страницу</Link>.
 
-Откройте <a href='https://assist.riichimahjong.org' target='_blank'>ассистент</a> и войдите в систему:
+Откройте <a href={env.urls.tyr} target='_blank'>ассистент</a> и войдите в систему:
 
 <Center><img src='/assets/img/forPlayers/tyr-1-login.avif' style={{ maxWidth: 500, width: '100%' }} /></Center>
 
