@@ -68,7 +68,7 @@ export const ProfileSignup: React.FC = () => {
 
   const submitForm = useCallback(
     (values: { email: string; title: string; password: string }) => {
-      setRegisterInProgress(true)
+      setRegisterInProgress(true);
       api
         .requestRegistration(
           values.email.trim().toLowerCase(),
@@ -151,7 +151,11 @@ export const ProfileSignup: React.FC = () => {
             <Link to='/profile/login'>
               <Button variant='outline'>{i18n._t('Already registered?')}</Button>
             </Link>
-            <Button type='submit' data-testid='register_submit_button' disabled={registerInProgress}>
+            <Button
+              type='submit'
+              data-testid='register_submit_button'
+              disabled={registerInProgress}
+            >
               {i18n._t('Register new account')}
             </Button>
           </Group>
