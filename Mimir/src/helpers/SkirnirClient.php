@@ -3,10 +3,14 @@
 namespace Mimir;
 
 use Common\Notifications;
+use Common\YakuMap;
 
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/Event.php';
+require_once __DIR__ . '/../primitives/Round.php';
+require_once __DIR__ . '/../primitives/MultiRound.php';
 require_once __DIR__ . '/../../../Common/Notifications.php';
+require_once __DIR__ . '/../../../Common/YakuMap.php';
 
 class SkirnirClient
 {
@@ -113,28 +117,105 @@ class SkirnirClient
     }
 
     /**
+     * @param int $han
+     * @param int $fu
+     * @param bool $withKiriage
+     * @param bool $withKazoe
+     * @return string
+     */
+    protected function _toReadableHanFu($han, $fu, $withKiriage = false, $withKazoe = false)
+    {
+        switch ($han) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                if ($withKiriage && ($han === 4 && $fu === 30) || ($han === 3 && $fu === 60)) {
+                    return 'Mangan';
+                }
+                return $han . ' han ' . $fu . ' fu';
+            case 5:
+                return 'Mangan';
+            case 6:
+            case 7:
+                return 'Haneman';
+            case 8:
+            case 9:
+            case 10:
+                return 'Baiman';
+            case 11:
+            case 12:
+                return 'Sanbaiman';
+            case 13:
+                if ($withKazoe) {
+                    return 'Yakuman';
+                } else {
+                    return 'Sanbaiman';
+                }
+            default:
+                if ($han < 0) {
+                    return 'Yakuman';
+                }
+        }
+        return '';
+    }
+
+    /**
+     * @param string $yaku
+     * @return string
+     */
+    protected function _toReadableYaku($yaku)
+    {
+        $names = YakuMap::getTranslations();
+        $list = array_map('intval', explode(',', $yaku));
+        return implode(', ', array_map(function ($y) use (&$names) {
+            return $names[$y];
+        }, $list));
+    }
+
+    /**
      * @param int[] $playerIds
      * @param int $eventId
      * @param array $diff
+     * @param RoundPrimitive $round
      * @return void
      * @throws InvalidParametersException
      */
-    public function messageHandRecorded($playerIds, $eventId, $diff)
+    public function messageHandRecorded($playerIds, $eventId, $diff, $round)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
-        [$disabledForEvent, $eventTitle] = $this->_fetchEventData($eventId);
+        [$disabledForEvent, $eventTitle, $ruleset] = $this->_fetchEventData($eventId);
         if ($disabledForEvent) {
             return;
         }
+
         $ids = $this->_getFilteredIdsByPermissions(Notifications::HandHasBeenRecorded, $settings);
         $diffMsg = [];
         $playerMap = $this->_getPlayersMap($settings);
+
+        $winsByPlayer = [];
+        if ($round instanceof MultiRoundPrimitive) {
+            $wins = $round->rounds();
+        } else {
+            $wins = [$round];
+        }
+
         foreach ($diff as $player => $scores) {
             if ($scores[0] !== $scores[1]) {
                 $diffMsg [] = '<b>' . $playerMap[$player] . '</b>: ' . $scores[0] . '➡️' . $scores[1]
                     . ' (' . ($scores[1] > $scores[0] ? '+' : '') . ($scores[1] - $scores[0]) . ')';
             }
         }
+
+        foreach ($wins as $win) {
+            $diffMsg []= '<b>' . $playerMap[$win->getWinnerId()] . '</b>: - <b>' . $this->_toReadableHanFu(
+                $win->getHan(),
+                $win->getFu(),
+                $ruleset->rules()->getWithKiriageMangan(),
+                $ruleset->rules()->getWithKazoe()
+            ). '</b>, ' . $this->_toReadableYaku($win->getYaku());
+        }
+
         if (empty($diffMsg)) {
             $diffMsg []= 'No changes';
         }
@@ -276,7 +357,7 @@ class SkirnirClient
             throw new InvalidParametersException('Event not found in DB');
         }
 
-        return [mb_strpos($events[0]->getTitle(), 'TEST') !== false, $events[0]->getTitle()];
+        return [mb_strpos($events[0]->getTitle(), 'TEST') !== false, $events[0]->getTitle(), $events[0]->getRulesetConfig()];
     }
 
     /**
