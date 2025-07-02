@@ -49,11 +49,10 @@ import {
   IconScript,
   IconSquare,
   IconSquareCheckFilled,
-  IconTimelineEventPlus,
   IconTool,
   IconTournament,
 } from '@tabler/icons-react';
-import { Link, Redirect, useLocation } from 'wouter';
+import { Link, Redirect } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { useStorage } from '../hooks/storage';
@@ -61,7 +60,6 @@ import { Event, EventType } from '../clients/proto/atoms.pb';
 import { authCtx, PrivilegesLevel } from '../hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
-import { TopActionButton } from '../components/TopActionButton';
 import { MenuItemLink } from '../components/MenuItemLink';
 import { env } from '../env';
 import { notifications } from '@mantine/notifications';
@@ -74,7 +72,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const i18n = useI18n();
   const storage = useStorage();
   const theme = useMantineTheme();
-  const [, navigate] = useLocation();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [stopEventModalOpened, { close: stopEventModalClose, open: stopEventModalOpen }] =
     useDisclosure(false);
@@ -463,14 +460,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
             );
           })}
         </Stack>
-        <TopActionButton
-          title={i18n._t('Create new event')}
-          loading={false}
-          icon={<IconTimelineEventPlus />}
-          onClick={() => {
-            navigate('/ownedEvents/new');
-          }}
-        />
       </Container>
       {totalPages > 1 && (
         <>

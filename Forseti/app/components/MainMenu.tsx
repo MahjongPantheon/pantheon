@@ -20,6 +20,7 @@ import {
   IconRefreshAlert,
   IconScript,
   IconSun,
+  IconTimelineEventPlus,
   IconTool,
   IconUserCircle,
   IconUserPlus,
@@ -224,6 +225,14 @@ export const MainMenu = ({
             href={'/ownedEvents'}
             icon={<IconList size={20} />}
             text={i18n._t('My events')}
+            onClick={closeMenu}
+          />
+        )}
+        {isLoggedIn && (
+          <MainMenuLink
+            href={'/ownedEvents/new'}
+            icon={<IconTimelineEventPlus size={20} />}
+            text={i18n._t('Create new event')}
             onClick={closeMenu}
           />
         )}
