@@ -193,11 +193,10 @@ class SkirnirClient
         $diffMsg = [];
         $playerMap = $this->_getPlayersMap($settings);
 
-        $winsByPlayer = [];
         if ($round instanceof MultiRoundPrimitive) {
-            $wins = $round->rounds();
+            $rounds = $round->rounds();
         } else {
-            $wins = [$round];
+            $rounds = [$round];
         }
 
         foreach ($diff as $player => $scores) {
@@ -207,13 +206,24 @@ class SkirnirClient
             }
         }
 
-        foreach ($wins as $win) {
-            $diffMsg []= '<b>' . $playerMap[$win->getWinnerId()] . '</b>: - <b>' . $this->_toReadableHanFu(
-                $win->getHan(),
-                $win->getFu(),
-                $ruleset->rules()->getWithKiriageMangan(),
-                $ruleset->rules()->getWithKazoe()
-            ). '</b>, ' . $this->_toReadableYaku($win->getYaku());
+        if ($rounds[0]->getOutcome() === 'ron' || $rounds[0]->getOutcome() === 'multiron' || $rounds[0]->getOutcome() === 'tsumo') {
+            $diffMsg []= '';
+            foreach ($rounds as $win) {
+                $diffMsg [] = '<b>' . $playerMap[$win->getWinnerId()] . '</b>: - <b>' . $this->_toReadableHanFu(
+                    $win->getHan(),
+                    $win->getFu(),
+                    $ruleset->rules()->getWithKiriageMangan(),
+                    $ruleset->rules()->getWithKazoe()
+                ) . '</b>, ' . $this->_toReadableYaku($win->getYaku());
+            }
+        } else {
+            if ($rounds[0]->getOutcome() === 'draw') {
+                $diffMsg []= 'Exhaustive draw';
+            } else if ($rounds[0]->getOutcome() === 'abort') {
+                $diffMsg []= 'Abortive draw';
+            } else if ($rounds[0]->getOutcome() === 'chombo') {
+                $diffMsg []= 'Chombo (' . $playerMap[$rounds[0]->getLoserId()] . ')';
+            }
         }
 
         if (empty($diffMsg)) {
@@ -222,7 +232,7 @@ class SkirnirClient
 
         $this->_sendMessage(
             $ids,
-            "[<b>$eventTitle</b>]\n✍️ New hand has been recorded. Score changes:\n" .
+            "[<b>$eventTitle</b>]\n✍️ New hand has been recorded.\n" .
                 implode("\n", $diffMsg)
         );
     }
