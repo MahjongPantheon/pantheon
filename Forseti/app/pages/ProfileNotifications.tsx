@@ -39,6 +39,8 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
         ce: 0,
         te: 0,
         rc: 1,
+        pa: 1,
+        ha: 0,
       } as Record<string, number>,
     },
 
@@ -129,6 +131,13 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
         <Checkbox
           label={i18n._t('Notify when a hand has been recorded')}
           {...form.getInputProps('notifications.h', { type: 'checkbox' })}
+        />
+        <Space h='md' />
+        <Checkbox
+          label={i18n._t(
+            'Notify when any hand has been recorded for any event you are administrator or referee of'
+          )}
+          {...form.getInputProps('notifications.ha', { type: 'checkbox' })}
         />
         <Space h='md' />
         <Checkbox

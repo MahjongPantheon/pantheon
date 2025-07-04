@@ -377,16 +377,12 @@ class InteractiveSessionModel extends Model
                 return $pr->getReplacementPlayerId() ?: $pr->getPlayerId();
             }, PlayerRegistrationPrimitive::findByEventId($this->_ds, $session->getEventId())));
 
-            // Explicitly add event admins as potential recipients
-            $playerIds = array_unique(array_merge(
-                $playerIds,
-                array_map(function ($rule) {
-                    return (int)$rule['id'];
-                }, $this->_ds->remote()->getEventAdmins($session->getEventId()))
-            ));
+            $adminIds = array_map(function ($rule) {
+                return (int)$rule['id'];
+            }, $this->_ds->remote()->getEventAdmins($session->getEventId()));
 
             $skirnir->trackSession($session->getRepresentationalHash());
-            $skirnir->messageHandRecorded($playerIds, $session->getEventId(), $diff, $round);
+            $skirnir->messageHandRecorded($playerIds, $adminIds, $session->getEventId(), $diff, $round);
 
             if ($data && $data['_isFinished'] && !$session->getEvent()->getSyncEnd()) {
                 (new JobsQueuePrimitive($this->_ds))

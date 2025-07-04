@@ -175,21 +175,26 @@ class SkirnirClient
 
     /**
      * @param int[] $playerIds
+     * @param int[] $adminIds
      * @param int $eventId
      * @param array $diff
      * @param RoundPrimitive $round
      * @return void
      * @throws InvalidParametersException
      */
-    public function messageHandRecorded($playerIds, $eventId, $diff, $round)
+    public function messageHandRecorded($playerIds, $adminIds, $eventId, $diff, $round)
     {
         $settings = $this->_fetchNotificationSettings($playerIds);
+        $settingsAdmin = $this->_fetchNotificationSettings($adminIds);
         [$disabledForEvent, $eventTitle, $ruleset] = $this->_fetchEventData($eventId);
         if ($disabledForEvent) {
             return;
         }
 
-        $ids = $this->_getFilteredIdsByPermissions(Notifications::HandHasBeenRecorded, $settings);
+        $idsFiltered = array_unique(array_merge(
+            $this->_getFilteredIdsByPermissions(Notifications::HandHasBeenRecorded, $settings),
+            $this->_getFilteredIdsByPermissions(Notifications::HandHasBeenRecordedAdmin, $settingsAdmin)
+        ));
         $diffMsg = [];
         $playerMap = $this->_getPlayersMap($settings);
 
@@ -231,7 +236,7 @@ class SkirnirClient
         }
 
         $this->_sendMessage(
-            $ids,
+            $idsFiltered,
             "[<b>$eventTitle</b>]\n✍️ New hand has been recorded.\n" .
                 implode("\n", $diffMsg)
         );
