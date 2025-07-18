@@ -2,6 +2,11 @@
 
 TRAPPED_SIGNAL=false
 
+echo 'Starting Frey dev';
+make dev_frey &
+FREY_PID=$!
+echo $FREY_PID
+
 echo 'Starting Tyr dev';
 make dev_tyr &
 TYR_PID=$!
@@ -34,6 +39,9 @@ do
     kill -0 $TYR_PID 2> /dev/null
     TYR_STATUS=$?
 
+    kill -0 $FREY_PID 2> /dev/null
+    FREY_STATUS=$?
+
     kill -0 $FORSETI_PID 2> /dev/null
     FORSETI_STATUS=$?
 
@@ -47,10 +55,14 @@ do
     SKIRNIR_STATUS=$?
 
     if [ "$TRAPPED_SIGNAL" = "false" ]; then
-        if [ $TYR_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ]; then
+        if [ $TYR_STATUS -ne 0 ] || [ $FREY_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ]; then
             if [ $FORSETI_STATUS -eq 0 ]; then
                 kill -15 $FORSETI_PID;
                 wait $FORSETI_PID;
+            fi
+            if [ $FREY_STATUS -eq 0 ]; then
+                kill -15 $FREY_PID;
+                wait $FREY_PID;
             fi
             if [ $TYR_STATUS -eq 0 ]; then
                 kill -15 $TYR_PID;
@@ -71,7 +83,7 @@ do
             exit 1;
         fi
     else
-       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ]; then
+       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $FREY_STATUS -ne 0 ]  && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ]; then
             exit 0;
        fi
     fi

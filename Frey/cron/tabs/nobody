@@ -1,1 +1,1 @@
-* * * * * php /var/www/html/Frey/cron/send_stats.php
+* * * * * node /var/www/html/Frey/cron/send_stats.js

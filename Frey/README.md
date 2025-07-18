@@ -21,9 +21,6 @@ Frey is a simple authentication service with abilities of personal data storage.
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send 
 pull requests for missing functionality.
 
-- Remember to use PSR2 coding standards when adding php code.
-- The DB migrations are implemented using [Phinx](http://docs.phinx.org), see its documentation for details.
-
 ### Legend
 
 **Frey** (or Freyr) is a god in Norse mythology associated with sacral kingship and prosperity, with sunshine

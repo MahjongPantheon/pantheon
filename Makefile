@@ -164,6 +164,10 @@ dev_sigrun:
 dev_bragi:
 	cd Bragi && ${MAKE} container_dev
 
+.PHONY: dev_frey
+dev_frey:
+	cd Frey && ${MAKE} container_dev
+
 .PHONY: dev_skirnir
 dev_skirnir:
 	cd Skirnir && ${MAKE} container_dev

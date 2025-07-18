@@ -7,8 +7,6 @@ ENV PHINX_DB_FREY_NAME_UNIT=frey_unit
 ENV PHINX_DB_FREY_USER=frey
 ENV PHINX_DB_FREY_PASS=pgpass
 
-ENV PHP_IDE_CONFIG="serverName=pantheon_frey"
-
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
 RUN dos2unix /entrypoint.sh
