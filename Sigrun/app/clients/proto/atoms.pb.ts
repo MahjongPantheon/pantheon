@@ -145,7 +145,6 @@ export interface PersonEx {
   country: string;
   email: string;
   phone: string;
-  groups: number[];
   hasAvatar: boolean;
   lastUpdate: string;
   msNickname: string;
@@ -2014,7 +2013,6 @@ export const PersonEx = {
       country: "",
       email: "",
       phone: "",
-      groups: [],
       hasAvatar: false,
       lastUpdate: "",
       msNickname: "",
@@ -2052,9 +2050,6 @@ export const PersonEx = {
     }
     if (msg.phone) {
       writer.writeString(7, msg.phone);
-    }
-    if (msg.groups?.length) {
-      writer.writePackedInt32(8, msg.groups);
     }
     if (msg.hasAvatar) {
       writer.writeBool(9, msg.hasAvatar);
@@ -2113,14 +2108,6 @@ export const PersonEx = {
         }
         case 7: {
           msg.phone = reader.readString();
-          break;
-        }
-        case 8: {
-          if (reader.isDelimited()) {
-            msg.groups.push(...reader.readPackedInt32());
-          } else {
-            msg.groups.push(reader.readInt32());
-          }
           break;
         }
         case 9: {
@@ -9643,7 +9630,6 @@ export const PersonExJSON = {
       country: "",
       email: "",
       phone: "",
-      groups: [],
       hasAvatar: false,
       lastUpdate: "",
       msNickname: "",
@@ -9681,9 +9667,6 @@ export const PersonExJSON = {
     }
     if (msg.phone) {
       json["phone"] = msg.phone;
-    }
-    if (msg.groups?.length) {
-      json["groups"] = msg.groups;
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
@@ -9737,10 +9720,6 @@ export const PersonExJSON = {
     const _phone_ = json["phone"];
     if (_phone_) {
       msg.phone = _phone_;
-    }
-    const _groups_ = json["groups"];
-    if (_groups_) {
-      msg.groups = _groups_.map(protoscript.parseNumber);
     }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {

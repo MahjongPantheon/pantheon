@@ -184,7 +184,7 @@ export async function findByMajsoulAccountId(
   ]);
 
   const withPrivateData =
-    currentPerson[0].is_superadmin ||
+    currentPerson[0].is_superadmin === 1 ||
     rights.filter(
       (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
     ).length > 0;
@@ -192,18 +192,18 @@ export async function findByMajsoulAccountId(
   return {
     people: persons.map((r) => ({
       id: r.id,
-      city: r.city,
-      tenhouId: r.tenhou_id,
+      city: r.city ?? '',
+      tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
       email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone : "",
-      hasAvatar: r.has_avatar,
-      lastUpdate: r.last_update,
+      phone: withPrivateData ? r.phone ?? '' : "",
+      hasAvatar: r.has_avatar === 1,
+      lastUpdate: (r.last_update ?? new Date()).toISOString(),
       msNickname: accById[r.id].nickname,
       msAccountId: accById[r.id].account_id,
-      telegramId: r.telegram_id,
-      notifications: r.notifications,
+      telegramId: r.telegram_id ?? '',
+      notifications: r.notifications ?? '',
     })),
   };
 }
@@ -237,26 +237,26 @@ export async function findByTenhouIds(
   ]);
 
   const withPrivateData =
-    currentPerson[0].is_superadmin ||
+    currentPerson[0].is_superadmin === 1 ||
     rights.filter(
       (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
     ).length > 0;
 
   return {
     people: persons.map((r) => ({
-      id: r.id,
-      city: r.city,
-      tenhouId: r.tenhou_id,
+      id: r.person_id ?? 0,
+      city: r.city ?? '',
+      tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
       email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone : "",
-      hasAvatar: r.has_avatar,
-      lastUpdate: r.last_update,
-      msNickname: r.nickname,
-      msAccountId: r.account_id,
-      telegramId: r.telegram_id,
-      notifications: r.notifications,
+      phone: withPrivateData ? r.phone ?? '' : "",
+      hasAvatar: r.has_avatar === 1,
+      lastUpdate: (r.last_update ?? new Date()).toISOString(),
+      msNickname: r.nickname ?? '',
+      msAccountId: r.account_id ?? 0,
+      telegramId: r.telegram_id ?? '',
+      notifications: r.notifications ?? '',
     })),
   };
 }
@@ -303,26 +303,26 @@ export async function findByTitle(
   ]);
 
   const withPrivateData =
-    currentPerson[0].is_superadmin ||
+    currentPerson[0].is_superadmin === 1 ||
     rights.filter(
       (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
     ).length > 0;
 
   return {
     people: persons.map((r) => ({
-      id: r.id,
-      city: r.city,
-      tenhouId: r.tenhou_id,
+      id: r.person_id ?? 0,
+      city: r.city ?? '',
+      tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
       email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone : "",
-      hasAvatar: r.has_avatar,
-      lastUpdate: r.last_update,
-      msNickname: r.nickname,
-      msAccountId: r.account_id,
-      telegramId: r.telegram_id,
-      notifications: r.notifications,
+      phone: withPrivateData ? r.phone ?? '' : "",
+      hasAvatar: r.has_avatar === 1,
+      lastUpdate: (r.last_update ?? new Date()).toISOString(),
+      msNickname: r.nickname ?? '',
+      msAccountId: r.account_id ?? 0,
+      telegramId: r.telegram_id ?? '',
+      notifications: r.notifications ?? '',
     })),
   };
 }
@@ -388,26 +388,26 @@ export async function getPersonalInfo(
   ]);
 
   const withPrivateData =
-    currentPerson[0].is_superadmin ||
+    currentPerson[0].is_superadmin === 1 ||
     rights.filter(
       (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
     ).length > 0;
 
   return {
     people: data.map((r) => ({
-      id: r.id,
-      city: r.city,
-      tenhouId: r.tenhou_id,
+      id: r.person_id ?? 0,
+      city: r.city ?? '',
+      tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
       email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone : "",
-      hasAvatar: r.has_avatar,
-      lastUpdate: r.last_update,
-      msNickname: r.nickname,
-      msAccountId: r.account_id,
-      telegramId: r.telegram_id,
-      notifications: r.notifications,
+      phone: withPrivateData ? r.phone ?? '' : "",
+      hasAvatar: r.has_avatar === 1,
+      lastUpdate: (r.last_update ?? new Date()).toISOString(),
+      msNickname: r.nickname ?? '',
+      msAccountId: r.account_id ?? 0,
+      telegramId: r.telegram_id ?? '',
+      notifications: r.notifications ?? '',
     })),
   };
 }

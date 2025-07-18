@@ -67,7 +67,6 @@ export interface AuthMeResponse {
   phone: string;
   tenhouId: string;
   title: string;
-  groups: number[];
   hasAvatar: boolean;
   lastUpdate: string;
 }
@@ -2028,7 +2027,6 @@ export const AuthMeResponse = {
       phone: "",
       tenhouId: "",
       title: "",
-      groups: [],
       hasAvatar: false,
       lastUpdate: "",
       ...msg,
@@ -2062,9 +2060,6 @@ export const AuthMeResponse = {
     }
     if (msg.title) {
       writer.writeString(7, msg.title);
-    }
-    if (msg.groups?.length) {
-      writer.writePackedInt32(8, msg.groups);
     }
     if (msg.hasAvatar) {
       writer.writeBool(9, msg.hasAvatar);
@@ -2111,14 +2106,6 @@ export const AuthMeResponse = {
         }
         case 7: {
           msg.title = reader.readString();
-          break;
-        }
-        case 8: {
-          if (reader.isDelimited()) {
-            msg.groups.push(...reader.readPackedInt32());
-          } else {
-            msg.groups.push(reader.readInt32());
-          }
           break;
         }
         case 9: {
@@ -5453,7 +5440,6 @@ export const AuthMeResponseJSON = {
       phone: "",
       tenhouId: "",
       title: "",
-      groups: [],
       hasAvatar: false,
       lastUpdate: "",
       ...msg,
@@ -5487,9 +5473,6 @@ export const AuthMeResponseJSON = {
     }
     if (msg.title) {
       json["title"] = msg.title;
-    }
-    if (msg.groups?.length) {
-      json["groups"] = msg.groups;
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
@@ -5531,10 +5514,6 @@ export const AuthMeResponseJSON = {
     const _title_ = json["title"];
     if (_title_) {
       msg.title = _title_;
-    }
-    const _groups_ = json["groups"];
-    if (_groups_) {
-      msg.groups = _groups_.map(protoscript.parseNumber);
     }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {

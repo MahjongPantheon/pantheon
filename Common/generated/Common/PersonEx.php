@@ -43,10 +43,6 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      */
     protected $phone = '';
     /**
-     * Generated from protobuf field <code>repeated int32 groups = 8;</code>
-     */
-    private $groups;
-    /**
      * Generated from protobuf field <code>bool has_avatar = 9;</code>
      */
     protected $has_avatar = false;
@@ -84,7 +80,6 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      *     @type string $country
      *     @type string $email
      *     @type string $phone
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $groups
      *     @type bool $has_avatar
      *     @type string $last_update
      *     @type string $ms_nickname
@@ -248,28 +243,6 @@ class PersonEx extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->phone = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated int32 groups = 8;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated int32 groups = 8;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setGroups($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->groups = $arr;
 
         return $this;
     }

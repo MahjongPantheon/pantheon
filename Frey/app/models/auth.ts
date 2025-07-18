@@ -25,6 +25,7 @@ import {
   sendPasswordRecovery,
   sendSignupMail,
 } from "../helpers/mailer";
+import { Context } from '../context';
 
 export async function authorize(
   db: Database,
@@ -159,7 +160,11 @@ export async function changePassword(
 export async function me(
   db: Database,
   payload: AuthMePayload,
+  context: Context
 ): Promise<AuthMeResponse> {
+  if (context.personId !== payload.personId) {
+    throw new Error('This function should be used by account owner only');
+  }
   const data = await db
     .selectFrom("person")
     .selectAll()
@@ -202,7 +207,8 @@ export async function quickAuthorize(
     }
     await verifyHash(payload.authToken, personData[0].auth_hash);
     return { authSuccess: true };
-  } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
     return { authSuccess: false };
   }
 }

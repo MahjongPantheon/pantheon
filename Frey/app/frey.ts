@@ -207,8 +207,9 @@ export class FreyClient implements Frey<Context> {
 
   async Me(
     authMePayload: AuthMePayload,
+    context: Context,
   ): Promise<AuthMeResponse> {
-    return me(this.db, authMePayload);
+    return me(this.db, authMePayload, context);
   }
 
   async QuickAuthorize(
