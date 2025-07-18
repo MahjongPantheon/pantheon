@@ -67,8 +67,6 @@ service Frey {
     returns (AccessAddRuleForPersonResponse);
   rpc DeleteRuleForPerson(AccessDeleteRuleForPersonPayload)
     returns (GenericSuccessResponse);
-  rpc ClearAccessCache(AccessClearAccessCachePayload)
-    returns (GenericSuccessResponse);
   rpc CreateAccount(PersonsCreateAccountPayload)
     returns (PersonsCreateAccountResponse);
   rpc GetNotificationsSettings(PersonsGetNotificationsSettingsPayload)
@@ -206,11 +204,6 @@ message AccessAddRuleForPersonResponse {
 
 message AccessDeleteRuleForPersonPayload {
   int32 rule_id = 1;
-}
-
-message AccessClearAccessCachePayload {
-  int32 person_id = 1;
-  int32 event_id = 2;
 }
 
 message PersonsCreateAccountPayload {

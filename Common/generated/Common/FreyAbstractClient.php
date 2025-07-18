@@ -563,29 +563,6 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ClearAccessCache(array $ctx, \Common\AccessClearAccessCachePayload $in): \Common\GenericSuccessResponse
-    {
-        $ctx = Context::withPackageName($ctx, 'common');
-        $ctx = Context::withServiceName($ctx, 'Frey');
-        $ctx = Context::withMethodName($ctx, 'ClearAccessCache');
-
-        $out = new \Common\GenericSuccessResponse();
-
-        $url = $this->addr;
-        if (empty($this->prefix)) {
-            $url = $url.'/common.Frey/ClearAccessCache';
-        } else {
-            $url = $url.'/'.$this->prefix.'/common.Frey/ClearAccessCache';
-        }
-
-        $this->doRequest($ctx, $url, $in, $out);
-
-        return $out;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function CreateAccount(array $ctx, \Common\PersonsCreateAccountPayload $in): \Common\PersonsCreateAccountResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');

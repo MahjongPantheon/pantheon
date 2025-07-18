@@ -2,7 +2,6 @@ import { GenericSuccessResponse } from "clients/proto/atoms.pb";
 import {
   AccessAddRuleForPersonPayload,
   AccessAddRuleForPersonResponse,
-  AccessClearAccessCachePayload,
   AccessDeleteRuleForPersonPayload,
   AccessGetEventAdminsPayload,
   AccessGetEventAdminsResponse,
@@ -50,7 +49,6 @@ import { Database } from "./db";
 import { Context } from "./context";
 import {
   addRuleForPerson,
-  clearAccessCache,
   deleteRuleForPerson,
   getEventAdmins,
   getEventReferees,
@@ -79,9 +77,10 @@ import {
   setNotificationsSettings,
   updatePersonalInfo,
 } from "./models/persons";
+import { IRedisClient } from './helpers/cache/RedisClient';
 
 export class FreyClient implements Frey<Context> {
-  constructor(protected db: Database) {}
+  constructor(protected db: Database, protected redisClient: IRedisClient) {}
 
   async AddRuleForPerson(
     accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
@@ -111,12 +110,6 @@ export class FreyClient implements Frey<Context> {
     authChangePasswordPayload: AuthChangePasswordPayload,
   ): Promise<AuthChangePasswordResponse> {
     return changePassword(this.db, authChangePasswordPayload);
-  }
-
-  async ClearAccessCache(
-    accessClearAccessCachePayload: AccessClearAccessCachePayload,
-  ): Promise<GenericSuccessResponse> {
-    return clearAccessCache(accessClearAccessCachePayload);
   }
 
   async CreateAccount(
@@ -202,7 +195,7 @@ export class FreyClient implements Frey<Context> {
   async GetSuperadminFlag(
     accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
   ): Promise<AccessGetSuperadminFlagResponse> {
-    return getSuperadminFlag(this.db, accessGetSuperadminFlagPayload);
+    return getSuperadminFlag(this.db, this.redisClient, accessGetSuperadminFlagPayload);
   }
 
   async Me(

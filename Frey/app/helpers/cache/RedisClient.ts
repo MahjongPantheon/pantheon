@@ -3,7 +3,7 @@ import { RedisClientType, createClient } from 'redis';
 export interface IRedisClient {
   connect(): Promise<void>;
   get<T>(key: string, onNotFound?: T): Promise<T>;
-  set<T>(key: string, val: T): Promise<boolean>;
+  set<T>(key: string, val: T, ttl?: number): Promise<boolean>;
   remove(key: string): Promise<boolean>;
   incr(key: string): Promise<number>;
   decr(key: string): Promise<number>;
@@ -144,8 +144,8 @@ export class RedisClient implements IRedisClient {
     return this.clientBase.del(key).then((r) => r > 0);
   }
 
-  public async set<T>(key: string, val: T): Promise<boolean> {
-    return this.clientBase.set(key, JSON.stringify(val)).then((r) => r !== null);
+  public async set<T>(key: string, val: T, ttl = 60 * 10): Promise<boolean> {
+    return this.clientBase.set(key, JSON.stringify(val), { EX: ttl }).then((r) => r !== null);
   }
 }
 

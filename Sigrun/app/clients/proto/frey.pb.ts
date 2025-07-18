@@ -147,11 +147,6 @@ export interface AccessDeleteRuleForPersonPayload {
   ruleId: number;
 }
 
-export interface AccessClearAccessCachePayload {
-  personId: number;
-  eventId: number;
-}
-
 export interface PersonsCreateAccountPayload {
   email: string;
   password: string;
@@ -493,18 +488,6 @@ export async function DeleteRuleForPerson(
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
-export async function ClearAccessCache(
-  accessClearAccessCachePayload: AccessClearAccessCachePayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await PBrequest(
-    "/common.Frey/ClearAccessCache",
-    AccessClearAccessCachePayload.encode(accessClearAccessCachePayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
 export async function CreateAccount(
   personsCreateAccountPayload: PersonsCreateAccountPayload,
   config?: ClientConfiguration,
@@ -810,18 +793,6 @@ export async function DeleteRuleForPersonJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
-export async function ClearAccessCacheJSON(
-  accessClearAccessCachePayload: AccessClearAccessCachePayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await JSONrequest(
-    "/common.Frey/ClearAccessCache",
-    AccessClearAccessCachePayloadJSON.encode(accessClearAccessCachePayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponseJSON.decode(response);
-}
-
 export async function CreateAccountJSON(
   personsCreateAccountPayload: PersonsCreateAccountPayload,
   config?: ClientConfiguration,
@@ -968,12 +939,6 @@ export interface Frey<Context = unknown> {
   ) => Promise<AccessAddRuleForPersonResponse> | AccessAddRuleForPersonResponse;
   DeleteRuleForPerson: (
     accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
-    context: Context,
-  ) =>
-    | Promise<protoAtoms.GenericSuccessResponse>
-    | protoAtoms.GenericSuccessResponse;
-  ClearAccessCache: (
-    accessClearAccessCachePayload: AccessClearAccessCachePayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
@@ -1240,18 +1205,6 @@ export function createFrey<Context>(service: Frey<Context>) {
         input: {
           protobuf: AccessDeleteRuleForPersonPayload,
           json: AccessDeleteRuleForPersonPayloadJSON,
-        },
-        output: {
-          protobuf: protoAtoms.GenericSuccessResponse,
-          json: protoAtoms.GenericSuccessResponseJSON,
-        },
-      },
-      ClearAccessCache: {
-        name: "ClearAccessCache",
-        handler: service.ClearAccessCache,
-        input: {
-          protobuf: AccessClearAccessCachePayload,
-          json: AccessClearAccessCachePayloadJSON,
         },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
@@ -3412,86 +3365,6 @@ export const AccessDeleteRuleForPersonPayload = {
       switch (field) {
         case 1: {
           msg.ruleId = reader.readInt32();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const AccessClearAccessCachePayload = {
-  /**
-   * Serializes AccessClearAccessCachePayload to protobuf.
-   */
-  encode: function (
-    msg: PartialDeep<AccessClearAccessCachePayload>,
-  ): Uint8Array {
-    return AccessClearAccessCachePayload._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes AccessClearAccessCachePayload from protobuf.
-   */
-  decode: function (bytes: ByteSource): AccessClearAccessCachePayload {
-    return AccessClearAccessCachePayload._readMessage(
-      AccessClearAccessCachePayload.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes AccessClearAccessCachePayload with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<AccessClearAccessCachePayload>,
-  ): AccessClearAccessCachePayload {
-    return {
-      personId: 0,
-      eventId: 0,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<AccessClearAccessCachePayload>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.personId) {
-      writer.writeInt32(1, msg.personId);
-    }
-    if (msg.eventId) {
-      writer.writeInt32(2, msg.eventId);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: AccessClearAccessCachePayload,
-    reader: protoscript.BinaryReader,
-  ): AccessClearAccessCachePayload {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.personId = reader.readInt32();
-          break;
-        }
-        case 2: {
-          msg.eventId = reader.readInt32();
           break;
         }
         default: {
@@ -6611,72 +6484,6 @@ export const AccessDeleteRuleForPersonPayloadJSON = {
     const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = protoscript.parseNumber(_ruleId_);
-    }
-    return msg;
-  },
-};
-
-export const AccessClearAccessCachePayloadJSON = {
-  /**
-   * Serializes AccessClearAccessCachePayload to JSON.
-   */
-  encode: function (msg: PartialDeep<AccessClearAccessCachePayload>): string {
-    return JSON.stringify(AccessClearAccessCachePayloadJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes AccessClearAccessCachePayload from JSON.
-   */
-  decode: function (json: string): AccessClearAccessCachePayload {
-    return AccessClearAccessCachePayloadJSON._readMessage(
-      AccessClearAccessCachePayloadJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes AccessClearAccessCachePayload with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<AccessClearAccessCachePayload>,
-  ): AccessClearAccessCachePayload {
-    return {
-      personId: 0,
-      eventId: 0,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<AccessClearAccessCachePayload>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.personId) {
-      json["personId"] = msg.personId;
-    }
-    if (msg.eventId) {
-      json["eventId"] = msg.eventId;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: AccessClearAccessCachePayload,
-    json: any,
-  ): AccessClearAccessCachePayload {
-    const _personId_ = json["personId"] ?? json["person_id"];
-    if (_personId_) {
-      msg.personId = protoscript.parseNumber(_personId_);
-    }
-    const _eventId_ = json["eventId"] ?? json["event_id"];
-    if (_eventId_) {
-      msg.eventId = protoscript.parseNumber(_eventId_);
     }
     return msg;
   },

@@ -3,7 +3,6 @@ import { Database } from "../db";
 import {
   AccessAddRuleForPersonPayload,
   AccessAddRuleForPersonResponse,
-  AccessClearAccessCachePayload,
   AccessDeleteRuleForPersonPayload,
   AccessGetEventAdminsPayload,
   AccessGetEventAdminsResponse,
@@ -16,6 +15,8 @@ import {
 } from "../clients/proto/frey.pb";
 import { GenericSuccessResponse } from "../clients/proto/atoms.pb";
 import { Rights } from "../helpers/rights";
+import { IRedisClient } from '../helpers/cache/RedisClient';
+import { getSuperadminCacheKey } from '../helpers/cache/schema';
 
 export async function addRuleForPerson(
   db: Database,
@@ -50,23 +51,24 @@ export async function deleteRuleForPerson(
   return { success: true };
 }
 
-export async function clearAccessCache(
-  payload: AccessClearAccessCachePayload,
-): Promise<GenericSuccessResponse> {
-  // TODO
-  return { success: true };
-}
-
 export async function getSuperadminFlag(
   db: Database,
+  redisClient: IRedisClient,
   payload: AccessGetSuperadminFlagPayload,
 ): Promise<AccessGetSuperadminFlagResponse> {
+  const cached = await redisClient.get<boolean | null>(getSuperadminCacheKey(payload.personId), null);
+  if (cached !== null) {
+    return { isAdmin: cached };
+  }
+
   const result = await db
     .selectFrom("person")
     .where("id", "=", payload.personId)
     .select("is_superadmin")
     .execute();
-  return { isAdmin: result.length > 0 && !!result[0].is_superadmin };
+  const response = result.length > 0 && !!result[0].is_superadmin;
+  await redisClient.set<boolean>(getSuperadminCacheKey(payload.personId), response);
+  return { isAdmin: response };
 }
 
 export async function getEventAdmins(

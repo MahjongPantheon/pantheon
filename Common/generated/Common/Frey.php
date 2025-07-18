@@ -205,15 +205,6 @@ interface Frey
     /**
      *
      *
-     * Generated from protobuf method <code>common.Frey/ClearAccessCache</code>
-     *
-     * @throws \Twirp\Error
-     */
-    public function ClearAccessCache(array $ctx, \Common\AccessClearAccessCachePayload $req): \Common\GenericSuccessResponse;
-
-    /**
-     *
-     *
      * Generated from protobuf method <code>common.Frey/CreateAccount</code>
      *
      * @throws \Twirp\Error
