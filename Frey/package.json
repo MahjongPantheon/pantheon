@@ -9,6 +9,7 @@
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
     "@types/pg": "^8.15.4",
+    "accept-language": "^3.0.20",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cross-env": "^7.0.3",
