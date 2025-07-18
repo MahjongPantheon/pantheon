@@ -80,119 +80,105 @@ import {
   updatePersonalInfo,
 } from "./models/persons";
 
-// TODO: remove groups
 export class FreyClient implements Frey<Context> {
   constructor(protected db: Database) {}
 
   async AddRuleForPerson(
     accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
-    context: Context,
   ): Promise<AccessAddRuleForPersonResponse> {
     return addRuleForPerson(this.db, accessAddRuleForPersonPayload);
   }
 
   async ApproveRegistration(
     authApproveRegistrationPayload: AuthApproveRegistrationPayload,
-    context: Context,
   ): Promise<AuthApproveRegistrationResponse> {
     return approveRegistration(this.db, authApproveRegistrationPayload);
   }
 
   async ApproveResetPassword(
     authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
-    context: Context,
   ): Promise<AuthApproveResetPasswordResponse> {
     return approveResetPassword(this.db, authApproveResetPasswordPayload);
   }
 
   async Authorize(
     authAuthorizePayload: AuthAuthorizePayload,
-    context: Context,
   ): Promise<AuthAuthorizeResponse> {
     return authorize(this.db, authAuthorizePayload);
   }
 
   async ChangePassword(
     authChangePasswordPayload: AuthChangePasswordPayload,
-    context: Context,
   ): Promise<AuthChangePasswordResponse> {
     return changePassword(this.db, authChangePasswordPayload);
   }
 
   async ClearAccessCache(
     accessClearAccessCachePayload: AccessClearAccessCachePayload,
-    context: Context,
   ): Promise<GenericSuccessResponse> {
     return clearAccessCache(accessClearAccessCachePayload);
   }
 
   async CreateAccount(
     personsCreateAccountPayload: PersonsCreateAccountPayload,
-    context: Context,
   ): Promise<PersonsCreateAccountResponse> {
     return createAccount(this.db, personsCreateAccountPayload);
   }
 
   async DeleteRuleForPerson(
     accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
-    context: Context,
   ): Promise<GenericSuccessResponse> {
     return deleteRuleForPerson(this.db, accessDeleteRuleForPersonPayload);
   }
 
   async DepersonalizeAccount(
-    depersonalizePayload: DepersonalizePayload,
+    _depersonalizePayload: DepersonalizePayload,
     context: Context,
   ): Promise<GenericSuccessResponse> {
     return depersonalizeAccount(this.db, context);
   }
 
-  // TODO: find by nickname
   async FindByMajsoulAccountId(
     personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
     context: Context,
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return findByMajsoulAccountId(this.db, personsFindByMajsoulIdsPayload);
+    return findByMajsoulAccountId(this.db, personsFindByMajsoulIdsPayload, context);
   }
 
   async FindByTenhouIds(
     personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
     context: Context,
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return findByTenhouIds(this.db, personsFindByTenhouIdsPayload);
+    return findByTenhouIds(this.db, personsFindByTenhouIdsPayload, context);
   }
 
   async FindByTitle(
     personsFindByTitlePayload: PersonsFindByTitlePayload,
     context: Context,
   ): Promise<PersonsFindByTitleResponse> {
-    return findByTitle(this.db, personsFindByTitlePayload);
+    return findByTitle(this.db, personsFindByTitlePayload, context);
   }
 
   async GetEventAdmins(
     accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
-    context: Context,
   ): Promise<AccessGetEventAdminsResponse> {
     return getEventAdmins(this.db, accessGetEventAdminsPayload);
   }
 
   async GetEventReferees(
     accessGetEventRefereesPayload: AccessGetEventRefereesPayload,
-    context: Context,
   ): Promise<AccessGetEventRefereesResponse> {
     return getEventReferees(this.db, accessGetEventRefereesPayload);
   }
 
   async GetMajsoulNicknames(
     personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload,
-    context: Context,
   ): Promise<PersonsGetMajsoulNicknamesResponse> {
     return getMajsoulNicknames(this.db, personsGetMajsoulNicknamesPayload);
   }
 
   async GetNotificationsSettings(
     personsGetNotificationsSettingsPayload: PersonsGetNotificationsSettingsPayload,
-    context: Context,
   ): Promise<PersonsGetNotificationsSettingsResponse> {
     return getNotificationsSettings(
       this.db,
@@ -202,7 +188,6 @@ export class FreyClient implements Frey<Context> {
 
   async GetOwnedEventIds(
     accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
-    context: Context,
   ): Promise<AccessGetOwnedEventIdsResponse> {
     return getOwnedEventIds(this.db, accessGetOwnedEventIdsPayload);
   }
@@ -211,47 +196,41 @@ export class FreyClient implements Frey<Context> {
     personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
     context: Context,
   ): Promise<PersonsGetPersonalInfoResponse> {
-    return getPersonalInfo(this.db, personsGetPersonalInfoPayload);
+    return getPersonalInfo(this.db, personsGetPersonalInfoPayload, context);
   }
 
   async GetSuperadminFlag(
     accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
-    context: Context,
   ): Promise<AccessGetSuperadminFlagResponse> {
     return getSuperadminFlag(this.db, accessGetSuperadminFlagPayload);
   }
 
   async Me(
     authMePayload: AuthMePayload,
-    context: Context,
   ): Promise<AuthMeResponse> {
     return me(this.db, authMePayload);
   }
 
   async QuickAuthorize(
     authQuickAuthorizePayload: AuthQuickAuthorizePayload,
-    context: Context,
   ): Promise<AuthQuickAuthorizeResponse> {
     return quickAuthorize(this.db, authQuickAuthorizePayload);
   }
 
   async RequestRegistration(
     authRequestRegistrationPayload: AuthRequestRegistrationPayload,
-    context: Context,
   ): Promise<AuthRequestRegistrationResponse> {
     return requestRegistration(this.db, authRequestRegistrationPayload);
   }
 
   async RequestResetPassword(
     authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
-    context: Context,
   ): Promise<AuthRequestResetPasswordResponse> {
     return requestResetPassword(this.db, authRequestResetPasswordPayload);
   }
 
   async SetNotificationsSettings(
     personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload,
-    context: Context,
   ): Promise<GenericSuccessResponse> {
     return setNotificationsSettings(
       this.db,
