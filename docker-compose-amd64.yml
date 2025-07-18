@@ -122,6 +122,7 @@ services:
       - hermod.pantheon.internal
     volumes:
       - ./Frey:/var/www/html/Frey
+      - ./Frey-dist:/var/www/html/Frey-dist
       - ./Common:/var/www/html/Common
     environment:
       PHINX_DB_FREY_PORT: 5432

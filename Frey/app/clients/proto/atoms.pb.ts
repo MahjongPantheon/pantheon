@@ -647,6 +647,16 @@ export interface RulesetConfig {
   doubleYakuman: number[];
 }
 
+export interface MajsoulSearchEx {
+  nickname: string;
+  accountId: number;
+}
+
+export interface MajsoulPersonMapping {
+  personId: number;
+  nickname: string;
+}
+
 export interface GenericSuccessResponse {
   success: boolean;
 }
@@ -8061,6 +8071,160 @@ export const RulesetConfig = {
   },
 };
 
+export const MajsoulSearchEx = {
+  /**
+   * Serializes MajsoulSearchEx to protobuf.
+   */
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): Uint8Array {
+    return MajsoulSearchEx._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes MajsoulSearchEx from protobuf.
+   */
+  decode: function (bytes: ByteSource): MajsoulSearchEx {
+    return MajsoulSearchEx._readMessage(
+      MajsoulSearchEx.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes MajsoulSearchEx with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<MajsoulSearchEx>): MajsoulSearchEx {
+    return {
+      nickname: "",
+      accountId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulSearchEx>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.nickname) {
+      writer.writeString(1, msg.nickname);
+    }
+    if (msg.accountId) {
+      writer.writeInt32(2, msg.accountId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: MajsoulSearchEx,
+    reader: protoscript.BinaryReader,
+  ): MajsoulSearchEx {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.nickname = reader.readString();
+          break;
+        }
+        case 2: {
+          msg.accountId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const MajsoulPersonMapping = {
+  /**
+   * Serializes MajsoulPersonMapping to protobuf.
+   */
+  encode: function (msg: PartialDeep<MajsoulPersonMapping>): Uint8Array {
+    return MajsoulPersonMapping._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes MajsoulPersonMapping from protobuf.
+   */
+  decode: function (bytes: ByteSource): MajsoulPersonMapping {
+    return MajsoulPersonMapping._readMessage(
+      MajsoulPersonMapping.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes MajsoulPersonMapping with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<MajsoulPersonMapping>,
+  ): MajsoulPersonMapping {
+    return {
+      personId: 0,
+      nickname: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulPersonMapping>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.personId) {
+      writer.writeInt32(1, msg.personId);
+    }
+    if (msg.nickname) {
+      writer.writeString(2, msg.nickname);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: MajsoulPersonMapping,
+    reader: protoscript.BinaryReader,
+  ): MajsoulPersonMapping {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.personId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.nickname = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const GenericSuccessResponse = {
   /**
    * Serializes GenericSuccessResponse to protobuf.
@@ -14768,6 +14932,133 @@ export const RulesetConfigJSON = {
     const _doubleYakuman_ = json["doubleYakuman"] ?? json["double_yakuman"];
     if (_doubleYakuman_) {
       msg.doubleYakuman = _doubleYakuman_.map(protoscript.parseNumber);
+    }
+    return msg;
+  },
+};
+
+export const MajsoulSearchExJSON = {
+  /**
+   * Serializes MajsoulSearchEx to JSON.
+   */
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): string {
+    return JSON.stringify(MajsoulSearchExJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes MajsoulSearchEx from JSON.
+   */
+  decode: function (json: string): MajsoulSearchEx {
+    return MajsoulSearchExJSON._readMessage(
+      MajsoulSearchExJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes MajsoulSearchEx with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<MajsoulSearchEx>): MajsoulSearchEx {
+    return {
+      nickname: "",
+      accountId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulSearchEx>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.nickname) {
+      json["nickname"] = msg.nickname;
+    }
+    if (msg.accountId) {
+      json["accountId"] = msg.accountId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: MajsoulSearchEx, json: any): MajsoulSearchEx {
+    const _nickname_ = json["nickname"];
+    if (_nickname_) {
+      msg.nickname = _nickname_;
+    }
+    const _accountId_ = json["accountId"] ?? json["account_id"];
+    if (_accountId_) {
+      msg.accountId = protoscript.parseNumber(_accountId_);
+    }
+    return msg;
+  },
+};
+
+export const MajsoulPersonMappingJSON = {
+  /**
+   * Serializes MajsoulPersonMapping to JSON.
+   */
+  encode: function (msg: PartialDeep<MajsoulPersonMapping>): string {
+    return JSON.stringify(MajsoulPersonMappingJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes MajsoulPersonMapping from JSON.
+   */
+  decode: function (json: string): MajsoulPersonMapping {
+    return MajsoulPersonMappingJSON._readMessage(
+      MajsoulPersonMappingJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes MajsoulPersonMapping with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<MajsoulPersonMapping>,
+  ): MajsoulPersonMapping {
+    return {
+      personId: 0,
+      nickname: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulPersonMapping>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.personId) {
+      json["personId"] = msg.personId;
+    }
+    if (msg.nickname) {
+      json["nickname"] = msg.nickname;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: MajsoulPersonMapping,
+    json: any,
+  ): MajsoulPersonMapping {
+    const _personId_ = json["personId"] ?? json["person_id"];
+    if (_personId_) {
+      msg.personId = protoscript.parseNumber(_personId_);
+    }
+    const _nickname_ = json["nickname"];
+    if (_nickname_) {
+      msg.nickname = _nickname_;
     }
     return msg;
   },

@@ -653,6 +653,16 @@ message RulesetConfig {
   repeated int32 double_yakuman = 40;
 }
 
+message MajsoulSearchEx {
+  string nickname= 1;
+  int32 account_id = 2;
+}
+
+message MajsoulPersonMapping {
+  int32 person_id = 1;
+  string nickname = 2;
+}
+
 // Generics
 
 message GenericSuccessResponse {
