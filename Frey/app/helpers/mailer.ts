@@ -1,48 +1,46 @@
-import { base64encode, chunks, md5 } from "./crypto";
-import { v4 } from "uuid";
-import { env } from "./env";
+import { base64encode, chunks, md5 } from './crypto';
+import { v4 } from 'uuid';
+import { env } from './env';
 
 async function _send(
   to: string,
   subject: string,
   message: string,
   headers: Record<string, string>,
-  additionalParams: string,
+  additionalParams: string
 ) {
   const boundary = md5(v4() + Date.now().toString());
   const additionalHeaders = {
     ...headers,
-    "Content-Type": 'multipart/alternative; boundary="' + boundary + '"',
+    'Content-Type': 'multipart/alternative; boundary="' + boundary + '"',
   };
 
   const content = message
     .replace(/https:\/\/(\S+)/gi, '<a href="$0">$0</a>')
-    .replaceAll("\n", "<br />");
+    .replaceAll('\n', '<br />');
   const htmlContent = `<html><head><meta charset='UTF-8'><title>${subject}</title></head><body>${content}</body></html>`;
   const chunkedContent = chunks(base64encode(message));
   const chunkedHtmlContent = chunks(base64encode(htmlContent));
-  const subj = "=?utf-8?B?" + base64encode(subject) + "?=";
+  const subj = '=?utf-8?B?' + base64encode(subject) + '?=';
 
   const body =
-    "--$boundary\r\n" +
-    "Content-Type: text/plain; charset=UTF-8\r\n" +
-    "Content-Transfer-Encoding: base64\r\n\r\n" +
+    '--$boundary\r\n' +
+    'Content-Type: text/plain; charset=UTF-8\r\n' +
+    'Content-Transfer-Encoding: base64\r\n\r\n' +
     chunkedContent +
-    "\r\n" +
-    "--$boundary\r\n" +
-    "Content-Type: text/html; charset=UTF-8\r\n" +
-    "Content-Transfer-Encoding: base64\r\n\r\n" +
+    '\r\n' +
+    '--$boundary\r\n' +
+    'Content-Type: text/html; charset=UTF-8\r\n' +
+    'Content-Transfer-Encoding: base64\r\n\r\n' +
     chunkedHtmlContent +
-    "\r\n" +
-    "--$boundary--";
+    '\r\n' +
+    '--$boundary--';
 
   return fetch(env.mailer.mailerAddr, {
-    method: "POST",
+    method: 'POST',
     body: new URLSearchParams({
-      actionkey: env.mailer.remoteActionKey ?? "",
-      data: base64encode(
-        JSON.stringify([to, subj, body, additionalHeaders, additionalParams]),
-      ),
+      actionkey: env.mailer.remoteActionKey ?? '',
+      data: base64encode(JSON.stringify([to, subj, body, additionalHeaders, additionalParams])),
     }),
   });
 }
@@ -50,7 +48,7 @@ async function _send(
 export async function sendAlreadyRegisteredMail(signupEmail: string) {
   return _send(
     signupEmail,
-    "Pantheon: your email is already registered",
+    'Pantheon: your email is already registered',
     `Hello!
 
   You (or someone else) had just attempted to register an email that we already have in our database.
@@ -63,18 +61,18 @@ export async function sendAlreadyRegisteredMail(signupEmail: string) {
   Pantheon support team
   `,
     {
-      "MIME-Version": "1.0",
-      "List-Unsubscribe": env.mailer.mailerAddr,
-      "X-Mailer": "PantheonNotifier/2.0",
+      'MIME-Version': '1.0',
+      'List-Unsubscribe': env.mailer.mailerAddr,
+      'X-Mailer': 'PantheonNotifier/2.0',
     },
-    '-F "Pantheon mail service" -f ' + env.mailer.mailerAddr,
+    '-F "Pantheon mail service" -f ' + env.mailer.mailerAddr
   );
 }
 
 export async function sendSignupMail(signupEmail: string, regLink: string) {
   return _send(
     signupEmail,
-    "Pantheon: confirm your registration",
+    'Pantheon: confirm your registration',
     `Hello!
 
   You have just registered your account in the Pantheon system,
@@ -88,22 +86,19 @@ export async function sendSignupMail(signupEmail: string, regLink: string) {
   Pantheon support team
   `,
     {
-      "MIME-Version": "1.0",
-      "List-Unsubscribe": env.mailer.mailerAddr,
-      "X-Mailer": "PantheonNotifier/2.0",
+      'MIME-Version': '1.0',
+      'List-Unsubscribe': env.mailer.mailerAddr,
+      'X-Mailer': 'PantheonNotifier/2.0',
     },
-    '-F "Pantheon mail service" -f ' + env.mailer.mailerAddr,
+    '-F "Pantheon mail service" -f ' + env.mailer.mailerAddr
   );
 }
 
-export async function sendPasswordRecovery(
-  approvalToken: string,
-  emailSanitized: string,
-) {
+export async function sendPasswordRecovery(approvalToken: string, emailSanitized: string) {
   const link =
     env.mailer.guiUrl +
-    "/profile/resetPasswordConfirm/" +
-    base64encode(approvalToken + "@@@" + emailSanitized);
+    '/profile/resetPasswordConfirm/' +
+    base64encode(approvalToken + '@@@' + emailSanitized);
   const message = `Hello!
 
   You have just requested password recovery for your account
@@ -119,13 +114,13 @@ in the Pantheon system. Please follow next link to reset your password:
 
   return _send(
     emailSanitized,
-    "Pantheon: password recovery request",
+    'Pantheon: password recovery request',
     message,
     {
-      "MIME-Version": "1.0",
-      "List-Unsubscribe": env.mailer.mailerAddr,
-      "X-Mailer": "PantheonNotifier/2.0",
+      'MIME-Version': '1.0',
+      'List-Unsubscribe': env.mailer.mailerAddr,
+      'X-Mailer': 'PantheonNotifier/2.0',
     },
-    '-F "Pantheon mail service" -f ' + env.mailer.mailerAddr,
+    '-F "Pantheon mail service" -f ' + env.mailer.mailerAddr
   );
 }

@@ -253,9 +253,10 @@ export class RedisClientMock implements IRedisClient {
     }
     return Promise.resolve(
       Object.fromEntries(
-        Object.entries(JSON.parse(this._data[key]) as Record<string, string>).map(
-          ([k, value]) => [k, value as T]
-        )
+        Object.entries(JSON.parse(this._data[key]) as Record<string, string>).map(([k, value]) => [
+          k,
+          value as T,
+        ])
       )
     );
   }

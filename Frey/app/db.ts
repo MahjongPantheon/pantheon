@@ -1,12 +1,12 @@
-import type { Database as Db } from "./schema.ts";
-import { Pool } from "pg";
-import { Kysely, PostgresDialect } from "kysely";
+import type { Database as Db } from './schema.ts';
+import { Pool } from 'pg';
+import { Kysely, PostgresDialect } from 'kysely';
 
 const dialect = new PostgresDialect({
   pool: new Pool({
-    database: "frey",
-    host: "localhost",
-    user: "postgres",
+    database: 'frey',
+    host: 'localhost',
+    user: 'postgres',
     port: 5432,
     max: 10,
   }),

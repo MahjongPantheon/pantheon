@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from 'vitest';
 import { RedisClientMock } from './RedisClient';
 
 describe('RedisClientMock', () => {

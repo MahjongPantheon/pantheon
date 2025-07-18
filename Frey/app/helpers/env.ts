@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 type EnvVars = {
   DEBUG_TOKEN: string;
@@ -24,18 +24,15 @@ type EnvVars = {
 
 const data: Partial<EnvVars> =
   dotenv.config({
-    path:
-      process.env.NODE_ENV === "production"
-        ? ".env.production"
-        : ".env.development",
+    path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
   })?.parsed ?? {};
 
-process.env.TZ = data.TZ ?? "UTC";
+process.env.TZ = data.TZ ?? 'UTC';
 
 export const env = {
   debug: {
-    token: data.DEBUG_TOKEN ?? "",
-    internalQuerySecret: data.INTERNAL_QUERY_SECRET ?? "",
+    token: data.DEBUG_TOKEN ?? '',
+    internalQuerySecret: data.INTERNAL_QUERY_SECRET ?? '',
   },
   port: data.PORT ?? 3000,
   db: {
@@ -47,7 +44,7 @@ export const env = {
   mailer: {
     remoteUrl: data.HERMOD_URL_INTERNAL,
     remoteActionKey: data.MAIL_ACTION_KEY,
-    mailerAddr: "noreply@" + (data.ALLOWED_SENDER_DOMAINS ?? "pantheon.local"),
+    mailerAddr: 'noreply@' + (data.ALLOWED_SENDER_DOMAINS ?? 'pantheon.local'),
     guiUrl: data.FORSETI_URL,
   },
   cookieDomain: data.COOKIE_DOMAIN,
@@ -55,5 +52,5 @@ export const env = {
   mimirUrl: data.MIMIR_URL_INTERNAL,
   huginUrl: data.HUGIN_URL_INTERNAL,
   userinfoHook: data.USERINFO_HOOK ?? null,
-  userinfoHookApiKey: data.USERINFO_HOOK_API_KEY ?? "",
+  userinfoHookApiKey: data.USERINFO_HOOK_API_KEY ?? '',
 };

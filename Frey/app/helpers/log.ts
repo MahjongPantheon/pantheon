@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs";
+import { writeFile } from 'node:fs';
 
 export class Log {
   private queue: string[] = [];
@@ -6,17 +6,17 @@ export class Log {
   constructor(private filename: string) {}
 
   public logStart(fn: string, args: string[]) {
-    this.queue.push("[Frey][" + fn + "](" + args.join(", ") + ") :: started");
+    this.queue.push('[Frey][' + fn + '](' + args.join(', ') + ') :: started');
     this._flush();
   }
 
   public logSuccess(fn: string, args: string[]) {
-    this.queue.push("[Frey][" + fn + "](" + args.join(", ") + ") :: succeeded");
+    this.queue.push('[Frey][' + fn + '](' + args.join(', ') + ') :: succeeded');
     this._flush();
   }
 
   public logFailure(fn: string, args: string[]) {
-    this.queue.push("[Frey][" + fn + "](" + args.join(", ") + ") :: errored");
+    this.queue.push('[Frey][' + fn + '](' + args.join(', ') + ') :: errored');
     this._flush();
   }
 
@@ -34,7 +34,7 @@ export class Log {
     }
 
     const item = this.queue.shift()!;
-    writeFile(this.filename, item, { encoding: "utf8" }, (err) => {
+    writeFile(this.filename, item, { encoding: 'utf8' }, (err) => {
       if (err) {
         this.queue.unshift(item);
       }

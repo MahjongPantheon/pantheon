@@ -1,4 +1,4 @@
-import type { ColumnType } from "kysely";
+import type { ColumnType } from 'kysely';
 
 export type Generated<T> =
   T extends ColumnType<infer S, infer I, infer U>
@@ -13,7 +13,7 @@ export interface MajsoulPlatformAccounts {
   person_id: number;
 }
 
-export type RowMajsoulPlatformAccount = Omit<MajsoulPlatformAccounts, "id">;
+export type RowMajsoulPlatformAccount = Omit<MajsoulPlatformAccounts, 'id'>;
 
 export interface Person {
   auth_hash: string;
@@ -46,7 +46,7 @@ export interface Person {
   title: string;
 }
 
-export type RowPerson = Omit<Person, "id">;
+export type RowPerson = Omit<Person, 'id'>;
 
 export interface PersonAccess {
   /**
@@ -62,7 +62,7 @@ export interface PersonAccess {
   person_id: number;
 }
 
-export type RowPersonAccess = Omit<PersonAccess, "id">;
+export type RowPersonAccess = Omit<PersonAccess, 'id'>;
 
 export interface Registrant {
   approval_code: string;
@@ -76,7 +76,7 @@ export interface Registrant {
   title: Generated<string>;
 }
 
-export type RowRegistrant = Omit<Registrant, "id">;
+export type RowRegistrant = Omit<Registrant, 'id'>;
 
 export interface Database {
   majsoul_platform_accounts: MajsoulPlatformAccounts;

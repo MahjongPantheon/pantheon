@@ -1,5 +1,5 @@
-import { RowPersonAccess } from "../schema";
-import { Database } from "../db";
+import { RowPersonAccess } from '../schema';
+import { Database } from '../db';
 import {
   AccessAddRuleForPersonPayload,
   AccessAddRuleForPersonResponse,
@@ -12,15 +12,15 @@ import {
   AccessGetOwnedEventIdsResponse,
   AccessGetSuperadminFlagPayload,
   AccessGetSuperadminFlagResponse,
-} from "../clients/proto/frey.pb";
-import { GenericSuccessResponse } from "../clients/proto/atoms.pb";
-import { Rights } from "../helpers/rights";
+} from '../clients/proto/frey.pb';
+import { GenericSuccessResponse } from '../clients/proto/atoms.pb';
+import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getSuperadminCacheKey } from '../helpers/cache/schema';
 
 export async function addRuleForPerson(
   db: Database,
-  payload: AccessAddRuleForPersonPayload,
+  payload: AccessAddRuleForPersonPayload
 ): Promise<AccessAddRuleForPersonResponse> {
   const value: RowPersonAccess = {
     acl_name: payload.ruleName,
@@ -29,12 +29,10 @@ export async function addRuleForPerson(
     person_id: payload.personId,
   };
   const result = await db
-    .insertInto("person_access")
+    .insertInto('person_access')
     .values(value)
     .onConflict((oc) =>
-      oc
-        .constraint("person_access_person_id_acl_name_event_id")
-        .doUpdateSet(value),
+      oc.constraint('person_access_person_id_acl_name_event_id').doUpdateSet(value)
     )
     .execute();
   return { ruleId: Number(result[0].insertId) };
@@ -42,29 +40,29 @@ export async function addRuleForPerson(
 
 export async function deleteRuleForPerson(
   db: Database,
-  payload: AccessDeleteRuleForPersonPayload,
+  payload: AccessDeleteRuleForPersonPayload
 ): Promise<GenericSuccessResponse> {
-  await db
-    .deleteFrom("person_access")
-    .where("id", "=", payload.ruleId)
-    .execute();
+  await db.deleteFrom('person_access').where('id', '=', payload.ruleId).execute();
   return { success: true };
 }
 
 export async function getSuperadminFlag(
   db: Database,
   redisClient: IRedisClient,
-  payload: AccessGetSuperadminFlagPayload,
+  payload: AccessGetSuperadminFlagPayload
 ): Promise<AccessGetSuperadminFlagResponse> {
-  const cached = await redisClient.get<boolean | null>(getSuperadminCacheKey(payload.personId), null);
+  const cached = await redisClient.get<boolean | null>(
+    getSuperadminCacheKey(payload.personId),
+    null
+  );
   if (cached !== null) {
     return { isAdmin: cached };
   }
 
   const result = await db
-    .selectFrom("person")
-    .where("id", "=", payload.personId)
-    .select("is_superadmin")
+    .selectFrom('person')
+    .where('id', '=', payload.personId)
+    .select('is_superadmin')
     .execute();
   const response = result.length > 0 && !!result[0].is_superadmin;
   await redisClient.set<boolean>(getSuperadminCacheKey(payload.personId), response);
@@ -73,16 +71,13 @@ export async function getSuperadminFlag(
 
 export async function getEventAdmins(
   db: Database,
-  payload: AccessGetEventAdminsPayload,
+  payload: AccessGetEventAdminsPayload
 ): Promise<AccessGetEventAdminsResponse> {
   const result = await db
-    .selectFrom("person_access")
-    .leftJoin("person", "person_id", "person_access.person_id")
+    .selectFrom('person_access')
+    .leftJoin('person', 'person_id', 'person_access.person_id')
     .where((qb) =>
-      qb.and([
-        qb("event_id", "=", payload.eventId),
-        qb("acl_name", "=", Rights.ADMIN_EVENT),
-      ]),
+      qb.and([qb('event_id', '=', payload.eventId), qb('acl_name', '=', Rights.ADMIN_EVENT)])
     )
     .selectAll()
     .execute();
@@ -90,7 +85,7 @@ export async function getEventAdmins(
     admins: result.map((r) => ({
       ruleId: r.id ?? 0,
       personId: r.person_id,
-      personName: r.title ?? "",
+      personName: r.title ?? '',
       lastUpdate: (r.last_update ?? new Date()).toISOString(),
       hasAvatar: r.has_avatar === 1,
     })),
@@ -99,16 +94,13 @@ export async function getEventAdmins(
 
 export async function getEventReferees(
   db: Database,
-  payload: AccessGetEventRefereesPayload,
+  payload: AccessGetEventRefereesPayload
 ): Promise<AccessGetEventRefereesResponse> {
   const result = await db
-    .selectFrom("person_access")
-    .leftJoin("person", "person_id", "person_access.person_id")
+    .selectFrom('person_access')
+    .leftJoin('person', 'person_id', 'person_access.person_id')
     .where((qb) =>
-      qb.and([
-        qb("event_id", "=", payload.eventId),
-        qb("acl_name", "=", Rights.REFEREE_FOR_EVENT),
-      ]),
+      qb.and([qb('event_id', '=', payload.eventId), qb('acl_name', '=', Rights.REFEREE_FOR_EVENT)])
     )
     .selectAll()
     .execute();
@@ -116,7 +108,7 @@ export async function getEventReferees(
     referees: result.map((r) => ({
       ruleId: r.id ?? 0,
       personId: r.person_id,
-      personName: r.title ?? "",
+      personName: r.title ?? '',
       lastUpdate: (r.last_update ?? new Date()).toISOString(),
       hasAvatar: r.has_avatar === 1,
     })),
@@ -125,20 +117,19 @@ export async function getEventReferees(
 
 export async function getOwnedEventIds(
   db: Database,
-  accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
+  accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload
 ): Promise<AccessGetOwnedEventIdsResponse> {
   const result = await db
-    .selectFrom("person_access")
+    .selectFrom('person_access')
     .where((qb) =>
       qb.and([
-        qb("person_id", "=", accessGetOwnedEventIdsPayload.personId),
-        qb("acl_name", "in", [Rights.ADMIN_EVENT, Rights.REFEREE_FOR_EVENT]),
-      ]),
+        qb('person_id', '=', accessGetOwnedEventIdsPayload.personId),
+        qb('acl_name', 'in', [Rights.ADMIN_EVENT, Rights.REFEREE_FOR_EVENT]),
+      ])
     )
     .selectAll()
     .execute();
-  const isNumber: (n: number | null) => n is number = (n) =>
-    typeof n === "number";
+  const isNumber: (n: number | null) => n is number = (n) => typeof n === 'number';
   return {
     eventIds: result.map((e) => e.event_id).filter(isNumber),
   };

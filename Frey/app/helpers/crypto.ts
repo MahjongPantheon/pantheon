@@ -1,23 +1,23 @@
-import { createHash } from "crypto";
+import { createHash } from 'crypto';
 
 export function sha384(input: string): string {
-  return createHash("sha3-384").update(input).digest("hex");
+  return createHash('sha3-384').update(input).digest('hex');
 }
 
 export function md5(input: string): string {
-  return createHash("md5").update(input).digest("hex");
+  return createHash('md5').update(input).digest('hex');
 }
 
 export function sha1(input: string): string {
-  return createHash("sha1").update(input).digest("hex");
+  return createHash('sha1').update(input).digest('hex');
 }
 
 export function base64encode(input: string): string {
-  return Buffer.from(input, "utf8").toString("base64");
+  return Buffer.from(input, 'utf8').toString('base64');
 }
 
 export function base64decode(input: string): string {
-  return Buffer.from(input, "base64").toString("utf8");
+  return Buffer.from(input, 'base64').toString('utf8');
 }
 
 // Note: function is not multibyte-safe
@@ -35,8 +35,7 @@ export function calcPasswordStrength(password: string): number {
   const hasUppercaseLatinSymbols = password.match(/[A-Z]/);
   const hasDigits = password.match(/[0-9]/);
   const hasPunctuation = password.match(/[-@#$%^&*(),\.\/\\"']/);
-  const hasOtherSymbols =
-    password.replace(/[-a-z0-9@#$%^&*(),\./\\"']/g, "").length > 0;
+  const hasOtherSymbols = password.replace(/[-a-z0-9@#$%^&*(),\./\\"']/g, '').length > 0;
 
   return (
     Math.ceil(password.length / 2) *

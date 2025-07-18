@@ -1,18 +1,18 @@
-import bcrypt from "bcrypt";
-import { sha1, sha384 } from "./crypto";
+import bcrypt from 'bcrypt';
+import { sha1, sha384 } from './crypto';
 
 export const makeClientHash = (password: string, salt: string) => {
   return sha384(password + salt);
 };
 
 export const verifyHash = async (clientHash: string, authHash: string) => {
-  authHash = authHash.replace("$2y$", "$2a$");
+  authHash = authHash.replace('$2y$', '$2a$');
   return new Promise<void>((resolve, reject) => {
     bcrypt.compare(clientHash, authHash, function (_, res) {
       if (res) {
         resolve();
       } else {
-        reject("Password check failed");
+        reject('Password check failed');
       }
     });
   });

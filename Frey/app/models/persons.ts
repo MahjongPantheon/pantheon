@@ -14,40 +14,43 @@ import {
   PersonsGetPersonalInfoResponse,
   PersonsSetNotificationsSettingsPayload,
   PersonsUpdatePersonalInfoPayload,
-} from "../clients/proto/frey.pb";
-import { emailRe } from "../helpers/email";
-import { makeHashes } from "../helpers/auth";
-import { Database } from "../db";
-import { Context } from "../context";
-import { GenericSuccessResponse } from "../clients/proto/atoms.pb";
-import { env } from "../helpers/env";
-import { sql } from "kysely/dist/esm";
-import { RowPerson } from "../schema";
-import { Rights } from "../helpers/rights";
+} from '../clients/proto/frey.pb';
+import { emailRe } from '../helpers/email';
+import { makeHashes } from '../helpers/auth';
+import { Database } from '../db';
+import { Context } from '../context';
+import { GenericSuccessResponse } from '../clients/proto/atoms.pb';
+import { env } from '../helpers/env';
+import { sql } from 'kysely/dist/esm';
+import { RowPerson } from '../schema';
+import { Rights } from '../helpers/rights';
+import { IRedisClient } from '../helpers/cache/RedisClient';
+import { getPersonalInfoCacheKey } from '../helpers/cache/schema';
+import { getCachedPersonalData } from '../helpers/cache/personalData';
 
 export async function createAccount(
   db: Database,
-  personsCreateAccountPayload: PersonsCreateAccountPayload,
+  personsCreateAccountPayload: PersonsCreateAccountPayload
 ): Promise<PersonsCreateAccountResponse> {
   if (
     personsCreateAccountPayload.email.length === 0 ||
     personsCreateAccountPayload.title.length === 0 ||
     personsCreateAccountPayload.password.length === 0
   ) {
-    throw new Error("Some of required field are empty");
+    throw new Error('Some of required field are empty');
   }
   if (!emailRe.test(personsCreateAccountPayload.email)) {
-    throw new Error("Email address is malformed");
+    throw new Error('Email address is malformed');
   }
   const duplicates = await db
-    .selectFrom("person")
-    .where("email", "=", personsCreateAccountPayload.email)
-    .select(({ fn }) => fn.count("id").as("count"))
+    .selectFrom('person')
+    .where('email', '=', personsCreateAccountPayload.email)
+    .select(({ fn }) => fn.count('id').as('count'))
     .execute();
 
   if (Number(duplicates[0].count) > 0) {
     // TODO: remove registration bruteforce email checking?
-    throw new Error("This account is already registered");
+    throw new Error('This account is already registered');
   }
   const hashes = await makeHashes(personsCreateAccountPayload.password);
   const value = {
@@ -62,32 +65,33 @@ export async function createAccount(
     tenhou_id: personsCreateAccountPayload.tenhouId,
     title: personsCreateAccountPayload.title,
   };
-  const result = await db.insertInto("person").values(value).execute();
+  const result = await db.insertInto('person').values(value).execute();
   return { personId: Number(result[0].insertId) };
 }
 
 export async function depersonalizeAccount(
   db: Database,
-  context: Context,
+  redisClient: IRedisClient,
+  context: Context
 ): Promise<GenericSuccessResponse> {
   if (context.personId === null) {
-    throw new Error("Should be logged in to depersonalize");
+    throw new Error('Should be logged in to depersonalize');
   }
 
-  const city = "";
-  const country = "";
-  const title = "[Deleted account #" + context.personId + "]";
-  const tenhouId = "";
-  const phone = "";
+  const city = '';
+  const country = '';
+  const title = '[Deleted account #' + context.personId + ']';
+  const tenhouId = '';
+  const phone = '';
 
   const promises = [];
   if (env.userinfoHook) {
     promises.push(
       fetch(env.userinfoHook, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": env.userinfoHookApiKey,
+          'Content-Type': 'application/json',
+          'X-Api-Key': env.userinfoHookApiKey,
         },
         body: JSON.stringify({
           city,
@@ -96,21 +100,20 @@ export async function depersonalizeAccount(
           person_id: context.personId,
           tenhou_id: tenhouId,
         }),
-      }),
+      })
     );
   }
 
   if (env.gullveigUrl) {
     promises.push(
       fetch(env.gullveigUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: context.personId,
-          avatar:
-            "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", // empty image
+          avatar: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==', // empty image
         }),
-      }),
+      })
     );
   }
 
@@ -118,22 +121,23 @@ export async function depersonalizeAccount(
 
   promises.push(
     db
-      .updateTable("person")
+      .updateTable('person')
       .set({
         country,
         city,
         title,
-        tenhou_id: "",
+        tenhou_id: '',
         phone,
         has_avatar: 0,
-        telegram_id: "",
-        auth_hash: "",
-        auth_salt: "",
-        auth_reset_token: "",
+        telegram_id: '',
+        auth_hash: '',
+        auth_salt: '',
+        auth_reset_token: '',
       })
-      .execute(),
+      .execute()
   );
 
+  promises.push(redisClient.remove(getPersonalInfoCacheKey(context.personId)));
   await Promise.all(promises);
 
   return { success: true };
@@ -142,14 +146,14 @@ export async function depersonalizeAccount(
 export async function findByMajsoulAccountId(
   db: Database,
   payload: PersonsFindByMajsoulIdsPayload,
-  context: Context,
+  context: Context
 ): Promise<PersonsFindByTenhouIdsResponse> {
   const soulAccounts = await db
-    .selectFrom("majsoul_platform_accounts")
+    .selectFrom('majsoul_platform_accounts')
     .where(
-      "nickname",
-      "in",
-      payload.ids.map((i) => i.nickname),
+      'nickname',
+      'in',
+      payload.ids.map((i) => i.nickname)
     )
     .selectAll()
     .execute();
@@ -158,36 +162,26 @@ export async function findByMajsoulAccountId(
       acc[r.person_id] = r;
       return acc;
     },
-    {} as Record<number, (typeof soulAccounts)[number]>,
+    {} as Record<number, (typeof soulAccounts)[number]>
   );
 
   const [persons, currentPerson, rights] = await Promise.all([
     db
-      .selectFrom("person")
+      .selectFrom('person')
       .where(
-        "id",
-        "in",
-        soulAccounts.map((r) => r.person_id),
+        'id',
+        'in',
+        soulAccounts.map((r) => r.person_id)
       )
       .selectAll()
       .execute(),
-    db
-      .selectFrom("person")
-      .where("id", "=", context.personId)
-      .selectAll()
-      .execute(),
-    db
-      .selectFrom("person_access")
-      .where("person_id", "=", context.personId)
-      .selectAll()
-      .execute(),
+    db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
+    db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
   ]);
 
   const withPrivateData =
     currentPerson[0].is_superadmin === 1 ||
-    rights.filter(
-      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
-    ).length > 0;
+    rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0;
 
   return {
     people: persons.map((r) => ({
@@ -196,8 +190,8 @@ export async function findByMajsoulAccountId(
       tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
-      email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone ?? '' : "",
+      email: withPrivateData ? r.email : '',
+      phone: withPrivateData ? (r.phone ?? '') : '',
       hasAvatar: r.has_avatar === 1,
       lastUpdate: (r.last_update ?? new Date()).toISOString(),
       msNickname: accById[r.id].nickname,
@@ -211,36 +205,22 @@ export async function findByMajsoulAccountId(
 export async function findByTenhouIds(
   db: Database,
   payload: PersonsFindByTenhouIdsPayload,
-  context: Context,
+  context: Context
 ): Promise<PersonsFindByTenhouIdsResponse> {
   const [persons, currentPerson, rights] = await Promise.all([
     db
-      .selectFrom("person")
-      .leftJoin(
-        "majsoul_platform_accounts",
-        "majsoul_platform_accounts.person_id",
-        "person.id",
-      )
-      .where("tenhou_id", "in", payload.ids)
+      .selectFrom('person')
+      .leftJoin('majsoul_platform_accounts', 'majsoul_platform_accounts.person_id', 'person.id')
+      .where('tenhou_id', 'in', payload.ids)
       .selectAll()
       .execute(),
-    db
-      .selectFrom("person")
-      .where("id", "=", context.personId)
-      .selectAll()
-      .execute(),
-    db
-      .selectFrom("person_access")
-      .where("person_id", "=", context.personId)
-      .selectAll()
-      .execute(),
+    db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
+    db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
   ]);
 
   const withPrivateData =
     currentPerson[0].is_superadmin === 1 ||
-    rights.filter(
-      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
-    ).length > 0;
+    rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0;
 
   return {
     people: persons.map((r) => ({
@@ -249,8 +229,8 @@ export async function findByTenhouIds(
       tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
-      email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone ?? '' : "",
+      email: withPrivateData ? r.email : '',
+      phone: withPrivateData ? (r.phone ?? '') : '',
       hasAvatar: r.has_avatar === 1,
       lastUpdate: (r.last_update ?? new Date()).toISOString(),
       msNickname: r.nickname ?? '',
@@ -264,49 +244,35 @@ export async function findByTenhouIds(
 export async function findByTitle(
   db: Database,
   payload: PersonsFindByTitlePayload,
-  context: Context,
+  context: Context
 ): Promise<PersonsFindByTitleResponse> {
   const [persons, currentPerson, rights] = await Promise.all([
     db
-      .selectFrom("person")
-      .leftJoin(
-        "majsoul_platform_accounts",
-        "majsoul_platform_accounts.person_id",
-        "person.id",
-      )
+      .selectFrom('person')
+      .leftJoin('majsoul_platform_accounts', 'majsoul_platform_accounts.person_id', 'person.id')
       .selectAll()
       .where((eb) =>
         eb(
           sql`to_tsvector('simple', coalesce(title, '')`,
-          "@@",
+          '@@',
           sql`to_tsquery('simple', ${eb.val(
             payload.query
-              .split(" ")
-              .map((w) => w + ":*")
-              .join(" & "),
-          )})`,
-        ),
+              .split(' ')
+              .map((w) => w + ':*')
+              .join(' & ')
+          )})`
+        )
       )
       .selectAll()
       .limit(10)
       .execute(),
-    db
-      .selectFrom("person")
-      .where("id", "=", context.personId)
-      .selectAll()
-      .execute(),
-    db
-      .selectFrom("person_access")
-      .where("person_id", "=", context.personId)
-      .selectAll()
-      .execute(),
+    db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
+    db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
   ]);
 
   const withPrivateData =
     currentPerson[0].is_superadmin === 1 ||
-    rights.filter(
-      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
-    ).length > 0;
+    rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0;
 
   return {
     people: persons.map((r) => ({
@@ -315,8 +281,8 @@ export async function findByTitle(
       tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
-      email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone ?? '' : "",
+      email: withPrivateData ? r.email : '',
+      phone: withPrivateData ? (r.phone ?? '') : '',
       hasAvatar: r.has_avatar === 1,
       lastUpdate: (r.last_update ?? new Date()).toISOString(),
       msNickname: r.nickname ?? '',
@@ -329,12 +295,12 @@ export async function findByTitle(
 
 export async function getMajsoulNicknames(
   db: Database,
-  payload: PersonsGetMajsoulNicknamesPayload,
+  payload: PersonsGetMajsoulNicknamesPayload
 ): Promise<PersonsGetMajsoulNicknamesResponse> {
   const result = await db
-    .selectFrom("majsoul_platform_accounts")
-    .where("person_id", "in", payload.ids)
-    .select(["nickname", "person_id"])
+    .selectFrom('majsoul_platform_accounts')
+    .where('person_id', 'in', payload.ids)
+    .select(['nickname', 'person_id'])
     .execute();
   return {
     mapping: result.map((item) => ({
@@ -346,52 +312,47 @@ export async function getMajsoulNicknames(
 
 export async function getNotificationsSettings(
   db: Database,
-  payload: PersonsGetNotificationsSettingsPayload,
+  payload: PersonsGetNotificationsSettingsPayload
 ): Promise<PersonsGetNotificationsSettingsResponse> {
   const result = await db
-    .selectFrom("person")
-    .where("id", "=", payload.personId)
+    .selectFrom('person')
+    .where('id', '=', payload.personId)
     .selectAll()
     .execute();
   return {
-    telegramId: result[0].telegram_id ?? "",
-    notifications: result[0].notifications ?? "",
+    telegramId: result[0].telegram_id ?? '',
+    notifications: result[0].notifications ?? '',
   };
+}
+
+async function getPersonData(db: Database, redisClient: IRedisClient, ids: number[]) {
+  if (ids.length === 1) {
+    return getCachedPersonalData(db, redisClient, ids[0]);
+  }
+
+  return db
+    .selectFrom('person')
+    .leftJoin('majsoul_platform_accounts', 'majsoul_platform_accounts.person_id', 'person.id')
+    .where('person.id', 'in', ids)
+    .selectAll()
+    .execute();
 }
 
 export async function getPersonalInfo(
   db: Database,
+  redisClient: IRedisClient,
   payload: PersonsGetPersonalInfoPayload,
-  context: Context,
+  context: Context
 ): Promise<PersonsGetPersonalInfoResponse> {
   const [data, currentPerson, rights] = await Promise.all([
-    db
-      .selectFrom("person")
-      .leftJoin(
-        "majsoul_platform_accounts",
-        "majsoul_platform_accounts.person_id",
-        "person.id",
-      )
-      .where("person.id", "in", payload.ids)
-      .selectAll()
-      .execute(),
-    db
-      .selectFrom("person")
-      .where("id", "=", context.personId)
-      .selectAll()
-      .execute(),
-    db
-      .selectFrom("person_access")
-      .where("person_id", "=", context.personId)
-      .selectAll()
-      .execute(),
+    getPersonData(db, redisClient, payload.ids),
+    db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
+    db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
   ]);
 
   const withPrivateData =
     currentPerson[0].is_superadmin === 1 ||
-    rights.filter(
-      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
-    ).length > 0;
+    rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0;
 
   return {
     people: data.map((r) => ({
@@ -400,8 +361,8 @@ export async function getPersonalInfo(
       tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
-      email: withPrivateData ? r.email : "",
-      phone: withPrivateData ? r.phone ?? '' : "",
+      email: withPrivateData ? r.email : '',
+      phone: withPrivateData ? (r.phone ?? '') : '',
       hasAvatar: r.has_avatar === 1,
       lastUpdate: (r.last_update ?? new Date()).toISOString(),
       msNickname: r.nickname ?? '',
@@ -414,11 +375,11 @@ export async function getPersonalInfo(
 
 export async function setNotificationsSettings(
   db: Database,
-  payload: PersonsSetNotificationsSettingsPayload,
+  payload: PersonsSetNotificationsSettingsPayload
 ): Promise<GenericSuccessResponse> {
   await db
-    .updateTable("person")
-    .where("id", "=", payload.personId)
+    .updateTable('person')
+    .where('id', '=', payload.personId)
     .set({
       telegram_id: payload.telegramId,
       notifications: payload.notifications,
@@ -429,21 +390,22 @@ export async function setNotificationsSettings(
 
 export async function updatePersonalInfo(
   db: Database,
+  redisClient: IRedisClient,
   payload: PersonsUpdatePersonalInfoPayload,
-  context: Context,
+  context: Context
 ): Promise<GenericSuccessResponse> {
   if (payload.email.length === 0 || payload.title.length === 0) {
-    throw new Error("Some of required field are empty");
+    throw new Error('Some of required field are empty');
   }
 
   const promises = [];
   if (env.userinfoHook) {
     promises.push(
       fetch(env.userinfoHook, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": env.userinfoHookApiKey,
+          'Content-Type': 'application/json',
+          'X-Api-Key': env.userinfoHookApiKey,
         },
         body: JSON.stringify({
           city: payload.city,
@@ -452,20 +414,20 @@ export async function updatePersonalInfo(
           person_id: context.personId,
           tenhou_id: payload.tenhouId,
         }),
-      }),
+      })
     );
   }
 
   if (env.gullveigUrl) {
     promises.push(
       fetch(env.gullveigUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: context.personId,
           avatar: payload.avatarData,
         }),
-      }),
+      })
     );
   }
 
@@ -479,7 +441,8 @@ export async function updatePersonalInfo(
     tenhou_id: payload.tenhouId,
     title: payload.title,
   };
-  promises.push(db.updateTable("person").set(value).execute());
+  promises.push(db.updateTable('person').set(value).execute());
+  promises.push(redisClient.remove(getPersonalInfoCacheKey(payload.id)));
   await Promise.all(promises);
   return { success: true };
 }

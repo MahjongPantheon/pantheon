@@ -5,8 +5,8 @@ export function parseCookies(request: IncomingMessage) {
   const cookieHeader = request.headers?.cookie;
   if (!cookieHeader) return list;
 
-  cookieHeader.split(`;`).forEach(function(cookie) {
-    const [ _name, ...rest] = cookie.split(`=`);
+  cookieHeader.split(`;`).forEach(function (cookie) {
+    const [_name, ...rest] = cookie.split(`=`);
     const name = _name?.trim();
     if (!name) return;
     const value = rest.join(`=`).trim();
