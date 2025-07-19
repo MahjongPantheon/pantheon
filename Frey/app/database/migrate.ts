@@ -3,7 +3,7 @@ import { Pool } from 'pg';
 import { promises as fs } from 'fs';
 import { Kysely, Migrator, PostgresDialect, FileMigrationProvider } from 'kysely';
 import { Database } from './schema';
-import { env } from './helpers/env';
+import { env } from '../helpers/env';
 
 async function migrateToLatest() {
   const db = new Kysely<Database>({

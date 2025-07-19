@@ -1,5 +1,5 @@
-import { RowPersonAccess } from '../schema';
-import { Database } from '../db';
+import { RowPersonAccess } from '../database/schema';
+import { Database } from '../database/db';
 import {
   AccessAddRuleForPersonPayload,
   AccessAddRuleForPersonResponse,

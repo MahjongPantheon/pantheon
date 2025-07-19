@@ -1,4 +1,4 @@
-import { RowMajsoulPlatformAccount, RowPerson } from '../../schema';
+import { RowMajsoulPlatformAccount, RowPerson } from '../../database/schema';
 import { Nullable } from '../types';
 
 export const getSuperadminCacheKey = (personId: number) => `frey:superadmin:${personId}`;

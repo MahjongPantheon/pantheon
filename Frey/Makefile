@@ -30,7 +30,7 @@ container_migrate: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running, can't run migrations.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bun app/migrate.ts'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bun app/database/migrate.ts'; \
 	fi
 
 .PHONY: logs

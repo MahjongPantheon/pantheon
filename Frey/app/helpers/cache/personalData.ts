@@ -1,6 +1,6 @@
 import { getPersonalInfoCacheKey, PersonalInfoData } from './schema';
 import { IRedisClient } from './RedisClient';
-import { Database } from '../../db';
+import { Database } from '../../database/db';
 
 export const getCachedPersonalData = async (
   db: Database,

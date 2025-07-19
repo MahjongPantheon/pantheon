@@ -17,12 +17,12 @@ import {
 } from '../clients/proto/frey.pb';
 import { emailRe } from '../helpers/email';
 import { makeHashes } from '../helpers/auth';
-import { Database } from '../db';
+import { Database } from '../database/db';
 import { Context } from '../context';
 import { GenericSuccessResponse } from '../clients/proto/atoms.pb';
 import { env } from '../helpers/env';
 import { sql } from 'kysely';
-import { RowPerson } from '../schema';
+import { RowPerson } from '../database/schema';
 import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getPersonalInfoCacheKey } from '../helpers/cache/schema';

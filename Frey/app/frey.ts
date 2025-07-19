@@ -45,7 +45,7 @@ import {
   PersonsSetNotificationsSettingsPayload,
   PersonsUpdatePersonalInfoPayload,
 } from './clients/proto/frey.pb';
-import { Database } from './db';
+import { Database } from './database/db';
 import { Context } from './context';
 import {
   addRuleForPerson,

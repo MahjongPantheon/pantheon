@@ -17,7 +17,7 @@ import {
   AuthRequestResetPasswordResponse,
 } from '../clients/proto/frey.pb';
 import { makeClientHash, makeHashes, verifyHash } from '../helpers/auth';
-import { Database } from '../db';
+import { Database } from '../database/db';
 import { emailRe } from '../helpers/email';
 import { calcPasswordStrength, sha1 } from '../helpers/crypto';
 import { sendAlreadyRegisteredMail, sendPasswordRecovery, sendSignupMail } from '../helpers/mailer';

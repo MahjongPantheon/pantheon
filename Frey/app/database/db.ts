@@ -1,8 +1,8 @@
 import type { Database as Db } from './schema.ts';
 import { Pool } from 'pg';
 import { Kysely, PostgresDialect } from 'kysely';
-import { RedisClient } from './helpers/cache/RedisClient';
-import { env } from './helpers/env';
+import { RedisClient } from '../helpers/cache/RedisClient';
+import { env } from '../helpers/env';
 
 const dialect = new PostgresDialect({
   pool: new Pool({

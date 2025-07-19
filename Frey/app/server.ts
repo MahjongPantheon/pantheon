@@ -2,7 +2,7 @@ import { createServer, IncomingMessage } from 'http';
 import { createTwirpServer } from 'twirpscript';
 import { createFrey } from './clients/proto/frey.pb';
 import { FreyClient } from './frey';
-import { db, redisClient } from './db';
+import { db, redisClient } from './database/db';
 import { env } from './helpers/env';
 import { Context } from './context';
 import { fillRequestVars } from './middleware/requestVars';
