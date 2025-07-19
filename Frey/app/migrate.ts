@@ -15,6 +15,22 @@ async function migrateToLatest() {
         password: env.db.password,
       }),
     }),
+    log(event) {
+      if (event.level === "error") {
+        console.error("Query failed : ", {
+          durationMs: event.queryDurationMillis,
+          error: event.error,
+          sql: event.query.sql,
+          params: event.query.parameters,
+        });
+      } else { // `'query'`
+        console.log("Query executed : ", {
+          durationMs: event.queryDurationMillis,
+          sql: event.query.sql,
+          params: event.query.parameters,
+        });
+      }
+    }
   });
 
   const migrator = new Migrator({

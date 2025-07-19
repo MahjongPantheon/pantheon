@@ -47,7 +47,9 @@ export async function up(db: Kysely<any>): Promise<void> {
 
   await db.schema
     .createIndex('titlesearch_idx')
-    .expression(sql`USING GIN (to_tsvector('simple', title))`)
+    .on('person')
+    .using('GIN')
+    .expression(sql`to_tsvector('simple', title)`)
     .execute()
 
   await db.schema
@@ -94,7 +96,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
 
   await db.schema
-    .createTable('majsoul_platform_accounts')
+    .createTable('majsoul_platform_account')
     .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('person_id', 'integer', (col) => col.references('person.id').onDelete('cascade').notNull())
     .addColumn('nickname', 'varchar', (col) => col.notNull())
@@ -103,14 +105,14 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute();
 
   await db.schema
-    .createIndex('majsoul_platform_accounts_account_id')
+    .createIndex('majsoul_platform_account_account_id')
     .on('majsoul_platform_account')
     .column('account_id')
     .unique()
     .execute()
 
   await db.schema
-    .createIndex('majsoul_platform_accounts_nickname')
+    .createIndex('majsoul_platform_account_nickname')
     .on('majsoul_platform_account')
     .column('nickname')
     .execute()

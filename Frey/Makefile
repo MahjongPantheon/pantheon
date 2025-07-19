@@ -25,14 +25,13 @@ shell: get_container_id
 kill:
 	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'frey' | awk '{print $$3}'` || exit 0
 
-# TODO
-#.PHONY: container_migrate
-#container_migrate: get_container_id
-#	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-#		echo "${RED}Frey container is not running, can't run migrations.${NC}"; \
-#	else \
-#		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx migrate -e docker'; \
-#	fi
+.PHONY: container_migrate
+container_migrate: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running, can't run migrations.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bun app/migrate.ts'; \
+	fi
 
 .PHONY: logs
 logs: get_container_id

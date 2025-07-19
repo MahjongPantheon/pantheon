@@ -42,7 +42,7 @@ export const env = {
   port: parseInt(data.PORT ?? '4004'),
   db: {
     host: data.DB_FREY_HOST ?? 'db.pantheon.internal',
-    username: data.DB_FREY_USER ?? 'frey',
+    username: data.DB_FREY_USER ?? 'frey2',
     password: data.DB_FREY_PASSWORD ?? 'pgpass',
     dbname: data.DB_FREY_NAME ?? 'frey2',
     port: parseInt(data.DB_FREY_PORT ?? '5532'),
