@@ -21,7 +21,7 @@ import { Database } from '../db';
 import { Context } from '../context';
 import { GenericSuccessResponse } from '../clients/proto/atoms.pb';
 import { env } from '../helpers/env';
-import { sql } from 'kysely/dist/esm';
+import { sql } from 'kysely';
 import { RowPerson } from '../schema';
 import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';

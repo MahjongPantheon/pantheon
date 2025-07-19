@@ -30,7 +30,7 @@ RUN apk update && \
     protoc && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-RUN npm install -g i18n-stex i18n-po-json i18n-json-po pm2 && chown -R root:root /usr/local/lib/node_modules/
+RUN npm install -g bun i18n-stex i18n-po-json i18n-json-po pm2 && chown -R root:root /usr/local/lib/node_modules/
 
 COPY install-bun.sh /install-bun.sh
 RUN BUN_INSTALL=/usr/local bash /install-bun.sh

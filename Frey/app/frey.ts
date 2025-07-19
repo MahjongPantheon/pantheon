@@ -100,7 +100,7 @@ export class FreyClient implements Frey<Context> {
   async ApproveResetPassword(
     authApproveResetPasswordPayload: AuthApproveResetPasswordPayload
   ): Promise<AuthApproveResetPasswordResponse> {
-    return approveResetPassword(this.db, authApproveResetPasswordPayload);
+    return approveResetPassword(this.db, this.redisClient, authApproveResetPasswordPayload);
   }
 
   async Authorize(authAuthorizePayload: AuthAuthorizePayload): Promise<AuthAuthorizeResponse> {
@@ -110,7 +110,7 @@ export class FreyClient implements Frey<Context> {
   async ChangePassword(
     authChangePasswordPayload: AuthChangePasswordPayload
   ): Promise<AuthChangePasswordResponse> {
-    return changePassword(this.db, authChangePasswordPayload);
+    return changePassword(this.db, this.redisClient, authChangePasswordPayload);
   }
 
   async CreateAccount(
@@ -129,7 +129,7 @@ export class FreyClient implements Frey<Context> {
     _depersonalizePayload: DepersonalizePayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return depersonalizeAccount(this.db, context);
+    return depersonalizeAccount(this.db, this.redisClient, context);
   }
 
   async FindByMajsoulAccountId(
@@ -187,7 +187,7 @@ export class FreyClient implements Frey<Context> {
     personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
     context: Context
   ): Promise<PersonsGetPersonalInfoResponse> {
-    return getPersonalInfo(this.db, personsGetPersonalInfoPayload, context);
+    return getPersonalInfo(this.db, this.redisClient, personsGetPersonalInfoPayload, context);
   }
 
   async GetSuperadminFlag(
@@ -197,13 +197,13 @@ export class FreyClient implements Frey<Context> {
   }
 
   async Me(authMePayload: AuthMePayload, context: Context): Promise<AuthMeResponse> {
-    return me(this.db, authMePayload, context);
+    return me(this.db, this.redisClient, authMePayload, context);
   }
 
   async QuickAuthorize(
     authQuickAuthorizePayload: AuthQuickAuthorizePayload
   ): Promise<AuthQuickAuthorizeResponse> {
-    return quickAuthorize(this.db, authQuickAuthorizePayload);
+    return quickAuthorize(this.db, this.redisClient, authQuickAuthorizePayload);
   }
 
   async RequestRegistration(
@@ -215,7 +215,7 @@ export class FreyClient implements Frey<Context> {
   async RequestResetPassword(
     authRequestResetPasswordPayload: AuthRequestResetPasswordPayload
   ): Promise<AuthRequestResetPasswordResponse> {
-    return requestResetPassword(this.db, authRequestResetPasswordPayload);
+    return requestResetPassword(this.db, this.redisClient, authRequestResetPasswordPayload);
   }
 
   async SetNotificationsSettings(
@@ -228,6 +228,6 @@ export class FreyClient implements Frey<Context> {
     personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return updatePersonalInfo(this.db, personsUpdatePersonalInfoPayload, context);
+    return updatePersonalInfo(this.db, this.redisClient, personsUpdatePersonalInfoPayload, context);
   }
 }

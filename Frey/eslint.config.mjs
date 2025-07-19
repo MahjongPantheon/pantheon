@@ -140,11 +140,9 @@ export default [{
     "coverage",
     "node_modules",
     "dist",
-    "pnpm-lock.yaml",
+    "bun.lock",
     "server.js",
     "eslint.config.mjs",
     "proto.config.mjs",
-    "vite.config.ts",
-    "vitest.config.ts",
   ],
 }];

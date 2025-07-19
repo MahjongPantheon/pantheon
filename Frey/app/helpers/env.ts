@@ -18,6 +18,11 @@ type EnvVars = {
   DB_FREY_NAME: string;
   DB_FREY_USER: string;
   DB_FREY_PASSWORD: string;
+  DB_FREY_PORT: string;
+  DB_FREY_REDIS_HOST: string,
+  DB_FREY_REDIS_PORT: string,
+  DB_FREY_REDIS_USER: string,
+  DB_FREY_REDIS_PASSWORD: string,
   PORT: string;
   TZ: string;
 };
@@ -34,12 +39,19 @@ export const env = {
     token: data.DEBUG_TOKEN ?? '',
     internalQuerySecret: data.INTERNAL_QUERY_SECRET ?? '',
   },
-  port: data.PORT ?? 3000,
+  port: parseInt(data.PORT ?? '4004'),
   db: {
-    host: data.DB_FREY_HOST,
-    username: data.DB_FREY_USER,
-    password: data.DB_FREY_PASSWORD,
-    dbname: data.DB_FREY_NAME,
+    host: data.DB_FREY_HOST ?? 'db.pantheon.internal',
+    username: data.DB_FREY_USER ?? 'frey',
+    password: data.DB_FREY_PASSWORD ?? 'pgpass',
+    dbname: data.DB_FREY_NAME ?? 'frey2',
+    port: parseInt(data.DB_FREY_PORT ?? '5532'),
+  },
+  redis: {
+    host: data.DB_FREY_REDIS_HOST ?? 'redis.pantheon.internal',
+    port: parseInt(data.DB_FREY_REDIS_PORT ?? '6379'),
+    username: data.DB_FREY_REDIS_USER ?? 'redis',
+    password: data.DB_FREY_REDIS_PASSWORD ?? 'redispass',
   },
   mailer: {
     remoteUrl: data.HERMOD_URL_INTERNAL,

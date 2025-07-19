@@ -14,11 +14,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "baseUrl": "app",
-    "types": ["vitest/globals"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true
   },
   "include": ["app"],
-  "references": [{ "path": "./tsconfig.node.json" }]
 }

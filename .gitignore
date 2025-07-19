@@ -79,6 +79,7 @@ Forseti-dist/*
 !Forseti-dist/.keep
 
 Frey/node_modules/*
+Frey/dist/*
 
 Sigrun/dev-dist
 Sigrun-dist/*
