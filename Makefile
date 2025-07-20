@@ -262,17 +262,17 @@ shell_fenrir:
 
 .PHONY: seed
 seed:
-	cd Frey && ${MAKE} container_seed
+	${MAKE} bootstrap_admin
 	cd Mimir && ${MAKE} container_seed
 
 .PHONY: seed_bigevent
 seed_bigevent:
-	cd Frey && ${MAKE} container_seed
+	${MAKE} bootstrap_admin
 	cd Mimir && ${MAKE} container_seed_bigevent
 
 .PHONY: seed_tournament
 seed_tournament:
-	cd Frey && ${MAKE} container_seed
+	${MAKE} bootstrap_admin
 	cd Mimir && ${MAKE} container_seed_tournament
 
 .PHONY: dump_last_mail

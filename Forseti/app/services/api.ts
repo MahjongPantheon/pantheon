@@ -81,11 +81,15 @@ import {
   UpdatePersonalInfo,
   GetNotificationsSettings,
   SetNotificationsSettings,
-  GetRuleValue,
   GetEventReferees,
 } from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
+import {
+  EventAdmin,
+  EventData,
+  EventReferee,
+  IntermediateResultOfSession,
+} from '../clients/proto/atoms.pb';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
 import { GetLastDay, GetLastMonth, GetLastYear } from '../clients/proto/hugin.pb';
@@ -445,17 +449,15 @@ export class ApiService {
   }
 
   getIsEventReferee(playerId: number, eventId: number) {
-    return GetRuleValue(
-      { personId: playerId, eventId, ruleName: 'REFEREE_FOR_EVENT' },
-      this._clientConfFrey
-    ).then((v) => v.value.boolValue);
+    return GetEventReferees({ eventId }, this._clientConfFrey).then(
+      (v) => !!v.referees.find((r: EventReferee) => r.personId === playerId)
+    );
   }
 
   getIsEventAdmin(playerId: number, eventId: number) {
-    return GetRuleValue(
-      { personId: playerId, eventId, ruleName: 'ADMIN_EVENT' },
-      this._clientConfFrey
-    ).then((v) => v.value.boolValue);
+    return GetEventAdmins({ eventId }, this._clientConfFrey).then(
+      (v) => !!v.admins.find((r: EventAdmin) => r.personId === playerId)
+    );
   }
 
   addEventReferee(playerId: number, eventId: number) {

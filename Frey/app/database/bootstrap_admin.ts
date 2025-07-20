@@ -27,7 +27,7 @@ async function bootstrapAdmin() {
       acl_name: Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
       acl_value: 1,
       person_id: ret.personId,
-      event_id: null,
+      event_id: -1,
     })
     .execute();
 
