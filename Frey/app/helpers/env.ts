@@ -19,10 +19,10 @@ type EnvVars = {
   DB_FREY_USER: string;
   DB_FREY_PASSWORD: string;
   DB_FREY_PORT: string;
-  DB_FREY_REDIS_HOST: string,
-  DB_FREY_REDIS_PORT: string,
-  DB_FREY_REDIS_USER: string,
-  DB_FREY_REDIS_PASSWORD: string,
+  DB_FREY_REDIS_HOST: string;
+  DB_FREY_REDIS_PORT: string;
+  DB_FREY_REDIS_USER: string;
+  DB_FREY_REDIS_PASSWORD: string;
   PORT: string;
   TZ: string;
 };
@@ -42,10 +42,10 @@ export const env = {
   },
   port: parseInt(data.PORT ?? '4004'),
   db: {
-    host: data.DB_FREY_HOST ?? 'db.pantheon.internal',
-    username: data.DB_FREY_USER ?? 'frey2',
-    password: data.DB_FREY_PASSWORD ?? 'pgpass',
-    dbname: data.DB_FREY_NAME ?? 'frey2',
+    host: process.env.DB_FREY_HOST ?? data.DB_FREY_HOST ?? 'db.pantheon.internal',
+    username: process.env.DB_FREY_USER ?? data.DB_FREY_USER ?? 'frey2',
+    password: process.env.DB_FREY_PASSWORD ?? data.DB_FREY_PASSWORD ?? 'pgpass',
+    dbname: process.env.DB_FREY_NAME ?? data.DB_FREY_NAME ?? 'frey2',
     port: parseInt(data.DB_FREY_PORT ?? '5432'),
   },
   redis: {

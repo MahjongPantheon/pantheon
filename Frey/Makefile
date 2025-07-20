@@ -137,40 +137,34 @@ cleanup_prebuilts:
 dev:
 	bun run app/server.ts --watch
 
-# TODO
-#.PHONY: init_test_db
-#init_test_db:
-#	@bin/phinx migrate -e testing
+.PHONY: init_test_db
+init_test_db:
+	DB_FREY_NAME=frey2_unit bun app/database/migrate.ts
 
-# TODO
-#.PHONY: clean_test_db
-#clean_test_db:
-#	while read p; do \
-#		PGPASSWORD=pgpass psql -hdb.pantheon.internal -U frey frey_unit -c "DROP TABLE \"$$p\""; \
-#	done < ./data/tablelist.txt || true
+.PHONY: clean_test_db
+clean_test_db:
+	bun app/database/clean_test_db.ts
 
 .PHONY: reload_pm2
 reload_pm2:
 	HOME=/home/user su-exec user pm2 restart all
 	HOME=/home/user su-exec user pm2 scale server 8 || exit 0
 
-# TODO
-#.PHONY: container_init_test_db
-#container_init_test_db: get_container_id
-#	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-#		echo "${RED}Frey container is not running.${NC}"; \
-#	else \
-#		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make init_test_db' ; \
-#	fi
+.PHONY: container_init_test_db
+container_init_test_db: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make init_test_db' ; \
+	fi
 
-# TODO
-#.PHONY: container_clean_test_db
-#container_clean_test_db: get_container_id
-#	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-#		echo "${RED}Frey container is not running.${NC}"; \
-#	else \
-#		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
-#	fi
+.PHONY: container_clean_test_db
+container_clean_test_db: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
+	fi
 
 # TODO
 #.PHONY: container_seed
@@ -274,13 +268,3 @@ container_proto_gen: get_container_id
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make proto_gen' ; \
 	fi
-
-# TODO
-#PHONY: container_warmup
-#container_warmup: get_container_id
-#	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-#		echo "${RED}Frey container is not running.${NC}"; \
-#	else \
-#		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'for i in $$(seq 1 8); do curl http://sigrun.pantheon.internal > /dev/null; done' ; \
-#	fi
-#
