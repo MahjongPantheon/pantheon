@@ -114,9 +114,10 @@ export class FreyClient implements Frey<Context> {
   }
 
   async CreateAccount(
-    personsCreateAccountPayload: PersonsCreateAccountPayload
+    personsCreateAccountPayload: PersonsCreateAccountPayload,
+    context: Context
   ): Promise<PersonsCreateAccountResponse> {
-    return createAccount(this.db, personsCreateAccountPayload);
+    return createAccount(this.db, this.redisClient, personsCreateAccountPayload, context);
   }
 
   async DeleteRuleForPerson(

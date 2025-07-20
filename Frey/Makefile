@@ -141,6 +141,10 @@ dev:
 init_test_db:
 	DB_FREY_NAME=frey2_unit bun app/database/migrate.ts
 
+.PHONY: bootstrap_admin
+bootstrap_admin:
+	bun app/database/bootstrap_admin.ts
+
 .PHONY: clean_test_db
 clean_test_db:
 	bun app/database/clean_test_db.ts
@@ -166,14 +170,13 @@ container_clean_test_db: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
 	fi
 
-# TODO
-#.PHONY: container_seed
-#container_seed: get_container_id container_migrate
-#	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-#		echo "${RED}Frey container is not running, can't run seeding.${NC}"; \
-#	else \
-#	  $(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s BasicSeeder --verbose'; \
-#	fi
+.PHONY: container_bootstrap_admin
+container_bootstrap_admin: get_container_id container_migrate
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running, can't run seeding.${NC}"; \
+	else \
+	  $(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make bootstrap_admin' ; \
+	fi
 
 # TODO
 #.PHONY: container_dump_users

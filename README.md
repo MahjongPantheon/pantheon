@@ -31,7 +31,9 @@ To deploy pantheon on your own VPS or personal environment on production mode:
    - As an option, you can run `make container` to build containers from scratch, but it's not recommended for production environment.
 6. Run `make prod_start` to start containers
 7. Run the following command: `make prod_compile`. This will build all static files for Tyr/Forseti/Sigrun and Sigrun server.
-8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). Don't do this on database that already has users!
+8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). Be careful doing this on the database that already has users or admins, as it will potentially create a security breach (e.g. superadmin account with default login and password).
+   - Use `https://{yourhost}/profile/editPlayer/{player_id}` link to edit the email, and then use password reset feature to set the new password.
+   - On fresh setup, `player_id` will be `1`, in general you can find the `player_id` on `https://{yourhost}/profile/manage` page after logging in with default username and password.
 9. Basically, you're done :)
 
 To update code on production server you will need to do the following:
@@ -135,7 +137,7 @@ to container shell, if you want to. Notice that killing php-fpm, postgres or ngi
 Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
 
 To create an event and fill it with some data, run `make seed`, `make seed_bigevent` or `make seed_tournament` (with `sudo` if required). Note that users are
-re-seeded on each command run.
+re-seeded on each command run. To log in as one of the created users, you may need the id and client hash emitted in the console. Note that dump is output in development mode only.
 
 A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md) is available.
 

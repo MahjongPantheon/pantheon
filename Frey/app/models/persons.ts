@@ -27,10 +27,14 @@ import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getPersonalInfoCacheKey } from '../helpers/cache/schema';
 import { getCachedPersonalData } from '../helpers/cache/personalData';
+import { getSuperadminFlag } from './access';
 
 export async function createAccount(
   db: Database,
-  personsCreateAccountPayload: PersonsCreateAccountPayload
+  redisClient: IRedisClient,
+  personsCreateAccountPayload: PersonsCreateAccountPayload,
+  context: Context,
+  bootstrap = false
 ): Promise<PersonsCreateAccountResponse> {
   if (
     personsCreateAccountPayload.email.length === 0 ||
@@ -42,6 +46,15 @@ export async function createAccount(
   if (!emailRe.test(personsCreateAccountPayload.email)) {
     throw new Error('Email address is malformed');
   }
+
+  if (
+    !bootstrap &&
+    (!context.personId ||
+      (await getSuperadminFlag(db, redisClient, { personId: context.personId })))
+  ) {
+    throw new Error('This action is not allowed');
+  }
+
   const duplicates = await db
     .selectFrom('person')
     .where('email', '=', personsCreateAccountPayload.email)
@@ -66,6 +79,16 @@ export async function createAccount(
     title: personsCreateAccountPayload.title,
   };
   const result = await db.insertInto('person').values(value).execute();
+
+  if (env.development) {
+    console.info(
+      '==> User created. ID: ',
+      Number(result[0].insertId),
+      ', client hash: ',
+      hashes.clientHash
+    );
+  }
+
   return { personId: Number(result[0].insertId) };
 }
 

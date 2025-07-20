@@ -540,7 +540,7 @@ pull:
 
 .PHONY: bootstrap_admin
 bootstrap_admin:
-	cd Frey && ${MAKE} container_seed
+	cd Frey && ${MAKE} container_bootstrap_admin
 
 # i18n related
 .PHONY: i18n_extract
