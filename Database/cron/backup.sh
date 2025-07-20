@@ -1,13 +1,13 @@
 #!/bin/bash
 
 cd ~ || exit
-rm -rf ~/backup/frey ~/backup/mimir ~/backup/hugin
-pg_dump --clean -Z0 -Fd frey -f ~/backup/frey
+rm -rf ~/backup/frey2 ~/backup/mimir ~/backup/hugin
+pg_dump --clean -Z0 -Fd frey2 -f ~/backup/frey2
 pg_dump --clean -Z0 -Fd mimir -f ~/backup/mimir
 pg_dump --clean -Z0 -Fd hugin -f ~/backup/hugin
 cd /var/lib/postgresql/backup || exit
 
-cd frey && ls | xargs lzma && cd ..
+cd frey2 && ls | xargs lzma && cd ..
 cd mimir && ls | xargs lzma && cd ..
 cd hugin && ls | xargs lzma && cd ..
 
