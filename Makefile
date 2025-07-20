@@ -275,10 +275,6 @@ seed_tournament:
 	cd Frey && ${MAKE} container_seed
 	cd Mimir && ${MAKE} container_seed_tournament
 
-.PHONY: dump_users
-dump_users:
-	cd Frey && ${MAKE} container_dump_users
-
 .PHONY: dump_last_mail
 dump_last_mail:
 	cd Hermod && ${MAKE} container_last_mail
@@ -469,6 +465,11 @@ prod_build_forseti: export NODE_ENV=production
 prod_build_forseti: # this is for automated builds, don't run it manually
 	cd Forseti && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild
 
+.PHONY: prod_build_frey
+prod_build_frey: export NODE_ENV=production
+prod_build_frey: # this is for automated builds, don't run it manually
+	cd Frey && ${MAKE} container_build && ${MAKE} container_prebuild
+
 .PHONY: prod_build_sigrun
 prod_build_sigrun: export NODE_ENV=production
 prod_build_sigrun: # this is for automated builds, don't run it manually
@@ -492,10 +493,12 @@ prod_compile:
 	@cp Env/.env.production Forseti/.env.production
 	@cp Env/.env.production Bragi/.env.production
 	@cp Env/.env.production Skirnir/.env.production
+	@cp Env/.env.production Frey/.env.production
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
+	${MAKE} prod_build_frey && cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
 	cd Sigrun && ${MAKE} container_warmup
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
@@ -574,6 +577,12 @@ e2e_dev:
 	${CONTAINER_COMMAND} pull ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH}:latest
 	@${COMPOSE_COMMAND} --profile e2e up -d
 	cd Fenrir && ${MAKE} container_deps && ${MAKE} container_run
+
+.PHONY: e2e_build_frey
+e2e_build_frey: export NODE_ENV=development
+e2e_build_frey: export ENV_FILENAME=.env.e2e
+e2e_build_frey: # this is for automated builds, don't run it manually
+	cd Frey && ${MAKE} container_build && ${MAKE} container_prebuild
 
 .PHONY: e2e_build_tyr
 e2e_build_tyr: export NODE_ENV=development

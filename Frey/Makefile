@@ -113,7 +113,7 @@ autofix:
 
 .PHONY: build
 build:
-	bun build app/server.ts --compile --target=bun --sourcemap=external --outdir=dist
+	bun build app/server.ts --target=bun --sourcemap=external --outdir=dist
 
 .PHONY: prod_deps
 prod_deps:
@@ -121,18 +121,12 @@ prod_deps:
 
 .PHONY: prebuild
 prebuild:
-	cp -R dist ../Frey-dist/
-	cp -f server.js ../Frey-dist/
+	cp -f dist/server.js ../Frey-dist/
+	cp -f dist/server.js.map ../Frey-dist/
 	if [ -f .env.production ]; then cp -f .env.production ../Frey-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Frey-dist/ ; fi
 	cp -f package.json ../Frey-dist/
 	cp -f bun.lock ../Frey-dist/
-
-.PHONY: cleanup_prebuilts
-cleanup_prebuilts:
-	mkdir -p ../Frey-dist/dist/client/assets
-	# clean all generated bundle files except last 30
-	cd ../Frey-dist/dist/client/assets && find -name '*.js' -or -name '*.css' -or -name '*.js.gz' -or -name '*.css.gz' | tail -n +30 | xargs -I {} rm {}
 
 dev:
 	bun run app/server.ts --watch
@@ -177,16 +171,6 @@ container_bootstrap_admin: get_container_id container_migrate
 	else \
 	  $(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make bootstrap_admin' ; \
 	fi
-
-# TODO
-#.PHONY: container_dump_users
-#container_dump_users: get_container_id
-#	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-#		echo "${RED}Frey container is not running.${NC}"; \
-#	else \
-#		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cat /tmp/frey_tokens_debug' ; \
-#	fi
-
 
 .PHONY: proto_gen
 proto_gen:
@@ -238,14 +222,6 @@ container_build: get_container_id
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make build' ; \
-	fi
-
-.PHONY: container_cleanup_prebuilts
-container_cleanup_prebuilts: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make cleanup_prebuilts' ; \
 	fi
 
 .PHONY: container_prebuild
