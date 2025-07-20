@@ -17,6 +17,26 @@ const dialect = new PostgresDialect({
 
 export const db = new Kysely<Db>({
   dialect,
+  log(event) {
+    if (!env.development) {
+      return;
+    }
+    if (event.level === 'error') {
+      console.error('Query failed : ', {
+        durationMs: event.queryDurationMillis,
+        error: event.error,
+        sql: event.query.sql,
+        params: event.query.parameters,
+      });
+    } else {
+      // `'query'`
+      console.log('Query executed : ', {
+        durationMs: event.queryDurationMillis,
+        sql: event.query.sql,
+        params: event.query.parameters,
+      });
+    }
+  },
 });
 
 export type Database = typeof db;

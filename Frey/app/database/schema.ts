@@ -5,7 +5,7 @@ export type Generated<T> =
     ? ColumnType<S, I | undefined, U>
     : ColumnType<T, T | undefined, T>;
 
-export interface MajsoulPlatformAccounts {
+export interface MajsoulPlatformAccount {
   account_id: number;
   friend_id: number;
   id: Generated<number>;
@@ -13,7 +13,7 @@ export interface MajsoulPlatformAccounts {
   person_id: number;
 }
 
-export type RowMajsoulPlatformAccount = Omit<MajsoulPlatformAccounts, 'id'>;
+export type RowMajsoulPlatformAccount = Omit<MajsoulPlatformAccount, 'id'>;
 
 export interface Person {
   auth_hash: string;
@@ -79,7 +79,7 @@ export interface Registrant {
 export type RowRegistrant = Omit<Registrant, 'id'>;
 
 export interface Database {
-  majsoul_platform_accounts: MajsoulPlatformAccounts;
+  majsoul_platform_account: MajsoulPlatformAccount;
   person: Person;
   person_access: PersonAccess;
   registrant: Registrant;

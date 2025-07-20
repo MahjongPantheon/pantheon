@@ -13,7 +13,7 @@ export const getCachedPersonalData = async (
   }
   const data = await db
     .selectFrom('person')
-    .leftJoin('majsoul_platform_accounts', 'majsoul_platform_accounts.person_id', 'person.id')
+    .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
     .where('person.id', '=', id)
     .selectAll()
     .execute();

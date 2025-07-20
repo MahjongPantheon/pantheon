@@ -35,6 +35,7 @@ const data: Partial<EnvVars> =
 process.env.TZ = data.TZ ?? 'UTC';
 
 export const env = {
+  development: process.env.NODE_ENV === 'production',
   debug: {
     token: data.DEBUG_TOKEN ?? '',
     internalQuerySecret: data.INTERNAL_QUERY_SECRET ?? '',
@@ -45,7 +46,7 @@ export const env = {
     username: data.DB_FREY_USER ?? 'frey2',
     password: data.DB_FREY_PASSWORD ?? 'pgpass',
     dbname: data.DB_FREY_NAME ?? 'frey2',
-    port: parseInt(data.DB_FREY_PORT ?? '5532'),
+    port: parseInt(data.DB_FREY_PORT ?? '5432'),
   },
   redis: {
     host: data.DB_FREY_REDIS_HOST ?? 'redis.pantheon.internal',

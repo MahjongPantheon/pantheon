@@ -42,7 +42,7 @@ export interface GroupAccess {
 export interface MajsoulPlatformAccounts {
   account_id: number;
   friend_id: number;
-  id: Generated<Int8>;
+  id: Generated<number>;
   nickname: string;
   person_id: number;
 }

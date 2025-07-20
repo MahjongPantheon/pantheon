@@ -1,52 +1,29 @@
 import { Kysely, PostgresDialect } from 'kysely';
-import { Database } from './schema';
-import { DB as DatabaseOld } from './schema_old';
+import { DB as DatabaseOld } from './schema_v1';
 import { Pool } from 'pg';
 import { env } from '../helpers/env';
+import { db as newDb } from './db';
+import * as process from "node:process";
 
-const oldDb = new Kysely<DatabaseOld>({
-  dialect: new PostgresDialect({
-    pool: new Pool({
-      host: env.db.host,
-      database: 'frey',
-      user: 'frey',
-      password: env.db.password,
+process.env.NODE_ENV = 'development';
+
+export async function migrateFromFrey1() {
+  const oldDb = new Kysely<DatabaseOld>({
+    dialect: new PostgresDialect({
+      pool: new Pool({
+        host: env.db.host,
+        database: 'frey',
+        user: 'frey',
+        password: env.db.password,
+        port: env.db.port
+      }),
     }),
-  }),
-});
+  });
 
-const newDb = new Kysely<Database>({
-  dialect: new PostgresDialect({
-    pool: new Pool({
-      host: env.db.host,
-      database: env.db.dbname,
-      user: env.db.username,
-      password: env.db.password,
-    }),
-  }),
-  log(event) {
-    if (event.level === 'error') {
-      console.error('Query failed : ', {
-        durationMs: event.queryDurationMillis,
-        error: event.error,
-        sql: event.query.sql,
-        params: event.query.parameters,
-      });
-    } else {
-      // `'query'`
-      console.log('Query executed : ', {
-        durationMs: event.queryDurationMillis,
-        sql: event.query.sql,
-        params: event.query.parameters,
-      });
-    }
-  },
-});
-
-async function migrate() {
   await newDb.transaction().execute(async (trx) => {
     let i = 0;
     const limit = 100;
+    console.log('Migrating person table');
     while (true) {
       const records = await oldDb
         .selectFrom('person')
@@ -82,11 +59,13 @@ async function migrate() {
           }))
         )
         .execute();
-
+      process.stdout.write('.');
       i += limit;
     }
+    process.stdout.write('\n');
 
     i = 0;
+    console.log('Migrating person_access table');
     while (true) {
       const records = await oldDb
         .selectFrom('person_access')
@@ -118,9 +97,84 @@ async function migrate() {
         )
         .execute();
 
+      process.stdout.write('.');
       i += limit;
     }
+    process.stdout.write('\n');
 
-    // TODO: migrate other two tables
+    i = 0;
+    console.log('Migrating majsoul_platform_accounts table');
+    while (true) {
+      const records = await oldDb
+        .selectFrom('majsoul_platform_accounts')
+        .orderBy('id', 'asc')
+        .selectAll()
+        .limit(limit)
+        .offset(i)
+        .execute();
+      if (records.length === 0) {
+        break;
+      }
+
+      await trx
+        .insertInto('majsoul_platform_account')
+        .values(
+          records.map((rec) => ({
+            id: rec.id,
+            account_id: rec.account_id,
+            friend_id: rec.friend_id,
+            nickname: rec.nickname,
+            person_id: rec.person_id,
+          }))
+        )
+        .execute();
+
+      process.stdout.write('.');
+      i += limit;
+    }
+    process.stdout.write('\n');
+
+    i = 0;
+    console.log('Migrating registrant table');
+    while (true) {
+      const records = await oldDb
+        .selectFrom('registrant')
+        .orderBy('id', 'asc')
+        .selectAll()
+        .limit(limit)
+        .offset(i)
+        .execute();
+      if (records.length === 0) {
+        break;
+      }
+
+      await trx
+        .insertInto('registrant')
+        .values(
+          records.map((rec) => ({
+            id: rec.id,
+            approval_code: rec.approval_code,
+            auth_hash: rec.auth_hash,
+            auth_salt: rec.auth_salt,
+            email: rec.email,
+            title: rec.title,
+          }))
+        )
+        .execute();
+
+      process.stdout.write('.');
+      i += limit;
+    }
+    process.stdout.write('\n');
   });
 }
+
+migrateFromFrey1()
+  .then(() => {
+    console.log('Migration completed!');
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error('Migration failed', error);
+    process.exit(1);
+  });

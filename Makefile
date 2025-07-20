@@ -206,6 +206,10 @@ migrate:
 	cd Frey && ${MAKE} container_migrate
 	cd Hugin && ${MAKE} container_migrate
 
+.PHONY: migrate_frey1
+migrate_frey1:
+	cd Frey && ${MAKE} container_migrate_frey1
+
 .PHONY: shell_tyr
 shell_tyr:
 	cd Tyr && ${MAKE} shell

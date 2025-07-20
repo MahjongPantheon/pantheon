@@ -149,7 +149,7 @@ export async function findByMajsoulAccountId(
   context: Context
 ): Promise<PersonsFindByTenhouIdsResponse> {
   const soulAccounts = await db
-    .selectFrom('majsoul_platform_accounts')
+    .selectFrom('majsoul_platform_account')
     .where(
       'nickname',
       'in',
@@ -210,7 +210,7 @@ export async function findByTenhouIds(
   const [persons, currentPerson, rights] = await Promise.all([
     db
       .selectFrom('person')
-      .leftJoin('majsoul_platform_accounts', 'majsoul_platform_accounts.person_id', 'person.id')
+      .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
       .where('tenhou_id', 'in', payload.ids)
       .selectAll()
       .execute(),
@@ -249,7 +249,7 @@ export async function findByTitle(
   const [persons, currentPerson, rights] = await Promise.all([
     db
       .selectFrom('person')
-      .leftJoin('majsoul_platform_accounts', 'majsoul_platform_accounts.person_id', 'person.id')
+      .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
       .selectAll()
       .where((eb) =>
         eb(
@@ -298,7 +298,7 @@ export async function getMajsoulNicknames(
   payload: PersonsGetMajsoulNicknamesPayload
 ): Promise<PersonsGetMajsoulNicknamesResponse> {
   const result = await db
-    .selectFrom('majsoul_platform_accounts')
+    .selectFrom('majsoul_platform_account')
     .where('person_id', 'in', payload.ids)
     .select(['nickname', 'person_id'])
     .execute();
@@ -332,7 +332,7 @@ async function getPersonData(db: Database, redisClient: IRedisClient, ids: numbe
 
   return db
     .selectFrom('person')
-    .leftJoin('majsoul_platform_accounts', 'majsoul_platform_accounts.person_id', 'person.id')
+    .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
     .where('person.id', 'in', ids)
     .selectAll()
     .execute();
