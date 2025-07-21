@@ -1,7 +1,15 @@
 Переписываем Frey на js
 
-- Попробовать завезти bun:
-  - bun build app/server.ts --target=bun --sourcemap=external --outdir=dist --outfile=server.js
+- Странная ошибка сервера:
+
+[TwirpScript] Started POST "/v2/common.Frey/GetEventAdmins"
+[TwirpScript] Error:
+TwirpError {
+  code: "bad_route",
+  msg: "no handler for path POST /v2/common.Frey/GetEventAdmins.",
+  meta: undefined,
+}
+
 
 - Написать тесты для моделей
 - Проконтролировать таймзоны, возможно надо будет допихнуть условный luxon

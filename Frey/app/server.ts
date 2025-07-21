@@ -9,7 +9,7 @@ import { fillRequestVars } from './middleware/requestVars';
 
 export const freyHandler = [createFrey(new FreyClient(db, redisClient))];
 
-const app = createTwirpServer<Context, typeof freyHandler, IncomingMessage>(freyHandler).use(
-  fillRequestVars()
-);
+const app = createTwirpServer<Context, typeof freyHandler, IncomingMessage>(freyHandler, {
+  prefix: '/v2',
+}).use(fillRequestVars());
 createServer(app).listen(env.port, () => console.log(`Server listening on port ${env.port}`));

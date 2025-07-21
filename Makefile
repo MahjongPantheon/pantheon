@@ -192,6 +192,10 @@ bragi_stop:
 skirnir_stop:
 	cd Skirnir && ${MAKE} container_stop
 
+.PHONY: frey_stop
+frey_stop:
+	cd Frey && ${MAKE} container_stop
+
 .PHONY: dev
 dev: build_reverse_proxy pantheon_run
 	${MAKE} reverse_proxy_stop

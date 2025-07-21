@@ -32,7 +32,7 @@ make dev_skirnir &
 SKIRNIR_PID=$!
 echo $SKIRNIR_PID
 
-trap "TRAPPED_SIGNAL=true; make tyr_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop;" SIGTERM  SIGINT
+trap "TRAPPED_SIGNAL=true; make frey_stop; make tyr_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop;" SIGTERM  SIGINT
 
 while :
 do
