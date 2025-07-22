@@ -16,16 +16,17 @@ export function fillRequestVars(): Middleware<Context, IncomingMessage> {
 
     ctx.locale =
       storage.getLang() ??
-      acceptLanguage.get((req.headers['Accept-Language'] as string) ?? 'en-US') ??
+      acceptLanguage.get((req.headers['Accept-Language'.toLowerCase()] as string) ?? 'en-US') ??
       'en';
 
-    ctx.authToken = req.headers['X-Auth-Token']?.toString() ?? storage.getAuthToken() ?? null;
+    ctx.authToken =
+      req.headers['X-Auth-Token'.toLowerCase()]?.toString() ?? storage.getAuthToken() ?? null;
     ctx.personId =
-      (parseInt(req.headers['X-Current-Person-Id']?.toString() ?? '') || null) ??
+      (parseInt(req.headers['X-Current-Person-Id'.toLowerCase()]?.toString() ?? '') || null) ??
       storage.getPersonId() ??
       null;
     ctx.currentEventId =
-      (parseInt(req.headers['X-Current-Event-Id']?.toString() ?? '') || null) ??
+      (parseInt(req.headers['X-Current-Event-Id'.toLowerCase()]?.toString() ?? '') || null) ??
       storage.getEventId() ??
       null;
 

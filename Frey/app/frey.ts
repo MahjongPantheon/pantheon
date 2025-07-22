@@ -45,7 +45,6 @@ import {
   PersonsSetNotificationsSettingsPayload,
   PersonsUpdatePersonalInfoPayload,
 } from './clients/proto/frey.pb';
-import { Database } from './database/db';
 import { Context } from './context';
 import {
   addRuleForPerson,
@@ -77,158 +76,175 @@ import {
   setNotificationsSettings,
   updatePersonalInfo,
 } from './models/persons';
-import { IRedisClient } from './helpers/cache/RedisClient';
 
-export class FreyClient implements Frey<Context> {
-  constructor(
-    protected db: Database,
-    protected redisClient: IRedisClient
-  ) {}
-
+export const freyClient: Frey<Context> = {
   async AddRuleForPerson(
-    accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload
+    accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
+    context: Context
   ): Promise<AccessAddRuleForPersonResponse> {
-    return addRuleForPerson(this.db, accessAddRuleForPersonPayload);
-  }
+    return addRuleForPerson(context.db, accessAddRuleForPersonPayload);
+  },
 
   async ApproveRegistration(
-    authApproveRegistrationPayload: AuthApproveRegistrationPayload
+    authApproveRegistrationPayload: AuthApproveRegistrationPayload,
+    context: Context
   ): Promise<AuthApproveRegistrationResponse> {
-    return approveRegistration(this.db, authApproveRegistrationPayload);
-  }
+    return approveRegistration(context.db, authApproveRegistrationPayload);
+  },
 
   async ApproveResetPassword(
-    authApproveResetPasswordPayload: AuthApproveResetPasswordPayload
+    authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
+    context: Context
   ): Promise<AuthApproveResetPasswordResponse> {
-    return approveResetPassword(this.db, this.redisClient, authApproveResetPasswordPayload);
-  }
+    return approveResetPassword(context.db, context.redisClient, authApproveResetPasswordPayload);
+  },
 
-  async Authorize(authAuthorizePayload: AuthAuthorizePayload): Promise<AuthAuthorizeResponse> {
-    return authorize(this.db, authAuthorizePayload);
-  }
+  async Authorize(
+    authAuthorizePayload: AuthAuthorizePayload,
+    context: Context
+  ): Promise<AuthAuthorizeResponse> {
+    return authorize(context.db, authAuthorizePayload);
+  },
 
   async ChangePassword(
-    authChangePasswordPayload: AuthChangePasswordPayload
+    authChangePasswordPayload: AuthChangePasswordPayload,
+    context: Context
   ): Promise<AuthChangePasswordResponse> {
-    return changePassword(this.db, this.redisClient, authChangePasswordPayload);
-  }
+    return changePassword(context.db, context.redisClient, authChangePasswordPayload);
+  },
 
   async CreateAccount(
     personsCreateAccountPayload: PersonsCreateAccountPayload,
     context: Context
   ): Promise<PersonsCreateAccountResponse> {
-    return createAccount(this.db, this.redisClient, personsCreateAccountPayload, context);
-  }
+    return createAccount(context.db, context.redisClient, personsCreateAccountPayload, context);
+  },
 
   async DeleteRuleForPerson(
-    accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload
+    accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
+    context: Context
   ): Promise<GenericSuccessResponse> {
-    return deleteRuleForPerson(this.db, accessDeleteRuleForPersonPayload);
-  }
+    return deleteRuleForPerson(context.db, accessDeleteRuleForPersonPayload);
+  },
 
   async DepersonalizeAccount(
     _depersonalizePayload: DepersonalizePayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return depersonalizeAccount(this.db, this.redisClient, context);
-  }
+    return depersonalizeAccount(context.db, context.redisClient, context);
+  },
 
   async FindByMajsoulAccountId(
     personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
     context: Context
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return findByMajsoulAccountId(this.db, personsFindByMajsoulIdsPayload, context);
-  }
+    return findByMajsoulAccountId(context.db, personsFindByMajsoulIdsPayload, context);
+  },
 
   async FindByTenhouIds(
     personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
     context: Context
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return findByTenhouIds(this.db, personsFindByTenhouIdsPayload, context);
-  }
+    return findByTenhouIds(context.db, personsFindByTenhouIdsPayload, context);
+  },
 
   async FindByTitle(
     personsFindByTitlePayload: PersonsFindByTitlePayload,
     context: Context
   ): Promise<PersonsFindByTitleResponse> {
-    return findByTitle(this.db, personsFindByTitlePayload, context);
-  }
+    return findByTitle(context.db, personsFindByTitlePayload, context);
+  },
 
   async GetEventAdmins(
-    accessGetEventAdminsPayload: AccessGetEventAdminsPayload
+    accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
+    context: Context
   ): Promise<AccessGetEventAdminsResponse> {
-    return getEventAdmins(this.db, accessGetEventAdminsPayload);
-  }
+    return getEventAdmins(context.db, accessGetEventAdminsPayload);
+  },
 
   async GetEventReferees(
-    accessGetEventRefereesPayload: AccessGetEventRefereesPayload
+    accessGetEventRefereesPayload: AccessGetEventRefereesPayload,
+    context: Context
   ): Promise<AccessGetEventRefereesResponse> {
-    return getEventReferees(this.db, accessGetEventRefereesPayload);
-  }
+    return getEventReferees(context.db, accessGetEventRefereesPayload);
+  },
 
   async GetMajsoulNicknames(
-    personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload
+    personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload,
+    context: Context
   ): Promise<PersonsGetMajsoulNicknamesResponse> {
-    return getMajsoulNicknames(this.db, personsGetMajsoulNicknamesPayload);
-  }
+    return getMajsoulNicknames(context.db, personsGetMajsoulNicknamesPayload);
+  },
 
   async GetNotificationsSettings(
-    personsGetNotificationsSettingsPayload: PersonsGetNotificationsSettingsPayload
+    personsGetNotificationsSettingsPayload: PersonsGetNotificationsSettingsPayload,
+    context: Context
   ): Promise<PersonsGetNotificationsSettingsResponse> {
-    return getNotificationsSettings(this.db, personsGetNotificationsSettingsPayload);
-  }
+    return getNotificationsSettings(context.db, personsGetNotificationsSettingsPayload);
+  },
 
   async GetOwnedEventIds(
-    accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload
+    accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
+    context: Context
   ): Promise<AccessGetOwnedEventIdsResponse> {
-    return getOwnedEventIds(this.db, accessGetOwnedEventIdsPayload);
-  }
+    return getOwnedEventIds(context.db, accessGetOwnedEventIdsPayload);
+  },
 
   async GetPersonalInfo(
     personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
     context: Context
   ): Promise<PersonsGetPersonalInfoResponse> {
-    return getPersonalInfo(this.db, this.redisClient, personsGetPersonalInfoPayload, context);
-  }
+    return getPersonalInfo(context.db, context.redisClient, personsGetPersonalInfoPayload, context);
+  },
 
   async GetSuperadminFlag(
-    accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload
+    accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
+    context: Context
   ): Promise<AccessGetSuperadminFlagResponse> {
-    return getSuperadminFlag(this.db, this.redisClient, accessGetSuperadminFlagPayload);
-  }
+    return getSuperadminFlag(context.db, context.redisClient, accessGetSuperadminFlagPayload);
+  },
 
   async Me(authMePayload: AuthMePayload, context: Context): Promise<AuthMeResponse> {
-    return me(this.db, this.redisClient, authMePayload, context);
-  }
+    return me(context.db, context.redisClient, authMePayload, context);
+  },
 
   async QuickAuthorize(
-    authQuickAuthorizePayload: AuthQuickAuthorizePayload
+    authQuickAuthorizePayload: AuthQuickAuthorizePayload,
+    context: Context
   ): Promise<AuthQuickAuthorizeResponse> {
-    return quickAuthorize(this.db, this.redisClient, authQuickAuthorizePayload);
-  }
+    return quickAuthorize(context.db, context.redisClient, authQuickAuthorizePayload);
+  },
 
   async RequestRegistration(
-    authRequestRegistrationPayload: AuthRequestRegistrationPayload
+    authRequestRegistrationPayload: AuthRequestRegistrationPayload,
+    context: Context
   ): Promise<AuthRequestRegistrationResponse> {
-    return requestRegistration(this.db, authRequestRegistrationPayload);
-  }
+    return requestRegistration(context.db, authRequestRegistrationPayload);
+  },
 
   async RequestResetPassword(
-    authRequestResetPasswordPayload: AuthRequestResetPasswordPayload
+    authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
+    context: Context
   ): Promise<AuthRequestResetPasswordResponse> {
-    return requestResetPassword(this.db, this.redisClient, authRequestResetPasswordPayload);
-  }
+    return requestResetPassword(context.db, context.redisClient, authRequestResetPasswordPayload);
+  },
 
   async SetNotificationsSettings(
-    personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload
+    personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload,
+    context: Context
   ): Promise<GenericSuccessResponse> {
-    return setNotificationsSettings(this.db, personsSetNotificationsSettingsPayload);
-  }
+    return setNotificationsSettings(context.db, personsSetNotificationsSettingsPayload);
+  },
 
   async UpdatePersonalInfo(
     personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return updatePersonalInfo(this.db, this.redisClient, personsUpdatePersonalInfoPayload, context);
-  }
-}
+    return updatePersonalInfo(
+      context.db,
+      context.redisClient,
+      personsUpdatePersonalInfoPayload,
+      context
+    );
+  },
+};

@@ -117,13 +117,19 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4004:80"
+      - "4204:4204"
+      - "4204:4204/udp"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal
     volumes:
       - ./Frey:/var/www/html/Frey
+      - ./Frey-dist:/var/www/html/Frey-dist
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
     environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
       PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db.pantheon.internal
     networks:

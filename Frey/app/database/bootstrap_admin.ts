@@ -1,9 +1,12 @@
 import { createAccount } from '../models/persons';
-import { db, redisClient } from './db';
+import { createRedisConstructor, createDbConstructor } from './db';
 import { Rights } from '../helpers/rights';
 import * as process from 'node:process';
 
 async function bootstrapAdmin() {
+  const db = createDbConstructor()();
+  const redisClient = createRedisConstructor()();
+
   const ret = await createAccount(
     db,
     redisClient,

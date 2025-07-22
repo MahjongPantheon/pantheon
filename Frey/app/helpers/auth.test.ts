@@ -1,4 +1,5 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
 import { makeClientHash, makeHashes, verifyHash } from './auth';
 
 describe('Auth hashing', () => {
@@ -6,7 +7,7 @@ describe('Auth hashing', () => {
     const password = 'testpassword';
     const { hash, salt, clientHash } = await makeHashes(password);
     const clientHashVerify = makeClientHash(password, salt);
-    expect(clientHashVerify).toEqual(clientHash);
+    assert.equal(clientHashVerify, clientHash);
     await verifyHash(clientHash, hash); // should not throw
   });
 });

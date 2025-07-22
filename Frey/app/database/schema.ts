@@ -35,7 +35,7 @@ export interface Person {
   has_avatar: number | null;
   id: Generated<number>;
   is_superadmin: number | null;
-  last_update: Date | null;
+  last_update: string | null; // date string
   notifications: string | null;
   /**
    * PERSONAL DATA

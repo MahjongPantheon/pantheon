@@ -16,21 +16,22 @@ async function migrateToLatest() {
       }),
     }),
     log(event) {
-      if (event.level === "error") {
-        console.error("Query failed : ", {
+      if (event.level === 'error') {
+        console.error('Query failed : ', {
           durationMs: event.queryDurationMillis,
           error: event.error,
           sql: event.query.sql,
           params: event.query.parameters,
         });
-      } else { // `'query'`
-        console.log("Query executed : ", {
+      } else {
+        // `'query'`
+        console.log('Query executed : ', {
           durationMs: event.queryDurationMillis,
           sql: event.query.sql,
           params: event.query.parameters,
         });
       }
-    }
+    },
   });
 
   const migrator = new Migrator({
@@ -62,4 +63,12 @@ async function migrateToLatest() {
   await db.destroy();
 }
 
-await migrateToLatest();
+migrateToLatest()
+  .then(() => {
+    console.log('Migration completed!');
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error('Migration failed', error);
+    process.exit(1);
+  });

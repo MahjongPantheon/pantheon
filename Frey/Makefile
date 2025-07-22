@@ -30,7 +30,7 @@ container_migrate: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running, can't run migrations.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bun app/database/migrate.ts'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user pnpm exec tsx app/database/migrate.ts'; \
 	fi
 
 .PHONY: container_migrate_frey1
@@ -38,8 +38,8 @@ container_migrate_frey1: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running, can't run migrations.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bun app/database/migrate.ts'; \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bun app/database/migrate_from_frey1.ts'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user pnpm exec tsx app/database/migrate.ts'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user pnpm exec tsx app/database/migrate_from_frey1.ts'; \
 	fi
 
 .PHONY: logs
@@ -52,12 +52,12 @@ logs: get_container_id
 
 .PHONY: deps
 deps:
-	bun install
+	pnpm install
 
 .PHONY: eslint
 eslint:
 	echo "======= Frey: eslint ======"
-	bun run eslint .
+	pnpm run eslint .
 
 .PHONY: container_eslint
 container_eslint: get_container_id
@@ -70,7 +70,7 @@ container_eslint: get_container_id
 .PHONY: prettier
 prettier:
 	echo "======= Frey: prettier ======"
-	bun run prettier -c ./app
+	pnpm run prettier -c ./app
 
 .PHONY: container_prettier
 container_prettier: get_container_id
@@ -83,7 +83,7 @@ container_prettier: get_container_id
 .PHONY: typecheck
 typecheck:
 	echo "======= Frey: typecheck ======"
-	bun run tsc --project tsconfig.json --noEmit
+	pnpm run tsc --project tsconfig.json --noEmit
 
 .PHONY: container_typecheck
 container_typecheck: get_container_id
@@ -96,7 +96,7 @@ container_typecheck: get_container_id
 .PHONY: test
 test:
 	echo "======= Frey: test ======"
-	bun test
+	pnpm exec tsx --test
 
 .PHONY: container_test
 container_test: get_container_id
@@ -108,16 +108,16 @@ container_test: get_container_id
 
 .PHONY: autofix
 autofix:
-	bun run eslint . --fix
-	bun run prettier -w ./app
+	pnpm run eslint . --fix
+	pnpm run prettier -w ./app
 
 .PHONY: build
 build:
-	bun build app/server.ts --target=bun --sourcemap=external --outdir=dist
+	NODE_ENV=production pnpm run pkgroll
 
 .PHONY: prod_deps
 prod_deps:
-	cd ../Frey-dist && NODE_ENV=production bun install
+	cd ../Frey-dist && NODE_ENV=production pnpm install
 
 .PHONY: prebuild
 prebuild:
@@ -126,22 +126,22 @@ prebuild:
 	if [ -f .env.production ]; then cp -f .env.production ../Frey-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Frey-dist/ ; fi
 	cp -f package.json ../Frey-dist/
-	cp -f bun.lock ../Frey-dist/
+	cp -f pnpm.lock ../Frey-dist/
 
 dev:
-	bun run app/server.ts --watch
+	pnpm exec tsx watch --inspect=0.0.0.0:4204/debug app/server.ts
 
 .PHONY: init_test_db
 init_test_db:
-	DB_FREY_NAME=frey2_unit bun app/database/migrate.ts
+	DB_FREY_NAME=frey2_unit pnpm exec tsx app/database/migrate.ts
 
 .PHONY: bootstrap_admin
 bootstrap_admin:
-	bun app/database/bootstrap_admin.ts
+	pnpm exec tsx app/database/bootstrap_admin.ts
 
 .PHONY: clean_test_db
 clean_test_db:
-	bun app/database/clean_test_db.ts
+	pnpm exec tsx app/database/clean_test_db.ts
 
 .PHONY: reload_pm2
 reload_pm2:
@@ -174,7 +174,7 @@ container_bootstrap_admin: get_container_id container_migrate
 
 .PHONY: proto_gen
 proto_gen:
-	bun run twirpscript
+	pnpm run twirpscript
 
 .PHONY: container_dev
 container_dev: get_container_id
@@ -189,7 +189,7 @@ container_stop: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'killall bun' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'killall node' ; \
 	fi
 
 .PHONY: container_deps

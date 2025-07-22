@@ -1,15 +1,9 @@
 Переписываем Frey на js
 
-- Странная ошибка сервера:
-
-[TwirpScript] Started POST "/v2/common.Frey/GetEventAdmins"
-[TwirpScript] Error:
-TwirpError {
-  code: "bad_route",
-  msg: "no handler for path POST /v2/common.Frey/GetEventAdmins.",
-  meta: undefined,
-}
-
+- bun - хуита. Дебаггер не работает, память течет.
+  - Заменить на tsx (запуск/вотч) + pkgroll (сборка прод-бандла)
+  - Вернуть pnpm
+  - Заиспользовать встроенный тест-раннер https://nodejs.org/en/learn/test-runner/using-test-runner
 
 - Написать тесты для моделей
 - Проконтролировать таймзоны, возможно надо будет допихнуть условный luxon

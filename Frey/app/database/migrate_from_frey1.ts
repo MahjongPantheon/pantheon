@@ -2,8 +2,8 @@ import { Kysely, PostgresDialect } from 'kysely';
 import { DB as DatabaseOld } from './schema_v1';
 import { Pool } from 'pg';
 import { env } from '../helpers/env';
-import { db as newDb } from './db';
-import * as process from "node:process";
+import { createDbConstructor } from './db';
+import * as process from 'node:process';
 
 process.env.NODE_ENV = 'development';
 
@@ -15,10 +15,12 @@ export async function migrateFromFrey1() {
         database: 'frey',
         user: 'frey',
         password: env.db.password,
-        port: env.db.port
+        port: env.db.port,
       }),
     }),
   });
+
+  const newDb = createDbConstructor()();
 
   await newDb.transaction().execute(async (trx) => {
     let i = 0;

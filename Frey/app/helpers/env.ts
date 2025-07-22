@@ -27,15 +27,16 @@ type EnvVars = {
   TZ: string;
 };
 
+const development = process.env.NODE_ENV !== 'production';
 const data: Partial<EnvVars> =
   dotenv.config({
-    path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
+    path: development ? '.env.development' : '.env.production',
   })?.parsed ?? {};
 
 process.env.TZ = data.TZ ?? 'UTC';
 
 export const env = {
-  development: process.env.NODE_ENV === 'production',
+  development,
   debug: {
     token: data.DEBUG_TOKEN ?? '',
     internalQuerySecret: data.INTERNAL_QUERY_SECRET ?? '',
