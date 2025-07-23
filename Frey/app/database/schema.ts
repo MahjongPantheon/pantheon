@@ -57,7 +57,10 @@ export interface PersonAccess {
    * ACL value 1 or 0
    */
   acl_value: number;
-  event_id: number | null;
+  /**
+   * -1 for system-wide access rule
+   */
+  event_id: number;
   id: Generated<number>;
   person_id: number;
 }

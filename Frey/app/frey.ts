@@ -82,7 +82,12 @@ export const freyClient: Frey<Context> = {
     accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
     context: Context
   ): Promise<AccessAddRuleForPersonResponse> {
-    return addRuleForPerson(context.db, accessAddRuleForPersonPayload);
+    return addRuleForPerson(
+      context.db,
+      context.redisClient,
+      context,
+      accessAddRuleForPersonPayload
+    );
   },
 
   async ApproveRegistration(
@@ -124,7 +129,12 @@ export const freyClient: Frey<Context> = {
     accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return deleteRuleForPerson(context.db, accessDeleteRuleForPersonPayload);
+    return deleteRuleForPerson(
+      context.db,
+      context.redisClient,
+      context,
+      accessDeleteRuleForPersonPayload
+    );
   },
 
   async DepersonalizeAccount(

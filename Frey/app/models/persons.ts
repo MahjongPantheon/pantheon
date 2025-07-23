@@ -50,7 +50,7 @@ export async function createAccount(
   if (
     !bootstrap &&
     (!context.personId ||
-      (await getSuperadminFlag(db, redisClient, { personId: context.personId })))
+      !(await getSuperadminFlag(db, redisClient, { personId: context.personId })).isAdmin)
   ) {
     throw new Error('This action is not allowed');
   }
@@ -367,14 +367,14 @@ export async function getPersonalInfo(
   payload: PersonsGetPersonalInfoPayload,
   context: Context
 ): Promise<PersonsGetPersonalInfoResponse> {
-  const [data, currentPerson, rights] = await Promise.all([
+  const [data, isAdmin, rights] = await Promise.all([
     getPersonData(db, redisClient, payload.ids),
-    db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
+    getSuperadminFlag(db, redisClient, { personId: context.personId ?? 0 }),
     db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
   ]);
 
   const withPrivateData =
-    currentPerson[0].is_superadmin === 1 ||
+    isAdmin.isAdmin ||
     rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0;
 
   return {
@@ -419,6 +419,13 @@ export async function updatePersonalInfo(
 ): Promise<GenericSuccessResponse> {
   if (payload.email.length === 0 || payload.title.length === 0) {
     throw new Error('Some of required field are empty');
+  }
+
+  if (
+    context.personId !== payload.id &&
+    !(await getSuperadminFlag(db, redisClient, { personId: context.personId ?? -1 })).isAdmin
+  ) {
+    throw new Error('This action is not allowed');
   }
 
   const promises = [];

@@ -17,11 +17,47 @@ import { GenericSuccessResponse } from '../clients/proto/atoms.pb';
 import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getSuperadminCacheKey } from '../helpers/cache/schema';
+import { Context } from '../context';
 
 export async function addRuleForPerson(
   db: Database,
+  redisClient: IRedisClient,
+  context: Context,
   payload: AccessAddRuleForPersonPayload
 ): Promise<AccessAddRuleForPersonResponse> {
+  const eventAdmins = await getEventAdmins(db, { eventId: payload.eventId });
+  const isSuperadmin =
+    context.personId && (await getSuperadminFlag(db, redisClient, { personId: context.personId }));
+  const isEventAdmin =
+    context.personId &&
+    eventAdmins.admins.filter((admin) => admin.personId === context.personId).length > 0;
+
+  // Separate checks for add admin in the event
+  if (
+    payload.ruleName === Rights.ADMIN_EVENT &&
+    context.personId !== null &&
+    payload.eventId !== -1
+  ) {
+    if (context.personId === payload.personId) {
+      // Throw if we already have admins in this event; otherwise it's a bootstrapping of first admin
+      if (eventAdmins.admins.length > 0) {
+        throw new Error('You are not allowed to add yourself to administrators in this event');
+      }
+    } else {
+      if (!isEventAdmin && !isSuperadmin) {
+        throw new Error('You are not allowed to add administrators in this event');
+      }
+    }
+  } else if (payload.ruleName === Rights.REFEREE_FOR_EVENT) {
+    if (!isEventAdmin && !isSuperadmin) {
+      throw new Error('You are not allowed to add referees in this event');
+    }
+  } else {
+    if (!isSuperadmin) {
+      throw new Error('Unknown rule to add');
+    }
+  }
+
   const value: RowPersonAccess = {
     acl_name: payload.ruleName,
     acl_value: payload.ruleValue.boolValue === true ? 1 : 0,
@@ -40,8 +76,53 @@ export async function addRuleForPerson(
 
 export async function deleteRuleForPerson(
   db: Database,
+  redisClient: IRedisClient,
+  context: Context,
   payload: AccessDeleteRuleForPersonPayload
 ): Promise<GenericSuccessResponse> {
+  const rule = await db
+    .selectFrom('person_access')
+    .selectAll()
+    .where('id', '=', payload.ruleId)
+    .execute();
+  if (rule.length === 0) {
+    throw new Error('Rule does not exist');
+  }
+
+  const eventAdmins =
+    rule[0].event_id === -1
+      ? { admins: [] }
+      : await getEventAdmins(db, { eventId: rule[0].event_id });
+  const isSuperadmin =
+    context.personId && (await getSuperadminFlag(db, redisClient, { personId: context.personId }));
+  const isEventAdmin =
+    context.personId &&
+    rule[0].event_id === -1 &&
+    eventAdmins.admins.filter((admin) => admin.personId === context.personId).length > 0;
+
+  // Separate checks for add admin in the event
+  if (
+    rule[0].acl_name === Rights.ADMIN_EVENT &&
+    context.personId !== null &&
+    rule[0].event_id !== -1
+  ) {
+    if (context.personId === rule[0].person_id) {
+      throw new Error('You are not allowed to remove yourself from administrators in this event');
+    } else {
+      if (!isEventAdmin && !isSuperadmin) {
+        throw new Error('You are not allowed to remove administrators from this event');
+      }
+    }
+  } else if (rule[0].acl_name === Rights.REFEREE_FOR_EVENT) {
+    if (!isEventAdmin && !isSuperadmin) {
+      throw new Error('You are not allowed to remove referees from this event');
+    }
+  } else {
+    if (!isSuperadmin) {
+      throw new Error('Unknown rule to remove');
+    }
+  }
+
   await db.deleteFrom('person_access').where('id', '=', payload.ruleId).execute();
   return { success: true };
 }
