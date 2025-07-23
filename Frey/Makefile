@@ -111,23 +111,6 @@ autofix:
 	pnpm run eslint . --fix
 	pnpm run prettier -w ./app
 
-.PHONY: build
-build:
-	NODE_ENV=production pnpm run pkgroll
-
-.PHONY: prod_deps
-prod_deps:
-	cd ../Frey-dist && NODE_ENV=production pnpm install
-
-.PHONY: prebuild
-prebuild:
-	cp -f dist/server.js ../Frey-dist/
-	cp -f dist/server.js.map ../Frey-dist/
-	if [ -f .env.production ]; then cp -f .env.production ../Frey-dist/ ; fi
-	if [ -f .env.development ]; then cp -f .env.development ../Frey-dist/ ; fi
-	cp -f package.json ../Frey-dist/
-	cp -f pnpm.lock ../Frey-dist/
-
 dev:
 	pnpm exec tsx watch --inspect=0.0.0.0:4204/debug app/server.ts
 

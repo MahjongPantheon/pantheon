@@ -135,7 +135,6 @@ pantheon_stop:
 enable_debug: export ENV_FILENAME=.env.development
 enable_debug:
 	@cd Mimir && ${MAKE} container_enable_debug
-	@cd Frey && ${MAKE} container_enable_debug
 	@cd Hugin && ${MAKE} container_enable_debug
 	@cd Gullveig && ${MAKE} container_enable_debug
 
@@ -143,7 +142,6 @@ enable_debug:
 disable_debug: export ENV_FILENAME=.env.development
 disable_debug:
 	@cd Mimir && ${MAKE} container_disable_debug
-	@cd Frey && ${MAKE} container_disable_debug
 	@cd Hugin && ${MAKE} container_disable_debug
 	@cd Gullveig && ${MAKE} container_disable_debug
 
@@ -418,7 +416,6 @@ test:
 autofix:
 	cd Mimir && ${MAKE} container_autofix
 	cd Frey && ${MAKE} container_autofix
-	cd Frey && ${MAKE} container_autofix_common
 	cd Tyr && ${MAKE} container_autofix
 	cd Forseti && ${MAKE} container_autofix
 	cd Sigrun && ${MAKE} container_autofix
@@ -469,11 +466,6 @@ prod_build_forseti: export NODE_ENV=production
 prod_build_forseti: # this is for automated builds, don't run it manually
 	cd Forseti && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild
 
-.PHONY: prod_build_frey
-prod_build_frey: export NODE_ENV=production
-prod_build_frey: # this is for automated builds, don't run it manually
-	cd Frey && ${MAKE} container_build && ${MAKE} container_prebuild
-
 .PHONY: prod_build_sigrun
 prod_build_sigrun: export NODE_ENV=production
 prod_build_sigrun: # this is for automated builds, don't run it manually
@@ -502,7 +494,7 @@ prod_compile:
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
-	${MAKE} prod_build_frey && cd Frey && ${MAKE} container_reload_pm2
+	cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
 	cd Sigrun && ${MAKE} container_warmup
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
@@ -582,12 +574,6 @@ e2e_dev:
 	@${COMPOSE_COMMAND} --profile e2e up -d
 	cd Fenrir && ${MAKE} container_deps && ${MAKE} container_run
 
-.PHONY: e2e_build_frey
-e2e_build_frey: export NODE_ENV=development
-e2e_build_frey: export ENV_FILENAME=.env.e2e
-e2e_build_frey: # this is for automated builds, don't run it manually
-	cd Frey && ${MAKE} container_build && ${MAKE} container_prebuild
-
 .PHONY: e2e_build_tyr
 e2e_build_tyr: export NODE_ENV=development
 e2e_build_tyr: export ENV_FILENAME=.env.e2e
@@ -631,6 +617,7 @@ e2e_compile:
 	${MAKE} e2e_build_tyr
 	${MAKE} e2e_build_forseti
 	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
+	${MAKE} cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
 
