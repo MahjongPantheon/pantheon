@@ -12,8 +12,6 @@ export type Generated<T> =
 
 export type Int8 = ColumnType<string, bigint | number | string, bigint | number | string>;
 
-export type Timestamp = ColumnType<Date, Date | string, Date | string>;
-
 export interface Group {
   description: string;
   id: Generated<number>;
@@ -68,7 +66,7 @@ export interface Person {
   has_avatar: Generated<number>;
   id: Generated<number>;
   is_superadmin: Generated<number>;
-  last_update: Timestamp | null;
+  last_update: string | null;
   notifications: Generated<string>;
   /**
    * PERSONAL DATA
@@ -107,9 +105,9 @@ export interface PersonGroup {
 
 export interface Phinxlog {
   breakpoint: Generated<boolean>;
-  end_time: Timestamp | null;
+  end_time: string | null;
   migration_name: string | null;
-  start_time: Timestamp | null;
+  start_time: string | null;
   version: Int8;
 }
 

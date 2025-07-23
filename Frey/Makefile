@@ -57,7 +57,7 @@ deps:
 .PHONY: eslint
 eslint:
 	echo "======= Frey: eslint ======"
-	pnpm run eslint .
+	pnpm exec eslint .
 
 .PHONY: container_eslint
 container_eslint: get_container_id
@@ -70,7 +70,7 @@ container_eslint: get_container_id
 .PHONY: prettier
 prettier:
 	echo "======= Frey: prettier ======"
-	pnpm run prettier -c ./app
+	pnpm exec prettier -c ./app
 
 .PHONY: container_prettier
 container_prettier: get_container_id
@@ -83,7 +83,7 @@ container_prettier: get_container_id
 .PHONY: typecheck
 typecheck:
 	echo "======= Frey: typecheck ======"
-	pnpm run tsc --project tsconfig.json --noEmit
+	pnpm exec tsc --project tsconfig.json --noEmit
 
 .PHONY: container_typecheck
 container_typecheck: get_container_id
@@ -108,8 +108,8 @@ container_test: get_container_id
 
 .PHONY: autofix
 autofix:
-	pnpm run eslint . --fix
-	pnpm run prettier -w ./app
+	pnpm exec eslint . --fix
+	pnpm exec prettier -w ./app
 
 dev:
 	pnpm exec tsx watch --inspect=0.0.0.0:4204/debug app/server.ts
@@ -157,7 +157,7 @@ container_bootstrap_admin: get_container_id container_migrate
 
 .PHONY: proto_gen
 proto_gen:
-	pnpm run twirpscript
+	pnpm exec twirpscript
 
 .PHONY: container_dev
 container_dev: get_container_id

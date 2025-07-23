@@ -191,7 +191,7 @@ export async function me(
     tenhouId: personData.tenhou_id ?? '',
     title: personData.title,
     hasAvatar: !!personData.has_avatar,
-    lastUpdate: personData.last_update?.toISOString() ?? '',
+    lastUpdate: personData.last_update ?? '',
   };
 }
 

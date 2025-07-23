@@ -86,7 +86,7 @@ export async function getEventAdmins(
       ruleId: r.id ?? 0,
       personId: r.person_id,
       personName: r.title ?? '',
-      lastUpdate: (r.last_update ?? new Date()).toISOString(),
+      lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
       hasAvatar: r.has_avatar === 1,
     })),
   };
@@ -109,7 +109,7 @@ export async function getEventReferees(
       ruleId: r.id ?? 0,
       personId: r.person_id,
       personName: r.title ?? '',
-      lastUpdate: (r.last_update ?? new Date()).toISOString(),
+      lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
       hasAvatar: r.has_avatar === 1,
     })),
   };

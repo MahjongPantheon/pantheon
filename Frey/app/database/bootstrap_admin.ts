@@ -5,7 +5,7 @@ import * as process from 'node:process';
 
 async function bootstrapAdmin() {
   const db = createDbConstructor()();
-  const redisClient = createRedisConstructor()();
+  const redisClient = await createRedisConstructor()();
 
   const ret = await createAccount(
     db,
@@ -19,7 +19,7 @@ async function bootstrapAdmin() {
       tenhouId: '',
       title: 'Adminstrator',
     },
-    { authToken: '', currentEventId: null, locale: '', personId: null },
+    { authToken: '', currentEventId: null, locale: '', personId: null, db, redisClient },
     true
   );
 
