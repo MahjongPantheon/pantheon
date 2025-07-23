@@ -7,10 +7,12 @@ import { Context } from './context';
 import { fillRequestVars } from './middleware/requestVars';
 import { createDbConstructor, createRedisConstructor } from './database/db';
 import { storages } from './middleware/storages';
+import { Log } from './helpers/log';
 
 export const freyHandler = [createFrey(freyClient)];
 const dbConstructor = createDbConstructor();
 const redisConstructor = createRedisConstructor();
+const logger = new Log('/var/log/frey.log');
 
 redisConstructor().then((redis) => {
   const app = createTwirpServer<Context, typeof freyHandler, IncomingMessage>(freyHandler, {
@@ -19,6 +21,18 @@ redisConstructor().then((redis) => {
   })
     .use(fillRequestVars())
     .use(storages(dbConstructor(), redis));
+
+  app.on('requestReceived', (ctx) => {
+    logger.logStart(ctx.method?.name ?? 'Unknown', []);
+  });
+
+  app.on('responseSent', (ctx) => {
+    logger.logSuccess(ctx.method?.name ?? 'Unknown', []);
+  });
+
+  app.on('error', (ctx, err) => {
+    logger.logFailure(ctx.method?.name ?? 'Unknown', [err.msg]);
+  });
 
   createServer(app).listen(env.port, () => console.log(`Server listening on port ${env.port}`));
 });
