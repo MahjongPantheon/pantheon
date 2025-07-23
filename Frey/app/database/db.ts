@@ -1,19 +1,19 @@
 import type { Database as Db } from './schema.ts';
 import { Pool } from 'pg';
 import { Kysely, PostgresDialect } from 'kysely';
-import { IRedisClient, RedisClient } from '../helpers/cache/RedisClient';
+import { IRedisClient, RedisClient, RedisClientMock } from '../helpers/cache/RedisClient';
 import { env } from '../helpers/env';
 
 export type Database = Kysely<Db>;
 
-export function createDbConstructor(): () => Database {
+export function createDbConstructor(mock?: boolean): () => Database {
   let db: Database | undefined;
   return () => {
     if (!db) {
       db = new Kysely<Db>({
         dialect: new PostgresDialect({
           pool: new Pool({
-            database: env.db.dbname,
+            database: mock ? 'frey2_unit' : env.db.dbname,
             host: env.db.host,
             user: env.db.username,
             password: env.db.password,
@@ -48,16 +48,20 @@ export function createDbConstructor(): () => Database {
   };
 }
 
-export function createRedisConstructor(): () => Promise<IRedisClient> {
+export function createRedisConstructor(mock?: boolean): () => Promise<IRedisClient> {
   let redisClient: IRedisClient | undefined;
   return async () => {
     if (!redisClient) {
-      redisClient = new RedisClient(
-        env.redis.username,
-        env.redis.password,
-        env.redis.host,
-        env.redis.port
-      );
+      if (mock) {
+        redisClient = new RedisClientMock();
+      } else {
+        redisClient = new RedisClient(
+          env.redis.username,
+          env.redis.password,
+          env.redis.host,
+          env.redis.port
+        );
+      }
     }
 
     await redisClient.connect();
