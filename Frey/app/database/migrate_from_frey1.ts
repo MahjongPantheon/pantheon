@@ -92,7 +92,7 @@ export async function migrateFromFrey1() {
             .map((rec) => ({
               acl_name: rec.acl_name,
               acl_value: parseInt(rec.acl_value.toString()),
-              event_id: rec.event_id,
+              event_id: rec.event_id ?? -1,
               id: rec.id,
               person_id: rec.person_id,
             }))

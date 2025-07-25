@@ -1,0 +1,4 @@
+// GetEventAdmins;
+// GetEventReferees;
+// GetMajsoulNicknames;
+// GetOwnedEventIds;

@@ -18,10 +18,6 @@ class AuthRequestResetPasswordPayload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string email = 1;</code>
      */
     protected $email = '';
-    /**
-     * Generated from protobuf field <code>bool send_email = 2;</code>
-     */
-    protected $send_email = false;
 
     /**
      * Constructor.
@@ -30,7 +26,6 @@ class AuthRequestResetPasswordPayload extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $email
-     *     @type bool $send_email
      * }
      */
     public function __construct($data = NULL) {
@@ -56,28 +51,6 @@ class AuthRequestResetPasswordPayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->email = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool send_email = 2;</code>
-     * @return bool
-     */
-    public function getSendEmail()
-    {
-        return $this->send_email;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool send_email = 2;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setSendEmail($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->send_email = $var;
 
         return $this;
     }

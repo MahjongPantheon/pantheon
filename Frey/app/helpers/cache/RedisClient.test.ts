@@ -1,5 +1,3 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
 import { RedisClientMock } from './RedisClient';
 
 describe('RedisClientMock', () => {
@@ -8,7 +6,7 @@ describe('RedisClientMock', () => {
     const obj = { kek: 1, lol: '2' };
     await client.set('test1', obj);
     const result = await client.get('test1');
-    assert.deepEqual(result, obj);
+    expect(result).toEqual(obj);
   });
 
   it('Should store and get hash value', async () => {
@@ -16,7 +14,7 @@ describe('RedisClientMock', () => {
     const obj = { kek: 1, lol: '2' };
     await client.hSetNX('test2', 'key1', obj);
     const result = await client.hGetAll('test2');
-    assert.deepEqual(result, { key1: obj });
+    expect(result).toEqual({ key1: obj });
   });
 
   it('should store and remove value', async () => {
@@ -24,13 +22,13 @@ describe('RedisClientMock', () => {
     const obj = { kek: 1, lol: '2' };
     await client.set('test3', obj);
     await client.remove('test3');
-    assert.equal((await client.get('test3').catch((e) => e)) instanceof Error, true);
+    expect(await client.get('test3').catch((e) => e)).toBeInstanceOf(Error);
   });
 
   it('should increment and decrement value', async () => {
     const client = new RedisClientMock();
-    assert.equal(await client.incr('test4'), 1);
-    assert.equal(await client.decr('test4'), 0);
+    expect(await client.incr('test4')).toEqual(1);
+    expect(await client.decr('test4')).toEqual(0);
   });
 
   it('should rpop values one by one regardless of lpush order', async () => {
@@ -44,6 +42,6 @@ describe('RedisClientMock', () => {
       .then(() => client.lPush('q2', obj))
       .then(() => client.lPush('q3', obj));
 
-    assert.deepEqual(await Promise.all(promises), [obj, obj, obj, obj]);
+    expect(await Promise.all(promises)).toEqual([obj, obj, obj, obj]);
   });
 });

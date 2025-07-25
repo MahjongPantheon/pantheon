@@ -1,41 +1,5 @@
-import { createAccount } from '../models/persons';
-import { createRedisConstructor, createDbConstructor } from './db';
-import { Rights } from '../helpers/rights';
 import * as process from 'node:process';
-
-async function bootstrapAdmin() {
-  const db = createDbConstructor()();
-  const redisClient = await createRedisConstructor()();
-
-  const ret = await createAccount(
-    db,
-    redisClient,
-    {
-      city: '',
-      country: '',
-      email: 'admin@localhost.localdomain',
-      password: '123456',
-      phone: '',
-      tenhouId: '',
-      title: 'Adminstrator',
-    },
-    { authToken: '', currentEventId: null, locale: '', personId: null, db, redisClient },
-    true
-  );
-
-  await db.updateTable('person').set({ is_superadmin: 1 }).where('id', '=', ret.personId).execute();
-  await db
-    .insertInto('person_access')
-    .values({
-      acl_name: Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA,
-      acl_value: 1,
-      person_id: ret.personId,
-      event_id: -1,
-    })
-    .execute();
-
-  return ret.personId;
-}
+import { bootstrapAdmin } from './actions/bootstrap';
 
 bootstrapAdmin()
   .then((id) => {

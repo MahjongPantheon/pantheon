@@ -408,9 +408,17 @@ lint:
 
 .PHONY: test
 test:
+	@echo "Running tests for all subsystems"
+	@echo "For more information, you might also want to run `make test_verbose`"
 	cd Tyr && ${MAKE} container_test
 	cd Frey && ${MAKE} container_test
 	cd Mimir && ${MAKE} container_test
+
+.PHONY: test_verbose
+test_verbose:
+	cd Tyr && ${MAKE} container_test_verbose
+	cd Frey && ${MAKE} container_test_verbose
+	cd Mimir && ${MAKE} container_test_verbose
 
 .PHONY: autofix
 autofix:

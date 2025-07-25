@@ -14,14 +14,6 @@ use Google\Protobuf\Internal\GPBUtil;
  */
 class AuthMePayload extends \Google\Protobuf\Internal\Message
 {
-    /**
-     * Generated from protobuf field <code>int32 person_id = 1;</code>
-     */
-    protected $person_id = 0;
-    /**
-     * Generated from protobuf field <code>string auth_token = 2;</code>
-     */
-    protected $auth_token = '';
 
     /**
      * Constructor.
@@ -29,57 +21,11 @@ class AuthMePayload extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $person_id
-     *     @type string $auth_token
      * }
      */
     public function __construct($data = NULL) {
         \GPBMetadata\Proto\Frey::initOnce();
         parent::__construct($data);
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 person_id = 1;</code>
-     * @return int
-     */
-    public function getPersonId()
-    {
-        return $this->person_id;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 person_id = 1;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setPersonId($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->person_id = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>string auth_token = 2;</code>
-     * @return string
-     */
-    public function getAuthToken()
-    {
-        return $this->auth_token;
-    }
-
-    /**
-     * Generated from protobuf field <code>string auth_token = 2;</code>
-     * @param string $var
-     * @return $this
-     */
-    public function setAuthToken($var)
-    {
-        GPBUtil::checkString($var, True);
-        $this->auth_token = $var;
-
-        return $this;
     }
 
 }

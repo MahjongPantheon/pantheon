@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { sha1, sha384 } from './crypto';
+import { InvalidInputError } from './errors';
 
 export const makeClientHash = (password: string, salt: string) => {
   return sha384(password + salt);
@@ -12,7 +13,7 @@ export const verifyHash = async (clientHash: string, authHash: string) => {
       if (res) {
         resolve();
       } else {
-        reject('Password check failed');
+        reject(new InvalidInputError('Password check failed'));
       }
     });
   });

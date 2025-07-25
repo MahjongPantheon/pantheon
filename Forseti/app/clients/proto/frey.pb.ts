@@ -20,7 +20,6 @@ export interface AuthRequestRegistrationPayload {
   email: string;
   title: string;
   password: string;
-  sendEmail: boolean;
 }
 
 export interface AuthRequestRegistrationResponse {
@@ -54,10 +53,7 @@ export interface AuthQuickAuthorizeResponse {
   authSuccess: boolean;
 }
 
-export interface AuthMePayload {
-  personId: number;
-  authToken: string;
-}
+export interface AuthMePayload {}
 
 export interface AuthMeResponse {
   personId: number;
@@ -83,7 +79,6 @@ export interface AuthChangePasswordResponse {
 
 export interface AuthRequestResetPasswordPayload {
   email: string;
-  sendEmail: boolean;
 }
 
 export interface AuthRequestResetPasswordResponse {
@@ -171,9 +166,9 @@ export interface PersonsUpdatePersonalInfoPayload {
   tenhouId: string;
   hasAvatar: boolean;
   avatarData: string;
-  msNickname: string;
-  msFriendId: number;
-  msAccountId: number;
+  msNickname?: string | null | undefined;
+  msFriendId?: number | null | undefined;
+  msAccountId?: number | null | undefined;
 }
 
 export interface PersonsGetPersonalInfoPayload {
@@ -1288,7 +1283,6 @@ export const AuthRequestRegistrationPayload = {
       email: "",
       title: "",
       password: "",
-      sendEmail: false,
       ...msg,
     };
   },
@@ -1308,9 +1302,6 @@ export const AuthRequestRegistrationPayload = {
     }
     if (msg.password) {
       writer.writeString(3, msg.password);
-    }
-    if (msg.sendEmail) {
-      writer.writeBool(4, msg.sendEmail);
     }
     return writer;
   },
@@ -1335,10 +1326,6 @@ export const AuthRequestRegistrationPayload = {
         }
         case 3: {
           msg.password = reader.readString();
-          break;
-        }
-        case 4: {
-          msg.sendEmail = reader.readBool();
           break;
         }
         default: {
@@ -1875,21 +1862,15 @@ export const AuthMePayload = {
   /**
    * Serializes AuthMePayload to protobuf.
    */
-  encode: function (msg: PartialDeep<AuthMePayload>): Uint8Array {
-    return AuthMePayload._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
+  encode: function (_msg?: PartialDeep<AuthMePayload>): Uint8Array {
+    return new Uint8Array();
   },
 
   /**
    * Deserializes AuthMePayload from protobuf.
    */
-  decode: function (bytes: ByteSource): AuthMePayload {
-    return AuthMePayload._readMessage(
-      AuthMePayload.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
+  decode: function (_bytes?: ByteSource): AuthMePayload {
+    return {};
   },
 
   /**
@@ -1897,8 +1878,6 @@ export const AuthMePayload = {
    */
   initialize: function (msg?: Partial<AuthMePayload>): AuthMePayload {
     return {
-      personId: 0,
-      authToken: "",
       ...msg,
     };
   },
@@ -1907,15 +1886,9 @@ export const AuthMePayload = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<AuthMePayload>,
+    _msg: PartialDeep<AuthMePayload>,
     writer: protoscript.BinaryWriter,
   ): protoscript.BinaryWriter {
-    if (msg.personId) {
-      writer.writeInt32(1, msg.personId);
-    }
-    if (msg.authToken) {
-      writer.writeString(2, msg.authToken);
-    }
     return writer;
   },
 
@@ -1923,27 +1896,10 @@ export const AuthMePayload = {
    * @private
    */
   _readMessage: function (
-    msg: AuthMePayload,
-    reader: protoscript.BinaryReader,
+    _msg: AuthMePayload,
+    _reader: protoscript.BinaryReader,
   ): AuthMePayload {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.personId = reader.readInt32();
-          break;
-        }
-        case 2: {
-          msg.authToken = reader.readString();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
+    return _msg;
   },
 };
 
@@ -2266,7 +2222,6 @@ export const AuthRequestResetPasswordPayload = {
   ): AuthRequestResetPasswordPayload {
     return {
       email: "",
-      sendEmail: false,
       ...msg,
     };
   },
@@ -2280,9 +2235,6 @@ export const AuthRequestResetPasswordPayload = {
   ): protoscript.BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
-    }
-    if (msg.sendEmail) {
-      writer.writeBool(2, msg.sendEmail);
     }
     return writer;
   },
@@ -2299,10 +2251,6 @@ export const AuthRequestResetPasswordPayload = {
       switch (field) {
         case 1: {
           msg.email = reader.readString();
-          break;
-        }
-        case 2: {
-          msg.sendEmail = reader.readBool();
           break;
         }
         default: {
@@ -3606,9 +3554,9 @@ export const PersonsUpdatePersonalInfoPayload = {
       tenhouId: "",
       hasAvatar: false,
       avatarData: "",
-      msNickname: "",
-      msFriendId: 0,
-      msAccountId: 0,
+      msNickname: undefined,
+      msFriendId: undefined,
+      msAccountId: undefined,
       ...msg,
     };
   },
@@ -3647,13 +3595,13 @@ export const PersonsUpdatePersonalInfoPayload = {
     if (msg.avatarData) {
       writer.writeString(9, msg.avatarData);
     }
-    if (msg.msNickname) {
+    if (msg.msNickname != undefined) {
       writer.writeString(10, msg.msNickname);
     }
-    if (msg.msFriendId) {
+    if (msg.msFriendId != undefined) {
       writer.writeInt32(11, msg.msFriendId);
     }
-    if (msg.msAccountId) {
+    if (msg.msAccountId != undefined) {
       writer.writeInt32(12, msg.msAccountId);
     }
     return writer;
@@ -4732,7 +4680,6 @@ export const AuthRequestRegistrationPayloadJSON = {
       email: "",
       title: "",
       password: "",
-      sendEmail: false,
       ...msg,
     };
   },
@@ -4752,9 +4699,6 @@ export const AuthRequestRegistrationPayloadJSON = {
     }
     if (msg.password) {
       json["password"] = msg.password;
-    }
-    if (msg.sendEmail) {
-      json["sendEmail"] = msg.sendEmail;
     }
     return json;
   },
@@ -4777,10 +4721,6 @@ export const AuthRequestRegistrationPayloadJSON = {
     const _password_ = json["password"];
     if (_password_) {
       msg.password = _password_;
-    }
-    const _sendEmail_ = json["sendEmail"] ?? json["send_email"];
-    if (_sendEmail_) {
-      msg.sendEmail = _sendEmail_;
     }
     return msg;
   },
@@ -5226,18 +5166,15 @@ export const AuthMePayloadJSON = {
   /**
    * Serializes AuthMePayload to JSON.
    */
-  encode: function (msg: PartialDeep<AuthMePayload>): string {
-    return JSON.stringify(AuthMePayloadJSON._writeMessage(msg));
+  encode: function (_msg?: PartialDeep<AuthMePayload>): string {
+    return "{}";
   },
 
   /**
    * Deserializes AuthMePayload from JSON.
    */
-  decode: function (json: string): AuthMePayload {
-    return AuthMePayloadJSON._readMessage(
-      AuthMePayloadJSON.initialize(),
-      JSON.parse(json),
-    );
+  decode: function (_json?: string): AuthMePayload {
+    return {};
   },
 
   /**
@@ -5245,8 +5182,6 @@ export const AuthMePayloadJSON = {
    */
   initialize: function (msg?: Partial<AuthMePayload>): AuthMePayload {
     return {
-      personId: 0,
-      authToken: "",
       ...msg,
     };
   },
@@ -5255,30 +5190,15 @@ export const AuthMePayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: PartialDeep<AuthMePayload>,
+    _msg: PartialDeep<AuthMePayload>,
   ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.personId) {
-      json["personId"] = msg.personId;
-    }
-    if (msg.authToken) {
-      json["authToken"] = msg.authToken;
-    }
-    return json;
+    return {};
   },
 
   /**
    * @private
    */
-  _readMessage: function (msg: AuthMePayload, json: any): AuthMePayload {
-    const _personId_ = json["personId"] ?? json["person_id"];
-    if (_personId_) {
-      msg.personId = protoscript.parseNumber(_personId_);
-    }
-    const _authToken_ = json["authToken"] ?? json["auth_token"];
-    if (_authToken_) {
-      msg.authToken = _authToken_;
-    }
+  _readMessage: function (msg: AuthMePayload, _json: any): AuthMePayload {
     return msg;
   },
 };
@@ -5560,7 +5480,6 @@ export const AuthRequestResetPasswordPayloadJSON = {
   ): AuthRequestResetPasswordPayload {
     return {
       email: "",
-      sendEmail: false,
       ...msg,
     };
   },
@@ -5575,9 +5494,6 @@ export const AuthRequestResetPasswordPayloadJSON = {
     if (msg.email) {
       json["email"] = msg.email;
     }
-    if (msg.sendEmail) {
-      json["sendEmail"] = msg.sendEmail;
-    }
     return json;
   },
 
@@ -5591,10 +5507,6 @@ export const AuthRequestResetPasswordPayloadJSON = {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
-    }
-    const _sendEmail_ = json["sendEmail"] ?? json["send_email"];
-    if (_sendEmail_) {
-      msg.sendEmail = _sendEmail_;
     }
     return msg;
   },
@@ -6691,9 +6603,9 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
       tenhouId: "",
       hasAvatar: false,
       avatarData: "",
-      msNickname: "",
-      msFriendId: 0,
-      msAccountId: 0,
+      msNickname: undefined,
+      msFriendId: undefined,
+      msAccountId: undefined,
       ...msg,
     };
   },
@@ -6732,13 +6644,13 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     if (msg.avatarData) {
       json["avatarData"] = msg.avatarData;
     }
-    if (msg.msNickname) {
+    if (msg.msNickname != undefined) {
       json["msNickname"] = msg.msNickname;
     }
-    if (msg.msFriendId) {
+    if (msg.msFriendId != undefined) {
       json["msFriendId"] = msg.msFriendId;
     }
-    if (msg.msAccountId) {
+    if (msg.msAccountId != undefined) {
       json["msAccountId"] = msg.msAccountId;
     }
     return json;

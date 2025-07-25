@@ -162,7 +162,7 @@ export const freyClient: Frey<Context> = {
     personsFindByTitlePayload: PersonsFindByTitlePayload,
     context: Context
   ): Promise<PersonsFindByTitleResponse> {
-    return findByTitle(context.db, personsFindByTitlePayload, context);
+    return findByTitle(context.db, personsFindByTitlePayload);
   },
 
   async GetEventAdmins(
@@ -190,7 +190,11 @@ export const freyClient: Frey<Context> = {
     personsGetNotificationsSettingsPayload: PersonsGetNotificationsSettingsPayload,
     context: Context
   ): Promise<PersonsGetNotificationsSettingsResponse> {
-    return getNotificationsSettings(context.db, personsGetNotificationsSettingsPayload);
+    return getNotificationsSettings(
+      context.db,
+      context.redisClient,
+      personsGetNotificationsSettingsPayload
+    );
   },
 
   async GetOwnedEventIds(
@@ -214,8 +218,8 @@ export const freyClient: Frey<Context> = {
     return getSuperadminFlag(context.db, context.redisClient, accessGetSuperadminFlagPayload);
   },
 
-  async Me(authMePayload: AuthMePayload, context: Context): Promise<AuthMeResponse> {
-    return me(context.db, context.redisClient, authMePayload, context);
+  async Me(_: AuthMePayload, context: Context): Promise<AuthMeResponse> {
+    return me(context.db, context.redisClient, context);
   },
 
   async QuickAuthorize(
@@ -243,7 +247,12 @@ export const freyClient: Frey<Context> = {
     personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return setNotificationsSettings(context.db, personsSetNotificationsSettingsPayload);
+    return setNotificationsSettings(
+      context.db,
+      context.redisClient,
+      personsSetNotificationsSettingsPayload,
+      context
+    );
   },
 
   async UpdatePersonalInfo(

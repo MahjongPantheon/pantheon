@@ -22,7 +22,10 @@ export function createDbConstructor(mock?: boolean): () => Database {
           }),
         }),
         log(event) {
-          if (!env.development) {
+          if (
+            !env.development ||
+            (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE !== 'true')
+          ) {
             return;
           }
           if (event.level === 'error') {

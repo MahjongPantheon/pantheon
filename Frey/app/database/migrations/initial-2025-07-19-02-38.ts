@@ -89,6 +89,13 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute();
 
   await db.schema
+    .createIndex('majsoul_platform_account_person_id')
+    .on('majsoul_platform_account')
+    .column('person_id')
+    .unique()
+    .execute();
+
+  await db.schema
     .createIndex('majsoul_platform_account_account_id')
     .on('majsoul_platform_account')
     .column('account_id')

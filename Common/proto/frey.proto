@@ -79,7 +79,6 @@ message AuthRequestRegistrationPayload {
   string email = 1;
   string title = 2;
   string password = 3;
-  bool send_email = 4;
 }
 
 message AuthRequestRegistrationResponse {
@@ -113,10 +112,7 @@ message AuthQuickAuthorizeResponse {
   bool auth_success = 1;
 }
 
-message AuthMePayload {
-  int32 person_id = 1;
-  string auth_token = 2;
-}
+message AuthMePayload {}
 
 message AuthMeResponse {
   int32 person_id = 1;
@@ -142,7 +138,6 @@ message AuthChangePasswordResponse {
 
 message AuthRequestResetPasswordPayload {
   string email = 1;
-  bool send_email = 2;
 }
 
 message AuthRequestResetPasswordResponse {
@@ -230,9 +225,9 @@ message PersonsUpdatePersonalInfoPayload {
   string tenhou_id = 7;
   bool has_avatar = 8;
   string avatar_data = 9;
-  string ms_nickname = 10;
-  int32 ms_friend_id  = 11;
-  int32 ms_account_id = 12;
+  optional string ms_nickname = 10;
+  optional int32 ms_friend_id  = 11;
+  optional int32 ms_account_id = 12;
 }
 
 message PersonsGetPersonalInfoPayload {

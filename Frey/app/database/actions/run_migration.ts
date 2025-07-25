@@ -1,7 +1,7 @@
 import { FileMigrationProvider, Kysely, Migrator, PostgresDialect } from 'kysely';
-import { Database } from './schema';
+import { Database } from '../schema';
 import { Pool } from 'pg';
-import { env } from '../helpers/env';
+import { env } from '../../helpers/env';
 import { promises as fs } from 'fs';
 import path from 'path';
 
@@ -16,6 +16,9 @@ export async function migrateToLatest(mock?: boolean) {
       }),
     }),
     log(event) {
+      if (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE !== 'true') {
+        return;
+      }
       if (event.level === 'error') {
         console.error('Query failed : ', {
           durationMs: event.queryDurationMillis,
@@ -40,13 +43,16 @@ export async function migrateToLatest(mock?: boolean) {
       fs,
       path,
       // This needs to be an absolute path.
-      migrationFolder: path.join(__dirname, './migrations'),
+      migrationFolder: path.join(__dirname, '../migrations'),
     }),
   });
 
   const { error, results } = await migrator.migrateToLatest();
 
   results?.forEach((it) => {
+    if (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE !== 'true') {
+      return;
+    }
     if (it.status === 'Success') {
       console.log(`migration "${it.migrationName}" was executed successfully`);
     } else if (it.status === 'Error') {

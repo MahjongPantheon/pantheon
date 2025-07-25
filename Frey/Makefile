@@ -96,7 +96,7 @@ container_typecheck: get_container_id
 .PHONY: test
 test:
 	echo "======= Frey: test ======"
-	pnpm exec tsx --test
+	pnpm exec jest
 
 .PHONY: container_test
 container_test: get_container_id
@@ -104,6 +104,20 @@ container_test: get_container_id
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make test' ; \
+	fi
+
+.PHONY: test_verbose
+test_verbose: export TEST_VERBOSE=true
+test_verbose:
+	echo "======= Frey: test ======"
+	pnpm exec jest
+
+.PHONY: container_test_verbose
+container_test_verbose: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make test_verbose' ; \
 	fi
 
 .PHONY: autofix

@@ -26,6 +26,15 @@ import { getCachedPersonalData } from '../helpers/cache/personalData';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getPersonalInfoCacheKey } from '../helpers/cache/schema';
 
+import {
+  ActionNotAllowedError,
+  DataMalformedError,
+  ExistsError,
+  InvalidInputError,
+  NotFoundError,
+} from '../helpers/errors';
+import { env } from 'helpers/env';
+
 export async function authorize(
   db: Database,
   payload: AuthAuthorizePayload
@@ -37,7 +46,7 @@ export async function authorize(
     .execute();
 
   if (personData.length === 0) {
-    throw new Error('Person not found in database');
+    throw new NotFoundError('Person not found in database');
   }
 
   const authToken = makeClientHash(payload.password, personData[0].auth_salt);
@@ -56,7 +65,7 @@ export async function approveRegistration(
     .execute();
 
   if (regData.length === 0) {
-    throw new Error('Approval code is invalid');
+    throw new InvalidInputError('Approval code is invalid');
   }
 
   const personData = await db
@@ -66,7 +75,7 @@ export async function approveRegistration(
     .execute();
 
   if (personData.length > 0) {
-    throw new Error('Email is already registered');
+    throw new ExistsError('Email is already registered');
   }
 
   const ret = await db
@@ -98,11 +107,11 @@ export async function approveResetPassword(
     .execute();
 
   if (regData.length === 0) {
-    throw new Error('Email is not known to the system');
+    throw new NotFoundError('Email is not known to the system');
   }
 
   if (payload.resetToken === '' || regData[0].auth_reset_token !== payload.resetToken) {
-    throw new Error('Password reset approval code is incorrect.');
+    throw new InvalidInputError('Password reset approval code is incorrect.');
   }
 
   const newPassword = sha1(payload.email + Date.now().toString()).slice(0, 8);
@@ -138,10 +147,14 @@ export async function changePassword(
     .execute();
 
   if (regData.length === 0) {
-    throw new Error('Email is not known to the system');
+    throw new NotFoundError('Email is not known to the system');
   }
 
   await verifyHash(makeClientHash(payload.password, regData[0].auth_salt), regData[0].auth_hash);
+
+  if (calcPasswordStrength(payload.newPassword) < 14) {
+    throw new InvalidInputError('Password is too weak');
+  }
 
   const tokens = await makeHashes(payload.newPassword);
 
@@ -165,25 +178,24 @@ export async function changePassword(
 export async function me(
   db: Database,
   redisClient: IRedisClient,
-  payload: AuthMePayload,
   context: Context
 ): Promise<AuthMeResponse> {
-  if (context.personId !== payload.personId) {
-    throw new Error('This function should be used by account owner only');
+  if (!context.personId || !context.authToken) {
+    throw new ActionNotAllowedError('Should be logged in to use this function');
   }
 
-  const data = await getCachedPersonalData(db, redisClient, payload.personId);
+  const data = await getCachedPersonalData(db, redisClient, context.personId);
 
   if (data.length === 0) {
-    throw new Error('Person is not known to the system');
+    throw new NotFoundError('Person is not known to the system');
   }
 
   const [personData] = data;
 
-  await verifyHash(payload.authToken, personData.auth_hash);
+  await verifyHash(context.authToken, personData.auth_hash);
 
   return {
-    personId: payload.personId,
+    personId: context.personId,
     country: personData.country,
     city: personData.city ?? '',
     email: personData.email,
@@ -200,17 +212,12 @@ export async function quickAuthorize(
   redisClient: IRedisClient,
   payload: AuthQuickAuthorizePayload
 ): Promise<AuthQuickAuthorizeResponse> {
-  try {
-    const personData = await getCachedPersonalData(db, redisClient, payload.personId);
-    if (personData.length === 0) {
-      throw new Error('Person is not known to the system');
-    }
-    await verifyHash(payload.authToken, personData[0].auth_hash);
-    return { authSuccess: true };
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (_) {
-    return { authSuccess: false };
+  const personData = await getCachedPersonalData(db, redisClient, payload.personId);
+  if (personData.length === 0) {
+    throw new NotFoundError('Person is not known to the system');
   }
+  await verifyHash(payload.authToken, personData[0].auth_hash);
+  return { authSuccess: true };
 }
 
 export async function requestRegistration(
@@ -218,20 +225,24 @@ export async function requestRegistration(
   payload: AuthRequestRegistrationPayload
 ): Promise<AuthRequestRegistrationResponse> {
   if (!emailRe.test(payload.email)) {
-    throw new Error('Email address is malformed');
+    throw new DataMalformedError('Email address is malformed');
   }
 
   if (calcPasswordStrength(payload.password) < 14) {
-    throw new Error('Password is too weak');
+    throw new InvalidInputError('Password is too weak');
   }
 
   const alreadyRegistered =
     (await db.selectFrom('person').where('email', '=', payload.email).select('id').execute())
       .length > 0;
 
-  if (alreadyRegistered && payload.sendEmail) {
-    await sendAlreadyRegisteredMail(payload.email);
-    return { approvalCode: '' };
+  if (alreadyRegistered) {
+    if (env.development) {
+      throw new ExistsError('Already registered');
+    } else {
+      await sendAlreadyRegisteredMail(payload.email);
+      return { approvalCode: '' };
+    }
   }
 
   const tokens = await makeHashes(payload.password);
@@ -247,7 +258,7 @@ export async function requestRegistration(
     })
     .execute();
 
-  if (payload.sendEmail) {
+  if (!env.development) {
     await sendSignupMail(payload.email, '/profile/confirm/' + approvalCode);
     return { approvalCode: '' };
   }
@@ -267,7 +278,7 @@ export async function requestResetPassword(
     .execute();
 
   if (result.length === 0) {
-    throw new Error('Email in not known to auth system');
+    throw new NotFoundError('Email in not known to auth system');
   }
 
   const token = sha1(payload.email + Date.now().toString());
@@ -276,7 +287,7 @@ export async function requestResetPassword(
   promises.push(db.updateTable('person').set({ auth_reset_token: token }).execute());
   promises.push(redisClient.remove(getPersonalInfoCacheKey(result[0].id)));
 
-  if (payload.sendEmail) {
+  if (!env.development) {
     promises.push(sendPasswordRecovery(token, payload.email));
     await Promise.all(promises);
     return { resetToken: '' };

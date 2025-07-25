@@ -51,17 +51,17 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
      */
     protected $avatar_data = '';
     /**
-     * Generated from protobuf field <code>string ms_nickname = 10;</code>
+     * Generated from protobuf field <code>optional string ms_nickname = 10;</code>
      */
-    protected $ms_nickname = '';
+    protected $ms_nickname = null;
     /**
-     * Generated from protobuf field <code>int32 ms_friend_id = 11;</code>
+     * Generated from protobuf field <code>optional int32 ms_friend_id = 11;</code>
      */
-    protected $ms_friend_id = 0;
+    protected $ms_friend_id = null;
     /**
-     * Generated from protobuf field <code>int32 ms_account_id = 12;</code>
+     * Generated from protobuf field <code>optional int32 ms_account_id = 12;</code>
      */
-    protected $ms_account_id = 0;
+    protected $ms_account_id = null;
 
     /**
      * Constructor.
@@ -287,16 +287,26 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string ms_nickname = 10;</code>
+     * Generated from protobuf field <code>optional string ms_nickname = 10;</code>
      * @return string
      */
     public function getMsNickname()
     {
-        return $this->ms_nickname;
+        return isset($this->ms_nickname) ? $this->ms_nickname : '';
+    }
+
+    public function hasMsNickname()
+    {
+        return isset($this->ms_nickname);
+    }
+
+    public function clearMsNickname()
+    {
+        unset($this->ms_nickname);
     }
 
     /**
-     * Generated from protobuf field <code>string ms_nickname = 10;</code>
+     * Generated from protobuf field <code>optional string ms_nickname = 10;</code>
      * @param string $var
      * @return $this
      */
@@ -309,16 +319,26 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 ms_friend_id = 11;</code>
+     * Generated from protobuf field <code>optional int32 ms_friend_id = 11;</code>
      * @return int
      */
     public function getMsFriendId()
     {
-        return $this->ms_friend_id;
+        return isset($this->ms_friend_id) ? $this->ms_friend_id : 0;
+    }
+
+    public function hasMsFriendId()
+    {
+        return isset($this->ms_friend_id);
+    }
+
+    public function clearMsFriendId()
+    {
+        unset($this->ms_friend_id);
     }
 
     /**
-     * Generated from protobuf field <code>int32 ms_friend_id = 11;</code>
+     * Generated from protobuf field <code>optional int32 ms_friend_id = 11;</code>
      * @param int $var
      * @return $this
      */
@@ -331,16 +351,26 @@ class PersonsUpdatePersonalInfoPayload extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 ms_account_id = 12;</code>
+     * Generated from protobuf field <code>optional int32 ms_account_id = 12;</code>
      * @return int
      */
     public function getMsAccountId()
     {
-        return $this->ms_account_id;
+        return isset($this->ms_account_id) ? $this->ms_account_id : 0;
+    }
+
+    public function hasMsAccountId()
+    {
+        return isset($this->ms_account_id);
+    }
+
+    public function clearMsAccountId()
+    {
+        unset($this->ms_account_id);
     }
 
     /**
-     * Generated from protobuf field <code>int32 ms_account_id = 12;</code>
+     * Generated from protobuf field <code>optional int32 ms_account_id = 12;</code>
      * @param int $var
      * @return $this
      */

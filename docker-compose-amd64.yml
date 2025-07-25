@@ -119,6 +119,10 @@ services:
       - "127.0.0.1:4004:80"
       - "4204:4204"
       - "4204:4204/udp"
+      - "4404:4404"
+      - "4404:4404/udp"
+      - "4414:4414"
+      - "4414:4414/udp"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal

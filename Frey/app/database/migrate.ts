@@ -1,4 +1,4 @@
-import { migrateToLatest } from './run_migration';
+import { migrateToLatest } from './actions/run_migration';
 
 migrateToLatest()
   .then(() => {

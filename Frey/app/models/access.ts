@@ -18,6 +18,7 @@ import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getSuperadminCacheKey } from '../helpers/cache/schema';
 import { Context } from '../context';
+import { ActionNotAllowedError, NotFoundError } from '../helpers/errors';
 
 export async function addRuleForPerson(
   db: Database,
@@ -41,20 +42,22 @@ export async function addRuleForPerson(
     if (context.personId === payload.personId) {
       // Throw if we already have admins in this event; otherwise it's a bootstrapping of first admin
       if (eventAdmins.admins.length > 0) {
-        throw new Error('You are not allowed to add yourself to administrators in this event');
+        throw new ActionNotAllowedError(
+          'You are not allowed to add yourself to administrators in this event'
+        );
       }
     } else {
       if (!isEventAdmin && !isSuperadmin) {
-        throw new Error('You are not allowed to add administrators in this event');
+        throw new ActionNotAllowedError('You are not allowed to add administrators in this event');
       }
     }
   } else if (payload.ruleName === Rights.REFEREE_FOR_EVENT) {
     if (!isEventAdmin && !isSuperadmin) {
-      throw new Error('You are not allowed to add referees in this event');
+      throw new ActionNotAllowedError('You are not allowed to add referees in this event');
     }
   } else {
     if (!isSuperadmin) {
-      throw new Error('Unknown rule to add');
+      throw new ActionNotAllowedError('Unknown rule to add');
     }
   }
 
@@ -86,7 +89,7 @@ export async function deleteRuleForPerson(
     .where('id', '=', payload.ruleId)
     .execute();
   if (rule.length === 0) {
-    throw new Error('Rule does not exist');
+    throw new NotFoundError('Rule does not exist');
   }
 
   const eventAdmins =
@@ -107,19 +110,23 @@ export async function deleteRuleForPerson(
     rule[0].event_id !== -1
   ) {
     if (context.personId === rule[0].person_id) {
-      throw new Error('You are not allowed to remove yourself from administrators in this event');
+      throw new ActionNotAllowedError(
+        'You are not allowed to remove yourself from administrators in this event'
+      );
     } else {
       if (!isEventAdmin && !isSuperadmin) {
-        throw new Error('You are not allowed to remove administrators from this event');
+        throw new ActionNotAllowedError(
+          'You are not allowed to remove administrators from this event'
+        );
       }
     }
   } else if (rule[0].acl_name === Rights.REFEREE_FOR_EVENT) {
     if (!isEventAdmin && !isSuperadmin) {
-      throw new Error('You are not allowed to remove referees from this event');
+      throw new ActionNotAllowedError('You are not allowed to remove referees from this event');
     }
   } else {
     if (!isSuperadmin) {
-      throw new Error('Unknown rule to remove');
+      throw new ActionNotAllowedError('Unknown rule to remove');
     }
   }
 
@@ -143,10 +150,13 @@ export async function getSuperadminFlag(
   const result = await db
     .selectFrom('person')
     .where('id', '=', payload.personId)
-    .select('is_superadmin')
+    .select(['is_superadmin', 'auth_hash'])
     .execute();
+
   const response = result.length > 0 && !!result[0].is_superadmin;
-  await redisClient.set<boolean>(getSuperadminCacheKey(payload.personId), response);
+  if (result.length > 0) {
+    await redisClient.set<boolean>(getSuperadminCacheKey(payload.personId), response);
+  }
   return { isAdmin: response };
 }
 

@@ -2,6 +2,7 @@ import { RedisClientType, createClient } from 'redis';
 
 export interface IRedisClient {
   connect(): Promise<void>;
+  disconnect(): Promise<void>;
   get<T>(key: string, onNotFound?: T): Promise<T>;
   set<T>(key: string, val: T, ttl?: number): Promise<boolean>;
   remove(key: string): Promise<boolean>;
@@ -42,6 +43,12 @@ export class RedisClient implements IRedisClient {
     await this.clientBase.connect();
     await this.clientPub.connect();
     await this.clientSub.connect();
+  }
+
+  public async disconnect() {
+    await this.clientBase.disconnect();
+    await this.clientPub.disconnect();
+    await this.clientSub.disconnect();
   }
 
   public async rPop<T>(key: string): Promise<T> {
@@ -156,6 +163,10 @@ export class RedisClientMock implements IRedisClient {
   private _channelListeners: Record<string, Array<(data: any) => Promise<void>>> = {};
 
   public async connect() {
+    return Promise.resolve();
+  }
+
+  public async disconnect() {
     return Promise.resolve();
   }
 

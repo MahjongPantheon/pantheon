@@ -24,7 +24,11 @@ export async function cleanup() {
     .where('table_schema', 'not in', ['pg_catalog', 'information_schema'])
     .execute();
 
-  for (let t in tables) {
-    await oldDb.schema.dropTable(t).execute();
+  for (let t of tables) {
+    if (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE === 'true') {
+      console.log('Cleaning up table', t.table_name);
+    }
+
+    await oldDb.schema.dropTable(t.table_name).ifExists().cascade().execute();
   }
 }

@@ -102,6 +102,19 @@ container_test: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make test' ; \
 	fi
 
+.PHONY: test_verbose
+test_verbose: export TEST_VERBOSE=true
+test_verbose:
+	php bin/unit.php
+
+.PHONY: container_test_verbose
+container_test_verbose: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Mimir container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make test_verbose' ; \
+	fi
+
 .PHONY: autofix
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
