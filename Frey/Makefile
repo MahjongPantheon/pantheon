@@ -120,6 +120,39 @@ container_test_verbose: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make test_verbose' ; \
 	fi
 
+.PHONY: run_test_server
+run_test_server: export TEST_VERBOSE=true
+run_test_server:
+	@echo "${GREEN}Running test server on port 4404${NC}"
+	@echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"
+	@echo "Use 'make test_noserver' in separate terminal to run jest on already started server"
+	pnpm exec tsx watch --inspect=0.0.0.0:4404/debug app/tests/testserver.ts
+
+.PHONY: container_run_test_server
+container_run_test_server: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+	  echo "${GREEN}Running test server on port 4404${NC}"; \
+		echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"; \
+		echo "Use `make container_test_noserver` in separate terminal to run jest on already started server"; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user pnpm exec tsx watch --inspect=0.0.0.0:4404/debug app/tests/testserver.ts' ; \
+	fi
+
+.PHONY: test_noserver
+test_noserver: export DEBUG=true
+test_noserver:
+	echo "======= Frey: test_noserver ======"
+	pnpm exec jest
+
+.PHONY: container_test_noserver
+container_test_noserver: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make test_noserver' ; \
+	fi
+
 .PHONY: autofix
 autofix:
 	pnpm exec eslint . --fix
