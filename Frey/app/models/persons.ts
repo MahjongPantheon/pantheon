@@ -180,6 +180,7 @@ export async function depersonalizeAccount(
         auth_salt: '',
         auth_reset_token: '',
       })
+      .where('id', '=', context.personId)
       .execute()
   );
 
@@ -461,11 +462,11 @@ export async function setNotificationsSettings(
   await Promise.all([
     db
       .updateTable('person')
-      .where('id', '=', payload.personId)
       .set({
         telegram_id: payload.telegramId,
         notifications: payload.notifications,
       })
+      .where('id', '=', payload.personId)
       .execute(),
     redisClient.remove(getNotificationSettingsCacheKey(payload.personId)),
   ]);
@@ -558,9 +559,8 @@ export async function updatePersonalInfo(
       db
         .insertInto('majsoul_platform_account')
         .values(msValue as RowMajsoulPlatformAccount)
-        .onConflict((oc) =>
-          oc.constraint('majsoul_platform_account_person_id').doUpdateSet(msValue)
-        )
+        .onConflict((oc) => oc.column('person_id').doUpdateSet(msValue))
+        .onConflict((oc) => oc.column('account_id').doUpdateSet(msValue))
         .execute()
     );
   }

@@ -126,6 +126,7 @@ export async function approveResetPassword(
         auth_salt: tokens.salt,
         auth_hash: tokens.hash,
       })
+      .where('id', '=', regData[0].id)
       .execute()
   );
   promises.push(redisClient.remove(getPersonalInfoCacheKey(regData[0].id)));
@@ -167,6 +168,7 @@ export async function changePassword(
         auth_salt: tokens.salt,
         auth_hash: tokens.hash,
       })
+      .where('id', '=', regData[0].id)
       .execute()
   );
   promises.push(redisClient.remove(getPersonalInfoCacheKey(regData[0].id)));
@@ -284,7 +286,13 @@ export async function requestResetPassword(
   const token = sha1(payload.email + Date.now().toString());
 
   const promises = [];
-  promises.push(db.updateTable('person').set({ auth_reset_token: token }).execute());
+  promises.push(
+    db
+      .updateTable('person')
+      .set({ auth_reset_token: token })
+      .where('id', '=', result[0].id)
+      .execute()
+  );
   promises.push(redisClient.remove(getPersonalInfoCacheKey(result[0].id)));
 
   if (!env.development) {

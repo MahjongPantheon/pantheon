@@ -200,7 +200,6 @@ describe('Search for users', () => {
           tenhouId: 'davig1',
           title: 'David Guetta',
           msNickname: 'davig2',
-          msFriendId: 123,
           msAccountId: 321,
         },
         {
@@ -208,7 +207,6 @@ describe('Search for users', () => {
           tenhouId: 'davij1',
           title: 'David Johnson',
           msNickname: 'davij2',
-          msFriendId: 345,
           msAccountId: 543,
         },
       ],
@@ -241,7 +239,6 @@ describe('Search for users', () => {
           email: expect.anything(),
           phone: '123321',
           msNickname: 'davig2',
-          msFriendId: 123,
           msAccountId: 321,
         },
         {
@@ -251,7 +248,6 @@ describe('Search for users', () => {
           email: expect.anything(),
           phone: '123321',
           msNickname: 'davij2',
-          msFriendId: 345,
           msAccountId: 543,
         },
       ],

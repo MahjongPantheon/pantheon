@@ -70,9 +70,7 @@ export async function addRuleForPerson(
   const result = await db
     .insertInto('person_access')
     .values(value)
-    .onConflict((oc) =>
-      oc.constraint('person_access_person_id_acl_name_event_id').doUpdateSet(value)
-    )
+    .onConflict((oc) => oc.columns(['event_id', 'person_id', 'acl_name']).doUpdateSet(value))
     .execute();
   return { ruleId: Number(result[0].insertId) };
 }
