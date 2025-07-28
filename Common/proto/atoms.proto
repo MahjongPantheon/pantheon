@@ -22,21 +22,6 @@ package common;
 
 // Frey specifics
 
-message AccessRules {
-  map<string, RuleValue> rules = 1;
-}
-
-message RuleValue {
-  oneof kind {
-    // Represents a double value.
-    int32 number_value = 2;
-    // Represents a string value.
-    string string_value = 3;
-    // Represents a boolean value.
-    bool bool_value = 4;
-  }
-}
-
 message EventAdmin {
   int32 rule_id = 1;
   int32 person_id = 2;
@@ -51,32 +36,6 @@ message EventReferee {
   string person_name = 3;
   bool has_avatar = 4;
   string last_update = 5;
-}
-
-message RuleListItem {
-  string default = 1;
-  string type = 2;
-  string title = 3;
-}
-
-message EventRuleListItem {
-  bool is_global = 1;
-  int32 id = 2;
-  RuleValue value = 3;
-  string name = 4;
-  string owner_title = 5;
-  repeated string allowed_values = 6;
-}
-
-message RuleListItemEx {
-  int32 id = 1;
-  string type = 2;
-  RuleValue value = 3;
-  repeated string allowed_values = 4;
-}
-
-message RuleListItemExMap {
-  map<string, RuleListItemEx> rules = 1;
 }
 
 message Person {
@@ -102,13 +61,6 @@ message PersonEx {
   int32 ms_account_id = 12;
   string telegram_id = 13;
   string notifications = 14;
-}
-
-message Group {
-  int32 id = 1;
-  string title = 2;
-  string color = 3;
-  string description = 4;
 }
 
 // Mimir specifics

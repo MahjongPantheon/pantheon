@@ -1,2 +1,0 @@
-// AddRuleForPerson
-// DeleteRuleForPerson

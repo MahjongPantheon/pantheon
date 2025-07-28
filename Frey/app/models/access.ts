@@ -19,6 +19,7 @@ import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getSuperadminCacheKey } from '../helpers/cache/schema';
 import { Context } from '../context';
 import { ActionNotAllowedError, NotFoundError } from '../helpers/errors';
+import { verifyHash } from '../helpers/auth';
 
 export async function addRuleForPerson(
   db: Database,
@@ -28,10 +29,21 @@ export async function addRuleForPerson(
 ): Promise<AccessAddRuleForPersonResponse> {
   const eventAdmins = await getEventAdmins(db, { eventId: payload.eventId });
   const isSuperadmin =
-    context.personId && (await getSuperadminFlag(db, redisClient, { personId: context.personId }));
+    context.personId &&
+    (await getSuperadminFlag(db, redisClient, { personId: context.personId })).isAdmin;
   const isEventAdmin =
     context.personId &&
     eventAdmins.admins.filter((admin) => admin.personId === context.personId).length > 0;
+
+  const regData = await db
+    .selectFrom('person')
+    .where('id', '=', context.personId)
+    .selectAll()
+    .execute();
+  if (regData.length === 0) {
+    throw new NotFoundError('Person is not known ot the system');
+  }
+  await verifyHash(context.authToken ?? '', regData[0].auth_hash);
 
   // Separate checks for add admin in the event
   if (
@@ -63,7 +75,7 @@ export async function addRuleForPerson(
 
   const value: RowPersonAccess = {
     acl_name: payload.ruleName,
-    acl_value: payload.ruleValue.boolValue === true ? 1 : 0,
+    acl_value: payload.ruleValue,
     event_id: payload.eventId,
     person_id: payload.personId,
   };
@@ -71,8 +83,9 @@ export async function addRuleForPerson(
     .insertInto('person_access')
     .values(value)
     .onConflict((oc) => oc.columns(['event_id', 'person_id', 'acl_name']).doUpdateSet(value))
+    .returning('id')
     .execute();
-  return { ruleId: Number(result[0].insertId) };
+  return { ruleId: result[0].id };
 }
 
 export async function deleteRuleForPerson(
@@ -95,11 +108,21 @@ export async function deleteRuleForPerson(
       ? { admins: [] }
       : await getEventAdmins(db, { eventId: rule[0].event_id });
   const isSuperadmin =
-    context.personId && (await getSuperadminFlag(db, redisClient, { personId: context.personId }));
+    context.personId &&
+    (await getSuperadminFlag(db, redisClient, { personId: context.personId })).isAdmin;
   const isEventAdmin =
     context.personId &&
-    rule[0].event_id === -1 &&
     eventAdmins.admins.filter((admin) => admin.personId === context.personId).length > 0;
+
+  const regData = await db
+    .selectFrom('person')
+    .where('id', '=', context.personId)
+    .selectAll()
+    .execute();
+  if (regData.length === 0) {
+    throw new NotFoundError('Person is not known ot the system');
+  }
+  await verifyHash(context.authToken ?? '', regData[0].auth_hash);
 
   // Separate checks for add admin in the event
   if (
@@ -164,11 +187,16 @@ export async function getEventAdmins(
 ): Promise<AccessGetEventAdminsResponse> {
   const result = await db
     .selectFrom('person_access')
-    .leftJoin('person', 'person_id', 'person_access.person_id')
+    .leftJoin('person', 'person.id', 'person_access.person_id')
     .where((qb) =>
-      qb.and([qb('event_id', '=', payload.eventId), qb('acl_name', '=', Rights.ADMIN_EVENT)])
+      qb.and([
+        qb('event_id', '=', payload.eventId),
+        qb('acl_name', '=', Rights.ADMIN_EVENT),
+        qb('acl_value', '=', 1),
+      ])
     )
-    .selectAll()
+    .selectAll('person_access')
+    .select(['person.last_update', 'person.has_avatar', 'person.title'])
     .execute();
   return {
     admins: result.map((r) => ({
@@ -187,9 +215,13 @@ export async function getEventReferees(
 ): Promise<AccessGetEventRefereesResponse> {
   const result = await db
     .selectFrom('person_access')
-    .leftJoin('person', 'person_id', 'person_access.person_id')
+    .leftJoin('person', 'person.id', 'person_access.person_id')
     .where((qb) =>
-      qb.and([qb('event_id', '=', payload.eventId), qb('acl_name', '=', Rights.REFEREE_FOR_EVENT)])
+      qb.and([
+        qb('event_id', '=', payload.eventId),
+        qb('acl_name', '=', Rights.REFEREE_FOR_EVENT),
+        qb('acl_value', '=', 1),
+      ])
     )
     .selectAll()
     .execute();
@@ -214,6 +246,7 @@ export async function getOwnedEventIds(
       qb.and([
         qb('person_id', '=', accessGetOwnedEventIdsPayload.personId),
         qb('acl_name', 'in', [Rights.ADMIN_EVENT, Rights.REFEREE_FOR_EVENT]),
+        qb('acl_value', '=', 1),
       ])
     )
     .selectAll()

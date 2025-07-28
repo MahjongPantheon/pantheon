@@ -7,7 +7,6 @@ import {
   AuthAuthorizeResponse,
   AuthChangePasswordPayload,
   AuthChangePasswordResponse,
-  AuthMePayload,
   AuthMeResponse,
   AuthQuickAuthorizePayload,
   AuthQuickAuthorizeResponse,

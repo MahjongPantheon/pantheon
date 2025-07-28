@@ -128,8 +128,7 @@ export interface AccessGetOwnedEventIdsResponse {
 
 export interface AccessAddRuleForPersonPayload {
   ruleName: string;
-  ruleValue: protoAtoms.RuleValue;
-  ruleType: string;
+  ruleValue: number;
   personId: number;
   eventId: number;
 }
@@ -3108,8 +3107,7 @@ export const AccessAddRuleForPersonPayload = {
   ): AccessAddRuleForPersonPayload {
     return {
       ruleName: "",
-      ruleValue: protoAtoms.RuleValue.initialize(),
-      ruleType: "",
+      ruleValue: 0,
       personId: 0,
       eventId: 0,
       ...msg,
@@ -3127,16 +3125,13 @@ export const AccessAddRuleForPersonPayload = {
       writer.writeString(1, msg.ruleName);
     }
     if (msg.ruleValue) {
-      writer.writeMessage(2, msg.ruleValue, protoAtoms.RuleValue._writeMessage);
-    }
-    if (msg.ruleType) {
-      writer.writeString(3, msg.ruleType);
+      writer.writeInt32(2, msg.ruleValue);
     }
     if (msg.personId) {
-      writer.writeInt32(4, msg.personId);
+      writer.writeInt32(3, msg.personId);
     }
     if (msg.eventId) {
-      writer.writeInt32(5, msg.eventId);
+      writer.writeInt32(4, msg.eventId);
     }
     return writer;
   },
@@ -3156,18 +3151,14 @@ export const AccessAddRuleForPersonPayload = {
           break;
         }
         case 2: {
-          reader.readMessage(msg.ruleValue, protoAtoms.RuleValue._readMessage);
+          msg.ruleValue = reader.readInt32();
           break;
         }
         case 3: {
-          msg.ruleType = reader.readString();
-          break;
-        }
-        case 4: {
           msg.personId = reader.readInt32();
           break;
         }
-        case 5: {
+        case 4: {
           msg.eventId = reader.readInt32();
           break;
         }
@@ -6212,8 +6203,7 @@ export const AccessAddRuleForPersonPayloadJSON = {
   ): AccessAddRuleForPersonPayload {
     return {
       ruleName: "",
-      ruleValue: protoAtoms.RuleValueJSON.initialize(),
-      ruleType: "",
+      ruleValue: 0,
       personId: 0,
       eventId: 0,
       ...msg,
@@ -6231,13 +6221,7 @@ export const AccessAddRuleForPersonPayloadJSON = {
       json["ruleName"] = msg.ruleName;
     }
     if (msg.ruleValue) {
-      const _ruleValue_ = protoAtoms.RuleValueJSON._writeMessage(msg.ruleValue);
-      if (Object.keys(_ruleValue_).length > 0) {
-        json["ruleValue"] = _ruleValue_;
-      }
-    }
-    if (msg.ruleType) {
-      json["ruleType"] = msg.ruleType;
+      json["ruleValue"] = msg.ruleValue;
     }
     if (msg.personId) {
       json["personId"] = msg.personId;
@@ -6261,11 +6245,7 @@ export const AccessAddRuleForPersonPayloadJSON = {
     }
     const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
-      protoAtoms.RuleValueJSON._readMessage(msg.ruleValue, _ruleValue_);
-    }
-    const _ruleType_ = json["ruleType"] ?? json["rule_type"];
-    if (_ruleType_) {
-      msg.ruleType = _ruleType_;
+      msg.ruleValue = protoscript.parseNumber(_ruleValue_);
     }
     const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {

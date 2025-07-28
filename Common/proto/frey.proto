@@ -187,10 +187,9 @@ message AccessGetOwnedEventIdsResponse {
 
 message AccessAddRuleForPersonPayload {
   string rule_name = 1;
-  RuleValue rule_value = 2;
-  string rule_type = 3;
-  int32 person_id = 4;
-  int32 event_id = 5;
+  int32 rule_value = 2;
+  int32 person_id = 3;
+  int32 event_id = 4;
 }
 
 message AccessAddRuleForPersonResponse {
