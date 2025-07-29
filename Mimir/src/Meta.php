@@ -214,7 +214,7 @@ class Meta
             return false;
         }
         $eventAdmins = $this->_frey->getEventAdmins($eventId);
-        if (count(array_filter($this->_eventAdmins, function ($admin) {
+        if (count(array_filter($eventAdmins, function ($admin) {
             return $admin['id'] === $this->_currentPersonId;
         })) > 0) {
             return true;
@@ -235,7 +235,7 @@ class Meta
             return false;
         }
         $eventAdmins = $this->_frey->getEventReferees($eventId);
-        if (count(array_filter($this->_eventAdmins, function ($admin) {
+        if (count(array_filter($eventAdmins, function ($admin) {
             return $admin['id'] === $this->_currentPersonId;
         })) > 0) {
             return true;
