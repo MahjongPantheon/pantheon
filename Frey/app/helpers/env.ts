@@ -64,7 +64,7 @@ export const env = {
   cookieDomain: data.COOKIE_DOMAIN,
   gullveigUrl: data.GULLVEIG_URL_INTERNAL,
   mimirUrl: data.MIMIR_URL_INTERNAL,
-  huginUrl: data.HUGIN_URL_INTERNAL,
+  huginUrl: process.env.HUGIN_URL_INTERNAL ?? data.HUGIN_URL_INTERNAL,
   userinfoHook: data.USERINFO_HOOK ?? null,
   userinfoHookApiKey: data.USERINFO_HOOK_API_KEY ?? '',
 };

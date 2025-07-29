@@ -48,7 +48,7 @@ class Meta
     /**
      * @var array
      */
-    protected $_accessRules;
+    protected $_eventAdmins;
     /**
      * @var bool
      */
@@ -157,14 +157,10 @@ class Meta
                     $this->_authToken = null;
                 }
                 if (!empty($this->_currentEventId) && !empty($this->_currentPersonId)) {
-                    $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
-                    if (!empty($this->_accessRules['IS_SUPER_ADMIN'])) {
-                        $this->_superadmin = true;
-                    }
+                    $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
+                    $this->_eventAdmins = $this->_frey->getEventAdmins($this->_currentEventId);
                 } else if (!empty($this->_currentPersonId)) {
                     $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
-                    // -1 for global privileges
-                    $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, -1);
                 }
             } catch (\Exception $e) {
                 $this->_currentPersonId = null;
@@ -176,19 +172,6 @@ class Meta
     public function getAuthToken(): ?string
     {
         return $this->_authToken;
-    }
-
-    /**
-     * @param string $name
-     * @return mixed|null
-     */
-    public function getAccessRuleValue(string $name)
-    {
-        if (!isset($this->_accessRules[$name])) {
-            return null;
-        }
-
-        return $this->_accessRules[$name];
     }
 
     /**
@@ -207,7 +190,12 @@ class Meta
         if ($this->_superadmin) {
             return true;
         }
-        if (!empty($this->_accessRules['ADMIN_EVENT'])) {
+        if (!$this->_currentPersonId) {
+            return false;
+        }
+        if (count(array_filter($this->_eventAdmins, function ($admin) {
+            return $admin['id'] === $this->_currentPersonId;
+        })) > 0) {
             return true;
         }
         return false;
@@ -222,11 +210,13 @@ class Meta
         if ($this->_superadmin) {
             return true;
         }
-        if (empty($this->_currentPersonId)) {
+        if (!$this->_currentPersonId) {
             return false;
         }
-        $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
-        if (!empty($this->_accessRules['ADMIN_EVENT'])) {
+        $eventAdmins = $this->_frey->getEventAdmins($eventId);
+        if (count(array_filter($this->_eventAdmins, function ($admin) {
+            return $admin['id'] === $this->_currentPersonId;
+        })) > 0) {
             return true;
         }
         return false;
@@ -241,11 +231,13 @@ class Meta
         if ($this->_superadmin) {
             return true;
         }
-        if (empty($this->_currentPersonId)) {
+        if (!$this->_currentPersonId) {
             return false;
         }
-        $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
-        if (!empty($this->_accessRules['REFEREE_FOR_EVENT'])) {
+        $eventAdmins = $this->_frey->getEventReferees($eventId);
+        if (count(array_filter($this->_eventAdmins, function ($admin) {
+            return $admin['id'] === $this->_currentPersonId;
+        })) > 0) {
             return true;
         }
         return false;

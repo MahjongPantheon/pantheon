@@ -191,7 +191,7 @@ class FreyClientMock implements IFreyClient
         return true;
     }
 
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
+    public function addRuleForPerson(string $ruleName, int $ruleValue, int $personId, int $eventId)
     {
         return 123;
         // TODO: Implement addRuleForPerson() method.
@@ -222,7 +222,7 @@ class FreyClientMock implements IFreyClient
         return [];
     }
 
-    public function me(int $id, string $clientSideToken): array
+    public function me(): array
     {
         // TODO: Implement me() method.
         return [];

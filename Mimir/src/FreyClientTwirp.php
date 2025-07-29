@@ -47,39 +47,6 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
-     * @param ?\Common\RuleValue $value
-     * @return bool|int|string
-     */
-    protected static function _fromRuleValue(?\Common\RuleValue $value)
-    {
-        if (empty($value)) {
-            return false; // TODO: kludge
-        }
-        if ($value->hasBoolValue()) {
-            return $value->getBoolValue();
-        }
-        if ($value->hasNumberValue()) {
-            return $value->getNumberValue();
-        }
-        return $value->getStringValue();
-    }
-
-    /**
-     * @param mixed $value
-     * @return \Common\RuleValue
-     */
-    protected static function _toRuleValue(&$value): \Common\RuleValue
-    {
-        if (is_bool($value)) {
-            return (new \Common\RuleValue())->setBoolValue($value);
-        } elseif (is_integer($value)) {
-            return (new \Common\RuleValue())->setNumberValue($value);
-        } else {
-            return (new \Common\RuleValue())->setStringValue($value);
-        }
-    }
-
-    /**
      * @return \Common\FreyClient
      */
     // @phpstan-ignore-next-line
@@ -265,7 +232,6 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
@@ -300,7 +266,6 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
@@ -336,7 +301,6 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
@@ -460,23 +424,19 @@ class FreyClientTwirp implements IFreyClient
     /**
      *  Add new rule for a person.
      *
-     *
-     *
      * @param string $ruleName
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
+     * @param int $ruleValue
      * @param int $personId
      * @param int $eventId
      * @return int|null
     */
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
+    public function addRuleForPerson(string $ruleName, int $ruleValue, int $personId, int $eventId)
     {
         return $this->_client->AddRuleForPerson(
             $this->_ctx,
             (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName($ruleName)
-                ->setRuleValue(self::_toRuleValue($ruleValue))
-                ->setRuleType($ruleType)
+                ->setRuleValue($ruleValue)
                 ->setPersonId($personId)
                 ->setEventId($eventId)
         )->getRuleId();
@@ -523,17 +483,13 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
-     * @param int $id
-     * @param string $clientSideToken
      * @return array
      */
-    public function me(int $id, string $clientSideToken): array
+    public function me(): array
     {
         $person = $this->_client->Me(
             $this->_ctx,
             (new \Common\AuthMePayload())
-                ->setPersonId($id)
-                ->setAuthToken($clientSideToken)
         );
         return [
             'id' => $person->getPersonId(),
@@ -542,7 +498,6 @@ class FreyClientTwirp implements IFreyClient
             'email' => $person->getEmail(),
             'phone' => $person->getPhone(),
             'tenhou_id' => $person->getTenhouId(),
-            'groups' => $person->getGroups(),
             'title' => $person->getTitle(),
         ];
     }

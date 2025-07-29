@@ -35,6 +35,7 @@ import {
   ExistsError,
   NotFoundError,
 } from '../helpers/errors';
+import { clearStatCache } from '../helpers/mimir';
 
 export async function createAccount(
   db: Database,
@@ -163,7 +164,7 @@ export async function depersonalizeAccount(
     );
   }
 
-  // TODO: trigger mimir's ClearStatCache
+  promises.push(clearStatCache(context.personId));
 
   promises.push(
     db
@@ -523,7 +524,9 @@ export async function updatePersonalInfo(
     );
   }
 
-  // TODO: trigger mimir's ClearStatCache
+  if (context.personId) {
+    promises.push(clearStatCache(context.personId));
+  }
 
   const value: Partial<RowPerson> = {
     city: payload.city,

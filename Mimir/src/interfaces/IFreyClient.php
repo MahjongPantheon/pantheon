@@ -64,11 +64,9 @@ interface IFreyClient
     /**
      *  Return information about person related to client token
      *
-     * @param int $id
-     * @param string $clientSideToken
      * @return array
     */
-    public function me(int $id, string $clientSideToken): array;
+    public function me(): array;
 
     /**
      *  Change password when old password is known.
@@ -187,13 +185,12 @@ interface IFreyClient
      *
      *
      * @param string $ruleName
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
+     * @param int $ruleValue
      * @param int $personId
      * @param int $eventId
      * @return int|null
     */
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId);
+    public function addRuleForPerson(string $ruleName, int $ruleValue, int $personId, int $eventId);
 
     /**
      *  Drop personal rule by id

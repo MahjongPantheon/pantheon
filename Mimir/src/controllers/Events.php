@@ -86,7 +86,7 @@ class EventsController extends Controller
         }
 
         // Check we have rights to create new event
-        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->getAccessRuleValue('CREATE_EVENT')) {
+        if (!$this->_meta->getCurrentPersonId()) {
             throw new BadActionException("You don't have enough privileges to create new event");
         }
 
@@ -174,8 +174,7 @@ class EventsController extends Controller
 
         $ruleId = $this->_ds->remote()->addRuleForPerson(
             'ADMIN_EVENT',
-            true,
-            'bool',
+            1,
             $this->_meta->getCurrentPersonId(),
             $id
         );
