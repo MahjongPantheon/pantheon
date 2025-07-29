@@ -135,7 +135,7 @@ container_run_test_server: get_container_id
 	else \
 	  echo "${GREEN}Running test server on port 4404${NC}"; \
 		echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"; \
-		echo "Use `make container_test_noserver` in separate terminal to run jest on already started server"; \
+		echo "Use 'make container_test_noserver' in separate terminal to run jest on already started server"; \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user pnpm exec tsx watch --inspect=0.0.0.0:4404/debug app/tests/testserver.ts' ; \
 	fi
 
