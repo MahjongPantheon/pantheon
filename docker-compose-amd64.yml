@@ -92,6 +92,18 @@ services:
         aliases:
           - db.pantheon.local
           - db.pantheon.internal
+  redis.pantheon.internal:
+    build: ./Redis
+    image: ghcr.io/mahjongpantheon/pantheon-redis:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "6379:6379"
+    networks:
+      internal_net:
+        aliases:
+          - redis.pantheon.local
+          - redis.pantheon.internal
   frey.pantheon.internal:
     build:
       context: ./Frey
