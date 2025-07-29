@@ -2,9 +2,7 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
-  reporters: process.env.GITHUB_ACTIONS
-    ? [['github-actions', {silent: false}], 'summary']
-    : [['default', {summaryThreshold: 10}]],
+  reporters: ['jest-spec-reporter'],
   ...(process.env.DEBUG
     ? {}
     : {

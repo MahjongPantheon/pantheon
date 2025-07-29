@@ -46,6 +46,7 @@
     "i18n-po-json": "https://github.com/ctizen/i18n-po-json#2.0.8",
     "i18n-stex": "https://github.com/ctizen/stex#2.1.2",
     "jest": "^30.0.5",
+    "jest-spec-reporter": "^1.0.19",
     "prettier": "^3.5.3",
     "typescript": "5.8.3"
   }
