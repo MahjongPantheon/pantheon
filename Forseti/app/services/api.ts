@@ -202,7 +202,7 @@ export class ApiService {
 
   requestRegistration(email: string, title: string, password: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RequestRegistration' });
-    return RequestRegistration({ email, title, password, sendEmail: true }, this._clientConfFrey);
+    return RequestRegistration({ email, title, password }, this._clientConfFrey);
   }
 
   confirmRegistration(code: string) {
@@ -212,7 +212,7 @@ export class ApiService {
 
   requestPasswordRecovery(email: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RequestResetPassword' });
-    return RequestResetPassword({ email, sendEmail: true }, this._clientConfFrey);
+    return RequestResetPassword({ email }, this._clientConfFrey);
   }
 
   approvePasswordRecovery(email: string, resetToken: string) {
@@ -436,8 +436,7 @@ export class ApiService {
         personId: playerId,
         eventId,
         ruleName: 'ADMIN_EVENT',
-        ruleType: 'bool',
-        ruleValue: { boolValue: true },
+        ruleValue: 1,
       },
       this._clientConfFrey
     ).then((r) => r.ruleId);
@@ -467,8 +466,7 @@ export class ApiService {
         personId: playerId,
         eventId,
         ruleName: 'REFEREE_FOR_EVENT',
-        ruleType: 'bool',
-        ruleValue: { boolValue: true },
+        ruleValue: 1,
       },
       this._clientConfFrey
     ).then((r) => r.ruleId);
