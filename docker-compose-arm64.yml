@@ -94,7 +94,7 @@ services:
           - db.pantheon.internal
   redis.pantheon.internal:
     build: ./Redis
-    image: ghcr.io/mahjongpantheon/pantheon-redis:latest
+    image: ghcr.io/mahjongpantheon/pantheon-redis-arm64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
