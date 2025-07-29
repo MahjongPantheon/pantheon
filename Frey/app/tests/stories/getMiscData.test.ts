@@ -214,15 +214,15 @@ describe('Get misc data', () => {
       mapping: [
         {
           nickname: 'adminaccount',
-          personId: 2,
+          personId: adminAuthData.personId,
         },
         {
           nickname: 'anotheradminaccount',
-          personId: 3,
+          personId: anotherAdminData.personId,
         },
         {
           nickname: 'refereeeaccount',
-          personId: 4,
+          personId: refereeData.personId,
         },
       ],
     });
