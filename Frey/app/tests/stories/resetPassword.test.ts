@@ -1,8 +1,5 @@
 import { createUser, makeFreyClient, makeUniqueEmail } from '../helpers';
-import {
-  InvalidInputError,
-  NotFoundError,
-} from '../../helpers/errors';
+import { InvalidInputError, NotFoundError } from '../../helpers/errors';
 
 describe('Reset password', () => {
   const frey = makeFreyClient();
