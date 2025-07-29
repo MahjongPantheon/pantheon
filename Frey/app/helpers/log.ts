@@ -1,9 +1,9 @@
 import { writeFile } from 'node:fs';
 
 export class Log {
-  private queue: string[] = [];
+  private readonly queue: string[] = [];
   private _timeout: NodeJS.Timeout | null = null;
-  constructor(private filename: string) {}
+  constructor(private readonly filename: string) {}
 
   public logStart(fn: string, args: string[]) {
     this.queue.push('[Frey][' + fn + '](' + args.join(', ') + ') :: started');

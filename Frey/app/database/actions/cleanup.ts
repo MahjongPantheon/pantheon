@@ -17,14 +17,14 @@ export async function cleanup() {
   });
 
   const tables = await oldDb
-    // @ts-ignore
+    // @ts-expect-error
     .selectFrom('information_schema.tables')
-    // @ts-ignore
+    // @ts-expect-error
     .select('table_name')
     .where('table_schema', 'not in', ['pg_catalog', 'information_schema'])
     .execute();
 
-  for (let t of tables) {
+  for (const t of tables) {
     if (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE === 'true') {
       console.log('Cleaning up table', t.table_name);
     }

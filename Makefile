@@ -309,6 +309,14 @@ forseti_typecheck:
 frey_eslint:
 	cd Frey && ${MAKE} container_eslint > ../tmp/frey_lint.log 2>&1
 
+.PHONY: frey_prettier
+frey_prettier:
+	cd Frey && ${MAKE} container_prettier > ../tmp/frey_prettier.log 2>&1
+
+.PHONY: frey_typecheck
+frey_typecheck:
+	cd Frey && ${MAKE} container_typecheck > ../tmp/frey_typecheck.log 2>&1
+
 .PHONY: gullveig_lint
 gullveig_lint:
 	cd Gullveig && ${MAKE} container_lint > ../tmp/gullveig_lint.log 2>&1
@@ -385,7 +393,7 @@ fenrir_typecheck:
 lint:
 	${MAKE} -j16 bragi_eslint bragi_prettier bragi_typecheck \
 		forseti_eslint forseti_prettier forseti_typecheck \
-		frey_eslint \
+		frey_eslint frey_prettier frey_typecheck \
 		gullveig_lint gullveig_analyze \
 		hugin_lint hugin_analyze \
 		mimir_lint mimir_analyze \

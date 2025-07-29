@@ -22,12 +22,12 @@ export function base64decode(input: string): string {
 
 // Note: function is not multibyte-safe
 export function chunks(input: string, size = 76): string[] {
-  let chunks = [];
+  const c = [];
   let strIndex = 0;
   for (let nextIndex = 0; strIndex < input.length; nextIndex++) {
-    chunks[nextIndex] = input.slice(strIndex, (strIndex += size));
+    c[nextIndex] = input.slice(strIndex, (strIndex += size));
   }
-  return chunks;
+  return c;
 }
 
 export function calcPasswordStrength(password: string): number {

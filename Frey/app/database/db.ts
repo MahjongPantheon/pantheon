@@ -9,8 +9,7 @@ export type Database = Kysely<Db>;
 export function createDbConstructor(mock?: boolean): () => Database {
   let db: Database | undefined;
   return () => {
-    if (!db) {
-      db = new Kysely<Db>({
+    db ??= new Kysely<Db>({
         dialect: new PostgresDialect({
           pool: new Pool({
             database: mock ? 'frey2_unit' : env.db.dbname,
@@ -45,7 +44,6 @@ export function createDbConstructor(mock?: boolean): () => Database {
           }
         },
       });
-    }
 
     return db;
   };

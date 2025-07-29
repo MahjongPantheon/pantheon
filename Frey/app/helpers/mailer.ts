@@ -27,12 +27,12 @@ async function _send(
     '--$boundary\r\n' +
     'Content-Type: text/plain; charset=UTF-8\r\n' +
     'Content-Transfer-Encoding: base64\r\n\r\n' +
-    chunkedContent +
+    chunkedContent.join('\n') +
     '\r\n' +
     '--$boundary\r\n' +
     'Content-Type: text/html; charset=UTF-8\r\n' +
     'Content-Transfer-Encoding: base64\r\n\r\n' +
-    chunkedHtmlContent +
+    chunkedHtmlContent.join('\n') +
     '\r\n' +
     '--$boundary--';
 

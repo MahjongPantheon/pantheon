@@ -1,7 +1,5 @@
 import { createUser, makeFreyClient, makeUniqueEmail } from '../helpers';
 import {
-  DataMalformedError,
-  ExistsError,
   InvalidInputError,
   NotFoundError,
 } from '../../helpers/errors';
