@@ -70,6 +70,16 @@ jobs:
             ghcr.io/mahjongpantheon/pantheon-database-arm64:latest
             ghcr.io/mahjongpantheon/pantheon-database-arm64:${{ github.sha }}
 
+      - name: Build and push [Redis]
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Redis
+          platforms: linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ghcr.io/mahjongpantheon/pantheon-redis-arm64:latest
+            ghcr.io/mahjongpantheon/pantheon-redis-arm64:${{ github.sha }}
+
       - name: Build and push [Forseti]
         uses: docker/build-push-action@v6
         with:
