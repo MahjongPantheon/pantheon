@@ -5,6 +5,7 @@ import { Storage } from '../../../Common/storage';
 import { StorageStrategyServer } from '../../../Common/storageStrategyServer';
 import { parseCookies } from '../helpers/cookies';
 import acceptLanguage from 'accept-language';
+import { env } from '../helpers/env';
 acceptLanguage.languages(['en-US', 'de-DE', 'ru-RU']);
 
 export function fillRequestVars(): Middleware<Context, IncomingMessage> {
@@ -29,6 +30,9 @@ export function fillRequestVars(): Middleware<Context, IncomingMessage> {
       (parseInt(req.headers['X-Current-Event-Id'.toLowerCase()]?.toString() ?? '') || null) ??
       storage.getEventId() ??
       null;
+
+    ctx.isInternalQuery =
+      req.headers['X-Internal-Query-Secret'.toLowerCase()]?.toString() === env.internalQuerySecret;
 
     return next();
   };

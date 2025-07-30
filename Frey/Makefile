@@ -218,10 +218,8 @@ container_clean_test_db: get_container_id
 	fi
 
 .PHONY: reload_pm2
-reload_pm2: export PORT=4104
 reload_pm2:
-	HOME=/home/user su-exec user pm2 restart all
-	HOME=/home/user su-exec user pm2 scale server 8 || exit 0
+	cd /var/www/html/Frey-dist && HOME=/home/user su-exec user pm2 restart ecosystem.config.js --env production
 
 .PHONY: container_reload_pm2
 container_reload_pm2: get_container_id

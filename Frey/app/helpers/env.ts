@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 
 type EnvVars = {
-  DEBUG_TOKEN: string;
   INTERNAL_QUERY_SECRET: string;
   VERBOSE: string;
   HERMOD_URL_INTERNAL: string;
@@ -37,10 +36,6 @@ process.env.TZ = data.TZ ?? 'UTC';
 
 export const env = {
   development,
-  debug: {
-    token: data.DEBUG_TOKEN ?? '',
-    internalQuerySecret: data.INTERNAL_QUERY_SECRET ?? '',
-  },
   port: parseInt(process.env.PORT ?? data.PORT ?? '4004'),
   db: {
     host: process.env.DB_FREY_HOST ?? data.DB_FREY_HOST ?? 'db.pantheon.internal',
@@ -67,4 +62,7 @@ export const env = {
   huginUrl: process.env.HUGIN_URL_INTERNAL ?? data.HUGIN_URL_INTERNAL,
   userinfoHook: data.USERINFO_HOOK ?? null,
   userinfoHookApiKey: data.USERINFO_HOOK_API_KEY ?? '',
+  internalQuerySecret: process.env.INTERNAL_QUERY_SECRET ?? data.INTERNAL_QUERY_SECRET ?? '',
 };
+
+console.log('[Frey] Running with env', env);

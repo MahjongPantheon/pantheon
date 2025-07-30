@@ -8,4 +8,5 @@ export interface Context {
   currentEventId: number | null;
   db: Database;
   redisClient: IRedisClient;
+  isInternalQuery: boolean;
 }

@@ -6,6 +6,8 @@ export async function bootstrapAdmin(mockdb?: boolean) {
   const db = createDbConstructor(mockdb)();
   const redisClient = await createRedisConstructor()();
 
+  await db.deleteFrom('person').where('email', '=', 'admin@localhost.localdomain').execute();
+
   const ret = await createAccount(
     db,
     redisClient,
@@ -18,8 +20,15 @@ export async function bootstrapAdmin(mockdb?: boolean) {
       tenhouId: '',
       title: 'Adminstrator',
     },
-    { authToken: '', currentEventId: null, locale: '', personId: null, db, redisClient },
-    true
+    {
+      authToken: '',
+      currentEventId: null,
+      locale: '',
+      personId: null,
+      db,
+      redisClient,
+      isInternalQuery: true,
+    }
   );
 
   await db.updateTable('person').set({ is_superadmin: 1 }).where('id', '=', ret.personId).execute();

@@ -41,8 +41,7 @@ export async function createAccount(
   db: Database,
   redisClient: IRedisClient,
   personsCreateAccountPayload: PersonsCreateAccountPayload,
-  context: Context,
-  bootstrap = false
+  context: Context
 ): Promise<PersonsCreateAccountResponse> {
   if (
     personsCreateAccountPayload.email.length === 0 ||
@@ -56,7 +55,7 @@ export async function createAccount(
   }
 
   if (
-    !bootstrap &&
+    !context.isInternalQuery &&
     (!context.personId ||
       !(await getSuperadminFlag(db, redisClient, { personId: context.personId })).isAdmin)
   ) {
@@ -90,10 +89,10 @@ export async function createAccount(
 
   if (env.development) {
     console.info(
-      bootstrap ? 'Admin bootstrapped' : '==> User created: ',
+      context.isInternalQuery ? 'Admin bootstrapped' : '==> User created: ',
       JSON.stringify({ id: Number(result[0].id), hash: hashes.clientHash })
     );
-    if (bootstrap) {
+    if (context.isInternalQuery) {
       await writeFile(
         '/tmp/admin_creds.json',
         JSON.stringify({ id: Number(result[0].id), hash: hashes.clientHash })
