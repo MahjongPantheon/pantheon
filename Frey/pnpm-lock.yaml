@@ -105,11 +105,14 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.34.1
         version: 8.38.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      esbuild:
+        specifier: ^0.25.8
+        version: 0.25.8
       eslint:
         specifier: ^9.29.0
         version: 9.31.0(jiti@2.4.2)
       eslint-config-prettier:
-        specifier: ^10.1.5
+        specifier: ^10.1.8
         version: 10.1.8(eslint@9.31.0(jiti@2.4.2))
       eslint-plugin-unused-imports:
         specifier: ^4.1.4

@@ -21,10 +21,6 @@ shell: get_container_id
 		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && /bin/sh -l' ; \
 	fi
 
-.PHONY: kill
-kill:
-	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'frey' | awk '{print $$3}'` || exit 0
-
 .PHONY: container_migrate
 container_migrate: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
@@ -53,6 +49,14 @@ logs: get_container_id
 .PHONY: deps
 deps:
 	pnpm install
+
+.PHONY: container_deps
+container_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
+	fi
 
 .PHONY: eslint
 eslint:
@@ -158,53 +162,16 @@ autofix:
 	pnpm exec eslint . --fix
 	pnpm exec prettier -w ./app
 
+.PHONY: container_autofix
+container_autofix: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make autofix' ; \
+	fi
+
 dev:
 	pnpm exec tsx watch --inspect=0.0.0.0:4204/debug app/server.ts
-
-.PHONY: init_test_db
-init_test_db:
-	DB_FREY_NAME=frey2_unit pnpm exec tsx app/database/migrate.ts
-
-.PHONY: bootstrap_admin
-bootstrap_admin:
-	pnpm exec tsx app/database/bootstrap_admin.ts
-
-.PHONY: clean_test_db
-clean_test_db:
-	pnpm exec tsx app/database/clean_test_db.ts
-
-.PHONY: reload_pm2
-reload_pm2:
-	HOME=/home/user su-exec user pm2 restart all
-	HOME=/home/user su-exec user pm2 scale server 8 || exit 0
-
-.PHONY: container_init_test_db
-container_init_test_db: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make init_test_db' ; \
-	fi
-
-.PHONY: container_clean_test_db
-container_clean_test_db: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
-	fi
-
-.PHONY: container_bootstrap_admin
-container_bootstrap_admin: get_container_id container_migrate
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running, can't run seeding.${NC}"; \
-	else \
-	  $(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make bootstrap_admin' ; \
-	fi
-
-.PHONY: proto_gen
-proto_gen:
-	pnpm exec twirpscript
 
 .PHONY: container_dev
 container_dev: get_container_id
@@ -214,53 +181,47 @@ container_dev: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make dev' ; \
 	fi
 
-.PHONY: container_stop
-container_stop: get_container_id
+.PHONY: init_test_db
+init_test_db:
+	DB_FREY_NAME=frey2_unit pnpm exec tsx app/database/migrate.ts
+
+.PHONY: container_init_test_db
+container_init_test_db: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'killall node' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make init_test_db' ; \
 	fi
 
-.PHONY: container_deps
-container_deps: get_container_id
+.PHONY: bootstrap_admin
+bootstrap_admin:
+	pnpm exec tsx app/database/bootstrap_admin.ts
+
+.PHONY: container_bootstrap_admin
+container_bootstrap_admin: get_container_id container_migrate
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
+		echo "${RED}Frey container is not running, can't run seeding.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
+	  $(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make bootstrap_admin' ; \
 	fi
 
-.PHONY: container_prod_deps
-container_prod_deps: get_container_id
+.PHONY: clean_test_db
+clean_test_db:
+	pnpm exec tsx app/database/clean_test_db.ts
+
+.PHONY: container_clean_test_db
+container_clean_test_db: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make prod_deps' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
 	fi
 
-.PHONY: container_autofix
-container_autofix: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make autofix' ; \
-	fi
-
-.PHONY: container_build
-container_build: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make build' ; \
-	fi
-
-.PHONY: container_prebuild
-container_prebuild: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make prebuild' ; \
-	fi
+.PHONY: reload_pm2
+reload_pm2: export PORT=4104
+reload_pm2:
+	HOME=/home/user su-exec user pm2 restart all
+	HOME=/home/user su-exec user pm2 scale server 8 || exit 0
 
 .PHONY: container_reload_pm2
 container_reload_pm2: get_container_id
@@ -270,10 +231,66 @@ container_reload_pm2: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make reload_pm2' ; \
 	fi
 
+.PHONY: build
+build:
+	mkdir -p dist
+	pnpm exec esbuild app/server.ts --bundle --platform=node --target=node22 --packages=external --outfile=./dist/server.js
+
+.PHONY: container_build
+container_build: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make build' ; \
+	fi
+
+.PHONY: prod_deps
+prod_deps:
+	cd ../Frey-dist && NODE_ENV=production pnpm install
+
+.PHONY: container_prod_deps
+container_prod_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make prod_deps' ; \
+	fi
+
+.PHONY: prebuild
+prebuild:
+	cp -f dist/server.js ../Frey-dist/
+	if [ -f .env.production ]; then cp -f .env.production ../Frey-dist/ ; fi
+	cp -f package.json ../Frey-dist/
+	cp -f pnpm-lock.yaml ../Frey-dist/
+
+.PHONY: container_prebuild
+container_prebuild: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make prebuild' ; \
+	fi
+
+.PHONY: proto_gen
+proto_gen:
+	pnpm exec twirpscript
+
 .PHONY: container_proto_gen
 container_proto_gen: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make proto_gen' ; \
+	fi
+
+.PHONY: kill
+kill:
+	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'frey' | awk '{print $$3}'` || exit 0
+
+.PHONY: container_stop
+container_stop: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'killall node' ; \
 	fi

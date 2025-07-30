@@ -41,7 +41,7 @@ export const env = {
     token: data.DEBUG_TOKEN ?? '',
     internalQuerySecret: data.INTERNAL_QUERY_SECRET ?? '',
   },
-  port: parseInt(data.PORT ?? '4004'),
+  port: parseInt(process.env.PORT ?? data.PORT ?? '4004'),
   db: {
     host: process.env.DB_FREY_HOST ?? data.DB_FREY_HOST ?? 'db.pantheon.internal',
     username: process.env.DB_FREY_USER ?? data.DB_FREY_USER ?? 'frey2',

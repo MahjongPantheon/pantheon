@@ -479,6 +479,11 @@ prod_build_sigrun: export NODE_ENV=production
 prod_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: prod_build_frey
+prod_build_frey: export NODE_ENV=production
+prod_build_frey: # this is for automated builds, don't run it manually
+	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: prod_build_bragi
 prod_build_bragi: export NODE_ENV=production
 prod_build_bragi: # this is for automated builds, don't run it manually
@@ -502,7 +507,7 @@ prod_compile:
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
-	cd Frey && ${MAKE} container_reload_pm2
+	${MAKE} prod_build_frey && cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
 	cd Sigrun && ${MAKE} container_warmup
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
@@ -600,6 +605,12 @@ e2e_build_sigrun: export ENV_FILENAME=.env.e2e
 e2e_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: e2e_build_frey
+e2e_build_frey: export NODE_ENV=development
+e2e_build_frey: export ENV_FILENAME=.env.e2e
+e2e_build_frey: # this is for automated builds, don't run it manually
+	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: e2e_build_bragi
 e2e_build_bragi: export NODE_ENV=development
 e2e_build_bragi: export ENV_FILENAME=.env.e2e
@@ -620,12 +631,13 @@ e2e_compile:
 	@cp Env/.env.e2e Forseti/.env.e2e
 	@cp Env/.env.e2e Bragi/.env.e2e
 	@cp Env/.env.e2e Skirnir/.env.e2e
+	@cp Env/.env.e2e Frey/.env.e2e
 	${MAKE} deps
 	${MAKE} migrate
 	${MAKE} e2e_build_tyr
 	${MAKE} e2e_build_forseti
 	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
-	${MAKE} cd Frey && ${MAKE} container_reload_pm2
+	${MAKE} e2e_build_frey && ${MAKE} cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
 
