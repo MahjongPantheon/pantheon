@@ -18,7 +18,7 @@ import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getSuperadminCacheKey } from '../helpers/cache/schema';
 import { Context } from '../context';
-import { ActionNotAllowedError, NotFoundError } from '../helpers/errors';
+import { ActionNotAllowedError, ExistsError, NotFoundError } from '../helpers/errors';
 import { verifyHash } from '../helpers/auth';
 
 export async function addRuleForPerson(
@@ -73,18 +73,25 @@ export async function addRuleForPerson(
     }
   }
 
+  const existingRules = await db
+    .selectFrom('person_access')
+    .selectAll()
+    .where((qb) =>
+      qb.and([qb('event_id', '=', payload.eventId), qb('person_id', '=', payload.personId)])
+    )
+    .execute();
+
+  if (existingRules.filter((rule) => rule.acl_name === payload.ruleName).length > 0) {
+    throw new ExistsError('This rule already exists');
+  }
+
   const value: RowPersonAccess = {
     acl_name: payload.ruleName,
     acl_value: payload.ruleValue,
     event_id: payload.eventId,
     person_id: payload.personId,
   };
-  const result = await db
-    .insertInto('person_access')
-    .values(value)
-    .onConflict((oc) => oc.columns(['event_id', 'person_id', 'acl_name']).doUpdateSet(value))
-    .returning('id')
-    .execute();
+  const result = await db.insertInto('person_access').values(value).returning('id').execute();
   return { ruleId: result[0].id };
 }
 

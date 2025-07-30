@@ -54,13 +54,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute();
 
   await db.schema
-    .createIndex('person_access_uniq')
-    .on('person_access')
-    .columns(['event_id', 'person_id', 'acl_name'])
-    .unique()
-    .execute();
-
-  await db.schema
     .createIndex('person_access_event_id')
     .on('person_access')
     .column('event_id')

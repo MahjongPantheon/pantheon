@@ -479,14 +479,14 @@ export async function updatePersonalInfo(
   payload: PersonsUpdatePersonalInfoPayload,
   context: Context
 ): Promise<GenericSuccessResponse> {
-  if (payload.email.length === 0 || payload.title.length === 0) {
+  if (payload.title.length === 0) {
     throw new DataMalformedError('Some of required field are empty');
   }
 
-  if (
-    context.personId !== payload.id &&
-    !(await getSuperadminFlag(db, redisClient, { personId: context.personId ?? -1 })).isAdmin
-  ) {
+  const isSuperadmin = (
+    await getSuperadminFlag(db, redisClient, { personId: context.personId ?? -1 })
+  ).isAdmin;
+  if (context.personId !== payload.id && !isSuperadmin) {
     throw new ActionNotAllowedError('This action is not allowed');
   }
 
@@ -535,6 +535,14 @@ export async function updatePersonalInfo(
     tenhou_id: payload.tenhouId,
     title: payload.title,
   };
+
+  if (isSuperadmin) {
+    if (payload.email.length === 0) {
+      throw new DataMalformedError('Some of required field are empty');
+    }
+    // allow superadmin to change emails of users
+    value.email = payload.email;
+  }
 
   promises.push(db.updateTable('person').set(value).where('id', '=', payload.id).execute());
 
