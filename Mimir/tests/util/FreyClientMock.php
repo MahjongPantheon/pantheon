@@ -213,7 +213,7 @@ class FreyClientMock implements IFreyClient
     public function getEventAdmins(int $eventId): array
     {
         // TODO: Implement getEventAdmins() method.
-        return [];
+        return [['id' => 1]];
     }
 
     public function getOwnedEventIds(int $personId): array
