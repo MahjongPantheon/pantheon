@@ -24,7 +24,7 @@ async function sendStats() {
   await fetch(env.huginUrl + '/addMetric', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ m: 'registered_users', v: count, s: 'frey' }),
+    body: JSON.stringify([{ m: 'registered_users', v: count, s: 'frey' }]),
   });
 }
 

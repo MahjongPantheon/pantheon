@@ -201,7 +201,12 @@ export const freyClient: Frey<Context> = {
     accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
     context: Context
   ): Promise<AccessGetOwnedEventIdsResponse> {
-    return getOwnedEventIds(context.db, accessGetOwnedEventIdsPayload);
+    return getOwnedEventIds(
+      context.db,
+      context.redisClient,
+      context,
+      accessGetOwnedEventIdsPayload
+    );
   },
 
   async GetPersonalInfo(

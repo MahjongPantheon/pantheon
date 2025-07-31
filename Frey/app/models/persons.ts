@@ -304,7 +304,6 @@ export async function findByTitle(
 ): Promise<PersonsFindByTitleResponse> {
   const persons = await db
     .selectFrom('person')
-    .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
     .selectAll()
     .where((eb) =>
       eb(
@@ -324,7 +323,7 @@ export async function findByTitle(
 
   return {
     people: persons.map((r) => ({
-      id: r.person_id ?? 0,
+      id: r.id ?? 0,
       city: r.city ?? '',
       tenhouId: r.tenhou_id ?? '',
       title: r.title,

@@ -245,19 +245,29 @@ export async function getEventReferees(
 
 export async function getOwnedEventIds(
   db: Database,
+  redisClient: IRedisClient,
+  context: Context,
   accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload
 ): Promise<AccessGetOwnedEventIdsResponse> {
-  const result = await db
-    .selectFrom('person_access')
-    .where((qb) =>
-      qb.and([
-        qb('person_id', '=', accessGetOwnedEventIdsPayload.personId),
-        qb('acl_name', 'in', [Rights.ADMIN_EVENT, Rights.REFEREE_FOR_EVENT]),
-        qb('acl_value', '=', 1),
-      ])
-    )
-    .selectAll()
-    .execute();
+  const isSuperAdmin = (
+    await getSuperadminFlag(db, redisClient, {
+      personId: context.personId ?? 0,
+    })
+  ).isAdmin;
+
+  const result = isSuperAdmin
+    ? await db.selectFrom('person_access').select('event_id').distinct().execute()
+    : await db
+        .selectFrom('person_access')
+        .where((qb) =>
+          qb.and([
+            qb('person_id', '=', accessGetOwnedEventIdsPayload.personId),
+            qb('acl_name', 'in', [Rights.ADMIN_EVENT, Rights.REFEREE_FOR_EVENT]),
+            qb('acl_value', '=', 1),
+          ])
+        )
+        .select('event_id')
+        .execute();
   const isNumber: (n: number | null) => n is number = (n) => typeof n === 'number';
   return {
     eventIds: result.map((e) => e.event_id).filter(isNumber),

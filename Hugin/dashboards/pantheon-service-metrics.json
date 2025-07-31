@@ -1,35 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.4.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -49,18 +18,18 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 1,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "aetmxmrinw4xsc"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "mode": "palette-classic"
           },
           "custom": {
             "axisBorderShow": false,
@@ -71,7 +40,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 25,
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -86,10 +55,10 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "normal"
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -100,8 +69,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -118,34 +86,52 @@
         "x": 0,
         "y": 0
       },
-      "id": 1,
+      "id": 8,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "eetmqtb25unlse"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "pantheon_stale_games",
+          "expr": "pantheon_method_exec_duration_AddRuleForPerson",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "stale games",
+          "legendFormat": "AddRuleForPerson",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_ApproveRegistration",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "ApproveRegistration",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -153,26 +139,368 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "eetmqtb25unlse"
           },
           "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "pantheon_played_games - pantheon_stale_games",
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_ApproveResetPassword",
           "fullMetaSearch": false,
+          "hide": false,
           "includeNullMetadata": true,
-          "legendFormat": "played games",
+          "instant": false,
+          "legendFormat": "ApproveResetPassword",
           "range": true,
-          "refId": "A",
+          "refId": "C",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_Authorize",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "Authorize",
+          "range": true,
+          "refId": "D",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_ChangePassword",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "ChangePassword",
+          "range": true,
+          "refId": "E",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_CreateAccount",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "CreateAccount",
+          "range": true,
+          "refId": "F",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_DeleteRuleForPerson",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "DeleteRuleForPerson",
+          "range": true,
+          "refId": "G",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_DepersonalizeAccount",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "DepersonalizeAccount",
+          "range": true,
+          "refId": "H",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_FindByMajsoulAccountId",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "FindByMajsoulAccountId",
+          "range": true,
+          "refId": "I",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_FindByTenhouIds",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "FindByTenhouIds",
+          "range": true,
+          "refId": "J",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_FindByTitle",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "FindByTitle",
+          "range": true,
+          "refId": "K",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_GetEventAdmins",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "GetEventAdmins",
+          "range": true,
+          "refId": "L",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_GetEventReferees",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "GetEventReferees",
+          "range": true,
+          "refId": "M",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_GetMajsoulNicknames",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "GetMajsoulNicknames",
+          "range": true,
+          "refId": "N",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_GetNotificationsSettings",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "GetNotificationsSettings",
+          "range": true,
+          "refId": "O",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_GetOwnedEventIds",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "GetOwnedEventIds",
+          "range": true,
+          "refId": "P",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_GetPersonalInfo",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "GetPersonalInfo",
+          "range": true,
+          "refId": "Q",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_Me",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "Me",
+          "range": true,
+          "refId": "R",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_QuickAuthorize",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "QuickAuthorize",
+          "range": true,
+          "refId": "S",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_RequestRegistration",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "RequestRegistration",
+          "range": true,
+          "refId": "T",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_RequestResetPassword",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "RequestResetPassword",
+          "range": true,
+          "refId": "U",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_SetNotificationsSettings",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "SetNotificationsSettings",
+          "range": true,
+          "refId": "V",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_method_exec_duration_UpdatePersonalInfo",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "UpdatePersonalInfo",
+          "range": true,
+          "refId": "W",
           "useBackend": false
         }
       ],
-      "title": "Currently played games / stale games",
+      "title": "[Frey] Method timings, ms",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "aetmxmrinw4xsc"
       },
       "fieldConfig": {
         "defaults": {
@@ -218,8 +546,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -245,26 +572,27 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
           "expr": "pantheon_sys_errors",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "legendFormat": "__auto",
+          "legendFormat": "Error log size",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "Error log size",
@@ -273,7 +601,258 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "aetmxmrinw4xsc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 25,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_stale_games",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "stale games",
+          "range": true,
+          "refId": "B",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "expr": "pantheon_played_games - pantheon_stale_games",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "legendFormat": "played games",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Currently played games / stale games",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "aetmxmrinw4xsc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_events_total_count",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "legendFormat": "Total events",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_events_empty_count",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "Events without a single session",
+          "range": true,
+          "refId": "B",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "pantheon_achievement_entries",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "Achievement entries count",
+          "range": true,
+          "refId": "C",
+          "useBackend": false
+        }
+      ],
+      "title": "Events and achievements",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "aetmxmrinw4xsc"
       },
       "fieldConfig": {
         "defaults": {
@@ -319,8 +898,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -335,7 +913,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 16
       },
       "id": 4,
       "options": {
@@ -346,16 +924,17 @@
           "showLegend": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "eetmqtb25unlse"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -374,7 +953,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "aetmxmrinw4xsc"
       },
       "fieldConfig": {
         "defaults": {
@@ -419,8 +998,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -435,140 +1013,6 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
-      },
-      "id": 6,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "pantheon_events_total_count",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "Total events",
-          "range": true,
-          "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "pantheon_events_empty_count",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "Events without a single session",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "pantheon_achievement_entries",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "Achievement entries count",
-          "range": true,
-          "refId": "C",
-          "useBackend": false
-        }
-      ],
-      "title": "Events and achievements",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
         "y": 16
       },
       "id": 7,
@@ -580,13 +1024,18 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eetmqtb25unlse"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
           "expr": "pantheon_jobs_queue",
@@ -595,18 +1044,15 @@
           "legendFormat": "Size of jobs queue (zero normally)",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "Jobs queue health",
       "type": "timeseries"
     }
   ],
-  "schemaVersion": 40,
+  "preload": false,
+  "schemaVersion": 41,
   "tags": [
     "Pantheon"
   ],
@@ -614,13 +1060,12 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Pantheon service metrics",
   "uid": "be71b9xpmt3b4c",
-  "version": 19,
-  "weekStart": ""
+  "version": 8
 }

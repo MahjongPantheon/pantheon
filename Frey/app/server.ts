@@ -8,6 +8,7 @@ import { fillRequestVars } from './middleware/requestVars';
 import { createDbConstructor, createRedisConstructor } from './database/db';
 import { storages } from './middleware/storages';
 import { Log } from './helpers/log';
+import { metrics } from './middleware/metrics';
 
 export const freyHandler = [createFrey(freyClient)];
 const dbConstructor = createDbConstructor();
@@ -20,7 +21,8 @@ redisConstructor().then((redis) => {
     prefix: '/v2',
   })
     .use(fillRequestVars())
-    .use(storages(dbConstructor(), redis));
+    .use(storages(dbConstructor(), redis))
+    .use(metrics());
 
   app.on('requestReceived', (ctx) => {
     logger.logStart(ctx.method?.name ?? 'Unknown', []);
