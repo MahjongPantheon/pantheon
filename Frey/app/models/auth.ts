@@ -87,11 +87,12 @@ export async function approveRegistration(
       disabled: 0,
       country: '',
     })
+    .returning('id')
     .execute();
 
   await db.deleteFrom('registrant').where('approval_code', '=', payload.approvalCode).execute();
 
-  return { personId: Number(ret[0].insertId ?? 0) };
+  return { personId: ret[0].id };
 }
 
 export async function approveResetPassword(
