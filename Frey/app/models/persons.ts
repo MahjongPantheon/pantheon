@@ -385,7 +385,13 @@ async function getPersonData(db: Database, redisClient: IRedisClient, ids: numbe
     .selectFrom('person')
     .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
     .where('person.id', 'in', ids)
-    .selectAll()
+    .selectAll('person')
+    .select([
+      'majsoul_platform_account.person_id',
+      'majsoul_platform_account.account_id',
+      'majsoul_platform_account.friend_id',
+      'majsoul_platform_account.nickname',
+    ])
     .execute();
 }
 

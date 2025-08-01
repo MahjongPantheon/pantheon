@@ -179,6 +179,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: "dev@pantheon.dev"
       PGADMIN_DEFAULT_PASSWORD: "password"
+      PGADMIN_CONFIG_WTF_CSRF_ENABLED: "False"
       PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
     volumes:
       - pgadmindata:/var/lib/pgadmin

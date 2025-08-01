@@ -69,13 +69,20 @@ export async function migrateFromFrey1() {
     i = 0;
     console.log('Migrating person_access table');
     while (true) {
-      const records = await oldDb
-        .selectFrom('person_access')
-        .orderBy('id', 'asc')
-        .selectAll()
-        .limit(limit)
-        .offset(i)
-        .execute();
+      const records = (
+        await oldDb
+          .selectFrom('person_access')
+          .orderBy('id', 'asc')
+          .selectAll()
+          .limit(limit)
+          .offset(i)
+          .execute()
+      ).filter((rec) =>
+        ['ADMIN_EVENT', 'REFEREE_FOR_EVENT', 'GET_PERSONAL_INFO_WITH_PRIVATE_DATA'].includes(
+          rec.acl_name
+        )
+      );
+
       if (records.length === 0) {
         break;
       }
@@ -83,19 +90,13 @@ export async function migrateFromFrey1() {
       await trx
         .insertInto('person_access')
         .values(
-          records
-            .filter((rec) =>
-              ['ADMIN_EVENT', 'REFEREE_FOR_EVENT', 'GET_PERSONAL_INFO_WITH_PRIVATE_DATA'].includes(
-                rec.acl_name
-              )
-            )
-            .map((rec) => ({
-              acl_name: rec.acl_name,
-              acl_value: parseInt(rec.acl_value.toString()),
-              event_id: rec.event_id ?? -1,
-              id: rec.id,
-              person_id: rec.person_id,
-            }))
+          records.map((rec) => ({
+            acl_name: rec.acl_name,
+            acl_value: rec.acl_value === 'true' ? 1 : 0,
+            event_id: rec.event_id ?? -1,
+            id: rec.id,
+            person_id: rec.person_id,
+          }))
         )
         .execute();
 
