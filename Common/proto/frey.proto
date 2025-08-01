@@ -41,10 +41,6 @@ service Frey {
     returns (AuthRequestResetPasswordResponse);
   rpc ApproveResetPassword(AuthApproveResetPasswordPayload)
     returns (AuthApproveResetPasswordResponse);
-  rpc GetAccessRules(AccessGetAccessRulesPayload)
-    returns (AccessGetAccessRulesResponse);
-  rpc GetRuleValue(AccessGetRuleValuePayload)
-    returns (AccessGetRuleValueResponse);
   rpc UpdatePersonalInfo(PersonsUpdatePersonalInfoPayload)
     returns (GenericSuccessResponse);
   rpc GetPersonalInfo(PersonsGetPersonalInfoPayload)
@@ -55,8 +51,6 @@ service Frey {
     returns (PersonsFindByTenhouIdsResponse);
   rpc FindByTitle(PersonsFindByTitlePayload)
     returns (PersonsFindByTitleResponse);
-  rpc GetGroups(PersonsGetGroupsPayload)
-    returns (PersonsGetGroupsResponse);
   rpc GetEventAdmins(AccessGetEventAdminsPayload)
     returns (AccessGetEventAdminsResponse);
   rpc GetEventReferees(AccessGetEventRefereesPayload)
@@ -69,66 +63,22 @@ service Frey {
     returns (AccessGetSuperadminFlagResponse);
   rpc GetOwnedEventIds(AccessGetOwnedEventIdsPayload)
     returns (AccessGetOwnedEventIdsResponse);
-  rpc GetRulesList(AccessGetRulesListPayload)
-    returns (AccessGetRulesListResponse);
-  rpc GetAllEventRules(AccessGetAllEventRulesPayload)
-    returns (AccessGetAllEventRulesResponse);
-  rpc GetPersonAccess(AccessGetPersonAccessPayload)
-    returns (AccessGetPersonAccessResponse);
-  rpc GetGroupAccess(AccessGetGroupAccessPayload)
-    returns (AccessGetGroupAccessResponse);
-  rpc GetAllPersonAccess(AccessGetAllPersonAccessPayload)
-    returns (AccessGetAllPersonAccessResponse);
-  rpc GetAllGroupAccess(AccessGetAllGroupAccessPayload)
-    returns (AccessGetAllGroupAccessResponse);
   rpc AddRuleForPerson(AccessAddRuleForPersonPayload)
     returns (AccessAddRuleForPersonResponse);
-  rpc AddRuleForGroup(AccessAddRuleForGroupPayload)
-    returns (AccessAddRuleForGroupResponse);
-  rpc UpdateRuleForPerson(AccessUpdateRuleForPersonPayload)
-    returns (GenericSuccessResponse);
-  rpc UpdateRuleForGroup(AccessUpdateRuleForGroupPayload)
-    returns (GenericSuccessResponse);
   rpc DeleteRuleForPerson(AccessDeleteRuleForPersonPayload)
-    returns (GenericSuccessResponse);
-  rpc DeleteRuleForGroup(AccessDeleteRuleForGroupPayload)
-    returns (GenericSuccessResponse);
-  rpc ClearAccessCache(AccessClearAccessCachePayload)
     returns (GenericSuccessResponse);
   rpc CreateAccount(PersonsCreateAccountPayload)
     returns (PersonsCreateAccountResponse);
-  rpc CreateGroup(PersonsCreateGroupPayload)
-    returns (PersonsCreateGroupResponse);
-  rpc UpdateGroup(PersonsUpdateGroupPayload)
-    returns (GenericSuccessResponse);
-  rpc DeleteGroup(PersonsDeleteGroupPayload)
-    returns (GenericSuccessResponse);
-  rpc AddPersonToGroup(PersonsAddPersonToGroupPayload)
-    returns (GenericSuccessResponse);
-  rpc RemovePersonFromGroup(PersonsRemovePersonFromGroupPayload)
-    returns (GenericSuccessResponse);
-  rpc GetPersonsOfGroup(PersonsGetPersonsOfGroupPayload)
-    returns (PersonsGetPersonsOfGroupResponse);
-  rpc GetGroupsOfPerson(PersonsGetGroupsOfPersonPayload)
-    returns (PersonsGetGroupsOfPersonResponse);
   rpc GetNotificationsSettings(PersonsGetNotificationsSettingsPayload)
     returns (PersonsGetNotificationsSettingsResponse);
   rpc SetNotificationsSettings(PersonsSetNotificationsSettingsPayload)
     returns (GenericSuccessResponse);
-
-  // superadmin: this should be covered with some
-  // bootstrap authenthication, TODO
-  rpc AddSystemWideRuleForPerson(AccessAddSystemWideRuleForPersonPayload)
-    returns (AccessAddSystemWideRuleForPersonResponse);
-  rpc AddSystemWideRuleForGroup(AccessAddSystemWideRuleForGroupPayload)
-    returns (AccessAddSystemWideRuleForGroupResponse);
 }
 
 message AuthRequestRegistrationPayload {
   string email = 1;
   string title = 2;
   string password = 3;
-  bool send_email = 4;
 }
 
 message AuthRequestRegistrationResponse {
@@ -162,10 +112,7 @@ message AuthQuickAuthorizeResponse {
   bool auth_success = 1;
 }
 
-message AuthMePayload {
-  int32 person_id = 1;
-  string auth_token = 2;
-}
+message AuthMePayload {}
 
 message AuthMeResponse {
   int32 person_id = 1;
@@ -175,7 +122,6 @@ message AuthMeResponse {
   string phone = 5;
   string tenhou_id = 6;
   string title = 7;
-  repeated int32 groups = 8;
   bool has_avatar = 9;
   string last_update = 10;
 }
@@ -192,7 +138,6 @@ message AuthChangePasswordResponse {
 
 message AuthRequestResetPasswordPayload {
   string email = 1;
-  bool send_email = 2;
 }
 
 message AuthRequestResetPasswordResponse {
@@ -206,25 +151,6 @@ message AuthApproveResetPasswordPayload {
 
 message AuthApproveResetPasswordResponse {
   string new_tmp_password = 1;
-}
-
-message AccessGetAccessRulesPayload {
-  int32 person_id = 1;
-  int32 event_id = 2;
-}
-
-message AccessGetAccessRulesResponse {
-  AccessRules rules = 1;
-}
-
-message AccessGetRuleValuePayload {
-  int32 person_id = 1;
-  int32 event_id = 2;
-  string rule_name = 3;
-}
-
-message AccessGetRuleValueResponse {
-  RuleValue value = 1;
 }
 
 message AccessGetEventAdminsPayload {
@@ -259,124 +185,18 @@ message AccessGetOwnedEventIdsResponse {
   repeated int32 event_ids = 1;
 }
 
-message AccessGetRulesListPayload {
-}
-
-message AccessGetRulesListResponse {
-  repeated RuleListItem items = 1;
-}
-
-message AccessGetAllEventRulesPayload {
-  int32 event_id = 1;
-}
-
-message AccessGetAllEventRulesResponse {
-  repeated EventRuleListItem person_rules = 1;
-  repeated EventRuleListItem group_rules = 2;
-}
-
-message AccessGetPersonAccessPayload {
-  int32 person_id = 1;
-  int32 event_id = 2;
-}
-
-message AccessGetPersonAccessResponse {
-  AccessRules rules = 1;
-}
-
-message AccessGetGroupAccessPayload {
-  int32 group_id = 1;
-  int32 event_id = 2;
-}
-
-message AccessGetGroupAccessResponse {
-  AccessRules rules = 1;
-}
-
-message AccessGetAllPersonAccessPayload {
-  int32 person_id = 1;
-}
-
-message AccessGetAllPersonAccessResponse {
-  map<int32, RuleListItemExMap> rules_by_event = 1;
-}
-
-message AccessGetAllGroupAccessPayload {
-  int32 group_id = 1;
-}
-
-message AccessGetAllGroupAccessResponse {
-  map<int32, RuleListItemExMap> rules_by_event = 1;
-}
-
 message AccessAddRuleForPersonPayload {
   string rule_name = 1;
-  RuleValue rule_value = 2;
-  string rule_type = 3;
-  int32 person_id = 4;
-  int32 event_id = 5;
+  int32 rule_value = 2;
+  int32 person_id = 3;
+  int32 event_id = 4;
 }
 
 message AccessAddRuleForPersonResponse {
   int32 rule_id = 1;
 }
 
-message AccessAddRuleForGroupPayload {
-  string rule_name = 1;
-  RuleValue rule_value = 2;
-  string rule_type = 3;
-  int32 group_id = 4;
-  int32 event_id = 5;
-}
-
-message AccessAddRuleForGroupResponse {
-  int32 rule_id = 1;
-}
-
-message AccessUpdateRuleForPersonPayload {
-  int32 rule_id = 1;
-  RuleValue rule_value = 2;
-  string rule_type = 3;
-}
-
-message AccessUpdateRuleForGroupPayload {
-  int32 rule_id = 1;
-  RuleValue rule_value = 2;
-  string rule_type = 3;
-}
-
 message AccessDeleteRuleForPersonPayload {
-  int32 rule_id = 1;
-}
-
-message AccessDeleteRuleForGroupPayload {
-  int32 rule_id = 1;
-}
-
-message AccessClearAccessCachePayload {
-  int32 person_id = 1;
-  int32 event_id = 2;
-}
-
-message AccessAddSystemWideRuleForPersonPayload {
-  string rule_name = 1;
-  RuleValue rule_value = 2;
-  string rule_type = 3;
-  int32 person_id = 4;
-}
-
-message AccessAddSystemWideRuleForPersonResponse {
-  int32 rule_id = 1;
-}
-
-message AccessAddSystemWideRuleForGroupPayload {
-  string rule_name = 1;
-  RuleValue rule_value = 2;
-  string rule_type = 3;
-  int32 group_id = 4;
-}
-
-message AccessAddSystemWideRuleForGroupResponse {
   int32 rule_id = 1;
 }
 
@@ -394,53 +214,6 @@ message PersonsCreateAccountResponse {
   int32 person_id = 1;
 }
 
-message PersonsCreateGroupPayload {
-  string title = 1;
-  string description = 2;
-  string color = 3;
-}
-
-message PersonsCreateGroupResponse {
-  int32 group_id = 1;
-}
-
-message PersonsUpdateGroupPayload {
-  int32 group_id = 1;
-  string title = 2;
-  string description = 3;
-  string color = 4;
-}
-
-message PersonsDeleteGroupPayload {
-  int32 group_id = 1;
-}
-
-message PersonsAddPersonToGroupPayload {
-  int32 person_id = 1;
-  int32 group_id = 2;
-}
-
-message PersonsRemovePersonFromGroupPayload {
-  int32 person_id = 1;
-  int32 group_id = 2;
-}
-
-message PersonsGetPersonsOfGroupPayload {
-  int32 group_id = 1;
-}
-
-message PersonsGetPersonsOfGroupResponse {
-  repeated Person people = 1;
-}
-
-message PersonsGetGroupsOfPersonPayload {
-  int32 person_id = 1;
-}
-
-message PersonsGetGroupsOfPersonResponse {
-  repeated Group groups = 1;
-}
-
 message PersonsUpdatePersonalInfoPayload {
   int32 id = 1;
   string title = 2;
@@ -451,9 +224,9 @@ message PersonsUpdatePersonalInfoPayload {
   string tenhou_id = 7;
   bool has_avatar = 8;
   string avatar_data = 9;
-  string ms_nickname = 10;
-  int32 ms_friend_id  = 11;
-  int32 ms_account_id = 12;
+  optional string ms_nickname = 10;
+  optional int32 ms_friend_id  = 11;
+  optional int32 ms_account_id = 12;
 }
 
 message PersonsGetPersonalInfoPayload {
@@ -472,11 +245,6 @@ message PersonsFindByMajsoulIdsPayload {
   repeated MajsoulSearchEx ids = 1;
 }
 
-message MajsoulSearchEx {
-  string nickname= 1;
-  int32 account_id = 2;
-}
-
 message PersonsFindByTenhouIdsResponse {
   repeated PersonEx people = 1;
 }
@@ -489,14 +257,6 @@ message PersonsFindByTitleResponse {
   repeated Person people = 1;
 }
 
-message PersonsGetGroupsPayload {
-  repeated int32 ids = 1;
-}
-
-message PersonsGetGroupsResponse {
-  repeated Group groups = 1;
-}
-
 message DepersonalizePayload {
 }
 
@@ -506,11 +266,6 @@ message PersonsGetMajsoulNicknamesPayload {
 
 message PersonsGetMajsoulNicknamesResponse {
   repeated MajsoulPersonMapping mapping = 1;
-}
-
-message MajsoulPersonMapping {
-  int32 person_id = 1;
-  string nickname = 2;
 }
 
 message PersonsGetNotificationsSettingsPayload {

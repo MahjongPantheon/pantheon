@@ -1,1 +1,1 @@
-* * * * * php /var/www/html/Frey/cron/send_stats.php
+* * * * * pnpm exec tsx /var/www/html/Frey/cron/send_stats.ts

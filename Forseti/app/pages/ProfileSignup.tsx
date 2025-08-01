@@ -78,7 +78,9 @@ export const ProfileSignup: React.FC = () => {
         .then((resp) => {
           if (resp.approvalCode && process.env.NODE_ENV !== 'production') {
             // debug mode; code will not be sent in production mode
-            alert('Confirmation link: ' + window.location.host + resp.approvalCode);
+            alert(
+              'Confirmation link: ' + window.location.host + '/profile/confirm/' + resp.approvalCode
+            );
           }
           setSuccess(true);
           setRegisterInProgress(false);

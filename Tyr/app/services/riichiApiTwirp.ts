@@ -67,7 +67,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
-      return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
+      return fetch(url, {
         ...opts,
         headers,
       })

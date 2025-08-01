@@ -89,22 +89,6 @@ class FreyClientMock implements IFreyClient
         return '';
     }
 
-    public function getAccessRules(int $personId, int $eventId): array
-    {
-        if ($personId === 1) {
-            return [
-                'ADMIN_EVENT' => true,
-                'CREATE_EVENT' => true
-            ];
-        }
-        return [];
-    }
-
-    public function getRuleValue(int $personId, int $eventId, string $ruleName)
-    {
-        // TODO: Implement getRuleValue() method.
-    }
-
     public function updatePersonalInfo(int $id, string $title, string $city, string $country, string $email, string $phone, string $tenhouId): bool
     {
         // TODO: Implement updatePersonalInfo() method.
@@ -201,88 +185,22 @@ class FreyClientMock implements IFreyClient
         return [];
     }
 
-    public function getGroups(array $ids): array
-    {
-        // TODO: Implement getGroups() method.
-        return [];
-    }
-
     public function getSuperadminFlag(int $personId): bool
     {
         // TODO: Implement getSuperadminFlag() method.
         return true;
     }
 
-    public function getRulesList(): array
-    {
-        // TODO: Implement getRulesList() method.
-        return [];
-    }
-
-    public function getPersonAccess(int $personId, $eventId): array
-    {
-        // TODO: Implement getPersonAccess() method.
-        return [];
-    }
-
-    public function getGroupAccess(int $groupId, $eventId): array
-    {
-        // TODO: Implement getGroupAccess() method.
-        return [];
-    }
-
-    public function getAllPersonAccess(int $personId): array
-    {
-        // TODO: Implement getAllPersonAccess() method.
-        return [];
-    }
-
-    public function getAllGroupAccess(int $groupId): array
-    {
-        // TODO: Implement getAllGroupAccess() method.
-        return [];
-    }
-
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
+    public function addRuleForPerson(string $ruleName, int $ruleValue, int $personId, int $eventId)
     {
         return 123;
         // TODO: Implement addRuleForPerson() method.
         /* @phpstan-ignore-line */
     }
 
-    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId)
-    {
-        // TODO: Implement addRuleForGroup() method.
-        /* @phpstan-ignore-line */
-    }
-
-    public function updateRuleForPerson(int $ruleId, $ruleValue, string $ruleType): bool
-    {
-        // TODO: Implement updateRuleForPerson() method.
-        return true;
-    }
-
-    public function updateRuleForGroup(int $ruleId, $ruleValue, string $ruleType): bool
-    {
-        // TODO: Implement updateRuleForGroup() method.
-        return true;
-    }
-
     public function deleteRuleForPerson(int $ruleId): bool
     {
         // TODO: Implement deleteRuleForPerson() method.
-        return true;
-    }
-
-    public function deleteRuleForGroup(int $ruleId): bool
-    {
-        // TODO: Implement deleteRuleForGroup() method.
-        return true;
-    }
-
-    public function clearAccessCache(int $personId, int $eventId): bool
-    {
-        // TODO: Implement clearAccessCache() method.
         return true;
     }
 
@@ -292,64 +210,10 @@ class FreyClientMock implements IFreyClient
         return 0;
     }
 
-    public function createGroup(string $title, string $description, string $color): int
-    {
-        // TODO: Implement createGroup() method.
-        return 0;
-    }
-
-    public function updateGroup(int $id, string $title, string $description, string $color): bool
-    {
-        // TODO: Implement updateGroup() method.
-        return true;
-    }
-
-    public function deleteGroup(int $id): bool
-    {
-        // TODO: Implement deleteGroup() method.
-        return true;
-    }
-
-    public function addPersonToGroup(int $personId, int $groupId): bool
-    {
-        // TODO: Implement addPersonToGroup() method.
-        return true;
-    }
-
-    public function removePersonFromGroup(int $personId, int $groupId): bool
-    {
-        // TODO: Implement removePersonFromGroup() method.
-        return true;
-    }
-
-    public function getPersonsOfGroup(int $groupId): array
-    {
-        // TODO: Implement getPersonsOfGroup() method.
-        return [];
-    }
-
-    public function getGroupsOfPerson(int $personId): array
-    {
-        // TODO: Implement getGroupsOfPerson() method.
-        return [];
-    }
-
-    public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId)
-    {
-        // TODO: Implement addSystemWideRuleForPerson() method.
-        /* @phpstan-ignore-line */
-    }
-
-    public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId)
-    {
-        // TODO: Implement addSystemWideRuleForGroup() method.
-        /* @phpstan-ignore-line */
-    }
-
     public function getEventAdmins(int $eventId): array
     {
         // TODO: Implement getEventAdmins() method.
-        return [];
+        return [['id' => 1]];
     }
 
     public function getOwnedEventIds(int $personId): array
@@ -358,13 +222,7 @@ class FreyClientMock implements IFreyClient
         return [];
     }
 
-    public function getAllEventRules(int $eventId): array
-    {
-        // TODO: Implement getAllEventRules() method.
-        return [];
-    }
-
-    public function me(int $id, string $clientSideToken): array
+    public function me(): array
     {
         // TODO: Implement me() method.
         return [];

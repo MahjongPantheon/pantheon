@@ -1,13 +1,5 @@
 ARG CONTAINER_ARCH=amd64
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-${CONTAINER_ARCH}:latest
-
-# these should match auth data in dbinit_frey.sql
-ENV PHINX_DB_FREY_NAME=frey
-ENV PHINX_DB_FREY_NAME_UNIT=frey_unit
-ENV PHINX_DB_FREY_USER=frey
-ENV PHINX_DB_FREY_PASS=pgpass
-
-ENV PHP_IDE_CONFIG="serverName=pantheon_frey"
+FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-${CONTAINER_ARCH}:latest
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

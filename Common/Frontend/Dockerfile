@@ -32,9 +32,6 @@ RUN apk update && \
 
 RUN npm install -g i18n-stex i18n-po-json i18n-json-po pm2 && chown -R root:root /usr/local/lib/node_modules/
 
-COPY install-bun.sh /install-bun.sh
-RUN BUN_INSTALL=/usr/local bash /install-bun.sh
-
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)
 RUN echo "user:x:${LOCAL_USER_ID:9001}:${LOCAL_USER_ID:9001}::/home/user:" >> /etc/passwd

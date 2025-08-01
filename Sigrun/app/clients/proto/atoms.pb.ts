@@ -53,32 +53,6 @@ export type PlatformType =
   | "PLATFORM_TYPE_TENHOUNET"
   | "PLATFORM_TYPE_MAHJONGSOUL";
 
-export interface AccessRules {
-  rules: Record<string, AccessRules.Rules["value"] | undefined>;
-}
-
-export declare namespace AccessRules {
-  interface Rules {
-    key: string;
-    value: RuleValue;
-  }
-}
-
-export interface RuleValue {
-  /**
-   * Represents a double value.
-   */
-  numberValue?: number | null | undefined;
-  /**
-   * Represents a string value.
-   */
-  stringValue?: string | null | undefined;
-  /**
-   * Represents a boolean value.
-   */
-  boolValue?: boolean | null | undefined;
-}
-
 export interface EventAdmin {
   ruleId: number;
   personId: number;
@@ -93,39 +67,6 @@ export interface EventReferee {
   personName: string;
   hasAvatar: boolean;
   lastUpdate: string;
-}
-
-export interface RuleListItem {
-  default: string;
-  type: string;
-  title: string;
-}
-
-export interface EventRuleListItem {
-  isGlobal: boolean;
-  id: number;
-  value: RuleValue;
-  name: string;
-  ownerTitle: string;
-  allowedValues: string[];
-}
-
-export interface RuleListItemEx {
-  id: number;
-  type: string;
-  value: RuleValue;
-  allowedValues: string[];
-}
-
-export interface RuleListItemExMap {
-  rules: Record<string, RuleListItemExMap.Rules["value"] | undefined>;
-}
-
-export declare namespace RuleListItemExMap {
-  interface Rules {
-    key: string;
-    value: RuleListItemEx;
-  }
 }
 
 export interface Person {
@@ -145,20 +86,12 @@ export interface PersonEx {
   country: string;
   email: string;
   phone: string;
-  groups: number[];
   hasAvatar: boolean;
   lastUpdate: string;
   msNickname: string;
   msAccountId: number;
   telegramId: string;
   notifications: string;
-}
-
-export interface Group {
-  id: number;
-  title: string;
-  color: string;
-  description: string;
 }
 
 export interface Country {
@@ -647,6 +580,16 @@ export interface RulesetConfig {
   doubleYakuman: number[];
 }
 
+export interface MajsoulSearchEx {
+  nickname: string;
+  accountId: number;
+}
+
+export interface MajsoulPersonMapping {
+  personId: number;
+  nickname: string;
+}
+
 export interface GenericSuccessResponse {
   success: boolean;
 }
@@ -1049,213 +992,6 @@ export const PlatformType = {
   },
 } as const;
 
-export const AccessRules = {
-  /**
-   * Serializes AccessRules to protobuf.
-   */
-  encode: function (msg: PartialDeep<AccessRules>): Uint8Array {
-    return AccessRules._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes AccessRules from protobuf.
-   */
-  decode: function (bytes: ByteSource): AccessRules {
-    return AccessRules._readMessage(
-      AccessRules.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes AccessRules with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<AccessRules>): AccessRules {
-    return {
-      rules: {},
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<AccessRules>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.rules) {
-      writer.writeRepeatedMessage(
-        1,
-        Object.entries(msg.rules).map(([key, value]) => ({
-          key: key as any,
-          value: value as any,
-        })) as any,
-        AccessRules.Rules._writeMessage,
-      );
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: AccessRules,
-    reader: protoscript.BinaryReader,
-  ): AccessRules {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          const map = {} as AccessRules.Rules;
-          reader.readMessage(map, AccessRules.Rules._readMessage);
-          msg.rules[map.key.toString()] = map.value;
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-
-  Rules: {
-    /**
-     * @private
-     */
-    _writeMessage: function (
-      msg: PartialDeep<AccessRules.Rules>,
-      writer: protoscript.BinaryWriter,
-    ): protoscript.BinaryWriter {
-      if (msg.key) {
-        writer.writeString(1, msg.key);
-      }
-      if (msg.value) {
-        writer.writeMessage(2, msg.value, RuleValue._writeMessage);
-      }
-      return writer;
-    },
-
-    /**
-     * @private
-     */
-    _readMessage: function (
-      msg: AccessRules.Rules,
-      reader: protoscript.BinaryReader,
-    ): AccessRules.Rules {
-      while (reader.nextField()) {
-        const field = reader.getFieldNumber();
-        switch (field) {
-          case 1: {
-            msg.key = reader.readString();
-            break;
-          }
-          case 2: {
-            msg.value = RuleValue.initialize();
-            reader.readMessage(msg.value, RuleValue._readMessage);
-            break;
-          }
-          default: {
-            reader.skipField();
-            break;
-          }
-        }
-      }
-      return msg;
-    },
-  },
-};
-
-export const RuleValue = {
-  /**
-   * Serializes RuleValue to protobuf.
-   */
-  encode: function (msg: PartialDeep<RuleValue>): Uint8Array {
-    return RuleValue._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes RuleValue from protobuf.
-   */
-  decode: function (bytes: ByteSource): RuleValue {
-    return RuleValue._readMessage(
-      RuleValue.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes RuleValue with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleValue>): RuleValue {
-    return {
-      numberValue: undefined,
-      stringValue: undefined,
-      boolValue: undefined,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleValue>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.numberValue != undefined) {
-      writer.writeInt32(2, msg.numberValue);
-    }
-    if (msg.stringValue != undefined) {
-      writer.writeString(3, msg.stringValue);
-    }
-    if (msg.boolValue != undefined) {
-      writer.writeBool(4, msg.boolValue);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: RuleValue,
-    reader: protoscript.BinaryReader,
-  ): RuleValue {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 2: {
-          msg.numberValue = reader.readInt32();
-          break;
-        }
-        case 3: {
-          msg.stringValue = reader.readString();
-          break;
-        }
-        case 4: {
-          msg.boolValue = reader.readBool();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
 export const EventAdmin = {
   /**
    * Serializes EventAdmin to protobuf.
@@ -1456,413 +1192,6 @@ export const EventReferee = {
   },
 };
 
-export const RuleListItem = {
-  /**
-   * Serializes RuleListItem to protobuf.
-   */
-  encode: function (msg: PartialDeep<RuleListItem>): Uint8Array {
-    return RuleListItem._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes RuleListItem from protobuf.
-   */
-  decode: function (bytes: ByteSource): RuleListItem {
-    return RuleListItem._readMessage(
-      RuleListItem.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes RuleListItem with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleListItem>): RuleListItem {
-    return {
-      default: "",
-      type: "",
-      title: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleListItem>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.default) {
-      writer.writeString(1, msg.default);
-    }
-    if (msg.type) {
-      writer.writeString(2, msg.type);
-    }
-    if (msg.title) {
-      writer.writeString(3, msg.title);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: RuleListItem,
-    reader: protoscript.BinaryReader,
-  ): RuleListItem {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.default = reader.readString();
-          break;
-        }
-        case 2: {
-          msg.type = reader.readString();
-          break;
-        }
-        case 3: {
-          msg.title = reader.readString();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const EventRuleListItem = {
-  /**
-   * Serializes EventRuleListItem to protobuf.
-   */
-  encode: function (msg: PartialDeep<EventRuleListItem>): Uint8Array {
-    return EventRuleListItem._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes EventRuleListItem from protobuf.
-   */
-  decode: function (bytes: ByteSource): EventRuleListItem {
-    return EventRuleListItem._readMessage(
-      EventRuleListItem.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes EventRuleListItem with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<EventRuleListItem>): EventRuleListItem {
-    return {
-      isGlobal: false,
-      id: 0,
-      value: RuleValue.initialize(),
-      name: "",
-      ownerTitle: "",
-      allowedValues: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventRuleListItem>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.isGlobal) {
-      writer.writeBool(1, msg.isGlobal);
-    }
-    if (msg.id) {
-      writer.writeInt32(2, msg.id);
-    }
-    if (msg.value) {
-      writer.writeMessage(3, msg.value, RuleValue._writeMessage);
-    }
-    if (msg.name) {
-      writer.writeString(4, msg.name);
-    }
-    if (msg.ownerTitle) {
-      writer.writeString(5, msg.ownerTitle);
-    }
-    if (msg.allowedValues?.length) {
-      writer.writeRepeatedString(6, msg.allowedValues);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventRuleListItem,
-    reader: protoscript.BinaryReader,
-  ): EventRuleListItem {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.isGlobal = reader.readBool();
-          break;
-        }
-        case 2: {
-          msg.id = reader.readInt32();
-          break;
-        }
-        case 3: {
-          reader.readMessage(msg.value, RuleValue._readMessage);
-          break;
-        }
-        case 4: {
-          msg.name = reader.readString();
-          break;
-        }
-        case 5: {
-          msg.ownerTitle = reader.readString();
-          break;
-        }
-        case 6: {
-          msg.allowedValues.push(reader.readString());
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const RuleListItemEx = {
-  /**
-   * Serializes RuleListItemEx to protobuf.
-   */
-  encode: function (msg: PartialDeep<RuleListItemEx>): Uint8Array {
-    return RuleListItemEx._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes RuleListItemEx from protobuf.
-   */
-  decode: function (bytes: ByteSource): RuleListItemEx {
-    return RuleListItemEx._readMessage(
-      RuleListItemEx.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes RuleListItemEx with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleListItemEx>): RuleListItemEx {
-    return {
-      id: 0,
-      type: "",
-      value: RuleValue.initialize(),
-      allowedValues: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleListItemEx>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.id) {
-      writer.writeInt32(1, msg.id);
-    }
-    if (msg.type) {
-      writer.writeString(2, msg.type);
-    }
-    if (msg.value) {
-      writer.writeMessage(3, msg.value, RuleValue._writeMessage);
-    }
-    if (msg.allowedValues?.length) {
-      writer.writeRepeatedString(4, msg.allowedValues);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: RuleListItemEx,
-    reader: protoscript.BinaryReader,
-  ): RuleListItemEx {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.id = reader.readInt32();
-          break;
-        }
-        case 2: {
-          msg.type = reader.readString();
-          break;
-        }
-        case 3: {
-          reader.readMessage(msg.value, RuleValue._readMessage);
-          break;
-        }
-        case 4: {
-          msg.allowedValues.push(reader.readString());
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const RuleListItemExMap = {
-  /**
-   * Serializes RuleListItemExMap to protobuf.
-   */
-  encode: function (msg: PartialDeep<RuleListItemExMap>): Uint8Array {
-    return RuleListItemExMap._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes RuleListItemExMap from protobuf.
-   */
-  decode: function (bytes: ByteSource): RuleListItemExMap {
-    return RuleListItemExMap._readMessage(
-      RuleListItemExMap.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes RuleListItemExMap with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleListItemExMap>): RuleListItemExMap {
-    return {
-      rules: {},
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleListItemExMap>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.rules) {
-      writer.writeRepeatedMessage(
-        1,
-        Object.entries(msg.rules).map(([key, value]) => ({
-          key: key as any,
-          value: value as any,
-        })) as any,
-        RuleListItemExMap.Rules._writeMessage,
-      );
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: RuleListItemExMap,
-    reader: protoscript.BinaryReader,
-  ): RuleListItemExMap {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          const map = {} as RuleListItemExMap.Rules;
-          reader.readMessage(map, RuleListItemExMap.Rules._readMessage);
-          msg.rules[map.key.toString()] = map.value;
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-
-  Rules: {
-    /**
-     * @private
-     */
-    _writeMessage: function (
-      msg: PartialDeep<RuleListItemExMap.Rules>,
-      writer: protoscript.BinaryWriter,
-    ): protoscript.BinaryWriter {
-      if (msg.key) {
-        writer.writeString(1, msg.key);
-      }
-      if (msg.value) {
-        writer.writeMessage(2, msg.value, RuleListItemEx._writeMessage);
-      }
-      return writer;
-    },
-
-    /**
-     * @private
-     */
-    _readMessage: function (
-      msg: RuleListItemExMap.Rules,
-      reader: protoscript.BinaryReader,
-    ): RuleListItemExMap.Rules {
-      while (reader.nextField()) {
-        const field = reader.getFieldNumber();
-        switch (field) {
-          case 1: {
-            msg.key = reader.readString();
-            break;
-          }
-          case 2: {
-            msg.value = RuleListItemEx.initialize();
-            reader.readMessage(msg.value, RuleListItemEx._readMessage);
-            break;
-          }
-          default: {
-            reader.skipField();
-            break;
-          }
-        }
-      }
-      return msg;
-    },
-  },
-};
-
 export const Person = {
   /**
    * Serializes Person to protobuf.
@@ -2004,7 +1333,6 @@ export const PersonEx = {
       country: "",
       email: "",
       phone: "",
-      groups: [],
       hasAvatar: false,
       lastUpdate: "",
       msNickname: "",
@@ -2042,9 +1370,6 @@ export const PersonEx = {
     }
     if (msg.phone) {
       writer.writeString(7, msg.phone);
-    }
-    if (msg.groups?.length) {
-      writer.writePackedInt32(8, msg.groups);
     }
     if (msg.hasAvatar) {
       writer.writeBool(9, msg.hasAvatar);
@@ -2105,14 +1430,6 @@ export const PersonEx = {
           msg.phone = reader.readString();
           break;
         }
-        case 8: {
-          if (reader.isDelimited()) {
-            msg.groups.push(...reader.readPackedInt32());
-          } else {
-            msg.groups.push(reader.readInt32());
-          }
-          break;
-        }
         case 9: {
           msg.hasAvatar = reader.readBool();
           break;
@@ -2135,95 +1452,6 @@ export const PersonEx = {
         }
         case 14: {
           msg.notifications = reader.readString();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const Group = {
-  /**
-   * Serializes Group to protobuf.
-   */
-  encode: function (msg: PartialDeep<Group>): Uint8Array {
-    return Group._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes Group from protobuf.
-   */
-  decode: function (bytes: ByteSource): Group {
-    return Group._readMessage(
-      Group.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes Group with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<Group>): Group {
-    return {
-      id: 0,
-      title: "",
-      color: "",
-      description: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<Group>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.id) {
-      writer.writeInt32(1, msg.id);
-    }
-    if (msg.title) {
-      writer.writeString(2, msg.title);
-    }
-    if (msg.color) {
-      writer.writeString(3, msg.color);
-    }
-    if (msg.description) {
-      writer.writeString(4, msg.description);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: Group, reader: protoscript.BinaryReader): Group {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.id = reader.readInt32();
-          break;
-        }
-        case 2: {
-          msg.title = reader.readString();
-          break;
-        }
-        case 3: {
-          msg.color = reader.readString();
-          break;
-        }
-        case 4: {
-          msg.description = reader.readString();
           break;
         }
         default: {
@@ -8061,6 +7289,160 @@ export const RulesetConfig = {
   },
 };
 
+export const MajsoulSearchEx = {
+  /**
+   * Serializes MajsoulSearchEx to protobuf.
+   */
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): Uint8Array {
+    return MajsoulSearchEx._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes MajsoulSearchEx from protobuf.
+   */
+  decode: function (bytes: ByteSource): MajsoulSearchEx {
+    return MajsoulSearchEx._readMessage(
+      MajsoulSearchEx.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes MajsoulSearchEx with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<MajsoulSearchEx>): MajsoulSearchEx {
+    return {
+      nickname: "",
+      accountId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulSearchEx>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.nickname) {
+      writer.writeString(1, msg.nickname);
+    }
+    if (msg.accountId) {
+      writer.writeInt32(2, msg.accountId);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: MajsoulSearchEx,
+    reader: protoscript.BinaryReader,
+  ): MajsoulSearchEx {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.nickname = reader.readString();
+          break;
+        }
+        case 2: {
+          msg.accountId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const MajsoulPersonMapping = {
+  /**
+   * Serializes MajsoulPersonMapping to protobuf.
+   */
+  encode: function (msg: PartialDeep<MajsoulPersonMapping>): Uint8Array {
+    return MajsoulPersonMapping._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes MajsoulPersonMapping from protobuf.
+   */
+  decode: function (bytes: ByteSource): MajsoulPersonMapping {
+    return MajsoulPersonMapping._readMessage(
+      MajsoulPersonMapping.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes MajsoulPersonMapping with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<MajsoulPersonMapping>,
+  ): MajsoulPersonMapping {
+    return {
+      personId: 0,
+      nickname: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulPersonMapping>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.personId) {
+      writer.writeInt32(1, msg.personId);
+    }
+    if (msg.nickname) {
+      writer.writeString(2, msg.nickname);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: MajsoulPersonMapping,
+    reader: protoscript.BinaryReader,
+  ): MajsoulPersonMapping {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.personId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.nickname = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const GenericSuccessResponse = {
   /**
    * Serializes GenericSuccessResponse to protobuf.
@@ -8661,180 +8043,6 @@ export const PlatformTypeJSON = {
   },
 } as const;
 
-export const AccessRulesJSON = {
-  /**
-   * Serializes AccessRules to JSON.
-   */
-  encode: function (msg: PartialDeep<AccessRules>): string {
-    return JSON.stringify(AccessRulesJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes AccessRules from JSON.
-   */
-  decode: function (json: string): AccessRules {
-    return AccessRulesJSON._readMessage(
-      AccessRulesJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes AccessRules with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<AccessRules>): AccessRules {
-    return {
-      rules: {},
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<AccessRules>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.rules) {
-      const _rules_ = Object.fromEntries(
-        Object.entries(msg.rules)
-          .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(AccessRulesJSON.Rules._writeMessage)
-          .map(({ key, value }) => [key, value]),
-      );
-      if (Object.keys(_rules_).length > 0) {
-        json["rules"] = _rules_;
-      }
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: AccessRules, json: any): AccessRules {
-    const _rules_ = json["rules"];
-    if (_rules_) {
-      msg.rules = Object.fromEntries(
-        Object.entries(_rules_)
-          .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(AccessRulesJSON.Rules._readMessage)
-          .map(({ key, value }) => [key, value]),
-      );
-    }
-    return msg;
-  },
-
-  Rules: {
-    /**
-     * @private
-     */
-    _writeMessage: function (
-      msg: PartialDeep<AccessRules.Rules>,
-    ): Record<string, unknown> {
-      const json: Record<string, unknown> = {};
-      if (msg.key) {
-        json["key"] = msg.key;
-      }
-      if (msg.value) {
-        const _value_ = RuleValueJSON._writeMessage(msg.value);
-        if (Object.keys(_value_).length > 0) {
-          json["value"] = _value_;
-        }
-      }
-      return json;
-    },
-
-    /**
-     * @private
-     */
-    _readMessage: function (
-      msg: AccessRules.Rules,
-      json: any,
-    ): AccessRules.Rules {
-      const _key_ = json["key"];
-      if (_key_) {
-        msg.key = _key_;
-      }
-      const _value_ = json["value"];
-      if (_value_) {
-        RuleValueJSON._readMessage(msg.value, _value_);
-      }
-      return msg;
-    },
-  },
-};
-
-export const RuleValueJSON = {
-  /**
-   * Serializes RuleValue to JSON.
-   */
-  encode: function (msg: PartialDeep<RuleValue>): string {
-    return JSON.stringify(RuleValueJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes RuleValue from JSON.
-   */
-  decode: function (json: string): RuleValue {
-    return RuleValueJSON._readMessage(
-      RuleValueJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes RuleValue with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleValue>): RuleValue {
-    return {
-      numberValue: undefined,
-      stringValue: undefined,
-      boolValue: undefined,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleValue>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.numberValue != undefined) {
-      json["numberValue"] = msg.numberValue;
-    }
-    if (msg.stringValue != undefined) {
-      json["stringValue"] = msg.stringValue;
-    }
-    if (msg.boolValue != undefined) {
-      json["boolValue"] = msg.boolValue;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: RuleValue, json: any): RuleValue {
-    const _numberValue_ = json["numberValue"] ?? json["number_value"];
-    if (_numberValue_) {
-      msg.numberValue = protoscript.parseNumber(_numberValue_);
-    }
-    const _stringValue_ = json["stringValue"] ?? json["string_value"];
-    if (_stringValue_) {
-      msg.stringValue = _stringValue_;
-    }
-    const _boolValue_ = json["boolValue"] ?? json["bool_value"];
-    if (_boolValue_) {
-      msg.boolValue = _boolValue_;
-    }
-    return msg;
-  },
-};
-
 export const EventAdminJSON = {
   /**
    * Serializes EventAdmin to JSON.
@@ -9005,362 +8213,6 @@ export const EventRefereeJSON = {
   },
 };
 
-export const RuleListItemJSON = {
-  /**
-   * Serializes RuleListItem to JSON.
-   */
-  encode: function (msg: PartialDeep<RuleListItem>): string {
-    return JSON.stringify(RuleListItemJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes RuleListItem from JSON.
-   */
-  decode: function (json: string): RuleListItem {
-    return RuleListItemJSON._readMessage(
-      RuleListItemJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes RuleListItem with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleListItem>): RuleListItem {
-    return {
-      default: "",
-      type: "",
-      title: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleListItem>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.default) {
-      json["default"] = msg.default;
-    }
-    if (msg.type) {
-      json["type"] = msg.type;
-    }
-    if (msg.title) {
-      json["title"] = msg.title;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: RuleListItem, json: any): RuleListItem {
-    const _default_ = json["default"];
-    if (_default_) {
-      msg.default = _default_;
-    }
-    const _type_ = json["type"];
-    if (_type_) {
-      msg.type = _type_;
-    }
-    const _title_ = json["title"];
-    if (_title_) {
-      msg.title = _title_;
-    }
-    return msg;
-  },
-};
-
-export const EventRuleListItemJSON = {
-  /**
-   * Serializes EventRuleListItem to JSON.
-   */
-  encode: function (msg: PartialDeep<EventRuleListItem>): string {
-    return JSON.stringify(EventRuleListItemJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes EventRuleListItem from JSON.
-   */
-  decode: function (json: string): EventRuleListItem {
-    return EventRuleListItemJSON._readMessage(
-      EventRuleListItemJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes EventRuleListItem with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<EventRuleListItem>): EventRuleListItem {
-    return {
-      isGlobal: false,
-      id: 0,
-      value: RuleValueJSON.initialize(),
-      name: "",
-      ownerTitle: "",
-      allowedValues: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventRuleListItem>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.isGlobal) {
-      json["isGlobal"] = msg.isGlobal;
-    }
-    if (msg.id) {
-      json["id"] = msg.id;
-    }
-    if (msg.value) {
-      const _value_ = RuleValueJSON._writeMessage(msg.value);
-      if (Object.keys(_value_).length > 0) {
-        json["value"] = _value_;
-      }
-    }
-    if (msg.name) {
-      json["name"] = msg.name;
-    }
-    if (msg.ownerTitle) {
-      json["ownerTitle"] = msg.ownerTitle;
-    }
-    if (msg.allowedValues?.length) {
-      json["allowedValues"] = msg.allowedValues;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventRuleListItem,
-    json: any,
-  ): EventRuleListItem {
-    const _isGlobal_ = json["isGlobal"] ?? json["is_global"];
-    if (_isGlobal_) {
-      msg.isGlobal = _isGlobal_;
-    }
-    const _id_ = json["id"];
-    if (_id_) {
-      msg.id = protoscript.parseNumber(_id_);
-    }
-    const _value_ = json["value"];
-    if (_value_) {
-      RuleValueJSON._readMessage(msg.value, _value_);
-    }
-    const _name_ = json["name"];
-    if (_name_) {
-      msg.name = _name_;
-    }
-    const _ownerTitle_ = json["ownerTitle"] ?? json["owner_title"];
-    if (_ownerTitle_) {
-      msg.ownerTitle = _ownerTitle_;
-    }
-    const _allowedValues_ = json["allowedValues"] ?? json["allowed_values"];
-    if (_allowedValues_) {
-      msg.allowedValues = _allowedValues_;
-    }
-    return msg;
-  },
-};
-
-export const RuleListItemExJSON = {
-  /**
-   * Serializes RuleListItemEx to JSON.
-   */
-  encode: function (msg: PartialDeep<RuleListItemEx>): string {
-    return JSON.stringify(RuleListItemExJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes RuleListItemEx from JSON.
-   */
-  decode: function (json: string): RuleListItemEx {
-    return RuleListItemExJSON._readMessage(
-      RuleListItemExJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes RuleListItemEx with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleListItemEx>): RuleListItemEx {
-    return {
-      id: 0,
-      type: "",
-      value: RuleValueJSON.initialize(),
-      allowedValues: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleListItemEx>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.id) {
-      json["id"] = msg.id;
-    }
-    if (msg.type) {
-      json["type"] = msg.type;
-    }
-    if (msg.value) {
-      const _value_ = RuleValueJSON._writeMessage(msg.value);
-      if (Object.keys(_value_).length > 0) {
-        json["value"] = _value_;
-      }
-    }
-    if (msg.allowedValues?.length) {
-      json["allowedValues"] = msg.allowedValues;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: RuleListItemEx, json: any): RuleListItemEx {
-    const _id_ = json["id"];
-    if (_id_) {
-      msg.id = protoscript.parseNumber(_id_);
-    }
-    const _type_ = json["type"];
-    if (_type_) {
-      msg.type = _type_;
-    }
-    const _value_ = json["value"];
-    if (_value_) {
-      RuleValueJSON._readMessage(msg.value, _value_);
-    }
-    const _allowedValues_ = json["allowedValues"] ?? json["allowed_values"];
-    if (_allowedValues_) {
-      msg.allowedValues = _allowedValues_;
-    }
-    return msg;
-  },
-};
-
-export const RuleListItemExMapJSON = {
-  /**
-   * Serializes RuleListItemExMap to JSON.
-   */
-  encode: function (msg: PartialDeep<RuleListItemExMap>): string {
-    return JSON.stringify(RuleListItemExMapJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes RuleListItemExMap from JSON.
-   */
-  decode: function (json: string): RuleListItemExMap {
-    return RuleListItemExMapJSON._readMessage(
-      RuleListItemExMapJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes RuleListItemExMap with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<RuleListItemExMap>): RuleListItemExMap {
-    return {
-      rules: {},
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<RuleListItemExMap>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.rules) {
-      const _rules_ = Object.fromEntries(
-        Object.entries(msg.rules)
-          .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(RuleListItemExMapJSON.Rules._writeMessage)
-          .map(({ key, value }) => [key, value]),
-      );
-      if (Object.keys(_rules_).length > 0) {
-        json["rules"] = _rules_;
-      }
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: RuleListItemExMap,
-    json: any,
-  ): RuleListItemExMap {
-    const _rules_ = json["rules"];
-    if (_rules_) {
-      msg.rules = Object.fromEntries(
-        Object.entries(_rules_)
-          .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(RuleListItemExMapJSON.Rules._readMessage)
-          .map(({ key, value }) => [key, value]),
-      );
-    }
-    return msg;
-  },
-
-  Rules: {
-    /**
-     * @private
-     */
-    _writeMessage: function (
-      msg: PartialDeep<RuleListItemExMap.Rules>,
-    ): Record<string, unknown> {
-      const json: Record<string, unknown> = {};
-      if (msg.key) {
-        json["key"] = msg.key;
-      }
-      if (msg.value) {
-        const _value_ = RuleListItemExJSON._writeMessage(msg.value);
-        if (Object.keys(_value_).length > 0) {
-          json["value"] = _value_;
-        }
-      }
-      return json;
-    },
-
-    /**
-     * @private
-     */
-    _readMessage: function (
-      msg: RuleListItemExMap.Rules,
-      json: any,
-    ): RuleListItemExMap.Rules {
-      const _key_ = json["key"];
-      if (_key_) {
-        msg.key = _key_;
-      }
-      const _value_ = json["value"];
-      if (_value_) {
-        RuleListItemExJSON._readMessage(msg.value, _value_);
-      }
-      return msg;
-    },
-  },
-};
-
 export const PersonJSON = {
   /**
    * Serializes Person to JSON.
@@ -9479,7 +8331,6 @@ export const PersonExJSON = {
       country: "",
       email: "",
       phone: "",
-      groups: [],
       hasAvatar: false,
       lastUpdate: "",
       msNickname: "",
@@ -9517,9 +8368,6 @@ export const PersonExJSON = {
     }
     if (msg.phone) {
       json["phone"] = msg.phone;
-    }
-    if (msg.groups?.length) {
-      json["groups"] = msg.groups;
     }
     if (msg.hasAvatar) {
       json["hasAvatar"] = msg.hasAvatar;
@@ -9574,10 +8422,6 @@ export const PersonExJSON = {
     if (_phone_) {
       msg.phone = _phone_;
     }
-    const _groups_ = json["groups"];
-    if (_groups_) {
-      msg.groups = _groups_.map(protoscript.parseNumber);
-    }
     const _hasAvatar_ = json["hasAvatar"] ?? json["has_avatar"];
     if (_hasAvatar_) {
       msg.hasAvatar = _hasAvatar_;
@@ -9601,78 +8445,6 @@ export const PersonExJSON = {
     const _notifications_ = json["notifications"];
     if (_notifications_) {
       msg.notifications = _notifications_;
-    }
-    return msg;
-  },
-};
-
-export const GroupJSON = {
-  /**
-   * Serializes Group to JSON.
-   */
-  encode: function (msg: PartialDeep<Group>): string {
-    return JSON.stringify(GroupJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes Group from JSON.
-   */
-  decode: function (json: string): Group {
-    return GroupJSON._readMessage(GroupJSON.initialize(), JSON.parse(json));
-  },
-
-  /**
-   * Initializes Group with all fields set to their default value.
-   */
-  initialize: function (msg?: Partial<Group>): Group {
-    return {
-      id: 0,
-      title: "",
-      color: "",
-      description: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (msg: PartialDeep<Group>): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.id) {
-      json["id"] = msg.id;
-    }
-    if (msg.title) {
-      json["title"] = msg.title;
-    }
-    if (msg.color) {
-      json["color"] = msg.color;
-    }
-    if (msg.description) {
-      json["description"] = msg.description;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: Group, json: any): Group {
-    const _id_ = json["id"];
-    if (_id_) {
-      msg.id = protoscript.parseNumber(_id_);
-    }
-    const _title_ = json["title"];
-    if (_title_) {
-      msg.title = _title_;
-    }
-    const _color_ = json["color"];
-    if (_color_) {
-      msg.color = _color_;
-    }
-    const _description_ = json["description"];
-    if (_description_) {
-      msg.description = _description_;
     }
     return msg;
   },
@@ -14768,6 +13540,133 @@ export const RulesetConfigJSON = {
     const _doubleYakuman_ = json["doubleYakuman"] ?? json["double_yakuman"];
     if (_doubleYakuman_) {
       msg.doubleYakuman = _doubleYakuman_.map(protoscript.parseNumber);
+    }
+    return msg;
+  },
+};
+
+export const MajsoulSearchExJSON = {
+  /**
+   * Serializes MajsoulSearchEx to JSON.
+   */
+  encode: function (msg: PartialDeep<MajsoulSearchEx>): string {
+    return JSON.stringify(MajsoulSearchExJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes MajsoulSearchEx from JSON.
+   */
+  decode: function (json: string): MajsoulSearchEx {
+    return MajsoulSearchExJSON._readMessage(
+      MajsoulSearchExJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes MajsoulSearchEx with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<MajsoulSearchEx>): MajsoulSearchEx {
+    return {
+      nickname: "",
+      accountId: 0,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulSearchEx>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.nickname) {
+      json["nickname"] = msg.nickname;
+    }
+    if (msg.accountId) {
+      json["accountId"] = msg.accountId;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: MajsoulSearchEx, json: any): MajsoulSearchEx {
+    const _nickname_ = json["nickname"];
+    if (_nickname_) {
+      msg.nickname = _nickname_;
+    }
+    const _accountId_ = json["accountId"] ?? json["account_id"];
+    if (_accountId_) {
+      msg.accountId = protoscript.parseNumber(_accountId_);
+    }
+    return msg;
+  },
+};
+
+export const MajsoulPersonMappingJSON = {
+  /**
+   * Serializes MajsoulPersonMapping to JSON.
+   */
+  encode: function (msg: PartialDeep<MajsoulPersonMapping>): string {
+    return JSON.stringify(MajsoulPersonMappingJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes MajsoulPersonMapping from JSON.
+   */
+  decode: function (json: string): MajsoulPersonMapping {
+    return MajsoulPersonMappingJSON._readMessage(
+      MajsoulPersonMappingJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes MajsoulPersonMapping with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<MajsoulPersonMapping>,
+  ): MajsoulPersonMapping {
+    return {
+      personId: 0,
+      nickname: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<MajsoulPersonMapping>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.personId) {
+      json["personId"] = msg.personId;
+    }
+    if (msg.nickname) {
+      json["nickname"] = msg.nickname;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: MajsoulPersonMapping,
+    json: any,
+  ): MajsoulPersonMapping {
+    const _personId_ = json["personId"] ?? json["person_id"];
+    if (_personId_) {
+      msg.personId = protoscript.parseNumber(_personId_);
+    }
+    const _nickname_ = json["nickname"];
+    if (_nickname_) {
+      msg.nickname = _nickname_;
     }
     return msg;
   },

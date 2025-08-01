@@ -47,39 +47,6 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
-     * @param ?\Common\RuleValue $value
-     * @return bool|int|string
-     */
-    protected static function _fromRuleValue(?\Common\RuleValue $value)
-    {
-        if (empty($value)) {
-            return false; // TODO: kludge
-        }
-        if ($value->hasBoolValue()) {
-            return $value->getBoolValue();
-        }
-        if ($value->hasNumberValue()) {
-            return $value->getNumberValue();
-        }
-        return $value->getStringValue();
-    }
-
-    /**
-     * @param mixed $value
-     * @return \Common\RuleValue
-     */
-    protected static function _toRuleValue(&$value): \Common\RuleValue
-    {
-        if (is_bool($value)) {
-            return (new \Common\RuleValue())->setBoolValue($value);
-        } elseif (is_integer($value)) {
-            return (new \Common\RuleValue())->setNumberValue($value);
-        } else {
-            return (new \Common\RuleValue())->setStringValue($value);
-        }
-    }
-
-    /**
      * @return \Common\FreyClient
      */
     // @phpstan-ignore-next-line
@@ -218,58 +185,6 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
-     *  Primary client method, aggregating rules from groups and person.
-     *  Get array of access rules for person in event.
-     *  Cached for 10 minutes.
-     *
-     * @param int $personId
-     * @param int $eventId
-     * @return array
-    */
-    public function getAccessRules(int $personId, int $eventId): array
-    {
-        $ret = $this->_client->GetAccessRules(
-            $this->_ctx,
-            (new \Common\AccessGetAccessRulesPayload())
-                ->setPersonId($personId)
-                ->setEventId($eventId)
-        )->getRules();
-
-        if (empty($ret)) {
-            return []; // TODO log error
-        }
-
-        $rules = [];
-        foreach ($ret->getRules()->getIterator() as $k => $v) {
-            $rules[$k] = self::_fromRuleValue($v);
-        }
-
-        return $rules;
-    }
-
-    /**
-     *  Get single rule for person in event. Hardly relies on cache.
-     *  Also counts group rules if person belongs to one or more groups.
-     *  Typically should not be used when more than one value should be retrieved.
-     *  Returns null if no data found for provided person/event ids or rule name.
-     *
-     * @param int $personId
-     * @param int $eventId
-     * @param string $ruleName
-     * @return mixed
-    */
-    public function getRuleValue(int $personId, int $eventId, string $ruleName)
-    {
-        return self::_fromRuleValue($this->_client->GetRuleValue(
-            $this->_ctx,
-            (new \Common\AccessGetRuleValuePayload())
-                ->setPersonId($personId)
-                ->setEventId($eventId)
-                ->setRuleName($ruleName)
-        )->getValue());
-    }
-
-    /**
      * @param int $id
      * @param string $title
      * @param string $country
@@ -317,7 +232,6 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
@@ -352,7 +266,6 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
@@ -388,7 +301,6 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
                 'has_avatar' => $person->getHasAvatar(),
                 'last_update' => $person->getLastUpdate(),
@@ -423,30 +335,6 @@ class FreyClientTwirp implements IFreyClient
                 'title' => $person->getTitle(),
             ];
         }, iterator_to_array($persons));
-    }
-
-    /**
-     *  Get info of groups by id list
-     *
-     * @param array $ids
-     * @return array
-    */
-    public function getGroups(array $ids): array
-    {
-        $groups = $this->_client->GetGroups(
-            $this->_ctx,
-            (new \Common\PersonsGetGroupsPayload())
-                ->setIds($ids)
-        )->getGroups();
-
-        return array_map(function (\Common\Group $group) {
-            return [
-                'id' => $group->getId(),
-                'title' => $group->getTitle(),
-                'label_color' => $group->getColor(),
-                'description' => $group->getDescription(),
-            ];
-        }, iterator_to_array($groups));
     }
 
     /**
@@ -534,276 +422,24 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
-     *  Get rule list with translations to selected locale
-     *
-     * @return array
-    */
-    public function getRulesList(): array
-    {
-        $rules = $this->_client->GetRulesList(
-            $this->_ctx,
-            (new \Common\AccessGetRulesListPayload())
-        )->getItems()->getIterator();
-
-        return array_map(function (\Common\RuleListItem $rule) {
-            return [
-                'default' => $rule->getDefault(),
-                'type' => $rule->getType(),
-                'title' => $rule->getTitle(),
-            ];
-        }, iterator_to_array($rules));
-    }
-
-    /**
-     *  Get all access rules for event.
-     *  - Method results are not cached!
-     *  - To be used in admin panel, but not in client side!
-     *
-     * @param int $eventId
-     * @return array
-    */
-    public function getAllEventRules(int $eventId): array
-    {
-        $ret = $this->_client->GetAllEventRules(
-            $this->_ctx,
-            (new \Common\AccessGetAllEventRulesPayload())
-        );
-        $retGroup = iterator_to_array($ret->getGroupRules()->getIterator());
-        $retPerson = iterator_to_array($ret->getPersonRules()->getIterator());
-        $predicate = function (\Common\EventRuleListItem $rule) {
-            return [
-                'isGlobal' => $rule->getIsGlobal(),
-                'id' => $rule->getId(),
-                'type' => $rule->getValue()?->hasBoolValue() ? 'bool' : ($rule->getValue()?->hasNumberValue() ? 'number' : 'string'),
-                'value' => $rule->getValue(),
-                'name' => $rule->getName(),
-                'ownerTitle' => $rule->getOwnerTitle(),
-                'allowed_values' => iterator_to_array($rule->getAllowedValues()->getIterator())
-            ];
-        };
-
-        return [
-            'person' => array_map($predicate, $retPerson),
-            'group' => array_map($predicate, $retGroup)
-        ];
-    }
-
-    /**
-     *  Get access rules for person.
-     *  - eventId may be null to get system-wide rules.
-     *  - Method results are not cached!
-     *  - To be used in admin panel, but not in client side!
-     *  - Does not output superadmin flag
-     *
-     * @param int $personId
-     * @param int|null $eventId
-     * @return array
-    */
-    public function getPersonAccess(int $personId, $eventId): array
-    {
-        $ret = $this->_client->GetPersonAccess(
-            $this->_ctx,
-            (new \Common\AccessGetPersonAccessPayload())
-                ->setPersonId($personId)
-                ->setEventId($eventId ?? -1) // -1 for global
-        )->getRules();
-
-        if (empty($ret)) {
-            return [];
-        }
-
-        $rules = [];
-        foreach ($ret->getRules()->getIterator() as $k => $v) {
-            $rules[$k] = self::_fromRuleValue($v);
-        }
-
-        return $rules;
-    }
-
-    /**
-     *  Get access rules for group.
-     *  - eventId may be null to get system-wide rules.
-     *  - Method results are not cached!
-     *  - To be used in admin panel, but not in client side!
-     *  - Does not output superadmin flag
-     *
-     * @param int $groupId
-     * @param int|null $eventId
-     * @return array
-    */
-    public function getGroupAccess(int $groupId, $eventId): array
-    {
-        $ret = $this->_client->GetGroupAccess(
-            $this->_ctx,
-            (new \Common\AccessGetGroupAccessPayload())
-                ->setGroupId($groupId)
-                ->setEventId($eventId ?? -1) // -1 for global
-        )->getRules();
-
-        if (empty($ret)) {
-            return [];
-        }
-
-        $rules = [];
-        foreach ($ret->getRules()->getIterator() as $k => $v) {
-            $rules[$k] = self::_fromRuleValue($v);
-        }
-
-        return $rules;
-    }
-
-    /**
-     *  Get all access rules for person.
-     *  - Method results are not cached!
-     *  - To be used in admin panel, but not in client side!
-     *
-     * @param int $personId
-     * @return array
-    */
-    public function getAllPersonAccess(int $personId): array
-    {
-        $map = $this->_client->GetAllPersonAccess(
-            $this->_ctx,
-            (new \Common\AccessGetAllPersonAccessPayload())
-                ->setPersonId($personId)
-        )->getRulesByEvent()->getIterator();
-
-        $ret = [];
-        foreach ($map as $eventId => $access) {
-            $ret[$eventId] = [];
-            /** @var RuleListItemEx $data */
-            foreach ($access as $ruleName => $data) {
-                $ret[$eventId][$ruleName] = [
-                    'id' => $data->getId(),
-                    'type' => $data->getType(),
-                    'value' => self::_fromRuleValue($data->getValue()),
-                    'allowed_values' => $data->getAllowedValues()
-                ];
-            }
-        }
-
-        return $ret;
-    }
-
-    /**
-     *  Get all access rules for group.
-     *  - Method results are not cached!
-     *  - To be used in admin panel, but not in client side!
-     *
-     * @param int $groupId
-     * @return array
-    */
-    public function getAllGroupAccess(int $groupId): array
-    {
-        $map = $this->_client->GetAllGroupAccess(
-            $this->_ctx,
-            (new \Common\AccessGetAllGroupAccessPayload())
-                ->setGroupId($groupId)
-        )->getRulesByEvent()->getIterator();
-
-        $ret = [];
-        foreach ($map as $eventId => $access) {
-            $ret[$eventId] = [];
-            /** @var RuleListItemEx $data */
-            foreach ($access as $ruleName => $data) {
-                $ret[$eventId][$ruleName] = [
-                    'id' => $data->getId(),
-                    'type' => $data->getType(),
-                    'value' => self::_fromRuleValue($data->getValue()),
-                    'allowed_values' => $data->getAllowedValues()
-                ];
-            }
-        }
-
-        return $ret;
-    }
-
-    /**
      *  Add new rule for a person.
      *
-     *
-     *
      * @param string $ruleName
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
+     * @param int $ruleValue
      * @param int $personId
      * @param int $eventId
      * @return int|null
     */
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
+    public function addRuleForPerson(string $ruleName, int $ruleValue, int $personId, int $eventId)
     {
         return $this->_client->AddRuleForPerson(
             $this->_ctx,
             (new \Common\AccessAddRuleForPersonPayload())
                 ->setRuleName($ruleName)
-                ->setRuleValue(self::_toRuleValue($ruleValue))
-                ->setRuleType($ruleType)
+                ->setRuleValue($ruleValue)
                 ->setPersonId($personId)
                 ->setEventId($eventId)
         )->getRuleId();
-    }
-
-    /**
-     *  Add new rule for a group.
-     *
-     *
-     *
-     * @param string $ruleName
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
-     * @param int $groupId
-     * @param int $eventId
-     * @return int|null
-    */
-    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId)
-    {
-        return $this->_client->AddRuleForGroup(
-            $this->_ctx,
-            (new \Common\AccessAddRuleForGroupPayload())
-                ->setRuleName($ruleName)
-                ->setRuleValue(self::_toRuleValue($ruleValue))
-                ->setRuleType($ruleType)
-                ->setGroupId($groupId)
-                ->setEventId($eventId)
-        )->getRuleId();
-    }
-
-    /**
-     *  Update personal rule value and/or type
-     *
-     * @param int $ruleId
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
-     * @return bool
-    */
-    public function updateRuleForPerson(int $ruleId, $ruleValue, string $ruleType): bool
-    {
-        return $this->_client->UpdateRuleForPerson(
-            $this->_ctx,
-            (new \Common\AccessUpdateRuleForPersonPayload())
-                ->setRuleId($ruleId)
-                ->setRuleValue(self::_toRuleValue($ruleValue))
-                ->setRuleType($ruleType)
-        )->getSuccess();
-    }
-
-    /**
-     *  Update group rule value and/or type
-     *
-     * @param int $ruleId
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
-     * @return bool
-    */
-    public function updateRuleForGroup(int $ruleId, $ruleValue, string $ruleType): bool
-    {
-        return $this->_client->UpdateRuleForGroup(
-            $this->_ctx,
-            (new \Common\AccessUpdateRuleForGroupPayload())
-                ->setRuleId($ruleId)
-                ->setRuleValue(self::_toRuleValue($ruleValue))
-                ->setRuleType($ruleType)
-        )->getSuccess();
     }
 
     /**
@@ -818,40 +454,6 @@ class FreyClientTwirp implements IFreyClient
             $this->_ctx,
             (new \Common\AccessDeleteRuleForPersonPayload())
                 ->setRuleId($ruleId)
-        )->getSuccess();
-    }
-
-    /**
-     *  Drop group rule by id
-     *
-     * @param int $ruleId
-     * @return bool
-    */
-    public function deleteRuleForGroup(int $ruleId): bool
-    {
-        return $this->_client->DeleteRuleForGroup(
-            $this->_ctx,
-            (new \Common\AccessDeleteRuleForGroupPayload())
-                ->setRuleId($ruleId)
-        )->getSuccess();
-    }
-
-    /**
-     *  Clear cache for access rules of person in event.
-     *  Warning: clearing whole cache is explicitly NOT IMPLEMENTED. When altering groups access rules,
-     *  it's better to wait for 10mins than cause shitload on DB.
-     *
-     * @param int $personId
-     * @param int $eventId
-     * @return bool
-    */
-    public function clearAccessCache(int $personId, int $eventId): bool
-    {
-        return $this->_client->ClearAccessCache(
-            $this->_ctx,
-            (new \Common\AccessClearAccessCachePayload())
-                ->setPersonId($personId)
-                ->setEventId($eventId)
         )->getSuccess();
     }
 
@@ -881,201 +483,13 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
-     *  Create new group in admin interface
-     *  Returns new group id
-     *
-     * @param string $title
-     * @param string $description
-     * @param string $color
-     * @return int
-    */
-    public function createGroup(string $title, string $description, string $color): int
-    {
-        return $this->_client->CreateGroup(
-            $this->_ctx,
-            (new \Common\PersonsCreateGroupPayload())
-                ->setTitle($title)
-                ->setDescription($description)
-                ->setColor($color)
-        )->getGroupId();
-    }
-
-    /**
-     *  Update group info in admin interface
-     *
-     * @param int $id
-     * @param string $title
-     * @param string $description
-     * @param string $color
-     * @return bool
-    */
-    public function updateGroup(int $id, string $title, string $description, string $color): bool
-    {
-        return $this->_client->UpdateGroup(
-            $this->_ctx,
-            (new \Common\PersonsUpdateGroupPayload())
-                ->setGroupId($id)
-                ->setTitle($title)
-                ->setDescription($description)
-                ->setColor($color)
-        )->getSuccess();
-    }
-
-    /**
-     *  Delete group and all of its linked dependencies
-     *
-     * @param int $id
-     * @return bool
-    */
-    public function deleteGroup(int $id): bool
-    {
-        return $this->_client->DeleteGroup(
-            $this->_ctx,
-            (new \Common\PersonsDeleteGroupPayload())
-                ->setGroupId($id)
-        )->getSuccess();
-    }
-
-    /**
-     *  Add person to group
-     *
-     * @param int $personId
-     * @param int $groupId
-     * @return bool
-    */
-    public function addPersonToGroup(int $personId, int $groupId): bool
-    {
-        return $this->_client->AddPersonToGroup(
-            $this->_ctx,
-            (new \Common\PersonsAddPersonToGroupPayload())
-                ->setPersonId($personId)
-                ->setGroupId($groupId)
-        )->getSuccess();
-    }
-
-    /**
-     *  Remove person from group
-     *
-     * @param int $personId
-     * @param int $groupId
-     * @return bool
-    */
-    public function removePersonFromGroup(int $personId, int $groupId): bool
-    {
-        return $this->_client->RemovePersonFromGroup(
-            $this->_ctx,
-            (new \Common\PersonsRemovePersonFromGroupPayload())
-                ->setPersonId($personId)
-                ->setGroupId($groupId)
-        )->getSuccess();
-    }
-
-    /**
-     *  List persons of group
-     *
-     * @param int $groupId
-     * @return array
-    */
-    public function getPersonsOfGroup(int $groupId): array
-    {
-        $persons = $this->_client->GetPersonsOfGroup(
-            $this->_ctx,
-            (new \Common\PersonsGetPersonsOfGroupPayload())
-                ->setGroupId($groupId)
-        )->getPeople();
-
-        return array_map(function (\Common\Person $person) {
-            return [
-                'id' => $person->getId(),
-                'city' => $person->getCity(),
-                'tenhou_id' => $person->getTenhouId(),
-                'title' => $person->getTitle(),
-            ];
-        }, iterator_to_array($persons));
-    }
-
-    /**
-     *  List groups of person
-     *
-     * @param int $personId
-     * @return array
-    */
-    public function getGroupsOfPerson(int $personId): array
-    {
-        $groups = $this->_client->GetGroupsOfPerson(
-            $this->_ctx,
-            (new \Common\PersonsGetGroupsOfPersonPayload())
-                ->setPersonId($personId)
-        )->getGroups();
-
-        return array_map(function (\Common\Group $group) {
-            return [
-                'id' => $group->getId(),
-                'title' => $group->getTitle(),
-                'label_color' => $group->getColor(),
-                'description' => $group->getDescription(),
-            ];
-        }, iterator_to_array($groups));
-    }
-
-    /**
-     *  Add new system-wide rule for a person.
-     *
-     *
-     *
-     * @param string $ruleName
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
-     * @param int $personId
-     * @return int|null
-    */
-    public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId)
-    {
-        return $this->_client->AddSystemWideRuleForPerson(
-            $this->_ctx,
-            (new \Common\AccessAddSystemWideRuleForPersonPayload())
-                ->setRuleName($ruleName)
-                ->setRuleValue(self::_toRuleValue($ruleValue))
-                ->setRuleType($ruleType)
-                ->setPersonId($personId)
-        )->getRuleId();
-    }
-
-    /**
-     *  Add new system-wide rule for a group.
-     *
-     *
-     *
-     * @param string $ruleName
-     * @param string|int|boolean $ruleValue
-     * @param string $ruleType
-     * @param int $groupId
-     * @return int|null
-    */
-    public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId)
-    {
-        return $this->_client->AddSystemWideRuleForGroup(
-            $this->_ctx,
-            (new \Common\AccessAddSystemWideRuleForGroupPayload())
-                ->setRuleName($ruleName)
-                ->setRuleValue(self::_toRuleValue($ruleValue))
-                ->setRuleType($ruleType)
-                ->setGroupId($groupId)
-        )->getRuleId();
-    }
-
-    /**
-     * @param int $id
-     * @param string $clientSideToken
      * @return array
      */
-    public function me(int $id, string $clientSideToken): array
+    public function me(): array
     {
         $person = $this->_client->Me(
             $this->_ctx,
             (new \Common\AuthMePayload())
-                ->setPersonId($id)
-                ->setAuthToken($clientSideToken)
         );
         return [
             'id' => $person->getPersonId(),
@@ -1084,7 +498,6 @@ class FreyClientTwirp implements IFreyClient
             'email' => $person->getEmail(),
             'phone' => $person->getPhone(),
             'tenhou_id' => $person->getTenhouId(),
-            'groups' => $person->getGroups(),
             'title' => $person->getTitle(),
         ];
     }

@@ -51,7 +51,12 @@ export const ProfileResetPassword: React.FC = () => {
         .then((resp) => {
           if (resp.resetToken && process.env.NODE_ENV !== 'production') {
             // debug mode; code will not be sent in production mode
-            alert('Reset link: ' + resp.resetToken);
+            window.prompt(
+              'Reset link',
+              window.location.host +
+                '/profile/resetPasswordConfirm/' +
+                window.btoa(resp.resetToken + '@@@' + values.email.trim().toLowerCase())
+            );
           }
           setIsLoading(false);
           setIsSuccess(true);

@@ -135,7 +135,6 @@ pantheon_stop:
 enable_debug: export ENV_FILENAME=.env.development
 enable_debug:
 	@cd Mimir && ${MAKE} container_enable_debug
-	@cd Frey && ${MAKE} container_enable_debug
 	@cd Hugin && ${MAKE} container_enable_debug
 	@cd Gullveig && ${MAKE} container_enable_debug
 
@@ -143,7 +142,6 @@ enable_debug:
 disable_debug: export ENV_FILENAME=.env.development
 disable_debug:
 	@cd Mimir && ${MAKE} container_disable_debug
-	@cd Frey && ${MAKE} container_disable_debug
 	@cd Hugin && ${MAKE} container_disable_debug
 	@cd Gullveig && ${MAKE} container_disable_debug
 
@@ -163,6 +161,10 @@ dev_sigrun:
 .PHONY: dev_bragi
 dev_bragi:
 	cd Bragi && ${MAKE} container_dev
+
+.PHONY: dev_frey
+dev_frey:
+	cd Frey && ${MAKE} container_dev
 
 .PHONY: dev_skirnir
 dev_skirnir:
@@ -188,6 +190,10 @@ bragi_stop:
 skirnir_stop:
 	cd Skirnir && ${MAKE} container_stop
 
+.PHONY: frey_stop
+frey_stop:
+	cd Frey && ${MAKE} container_stop
+
 .PHONY: dev
 dev: build_reverse_proxy pantheon_run
 	${MAKE} reverse_proxy_stop
@@ -201,6 +207,10 @@ migrate:
 	cd Mimir && ${MAKE} container_migrate
 	cd Frey && ${MAKE} container_migrate
 	cd Hugin && ${MAKE} container_migrate
+
+.PHONY: migrate_frey1
+migrate_frey1:
+	cd Frey && ${MAKE} container_migrate_frey1
 
 .PHONY: shell_tyr
 shell_tyr:
@@ -254,22 +264,18 @@ shell_fenrir:
 
 .PHONY: seed
 seed:
-	cd Frey && ${MAKE} container_seed
+	${MAKE} bootstrap_admin
 	cd Mimir && ${MAKE} container_seed
 
 .PHONY: seed_bigevent
 seed_bigevent:
-	cd Frey && ${MAKE} container_seed
+	${MAKE} bootstrap_admin
 	cd Mimir && ${MAKE} container_seed_bigevent
 
 .PHONY: seed_tournament
 seed_tournament:
-	cd Frey && ${MAKE} container_seed
+	${MAKE} bootstrap_admin
 	cd Mimir && ${MAKE} container_seed_tournament
-
-.PHONY: dump_users
-dump_users:
-	cd Frey && ${MAKE} container_dump_users
 
 .PHONY: dump_last_mail
 dump_last_mail:
@@ -299,17 +305,17 @@ forseti_prettier:
 forseti_typecheck:
 	cd Forseti && ${MAKE} container_typecheck > ../tmp/forseti_typecheck.log 2>&1
 
-.PHONY: frey_lint
-frey_lint:
-	cd Frey && ${MAKE} container_lint > ../tmp/frey_lint.log 2>&1
+.PHONY: frey_eslint
+frey_eslint:
+	cd Frey && ${MAKE} container_eslint > ../tmp/frey_lint.log 2>&1
 
-.PHONY: frey_analyze
-frey_analyze:
-	cd Frey && ${MAKE} container_analyze > ../tmp/frey_analyze.log 2>&1
+.PHONY: frey_prettier
+frey_prettier:
+	cd Frey && ${MAKE} container_prettier > ../tmp/frey_prettier.log 2>&1
 
-.PHONY: frey_lint_common
-frey_lint_common:
-	cd Frey && ${MAKE} container_lint_common > ../tmp/frey_lint_common.log 2>&1
+.PHONY: frey_typecheck
+frey_typecheck:
+	cd Frey && ${MAKE} container_typecheck > ../tmp/frey_typecheck.log 2>&1
 
 .PHONY: gullveig_lint
 gullveig_lint:
@@ -387,7 +393,7 @@ fenrir_typecheck:
 lint:
 	${MAKE} -j16 bragi_eslint bragi_prettier bragi_typecheck \
 		forseti_eslint forseti_prettier forseti_typecheck \
-		frey_lint frey_analyze frey_lint_common \
+		frey_eslint frey_prettier frey_typecheck \
 		gullveig_lint gullveig_analyze \
 		hugin_lint hugin_analyze \
 		mimir_lint mimir_analyze \
@@ -402,15 +408,22 @@ lint:
 
 .PHONY: test
 test:
+	@echo "Running tests for all subsystems"
+	@echo "For more information, you might also want to run 'make test_verbose'"
 	cd Tyr && ${MAKE} container_test
 	cd Frey && ${MAKE} container_test
 	cd Mimir && ${MAKE} container_test
+
+.PHONY: test_verbose
+test_verbose:
+	cd Tyr && ${MAKE} container_test_verbose
+	cd Frey && ${MAKE} container_test_verbose
+	cd Mimir && ${MAKE} container_test_verbose
 
 .PHONY: autofix
 autofix:
 	cd Mimir && ${MAKE} container_autofix
 	cd Frey && ${MAKE} container_autofix
-	cd Frey && ${MAKE} container_autofix_common
 	cd Tyr && ${MAKE} container_autofix
 	cd Forseti && ${MAKE} container_autofix
 	cd Sigrun && ${MAKE} container_autofix
@@ -466,6 +479,11 @@ prod_build_sigrun: export NODE_ENV=production
 prod_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: prod_build_frey
+prod_build_frey: export NODE_ENV=production
+prod_build_frey: # this is for automated builds, don't run it manually
+	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: prod_build_bragi
 prod_build_bragi: export NODE_ENV=production
 prod_build_bragi: # this is for automated builds, don't run it manually
@@ -484,10 +502,12 @@ prod_compile:
 	@cp Env/.env.production Forseti/.env.production
 	@cp Env/.env.production Bragi/.env.production
 	@cp Env/.env.production Skirnir/.env.production
+	@cp Env/.env.production Frey/.env.production
 	${MAKE} prod_deps
 	${MAKE} migrate
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
+	${MAKE} prod_build_frey && cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
 	cd Sigrun && ${MAKE} container_warmup
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
@@ -532,7 +552,7 @@ pull:
 
 .PHONY: bootstrap_admin
 bootstrap_admin:
-	cd Frey && ${MAKE} container_seed
+	cd Frey && ${MAKE} container_bootstrap_admin
 
 # i18n related
 .PHONY: i18n_extract
@@ -585,6 +605,12 @@ e2e_build_sigrun: export ENV_FILENAME=.env.e2e
 e2e_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: e2e_build_frey
+e2e_build_frey: export NODE_ENV=development
+e2e_build_frey: export ENV_FILENAME=.env.e2e
+e2e_build_frey: # this is for automated builds, don't run it manually
+	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: e2e_build_bragi
 e2e_build_bragi: export NODE_ENV=development
 e2e_build_bragi: export ENV_FILENAME=.env.e2e
@@ -605,11 +631,13 @@ e2e_compile:
 	@cp Env/.env.e2e Forseti/.env.e2e
 	@cp Env/.env.e2e Bragi/.env.e2e
 	@cp Env/.env.e2e Skirnir/.env.e2e
+	@cp Env/.env.e2e Frey/.env.e2e
 	${MAKE} deps
 	${MAKE} migrate
 	${MAKE} e2e_build_tyr
 	${MAKE} e2e_build_forseti
 	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
+	${MAKE} e2e_build_frey && ${MAKE} cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
 

@@ -81,11 +81,15 @@ import {
   UpdatePersonalInfo,
   GetNotificationsSettings,
   SetNotificationsSettings,
-  GetRuleValue,
   GetEventReferees,
 } from '../clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { EventData, IntermediateResultOfSession } from '../clients/proto/atoms.pb';
+import {
+  EventAdmin,
+  EventData,
+  EventReferee,
+  IntermediateResultOfSession,
+} from '../clients/proto/atoms.pb';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
 import { GetLastDay, GetLastMonth, GetLastYear } from '../clients/proto/hugin.pb';
@@ -130,7 +134,7 @@ export class ApiService {
     this._clientConfFrey.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
-      return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
+      return fetch(url, {
         ...opts,
         headers,
       })
@@ -198,7 +202,7 @@ export class ApiService {
 
   requestRegistration(email: string, title: string, password: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RequestRegistration' });
-    return RequestRegistration({ email, title, password, sendEmail: true }, this._clientConfFrey);
+    return RequestRegistration({ email, title, password }, this._clientConfFrey);
   }
 
   confirmRegistration(code: string) {
@@ -208,7 +212,7 @@ export class ApiService {
 
   requestPasswordRecovery(email: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RequestResetPassword' });
-    return RequestResetPassword({ email, sendEmail: true }, this._clientConfFrey);
+    return RequestResetPassword({ email }, this._clientConfFrey);
   }
 
   approvePasswordRecovery(email: string, resetToken: string) {
@@ -432,8 +436,7 @@ export class ApiService {
         personId: playerId,
         eventId,
         ruleName: 'ADMIN_EVENT',
-        ruleType: 'bool',
-        ruleValue: { boolValue: true },
+        ruleValue: 1,
       },
       this._clientConfFrey
     ).then((r) => r.ruleId);
@@ -445,17 +448,15 @@ export class ApiService {
   }
 
   getIsEventReferee(playerId: number, eventId: number) {
-    return GetRuleValue(
-      { personId: playerId, eventId, ruleName: 'REFEREE_FOR_EVENT' },
-      this._clientConfFrey
-    ).then((v) => v.value.boolValue);
+    return GetEventReferees({ eventId }, this._clientConfFrey).then(
+      (v) => !!v.referees.find((r: EventReferee) => r.personId === playerId)
+    );
   }
 
   getIsEventAdmin(playerId: number, eventId: number) {
-    return GetRuleValue(
-      { personId: playerId, eventId, ruleName: 'ADMIN_EVENT' },
-      this._clientConfFrey
-    ).then((v) => v.value.boolValue);
+    return GetEventAdmins({ eventId }, this._clientConfFrey).then(
+      (v) => !!v.admins.find((r: EventAdmin) => r.personId === playerId)
+    );
   }
 
   addEventReferee(playerId: number, eventId: number) {
@@ -465,8 +466,7 @@ export class ApiService {
         personId: playerId,
         eventId,
         ruleName: 'REFEREE_FOR_EVENT',
-        ruleType: 'bool',
-        ruleValue: { boolValue: true },
+        ruleValue: 1,
       },
       this._clientConfFrey
     ).then((r) => r.ruleId);

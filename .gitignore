@@ -49,6 +49,8 @@ Hugin/vendor/
 
 Gullveig/vendor/
 
+Frey-old/
+
 Tyr/dist
 Tyr/dev-dist
 Tyr/tmp
@@ -76,11 +78,8 @@ Forseti-dist/*
 !Forseti-dist/.well-known
 !Forseti-dist/.keep
 
-Frey/config/local/*
-Frey/vendor/
-Frey/data/verbose.log
-Frey/data/db.sqlite
-Frey/tests/data/*
+Frey/node_modules/*
+Frey/dist/*
 
 Sigrun/dev-dist
 Sigrun-dist/*

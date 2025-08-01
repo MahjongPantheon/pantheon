@@ -129,7 +129,7 @@ export const ProfileManage: React.FC = () => {
           values.title.trim(),
           values.country,
           values.city,
-          '', // email can't be changed by yourself, pass just anything.
+          values.email,
           values.phone.trim(),
           values.tenhouId.trim(),
           values.hasAvatar,

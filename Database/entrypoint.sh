@@ -77,6 +77,10 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
     { echo; echo "host all all 0.0.0.0/0 $authMethod"; } >> "$PGDATA"/pg_hba.conf
 fi
 
+if [ -z "$(psql --username $POSTGRES_USER -c "\l" | grep frey2)" ]; then
+  psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" < "/container-entrypoint-initdb.d/dbinit_frey2.sql";
+fi
+
 sed -i "s|max_connections\s*=\s*\d*|max_connections = 600|g" "$PGDATA"/postgresql.conf
 sed -i "s|shared_buffers\s*=\s*\d*MB|shared_buffers = 1024MB|g" "$PGDATA"/postgresql.conf
 sed -i "s|#work_mem|work_mem|g" "$PGDATA"/postgresql.conf
