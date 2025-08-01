@@ -69,22 +69,27 @@ export async function migrateFromFrey1() {
     i = 0;
     console.log('Migrating person_access table');
     while (true) {
-      const records = (
-        await oldDb
-          .selectFrom('person_access')
-          .orderBy('id', 'asc')
-          .selectAll()
-          .limit(limit)
-          .offset(i)
-          .execute()
-      ).filter((rec) =>
+      const recordsAll = await oldDb
+        .selectFrom('person_access')
+        .orderBy('id', 'asc')
+        .selectAll()
+        .limit(limit)
+        .offset(i)
+        .execute();
+
+      if (recordsAll.length === 0) {
+        break;
+      }
+
+      const records = recordsAll.filter((rec) =>
         ['ADMIN_EVENT', 'REFEREE_FOR_EVENT', 'GET_PERSONAL_INFO_WITH_PRIVATE_DATA'].includes(
           rec.acl_name
         )
       );
 
       if (records.length === 0) {
-        break;
+        i += limit;
+        continue;
       }
 
       await trx
