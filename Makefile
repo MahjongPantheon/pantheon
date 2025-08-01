@@ -637,7 +637,7 @@ e2e_compile:
 	${MAKE} e2e_build_tyr
 	${MAKE} e2e_build_forseti
 	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
-	${MAKE} e2e_build_frey && ${MAKE} cd Frey && ${MAKE} container_reload_pm2
+	${MAKE} e2e_build_frey && cd Frey && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
 

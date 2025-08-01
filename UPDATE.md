@@ -43,10 +43,11 @@ Follow these steps:
 - Run `make prod_restart` to restart containers.
 - Run `cd Database && make create_frey2_db` to create the new database for the new service.
 - Run `make prod_compile` to build all the services.
-- Run `cd Frey && make container_migrate_frey1` to migrate the database contents. Note that old `frey` database will not
+- Run `make migrate_frey1` to migrate the database contents. Note that old `frey` database will not
   be altered during migration, and the new `frey2` database will be populated with the data from `frey` database. In case of
   any error you may try running the migration again, as it's executed inside the transaction which is rolled back in case of
   any error. Also if something goes wrong you might want to roll back to some previous commit and everything will work as expected.
+  - Note: you should not run this command twice or run it an already populated database.
 - After these steps are completed, turn the reverse proxy back on.
 - Basically this is it, congratulations :) Now you may want to remove `frey` database, though we'd advise to not doing this
   for a while, until you verify that everything works find.
