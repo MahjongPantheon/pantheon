@@ -23,13 +23,8 @@ jobs:
         env:
           ENV_FILENAME: .env.development
 
-#      - name: Pull containers
-#        run: make pull
-#        env:
-#          ENV_FILENAME: .env.development
-
-      - name: Build containers
-        run: make container
+      - name: Pull containers
+        run: make pull
         env:
           ENV_FILENAME: .env.development
 
