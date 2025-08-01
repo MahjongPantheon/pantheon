@@ -96,3 +96,12 @@ backup_restore: get_container_id
 	else \
 		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres sh -c "export COMMIT=${COMMIT} && cd /var/lib/postgresql/ && make __restore"' ; \
 	fi
+
+.PHONY: create_frey2_db
+create_frey2_db: get_container_id
+	if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Database container is not running, can't create db.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres sh -c "bash /create_frey2_db.sh"' ; \
+	fi
+
