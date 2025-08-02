@@ -51,7 +51,7 @@ export const env = {
     password: data.DB_FREY_REDIS_PASSWORD ?? 'redispass',
   },
   mailer: {
-    remoteUrl: data.HERMOD_URL_INTERNAL,
+    remoteUrl: data.HERMOD_URL_INTERNAL ?? 'hermod.pantheon.internal',
     remoteActionKey: data.MAIL_ACTION_KEY,
     mailerAddr: 'noreply@' + (data.ALLOWED_SENDER_DOMAINS ?? 'pantheon.local'),
     guiUrl: data.FORSETI_URL,

@@ -36,12 +36,15 @@ async function _send(
     '\r\n' +
     '--$boundary--';
 
-  return fetch(env.mailer.mailerAddr, {
+  return fetch(env.mailer.remoteUrl, {
     method: 'POST',
     body: new URLSearchParams({
       actionkey: env.mailer.remoteActionKey ?? '',
       data: base64encode(JSON.stringify([to, subj, body, additionalHeaders, additionalParams])),
     }),
+  }).catch((err) => {
+    console.error(err);
+    throw err;
   });
 }
 
