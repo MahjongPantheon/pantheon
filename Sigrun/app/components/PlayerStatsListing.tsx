@@ -17,9 +17,9 @@
 
 import { List, Text } from '@mantine/core';
 import * as React from 'react';
-import { PlayersGetPlayerStatsResponse } from '../clients/proto/mimir.pb';
+import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
 import { useI18n } from '../hooks/i18n';
-import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
+import { SessionHistoryResultTable } from 'tsclients/proto/atoms.pb';
 
 export const PlayerStatsListing = ({
   playerStats,

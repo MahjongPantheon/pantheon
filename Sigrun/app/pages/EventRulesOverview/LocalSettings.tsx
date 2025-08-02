@@ -18,7 +18,7 @@
 import * as React from 'react';
 import { NumberInput } from '@mantine/core';
 import { IconChartHistogram, IconNumbers } from '@tabler/icons-react';
-import { GameConfig } from '../../clients/proto/atoms.pb';
+import { GameConfig } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../../services/i18n';
 
 type LocalSettingsProps = {

@@ -19,7 +19,7 @@ import { ActionIcon, Button, Container, createStyles, Drawer, Group, Header } fr
 import * as React from 'react';
 import { IconList } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
-import { Event } from '../clients/proto/atoms.pb';
+import { Event } from 'tsclients/proto/atoms.pb';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { MainMenu } from './MainMenu';
 

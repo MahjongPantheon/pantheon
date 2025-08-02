@@ -141,14 +141,6 @@ clean_test_db:
 		PGPASSWORD=pgpass psql -hdb.pantheon.internal -U hugin hugin_unit -c "DROP TABLE \"$$p\""; \
 	done < ./data/tablelist.txt || true
 
-.PHONY: container_proto_gen
-container_proto_gen: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make proto_gen' ; \
-	fi
-
 .PHONY: container_deps
 container_deps: get_container_id
 		@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \

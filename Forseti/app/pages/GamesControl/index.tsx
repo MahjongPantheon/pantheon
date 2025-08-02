@@ -26,7 +26,7 @@ import {
   IntermediateResultOfSession,
   RegisteredPlayer,
   TableState,
-} from '../../clients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb';
 import { Container, LoadingOverlay } from '@mantine/core';
 
 import { notifications } from '@mantine/notifications';
@@ -37,7 +37,7 @@ import { TopActionButton } from '../../components/TopActionButton';
 import { IconRefresh } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
 import { useStorage } from '../../hooks/storage';
-import { EventsGetTimerStateResponse } from '../../clients/proto/mimir.pb';
+import { EventsGetTimerStateResponse } from 'tsclients/proto/mimir.pb';
 
 const DEFAULT_SECS_UNTIL_RELOAD = 60;
 export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {

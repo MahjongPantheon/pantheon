@@ -23,7 +23,7 @@ import {
   getWinningUsers,
 } from './mimir';
 import { IAppState } from '../interfaces';
-import { PlayerInSession, RoundOutcome } from '../../clients/proto/atoms.pb';
+import { PlayerInSession, RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export function winPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getWinningUsers(state).indexOf(userData);

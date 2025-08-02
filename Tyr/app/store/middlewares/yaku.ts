@@ -24,7 +24,7 @@ import {
 } from '../actions/interfaces';
 import { YakuId } from '../../helpers/yaku';
 import { IAppState } from '../interfaces';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export const yaku =
   (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>

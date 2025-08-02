@@ -36,6 +36,7 @@ Hugin/www/.well-known
 Thumbs.db
 
 Common/protoc-bin/
+Common/tsclients/node_modules/
 
 Database/export.tar.gz
 

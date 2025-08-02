@@ -31,7 +31,7 @@ import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
 import { Meta } from './components/Meta';
 import { useIsomorphicState } from './hooks/useIsomorphicState';
-import { PersonEx, PlatformType } from './clients/proto/atoms.pb';
+import { PersonEx, PlatformType } from 'tsclients/proto/atoms.pb';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { MainMenu } from './components/MainMenu';
 import { AddOnlineReplayModal } from './components/AddOnlineReplayModal';

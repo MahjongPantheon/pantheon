@@ -169,7 +169,7 @@ Services will be available at:
 **Mimir** and **Frey** use [twirp](https://github.com/twitchtv/twirp) interface to communicate with other services.
 See protocol description files in `Common` folder. 
 Please note: 
-- If you change the protocols, you should run `make proto_gen` in root repo folder to regenerate all protocol related code. 
+- If you change the protocols, you should run `make proto_gen` in root repo folder to regenerate all protocol related code.
 - You always should change the proto files and never should change the generated code by hand.
 
 #### Upgrade to Frey v2

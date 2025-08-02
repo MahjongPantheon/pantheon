@@ -25,6 +25,7 @@
     "redis": "^4.7.0",
     "simple-node-logger": "^21.8.12",
     "tsx": "^4.20.3",
+    "tsclients": "file:../Common/tsclients",
     "twirpscript": "^0.0.72",
     "uuid": "^10.0.0"
   },

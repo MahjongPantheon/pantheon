@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Player, Round } from '../clients/proto/atoms.pb';
+import { Player, Round } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../services/i18n';
 import { YakuId, yakuNameMap as yakuNameMapGen } from './yaku';
 

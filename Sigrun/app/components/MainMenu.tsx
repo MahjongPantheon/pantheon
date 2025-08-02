@@ -22,7 +22,7 @@ import {
   IconUserPlus,
   IconUsers,
 } from '@tabler/icons-react';
-import { EventType, PlatformType } from '../clients/proto/atoms.pb';
+import { EventType, PlatformType } from 'tsclients/proto/atoms.pb';
 import { FlagEn, FlagKo, FlagRu, FlagDe } from '../helpers/flags';
 import { useI18n } from '../hooks/i18n';
 import { useContext } from 'react';

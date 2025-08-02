@@ -1,0 +1,11 @@
+{
+  "name": "tsclients",
+  "version": "1.0.0",
+  "description": "Twirpscript compiled files",
+  "license": "GPLv3",
+  "type": "module",
+  "dependencies": {
+    "twirpscript": "^0.0.72",
+    "protoscript": "^0.0.23"
+  }
+}

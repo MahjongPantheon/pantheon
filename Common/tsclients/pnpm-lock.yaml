@@ -1,0 +1,49 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      protoscript:
+        specifier: ^0.0.23
+        version: 0.0.23
+      twirpscript:
+        specifier: ^0.0.72
+        version: 0.0.72
+
+packages:
+
+  google-protobuf@3.21.4:
+    resolution: {integrity: sha512-MnG7N936zcKTco4Jd2PX2U96Kf9PxygAPKBug+74LHzmHXmceN16MmRcdgZv+DGef/S9YvQAfRsNCn4cjf9yyQ==}
+
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+
+  protoscript@0.0.23:
+    resolution: {integrity: sha512-5PB7ERq8ApyY+5T2bLLQaZHWis9ysm1PzIVX9GO5fjtGO/6EnVxFglzLouaxQPR+l2wF7XmEn+VNjlXCD1TQow==}
+    hasBin: true
+
+  twirpscript@0.0.72:
+    resolution: {integrity: sha512-KpVuqkzO95wMdvmK+GzXn+g/VFFGWJmgn3s8eXfIT+DmJ1nudAU3m9F/ets2byKyN1TXd3atWRCQlQpIj4jl+w==}
+    hasBin: true
+
+snapshots:
+
+  google-protobuf@3.21.4: {}
+
+  prettier@3.6.2: {}
+
+  protoscript@0.0.23:
+    dependencies:
+      google-protobuf: 3.21.4
+      prettier: 3.6.2
+
+  twirpscript@0.0.72:
+    dependencies:
+      protoscript: 0.0.23

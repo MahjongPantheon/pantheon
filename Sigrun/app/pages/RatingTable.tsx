@@ -40,7 +40,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { PlayerAvatar } from '../components/PlayerAvatar';
-import { EventType, PlayerInRating } from '../clients/proto/atoms.pb';
+import { EventType, PlayerInRating } from 'tsclients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 import { useEvent } from '../hooks/useEvent';

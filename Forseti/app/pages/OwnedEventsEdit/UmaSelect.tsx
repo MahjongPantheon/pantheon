@@ -19,7 +19,7 @@ import { Center, Group, NumberInput, Radio, SimpleGrid, Stack, Text } from '@man
 import * as React from 'react';
 import { I18nService } from '../../services/i18n';
 import { FormHandle } from './types';
-import { UmaType } from '../../clients/proto/atoms.pb';
+import { UmaType } from 'tsclients/proto/atoms.pb';
 
 type UmaSelectProps = {
   form: FormHandle;

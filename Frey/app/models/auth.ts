@@ -14,7 +14,7 @@ import {
   AuthRequestRegistrationResponse,
   AuthRequestResetPasswordPayload,
   AuthRequestResetPasswordResponse,
-} from '../clients/proto/frey.pb';
+} from 'tsclients/proto/frey.pb';
 import { makeClientHash, makeHashes, verifyHash } from '../helpers/auth';
 import { Database } from '../database/db';
 import { emailRe } from '../helpers/email';

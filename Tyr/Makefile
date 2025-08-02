@@ -144,10 +144,6 @@ i18n_update:
 	./node_modules/.bin/pojson -s app/i18n/cn.po -o app/i18n/cn.json --withMeta
 	./node_modules/.bin/pojson -s app/i18n/ko.po -o app/i18n/ko.json --withMeta
 
-PHONY: proto_gen
-proto_gen:
-	./node_modules/.bin/twirpscript
-
 .PHONY: container_dev
 container_dev: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
@@ -218,12 +214,4 @@ container_i18n_update: get_container_id
 		echo "${RED}Tyr container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make i18n_update' ; \
-	fi
-
-PHONY: container_proto_gen
-container_proto_gen: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Tyr container is not running.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make proto_gen' ; \
 	fi

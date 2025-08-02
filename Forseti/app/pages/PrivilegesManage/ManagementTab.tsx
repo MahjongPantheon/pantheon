@@ -18,7 +18,7 @@
 import * as React from 'react';
 import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
-import { EventAdmin, EventReferee } from '../../clients/proto/atoms.pb';
+import { EventAdmin, EventReferee } from 'tsclients/proto/atoms.pb';
 import {
   ActionIcon,
   Text,

@@ -31,7 +31,7 @@ import {
 import { notifications } from '@mantine/notifications';
 import { Redirect } from 'wouter';
 import { useStorage } from '../../hooks/storage';
-import { GameConfig } from '../../clients/proto/atoms.pb';
+import { GameConfig } from 'tsclients/proto/atoms.pb';
 import { CommonReasons } from './CommonReasons';
 
 type PenaltyFormProps = {

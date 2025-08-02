@@ -1,4 +1,4 @@
-import * as Frey from '../clients/proto/frey.pb';
+import * as Frey from 'tsclients/proto/frey.pb';
 import { client } from 'twirpscript';
 import { readFile } from 'fs/promises';
 import { v4 } from 'uuid';

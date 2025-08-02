@@ -19,7 +19,7 @@ import * as React from 'react';
 import { Alert, Container, Divider, Space, Stack, Tabs } from '@mantine/core';
 import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
-import { EventType } from '../../clients/proto/atoms.pb';
+import { EventType } from 'tsclients/proto/atoms.pb';
 import { useEvent } from '../../hooks/useEvent';
 import { useIsomorphicState } from '../../hooks/useIsomorphicState';
 import { TabsList } from './TabsList';

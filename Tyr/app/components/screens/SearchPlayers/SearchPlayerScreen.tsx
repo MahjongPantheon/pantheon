@@ -25,7 +25,7 @@ import {
   GET_ALL_PLAYERS_INIT,
 } from '../../../store/actions/interfaces';
 import { getPlayers } from '../../../store/selectors/newGame';
-import { RegisteredPlayer } from '../../../clients/proto/atoms.pb';
+import { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 import { useEffect } from 'react';
 import { PlayersSearch } from '../../pages/PlayersSearch/PlayersSearch';
 

@@ -21,7 +21,7 @@ import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { useApi } from '../../hooks/api';
 import { IconSearch } from '@tabler/icons-react';
-import { RegisteredPlayer } from '../../clients/proto/atoms.pb';
+import { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 type ItemProps = {
   title: string;
   value: string; // playerID

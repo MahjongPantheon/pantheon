@@ -23,7 +23,7 @@ import {
   SessionStatus,
   TableState,
   TournamentGamesStatus,
-} from '../../clients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb';
 import {
   Box,
   Button,

@@ -30,7 +30,7 @@ import {
 import { doraOptions, mayGoNextFromYakuSelect } from '../../../store/selectors/navbar';
 import { getDora, getFu, getPossibleFu, getHan } from '../../../store/selectors/hanFu';
 import { getOutcomeName } from '../../../store/selectors/table';
-import { RoundOutcome } from '../../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 import { useContext } from 'react';
 import { i18n } from '../../i18n';
 import { Hand, IProps as HandProps } from '../../pages/Hand/Hand';

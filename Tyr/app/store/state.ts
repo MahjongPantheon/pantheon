@@ -27,7 +27,7 @@ import {
 import { getFixedFu } from '../helpers/yakuValues';
 import { IAppState } from './interfaces';
 import { defaultPlayer } from './selectors/newGame';
-import { RoundOutcome } from '../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export const initialState: IAppState = {
   currentOtherTableIndex: 0,

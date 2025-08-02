@@ -1,4 +1,4 @@
-import { MyEvent } from '../../../clients/proto/atoms.pb';
+import { MyEvent } from 'tsclients/proto/atoms.pb';
 
 import { useContext } from 'react';
 import { i18n } from '../../i18n';

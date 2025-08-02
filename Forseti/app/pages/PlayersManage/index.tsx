@@ -19,7 +19,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { usePageTitle } from '../../hooks/pageTitle';
 import { nprogress } from '@mantine/nprogress';
-import { GameConfig, RegisteredPlayer, Event } from '../../clients/proto/atoms.pb';
+import { GameConfig, RegisteredPlayer, Event } from 'tsclients/proto/atoms.pb';
 
 import { authCtx } from '../../hooks/auth';
 import { useApi } from '../../hooks/api';

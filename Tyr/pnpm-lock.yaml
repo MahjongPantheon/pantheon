@@ -47,6 +47,9 @@ importers:
       redux:
         specifier: 5.0.1
         version: 5.0.1
+      tsclients:
+        specifier: file:../Common/tsclients
+        version: file:../Common/tsclients
       twirpscript:
         specifier: ^0.0.72
         version: 0.0.72
@@ -4055,6 +4058,9 @@ packages:
   ts-dedent@2.2.0:
     resolution: {integrity: sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==}
     engines: {node: '>=6.10'}
+
+  tsclients@file:../Common/tsclients:
+    resolution: {directory: ../Common/tsclients, type: directory}
 
   tsconfck@3.1.3:
     resolution: {integrity: sha512-ulNZP1SVpRDesxeMLON/LtWM8HIgAJEIVpVVhBM6gsmvQ8+Rh+ZG7FWGvHh7Ah3pRABwVJWklWCr/BTZSv0xnQ==}
@@ -8974,6 +8980,11 @@ snapshots:
       typescript: 5.8.3
 
   ts-dedent@2.2.0: {}
+
+  tsclients@file:../Common/tsclients:
+    dependencies:
+      protoscript: 0.0.23
+      twirpscript: 0.0.72
 
   tsconfck@3.1.3(typescript@5.8.3):
     optionalDependencies:

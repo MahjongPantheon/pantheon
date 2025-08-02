@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { EndingPolicy, RoundOutcome } from '../clients/proto/atoms.pb';
+import { EndingPolicy, RoundOutcome } from 'tsclients/proto/atoms.pb';
 import { YakuId } from './yaku';
 import { I18nService } from '../services/i18n';
 

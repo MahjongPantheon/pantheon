@@ -33,7 +33,7 @@ import { Notification } from '../../base/Notification/Notification';
 import { ModalDialog } from '../../base/ModalDialog/ModalDialog';
 import { TablePrimaryView } from '../../pages/TablePrimaryView/TablePrimaryView';
 import { getPlayerData, getTableStatus } from '../../../store/selectors/table';
-import { RoundOutcome } from '../../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 const outcomes = {
   ron: RoundOutcome.ROUND_OUTCOME_RON,

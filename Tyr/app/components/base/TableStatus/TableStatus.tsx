@@ -11,7 +11,7 @@ import { roundToString } from '../../../helpers/roundToString';
 import styles from './TableStatus.module.css';
 import { Button } from '../Button/Button';
 import { TableStatus as TableStatusProps } from '../../../helpers/interfaces';
-import { EndingPolicy } from '../../../clients/proto/atoms.pb';
+import { EndingPolicy } from 'tsclients/proto/atoms.pb';
 
 export const TableStatus = (props: TableStatusProps) => {
   const loc = useContext(i18n);

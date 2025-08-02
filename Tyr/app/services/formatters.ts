@@ -37,7 +37,7 @@ import {
   Round,
   RoundOutcome,
   TsumoResult,
-} from '../clients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb';
 import { AppOutcomeRon } from '../helpers/interfaces';
 import { unpack } from '../helpers/yakuCompatibility';
 

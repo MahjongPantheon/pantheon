@@ -30,7 +30,7 @@ import {
 
 import { TableStatus } from '../../helpers/interfaces';
 import { I18nService } from '../../services/i18n';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 import { IProps as PlayerPlaceProps } from '../../components/base/PlayerPlace/PlayerPlace';
 import { IProps as ButtonsProps } from '../../components/base/PlayerButtons/PlayerButtons';
 import {

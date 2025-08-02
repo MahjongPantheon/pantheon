@@ -17,7 +17,7 @@
 
 import { IAppState } from '../interfaces';
 import { memoize } from '../../helpers/memoize';
-import { RegisteredPlayer } from '../../clients/proto/atoms.pb';
+import { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 
 const DEFAULT_ID = -1;
 export const defaultPlayer: Readonly<RegisteredPlayer> = {

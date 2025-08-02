@@ -36,7 +36,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { Suspense, useState } from 'react';
-import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
+import { SessionHistoryResultTable } from 'tsclients/proto/atoms.pb';
 import { PlayerAvatar } from '../components/PlayerAvatar';
 import { useMediaQuery } from '@mantine/hooks';
 import { PlayerStatsListing } from '../components/PlayerStatsListing';

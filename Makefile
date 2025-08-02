@@ -433,14 +433,12 @@ autofix:
 	cd Skirnir && ${MAKE} container_autofix
 	cd Fenrir && ${MAKE} container_autofix
 
+# First updates php generated code, second updates generated typescript
 .PHONY: proto_gen
 proto_gen:
 	cd Mimir && ${MAKE} container_proto_gen
 	cd Frey && ${MAKE} container_proto_gen
-	cd Forseti && ${MAKE} container_proto_gen
-	cd Tyr && ${MAKE} container_proto_gen
-	cd Sigrun && ${MAKE} container_proto_gen
-	cd Hugin && ${MAKE} container_proto_gen
+	${MAKE} deps
 
 # Db import/export
 

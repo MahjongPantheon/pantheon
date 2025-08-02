@@ -47,7 +47,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { StopEventModal } from './components/StopEventModal';
 import { MainMenu } from './components/MainMenu';
 import { useRoute } from 'wouter';
-import { Event } from './clients/proto/atoms.pb';
+import { Event } from 'tsclients/proto/atoms.pb';
 import { fontLoader } from './helpers/fontLoader';
 import { RecalcAchievementsModal } from './components/RecalcAchievementsModal';
 import { RecalcPlayerStatsModal } from './components/RecalcPlayerStatsModal';

@@ -49,6 +49,7 @@ logs: get_container_id
 .PHONY: deps
 deps:
 	pnpm install
+	cd ../Common/tsclients && pnpm install
 
 .PHONY: container_deps
 container_deps: get_container_id
@@ -245,6 +246,7 @@ container_build: get_container_id
 .PHONY: prod_deps
 prod_deps:
 	cd ../Frey-dist && NODE_ENV=production pnpm install
+	cd ../Common/tsclients && pnpm install
 
 .PHONY: container_prod_deps
 container_prod_deps: get_container_id

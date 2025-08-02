@@ -26,7 +26,7 @@ import {
   IconTargetArrow,
 } from '@tabler/icons-react';
 import { I18nService } from '../../services/i18n';
-import { GameConfig } from '../../clients/proto/atoms.pb';
+import { GameConfig } from 'tsclients/proto/atoms.pb';
 import { UmaSelect } from './UmaSelect';
 
 type RulesetSettingsProps = {

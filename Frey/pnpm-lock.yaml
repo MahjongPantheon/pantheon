@@ -65,6 +65,9 @@ importers:
       simple-node-logger:
         specifier: ^21.8.12
         version: 21.8.12
+      tsclients:
+        specifier: file:../Common/tsclients
+        version: file:../Common/tsclients
       tsx:
         specifier: ^4.20.3
         version: 4.20.3
@@ -3004,6 +3007,9 @@ packages:
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
+
+  tsclients@file:../Common/tsclients:
+    resolution: {directory: ../Common/tsclients, type: directory}
 
   tslib@1.9.3:
     resolution: {integrity: sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==}
@@ -6367,6 +6373,11 @@ snapshots:
   ts-api-utils@2.1.0(typescript@5.8.3):
     dependencies:
       typescript: 5.8.3
+
+  tsclients@file:../Common/tsclients:
+    dependencies:
+      protoscript: 0.0.23
+      twirpscript: 0.0.72
 
   tslib@1.9.3: {}
 

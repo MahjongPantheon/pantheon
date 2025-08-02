@@ -23,7 +23,7 @@ import {
   SessionStatus,
   TableState,
   TournamentGamesStatus,
-} from '../../clients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb';
 import {
   ActionIcon,
   Badge,
@@ -55,7 +55,7 @@ import { useI18n } from '../../hooks/i18n';
 import { Confirmation } from './Confirmation';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { useState } from 'react';
-import { EventsGetTimerStateResponse } from '../../clients/proto/mimir.pb';
+import { EventsGetTimerStateResponse } from 'tsclients/proto/mimir.pb';
 
 type GamesListProps = {
   tablesState: TableState[];

@@ -21,7 +21,7 @@ import { useApi } from '../hooks/api';
 import { Container, Divider, Space } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
-import { EventType, Player } from '../clients/proto/atoms.pb';
+import { EventType, Player } from 'tsclients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';

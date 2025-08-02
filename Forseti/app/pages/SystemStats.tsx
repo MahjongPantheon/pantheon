@@ -34,7 +34,7 @@ import {
 } from '@mantine/core';
 
 import { useStorage } from '../hooks/storage';
-import { HuginData } from '../clients/proto/hugin.pb';
+import { HuginData } from 'tsclients/proto/hugin.pb';
 import { Link, Redirect } from 'wouter';
 import LineGraph from '../components/LineGraph';
 import { authCtx, PrivilegesLevel } from '../hooks/auth';

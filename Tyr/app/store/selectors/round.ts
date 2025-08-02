@@ -16,7 +16,7 @@
  */
 
 import { I18nService } from '../../services/i18n';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 import {
   IRoundOverviewAbort,
   IRoundOverviewChombo,

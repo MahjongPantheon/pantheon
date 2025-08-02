@@ -1,4 +1,4 @@
-import { GenericSuccessResponse } from 'clients/proto/atoms.pb';
+import { GenericSuccessResponse } from 'tsclients/proto/atoms.pb';
 import {
   AccessAddRuleForPersonPayload,
   AccessAddRuleForPersonResponse,
@@ -44,7 +44,7 @@ import {
   PersonsGetPersonalInfoResponse,
   PersonsSetNotificationsSettingsPayload,
   PersonsUpdatePersonalInfoPayload,
-} from './clients/proto/frey.pb';
+} from 'tsclients/proto/frey.pb';
 import { Context } from './context';
 import {
   addRuleForPerson,

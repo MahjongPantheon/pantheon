@@ -21,7 +21,7 @@ import { useI18n } from '../hooks/i18n';
 import { useContext } from 'react';
 import { globalsCtx } from '../hooks/globals';
 import { useMediaQuery } from '@mantine/hooks';
-import { EventType } from '../clients/proto/atoms.pb';
+import { EventType } from 'tsclients/proto/atoms.pb';
 
 export function AppFooter() {
   const i18n = useI18n();

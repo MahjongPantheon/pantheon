@@ -18,7 +18,7 @@
 import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
-import { HandValueStat } from '../clients/proto/atoms.pb';
+import { HandValueStat } from 'tsclients/proto/atoms.pb';
 const BarGraph = React.lazy(() => import('./BarGraph'));
 
 export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] }) => {

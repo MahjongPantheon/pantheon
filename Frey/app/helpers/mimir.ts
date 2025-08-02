@@ -1,4 +1,4 @@
-import { ClearStatCache } from '../clients/proto/mimir.pb';
+import { ClearStatCache } from 'tsclients/proto/mimir.pb';
 import { env } from './env';
 
 export async function clearStatCache(personId: number) {

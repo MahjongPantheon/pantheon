@@ -14,13 +14,13 @@ import {
   PersonsGetPersonalInfoResponse,
   PersonsSetNotificationsSettingsPayload,
   PersonsUpdatePersonalInfoPayload,
-} from '../clients/proto/frey.pb';
+} from 'tsclients/proto/frey.pb';
 import { writeFile } from 'fs/promises';
 import { emailRe } from '../helpers/email';
 import { makeHashes, verifyHash } from '../helpers/auth';
 import { Database } from '../database/db';
 import { Context } from '../context';
-import { GenericSuccessResponse } from '../clients/proto/atoms.pb';
+import { GenericSuccessResponse } from 'tsclients/proto/atoms.pb';
 import { env } from '../helpers/env';
 import { sql } from 'kysely';
 import { RowMajsoulPlatformAccount, RowPerson } from '../database/schema';

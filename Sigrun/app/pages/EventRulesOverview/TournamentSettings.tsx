@@ -18,7 +18,7 @@
 import * as React from 'react';
 import { Checkbox, NumberInput, Radio, Space, Stack } from '@mantine/core';
 import { IconClockPlay, IconUserX } from '@tabler/icons-react';
-import { EndingPolicy, GameConfig } from '../../clients/proto/atoms.pb';
+import { EndingPolicy, GameConfig } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../../services/i18n';
 
 type TournamentSettingsProps = {

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { GameResult, Player } from '../clients/proto/atoms.pb';
+import { GameResult, Player } from 'tsclients/proto/atoms.pb';
 import { CSSProperties } from 'react';
 import {
   ActionIcon,

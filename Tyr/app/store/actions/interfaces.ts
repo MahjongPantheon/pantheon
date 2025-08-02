@@ -18,7 +18,7 @@
 import { YakuId } from '../../helpers/yaku';
 import { RemoteError } from '../../services/remoteError';
 import { IAppState } from '../interfaces';
-import { AuthAuthorizeResponse } from '../../clients/proto/frey.pb';
+import { AuthAuthorizeResponse } from 'tsclients/proto/frey.pb';
 import {
   GameConfig,
   MyEvent,
@@ -29,12 +29,12 @@ import {
   RoundState,
   SessionHistoryResult,
   TableState,
-} from '../../clients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb';
 import {
   CurrentSession,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
-} from '../../clients/proto/mimir.pb';
+} from 'tsclients/proto/mimir.pb';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';

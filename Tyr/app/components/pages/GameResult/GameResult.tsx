@@ -1,4 +1,4 @@
-import { SessionHistoryResult } from '../../../clients/proto/atoms.pb';
+import { SessionHistoryResult } from 'tsclients/proto/atoms.pb';
 
 import { useContext } from 'react';
 import { i18n } from '../../i18n';

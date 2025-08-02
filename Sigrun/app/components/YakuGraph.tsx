@@ -19,7 +19,7 @@ import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
-import { YakuStat } from '../clients/proto/atoms.pb';
+import { YakuStat } from 'tsclients/proto/atoms.pb';
 import { useMemo } from 'react';
 
 const BarGraph = React.lazy(() => import('./BarGraph'));

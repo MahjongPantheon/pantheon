@@ -17,7 +17,7 @@
 
 import { Center, Group, NumberInput, Radio, SimpleGrid, Stack, Text } from '@mantine/core';
 import * as React from 'react';
-import { GameConfig, UmaType } from '../../clients/proto/atoms.pb';
+import { GameConfig, UmaType } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../../services/i18n';
 
 type UmaSelectProps = {

@@ -16,7 +16,7 @@
  */
 
 import { IAppState } from '../interfaces';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export function getPlayerWithPao(state: IAppState) {
   switch (state.currentOutcome?.selectedOutcome) {

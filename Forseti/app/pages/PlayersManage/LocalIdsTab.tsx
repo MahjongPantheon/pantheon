@@ -18,7 +18,7 @@
 import * as React from 'react';
 import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
-import { RegisteredPlayer } from '../../clients/proto/atoms.pb';
+import { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 import {
   Text,
   Container,

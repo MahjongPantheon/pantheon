@@ -17,7 +17,7 @@
 
 import { Avatar, MantineSize, Tooltip } from '@mantine/core';
 import { IconFriends, IconNetwork, IconTournament } from '@tabler/icons-react';
-import { EventType, Event } from '../clients/proto/atoms.pb';
+import { EventType, Event } from 'tsclients/proto/atoms.pb';
 import { useI18n } from '../hooks/i18n';
 
 export const EventTypeIcon = ({

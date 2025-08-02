@@ -38,7 +38,7 @@ import {
   PlatformType,
   RulesetConfig,
   UmaType,
-} from '../../clients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb';
 import { TopActionButton } from '../../components/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';

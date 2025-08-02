@@ -1,4 +1,4 @@
-import { RegisteredPlayer } from '../../../clients/proto/atoms.pb';
+import { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 
 import { ChangeEvent, useContext, useState } from 'react';
 import { Button } from '../../base/Button/Button';

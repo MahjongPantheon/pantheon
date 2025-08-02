@@ -17,7 +17,7 @@
 
 import { I18nService } from '../../services/i18n';
 import { yakuMap } from '../../helpers/yaku';
-import { RoundOutcome, RoundState } from '../../clients/proto/atoms.pb';
+import { RoundOutcome, RoundState } from 'tsclients/proto/atoms.pb';
 import {
   IRoundOverviewAbort,
   IRoundOverviewBase,

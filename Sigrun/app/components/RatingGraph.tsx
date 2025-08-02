@@ -20,8 +20,8 @@ import * as React from 'react';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import starSvg from '../../assets/img/star.svg';
-import { PlayersGetPlayerStatsResponse } from '../clients/proto/mimir.pb';
-import { SessionHistoryResultTable } from '../clients/proto/atoms.pb';
+import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
+import { SessionHistoryResultTable } from 'tsclients/proto/atoms.pb';
 const LineGraph = React.lazy(() => import('./LineGraph'));
 
 export const RatingGraph = ({

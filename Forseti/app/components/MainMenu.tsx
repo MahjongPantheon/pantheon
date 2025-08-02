@@ -29,7 +29,7 @@ import { FlagDe, FlagEn, FlagKo, FlagRu } from '../helpers/flags';
 import * as React from 'react';
 import { useContext } from 'react';
 import { useI18n } from '../hooks/i18n';
-import { Event, EventType } from '../clients/proto/atoms.pb';
+import { Event, EventType } from 'tsclients/proto/atoms.pb';
 import { useApi } from '../hooks/api';
 import { useRoute } from 'wouter';
 import { modalsCtx } from '../hooks/modals';

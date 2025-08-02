@@ -12,8 +12,8 @@ import {
   AccessGetOwnedEventIdsResponse,
   AccessGetSuperadminFlagPayload,
   AccessGetSuperadminFlagResponse,
-} from '../clients/proto/frey.pb';
-import { GenericSuccessResponse } from '../clients/proto/atoms.pb';
+} from 'tsclients/proto/frey.pb';
+import { GenericSuccessResponse } from 'tsclients/proto/atoms.pb';
 import { Rights } from '../helpers/rights';
 import { IRedisClient } from '../helpers/cache/RedisClient';
 import { getSuperadminCacheKey } from '../helpers/cache/schema';

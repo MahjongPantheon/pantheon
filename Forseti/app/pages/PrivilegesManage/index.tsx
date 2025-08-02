@@ -28,7 +28,7 @@ import { Container, LoadingOverlay } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { Redirect } from 'wouter';
 import { useStorage } from '../../hooks/storage';
-import { EventAdmin, EventReferee } from '../../clients/proto/atoms.pb';
+import { EventAdmin, EventReferee } from 'tsclients/proto/atoms.pb';
 
 export const PrivilegesManage: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const eventId = parseInt(id, 10);

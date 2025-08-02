@@ -36,7 +36,7 @@ import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { ReactNode, useEffect, useState } from 'react';
 import { IconAlarm } from '@tabler/icons-react';
-import { PlayerSeating } from '../clients/proto/atoms.pb';
+import { PlayerSeating } from 'tsclients/proto/atoms.pb';
 import sound from '../../assets/snd/5min.wav';
 import { useI18n } from '../hooks/i18n';
 import { Meta } from '../components/Meta';

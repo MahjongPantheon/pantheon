@@ -38,7 +38,7 @@ import {
 } from '../actions/interfaces';
 import { AppScreen, IAppState } from '../interfaces';
 import { YakuId } from '../../helpers/yaku';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export const screenManageMw =
   () =>

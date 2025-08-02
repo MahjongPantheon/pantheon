@@ -23,7 +23,7 @@ import {
 import { IAppState } from '../interfaces';
 import { YakuId } from '../../helpers/yaku';
 import { WinProps, Yaku } from '../../helpers/interfaces';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 import { memoize } from '../../helpers/memoize';
 import { getWinningUsers, hasYaku } from './mimir';
 import { filterAllowed, yakuCommon, yakumans, yakuRare } from '../../helpers/yakuLists';

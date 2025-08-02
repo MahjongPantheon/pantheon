@@ -16,7 +16,7 @@
  */
 
 import { createContext } from 'react';
-import { PersonEx } from '../clients/proto/atoms.pb';
+import { PersonEx } from 'tsclients/proto/atoms.pb';
 
 export const auth = {
   isLoggedIn: false,

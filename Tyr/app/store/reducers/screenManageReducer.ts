@@ -32,7 +32,7 @@ import {
   START_NEW_GAME,
 } from '../actions/interfaces';
 import { AppOutcome } from '../../helpers/interfaces';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export function screenManageReducer(state: IAppState, action: AppActionTypes): IAppState {
   switch (action.type) {

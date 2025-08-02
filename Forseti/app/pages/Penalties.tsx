@@ -21,7 +21,7 @@ import { authCtx } from '../hooks/auth';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { usePageTitle } from '../hooks/pageTitle';
-import { Chombo, GameConfig, Penalty, Player } from '../clients/proto/atoms.pb';
+import { Chombo, GameConfig, Penalty, Player } from 'tsclients/proto/atoms.pb';
 import { Container, LoadingOverlay, Space } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';

@@ -29,7 +29,7 @@ import { YakuId } from '../../helpers/yaku';
 import { addYakuToList, limits, pack, unpack } from '../../helpers/yakuCompatibility';
 import { getFixedFu, getHan } from '../../helpers/yakuValues';
 import { Graph } from '../../helpers/graph';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 /**
  * Should be used only for common win props, like riichiBets! For all other things modifyWinOutcome should be used.

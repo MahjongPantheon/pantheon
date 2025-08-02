@@ -15,7 +15,7 @@ import { i18n } from '../../i18n';
 import { TableStatus } from '../../base/TableStatus/TableStatus';
 import styles from './TablePrimaryView.module.css';
 import { TableStatus as TableStatusProps } from '../../../helpers/interfaces';
-import { EndingPolicy } from '../../../clients/proto/atoms.pb';
+import { EndingPolicy } from 'tsclients/proto/atoms.pb';
 
 export type IProps = {
   toimen: PlayerProps;

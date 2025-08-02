@@ -32,7 +32,7 @@ import {
 import { IconX } from '@tabler/icons-react';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { CancelConfirmation } from './CancelConfirmation';
-import { Chombo, Penalty, Player } from '../../clients/proto/atoms.pb';
+import { Chombo, Penalty, Player } from 'tsclients/proto/atoms.pb';
 
 type PenaltiesListProps = {
   penaltiesList: Penalty[];

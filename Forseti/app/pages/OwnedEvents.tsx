@@ -56,7 +56,7 @@ import { Link, Redirect } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { useStorage } from '../hooks/storage';
-import { Event, EventType } from '../clients/proto/atoms.pb';
+import { Event, EventType } from 'tsclients/proto/atoms.pb';
 import { authCtx, PrivilegesLevel } from '../hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';

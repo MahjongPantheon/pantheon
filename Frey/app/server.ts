@@ -1,7 +1,7 @@
 import { createServer, IncomingMessage } from 'http';
 import { createTwirpServer } from 'twirpscript';
 import { createSimpleLogger } from 'simple-node-logger';
-import { createFrey } from './clients/proto/frey.pb';
+import { createFrey } from 'tsclients/proto/frey.pb';
 import { freyClient } from './frey';
 import { env } from './helpers/env';
 import { Context } from './context';

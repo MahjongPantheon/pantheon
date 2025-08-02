@@ -30,6 +30,7 @@
     "jest": "^29.7.0",
     "prettier": "^3.5.3",
     "ts-jest": "^29.2.5",
+    "tsclients": "file:../Common/tsclients",
     "typescript": "5.8.3",
     "workbox-build": "^7.3.0",
     "workbox-window": "^7.3.0",

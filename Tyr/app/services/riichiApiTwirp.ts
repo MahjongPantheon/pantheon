@@ -33,12 +33,12 @@ import {
   ListMyPenalties,
   PreviewRound,
   StartGame,
-} from '../clients/proto/mimir.pb';
+} from 'tsclients/proto/mimir.pb';
 import { IRiichiApi } from './IRiichiApi';
-import { Authorize, GetPersonalInfo, QuickAuthorize } from '../clients/proto/frey.pb';
+import { Authorize, GetPersonalInfo, QuickAuthorize } from 'tsclients/proto/frey.pb';
 import { formatRoundToTwirp } from './formatters';
 import { ClientConfiguration } from 'twirpscript';
-import { Penalty, SessionStatus } from '../clients/proto/atoms.pb';
+import { Penalty, SessionStatus } from 'tsclients/proto/atoms.pb';
 
 import { handleReleaseTag } from './releaseTags';
 import { env } from '../helpers/env';

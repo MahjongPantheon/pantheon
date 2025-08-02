@@ -34,10 +34,10 @@ import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { useEffect, useState } from 'react';
-import { SessionStatus, TableState } from '../clients/proto/atoms.pb';
+import { SessionStatus, TableState } from 'tsclients/proto/atoms.pb';
 import { useI18n } from '../hooks/i18n';
 import { Meta } from '../components/Meta';
-import { EventsGetTablesStateResponse } from '../clients/proto/mimir.pb';
+import { EventsGetTablesStateResponse } from 'tsclients/proto/mimir.pb';
 import { IconCheck } from '@tabler/icons-react';
 
 export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {

@@ -60,7 +60,7 @@ import {
   UpdatePlayersLocalIds,
   UpdatePlayersTeams,
   UpdatePrescriptedEventConfig,
-} from '../clients/proto/mimir.pb';
+} from 'tsclients/proto/mimir.pb';
 import {
   AddRuleForPerson,
   ApproveRegistration,
@@ -82,17 +82,17 @@ import {
   GetNotificationsSettings,
   SetNotificationsSettings,
   GetEventReferees,
-} from '../clients/proto/frey.pb';
+} from 'tsclients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import {
   EventAdmin,
   EventData,
   EventReferee,
   IntermediateResultOfSession,
-} from '../clients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
-import { GetLastDay, GetLastMonth, GetLastYear } from '../clients/proto/hugin.pb';
+import { GetLastDay, GetLastMonth, GetLastYear } from 'tsclients/proto/hugin.pb';
 import { env } from '../env';
 
 export class ApiService {

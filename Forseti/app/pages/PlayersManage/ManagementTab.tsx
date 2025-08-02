@@ -19,7 +19,7 @@ import * as React from 'react';
 import { useApi } from '../../hooks/api';
 import { useContext, useState } from 'react';
 import { useI18n } from '../../hooks/i18n';
-import { GameConfig, RegisteredPlayer, Event, EventType } from '../../clients/proto/atoms.pb';
+import { GameConfig, RegisteredPlayer, Event, EventType } from 'tsclients/proto/atoms.pb';
 import {
   ActionIcon,
   Text,

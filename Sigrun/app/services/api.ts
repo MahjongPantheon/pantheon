@@ -31,7 +31,7 @@ import {
   GetRatingTable,
   GetTablesState,
   GetTimerState,
-} from '../clients/proto/mimir.pb';
+} from 'tsclients/proto/mimir.pb';
 import {
   Authorize,
   GetEventAdmins,
@@ -40,7 +40,7 @@ import {
   GetPersonalInfo,
   GetSuperadminFlag,
   QuickAuthorize,
-} from '../clients/proto/frey.pb';
+} from 'tsclients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';

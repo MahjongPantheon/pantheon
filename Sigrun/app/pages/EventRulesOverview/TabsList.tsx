@@ -25,7 +25,7 @@ import {
 } from '@tabler/icons-react';
 import { Tabs } from '@mantine/core';
 import { I18nService } from '../../services/i18n';
-import { EventType } from '../../clients/proto/atoms.pb';
+import { EventType } from 'tsclients/proto/atoms.pb';
 
 type TabsProps = {
   i18n: I18nService;

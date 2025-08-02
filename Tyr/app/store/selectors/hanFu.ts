@@ -17,7 +17,7 @@
 
 import { IAppState } from '../interfaces';
 import { memoize } from '../../helpers/memoize';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 function _getHan(state: IAppState, user: number) {
   const outcome = state.currentOutcome;

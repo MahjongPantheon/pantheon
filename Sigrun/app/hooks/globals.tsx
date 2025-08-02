@@ -16,7 +16,7 @@
  */
 
 import { createContext } from 'react';
-import { EventType, PlatformType } from '../clients/proto/atoms.pb';
+import { EventType, PlatformType } from 'tsclients/proto/atoms.pb';
 
 export type Globals = {
   eventId: number[] | null;

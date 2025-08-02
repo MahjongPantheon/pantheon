@@ -19,7 +19,7 @@ import { useContext, useEffect } from 'react';
 import { globalsCtx } from './globals';
 import { useIsomorphicState } from './useIsomorphicState';
 import { useApi } from './api';
-import { PlatformType } from '../clients/proto/atoms.pb';
+import { PlatformType } from 'tsclients/proto/atoms.pb';
 
 export const useEvent = (eventIdListStr: string | null) => {
   const globals = useContext(globalsCtx);

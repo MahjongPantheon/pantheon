@@ -30,7 +30,7 @@ import {
 import { FormHandle } from './types';
 import { authCtx, PrivilegesLevel } from '../../hooks/auth';
 import { useContext } from 'react';
-import { PlatformType } from '../../clients/proto/atoms.pb';
+import { PlatformType } from 'tsclients/proto/atoms.pb';
 
 type OnlineSettingsProps = {
   form: FormHandle;

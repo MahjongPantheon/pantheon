@@ -19,7 +19,7 @@ import { IAppState } from '../interfaces';
 import { yakumanInYaku } from './yaku';
 import { getHan } from './hanFu';
 import { getLosingUsers, getWinningUsers } from './mimir';
-import { RoundOutcome } from '../../clients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export function doraOptions(state: IAppState, playerId: number) {
   if (yakumanInYaku(state)[playerId]) {

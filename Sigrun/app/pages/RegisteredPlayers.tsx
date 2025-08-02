@@ -34,7 +34,7 @@ import {
   Box,
 } from '@mantine/core';
 import { PlayerAvatar } from '../components/PlayerAvatar';
-import { EventType } from '../clients/proto/atoms.pb';
+import { EventType } from 'tsclients/proto/atoms.pb';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 import { useEvent } from '../hooks/useEvent';

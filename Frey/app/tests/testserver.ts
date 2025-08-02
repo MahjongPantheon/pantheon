@@ -1,4 +1,4 @@
-import * as Frey from '../clients/proto/frey.pb';
+import * as Frey from 'tsclients/proto/frey.pb';
 import { freyClient } from '../frey';
 import { createDbConstructor, createRedisConstructor } from '../database/db';
 import { createTwirpServer } from 'twirpscript';

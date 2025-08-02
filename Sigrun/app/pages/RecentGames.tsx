@@ -33,7 +33,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
-import { EventType, Player } from '../clients/proto/atoms.pb';
+import { EventType, Player } from 'tsclients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
