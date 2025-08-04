@@ -5,6 +5,7 @@
   "license": "GPLv3",
   "type": "module",
   "dependencies": {
+    "esbuild": "^0.25.8",
     "twirpscript": "^0.0.72",
     "protoscript": "^0.0.23"
   }

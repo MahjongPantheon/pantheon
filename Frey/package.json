@@ -14,6 +14,7 @@
     "cookie-parser": "^1.4.7",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
+    "esbuild-node-externals": "^1.18.0",
     "express": "^4.21.2",
     "i18n-dialect": "https://github.com/ctizen/i18n-dialect#2.0.2",
     "i18n-proto": "^1.0.5",
@@ -24,8 +25,8 @@
     "protoscript": "^0.0.23",
     "redis": "^4.7.0",
     "simple-node-logger": "^21.8.12",
-    "tsx": "^4.20.3",
     "tsclients": "file:../Common/tsclients",
+    "tsx": "^4.20.3",
     "twirpscript": "^0.0.72",
     "uuid": "^10.0.0"
   },

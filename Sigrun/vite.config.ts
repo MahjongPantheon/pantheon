@@ -21,6 +21,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  ssr: {
+    noExternal: ['tsclients'],
+  },
   plugins: [
     react(),
     tsconfigPaths(),
@@ -61,7 +64,7 @@ export default defineConfig({
   },
   server: {
     port: 4002,
-    allowedHosts: ['sigrun.pantheon.local']
+    allowedHosts: ['sigrun.pantheon.local'],
   },
   build: {
     rollupOptions: {

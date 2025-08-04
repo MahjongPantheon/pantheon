@@ -579,10 +579,11 @@ e2e:
 	cd Fenrir && ${MAKE} container_run
 
 .PHONY: e2e_local
-e2e_dev: export ENV_FILENAME=.env.development
+e2e_dev: export ENV_FILENAME=.env.e2e
 e2e_dev:
 	${CONTAINER_COMMAND} pull ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH}:latest
 	@${COMPOSE_COMMAND} --profile e2e up -d
+	${MAKE} e2e_compile
 	cd Fenrir && ${MAKE} container_deps && ${MAKE} container_run
 
 .PHONY: e2e_build_tyr
@@ -619,7 +620,7 @@ e2e_build_bragi: # this is for automated builds, don't run it manually
 e2e_build_skirnir: export NODE_ENV=development
 e2e_build_skirnir: export ENV_FILENAME=.env.e2e
 e2e_build_skirnir: # this is for automated builds, don't run it manually
-	cd Skirnir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps && ${MAKE} container_reload_pm2
+	cd Skirnir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
 .PHONY: e2e_compile
 e2e_compile: export ENV_FILENAME=.env.e2e

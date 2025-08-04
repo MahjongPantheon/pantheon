@@ -233,7 +233,7 @@ container_reload_pm2: get_container_id
 .PHONY: build
 build:
 	mkdir -p dist
-	pnpm exec esbuild app/server.ts --bundle --platform=node --target=node22 --packages=external --outfile=./dist/server.js
+	pnpm exec tsx build.ts
 
 .PHONY: container_build
 container_build: get_container_id

@@ -376,7 +376,7 @@ services:
     profiles:
       - e2e
     env_file:
-      - ./Env/${ENV_FILENAME:-.env.production}
+      - ./Env/${ENV_FILENAME:-.env.e2e}
     environment:
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm

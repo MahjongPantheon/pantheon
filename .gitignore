@@ -37,6 +37,7 @@ Thumbs.db
 
 Common/protoc-bin/
 Common/tsclients/node_modules/
+Common/tsclients/proto/*.js
 
 Database/export.tar.gz
 
@@ -81,6 +82,8 @@ Forseti-dist/*
 
 Frey/node_modules/*
 Frey/dist/*
+Frey-dist/.env.production
+Frey-dist/node_modules/*
 
 Sigrun/dev-dist
 Sigrun-dist/*
@@ -97,3 +100,10 @@ Bragi-dist/*
 
 Hermod/opendkim_keys/*
 !Hermod/opendkim_keys/.keep
+
+Skirnir-dist/.env.development
+Skirnir-dist/.env.production
+Skirnir-dist/dist/
+Skirnir-dist/node_modules/
+Skirnir-dist/package.json
+Skirnir-dist/pnpm-lock.yaml
