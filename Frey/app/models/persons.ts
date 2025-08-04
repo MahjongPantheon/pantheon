@@ -505,6 +505,7 @@ export async function updatePersonalInfo(
           'X-Api-Key': env.userinfoHookApiKey,
         },
         body: JSON.stringify({
+          email: payload.email,
           city: payload.city,
           country: payload.country,
           title: payload.title,
