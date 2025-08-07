@@ -85,6 +85,7 @@ export const initialState: IAppState = {
   gameOverviewReady: false,
 
   historyInitialized: false,
+  networkDialogShown: false,
 
   penalties: [],
 };

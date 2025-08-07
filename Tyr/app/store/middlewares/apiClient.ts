@@ -64,6 +64,7 @@ import {
   SELECT_EVENT,
   SET_CREDENTIALS,
   SET_TIMER,
+  SHOW_NETWORK_DIALOG,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
@@ -497,9 +498,14 @@ function startupWithAuth(
         }
       }
     })
-    .catch(() => {
-      dispatchToStore({ type: FORCE_LOGOUT, payload: undefined });
-      dispatchToStore({ type: RESET_LOGIN_ERROR }); // this resets error screen
+    .catch((e) => {
+      if (e.msg === 'Password check failed' || e.msg === 'Person is not known to the system') {
+        dispatchToStore({ type: FORCE_LOGOUT, payload: undefined });
+        dispatchToStore({ type: RESET_LOGIN_ERROR }); // this resets error screen
+      } else {
+        // Probably network problems, output a dialog to retry or force logout
+        dispatchToStore({ type: SHOW_NETWORK_DIALOG, payload: true });
+      }
     });
 }
 

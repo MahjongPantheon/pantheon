@@ -133,6 +133,7 @@ export const TOGGLE_RIICHI_NOTIFICATION = 'TOGGLE_RIICHI_NOTIFICATION';
 export const GET_PENALTIES_INIT = 'GET_PENALTIES_INIT';
 export const GET_PENALTIES_SUCCESS = 'GET_PENALTIES_SUCCESS';
 export const GET_PENALTIES_FAIL = 'GET_PENALTIES_FAIL';
+export const SHOW_NETWORK_DIALOG = 'SHOW_NETWORK_DIALOG';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -603,6 +604,11 @@ interface GetPenaltiesFail {
   payload: RemoteError;
 }
 
+interface ShowNetworkDialog {
+  type: typeof SHOW_NETWORK_DIALOG;
+  payload: boolean;
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -700,4 +706,5 @@ export type AppActionTypes =
   | GetPenaltiesInit
   | GetPenaltiesSuccess
   | GetPenaltiesFail
-  | ToggleRiichiNotificationAction;
+  | ToggleRiichiNotificationAction
+  | ShowNetworkDialog;

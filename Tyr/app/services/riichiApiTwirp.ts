@@ -74,23 +74,26 @@ export class RiichiApiTwirpService implements IRiichiApi {
         .then(handleReleaseTag)
         .then((resp) => {
           if (!resp.ok) {
-            return resp.json().then((err) => {
-              // Twirp server error handling
-              if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(env.urls.hugin, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    source: 'Tyr [twirp]',
-                    error: `From: ${
-                      typeof window !== 'undefined' && window.location.href
-                    } | To: ${url} | Details: ${err.meta.cause}`,
-                  }),
-                });
-                throw new Error(err.meta.cause);
-              }
-              return resp;
-            });
+            return resp
+              .clone()
+              .json()
+              .then((err) => {
+                // Twirp server error handling
+                if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
+                  fetch(env.urls.hugin, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      source: 'Tyr [twirp]',
+                      error: `From: ${
+                        typeof window !== 'undefined' && window.location.href
+                      } | To: ${url} | Details: ${err.meta.cause}`,
+                    }),
+                  });
+                  throw new Error(err.meta.cause);
+                }
+                return resp;
+              });
           }
           return resp;
         });

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-04 22:50Z\n"
+"POT-Creation-Date: 2025-08-07 21:43Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/components/App.tsx:186:35
+#: app/components/App.tsx:189:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr ""
 
-#: app/components/App.tsx:188:16
+#: app/components/App.tsx:191:16
 msgid "Please return back and press riichi button for the winner"
+msgstr ""
+
+#: app/components/App.tsx:213:35
+msgid "Retry"
+msgstr ""
+
+#: app/components/App.tsx:214:37
+msgid "Reset & logout"
+msgstr ""
+
+#: app/components/App.tsx:216:16
+msgid "It looks like there are issues with your network connection. Would you like to retry starting the application or clear the credentials and try logging in again?"
 msgstr ""
 
 #: app/components/base/HandOfPlayer/HandOfPlayer.tsx:89:19
