@@ -150,6 +150,7 @@ export interface IAppState {
   eventsListError?: RemoteError;
 
   historyInitialized: boolean;
+  networkDialogShown: boolean;
 
   riichiNotificationShown?: boolean;
 

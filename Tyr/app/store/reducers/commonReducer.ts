@@ -25,6 +25,7 @@ import {
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
   SETTINGS_SAVE_THEME,
+  SHOW_NETWORK_DIALOG,
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_OVERVIEW_DIFFBY,
   TOGGLE_RIICHI_NOTIFICATION,
@@ -89,6 +90,11 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
       return {
         ...state,
         riichiNotificationShown: action.payload,
+      };
+    case SHOW_NETWORK_DIALOG:
+      return {
+        ...state,
+        networkDialogShown: action.payload,
       };
     default:
       return state;

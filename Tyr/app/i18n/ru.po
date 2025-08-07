@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 17:58Z\n"
-"PO-Revision-Date: 2025-02-21 22:14+0300\n"
+"POT-Creation-Date: 2025-08-07 21:43Z\n"
+"PO-Revision-Date: 2025-08-08 00:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #: app/components/base/TableStatus/TableStatus.tsx:96:16
 msgid "%1 deal left"
@@ -102,7 +102,6 @@ msgid "Chuuren poutou"
 msgstr "Чууренпото"
 
 #: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
-#, fuzzy
 msgid "Chuuren poutou 9-side"
 msgstr "Чууренпото 9-ти сторонний"
 
@@ -213,6 +212,15 @@ msgstr "Иипейко"
 msgid "Ippatsu"
 msgstr "Иппацу"
 
+#: app/components/App.tsx:216:16
+msgid ""
+"It looks like there are issues with your network connection. Would you like "
+"to retry starting the application or clear the credentials and try logging "
+"in again?"
+msgstr ""
+"Похоже, что есть проблемы с соединением с сетью. Хотите попробовать "
+"повторить запуск приложения или очистить данные и войти заново?"
+
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
 msgstr "Иццу"
@@ -226,7 +234,6 @@ msgid "Kokushi musou"
 msgstr "Кокушимусо"
 
 #: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
-#, fuzzy
 msgid "Kokushi musou 13-side"
 msgstr "Кокушимусо 13-ти сторонний"
 
@@ -287,7 +294,7 @@ msgstr "Никто не выбран"
 msgid "Notice"
 msgstr "Предупреждение"
 
-#: app/components/App.tsx:186:35
+#: app/components/App.tsx:189:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "ОК"
@@ -332,7 +339,7 @@ msgstr "Пин-фу"
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: app/components/App.tsx:188:16
+#: app/components/App.tsx:191:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "Пожалуйста, вернитесь назад и нажмите кнопку риичи для выигравшего"
 
@@ -347,6 +354,14 @@ msgstr "Судья был вызван за ваш стол!"
 #: app/helpers/yaku.ts:396:34 app/helpers/yaku.ts:397:39
 msgid "Renhou"
 msgstr "Ренхо"
+
+#: app/components/App.tsx:214:37
+msgid "Reset & logout"
+msgstr "Сброс и выход"
+
+#: app/components/App.tsx:213:35
+msgid "Retry"
+msgstr "Повторить"
 
 #: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
 msgid "Riichi"
@@ -442,7 +457,6 @@ msgid "Suuankou"
 msgstr "Сууанко"
 
 #: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
-#, fuzzy
 msgid "Suuankou Tanki"
 msgstr "Сууанко Танки"
 

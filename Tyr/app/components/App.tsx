@@ -21,11 +21,14 @@ import themes from './themes.module.css';
 import { IAppState } from '../store/interfaces';
 import {
   AppActionTypes,
+  FORCE_LOGOUT,
   GO_TO_CURRENT_GAME,
   HISTORY_INIT,
   INIT_STATE,
+  RESET_LOGIN_ERROR,
   SELECT_EVENT,
   SETTINGS_SAVE_LANG,
+  SHOW_NETWORK_DIALOG,
   STARTUP_WITH_AUTH,
   TOGGLE_RIICHI_NOTIFICATION,
   UPDATE_CURRENT_GAMES_INIT,
@@ -186,6 +189,33 @@ export const App = (props: IProps) => {
               actionPrimaryLabel={i18nService._t('OK')}
             >
               {i18nService._t('Please return back and press riichi button for the winner')}
+            </ModalDialog>
+          )}
+          {state.networkDialogShown && (
+            <ModalDialog
+              onClose={() => {}}
+              actionSecondary={() => {
+                dispatch({ type: FORCE_LOGOUT, payload: undefined });
+                dispatch({ type: RESET_LOGIN_ERROR }); // this resets error screen
+                dispatch({ type: SHOW_NETWORK_DIALOG, payload: false });
+              }}
+              actionPrimary={() => {
+                dispatch({ type: SHOW_NETWORK_DIALOG, payload: false });
+                dispatch({
+                  type: STARTUP_WITH_AUTH,
+                  payload: {
+                    token: storage.getAuthToken() ?? '',
+                    personId: storage.getPersonId() ?? 0,
+                    sessionId: storage.getSessionId() ?? v4(),
+                  },
+                });
+              }}
+              actionPrimaryLabel={i18nService._t('Retry')}
+              actionSecondaryLabel={i18nService._t('Reset & logout')}
+            >
+              {i18nService._t(
+                'It looks like there are issues with your network connection. Would you like to retry starting the application or clear the credentials and try logging in again?'
+              )}
             </ModalDialog>
           )}
         </i18n.Provider>
