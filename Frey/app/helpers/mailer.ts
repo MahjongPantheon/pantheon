@@ -24,7 +24,7 @@ async function _send(
   const subj = '=?utf-8?B?' + base64encode(subject) + '?=';
 
   const body =
-    '--$boundary\r\n' +
+    `--${boundary}\r\n` +
     'Content-Type: text/plain; charset=UTF-8\r\n' +
     'Content-Transfer-Encoding: base64\r\n\r\n' +
     chunkedContent.join('\n') +
@@ -34,7 +34,7 @@ async function _send(
     'Content-Transfer-Encoding: base64\r\n\r\n' +
     chunkedHtmlContent.join('\n') +
     '\r\n' +
-    '--$boundary--';
+    `--${boundary}--`;
 
   return fetch(env.mailer.remoteUrl, {
     method: 'POST',
