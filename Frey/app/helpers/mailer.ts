@@ -16,7 +16,7 @@ async function _send(
   };
 
   const content = message
-    .replace(/https:\/\/(\S+)/gi, '<a href="\0">\0</a>')
+    .replace(/https:\/\/(\S+)/gi, '<a href="$&">$&</a>')
     .replaceAll('\n', '<br />');
   const htmlContent = `<html><head><meta charset='UTF-8'><title>${subject}</title></head><body>${content}</body></html>`;
   const chunkedContent = chunks(base64encode(message));
