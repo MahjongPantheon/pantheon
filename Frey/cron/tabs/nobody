@@ -1,1 +1,1 @@
-* * * * * pnpm exec tsx /var/www/html/Frey/cron/send_stats.ts
+* * * * * cd /var/www/html/Frey && pnpm exec tsx /var/www/html/Frey/cron/send_stats.ts
