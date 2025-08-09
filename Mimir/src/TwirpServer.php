@@ -43,8 +43,6 @@ use Common\EventsGetAchievementsPayload;
 use Common\EventsGetAchievementsResponse;
 use Common\EventsGetAllRegisteredPlayersPayload;
 use Common\EventsGetAllRegisteredPlayersResponse;
-use Common\EventsGetCountriesPayload;
-use Common\EventsGetCountriesResponse;
 use Common\EventsGetCurrentSeatingResponse;
 use Common\EventsGetEventForEditPayload;
 use Common\EventsGetEventForEditResponse;
@@ -65,8 +63,6 @@ use Common\EventsGetRulesetsResponse;
 use Common\EventsGetStartingTimerResponse;
 use Common\EventsGetTablesStateResponse;
 use Common\EventsGetTimerStateResponse;
-use Common\EventsGetTimezonesPayload;
-use Common\EventsGetTimezonesResponse;
 use Common\EventsRegisterPlayerPayload;
 use Common\EventsUnregisterPlayerPayload;
 use Common\EventsUpdateEventPayload;
@@ -831,32 +827,6 @@ final class TwirpServer implements Mimir
             ->setRulesets(array_map(function ($r) {
                 return $r['originalRules'];
             }, $ret));
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function GetTimezones(array $ctx, EventsGetTimezonesPayload $req): EventsGetTimezonesResponse
-    {
-        $ret = $this->_eventsController->getTimezones($req->getAddr());
-        return (new EventsGetTimezonesResponse())
-            ->setTimezones($ret['timezones'])
-            ->setPreferredByIp($ret['preferredByIp']);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function GetCountries(array $ctx, EventsGetCountriesPayload $req): EventsGetCountriesResponse
-    {
-        $ret = $this->_eventsController->getCountries($req->getAddr());
-        return (new EventsGetCountriesResponse())
-            ->setCountries(array_map(function ($country) {
-                return (new Country())
-                    ->setCode($country['code'])
-                    ->setName($country['name']);
-            }, $ret['countries']))
-            ->setPreferredByIp($ret['preferredByIp']);
     }
 
     /**

@@ -20,11 +20,9 @@ namespace Mimir;
 use Common\Country;
 use Common\Event;
 use Common\EventData;
-use Common\EventsGetCountriesPayload;
 use Common\EventsGetEventsPayload;
 use Common\EventsGetEventsByIdPayload;
 use Common\EventsGetRulesetsPayload;
-use Common\EventsGetTimezonesPayload;
 use Common\EventsRegisterPlayerPayload;
 use Common\EventsUnregisterPlayerPayload;
 use Common\EventsUpdateEventPayload;
@@ -150,28 +148,6 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotEmpty($rulesets);
         $this->assertInstanceOf(RulesetConfig::class, $rulesets[0]);
-    }
-
-    public function testGetTimezones()
-    {
-        $response = $this->_client->GetTimezones([], (new EventsGetTimezonesPayload())->setAddr('8.8.8.8'));
-        $this->assertNotEmpty($response);
-        // Google's 8.8.8.8 DNS server should be in Chicago timezone
-        $this->assertEquals('America/Chicago', $response->getPreferredByIp());
-        $tz = iterator_to_array($response->getTimezones());
-        $this->assertNotEmpty($tz);
-        $this->assertIsString($tz[0]);
-    }
-
-    public function testGetCountries()
-    {
-        $response = $this->_client->GetCountries([], (new EventsGetCountriesPayload())->setAddr('8.8.8.8'));
-        $this->assertNotEmpty($response);
-        // Google's 8.8.8.8 DNS server should be in the US
-        $this->assertEquals('US', $response->getPreferredByIp());
-        $countires = iterator_to_array($response->getCountries());
-        $this->assertNotEmpty($countires);
-        $this->assertInstanceOf(Country::class, $countires[0]);
     }
 
     public function testGetEvents()
