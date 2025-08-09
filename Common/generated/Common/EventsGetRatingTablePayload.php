@@ -27,13 +27,6 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
      */
     protected $order = '';
     /**
-     * \@deprecated
-     *
-     * Generated from protobuf field <code>optional bool with_prefinished = 4 [deprecated = true];</code>
-     * @deprecated
-     */
-    protected $with_prefinished = null;
-    /**
      * Generated from protobuf field <code>optional bool only_min_games = 5;</code>
      */
     protected $only_min_games = null;
@@ -47,8 +40,6 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $event_id_list
      *     @type string $order_by
      *     @type string $order
-     *     @type bool $with_prefinished
-     *           \@deprecated
      *     @type bool $only_min_games
      * }
      */
@@ -119,52 +110,6 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->order = $var;
-
-        return $this;
-    }
-
-    /**
-     * \@deprecated
-     *
-     * Generated from protobuf field <code>optional bool with_prefinished = 4 [deprecated = true];</code>
-     * @return bool
-     * @deprecated
-     */
-    public function getWithPrefinished()
-    {
-        if (isset($this->with_prefinished)) {
-            @trigger_error('with_prefinished is deprecated.', E_USER_DEPRECATED);
-        }
-        return isset($this->with_prefinished) ? $this->with_prefinished : false;
-    }
-
-    public function hasWithPrefinished()
-    {
-        if (isset($this->with_prefinished)) {
-            @trigger_error('with_prefinished is deprecated.', E_USER_DEPRECATED);
-        }
-        return isset($this->with_prefinished);
-    }
-
-    public function clearWithPrefinished()
-    {
-        @trigger_error('with_prefinished is deprecated.', E_USER_DEPRECATED);
-        unset($this->with_prefinished);
-    }
-
-    /**
-     * \@deprecated
-     *
-     * Generated from protobuf field <code>optional bool with_prefinished = 4 [deprecated = true];</code>
-     * @param bool $var
-     * @return $this
-     * @deprecated
-     */
-    public function setWithPrefinished($var)
-    {
-        @trigger_error('with_prefinished is deprecated.', E_USER_DEPRECATED);
-        GPBUtil::checkBool($var);
-        $this->with_prefinished = $var;
 
         return $this;
     }

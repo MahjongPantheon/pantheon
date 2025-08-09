@@ -11,6 +11,7 @@ export const env = {
   adminEmail: import.meta.env.VITE_ADMIN_EMAIL as string,
   urls: {
     gullveig: proxyAppend(import.meta.env.VITE_GULLVEIG_URL),
+    meili: proxyAppend(import.meta.env.VITE_MEILI_URL),
     sigrun: proxyAppend(import.meta.env.VITE_SIGRUN_URL),
     hugin: proxyAppend(import.meta.env.VITE_HUGIN_URL),
     mimir: proxyAppend(import.meta.env.VITE_MIMIR_URL),

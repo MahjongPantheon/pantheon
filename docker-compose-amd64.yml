@@ -286,21 +286,39 @@ services:
     image: ghcr.io/mahjongpantheon/pantheon-gullveig-amd64:latest
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
-    environment:
-      PNPM_HOME: /.pnpm
-      npm_config_store_dir: /.pnpm
     ports:
       - "127.0.0.1:4012:80"
     volumes:
       - ./Gullveig:/var/www/html/Gullveig
       - ./Common:/var/www/html/Common
       - gullveigstorage01:/var/storage
-      - pnpmstore01:/.pnpm
     networks:
       internal_net:
         aliases:
           - gullveig.pantheon.local
           - gullveig.pantheon.internal
+  meili.pantheon.internal:
+    build:
+      context: ./Meili
+      args:
+        CONTAINER_ARCH: amd64
+    cgroup: host
+    cap_add:
+      - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-meili-amd64:latest
+    env_file:
+      - ./Env/${ENV_FILENAME:-.env.production}
+    ports:
+      - "127.0.0.1:4018:80"
+    volumes:
+      - ./Meili:/var/www/html/Meili
+      - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
+    networks:
+      internal_net:
+        aliases:
+          - meili.pantheon.local
+          - meili.pantheon.internal
   bragi.pantheon.internal:
     build:
       context: ./Bragi

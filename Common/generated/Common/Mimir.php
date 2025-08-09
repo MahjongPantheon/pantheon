@@ -25,24 +25,6 @@ interface Mimir
     /**
      *
      *
-     * Generated from protobuf method <code>common.Mimir/GetTimezones</code>
-     *
-     * @throws \Twirp\Error
-     */
-    public function GetTimezones(array $ctx, \Common\EventsGetTimezonesPayload $req): \Common\EventsGetTimezonesResponse;
-
-    /**
-     *
-     *
-     * Generated from protobuf method <code>common.Mimir/GetCountries</code>
-     *
-     * @throws \Twirp\Error
-     */
-    public function GetCountries(array $ctx, \Common\EventsGetCountriesPayload $req): \Common\EventsGetCountriesResponse;
-
-    /**
-     *
-     *
      * Generated from protobuf method <code>common.Mimir/GetEvents</code>
      *
      * @throws \Twirp\Error

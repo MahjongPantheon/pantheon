@@ -103,52 +103,6 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetTimezones(array $ctx, \Common\EventsGetTimezonesPayload $in): \Common\EventsGetTimezonesResponse
-    {
-        $ctx = Context::withPackageName($ctx, 'common');
-        $ctx = Context::withServiceName($ctx, 'Mimir');
-        $ctx = Context::withMethodName($ctx, 'GetTimezones');
-
-        $out = new \Common\EventsGetTimezonesResponse();
-
-        $url = $this->addr;
-        if (empty($this->prefix)) {
-            $url = $url.'/common.Mimir/GetTimezones';
-        } else {
-            $url = $url.'/'.$this->prefix.'/common.Mimir/GetTimezones';
-        }
-
-        $this->doRequest($ctx, $url, $in, $out);
-
-        return $out;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function GetCountries(array $ctx, \Common\EventsGetCountriesPayload $in): \Common\EventsGetCountriesResponse
-    {
-        $ctx = Context::withPackageName($ctx, 'common');
-        $ctx = Context::withServiceName($ctx, 'Mimir');
-        $ctx = Context::withMethodName($ctx, 'GetCountries');
-
-        $out = new \Common\EventsGetCountriesResponse();
-
-        $url = $this->addr;
-        if (empty($this->prefix)) {
-            $url = $url.'/common.Mimir/GetCountries';
-        } else {
-            $url = $url.'/'.$this->prefix.'/common.Mimir/GetCountries';
-        }
-
-        $this->doRequest($ctx, $url, $in, $out);
-
-        return $out;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function GetEvents(array $ctx, \Common\EventsGetEventsPayload $in): \Common\EventsGetEventsResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');

@@ -33,6 +33,7 @@ deps:
 	cd Sigrun && ${MAKE} container_deps
 	cd Hugin && ${MAKE} container_deps
 	cd Gullveig && ${MAKE} container_deps
+	cd Meili && ${MAKE} container_deps
 	cd Skirnir && ${MAKE} container_deps
 	cd Fenrir && ${MAKE} container_deps
 
@@ -137,6 +138,7 @@ enable_debug:
 	@cd Mimir && ${MAKE} container_enable_debug
 	@cd Hugin && ${MAKE} container_enable_debug
 	@cd Gullveig && ${MAKE} container_enable_debug
+	@cd Meili && ${MAKE} container_enable_debug
 
 .PHONY: disable_debug
 disable_debug: export ENV_FILENAME=.env.development
@@ -144,7 +146,7 @@ disable_debug:
 	@cd Mimir && ${MAKE} container_disable_debug
 	@cd Hugin && ${MAKE} container_disable_debug
 	@cd Gullveig && ${MAKE} container_disable_debug
-
+	@cd Meili && ${MAKE} container_disable_debug
 
 .PHONY: dev_tyr
 dev_tyr:
@@ -252,6 +254,10 @@ shell_db:
 shell_gullveig:
 	cd Gullveig && ${MAKE} shell
 
+.PHONY: shell_meili
+shell_meili:
+	cd Meili && ${MAKE} shell
+
 .PHONY: shell_skirnir
 shell_skirnir:
 	cd Skirnir && ${MAKE} shell
@@ -325,6 +331,14 @@ gullveig_lint:
 gullveig_analyze:
 	cd Gullveig && ${MAKE} container_analyze > ../tmp/gullveig_analyze.log 2>&1
 
+.PHONY: meili_lint
+meili_lint:
+	cd Gullveig && ${MAKE} container_lint > ../tmp/meili_lint.log 2>&1
+
+.PHONY: meili_analyze
+meili_analyze:
+	cd Gullveig && ${MAKE} container_analyze > ../tmp/meili_analyze.log 2>&1
+
 .PHONY: hugin_lint
 hugin_lint:
 	cd Hugin && ${MAKE} container_lint > ../tmp/hugin_lint.log 2>&1
@@ -395,6 +409,7 @@ lint:
 		forseti_eslint forseti_prettier forseti_typecheck \
 		frey_eslint frey_prettier frey_typecheck \
 		gullveig_lint gullveig_analyze \
+		meili_lint meili_analyze \
 		hugin_lint hugin_analyze \
 		mimir_lint mimir_analyze \
 		skirnir_eslint skirnir_prettier skirnir_typecheck \
@@ -429,6 +444,7 @@ autofix:
 	cd Sigrun && ${MAKE} container_autofix
 	cd Hugin && ${MAKE} container_autofix
 	cd Gullveig && ${MAKE} container_autofix
+	cd Meili && ${MAKE} container_autofix
 	cd Bragi && ${MAKE} container_autofix
 	cd Skirnir && ${MAKE} container_autofix
 	cd Fenrir && ${MAKE} container_autofix
@@ -460,6 +476,7 @@ prod_deps:
 	cd Forseti && ${MAKE} container_deps
 	cd Hugin && ${MAKE} container_deps
 	cd Gullveig && ${MAKE} container_deps
+	cd Meili && ${MAKE} container_deps
 	# sigrun, skirnir and bragi should install deps after prebuild
 
 .PHONY: prod_build_tyr
@@ -528,7 +545,7 @@ prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
 	@${COMPOSE_COMMAND} down forseti.pantheon.internal frey.pantheon.internal hermod.pantheon.internal \
     hugin.pantheon.internal mimir.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal \
-    gullveig.pantheon.internal bragi.pantheon.internal skirnir.pantheon.internal
+    gullveig.pantheon.internal bragi.pantheon.internal skirnir.pantheon.internal meili.pantheon.internal
 
 .PHONY: prod_restart
 prod_restart:

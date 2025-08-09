@@ -29,6 +29,7 @@ return [
     'freyUrl'   => getenv('FREY_URL_INTERNAL'),
     'sigrunUrl'  => getenv('SIGRUN_URL'),
     'skirnirUrl'  => getenv('SKIRNIR_URL_INTERNAL'),
+    'meiliUrl' => getenv('MEILI_URL_INTERNAL') ?: 'http://meili.pantheon.internal',
     'huginUrl'  => getenv('HUGIN_URL_INTERNAL'),
     'verbose'   => getenv('VERBOSE') === 'true',
     'verboseLog' => null,

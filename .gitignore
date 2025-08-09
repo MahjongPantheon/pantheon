@@ -36,6 +36,7 @@ Hugin/www/.well-known
 Thumbs.db
 
 Common/protoc-bin/
+Common/node-geoip/node_modules/
 Common/tsclients/node_modules/
 Common/tsclients/proto/*.js
 
@@ -46,6 +47,8 @@ Mimir/vendor/
 Mimir/data/db.sqlite
 Mimir/data/verbose.log
 Mimir/tests/data/*
+
+Meili/vendor/
 
 Hugin/vendor/
 

@@ -24,24 +24,6 @@ export interface EventsGetRulesetsResponse {
   rulesetTitles: string[];
 }
 
-export interface EventsGetTimezonesPayload {
-  addr: string;
-}
-
-export interface EventsGetTimezonesResponse {
-  preferredByIp: string;
-  timezones: string[];
-}
-
-export interface EventsGetCountriesPayload {
-  addr: string;
-}
-
-export interface EventsGetCountriesResponse {
-  preferredByIp: string;
-  countries: protoAtoms.Country[];
-}
-
 export interface EventsGetEventsPayload {
   limit: number;
   offset: number;
@@ -72,10 +54,6 @@ export interface EventsGetRatingTablePayload {
   eventIdList: number[];
   orderBy: string;
   order: string;
-  /**
-   * @deprecated
-   */
-  withPrefinished?: boolean | null | undefined;
   onlyMinGames?: boolean | null | undefined;
 }
 
@@ -462,30 +440,6 @@ export async function GetRulesets(
     config,
   );
   return EventsGetRulesetsResponse.decode(response);
-}
-
-export async function GetTimezones(
-  eventsGetTimezonesPayload: EventsGetTimezonesPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetTimezonesResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/GetTimezones",
-    EventsGetTimezonesPayload.encode(eventsGetTimezonesPayload),
-    config,
-  );
-  return EventsGetTimezonesResponse.decode(response);
-}
-
-export async function GetCountries(
-  eventsGetCountriesPayload: EventsGetCountriesPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetCountriesResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/GetCountries",
-    EventsGetCountriesPayload.encode(eventsGetCountriesPayload),
-    config,
-  );
-  return EventsGetCountriesResponse.decode(response);
 }
 
 export async function GetEvents(
@@ -1368,30 +1322,6 @@ export async function GetRulesetsJSON(
     config,
   );
   return EventsGetRulesetsResponseJSON.decode(response);
-}
-
-export async function GetTimezonesJSON(
-  eventsGetTimezonesPayload: EventsGetTimezonesPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetTimezonesResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/GetTimezones",
-    EventsGetTimezonesPayloadJSON.encode(eventsGetTimezonesPayload),
-    config,
-  );
-  return EventsGetTimezonesResponseJSON.decode(response);
-}
-
-export async function GetCountriesJSON(
-  eventsGetCountriesPayload: EventsGetCountriesPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetCountriesResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/GetCountries",
-    EventsGetCountriesPayloadJSON.encode(eventsGetCountriesPayload),
-    config,
-  );
-  return EventsGetCountriesResponseJSON.decode(response);
 }
 
 export async function GetEventsJSON(
@@ -2277,14 +2207,6 @@ export interface Mimir<Context = unknown> {
     eventsGetRulesetsPayload: EventsGetRulesetsPayload,
     context: Context,
   ) => Promise<EventsGetRulesetsResponse> | EventsGetRulesetsResponse;
-  GetTimezones: (
-    eventsGetTimezonesPayload: EventsGetTimezonesPayload,
-    context: Context,
-  ) => Promise<EventsGetTimezonesResponse> | EventsGetTimezonesResponse;
-  GetCountries: (
-    eventsGetCountriesPayload: EventsGetCountriesPayload,
-    context: Context,
-  ) => Promise<EventsGetCountriesResponse> | EventsGetCountriesResponse;
   GetEvents: (
     eventsGetEventsPayload: EventsGetEventsPayload,
     context: Context,
@@ -2673,30 +2595,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: EventsGetRulesetsResponse,
           json: EventsGetRulesetsResponseJSON,
-        },
-      },
-      GetTimezones: {
-        name: "GetTimezones",
-        handler: service.GetTimezones,
-        input: {
-          protobuf: EventsGetTimezonesPayload,
-          json: EventsGetTimezonesPayloadJSON,
-        },
-        output: {
-          protobuf: EventsGetTimezonesResponse,
-          json: EventsGetTimezonesResponseJSON,
-        },
-      },
-      GetCountries: {
-        name: "GetCountries",
-        handler: service.GetCountries,
-        input: {
-          protobuf: EventsGetCountriesPayload,
-          json: EventsGetCountriesPayloadJSON,
-        },
-        output: {
-          protobuf: EventsGetCountriesResponse,
-          json: EventsGetCountriesResponseJSON,
         },
       },
       GetEvents: {
@@ -3683,308 +3581,6 @@ export const EventsGetRulesetsResponse = {
   },
 };
 
-export const EventsGetTimezonesPayload = {
-  /**
-   * Serializes EventsGetTimezonesPayload to protobuf.
-   */
-  encode: function (msg: PartialDeep<EventsGetTimezonesPayload>): Uint8Array {
-    return EventsGetTimezonesPayload._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes EventsGetTimezonesPayload from protobuf.
-   */
-  decode: function (bytes: ByteSource): EventsGetTimezonesPayload {
-    return EventsGetTimezonesPayload._readMessage(
-      EventsGetTimezonesPayload.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes EventsGetTimezonesPayload with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetTimezonesPayload>,
-  ): EventsGetTimezonesPayload {
-    return {
-      addr: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesPayload>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.addr) {
-      writer.writeString(1, msg.addr);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetTimezonesPayload,
-    reader: protoscript.BinaryReader,
-  ): EventsGetTimezonesPayload {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.addr = reader.readString();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const EventsGetTimezonesResponse = {
-  /**
-   * Serializes EventsGetTimezonesResponse to protobuf.
-   */
-  encode: function (msg: PartialDeep<EventsGetTimezonesResponse>): Uint8Array {
-    return EventsGetTimezonesResponse._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes EventsGetTimezonesResponse from protobuf.
-   */
-  decode: function (bytes: ByteSource): EventsGetTimezonesResponse {
-    return EventsGetTimezonesResponse._readMessage(
-      EventsGetTimezonesResponse.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes EventsGetTimezonesResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetTimezonesResponse>,
-  ): EventsGetTimezonesResponse {
-    return {
-      preferredByIp: "",
-      timezones: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesResponse>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.preferredByIp) {
-      writer.writeString(1, msg.preferredByIp);
-    }
-    if (msg.timezones?.length) {
-      writer.writeRepeatedString(2, msg.timezones);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetTimezonesResponse,
-    reader: protoscript.BinaryReader,
-  ): EventsGetTimezonesResponse {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.preferredByIp = reader.readString();
-          break;
-        }
-        case 2: {
-          msg.timezones.push(reader.readString());
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const EventsGetCountriesPayload = {
-  /**
-   * Serializes EventsGetCountriesPayload to protobuf.
-   */
-  encode: function (msg: PartialDeep<EventsGetCountriesPayload>): Uint8Array {
-    return EventsGetCountriesPayload._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes EventsGetCountriesPayload from protobuf.
-   */
-  decode: function (bytes: ByteSource): EventsGetCountriesPayload {
-    return EventsGetCountriesPayload._readMessage(
-      EventsGetCountriesPayload.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes EventsGetCountriesPayload with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetCountriesPayload>,
-  ): EventsGetCountriesPayload {
-    return {
-      addr: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesPayload>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.addr) {
-      writer.writeString(1, msg.addr);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetCountriesPayload,
-    reader: protoscript.BinaryReader,
-  ): EventsGetCountriesPayload {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.addr = reader.readString();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const EventsGetCountriesResponse = {
-  /**
-   * Serializes EventsGetCountriesResponse to protobuf.
-   */
-  encode: function (msg: PartialDeep<EventsGetCountriesResponse>): Uint8Array {
-    return EventsGetCountriesResponse._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes EventsGetCountriesResponse from protobuf.
-   */
-  decode: function (bytes: ByteSource): EventsGetCountriesResponse {
-    return EventsGetCountriesResponse._readMessage(
-      EventsGetCountriesResponse.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes EventsGetCountriesResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetCountriesResponse>,
-  ): EventsGetCountriesResponse {
-    return {
-      preferredByIp: "",
-      countries: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesResponse>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.preferredByIp) {
-      writer.writeString(1, msg.preferredByIp);
-    }
-    if (msg.countries?.length) {
-      writer.writeRepeatedMessage(
-        2,
-        msg.countries as any,
-        protoAtoms.Country._writeMessage,
-      );
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetCountriesResponse,
-    reader: protoscript.BinaryReader,
-  ): EventsGetCountriesResponse {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.preferredByIp = reader.readString();
-          break;
-        }
-        case 2: {
-          const m = protoAtoms.Country.initialize();
-          reader.readMessage(m, protoAtoms.Country._readMessage);
-          msg.countries.push(m);
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
 export const EventsGetEventsPayload = {
   /**
    * Serializes EventsGetEventsPayload to protobuf.
@@ -4467,7 +4063,6 @@ export const EventsGetRatingTablePayload = {
       eventIdList: [],
       orderBy: "",
       order: "",
-      withPrefinished: undefined,
       onlyMinGames: undefined,
       ...msg,
     };
@@ -4488,9 +4083,6 @@ export const EventsGetRatingTablePayload = {
     }
     if (msg.order) {
       writer.writeString(3, msg.order);
-    }
-    if (msg.withPrefinished != undefined) {
-      writer.writeBool(4, msg.withPrefinished);
     }
     if (msg.onlyMinGames != undefined) {
       writer.writeBool(5, msg.onlyMinGames);
@@ -4522,10 +4114,6 @@ export const EventsGetRatingTablePayload = {
         }
         case 3: {
           msg.order = reader.readString();
-          break;
-        }
-        case 4: {
-          msg.withPrefinished = reader.readBool();
           break;
         }
         case 5: {
@@ -10197,260 +9785,6 @@ export const EventsGetRulesetsResponseJSON = {
   },
 };
 
-export const EventsGetTimezonesPayloadJSON = {
-  /**
-   * Serializes EventsGetTimezonesPayload to JSON.
-   */
-  encode: function (msg: PartialDeep<EventsGetTimezonesPayload>): string {
-    return JSON.stringify(EventsGetTimezonesPayloadJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes EventsGetTimezonesPayload from JSON.
-   */
-  decode: function (json: string): EventsGetTimezonesPayload {
-    return EventsGetTimezonesPayloadJSON._readMessage(
-      EventsGetTimezonesPayloadJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes EventsGetTimezonesPayload with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetTimezonesPayload>,
-  ): EventsGetTimezonesPayload {
-    return {
-      addr: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesPayload>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.addr) {
-      json["addr"] = msg.addr;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetTimezonesPayload,
-    json: any,
-  ): EventsGetTimezonesPayload {
-    const _addr_ = json["addr"];
-    if (_addr_) {
-      msg.addr = _addr_;
-    }
-    return msg;
-  },
-};
-
-export const EventsGetTimezonesResponseJSON = {
-  /**
-   * Serializes EventsGetTimezonesResponse to JSON.
-   */
-  encode: function (msg: PartialDeep<EventsGetTimezonesResponse>): string {
-    return JSON.stringify(EventsGetTimezonesResponseJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes EventsGetTimezonesResponse from JSON.
-   */
-  decode: function (json: string): EventsGetTimezonesResponse {
-    return EventsGetTimezonesResponseJSON._readMessage(
-      EventsGetTimezonesResponseJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes EventsGetTimezonesResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetTimezonesResponse>,
-  ): EventsGetTimezonesResponse {
-    return {
-      preferredByIp: "",
-      timezones: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetTimezonesResponse>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.preferredByIp) {
-      json["preferredByIp"] = msg.preferredByIp;
-    }
-    if (msg.timezones?.length) {
-      json["timezones"] = msg.timezones;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetTimezonesResponse,
-    json: any,
-  ): EventsGetTimezonesResponse {
-    const _preferredByIp_ = json["preferredByIp"] ?? json["preferred_by_ip"];
-    if (_preferredByIp_) {
-      msg.preferredByIp = _preferredByIp_;
-    }
-    const _timezones_ = json["timezones"];
-    if (_timezones_) {
-      msg.timezones = _timezones_;
-    }
-    return msg;
-  },
-};
-
-export const EventsGetCountriesPayloadJSON = {
-  /**
-   * Serializes EventsGetCountriesPayload to JSON.
-   */
-  encode: function (msg: PartialDeep<EventsGetCountriesPayload>): string {
-    return JSON.stringify(EventsGetCountriesPayloadJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes EventsGetCountriesPayload from JSON.
-   */
-  decode: function (json: string): EventsGetCountriesPayload {
-    return EventsGetCountriesPayloadJSON._readMessage(
-      EventsGetCountriesPayloadJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes EventsGetCountriesPayload with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetCountriesPayload>,
-  ): EventsGetCountriesPayload {
-    return {
-      addr: "",
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesPayload>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.addr) {
-      json["addr"] = msg.addr;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetCountriesPayload,
-    json: any,
-  ): EventsGetCountriesPayload {
-    const _addr_ = json["addr"];
-    if (_addr_) {
-      msg.addr = _addr_;
-    }
-    return msg;
-  },
-};
-
-export const EventsGetCountriesResponseJSON = {
-  /**
-   * Serializes EventsGetCountriesResponse to JSON.
-   */
-  encode: function (msg: PartialDeep<EventsGetCountriesResponse>): string {
-    return JSON.stringify(EventsGetCountriesResponseJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes EventsGetCountriesResponse from JSON.
-   */
-  decode: function (json: string): EventsGetCountriesResponse {
-    return EventsGetCountriesResponseJSON._readMessage(
-      EventsGetCountriesResponseJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes EventsGetCountriesResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetCountriesResponse>,
-  ): EventsGetCountriesResponse {
-    return {
-      preferredByIp: "",
-      countries: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetCountriesResponse>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.preferredByIp) {
-      json["preferredByIp"] = msg.preferredByIp;
-    }
-    if (msg.countries?.length) {
-      json["countries"] = msg.countries.map(
-        protoAtoms.CountryJSON._writeMessage,
-      );
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetCountriesResponse,
-    json: any,
-  ): EventsGetCountriesResponse {
-    const _preferredByIp_ = json["preferredByIp"] ?? json["preferred_by_ip"];
-    if (_preferredByIp_) {
-      msg.preferredByIp = _preferredByIp_;
-    }
-    const _countries_ = json["countries"];
-    if (_countries_) {
-      for (const item of _countries_) {
-        const m = protoAtoms.CountryJSON.initialize();
-        protoAtoms.CountryJSON._readMessage(m, item);
-        msg.countries.push(m);
-      }
-    }
-    return msg;
-  },
-};
-
 export const EventsGetEventsPayloadJSON = {
   /**
    * Serializes EventsGetEventsPayload to JSON.
@@ -10859,7 +10193,6 @@ export const EventsGetRatingTablePayloadJSON = {
       eventIdList: [],
       orderBy: "",
       order: "",
-      withPrefinished: undefined,
       onlyMinGames: undefined,
       ...msg,
     };
@@ -10880,9 +10213,6 @@ export const EventsGetRatingTablePayloadJSON = {
     }
     if (msg.order) {
       json["order"] = msg.order;
-    }
-    if (msg.withPrefinished != undefined) {
-      json["withPrefinished"] = msg.withPrefinished;
     }
     if (msg.onlyMinGames != undefined) {
       json["onlyMinGames"] = msg.onlyMinGames;
@@ -10908,11 +10238,6 @@ export const EventsGetRatingTablePayloadJSON = {
     const _order_ = json["order"];
     if (_order_) {
       msg.order = _order_;
-    }
-    const _withPrefinished_ =
-      json["withPrefinished"] ?? json["with_prefinished"];
-    if (_withPrefinished_) {
-      msg.withPrefinished = _withPrefinished_;
     }
     const _onlyMinGames_ = json["onlyMinGames"] ?? json["only_min_games"];
     if (_onlyMinGames_) {

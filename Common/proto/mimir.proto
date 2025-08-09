@@ -25,10 +25,6 @@ import "proto/atoms.proto";
 service Mimir {
   rpc GetRulesets (EventsGetRulesetsPayload)
     returns (EventsGetRulesetsResponse);
-  rpc GetTimezones (EventsGetTimezonesPayload)
-    returns (EventsGetTimezonesResponse);
-  rpc GetCountries (EventsGetCountriesPayload)
-    returns (EventsGetCountriesResponse);
   rpc GetEvents (EventsGetEventsPayload)
     returns (EventsGetEventsResponse);
   rpc GetEventsById (EventsGetEventsByIdPayload)
@@ -180,24 +176,6 @@ message EventsGetRulesetsResponse {
   repeated RulesetConfig rulesets = 1;
   repeated string ruleset_ids = 2;
   repeated string ruleset_titles = 3;
-}
-
-message EventsGetTimezonesPayload {
-  string addr = 1;
-}
-
-message EventsGetTimezonesResponse {
-  string preferred_by_ip = 1;
-  repeated string timezones = 2;
-}
-
-message EventsGetCountriesPayload {
-  string addr = 1;
-}
-
-message EventsGetCountriesResponse {
-  string preferred_by_ip = 1;
-  repeated Country countries = 2;
 }
 
 message EventsGetEventsPayload {

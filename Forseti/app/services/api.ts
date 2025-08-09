@@ -27,7 +27,6 @@ import {
   FinishEvent,
   ForceFinishGame,
   GetAllRegisteredPlayers,
-  GetCountries,
   GetEventForEdit,
   GetEvents,
   GetEventsById,
@@ -36,7 +35,6 @@ import {
   GetRulesets,
   GetTablesState,
   GetTimerState,
-  GetTimezones,
   ListChombo,
   ListPenalties,
   MakeIntervalSeating,
@@ -225,9 +223,15 @@ export class ApiService {
     return ChangePassword({ email, password, newPassword }, this._clientConfFrey);
   }
 
-  getCountries() {
+  getCountries(): Promise<{
+    countries: Array<{ code: string; name: string }>;
+    preferredByIp: string;
+  }> {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetCountries' });
-    return GetCountries({ addr: '' }, this._clientConfMimir);
+    return fetch(env.urls.meili, {
+      method: 'post',
+      body: JSON.stringify({ ip: '', action: 'get_countries' }),
+    }).then((res) => res.json());
   }
 
   getPersonalInfo(personId: number) {
@@ -366,12 +370,12 @@ export class ApiService {
     });
   }
 
-  getTimezones() {
+  getTimezones(): Promise<{ timezones: string[]; preferredById: string }> {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTimezones' });
-    return GetTimezones(
-      { addr: '' /* mimir will substitute with current IP if empty*/ },
-      this._clientConfMimir
-    );
+    return fetch(env.urls.meili, {
+      method: 'post',
+      body: JSON.stringify({ ip: '', action: 'get_timezones' }),
+    }).then((res) => res.json());
   }
 
   getGameConfig(eventId: number) {
