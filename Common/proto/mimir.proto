@@ -231,8 +231,6 @@ message EventsGetRatingTablePayload {
   repeated int32 event_id_list = 1;
   string order_by = 2;
   string order = 3;
-  // @deprecated
-  optional bool with_prefinished = 4 [deprecated = true];
   optional bool only_min_games = 5;
 }
 
