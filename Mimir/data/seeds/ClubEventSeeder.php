@@ -67,7 +67,7 @@ class ClubEventSeeder extends AbstractSeed
         $playerNames = array_filter(preg_split('#\s#is', file_get_contents(__DIR__ . '/../../tests/models/testdata/players.txt')));
         array_map(function ($id) use ($ds, $event, &$idMap) {
             $playerId = $ds->remote()->createAccount(
-                'test' . $id . '@test.te',
+                'test' . $id . '_' . crc32(time()) . '@test.te',
                 'pwd',
                 'player' . $id,
                 'City of sin',

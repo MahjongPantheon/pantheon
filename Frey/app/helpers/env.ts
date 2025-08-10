@@ -60,6 +60,7 @@ export const env = {
   gullveigUrl: data.GULLVEIG_URL_INTERNAL,
   mimirUrl: process.env.MIMIR_URL_INTERNAL ?? data.MIMIR_URL_INTERNAL,
   huginUrl: process.env.HUGIN_URL_INTERNAL ?? data.HUGIN_URL_INTERNAL,
+  forsetiUrl: process.env.FORSETI_URL ?? data.FORSETI_URL,
   userinfoHook: data.USERINFO_HOOK ?? null,
   userinfoHookApiKey: data.USERINFO_HOOK_API_KEY ?? '',
   internalQuerySecret: process.env.INTERNAL_QUERY_SECRET ?? data.INTERNAL_QUERY_SECRET ?? '',

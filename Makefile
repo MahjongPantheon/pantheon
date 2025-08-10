@@ -287,6 +287,10 @@ seed_tournament:
 dump_last_mail:
 	cd Hermod && ${MAKE} container_last_mail
 
+.PHONY: dump_users
+dump_users:
+	cd Frey && ${MAKE} container_dump_users
+
 .PHONY: bragi_eslint
 bragi_eslint:
 	cd Bragi && ${MAKE} container_eslint > ../tmp/bragi_eslint.log 2>&1

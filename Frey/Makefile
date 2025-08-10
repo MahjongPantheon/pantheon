@@ -294,3 +294,11 @@ container_stop: get_container_id
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'killall node' ; \
 	fi
+
+.PHONY: container_dump_users
+container_dump_users: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user cat /tmp/dump_users.txt' ; \
+	fi

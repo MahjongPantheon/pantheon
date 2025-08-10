@@ -139,6 +139,7 @@ Please note: if you're using podman, trying to stop a single service container w
 
 To create an event and fill it with some data, run `make seed`, `make seed_bigevent` or `make seed_tournament` (with `sudo` if required). Note that users are
 re-seeded on each command run. To log in as one of the created users, you may need the id and client hash emitted in the console. Note that dump is output in development mode only.
+Created users' data is saved to temporary file inside Frey container, so you may also access this data using `make dump_users`.
 
 A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md) is available.
 

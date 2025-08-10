@@ -88,9 +88,19 @@ export async function createAccount(
   const result = await db.insertInto('person').values(value).returning('id').execute();
 
   if (env.development) {
-    console.info(
-      context.isInternalQuery ? 'Admin bootstrapped' : '==> User created: ',
-      JSON.stringify({ id: Number(result[0].id), hash: hashes.clientHash })
+    await writeFile(
+      '/tmp/dump_users.txt',
+      '==> User created: ' +
+        JSON.stringify(
+          {
+            id: result[0].id,
+            email: personsCreateAccountPayload.email,
+            impersonateUrl: `${env.forsetiUrl}/profile/impersonate/${result[0].id}/${hashes.clientHash}`,
+          },
+          undefined,
+          '  '
+        ),
+      { flag: 'a+' }
     );
     if (context.isInternalQuery) {
       await writeFile(
