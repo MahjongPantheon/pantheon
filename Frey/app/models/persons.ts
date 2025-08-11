@@ -273,8 +273,14 @@ export async function findByTenhouIds(
     db
       .selectFrom('person')
       .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
-      .where('tenhou_id', 'in', payload.ids)
-      .selectAll()
+      .where('person.tenhou_id', 'in', payload.ids)
+      .selectAll('person')
+      .select([
+        'majsoul_platform_account.person_id',
+        'majsoul_platform_account.account_id',
+        'majsoul_platform_account.friend_id',
+        'majsoul_platform_account.nickname',
+      ])
       .execute(),
     db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
     db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
@@ -291,7 +297,7 @@ export async function findByTenhouIds(
 
   return {
     people: persons.map((r) => ({
-      id: r.person_id ?? 0,
+      id: r.id ?? 0,
       city: r.city ?? '',
       tenhouId: r.tenhou_id ?? '',
       title: r.title,
