@@ -63,7 +63,7 @@ import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
 export const RatingTable: React.FC<{
   params: {
     eventId: string;
-    orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
+    orderBy?: 'name' | 'rating' | 'game_count_and_rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
   };
 }> = ({ params: { eventId, orderBy, minGamesSelector } }) => {
@@ -72,6 +72,7 @@ export const RatingTable: React.FC<{
   const order = {
     name: 'asc',
     rating: 'desc',
+    game_count_and_rating: 'desc',
     avg_place: 'asc',
     avg_score: 'desc',
     team: 'desc',
@@ -240,6 +241,34 @@ export const RatingTable: React.FC<{
                   style={{ cursor: 'pointer' }}
                 >
                   {i18n._t('Rating')}
+                </Badge>
+                <Badge
+                  size='lg'
+                  color='purple'
+                  radius='sm'
+                  variant={orderBy === 'game_count_and_rating' ? 'filled' : 'light'}
+                  component={'a'}
+                  pl={5}
+                  pr={5}
+                  leftSection={
+                    <Box mt={7}>
+                      <IconSortDescending2 size='1rem' />
+                    </Box>
+                  }
+                  href={`/event/${eventId}/order/game_count_and_rating${
+                    minGamesSelector === 'min' ? '/filter/min' : ''
+                  }`}
+                  onClick={(e) => {
+                    navigate(
+                      `/event/${eventId}/order/game_count_and_rating${
+                        minGamesSelector === 'min' ? '/filter/min' : ''
+                      }`
+                    );
+                    e.preventDefault();
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {i18n._t('Game count and Rating')}
                 </Badge>
                 {events?.[0]?.withChips && (
                   <Badge
@@ -459,7 +488,7 @@ export const RatingTable: React.FC<{
                       <Badge
                         w={75}
                         size='lg'
-                        variant={orderBy === 'rating' ? 'filled' : 'light'}
+                        variant={orderBy === 'rating' || orderBy === 'game_count_and_rating' ? 'filled' : 'light'}
                         color={player.winnerZone ? 'lime' : 'red'}
                         radius='sm'
                         style={{ padding: 0 }}
