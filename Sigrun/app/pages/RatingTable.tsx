@@ -63,14 +63,7 @@ import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
 export const RatingTable: React.FC<{
   params: {
     eventId: string;
-    orderBy?:
-      | 'name'
-      | 'rating'
-      | 'game_count_and_rating'
-      | 'avg_place'
-      | 'avg_score'
-      | 'team'
-      | 'chips';
+    orderBy?: 'name' | 'rating' | 'games_and_rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
   };
 }> = ({ params: { eventId, orderBy, minGamesSelector } }) => {
@@ -79,7 +72,7 @@ export const RatingTable: React.FC<{
   const order = {
     name: 'asc',
     rating: 'desc',
-    game_count_and_rating: 'desc',
+    games_and_rating: 'desc',
     avg_place: 'asc',
     avg_score: 'desc',
     team: 'desc',
@@ -253,7 +246,7 @@ export const RatingTable: React.FC<{
                   size='lg'
                   color='purple'
                   radius='sm'
-                  variant={orderBy === 'game_count_and_rating' ? 'filled' : 'light'}
+                  variant={orderBy === 'games_and_rating' ? 'filled' : 'light'}
                   component={'a'}
                   pl={5}
                   pr={5}
@@ -262,12 +255,12 @@ export const RatingTable: React.FC<{
                       <IconSortDescending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${eventId}/order/game_count_and_rating${
+                  href={`/event/${eventId}/order/games_and_rating${
                     minGamesSelector === 'min' ? '/filter/min' : ''
                   }`}
                   onClick={(e) => {
                     navigate(
-                      `/event/${eventId}/order/game_count_and_rating${
+                      `/event/${eventId}/order/games_and_rating${
                         minGamesSelector === 'min' ? '/filter/min' : ''
                       }`
                     );
@@ -496,7 +489,7 @@ export const RatingTable: React.FC<{
                         w={75}
                         size='lg'
                         variant={
-                          orderBy === 'rating' || orderBy === 'game_count_and_rating'
+                          orderBy === 'rating' || orderBy === 'games_and_rating'
                             ? 'filled'
                             : 'light'
                         }
@@ -532,12 +525,12 @@ export const RatingTable: React.FC<{
                         w={45}
                         size='lg'
                         color={
-                          orderBy == 'game_count_and_rating'
+                          orderBy == 'games_and_rating'
                             ? 'purple'
                             : calcDimmedBackground(isDimmed, isDark, '#f8f9fa')
                         }
                         c={
-                          orderBy == 'game_count_and_rating'
+                          orderBy == 'games_and_rating'
                             ? 'white'
                             : calcDimmedText(isDimmed, isDark, '#868e96')
                         }

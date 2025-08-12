@@ -315,7 +315,7 @@ class EventRatingTableModel extends Model
                     }
                 });
                 break;
-            case 'game_count_and_rating':
+            case 'games_and_rating':
                 usort($ratingLines, function ($el1, $el2) {
                     if ($el1['games_played'] !== $el2['games_played']) {
                         return ($el1['games_played'] - $el2['games_played']) < 0 ? -1 : 1; // more games is better
@@ -367,7 +367,7 @@ class EventRatingTableModel extends Model
                 });
                 break;
             default:
-                throw new InvalidParametersException("Parameter orderBy should be either 'name', 'rating', 'game_count_and_rating', 'avg_place', 'avg_score' or 'chips'");
+                throw new InvalidParametersException("Parameter orderBy should be either 'name', 'rating', 'games_and_rating', 'avg_place', 'avg_score' or 'chips'");
         }
     }
 
