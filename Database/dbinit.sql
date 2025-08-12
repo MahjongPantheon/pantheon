@@ -1,5 +1,0 @@
-CREATE USER mimir WITH PASSWORD 'pgpass';
-CREATE DATABASE mimir;
-CREATE DATABASE mimir_unit;
-ALTER DATABASE mimir OWNER TO mimir;
-ALTER DATABASE mimir_unit OWNER TO mimir;
