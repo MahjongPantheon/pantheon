@@ -275,7 +275,7 @@ export const RatingTable: React.FC<{
                   }}
                   style={{ cursor: 'pointer' }}
                 >
-                  {i18n._t('Game count and Rating')}
+                  {i18n._t('Games+Rating')}
                 </Badge>
                 {events?.[0]?.withChips && (
                   <Badge
@@ -531,8 +531,16 @@ export const RatingTable: React.FC<{
                         title={i18n._t('Games played')}
                         w={45}
                         size='lg'
-                        color={calcDimmedBackground(isDimmed, isDark, '#f8f9fa')}
-                        c={calcDimmedText(isDimmed, isDark, '#868e96')}
+                        color={
+                          orderBy == 'game_count_and_rating'
+                            ? 'purple'
+                            : calcDimmedBackground(isDimmed, isDark, '#f8f9fa')
+                        }
+                        c={
+                          orderBy == 'game_count_and_rating'
+                            ? 'white'
+                            : calcDimmedText(isDimmed, isDark, '#868e96')
+                        }
                         radius='sm'
                         style={{ padding: 0 }}
                       >
