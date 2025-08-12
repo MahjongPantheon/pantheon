@@ -1,0 +1,7 @@
+build
+coverage
+app/i18n
+app/clients
+node_modules
+dist
+pnpm-lock.yaml
