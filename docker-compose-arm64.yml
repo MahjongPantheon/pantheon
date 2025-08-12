@@ -154,6 +154,12 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4001:80"
+      - "4201:4201"
+      - "4201:4201/udp"
+      - "4401:4401"
+      - "4401:4401/udp"
+      - "4411:4414"
+      - "4411:4411/udp"
     depends_on:
       - frey.pantheon.internal
       - db.pantheon.internal
@@ -161,6 +167,8 @@ services:
     volumes:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
+      - ./Mimir-dist:/var/www/html/Mimir-dist
+      - pnpmstore01:/.pnpm
     environment:
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db.pantheon.internal

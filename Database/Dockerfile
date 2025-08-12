@@ -11,10 +11,11 @@ RUN chmod 755 /entrypoint.sh
 
 # copy db init scripts
 RUN mkdir -p /container-entrypoint-initdb.d
-COPY dbinit.sql /container-entrypoint-initdb.d/dbinit.sql
+COPY dbinit_mimir2.sql /container-entrypoint-initdb.d/dbinit_mimir2.sql
 COPY dbinit_frey2.sql /container-entrypoint-initdb.d/dbinit_frey2.sql
 COPY dbinit_hugin.sql /container-entrypoint-initdb.d/dbinit_hugin.sql
 COPY create_frey2_db.sh /create_frey2_db.sh
+COPY create_mimir2_db.sh /create_mimir2_db.sh
 COPY Makefile /var/lib/postgresql/Makefile
 
 # Copy cron defs
