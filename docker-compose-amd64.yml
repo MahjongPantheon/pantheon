@@ -161,6 +161,8 @@ services:
     volumes:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
+      - ./Mimir-dist:/var/www/html/Mimir-dist
+      - pnpmstore01:/.pnpm
     environment:
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db.pantheon.internal
