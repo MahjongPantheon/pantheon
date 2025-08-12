@@ -22,6 +22,8 @@ Forseti/.env.production
 Sigrun/.env.production
 Bragi/.env.production
 Skirnir/.env.production
+Mimir/.env.production
+Frey/.env.production
 Tyr/.env.development
 Forseti/.env.development
 Sigrun/.env.development
@@ -42,12 +44,6 @@ Common/tsclients/proto/*.js
 
 Database/export.tar.gz
 
-Mimir/config/local/*
-Mimir/vendor/
-Mimir/data/db.sqlite
-Mimir/data/verbose.log
-Mimir/tests/data/*
-
 Meili/vendor/
 
 Hugin/vendor/
@@ -55,6 +51,7 @@ Hugin/vendor/
 Gullveig/vendor/
 
 Frey-old/
+Mimir-old/
 
 Tyr/dist
 Tyr/dev-dist
@@ -87,6 +84,11 @@ Frey/node_modules/*
 Frey/dist/*
 Frey-dist/.env.production
 Frey-dist/node_modules/*
+
+Mimir/node_modules/*
+Mimir/dist/*
+Mimir-dist/.env.production
+Mimir-dist/node_modules/*
 
 Sigrun/dev-dist
 Sigrun-dist/*
