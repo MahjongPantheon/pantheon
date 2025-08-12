@@ -112,6 +112,7 @@ class OnlineParser
         $rounds = [];
         foreach ($this->_roundData as $round) {
             $savedRound = RoundPrimitive::createFromData($this->_ds, $session, $round);
+            $savedRound->setLastSessionState($session->getCurrentState());
             $rounds []= $savedRound;
             $success = $success && $session->updateCurrentState($savedRound);
             $scores []= $session->getCurrentState()->getScores();

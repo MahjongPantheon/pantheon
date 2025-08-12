@@ -86,7 +86,8 @@ class RoundPrimitive extends Primitive
             '_endDate'     => $this->_stringTransform(true),
             '_lastSessionState' => [
                 'serialize' => function () {
-                    return $this->getSession()->getCurrentState()->toJson();
+                    // TODO it's wrong, rollback fails
+                    return $this->getLastSessionState()->toJson();
                 } // don't do explicit deserialize here, as it may be not required in client code
             ]
         ];
@@ -867,6 +868,16 @@ class RoundPrimitive extends Primitive
     public function getOpenHand()
     {
         return boolval($this->_openHand);
+    }
+
+    /**
+     * @param SessionState $lastSessionState
+     * @return RoundPrimitive
+     */
+    public function setLastSessionState($lastSessionState)
+    {
+        $this->_lastSessionState = $lastSessionState->toJson();
+        return $this;
     }
 
     /**
