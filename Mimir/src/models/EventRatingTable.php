@@ -365,6 +365,21 @@ class EventRatingTableModel extends Model
                     }
                 });
                 break;
+            case 'games_and_rating':
+                usort($ratingLines, function ($el1, $el2) {
+                    if ($el1['games_played'] !== $el2['games_played']) {
+                        return ($el1['games_played'] - $el2['games_played']) < 0 ? -1 : 1; // more games is better
+                    }
+                    if (abs($el1['rating'] - $el2['rating']) < 0.0001) {
+                        return ($el2['avg_place'] - $el1['avg_place']) > 0 ? 1 : -1; // lower avg place is better, so invert
+                    }
+                    if ($el1['rating'] - $el2['rating'] < 0) { // higher rating is better
+                        return -1;  // usort casts return result to int, so pass explicit int here.
+                    } else {
+                        return 1;
+                    }
+                });
+                break;
             case 'avg_place':
                 usort($ratingLines, function ($el1, $el2) {
                     if (abs($el1['avg_place'] - $el2['avg_place']) < 0.0001) { // floats need epsilon
@@ -402,7 +417,7 @@ class EventRatingTableModel extends Model
                 });
                 break;
             default:
-                throw new InvalidParametersException("Parameter orderBy should be either 'name', 'rating' or 'avg_place'");
+                throw new InvalidParametersException("Parameter orderBy should be either 'name', 'rating', 'games_and_rating', 'avg_place', 'avg_score' or 'chips'");
         }
     }
 
