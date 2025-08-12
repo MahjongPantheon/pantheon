@@ -7,6 +7,11 @@ make dev_frey &
 FREY_PID=$!
 echo $FREY_PID
 
+echo 'Starting Mimir dev';
+make dev_mimir &
+MIMIR_PID=$!
+echo $MIMIR_PID
+
 echo 'Starting Tyr dev';
 make dev_tyr &
 TYR_PID=$!
@@ -32,7 +37,7 @@ make dev_skirnir &
 SKIRNIR_PID=$!
 echo $SKIRNIR_PID
 
-trap "TRAPPED_SIGNAL=true; make frey_stop; make tyr_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop;" SIGTERM  SIGINT
+trap "TRAPPED_SIGNAL=true; make frey_stop; make mimir_stop; make tyr_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop;" SIGTERM  SIGINT
 
 while :
 do
@@ -41,6 +46,9 @@ do
 
     kill -0 $FREY_PID 2> /dev/null
     FREY_STATUS=$?
+
+    kill -0 $MIMIR_PID 2> /dev/null
+    MIMIR_STATUS=$?
 
     kill -0 $FORSETI_PID 2> /dev/null
     FORSETI_STATUS=$?
@@ -55,7 +63,7 @@ do
     SKIRNIR_STATUS=$?
 
     if [ "$TRAPPED_SIGNAL" = "false" ]; then
-        if [ $TYR_STATUS -ne 0 ] || [ $FREY_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ]; then
+        if [ $TYR_STATUS -ne 0 ] || [ $FREY_STATUS -ne 0 ] || [ $MIMIR_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ]; then
             if [ $FORSETI_STATUS -eq 0 ]; then
                 kill -15 $FORSETI_PID;
                 wait $FORSETI_PID;
@@ -63,6 +71,10 @@ do
             if [ $FREY_STATUS -eq 0 ]; then
                 kill -15 $FREY_PID;
                 wait $FREY_PID;
+            fi
+            if [ $MIMIR_STATUS -eq 0 ]; then
+                kill -15 $MIMIR_PID;
+                wait $MIMIR_PID;
             fi
             if [ $TYR_STATUS -eq 0 ]; then
                 kill -15 $TYR_PID;
@@ -83,7 +95,7 @@ do
             exit 1;
         fi
     else
-       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $FREY_STATUS -ne 0 ]  && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ]; then
+       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $FREY_STATUS -ne 0 ] && [ $MIMIR_STATUS -ne 0 ] && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ]; then
             exit 0;
        fi
     fi

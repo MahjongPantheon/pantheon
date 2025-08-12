@@ -110,12 +110,16 @@ pantheon_run:
 	@cp Env/.env.development Tyr/.env.development
 	@cp Env/.env.development Sigrun/.env.development
 	@cp Env/.env.development Bragi/.env.development
+	@cp Env/.env.development Frey/.env.development
+	@cp Env/.env.development Mimir/.env.development
 	@cp Env/.env.development Forseti/.env.development
 	@cp Env/.env.development Skirnir/.env.development
 	@if [ -f Env/.env.development.local ]; then \
   	cat Env/.env.development.local >> Tyr/.env.development && \
   	cat Env/.env.development.local >> Sigrun/.env.development && \
   	cat Env/.env.development.local >> Bragi/.env.development && \
+  	cat Env/.env.development.local >> Mimir/.env.development && \
+  	cat Env/.env.development.local >> Frey/.env.development && \
   	cat Env/.env.development.local >> Forseti/.env.development && \
   	cat Env/.env.development.local >> Skirnir/.env.development ; \
 	fi
@@ -132,18 +136,18 @@ pantheon_stop:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
 	${COMPOSE_COMMAND} down
 
+# only for php services
 .PHONY: enable_debug
 enable_debug: export ENV_FILENAME=.env.development
 enable_debug:
-	@cd Mimir && ${MAKE} container_enable_debug
 	@cd Hugin && ${MAKE} container_enable_debug
 	@cd Gullveig && ${MAKE} container_enable_debug
 	@cd Meili && ${MAKE} container_enable_debug
 
+# only for php services
 .PHONY: disable_debug
 disable_debug: export ENV_FILENAME=.env.development
 disable_debug:
-	@cd Mimir && ${MAKE} container_disable_debug
 	@cd Hugin && ${MAKE} container_disable_debug
 	@cd Gullveig && ${MAKE} container_disable_debug
 	@cd Meili && ${MAKE} container_disable_debug
@@ -167,6 +171,10 @@ dev_bragi:
 .PHONY: dev_frey
 dev_frey:
 	cd Frey && ${MAKE} container_dev
+
+.PHONY: dev_mimir
+dev_mimir:
+	cd Mimir && ${MAKE} container_dev
 
 .PHONY: dev_skirnir
 dev_skirnir:
@@ -196,6 +204,10 @@ skirnir_stop:
 frey_stop:
 	cd Frey && ${MAKE} container_stop
 
+.PHONY: mimir_stop
+mimir_stop:
+	cd Mimir && ${MAKE} container_stop
+
 .PHONY: dev
 dev: build_reverse_proxy pantheon_run
 	${MAKE} reverse_proxy_stop
@@ -213,6 +225,10 @@ migrate:
 .PHONY: migrate_frey1
 migrate_frey1:
 	cd Frey && ${MAKE} container_migrate_frey1
+
+.PHONY: migrate_mimir1
+migrate_mimir1:
+	cd Mimir && ${MAKE} container_migrate_mimir1
 
 .PHONY: shell_tyr
 shell_tyr:
@@ -351,13 +367,17 @@ hugin_lint:
 hugin_analyze:
 	cd Hugin && ${MAKE} container_analyze > ../tmp/hugin_analyze.log 2>&1
 
-.PHONY: mimir_lint
-mimir_lint:
-	cd Mimir && ${MAKE} container_lint > ../tmp/mimir_lint.log 2>&1
+.PHONY: mimir_eslint
+mimir_eslint:
+	cd Frey && ${MAKE} container_eslint > ../tmp/mimir_lint.log 2>&1
 
-.PHONY: mimir_analyze
-mimir_analyze:
-	cd Mimir && ${MAKE} container_analyze > ../tmp/mimir_analyze.log 2>&1
+.PHONY: mimir_prettier
+mimir_prettier:
+	cd Frey && ${MAKE} container_prettier > ../tmp/mimir_prettier.log 2>&1
+
+.PHONY: mimir_typecheck
+mimir_typecheck:
+	cd Frey && ${MAKE} container_typecheck > ../tmp/mimir_typecheck.log 2>&1
 
 .PHONY: skirnir_eslint
 skirnir_eslint:
@@ -415,7 +435,7 @@ lint:
 		gullveig_lint gullveig_analyze \
 		meili_lint meili_analyze \
 		hugin_lint hugin_analyze \
-		mimir_lint mimir_analyze \
+		mimir_eslint mimir_prettier mimir_typecheck \
 		skirnir_eslint skirnir_prettier skirnir_typecheck \
 		sigrun_eslint sigrun_prettier sigrun_typecheck \
 		tyr_eslint tyr_prettier tyr_typecheck \
@@ -453,10 +473,9 @@ autofix:
 	cd Skirnir && ${MAKE} container_autofix
 	cd Fenrir && ${MAKE} container_autofix
 
-# First updates php generated code, second updates generated typescript
+# Using Frey container to regenerate common proto clients
 .PHONY: proto_gen
 proto_gen:
-	cd Mimir && ${MAKE} container_proto_gen
 	cd Frey && ${MAKE} container_proto_gen
 	${MAKE} deps
 
@@ -503,6 +522,11 @@ prod_build_frey: export NODE_ENV=production
 prod_build_frey: # this is for automated builds, don't run it manually
 	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: prod_build_mimir
+prod_build_mimir: export NODE_ENV=production
+prod_build_mimir: # this is for automated builds, don't run it manually
+	cd Mimir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: prod_build_bragi
 prod_build_bragi: export NODE_ENV=production
 prod_build_bragi: # this is for automated builds, don't run it manually
@@ -520,6 +544,7 @@ prod_compile:
 	@cp Env/.env.production Sigrun/.env.production
 	@cp Env/.env.production Forseti/.env.production
 	@cp Env/.env.production Bragi/.env.production
+	@cp Env/.env.production Mimir/.env.production
 	@cp Env/.env.production Skirnir/.env.production
 	@cp Env/.env.production Frey/.env.production
 	${MAKE} prod_deps
@@ -527,6 +552,7 @@ prod_compile:
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_frey && cd Frey && ${MAKE} container_reload
+	${MAKE} prod_build_mimir && cd Mimir && ${MAKE} container_reload
 	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload
 	cd Sigrun && ${MAKE} container_warmup
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload
@@ -631,6 +657,12 @@ e2e_build_frey: export ENV_FILENAME=.env.e2e
 e2e_build_frey: # this is for automated builds, don't run it manually
 	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: e2e_build_mimir
+e2e_build_mimir: export NODE_ENV=development
+e2e_build_mimir: export ENV_FILENAME=.env.e2e
+e2e_build_mimir: # this is for automated builds, don't run it manually
+	cd Mimir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: e2e_build_bragi
 e2e_build_bragi: export NODE_ENV=development
 e2e_build_bragi: export ENV_FILENAME=.env.e2e
@@ -652,6 +684,7 @@ e2e_compile:
 	@cp Env/.env.e2e Bragi/.env.e2e
 	@cp Env/.env.e2e Skirnir/.env.e2e
 	@cp Env/.env.e2e Frey/.env.e2e
+	@cp Env/.env.e2e Mimir/.env.e2e
 	${MAKE} deps
 	${MAKE} migrate
 	${MAKE} e2e_build_tyr
@@ -659,6 +692,7 @@ e2e_compile:
 	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload
 	${MAKE} e2e_build_frey && cd Frey && ${MAKE} container_reload
 	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload
+	${MAKE} e2e_build_mimir && cd Mimir && ${MAKE} container_reload
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload
 
 .PHONY: e2e_run

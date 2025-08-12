@@ -176,15 +176,9 @@ Please note:
 - If you change the protocols, you should run `make proto_gen` in root repo folder to regenerate all protocol related code.
 - You always should change the proto files and never should change the generated code by hand.
 
-#### Upgrade to Frey v2
+#### Upgrade to Mimir v2 and Frey v2
 
-Frey has been rewritten from scratch for better maintainability. To migrate to new version you'll need to:
-- Update containers with `make pull`
-- Update the code using `git fetch && git checkout origin/master`
-- Restart and rebuild everything using `make prod_restart && make prod_compile`
-- Run migration script using `make migrate_frey1`
-
-After the steps are completed, you may want to remove old `frey` database. To do so, use `make shell_db` and drop the database using `psql`.
+Please see UPDATE.md for details.
 
 #### End-to-end tests
 
