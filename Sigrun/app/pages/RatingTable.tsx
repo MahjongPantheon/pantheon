@@ -63,7 +63,14 @@ import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
 export const RatingTable: React.FC<{
   params: {
     eventId: string;
-    orderBy?: 'name' | 'rating' | 'game_count_and_rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
+    orderBy?:
+      | 'name'
+      | 'rating'
+      | 'game_count_and_rating'
+      | 'avg_place'
+      | 'avg_score'
+      | 'team'
+      | 'chips';
     minGamesSelector?: 'all' | 'min';
   };
 }> = ({ params: { eventId, orderBy, minGamesSelector } }) => {
@@ -488,7 +495,11 @@ export const RatingTable: React.FC<{
                       <Badge
                         w={75}
                         size='lg'
-                        variant={orderBy === 'rating' || orderBy === 'game_count_and_rating' ? 'filled' : 'light'}
+                        variant={
+                          orderBy === 'rating' || orderBy === 'game_count_and_rating'
+                            ? 'filled'
+                            : 'light'
+                        }
                         color={player.winnerZone ? 'lime' : 'red'}
                         radius='sm'
                         style={{ padding: 0 }}
