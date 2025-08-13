@@ -30,6 +30,14 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>optional bool only_min_games = 5;</code>
      */
     protected $only_min_games = null;
+    /**
+     * Generated from protobuf field <code>optional string date_from = 6;</code>
+     */
+    protected $date_from = null;
+    /**
+     * Generated from protobuf field <code>optional string date_to = 7;</code>
+     */
+    protected $date_to = null;
 
     /**
      * Constructor.
@@ -41,6 +49,8 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
      *     @type string $order_by
      *     @type string $order
      *     @type bool $only_min_games
+     *     @type string $date_from
+     *     @type string $date_to
      * }
      */
     public function __construct($data = NULL) {
@@ -142,6 +152,70 @@ class EventsGetRatingTablePayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->only_min_games = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string date_from = 6;</code>
+     * @return string
+     */
+    public function getDateFrom()
+    {
+        return isset($this->date_from) ? $this->date_from : '';
+    }
+
+    public function hasDateFrom()
+    {
+        return isset($this->date_from);
+    }
+
+    public function clearDateFrom()
+    {
+        unset($this->date_from);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string date_from = 6;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setDateFrom($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->date_from = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string date_to = 7;</code>
+     * @return string
+     */
+    public function getDateTo()
+    {
+        return isset($this->date_to) ? $this->date_to : '';
+    }
+
+    public function hasDateTo()
+    {
+        return isset($this->date_to);
+    }
+
+    public function clearDateTo()
+    {
+        unset($this->date_to);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string date_to = 7;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setDateTo($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->date_to = $var;
 
         return $this;
     }

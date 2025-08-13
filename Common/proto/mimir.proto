@@ -210,6 +210,8 @@ message EventsGetRatingTablePayload {
   string order_by = 2;
   string order = 3;
   optional bool only_min_games = 5;
+  optional string date_from = 6;
+  optional string date_to = 7;
 }
 
 message EventsGetRatingTableResponse {

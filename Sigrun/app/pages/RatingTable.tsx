@@ -65,8 +65,10 @@ export const RatingTable: React.FC<{
     eventId: string;
     orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
+    dateFrom?: Date | null | undefined;
+    dateTo?: Date | null | undefined;
   };
-}> = ({ params: { eventId, orderBy, minGamesSelector } }) => {
+}> = ({ params: { eventId, orderBy, minGamesSelector, dateFrom, dateTo } }) => {
   orderBy = orderBy ?? 'rating';
   minGamesSelector = minGamesSelector ?? 'all';
   const order = {
@@ -92,7 +94,7 @@ export const RatingTable: React.FC<{
   const eventIds = eventId.split('.').map((x) => parseInt(x));
   const [players, , playersLoading] = useIsomorphicState(
     [],
-    'RatingTable_event_' + eventId + order + orderBy + minGamesSelector,
+    'RatingTable_event_' + eventId + order + orderBy + minGamesSelector + dateFrom?.toISOString() + dateTo?.toISOString(),
     () => {
       if (eventIds.length === 1) {
         api.setEventId(eventIds[0]);
@@ -101,10 +103,12 @@ export const RatingTable: React.FC<{
         eventIds,
         order ?? 'desc',
         orderBy === 'team' ? 'rating' : (orderBy ?? 'rating'),
-        minGamesSelector === 'min'
+        minGamesSelector === 'min',
+        dateFrom,
+        dateTo,
       );
     },
-    [eventId, order, orderBy, minGamesSelector]
+    [eventId, order, orderBy, minGamesSelector, dateFrom, dateTo]
   );
 
   if (!players || !events) {
@@ -148,6 +152,12 @@ export const RatingTable: React.FC<{
     let href = `/event/${eventId}/order/${_orderBy}`;
     if (_minGamesSelector === 'min') {
       href += '/filter/min';
+    }
+    if (dateFrom != null) {
+      href += '/' + dateFrom.toISOString();
+    }
+    if (dateTo != null) {
+      href += '/' + dateTo.toISOString();
     }
     return href;
   }
