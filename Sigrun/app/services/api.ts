@@ -136,14 +136,14 @@ export class ApiService {
     order: 'asc' | 'desc',
     orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'chips',
     onlyMinGames: boolean,
-    dateFrom?: Date | null | undefined,
-    dateTo?: Date | null | undefined,
+    dateFrom?: string | null | undefined,
+    dateTo?: string | null | undefined,
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, {
       method: 'GetRatingTable',
     });
     return GetRatingTable(
-      { eventIdList: eventIds, order, orderBy, onlyMinGames, dateFrom: dateFrom?.toISOString(), dateTo: dateTo?.toISOString() },
+      { eventIdList: eventIds, order, orderBy, onlyMinGames, dateFrom, dateTo },
       this._clientConfMimir
     ).then((r) => r.list);
   }

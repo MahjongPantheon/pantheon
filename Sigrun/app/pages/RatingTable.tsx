@@ -65,8 +65,8 @@ export const RatingTable: React.FC<{
     eventId: string;
     orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
-    dateFrom?: Date | null | undefined;
-    dateTo?: Date | null | undefined;
+    dateFrom?: string | null | undefined;
+    dateTo?: string | null | undefined;
   };
 }> = ({ params: { eventId, orderBy, minGamesSelector, dateFrom, dateTo } }) => {
   orderBy = orderBy ?? 'rating';
@@ -94,7 +94,7 @@ export const RatingTable: React.FC<{
   const eventIds = eventId.split('.').map((x) => parseInt(x));
   const [players, , playersLoading] = useIsomorphicState(
     [],
-    'RatingTable_event_' + eventId + order + orderBy + minGamesSelector + dateFrom?.toISOString() + dateTo?.toISOString(),
+    'RatingTable_event_' + eventId + order + orderBy + minGamesSelector + dateFrom + dateTo,
     () => {
       if (eventIds.length === 1) {
         api.setEventId(eventIds[0]);
@@ -154,10 +154,10 @@ export const RatingTable: React.FC<{
       href += '/filter/min';
     }
     if (dateFrom != null) {
-      href += '/' + dateFrom.toISOString();
-    }
-    if (dateTo != null) {
-      href += '/' + dateTo.toISOString();
+      href += '/from/' + dateFrom;
+      if (dateTo != null) {
+        href += '/to' + dateTo;
+      }
     }
     return href;
   }
