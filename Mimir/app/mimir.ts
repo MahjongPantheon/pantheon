@@ -81,13 +81,25 @@ import {
   SeatingMakeShuffledSeatingPayload,
   TypedGamesAddOnlineReplayPayload,
 } from 'tsclients/proto/mimir.pb';
+import { createRuleset } from './rulesets/ruleset';
 
 export const mimirClient: Mimir<Context> = {
-  GetRulesets: function (
-    eventsGetRulesetsPayload: EventsGetRulesetsPayload,
-    context: Context
-  ): Promise<EventsGetRulesetsResponse> | EventsGetRulesetsResponse {
-    throw new Error('Function not implemented.');
+  GetRulesets: function (): Promise<EventsGetRulesetsResponse> | EventsGetRulesetsResponse {
+    return [
+      createRuleset('ema'),
+      createRuleset('jpmlA'),
+      createRuleset('wrc'),
+      createRuleset('tenhounet'),
+      createRuleset('rrc'),
+    ].reduce(
+      (acc, r) => {
+        acc.rulesets.push(r.rules);
+        acc.rulesetTitles.push(r.title);
+        acc.rulesetIds.push(r.id);
+        return acc;
+      },
+      { rulesets: [], rulesetIds: [], rulesetTitles: [] } as EventsGetRulesetsResponse
+    );
   },
   GetEvents: function (
     eventsGetEventsPayload: EventsGetEventsPayload,
