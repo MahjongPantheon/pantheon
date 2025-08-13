@@ -7,7 +7,7 @@ module.exports = {
   ...(process.env.DEBUG
     ? {}
     : {
-        globalSetup: './app/tests/setup.ts',
-        globalTeardown: './app/tests/teardown.ts',
+        // globalSetup: './app/tests/setup.ts',
+        // globalTeardown: './app/tests/teardown.ts',
       }),
 };
