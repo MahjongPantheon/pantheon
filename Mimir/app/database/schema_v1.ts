@@ -3,47 +3,36 @@
  * Please do not edit it manually.
  */
 
-import type { ColumnType } from 'kysely';
-
-export type Generated<T> =
-  T extends ColumnType<infer S, infer I, infer U>
-    ? ColumnType<S, I | undefined, U>
-    : ColumnType<T, T | undefined, T>;
-
-export type Int8 = ColumnType<string, bigint | number | string, bigint | number | string>;
-
-export type Timestamp = ColumnType<Date, Date | string, Date | string>;
-
 export interface Achievements {
   /**
    * achievements precalculated data
    */
   data: string;
   event_id: number;
-  id: Generated<number>;
-  last_update: Timestamp | null;
+  id: number;
+  last_update: string | null;
 }
 
 export interface Event {
   __deprecated_is_textlog: string | null;
   allow_player_append: number;
-  allow_view_other_tables: Generated<number>;
+  allow_view_other_tables: number;
   auto_seating: number;
   description: string;
-  end_time: Timestamp | null;
-  finished: Generated<number>;
+  end_time: string | null;
+  finished: number;
   /**
    * for timer, duration in seconds
    */
   game_duration: number | null;
   games_status: string | null;
-  hide_achievements: Generated<number>;
-  hide_results: Generated<number>;
-  id: Generated<number>;
-  is_listed: Generated<number>;
+  hide_achievements: number;
+  hide_results: number;
+  id: number;
+  is_listed: number;
   is_online: number;
-  is_prescripted: Generated<number>;
-  is_team: Generated<number>;
+  is_prescripted: number;
+  is_team: number;
   /**
    * for timer, unix datetime of last started timer
    */
@@ -52,8 +41,8 @@ export interface Event {
    * tenhou lobby id for online events
    */
   lobby_id: number | null;
-  min_games_count: Generated<number>;
-  next_game_start_time: Generated<number>;
+  min_games_count: number;
+  next_game_start_time: number;
   platform_id: number | null;
   /**
    * timer red zone amount in seconds, or null to disable red zone
@@ -63,18 +52,18 @@ export interface Event {
    * table rules, either in JSON or as a predefined ID
    */
   ruleset: string | null;
-  ruleset_changes: Generated<string>;
-  ruleset_config: Generated<string>;
-  series_length: Generated<number>;
+  ruleset_changes: string;
+  ruleset_config: string;
+  series_length: number;
   sort_by_games: number;
-  start_time: Timestamp | null;
+  start_time: string | null;
   /**
    * host of statistics frontend
    */
   stat_host: string;
-  sync_end: Generated<number>;
+  sync_end: number;
   sync_start: number;
-  time_to_start: Generated<number>;
+  time_to_start: number;
   timezone: string;
   title: string;
   use_penalty: number;
@@ -83,7 +72,7 @@ export interface Event {
 
 export interface EventPrescript {
   event_id: number;
-  id: Generated<number>;
+  id: number;
   next_game: number;
   /**
    * predefined event seating script
@@ -93,8 +82,8 @@ export interface EventPrescript {
 
 export interface EventRegisteredPlayers {
   event_id: number;
-  id: Generated<number>;
-  ignore_seating: Generated<number>;
+  id: number;
+  ignore_seating: number;
   local_id: number | null;
   player_id: number;
   replacement_id: number | null;
@@ -102,37 +91,29 @@ export interface EventRegisteredPlayers {
 }
 
 export interface GamePlatforms {
-  id: Generated<number>;
+  id: number;
   platform_id: number;
   platform_name: string;
 }
 
 export interface JobsQueue {
-  created_at: Timestamp;
-  id: Generated<number>;
-  job_arguments: Generated<string>;
+  created_at: string;
+  id: number;
+  job_arguments: string;
   job_name: string;
 }
 
 export interface Penalty {
   amount: number;
   assigned_by: number;
-  cancelled: Generated<number>;
+  cancelled: number;
   cancelled_reason: string | null;
-  created_at: Timestamp;
+  created_at: string;
   event_id: number;
-  id: Generated<number>;
+  id: number;
   player_id: number;
-  reason: Generated<string>;
+  reason: string;
   session_id: number | null;
-}
-
-export interface Phinxlog {
-  breakpoint: Generated<boolean>;
-  end_time: Timestamp | null;
-  migration_name: string | null;
-  start_time: Timestamp | null;
-  version: Int8;
 }
 
 export interface PlayerHistory {
@@ -140,7 +121,7 @@ export interface PlayerHistory {
   chips: number | null;
   event_id: number;
   games_played: number;
-  id: Generated<number>;
+  id: number;
   player_id: number;
   rating: number;
   session_id: number;
@@ -152,8 +133,8 @@ export interface PlayerStats {
    */
   data: string;
   event_id: number;
-  id: Generated<number>;
-  last_update: Timestamp | null;
+  id: number;
+  last_update: string | null;
   player_id: number;
 }
 
@@ -162,11 +143,11 @@ export interface Round {
    * dora count
    */
   dora: number | null;
-  end_date: Timestamp | null;
+  end_date: string | null;
   event_id: number;
   fu: number | null;
   han: number | null;
-  id: Generated<number>;
+  id: number;
   kandora: number | null;
   kanuradora: number | null;
   /**
@@ -216,15 +197,15 @@ export interface Round {
 }
 
 export interface Session {
-  end_date: Timestamp | null;
+  end_date: string | null;
   event_id: number;
-  extra_time: Generated<number>;
-  id: Generated<number>;
+  extra_time: number;
+  id: number;
   /**
    * json-encoded results for in-progress sessions
    */
   intermediate_results: string | null;
-  okr_ignore: Generated<number>;
+  okr_ignore: number;
   /**
    * original tenhou game link, for access to replay
    */
@@ -237,7 +218,7 @@ export interface Session {
    * hash to find this game from client mobile app
    */
   representational_hash: string | null;
-  start_date: Timestamp | null;
+  start_date: string | null;
   /**
    * planned / inprogress / prefinished / finished
    */
@@ -249,7 +230,7 @@ export interface Session {
 }
 
 export interface SessionPlayer {
-  id: Generated<number>;
+  id: number;
   order: number;
   player_id: number;
   session_id: number;
@@ -258,7 +239,7 @@ export interface SessionPlayer {
 export interface SessionResults {
   chips: number | null;
   event_id: number;
-  id: Generated<number>;
+  id: number;
   place: number;
   player_id: number;
   /**
@@ -273,7 +254,7 @@ export interface SessionResults {
 }
 
 export interface Yaku {
-  id: Generated<number>;
+  id: number;
   name: string;
 }
 
@@ -285,7 +266,6 @@ export interface DB {
   game_platforms: GamePlatforms;
   jobs_queue: JobsQueue;
   penalty: Penalty;
-  phinxlog: Phinxlog;
   player_history: PlayerHistory;
   player_stats: PlayerStats;
   round: Round;
