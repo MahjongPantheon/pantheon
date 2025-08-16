@@ -174,7 +174,7 @@ export interface Round {
   /**
    * boolean, was winner's hand opened or not
    */
-  open_hand: number | null;
+  open_hand: number;
   end_date: string | null;
   /**
    * session intermediate results before this round was registered
