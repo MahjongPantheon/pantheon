@@ -30,7 +30,6 @@ import {
   EventsGetPrescriptedEventConfigResponse,
   EventsGetRatingTablePayload,
   EventsGetRatingTableResponse,
-  EventsGetRulesetsPayload,
   EventsGetRulesetsResponse,
   EventsGetStartingTimerResponse,
   EventsGetTablesStatePayload,
