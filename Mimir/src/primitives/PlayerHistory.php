@@ -161,6 +161,36 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
+     * @param int[] $eventIds
+     * @param date $dateTo
+     * @throws \Exception
+     * @return PlayerHistoryPrimitive[]
+     */
+    public static function findLastByEventAndDateTo(DataSource $ds, $eventIds, $dateTo)
+    {
+        // 1) select ids of latest player history items strictly before dateTo
+        $orm = $ds->table(static::$_table)->table_alias('h');
+        $orm = $orm->selectExpr('max(h.id)', 'mx')
+                   ->select('h.player_id')
+                   ->select('h.event_id');
+        $orm = $orm->join('session', array('h.session_id', '=', 's.id'), 's');
+        if ($dateTo !== null) {
+            $orm = $orm->whereLt('s.start_date', $dateTo->format('Y-m-d H:i:s'));
+        }
+        $orm = $orm->whereIn('h.event_id', $eventIds)
+            ->groupBy('h.player_id')
+            ->groupBy('h.event_id');
+
+        $ids = array_map(function ($el) {
+            return $el['mx'];
+        }, $orm->findArray());
+
+        // 2) return id-indexed search results
+        return self::findById($ds, $ids);
+    }
+
+    /**
+     * @param DataSource $ds
      * @param int $eventId
      * @param int $playerId
      * @throws \Exception
@@ -428,6 +458,32 @@ class PlayerHistoryPrimitive extends Primitive
             ->_setGamesPlayed($his1->getGamesPlayed() + $his2->getGamesPlayed())
             ->_setRating($his1->getRating() + $his2->getRating());
     }
+
+    /**
+     * Create a new history item which is a difference of two other history items.
+     *
+     * @param PlayerHistoryPrimitive $his2
+     * @param PlayerHistoryPrimitive $his1
+     * @throws \Exception
+     * @return PlayerHistoryPrimitive
+     */
+    public static function makeHistoryItemsDifference(PlayerHistoryPrimitive $his2, PlayerHistoryPrimitive $his1)
+    {
+        if ($his1->_ds !== $his2->_ds) {
+            throw new InvalidParametersException('PlayerHistoryPrimitives should belong to same DB');
+        }
+
+        // place1*games1 + place0*games0 = place2*games2
+        // place0 = place2*games2 - place1*games1 / (games2-games1)
+        return (new self($his2->_ds))
+            ->setPlayer($his2->getPlayer())
+            ->setSession($his2->getSession())
+            ->_setAvgPlace(($his2->getAvgPlace() * $his2->getGamesPlayed() - $his1->getAvgPlace() * $his1->getGamesPlayed())
+                    / ($his2->getGamesPlayed() - $his1->getGamesPlayed()))
+            ->_setGamesPlayed($his2->getGamesPlayed() - $his1->getGamesPlayed())
+            ->_setRating($his2->getRating() - $his1->getRating());
+    }
+
 
     /**
      * @return float

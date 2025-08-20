@@ -44,7 +44,7 @@ class EventRatingTableModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $isAdmin = false, $onlyMinGames = false)
+    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order,$isAdmin = false, $onlyMinGames = false, $dateFromStr = null, $dateToStr = null)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
@@ -57,10 +57,26 @@ class EventRatingTableModel extends Model
         $mainEvent = $eventList[0];
         $minGamesCount = $mainEvent->getMinGamesCount();
 
+        if ($dateFromStr !== null) {
+            $dateFrom = \DateTime::createFromFormat('c', $dateFromStr); // iso format
+            $historyItemsDbFrom = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateFrom);
+            if ($dateToStr !== null) {
+                $dateTo = \DateTime::createFromFormat('c', $dateToStr); // iso format
+                $historyItemsDbTo = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateTo);
+            } else {
+                $historyItemsDbTo = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds);
+            }
+            // .........A.......B.....
+            // we got date intervals (-inf, A) and (-inf, B), now construct (A, B)
+            $historyItemsDb = _calculateHistoryForDateInterval($historyItemsDbFrom, $historyItemsDbTo);
+        } else {
+            $historyItemsDb = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds);
+        }
+
         /** @var PlayerHistoryPrimitive[] $playersHistoryItemsCombined */
         $playersHistoryItemsCombined = [];
 
-        $historyItems = array_reduce(PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds), function ($acc, PlayerHistoryPrimitive $item) {
+        $historyItems = array_reduce($historyItemsDb, function ($acc, PlayerHistoryPrimitive $item) {
             if (empty($acc[$item->getEventId()])) {
                 $acc[$item->getEventId()] = [];
             }
@@ -226,6 +242,33 @@ class EventRatingTableModel extends Model
         }
 
         return $data;
+    }
+
+    /**
+     * @param PlayerHistoryPrimitive[] $historyItemsDbFrom
+     * @param PlayerHistoryPrimitive[] $historyItemsDbTo
+     * @return PlayerHistoryPrimitive[]
+     */
+    protected function _calculateHistoryForDateInterval($historyItemsDbFrom, $historyItemsDbTo)
+    {
+        $fromMap = [];
+        foreach ($historyItemsDbFrom as $item) {
+            $key = implode('|', [$item->getPlayerId(), $item->getEventId()]);
+            $fromMap[$key] = $item;
+        }
+        $result = [];
+        foreach ($historyItemsDbTo as $item) {
+            $key = implode('|', [$item->getPlayerId(), $item->getEventId()]);
+            if (array_key_exists($key, $fromMap)) {
+                $prevItem = $fromMap[$key];
+                if ($prevItem->getGamesPlayed() != $item->getGamesPlayed()) {
+                    $result[] = PlayerHistoryPrimitive::makeHistoryItemsDifference($item, $prevItem);
+                }
+            } else {
+                $result[] = $item;
+            }
+        }
+        return $result;
     }
 
     /**
