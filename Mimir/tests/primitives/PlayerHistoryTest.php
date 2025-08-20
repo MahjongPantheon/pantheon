@@ -66,6 +66,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->_setRepresentationalHash('93471260812749')
+            ->setStartDate('2025-08-17 17:00:00')
             ->setReplayHash('');
         $this->_session->save();
 
@@ -74,6 +75,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->_setRepresentationalHash('982737468764')
+            ->setStartDate('2025-08-19 19:00:00')
             ->setReplayHash('');
         $this->_anotherSession->save();
     }
@@ -136,6 +138,67 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1700, $itemCopy->getRating());
         $this->assertEquals($this->_players[0]->getId(), $itemCopy->getPlayerId());
         $this->assertTrue($itemCopy !== $item); // different objects!
+    }
+
+    public function testFindLastItemByPlayerEventAndDate()
+    {
+        $item = new PlayerHistoryPrimitive($this->_ds);
+        $item
+            ->setSession($this->_session)
+            ->setPlayer($this->_players[0])
+            ->_setRating(-10000)
+            ->_setAvgPlace(3)
+            ->_setGamesPlayed(1)
+            ->save();
+        $item2 = new PlayerHistoryPrimitive($this->_ds);
+        $item2
+            ->setSession($this->_anotherSession)
+            ->setPlayer($this->_players[0])
+            ->_setRating(30000)
+            ->_setAvgPlace(2)
+            ->_setGamesPlayed(3)
+            ->save();
+
+        // both without passing date
+        $items = PlayerHistoryPrimitive::findLastByEventAndDateTo(
+            $this->_ds,
+            [$this->_event->getId()],
+            null
+        );
+        $this->assertEquals(count($items), 1);
+        $this->assertEquals($items[0]->getRating(), 30000);
+        $this->assertEquals($items[0]->getAvgPlace(), 2);
+        $this->assertEquals($items[0]->getGamesPlayed(), 3);
+
+        // both
+        $items = PlayerHistoryPrimitive::findLastByEventAndDateTo(
+            $this->_ds,
+            [$this->_event->getId()],
+            new \DateTime('2025-08-20 20:00:00')
+        );
+        $this->assertEquals(count($items), 1);
+        $this->assertEquals($items[0]->getRating(), 30000);
+        $this->assertEquals($items[0]->getAvgPlace(), 2);
+        $this->assertEquals($items[0]->getGamesPlayed(), 3);
+
+        // only first
+        $items = PlayerHistoryPrimitive::findLastByEventAndDateTo(
+            $this->_ds,
+            [$this->_event->getId()],
+            new \DateTime('2025-08-18 18:00:00')
+        );
+        $this->assertEquals(count($items), 1);
+        $this->assertEquals($items[0]->getRating(), -10000);
+        $this->assertEquals($items[0]->getAvgPlace(), 3);
+        $this->assertEquals($items[0]->getGamesPlayed(), 1);
+
+        // none
+        $items = PlayerHistoryPrimitive::findLastByEventAndDateTo(
+            $this->_ds,
+            [$this->_event->getId()],
+            new \DateTime('2025-08-16 16:00:00')
+        );
+        $this->assertEquals(count($items), 0);
     }
 
     public function testFindAllPlayersLastItemByEvent()
