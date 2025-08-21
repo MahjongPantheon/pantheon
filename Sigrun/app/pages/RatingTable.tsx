@@ -156,7 +156,7 @@ export const RatingTable: React.FC<{
     if (dateFrom != null) {
       href += '/from/' + dateFrom;
       if (dateTo != null) {
-        href += '/to' + dateTo;
+        href += '/to/' + dateTo;
       }
     }
     return href;
