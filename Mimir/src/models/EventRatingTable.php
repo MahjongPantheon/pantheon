@@ -46,7 +46,7 @@ class EventRatingTableModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order,$isAdmin = false, $onlyMinGames = false, $dateFromStr = null, $dateToStr = null)
+    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $isAdmin = false, $onlyMinGames = false, $dateFromStr = null, $dateToStr = null)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
