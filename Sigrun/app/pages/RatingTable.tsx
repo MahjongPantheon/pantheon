@@ -65,8 +65,8 @@ export const RatingTable: React.FC<{
     eventId: string;
     orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
-    dateFrom?: string | null | undefined;
-    dateTo?: string | null | undefined;
+    dateFrom?: string | undefined;
+    dateTo?: string | undefined;
   };
 }> = ({ params: { eventId, orderBy, minGamesSelector, dateFrom, dateTo } }) => {
   orderBy = orderBy ?? 'rating';
