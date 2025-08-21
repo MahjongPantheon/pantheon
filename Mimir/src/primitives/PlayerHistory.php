@@ -162,14 +162,14 @@ class PlayerHistoryPrimitive extends Primitive
     /**
      * @param DataSource $ds
      * @param int[] $eventIds
-     * @param date $dateTo
+     * @param \DateTime $dateTo
      * @throws \Exception
      * @return PlayerHistoryPrimitive[]
      */
     public static function findLastByEventAndDateTo(DataSource $ds, $eventIds, $dateTo)
     {
         // 1) select ids of latest player history items strictly before dateTo
-        $orm = $ds->table(static::$_table)->table_alias('h');
+        $orm = $ds->table(static::$_table)->tableAlias('h');
         $orm = $orm->selectExpr('max(h.id)', 'mx')
                    ->select('h.player_id')
                    ->select('h.event_id');
