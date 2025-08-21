@@ -691,7 +691,7 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
-        $this->_log->info('Getting rating table for event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Getting rating table for event ids: ' . implode(", ", $eventIdList) . ' from: "' . $dateFromStr . '" to: "' . $dateToStr . '"');
 
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
