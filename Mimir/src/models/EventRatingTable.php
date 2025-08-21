@@ -60,10 +60,10 @@ class EventRatingTableModel extends Model
         $minGamesCount = $mainEvent->getMinGamesCount();
 
         if (!empty($dateFromStr)) {
-            $dateFrom = \DateTime::createFromFormat('c', $dateFromStr); // iso format
+            $dateFrom = new \DateTime($dateFromStr);
             $historyItemsDbFrom = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateFrom);
             if (!empty($dateToStr)) {
-                $dateTo = \DateTime::createFromFormat('c', $dateToStr); // iso format
+                $dateTo = new \DateTime($dateToStr);
                 $historyItemsDbTo = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateTo);
             } else {
                 $historyItemsDbTo = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds);
