@@ -40,6 +40,8 @@ class EventRatingTableModel extends Model
      * @param string $order
      * @param bool $isAdmin show prefinished games and also all rating table if it's hidden
      * @param bool $onlyMinGames
+     * @param string $dateFromStr
+     * @param string $dateToStr
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception
@@ -57,10 +59,10 @@ class EventRatingTableModel extends Model
         $mainEvent = $eventList[0];
         $minGamesCount = $mainEvent->getMinGamesCount();
 
-        if ($dateFromStr !== null) {
+        if (!empty($dateFromStr)) {
             $dateFrom = \DateTime::createFromFormat('c', $dateFromStr); // iso format
             $historyItemsDbFrom = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateFrom);
-            if ($dateToStr !== null) {
+            if (!empty($dateToStr)) {
                 $dateTo = \DateTime::createFromFormat('c', $dateToStr); // iso format
                 $historyItemsDbTo = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateTo);
             } else {
