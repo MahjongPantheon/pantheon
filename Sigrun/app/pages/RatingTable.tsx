@@ -104,8 +104,8 @@ export const RatingTable: React.FC<{
         order ?? 'desc',
         orderBy === 'team' ? 'rating' : (orderBy ?? 'rating'),
         minGamesSelector === 'min',
-        dateFrom,
-        dateTo
+        dateFrom != null ? decodeURIComponent(dateFrom) : undefined,
+        dateTo != null ? decodeURIComponent(dateTo) : undefined
       );
     },
     [eventId, order, orderBy, minGamesSelector, dateFrom, dateTo]
