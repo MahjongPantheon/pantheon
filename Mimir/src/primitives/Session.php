@@ -556,6 +556,16 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @param string $date UTC date string
+     * @return $this
+     */
+    public function setStartDate($date)
+    {
+        $this->_startDate = $date;
+        return $this;
+    }
+
+    /**
      * @throws EntityNotFoundException
      * @throws \Exception
      *

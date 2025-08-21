@@ -55,6 +55,8 @@ export interface EventsGetRatingTablePayload {
   orderBy: string;
   order: string;
   onlyMinGames?: boolean | null | undefined;
+  dateFrom?: string | null | undefined;
+  dateTo?: string | null | undefined;
 }
 
 export interface EventsGetRatingTableResponse {
@@ -4064,6 +4066,8 @@ export const EventsGetRatingTablePayload = {
       orderBy: "",
       order: "",
       onlyMinGames: undefined,
+      dateFrom: undefined,
+      dateTo: undefined,
       ...msg,
     };
   },
@@ -4086,6 +4090,12 @@ export const EventsGetRatingTablePayload = {
     }
     if (msg.onlyMinGames != undefined) {
       writer.writeBool(5, msg.onlyMinGames);
+    }
+    if (msg.dateFrom != undefined) {
+      writer.writeString(6, msg.dateFrom);
+    }
+    if (msg.dateTo != undefined) {
+      writer.writeString(7, msg.dateTo);
     }
     return writer;
   },
@@ -4118,6 +4128,14 @@ export const EventsGetRatingTablePayload = {
         }
         case 5: {
           msg.onlyMinGames = reader.readBool();
+          break;
+        }
+        case 6: {
+          msg.dateFrom = reader.readString();
+          break;
+        }
+        case 7: {
+          msg.dateTo = reader.readString();
           break;
         }
         default: {
@@ -10194,6 +10212,8 @@ export const EventsGetRatingTablePayloadJSON = {
       orderBy: "",
       order: "",
       onlyMinGames: undefined,
+      dateFrom: undefined,
+      dateTo: undefined,
       ...msg,
     };
   },
@@ -10216,6 +10236,12 @@ export const EventsGetRatingTablePayloadJSON = {
     }
     if (msg.onlyMinGames != undefined) {
       json["onlyMinGames"] = msg.onlyMinGames;
+    }
+    if (msg.dateFrom != undefined) {
+      json["dateFrom"] = msg.dateFrom;
+    }
+    if (msg.dateTo != undefined) {
+      json["dateTo"] = msg.dateTo;
     }
     return json;
   },
@@ -10242,6 +10268,14 @@ export const EventsGetRatingTablePayloadJSON = {
     const _onlyMinGames_ = json["onlyMinGames"] ?? json["only_min_games"];
     if (_onlyMinGames_) {
       msg.onlyMinGames = _onlyMinGames_;
+    }
+    const _dateFrom_ = json["dateFrom"] ?? json["date_from"];
+    if (_dateFrom_) {
+      msg.dateFrom = _dateFrom_;
+    }
+    const _dateTo_ = json["dateTo"] ?? json["date_to"];
+    if (_dateTo_) {
+      msg.dateTo = _dateTo_;
     }
     return msg;
   },
