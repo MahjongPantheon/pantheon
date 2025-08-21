@@ -105,7 +105,7 @@ export const RatingTable: React.FC<{
         orderBy === 'team' ? 'rating' : (orderBy ?? 'rating'),
         minGamesSelector === 'min',
         dateFrom,
-        dateTo,
+        dateTo
       );
     },
     [eventId, order, orderBy, minGamesSelector, dateFrom, dateTo]
@@ -147,7 +147,7 @@ export const RatingTable: React.FC<{
 
   function getUrl(
     _orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips',
-    _minGamesSelector: 'all' | 'min',
+    _minGamesSelector: 'all' | 'min'
   ): string {
     let href = `/event/${eventId}/order/${_orderBy}`;
     if (_minGamesSelector === 'min') {

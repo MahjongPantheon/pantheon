@@ -137,7 +137,7 @@ export class ApiService {
     orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'chips',
     onlyMinGames: boolean,
     dateFrom?: string | null | undefined,
-    dateTo?: string | null | undefined,
+    dateTo?: string | null | undefined
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, {
       method: 'GetRatingTable',
