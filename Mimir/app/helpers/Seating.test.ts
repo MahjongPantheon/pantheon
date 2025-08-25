@@ -1,116 +1,54 @@
-import { PlayersMap, Seating } from './Seating';
+import { Seating } from './Seating';
+import { PlayersMap } from 'mahjong-seatings-rs-node';
 
-describe('Seating', () => {
-  describe('makeIntersectionsTable', () => {
-    it('should correctly calculate intersection table', () => {
-      const players: PlayersMap = [
-        [1, 1500],
-        [2, 1500],
-        [3, 1500],
-        [4, 1500],
-        [5, 1500],
-        [6, 1500],
-        [7, 1500],
-        [8, 1500],
-        [9, 1500],
-        [10, 1500],
-        [11, 1500],
-        [12, 1500],
-        [13, 1500],
-        [14, 1500],
-        [15, 1500],
-        [16, 1500],
-      ];
+const toList = (players: PlayersMap) =>
+  Object.entries(players).map(([key, value]) => [+key, value]);
 
-      const previousSeating = [
-        [1, 2, 3, 4],
-        [5, 6, 7, 8],
-        [9, 10, 11, 12],
-        [13, 14, 15, 16],
-      ];
-
-      const table = new Seating().makeIntersectionsTable(players, previousSeating);
-      const check = [
-        '1+++2',
-        '1+++3',
-        '1+++4',
-        '2+++3',
-        '2+++4',
-        '3+++4',
-
-        '5+++6',
-        '5+++7',
-        '5+++8',
-        '6+++7',
-        '6+++8',
-        '7+++8',
-
-        '9+++10',
-        '9+++11',
-        '9+++12',
-        '10+++11',
-        '10+++12',
-        '11+++12',
-
-        '13+++14',
-        '13+++15',
-        '13+++16',
-        '14+++15',
-        '14+++16',
-        '15+++16',
-      ];
-
-      check.forEach((intersection) => {
-        expect(table[intersection]).toBe(2); // last seating is exactly same as previous -> expect 2 everywhere
-      });
-      expect(Object.keys(table)).toHaveLength(check.length);
-    });
-  });
-
+describe('Seating Rust', () => {
   describe('shuffledSeating - single group', () => {
     it('should create initial random seating', async () => {
-      const players: PlayersMap = [
-        [1, 1500],
-        [2, 1500],
-        [3, 1500],
-        [4, 1500],
-        [5, 1500],
-        [6, 1500],
-        [7, 1500],
-        [8, 1500],
-        [9, 1500],
-        [10, 1500],
-        [11, 1500],
-        [12, 1500],
-      ];
+      const players: PlayersMap = {
+        1: 1500,
+        2: 1500,
+        3: 1500,
+        4: 1500,
+        5: 1500,
+        6: 1500,
+        7: 1500,
+        8: 1500,
+        9: 1500,
+        10: 1500,
+        11: 1500,
+        12: 1500,
+      };
 
-      const seating = await new Seating().shuffledSeating(players, [], 1, 3464752);
+      const seating = new Seating().shuffledSeating(players, [], 1, 123123);
 
       expect(seating).toBeDefined();
       expect(seating).toHaveLength(12);
       expect(JSON.stringify(seating)).not.toBe(JSON.stringify(players));
-      expect(seating?.sort(([a], [b]) => a - b)).toEqual(players);
+      expect(seating?.sort(([a], [b]) => a - b)).toEqual(toList(players));
     });
 
     it('should not intersect after first game', async () => {
-      const players: PlayersMap = [
-        [1, 1500],
-        [2, 1500],
-        [3, 1500],
-        [4, 1500],
-        [5, 1500],
-        [6, 1500],
-        [7, 1500],
-        [8, 1500],
-        [9, 1500],
-        [10, 1500],
-        [11, 1500],
-        [12, 1500],
-        [13, 1500],
-        [14, 1500],
-        [15, 1500],
-        [16, 1500],
-      ];
+      const players: PlayersMap = {
+        1: 1500,
+        2: 1500,
+        3: 1500,
+        4: 1500,
+        5: 1500,
+        6: 1500,
+        7: 1500,
+        8: 1500,
+        9: 1500,
+        10: 1500,
+        11: 1500,
+        12: 1500,
+        13: 1500,
+        14: 1500,
+        15: 1500,
+        16: 1500,
+      };
 
       const previousSeating = [
         [1, 2, 3, 4],
@@ -119,8 +57,8 @@ describe('Seating', () => {
         [13, 14, 15, 16],
       ];
 
-      const seating = await new Seating().shuffledSeating(players, previousSeating, 1, 3462352);
-      const intersections = new Seating().makeIntersectionsTable(seating!, previousSeating);
+      const seating = new Seating().shuffledSeating(players, previousSeating, 1, 2134163);
+      const intersections = new Seating().makeIntersectionsTable(seating, previousSeating);
 
       Object.values(intersections).forEach((intersection) => {
         expect(intersection).toBe(1);
@@ -128,24 +66,24 @@ describe('Seating', () => {
     });
 
     it('should handle seating after several games', async () => {
-      const players: PlayersMap = [
-        [1, 1500],
-        [2, 1500],
-        [3, 1500],
-        [4, 1500],
-        [5, 1500],
-        [6, 1500],
-        [7, 1500],
-        [8, 1500],
-        [9, 1500],
-        [10, 1500],
-        [11, 1500],
-        [12, 1500],
-        [13, 1500],
-        [14, 1500],
-        [15, 1500],
-        [16, 1500],
-      ];
+      const players: PlayersMap = {
+        1: 1500,
+        2: 1500,
+        3: 1500,
+        4: 1500,
+        5: 1500,
+        6: 1500,
+        7: 1500,
+        8: 1500,
+        9: 1500,
+        10: 1500,
+        11: 1500,
+        12: 1500,
+        13: 1500,
+        14: 1500,
+        15: 1500,
+        16: 1500,
+      };
 
       const previousSeating = [
         [1, 2, 3, 4],
@@ -158,8 +96,8 @@ describe('Seating', () => {
         [4, 8, 12, 16],
       ];
 
-      const seating = await new Seating().shuffledSeating(players, previousSeating, 1, 9486370);
-      const intersections = new Seating().makeIntersectionsTable(seating!, previousSeating);
+      const seating = new Seating().shuffledSeating(players, previousSeating, 1, 9486370);
+      const intersections = new Seating().makeIntersectionsTable(seating, previousSeating);
 
       Object.values(intersections).forEach((intersection) => {
         // shuffled seating is not as good as swiss and may produce intersections even in second game
@@ -170,24 +108,24 @@ describe('Seating', () => {
 
   describe('shuffledSeating - two groups', () => {
     it('should separate winners and losers', async () => {
-      const players: PlayersMap = [
-        [1, 1508],
-        [2, 1507],
-        [3, 1506],
-        [4, 1505],
-        [5, 1504],
-        [6, 1503],
-        [7, 1502],
-        [8, 1501],
-        [9, 1499],
-        [10, 1498],
-        [11, 1497],
-        [12, 1496],
-        [13, 1495],
-        [14, 1494],
-        [15, 1493],
-        [16, 1492],
-      ];
+      const players: PlayersMap = {
+        1: 1508,
+        2: 1507,
+        3: 1506,
+        4: 1505,
+        5: 1504,
+        6: 1503,
+        7: 1502,
+        8: 1501,
+        9: 1499,
+        10: 1498,
+        11: 1497,
+        12: 1496,
+        13: 1495,
+        14: 1494,
+        15: 1493,
+        16: 1492,
+      };
 
       const previousSeating = [
         [1, 2, 3, 4],
@@ -196,9 +134,9 @@ describe('Seating', () => {
         [13, 14, 15, 16],
       ];
 
-      const seating = await new Seating().shuffledSeating(players, previousSeating, 2, 3462352);
+      const seating = new Seating().shuffledSeating(players, previousSeating, 2, 3462352);
 
-      const seatingValues = Object.values(seating!);
+      const seatingValues = Object.values(seating);
       const winners = seatingValues.slice(0, 8);
       const losers = seatingValues.slice(8);
 
@@ -210,7 +148,7 @@ describe('Seating', () => {
         expect(score[1]).toBeLessThan(1500);
       });
 
-      const intersections = new Seating().makeIntersectionsTable(seating!, previousSeating);
+      const intersections = new Seating().makeIntersectionsTable(seating, previousSeating);
       Object.values(intersections).forEach((intersection) => {
         expect(intersection).toBeLessThanOrEqual(2); // may be 2, as of stricter conditions
       });
@@ -219,40 +157,40 @@ describe('Seating', () => {
 
   describe('swissSeating', () => {
     it('should handle swiss seating after several games', async () => {
-      const players: PlayersMap = [
-        [1, -1200],
-        [2, 9200],
-        [3, -13700],
-        [4, 4400],
-        [5, -27400],
-        [6, 10500],
-        [7, -29500],
-        [8, -8000],
-        [9, -23700],
-        [10, -9000],
-        [11, 1900],
-        [12, -38200],
-        [13, -1000],
-        [14, 13400],
-        [15, -34900],
-        [16, -19200],
-        [17, 8500],
-        [18, 11700],
-        [19, -32100],
-        [20, -4700],
-        [21, -15100],
-        [22, -2000],
-        [23, -25700],
-        [24, 21400],
-        [25, 40000],
-        [26, 64200],
-        [27, -14700],
-        [28, 49500],
-        [29, 35400],
-        [30, 1900],
-        [31, 59400],
-        [32, -31300],
-      ];
+      const players: PlayersMap = {
+        1: -1200,
+        2: 9200,
+        3: -13700,
+        4: 4400,
+        5: -27400,
+        6: 10500,
+        7: -29500,
+        8: -8000,
+        9: -23700,
+        10: -9000,
+        11: 1900,
+        12: -38200,
+        13: -1000,
+        14: 13400,
+        15: -34900,
+        16: -19200,
+        17: 8500,
+        18: 11700,
+        19: -32100,
+        20: -4700,
+        21: -15100,
+        22: -2000,
+        23: -25700,
+        24: 21400,
+        25: 40000,
+        26: 64200,
+        27: -14700,
+        28: 49500,
+        29: 35400,
+        30: 1900,
+        31: 59400,
+        32: -31300,
+      };
 
       const previousSeating = [
         // session 1
@@ -305,39 +243,39 @@ describe('Seating', () => {
         [16, 19, 7, 22],
         [32, 15, 27, 10],
 
-        // session 6 (commented out in original)
-        /*[26, 20, 11, 4],
+        // session 6
+        [26, 20, 11, 4],
         [31, 21, 1, 18],
         [28, 30, 16, 9],
         [12, 25, 32, 6],
         [29, 8, 23, 15],
         [24, 19, 13, 10],
         [3, 5, 22, 14],
-        [2, 17, 7, 27],*/
+        [2, 17, 7, 27],
 
-        // session 7 (commented out in original)
-        /*[11, 26, 8, 21],
+        // session 7
+        [11, 26, 8, 21],
         [30, 4, 31, 6],
         [12, 2, 22, 28],
         [25, 9, 19, 14],
         [29, 24, 16, 1],
         [10, 3, 13, 18],
         [5, 23, 17, 20],
-        [32, 15, 27, 7],*/
+        [32, 15, 27, 7],
 
-        // session 8 (commented out in original)
-        /*[26, 7, 10, 31],
+        // session 8
+        [26, 7, 10, 31],
         [23, 1, 25, 28],
         [20, 22, 27, 29],
         [30, 8, 17, 24],
         [32, 18, 14, 11],
         [13, 21, 19, 6],
         [16, 2, 4, 5],
-        [12, 3, 9, 15]*/
+        [12, 3, 9, 15],
       ];
 
       const s = new Seating();
-      const seating = await s.swissSeating(players, previousSeating);
+      const seating = s.swissSeating(players, previousSeating, 12345);
       const intersections = new Seating().makeIntersectionsTable(seating, previousSeating);
 
       Object.values(intersections).forEach((intersection) => {
@@ -348,189 +286,151 @@ describe('Seating', () => {
   });
 
   describe('makeIntervalSeating', () => {
-    const players: PlayersMap = [
-      [1, 100000],
-      [2, 90000],
-      [3, 80000],
-      [4, 70000],
-      [5, 60000],
-      [6, 50000],
-      [7, 40000],
-      [8, 30000],
-      [9, 20000],
-      [10, 10000],
-      [11, 0],
-      [12, -10000],
-      [13, -20000],
-      [14, -30000],
-      [15, -40000],
-      [16, -50000],
-      [17, -60000],
-      [18, -70000],
-      [19, -80000],
-      [20, -90000],
-    ];
+    const players: PlayersMap = {
+      1: 100000,
+      2: 90000,
+      3: 80000,
+      4: 70000,
+      5: 60000,
+      6: 50000,
+      7: 40000,
+      8: 30000,
+      9: 20000,
+      10: 10000,
+      11: 0,
+      12: -10000,
+      13: -20000,
+      14: -30000,
+      15: -40000,
+      16: -50000,
+      17: -60000,
+      18: -70000,
+      19: -80000,
+      20: -90000,
+    };
 
     it('should create interval seating with step 2', () => {
       const s = new Seating();
-      s.shuffle = function (arr) {
-        // mock to preserve order
-        return arr;
-      };
-      const seating = s.makeIntervalSeating(players, 2);
+      const seating = s.intervalSeating(players, 2, 12345);
       const expected = [
+        [7, 40000],
         [1, 100000],
         [3, 80000],
         [5, 60000],
-        [7, 40000],
-        [2, 90000],
         [4, 70000],
         [6, 50000],
         [8, 30000],
+        [2, 90000],
+        [15, -40000],
         [9, 20000],
         [11, 0],
         [13, -20000],
-        [15, -40000],
-        [10, 10000],
         [12, -10000],
         [14, -30000],
         [16, -50000],
+        [10, 10000],
+        [20, -90000],
         [17, -60000],
         [18, -70000],
         [19, -80000],
-        [20, -90000],
       ];
       expect(seating).toEqual(expected);
     });
 
     it('should create interval seating with step 3', () => {
       const s = new Seating();
-      s.shuffle = function (arr) {
-        // mock to preserve order
-        return arr;
-      };
-      const seating = s.makeIntervalSeating(players, 3);
+      const seating = s.intervalSeating(players, 3, 12345);
       const expected = [
+        [10, 10000],
         [1, 100000],
         [4, 70000],
         [7, 40000],
-        [10, 10000],
 
-        [2, 90000],
         [5, 60000],
         [8, 30000],
         [11, 0],
+        [2, 90000],
 
+        [12, -10000],
         [3, 80000],
         [6, 50000],
         [9, 20000],
-        [12, -10000],
 
-        [13, -20000],
         [14, -30000],
         [15, -40000],
         [16, -50000],
+        [13, -20000],
 
+        [20, -90000],
         [17, -60000],
         [18, -70000],
         [19, -80000],
-        [20, -90000],
       ];
       expect(seating).toEqual(expected);
     });
 
     it('should create interval seating with step 4', () => {
       const s = new Seating();
-      s.shuffle = function (arr) {
-        // mock to preserve order
-        return arr;
-      };
-      const seating = s.makeIntervalSeating(players, 4);
+      const seating = s.intervalSeating(players, 4, 12345);
       const expected = [
+        [13, -20000],
         [1, 100000],
         [5, 60000],
         [9, 20000],
-        [13, -20000],
 
-        [2, 90000],
         [6, 50000],
         [10, 10000],
         [14, -30000],
+        [2, 90000],
 
+        [15, -40000],
         [3, 80000],
         [7, 40000],
         [11, 0],
-        [15, -40000],
 
-        [4, 70000],
         [8, 30000],
         [12, -10000],
         [16, -50000],
+        [4, 70000],
 
+        [20, -90000],
         [17, -60000],
         [18, -70000],
         [19, -80000],
-        [20, -90000],
       ];
       expect(seating).toEqual(expected);
     });
 
     it('should create interval seating with step 5', () => {
       const s = new Seating();
-      s.shuffle = function (arr) {
-        // mock to preserve order
-        return arr;
-      };
-      const seating = s.makeIntervalSeating(players, 5);
+      const seating = s.intervalSeating(players, 5, 12345);
       const expected = [
+        [16, -50000],
         [1, 100000],
         [6, 50000],
         [11, 0],
-        [16, -50000],
 
-        [2, 90000],
         [7, 40000],
         [12, -10000],
         [17, -60000],
+        [2, 90000],
 
+        [18, -70000],
         [3, 80000],
         [8, 30000],
         [13, -20000],
-        [18, -70000],
 
-        [4, 70000],
         [9, 20000],
         [14, -30000],
         [19, -80000],
+        [4, 70000],
 
+        [20, -90000],
         [5, 60000],
         [10, 10000],
         [15, -40000],
-        [20, -90000],
       ];
       expect(seating).toEqual(expected);
-    });
-  });
-
-  describe('shuffle', () => {
-    it('should randomize array while maintaining elements', () => {
-      const ordered: PlayersMap = [
-        [1, 1],
-        [2, 2],
-        [3, 3],
-        [4, 4],
-        [5, 5],
-        [6, 6],
-        [7, 7],
-        [8, 8],
-      ];
-      const seating = new Seating();
-      seating.shuffleSeed();
-      const shuffled = seating.shuffle(ordered);
-
-      expect(Object.keys(shuffled)).toHaveLength(8);
-      expect(JSON.stringify(shuffled)).not.toBe(JSON.stringify(ordered));
-      expect(shuffled.sort(([a], [b]) => a - b)).toEqual(ordered);
     });
   });
 
@@ -553,18 +453,16 @@ describe('Seating', () => {
 
       const result = new Seating().makePrescriptedSeating(prescriptForSession, players);
 
-      expect(result).toHaveLength(2);
-      expect(result[0]).toEqual([
-        { id: 101, local_id: 1 },
-        { id: 102, local_id: 2 },
-        { id: 103, local_id: 3 },
-        { id: 104, local_id: 4 },
-      ]);
-      expect(result[1]).toEqual([
-        { id: 105, local_id: 5 },
-        { id: 106, local_id: 6 },
-        { id: 107, local_id: 7 },
-        { id: 108, local_id: 8 },
+      expect(result).toHaveLength(8);
+      expect(result).toEqual([
+        [101, 1],
+        [102, 2],
+        [103, 3],
+        [104, 4],
+        [105, 5],
+        [106, 6],
+        [107, 7],
+        [108, 8],
       ]);
     });
   });
