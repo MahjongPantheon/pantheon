@@ -20,6 +20,7 @@
     "i18n-proto": "^1.0.5",
     "kysely": "^0.28.2",
     "lodash.debounce": "^4.0.8",
+    "mahjong-seatings-rs-node": "1.1.0",
     "pg": "^8.16.3",
     "pm2": "^6.0.5",
     "protoscript": "^0.0.23",
