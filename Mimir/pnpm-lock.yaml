@@ -53,6 +53,9 @@ importers:
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
+      mahjong-seatings-rs-node:
+        specifier: 1.1.0
+        version: 1.1.0
       pg:
         specifier: ^8.16.3
         version: 8.16.3
@@ -2370,6 +2373,9 @@ packages:
   lru-cache@7.18.3:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
+
+  mahjong-seatings-rs-node@1.1.0:
+    resolution: {integrity: sha512-nm4++KH16N/cqznvsnKhLSxeR7CTgvqy8QuZMYuWxIfffyYiAKLaTgiSnbyDbFVMLxZDpcdev4viURavs9SIzg==}
 
   make-dir@4.0.0:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
@@ -5736,6 +5742,8 @@ snapshots:
       yallist: 4.0.0
 
   lru-cache@7.18.3: {}
+
+  mahjong-seatings-rs-node@1.1.0: {}
 
   make-dir@4.0.0:
     dependencies:
