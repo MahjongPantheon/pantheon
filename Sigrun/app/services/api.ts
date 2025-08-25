@@ -237,7 +237,10 @@ export class ApiService {
     this._analytics?.track(Analytics.LOAD_STARTED, {
       method: 'GetEventAdmins',
     });
-    return GetAchievements({ eventId, achievementsList }, this._clientConfMimir);
+    return GetAchievements({ eventId, achievementsList }, this._clientConfMimir).catch(() => ({
+      achievements: [],
+      lastUpdate: new Date().toISOString(),
+    }));
   }
 
   getSuperadminFlag(personId?: number) {
