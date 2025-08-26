@@ -175,7 +175,7 @@ class PlayerHistoryPrimitive extends Primitive
                    ->select('h.event_id');
         $orm = $orm->join('session', array('h.session_id', '=', 's.id'), 's');
         if ($dateTo !== null) {
-            $orm = $orm->whereLt('s.start_date', $dateTo->format('Y-m-d H:i:s'));
+            $orm = $orm->whereLt('s.end_date', $dateTo->format('Y-m-d H:i:s'));
         }
         $orm = $orm->whereIn('h.event_id', $eventIds)
             ->groupBy('h.player_id')

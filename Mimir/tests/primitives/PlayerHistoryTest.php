@@ -66,7 +66,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->_setRepresentationalHash('93471260812749')
-            ->setStartDate('2025-08-17 17:00:00')
+            ->setEndDate('2025-08-17 17:00:00')
             ->setReplayHash('');
         $this->_session->save();
 
@@ -75,7 +75,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->_setRepresentationalHash('982737468764')
-            ->setStartDate('2025-08-19 19:00:00')
+            ->setEndDate('2025-08-19 19:00:00')
             ->setReplayHash('');
         $this->_anotherSession->save();
     }
