@@ -610,23 +610,26 @@ function getBestHandOfEvent(Db $db, array $eventIdList, array $players)
         ->limit(10)
         ->findArray();
     $maxHan = 0;
-    $names = [];
+    $result = [];
     foreach ($rounds as $round) {
         if ($maxHan === 0) {
             $maxHan = $round['han'];
+            if ($maxHan > 13) {
+                $maxHan = 13;
+            }
         }
 
         if ($round['han'] < $maxHan) {
             continue;
         }
 
-        $names []= $players[$round['winner_id']]['title'];
+        $result []= [
+            'name' => $players[$round['winner_id']]['title'],
+            'han' => $round['han']
+        ];
     }
 
-    return [
-        'han' => $maxHan,
-        'names' => $names
-    ];
+    return $result;
 }
 
 /**
