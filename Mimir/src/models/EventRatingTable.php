@@ -72,7 +72,12 @@ class EventRatingTableModel extends Model
             // we got date intervals (-inf, A) and (-inf, B), now construct (A, B)
             $historyItemsDb = $this->_calculateHistoryForDateInterval($historyItemsDbFrom, $historyItemsDbTo);
         } else {
-            $historyItemsDb = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds);
+            if (!empty($dateToStr)) {
+                $dateTo = new \DateTime($dateToStr);
+                $historyItemsDb = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateTo);
+            } else {
+                $historyItemsDb = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds);
+            }
         }
 
         /** @var PlayerHistoryPrimitive[] $playersHistoryItemsCombined */

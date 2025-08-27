@@ -94,7 +94,7 @@ export const RatingTable: React.FC<{
   const eventIds = eventId.split('.').map((x) => parseInt(x));
   const [players, , playersLoading] = useIsomorphicState(
     [],
-    'RatingTable_event_' + eventId + order + orderBy + minGamesSelector + dateFrom + dateTo,
+    `RatingTable_event_${eventId}_${order}_${orderBy}_${minGamesSelector}_f${dateFrom}_t${dateTo}`,
     () => {
       if (eventIds.length === 1) {
         api.setEventId(eventIds[0]);
@@ -155,9 +155,9 @@ export const RatingTable: React.FC<{
     }
     if (dateFrom != null) {
       href += '/from/' + dateFrom;
-      if (dateTo != null) {
-        href += '/to/' + dateTo;
-      }
+    }
+    if (dateTo != null) {
+      href += '/to/' + dateTo;
     }
     return href;
   }

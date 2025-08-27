@@ -40,6 +40,7 @@ export function App() {
       <Route path='/event/:eventId/info' component={EventInfo} />
       <Route path='/event/:eventId/order/:orderBy' component={RatingTable} />
       <Route path='/event/:eventId/order/:orderBy/from/:dateFrom' component={RatingTable} />
+      <Route path='/event/:eventId/order/:orderBy/to/:dateTo' component={RatingTable} />
       <Route
         path='/event/:eventId/order/:orderBy/from/:dateFrom/to/:dateTo'
         component={RatingTable}
@@ -50,6 +51,10 @@ export function App() {
       />
       <Route
         path='/event/:eventId/order/:orderBy/filter/:minGamesSelector/from/:dateFrom'
+        component={RatingTable}
+      />
+      <Route
+        path='/event/:eventId/order/:orderBy/filter/:minGamesSelector/to/:dateTo'
         component={RatingTable}
       />
       <Route
