@@ -65,8 +65,10 @@ export const RatingTable: React.FC<{
     eventId: string;
     orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
+    dateFrom?: string | undefined;
+    dateTo?: string | undefined;
   };
-}> = ({ params: { eventId, orderBy, minGamesSelector } }) => {
+}> = ({ params: { eventId, orderBy, minGamesSelector, dateFrom, dateTo } }) => {
   orderBy = orderBy ?? 'rating';
   minGamesSelector = minGamesSelector ?? 'all';
   const order = {
@@ -92,7 +94,7 @@ export const RatingTable: React.FC<{
   const eventIds = eventId.split('.').map((x) => parseInt(x));
   const [players, , playersLoading] = useIsomorphicState(
     [],
-    'RatingTable_event_' + eventId + order + orderBy + minGamesSelector,
+    `RatingTable_event_${eventId}_${order}_${orderBy}_${minGamesSelector}_f${dateFrom}_t${dateTo}`,
     () => {
       if (eventIds.length === 1) {
         api.setEventId(eventIds[0]);
@@ -101,10 +103,12 @@ export const RatingTable: React.FC<{
         eventIds,
         order ?? 'desc',
         orderBy === 'team' ? 'rating' : (orderBy ?? 'rating'),
-        minGamesSelector === 'min'
+        minGamesSelector === 'min',
+        dateFrom != null ? decodeURIComponent(dateFrom) : undefined,
+        dateTo != null ? decodeURIComponent(dateTo) : undefined
       );
     },
-    [eventId, order, orderBy, minGamesSelector]
+    [eventId, order, orderBy, minGamesSelector, dateFrom, dateTo]
   );
 
   if (!players || !events) {
@@ -139,6 +143,23 @@ export const RatingTable: React.FC<{
         </Alert>
       </Container>
     );
+  }
+
+  function getUrl(
+    _orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips',
+    _minGamesSelector: 'all' | 'min'
+  ): string {
+    let href = `/event/${eventId}/order/${_orderBy}`;
+    if (_minGamesSelector === 'min') {
+      href += '/filter/min';
+    }
+    if (dateFrom != null) {
+      href += '/from/' + dateFrom;
+    }
+    if (dateTo != null) {
+      href += '/to/' + dateTo;
+    }
+    return href;
   }
 
   return (
@@ -203,9 +224,9 @@ export const RatingTable: React.FC<{
                         <IconSortDescending2 size='1rem' />
                       </Box>
                     }
-                    href={`/event/${eventId}/order/team`}
+                    href={getUrl('team', 'all')}
                     onClick={(e) => {
-                      navigate(`/event/${eventId}/order/team`);
+                      navigate(getUrl('team', 'all'));
                       e.preventDefault();
                     }}
                     style={{ cursor: 'pointer' }}
@@ -226,15 +247,9 @@ export const RatingTable: React.FC<{
                       <IconSortDescending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${eventId}/order/rating${
-                    minGamesSelector === 'min' ? '/filter/min' : ''
-                  }`}
+                  href={getUrl('rating', minGamesSelector)}
                   onClick={(e) => {
-                    navigate(
-                      `/event/${eventId}/order/rating${
-                        minGamesSelector === 'min' ? '/filter/min' : ''
-                      }`
-                    );
+                    navigate(getUrl('rating', minGamesSelector));
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -255,15 +270,9 @@ export const RatingTable: React.FC<{
                         <IconSortDescending2 size='1rem' />
                       </Box>
                     }
-                    href={`/event/${eventId}/order/chips${
-                      minGamesSelector === 'min' ? '/filter/min' : ''
-                    }`}
+                    href={getUrl('chips', minGamesSelector)}
                     onClick={(e) => {
-                      navigate(
-                        `/event/${eventId}/order/chips${
-                          minGamesSelector === 'min' ? '/filter/min' : ''
-                        }`
-                      );
+                      navigate(getUrl('chips', minGamesSelector));
                       e.preventDefault();
                     }}
                     style={{ cursor: 'pointer' }}
@@ -286,15 +295,9 @@ export const RatingTable: React.FC<{
                       <IconSortDescending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${eventId}/order/avg_score${
-                    minGamesSelector === 'min' ? '/filter/min' : ''
-                  }`}
+                  href={getUrl('avg_score', minGamesSelector)}
                   onClick={(e) => {
-                    navigate(
-                      `/event/${eventId}/order/avg_score${
-                        minGamesSelector === 'min' ? '/filter/min' : ''
-                      }`
-                    );
+                    navigate(getUrl('avg_score', minGamesSelector));
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -315,15 +318,9 @@ export const RatingTable: React.FC<{
                       <IconSortAscending2 size='1rem' />
                     </Box>
                   }
-                  href={`/event/${eventId}/order/avg_place${
-                    minGamesSelector === 'min' ? '/filter/min' : ''
-                  }`}
+                  href={getUrl('avg_place', minGamesSelector)}
                   onClick={(e) => {
-                    navigate(
-                      `/event/${eventId}/order/avg_place${
-                        minGamesSelector === 'min' ? '/filter/min' : ''
-                      }`
-                    );
+                    navigate(getUrl('avg_place', minGamesSelector));
                     e.preventDefault();
                   }}
                   style={{ cursor: 'pointer' }}
@@ -351,9 +348,9 @@ export const RatingTable: React.FC<{
                       component={'a'}
                       pl={5}
                       pr={5}
-                      href={`/event/${eventId}/order/${orderBy}`}
+                      href={getUrl(orderBy, 'all')}
                       onClick={(e) => {
-                        navigate(`/event/${eventId}/order/${orderBy}`);
+                        navigate(getUrl(orderBy, 'all'));
                         e.preventDefault();
                       }}
                       style={{ cursor: 'pointer' }}
@@ -369,9 +366,9 @@ export const RatingTable: React.FC<{
                       pl={5}
                       pr={5}
                       title={i18n._t('Players having a required minimum of games')}
-                      href={`/event/${eventId}/order/${orderBy}/filter/min`}
+                      href={getUrl(orderBy, 'min')}
                       onClick={(e) => {
-                        navigate(`/event/${eventId}/order/${orderBy}/filter/min`);
+                        navigate(getUrl(orderBy, 'min'));
                         e.preventDefault();
                       }}
                       style={{ cursor: 'pointer' }}

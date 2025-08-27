@@ -967,7 +967,9 @@ final class TwirpServer implements Mimir
                 iterator_to_array($req->getEventIdList()),
                 $req->getOrderBy(),
                 $req->getOrder(),
-                $req->getOnlyMinGames()
+                $req->getOnlyMinGames(),
+                $req->getDateFrom(),
+                $req->getDateTo(),
             )));
     }
 

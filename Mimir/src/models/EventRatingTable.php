@@ -40,11 +40,13 @@ class EventRatingTableModel extends Model
      * @param string $order
      * @param bool $isAdmin show prefinished games and also all rating table if it's hidden
      * @param bool $onlyMinGames
+     * @param string $dateFromStr
+     * @param string $dateToStr
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $isAdmin = false, $onlyMinGames = false)
+    public function getRatingTable($eventList, $playerRegs, string $orderBy, string $order, $isAdmin = false, $onlyMinGames = false, $dateFromStr = null, $dateToStr = null)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
@@ -57,10 +59,31 @@ class EventRatingTableModel extends Model
         $mainEvent = $eventList[0];
         $minGamesCount = $mainEvent->getMinGamesCount();
 
+        if (!empty($dateFromStr)) {
+            $dateFrom = new \DateTime($dateFromStr);
+            $historyItemsDbFrom = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateFrom);
+            if (!empty($dateToStr)) {
+                $dateTo = new \DateTime($dateToStr);
+                $historyItemsDbTo = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateTo);
+            } else {
+                $historyItemsDbTo = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds);
+            }
+            // .........A.......B.....
+            // we got date intervals (-inf, A) and (-inf, B), now construct (A, B)
+            $historyItemsDb = $this->_calculateHistoryForDateInterval($historyItemsDbFrom, $historyItemsDbTo);
+        } else {
+            if (!empty($dateToStr)) {
+                $dateTo = new \DateTime($dateToStr);
+                $historyItemsDb = PlayerHistoryPrimitive::findLastByEventAndDateTo($this->_ds, $eventIds, $dateTo);
+            } else {
+                $historyItemsDb = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds);
+            }
+        }
+
         /** @var PlayerHistoryPrimitive[] $playersHistoryItemsCombined */
         $playersHistoryItemsCombined = [];
 
-        $historyItems = array_reduce(PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventIds), function ($acc, PlayerHistoryPrimitive $item) {
+        $historyItems = array_reduce($historyItemsDb, function ($acc, PlayerHistoryPrimitive $item) {
             if (empty($acc[$item->getEventId()])) {
                 $acc[$item->getEventId()] = [];
             }
@@ -226,6 +249,33 @@ class EventRatingTableModel extends Model
         }
 
         return $data;
+    }
+
+    /**
+     * @param PlayerHistoryPrimitive[] $historyItemsDbFrom
+     * @param PlayerHistoryPrimitive[] $historyItemsDbTo
+     * @return PlayerHistoryPrimitive[]
+     */
+    protected function _calculateHistoryForDateInterval($historyItemsDbFrom, $historyItemsDbTo)
+    {
+        $fromMap = [];
+        foreach ($historyItemsDbFrom as $item) {
+            $key = implode('|', [$item->getPlayerId(), $item->getEventId()]);
+            $fromMap[$key] = $item;
+        }
+        $result = [];
+        foreach ($historyItemsDbTo as $item) {
+            $key = implode('|', [$item->getPlayerId(), $item->getEventId()]);
+            if (array_key_exists($key, $fromMap)) {
+                $prevItem = $fromMap[$key];
+                if ($prevItem->getGamesPlayed() != $item->getGamesPlayed()) {
+                    $result[] = PlayerHistoryPrimitive::makeHistoryItemsDifference($item, $prevItem);
+                }
+            } else {
+                $result[] = $item;
+            }
+        }
+        return $result;
     }
 
     /**
