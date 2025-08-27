@@ -63,7 +63,7 @@ import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
 export const RatingTable: React.FC<{
   params: {
     eventId: string;
-    orderBy?: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
+    orderBy?: 'name' | 'rating' | 'games_and_rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
     minGamesSelector?: 'all' | 'min';
     dateFrom?: string | undefined;
     dateTo?: string | undefined;
@@ -74,6 +74,7 @@ export const RatingTable: React.FC<{
   const order = {
     name: 'asc',
     rating: 'desc',
+    games_and_rating: 'desc',
     avg_place: 'asc',
     avg_score: 'desc',
     team: 'desc',
@@ -146,7 +147,7 @@ export const RatingTable: React.FC<{
   }
 
   function getUrl(
-    _orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'team' | 'chips',
+    _orderBy: 'name' | 'rating' | 'games_and_rating' | 'avg_place' | 'avg_score' | 'team' | 'chips',
     _minGamesSelector: 'all' | 'min'
   ): string {
     let href = `/event/${eventId}/order/${_orderBy}`;
@@ -255,6 +256,28 @@ export const RatingTable: React.FC<{
                   style={{ cursor: 'pointer' }}
                 >
                   {i18n._t('Rating')}
+                </Badge>
+                <Badge
+                  size='lg'
+                  color='purple'
+                  radius='sm'
+                  variant={orderBy === 'games_and_rating' ? 'filled' : 'light'}
+                  component={'a'}
+                  pl={5}
+                  pr={5}
+                  leftSection={
+                    <Box mt={7}>
+                      <IconSortDescending2 size='1rem' />
+                    </Box>
+                  }
+                  href={getUrl('games_and_rating', minGamesSelector)}
+                  onClick={(e) => {
+                    navigate(getUrl('games_and_rating', minGamesSelector));
+                    e.preventDefault();
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {i18n._t('Games+Rating')}
                 </Badge>
                 {events?.[0]?.withChips && (
                   <Badge
@@ -456,7 +479,11 @@ export const RatingTable: React.FC<{
                       <Badge
                         w={75}
                         size='lg'
-                        variant={orderBy === 'rating' ? 'filled' : 'light'}
+                        variant={
+                          orderBy === 'rating' || orderBy === 'games_and_rating'
+                            ? 'filled'
+                            : 'light'
+                        }
                         color={player.winnerZone ? 'lime' : 'red'}
                         radius='sm'
                         style={{ padding: 0 }}
@@ -488,8 +515,16 @@ export const RatingTable: React.FC<{
                         title={i18n._t('Games played')}
                         w={45}
                         size='lg'
-                        color={calcDimmedBackground(isDimmed, isDark, '#f8f9fa')}
-                        c={calcDimmedText(isDimmed, isDark, '#868e96')}
+                        color={
+                          orderBy == 'games_and_rating'
+                            ? 'purple'
+                            : calcDimmedBackground(isDimmed, isDark, '#f8f9fa')
+                        }
+                        c={
+                          orderBy == 'games_and_rating'
+                            ? 'white'
+                            : calcDimmedText(isDimmed, isDark, '#868e96')
+                        }
                         radius='sm'
                         style={{ padding: 0 }}
                       >

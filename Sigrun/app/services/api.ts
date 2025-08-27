@@ -134,7 +134,7 @@ export class ApiService {
   getRatingTable(
     eventIds: number[],
     order: 'asc' | 'desc',
-    orderBy: 'name' | 'rating' | 'avg_place' | 'avg_score' | 'chips',
+    orderBy: 'name' | 'rating' | 'games_and_rating' | 'avg_place' | 'avg_score' | 'chips',
     onlyMinGames: boolean,
     dateFrom?: string | undefined,
     dateTo?: string | undefined

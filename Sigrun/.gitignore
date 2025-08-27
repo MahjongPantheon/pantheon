@@ -21,5 +21,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# Binary localization files
+*.mo
+
 #Coverage
 coverage
