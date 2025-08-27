@@ -63,11 +63,13 @@ class PlayersController extends Controller
     /**
      * @param int $playerId player to get stats for
      * @param int[] $eventIdList event to get stats for
+     * @param ?string $dateFromStr
+     * @param ?string $dateToStr
      * @throws EntityNotFoundException
      * @throws \Exception
      * @return array of statistics
      */
-    public function getPlayerStats($playerId, $eventIdList)
+    public function getPlayerStats($playerId, $eventIdList, $dateFromStr, $dateToStr)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
@@ -76,7 +78,7 @@ class PlayersController extends Controller
         $this->_log->info('Getting stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
 
         $stats = (new PlayerStatModel($this->_ds, $this->_config, $this->_meta))
-            ->getStats($eventIdList, $playerId);
+            ->getStats($eventIdList, $playerId, $dateFromStr, $dateToStr);
 
         $this->_log->info('Successfully got stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
 

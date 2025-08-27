@@ -350,11 +350,19 @@ class SessionPrimitive extends Primitive
      * @param int $playerId
      * @param int $eventId
      * @param string $withStatus
+     * @param ?\DateTime $dateFrom
+     * @param ?\DateTime $dateTo
      * @throws \Exception
      * @return SessionPrimitive[]
      */
-    public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId, string $withStatus = '*')
-    {
+    public static function findByPlayerAndEvent(
+        DataSource $ds,
+        int $playerId,
+        int $eventId,
+        string $withStatus = '*',
+        ?\DateTime $dateFrom = null,
+        ?\DateTime $dateTo = null,
+    ) {
         // TODO: here we can precache players, ids are known as GROUP_CONCAT(player_id)
         $orm = $ds->table(self::$_table)
             ->select(self::$_table . '.*')
@@ -364,6 +372,14 @@ class SessionPrimitive extends Primitive
             ->groupBy(self::$_table . '.id');
         if ($withStatus !== '*') {
             $orm->where(self::$_table . '.status', $withStatus);
+        }
+        if ($dateFrom !== null) {
+            $utcDate = (clone $dateFrom)->setTimezone(new \DateTimeZone('UTC'));
+            $orm->whereGte(self::$_table . ".end_date", $utcDate->format('Y-m-d H:i:s'));
+        }
+        if ($dateTo !== null) {
+            $utcDate = (clone $dateTo)->setTimezone(new \DateTimeZone('UTC'));
+            $orm->whereLt(self::$_table . ".end_date", $utcDate->format('Y-m-d H:i:s'));
         }
 
         $result = $orm->findArray();

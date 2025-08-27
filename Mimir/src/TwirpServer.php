@@ -1159,7 +1159,9 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_playersController->getPlayerStats(
             $req->getPlayerId(),
-            iterator_to_array($req->getEventIdList())
+            iterator_to_array($req->getEventIdList()),
+            $req->getDateFrom(),
+            $req->getDateTo(),
         );
         return (new PlayersGetPlayerStatsResponse())
             ->setLastUpdate($ret['last_update'])
