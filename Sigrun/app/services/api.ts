@@ -183,9 +183,14 @@ export class ApiService {
     return GetGamesSeries({ eventId }, this._clientConfMimir).then((r) => r.results);
   }
 
-  getPlayerStat(eventIdList: number[], playerId: number) {
+  getPlayerStat(
+    eventIdList: number[],
+    playerId: number,
+    dateFrom?: string | undefined,
+    dateTo?: string | undefined
+  ) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'getPlayerStat' });
-    return GetPlayerStats({ playerId, eventIdList }, this._clientConfMimir);
+    return GetPlayerStats({ playerId, eventIdList, dateFrom, dateTo }, this._clientConfMimir);
   }
 
   getTimerState(eventId: number) {

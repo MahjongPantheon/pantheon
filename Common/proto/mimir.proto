@@ -288,6 +288,8 @@ message GamesGetSessionOverviewResponse {
 message PlayersGetPlayerStatsPayload {
   int32 player_id = 1;
   repeated int32 event_id_list = 2;
+  optional string date_from = 3;
+  optional string date_to = 4;
 }
 
 message PlayersGetPlayerStatsResponse {

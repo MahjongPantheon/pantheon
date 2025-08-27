@@ -133,6 +133,8 @@ export interface GamesGetSessionOverviewResponse {
 export interface PlayersGetPlayerStatsPayload {
   playerId: number;
   eventIdList: number[];
+  dateFrom?: string | null | undefined;
+  dateTo?: string | null | undefined;
 }
 
 export interface PlayersGetPlayerStatsResponse {
@@ -5292,6 +5294,8 @@ export const PlayersGetPlayerStatsPayload = {
     return {
       playerId: 0,
       eventIdList: [],
+      dateFrom: undefined,
+      dateTo: undefined,
       ...msg,
     };
   },
@@ -5308,6 +5312,12 @@ export const PlayersGetPlayerStatsPayload = {
     }
     if (msg.eventIdList?.length) {
       writer.writePackedInt32(2, msg.eventIdList);
+    }
+    if (msg.dateFrom != undefined) {
+      writer.writeString(3, msg.dateFrom);
+    }
+    if (msg.dateTo != undefined) {
+      writer.writeString(4, msg.dateTo);
     }
     return writer;
   },
@@ -5332,6 +5342,14 @@ export const PlayersGetPlayerStatsPayload = {
           } else {
             msg.eventIdList.push(reader.readInt32());
           }
+          break;
+        }
+        case 3: {
+          msg.dateFrom = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.dateTo = reader.readString();
           break;
         }
         default: {
@@ -11269,6 +11287,8 @@ export const PlayersGetPlayerStatsPayloadJSON = {
     return {
       playerId: 0,
       eventIdList: [],
+      dateFrom: undefined,
+      dateTo: undefined,
       ...msg,
     };
   },
@@ -11285,6 +11305,12 @@ export const PlayersGetPlayerStatsPayloadJSON = {
     }
     if (msg.eventIdList?.length) {
       json["eventIdList"] = msg.eventIdList;
+    }
+    if (msg.dateFrom != undefined) {
+      json["dateFrom"] = msg.dateFrom;
+    }
+    if (msg.dateTo != undefined) {
+      json["dateTo"] = msg.dateTo;
     }
     return json;
   },
@@ -11303,6 +11329,14 @@ export const PlayersGetPlayerStatsPayloadJSON = {
     const _eventIdList_ = json["eventIdList"] ?? json["event_id_list"];
     if (_eventIdList_) {
       msg.eventIdList = _eventIdList_.map(protoscript.parseNumber);
+    }
+    const _dateFrom_ = json["dateFrom"] ?? json["date_from"];
+    if (_dateFrom_) {
+      msg.dateFrom = _dateFrom_;
+    }
+    const _dateTo_ = json["dateTo"] ?? json["date_to"];
+    if (_dateTo_) {
+      msg.dateTo = _dateTo_;
     }
     return msg;
   },

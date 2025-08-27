@@ -163,6 +163,17 @@ export const RatingTable: React.FC<{
     return href;
   }
 
+  function getPlayerUrl(_playerId: number): string {
+    let href = `/event/${eventId}/player/${_playerId}`;
+    if (dateFrom != null) {
+      href += '/from/' + dateFrom;
+    }
+    if (dateTo != null) {
+      href += '/to/' + dateTo;
+    }
+    return href;
+  }
+
   return (
     events && (
       <Container>
@@ -445,9 +456,9 @@ export const RatingTable: React.FC<{
                       <PlayerAvatar p={player} />
                       <Stack gap={2}>
                         <Anchor
-                          href={`/event/${eventId}/player/${player.id}`}
+                          href={getPlayerUrl(player.id)}
                           onClick={(e) => {
-                            navigate(`/event/${eventId}/player/${player.id}`);
+                            navigate(getPlayerUrl(player.id));
                             e.preventDefault();
                           }}
                         >
