@@ -27,6 +27,7 @@ RUN apk update && \
     nodejs \
     npm \
     pnpm \
+    supervisor \
     protoc && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
