@@ -34,26 +34,28 @@ class PlayerStatModel extends Model
      *
      * @param int[] $eventIdList
      * @param int $playerId
+     * @param ?string $dateFromStr
+     * @param ?string $dateToStr
      *
      * @return array
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function getStats(array $eventIdList, int $playerId)
+    public function getStats(array $eventIdList, int $playerId, ?string $dateFromStr = null, ?string $dateToStr = null)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
         // Find precalculated stats, if any
-        if (count($eventIdList) === 1) {
+        if (count($eventIdList) === 1 && empty($dateFromStr) && empty($dateToStr)) {
             $precalcStats = PlayerStatsPrimitive::findByEventAndPlayer($this->_ds, $eventIdList[0], $playerId);
             if (!empty($precalcStats)) {
                 return $precalcStats[0]->getData();
             }
         }
 
-        return $this->calculateStat($eventIdList, $playerId);
+        return $this->calculateStat($eventIdList, $playerId, $dateFromStr, $dateToStr);
     }
 
     /**
@@ -61,12 +63,14 @@ class PlayerStatModel extends Model
      *
      * @param int[] $eventIdList
      * @param int $playerId
+     * @param ?string $dateFromStr
+     * @param ?string $dateToStr
      * @return array
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function calculateStat(array $eventIdList, int $playerId)
+    public function calculateStat(array $eventIdList, int $playerId, ?string $dateFromStr = null, ?string $dateToStr = null)
     {
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
@@ -84,7 +88,7 @@ class PlayerStatModel extends Model
         foreach ($eventList as $event) {
             /* TODO: How to refactor this to avoid accessing DB in a loop? */
             /* We want to keep keys here, so we use "+" instead of array_merge. */
-            $games = $games + $this->_fetchGamesHistory($event, $player[0]);
+            $games = $games + $this->_fetchGamesHistory($event, $player[0], $dateFromStr, $dateToStr);
         }
 
         ksort($games);
@@ -109,7 +113,7 @@ class PlayerStatModel extends Model
 
         // Save precalculated data; don't support aggregated events.
         // TODO: how can we support aggregated events here?
-        if (count($eventIdList) === 1) {
+        if (count($eventIdList) === 1 && empty($dateFromStr) && empty($dateToStr)) {
             $precalcStats = PlayerStatsPrimitive::findByEventAndPlayer($this->_ds, $eventIdList[0], $playerId);
             if (!empty($precalcStats)) {
                 $precalc = $precalcStats[0];
@@ -759,17 +763,29 @@ class PlayerStatModel extends Model
     /**
      * @param EventPrimitive $event
      * @param PlayerPrimitive $player
+     * @param ?string $dateFromStr
+     * @param ?string $dateToStr
      * @throws \Exception
      * @return array [ ['session' => SessionPrimitive, 'results' => SessionResultsPrimitive[] ] ... ]
      */
-    protected function _fetchGamesHistory(EventPrimitive $event, PlayerPrimitive $player)
+    protected function _fetchGamesHistory(EventPrimitive $event, PlayerPrimitive $player, ?string $dateFromStr, ?string $dateToStr)
     {
         $pId = $player->getId();
         $eId = $event->getId();
         if (empty($pId) || empty($eId)) {
             throw new InvalidParametersException('Attempt to use deidented primitive');
         }
-        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $pId, $eId);
+        if (!empty($dateFromStr)) {
+            $dateFrom = new \DateTime($dateFromStr);
+        } else {
+            $dateFrom = null;
+        }
+        if (!empty($dateToStr)) {
+            $dateTo = new \DateTime($dateToStr);
+        } else {
+            $dateTo = null;
+        }
+        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $pId, $eId, dateFrom: $dateFrom, dateTo: $dateTo);
         if (empty($sessions)) {
             return [];
         }

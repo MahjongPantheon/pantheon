@@ -64,6 +64,12 @@ export function App() {
       <Route path='/event/:eventId/playersList' component={RegisteredPlayers} />
       <Route path='/event/:eventId/tablesState' component={TablesState} />
       <Route path='/event/:eventId/player/:playerId' component={PlayerStats} />
+      <Route path='/event/:eventId/player/:playerId/from/:dateFrom' component={PlayerStats} />
+      <Route path='/event/:eventId/player/:playerId/to/:dateTo' component={PlayerStats} />
+      <Route
+        path='/event/:eventId/player/:playerId/from/:dateFrom/to/:dateTo'
+        component={PlayerStats}
+      />
       <Route path='/event/:eventId/games' component={RecentGames} />
       <Route path='/event/:eventId/games/page/:page' component={RecentGames} />
       <Route path='/event/:eventId/game/:sessionHash' component={Game} />

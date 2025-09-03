@@ -51,9 +51,14 @@ const HandsGraph = React.lazy(() => import('../components/HandsGraph'));
 const YakuGraph = React.lazy(() => import('../components/YakuGraph'));
 const RatingGraph = React.lazy(() => import('../components/RatingGraph'));
 
-export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string } }> = ({
-  params: { eventId, playerId },
-}) => {
+export const PlayerStats: React.FC<{
+  params: {
+    eventId: string;
+    playerId: string;
+    dateFrom?: string | undefined;
+    dateTo?: string | undefined;
+  };
+}> = ({ params: { eventId, playerId, dateFrom, dateTo } }) => {
   const winds = ['東', '南', '西', '北'];
   const api = useApi();
   const storage = useStorage();
@@ -79,17 +84,30 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
 
   const [playerStats] = useIsomorphicState(
     [],
-    'PlayerStats_playerstats_' + eventId + playerId,
+    `PlayerStats_playerstats_${eventId}_${playerId}_f${dateFrom}_t${dateTo}`,
     () =>
       api.getPlayerStat(
         eventId.split('.').map((e) => parseInt(e, 10)),
-        parseInt(playerId, 10)
+        parseInt(playerId, 10),
+        dateFrom != null ? decodeURIComponent(dateFrom) : undefined,
+        dateTo != null ? decodeURIComponent(dateTo) : undefined
       ),
     [eventId, playerId]
   );
 
   if (!events || !player || !playerStats) {
     return null;
+  }
+
+  function getPlayerUrl(_playerId: number): string {
+    let href = `/event/${eventId}/player/${_playerId}`;
+    if (dateFrom != null) {
+      href += '/from/' + dateFrom;
+    }
+    if (dateTo != null) {
+      href += '/to/' + dateTo;
+    }
+    return href;
   }
 
   return (
@@ -254,9 +272,9 @@ export const PlayerStats: React.FC<{ params: { eventId: string; playerId: string
                       <Text fw={700}>{seat.title}</Text>
                     ) : (
                       <Anchor
-                        href={`/event/${eventId}/player/${seat.playerId}`}
+                        href={getPlayerUrl(seat.playerId)}
                         onClick={(e) => {
-                          navigate(`/event/${eventId}/player/${seat.playerId}`);
+                          navigate(getPlayerUrl(seat.playerId));
                           e.preventDefault();
                         }}
                       >
