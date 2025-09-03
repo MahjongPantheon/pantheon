@@ -158,15 +158,13 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_HAND] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_HAND].map(
-              (item: { name: string; han: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>: {i18n._pt('Achievements badge', '%1 han', [item.han])}
-                </List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.BEST_HAND].names.map((name: string, idx: number) => (
+              <List.Item key={`li_${idx}`}>{name}</List.Item>
+            ))}
           </List>
-          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
+            {i18n._pt('Achievements badge', '%1 han', [achDataByKey[Achievement.BEST_HAND].han])}
+          </Badge>
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
