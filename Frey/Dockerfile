@@ -9,6 +9,9 @@ RUN chmod 755 /entrypoint.sh
 # copy nginx configs
 COPY frey-container.nginx.conf /etc/nginx/http.d/frey.conf
 
+# copy supervisor config
+COPY supervisord.conf /etc/supervisord.conf
+
 # Copy cron defs
 COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
 
