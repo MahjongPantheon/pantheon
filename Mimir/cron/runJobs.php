@@ -43,7 +43,7 @@ try {
         try {
             switch ($job->getJobName()) {
                 case JobsQueuePrimitive::JOB_ACHIEVEMENTS:
-                    runAchievements($ds, (int)$job->getJobArguments()['eventId']);
+                    runAchievements($ds, $config, $meta, (int)$job->getJobArguments()['eventId']);
                     break;
                 case JobsQueuePrimitive::JOB_PLAYER_STATS:
                     runPlayerStats($ds, $config, $meta, (int)$job->getJobArguments()['playerId'], (int)$job->getJobArguments()['eventId']);
