@@ -8,6 +8,9 @@ COPY entrypoint.sh /entrypoint.sh
 RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
+# copy supervisor config
+COPY supervisord.conf /etc/supervisord.conf
+
 # copy nginx configs
 COPY meili-container.nginx.conf /etc/nginx/http.d/meili.conf
 

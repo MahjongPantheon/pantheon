@@ -22,17 +22,13 @@ import process from 'node:process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
-  Promise.all([
-    import('express'), import('dotenv')
-  ]).then(([express, dotenv]) => {
+  Promise.all([import('express'), import('dotenv')]).then(([express, dotenv]) => {
     const out = dotenv.default.config({
-      path: process.env.NODE_ENV === 'production'
-        ? '.env.production'
-        : '.env.development'
+      path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
     })?.parsed;
 
     const app = express.default();
-    const PORT = out?.PORT ?? 4108;
+    const PORT = out?.PORT ?? process.env.PORT ?? 4108;
     createServer(app, out).then((app) =>
       app.listen(PORT, () => {
         console.log('http://localhost:' + PORT);
@@ -40,16 +36,16 @@ if (fs.existsSync('./node_modules')) {
     );
 
     console.log(`Worker ${process.pid} started`);
-  })
+  });
 } else {
   import('http').then((http) => {
-    const server = http.createServer(() => {
-    });
-    server.listen(4108, 'localhost', () => {
-      console.log(`Server is running on http://localhost:4108`);
+    const server = http.createServer(() => {});
+    const port = parseInt(process.env.PORT ?? '4108');
+    server.listen(port, 'localhost', () => {
+      console.log(`Server is running on http://localhost:${port}`);
       console.log('Dummy server started. Waiting for deps to be installed...');
     });
-  })
+  });
 }
 
 export async function createServer(app, env) {
@@ -93,18 +89,23 @@ export async function createServer(app, env) {
     fs.readFile('./lastbuild.txt', { encoding: 'utf-8' }, (err, lastUpdate) => {
       if (err) {
         const date = new Date();
-        lastUpdate = date.getFullYear() + '-'
-          + date.getMonth().toString().padStart(2, '0')
-          + '-' + date.getDate().toString().padStart(2, '0');
+        lastUpdate =
+          date.getFullYear() +
+          '-' +
+          date.getMonth().toString().padStart(2, '0') +
+          '-' +
+          date.getDate().toString().padStart(2, '0');
       }
       res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${urls.map((url) => `<url>
+  ${urls.map(
+    (url) => `<url>
     <loc>${url}</loc>
     <lastmod>${lastUpdate.trim()}</lastmod>
     <changefreq>weekly</changefreq>
   </url>
-`)}
+`
+  )}
 </urlset>`);
     });
   });
@@ -112,10 +113,7 @@ export async function createServer(app, env) {
   app.use('*', async (req, res) => {
     const url = req.baseUrl;
 
-    const template = fs.readFileSync(
-      resolve('dist/client/index.html'),
-      'utf-8'
-    );
+    const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
     const render = (await import('./dist/server/server.js')).SSRRender;
 
     render(url, req.cookies).then(({ cookies, helmet, appHtml, serverData }) => {
@@ -128,13 +126,13 @@ export async function createServer(app, env) {
       for (let name in cookies.add) {
         res.cookie(name, cookies.add[name], {
           domain: env.VITE_COOKIE_DOMAIN,
-          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
+          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
         });
       }
       for (let name of cookies.remove) {
         res.clearCookie(name, {
           domain: env.VITE_COOKIE_DOMAIN,
-          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
+          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
         });
       }
       res.end(html);

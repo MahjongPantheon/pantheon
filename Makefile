@@ -511,7 +511,7 @@ prod_build_bragi: # this is for automated builds, don't run it manually
 .PHONY: prod_build_skirnir
 prod_build_skirnir: export NODE_ENV=production
 prod_build_skirnir: # this is for automated builds, don't run it manually
-	cd Skirnir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps && ${MAKE} container_reload_pm2
+	cd Skirnir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps && ${MAKE} container_reload
 
 .PHONY: prod_compile
 prod_compile: export ENV_FILENAME=.env.production
@@ -527,11 +527,11 @@ prod_compile:
 	${MAKE} prod_build_tyr
 	${MAKE} prod_build_forseti
 	${MAKE} prod_build_frey && cd Frey && ${MAKE} container_reload
-	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
+	${MAKE} prod_build_sigrun && cd Sigrun && ${MAKE} container_reload
 	cd Sigrun && ${MAKE} container_warmup
-	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
+	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload
 	cd Bragi && ${MAKE} container_warmup
-	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
+	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} container_reload
 
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
@@ -656,10 +656,10 @@ e2e_compile:
 	${MAKE} migrate
 	${MAKE} e2e_build_tyr
 	${MAKE} e2e_build_forseti
-	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload_pm2
+	${MAKE} e2e_build_sigrun && cd Sigrun && ${MAKE} container_reload
 	${MAKE} e2e_build_frey && cd Frey && ${MAKE} container_reload
-	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload_pm2
-	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload_pm2
+	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload
+	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload
 
 .PHONY: e2e_run
 e2e_run: export ENV_FILENAME=.env.e2e

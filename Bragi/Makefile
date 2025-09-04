@@ -130,16 +130,15 @@ i18n_update:
 	./node_modules/.bin/pojson -s app/i18n/ru.po -o app/i18n/ru.json --withMeta
 	#./node_modules/.bin/pojson -s app/i18n/de.po -o app/i18n/de.json --withMeta
 
-PHONY: reload_pm2
-reload_pm2:
-	HOME=/home/user su-exec user pm2 restart all
-	HOME=/home/user su-exec user pm2 scale server 8 || exit 0
+PHONY: reload
+reload:
+	supervisorctl restart bragi:
 
 .PHONY: rebuild_ssr
 rebuild_ssr:
 	HOME=/home/user su-exec user ${MAKE} build
 	HOME=/home/user su-exec user ${MAKE} prebuild
-	HOME=/home/user su-exec user ${MAKE} reload_pm2
+	HOME=/home/user su-exec user ${MAKE} reload
 
 .PHONY: container_dev
 container_dev: get_container_id
@@ -221,12 +220,12 @@ container_i18n_update: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make i18n_update' ; \
 	fi
 
-PHONY: container_reload_pm2
-container_reload_pm2: get_container_id
+PHONY: container_reload
+container_reload: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Bragi container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make reload_pm2' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make reload' ; \
 	fi
 
 PHONY: container_warmup

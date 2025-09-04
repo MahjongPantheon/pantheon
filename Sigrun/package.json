@@ -32,7 +32,6 @@
     "i18n-proto": "^1.0.5",
     "jsdom": "^25.0.1",
     "lodash.debounce": "^4.0.8",
-    "pm2": "^6.0.5",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",

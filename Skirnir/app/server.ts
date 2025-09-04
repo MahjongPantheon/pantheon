@@ -76,7 +76,7 @@ if (fs.existsSync('./node_modules')) {
       }
 
       const app = express.default();
-      const PORT = out?.SKIRNIR_PORT ? parseInt(out.SKIRNIR_PORT, 10) : 4015;
+      const PORT = parseInt(process.env.SKIRNIR_PORT ?? out?.SKIRNIR_PORT ?? '4015', 10);
 
       app.use(express.json());
 
@@ -100,8 +100,9 @@ if (fs.existsSync('./node_modules')) {
 } else {
   import('http').then((http) => {
     const server = http.createServer(() => {});
-    server.listen(4015, 'localhost', () => {
-      console.log(`Server is running on http://localhost:4015`);
+    const port = parseInt(process.env.PORT ?? '4015');
+    server.listen(port, 'localhost', () => {
+      console.log(`Server is running on http://localhost:${port}`);
       console.log('Dummy server started. Waiting for deps to be installed...');
     });
   });
