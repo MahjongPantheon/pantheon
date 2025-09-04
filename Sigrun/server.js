@@ -22,17 +22,13 @@ import process from 'node:process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
-  Promise.all([
-    import('express'), import('dotenv')
-  ]).then(([express, dotenv]) => {
+  Promise.all([import('express'), import('dotenv')]).then(([express, dotenv]) => {
     const out = dotenv.default.config({
-      path: process.env.NODE_ENV === 'production'
-        ? '.env.production'
-        : '.env.development'
+      path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
     })?.parsed;
 
     const app = express.default();
-    const PORT = out?.PORT ?? 4102;
+    const PORT = out?.PORT ?? process.env.PORT ?? 4102;
     createServer(app, out).then((app) =>
       app.listen(PORT, () => {
         console.log('http://localhost:' + PORT);
@@ -40,16 +36,16 @@ if (fs.existsSync('./node_modules')) {
     );
 
     console.log(`Worker ${process.pid} started`);
-  })
+  });
 } else {
   import('http').then((http) => {
-    const server = http.createServer(() => {
-    });
-    server.listen(4102, 'localhost', () => {
-      console.log(`Server is running on http://localhost:4102`);
+    const server = http.createServer(() => {});
+    const port = parseInt(process.env.PORT ?? '4102');
+    server.listen(port, 'localhost', () => {
+      console.log(`Server is running on http://localhost:${port}`);
       console.log('Dummy server started. Waiting for deps to be installed...');
     });
-  })
+  });
 }
 
 export async function createServer(app, env) {
@@ -66,59 +62,65 @@ export async function createServer(app, env) {
 
   app.get('/robots.txt', (req, res) => {
     res.send(`User-agent: *\nAllow: /\n\nUser-agent: MJ12bot\nDisallow: /\n`);
-  })
+  });
 
   app.get('/eid:eventId', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
-  })
+  });
 
   app.get('/eid:eventId/add-online', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/info`);
-  })
+  });
 
   app.get('/eid:eventId/last', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games`);
-  })
+  });
 
   app.get('/eid:eventId/last/page/:page', (req, res) => {
-    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games/page/${req.params.page}`);
-  })
+    res.redirect(
+      301,
+      `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/games/page/${req.params.page}`
+    );
+  });
 
   app.get('/eid:eventId/stat', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/rating`);
-  })
+  });
 
   app.get('/eid:eventId/stat/team', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/order/team`);
-  })
+  });
 
   app.get('/eid:eventId/user/:playerId', (req, res) => {
-    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/player/${req.params.playerId}`);
-  })
+    res.redirect(
+      301,
+      `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/player/${req.params.playerId}`
+    );
+  });
 
   app.get('/eid:eventId/game/:gameHash', (req, res) => {
-    res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/game/${req.params.gameHash}`);
-  })
+    res.redirect(
+      301,
+      `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/game/${req.params.gameHash}`
+    );
+  });
 
   app.get('/eid:eventId/timer', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/timer`);
-  })
+  });
 
   app.get('/eid:eventId/achievements', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
-  })
+  });
 
   app.get('/eid:eventId/achievements/:achievement', (req, res) => {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
-  })
+  });
 
   app.use('*', async (req, res) => {
     const url = req.baseUrl;
 
-    const template = fs.readFileSync(
-      resolve('dist/client/index.html'),
-      'utf-8'
-    );
+    const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
     const render = (await import('./dist/server/server.js')).SSRRender;
 
     render(url, req.cookies).then(({ cookies, helmet, appHtml, serverData }) => {
@@ -131,13 +133,13 @@ export async function createServer(app, env) {
       for (let name in cookies.add) {
         res.cookie(name, cookies.add[name], {
           domain: env.VITE_COOKIE_DOMAIN,
-          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
+          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
         });
       }
       for (let name of cookies.remove) {
         res.clearCookie(name, {
           domain: env.VITE_COOKIE_DOMAIN,
-          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000)
+          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
         });
       }
       res.end(html);

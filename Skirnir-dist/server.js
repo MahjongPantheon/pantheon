@@ -1,8 +1,10 @@
-import('http').then((http) => {
-  const server = http.createServer(() => {
+import process from "node:process";
+
+import("http").then((http) => {
+  const server = http.createServer(() => {});
+  const port = parseInt(process.env.PORT ?? "4115");
+  server.listen(port, "localhost", () => {
+    console.log(`Server is running on http://localhost:${port}`);
+    console.log("Dummy server started. Waiting for deps to be installed...");
   });
-  server.listen(4115, 'localhost', () => {
-    console.log(`Server is running on http://localhost:4115`);
-    console.log('Dummy server started. Waiting for deps to be installed...');
-  });
-})
+});
