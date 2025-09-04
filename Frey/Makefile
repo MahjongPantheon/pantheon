@@ -218,16 +218,16 @@ container_clean_test_db: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
 	fi
 
-.PHONY: reload_pm2
-reload_pm2:
-	cd /var/www/html/Frey-dist && HOME=/home/user su-exec user pm2 restart ecosystem.config.js --env production
+.PHONY: reload
+reload:
+	supervisorctl restart frey:
 
-.PHONY: container_reload_pm2
-container_reload_pm2: get_container_id
+.PHONY: container_reload
+container_reload: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make reload_pm2' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make reload' ; \
 	fi
 
 .PHONY: build
