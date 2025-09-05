@@ -9,19 +9,19 @@ type EnvVars = {
   FORSETI_URL: string;
   COOKIE_DOMAIN: string;
   GULLVEIG_URL_INTERNAL: string;
-  MIMIR_URL_INTERNAL: string;
+  FREY_URL_INTERNAL: string;
   HUGIN_URL_INTERNAL: string;
   USERINFO_HOOK: string;
   USERINFO_HOOK_API_KEY: string;
-  DB_FREY_HOST: string;
-  DB_FREY_NAME: string;
-  DB_FREY_USER: string;
-  DB_FREY_PASSWORD: string;
-  DB_FREY_PORT: string;
-  DB_FREY_REDIS_HOST: string;
-  DB_FREY_REDIS_PORT: string;
-  DB_FREY_REDIS_USER: string;
-  DB_FREY_REDIS_PASSWORD: string;
+  DB_MIMIR_HOST: string;
+  DB_MIMIR_NAME: string;
+  DB_MIMIR_USER: string;
+  DB_MIMIR_PASSWORD: string;
+  DB_MIMIR_PORT: string;
+  DB_MIMIR_REDIS_HOST: string;
+  DB_MIMIR_REDIS_PORT: string;
+  DB_MIMIR_REDIS_USER: string;
+  DB_MIMIR_REDIS_PASSWORD: string;
   PORT: string;
   TZ: string;
 };
@@ -36,19 +36,19 @@ process.env.TZ = data.TZ ?? 'UTC';
 
 export const env = {
   development,
-  port: parseInt(process.env.PORT ?? data.PORT ?? '4004'),
+  port: parseInt(process.env.PORT ?? data.PORT ?? '4001'),
   db: {
-    host: process.env.DB_FREY_HOST ?? data.DB_FREY_HOST ?? 'db.pantheon.internal',
-    username: process.env.DB_FREY_USER ?? data.DB_FREY_USER ?? 'frey2',
-    password: process.env.DB_FREY_PASSWORD ?? data.DB_FREY_PASSWORD ?? 'pgpass',
-    dbname: process.env.DB_FREY_NAME ?? data.DB_FREY_NAME ?? 'frey2',
-    port: parseInt(data.DB_FREY_PORT ?? '5432'),
+    host: process.env.DB_MIMIR_HOST ?? data.DB_MIMIR_HOST ?? 'db.pantheon.internal',
+    username: process.env.DB_MIMIR_USER ?? data.DB_MIMIR_USER ?? 'mimir',
+    password: process.env.DB_MIMIR_PASSWORD ?? data.DB_MIMIR_PASSWORD ?? 'pgpass',
+    dbname: process.env.DB_MIMIR_NAME ?? data.DB_MIMIR_NAME ?? 'mimir2',
+    port: parseInt(data.DB_MIMIR_PORT ?? '5432'),
   },
   redis: {
-    host: data.DB_FREY_REDIS_HOST ?? 'redis.pantheon.internal',
-    port: parseInt(data.DB_FREY_REDIS_PORT ?? '6379'),
-    username: data.DB_FREY_REDIS_USER ?? 'redis',
-    password: data.DB_FREY_REDIS_PASSWORD ?? 'redispass',
+    host: data.DB_MIMIR_REDIS_HOST ?? 'redis.pantheon.internal',
+    port: parseInt(data.DB_MIMIR_REDIS_PORT ?? '6379'),
+    username: data.DB_MIMIR_REDIS_USER ?? 'redis',
+    password: data.DB_MIMIR_REDIS_PASSWORD ?? 'redispass',
   },
   mailer: {
     remoteUrl: data.HERMOD_URL_INTERNAL ?? 'hermod.pantheon.internal',
@@ -58,12 +58,12 @@ export const env = {
   },
   cookieDomain: data.COOKIE_DOMAIN,
   gullveigUrl: data.GULLVEIG_URL_INTERNAL,
-  mimirUrl: process.env.MIMIR_URL_INTERNAL ?? data.MIMIR_URL_INTERNAL,
-  huginUrl: process.env.HUGIN_URL_INTERNAL ?? data.HUGIN_URL_INTERNAL,
+  freyUrl: process.env.FREY_URL_INTERNAL ?? data.FREY_URL_INTERNAL,
+  huginUrl: process.env.HUGIN_URL_INTERNAL ?? data.HUGIN_URL_INTERNAL ?? 'hugin.pantheon.internal',
   forsetiUrl: process.env.FORSETI_URL ?? data.FORSETI_URL,
   userinfoHook: data.USERINFO_HOOK ?? null,
   userinfoHookApiKey: data.USERINFO_HOOK_API_KEY ?? '',
   internalQuerySecret: process.env.INTERNAL_QUERY_SECRET ?? data.INTERNAL_QUERY_SECRET ?? '',
 };
 
-console.log('[Frey] Running with env', env);
+console.log('[Mimir] Running with env', env);

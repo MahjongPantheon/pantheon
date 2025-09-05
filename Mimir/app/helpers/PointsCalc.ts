@@ -1,6 +1,6 @@
 import { Ruleset } from '../rulesets/ruleset';
 
-interface PaymentsInfo {
+export interface PaymentsInfo {
   direct: Record<string, number>;
   riichi: Record<string, number>;
   honba: Record<string, number>;
