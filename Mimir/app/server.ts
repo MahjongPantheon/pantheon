@@ -1,19 +1,25 @@
 import { createServer, IncomingMessage } from 'http';
-import { createTwirpServer } from 'twirpscript';
+import { createTwirpServer, ClientConfiguration } from 'twirpscript';
 import { createSimpleLogger } from 'simple-node-logger';
 import { createMimir } from 'tsclients/proto/mimir.pb';
-import { mimirClient } from './mimir';
+import { mimirServer } from './mimir';
 import { env } from './helpers/env';
 import { Context } from './context';
 import { fillRequestVars } from './middleware/requestVars';
 import { createDbConstructor, createRedisConstructor } from './database/db';
 import { storages } from './middleware/storages';
 import { metrics } from './middleware/metrics';
+import { clients } from './middleware/clients';
 
-export const mimirHandler = [createMimir(mimirClient)];
+export const mimirHandler = [createMimir(mimirServer)];
 const dbConstructor = createDbConstructor();
 const redisConstructor = createRedisConstructor();
 const logger = createSimpleLogger('/var/log/mimir.log');
+
+const clientConfFrey: ClientConfiguration = {
+  prefix: '/v2',
+  baseURL: env.freyUrl,
+};
 
 redisConstructor().then((redis) => {
   const app = createTwirpServer<Context, typeof mimirHandler, IncomingMessage>(mimirHandler, {
@@ -22,6 +28,7 @@ redisConstructor().then((redis) => {
   })
     .use(fillRequestVars())
     .use(storages(dbConstructor(), redis))
+    .use(clients(clientConfFrey))
     .use(metrics(logger));
 
   app.on('requestReceived', (ctx) => {
