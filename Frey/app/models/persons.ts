@@ -568,33 +568,50 @@ export async function updatePersonalInfo(
 
   promises.push(db.updateTable('person').set(value).where('id', '=', payload.id).execute());
 
-  const msValue: Partial<RowMajsoulPlatformAccount> = {};
-  if (payload.msAccountId !== null && payload.msAccountId !== undefined) {
+  const soulAcc = await db
+    .selectFrom('majsoul_platform_account')
+    .where('person_id', '=', payload.id)
+    .selectAll()
+    .execute();
+
+  const msValue: Partial<RowMajsoulPlatformAccount> = {
+    ...(soulAcc.length > 0 ? soulAcc[0] : {}),
+  };
+  // forseti sends -1 in accountId and friendId when updating profile through user interface
+  if (payload.msAccountId != null && payload.msAccountId != -1) {
     msValue.account_id = payload.msAccountId;
   }
-  if (payload.msFriendId !== null && payload.msFriendId !== undefined) {
+  if (payload.msFriendId != null && payload.msFriendId != -1) {
     msValue.friend_id = payload.msFriendId;
   }
-  if (payload.msNickname !== null && payload.msNickname !== undefined) {
+  if (payload.msNickname != null) {
     msValue.nickname = payload.msNickname;
   }
   if (
-    msValue.account_id !== undefined ||
-    msValue.friend_id !== undefined ||
+    msValue.account_id !== undefined &&
+    msValue.friend_id !== undefined &&
     msValue.nickname !== undefined
   ) {
     msValue.person_id = payload.id;
     msValue.friend_id ??= 0;
     msValue.nickname ??= '';
     msValue.account_id ??= 0;
-    promises.push(
-      db
-        .insertInto('majsoul_platform_account')
-        .values(msValue as RowMajsoulPlatformAccount)
-        .onConflict((oc) => oc.column('person_id').doUpdateSet(msValue))
-        .onConflict((oc) => oc.column('account_id').doUpdateSet(msValue))
-        .execute()
-    );
+    if (soulAcc.length > 0) {
+      promises.push(
+        db
+          .updateTable('majsoul_platform_account')
+          .set(msValue)
+          .where('person_id', '=', payload.id)
+          .execute()
+      );
+    } else {
+      promises.push(
+        db
+          .insertInto('majsoul_platform_account')
+          .values(msValue as RowMajsoulPlatformAccount)
+          .execute()
+      );
+    }
   }
 
   promises.push(redisClient.remove(getPersonalInfoCacheKey(payload.id)));
