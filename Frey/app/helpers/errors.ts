@@ -44,3 +44,22 @@ export class InvalidInputError extends TwirpError {
     });
   }
 }
+
+export function wrapErrorObject(e: Error | TwirpError) {
+  if (e instanceof TwirpError) {
+    return e;
+  }
+  return new TwirpError({
+    msg: e.message,
+    code: 'internal',
+    meta: { originalError: e.message + e.stack },
+  });
+}
+
+export async function wrapError<T>(promise: Promise<T>): Promise<T> {
+  try {
+    return await promise;
+  } catch (e: any) {
+    throw wrapErrorObject(e);
+  }
+}

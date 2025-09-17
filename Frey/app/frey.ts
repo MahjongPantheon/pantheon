@@ -76,17 +76,15 @@ import {
   setNotificationsSettings,
   updatePersonalInfo,
 } from './models/persons';
+import { wrapError } from 'helpers/errors';
 
 export const freyClient: Frey<Context> = {
   async AddRuleForPerson(
     accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
     context: Context
   ): Promise<AccessAddRuleForPersonResponse> {
-    return addRuleForPerson(
-      context.db,
-      context.redisClient,
-      context,
-      accessAddRuleForPersonPayload
+    return wrapError(
+      addRuleForPerson(context.db, context.redisClient, context, accessAddRuleForPersonPayload)
     );
   },
 
@@ -94,46 +92,52 @@ export const freyClient: Frey<Context> = {
     authApproveRegistrationPayload: AuthApproveRegistrationPayload,
     context: Context
   ): Promise<AuthApproveRegistrationResponse> {
-    return approveRegistration(context.db, authApproveRegistrationPayload);
+    return wrapError(approveRegistration(context.db, authApproveRegistrationPayload));
   },
 
   async ApproveResetPassword(
     authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
     context: Context
   ): Promise<AuthApproveResetPasswordResponse> {
-    return approveResetPassword(context.db, context.redisClient, authApproveResetPasswordPayload);
+    return wrapError(
+      approveResetPassword(context.db, context.redisClient, authApproveResetPasswordPayload)
+    );
   },
 
   async Authorize(
     authAuthorizePayload: AuthAuthorizePayload,
     context: Context
   ): Promise<AuthAuthorizeResponse> {
-    return authorize(context.db, authAuthorizePayload);
+    return wrapError(authorize(context.db, authAuthorizePayload));
   },
 
   async ChangePassword(
     authChangePasswordPayload: AuthChangePasswordPayload,
     context: Context
   ): Promise<AuthChangePasswordResponse> {
-    return changePassword(context.db, context.redisClient, authChangePasswordPayload);
+    return wrapError(changePassword(context.db, context.redisClient, authChangePasswordPayload));
   },
 
   async CreateAccount(
     personsCreateAccountPayload: PersonsCreateAccountPayload,
     context: Context
   ): Promise<PersonsCreateAccountResponse> {
-    return createAccount(context.db, context.redisClient, personsCreateAccountPayload, context);
+    return wrapError(
+      createAccount(context.db, context.redisClient, personsCreateAccountPayload, context)
+    );
   },
 
   async DeleteRuleForPerson(
     accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return deleteRuleForPerson(
-      context.db,
-      context.redisClient,
-      context,
-      accessDeleteRuleForPersonPayload
+    return wrapError(
+      deleteRuleForPerson(
+        context.db,
+        context.redisClient,
+        context,
+        accessDeleteRuleForPersonPayload
+      )
     );
   },
 
@@ -141,59 +145,61 @@ export const freyClient: Frey<Context> = {
     _depersonalizePayload: DepersonalizePayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return depersonalizeAccount(context.db, context.redisClient, context);
+    return wrapError(depersonalizeAccount(context.db, context.redisClient, context));
   },
 
   async FindByMajsoulAccountId(
     personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload,
     context: Context
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return findByMajsoulAccountId(context.db, personsFindByMajsoulIdsPayload, context);
+    return wrapError(findByMajsoulAccountId(context.db, personsFindByMajsoulIdsPayload, context));
   },
 
   async FindByTenhouIds(
     personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
     context: Context
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return findByTenhouIds(context.db, personsFindByTenhouIdsPayload, context);
+    return wrapError(findByTenhouIds(context.db, personsFindByTenhouIdsPayload, context));
   },
 
   async FindByTitle(
     personsFindByTitlePayload: PersonsFindByTitlePayload,
     context: Context
   ): Promise<PersonsFindByTitleResponse> {
-    return findByTitle(context.db, personsFindByTitlePayload);
+    return wrapError(findByTitle(context.db, personsFindByTitlePayload));
   },
 
   async GetEventAdmins(
     accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
     context: Context
   ): Promise<AccessGetEventAdminsResponse> {
-    return getEventAdmins(context.db, accessGetEventAdminsPayload);
+    return wrapError(getEventAdmins(context.db, accessGetEventAdminsPayload));
   },
 
   async GetEventReferees(
     accessGetEventRefereesPayload: AccessGetEventRefereesPayload,
     context: Context
   ): Promise<AccessGetEventRefereesResponse> {
-    return getEventReferees(context.db, accessGetEventRefereesPayload);
+    return wrapError(getEventReferees(context.db, accessGetEventRefereesPayload));
   },
 
   async GetMajsoulNicknames(
     personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload,
     context: Context
   ): Promise<PersonsGetMajsoulNicknamesResponse> {
-    return getMajsoulNicknames(context.db, personsGetMajsoulNicknamesPayload);
+    return wrapError(getMajsoulNicknames(context.db, personsGetMajsoulNicknamesPayload));
   },
 
   async GetNotificationsSettings(
     personsGetNotificationsSettingsPayload: PersonsGetNotificationsSettingsPayload,
     context: Context
   ): Promise<PersonsGetNotificationsSettingsResponse> {
-    return getNotificationsSettings(
-      context.db,
-      context.redisClient,
-      personsGetNotificationsSettingsPayload
+    return wrapError(
+      getNotificationsSettings(
+        context.db,
+        context.redisClient,
+        personsGetNotificationsSettingsPayload
+      )
     );
   },
 
@@ -201,11 +207,8 @@ export const freyClient: Frey<Context> = {
     accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
     context: Context
   ): Promise<AccessGetOwnedEventIdsResponse> {
-    return getOwnedEventIds(
-      context.db,
-      context.redisClient,
-      context,
-      accessGetOwnedEventIdsPayload
+    return wrapError(
+      getOwnedEventIds(context.db, context.redisClient, context, accessGetOwnedEventIdsPayload)
     );
   },
 
@@ -213,50 +216,58 @@ export const freyClient: Frey<Context> = {
     personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
     context: Context
   ): Promise<PersonsGetPersonalInfoResponse> {
-    return getPersonalInfo(context.db, context.redisClient, personsGetPersonalInfoPayload, context);
+    return wrapError(
+      getPersonalInfo(context.db, context.redisClient, personsGetPersonalInfoPayload, context)
+    );
   },
 
   async GetSuperadminFlag(
     accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
     context: Context
   ): Promise<AccessGetSuperadminFlagResponse> {
-    return getSuperadminFlag(context.db, context.redisClient, accessGetSuperadminFlagPayload);
+    return wrapError(
+      getSuperadminFlag(context.db, context.redisClient, accessGetSuperadminFlagPayload)
+    );
   },
 
   async Me(_: AuthMePayload, context: Context): Promise<AuthMeResponse> {
-    return me(context.db, context.redisClient, context);
+    return wrapError(me(context.db, context.redisClient, context));
   },
 
   async QuickAuthorize(
     authQuickAuthorizePayload: AuthQuickAuthorizePayload,
     context: Context
   ): Promise<AuthQuickAuthorizeResponse> {
-    return quickAuthorize(context.db, context.redisClient, authQuickAuthorizePayload);
+    return wrapError(quickAuthorize(context.db, context.redisClient, authQuickAuthorizePayload));
   },
 
   async RequestRegistration(
     authRequestRegistrationPayload: AuthRequestRegistrationPayload,
     context: Context
   ): Promise<AuthRequestRegistrationResponse> {
-    return requestRegistration(context.db, authRequestRegistrationPayload);
+    return wrapError(requestRegistration(context.db, authRequestRegistrationPayload));
   },
 
   async RequestResetPassword(
     authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
     context: Context
   ): Promise<AuthRequestResetPasswordResponse> {
-    return requestResetPassword(context.db, context.redisClient, authRequestResetPasswordPayload);
+    return wrapError(
+      requestResetPassword(context.db, context.redisClient, authRequestResetPasswordPayload)
+    );
   },
 
   async SetNotificationsSettings(
     personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return setNotificationsSettings(
-      context.db,
-      context.redisClient,
-      personsSetNotificationsSettingsPayload,
-      context
+    return wrapError(
+      setNotificationsSettings(
+        context.db,
+        context.redisClient,
+        personsSetNotificationsSettingsPayload,
+        context
+      )
     );
   },
 
@@ -264,11 +275,8 @@ export const freyClient: Frey<Context> = {
     personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    return updatePersonalInfo(
-      context.db,
-      context.redisClient,
-      personsUpdatePersonalInfoPayload,
-      context
+    return wrapError(
+      updatePersonalInfo(context.db, context.redisClient, personsUpdatePersonalInfoPayload, context)
     );
   },
 };
