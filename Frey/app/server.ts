@@ -9,6 +9,7 @@ import { fillRequestVars } from './middleware/requestVars';
 import { createDbConstructor, createRedisConstructor } from './database/db';
 import { storages } from './middleware/storages';
 import { metrics } from './middleware/metrics';
+import { wrapErrorObject } from './helpers/errors';
 
 export const freyHandler = [createFrey(freyClient)];
 const dbConstructor = createDbConstructor();
@@ -22,19 +23,23 @@ redisConstructor().then((redis) => {
   })
     .use(fillRequestVars())
     .use(storages(dbConstructor(), redis))
-    .use(metrics(logger));
+    .use(metrics());
 
   app.on('requestReceived', (ctx) => {
-    logger.info('Request received', ctx.method?.name ?? 'Unknown');
+    logger.info('Request received ', ctx.method?.name ?? 'Unknown');
   });
 
   app.on('responseSent', (ctx) => {
-    logger.info('Response sent', ctx.method?.name ?? 'Unknown');
+    logger.info('Response sent ', ctx.method?.name ?? 'Unknown');
   });
 
   app.on('error', (ctx, err) => {
-    logger.error('Request errored', ctx.method?.name ?? 'Unknown', err);
+    logger.error('Request errored ', ctx.method?.name ?? 'Unknown', err);
   });
 
   createServer(app).listen(env.port, () => console.log(`Server listening on port ${env.port}`));
+});
+
+process.on('uncaughtExceptionMonitor', (err, origin) => {
+  logger.error('Uncaught exception: ', origin, wrapErrorObject(err));
 });
