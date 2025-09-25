@@ -113,6 +113,7 @@ First, please add the following entries to your `/etc/hosts` file so you could a
 127.0.0.1   tyr.pantheon.local
 127.0.0.1   pga.pantheon.local
 127.0.0.1   grafana.pantheon.local
+127.0.0.1   dozzle.pantheon.local
 ```
 
 Second, make sure your **local port 80** is not used by any other software (like nginx, apache or another web server).
@@ -167,6 +168,7 @@ Services will be available at:
   - Password: `admin` (Grafana will ask to change it on first login)
   - Set up Prometheus data source with `http://hugin.pantheon.internal:9090` as prometheus host
   - Import some dashboards from `Hugin/dashboards` to view the results
+- http://dozzle.pantheon.local for docker logs viewer.
 
 **Mimir** and **Frey** use [twirp](https://github.com/twitchtv/twirp) interface to communicate with other services.
 See protocol description files in `Common` folder. 

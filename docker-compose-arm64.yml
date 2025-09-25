@@ -474,3 +474,18 @@ services:
         aliases:
           - grafana.pantheon.local
           - grafana.pantheon.internal
+  dozzle.pantheon.internal:
+    image: amir20/dozzle:latest
+    cgroup: host
+    cap_add:
+      - ALL
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8050:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      internal_net:
+        aliases:
+          - dozzle.pantheon.local
+          - dozzle.pantheon.internal
