@@ -1,4 +1,4 @@
-import { Round } from './round';
+import { Round } from '../models/db/round';
 import { Ruleset } from '../rulesets/ruleset';
 
 export function checkRound(
