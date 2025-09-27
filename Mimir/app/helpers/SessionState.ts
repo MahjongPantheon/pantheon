@@ -486,7 +486,11 @@ export class SessionState {
   }
 
   protected _updateAfterDraw(round: Round): PaymentsInfo {
-    const tempaiIds = round.rounds[0].tempai?.split(',').map((i) => parseInt(i, 10)) ?? [];
+    const tempaiIds =
+      round.rounds[0].tempai
+        ?.split(',')
+        .filter((i) => !!i)
+        .map((i) => parseInt(i, 10)) ?? [];
     const calc = new PointsCalc();
     this._scores = calc.draw(this.getScores(), tempaiIds, round.riichi);
 
@@ -523,10 +527,12 @@ export class SessionState {
     const calc = new PointsCalc();
     this._scores = calc.chombo(this._ruleset, this.getCurrentDealer(), loserId, this.getScores());
 
-    if (!(loserId in this._chombo)) {
-      this._chombo[loserId] = 0;
+    if (this._ruleset.rules.chomboAmount > 0) {
+      if (!(loserId in this._chombo)) {
+        this._chombo[loserId] = 0;
+      }
+      this._chombo[loserId] -= this._ruleset.rules.chomboAmount;
     }
-    this._chombo[loserId] -= this._ruleset.rules.chomboAmount;
     return calc.lastPaymentsInfo();
   }
 

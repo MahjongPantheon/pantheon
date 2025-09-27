@@ -31,6 +31,55 @@ export interface Round {
   >;
 }
 
+export type PartialRound = Omit<Round, 'rounds' | 'end_date' | 'last_session_state'> & {
+  end_date?: Round['end_date'];
+  last_session_state?: Round['last_session_state'];
+  rounds: Array<
+    Partial<
+      Omit<
+        DBRound,
+        | 'id'
+        | 'outcome'
+        | 'session_id'
+        | 'multi_ron'
+        | 'event_id'
+        | 'round'
+        | 'riichi'
+        | 'end_date'
+        | 'last_session_state'
+        | 'open_hand'
+      >
+    > & { open_hand: number }
+  >;
+};
+
+const defRound = {
+  han: null,
+  fu: null,
+  dora: null,
+  uradora: null,
+  kandora: null,
+  kanuradora: null,
+  yaku: null,
+  tempai: null,
+  nagashi: null,
+  winner_id: null,
+  loser_id: null,
+  pao_player_id: null,
+};
+
+export function makeRoundWithDefaults(input: PartialRound): Round {
+  return {
+    end_date: null,
+    last_session_state: null,
+    ...input,
+    rounds: input.rounds.map((r) => ({
+      ...defRound,
+      ...r,
+    })),
+  };
+}
+
 export async function findBySessionIds(
   db: Database,
   sessionIds: number[]
