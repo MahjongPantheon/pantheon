@@ -12,7 +12,7 @@ export function fillRequestVars(): Middleware<Context, IncomingMessage> {
   return async (req, ctx, next) => {
     const storage = new Storage();
     const strategy = new StorageStrategyServer();
-    strategy.fill(parseCookies(req));
+    strategy.fill(parseCookies(req.headers.cookie));
     storage.setStrategy(strategy);
 
     ctx.locale =
