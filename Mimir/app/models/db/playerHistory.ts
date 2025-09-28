@@ -201,7 +201,8 @@ export function updateAvgPlaceAndGamesCount(item: PlayerHistoryItem, place: numb
 
 export function makeHistoryItemsSum(
   source: PlayerHistoryItem,
-  add: PlayerHistoryItem
+  add: PlayerHistoryItem,
+  ruleset: Ruleset
 ): PlayerHistoryItem {
   return {
     player_id: source.player_id,
@@ -211,14 +212,15 @@ export function makeHistoryItemsSum(
     avg_place:
       (source.avg_place * source.games_played + add.avg_place * add.games_played) /
       (source.games_played + add.games_played),
-    rating: source.rating + add.rating,
+    rating: source.rating + (add.rating - ruleset.rules.startRating),
     chips: source.chips === null ? null : source.chips + (add.chips ?? 0),
   };
 }
 
 export function makeHistoryItemsDiff(
   source: PlayerHistoryItem,
-  sub: PlayerHistoryItem
+  sub: PlayerHistoryItem,
+  ruleset: Ruleset
 ): PlayerHistoryItem {
   return {
     player_id: source.player_id,
@@ -228,14 +230,15 @@ export function makeHistoryItemsDiff(
     avg_place:
       Math.abs(source.avg_place * source.games_played - sub.avg_place * sub.games_played) /
       Math.abs(source.games_played - sub.games_played),
-    rating: source.rating - sub.rating,
+    rating: source.rating - (sub.rating - ruleset.rules.startRating),
     chips: source.chips === null ? null : source.chips - (sub.chips ?? 0),
   };
 }
 
 export function calculateHistory(
   itemsFrom: Array<PlayerHistoryItem>,
-  itemsTo: Array<PlayerHistoryItem>
+  itemsTo: Array<PlayerHistoryItem>,
+  ruleset: Ruleset
 ) {
   const fromMap = new Map<string, PlayerHistoryItem>();
   for (const item of itemsFrom) {
@@ -246,7 +249,7 @@ export function calculateHistory(
     const fromItem = fromMap.get(item.player_id + '_' + item.event_id);
     if (fromItem) {
       if (fromItem.games_played === item.games_played) {
-        result.push(makeHistoryItemsDiff(item, fromItem));
+        result.push(makeHistoryItemsDiff(item, fromItem, ruleset));
       }
     } else {
       result.push(item);
