@@ -60,6 +60,7 @@ export function calcPlacesMap(scores: Record<number, number>) {
   );
 }
 
+// for a single table
 export function calcRatingDelta(
   ruleset: Ruleset,
   placesMap: Record<number, number>,
@@ -68,20 +69,20 @@ export function calcRatingDelta(
 ) {
   const ratingDelta: Record<number, number> = {};
   const umaList = getUma(Object.values(scores), ruleset);
-  Object.entries(scores).forEach(([playerId, score], idx) => {
-    const scoreSub =
-      replacements[parseInt(playerId.toString(), 10)] &&
-      ruleset.rules.replacementPlayerFixedPoints !== 0
-        ? ruleset.rules.replacementPlayerFixedPoints
-        : score - ruleset.rules.startPoints;
-    const uma =
-      replacements[parseInt(playerId.toString(), 10)] &&
-      ruleset.rules.replacementPlayerOverrideUma !== 0
-        ? ruleset.rules.replacementPlayerOverrideUma
-        : umaList[idx];
-    ratingDelta[parseInt(playerId.toString(), 10)] =
-      scoreSub + getOka(placesMap[parseInt(playerId.toString(), 10)], ruleset) + uma;
-  });
+  Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([playerId, score], idx) => {
+      const pId = parseInt(playerId.toString(), 10);
+      const scoreSub =
+        replacements[pId] && ruleset.rules.replacementPlayerFixedPoints !== 0
+          ? ruleset.rules.replacementPlayerFixedPoints
+          : score - ruleset.rules.startPoints;
+      const uma =
+        replacements[pId] && ruleset.rules.replacementPlayerOverrideUma !== 0
+          ? ruleset.rules.replacementPlayerOverrideUma
+          : umaList[idx];
+      ratingDelta[pId] = scoreSub + getOka(placesMap[pId], ruleset) + uma;
+    });
   return ratingDelta;
 }
 
