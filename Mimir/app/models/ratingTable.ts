@@ -1,16 +1,23 @@
 import { Database } from '../database/db';
-import { createRuleset } from '../rulesets/ruleset';
+import { createRuleset, Ruleset } from '../rulesets/ruleset';
 import moment from 'moment-timezone';
 import {
   calculateHistory,
   findLastByEvent,
   findLastByEventAndDate,
+  makeHistoryItemsSum,
   PlayerHistoryItem,
 } from './db/playerHistory';
 import { getPrefinishedItems } from './db/session';
+import { PersonEx } from 'tsclients/proto/atoms.pb';
+import { ClientConfiguration } from 'twirpscript';
+import { GetPersonalInfo } from 'tsclients/proto/frey.pb';
+import { EventsGetRatingTableResponse } from 'tsclients/proto/mimir.pb';
+import { Penalty } from 'database/schema';
 
 export async function getRatingTable(
   db: Database,
+  freyConfig: ClientConfiguration,
   eventIdList: number[],
   orderBy: string,
   order: 'asc' | 'desc',
@@ -18,7 +25,7 @@ export async function getRatingTable(
   onlyMinGames: boolean,
   dateFrom: string | null,
   dateTo: string | null
-) {
+): Promise<EventsGetRatingTableResponse> {
   const events = await db
     .selectFrom('event')
     .select(['id', 'sort_by_games', 'min_games_count', 'ruleset_config', 'timezone']) // TODO
@@ -29,10 +36,31 @@ export async function getRatingTable(
     throw new Error('Main event not found');
   }
   const ruleset = createRuleset('custom', mainEvent.ruleset_config);
-  const dataItems = isAdmin
+  const dataItems: PlayerHistoryItem[] = isAdmin
     ? await getPrefinishedItems(db, ruleset, eventIdList)
-    : groupByEvent(await getHistoryItems(db, eventIdList, mainEvent.timezone, dateFrom, dateTo));
-  const data = sortItems(orderBy, playerItems, mergeSeveralEvents(dataItems));
+    : await getHistoryItems(db, ruleset, eventIdList, mainEvent.timezone, dateFrom, dateTo);
+  const playerItems = (
+    await GetPersonalInfo({ ids: dataItems.map((item) => item.player_id) }, freyConfig)
+  ).people;
+
+  const regData = await db
+    .selectFrom('event_registered_players')
+    .select(['player_id', 'team_name'])
+    .where('event_id', '=', mainEvent.id)
+    .execute();
+  const penalties = await db
+    .selectFrom('penalty')
+    .selectAll()
+    .where('event_id', 'in', eventIdList)
+    .execute();
+
+  const historyItems = mergeData(
+    mergeSeveralEvents(dataItems, ruleset),
+    playerItems,
+    regData,
+    penalties
+  );
+  const data = sortItems(orderBy, playerItems, historyItems);
 
   if (order === 'desc') {
     data.reverse();
@@ -46,11 +74,29 @@ export async function getRatingTable(
     data.filter((r) => r.games_played >= mainEvent.min_games_count);
   }
 
-  return data;
+  return {
+    list: data.map((item) => ({
+      id: item.player_id,
+      title: item.playerTitle,
+      tenhouId: item.playerTenhouId,
+      rating: item.rating,
+      chips: item.chips ?? 0,
+      winnerZone: item.rating - item.penaltiesAmount >= ruleset.rules.startRating,
+      avgPlace: item.avg_place,
+      avgScore: item.avg_score,
+      gamesPlayed: item.games_played,
+      teamName: item.playerTeamName,
+      hasAvatar: item.playerHasAvatar,
+      lastUpdate: item.playerLastUpdate,
+      penaltiesAmount: item.penaltiesAmount,
+      penaltiesCount: item.penaltiesCount,
+    })),
+  };
 }
 
 async function getHistoryItems(
   db: Database,
+  ruleset: Ruleset,
   eventIds: number[],
   timezone: string,
   dateFrom: string | null,
@@ -62,13 +108,13 @@ async function getHistoryItems(
   if (dateFromUtc && dateToUtc) {
     const itemsFrom = await findLastByEventAndDate(db, eventIds, dateFromUtc);
     const itemsTo = await findLastByEventAndDate(db, eventIds, dateToUtc);
-    return calculateHistory(itemsFrom, itemsTo);
+    return calculateHistory(itemsFrom, itemsTo, ruleset);
   }
 
   if (dateFromUtc && !dateToUtc) {
     const itemsFrom = await findLastByEventAndDate(db, eventIds, dateFromUtc);
     const itemsTo = await findLastByEvent(db, eventIds);
-    return calculateHistory(itemsFrom, itemsTo);
+    return calculateHistory(itemsFrom, itemsTo, ruleset);
   }
 
   if (!dateFromUtc && dateToUtc) {
@@ -78,28 +124,82 @@ async function getHistoryItems(
   return await findLastByEvent(db, eventIds);
 }
 
-function groupByEvent(items: Array<PlayerHistoryItem>): Map<number, Array<PlayerHistoryItem>> {
-  const result = new Map<number, Array<PlayerHistoryItem>>();
+// Input: items from several events, may contain several items for same player
+// Output: items merged, only one item per player, unsorted
+export function mergeSeveralEvents(
+  items: PlayerHistoryItem[],
+  ruleset: Ruleset
+): PlayerHistoryItem[] {
+  const result: Record<number, PlayerHistoryItem> = {};
   for (const item of items) {
-    const list = result.get(item.event_id);
-    if (list) {
-      list.push(item);
+    if (!result[item.player_id]) {
+      result[item.player_id] = item;
     } else {
-      result.set(item.event_id, [item]);
+      result[item.player_id] = makeHistoryItemsSum(result[item.player_id], item, ruleset);
     }
   }
-  return result;
+  return Object.values(result);
 }
 
-export function mergeSeveralEvents(items: Map<number, PlayerHistoryItem[]>): PlayerHistoryItem[] {
-  // TODO use makeHistoryItemsSum
+export function mergeData(
+  items: PlayerHistoryItem[],
+  playerItems: PersonEx[],
+  regData: Array<{ player_id: number; team_name: string | null }>,
+  penalties: Array<Omit<Penalty, 'id'> & { id?: number }>
+): Array<
+  PlayerHistoryItem & {
+    avg_score: number;
+    playerTitle: string;
+    playerTenhouId: string;
+    playerTeamName: string | null;
+    playerHasAvatar: boolean;
+    playerLastUpdate: string;
+    penaltiesAmount: number;
+    penaltiesCount: number;
+  }
+> {
+  const teamNames = regData.reduce(
+    (acc, item) => {
+      acc[item.player_id] = item.team_name;
+      return acc;
+    },
+    {} as Record<number, string | null>
+  );
+  const playersMap = playerItems.reduce(
+    (acc, item) => {
+      acc[item.id] = item;
+      return acc;
+    },
+    {} as Record<number, PersonEx>
+  );
+  const penaltiesMap = penalties.reduce(
+    (acc, item) => {
+      if (!acc[item.player_id]) {
+        acc[item.player_id] = { penaltiesCount: 0, penaltiesAmount: 0 };
+      }
+      acc[item.player_id].penaltiesCount++;
+      acc[item.player_id].penaltiesAmount += item.amount;
+      return acc;
+    },
+    {} as Record<number, { penaltiesCount: number; penaltiesAmount: number }>
+  );
+  return items.map((item) => ({
+    ...item,
+    avg_score: item.rating / item.games_played,
+    playerTitle: playersMap[item.player_id].title,
+    playerTenhouId: playersMap[item.player_id].tenhouId,
+    playerTeamName: teamNames[item.player_id],
+    playerHasAvatar: playersMap[item.player_id].hasAvatar,
+    playerLastUpdate: playersMap[item.player_id].lastUpdate,
+    ...penaltiesMap[item.player_id],
+  }));
 }
 
-export function sortItems(
+export function sortItems<T extends PlayerHistoryItem & { avg_score: number }>(
   orderBy: string,
-  playerItems: Record<number, Player>,
-  ratingLines: Array<PlayerHistoryItem & { avg_score: number }>
-): Array<PlayerHistoryItem & { avg_score: number }> {
+  playerItems: Record<number, PersonEx>,
+  ratingLines: T[]
+): T[] {
   ratingLines = [...ratingLines];
   switch (orderBy) {
     case 'name':
