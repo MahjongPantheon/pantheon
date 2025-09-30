@@ -155,7 +155,7 @@ export async function getPrefinishedItems(
   db: Database,
   ruleset: Ruleset,
   eventIds: number[]
-): Promise<Map<number, Omit<PlayerHistory, 'id'>[]>> {
+): Promise<Omit<PlayerHistory, 'id'>[]> {
   const sessions = await findByEventAndStatus(db, eventIds, [
     SessionStatus.SESSION_STATUS_PREFINISHED,
   ]);
@@ -231,11 +231,10 @@ export async function getPrefinishedItems(
     );
   }
 
-  // Flatten last results back grouped by event id, no sorting required
-  const historyItems: Map<number, Omit<PlayerHistory, 'id'>[]> = new Map();
+  // Flatten last results back, no sorting required
+  let historyItems: Omit<PlayerHistory, 'id'>[] = [];
   for (const eventId in lastResults) {
-    historyItems.set(
-      parseInt(eventId, 10),
+    historyItems = historyItems.concat(
       Object.values(lastResults[eventId])
         .map((res) => Object.values(res))
         .flat()
