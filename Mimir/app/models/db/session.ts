@@ -32,6 +32,7 @@ export async function findAllInProgress(db: Database) {
     .execute();
 }
 
+// TODO: memoize
 export async function findByRepresentationalHash(db: Database, hashList: string[]) {
   return db
     .selectFrom('session')

@@ -107,7 +107,8 @@ export async function findPlayersForSession(
   db: Database,
   freyConfig: ClientConfiguration,
   cache: IRedisClient,
-  sessionHash: string
+  sessionHash: string,
+  substituteReplacements = false
 ) {
   const session = await findByRepresentationalHash(db, [sessionHash]);
   if (session.length === 0) {
@@ -124,9 +125,11 @@ export async function findPlayersForSession(
 
   const registrationData = await fetchPlayersRegDataByIds(db, [session[0].event_id], playerIds);
   const replacements = new Map<number, number>();
-  for (const registration of registrationData) {
-    if (registration.replacement_id) {
-      replacements.set(registration.replacement_id, registration.id);
+  if (substituteReplacements) {
+    for (const registration of registrationData) {
+      if (registration.replacement_id) {
+        replacements.set(registration.replacement_id, registration.id);
+      }
     }
   }
 
@@ -143,11 +146,14 @@ export async function _findPlayers(
   replacements: Map<number, number> // replacementId -> id : note backward map
 ) {
   const players = await findById(freyConfig, cache, ids);
-  const replacementPlayers = await findById(freyConfig, cache, [...replacements.keys()]);
   const replaceMap = new Map<number, PersonEx>();
-  for (const player of replacementPlayers) {
-    if (replacements.has(player.id)) {
-      replaceMap.set(replacements.get(player.id)!, player);
+
+  if (replacements.size > 0) {
+    const replacementPlayers = await findById(freyConfig, cache, [...replacements.keys()]);
+    for (const player of replacementPlayers) {
+      if (replacements.has(player.id)) {
+        replaceMap.set(replacements.get(player.id)!, player);
+      }
     }
   }
 
