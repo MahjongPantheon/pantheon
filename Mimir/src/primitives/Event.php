@@ -66,6 +66,7 @@ class EventPrimitive extends Primitive
         'is_listed'         => '_isListed',
         'platform_id'       => '_platformId',
         'allow_view_other_tables' => '_allowViewOtherTables',
+        'manual_add_replay' => '_allowManualAddReplay',
     ];
 
     protected function _getFieldsTransforms()
@@ -99,6 +100,7 @@ class EventPrimitive extends Primitive
             '_timeToStart'        => $this->_integerTransform(),
             '_isListed'           => $this->_integerTransform(),
             '_allowViewOtherTables' => $this->_integerTransform(),
+            '_allowManualAddReplay' => $this->_integerTransform(),
             '_rulesetConfig'      => [
                 'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->rules()->serializeToJsonString();
@@ -263,6 +265,10 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_allowViewOtherTables;
+    /**
+     * If it's allowed to add replays manually in online events
+     */
+    protected $_allowManualAddReplay;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -931,6 +937,24 @@ class EventPrimitive extends Primitive
     public function setAllowViewOtherTables(int $allowViewOtherTables)
     {
         $this->_allowViewOtherTables = $allowViewOtherTables;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllowManualAddReplay()
+    {
+        return $this->_allowManualAddReplay;
+    }
+
+    /**
+     * @param int $allowManualAddReplay
+     * @return EventPrimitive
+     */
+    public function setAllowManualAddReplay(int $allowManualAddReplay)
+    {
+        $this->_allowManualAddReplay = $allowManualAddReplay;
         return $this;
     }
 }

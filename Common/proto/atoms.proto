@@ -462,6 +462,7 @@ message EventData {
   bool achievements_shown = 17;
   bool allow_view_other_tables = 18;
   PlatformType platform_id = 19;
+  bool allow_manual_add_replay = 20;
 }
 
 message TableState {

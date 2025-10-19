@@ -312,6 +312,7 @@ final class TwirpServer implements Mimir
             ->setIsPrescripted($ret['isPrescripted'])
             ->setAutostart($ret['autostart'])
             ->setAllowViewOtherTables($ret['allowViewOtherTables'])
+            ->setAllowManualAddReplay($ret['allowManualAddReplay'])
             ->setRulesetConfig($ret['ruleset']);
         if (!empty($ret['duration'])) {
             $data->setDuration($ret['duration']);
@@ -854,6 +855,7 @@ final class TwirpServer implements Mimir
                     ->setWithChips($ev['withChips'])
                     ->setWithYakitori($ev['withYakitori'])
                     ->setTournamentStarted($ev['tournamentStarted'])
+                    ->setAllowManualAddReplay($ev['allowManualAddReplay'])
                     ->setPlatformId($ev['platformId'] ?: -1);
             }, $ret['events']));
     }
@@ -881,6 +883,7 @@ final class TwirpServer implements Mimir
                     ->setAchievementsShown($ev['achievementsShown'])
                     ->setHasSeries($ev['hasSeries'])
                     ->setTournamentStarted($ev['tournamentStarted'])
+                    ->setAllowManualAddReplay($ev['allowManualAddReplay'])
                     ->setPlatformId($ev['platformId'] ?: -1);
             }, $this->_eventsController->getEventsById(iterator_to_array($req->getIds()))));
     }
@@ -1351,7 +1354,8 @@ final class TwirpServer implements Mimir
                 $req->getAchievementsShown(),
                 $req->getAllowViewOtherTables(),
                 $req->getPlatformId(),
-                $req->getRulesetConfig()
+                $req->getRulesetConfig(),
+                $req->getAllowManualAddReplay()
             ));
     }
 
@@ -1384,6 +1388,7 @@ final class TwirpServer implements Mimir
                 $ev->getAllowViewOtherTables(),
                 $ev->getPlatformId(),
                 $ev->getRulesetConfig(),
+                $ev->getAllowManualAddReplay()
             ));
     }
 
