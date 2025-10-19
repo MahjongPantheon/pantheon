@@ -267,6 +267,7 @@ class EventPrimitive extends Primitive
     protected $_allowViewOtherTables;
     /**
      * If it's allowed to add replays manually in online events
+     * @var integer
      */
     protected $_allowManualAddReplay;
     /**
