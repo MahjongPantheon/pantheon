@@ -57,6 +57,7 @@ export const useEvent = (eventIdListStr: string | null) => {
         loading: false,
         minGamesCount: 0,
         platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+        allowManualAddReplay: false,
       });
     } else {
       if (events) {
@@ -72,6 +73,7 @@ export const useEvent = (eventIdListStr: string | null) => {
           loading: false,
           minGamesCount: events[0]?.minGamesCount,
           platformType: events[0]?.platformId,
+          allowManualAddReplay: events[0]?.allowManualAddReplay,
         });
       } else {
         // data is requested but still loading
@@ -86,6 +88,7 @@ export const useEvent = (eventIdListStr: string | null) => {
           loading: true,
           minGamesCount: 0,
           platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+          allowManualAddReplay: false,
         });
       }
     }

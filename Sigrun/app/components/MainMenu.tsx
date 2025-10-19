@@ -149,7 +149,8 @@ export const MainMenu = ({
                 )}
               {globals.data.type === EventType.EVENT_TYPE_ONLINE &&
                 globals.data.platformType === PlatformType.PLATFORM_TYPE_TENHOUNET &&
-                globals.data.eventId?.length === 1 && (
+                globals.data.eventId?.length === 1 &&
+                globals.data.allowManualAddReplay && (
                   <AddOnlineReplayLink showLabel={showLabels} onClick={closeMenu} />
                 )}
             </>

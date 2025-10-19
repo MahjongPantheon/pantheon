@@ -128,6 +128,7 @@ export function Layout({ children }: { children: ReactNode }) {
     withChips: false,
     minGamesCount: 0,
     platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+    allowManualAddReplay: false,
   });
   const setData = (newData: Partial<Globals>) => {
     setDataInt((old) => ({ ...old, ...newData }));
