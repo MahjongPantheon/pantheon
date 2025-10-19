@@ -78,6 +78,13 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         label={i18n._t('Team tournament')}
         {...form.getInputProps('event.isTeam', { type: 'checkbox' })}
       />
+      <Checkbox
+        label={i18n._t('Allow adding of replays manually')}
+        description={i18n._t(
+          'If checked, any player participating in event will be able to add new replays through user interface. Disable this if you have any external tool which adds replays automatically.'
+        )}
+        {...form.getInputProps('event.allowManualAddReplay', { type: 'checkbox' })}
+      />
       <NumberInput
         {...form.getInputProps('ruleset.gameExpirationTime')}
         icon={<IconHourglass size='1rem' />}
