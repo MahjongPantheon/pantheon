@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 17:58Z\n"
+"POT-Creation-Date: 2025-10-19 20:10Z\n"
 "PO-Revision-Date: 2024-04-12 22:46+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -256,12 +256,12 @@ msgstr "패보 추가"
 msgid "Agariyame"
 msgstr "아가리야메"
 
-#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:152:51
+#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:185:51
 #: app/pages/RecentGames.tsx:88:49
 msgid "Aggregated event"
 msgstr "통합 이벤트"
 
-#: app/pages/RatingTable.tsx:361:24
+#: app/pages/RatingTable.tsx:392:24
 msgid "All players"
 msgstr "전체 작사"
 
@@ -334,11 +334,11 @@ msgstr "평균 실점: "
 msgid "Average dora per hand: "
 msgstr "화료 당 평균 도라 수: "
 
-#: app/pages/RatingTable.tsx:331:20 app/pages/RatingTable.tsx:549:7
+#: app/pages/RatingTable.tsx:362:20 app/pages/RatingTable.tsx:592:7
 msgid "Average place"
 msgstr "평균 순위"
 
-#: app/pages/RatingTable.tsx:550:7
+#: app/pages/RatingTable.tsx:593:7
 msgid "Average points"
 msgstr "평균 점수"
 
@@ -346,7 +346,7 @@ msgstr "평균 점수"
 msgid "Average points lost: "
 msgstr "평균 실점: "
 
-#: app/pages/RatingTable.tsx:302:20
+#: app/pages/RatingTable.tsx:339:20
 msgid "Average score"
 msgstr "평균 점수"
 
@@ -426,8 +426,8 @@ msgstr "청일색"
 msgid "Chinroutou"
 msgstr "청노두"
 
-#: app/pages/RatingTable.tsx:271:22 app/pages/RatingTable.tsx:503:34
-#: app/pages/RatingTable.tsx:547:24
+#: app/pages/RatingTable.tsx:314:22 app/pages/RatingTable.tsx:546:34
+#: app/pages/RatingTable.tsx:590:24
 msgid "Chips"
 msgstr "칩"
 
@@ -456,7 +456,7 @@ msgstr "구련보등"
 msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
 
-#: app/pages/PlayerStats.tsx:206:24
+#: app/pages/PlayerStats.tsx:224:24
 msgid "Close game preview"
 msgstr "대국 미리보기 닫기"
 
@@ -464,7 +464,7 @@ msgstr "대국 미리보기 닫기"
 msgid "Collect riichi bets by atamahane"
 msgstr "선오름에 따른 리치봉 지급"
 
-#: app/components/MainMenu.tsx:161:33
+#: app/components/MainMenu.tsx:162:33
 msgid "Common actions"
 msgstr "일반 동작"
 
@@ -567,7 +567,7 @@ msgstr "유국: %1"
 msgid "Draws: "
 msgstr "유국: "
 
-#: app/components/MainMenu.tsx:176:34 app/components/MainMenu.tsx:177:22
+#: app/components/MainMenu.tsx:177:34 app/components/MainMenu.tsx:178:22
 msgid "Edit my profile"
 msgstr "내 프로필 수정"
 
@@ -644,14 +644,19 @@ msgstr "대국 만료 기간 (시간)"
 msgid "Game preview"
 msgstr "대국 미리보기"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:491:32
-#: app/pages/RatingTable.tsx:551:7
+#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:526:32
+#: app/pages/RatingTable.tsx:594:7
 msgid "Games played"
 msgstr "총 대국 수"
 
 #: app/components/PlayerStatsListing.tsx:54:16
 msgid "Games played: "
 msgstr "총 대국 수: "
+
+#: app/pages/RatingTable.tsx:291:20
+#, fuzzy
+msgid "Games+Rating"
+msgstr "점수"
 
 #: app/pages/Achievements.tsx:344:20
 msgid "Given for collecting a yakuman during tournament."
@@ -897,7 +902,7 @@ msgstr "국사무쌍"
 msgid "Kuitan"
 msgstr "쿠이탕"
 
-#: app/components/MainMenu.tsx:218:33 app/components/MainMenu.tsx:219:20
+#: app/components/MainMenu.tsx:219:33 app/components/MainMenu.tsx:220:20
 msgid "Language"
 msgstr "언어"
 
@@ -914,7 +919,7 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 최근 대국, �
 msgid "Last series"
 msgstr "최근 시리즈"
 
-#: app/pages/Achievements.tsx:728:18 app/pages/PlayerStats.tsx:116:18
+#: app/pages/Achievements.tsx:728:18 app/pages/PlayerStats.tsx:134:18
 msgid "Last update: %1"
 msgstr "마지막 업데이트: %1"
 
@@ -977,7 +982,7 @@ msgstr "유국만관"
 msgid "Nagashi: %1"
 msgstr "유국만관: %1"
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:202:24
 msgid "Next game"
 msgstr "다음 대국"
 
@@ -1010,7 +1015,7 @@ msgstr ""
 "다가화 상황 발생 시 좌석 순서에 따라 첫번째 작사만 론 화료가 가능함. 비활성 "
 "시 론을 선언한 모든 작사가 화료하게 됨"
 
-#: app/components/MainMenu.tsx:205:32 app/components/MainMenu.tsx:206:20
+#: app/components/MainMenu.tsx:206:32 app/components/MainMenu.tsx:207:20
 msgid "Open assistant"
 msgstr "Pantheon으로 이동"
 
@@ -1058,7 +1063,7 @@ msgstr "점수와 보너스"
 msgid "Penalties"
 msgstr "벌부"
 
-#: app/pages/RatingTable.tsx:447:34
+#: app/pages/RatingTable.tsx:478:34
 msgid "Penalties count: %1; total penalties amount: %2"
 msgstr ""
 
@@ -1066,7 +1071,7 @@ msgstr ""
 msgid "Pinfu"
 msgstr "핑후"
 
-#: app/pages/RatingTable.tsx:543:7
+#: app/pages/RatingTable.tsx:586:7
 msgid "Place"
 msgstr "순위"
 
@@ -1086,24 +1091,24 @@ msgstr "남입 / 서입"
 msgid "Play only east rounds"
 msgstr "동장전만 진행함"
 
-#: app/pages/RatingTable.tsx:544:7
+#: app/pages/RatingTable.tsx:587:7
 msgid "Player ID"
 msgstr "작사 ID"
 
-#: app/pages/RatingTable.tsx:545:7
+#: app/pages/RatingTable.tsx:588:7
 msgid "Player name"
 msgstr "작사 이름"
 
-#: app/pages/PlayerStats.tsx:99:22
+#: app/pages/PlayerStats.tsx:117:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%2\"의 작사 %1의 통계"
 
-#: app/pages/PlayerStats.tsx:98:37
+#: app/pages/PlayerStats.tsx:116:37
 msgid "Player stats"
 msgstr "작사 통계"
 
-#: app/pages/RatingTable.tsx:371:30
+#: app/pages/RatingTable.tsx:402:30
 msgid "Players having a required minimum of games"
 msgstr "최소 대국 수를 채운 작사"
 
@@ -1112,22 +1117,22 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "이벤트 등록 작사 목록"
 
-#: app/pages/PlayerStats.tsx:166:24
+#: app/pages/PlayerStats.tsx:184:24
 msgid "Previous game"
 msgstr "이전 대국"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:242:20
+#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:269:20
 msgid "Rating"
 msgstr "점수"
 
-#: app/pages/RatingTable.tsx:548:7
+#: app/pages/RatingTable.tsx:591:7
 msgid "Rating points"
 msgstr "점수"
 
 #: app/components/AppFooter.tsx:71:20 app/pages/Achievements.tsx:693:35
-#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:135:35
-#: app/pages/RatingTable.tsx:150:20 app/pages/RatingTable.tsx:152:22
-#: app/pages/RatingTable.tsx:163:33
+#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:140:35
+#: app/pages/RatingTable.tsx:183:20 app/pages/RatingTable.tsx:185:22
+#: app/pages/RatingTable.tsx:196:33
 msgid "Rating table"
 msgstr "순위표"
 
@@ -1136,11 +1141,11 @@ msgctxt "Event menu"
 msgid "Rating table"
 msgstr "순위표"
 
-#: app/pages/RatingTable.tsx:138:12
+#: app/pages/RatingTable.tsx:143:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "관리자에 의해 순위표가 숨겨졌습니다"
 
-#: app/pages/RatingTable.tsx:155:24
+#: app/pages/RatingTable.tsx:188:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 순위표"
 
@@ -1273,7 +1278,7 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/pages/RatingTable.tsx:180:18
+#: app/pages/RatingTable.tsx:213:18
 msgid "Save as CSV"
 msgstr "CSV로 저장"
 
@@ -1328,15 +1333,15 @@ msgstr "소삼원"
 msgid "Shousuushii"
 msgstr "소사희"
 
-#: app/components/MainMenu.tsx:186:34 app/components/MainMenu.tsx:187:22
+#: app/components/MainMenu.tsx:187:34 app/components/MainMenu.tsx:188:22
 msgid "Sign in"
 msgstr "로그인"
 
-#: app/components/MainMenu.tsx:196:34 app/components/MainMenu.tsx:197:22
+#: app/components/MainMenu.tsx:197:34 app/components/MainMenu.tsx:198:22
 msgid "Sign up"
 msgstr "회원가입"
 
-#: app/Layout.tsx:177:38
+#: app/Layout.tsx:178:38
 msgid ""
 "Sigrun is the statistics viewer for riichi mahjong club games and "
 "tournaments powered by Mahjong Pantheon system. It provides game logs, "
@@ -1346,7 +1351,7 @@ msgstr ""
 "계 서비스입니다. 본 서비스를 통해 대국 로그, 작사 통계, 순위표 및 업적 목록"
 "을 확인할 수 있습니다."
 
-#: app/Layout.tsx:176:32
+#: app/Layout.tsx:177:32
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: 리치 마작 점수 및 통계"
 
@@ -1399,7 +1404,7 @@ msgstr ""
 "비멘젠 상태로 탕야오 화료 시 1판 인정. 비활성 시 비멘젠 탕야오를 인정하지 않"
 "음"
 
-#: app/pages/RatingTable.tsx:213:22 app/pages/RatingTable.tsx:546:21
+#: app/pages/RatingTable.tsx:246:22 app/pages/RatingTable.tsx:589:21
 msgid "Team"
 msgstr "팀"
 
@@ -1475,7 +1480,7 @@ msgstr "타이머의 시작 값. 타이머가 종료될 경우 하기의 대국 
 msgid "To damaten hands: "
 msgstr "다마텐 상대: "
 
-#: app/components/MainMenu.tsx:167:32 app/components/MainMenu.tsx:168:20
+#: app/components/MainMenu.tsx:168:32 app/components/MainMenu.tsx:169:20
 msgid "To events list"
 msgstr "이벤트 목록"
 
@@ -1487,11 +1492,11 @@ msgstr "리치 상대: "
 msgid "To open hands: "
 msgstr "비멘젠 상대: "
 
-#: app/components/MainMenu.tsx:271:33 app/components/MainMenu.tsx:272:20
+#: app/components/MainMenu.tsx:272:33 app/components/MainMenu.tsx:273:20
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:261:33 app/components/MainMenu.tsx:262:20
+#: app/components/MainMenu.tsx:262:33 app/components/MainMenu.tsx:263:20
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 
@@ -1568,7 +1573,7 @@ msgstr ""
 msgid "View game"
 msgstr "대국 보기"
 
-#: app/pages/PlayerStats.tsx:159:16
+#: app/pages/PlayerStats.tsx:177:16
 msgid "View selected game details"
 msgstr "해당 대국 세부내용 보기"
 
@@ -1606,7 +1611,7 @@ msgstr "승리 통계"
 msgid "With damaten: "
 msgstr "다마텐화료: "
 
-#: app/pages/RatingTable.tsx:379:24
+#: app/pages/RatingTable.tsx:410:24
 msgid "With min games"
 msgstr "최소 대국 수 달성"
 

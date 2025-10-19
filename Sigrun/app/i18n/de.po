@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 17:58Z\n"
+"POT-Creation-Date: 2025-10-19 20:10Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -264,12 +264,12 @@ msgstr "Replay hinzufügen"
 msgid "Agariyame"
 msgstr ""
 
-#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:152:51
+#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:185:51
 #: app/pages/RecentGames.tsx:88:49
 msgid "Aggregated event"
 msgstr "Zusammengefasstes Event"
 
-#: app/pages/RatingTable.tsx:361:24
+#: app/pages/RatingTable.tsx:392:24
 msgid "All players"
 msgstr "Alle Spieler"
 
@@ -309,8 +309,8 @@ msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net."
 msgstr ""
-"Punktewert vn Shuugi. Shuugi können in den Turniereinstellungen von tenhou."
-"net konfiguriert werden."
+"Punktewert vn Shuugi. Shuugi können in den Turniereinstellungen von "
+"tenhou.net konfiguriert werden."
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:52:22
 msgid ""
@@ -341,11 +341,11 @@ msgstr "Durchschnittlicher Wert bei Deal-in:"
 msgid "Average dora per hand: "
 msgstr "durchschnittliche Dora:"
 
-#: app/pages/RatingTable.tsx:331:20 app/pages/RatingTable.tsx:549:7
+#: app/pages/RatingTable.tsx:362:20 app/pages/RatingTable.tsx:592:7
 msgid "Average place"
 msgstr "Durchschnittliche Platzierung"
 
-#: app/pages/RatingTable.tsx:550:7
+#: app/pages/RatingTable.tsx:593:7
 msgid "Average points"
 msgstr "Durchschnittspunkte"
 
@@ -353,7 +353,7 @@ msgstr "Durchschnittspunkte"
 msgid "Average points lost: "
 msgstr "Durchschnittliche verlorene Punkte:"
 
-#: app/pages/RatingTable.tsx:302:20
+#: app/pages/RatingTable.tsx:339:20
 msgid "Average score"
 msgstr "Durchschnittliche Gewinnpunkte"
 
@@ -433,8 +433,8 @@ msgstr ""
 msgid "Chinroutou"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:271:22 app/pages/RatingTable.tsx:503:34
-#: app/pages/RatingTable.tsx:547:24
+#: app/pages/RatingTable.tsx:314:22 app/pages/RatingTable.tsx:546:34
+#: app/pages/RatingTable.tsx:590:24
 msgid "Chips"
 msgstr "Shuugi"
 
@@ -462,7 +462,7 @@ msgstr ""
 msgid "Chuuren poutou 9-side"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:206:24
+#: app/pages/PlayerStats.tsx:224:24
 msgid "Close game preview"
 msgstr "Spiel Vorschau schließen"
 
@@ -470,7 +470,7 @@ msgstr "Spiel Vorschau schließen"
 msgid "Collect riichi bets by atamahane"
 msgstr "Riichieinsätze nach Atamahane verteilen"
 
-#: app/components/MainMenu.tsx:161:33
+#: app/components/MainMenu.tsx:162:33
 msgid "Common actions"
 msgstr "Zuletzt genutzt"
 
@@ -575,7 +575,7 @@ msgstr "Unentschieden: %1"
 msgid "Draws: "
 msgstr "Unentschieden:"
 
-#: app/components/MainMenu.tsx:176:34 app/components/MainMenu.tsx:177:22
+#: app/components/MainMenu.tsx:177:34 app/components/MainMenu.tsx:178:22
 msgid "Edit my profile"
 msgstr "Profil bearbeiten"
 
@@ -658,14 +658,19 @@ msgstr "Gültigkeitsdauer des Spiels(in Stunden)"
 msgid "Game preview"
 msgstr "Spielvorschau"
 
-#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:491:32
-#: app/pages/RatingTable.tsx:551:7
+#: app/components/RatingGraph.tsx:161:21 app/pages/RatingTable.tsx:526:32
+#: app/pages/RatingTable.tsx:594:7
 msgid "Games played"
 msgstr "Anzahl an Spielen"
 
 #: app/components/PlayerStatsListing.tsx:54:16
 msgid "Games played: "
 msgstr "Gespielte Matches:"
+
+#: app/pages/RatingTable.tsx:291:20
+#, fuzzy
+msgid "Games+Rating"
+msgstr "Ranking"
 
 #: app/pages/Achievements.tsx:344:20
 msgid "Given for collecting a yakuman during tournament."
@@ -909,7 +914,7 @@ msgstr ""
 msgid "Kuitan"
 msgstr ""
 
-#: app/components/MainMenu.tsx:218:33 app/components/MainMenu.tsx:219:20
+#: app/components/MainMenu.tsx:219:33 app/components/MainMenu.tsx:220:20
 msgid "Language"
 msgstr "Sprache"
 
@@ -928,7 +933,7 @@ msgstr ""
 msgid "Last series"
 msgstr "Letzte Serie:"
 
-#: app/pages/Achievements.tsx:728:18 app/pages/PlayerStats.tsx:116:18
+#: app/pages/Achievements.tsx:728:18 app/pages/PlayerStats.tsx:134:18
 msgid "Last update: %1"
 msgstr "Letztes Update: %1"
 
@@ -992,7 +997,7 @@ msgstr ""
 msgid "Nagashi: %1"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:202:24
 msgid "Next game"
 msgstr "Nächstes Spiel"
 
@@ -1025,7 +1030,7 @@ msgstr ""
 "Kein Multiron, erster Spieler nach dem Spieler der hineingespielt hat, "
 "bekommt den Gewinn."
 
-#: app/components/MainMenu.tsx:205:32 app/components/MainMenu.tsx:206:20
+#: app/components/MainMenu.tsx:206:32 app/components/MainMenu.tsx:207:20
 msgid "Open assistant"
 msgstr "Mobile App öffnen"
 
@@ -1073,7 +1078,7 @@ msgstr "Punkte und Bezahlen"
 msgid "Penalties"
 msgstr "Strafen"
 
-#: app/pages/RatingTable.tsx:447:34
+#: app/pages/RatingTable.tsx:478:34
 msgid "Penalties count: %1; total penalties amount: %2"
 msgstr ""
 
@@ -1081,7 +1086,7 @@ msgstr ""
 msgid "Pinfu"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:543:7
+#: app/pages/RatingTable.tsx:586:7
 msgid "Place"
 msgstr "Platzierung"
 
@@ -1101,26 +1106,26 @@ msgstr "Weitere Runden erlauben"
 msgid "Play only east rounds"
 msgstr "Nur Ostrunden"
 
-#: app/pages/RatingTable.tsx:544:7
+#: app/pages/RatingTable.tsx:587:7
 msgid "Player ID"
 msgstr "Spieler ID"
 
-#: app/pages/RatingTable.tsx:545:7
+#: app/pages/RatingTable.tsx:588:7
 msgid "Player name"
 msgstr "Spielername"
 
-#: app/pages/PlayerStats.tsx:99:22
+#: app/pages/PlayerStats.tsx:117:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 "Spieler Statistiken für %1 im Turnier \"%2\" von Mahjong Pantheon zur "
 "Verfügung gestellt"
 
-#: app/pages/PlayerStats.tsx:98:37
+#: app/pages/PlayerStats.tsx:116:37
 msgid "Player stats"
 msgstr "Spieler Statistiken"
 
-#: app/pages/RatingTable.tsx:371:30
+#: app/pages/RatingTable.tsx:402:30
 msgid "Players having a required minimum of games"
 msgstr "Spieler haben das Spielanzahlminimum erreicht"
 
@@ -1129,22 +1134,22 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "Zum Event angemeldete Spieler"
 
-#: app/pages/PlayerStats.tsx:166:24
+#: app/pages/PlayerStats.tsx:184:24
 msgid "Previous game"
 msgstr "Letztes Spiel"
 
-#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:242:20
+#: app/components/RatingGraph.tsx:171:21 app/pages/RatingTable.tsx:269:20
 msgid "Rating"
 msgstr "Ranking"
 
-#: app/pages/RatingTable.tsx:548:7
+#: app/pages/RatingTable.tsx:591:7
 msgid "Rating points"
 msgstr "Ranglistenpunkte"
 
 #: app/components/AppFooter.tsx:71:20 app/pages/Achievements.tsx:693:35
-#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:135:35
-#: app/pages/RatingTable.tsx:150:20 app/pages/RatingTable.tsx:152:22
-#: app/pages/RatingTable.tsx:163:33
+#: app/pages/EventList.tsx:116:67 app/pages/RatingTable.tsx:140:35
+#: app/pages/RatingTable.tsx:183:20 app/pages/RatingTable.tsx:185:22
+#: app/pages/RatingTable.tsx:196:33
 msgid "Rating table"
 msgstr "Rangliste"
 
@@ -1153,11 +1158,11 @@ msgctxt "Event menu"
 msgid "Rating table"
 msgstr "Rangliste"
 
-#: app/pages/RatingTable.tsx:138:12
+#: app/pages/RatingTable.tsx:143:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "Ranglistenansicht vom Administrator deaktiviert"
 
-#: app/pages/RatingTable.tsx:155:24
+#: app/pages/RatingTable.tsx:188:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Rangliste des Turniers \"%1\" von Mahjong Pantheon zu Verfügung gestellt"
@@ -1295,7 +1300,7 @@ msgstr ""
 msgid "Sanshoku doukou"
 msgstr ""
 
-#: app/pages/RatingTable.tsx:180:18
+#: app/pages/RatingTable.tsx:213:18
 msgid "Save as CSV"
 msgstr "Als CSV speichern"
 
@@ -1351,15 +1356,15 @@ msgstr ""
 msgid "Shousuushii"
 msgstr ""
 
-#: app/components/MainMenu.tsx:186:34 app/components/MainMenu.tsx:187:22
+#: app/components/MainMenu.tsx:187:34 app/components/MainMenu.tsx:188:22
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: app/components/MainMenu.tsx:196:34 app/components/MainMenu.tsx:197:22
+#: app/components/MainMenu.tsx:197:34 app/components/MainMenu.tsx:198:22
 msgid "Sign up"
 msgstr "Konto erstellen"
 
-#: app/Layout.tsx:177:38
+#: app/Layout.tsx:178:38
 msgid ""
 "Sigrun is the statistics viewer for riichi mahjong club games and "
 "tournaments powered by Mahjong Pantheon system. It provides game logs, "
@@ -1368,7 +1373,7 @@ msgstr ""
 "Sigrun zeigt Statistiken, Wertungen, Spielaufzeichnungen und Grafiken für "
 "Klub Spiele und Turniere an."
 
-#: app/Layout.tsx:176:32
+#: app/Layout.tsx:177:32
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: Riichi Mahjong Wertung und Statistiken"
 
@@ -1418,7 +1423,7 @@ msgid ""
 "open hand."
 msgstr "Tanyao gilt bei geöffneter Hand."
 
-#: app/pages/RatingTable.tsx:213:22 app/pages/RatingTable.tsx:546:21
+#: app/pages/RatingTable.tsx:246:22 app/pages/RatingTable.tsx:589:21
 msgid "Team"
 msgstr "Team"
 
@@ -1498,7 +1503,7 @@ msgstr ""
 msgid "To damaten hands: "
 msgstr "In Damaten Hände:"
 
-#: app/components/MainMenu.tsx:167:32 app/components/MainMenu.tsx:168:20
+#: app/components/MainMenu.tsx:168:32 app/components/MainMenu.tsx:169:20
 msgid "To events list"
 msgstr "Events"
 
@@ -1510,11 +1515,11 @@ msgstr "In Hände mit Riichi:"
 msgid "To open hands: "
 msgstr "In offene Hände:i"
 
-#: app/components/MainMenu.tsx:271:33 app/components/MainMenu.tsx:272:20
+#: app/components/MainMenu.tsx:272:33 app/components/MainMenu.tsx:273:20
 msgid "Toggle color scheme"
 msgstr "Farbschema"
 
-#: app/components/MainMenu.tsx:261:33 app/components/MainMenu.tsx:262:20
+#: app/components/MainMenu.tsx:262:33 app/components/MainMenu.tsx:263:20
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 
@@ -1591,7 +1596,7 @@ msgstr ""
 msgid "View game"
 msgstr "Spiel ansehen"
 
-#: app/pages/PlayerStats.tsx:159:16
+#: app/pages/PlayerStats.tsx:177:16
 msgid "View selected game details"
 msgstr "Details für ausgewähltes Spiel"
 
@@ -1630,7 +1635,7 @@ msgstr "Gewinnstatistik"
 msgid "With damaten: "
 msgstr "Mit Damaten:"
 
-#: app/pages/RatingTable.tsx:379:24
+#: app/pages/RatingTable.tsx:410:24
 msgid "With min games"
 msgstr "Mit min. Spielen"
 

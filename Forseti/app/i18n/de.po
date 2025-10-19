@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-07 21:43Z\n"
+"POT-Creation-Date: 2025-10-19 20:10Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -175,6 +175,10 @@ msgstr "Daten zu gespielten Matches und Turnieren"
 msgid "Allow abortive draws"
 msgstr "Abbruch durch Unentschieden erlauben"
 
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:82:16
+msgid "Allow adding of replays manually"
+msgstr ""
+
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:82:16
 msgid "Allow bankruptcy"
 msgstr "Mit Tobi"
@@ -203,7 +207,7 @@ msgstr "Höhe der Strafe die ein Spieler nach Uma für einen Chombo erhält."
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "Strafe für diejenigen, die im Spiel kein einziges Mal gewonnen haben."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:95:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:102:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net. Set to 0 to disable chips."
@@ -322,7 +326,7 @@ msgstr "Runde abbrechen"
 msgid "Cancelled: "
 msgstr "Abbrechen"
 
-#: app/pages/OwnedEventsEdit/index.tsx:297:32
+#: app/pages/OwnedEventsEdit/index.tsx:298:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
 #: app/pages/ProfileManage.tsx:294:32 app/pages/ProfileManageAdmin.tsx:317:21
@@ -353,7 +357,7 @@ msgstr ""
 msgid "Chinroutou"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:94:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:101:16
 msgid "Chips value"
 msgstr "Shuugi Wert"
 
@@ -419,7 +423,7 @@ msgid "Confirm your email"
 msgstr "Email bestätigen"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:106:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:113:22
 msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "Anzahl von Spielen in einer Serie. 0 deaktiviert Serienfunktion."
@@ -549,8 +553,8 @@ msgstr "Uma teilen"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:81:18
 #: app/pages/GamesControl/index.tsx:94:14 app/pages/OwnedEvents.tsx:91:14
-#: app/pages/OwnedEventsEdit/index.tsx:203:18
-#: app/pages/OwnedEventsEdit/index.tsx:234:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:204:18
+#: app/pages/OwnedEventsEdit/index.tsx:235:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:76:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -658,7 +662,7 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Spiel konnte nicht definalisiert werden"
 
-#: app/pages/OwnedEventsEdit/index.tsx:197:29
+#: app/pages/OwnedEventsEdit/index.tsx:198:29
 msgid "Failed to fetch event data"
 msgstr "Event Informationen konnten nicht abgerufen werden"
 
@@ -716,7 +720,7 @@ msgstr ""
 "Fehler beim Speichern  der Sitzordnung: Serverfehler oder Netzwerk nicht "
 "erreichbar"
 
-#: app/pages/OwnedEventsEdit/index.tsx:229:27
+#: app/pages/OwnedEventsEdit/index.tsx:230:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 "Event konnte nicht gespeichert werden: Server Fehler oder Netzwerk nicht "
@@ -778,7 +782,7 @@ msgstr "Event beenden"
 msgid "Finish event."
 msgstr "Event beenden"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:145:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:100:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
@@ -787,7 +791,7 @@ msgstr ""
 "Fixe Strafpunkte der Ersatzspielern, unabhängig des Matchergebnisses, "
 "zugewiesen wird."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:128:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:135:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:90:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
@@ -796,12 +800,12 @@ msgstr ""
 "Fixer Punktwert der Ersatzspielern, unabhängig des Matchergebnisses, "
 "zugewiesen wird."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:127:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:134:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:89:16
 msgid "Fixed score applied to replacement player"
 msgstr "Fixe Punktzahl für Ersatzspieler"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:137:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:144:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:99:16
 msgid "Fixed uma for replacement player"
 msgstr "Uma für Ersatzspieler"
@@ -828,7 +832,7 @@ msgstr[1] "%1 Fehler wurden gefunden"
 msgid "Game duration"
 msgstr "Spieldauer"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:84:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:91:16
 msgid "Game expiration time (in hours)"
 msgstr "Gültigkeitsdauer des Spiels(in Stunden)"
 
@@ -908,6 +912,13 @@ msgid ""
 msgstr ""
 "Auszeichnungen wird für alle Nutzer öffentlich angezeigt. Ansonsten nur für "
 "Administratoren"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:83:22
+msgid ""
+"If checked, any player participating in event will be able to add new "
+"replays through user interface. Disable this if you have any external tool "
+"which adds replays automatically."
+msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:139:24
 msgid ""
@@ -1006,7 +1017,7 @@ msgstr "Startranking"
 msgid "Instructions"
 msgstr "Anleitung"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:92:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
 "be added to the rating. Set to 0 to disable expiration."
@@ -1200,14 +1211,14 @@ msgid "Min arbitrary penalty score"
 msgstr "Niedrigste Strafe"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:47:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:117:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:124:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr ""
 "Minimalanzahl der benötigten Spiele um in die Wertung aufgenommen zu werden."
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:46:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:116:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:123:16
 msgid "Minimal games count"
 msgstr "Mindestanzahl an Spielen"
 
@@ -1839,7 +1850,7 @@ msgstr ""
 msgid "Sanshoku doukou"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:297:60
+#: app/pages/OwnedEventsEdit/index.tsx:298:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
 #: app/pages/ProfileManage.tsx:294:60
@@ -1901,7 +1912,7 @@ msgid "Selected file is too big. Please select a file not bigger than 256KB"
 msgstr "Ausgewählte Datei darf nicht grösser als 256KB sein"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:35:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:105:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:112:16
 msgid "Series length"
 msgstr "Länge der Serie"
 
