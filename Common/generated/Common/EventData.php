@@ -88,6 +88,10 @@ class EventData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.common.PlatformType platform_id = 19;</code>
      */
     protected $platform_id = 0;
+    /**
+     * Generated from protobuf field <code>bool allow_manual_add_replay = 20;</code>
+     */
+    protected $allow_manual_add_replay = false;
 
     /**
      * Constructor.
@@ -115,6 +119,7 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     @type bool $achievements_shown
      *     @type bool $allow_view_other_tables
      *     @type int $platform_id
+     *     @type bool $allow_manual_add_replay
      * }
      */
     public function __construct($data = NULL) {
@@ -524,6 +529,28 @@ class EventData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkEnum($var, \Common\PlatformType::class);
         $this->platform_id = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool allow_manual_add_replay = 20;</code>
+     * @return bool
+     */
+    public function getAllowManualAddReplay()
+    {
+        return $this->allow_manual_add_replay;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool allow_manual_add_replay = 20;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setAllowManualAddReplay($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->allow_manual_add_replay = $var;
 
         return $this;
     }

@@ -55,6 +55,7 @@ class EventsController extends Controller
      * @param bool $allowViewOtherTables If other tables can be viewed during ongoing game
      * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
+     * @param bool $allowManualAddReplay If manual add of replay is allowed
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -77,7 +78,8 @@ class EventsController extends Controller
         $achievementsShown,
         $allowViewOtherTables,
         $platformId,
-        $rulesetConfig
+        $rulesetConfig,
+        $allowManualAddReplay
     ) {
         $this->_log->info('Creating new event...');
 
@@ -108,6 +110,7 @@ class EventsController extends Controller
             ->setMinGamesCount($minGamesCount)
             ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
             ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
+            ->setAllowManualAddReplay($allowManualAddReplay ? 1 : 0)
             ->setStatHost($statHost)
         ;
 
@@ -206,6 +209,7 @@ class EventsController extends Controller
      * @param bool $allowViewOtherTables If other tables can be viewed during ongoing game
      * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
+     * @param bool $allowManualAddReplay If manual add of replay is allowed
      * @return bool
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -228,7 +232,8 @@ class EventsController extends Controller
         $achievementsShown,
         $allowViewOtherTables,
         $platformId,
-        $rulesetConfig
+        $rulesetConfig,
+        $allowManualAddReplay
     ) {
         $this->_log->info('Updating event with id #' . $id);
 
@@ -257,6 +262,7 @@ class EventsController extends Controller
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
+            ->setAllowManualAddReplay($allowManualAddReplay ? 1 : 0)
             ->setRulesetConfig(new Ruleset($rulesetConfig))
         ;
 
@@ -335,6 +341,7 @@ class EventsController extends Controller
             'isListed' => (bool)$event->getIsListed(),
             'isRatingShown' => !$event->getHideResults(),
             'allowViewOtherTables' => (bool)$event->getAllowViewOtherTables(),
+            'allowManualAddReplay' => (bool)$event->getAllowManualAddReplay(),
             'achievementsShown' => !$event->getHideAchievements(),
             'isFinished' => (bool)$event->getIsFinished(),
             'platformId' => $event->getPlatformId()

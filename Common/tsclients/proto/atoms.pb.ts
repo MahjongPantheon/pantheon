@@ -116,6 +116,7 @@ export interface Event {
   achievementsShown: boolean;
   withYakitori: boolean;
   platformId: PlatformType;
+  allowManualAddReplay: boolean;
 }
 
 export interface MyEvent {
@@ -455,6 +456,7 @@ export interface EventData {
   achievementsShown: boolean;
   allowViewOtherTables: boolean;
   platformId: PlatformType;
+  allowManualAddReplay: boolean;
 }
 
 export interface TableState {
@@ -1582,6 +1584,7 @@ export const Event = {
       achievementsShown: false,
       withYakitori: false,
       platformId: PlatformType._fromInt(0),
+      allowManualAddReplay: false,
       ...msg,
     };
   },
@@ -1640,6 +1643,9 @@ export const Event = {
     }
     if (msg.platformId && PlatformType._toInt(msg.platformId)) {
       writer.writeEnum(17, PlatformType._toInt(msg.platformId));
+    }
+    if (msg.allowManualAddReplay) {
+      writer.writeBool(18, msg.allowManualAddReplay);
     }
     return writer;
   },
@@ -1713,6 +1719,10 @@ export const Event = {
         }
         case 17: {
           msg.platformId = PlatformType._fromInt(reader.readEnum());
+          break;
+        }
+        case 18: {
+          msg.allowManualAddReplay = reader.readBool();
           break;
         }
         default: {
@@ -5642,6 +5652,7 @@ export const EventData = {
       achievementsShown: false,
       allowViewOtherTables: false,
       platformId: PlatformType._fromInt(0),
+      allowManualAddReplay: false,
       ...msg,
     };
   },
@@ -5703,6 +5714,9 @@ export const EventData = {
     }
     if (msg.platformId && PlatformType._toInt(msg.platformId)) {
       writer.writeEnum(19, PlatformType._toInt(msg.platformId));
+    }
+    if (msg.allowManualAddReplay) {
+      writer.writeBool(20, msg.allowManualAddReplay);
     }
     return writer;
   },
@@ -5783,6 +5797,10 @@ export const EventData = {
         }
         case 19: {
           msg.platformId = PlatformType._fromInt(reader.readEnum());
+          break;
+        }
+        case 20: {
+          msg.allowManualAddReplay = reader.readBool();
           break;
         }
         default: {
@@ -8542,6 +8560,7 @@ export const EventJSON = {
       achievementsShown: false,
       withYakitori: false,
       platformId: PlatformType._fromInt(0),
+      allowManualAddReplay: false,
       ...msg,
     };
   },
@@ -8598,6 +8617,9 @@ export const EventJSON = {
     }
     if (msg.platformId && PlatformTypeJSON._toInt(msg.platformId)) {
       json["platformId"] = msg.platformId;
+    }
+    if (msg.allowManualAddReplay) {
+      json["allowManualAddReplay"] = msg.allowManualAddReplay;
     }
     return json;
   },
@@ -8671,6 +8693,11 @@ export const EventJSON = {
     const _platformId_ = json["platformId"] ?? json["platform_id"];
     if (_platformId_) {
       msg.platformId = PlatformType._fromInt(_platformId_);
+    }
+    const _allowManualAddReplay_ =
+      json["allowManualAddReplay"] ?? json["allow_manual_add_replay"];
+    if (_allowManualAddReplay_) {
+      msg.allowManualAddReplay = _allowManualAddReplay_;
     }
     return msg;
   },
@@ -12077,6 +12104,7 @@ export const EventDataJSON = {
       achievementsShown: false,
       allowViewOtherTables: false,
       platformId: PlatformType._fromInt(0),
+      allowManualAddReplay: false,
       ...msg,
     };
   },
@@ -12143,6 +12171,9 @@ export const EventDataJSON = {
     }
     if (msg.platformId && PlatformTypeJSON._toInt(msg.platformId)) {
       json["platformId"] = msg.platformId;
+    }
+    if (msg.allowManualAddReplay) {
+      json["allowManualAddReplay"] = msg.allowManualAddReplay;
     }
     return json;
   },
@@ -12220,6 +12251,11 @@ export const EventDataJSON = {
     const _platformId_ = json["platformId"] ?? json["platform_id"];
     if (_platformId_) {
       msg.platformId = PlatformType._fromInt(_platformId_);
+    }
+    const _allowManualAddReplay_ =
+      json["allowManualAddReplay"] ?? json["allow_manual_add_replay"];
+    if (_allowManualAddReplay_) {
+      msg.allowManualAddReplay = _allowManualAddReplay_;
     }
     return msg;
   },

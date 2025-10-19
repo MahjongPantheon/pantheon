@@ -463,6 +463,7 @@ class EventModel extends Model
             ->select('event.min_games_count', 'min_games_count')
             ->select('event.series_length', 'series_length')
             ->select('event.ruleset_config', 'ruleset_config')
+            ->select('event.manual_add_replay', 'manual_add_replay')
             ->select('event.platform_id', 'platform_id')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
@@ -505,6 +506,7 @@ class EventModel extends Model
                     'hasSeries' => $event['series_length'] > 0,
                     'isRatingShown' => !$event['hide_results'],
                     'achievementsShown' => !$event['hide_achievements'],
+                    'allowManualAddReplay' => !!$event['manual_add_replay'],
                     'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                     'withYakitori' => !empty($ruleset) && !empty($ruleset['withYakitori']),
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
@@ -539,6 +541,7 @@ class EventModel extends Model
             ->select('event.hide_achievements', 'hide_achievements')
             ->select('event.ruleset_config', 'ruleset_config')
             ->select('event.series_length', 'series_length')
+            ->select('event.manual_add_replay', 'manual_add_replay')
             ->select('event.platform_id', 'platform_id')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
@@ -562,6 +565,7 @@ class EventModel extends Model
                 'isTeam' => !!$event['is_team'],
                 'isRatingShown' => !$event['hide_results'],
                 'achievementsShown' => !$event['hide_achievements'],
+                'allowManualAddReplay' => !!$event['manual_add_replay'],
                 'hasSeries' => $event['series_length'] > 0,
                 'withChips' => !empty($ruleset) && !empty($ruleset['chipsValue']) && $ruleset['chipsValue'] > 0,
                 'withYakitori' => !empty($ruleset) && !empty($ruleset['withYakitori']),

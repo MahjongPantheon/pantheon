@@ -30,6 +30,7 @@ export type Globals = {
   withChips: boolean;
   minGamesCount: number;
   platformType: PlatformType;
+  allowManualAddReplay: boolean;
 };
 export const globals: { data: Globals; setData: (data: Partial<Globals>) => void } = {
   data: {
@@ -44,6 +45,7 @@ export const globals: { data: Globals; setData: (data: Partial<Globals>) => void
     withChips: false,
     minGamesCount: 0,
     platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+    allowManualAddReplay: false,
   },
   setData: () => {},
 };
