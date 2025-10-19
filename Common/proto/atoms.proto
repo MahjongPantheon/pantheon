@@ -120,6 +120,7 @@ message Event {
   bool achievements_shown = 15;
   bool with_yakitori = 16;
   PlatformType platform_id = 17;
+  bool allow_manual_add_replay = 18;
 }
 
 message MyEvent {
