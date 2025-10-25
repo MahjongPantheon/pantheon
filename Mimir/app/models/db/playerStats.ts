@@ -1,8 +1,8 @@
-import { Database } from '../../database/db';
+import { DatabaseService } from 'services/Database';
 import { scheduleRebuildSinglePlayerStats } from './jobsQueue';
 
-export async function invalidateByPlayer(db: Database, playerId: number) {
-  const stats = await db
+export async function invalidateByPlayer(db: DatabaseService, playerId: number) {
+  const stats = await db.client
     .selectFrom('player_stats')
     .where('player_id', '=', playerId)
     .select(({ fn }) => fn.count('id').as('cnt'))

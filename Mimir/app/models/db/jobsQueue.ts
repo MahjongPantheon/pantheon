@@ -1,9 +1,9 @@
-import { Database } from '../../database/db';
 import moment from 'moment-timezone';
 import { sql } from 'kysely';
+import { DatabaseService } from 'services/Database';
 
-export async function getPendingJobs(db: Database, limit: number) {
-  return db
+export async function getPendingJobs(db: DatabaseService, limit: number) {
+  return db.client
     .selectFrom('jobs_queue')
     .selectAll()
     .orderBy('created_at', 'asc')
@@ -11,8 +11,8 @@ export async function getPendingJobs(db: Database, limit: number) {
     .execute();
 }
 
-export async function scheduleRebuildAchievements(db: Database, eventId: number) {
-  return await db
+export async function scheduleRebuildAchievements(db: DatabaseService, eventId: number) {
+  return await db.client
     .insertInto('jobs_queue')
     .values({
       created_at: moment.utc().format('YYYY-MM-DD hh:mm:ss'),
@@ -22,15 +22,15 @@ export async function scheduleRebuildAchievements(db: Database, eventId: number)
     .execute();
 }
 
-export async function scheduleRebuildPlayersStats(db: Database, eventId: number) {
+export async function scheduleRebuildPlayersStats(db: DatabaseService, eventId: number) {
   return sql`
     insert into jobs_queue (created_at, job_name, job_arguments)
     select now(), 'playerStats', '{"playerId":' || player_id || ',"eventId":' || event_id || '}' from event_registered_players where event_id = ${eventId}
-    `.execute(db);
+    `.execute(db.client);
 }
 
-export async function scheduleRebuildSinglePlayerStats(db: Database, playerId: number) {
-  return await db
+export async function scheduleRebuildSinglePlayerStats(db: DatabaseService, playerId: number) {
+  return await db.client
     .insertInto('jobs_queue')
     .values({
       created_at: moment.utc().format('YYYY-MM-DD hh:mm:ss'),

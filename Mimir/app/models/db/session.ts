@@ -1,4 +1,3 @@
-import { Database } from '../../database/db';
 import { Database as DB, PlayerHistory, Session, SessionPlayer } from '../../database/schema';
 import { SessionStatus } from 'tsclients/proto/atoms.pb';
 import { OrderByExpression } from 'kysely';
@@ -11,13 +10,18 @@ import {
 } from './playerHistory';
 import { Ruleset } from '../../rulesets/ruleset';
 import { SessionState } from '../../helpers/SessionState';
+import { DatabaseService } from 'services/Database';
 
-export async function findById(db: Database, id: number) {
-  return db.selectFrom('session').selectAll().where('id', '=', id).execute();
+export async function findById(db: DatabaseService, id: number) {
+  return db.client.selectFrom('session').selectAll().where('id', '=', id).execute();
 }
 
-export async function findByReplayHashAndEvent(db: Database, eventId: number, replayHash: string) {
-  return db
+export async function findByReplayHashAndEvent(
+  db: DatabaseService,
+  eventId: number,
+  replayHash: string
+) {
+  return db.client
     .selectFrom('session')
     .selectAll()
     .where('event_id', '=', eventId)
@@ -25,16 +29,16 @@ export async function findByReplayHashAndEvent(db: Database, eventId: number, re
     .execute();
 }
 
-export async function findAllInProgress(db: Database) {
-  return db
+export async function findAllInProgress(db: DatabaseService) {
+  return db.client
     .selectFrom('session')
     .where('status', '=', SessionStatus.SESSION_STATUS_INPROGRESS)
     .execute();
 }
 
 // TODO: memoize
-export async function findByRepresentationalHash(db: Database, hashList: string[]) {
-  return db
+export async function findByRepresentationalHash(db: DatabaseService, hashList: string[]) {
+  return db.client
     .selectFrom('session')
     .selectAll()
     .where('representational_hash', 'in', hashList)
@@ -42,7 +46,7 @@ export async function findByRepresentationalHash(db: Database, hashList: string[
 }
 
 export async function findByEventAndStatus(
-  db: Database,
+  db: DatabaseService,
   eventIds: number[],
   status: SessionStatus[],
   offset = 0,
@@ -50,7 +54,7 @@ export async function findByEventAndStatus(
   orderBy: OrderByExpression<DB, 'session', Session> = 'id',
   order: 'asc' | 'desc' = 'desc'
 ) {
-  let qb = db
+  let qb = db.client
     .selectFrom('session')
     .selectAll()
     .where('status', 'in', status)
@@ -61,8 +65,8 @@ export async function findByEventAndStatus(
   return qb.offset(offset).orderBy(orderBy, order).execute();
 }
 
-export async function getPlayersSeatingInEvent(db: Database, eventId: number) {
-  return db
+export async function getPlayersSeatingInEvent(db: DatabaseService, eventId: number) {
+  return db.client
     .selectFrom('session')
     .leftJoin('session_player', 'session_player.session_id', 'session.id')
     .select('session_player.player_id')
@@ -74,14 +78,14 @@ export async function getPlayersSeatingInEvent(db: Database, eventId: number) {
 }
 
 export async function findByPlayerAndEvent(
-  db: Database,
+  db: DatabaseService,
   playerId: number,
   eventId: number,
   withStatus: SessionStatus | '*' = '*',
   dateFrom?: string,
   dateTo?: string
 ) {
-  let qb = db
+  let qb = db.client
     .selectFrom('session')
     .selectAll('session')
     .leftJoin('session_player', 'session_player.session_id', 'session.id')
@@ -102,12 +106,12 @@ export async function findByPlayerAndEvent(
 }
 
 export async function findLastByPlayerAndEvent(
-  db: Database,
+  db: DatabaseService,
   playerId: number,
   eventId: number,
   withStatus: SessionStatus | '*' = '*'
 ) {
-  let qb = db
+  let qb = db.client
     .selectFrom('session')
     .selectAll('session')
     .leftJoin('session_player', 'session_player.session_id', 'session.id');
@@ -124,13 +128,13 @@ export async function findLastByPlayerAndEvent(
 }
 
 export async function getGamesCount(
-  db: Database,
+  db: DatabaseService,
   eventIdList: number[],
   withStatus: SessionStatus
 ) {
   return Number(
     (
-      await db
+      await db.client
         .selectFrom('session')
         .select(({ fn }) => fn.count('id').as('cnt'))
         .where('event_id', 'in', eventIdList)
@@ -153,7 +157,7 @@ function groupBySession(items: Array<Omit<SessionPlayer, 'id'>>): Record<number,
 }
 
 export async function getPrefinishedItems(
-  db: Database,
+  db: DatabaseService,
   ruleset: Ruleset,
   eventIds: number[]
 ): Promise<Omit<PlayerHistory, 'id'>[]> {
@@ -162,7 +166,7 @@ export async function getPrefinishedItems(
   ]);
 
   const sessionPlayers = groupBySession(
-    await db
+    await db.client
       .selectFrom('session_player')
       .selectAll()
       .where(

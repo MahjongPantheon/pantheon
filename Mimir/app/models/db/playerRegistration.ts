@@ -1,30 +1,33 @@
-import { Database } from '../../database/db';
+import { DatabaseService } from 'services/Database';
 import { IRedisClient } from '../../helpers/cache/RedisClient';
 import { findById as playerFindById } from './player';
-import { ClientConfiguration } from 'twirpscript';
+import { FreyService } from 'services/Frey';
 
-export async function findByPlayerAndEvent(db: Database, ids: number[], event_id: number) {
-  return db
+export async function findByPlayerAndEvent(db: DatabaseService, ids: number[], event_id: number) {
+  return db.client
     .selectFrom('event_registered_players')
     .where('event_id', '=', event_id)
     .where('player_id', 'in', ids)
     .execute();
 }
 
-export async function findByEventId(db: Database, eventIds: number[]) {
-  return db
+export async function findByEventId(db: DatabaseService, eventIds: number[]) {
+  return db.client
     .selectFrom('event_registered_players')
     .selectAll()
     .where('event_id', 'in', eventIds)
     .execute();
 }
 
-export async function findByPlayerId(db: Database, player_id: number) {
-  return db.selectFrom('event_registered_players').where('player_id', '=', player_id).execute();
+export async function findByPlayerId(db: DatabaseService, player_id: number) {
+  return db.client
+    .selectFrom('event_registered_players')
+    .where('player_id', '=', player_id)
+    .execute();
 }
 
-export async function findNextFreeLocalId(db: Database, eventId: number) {
-  const result = await db
+export async function findNextFreeLocalId(db: DatabaseService, eventId: number) {
+  const result = await db.client
     .selectFrom('event_registered_players')
     .select('local_id')
     .where('event_id', '=', eventId)
@@ -37,8 +40,13 @@ export async function findNextFreeLocalId(db: Database, eventId: number) {
   return (result[0].local_id ?? 0) + 1;
 }
 
-export async function updateLocalIds(db: Database, eventId: number, idMap: Map<number, number>) {
-  db.insertInto('event_registered_players')
+export async function updateLocalIds(
+  db: DatabaseService,
+  eventId: number,
+  idMap: Map<number, number>
+) {
+  db.client
+    .insertInto('event_registered_players')
     .values([
       ...idMap.entries().map(([id, localId]) => ({
         player_id: id,
@@ -54,8 +62,13 @@ export async function updateLocalIds(db: Database, eventId: number, idMap: Map<n
     );
 }
 
-export async function updateTeamNames(db: Database, eventId: number, teamMap: Map<number, string>) {
-  db.insertInto('event_registered_players')
+export async function updateTeamNames(
+  db: DatabaseService,
+  eventId: number,
+  teamMap: Map<number, string>
+) {
+  db.client
+    .insertInto('event_registered_players')
     .values([
       ...teamMap.entries().map(([id, teamName]) => ({
         player_id: id,
@@ -71,9 +84,9 @@ export async function updateTeamNames(db: Database, eventId: number, teamMap: Ma
     );
 }
 
-export async function findRegisteredPlayersIdsByEvent(db: Database, eventId: number) {
+export async function findRegisteredPlayersIdsByEvent(db: DatabaseService, eventId: number) {
   return (
-    await db
+    await db.client
       .selectFrom('event_registered_players')
       .where('event_id', '=', eventId)
       .selectAll()
@@ -85,9 +98,9 @@ export async function findRegisteredPlayersIdsByEvent(db: Database, eventId: num
   }));
 }
 
-export async function findIgnoredPlayersIdsByEvent(db: Database, eventIds: number[]) {
+export async function findIgnoredPlayersIdsByEvent(db: DatabaseService, eventIds: number[]) {
   return (
-    await db
+    await db.client
       .selectFrom('event_registered_players')
       .select('player_id')
       .where('event_id', 'in', eventIds)
@@ -96,8 +109,8 @@ export async function findIgnoredPlayersIdsByEvent(db: Database, eventIds: numbe
   ).map((reg) => reg.player_id);
 }
 
-export async function fetchPlayersRegData(db: Database, eventIds: number[]) {
-  return await db
+export async function fetchPlayersRegData(db: DatabaseService, eventIds: number[]) {
+  return await db.client
     .selectFrom('event_registered_players')
     .select(['id', 'local_id', 'replacement_id', 'team_name'])
     .where('event_id', 'in', eventIds)
@@ -105,11 +118,11 @@ export async function fetchPlayersRegData(db: Database, eventIds: number[]) {
 }
 
 export async function fetchPlayersRegDataByIds(
-  db: Database,
+  db: DatabaseService,
   eventIds: number[],
   playerIds: number[]
 ) {
-  return await db
+  return await db.client
     .selectFrom('event_registered_players')
     .select(['id', 'local_id', 'replacement_id'])
     .where('event_id', 'in', eventIds)
@@ -118,20 +131,20 @@ export async function fetchPlayersRegDataByIds(
 }
 
 export async function fetchRegisteredPlayersByEvent(
-  db: Database,
-  freyConfig: ClientConfiguration,
+  db: DatabaseService,
+  frey: FreyService,
   cache: IRedisClient,
   eventId: number
 ) {
   const ids = (
-    await db
+    await db.client
       .selectFrom('event_registered_players')
       .select('player_id')
       .where('event_id', '=', eventId)
       .execute()
   ).map((reg) => reg.player_id);
 
-  return playerFindById(freyConfig, cache, ids);
+  return playerFindById(frey, cache, ids);
 }
 
 /**
@@ -139,7 +152,7 @@ export async function fetchRegisteredPlayersByEvent(
  * @param db
  * @param eventIds
  */
-export async function findReplacementMapByEvent(db: Database, eventIds: number[]) {
+export async function findReplacementMapByEvent(db: DatabaseService, eventIds: number[]) {
   const items = await findByEventId(db, eventIds);
   const result = new Map<number, number>();
   for (const item of items) {
@@ -151,7 +164,7 @@ export async function findReplacementMapByEvent(db: Database, eventIds: number[]
   return result;
 }
 
-export async function findLocalIdsMapByEvent(db: Database, eventId: number) {
+export async function findLocalIdsMapByEvent(db: DatabaseService, eventId: number) {
   const items = await findByEventId(db, [eventId]);
   const result = new Map<number, number>();
   for (const item of items) {
@@ -163,7 +176,7 @@ export async function findLocalIdsMapByEvent(db: Database, eventId: number) {
   return result;
 }
 
-export async function findTeamNameMapByEvent(db: Database, eventId: number) {
+export async function findTeamNameMapByEvent(db: DatabaseService, eventId: number) {
   const items = await findByEventId(db, [eventId]);
   const result = new Map<number, string>();
   for (const item of items) {

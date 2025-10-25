@@ -1,21 +1,21 @@
-import { Database } from '../../database/db';
 import { PlayerHistory } from '../../database/schema';
 import { Moment } from 'moment-timezone';
 import { Ruleset } from '../../rulesets/ruleset';
+import { DatabaseService } from 'services/Database';
 
 export type PlayerHistoryItem = Omit<PlayerHistory, 'id'> & { id?: number };
 
 export async function findLastByEvent(
-  db: Database,
+  db: DatabaseService,
   eventIds: number[]
 ): Promise<PlayerHistoryItem[]> {
-  const ids = await db
+  const ids = await db.client
     .selectFrom('player_history')
     .select([({ fn }) => fn.max('player_history.id').as('mx'), 'player_id', 'event_id'])
     .where('event_id', 'in', eventIds)
     .groupBy(['player_id', 'event_id'])
     .execute();
-  return await db
+  return await db.client
     .selectFrom('player_history')
     .selectAll()
     .where(
@@ -27,11 +27,11 @@ export async function findLastByEvent(
 }
 
 export async function findLastByEventAndDate(
-  db: Database,
+  db: DatabaseService,
   eventIds: number[],
   date: Moment | null
 ): Promise<PlayerHistoryItem[]> {
-  let expr = db
+  let expr = db.client
     .selectFrom('player_history')
     .select([
       ({ fn }) => fn.max('player_history.id').as('mx'),
@@ -47,7 +47,7 @@ export async function findLastByEventAndDate(
     .where('player_history.event_id', 'in', eventIds)
     .groupBy(['player_history.player_id', 'player_history.event_id']);
   const ids = await expr.execute();
-  return await db
+  return await db.client
     .selectFrom('player_history')
     .selectAll()
     .where(
@@ -59,11 +59,11 @@ export async function findLastByEventAndDate(
 }
 
 export async function findLastByEventAndPlayer(
-  db: Database,
+  db: DatabaseService,
   eventId: number,
   playerId: number
 ): Promise<PlayerHistoryItem[]> {
-  return await db
+  return await db.client
     .selectFrom('player_history')
     .selectAll()
     .where('player_id', '=', playerId)
@@ -74,10 +74,10 @@ export async function findLastByEventAndPlayer(
 }
 
 export async function findAllLastByEventAndPlayer(
-  db: Database,
+  db: DatabaseService,
   eventId: number
 ): Promise<PlayerHistoryItem[]> {
-  return await db
+  return await db.client
     .selectFrom('player_history as ph1')
     .selectAll('ph1')
     .leftJoin('player_history as ph2', (join) =>
@@ -90,11 +90,11 @@ export async function findAllLastByEventAndPlayer(
 }
 
 export async function findLastBySessionAndPlayer(
-  db: Database,
+  db: DatabaseService,
   sessionId: number,
   playerId: number
 ): Promise<PlayerHistoryItem[]> {
-  return await db
+  return await db.client
     .selectFrom('player_history')
     .selectAll()
     .where('player_id', '=', playerId)
@@ -104,8 +104,11 @@ export async function findLastBySessionAndPlayer(
     .execute();
 }
 
-export async function findBySession(db: Database, sessionId: number): Promise<PlayerHistoryItem[]> {
-  return await db
+export async function findBySession(
+  db: DatabaseService,
+  sessionId: number
+): Promise<PlayerHistoryItem[]> {
+  return await db.client
     .selectFrom('player_history')
     .selectAll()
     .where('session_id', '=', sessionId)
@@ -113,7 +116,7 @@ export async function findBySession(db: Database, sessionId: number): Promise<Pl
 }
 
 export async function makeNewHistoryItem(
-  db: Database,
+  db: DatabaseService,
   ruleset: Ruleset,
   playerId: number,
   eventId: number,
@@ -135,7 +138,7 @@ export async function makeNewHistoryItem(
       rating: ruleset.rules.startRating,
       chips: chips ?? null,
     };
-    await db.insertInto('player_history').values(prevItem).execute();
+    await db.client.insertInto('player_history').values(prevItem).execute();
   } else {
     prevItem = items[0];
   }

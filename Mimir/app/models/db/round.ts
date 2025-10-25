@@ -1,4 +1,4 @@
-import { Database } from '../../database/db';
+import { DatabaseService } from 'services/Database';
 import { Round as _Round } from '../../database/schema';
 import { checkRound } from '../../helpers/roundValidation';
 import { Ruleset } from '../../rulesets/ruleset';
@@ -81,10 +81,10 @@ export function makeRoundWithDefaults(input: PartialRound): Round {
 }
 
 export async function findBySessionIds(
-  db: Database,
+  db: DatabaseService,
   sessionIds: number[]
 ): Promise<Map<number, Round[]>> {
-  const rounds = await db
+  const rounds = await db.client
     .selectFrom('round')
     .where('session_id', 'in', sessionIds)
     .selectAll()
@@ -93,10 +93,14 @@ export async function findBySessionIds(
 }
 
 export async function findChomboInEvent(
-  db: Database,
+  db: DatabaseService,
   eventId: number
 ): Promise<Map<number, Round[]>> {
-  const rounds = await db.selectFrom('round').where('event_id', '=', eventId).selectAll().execute();
+  const rounds = await db.client
+    .selectFrom('round')
+    .where('event_id', '=', eventId)
+    .selectAll()
+    .execute();
   return convertAndRegroup(rounds);
 }
 
@@ -159,7 +163,7 @@ export function convertAndRegroup(rounds: DBRound[]): Map<number, Round[]> {
 }
 
 export async function saveRound(
-  db: Database,
+  db: DatabaseService,
   players: number[],
   allRegisteredPlayersIds: number[],
   ruleset: Ruleset,
@@ -181,5 +185,5 @@ export async function saveRound(
       last_session_state: round.last_session_state,
     });
   }
-  return await db.insertInto('round').values(rounds).execute();
+  return await db.client.insertInto('round').values(rounds).execute();
 }

@@ -1,22 +1,23 @@
 import { Kysely, PostgresDialect, sql, Transaction } from 'kysely';
 import { DB as DatabaseOld } from './schema_v1';
 import { Pool } from 'pg';
-import { env } from '../helpers/env';
-import { createDbConstructor } from './db';
 import * as process from 'node:process';
 import { Database } from './schema';
+import { Repository } from 'services/Repository';
 
 process.env.NODE_ENV = 'development';
 
 export async function migrateFromMimir1() {
+  const repo = Repository.instance({});
+
   const oldDb = new Kysely<DatabaseOld>({
     dialect: new PostgresDialect({
       pool: new Pool({
-        host: env.db.host,
+        host: repo.config.db.host,
         database: 'mimir',
         user: 'mimir',
-        password: env.db.password,
-        port: env.db.port,
+        password: repo.config.db.password,
+        port: repo.config.db.port,
       }),
     }),
   });
@@ -44,9 +45,7 @@ export async function migrateFromMimir1() {
     }
   }
 
-  const newDb = createDbConstructor()();
-
-  await newDb.transaction().execute(async (trx) => {
+  await repo.db.client.transaction().execute(async (trx) => {
     await migrateTable(
       'achievements',
       trx,
