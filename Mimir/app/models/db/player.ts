@@ -1,15 +1,14 @@
-import { ClientConfiguration } from 'twirpscript';
-import { FindByMajsoulAccountId, FindByTenhouIds, GetPersonalInfo } from 'tsclients/proto/frey.pb';
-import { IRedisClient } from '../../helpers/cache/RedisClient';
 import { playerInfo } from '../../helpers/cache/schema';
 import { PersonEx } from 'tsclients/proto/atoms.pb';
-import { Database } from '../../database/db';
 import { fetchPlayersRegDataByIds, findReplacementMapByEvent } from './playerRegistration';
 import { findByRepresentationalHash } from './session';
+import { FreyService } from 'services/Frey';
+import { DatabaseService } from 'services/Database';
+import { CacheService } from 'services/Cache';
 
 export async function findById(
-  freyConfig: ClientConfiguration,
-  cache: IRedisClient,
+  frey: FreyService,
+  cache: CacheService,
   ids: number[],
   skipCache = false
 ): Promise<PersonEx[]> {
@@ -20,7 +19,7 @@ export async function findById(
   if (!skipCache) {
     await Promise.all(
       ids.map((id) =>
-        cache
+        cache.client
           .get(playerInfo(id))
           .then((info) => {
             fetchedData.set(id, info as PersonEx);
@@ -35,15 +34,12 @@ export async function findById(
   }
 
   if (missingIds.length > 0) {
-    const data = await GetPersonalInfo(
-      {
-        ids: missingIds,
-      },
-      freyConfig
-    );
+    const data = await frey.GetPersonalInfo({
+      ids: missingIds,
+    });
     const promises: Promise<boolean>[] = [];
     data.people.forEach((person) => {
-      promises.push(cache.set(playerInfo(person.id), person, 300));
+      promises.push(cache.client.set(playerInfo(person.id), person, 300));
       fetchedRemote.set(person.id, person);
     });
     await Promise.all(promises);
@@ -63,10 +59,10 @@ export async function findById(
 }
 
 export async function findByTenhouId(
-  freyConfig: ClientConfiguration,
+  frey: FreyService,
   ids: string[]
 ): Promise<Record<string, PersonEx>> {
-  const data = await FindByTenhouIds({ ids }, freyConfig);
+  const data = await frey.FindByTenhouIds({ ids });
   return data.people.reduce(
     (acc, player) => {
       acc[player.tenhouId] = player;
@@ -77,13 +73,12 @@ export async function findByTenhouId(
 }
 
 export async function findMajsoulAccounts(
-  freyConfig: ClientConfiguration,
+  frey: FreyService,
   ids: [string, number][] // ms_nickname, ms_account_id
 ): Promise<Record<string, PersonEx>> {
-  const data = await FindByMajsoulAccountId(
-    { ids: ids.map(([nickname, accountId]) => ({ nickname, accountId })) },
-    freyConfig
-  );
+  const data = await frey.FindByMajsoulAccountId({
+    ids: ids.map(([nickname, accountId]) => ({ nickname, accountId })),
+  });
   return data.people.reduce(
     (acc, player) => {
       acc[player.msNickname + '-' + player.msAccountId] = player;
@@ -94,19 +89,19 @@ export async function findMajsoulAccounts(
 }
 
 export async function findPlayersForEvents(
-  db: Database,
-  freyConfig: ClientConfiguration,
-  cache: IRedisClient,
+  db: DatabaseService,
+  frey: FreyService,
+  cache: CacheService,
   eventIds: number[]
 ) {
   const registrationData = await findReplacementMapByEvent(db, eventIds);
-  return _findPlayers(freyConfig, cache, eventIds, registrationData);
+  return _findPlayers(frey, cache, eventIds, registrationData);
 }
 
 export async function findPlayersForSession(
-  db: Database,
-  freyConfig: ClientConfiguration,
-  cache: IRedisClient,
+  db: DatabaseService,
+  frey: FreyService,
+  cache: CacheService,
   sessionHash: string,
   substituteReplacements = false
 ) {
@@ -115,7 +110,7 @@ export async function findPlayersForSession(
     return { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() };
   }
   const playerIds = (
-    await db
+    await db.client
       .selectFrom('session_player')
       .select(['player_id'])
       .where('session_id', '=', session[0].id)
@@ -133,23 +128,23 @@ export async function findPlayersForSession(
     }
   }
 
-  const playersData = await _findPlayers(freyConfig, cache, playerIds, replacements);
+  const playersData = await _findPlayers(frey, cache, playerIds, replacements);
   // reorder players to match order at the table
   playersData.players.sort((a, b) => playerIds.indexOf(a.id) - playerIds.indexOf(b.id));
   return playersData;
 }
 
 export async function _findPlayers(
-  freyConfig: ClientConfiguration,
-  cache: IRedisClient,
+  frey: FreyService,
+  cache: CacheService,
   ids: number[],
   replacements: Map<number, number> // replacementId -> id : note backward map
 ) {
-  const players = await findById(freyConfig, cache, ids);
+  const players = await findById(frey, cache, ids);
   const replaceMap = new Map<number, PersonEx>();
 
   if (replacements.size > 0) {
-    const replacementPlayers = await findById(freyConfig, cache, [...replacements.keys()]);
+    const replacementPlayers = await findById(frey, cache, [...replacements.keys()]);
     for (const player of replacementPlayers) {
       if (replacements.has(player.id)) {
         replaceMap.set(replacements.get(player.id)!, player);
