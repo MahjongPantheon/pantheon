@@ -1,4 +1,3 @@
-import { Database } from '../database/db';
 import { createRuleset, Ruleset } from '../rulesets/ruleset';
 import moment from 'moment-timezone';
 import {
@@ -10,14 +9,14 @@ import {
 } from './db/playerHistory';
 import { getPrefinishedItems } from './db/session';
 import { PersonEx } from 'tsclients/proto/atoms.pb';
-import { ClientConfiguration } from 'twirpscript';
-import { GetPersonalInfo } from 'tsclients/proto/frey.pb';
 import { EventsGetRatingTableResponse } from 'tsclients/proto/mimir.pb';
 import { Penalty } from 'database/schema';
+import { FreyService } from 'services/Frey';
+import { DatabaseService } from 'services/Database';
 
 export async function getRatingTable(
-  db: Database,
-  freyConfig: ClientConfiguration,
+  db: DatabaseService,
+  frey: FreyService,
   eventIdList: number[],
   orderBy: string,
   order: 'asc' | 'desc',
@@ -26,7 +25,7 @@ export async function getRatingTable(
   dateFrom: string | null,
   dateTo: string | null
 ): Promise<EventsGetRatingTableResponse> {
-  const events = await db
+  const events = await db.client
     .selectFrom('event')
     .select(['id', 'sort_by_games', 'min_games_count', 'ruleset_config', 'timezone']) // TODO
     .where('id', 'in', eventIdList)
@@ -39,16 +38,15 @@ export async function getRatingTable(
   const dataItems: PlayerHistoryItem[] = isAdmin
     ? await getPrefinishedItems(db, ruleset, eventIdList)
     : await getHistoryItems(db, ruleset, eventIdList, mainEvent.timezone, dateFrom, dateTo);
-  const playerItems = (
-    await GetPersonalInfo({ ids: dataItems.map((item) => item.player_id) }, freyConfig)
-  ).people;
+  const playerItems = (await frey.GetPersonalInfo({ ids: dataItems.map((item) => item.player_id) }))
+    .people;
 
-  const regData = await db
+  const regData = await db.client
     .selectFrom('event_registered_players')
     .select(['player_id', 'team_name'])
     .where('event_id', '=', mainEvent.id)
     .execute();
-  const penalties = await db
+  const penalties = await db.client
     .selectFrom('penalty')
     .selectAll()
     .where('event_id', 'in', eventIdList)
@@ -95,7 +93,7 @@ export async function getRatingTable(
 }
 
 async function getHistoryItems(
-  db: Database,
+  db: DatabaseService,
   ruleset: Ruleset,
   eventIds: number[],
   timezone: string,

@@ -1,22 +1,11 @@
-import { Kysely, PostgresDialect } from 'kysely';
-import { Database } from '../db';
-import { Pool } from 'pg';
-import { env } from '../../helpers/env';
+import { Repository } from 'services/Repository';
 
 export async function cleanup() {
-  const oldDb = new Kysely<Database>({
-    dialect: new PostgresDialect({
-      pool: new Pool({
-        host: env.db.host,
-        database: 'mimir2_unit',
-        user: env.db.username,
-        password: env.db.password,
-        port: env.db.port,
-      }),
-    }),
-  });
+  // ensure we deal with test db and don't erase production db accidentally lol
+  process.env.TEST = 'true';
+  const repo = Repository.instance({});
 
-  const tables = await oldDb
+  const tables = await repo.db.client
     // @ts-expect-error
     .selectFrom('information_schema.tables')
     // @ts-expect-error
@@ -29,6 +18,6 @@ export async function cleanup() {
       console.log('Cleaning up table', t.table_name);
     }
 
-    await oldDb.schema.dropTable(t.table_name).ifExists().cascade().execute();
+    await repo.db.client.schema.dropTable(t.table_name).ifExists().cascade().execute();
   }
 }
