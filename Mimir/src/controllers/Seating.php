@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Mimir;
 
 use Common\TwirpError;
@@ -52,7 +53,7 @@ class SeatingController extends Controller
 
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
-        list ($playersMap, $tables) = $this->_getData($eventId);
+        list($playersMap, $tables) = $this->_getData($eventId);
         $playerIds = array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed) ?? []);
         $seating = array_chunk($playerIds, 4);
 
@@ -107,7 +108,7 @@ class SeatingController extends Controller
 
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
-        list ($playersMap, $tables) = $this->_getData($eventId);
+        list($playersMap, $tables) = $this->_getData($eventId);
         $playerIds = array_keys(Seating::swissSeating($playersMap, $tables));
         $seating = array_chunk($playerIds, 4);
 
@@ -155,7 +156,7 @@ class SeatingController extends Controller
         $this->_checkIfAllowed($eventId);
         $this->_log->info('Generating new swiss seating for event #' . $eventId);
 
-        list ($playersMap, $tables) = $this->_getData($eventId);
+        list($playersMap, $tables) = $this->_getData($eventId);
 
         // TODO: check if unique works here; there should not be any repeating players is swiss seating results
         $seating = array_unique(array_keys(Seating::swissSeating($playersMap, $tables)));
@@ -549,7 +550,7 @@ class SeatingController extends Controller
                 $acc[$item->getPlayerId()] = ['amount' => 0, 'count' => 0];
             }
             $acc[$item->getPlayerId()]['amount'] += $item->getAmount();
-            $acc[$item->getPlayerId()]['count'] ++;
+            $acc[$item->getPlayerId()]['count']++;
             return $acc;
         }, []);
 
@@ -577,9 +578,11 @@ class SeatingController extends Controller
         }
 
         $seatingInfo = SessionPrimitive::getPlayersSeatingInEvent($this->_ds, $eventId);
-        $tables = array_chunk(array_map(function ($el) {
+        $tables = array_chunk(array_filter(array_map(function ($el) {
             return $el['player_id'];
-        }, $seatingInfo), 4);
+        }, $seatingInfo), function ($playerId) use (&$ignoredPlayerIds) {
+            return !in_array($playerId, $ignoredPlayerIds);
+        }), 4);
 
         return [$playersMap, $tables];
     }
