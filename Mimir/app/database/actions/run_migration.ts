@@ -1,44 +1,13 @@
-import { FileMigrationProvider, Kysely, Migrator, PostgresDialect } from 'kysely';
-import { Database } from '../schema';
-import { Pool } from 'pg';
-import { env } from '../../helpers/env';
+import { FileMigrationProvider, Migrator } from 'kysely';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { Repository } from 'services/Repository';
 
-export async function migrateToLatest(mock?: boolean) {
-  const db = new Kysely<Database>({
-    dialect: new PostgresDialect({
-      pool: new Pool({
-        host: env.db.host,
-        database: mock ? 'mimir2_unit' : env.db.dbname,
-        user: env.db.username,
-        password: env.db.password,
-      }),
-    }),
-    log(event) {
-      if (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE !== 'true') {
-        return;
-      }
-      if (event.level === 'error') {
-        console.error('Query failed : ', {
-          durationMs: event.queryDurationMillis,
-          error: event.error,
-          sql: event.query.sql,
-          params: event.query.parameters,
-        });
-      } else {
-        // `'query'`
-        console.log('Query executed : ', {
-          durationMs: event.queryDurationMillis,
-          sql: event.query.sql,
-          params: event.query.parameters,
-        });
-      }
-    },
-  });
+export async function migrateToLatest() {
+  const repo = Repository.instance({});
 
   const migrator = new Migrator({
-    db,
+    db: repo.db.client,
     provider: new FileMigrationProvider({
       fs,
       path,
@@ -66,5 +35,5 @@ export async function migrateToLatest(mock?: boolean) {
     process.exit(1);
   }
 
-  await db.destroy();
+  await repo.db.client.destroy();
 }

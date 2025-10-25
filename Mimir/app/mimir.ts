@@ -140,8 +140,8 @@ export const mimirServer: Mimir<Context> = {
       eventsGetRatingTablePayload.eventIdList.length === 1 &&
       isEventAdmin(eventsGetRatingTablePayload.eventIdList[0]);
     return getRatingTable(
-      context.db,
-      context.freyConfig,
+      context.repository.db,
+      context.repository.frey,
       eventsGetRatingTablePayload.eventIdList,
       eventsGetRatingTablePayload.orderBy,
       eventsGetRatingTablePayload.order === 'asc' ? 'asc' : 'desc',
@@ -159,7 +159,7 @@ export const mimirServer: Mimir<Context> = {
       throw new Error('Event id list is empty');
     }
 
-    const events = await context.db
+    const events = await context.repository.db.client
       .selectFrom('event')
       .selectAll()
       .where('id', 'in', eventsGetLastGamesPayload.eventIdList)
@@ -195,9 +195,9 @@ export const mimirServer: Mimir<Context> = {
     context: Context
   ): Promise<EventsGetGameResponse> {
     return getFinishedGame(
-      context.db,
-      context.freyConfig,
-      context.redisClient,
+      context.repository.db,
+      context.repository.frey,
+      context.repository.cache,
       genericSessionPayload.sessionHash
     );
   },

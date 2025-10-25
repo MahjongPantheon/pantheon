@@ -19,7 +19,7 @@ export async function getEvents(
   eventsGetEventsPayload: EventsGetEventsPayload,
   context: Context
 ): Promise<EventsGetEventsResponse> {
-  let qb = context.db
+  let qb = context.repository.db.client
     .selectFrom('event')
     .leftJoin('session', 'session.event_id', 'event.id')
     .select([
@@ -40,7 +40,9 @@ export async function getEvents(
       'event.online_platform',
       ({ fn }) => fn.count('session.id').as('sessioncnt'),
     ]);
-  let qbcount = context.db.selectFrom('event').select(({ fn }) => fn.count('id').as('count'));
+  let qbcount = context.repository.db.client
+    .selectFrom('event')
+    .select(({ fn }) => fn.count('id').as('count'));
   if (eventsGetEventsPayload.filter) {
     qb = qb.where('title', 'ilike', `%${eventsGetEventsPayload.filter}%`);
     qbcount = qbcount.where('title', 'ilike', `%${eventsGetEventsPayload.filter}%`);
@@ -97,7 +99,7 @@ export async function getEventsById(
   eventsGetEventsByIdPayload: EventsGetEventsByIdPayload,
   context: Context
 ): Promise<EventsGetEventsByIdResponse> {
-  const data = await context.db
+  const data = await context.repository.db.client
     .selectFrom('event')
     .leftJoin('session', 'session.event_id', 'event.id')
     .select([
@@ -159,15 +161,15 @@ export async function getEventsById(
 }
 
 export async function getMyEvents(context: Context): Promise<PlayersGetMyEventsResponse> {
-  const regs = await context.db
+  const regs = await context.repository.db.client
     .selectFrom('event_registered_players')
     .select(['event_id'])
-    .where('event_registered_players.player_id', '=', context.personId)
+    .where('event_registered_players.player_id', '=', context.repository.meta.personId)
     .execute();
   const events =
     regs.length === 0
       ? []
-      : await context.db
+      : await context.repository.db.client
           .selectFrom('event')
           .where(
             'id',
@@ -191,7 +193,7 @@ export async function getGameConfig(
   genericEventPayload: GenericEventPayload,
   context: Context
 ): Promise<GameConfig> {
-  const data = await context.db
+  const data = await context.repository.db.client
     .selectFrom('event')
     .select([
       'id',

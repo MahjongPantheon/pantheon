@@ -1,20 +1,20 @@
 import { Session } from '../database/schema';
-import { Database } from '../database/db';
 import { findByEventId } from './db/playerRegistration';
 import { EventsGetGameResponse } from 'tsclients/proto/mimir.pb';
 import { findPlayersForSession } from './db/player';
-import { ClientConfiguration } from 'twirpscript';
-import { IRedisClient } from '../helpers/cache/RedisClient';
 import { findByRepresentationalHash } from './db/session';
 import { PersonEx, PlatformType } from 'tsclients/proto/atoms.pb';
 import { substituteReplacements } from '../helpers/players';
 import { formatGameResult } from '../helpers/formatters';
 import { SessionState } from 'helpers/SessionState';
 import { createRuleset } from 'rulesets/ruleset';
+import { DatabaseService } from 'services/Database';
+import { FreyService } from 'services/Frey';
+import { CacheService } from 'services/Cache';
 
 export type SessionItem = Omit<Session, 'id'> & { id: number };
 
-export async function getSubstitutionPlayers(db: Database, eventId: number) {
+export async function getSubstitutionPlayers(db: DatabaseService, eventId: number) {
   const replacements: Record<number, number> = {};
   const regs = await findByEventId(db, [eventId]);
   for (const reg of regs) {
@@ -27,30 +27,34 @@ export async function getSubstitutionPlayers(db: Database, eventId: number) {
 }
 
 export async function getFinishedGame(
-  db: Database,
-  freyConfig: ClientConfiguration,
-  cache: IRedisClient,
+  db: DatabaseService,
+  frey: FreyService,
+  cache: CacheService,
   representationalHash: string,
   substituteReplacementPlayers = false
 ): Promise<EventsGetGameResponse> {
   const [session, players] = await Promise.all([
     findByRepresentationalHash(db, [representationalHash]),
-    findPlayersForSession(db, freyConfig, cache, representationalHash),
+    findPlayersForSession(db, frey, cache, representationalHash),
   ]);
   if (session.length === 0) {
     throw new Error('No session found in database');
   }
 
   const [event, results, rounds, replacements, penalties] = await Promise.all([
-    db
+    db.client
       .selectFrom('event')
       .where('id', '=', session[0].event_id)
       .select(['online_platform', 'ruleset_config'])
       .execute(),
-    db.selectFrom('session_results').where('session_id', '=', session[0].id).selectAll().execute(),
-    db.selectFrom('round').where('session_id', '=', session[0].id).selectAll().execute(),
+    db.client
+      .selectFrom('session_results')
+      .where('session_id', '=', session[0].id)
+      .selectAll()
+      .execute(),
+    db.client.selectFrom('round').where('session_id', '=', session[0].id).selectAll().execute(),
     substituteReplacementPlayers ? players.replaceMap : new Map<number, PersonEx>(),
-    db.selectFrom('penalty').where('session_id', '=', session[0].id).selectAll().execute(),
+    db.client.selectFrom('penalty').where('session_id', '=', session[0].id).selectAll().execute(),
   ]);
 
   const ruleset = createRuleset('custom', event[0].ruleset_config);
