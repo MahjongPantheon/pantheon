@@ -1,4 +1,4 @@
-import { Repository } from 'services/Repository';
+import type { Repository } from 'services/Repository';
 
 export interface Context {
   repository: Repository;
