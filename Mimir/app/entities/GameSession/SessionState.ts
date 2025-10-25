@@ -1,5 +1,5 @@
-import { PaymentsInfo, PointsCalc } from './PointsCalc';
-import { Ruleset } from '../rulesets/ruleset';
+import { PaymentsInfo, PointsCalc } from '../../helpers/PointsCalc';
+import { Ruleset } from '../../rulesets/ruleset';
 import { Round } from '../models/db/round';
 
 interface SessionStateData {
