@@ -50,6 +50,13 @@ export async function authorize(
 
   const authToken = makeClientHash(payload.password, personData[0].auth_salt);
   await verifyHash(authToken, personData[0].auth_hash);
+
+  await db
+    .updateTable('person')
+    .set({ last_login: new Date().toISOString() })
+    .where('id', '=', personData[0].id)
+    .execute();
+
   return { personId: personData[0].id, authToken };
 }
 
@@ -219,6 +226,18 @@ export async function quickAuthorize(
     throw new NotFoundError('Person is not known to the system');
   }
   await verifyHash(payload.authToken, personData[0].auth_hash);
+
+  if (
+    !personData[0].last_login ||
+    new Date().getTime() - new Date(personData[0].last_login).getTime() > 1000 * 60 * 60 * 24
+  ) {
+    await db
+      .updateTable('person')
+      .set({ last_login: new Date().toISOString() })
+      .where('id', '=', personData[0].id)
+      .execute();
+  }
+
   return { authSuccess: true };
 }
 

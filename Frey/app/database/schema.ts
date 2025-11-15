@@ -44,6 +44,7 @@ export interface Person {
   telegram_id: string | null;
   tenhou_id: string | null;
   title: string;
+  last_login: string | null; // date string
 }
 
 export type RowPerson = Omit<Person, 'id'>;
