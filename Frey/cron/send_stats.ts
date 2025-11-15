@@ -21,10 +21,31 @@ async function sendStats() {
     .select(({ fn }) => fn.count<number>('person.id').as('count'))
     .execute();
 
+  const [{ count: deadCount }] = await db
+    .selectFrom('person')
+    .select(({ fn }) => fn.count<number>('person.id').as('count'))
+    .where((qb) =>
+      qb.or([
+        qb(
+          'last_login',
+          '<',
+          new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000).toISOString()
+        ),
+        qb('last_login', 'is', null),
+      ])
+    )
+    .execute();
+
   await fetch(env.huginUrl + '/addMetric', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify([{ m: 'registered_users', v: count, s: 'frey' }]),
+  });
+
+  await fetch(env.huginUrl + '/addMetric', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify([{ m: 'inactive_users', v: deadCount, s: 'frey' }]),
   });
 }
 
