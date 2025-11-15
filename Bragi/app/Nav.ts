@@ -15,7 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import IndexPageEn from './pages/index_en.mdx';
-import AboutEn from './pages/about_en.mdx';
 import BugsEn from './pages/bugs_en.mdx';
 import ForPlayerEn from './pages/forPlayers_en.mdx';
 import ForHostsEn from './pages/forHosts_en.mdx';
@@ -24,7 +23,6 @@ import CodeOfConductEn from './pages/codeOfConduct_en.mdx';
 import SeatingsEn from './pages/seatings_en.mdx';
 
 import IndexPageRu from './pages/index_ru.mdx';
-import AboutRu from './pages/about_ru.mdx';
 import HowToPlayRu from './pages/howToPlay_ru.mdx';
 import BugsRu from './pages/bugs_ru.mdx';
 import ForPlayersRu from './pages/forPlayers_ru.mdx';
@@ -36,7 +34,6 @@ import YakuListRu from './pages/yakuList_ru.mdx';
 
 enum Path {
   Index = '/',
-  About = '/about',
   HowToPlay = '/howToPlay',
   CodeOfConduct = '/codeOfConduct',
   GetStarted = '/getStarted',
@@ -56,14 +53,12 @@ export const links = [
     label: { en: 'Tech info', ru: 'Тех.детали' },
   },
   { link: Path.CodeOfConduct, label: { en: 'Terms & conditions', ru: 'Условия и нормы' } },
-  { link: Path.About, label: { en: 'About us', ru: 'О нас' } },
 ];
 
 const Dummy = () => '';
 
 export const components = {
   [Path.Index]: { en: IndexPageEn, ru: IndexPageRu },
-  [Path.About]: { en: AboutEn, ru: AboutRu },
   [Path.HowToPlay]: { en: Dummy, ru: HowToPlayRu },
   [Path.ForPlayers]: { en: ForPlayerEn, ru: ForPlayersRu },
   [Path.ForHosts]: { en: ForHostsEn, ru: ForHostsRu },
