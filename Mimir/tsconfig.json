@@ -1,22 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": "app",
-    "experimentalDecorators": true,
+    "baseUrl": ".",
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "strict": true,
+    "outDir": "dist",
+    "declaration": true,
+    "experimentalDecorators": true
   },
-  "include": ["build.ts", "app", "cron"],
+  "include": ["build.ts", "src", "cron"]
 }
