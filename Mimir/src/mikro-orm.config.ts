@@ -1,6 +1,8 @@
 import { defineConfig } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { ConfigService } from './services/Config.js';
+import { SeedManager } from '@mikro-orm/seeder';
+import { Migrator } from '@mikro-orm/migrations';
 
 const config = new ConfigService();
 
@@ -19,4 +21,5 @@ export default () =>
     metadataProvider: TsMorphMetadataProvider,
     // enable debug mode to log SQL queries and discovery information
     debug: true,
+    extensions: [SeedManager, Migrator],
   });
