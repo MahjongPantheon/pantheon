@@ -1,4 +1,4 @@
-import { Kysely, PostgresDialect } from 'kysely';
+import { MikroORM, EntityManager } from '@mikro-orm/postgresql';
 import { ConfigService } from './Config';
 import { Database } from 'database/schema';
 import { Pool } from 'pg';
@@ -8,6 +8,12 @@ export class DatabaseService {
   protected _db: Kysely<Database>;
 
   public constructor(config: ConfigService, logService: LogService) {
+    const orm = await MikroORM.init({
+      entities: ['./dist/entities'],
+      entitiesTs: ['./app/entities'],
+      dbName: 'my-db-name',
+    });
+
     this._db = new Kysely<Database>({
       dialect: new PostgresDialect({
         pool: new Pool({
