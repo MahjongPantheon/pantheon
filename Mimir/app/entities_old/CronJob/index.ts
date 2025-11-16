@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
 import { sql } from 'kysely';
-import { EntityBase } from 'entities/EntityBase';
+import { EntityBase } from 'entities_old/EntityBase';
 
 export class CronJobEntity extends EntityBase {
   async getPendingJobs(limit: number) {
