@@ -1,6 +1,5 @@
-import { PaymentsInfo, PointsCalc } from '../../helpers/PointsCalc';
-import { Ruleset } from '../../rulesets/ruleset';
-import { Round } from '../models/db/round';
+import { PaymentsInfo, PointsCalc } from '../../helpers/PointsCalc.js';
+import { Ruleset } from '../../rulesets/ruleset.js';
 
 interface SessionStateData {
   _scores: Record<number, number>;

@@ -1,6 +1,5 @@
-import { makeRoundWithDefaults, Round } from '../models/db/round';
-import { createRuleset } from '../rulesets/ruleset';
-import { SessionState } from './SessionState';
+import { createRuleset } from '../../rulesets/ruleset.js';
+import { SessionState } from './SessionState.js';
 
 describe('Session state', () => {
   const ruleset = createRuleset('ema');

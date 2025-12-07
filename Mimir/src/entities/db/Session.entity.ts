@@ -5,7 +5,7 @@ import type { LastSessionState } from './Round.entity.js';
 @Entity({ tableName: 'session' })
 export class SessionEntity {
   @PrimaryKey()
-  id!: string;
+  id!: number;
 
   @ManyToOne({ fieldName: 'event_id' })
   event!: EventEntity;

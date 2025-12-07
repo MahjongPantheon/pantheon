@@ -1,8 +1,11 @@
-import { playerInfo } from '../../helpers/cache/schema';
-import { PersonEx } from 'tsclients/proto/atoms.pb';
-import { EntityBase } from 'entities_old/EntityBase';
+import { PersonEx } from 'tsclients/proto/atoms.pb.js';
+import { Model } from './Model.js';
+import { playerInfo } from 'src/helpers/cache/schema.js';
+import { EventRegistrationModel } from './EventRegistrationModel.js';
+import { SessionPlayerEntity } from 'src/entities/db/SessionPlayer.entity.js';
+import { SessionEntity } from 'src/entities/db/Session.entity.js';
 
-export class PlayerEntity extends EntityBase {
+export class PlayerModel extends Model {
   async findById(ids: number[], skipCache = false): Promise<PersonEx[]> {
     let missingIds: number[] = [];
     const fetchedData = new Map<number, PersonEx>();
@@ -77,7 +80,8 @@ export class PlayerEntity extends EntityBase {
   }
 
   async findPlayersForEvents(eventIds: number[]) {
-    const registrationData = await findReplacementMapByEvent(eventIds);
+    const regModel = this.getModel(EventRegistrationModel);
+    const registrationData = await regModel.findReplacementMapByEvent(eventIds);
     return this._findPlayers(eventIds, registrationData);
   }
 
@@ -87,15 +91,18 @@ export class PlayerEntity extends EntityBase {
       return { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() };
     }
     const playerIds = (
-      await this.repo.db.client
-        .selectFrom('session_player')
-        .select(['player_id'])
-        .where('session_id', '=', session[0].id)
-        .orderBy('order', 'asc')
-        .execute()
-    ).map((reg) => reg.player_id);
+      await this.repo.db.em.findAll(SessionPlayerEntity, {
+        fields: ['playerId'],
+        where: { session: this.repo.db.em.getReference(SessionEntity, session[0].id) },
+        orderBy: { order: 1 },
+      })
+    ).map((reg) => reg.playerId);
 
-    const registrationData = await fetchPlayersRegDataByIds([session[0].event_id], playerIds);
+    const regModel = this.getModel(EventRegistrationModel);
+    const registrationData = await regModel.fetchPlayersRegDataByIds(
+      [session[0].event_id],
+      playerIds
+    );
     const replacements = new Map<number, number>();
     if (substituteReplacements) {
       for (const registration of registrationData) {
