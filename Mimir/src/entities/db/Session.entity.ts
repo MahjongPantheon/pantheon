@@ -1,6 +1,6 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Embedded, Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/postgresql';
 import { EventEntity } from './Event.entity.js';
-import type { LastSessionState } from './Round.entity.js';
+import { SessionStateEntity } from './SessionState.entity.js';
 
 @Entity({ tableName: 'session' })
 export class SessionEntity {
@@ -25,12 +25,8 @@ export class SessionEntity {
   @Property({ nullable: true })
   endDate?: string;
 
-  @Property({
-    nullable: true,
-    type: 'json',
-    comment: 'results for in-progress sessions',
-  })
-  intermediateResults?: LastSessionState;
+  @Embedded(() => SessionStateEntity)
+  intermediateResults?: SessionStateEntity;
 
   @Property({ nullable: true, comment: 'original tenhou game link, for access to replay' })
   origLink?: string;
