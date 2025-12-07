@@ -20,5 +20,5 @@
     "declaration": true,
     "experimentalDecorators": true
   },
-  "include": ["build.ts", "src", "cron"]
+  "include": ["build.ts", "src/**/*", "cron/**/*"]
 }
