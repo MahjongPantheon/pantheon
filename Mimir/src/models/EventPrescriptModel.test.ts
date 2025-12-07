@@ -1,4 +1,4 @@
-import { packScript, unpackScript } from './eventPrescript';
+import { packScript, unpackScript } from './EventPrescriptModel.js';
 
 describe('EventPrescript', () => {
   it('should pack event script', () => {
