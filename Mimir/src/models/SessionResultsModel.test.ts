@@ -1,7 +1,16 @@
-import { createRuleset } from '../../rulesets/ruleset';
-import { calcPlacesMap, calcRatingDelta } from './sessionResults';
+import { createRuleset } from 'src/rulesets/ruleset.js';
+import { SessionResultsModel } from './SessionResultsModel.js';
+import { Model } from './Model.js';
+
+import config from '../mikro-orm.config.js';
+import { MikroORM } from '@mikro-orm/postgresql';
+import { Repository } from 'src/services/Repository.js';
+
+const orm = await MikroORM.init(config());
 
 describe('SessionResults', () => {
+  const mdl = Model.getModel(Repository.instance({}, orm), SessionResultsModel);
+
   it('should calculate places map', () => {
     const scores = {
       1: 100000,
@@ -17,7 +26,7 @@ describe('SessionResults', () => {
       4: 70000,
       11: 0,
     };
-    expect(calcPlacesMap(scores)).toEqual({
+    expect(mdl.calcPlacesMap(scores)).toEqual({
       1: 1,
       2: 2,
       3: 3,
@@ -56,6 +65,6 @@ describe('SessionResults', () => {
       3: -30000, // replacement
       4: 50000 - 30000 - 5000,
     };
-    expect(calcRatingDelta(ruleset, placesMap, scores, replacements)).toEqual(expected);
+    expect(mdl.calcRatingDelta(ruleset, placesMap, scores, replacements)).toEqual(expected);
   });
 });

@@ -1,0 +1,220 @@
+import { SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import moment from 'moment-timezone';
+import { Model } from './Model.js';
+import { SessionEntity } from 'src/entities/db/Session.entity.js';
+import { EventEntity } from 'src/entities/db/Event.entity.js';
+import { SessionPlayerEntity } from 'src/entities/db/SessionPlayer.entity.js';
+import { SessionResultsModel } from './SessionResultsModel.js';
+import { Ruleset } from 'src/rulesets/ruleset.js';
+
+export class SessionModel extends Model {
+  async findById(id: number) {
+    return this.repo.db.em.findOne(SessionEntity, { id });
+  }
+
+  async findByReplayHashAndEvent(eventId: number, replayHash: string) {
+    return this.repo.db.em.findOne(SessionEntity, {
+      event: this.repo.db.em.getReference(EventEntity, eventId),
+      replayHash,
+    });
+  }
+
+  async findAllInProgress() {
+    return this.repo.db.em.findAll(SessionEntity, {
+      where: { status: SessionStatus.SESSION_STATUS_INPROGRESS },
+    });
+  }
+
+  // TODO: memoize
+  async findByRepresentationalHash(hashList: string[]) {
+    return this.repo.db.em.findAll(SessionEntity, {
+      where: { representationalHash: hashList },
+    });
+  }
+
+  async findByEventAndStatus(
+    eventIds: number[],
+    status: SessionStatus[],
+    offset = 0,
+    limit: number | null = null,
+    orderBy: keyof SessionEntity | null = null,
+    order: 'asc' | 'desc' = 'desc'
+  ) {
+    return this.repo.db.em.findAll(SessionEntity, {
+      where: { status, event: this.repo.db.em.getReference(EventEntity, eventIds) },
+      ...(orderBy !== null
+        ? {
+            orderBy: { [orderBy]: order === 'asc' ? 1 : -1 },
+          }
+        : {}),
+      limit: limit ?? undefined,
+      offset,
+    });
+  }
+
+  async getPlayersSeatingInEvent(eventId: number) {
+    const query = this.repo.db.em
+      .getKnex()
+      .from('session')
+      .leftJoin('session_player', 'session_player.session_id', 'session.id')
+      .select('session_player.player_id', 'session_player.order')
+      .where('session.event_id', '=', eventId)
+      .orderBy('session.id', 'asc')
+      .orderBy('session_player.order', 'asc');
+
+    return this.repo.db.em.execute<{ player_id: number; order: number }[]>(query);
+  }
+
+  async findByPlayerAndEvent(
+    playerId: number,
+    eventId: number,
+    withStatus: SessionStatus | '*' = '*',
+    dateFrom?: string,
+    dateTo?: string
+  ) {
+    return this.repo.db.em
+      .createQueryBuilder(SessionEntity)
+      .leftJoin('session_player', 'sp')
+      .where({
+        'sp.player_id': playerId,
+        'session.event_id': eventId,
+        ...(withStatus !== '*' ? { 'session.status': withStatus } : {}),
+        ...(dateFrom
+          ? { 'session.start_date': { gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss') } }
+          : {}),
+        ...(dateTo
+          ? { 'session.end_date': { lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss') } }
+          : {}),
+      })
+      .groupBy('session.id')
+      .execute<SessionEntity[]>('all', true); // TODO verify proper entities are returned
+  }
+
+  async findLastByPlayerAndEvent(
+    playerId: number,
+    eventId: number,
+    withStatus: SessionStatus | '*' = '*'
+  ) {
+    return this.repo.db.em
+      .createQueryBuilder(SessionEntity)
+      .leftJoin('session_player', 'sp')
+      .where({
+        ...(withStatus !== '*' ? { 'session.status': withStatus } : {}),
+        'sp.player_id': playerId,
+        'session.event_id': eventId,
+      })
+      .orderBy({ 'session.id': -1 })
+      .limit(1)
+      .execute<SessionEntity[]>('get', true); // TODO verify proper entity is returned
+  }
+
+  async getGamesCount(eventIdList: number[], withStatus: SessionStatus) {
+    return this.repo.db.em.count(SessionEntity, {
+      event: this.repo.db.em.getReference(EventEntity, eventIdList),
+      status: withStatus,
+    });
+  }
+
+  groupBySession(items: SessionPlayerEntity[]): Record<number, number[]> {
+    const result: Record<number, number[]> = {};
+    for (const item of items) {
+      if (result[item.session.id]) {
+        result[item.session.id].push(item.playerId);
+      } else {
+        result[item.session.id] = [item.playerId];
+      }
+    }
+    return result;
+  }
+
+  async getPrefinishedItems(ruleset: Ruleset, eventIds: number[]) {
+    const sessions = await this.findByEventAndStatus(eventIds, [
+      SessionStatus.SESSION_STATUS_PREFINISHED,
+    ]);
+
+    const sessionPlayers = this.groupBySession(
+      await this.repo.db.em.findAll(SessionPlayerEntity, {
+        where: {
+          session: this.repo.db.em.getReference(
+            SessionEntity,
+            sessions.map((s) => s.id)
+          ),
+        },
+      })
+    );
+
+    const srMdl = this.getModel(SessionResultsModel);
+    const phMdl = this.getModel(PlayerHistoryModel);
+
+    // Note: query in loop; though we don't expect too many eventIds in list as it's undocumented
+    // lastResults[eventId][sessionId][playerId]
+    const lastResults = await Promise.all(
+      eventIds.map((eventId) => phMdl.findAllLastByEventAndPlayer(eventId))
+    ).then((results) =>
+      results.reduce(
+        (acc, eventResults) => {
+          acc[eventResults[0].event_id] = eventResults.reduce(
+            (acc2, item) => {
+              if (!acc2[item.session_id]) {
+                acc2[item.session_id] = {};
+              }
+              acc2[item.session_id][item.player_id] = item;
+              return acc2;
+            },
+            {} as Record<number, Record<number, PlayerHistoryItem>>
+          );
+          return acc;
+        },
+        {} as Record<number, Record<number, Record<number, PlayerHistoryItem>>>
+      )
+    );
+
+    // Apply prefinished results to the last state hash
+    for (const session of sessions) {
+      if (!session.intermediateResults) {
+        continue;
+      }
+      const sessionState = SessionState.fromJson(
+        ruleset,
+        sessionPlayers[session.id],
+        session.intermediateResults
+      );
+      const sessionResults = srMdl.getUnfinishedSessionResults(
+        ruleset,
+        session.event.id,
+        session.id,
+        sessionState,
+        sessionPlayers[session.id]
+      );
+      lastResults[session.event.id][session.id] = phMdl.makeNewHistoryItemsForSession(
+        lastResults[session.event.id][session.id],
+        ruleset,
+        session.event.id,
+        session.id,
+        sessionResults.reduce(
+          (acc, item) => {
+            acc[item.playerId] = {
+              ratingDelta: item.ratingDelta,
+              place: item.place,
+              chips: item.chips ?? undefined,
+            };
+            return acc;
+          },
+          {} as Record<number, { ratingDelta: number; place: number; chips?: number }>
+        )
+      );
+    }
+
+    // Flatten last results back, no sorting required
+    let historyItems: Omit<PlayerHistory, 'id'>[] = [];
+    for (const eventId in lastResults) {
+      historyItems = historyItems.concat(
+        Object.values(lastResults[eventId])
+          .map((res) => Object.values(res))
+          .flat()
+      );
+    }
+
+    return historyItems;
+  }
+}
