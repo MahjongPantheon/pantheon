@@ -1,6 +1,8 @@
-import { complexUma, equalizedUma } from './ruleset.js';
+import { RulesetEntity } from './Ruleset.entity.js';
 
 describe('Equalize uma', () => {
+  const equalizedUma = RulesetEntity.prototype.equalizedUma;
+
   it('should output zero uma for all equal scores', () => {
     expect(equalizedUma([30000, 30000, 30000, 30000], [15000, 5000, -5000, -15000])).toEqual([
       0, 0, 0, 0,
@@ -36,6 +38,8 @@ describe('Equalize uma', () => {
 });
 
 describe('Complex uma', () => {
+  const complexUma = RulesetEntity.prototype.complexUma;
+
   const umaDef = {
     3: [12000, -1000, -3000, -8000],
     1: [8000, 3000, 1000, -12000],
