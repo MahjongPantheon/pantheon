@@ -13,27 +13,44 @@ export class SessionEntity {
   @Property({ nullable: true, comment: 'planned / inprogress / prefinished / finished' })
   status?: string;
 
-  @Property({ nullable: true, comment: 'table number in tournament' })
+  @Property({ fieldName: 'table_index', nullable: true, comment: 'table number in tournament' })
   tableIndex?: number;
 
-  @Property({ nullable: true, comment: 'hash to find this game from client mobile app' })
+  @Property({
+    fieldName: 'representational_hash',
+    nullable: true,
+    comment: 'hash to find this game from client mobile app',
+  })
   representationalHash?: string;
 
-  @Property({ nullable: true })
+  @Property({ fieldName: 'start_date', nullable: true })
   startDate?: string;
 
-  @Property({ nullable: true })
+  @Property({ fieldName: 'end_date', nullable: true })
   endDate?: string;
 
-  @Embedded(() => SessionStateEntity)
+  @Embedded({
+    entity: () => SessionStateEntity,
+    nullable: true,
+    object: true,
+    fieldName: 'intermediate_results',
+  })
   intermediateResults?: SessionStateEntity;
 
-  @Property({ nullable: true, comment: 'original tenhou game link, for access to replay' })
+  @Property({
+    fieldName: 'orig_link',
+    nullable: true,
+    comment: 'original tenhou game link, for access to replay',
+  })
   origLink?: string;
 
-  @Property({ nullable: true, comment: 'tenhou game hash, for deduplication' })
+  @Property({
+    fieldName: 'replay_hash',
+    nullable: true,
+    comment: 'tenhou game hash, for deduplication',
+  })
   replayHash?: string;
 
-  @Property({ comment: 'extra time for the session in minutes' })
+  @Property({ fieldName: 'extra_time', comment: 'extra time for the session in minutes' })
   extraTime!: number;
 }
