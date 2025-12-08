@@ -1,12 +1,13 @@
-import { getOka, getUma, Ruleset } from 'src/rulesets/ruleset.js';
 import { Model } from './Model.js';
 import { SessionResultsEntity } from 'src/entities/db/SessionResults.entity.js';
 import { EventEntity } from 'src/entities/db/Event.entity.js';
 import { SessionEntity } from 'src/entities/db/Session.entity.js';
+import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import { SessionState } from 'src/aggregates/SessionState.js';
 
 export class SessionResultsModel extends Model {
   public calc(
-    ruleset: Ruleset,
+    ruleset: RulesetEntity,
     state: SessionState,
     allPlayerIds: number[],
     event_id: number,
@@ -66,13 +67,13 @@ export class SessionResultsModel extends Model {
 
   // for a single table
   public calcRatingDelta(
-    ruleset: Ruleset,
+    ruleset: RulesetEntity,
     placesMap: Record<number, number>,
     scores: Record<number, number>,
     replacements: Record<number, number>
   ) {
     const ratingDelta: Record<number, number> = {};
-    const umaList = getUma(Object.values(scores), ruleset);
+    const umaList = ruleset.getUma(Object.values(scores));
     Object.entries(scores)
       .sort((a, b) => b[1] - a[1])
       .forEach(([playerId, score], idx) => {
@@ -85,13 +86,13 @@ export class SessionResultsModel extends Model {
           replacements[pId] && ruleset.rules.replacementPlayerOverrideUma !== 0
             ? ruleset.rules.replacementPlayerOverrideUma
             : umaList[idx];
-        ratingDelta[pId] = scoreSub + getOka(placesMap[pId], ruleset) + uma;
+        ratingDelta[pId] = scoreSub + ruleset.getOka(placesMap[pId]) + uma;
       });
     return ratingDelta;
   }
 
   public getUnfinishedSessionResults(
-    ruleset: Ruleset,
+    ruleset: RulesetEntity,
     eventId: number,
     sessionId: number,
     sessionState: SessionState,

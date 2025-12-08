@@ -1,18 +1,7 @@
-import { createRuleset, Ruleset } from '../rulesets/ruleset';
 import moment from 'moment-timezone';
-import {
-  calculateHistory,
-  findLastByEvent,
-  findLastByEventAndDate,
-  makeHistoryItemsSum,
-  PlayerHistoryItem,
-} from './db/playerHistory';
-import { getPrefinishedItems } from './db/session';
-import { PersonEx } from 'tsclients/proto/atoms.pb';
-import { EventsGetRatingTableResponse } from 'tsclients/proto/mimir.pb';
-import { Penalty } from 'database/schema';
-import { FreyService } from 'services/Frey';
-import { DatabaseService } from 'services/Database';
+import { PersonEx } from 'tsclients/proto/atoms.pb.js';
+import { EventsGetRatingTableResponse } from 'tsclients/proto/mimir.pb.js';
+import { FreyService } from '../services/Frey.js';
 
 export async function getRatingTable(
   db: DatabaseService,

@@ -5,7 +5,10 @@ import { SessionEntity } from 'src/entities/db/Session.entity.js';
 import { EventEntity } from 'src/entities/db/Event.entity.js';
 import { SessionPlayerEntity } from 'src/entities/db/SessionPlayer.entity.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
-import { Ruleset } from 'src/rulesets/ruleset.js';
+import { PlayerHistoryModel } from './PlayerHistoryModel.js';
+import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
+import { SessionState } from 'src/aggregates/SessionState.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -127,7 +130,7 @@ export class SessionModel extends Model {
     return result;
   }
 
-  async getPrefinishedItems(ruleset: Ruleset, eventIds: number[]) {
+  async getPrefinishedItems(ruleset: RulesetEntity, eventIds: number[]) {
     const sessions = await this.findByEventAndStatus(eventIds, [
       SessionStatus.SESSION_STATUS_PREFINISHED,
     ]);
@@ -153,19 +156,19 @@ export class SessionModel extends Model {
     ).then((results) =>
       results.reduce(
         (acc, eventResults) => {
-          acc[eventResults[0].event_id] = eventResults.reduce(
+          acc[eventResults[0].event.id] = eventResults.reduce(
             (acc2, item) => {
-              if (!acc2[item.session_id]) {
-                acc2[item.session_id] = {};
+              if (!acc2[item.sessionId]) {
+                acc2[item.sessionId] = {};
               }
-              acc2[item.session_id][item.player_id] = item;
+              acc2[item.sessionId][item.playerId] = item;
               return acc2;
             },
-            {} as Record<number, Record<number, PlayerHistoryItem>>
+            {} as Record<number, Record<number, PlayerHistoryEntity>>
           );
           return acc;
         },
-        {} as Record<number, Record<number, Record<number, PlayerHistoryItem>>>
+        {} as Record<number, Record<number, Record<number, PlayerHistoryEntity>>>
       )
     );
 
@@ -174,7 +177,7 @@ export class SessionModel extends Model {
       if (!session.intermediateResults) {
         continue;
       }
-      const sessionState = SessionState.fromJson(
+      const sessionState = new SessionState(
         ruleset,
         sessionPlayers[session.id],
         session.intermediateResults
@@ -206,7 +209,7 @@ export class SessionModel extends Model {
     }
 
     // Flatten last results back, no sorting required
-    let historyItems: Omit<PlayerHistory, 'id'>[] = [];
+    let historyItems: PlayerHistoryEntity[] = [];
     for (const eventId in lastResults) {
       historyItems = historyItems.concat(
         Object.values(lastResults[eventId])

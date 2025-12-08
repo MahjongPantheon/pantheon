@@ -1,9 +1,9 @@
 import { Moment } from 'moment-timezone';
-import { Ruleset } from 'src/rulesets/ruleset.js';
 import { Model } from './Model.js';
 import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
 import { EventEntity } from 'src/entities/db/Event.entity.js';
 import { sql } from '@mikro-orm/core';
+import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
 
 export class PlayerHistoryModel extends Model {
   async findLastByEvent(eventIds: number[]) {
@@ -83,7 +83,7 @@ export class PlayerHistoryModel extends Model {
   }
 
   async makeNewHistoryItem(
-    ruleset: Ruleset,
+    ruleset: RulesetEntity,
     playerId: number,
     eventId: number,
     sessionId: number,
@@ -122,7 +122,7 @@ export class PlayerHistoryModel extends Model {
 
   public makeNewHistoryItemsForSession(
     lastResultsMap: Record<number, PlayerHistoryEntity>,
-    ruleset: Ruleset,
+    ruleset: RulesetEntity,
     eventId: number,
     sessionId: number,
     playersData: Record<
@@ -168,7 +168,7 @@ export class PlayerHistoryModel extends Model {
   public makeHistoryItemsSum(
     source: PlayerHistoryEntity,
     add: PlayerHistoryEntity,
-    ruleset: Ruleset
+    ruleset: RulesetEntity
   ): PlayerHistoryEntity {
     const sum = new PlayerHistoryEntity();
     sum.playerId = source.playerId;
@@ -186,7 +186,7 @@ export class PlayerHistoryModel extends Model {
   public makeHistoryItemsDiff(
     source: PlayerHistoryEntity,
     sub: PlayerHistoryEntity,
-    ruleset: Ruleset
+    ruleset: RulesetEntity
   ): PlayerHistoryEntity {
     const diff = new PlayerHistoryEntity();
     diff.playerId = source.playerId;
@@ -204,7 +204,7 @@ export class PlayerHistoryModel extends Model {
   public calculateHistory(
     itemsFrom: Array<PlayerHistoryEntity>,
     itemsTo: Array<PlayerHistoryEntity>,
-    ruleset: Ruleset
+    ruleset: RulesetEntity
   ) {
     const fromMap = new Map<string, PlayerHistoryEntity>();
     for (const item of itemsFrom) {

@@ -4,6 +4,7 @@ import { playerInfo } from 'src/helpers/cache/schema.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { SessionPlayerEntity } from 'src/entities/db/SessionPlayer.entity.js';
 import { SessionEntity } from 'src/entities/db/Session.entity.js';
+import { SessionModel } from './SessionModel.js';
 
 export class PlayerModel extends Model {
   async findById(ids: number[], skipCache = false): Promise<PersonEx[]> {
@@ -86,7 +87,8 @@ export class PlayerModel extends Model {
   }
 
   async findPlayersForSession(sessionHash: string, substituteReplacements = false) {
-    const session = await findByRepresentationalHash([sessionHash]);
+    const sessionModel = this.getModel(SessionModel);
+    const session = await sessionModel.findByRepresentationalHash([sessionHash]);
     if (session.length === 0) {
       return { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() };
     }
@@ -100,7 +102,7 @@ export class PlayerModel extends Model {
 
     const regModel = this.getModel(EventRegistrationModel);
     const registrationData = await regModel.fetchPlayersRegDataByIds(
-      [session[0].event_id],
+      [session[0].event.id],
       playerIds
     );
     const replacements = new Map<number, number>();
