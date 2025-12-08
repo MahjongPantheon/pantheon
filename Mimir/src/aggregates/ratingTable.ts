@@ -3,6 +3,9 @@ import { PersonEx } from 'tsclients/proto/atoms.pb.js';
 import { EventsGetRatingTableResponse } from 'tsclients/proto/mimir.pb.js';
 import { FreyService } from '../services/Frey.js';
 
+// TODO: decide what is it? Model? Aggregate? If aggregate, why?
+// Looks more like a model
+
 export async function getRatingTable(
   db: DatabaseService,
   frey: FreyService,

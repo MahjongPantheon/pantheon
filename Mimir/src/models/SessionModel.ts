@@ -1,4 +1,4 @@
-import { SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import { PlatformType, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import moment from 'moment-timezone';
 import { Model } from './Model.js';
 import { SessionEntity } from 'src/entities/db/Session.entity.js';
@@ -9,6 +9,11 @@ import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
 import { SessionState } from 'src/aggregates/SessionState.js';
+import { PlayerModel } from './PlayerModel.js';
+import { formatGameResult } from 'src/helpers/formatters.js';
+import { RoundModel } from './RoundModel.js';
+import { Populate } from '@mikro-orm/postgresql';
+import { PenaltyModel } from './PenaltyModel.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -29,9 +34,13 @@ export class SessionModel extends Model {
   }
 
   // TODO: memoize
-  async findByRepresentationalHash(hashList: string[]) {
+  async findByRepresentationalHash(
+    hashList: string[],
+    populate?: Populate<SessionEntity, 'event'>
+  ) {
     return this.repo.db.em.findAll(SessionEntity, {
       where: { representationalHash: hashList },
+      populate,
     });
   }
 
@@ -219,5 +228,50 @@ export class SessionModel extends Model {
     }
 
     return historyItems;
+  }
+
+  async getFinishedGame(representationalHash: string, substituteReplacementPlayers = false) {
+    const playerModel = this.getModel(PlayerModel);
+    const roundModel = this.getModel(RoundModel);
+    const penaltyModel = this.getModel(PenaltyModel);
+    const sessionResultsModel = this.getModel(SessionResultsModel);
+    const [session, players] = await Promise.all([
+      this.findByRepresentationalHash([representationalHash], ['event']),
+      playerModel.findPlayersForSession(representationalHash, substituteReplacementPlayers),
+    ]);
+    if (session.length === 0) {
+      throw new Error('No session found in database');
+    }
+
+    const [results, rounds, replacements, penalties] = await Promise.all([
+      sessionResultsModel.findBySession(session[0].id),
+      roundModel.findBySessionIds([session[0].id]),
+      players.replaceMap,
+      penaltyModel.findBySession(session[0].id),
+    ]);
+
+    const sessionState = new SessionState(
+      session[0].event.ruleset,
+      players.players.map((p) => p.id),
+      session[0].intermediateResults
+    );
+
+    return {
+      players: playerModel.substituteReplacements(players.players, replacements),
+      game: formatGameResult(
+        session[0],
+        sessionState,
+        session[0].event.onlinePlatform === 'TENHOU'
+          ? PlatformType.PLATFORM_TYPE_TENHOUNET
+          : session[0].event.onlinePlatform === 'MAJSOUL'
+            ? PlatformType.PLATFORM_TYPE_MAHJONGSOUL
+            : PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+        players.players.map((p) => p.id),
+        results,
+        penalties,
+        rounds,
+        replacements
+      ),
+    };
   }
 }
