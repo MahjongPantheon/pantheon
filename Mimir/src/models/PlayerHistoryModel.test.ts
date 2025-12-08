@@ -1,4 +1,3 @@
-import { createRuleset } from '../rulesets/ruleset.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { Model } from './Model.js';
 import { Repository } from 'src/services/Repository.js';
@@ -6,6 +5,7 @@ import { MikroORM } from '@mikro-orm/postgresql';
 import config from '../mikro-orm.config.js';
 import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
 import { EventEntity } from 'src/entities/db/Event.entity.js';
+import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
 
 const orm = await MikroORM.init(config());
 
@@ -36,7 +36,7 @@ describe('PlayerHistory', () => {
   });
 
   it('should make new item for session', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.chipsValue = 1;
     const items: Record<number, PlayerHistoryEntity> = {};
     items[5] = new PlayerHistoryEntity();
@@ -123,7 +123,7 @@ describe('PlayerHistory', () => {
   });
 
   it('should make a sum of two history items', () => {
-    const ruleset = createRuleset('tenhounet');
+    const ruleset = RulesetEntity.createRuleset('tenhounet');
     ruleset.rules.startRating = 1500;
     const item1 = new PlayerHistoryEntity();
     const item2 = new PlayerHistoryEntity();
@@ -157,7 +157,7 @@ describe('PlayerHistory', () => {
   });
 
   it('should make a diff of two history items', () => {
-    const ruleset = createRuleset('tenhounet');
+    const ruleset = RulesetEntity.createRuleset('tenhounet');
     ruleset.rules.startRating = 1500;
     const item1 = new PlayerHistoryEntity();
     item1.playerId = 7;

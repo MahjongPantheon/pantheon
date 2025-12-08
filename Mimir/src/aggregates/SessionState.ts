@@ -1,16 +1,16 @@
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
-import { PaymentsInfo, PointsCalc } from '../../helpers/PointsCalc.js';
-import { RoundEntity } from '../db/Round.entity.js';
-import { RulesetEntity } from '../db/Ruleset.entity.js';
-import { SessionStateEntity } from '../db/SessionState.entity.js';
+import { PaymentsInfo, PointsCalc } from '../helpers/PointsCalc.js';
+import { RoundEntity } from '../entities/db/Round.entity.js';
+import { RulesetEntity } from '../entities/db/Ruleset.entity.js';
+import { SessionStateEntity } from '../entities/db/SessionState.entity.js';
 
 export class SessionState {
   protected _ruleset: RulesetEntity;
   protected _state: SessionStateEntity;
 
-  constructor(ruleset: RulesetEntity, playersIds: number[]) {
+  constructor(ruleset: RulesetEntity, playersIds: number[], state?: SessionStateEntity) {
     this._ruleset = ruleset;
-    this._state = new SessionStateEntity();
+    this._state = state ?? new SessionStateEntity();
 
     if (playersIds.length !== 4) {
       throw new Error(`Players count is not 4: ${JSON.stringify(playersIds)}`);
