@@ -5,7 +5,6 @@ import { HandEntity } from './Hand.entity.js';
 import { SessionStateEntity } from './SessionState.entity.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 
-// TODO: should be an aggregate
 @Entity({ tableName: 'round' })
 export class RoundEntity {
   @PrimaryKey()
