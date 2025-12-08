@@ -1,140 +1,27 @@
+import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { PaymentsInfo, PointsCalc } from '../../helpers/PointsCalc.js';
-import { Ruleset } from '../../rulesets/ruleset.js';
+import { RoundEntity } from '../db/Round.entity.js';
+import { RulesetEntity } from '../db/Ruleset.entity.js';
+import { SessionStateEntity } from '../db/SessionState.entity.js';
 
-interface SessionStateData {
-  _scores: Record<number, number>;
-  _chips: Record<number, number>;
-  _chombo: Record<number, number>;
-  _round: number;
-  _honba: number;
-  _riichiBets: number;
-  _prematurelyFinished: boolean;
-  _roundJustChanged: boolean;
-  _lastHandStarted: boolean;
-  _lastOutcome: string | null;
-  _yakitori: Record<number, boolean>;
-  _replacements: any[];
-}
-
-/**
- * Class SessionState
- *
- * Low-level model helper
- */
 export class SessionState {
-  protected _ruleset: Ruleset;
+  protected _ruleset: RulesetEntity;
+  protected _state: SessionStateEntity;
 
-  /** { player_id => score } */
-  protected _scores: Record<number, number> = {};
-
-  /** { player_id => chip } */
-  protected _chips: Record<number, number> = {};
-
-  /** { player_id => chombo_amount } */
-  protected _chombo: Record<number, number> = {};
-
-  /** 1e-4s */
-  protected _round = 1;
-
-  protected _honba = 0;
-
-  /** Count of riichi bets on table from previous rounds */
-  protected _riichiBets = 0;
-
-  /** True if game has been finished prematurely (e.g. by timeout) */
-  protected _prematurelyFinished = false;
-
-  /**
-   * True if round has just changed useful to determine if current 4e or
-   * 4s is first one, no matter what honba count is.
-   * (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
-   */
-  protected _roundJustChanged = true;
-
-  /**
-   * True if ending policy is "oneMoreHand" AND this last hand was started.
-   */
-  protected _lastHandStarted = false;
-
-  /**
-   * Outcome of previously recorded round. Useful to determine if certain rules
-   * should be applied in current case, e.g., agariyame should not be applied on
-   * chombo or abortive draw.
-   */
-  protected _lastOutcome: string | null = null;
-
-  /** If player has yakitori indicator */
-  protected _yakitori: Record<number, boolean> = {};
-
-  /** Saved current replacements for proper recalculations */
-  protected _replacements: any[] = [];
-
-  protected _playerIds: number[];
-
-  constructor(ruleset: Ruleset, playersIds: number[]) {
+  constructor(ruleset: RulesetEntity, playersIds: number[]) {
     this._ruleset = ruleset;
+    this._state = new SessionStateEntity();
 
     if (playersIds.length !== 4) {
       throw new Error(`Players count is not 4: ${JSON.stringify(playersIds)}`);
     }
 
     const startPoints = ruleset.rules.startPoints;
-    this._scores = {};
+    this._state.scores = {};
     playersIds.forEach((playerId) => {
-      this._scores[playerId] = startPoints;
+      this._state.scores[playerId] = startPoints;
     });
-    this._playerIds = playersIds;
-  }
-
-  public toJson(): string {
-    return JSON.stringify(this.toArray());
-  }
-
-  public toArray(): SessionStateData {
-    const arr: any = {};
-    const withChips = this._ruleset.rules.chipsValue > 0;
-
-    // Copy all properties except _rules
-    Object.keys(this).forEach((key) => {
-      if (key === '_rules') {
-        return;
-      }
-      if (key === '_chips' && !withChips) {
-        return;
-      }
-
-      const value = (this as any)[key];
-      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-        // Handle non-array objects
-        if (typeof value.toArray === 'function' || typeof value.toJson === 'function') {
-          throw new Error('No objects/functions allowed in session state');
-        }
-      }
-
-      arr[key] = value;
-    });
-
-    return arr;
-  }
-
-  public static fromJson(rules: Ruleset, playersIds: number[], json: string): SessionState {
-    let data: any = {};
-
-    if (json.trim()) {
-      try {
-        data = JSON.parse(json);
-      } catch (error) {
-        throw new Error(`JSON parse error: ${error}`);
-      }
-    }
-
-    const instance = new SessionState(rules, playersIds);
-
-    Object.keys(data).forEach((key) => {
-      (instance as any)[key] = data[key];
-    });
-
-    return instance;
+    this._state.playerIds = playersIds;
   }
 
   protected _tobi(): boolean {
@@ -143,11 +30,11 @@ export class SessionState {
   }
 
   protected _dealerIsLeaderOnOorasu(): boolean {
-    if (this._lastOutcome === 'chombo' || this._lastOutcome === 'abort') {
+    if (this._state.lastOutcome === 'chombo' || this._state.lastOutcome === 'abort') {
       return false; // chombo or abortive draw should not finish game
     }
 
-    if (this._roundJustChanged) {
+    if (this._state.roundJustChanged) {
       return false; // should play last round at least once!
     }
 
@@ -169,7 +56,7 @@ export class SessionState {
       return false;
     }
 
-    if (this._lastOutcome === 'chombo') {
+    if (this._state.lastOutcome === 'chombo') {
       return false; // chombo should not finish game
     }
 
@@ -187,140 +74,141 @@ export class SessionState {
    * End game prematurely
    */
   public forceFinish(): SessionState {
-    this._prematurelyFinished = true;
+    this._state.prematurelyFinished = true;
     return this;
   }
 
   public isFinished(): boolean {
     return (
       this._lastPossibleRoundWasPlayed() ||
-      this._prematurelyFinished ||
+      this._state.prematurelyFinished ||
       (this._ruleset.rules.withButtobi && this._tobi()) ||
       (this._ruleset.rules.withLeadingDealerGameOver && this._dealerIsLeaderOnOorasu())
     );
   }
 
   protected _addHonba(): SessionState {
-    this._honba++;
+    this._state.honba++;
     return this;
   }
 
   protected _resetHonba(): SessionState {
-    this._honba = 0;
+    this._state.honba = 0;
     return this;
   }
 
   public getHonba(): number {
-    return this._honba;
+    return this._state.honba;
   }
 
   protected _addRiichiBets(riichiBets: number): SessionState {
-    this._riichiBets += riichiBets;
+    this._state.riichiBets += riichiBets;
     return this;
   }
 
   protected _resetRiichiBets(): SessionState {
-    this._riichiBets = 0;
+    this._state.riichiBets = 0;
     return this;
   }
 
   public getRiichiBets(): number {
-    return this._riichiBets;
+    return this._state.riichiBets;
   }
 
   protected _nextRound(): SessionState {
-    this._round++;
+    this._state.round++;
     return this;
   }
 
   public getRound(): number {
-    return this._round;
+    return this._state.round;
   }
 
   public getScores(): Record<number, number> {
-    return this._scores;
+    return this._state.scores;
   }
 
   public setScores(scores: Record<number, number>): SessionState {
-    this._scores = scores;
+    this._state.scores = scores;
     return this;
   }
 
-  public getReplacements(): any[] {
-    return this._replacements;
+  public getReplacements(): Record<number, number> {
+    return this._state.replacements;
   }
 
-  public setReplacements(replacements: any[]): SessionState {
-    this._replacements = replacements;
+  public setReplacements(replacements: Record<number, number>): SessionState {
+    this._state.replacements = replacements;
     return this;
   }
 
   public getYakitori(): Record<number, boolean> {
-    return this._yakitori;
+    return this._state.yakitori;
   }
 
   public setYakitori(yakitori: Record<number, boolean>): SessionState {
-    this._yakitori = yakitori;
+    this._state.yakitori = yakitori;
     return this;
   }
 
   public getChips(): Record<number, number> {
-    return this._chips;
+    return this._state.chips;
   }
 
   public setChips(chips: Record<number, number>): SessionState {
-    this._chips = chips;
+    this._state.chips = chips;
     return this;
   }
 
   public getChombo(): Record<number, number> {
-    return this._chombo;
+    return this._state.chombo;
   }
 
   /**
    * Return id of current dealer
    */
   public getCurrentDealer(): number {
-    const players = Object.keys(this._scores).map(Number);
-    return players[(this._round - 1) % 4];
+    const players = Object.keys(this._state.scores).map(Number);
+    return players[(this._state.round - 1) % 4];
   }
 
   /**
    * Register new round in current session
    */
-  public update(round: Round): PaymentsInfo {
+  public update(round: RoundEntity): PaymentsInfo {
     const lastRoundIndex = this.getRound();
     let payments: PaymentsInfo;
 
     switch (round.outcome) {
-      case 'ron':
+      case RoundOutcome.ROUND_OUTCOME_RON:
         payments = this._updateAfterRon(round);
         break;
-      case 'multiron':
-        payments = this._updateAfterMultiRon(round, this._playerIds);
+      case RoundOutcome.ROUND_OUTCOME_MULTIRON:
+        payments = this._updateAfterMultiRon(round, this._state.playerIds);
         break;
-      case 'tsumo':
+      case RoundOutcome.ROUND_OUTCOME_TSUMO:
         payments = this._updateAfterTsumo(round);
         break;
-      case 'draw':
+      case RoundOutcome.ROUND_OUTCOME_DRAW:
         payments = this._updateAfterDraw(round);
         break;
-      case 'abort':
+      case RoundOutcome.ROUND_OUTCOME_ABORT:
         payments = this._updateAfterAbort(round);
         break;
-      case 'chombo':
+      case RoundOutcome.ROUND_OUTCOME_CHOMBO:
         payments = this._updateAfterChombo(round);
         break;
-      case 'nagashi':
+      case RoundOutcome.ROUND_OUTCOME_NAGASHI:
         payments = this._updateAfterNagashi(round);
         break;
+      case RoundOutcome.ROUND_OUTCOME_UNSPECIFIED:
       default:
         throw new Error('wrong outcome passed');
     }
 
     this._updateYakitori(round);
-    this._roundJustChanged = lastRoundIndex !== this.getRound();
-    this._lastOutcome = round.outcome;
+    this._state.roundJustChanged = lastRoundIndex !== this.getRound();
+    this._state.lastOutcome = round.outcome;
     return payments; // for dry run
   }
 
@@ -330,33 +218,33 @@ export class SessionState {
    */
   public giveRiichiBetsToPlayer(id: number | null, betAmount: number): void {
     if (id !== null) {
-      this._scores[id] += betAmount;
+      this._state.scores[id] += betAmount;
     }
   }
 
-  protected _updateAfterRon(round: Round): PaymentsInfo {
-    const winnerId = round.rounds[0].winner_id;
-    const loserId = round.rounds[0].loser_id;
+  protected _updateAfterRon(round: RoundEntity): PaymentsInfo {
+    const winnerId = round.hands[0].winnerId;
+    const loserId = round.hands[0].loserId;
 
-    if (winnerId === null || loserId === null) {
+    if (winnerId === undefined || loserId === undefined) {
       throw new Error('Winner and loser IDs required for ron');
     }
 
     const isDealer = this.getCurrentDealer() === winnerId;
 
     const calc = new PointsCalc();
-    this._scores = calc.ron(
+    this._state.scores = calc.ron(
       this._ruleset,
       isDealer,
       this.getScores(),
       winnerId,
       loserId,
-      round.rounds[0].han ?? 0,
-      round.rounds[0].fu,
-      round.riichi,
+      round.hands[0].han ?? 0,
+      round.hands[0].fu ?? 0,
+      round.riichi ?? [],
       this.getHonba(),
       this.getRiichiBets(),
-      round.rounds[0].pao_player_id
+      round.hands[0].paoPlayerId
     );
 
     if (isDealer && !this._ruleset.rules.withWinningDealerHonbaSkipped) {
@@ -369,16 +257,16 @@ export class SessionState {
     return calc.lastPaymentsInfo();
   }
 
-  protected _updateAfterMultiRon(round: Round, playerIds: number[]): PaymentsInfo {
-    const loserId = round.rounds[0].loser_id; // same for all rounds
-    if (loserId === null) {
+  protected _updateAfterMultiRon(round: RoundEntity, playerIds: number[]): PaymentsInfo {
+    const loserId = round.hands[0].loserId; // same for all rounds
+    if (loserId === undefined) {
       throw new Error('Loser ID required for multiron');
     }
 
     const calc = new PointsCalc();
     const riichiWinners = calc.assignRiichiBets(
-      round.rounds.map((r) => r.winner_id!),
-      round.riichi,
+      round.hands.map((r) => r.winnerId!),
+      round.riichi ?? [],
       loserId,
       this.getRiichiBets(),
       this.getHonba(),
@@ -394,25 +282,25 @@ export class SessionState {
     calc.resetPaymentsInfo();
     let payments = calc.lastPaymentsInfo();
 
-    round.rounds.forEach((roundItem) => {
-      const winnerId = roundItem.winner_id;
-      if (winnerId === null) return;
+    round.hands.forEach((hand) => {
+      const winnerId = hand.winnerId;
+      if (winnerId === undefined) return;
 
       dealerWon = dealerWon || this.getCurrentDealer() === winnerId;
       const winnerInfo = riichiWinners[winnerId];
 
-      this._scores = calc.ron(
+      this._state.scores = calc.ron(
         this._ruleset,
         this.getCurrentDealer() === winnerId,
         this.getScores(),
         winnerId,
-        roundItem.loser_id!,
-        roundItem.han ?? 0,
-        roundItem.fu,
+        hand.loserId!,
+        hand.han ?? 0,
+        hand.fu ?? 0,
         winnerInfo.from_players,
         winnerInfo.honba,
         winnerInfo.from_table,
-        roundItem.pao_player_id,
+        hand.paoPlayerId,
         winnerInfo.closest_winner,
         totalRiichiInRound
       );
@@ -451,24 +339,24 @@ export class SessionState {
     };
   }
 
-  protected _updateAfterTsumo(round: Round): PaymentsInfo {
-    const winnerId = round.rounds[0].winner_id;
-    if (winnerId === null) {
+  protected _updateAfterTsumo(round: RoundEntity): PaymentsInfo {
+    const winnerId = round.hands[0].winnerId;
+    if (winnerId === undefined) {
       throw new Error('Winner ID required for tsumo');
     }
 
     const calc = new PointsCalc();
-    this._scores = calc.tsumo(
+    this._state.scores = calc.tsumo(
       this._ruleset,
       this.getCurrentDealer(),
       this.getScores(),
       winnerId,
-      round.rounds[0].han ?? 0,
-      round.rounds[0].fu,
-      round.riichi,
+      round.hands[0].han ?? 0,
+      round.hands[0].fu ?? 0,
+      round.riichi ?? [],
       this.getHonba(),
       this.getRiichiBets(),
-      round.rounds[0].pao_player_id
+      round.hands[0].paoPlayerId
     );
 
     if (
@@ -484,16 +372,12 @@ export class SessionState {
     return calc.lastPaymentsInfo();
   }
 
-  protected _updateAfterDraw(round: Round): PaymentsInfo {
-    const tempaiIds =
-      round.rounds[0].tempai
-        ?.split(',')
-        .filter((i) => !!i)
-        .map((i) => parseInt(i, 10)) ?? [];
+  protected _updateAfterDraw(round: RoundEntity): PaymentsInfo {
+    const tempaiIds = round.hands[0].tempai ?? [];
     const calc = new PointsCalc();
-    this._scores = calc.draw(this.getScores(), tempaiIds, round.riichi);
+    this._state.scores = calc.draw(this.getScores(), tempaiIds, round.riichi ?? []);
 
-    this._addHonba()._addRiichiBets(round.riichi.length);
+    this._addHonba()._addRiichiBets((round.riichi ?? []).length);
 
     if (
       !tempaiIds.includes(this.getCurrentDealer()) ||
@@ -505,78 +389,79 @@ export class SessionState {
     return calc.lastPaymentsInfo();
   }
 
-  protected _updateAfterAbort(round: Round): PaymentsInfo {
+  protected _updateAfterAbort(round: RoundEntity): PaymentsInfo {
     if (!this._ruleset.rules.withAbortives) {
       throw new Error('Current game rules do not allow abortive draws');
     }
 
     const calc = new PointsCalc();
-    this._scores = calc.abort(this.getScores(), round.riichi);
+    this._state.scores = calc.abort(this.getScores(), round.riichi ?? []);
 
-    this._addHonba()._addRiichiBets(round.riichi.length);
+    this._addHonba()._addRiichiBets((round.riichi ?? []).length);
     return calc.lastPaymentsInfo();
   }
 
-  protected _updateAfterChombo(round: Round): PaymentsInfo {
-    const loserId = round.rounds[0].loser_id;
-    if (loserId === null) {
+  protected _updateAfterChombo(round: RoundEntity): PaymentsInfo {
+    const loserId = round.hands[0].loserId;
+    if (loserId === undefined) {
       throw new Error('Loser ID required for chombo');
     }
 
     const calc = new PointsCalc();
-    this._scores = calc.chombo(this._ruleset, this.getCurrentDealer(), loserId, this.getScores());
+    this._state.scores = calc.chombo(
+      this._ruleset,
+      this.getCurrentDealer(),
+      loserId,
+      this.getScores()
+    );
 
     if (this._ruleset.rules.chomboAmount > 0) {
-      if (!(loserId in this._chombo)) {
-        this._chombo[loserId] = 0;
+      if (!(loserId in this._state.chombo)) {
+        this._state.chombo[loserId] = 0;
       }
-      this._chombo[loserId] -= this._ruleset.rules.chomboAmount;
+      this._state.chombo[loserId] -= this._ruleset.rules.chomboAmount;
     }
     return calc.lastPaymentsInfo();
   }
 
-  protected _updateAfterNagashi(round: Round): PaymentsInfo {
+  protected _updateAfterNagashi(round: RoundEntity): PaymentsInfo {
     const calc = new PointsCalc();
-    this._scores = calc.nagashi(
+    this._state.scores = calc.nagashi(
       this.getScores(),
       this.getCurrentDealer(),
-      round.riichi,
-      round.rounds[0].nagashi?.split(',').map((i) => parseInt(i, 10)) ?? []
+      round.riichi ?? [],
+      round.hands[0].nagashi ?? []
     );
 
-    this._addHonba()._addRiichiBets(round.riichi.length);
+    this._addHonba()._addRiichiBets((round.riichi ?? []).length);
 
-    if (
-      !(round.rounds[0].tempai?.split(',').map((i) => parseInt(i, 10)) ?? []).includes(
-        this.getCurrentDealer()
-      )
-    ) {
+    if (!(round.hands[0].tempai ?? []).includes(this.getCurrentDealer())) {
       this._nextRound();
     }
     return calc.lastPaymentsInfo();
   }
 
-  protected _updateYakitori(round: Round): void {
+  protected _updateYakitori(round: RoundEntity): void {
     if (this._ruleset.rules.withYakitori) {
-      round.rounds.forEach((r) => {
-        const winnerId = r.winner_id;
-        if (winnerId !== null) {
-          this._yakitori[winnerId] = false;
+      round.hands.forEach((r) => {
+        const winnerId = r.winnerId;
+        if (winnerId !== undefined) {
+          this._state.yakitori[winnerId] = false;
         }
       });
     }
   }
 
   public lastHandStarted(): boolean {
-    return this._lastHandStarted;
+    return this._state.lastHandStarted;
   }
 
   public setLastHandStarted(state = true): SessionState {
-    this._lastHandStarted = state;
+    this._state.lastHandStarted = state;
     return this;
   }
 
   public getLastOutcome(): string | null {
-    return this._lastOutcome;
+    return this._state.lastOutcome;
   }
 }
