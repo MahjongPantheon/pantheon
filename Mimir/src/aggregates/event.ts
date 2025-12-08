@@ -1,19 +1,18 @@
-import { createRuleset } from 'rulesets/ruleset';
-import { Context } from '../context';
+import { Context } from '../context.js';
 import {
   EventsGetEventsByIdPayload,
   EventsGetEventsByIdResponse,
   EventsGetEventsPayload,
   EventsGetEventsResponse,
   PlayersGetMyEventsResponse,
-} from 'tsclients/proto/mimir.pb';
+} from 'tsclients/proto/mimir.pb.js';
 import {
   EventType,
   GameConfig,
   GenericEventPayload,
   PlatformType,
   TournamentGamesStatus,
-} from 'tsclients/proto/atoms.pb';
+} from 'tsclients/proto/atoms.pb.js';
 
 export async function getEvents(
   eventsGetEventsPayload: EventsGetEventsPayload,

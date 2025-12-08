@@ -1,16 +1,8 @@
-import { Session } from '../database/schema';
-import { findByEventId } from './db/playerRegistration';
-import { EventsGetGameResponse } from 'tsclients/proto/mimir.pb';
-import { findPlayersForSession } from './db/player';
-import { findByRepresentationalHash } from './db/session';
-import { PersonEx, PlatformType } from 'tsclients/proto/atoms.pb';
-import { substituteReplacements } from '../helpers/players';
-import { formatGameResult } from '../helpers/formatters';
-import { SessionState } from 'helpers/SessionState';
-import { createRuleset } from 'rulesets/ruleset';
-import { DatabaseService } from 'services/Database';
-import { FreyService } from 'services/Frey';
-import { CacheService } from 'services/Cache';
+import { EventsGetGameResponse } from 'tsclients/proto/mimir.pb.js';
+import { PersonEx, PlatformType } from 'tsclients/proto/atoms.pb.js';
+import { formatGameResult } from '../helpers/formatters.js';
+import { FreyService } from '../services/Frey.js';
+import { CacheService } from '../services/Cache.js';
 
 export type SessionItem = Omit<Session, 'id'> & { id: number };
 

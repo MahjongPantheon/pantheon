@@ -1,10 +1,10 @@
-import { createRuleset } from 'src/rulesets/ruleset.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { Model } from './Model.js';
 
 import config from '../mikro-orm.config.js';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { Repository } from 'src/services/Repository.js';
+import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
 
 const orm = await MikroORM.init(config());
 
@@ -43,7 +43,7 @@ describe('SessionResults', () => {
   });
 
   it('should calculate rating delta', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     const scores = {
       1: 100000,
       2: 90000,
