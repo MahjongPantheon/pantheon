@@ -1,4 +1,5 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Embedded, Entity, PrimaryKey, Property } from '@mikro-orm/postgresql';
+import { RulesetEntity } from './Ruleset.entity.js';
 
 @Entity({ tableName: 'event' })
 export class EventEntity {
@@ -64,8 +65,13 @@ export class EventEntity {
   @Property({ fieldName: 'lobby_id', comment: 'tenhou lobby id for online events', nullable: true })
   lobbyId?: number;
 
-  @Property({ fieldName: 'ruleset_config' })
-  rulesetConfig!: string;
+  @Embedded({
+    entity: () => RulesetEntity,
+    nullable: true,
+    object: true,
+    fieldName: 'ruleset_config',
+  })
+  ruleset!: RulesetEntity;
 
   @Property({ fieldName: 'timezone' })
   timezone!: string;

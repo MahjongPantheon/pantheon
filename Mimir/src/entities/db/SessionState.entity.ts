@@ -1,13 +1,7 @@
 import { Embeddable, Property } from '@mikro-orm/postgresql';
 
-// TODO: convert to embeddable, make a model (?)
-// Add Ruleset as embeddable for customized rulesets
-
 @Embeddable()
 export class SessionStateEntity {
-  @Property()
-  ruleset!: Ruleset;
-
   /** { player_id => score } */
   @Property()
   scores!: Record<number, number>;
