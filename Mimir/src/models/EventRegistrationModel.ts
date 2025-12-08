@@ -160,4 +160,16 @@ export class EventRegistrationModel extends Model {
     }
     return result;
   }
+
+  async getSubstitutionPlayers(eventId: number) {
+    const replacements: Record<number, number> = {};
+    const regs = await this.findByEventId([eventId]);
+    for (const reg of regs) {
+      if (!reg.playerId || !reg.replacementId) {
+        continue;
+      }
+      replacements[reg.playerId] = reg.replacementId;
+    }
+    return replacements;
+  }
 }

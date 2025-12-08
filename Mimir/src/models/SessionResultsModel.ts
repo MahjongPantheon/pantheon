@@ -6,6 +6,10 @@ import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
 import { SessionState } from 'src/aggregates/SessionState.js';
 
 export class SessionResultsModel extends Model {
+  findBySession(session_id: number): Promise<SessionResultsEntity[]> {
+    return this.repo.db.em.find(SessionResultsEntity, { session: session_id });
+  }
+
   public calc(
     ruleset: RulesetEntity,
     state: SessionState,

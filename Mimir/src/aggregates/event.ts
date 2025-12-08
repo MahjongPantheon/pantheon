@@ -14,6 +14,9 @@ import {
   TournamentGamesStatus,
 } from 'tsclients/proto/atoms.pb.js';
 
+// TODO: decide what is it? Model? Aggregate? If aggregate, why?
+// Looks more like a model
+
 export async function getEvents(
   eventsGetEventsPayload: EventsGetEventsPayload,
   context: Context
