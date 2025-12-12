@@ -1,13 +1,13 @@
 import { checkRound } from 'src/helpers/roundValidation.js';
 import { Model } from './Model.js';
-import { RoundEntity } from 'src/entities/db/Round.entity.js';
-import { SessionEntity } from 'src/entities/db/Session.entity.js';
-import { EventEntity } from 'src/entities/db/Event.entity.js';
-import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import { RoundEntity } from 'src/entities/Round.entity.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
+import { EventEntity } from 'src/entities/Event.entity.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { Round, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { Moment } from 'moment';
-import { SessionStateEntity } from 'src/entities/db/SessionState.entity.js';
-import { HandEntity } from 'src/entities/db/Hand.entity.js';
+import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
+import { HandEntity } from 'src/entities/Hand.entity.js';
 
 export class RoundModel extends Model {
   async findBySessionIds(sessionIds: number[]) {

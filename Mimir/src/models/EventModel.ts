@@ -1,4 +1,4 @@
-import { EventEntity } from 'src/entities/db/Event.entity.js';
+import { EventEntity } from 'src/entities/Event.entity.js';
 import { Model } from './Model.js';
 import {
   EventsGetEventsByIdPayload,
@@ -16,11 +16,11 @@ import {
   GameConfig,
   TournamentGamesStatus,
 } from 'tsclients/proto/atoms.pb.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/db/EventRegisteredPlayers.entity.js';
-import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
+import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
+import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
 import { SessionModel } from './SessionModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
-import { PenaltyEntity } from 'src/entities/db/Penalty.entity.js';
+import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
 
 export class EventModel extends Model {
   async findById(id: number) {
