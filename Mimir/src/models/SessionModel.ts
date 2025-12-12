@@ -233,41 +233,40 @@ export class SessionModel extends Model {
   async getFinishedGame(representationalHash: string, substituteReplacementPlayers = false) {
     const playerModel = this.getModel(PlayerModel);
     const roundModel = this.getModel(RoundModel);
-    const penaltyModel = this.getModel(PenaltyModel);
     const sessionResultsModel = this.getModel(SessionResultsModel);
     const [session, players] = await Promise.all([
       this.findByRepresentationalHash([representationalHash], ['event']),
-      playerModel.findPlayersForSession(representationalHash, substituteReplacementPlayers),
+      playerModel.findPlayersForSessions([representationalHash], substituteReplacementPlayers),
     ]);
     if (session.length === 0) {
       throw new Error('No session found in database');
     }
 
-    const [results, rounds, replacements, penalties] = await Promise.all([
-      sessionResultsModel.findBySession(session[0].id),
+    const [results, rounds, replacements] = await Promise.all([
+      sessionResultsModel.findBySession([session[0].id]),
       roundModel.findBySessionIds([session[0].id]),
       players.replaceMap,
-      penaltyModel.findBySession(session[0].id),
     ]);
-
-    const sessionState = new SessionState(
-      session[0].event.ruleset,
-      players.players.map((p) => p.id),
-      session[0].intermediateResults
-    );
 
     return {
       players: playerModel.substituteReplacements(players.players, replacements),
       game: formatGameResult(
         session[0],
-        sessionState,
         session[0].event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
         players.players.map((p) => p.id),
         results,
-        penalties,
-        rounds,
-        replacements
+        rounds
       ),
     };
   }
-}
+
+  async getPlayersOfGames(sessions: SessionEntity[]) {
+    const regs = await this.repo.db.em.findAll(SessionPlayerEntity, {
+      where: { session: this.repo.db.em.getReference(SessionEntity, sessions.map((s) => s.id)) },
+    });
+
+    const playerModel = this.getModel(PlayerModel);
+    const players = await playerModel.findPlayersForSessions(sessions.map((s) => s.representationalHash!), false);
+
+    return players;
+  }

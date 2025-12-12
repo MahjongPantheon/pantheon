@@ -84,6 +84,7 @@ import { Context } from './context.js';
 import { EventModel } from './models/EventModel.js';
 import { Model } from './models/Model.js';
 import { SessionModel } from './models/SessionModel.js';
+import { PlayerModel } from './models/PlayerModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -143,9 +144,10 @@ export const mimirServer: Mimir<Context> = {
     eventsGetRatingTablePayload: EventsGetRatingTablePayload,
     context: Context
   ): Promise<EventsGetRatingTableResponse> {
+    const playerModel = Model.getModel(context.repository, PlayerModel);
     const isAdmin: boolean =
       eventsGetRatingTablePayload.eventIdList.length === 1 &&
-      isEventAdmin(eventsGetRatingTablePayload.eventIdList[0]);
+      (await playerModel.isEventAdmin(eventsGetRatingTablePayload.eventIdList[0]));
     const model = Model.getModel(context.repository, EventModel);
     return model.getRatingTable(
       eventsGetRatingTablePayload.eventIdList,
@@ -174,9 +176,9 @@ export const mimirServer: Mimir<Context> = {
 
     if (
       eventsGetLastGamesPayload.orderBy &&
-      !['id', 'end_date'].includes(eventsGetLastGamesPayload.orderBy)
+      !['id', 'endDate'].includes(eventsGetLastGamesPayload.orderBy)
     ) {
-      throw new Error('Invalid orderBy parameter; Valid options: id, end_date');
+      throw new Error('Invalid orderBy parameter; Valid options: id, endDate');
     }
 
     if (
@@ -190,8 +192,8 @@ export const mimirServer: Mimir<Context> = {
       events,
       eventsGetLastGamesPayload.limit,
       eventsGetLastGamesPayload.offset,
-      eventsGetLastGamesPayload.orderBy,
-      eventsGetLastGamesPayload.order
+      eventsGetLastGamesPayload.orderBy as 'id' | 'endDate',
+      eventsGetLastGamesPayload.order as 'asc' | 'desc'
     );
   },
   GetGame: async function (
