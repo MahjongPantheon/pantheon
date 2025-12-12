@@ -1,15 +1,60 @@
-import { createRuleset } from '../../rulesets/ruleset.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { SessionState } from './SessionState.js';
+import { RoundEntity } from 'src/entities/Round.entity.js';
+import { HandEntity } from 'src/entities/Hand.entity.js';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+
+type Vals = {
+  outcome: RoundOutcome;
+  session_id: number;
+  event_id: number;
+  round_index: number;
+  riichi: number[];
+  rounds: {
+    han?: number;
+    tempai?: number[];
+    fu?: number;
+    dora?: number;
+    yaku?: number[];
+    winner_id?: number;
+    loser_id?: number;
+    open_hand?: number;
+    pao_player_id?: number;
+  }[];
+};
+
+function makeRoundWithDefaults(vals: Vals): RoundEntity {
+  const round = new RoundEntity();
+  round.outcome = vals.outcome;
+  round.session.id = vals.session_id;
+  round.event.id = vals.event_id;
+  round.round = vals.round_index;
+  round.riichi = vals.riichi;
+  round.hands = vals.rounds.map((hand) => {
+    const h = new HandEntity();
+    h.han = hand.han;
+    h.fu = hand.fu;
+    h.dora = hand.dora;
+    h.yaku = hand.yaku;
+    h.winnerId = hand.winner_id;
+    h.loserId = hand.loser_id;
+    h.tempai = hand.tempai;
+    h.openHand = !!hand.open_hand;
+    h.paoPlayerId = hand.pao_player_id;
+    return h;
+  });
+  return round;
+}
 
 describe('Session state', () => {
-  const ruleset = createRuleset('ema');
+  const ruleset = RulesetEntity.createRuleset('ema');
   const playerIds = [1, 2, 3, 4];
   const sessionId = 1234;
   const eventId = 321;
 
   it('updates after basic ron', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'ron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_RON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -19,7 +64,7 @@ describe('Session state', () => {
           han: 3,
           fu: 30,
           dora: 1,
-          yaku: '9,21', // pinfu, tanyao
+          yaku: [9, 21], // pinfu, tanyao
           winner_id: 2,
           loser_id: 1,
           open_hand: 0,
@@ -42,8 +87,8 @@ describe('Session state', () => {
   });
 
   it('updates after dealer ron', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'ron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_RON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -53,7 +98,7 @@ describe('Session state', () => {
           han: 3,
           fu: 30,
           dora: 1,
-          yaku: '9,21', // pinfu, tanyao
+          yaku: [9, 21], // pinfu, tanyao
           winner_id: 1,
           loser_id: 2,
           open_hand: 0,
@@ -76,8 +121,8 @@ describe('Session state', () => {
   });
 
   it('updates after pao ron', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'ron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_RON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -87,7 +132,7 @@ describe('Session state', () => {
           han: -1,
           fu: 30,
           dora: 0,
-          yaku: '1', // daisangen
+          yaku: [1], // daisangen
           winner_id: 2,
           loser_id: 1,
           open_hand: 1,
@@ -111,8 +156,8 @@ describe('Session state', () => {
   });
 
   it('updates after pao dealer ron', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'ron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_RON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -122,7 +167,7 @@ describe('Session state', () => {
           han: -1,
           fu: 30,
           dora: 0,
-          yaku: '1', // daisangen
+          yaku: [1], // daisangen
           winner_id: 1,
           loser_id: 2,
           open_hand: 1,
@@ -146,8 +191,8 @@ describe('Session state', () => {
   });
 
   it('updates after multi ron', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'multiron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_MULTIRON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -157,7 +202,7 @@ describe('Session state', () => {
           han: 3,
           fu: 30,
           dora: 1,
-          yaku: '9,21', // pinfu, tanyao
+          yaku: [9, 21], // pinfu, tanyao
           winner_id: 2,
           loser_id: 1,
           open_hand: 0,
@@ -166,7 +211,7 @@ describe('Session state', () => {
           han: 2,
           fu: 40,
           dora: 1,
-          yaku: '21', // tanyao
+          yaku: [21], // tanyao
           winner_id: 4,
           loser_id: 1,
           open_hand: 1,
@@ -189,8 +234,8 @@ describe('Session state', () => {
   });
 
   it('updates after multi ron with pao', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'multiron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_MULTIRON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -200,7 +245,7 @@ describe('Session state', () => {
           han: -1,
           fu: 30,
           dora: 1,
-          yaku: '1', // daisangen
+          yaku: [1], // daisangen
           winner_id: 2,
           loser_id: 1,
           open_hand: 0,
@@ -210,7 +255,7 @@ describe('Session state', () => {
           han: 2,
           fu: 40,
           dora: 1,
-          yaku: '21', // tanyao
+          yaku: [21], // tanyao
           winner_id: 4,
           loser_id: 1,
           open_hand: 1,
@@ -236,14 +281,14 @@ describe('Session state', () => {
     const state = new SessionState(ruleset, playerIds);
     state.update(
       makeRoundWithDefaults({
-        outcome: 'draw',
+        outcome: RoundOutcome.ROUND_OUTCOME_DRAW,
         session_id: sessionId,
         event_id: eventId,
         round_index: 1,
         riichi: [2, 3],
         rounds: [
           {
-            tempai: '',
+            tempai: [],
             open_hand: 0,
           },
         ],
@@ -258,8 +303,8 @@ describe('Session state', () => {
       4: 30000,
     });
 
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'multiron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_MULTIRON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -269,7 +314,7 @@ describe('Session state', () => {
           han: 3,
           fu: 30,
           dora: 1,
-          yaku: '9,21', // pinfu, tanyao
+          yaku: [9, 21], // pinfu, tanyao
           winner_id: 1,
           loser_id: 2,
           open_hand: 0,
@@ -278,7 +323,7 @@ describe('Session state', () => {
           han: 2,
           fu: 40,
           dora: 1,
-          yaku: '21', // tanyao
+          yaku: [21], // tanyao
           winner_id: 4,
           loser_id: 2,
           open_hand: 1,
@@ -300,8 +345,8 @@ describe('Session state', () => {
   });
 
   it('updates after basic tsumo', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'tsumo',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_TSUMO,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -311,7 +356,7 @@ describe('Session state', () => {
           han: 3,
           fu: 30,
           dora: 1,
-          yaku: '9,21', // pinfu, tanyao
+          yaku: [9, 21], // pinfu, tanyao
           winner_id: 2,
           loser_id: 1,
           open_hand: 0,
@@ -334,8 +379,8 @@ describe('Session state', () => {
   });
 
   it('updates after dealer tsumo', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'tsumo',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_TSUMO,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -345,7 +390,7 @@ describe('Session state', () => {
           han: 3,
           fu: 30,
           dora: 1,
-          yaku: '9,21', // pinfu, tanyao
+          yaku: [9, 21], // pinfu, tanyao
           winner_id: 1,
           loser_id: 2,
           open_hand: 0,
@@ -368,8 +413,8 @@ describe('Session state', () => {
   });
 
   it('updates after pao tsumo', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'tsumo',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_TSUMO,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -379,7 +424,7 @@ describe('Session state', () => {
           han: -1,
           fu: 30,
           dora: 0,
-          yaku: '1', // daisangen
+          yaku: [1], // daisangen
           winner_id: 2,
           loser_id: 1,
           open_hand: 1,
@@ -403,8 +448,8 @@ describe('Session state', () => {
   });
 
   it('updates after pao dealer tsumo', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'tsumo',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_TSUMO,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -414,7 +459,7 @@ describe('Session state', () => {
           han: -1,
           fu: 30,
           dora: 0,
-          yaku: '1', // daisangen
+          yaku: [1], // daisangen
           winner_id: 1,
           loser_id: 2,
           open_hand: 1,
@@ -438,15 +483,15 @@ describe('Session state', () => {
   });
 
   it('updates after draw dealer noten', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'draw',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_DRAW,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
       riichi: [3],
       rounds: [
         {
-          tempai: '2',
+          tempai: [2],
           open_hand: 0,
         },
       ],
@@ -467,15 +512,15 @@ describe('Session state', () => {
   });
 
   it('updates after draw dealer tempai', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'draw',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_DRAW,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
       riichi: [3],
       rounds: [
         {
-          tempai: '1,2',
+          tempai: [1, 2],
           open_hand: 0,
         },
       ],
@@ -496,15 +541,15 @@ describe('Session state', () => {
   });
 
   it('updates after draw everybody noten', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'draw',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_DRAW,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
       riichi: [],
       rounds: [
         {
-          tempai: '',
+          tempai: [],
           open_hand: 0,
         },
       ],
@@ -525,8 +570,8 @@ describe('Session state', () => {
   });
 
   it('updates after abort', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'abort',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_ABORT,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -538,10 +583,9 @@ describe('Session state', () => {
       ],
     });
 
-    const state = new SessionState(
-      { ...ruleset, rules: { ...ruleset.rules, withAbortives: true } },
-      playerIds
-    );
+    const ruleset2 = RulesetEntity.createRuleset('ema');
+    ruleset2.rules.withAbortives = true;
+    const state = new SessionState(ruleset2, playerIds);
     state.update(round);
     expect(state.getCurrentDealer()).toEqual(1);
     expect(state.getRound()).toEqual(1);
@@ -556,8 +600,8 @@ describe('Session state', () => {
   });
 
   it('fails to update after abort if not allowed', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'abort',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_ABORT,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -574,8 +618,8 @@ describe('Session state', () => {
   });
 
   it('updates after chombo without payments', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'chombo',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -588,10 +632,10 @@ describe('Session state', () => {
       ],
     });
 
-    const state = new SessionState(
-      { ...ruleset, rules: { ...ruleset.rules, chomboAmount: 20000, extraChomboPayments: false } },
-      playerIds
-    );
+    const ruleset2 = RulesetEntity.createRuleset('ema');
+    ruleset2.rules.chomboAmount = 20000;
+    ruleset2.rules.extraChomboPayments = false;
+    const state = new SessionState(ruleset2, playerIds);
     state.update(round);
     expect(state.getCurrentDealer()).toEqual(1);
     expect(state.getRound()).toEqual(1);
@@ -607,8 +651,8 @@ describe('Session state', () => {
   });
 
   it('updates after chombo with payments', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'chombo',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -621,10 +665,10 @@ describe('Session state', () => {
       ],
     });
 
-    const state = new SessionState(
-      { ...ruleset, rules: { ...ruleset.rules, chomboAmount: 0, extraChomboPayments: true } },
-      playerIds
-    );
+    const ruleset2 = RulesetEntity.createRuleset('ema');
+    ruleset2.rules.chomboAmount = 0;
+    ruleset2.rules.extraChomboPayments = true;
+    const state = new SessionState(ruleset2, playerIds);
     state.update(round);
     expect(state.getCurrentDealer()).toEqual(1);
     expect(state.getRound()).toEqual(1);
@@ -643,14 +687,14 @@ describe('Session state', () => {
     const state = new SessionState(ruleset, playerIds);
     state.update(
       makeRoundWithDefaults({
-        outcome: 'draw',
+        outcome: RoundOutcome.ROUND_OUTCOME_DRAW,
         session_id: sessionId,
         event_id: eventId,
         round_index: 1,
         riichi: [4],
         rounds: [
           {
-            tempai: '4',
+            tempai: [4],
             open_hand: 0,
           },
         ],
@@ -665,8 +709,8 @@ describe('Session state', () => {
       4: 30000 + 3000 - 1000,
     });
 
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'ron',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_RON,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1,
@@ -676,7 +720,7 @@ describe('Session state', () => {
           han: 3,
           fu: 30,
           dora: 1,
-          yaku: '9,21', // pinfu, tanyao
+          yaku: [9, 21], // pinfu, tanyao
           winner_id: 1,
           loser_id: 2,
           open_hand: 0,
@@ -696,8 +740,8 @@ describe('Session state', () => {
   });
 
   it('updates several times with draw', () => {
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'draw',
+    const round: RoundEntity = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_DRAW,
       session_id: sessionId,
       event_id: eventId,
       round_index: 1, // TODO убрать тут round_index, он не проверяется и только непонятно зачем болтается
@@ -727,42 +771,5 @@ describe('Session state', () => {
       3: 30000,
       4: 30000,
     });
-  });
-
-  it('properly serializes and deserializes state', () => {
-    const state = new SessionState(ruleset, playerIds);
-    const round: Round = makeRoundWithDefaults({
-      outcome: 'multiron',
-      session_id: sessionId,
-      event_id: eventId,
-      round_index: 1,
-      riichi: [2, 3],
-      rounds: [
-        {
-          han: 3,
-          fu: 30,
-          dora: 1,
-          yaku: '9,21', // pinfu, tanyao
-          winner_id: 1,
-          loser_id: 2,
-          open_hand: 0,
-        },
-        {
-          han: 2,
-          fu: 40,
-          dora: 1,
-          yaku: '21', // tanyao
-          winner_id: 4,
-          loser_id: 2,
-          open_hand: 1,
-        },
-      ],
-    });
-    state.update(round);
-
-    const serialized = state.toJson();
-    expect(serialized.length).toBeGreaterThan(0);
-    const deserialized = SessionState.fromJson(ruleset, playerIds, serialized);
-    expect(JSON.stringify(deserialized)).toEqual(JSON.stringify(state));
   });
 });

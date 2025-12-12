@@ -3,9 +3,9 @@ import { Model } from './Model.js';
 import { Repository } from 'src/services/Repository.js';
 import { MikroORM } from '@mikro-orm/postgresql';
 import config from '../mikro-orm.config.js';
-import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
-import { EventEntity } from 'src/entities/db/Event.entity.js';
-import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
+import { EventEntity } from 'src/entities/Event.entity.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 
 const orm = await MikroORM.init(config());
 

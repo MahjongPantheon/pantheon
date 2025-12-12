@@ -2,8 +2,8 @@ import { PersonEx } from 'tsclients/proto/atoms.pb.js';
 import { Model } from './Model.js';
 import { playerInfo } from 'src/helpers/cache/schema.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
-import { SessionPlayerEntity } from 'src/entities/db/SessionPlayer.entity.js';
-import { SessionEntity } from 'src/entities/db/Session.entity.js';
+import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
 import { SessionModel } from './SessionModel.js';
 
 export class PlayerModel extends Model {
@@ -88,7 +88,7 @@ export class PlayerModel extends Model {
 
   async findPlayersForSession(sessionHash: string, substituteReplacements = false) {
     const sessionModel = this.getModel(SessionModel);
-    const session = await sessionModel.findByRepresentationalHash([sessionHash]);
+    const session = await sessionModel.findByRepresentationalHash([sessionHash], ['event']);
     if (session.length === 0) {
       return { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() };
     }

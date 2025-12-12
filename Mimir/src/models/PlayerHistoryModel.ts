@@ -1,13 +1,13 @@
 import { Moment } from 'moment-timezone';
 import { Model } from './Model.js';
-import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
-import { EventEntity } from 'src/entities/db/Event.entity.js';
+import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
+import { EventEntity } from 'src/entities/Event.entity.js';
 import { sql } from '@mikro-orm/core';
-import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import moment from 'moment';
 import { PersonEx } from 'tsclients/proto/atoms.pb.js';
-import { PenaltyEntity } from 'src/entities/db/Penalty.entity.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/db/EventRegisteredPlayers.entity.js';
+import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
+import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 
 export class PlayerHistoryModel extends Model {
   async findLastByEvent(eventIds: number[]) {
