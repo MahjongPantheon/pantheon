@@ -26,4 +26,14 @@ export class PlayerHistoryEntity {
 
   @Property({ fieldName: 'rating' })
   rating!: number;
+
+  // Calculated fields not saved to DB
+  avgScore?: number;
+  playerTitle?: string;
+  playerTenhouId?: string;
+  playerTeamName?: string | null;
+  playerHasAvatar?: boolean;
+  playerLastUpdate?: string;
+  penaltiesAmount?: number;
+  penaltiesCount?: number;
 }
