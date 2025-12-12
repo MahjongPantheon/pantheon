@@ -5,6 +5,7 @@ import {
   EventsGetEventsByIdResponse,
   EventsGetEventsPayload,
   EventsGetEventsResponse,
+  EventsGetLastGamesResponse,
   EventsGetRatingTableResponse,
   PlayersGetMyEventsResponse,
 } from 'tsclients/proto/mimir.pb.js';
@@ -15,12 +16,18 @@ import {
   GenericEventPayload,
   GameConfig,
   TournamentGamesStatus,
+  SessionStatus,
 } from 'tsclients/proto/atoms.pb.js';
 import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
 import { SessionModel } from './SessionModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
+import { formatGameResult } from 'src/helpers/formatters.js';
+import { SessionResultsModel } from './SessionResultsModel.js';
+import { RoundModel } from './RoundModel.js';
+import { PenaltyModel } from './PenaltyModel.js';
 
 export class EventModel extends Model {
   async findById(id: number[]) {
@@ -286,6 +293,52 @@ export class EventModel extends Model {
         penaltiesAmount: item.penaltiesAmount,
         penaltiesCount: item.penaltiesCount,
       })),
+    };
+  }
+
+  async getLastFinishedGames(
+    eventList: EventEntity[],
+    limit: number,
+    offset: number,
+    orderBy: keyof SessionEntity,
+    order: 'asc' | 'desc'
+  ): Promise<EventsGetLastGamesResponse> {
+    const sessionModel = this.getModel(SessionModel);
+    const roundModel = this.getModel(RoundModel);
+    const sessionResultsModel = this.getModel(SessionResultsModel);
+
+    const games = await sessionModel.findByEventAndStatus(
+      eventList.map((event) => event.id),
+      [SessionStatus.SESSION_STATUS_FINISHED],
+      limit,
+      offset,
+      orderBy,
+      order
+    );
+
+    const gamesCount = await sessionModel.getGamesCount(
+      eventList.map((event) => event.id),
+      SessionStatus.SESSION_STATUS_FINISHED
+    );
+
+    const sessionResults = await sessionResultsModel.findBySession(games.map((game) => game.id));
+
+    const rounds = await roundModel.findBySessionIds(games.map((game) => game.id));
+
+    const players = await sessionModel.getPlayersOfGames(games);
+
+    return {
+      games: games.map((g) =>
+        formatGameResult(
+          g,
+          eventList[0].onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+          players.players.map((p) => p.id),
+          sessionResults,
+          rounds
+        )
+      ),
+      players: players.players,
+      totalGames: gamesCount,
     };
   }
 }
