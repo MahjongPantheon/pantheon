@@ -4,8 +4,7 @@ import {
   GenericSessionPayload,
   GenericSuccessResponse,
   EventData,
-} from 'tsclients/proto/atoms.pb';
-import { Context } from './context';
+} from 'tsclients/proto/atoms.pb.js';
 import {
   AddExtraTimePayload,
   CallRefereePayload,
@@ -79,25 +78,26 @@ import {
   SeatingMakePrescriptedSeatingPayload,
   SeatingMakeShuffledSeatingPayload,
   TypedGamesAddOnlineReplayPayload,
-} from 'tsclients/proto/mimir.pb';
-import { createRuleset } from './rulesets/ruleset';
-import { getEvents, getEventsById, getGameConfig, getMyEvents } from 'models/event';
-import { getRatingTable } from 'models/ratingTable';
-import { getFinishedGame } from 'models/session';
+} from 'tsclients/proto/mimir.pb.js';
+import { RulesetEntity } from './entities/Ruleset.entity.js';
+import { Context } from './context.js';
+import { EventModel } from './models/EventModel.js';
+import { Model } from './models/Model.js';
+import { SessionModel } from './models/SessionModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
     return [
-      createRuleset('ema'),
-      createRuleset('jpmlA'),
-      createRuleset('wrc'),
-      createRuleset('tenhounet'),
-      createRuleset('rrc'),
+      RulesetEntity.createRuleset('ema'),
+      RulesetEntity.createRuleset('jpmlA'),
+      RulesetEntity.createRuleset('wrc'),
+      RulesetEntity.createRuleset('tenhounet'),
+      RulesetEntity.createRuleset('rrc'),
     ].reduce(
       (acc, r) => {
         acc.rulesets.push(r.rules);
         acc.rulesetTitles.push(r.title);
-        acc.rulesetIds.push(r.id);
+        acc.rulesetIds.push(r.baseRuleset);
         return acc;
       },
       { rulesets: [], rulesetIds: [], rulesetTitles: [] } as EventsGetRulesetsResponse
@@ -108,28 +108,35 @@ export const mimirServer: Mimir<Context> = {
     eventsGetEventsPayload: EventsGetEventsPayload,
     context: Context
   ): Promise<EventsGetEventsResponse> {
-    return getEvents(eventsGetEventsPayload, context);
+    const model = Model.getModel(context.repository, EventModel);
+    return model.getEvents(eventsGetEventsPayload);
   },
 
   GetEventsById: async function (
     eventsGetEventsByIdPayload: EventsGetEventsByIdPayload,
     context: Context
   ): Promise<EventsGetEventsByIdResponse> {
-    return getEventsById(eventsGetEventsByIdPayload, context);
+    const model = Model.getModel(context.repository, EventModel);
+    return model.getEventsById(eventsGetEventsByIdPayload);
   },
 
   GetMyEvents: async function (
     _playersGetMyEventsPayload: PlayersGetMyEventsPayload,
     context: Context
   ): Promise<PlayersGetMyEventsResponse> {
-    return getMyEvents(context);
+    if (!context.repository.meta.personId) {
+      throw new Error('Not logged in');
+    }
+    const model = Model.getModel(context.repository, EventModel);
+    return model.getMyEvents(context.repository.meta.personId);
   },
 
   GetGameConfig: async function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GameConfig> {
-    return getGameConfig(genericEventPayload, context);
+    const model = Model.getModel(context.repository, EventModel);
+    return model.getGameConfig(genericEventPayload);
   },
 
   GetRatingTable: async function (
@@ -139,9 +146,8 @@ export const mimirServer: Mimir<Context> = {
     const isAdmin: boolean =
       eventsGetRatingTablePayload.eventIdList.length === 1 &&
       isEventAdmin(eventsGetRatingTablePayload.eventIdList[0]);
-    return getRatingTable(
-      context.repository.db,
-      context.repository.frey,
+    const model = Model.getModel(context.repository, EventModel);
+    return model.getRatingTable(
       eventsGetRatingTablePayload.eventIdList,
       eventsGetRatingTablePayload.orderBy,
       eventsGetRatingTablePayload.order === 'asc' ? 'asc' : 'desc',
@@ -159,11 +165,9 @@ export const mimirServer: Mimir<Context> = {
       throw new Error('Event id list is empty');
     }
 
-    const events = await context.repository.db.client
-      .selectFrom('event')
-      .selectAll()
-      .where('id', 'in', eventsGetLastGamesPayload.eventIdList)
-      .execute();
+    const model = Model.getModel(context.repository, EventModel);
+    const events = await model.findById(eventsGetLastGamesPayload.eventIdList);
+
     if (events.length !== eventsGetLastGamesPayload.eventIdList.length) {
       throw new Error('Some of events were not found in database');
     }
@@ -182,7 +186,7 @@ export const mimirServer: Mimir<Context> = {
       throw new Error('Invalid order parameter; Valid options: asc, desc');
     }
 
-    return getLastFinishedGames(
+    return model.getLastFinishedGames(
       events,
       eventsGetLastGamesPayload.limit,
       eventsGetLastGamesPayload.offset,
@@ -194,12 +198,8 @@ export const mimirServer: Mimir<Context> = {
     genericSessionPayload: GenericSessionPayload,
     context: Context
   ): Promise<EventsGetGameResponse> {
-    return getFinishedGame(
-      context.repository.db,
-      context.repository.frey,
-      context.repository.cache,
-      genericSessionPayload.sessionHash
-    );
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.getFinishedGame(genericSessionPayload.sessionHash);
   },
   GetGamesSeries: function (
     genericEventPayload: GenericEventPayload,

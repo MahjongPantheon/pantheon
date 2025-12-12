@@ -23,14 +23,13 @@ import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
 
 export class EventModel extends Model {
-  async findById(id: number) {
-    return await this.repo.db.em.findOne(
-      EventEntity,
-      {
+  async findById(id: number[]) {
+    return await this.repo.db.em.findAll(EventEntity, {
+      where: {
         id,
       },
-      { fields: ['onlinePlatform', 'ruleset'] }
-    );
+      populate: ['onlinePlatform', 'ruleset'],
+    });
   }
 
   protected _formatEventList(
