@@ -1,6 +1,6 @@
-import { PenaltyEntity } from 'src/entities/db/Penalty.entity.js';
+import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
 import { Model } from './Model.js';
-import { SessionEntity } from 'src/entities/db/Session.entity.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
 
 export class PenaltyModel extends Model {
   async findBySession(sessionId: number) {

@@ -1,13 +1,13 @@
 import { PlatformType, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import moment from 'moment-timezone';
 import { Model } from './Model.js';
-import { SessionEntity } from 'src/entities/db/Session.entity.js';
-import { EventEntity } from 'src/entities/db/Event.entity.js';
-import { SessionPlayerEntity } from 'src/entities/db/SessionPlayer.entity.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
+import { EventEntity } from 'src/entities/Event.entity.js';
+import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
-import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
-import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
 import { SessionState } from 'src/aggregates/SessionState.js';
 import { PlayerModel } from './PlayerModel.js';
 import { formatGameResult } from 'src/helpers/formatters.js';
@@ -261,11 +261,7 @@ export class SessionModel extends Model {
       game: formatGameResult(
         session[0],
         sessionState,
-        session[0].event.onlinePlatform === 'TENHOU'
-          ? PlatformType.PLATFORM_TYPE_TENHOUNET
-          : session[0].event.onlinePlatform === 'MAJSOUL'
-            ? PlatformType.PLATFORM_TYPE_MAHJONGSOUL
-            : PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+        session[0].event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
         players.players.map((p) => p.id),
         results,
         penalties,

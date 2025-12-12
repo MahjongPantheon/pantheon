@@ -1,6 +1,6 @@
-import { EventRegisteredPlayersEntity } from 'src/entities/db/EventRegisteredPlayers.entity.js';
+import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 import { Model } from './Model.js';
-import { EventEntity } from 'src/entities/db/Event.entity.js';
+import { EventEntity } from 'src/entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
 
 export class EventRegistrationModel extends Model {

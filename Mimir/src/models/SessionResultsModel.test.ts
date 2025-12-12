@@ -4,7 +4,7 @@ import { Model } from './Model.js';
 import config from '../mikro-orm.config.js';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { Repository } from 'src/services/Repository.js';
-import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 
 const orm = await MikroORM.init(config());
 

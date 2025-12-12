@@ -1,4 +1,4 @@
-import { JobsQueueEntity } from 'src/entities/db/JobsQueue.entity.js';
+import { JobsQueueEntity } from 'src/entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
 import moment from 'moment';
 
