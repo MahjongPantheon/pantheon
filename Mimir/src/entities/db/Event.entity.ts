@@ -1,5 +1,6 @@
 import { Embedded, Entity, PrimaryKey, Property } from '@mikro-orm/postgresql';
 import { RulesetEntity } from './Ruleset.entity.js';
+import { PlatformType } from 'tsclients/proto/atoms.pb.js';
 
 @Entity({ tableName: 'event' })
 export class EventEntity {
@@ -107,7 +108,7 @@ export class EventEntity {
   isListed!: number;
 
   @Property({ fieldName: 'online_platform', nullable: true })
-  onlinePlatform?: string;
+  onlinePlatform?: PlatformType;
 
   @Property({ fieldName: 'allow_view_other_tables' })
   allowViewOtherTables!: number;

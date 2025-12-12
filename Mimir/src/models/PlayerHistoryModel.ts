@@ -4,6 +4,10 @@ import { PlayerHistoryEntity } from 'src/entities/db/PlayerHistory.entity.js';
 import { EventEntity } from 'src/entities/db/Event.entity.js';
 import { sql } from '@mikro-orm/core';
 import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import moment from 'moment';
+import { PersonEx } from 'tsclients/proto/atoms.pb.js';
+import { PenaltyEntity } from 'src/entities/db/Penalty.entity.js';
+import { EventRegisteredPlayersEntity } from 'src/entities/db/EventRegisteredPlayers.entity.js';
 
 export class PlayerHistoryModel extends Model {
   async findLastByEvent(eventIds: number[]) {
@@ -222,5 +226,151 @@ export class PlayerHistoryModel extends Model {
       }
     }
     return result;
+  }
+
+  async getHistoryItems(
+    ruleset: RulesetEntity,
+    eventIds: number[],
+    timezone: string,
+    dateFrom: string | null,
+    dateTo: string | null
+  ): Promise<Array<PlayerHistoryEntity>> {
+    const dateFromUtc = dateFrom ? moment.tz(dateFrom, timezone).utc() : null;
+    const dateToUtc = dateTo ? moment.tz(dateTo, timezone).utc() : null;
+
+    if (dateFromUtc && dateToUtc) {
+      const itemsFrom = await this.findLastByEventAndDate(eventIds, dateFromUtc);
+      const itemsTo = await this.findLastByEventAndDate(eventIds, dateToUtc);
+      return this.calculateHistory(itemsFrom, itemsTo, ruleset);
+    }
+
+    if (dateFromUtc && !dateToUtc) {
+      const itemsFrom = await this.findLastByEventAndDate(eventIds, dateFromUtc);
+      const itemsTo = await this.findLastByEvent(eventIds);
+      return this.calculateHistory(itemsFrom, itemsTo, ruleset);
+    }
+
+    if (!dateFromUtc && dateToUtc) {
+      return await this.findLastByEventAndDate(eventIds, dateToUtc);
+    }
+
+    return await this.findLastByEvent(eventIds);
+  }
+
+  // Input: items from several events, may contain several items for same player
+  // Output: items merged, only one item per player, unsorted
+  mergeSeveralEvents(items: PlayerHistoryEntity[], ruleset: RulesetEntity): PlayerHistoryEntity[] {
+    const result: Record<number, PlayerHistoryEntity> = {};
+    for (const item of items) {
+      if (!result[item.playerId]) {
+        result[item.playerId] = item;
+      } else {
+        result[item.playerId] = this.makeHistoryItemsSum(result[item.playerId], item, ruleset);
+      }
+    }
+    return Object.values(result);
+  }
+
+  mergeData(
+    items: PlayerHistoryEntity[],
+    playerItems: PersonEx[],
+    regData: EventRegisteredPlayersEntity[],
+    penalties: Array<Omit<PenaltyEntity, 'id'> & { id?: number }>
+  ): Array<PlayerHistoryEntity> {
+    const teamNames = regData.reduce(
+      (acc, item) => {
+        acc[item.playerId] = item.teamName;
+        return acc;
+      },
+      {} as Record<number, string | undefined>
+    );
+    const playersMap = playerItems.reduce(
+      (acc, item) => {
+        acc[item.id] = item;
+        return acc;
+      },
+      {} as Record<number, PersonEx>
+    );
+    const penaltiesMap = penalties.reduce(
+      (acc, item) => {
+        if (!acc[item.playerId]) {
+          acc[item.playerId] = { penaltiesCount: 0, penaltiesAmount: 0 };
+        }
+        acc[item.playerId].penaltiesCount++;
+        acc[item.playerId].penaltiesAmount += item.amount;
+        return acc;
+      },
+      {} as Record<number, { penaltiesCount: number; penaltiesAmount: number }>
+    );
+    return items.map((item) => {
+      item.avgScore = item.rating / item.gamesPlayed;
+      item.playerTitle = playersMap[item.playerId].title;
+      item.playerTenhouId = playersMap[item.playerId].tenhouId;
+      item.playerTeamName = teamNames[item.playerId];
+      item.playerHasAvatar = playersMap[item.playerId].hasAvatar;
+      item.playerLastUpdate = playersMap[item.playerId].lastUpdate;
+      item.penaltiesAmount = penaltiesMap[item.playerId].penaltiesAmount;
+      item.penaltiesCount = penaltiesMap[item.playerId].penaltiesCount;
+      return item;
+    });
+  }
+
+  sortItems(
+    orderBy: string,
+    playerItems: Record<number, PersonEx>,
+    ratingLines: PlayerHistoryEntity[]
+  ): PlayerHistoryEntity[] {
+    ratingLines = [...ratingLines];
+    switch (orderBy) {
+      case 'name':
+        return ratingLines.sort((a, b) =>
+          playerItems[b.playerId].title.localeCompare(playerItems[a.playerId].title)
+        );
+      case 'rating':
+        return ratingLines.sort((a, b) => {
+          if (Math.abs(a.rating - b.rating) < 0.0001) {
+            return b.avgPlace - a.avgPlace; // lower is better
+          }
+          return a.rating - b.rating;
+        });
+      case 'games_and_rating':
+        return ratingLines.sort((a, b) => {
+          if (a.gamesPlayed !== b.gamesPlayed) {
+            return a.gamesPlayed - b.gamesPlayed;
+          }
+          if (Math.abs(a.rating - b.rating) < 0.0001) {
+            return b.avgPlace - a.avgPlace;
+          }
+          return a.rating - b.rating;
+        });
+      case 'avg_place':
+        return ratingLines.sort((a, b) => {
+          if (Math.abs(a.avgPlace - b.avgPlace) < 0.0001) {
+            return b.rating - a.rating;
+          }
+          return a.avgPlace - b.avgPlace;
+        });
+      case 'avg_score':
+        return ratingLines.sort((a, b) => {
+          if (a.avgScore === undefined || b.avgScore === undefined) {
+            return 0;
+          }
+          if (Math.abs(a.avgScore - b.avgScore) < 0.0001) {
+            return b.avgPlace - a.avgPlace;
+          }
+          return a.avgScore - b.avgScore;
+        });
+      case 'chips':
+        return ratingLines.sort((a, b) => {
+          if (Math.abs((a.chips ?? 0) - (b.chips ?? 0)) < 0.0001) {
+            return b.rating - a.rating;
+          }
+          return (a.chips ?? 0) - (b.chips ?? 0);
+        });
+      default:
+        throw new Error(
+          "Parameter orderBy should be either 'name', 'rating', 'games_and_rating', 'avg_place', 'avg_score' or 'chips'"
+        );
+    }
   }
 }
