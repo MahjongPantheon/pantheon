@@ -1,171 +1,137 @@
-import { Penalty, Round, SessionResults } from '../database/schema.js';
-import { SessionItem } from '../models/session.js';
-import { GameResult, PersonEx, PlatformType, Round as RoundResult } from 'tsclients/proto/atoms.pb';
-import { SessionState } from './SessionState.js';
+import {
+  GameResult,
+  PlatformType,
+  RoundOutcome,
+  Round as RoundResult,
+} from 'tsclients/proto/atoms.pb.js';
 import { base64decode } from './crypto.js';
-
-type GroupedRounds = Array<Array<Omit<Round, 'id'> & { id: number }>>;
+import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
+import { RoundEntity } from 'src/entities/Round.entity.js';
+import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
 
 export function formatGameResult(
-  session: SessionItem,
-  sessionState: SessionState,
+  session: SessionEntity,
   sessionPlatform: PlatformType,
   playerIds: number[],
-  results: Array<Omit<SessionResults, 'id'> & { id: number }>,
-  penalties: Array<Omit<Penalty, 'id'> & { id: number }>,
-  rounds: Array<Omit<Round, 'id'> & { id: number }>,
-  replacements: Map<number, PersonEx>
+  results: SessionResultsEntity[],
+  rounds: RoundEntity[]
 ): GameResult {
   return {
-    sessionHash: session.representational_hash!,
-    date: session.end_date,
-    replayLink: makeReplayLink(session.replay_hash, sessionPlatform),
-    players: playerIds.map((id) => (replacements.has(id) ? replacements.get(id)!.id : id)),
+    sessionHash: session.representationalHash!,
+    date: session.endDate,
+    replayLink: makeReplayLink(session.replayHash!, sessionPlatform),
+    players: playerIds,
     finalResults: results.map((result) => ({
-      playerId: result.player_id,
+      playerId: result.playerId,
       score: result.score,
-      ratingDelta: result.rating_delta,
+      ratingDelta: result.ratingDelta,
       place: result.place,
     })),
-    rounds: groupByMultiron(rounds).map((round) => formatRound(round, sessionState, replacements)),
+    rounds: rounds.map((round: RoundEntity) => formatRound(round, session.intermediateResults!)),
   };
 }
 
-export function groupByMultiron(rounds: Array<Omit<Round, 'id'> & { id: number }>): GroupedRounds {
-  const result: GroupedRounds = [];
-  let group = [];
-  for (const round of rounds) {
-    if (round.multi_ron && round.multi_ron > 1) {
-      group.push(round);
-    } else {
-      if (group.length > 0) {
-        result.push(group);
-        group = [];
-      }
-      result.push([round]);
-    }
-  }
-  if (group.length > 0) {
-    result.push(group);
-  }
-  return result;
-}
-
-export function formatRound(
-  round: Array<Omit<Round, 'id'> & { id: number }>,
-  sessionState: SessionState,
-  replacements: Map<number, PersonEx>
-): RoundResult {
-  if (round.length > 1) {
-    return {
-      multiron: {
-        roundIndex: round[0].round,
-        honba: sessionState.getHonba(),
-        loserId: replaceOne(round[0].loser_id!, replacements),
-        multiRon: round[0].multi_ron!,
-        riichiBets: round
-          .map((r) => replaceMany(r.riichi!.split(',').map(Number), replacements))
-          .flat(),
-        wins: round.map((r) => ({
-          winnerId: replaceOne(r.winner_id!, replacements),
-          paoPlayerId: replaceOne(r.pao_player_id!, replacements),
-          han: r.han!,
-          fu: r.fu!,
-          yaku: r.yaku!.split(',').map(Number),
-          dora: r.dora ?? 0,
-          uradora: r.uradora ?? 0,
-          kandora: r.kandora ?? 0,
-          kanuradora: r.kanuradora ?? 0,
-          openHand: r.open_hand === 1,
-        })),
-      },
-    };
-  }
-  const singleRound = round[0];
-  switch (singleRound.outcome) {
-    case 'ron':
+export function formatRound(round: RoundEntity, sessionState: SessionStateEntity): RoundResult {
+  switch (round.outcome) {
+    case RoundOutcome.ROUND_OUTCOME_MULTIRON:
+      return {
+        multiron: {
+          roundIndex: round.round,
+          honba: sessionState.honba,
+          loserId: round.hands[0].loserId!,
+          multiRon: round.hands.length,
+          riichiBets: round.riichi!,
+          wins: round.hands.map((r) => ({
+            winnerId: r.winnerId!,
+            paoPlayerId: r.paoPlayerId!,
+            han: r.han!,
+            fu: r.fu!,
+            yaku: r.yaku!,
+            dora: r.dora ?? 0,
+            uradora: r.uradora ?? 0,
+            kandora: r.kandora ?? 0,
+            kanuradora: r.kanuradora ?? 0,
+            openHand: r.openHand!,
+          })),
+        },
+      };
+    case RoundOutcome.ROUND_OUTCOME_RON:
       return {
         ron: {
-          roundIndex: singleRound.round,
-          honba: sessionState.getHonba(),
-          winnerId: replaceOne(singleRound.winner_id!, replacements),
-          loserId: replaceOne(singleRound.loser_id!, replacements),
-          paoPlayerId: replaceOne(singleRound.pao_player_id!, replacements),
-          han: singleRound.han!,
-          fu: singleRound.fu!,
-          yaku: singleRound.yaku!.split(',').map(Number),
-          riichiBets: replaceMany(singleRound.riichi!.split(',').map(Number), replacements),
-          dora: singleRound.dora ?? 0,
-          uradora: singleRound.uradora ?? 0,
-          kandora: singleRound.kandora ?? 0,
-          kanuradora: singleRound.kanuradora ?? 0,
-          openHand: singleRound.open_hand === 1,
+          roundIndex: round.round,
+          honba: sessionState.honba,
+          winnerId: round.hands[0].winnerId!,
+          loserId: round.hands[0].loserId!,
+          paoPlayerId: round.hands[0].paoPlayerId!,
+          han: round.hands[0].han!,
+          fu: round.hands[0].fu!,
+          yaku: round.hands[0].yaku!,
+          riichiBets: round.riichi!,
+          dora: round.hands[0].dora ?? 0,
+          uradora: round.hands[0].uradora ?? 0,
+          kandora: round.hands[0].kandora ?? 0,
+          kanuradora: round.hands[0].kanuradora ?? 0,
+          openHand: round.hands[0].openHand!,
         },
       };
-    case 'tsumo':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return {
         tsumo: {
-          roundIndex: singleRound.round,
-          honba: sessionState.getHonba(),
-          winnerId: replaceOne(singleRound.winner_id!, replacements),
-          paoPlayerId: replaceOne(singleRound.pao_player_id!, replacements),
-          han: singleRound.han!,
-          fu: singleRound.fu!,
-          yaku: singleRound.yaku!.split(',').map(Number),
-          riichiBets: replaceMany(singleRound.riichi!.split(',').map(Number), replacements),
-          dora: singleRound.dora ?? 0,
-          uradora: singleRound.uradora ?? 0,
-          kandora: singleRound.kandora ?? 0,
-          kanuradora: singleRound.kanuradora ?? 0,
-          openHand: singleRound.open_hand === 1,
+          roundIndex: round.round,
+          honba: sessionState.honba,
+          winnerId: round.hands[0].winnerId!,
+          paoPlayerId: round.hands[0].paoPlayerId!,
+          han: round.hands[0].han!,
+          fu: round.hands[0].fu!,
+          yaku: round.hands[0].yaku!,
+          riichiBets: round.riichi!,
+          dora: round.hands[0].dora ?? 0,
+          uradora: round.hands[0].uradora ?? 0,
+          kandora: round.hands[0].kandora ?? 0,
+          kanuradora: round.hands[0].kanuradora ?? 0,
+          openHand: round.hands[0].openHand!,
         },
       };
-    case 'draw':
+    case RoundOutcome.ROUND_OUTCOME_DRAW:
       return {
         draw: {
-          roundIndex: singleRound.round,
-          honba: sessionState.getHonba(),
-          riichiBets: replaceMany(singleRound.riichi!.split(',').map(Number), replacements),
-          tempai: replaceMany(singleRound.tempai!.split(',').map(Number), replacements),
+          roundIndex: round.round,
+          honba: sessionState.honba,
+          riichiBets: round.riichi!,
+          tempai: round.hands[0].tempai!,
         },
       };
-    case 'abort':
+    case RoundOutcome.ROUND_OUTCOME_ABORT:
       return {
         abort: {
-          roundIndex: singleRound.round,
-          honba: sessionState.getHonba(),
-          riichiBets: replaceMany(singleRound.riichi!.split(',').map(Number), replacements),
+          roundIndex: round.round,
+          honba: sessionState.honba,
+          riichiBets: round.riichi!,
         },
       };
-    case 'chombo':
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       return {
         chombo: {
-          roundIndex: singleRound.round,
-          honba: sessionState.getHonba(),
-          loserId: singleRound.loser_id!,
+          roundIndex: round.round,
+          honba: sessionState.honba,
+          loserId: round.hands[0].loserId!,
         },
       };
-    case 'nagashi':
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       return {
         nagashi: {
-          roundIndex: singleRound.round,
-          honba: sessionState.getHonba(),
-          riichiBets: replaceMany(singleRound.riichi!.split(',').map(Number), replacements),
-          tempai: replaceMany(singleRound.tempai!.split(',').map(Number), replacements),
-          nagashi: replaceMany(singleRound.nagashi!.split(',').map(Number), replacements),
+          roundIndex: round.round,
+          honba: sessionState.honba,
+          riichiBets: round.riichi!,
+          tempai: round.hands[0].tempai!,
+          nagashi: round.hands[0].nagashi!,
         },
       };
+    case RoundOutcome.ROUND_OUTCOME_UNSPECIFIED:
     default:
       throw new Error('Wrong outcome detected');
   }
-}
-
-export function replaceMany(ids: number[], replacements: Map<number, PersonEx>) {
-  return ids.map((id) => replaceOne(id, replacements));
-}
-
-export function replaceOne(id: number, replacements: Map<number, PersonEx>) {
-  return replacements.has(id) ? replacements.get(id)!.id : id;
 }
 
 export function makeReplayLink(hash: string | null, platform: PlatformType) {

@@ -86,9 +86,9 @@ export class PlayerModel extends Model {
     return this._findPlayers(eventIds, registrationData);
   }
 
-  async findPlayersForSession(sessionHash: string, substituteReplacements = false) {
+  async findPlayersForSessions(sessionHashList: string[], substituteReplacements = false) {
     const sessionModel = this.getModel(SessionModel);
-    const session = await sessionModel.findByRepresentationalHash([sessionHash], ['event']);
+    const session = await sessionModel.findByRepresentationalHash(sessionHashList, ['event']);
     if (session.length === 0) {
       return { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() };
     }
@@ -146,5 +146,11 @@ export class PlayerModel extends Model {
       }
       return p;
     });
+  }
+
+  async isEventAdmin(eventId: number) {
+    const personId = this.repo.meta.personId;
+    const admins = await this.repo.frey.GetEventAdmins({ eventId });
+    return admins.admins.includes(personId);
   }
 }
