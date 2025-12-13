@@ -165,38 +165,8 @@ export const mimirServer: Mimir<Context> = {
     eventsGetLastGamesPayload: EventsGetLastGamesPayload,
     context: Context
   ): Promise<EventsGetLastGamesResponse> {
-    if (eventsGetLastGamesPayload.eventIdList.length === 0) {
-      throw new Error('Event id list is empty');
-    }
-
     const model = Model.getModel(context.repository, EventModel);
-    const events = await model.findById(eventsGetLastGamesPayload.eventIdList);
-
-    if (events.length !== eventsGetLastGamesPayload.eventIdList.length) {
-      throw new Error('Some of events were not found in database');
-    }
-
-    if (
-      eventsGetLastGamesPayload.orderBy &&
-      !['id', 'endDate'].includes(eventsGetLastGamesPayload.orderBy)
-    ) {
-      throw new Error('Invalid orderBy parameter; Valid options: id, endDate');
-    }
-
-    if (
-      eventsGetLastGamesPayload.order &&
-      !['asc', 'desc'].includes(eventsGetLastGamesPayload.order)
-    ) {
-      throw new Error('Invalid order parameter; Valid options: asc, desc');
-    }
-
-    return model.getLastFinishedGames(
-      events,
-      eventsGetLastGamesPayload.limit,
-      eventsGetLastGamesPayload.offset,
-      eventsGetLastGamesPayload.orderBy as 'id' | 'endDate',
-      eventsGetLastGamesPayload.order as 'asc' | 'desc'
-    );
+    return model.getLastGames(eventsGetLastGamesPayload);
   },
   GetGame: async function (
     genericSessionPayload: GenericSessionPayload,
@@ -219,36 +189,7 @@ export const mimirServer: Mimir<Context> = {
     context: Context
   ): Promise<PlayersGetCurrentSessionsResponse> {
     const eventModel = Model.getModel(context.repository, EventModel);
-    const event = await eventModel.findById([playersGetCurrentSessionsPayload.eventId]);
-
-    if (event.length === 0) {
-      throw new Error('Event not found');
-    }
-
-    const sessionModel = Model.getModel(context.repository, SessionModel);
-    const sessions = await sessionModel.findByPlayerAndEvent(
-      playersGetCurrentSessionsPayload.playerId,
-      playersGetCurrentSessionsPayload.eventId,
-      SessionStatus.SESSION_STATUS_INPROGRESS
-    );
-
-    const timerState = await eventModel.getTimerState(
-      playersGetCurrentSessionsPayload.eventId,
-      sessions
-    );
-
-    const { players, replaceMap } = await sessionModel.getPlayersOfGames(sessions, true);
-    const playerModel = Model.getModel(context.repository, PlayerModel);
-
-    return {
-      sessions: sessions.map((s) => ({
-        ...s,
-        status: s.status!,
-        sessionHash: s.representationalHash!,
-        timerState: timerState[s.representationalHash!],
-        players: playerModel.substituteReplacements(players.get(s.id)!, replaceMap),
-      })),
-    };
+    return eventModel.getCurrentGames(playersGetCurrentSessionsPayload);
   },
   GetAllRegisteredPlayers: function (
     eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload,
