@@ -1,5 +1,6 @@
 import {
   GameResult,
+  PersonEx,
   PlatformType,
   RoundOutcome,
   Round as RoundResult,
@@ -13,7 +14,7 @@ import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
 export function formatGameResult(
   session: SessionEntity,
   sessionPlatform: PlatformType,
-  playerIds: number[],
+  players: PersonEx[],
   results: SessionResultsEntity[],
   rounds: RoundEntity[]
 ): GameResult {
@@ -21,7 +22,7 @@ export function formatGameResult(
     sessionHash: session.representationalHash!,
     date: session.endDate,
     replayLink: makeReplayLink(session.replayHash!, sessionPlatform),
-    players: playerIds,
+    players,
     finalResults: results.map((result) => ({
       playerId: result.playerId,
       score: result.score,

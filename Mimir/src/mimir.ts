@@ -4,6 +4,7 @@ import {
   GenericSessionPayload,
   GenericSuccessResponse,
   EventData,
+  SessionStatus,
 } from 'tsclients/proto/atoms.pb.js';
 import {
   AddExtraTimePayload,
@@ -213,11 +214,41 @@ export const mimirServer: Mimir<Context> = {
     const event = await eventModel.findById([genericEventPayload.eventId]);
     return { results: await seriesModel.getGamesSeries(event[0]) };
   },
-  GetCurrentSessions: function (
+  GetCurrentSessions: async function (
     playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload,
     context: Context
-  ): Promise<PlayersGetCurrentSessionsResponse> | PlayersGetCurrentSessionsResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<PlayersGetCurrentSessionsResponse> {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    const event = await eventModel.findById([playersGetCurrentSessionsPayload.eventId]);
+
+    if (event.length === 0) {
+      throw new Error('Event not found');
+    }
+
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    const sessions = await sessionModel.findByPlayerAndEvent(
+      playersGetCurrentSessionsPayload.playerId,
+      playersGetCurrentSessionsPayload.eventId,
+      SessionStatus.SESSION_STATUS_INPROGRESS
+    );
+
+    const timerState = await eventModel.getTimerState(
+      playersGetCurrentSessionsPayload.eventId,
+      sessions
+    );
+
+    const { players, replaceMap } = await sessionModel.getPlayersOfGames(sessions, true);
+    const playerModel = Model.getModel(context.repository, PlayerModel);
+
+    return {
+      sessions: sessions.map((s) => ({
+        ...s,
+        status: s.status!,
+        sessionHash: s.representationalHash!,
+        timerState: timerState[s.representationalHash!],
+        players: playerModel.substituteReplacements(players.get(s.id)!, replaceMap),
+      })),
+    };
   },
   GetAllRegisteredPlayers: function (
     eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload,
