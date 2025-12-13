@@ -27,7 +27,16 @@ import { SessionEntity } from 'src/entities/Session.entity.js';
 import { formatGameResult } from 'src/helpers/formatters.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { RoundModel } from './RoundModel.js';
-import { PenaltyModel } from './PenaltyModel.js';
+
+export type TimerState = {
+  started: boolean;
+  finished: boolean;
+  timeRemaining: number;
+  waitingForTimer: boolean;
+  haveAutostart: boolean;
+  autostartTimer: number;
+  hideSeatingAfter: number;
+};
 
 export class EventModel extends Model {
   async findById(id: number[]) {
@@ -190,12 +199,7 @@ export class EventModel extends Model {
       eventStatHost: data.statHost,
       eventTitle: data.title,
       gameDuration: data.gameDuration ?? 0,
-      gamesStatus:
-        data.gamesStatus === 'seating_ready'
-          ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
-          : data.gamesStatus === 'started'
-            ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED
-            : TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_UNSPECIFIED,
+      gamesStatus: data.gamesStatus ?? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_UNSPECIFIED,
       hideAddReplayButton: !data.isOnline,
       hideResults: !!data.hideResults,
       isFinished: !!data.finished,
@@ -332,13 +336,71 @@ export class EventModel extends Model {
         formatGameResult(
           g,
           eventList[0].onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
-          players.players.map((p) => p.id),
+          players.players.get(g.id) ?? [],
           sessionResults,
           rounds
         )
       ),
-      players: players.players,
       totalGames: gamesCount,
     };
+  }
+
+  async getTimerState(
+    eventId: number,
+    sessions: SessionEntity[]
+  ): Promise<Record<string, TimerState>> {
+    const event = await this.findById([eventId]);
+    if (event.length === 0) {
+      throw new Error('Event not found');
+    }
+
+    if (!event[0].useTimer) {
+      return {};
+    }
+
+    const timerState: Record<string, TimerState> = {};
+    for (const session of sessions) {
+      if (event[0].finished) {
+        timerState[session.representationalHash!] = {
+          started: false,
+          finished: true,
+          timeRemaining: 0,
+          waitingForTimer: false,
+          haveAutostart: false,
+          autostartTimer: 0,
+          hideSeatingAfter: 0,
+        };
+      } else {
+        timerState[session.representationalHash!] = {
+          started: false,
+          finished: false,
+          timeRemaining: 0,
+          waitingForTimer:
+            event[0].gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY,
+          haveAutostart: event[0].nextGameStartTime > 0 && event[0].timeToStart > 0,
+          autostartTimer: event[0].nextGameStartTime - Date.now() / 1000,
+          // show seating for 10 mins after start
+          hideSeatingAfter: (event[0].gameDuration! - 10) * 60,
+        };
+        if (!event[0].lastTimer) {
+          timerState[session.representationalHash!].started = false;
+          timerState[session.representationalHash!].finished = false;
+          timerState[session.representationalHash!].timeRemaining = 0;
+        } else if (
+          event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 + session.extraTime >
+          Date.now() / 1000
+        ) {
+          // game in progress
+          timerState[session.representationalHash!].started = true;
+          timerState[session.representationalHash!].finished = false;
+          timerState[session.representationalHash!].timeRemaining =
+            event[0].lastTimer +
+            (event[0].gameDuration ?? 0) * 60 +
+            session.extraTime -
+            Date.now() / 1000;
+        }
+      }
+    }
+    return timerState;
   }
 }

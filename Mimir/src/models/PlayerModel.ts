@@ -90,15 +90,20 @@ export class PlayerModel extends Model {
     const sessionModel = this.getModel(SessionModel);
     const session = await sessionModel.findByRepresentationalHash(sessionHashList, ['event']);
     if (session.length === 0) {
-      return { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() };
+      return {
+        playersData: { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() },
+        playerBySession: [],
+      };
     }
-    const playerIds = (
+    const playerBySession = (
       await this.repo.db.em.findAll(SessionPlayerEntity, {
-        fields: ['playerId'],
+        fields: ['playerId', 'session.id'],
         where: { session: this.repo.db.em.getReference(SessionEntity, session[0].id) },
         orderBy: { order: 1 },
       })
-    ).map((reg) => reg.playerId);
+    ).map((reg) => [reg.playerId, reg.session.id]);
+
+    const playerIds = playerBySession.map((p) => p[0]);
 
     const regModel = this.getModel(EventRegistrationModel);
     const registrationData = await regModel.fetchPlayersRegDataByIds(
@@ -117,7 +122,7 @@ export class PlayerModel extends Model {
     const playersData = await this._findPlayers(playerIds, replacements);
     // reorder players to match order at the table
     playersData.players.sort((a, b) => playerIds.indexOf(a.id) - playerIds.indexOf(b.id));
-    return playersData;
+    return { playersData, playerBySession };
   }
 
   async _findPlayers(
