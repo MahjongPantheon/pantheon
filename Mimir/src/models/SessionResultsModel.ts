@@ -12,6 +12,12 @@ export class SessionResultsModel extends Model {
     });
   }
 
+  findByEvent(eventId: number[]): Promise<SessionResultsEntity[]> {
+    return this.repo.db.em.find(SessionResultsEntity, {
+      event: this.repo.db.em.getReference(EventEntity, eventId),
+    });
+  }
+
   public calc(
     ruleset: RulesetEntity,
     state: SessionState,

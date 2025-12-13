@@ -85,6 +85,7 @@ import { EventModel } from './models/EventModel.js';
 import { Model } from './models/Model.js';
 import { SessionModel } from './models/SessionModel.js';
 import { PlayerModel } from './models/PlayerModel.js';
+import { EventGameSeriesModel } from './models/EventGameSeriesModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -203,11 +204,14 @@ export const mimirServer: Mimir<Context> = {
     const sessionModel = Model.getModel(context.repository, SessionModel);
     return sessionModel.getFinishedGame(genericSessionPayload.sessionHash);
   },
-  GetGamesSeries: function (
+  GetGamesSeries: async function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<EventsGetGamesSeriesResponse> | EventsGetGamesSeriesResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<EventsGetGamesSeriesResponse> {
+    const seriesModel = Model.getModel(context.repository, EventGameSeriesModel);
+    const eventModel = Model.getModel(context.repository, EventModel);
+    const event = await eventModel.findById([genericEventPayload.eventId]);
+    return { results: await seriesModel.getGamesSeries(event[0]) };
   },
   GetCurrentSessions: function (
     playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload,

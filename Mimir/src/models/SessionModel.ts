@@ -1,4 +1,4 @@
-import { PlatformType, SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import { PersonEx, PlatformType, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import moment from 'moment-timezone';
 import { Model } from './Model.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
@@ -260,13 +260,19 @@ export class SessionModel extends Model {
     };
   }
 
-  async getPlayersOfGames(sessions: SessionEntity[]) {
-    const regs = await this.repo.db.em.findAll(SessionPlayerEntity, {
-      where: { session: this.repo.db.em.getReference(SessionEntity, sessions.map((s) => s.id)) },
-    });
-
+  async getPlayersOfGames(
+    sessions: SessionEntity[],
+    substituteReplacementPlayers = true
+  ): Promise<{
+    players: PersonEx[];
+    replaceMap: Map<number, PersonEx>;
+  }> {
     const playerModel = this.getModel(PlayerModel);
-    const players = await playerModel.findPlayersForSessions(sessions.map((s) => s.representationalHash!), false);
+    const players = await playerModel.findPlayersForSessions(
+      sessions.map((s) => s.representationalHash!),
+      substituteReplacementPlayers
+    );
 
     return players;
   }
+}
