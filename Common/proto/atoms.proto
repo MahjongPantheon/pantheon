@@ -298,9 +298,9 @@ message GameResult {
   string session_hash = 1;
   optional string date = 2;
   string replay_link = 3;
-  repeated int32 players = 4;
   repeated FinalResultOfSession final_results = 5;
   repeated Round rounds = 7;
+  repeated PersonEx players = 8;
 }
 
 message PlayerPlaceInSeries {

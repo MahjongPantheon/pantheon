@@ -228,13 +228,11 @@ message EventsGetLastGamesPayload {
 
 message EventsGetLastGamesResponse {
   repeated GameResult games = 1;
-  repeated Player players = 2;
   int32 total_games = 3;
 }
 
 message EventsGetGameResponse {
   GameResult game = 1;
-  repeated Player players = 2;
 }
 
 message EventsGetGamesSeriesResponse {
@@ -272,7 +270,7 @@ message EventsGetTimerStateResponse {
   int32 time_remaining = 3;
   bool waiting_for_timer = 4;
   bool have_autostart = 5;
-  bool autostart_timer = 6;
+  int32 autostart_timer = 6;
   int32 hide_seating_after = 8;
 }
 
