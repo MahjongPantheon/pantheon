@@ -5,8 +5,10 @@ import {
   EventsGetEventsByIdResponse,
   EventsGetEventsPayload,
   EventsGetEventsResponse,
+  EventsGetLastGamesPayload,
   EventsGetLastGamesResponse,
   EventsGetRatingTableResponse,
+  PlayersGetCurrentSessionsPayload,
   PlayersGetMyEventsResponse,
 } from 'tsclients/proto/mimir.pb.js';
 import {
@@ -27,6 +29,7 @@ import { SessionEntity } from 'src/entities/Session.entity.js';
 import { formatGameResult } from 'src/helpers/formatters.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { RoundModel } from './RoundModel.js';
+import { PlayerModel } from './PlayerModel.js';
 
 export type TimerState = {
   started: boolean;
@@ -402,5 +405,69 @@ export class EventModel extends Model {
       }
     }
     return timerState;
+  }
+
+  async getLastGames(eventsGetLastGamesPayload: EventsGetLastGamesPayload) {
+    if (eventsGetLastGamesPayload.eventIdList.length === 0) {
+      throw new Error('Event id list is empty');
+    }
+
+    const events = await this.findById(eventsGetLastGamesPayload.eventIdList);
+
+    if (events.length !== eventsGetLastGamesPayload.eventIdList.length) {
+      throw new Error('Some of events were not found in database');
+    }
+
+    if (
+      eventsGetLastGamesPayload.orderBy &&
+      !['id', 'endDate'].includes(eventsGetLastGamesPayload.orderBy)
+    ) {
+      throw new Error('Invalid orderBy parameter; Valid options: id, endDate');
+    }
+
+    if (
+      eventsGetLastGamesPayload.order &&
+      !['asc', 'desc'].includes(eventsGetLastGamesPayload.order)
+    ) {
+      throw new Error('Invalid order parameter; Valid options: asc, desc');
+    }
+
+    return this.getLastFinishedGames(
+      events,
+      eventsGetLastGamesPayload.limit,
+      eventsGetLastGamesPayload.offset,
+      eventsGetLastGamesPayload.orderBy as 'id' | 'endDate',
+      eventsGetLastGamesPayload.order as 'asc' | 'desc'
+    );
+  }
+
+  async getCurrentGames(playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload) {
+    const event = await this.findById([playersGetCurrentSessionsPayload.eventId]);
+
+    if (event.length === 0) {
+      throw new Error('Event not found');
+    }
+
+    const sessionModel = this.getModel(SessionModel);
+    const sessions = await sessionModel.findByPlayerAndEvent(
+      playersGetCurrentSessionsPayload.playerId,
+      playersGetCurrentSessionsPayload.eventId,
+      SessionStatus.SESSION_STATUS_INPROGRESS
+    );
+
+    const timerState = await this.getTimerState(playersGetCurrentSessionsPayload.eventId, sessions);
+
+    const { players, replaceMap } = await sessionModel.getPlayersOfGames(sessions, true);
+    const playerModel = this.getModel(PlayerModel);
+
+    return {
+      sessions: sessions.map((s) => ({
+        ...s,
+        status: s.status!,
+        sessionHash: s.representationalHash!,
+        timerState: timerState[s.representationalHash!],
+        players: playerModel.substituteReplacements(players.get(s.id)!, replaceMap),
+      })),
+    };
   }
 }
