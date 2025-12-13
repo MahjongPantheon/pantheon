@@ -13,7 +13,6 @@ import { PlayerModel } from './PlayerModel.js';
 import { formatGameResult } from 'src/helpers/formatters.js';
 import { RoundModel } from './RoundModel.js';
 import { Populate } from '@mikro-orm/postgresql';
-import { PenaltyModel } from './PenaltyModel.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -245,15 +244,14 @@ export class SessionModel extends Model {
     const [results, rounds, replacements] = await Promise.all([
       sessionResultsModel.findBySession([session[0].id]),
       roundModel.findBySessionIds([session[0].id]),
-      players.replaceMap,
+      players.playersData.replaceMap,
     ]);
 
     return {
-      players: playerModel.substituteReplacements(players.players, replacements),
       game: formatGameResult(
         session[0],
         session[0].event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
-        players.players.map((p) => p.id),
+        playerModel.substituteReplacements(players.playersData.players, replacements),
         results,
         rounds
       ),
@@ -264,15 +262,30 @@ export class SessionModel extends Model {
     sessions: SessionEntity[],
     substituteReplacementPlayers = true
   ): Promise<{
-    players: PersonEx[];
-    replaceMap: Map<number, PersonEx>;
+    players: Map<number, PersonEx[]>; // session -> players ordered
+    replaceMap: Map<number, PersonEx>; // player -> replacement player
   }> {
     const playerModel = this.getModel(PlayerModel);
-    const players = await playerModel.findPlayersForSessions(
+    const {
+      playersData: { players, replaceMap },
+      playerBySession,
+    } = await playerModel.findPlayersForSessions(
       sessions.map((s) => s.representationalHash!),
       substituteReplacementPlayers
     );
-
-    return players;
+    const result = new Map<number, PersonEx[]>();
+    for (const [playerId, sessionId] of playerBySession) {
+      for (const player of players) {
+        if (player.id === playerId) {
+          // should already be ordered by table order in findPlayersForSessions
+          result.set(sessionId, [...(result.get(sessionId) ?? []), player]);
+          break;
+        }
+      }
+    }
+    return {
+      players: result,
+      replaceMap,
+    };
   }
 }

@@ -73,13 +73,11 @@ export interface EventsGetLastGamesPayload {
 
 export interface EventsGetLastGamesResponse {
   games: protoAtoms.GameResult[];
-  players: protoAtoms.Player[];
   totalGames: number;
 }
 
 export interface EventsGetGameResponse {
   game: protoAtoms.GameResult;
-  players: protoAtoms.Player[];
 }
 
 export interface EventsGetGamesSeriesResponse {
@@ -117,7 +115,7 @@ export interface EventsGetTimerStateResponse {
   timeRemaining: number;
   waitingForTimer: boolean;
   haveAutostart: boolean;
-  autostartTimer: boolean;
+  autostartTimer: number;
   hideSeatingAfter: number;
 }
 

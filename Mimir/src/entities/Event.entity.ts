@@ -1,6 +1,6 @@
 import { Embedded, Entity, PrimaryKey, Property } from '@mikro-orm/postgresql';
 import { RulesetEntity } from './Ruleset.entity.js';
-import { PlatformType } from 'tsclients/proto/atoms.pb.js';
+import { PlatformType, TournamentGamesStatus } from 'tsclients/proto/atoms.pb.js';
 
 @Entity({ tableName: 'event' })
 export class EventEntity {
@@ -81,7 +81,7 @@ export class EventEntity {
   seriesLength!: number;
 
   @Property({ fieldName: 'games_status', nullable: true })
-  gamesStatus?: string;
+  gamesStatus?: TournamentGamesStatus;
 
   @Property({ fieldName: 'hide_results' })
   hideResults!: number;

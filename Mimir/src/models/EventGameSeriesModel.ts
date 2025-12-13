@@ -160,7 +160,7 @@ export class EventGameSeriesModel extends Model {
   }
 
   protected formatSeriesResults(
-    players: PersonEx[],
+    players: Map<number, PersonEx[]>,
     games: SessionEntity[],
     sessionResults: SessionResultsEntity[],
     results: SeriesResult[]
@@ -187,7 +187,7 @@ export class EventGameSeriesModel extends Model {
     );
 
     return results.map((result) => ({
-      player: players.find((player) => player.id === result.playerId)!,
+      player: players.get(result.sessionIds[0])!.find((player) => player.id === result.playerId)!,
       bestSeries: this.formatSeries(result.sessionIds, result.playerId ?? 0, hashes, places),
       bestSeriesScores: result.scoresSum,
       bestSeriesPlaces: result.placesSum,
