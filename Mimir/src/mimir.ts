@@ -4,7 +4,6 @@ import {
   GenericSessionPayload,
   GenericSuccessResponse,
   EventData,
-  SessionStatus,
 } from 'tsclients/proto/atoms.pb.js';
 import {
   AddExtraTimePayload,
@@ -191,11 +190,12 @@ export const mimirServer: Mimir<Context> = {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.getCurrentGames(playersGetCurrentSessionsPayload);
   },
-  GetAllRegisteredPlayers: function (
+  GetAllRegisteredPlayers: async function (
     eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload,
     context: Context
-  ): Promise<EventsGetAllRegisteredPlayersResponse> | EventsGetAllRegisteredPlayersResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<EventsGetAllRegisteredPlayersResponse> {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.getAllRegisteredPlayers(eventsGetAllRegisteredPlayersPayload);
   },
   GetTimerState: function (
     genericEventPayload: GenericEventPayload,
