@@ -197,17 +197,19 @@ export const mimirServer: Mimir<Context> = {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.getAllRegisteredPlayers(eventsGetAllRegisteredPlayersPayload);
   },
-  GetTimerState: function (
+  GetTimerState: async function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<EventsGetTimerStateResponse> | EventsGetTimerStateResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<EventsGetTimerStateResponse> {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.getTimerState(genericEventPayload.eventId);
   },
-  GetSessionOverview: function (
+  GetSessionOverview: async function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
-  ): Promise<GamesGetSessionOverviewResponse> | GamesGetSessionOverviewResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<GamesGetSessionOverviewResponse> {
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.getSessionOverview(genericSessionPayload.sessionHash);
   },
   GetPlayerStats: function (
     playersGetPlayerStatsPayload: PlayersGetPlayerStatsPayload,

@@ -10,6 +10,7 @@ import {
   EventsGetLastGamesPayload,
   EventsGetLastGamesResponse,
   EventsGetRatingTableResponse,
+  EventsGetTimerStateResponse,
   PlayersGetCurrentSessionsPayload,
   PlayersGetMyEventsResponse,
 } from 'tsclients/proto/mimir.pb.js';
@@ -34,16 +35,6 @@ import { SessionResultsModel } from './SessionResultsModel.js';
 import { RoundModel } from './RoundModel.js';
 import { PlayerModel } from './PlayerModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
-
-export type TimerState = {
-  started: boolean;
-  finished: boolean;
-  timeRemaining: number;
-  waitingForTimer: boolean;
-  haveAutostart: boolean;
-  autostartTimer: number;
-  hideSeatingAfter: number;
-};
 
 export class EventModel extends Model {
   async findById(id: number[]) {
@@ -352,10 +343,45 @@ export class EventModel extends Model {
     };
   }
 
-  async getTimerState(
+  async getTimerState(eventId: number) {
+    const event = await this.findById([eventId]);
+    if (event.length === 0) {
+      throw new Error('Event not found');
+    }
+
+    if (!event[0].useTimer) {
+      throw new Error('Timer is not enabled for this event');
+    }
+
+    const timerState: EventsGetTimerStateResponse = {
+      started: false,
+      finished: false,
+      timeRemaining: 0,
+      waitingForTimer:
+        event[0].gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY,
+      haveAutostart: event[0].nextGameStartTime > 0 && event[0].timeToStart > 0,
+      autostartTimer: event[0].nextGameStartTime - Date.now() / 1000,
+      // show seating for 10 mins after start
+      hideSeatingAfter: (event[0].gameDuration! - 10) * 60,
+    };
+    if (!event[0].lastTimer) {
+      timerState.started = false;
+      timerState.finished = false;
+      timerState.timeRemaining = 0;
+    } else if (event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 > Date.now() / 1000) {
+      // game in progress
+      timerState.started = true;
+      timerState.finished = false;
+      timerState.timeRemaining =
+        event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 - Date.now() / 1000;
+    }
+    return timerState;
+  }
+
+  async getTimerStateForSessions(
     eventId: number,
     sessions: SessionEntity[]
-  ): Promise<Record<string, TimerState>> {
+  ): Promise<Record<string, EventsGetTimerStateResponse>> {
     const event = await this.findById([eventId]);
     if (event.length === 0) {
       throw new Error('Event not found');
@@ -365,7 +391,7 @@ export class EventModel extends Model {
       return {};
     }
 
-    const timerState: Record<string, TimerState> = {};
+    const timerState: Record<string, EventsGetTimerStateResponse> = {};
     for (const session of sessions) {
       if (event[0].finished) {
         timerState[session.representationalHash!] = {
@@ -459,7 +485,10 @@ export class EventModel extends Model {
       SessionStatus.SESSION_STATUS_INPROGRESS
     );
 
-    const timerState = await this.getTimerState(playersGetCurrentSessionsPayload.eventId, sessions);
+    const timerState = await this.getTimerStateForSessions(
+      playersGetCurrentSessionsPayload.eventId,
+      sessions
+    );
 
     const { players, replaceMap } = await sessionModel.getPlayersOfGames(sessions, true);
     const playerModel = this.getModel(PlayerModel);

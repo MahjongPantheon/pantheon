@@ -13,6 +13,8 @@ import { PlayerModel } from './PlayerModel.js';
 import { formatGameResult } from 'src/helpers/formatters.js';
 import { RoundModel } from './RoundModel.js';
 import { Populate } from '@mikro-orm/postgresql';
+import { GamesGetSessionOverviewResponse } from 'tsclients/proto/mimir.pb.js';
+import { EventModel } from './EventModel.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -286,6 +288,65 @@ export class SessionModel extends Model {
     return {
       players: result,
       replaceMap,
+    };
+  }
+
+  async getSessionOverview(sessionHash: string): Promise<GamesGetSessionOverviewResponse> {
+    const session = await this.findByRepresentationalHash([sessionHash]);
+    if (session.length === 0) {
+      throw new Error('Session not found');
+    }
+
+    const eventModel = this.getModel(EventModel);
+    const event = await eventModel.findById([session[0].event.id]);
+    if (event.length === 0) {
+      throw new Error('Event not found');
+    }
+
+    const playerModel = this.getModel(PlayerModel);
+    const {
+      playersData: { players, replaceMap },
+    } = await playerModel.findPlayersForSessions([session[0].representationalHash!], true);
+
+    const sessionState = new SessionState(
+      event[0].ruleset,
+      players.map((p) => p.id),
+      session[0].intermediateResults
+    );
+
+    return {
+      id: session[0].id,
+      eventId: session[0].event.id,
+      tableIndex: session[0].tableIndex,
+      players: players.map((player) => ({
+        id: player.id,
+        title: player.title,
+        hasAvatar: player.hasAvatar,
+        lastUpdate: player.lastUpdate,
+        score: sessionState.getScores()[player.id],
+        yakitori: sessionState.getYakitori()[player.id],
+        replacedBy: replaceMap.has(player.id)
+          ? {
+              id: replaceMap.get(player.id)!.id,
+              title: replaceMap.get(player.id)!.title,
+              hasAvatar: replaceMap.get(player.id)!.hasAvatar,
+              lastUpdate: replaceMap.get(player.id)!.lastUpdate,
+            }
+          : null,
+      })),
+      timerState: (await eventModel.getTimerStateForSessions(event[0].id, session))[
+        session[0].representationalHash!
+      ],
+      state: {
+        dealer: sessionState.getCurrentDealer(),
+        round: sessionState.getRound(),
+        riichi: sessionState.getRiichiBets(),
+        honba: sessionState.getHonba(),
+        scores: sessionState.getScores(),
+        finished: sessionState.isFinished(),
+        chombo: sessionState.getChombo(),
+        lastHandStarted: sessionState.lastHandStarted(),
+      },
     };
   }
 }
