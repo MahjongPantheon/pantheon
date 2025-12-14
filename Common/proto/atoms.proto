@@ -343,11 +343,13 @@ message RegisteredPlayer {
   string title = 2;
   optional int32 local_id = 3;
   optional string team_name = 4;
-  string tenhou_id = 5;
+  optional string tenhou_id = 5;
   bool ignore_seating = 6;
   optional ReplacementPlayer replaced_by = 7;
   bool has_avatar = 8;
   string last_update = 9;
+  optional int32 majsoul_id = 10;
+  optional string majsoul_nickname = 11;
 }
 
 message SessionHistoryResult {
