@@ -1,6 +1,8 @@
 import { EventEntity } from 'src/entities/Event.entity.js';
 import { Model } from './Model.js';
 import {
+  EventsGetAllRegisteredPlayersPayload,
+  EventsGetAllRegisteredPlayersResponse,
   EventsGetEventsByIdPayload,
   EventsGetEventsByIdResponse,
   EventsGetEventsPayload,
@@ -19,6 +21,7 @@ import {
   GameConfig,
   TournamentGamesStatus,
   SessionStatus,
+  RegisteredPlayer,
 } from 'tsclients/proto/atoms.pb.js';
 import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
@@ -30,6 +33,7 @@ import { formatGameResult } from 'src/helpers/formatters.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { RoundModel } from './RoundModel.js';
 import { PlayerModel } from './PlayerModel.js';
+import { EventRegistrationModel } from './EventRegistrationModel.js';
 
 export type TimerState = {
   started: boolean;
@@ -468,6 +472,66 @@ export class EventModel extends Model {
         timerState: timerState[s.representationalHash!],
         players: playerModel.substituteReplacements(players.get(s.id)!, replaceMap),
       })),
+    };
+  }
+
+  async getAllRegisteredPlayers(
+    eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload
+  ): Promise<EventsGetAllRegisteredPlayersResponse> {
+    if (eventsGetAllRegisteredPlayersPayload.eventIds.length === 0) {
+      throw new Error('Event IDs parameter is required');
+    }
+    const events = await this.findById(eventsGetAllRegisteredPlayersPayload.eventIds);
+    if (events.length !== eventsGetAllRegisteredPlayersPayload.eventIds.length) {
+      throw new Error('One or more events not found');
+    }
+    const needLocalIds = events.length === 1 && events[0].isPrescripted;
+    const playerModel = this.getModel(PlayerModel);
+    const { players, replaceMap } = await playerModel.findPlayersForEvents(
+      eventsGetAllRegisteredPlayersPayload.eventIds
+    );
+    const eventRegModel = this.getModel(EventRegistrationModel);
+    const ignoredPlayers = await eventRegModel.findIgnoredPlayersIdsByEvent(
+      eventsGetAllRegisteredPlayersPayload.eventIds
+    );
+    let localMap: Map<number, number> = new Map();
+    let teamNames: Map<number, string> = new Map();
+    if (needLocalIds) {
+      localMap = new Map(
+        (await eventRegModel.findLocalIdsMapByEvent(events[0].id))
+          .entries()
+          .map(([key, value]) => [value, key])
+      );
+    }
+    if (events[0].isTeam) {
+      teamNames = await eventRegModel.findTeamNameMapByEvent(events[0].id);
+    }
+    return {
+      players: players.map((player) => {
+        const localId = localMap.get(player.id);
+        const teamName = teamNames.get(player.id);
+        const data: RegisteredPlayer = {
+          id: player.id,
+          title: player.title,
+          localId,
+          teamName,
+          tenhouId: player.tenhouId,
+          majsoulId: player.msAccountId,
+          majsoulNickname: player.msNickname,
+          hasAvatar: player.hasAvatar,
+          lastUpdate: player.lastUpdate,
+          ignoreSeating: ignoredPlayers.includes(player.id),
+          replacedBy: replaceMap.has(player.id)
+            ? {
+                id: replaceMap.get(player.id)!.id,
+                title: replaceMap.get(player.id)!.title,
+                hasAvatar: replaceMap.get(player.id)!.hasAvatar,
+                lastUpdate: replaceMap.get(player.id)!.lastUpdate,
+              }
+            : null,
+        };
+        return data;
+      }),
     };
   }
 }
