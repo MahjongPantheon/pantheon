@@ -13,7 +13,7 @@ interface PointsResult {
   loser?: number;
 }
 
-interface RiichiBetAssignment {
+export interface RiichiBetAssignment {
   from_table: number;
   from_players: number[];
   honba: number;

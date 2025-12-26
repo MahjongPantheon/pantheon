@@ -86,6 +86,16 @@ export class PlayerModel extends Model {
     return this._findPlayers(eventIds, registrationData);
   }
 
+  async findPlayerIdsForSessions(sessionIds: number[]): Promise<Array<[number, number]>> {
+    return (
+      await this.repo.db.em.findAll(SessionPlayerEntity, {
+        fields: ['playerId', 'session.id'],
+        where: { session: sessionIds.map((id) => this.repo.db.em.getReference(SessionEntity, id)) },
+        orderBy: { order: 1 },
+      })
+    ).map((reg) => [reg.playerId, reg.session.id]);
+  }
+
   async findPlayersForSessions(sessionHashList: string[], substituteReplacements = false) {
     const sessionModel = this.getModel(SessionModel);
     const session = await sessionModel.findByRepresentationalHash(sessionHashList, ['event']);
@@ -95,13 +105,7 @@ export class PlayerModel extends Model {
         playerBySession: [],
       };
     }
-    const playerBySession = (
-      await this.repo.db.em.findAll(SessionPlayerEntity, {
-        fields: ['playerId', 'session.id'],
-        where: { session: this.repo.db.em.getReference(SessionEntity, session[0].id) },
-        orderBy: { order: 1 },
-      })
-    ).map((reg) => [reg.playerId, reg.session.id]);
+    const playerBySession = await this.findPlayerIdsForSessions(session.map((s) => s.id));
 
     const playerIds = playerBySession.map((p) => p[0]);
 
