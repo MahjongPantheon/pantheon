@@ -215,7 +215,8 @@ export const mimirServer: Mimir<Context> = {
     playersGetPlayerStatsPayload: PlayersGetPlayerStatsPayload,
     context: Context
   ): Promise<PlayersGetPlayerStatsResponse> | PlayersGetPlayerStatsResponse {
-    throw new Error('Function not implemented.');
+    const model = Model.getModel(context.repository, PlayerModel);
+    return model.getPlayerStats(playersGetPlayerStatsPayload.playerId);
   },
   AddRound: function (
     gamesAddRoundPayload: GamesAddRoundPayload,
