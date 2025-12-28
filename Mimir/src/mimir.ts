@@ -86,6 +86,7 @@ import { Model } from './models/Model.js';
 import { SessionModel } from './models/SessionModel.js';
 import { PlayerModel } from './models/PlayerModel.js';
 import { EventGameSeriesModel } from './models/EventGameSeriesModel.js';
+import { PlayerStatsModel } from './models/PlayerStatsModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -215,8 +216,8 @@ export const mimirServer: Mimir<Context> = {
     playersGetPlayerStatsPayload: PlayersGetPlayerStatsPayload,
     context: Context
   ): Promise<PlayersGetPlayerStatsResponse> | PlayersGetPlayerStatsResponse {
-    const model = Model.getModel(context.repository, PlayerModel);
-    return model.getPlayerStats(playersGetPlayerStatsPayload.playerId);
+    const statsModel = Model.getModel(context.repository, PlayerStatsModel);
+    return statsModel.getPlayerStats(playersGetPlayerStatsPayload);
   },
   AddRound: function (
     gamesAddRoundPayload: GamesAddRoundPayload,
