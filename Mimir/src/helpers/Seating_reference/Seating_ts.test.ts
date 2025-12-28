@@ -1,4 +1,4 @@
-import { PlayersMap, Seating_ts } from './Seating_ts';
+import { PlayersMap, Seating_ts } from './Seating_ts.js';
 
 describe.skip('Seating', () => {
   describe('makeIntersectionsTable', () => {

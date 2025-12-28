@@ -1,4 +1,4 @@
-import { Ruleset } from '../rulesets/ruleset.js';
+import { RulesetConfig } from 'tsclients/proto/atoms.pb.js';
 
 export interface PaymentsInfo {
   direct: Record<string, number>;
@@ -14,10 +14,10 @@ interface PointsResult {
 }
 
 export interface RiichiBetAssignment {
-  from_table: number;
-  from_players: number[];
+  fromTable: number;
+  fromPlayers: number[];
   honba: number;
-  closest_winner: number;
+  closestWinner: number;
 }
 
 export class PointsCalc {
@@ -43,7 +43,7 @@ export class PointsCalc {
    * Calculate points for Ron (direct win)
    */
   public ron(
-    rules: Ruleset,
+    rules: RulesetConfig,
     isDealer: boolean,
     currentScores: Record<number, number>,
     winnerId: number,
@@ -58,7 +58,7 @@ export class PointsCalc {
     totalRiichiInRound = 0
   ): Record<number, number> {
     this.resetPaymentsInfo();
-    const honbaValue = rules.rules.honbaValue;
+    const honbaValue = rules.honbaValue;
     const pointsDiff = this._calcPoints(rules, han, fu, false, isDealer);
 
     if (!winnerId || !loserId) {
@@ -104,7 +104,7 @@ export class PointsCalc {
     }
 
     // this condition we are checking only for double ron
-    if (rules.rules.doubleronRiichiAtamahane && closestWinner) {
+    if (rules.doubleronRiichiAtamahane && closestWinner) {
       // on tenhou we had to give all riichi bets to closest winner only
       if (closestWinner === winnerId) {
         scores[winnerId] += 1000 * totalRiichiInRound;
@@ -118,7 +118,7 @@ export class PointsCalc {
     }
 
     // this condition we are checking only for double ron
-    if (rules.rules.doubleronHonbaAtamahane && closestWinner) {
+    if (rules.doubleronHonbaAtamahane && closestWinner) {
       // on tenhou we had to give all honba sticks to closest winner only
       if (winnerId === closestWinner) {
         scores[winnerId] += honbaValue * honba;
@@ -138,7 +138,7 @@ export class PointsCalc {
    * Calculate points for Tsumo (self-draw win)
    */
   public tsumo(
-    rules: Ruleset,
+    rules: RulesetConfig,
     currentDealer: number,
     currentScores: Record<number, number>,
     winnerId: number,
@@ -150,7 +150,7 @@ export class PointsCalc {
     paoPlayerId: number | null = null
   ): Record<number, number> {
     this.resetPaymentsInfo();
-    const honbaValue = rules.rules.honbaValue;
+    const honbaValue = rules.honbaValue;
 
     if (!winnerId) {
       throw new Error('Tsumo must have winner');
@@ -309,7 +309,7 @@ export class PointsCalc {
    * Calculate points for chombo (penalty)
    */
   public chombo(
-    rules: Ruleset,
+    rules: RulesetConfig,
     currentDealer: number,
     loserId: number,
     currentScores: Record<number, number>
@@ -321,7 +321,7 @@ export class PointsCalc {
 
     const scores = { ...currentScores };
 
-    if (rules.rules.extraChomboPayments) {
+    if (rules.extraChomboPayments) {
       if (currentDealer === loserId) {
         for (const playerId of Object.keys(scores).map(Number)) {
           if (playerId === loserId) {
@@ -395,7 +395,7 @@ export class PointsCalc {
    * Calculate basic points based on han and fu
    */
   protected _calcPoints(
-    rules: Ruleset,
+    rules: RulesetConfig,
     han: number,
     fu: number | null,
     tsumo: boolean,
@@ -414,7 +414,7 @@ export class PointsCalc {
       timesSixRounded = Math.ceil((6 * basePoints) / 100) * 100;
 
       const isKiriage =
-        rules.rules.withKiriageMangan && ((han === 4 && fu === 30) || (han === 3 && fu === 60));
+        rules.withKiriageMangan && ((han === 4 && fu === 30) || (han === 3 && fu === 60));
 
       // mangan
       if (basePoints >= 2000 || isKiriage) {
@@ -428,7 +428,7 @@ export class PointsCalc {
       if (han < 0) {
         // natural yakuman
         rounded = Math.abs(han * 8000);
-      } else if (rules.rules.withKazoe && han >= 13) {
+      } else if (rules.withKazoe && han >= 13) {
         // kazoe yakuman
         rounded = 8000;
       } else if (han >= 11) {
@@ -519,10 +519,10 @@ export class PointsCalc {
     for (const [id, playerBets] of Object.entries(winners)) {
       const playerId = Number(id);
       result[playerId] = {
-        from_table: playerId === closestWinner ? riichiBets : 0,
-        from_players: playerBets,
+        fromTable: playerId === closestWinner ? riichiBets : 0,
+        fromPlayers: playerBets,
         honba: honba,
-        closest_winner: closestWinner,
+        closestWinner: closestWinner,
       };
     }
 
