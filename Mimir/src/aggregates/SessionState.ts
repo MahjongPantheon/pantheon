@@ -234,7 +234,7 @@ export class SessionState {
 
     const calc = new PointsCalc();
     this._state.scores = calc.ron(
-      this._ruleset,
+      this._ruleset.rules,
       isDealer,
       this.getScores(),
       winnerId,
@@ -275,7 +275,7 @@ export class SessionState {
 
     let totalRiichiInRound = 0;
     Object.values(riichiWinners).forEach((x) => {
-      totalRiichiInRound += x.from_players.length;
+      totalRiichiInRound += x.fromPlayers.length;
     });
 
     let dealerWon = false;
@@ -290,18 +290,18 @@ export class SessionState {
       const winnerInfo = riichiWinners[winnerId];
 
       this._state.scores = calc.ron(
-        this._ruleset,
+        this._ruleset.rules,
         this.getCurrentDealer() === winnerId,
         this.getScores(),
         winnerId,
         hand.loserId!,
         hand.han ?? 0,
         hand.fu ?? 0,
-        winnerInfo.from_players,
+        winnerInfo.fromPlayers,
         winnerInfo.honba,
-        winnerInfo.from_table,
+        winnerInfo.fromTable,
         hand.paoPlayerId,
-        winnerInfo.closest_winner,
+        winnerInfo.closestWinner,
         totalRiichiInRound
       );
 
@@ -347,7 +347,7 @@ export class SessionState {
 
     const calc = new PointsCalc();
     this._state.scores = calc.tsumo(
-      this._ruleset,
+      this._ruleset.rules,
       this.getCurrentDealer(),
       this.getScores(),
       winnerId,
@@ -409,7 +409,7 @@ export class SessionState {
 
     const calc = new PointsCalc();
     this._state.scores = calc.chombo(
-      this._ruleset,
+      this._ruleset.rules,
       this.getCurrentDealer(),
       loserId,
       this.getScores()

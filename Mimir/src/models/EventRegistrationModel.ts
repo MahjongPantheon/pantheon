@@ -89,27 +89,15 @@ export class EventRegistrationModel extends Model {
   }
 
   async fetchPlayersRegData(eventIds: number[]) {
-    const result = await this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
+    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
       where: { event: this.repo.db.em.getReference(EventEntity, eventIds) },
     });
-    return result.map((reg) => ({
-      id: reg.id,
-      local_id: reg.localId,
-      replacement_id: reg.replacementId,
-      team_name: reg.teamName,
-    }));
   }
 
   async fetchPlayersRegDataByIds(eventIds: number[], playerIds: number[]) {
-    const result = await this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
+    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
       where: { event: this.repo.db.em.getReference(EventEntity, eventIds), playerId: playerIds },
     });
-    return result.map((reg) => ({
-      id: reg.id,
-      local_id: reg.localId,
-      replacement_id: reg.replacementId,
-      team_name: reg.teamName,
-    }));
   }
 
   async fetchRegisteredPlayersByEvent(eventId: number) {

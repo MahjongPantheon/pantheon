@@ -117,8 +117,8 @@ export class PlayerModel extends Model {
     const replacements = new Map<number, number>();
     if (substituteReplacements) {
       for (const registration of registrationData) {
-        if (registration.replacement_id) {
-          replacements.set(registration.replacement_id, registration.id);
+        if (registration.replacementId) {
+          replacements.set(registration.replacementId, registration.id);
         }
       }
     }

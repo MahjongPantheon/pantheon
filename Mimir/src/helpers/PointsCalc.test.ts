@@ -1,9 +1,9 @@
-import { createRuleset } from '../rulesets/ruleset.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { PointsCalc } from './PointsCalc.js';
 
 describe('PointsCalc', () => {
   it('should calculate basic ron', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -14,7 +14,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -30,7 +30,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate basic dealer ron', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -41,7 +41,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -57,7 +57,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate limit ron', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -68,7 +68,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -84,7 +84,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -100,7 +100,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -116,7 +116,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -132,7 +132,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate RonKiriage', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     ruleset.rules.withKiriageMangan = true;
     const currentScores = {
@@ -144,7 +144,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -160,7 +160,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -176,7 +176,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -192,7 +192,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -208,7 +208,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate RonLimitDealer', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -219,7 +219,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -235,7 +235,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -251,7 +251,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -267,7 +267,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -283,7 +283,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate Kazoe', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -294,7 +294,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -312,7 +312,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -328,7 +328,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate TsumoBasic', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -339,7 +339,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         1, // dealer id
         currentScores,
         2, // winner id
@@ -354,7 +354,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate TsumoDealer', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -365,7 +365,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         1, // dealer id
         currentScores,
         1, // winner id
@@ -380,7 +380,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate TsumoLimit', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -391,7 +391,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         2, // dealer
         currentScores,
         1, // winner id
@@ -406,7 +406,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         2, // dealer
         currentScores,
         1, // winner id
@@ -421,7 +421,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         2, // dealer
         currentScores,
         1, // winner id
@@ -436,7 +436,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         2, // dealer
         currentScores,
         1, // winner id
@@ -451,7 +451,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate TsumoKiriage', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     ruleset.rules.withKiriageMangan = true;
     const currentScores = {
@@ -463,7 +463,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         2, // dealer
         currentScores,
         1, // winner id
@@ -478,7 +478,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         2, // dealer
         currentScores,
         1, // winner id
@@ -493,7 +493,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         1, // dealer
         currentScores,
         1, // winner id
@@ -508,7 +508,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         1, // dealer
         currentScores,
         1, // winner id
@@ -523,7 +523,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate Draw', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -564,7 +564,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate Abort', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -582,7 +582,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate Chombo', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -592,14 +592,14 @@ describe('PointsCalc', () => {
     };
     ruleset.rules.extraChomboPayments = false;
 
-    expect(new PointsCalc().chombo(ruleset, 1, 2, currentScores)).toEqual({
+    expect(new PointsCalc().chombo(ruleset.rules, 1, 2, currentScores)).toEqual({
       1: 0,
       2: 0,
       3: 0,
       4: 0,
     });
 
-    expect(new PointsCalc().chombo(ruleset, 1, 1, currentScores)).toEqual({
+    expect(new PointsCalc().chombo(ruleset.rules, 1, 1, currentScores)).toEqual({
       1: 0,
       2: 0,
       3: 0,
@@ -608,14 +608,14 @@ describe('PointsCalc', () => {
 
     ruleset.rules.extraChomboPayments = true;
 
-    expect(new PointsCalc().chombo(ruleset, 1, 2, currentScores)).toEqual({
+    expect(new PointsCalc().chombo(ruleset.rules, 1, 2, currentScores)).toEqual({
       1: 4000,
       2: -8000,
       3: 2000,
       4: 2000,
     });
 
-    expect(new PointsCalc().chombo(ruleset, 1, 1, currentScores)).toEqual({
+    expect(new PointsCalc().chombo(ruleset.rules, 1, 1, currentScores)).toEqual({
       1: -12000,
       2: 4000,
       3: 4000,
@@ -624,7 +624,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate Honba', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -635,7 +635,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -651,7 +651,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         1, // dealer
         currentScores,
         1, // winner id
@@ -666,7 +666,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate RiichiBets', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -677,7 +677,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         true, // dealer
         currentScores,
         1, // winner id
@@ -693,7 +693,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         1, // dealer
         currentScores,
         1, // winner id
@@ -708,7 +708,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate Yakuman', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -719,7 +719,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -735,7 +735,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate PaoTsumo', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -746,7 +746,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().tsumo(
-        ruleset,
+        ruleset.rules,
         2, // dealer
         currentScores,
         1, // winner id
@@ -761,7 +761,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate PaoRon', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -772,7 +772,7 @@ describe('PointsCalc', () => {
 
     expect(
       new PointsCalc().ron(
-        ruleset,
+        ruleset.rules,
         false, // dealer
         currentScores,
         1, // winner id
@@ -788,7 +788,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate Nagashi', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,
@@ -827,7 +827,7 @@ describe('PointsCalc', () => {
   });
 
   it('should calculate NagashiMultiple', () => {
-    const ruleset = createRuleset('ema');
+    const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;
     const currentScores = {
       1: 0,

@@ -26,23 +26,23 @@ type OutcomeStats = {
   chombo: number;
   feed: number;
   tsumofeed: number;
-  wins_with_open: number;
-  wins_with_riichi: number;
-  wins_with_dama: number;
-  unforced_feed_to_open: number;
-  unforced_feed_to_riichi: number;
-  unforced_feed_to_dama: number;
+  winsWithOpen: number;
+  winsWithRiichi: number;
+  winsWithDama: number;
+  unforcedFeedToOpen: number;
+  unforcedFeedToRiichi: number;
+  unforcedFeedToDama: number;
   draw: number;
-  draw_tempai: number;
-  points_won: number;
-  points_lost_ron: number;
-  points_lost_tsumo: number;
+  drawTempai: number;
+  pointsWon: number;
+  pointsLostRon: number;
+  pointsLostTsumo: number;
 };
 
 type RiichiStats = {
-  riichi_won: number;
-  riichi_lost: number;
-  feed_under_riichi: number;
+  riichiWon: number;
+  riichiLost: number;
+  feedUnderRiichi: number;
 };
 
 export class PlayerStatsModel extends Model {
@@ -86,45 +86,45 @@ export class PlayerStatsModel extends Model {
       });
       if (stats.length > 0) {
         return {
-          ratingHistory: stats[0].data.rating_history ?? [],
-          scoreHistory: Object.entries(stats[0].data.score_history ?? {}).map(
+          ratingHistory: stats[0].data.ratingHistory ?? [],
+          scoreHistory: Object.entries(stats[0].data.scoreHistory ?? {}).map(
             ([_sessionId, data]) => ({
               tables: data.map((item) => ({
-                sessionHash: item.session_hash,
-                eventId: item.event_id,
-                playerId: item.player_id,
+                sessionHash: item.sessionHash,
+                eventId: item.eventId,
+                playerId: item.playerId,
                 score: item.score,
-                ratingDelta: item.rating_delta,
+                ratingDelta: item.ratingDelta,
                 place: item.place,
                 title: item.title,
-                hasAvatar: item.has_avatar,
-                lastUpdate: item.last_update,
+                hasAvatar: item.hasAvatar,
+                lastUpdate: item.lastUpdate,
               })),
             })
           ),
-          playersInfo: stats[0].data.players_info!,
-          placesSummary: Object.entries(stats[0].data.places_summary ?? {}).map(
+          playersInfo: stats[0].data.playersInfo!,
+          placesSummary: Object.entries(stats[0].data.placesSummary ?? {}).map(
             ([place, count]) => ({
               place,
               count,
             })
           ),
-          totalPlayedGames: stats[0].data.total_played_games ?? 0,
-          totalPlayedRounds: stats[0].data.total_played_rounds ?? 0,
-          winSummary: stats[0].data.win_summary,
-          handsValueSummary: Object.entries(stats[0].data.hands_value_summary ?? {}).map(
+          totalPlayedGames: stats[0].data.totalPlayedGames ?? 0,
+          totalPlayedRounds: stats[0].data.totalPlayedRounds ?? 0,
+          winSummary: stats[0].data.winSummary,
+          handsValueSummary: Object.entries(stats[0].data.handsValueSummary ?? {}).map(
             ([handValue, count]) => ({
               handValue,
               count,
             })
           ),
-          yakuSummary: Object.entries(stats[0].data.yaku_summary ?? {}).map(([yaku, count]) => ({
+          yakuSummary: Object.entries(stats[0].data.yakuSummary ?? {}).map(([yaku, count]) => ({
             yaku,
             count,
           })),
-          riichiSummary: stats[0].data.riichi_summary,
-          doraStat: stats[0].data.dora_stat,
-          lastUpdate: stats[0].data.last_update ?? new Date().toISOString(),
+          riichiSummary: stats[0].data.riichiSummary,
+          doraStat: stats[0].data.doraStat,
+          lastUpdate: stats[0].data.lastUpdate ?? new Date().toISOString(),
         };
       }
     }
@@ -188,18 +188,18 @@ export class PlayerStatsModel extends Model {
     );
 
     const data = {
-      rating_history: this._getRatingHistorySequence(mainEvent.ruleset, playerId, games),
-      score_history: scoresAndPlayers.scores,
-      players_info: scoresAndPlayers.players,
-      places_summary: await this._getPlacesSummary(playerId, games),
-      total_played_games: games.size,
-      total_played_rounds: rounds.length,
-      win_summary: this._getOutcomeSummary(mainEvent.ruleset, playerId, rounds),
-      hands_value_summary: this._getHanSummary(playerId, rounds),
-      yaku_summary: this._getYakuSummary(playerId, rounds),
-      riichi_summary: this._getRiichiSummary(mainEvent.ruleset, playerId, rounds),
-      dora_stat: this._getDoraStat(playerId, rounds),
-      last_update: moment().tz(mainEvent.timezone).format('YYYY-MM-DD HH:mm:ss'),
+      ratingHistory: this._getRatingHistorySequence(mainEvent.ruleset, playerId, games),
+      scoreHistory: scoresAndPlayers.scores,
+      playersInfo: scoresAndPlayers.players,
+      placesSummary: await this._getPlacesSummary(playerId, games),
+      totalPlayedGames: games.size,
+      totalPlayedRounds: rounds.length,
+      winSummary: this._getOutcomeSummary(mainEvent.ruleset, playerId, rounds),
+      handsValueSummary: this._getHanSummary(playerId, rounds),
+      yakuSummary: this._getYakuSummary(playerId, rounds),
+      riichiSummary: this._getRiichiSummary(mainEvent.ruleset, playerId, rounds),
+      doraStat: this._getDoraStat(playerId, rounds),
+      lastUpdate: moment().tz(mainEvent.timezone).format('YYYY-MM-DD HH:mm:ss'),
     };
 
     // Save precalculated stats; don't support aggregated events
@@ -213,11 +213,11 @@ export class PlayerStatsModel extends Model {
         const entity = new PlayerStatsEntity();
         entity.data = {
           ...data,
-          score_history: {},
-          players_info: [],
-          places_summary: {},
-          hands_value_summary: {},
-          yaku_summary: {},
+          scoreHistory: {},
+          playersInfo: [],
+          placesSummary: {},
+          handsValueSummary: {},
+          yakuSummary: {},
         };
         entity.event = this.repo.db.em.getReference(EventEntity, eventIdList[0]);
         entity.playerId = playerId;
@@ -226,11 +226,11 @@ export class PlayerStatsModel extends Model {
       } else {
         stats.data = {
           ...data,
-          score_history: {},
-          players_info: [],
-          places_summary: {},
-          hands_value_summary: {},
-          yaku_summary: {},
+          scoreHistory: {},
+          playersInfo: [],
+          placesSummary: {},
+          handsValueSummary: {},
+          yakuSummary: {},
         };
         stats.event = this.repo.db.em.getReference(EventEntity, eventIdList[0]);
         stats.playerId = playerId;
@@ -326,14 +326,14 @@ export class PlayerStatsModel extends Model {
       games.entries().map(([, game]) => {
         return (playersBySessionGrouped.get(game.session.id) ?? []).map((playerId) => {
           const result = {
-            session_hash: game.session.representationalHash,
-            event_id: game.session.event.id,
+            sessionHash: game.session.representationalHash,
+            eventId: game.session.event.id,
             title: playerInfo.get(playerId)?.title ?? '',
-            has_avatar: playerInfo.get(playerId)?.hasAvatar ?? false,
-            last_update: playerInfo.get(playerId)?.lastUpdate ?? new Date(),
-            player_id: playerId,
+            hasAvatar: playerInfo.get(playerId)?.hasAvatar ?? false,
+            lastUpdate: playerInfo.get(playerId)?.lastUpdate ?? new Date(),
+            playerId: playerId,
             score: game.results.get(playerId)?.score ?? ruleset.rules.startRating,
-            rating_delta: game.results.get(playerId)?.ratingDelta ?? 0,
+            ratingDelta: game.results.get(playerId)?.ratingDelta ?? 0,
             place: game.results.get(playerId)?.place ?? 0,
             chips: 0,
           };
@@ -407,28 +407,28 @@ export class PlayerStatsModel extends Model {
             );
             if (round.hands[0].loserId === playerId) {
               acc.feed++;
-              acc.points_lost_ron -= pointsDelta;
+              acc.pointsLostRon -= pointsDelta;
               if (!riichiIds.includes(playerId)) {
                 if (round.hands[0].openHand) {
-                  acc.unforced_feed_to_open++;
+                  acc.unforcedFeedToOpen++;
                 } else {
                   if (riichiIds.includes(round.hands[0].winnerId ?? -1)) {
-                    acc.unforced_feed_to_riichi++;
+                    acc.unforcedFeedToRiichi++;
                   } else {
-                    acc.unforced_feed_to_dama++;
+                    acc.unforcedFeedToDama++;
                   }
                 }
               }
             } else if (round.hands[0].winnerId === playerId) {
               acc.ron++;
-              acc.points_won += pointsDelta;
+              acc.pointsWon += pointsDelta;
               if (round.hands[0].openHand) {
-                acc.wins_with_open++;
+                acc.winsWithOpen++;
               } else {
                 if (riichiIds.includes(playerId)) {
-                  acc.wins_with_riichi++;
+                  acc.winsWithRiichi++;
                 } else {
-                  acc.wins_with_dama++;
+                  acc.winsWithDama++;
                 }
               }
             }
@@ -449,19 +449,19 @@ export class PlayerStatsModel extends Model {
             );
             if (round.hands[0].winnerId === playerId) {
               acc.tsumo++;
-              acc.points_won += pointsDelta;
+              acc.pointsWon += pointsDelta;
               if (round.hands[0].openHand) {
-                acc.wins_with_open++;
+                acc.winsWithOpen++;
               } else {
                 if (riichiIds.includes(playerId)) {
-                  acc.wins_with_riichi++;
+                  acc.winsWithRiichi++;
                 } else {
-                  acc.wins_with_dama++;
+                  acc.winsWithDama++;
                 }
               }
             } else {
               acc.tsumofeed++;
-              acc.points_lost_tsumo -= pointsDelta;
+              acc.pointsLostTsumo -= pointsDelta;
             }
             break;
           }
@@ -469,7 +469,7 @@ export class PlayerStatsModel extends Model {
           case RoundOutcome.ROUND_OUTCOME_DRAW: {
             acc.draw++;
             if (round.hands[0].tempai?.includes(playerId)) {
-              acc.draw_tempai++;
+              acc.drawTempai++;
             }
             break;
           }
@@ -506,28 +506,28 @@ export class PlayerStatsModel extends Model {
               );
               if (hand.loserId === playerId) {
                 acc.feed++;
-                acc.points_lost_ron -= pointsDelta;
+                acc.pointsLostRon -= pointsDelta;
                 if (!riichiIds.includes(playerId)) {
                   if (hand.openHand) {
-                    acc.unforced_feed_to_open++;
+                    acc.unforcedFeedToOpen++;
                   } else {
                     if (riichiIds.includes(hand.winnerId ?? -1)) {
-                      acc.unforced_feed_to_riichi++;
+                      acc.unforcedFeedToRiichi++;
                     } else {
-                      acc.unforced_feed_to_dama++;
+                      acc.unforcedFeedToDama++;
                     }
                   }
                 }
               } else if (hand.winnerId === playerId) {
                 acc.ron++;
-                acc.points_won += pointsDelta;
+                acc.pointsWon += pointsDelta;
                 if (hand.openHand) {
-                  acc.wins_with_open++;
+                  acc.winsWithOpen++;
                 } else {
                   if (riichiIds.includes(playerId)) {
-                    acc.wins_with_riichi++;
+                    acc.winsWithRiichi++;
                   } else {
-                    acc.wins_with_dama++;
+                    acc.winsWithDama++;
                   }
                 }
               }
@@ -553,17 +553,17 @@ export class PlayerStatsModel extends Model {
         nagashi: 0,
         feed: 0,
         tsumofeed: 0,
-        wins_with_open: 0,
-        wins_with_riichi: 0, // not always equal to riichi_won below, riichi_won is for self sticks
-        wins_with_dama: 0,
-        unforced_feed_to_open: 0,
-        unforced_feed_to_riichi: 0,
-        unforced_feed_to_dama: 0,
+        winsWithOpen: 0,
+        winsWithRiichi: 0, // not always equal to riichiWon below, riichiWon is for self sticks
+        winsWithDama: 0,
+        unforcedFeedToOpen: 0,
+        unforcedFeedToRiichi: 0,
+        unforcedFeedToDama: 0,
         draw: 0,
-        draw_tempai: 0,
-        points_won: 0,
-        points_lost_ron: 0,
-        points_lost_tsumo: 0,
+        drawTempai: 0,
+        pointsWon: 0,
+        pointsLostRon: 0,
+        pointsLostTsumo: 0,
       }
     );
   }
@@ -583,11 +583,11 @@ export class PlayerStatsModel extends Model {
     let honba = sessionState.getHonba();
     let riichiBetsCount = sessionState.getRiichiBets();
     if (multironRiichiWinners !== undefined) {
-      closestWinnerForMultiron = multironRiichiWinners[winnerId].closest_winner;
+      closestWinnerForMultiron = multironRiichiWinners[winnerId].closestWinner;
       totalRiichiInRoundForMultiron = riichiIds.length;
-      riichiIds = multironRiichiWinners[winnerId].from_players; // overwrite for one ron instance of multiron
+      riichiIds = multironRiichiWinners[winnerId].fromPlayers; // overwrite for one ron instance of multiron
       honba = multironRiichiWinners[winnerId].honba;
-      riichiBetsCount = multironRiichiWinners[winnerId].from_table;
+      riichiBetsCount = multironRiichiWinners[winnerId].fromTable;
     }
 
     if (winnerId !== playerId) {
@@ -703,12 +703,12 @@ export class PlayerStatsModel extends Model {
             round.riichi?.includes(playerId)
           ) {
             if (hand.winnerId === playerId) {
-              acc.riichi_won++;
+              acc.riichiWon++;
             } else {
-              acc.riichi_lost++;
+              acc.riichiLost++;
             }
             if (hand.loserId === playerId) {
-              acc.feed_under_riichi++;
+              acc.feedUnderRiichi++;
             }
           } else if (
             (
@@ -720,7 +720,7 @@ export class PlayerStatsModel extends Model {
             ).includes(round.outcome) &&
             round.riichi?.includes(playerId)
           ) {
-            acc.riichi_lost++;
+            acc.riichiLost++;
           } else if (round.outcome === RoundOutcome.ROUND_OUTCOME_MULTIRON) {
             const roundRiichi = round.riichi;
             const roundWinners = round.hands.map((h) => h.winnerId!);
@@ -735,30 +735,30 @@ export class PlayerStatsModel extends Model {
                 lastSessionState?.honba ?? 0,
                 lastSessionState?.playerIds ?? [] // TODO: check if last state is set initially
               );
-              const closestWinner = riichiWinners[playerId]?.closest_winner;
+              const closestWinner = riichiWinners[playerId]?.closestWinner;
               if (ruleset.rules.doubleronRiichiAtamahane && closestWinner) {
                 if (closestWinner === playerId) {
-                  acc.riichi_won++;
+                  acc.riichiWon++;
                 } else {
-                  acc.riichi_lost++;
+                  acc.riichiLost++;
                 }
               } else {
-                acc.riichi_won++;
+                acc.riichiWon++;
               }
             }
 
             if (!roundWinners.includes(playerId) && roundRiichi?.includes(playerId)) {
-              acc.riichi_lost++;
+              acc.riichiLost++;
             }
 
             if (round.hands[0].loserId === playerId && roundRiichi?.includes(playerId)) {
-              acc.feed_under_riichi += round.hands.length;
+              acc.feedUnderRiichi += round.hands.length;
             }
           }
         });
         return acc;
       },
-      { riichi_won: 0, riichi_lost: 0, feed_under_riichi: 0 }
+      { riichiWon: 0, riichiLost: 0, feedUnderRiichi: 0 }
     );
   }
 

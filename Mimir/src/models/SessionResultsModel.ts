@@ -22,8 +22,8 @@ export class SessionResultsModel extends Model {
     ruleset: RulesetEntity,
     state: SessionState,
     allPlayerIds: number[],
-    event_id: number,
-    session_id: number
+    eventId: number,
+    sessionId: number
   ): SessionResultsEntity[] {
     const placesMap = this.calcPlacesMap(state.getScores());
     const ratingDelta = this.calcRatingDelta(
@@ -50,8 +50,8 @@ export class SessionResultsModel extends Model {
       }
 
       const entity = new SessionResultsEntity();
-      entity.event = this.repo.db.em.getReference(EventEntity, event_id);
-      entity.session = this.repo.db.em.getReference(SessionEntity, session_id);
+      entity.event = this.repo.db.em.getReference(EventEntity, eventId);
+      entity.session = this.repo.db.em.getReference(SessionEntity, sessionId);
       entity.playerId = currentPlayerId;
       entity.score = score;
       entity.place = place;
