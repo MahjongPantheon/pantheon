@@ -108,7 +108,7 @@ export class EventModel extends Model {
           : {}),
         ...(eventsGetEventsPayload.filterUnlisted
           ? {
-              is_listed: 1,
+              isListed: 1,
             }
           : {}),
       },
