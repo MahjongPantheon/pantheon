@@ -222,14 +222,19 @@ export const mimirServer: Mimir<Context> = {
   AddRound: function (
     gamesAddRoundPayload: GamesAddRoundPayload,
     context: Context
-  ): Promise<GamesAddRoundResponse> | GamesAddRoundResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<GamesAddRoundResponse> {
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.addRound(gamesAddRoundPayload.sessionHash, gamesAddRoundPayload.roundData);
   },
   PreviewRound: function (
     gamesPreviewRoundPayload: GamesPreviewRoundPayload,
     context: Context
-  ): Promise<GamesPreviewRoundResponse> | GamesPreviewRoundResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<GamesPreviewRoundResponse> {
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.previewRound(
+      gamesPreviewRoundPayload.sessionHash,
+      gamesPreviewRoundPayload.roundData
+    );
   },
   AddOnlineReplay: function (
     gamesAddOnlineReplayPayload: GamesAddOnlineReplayPayload,

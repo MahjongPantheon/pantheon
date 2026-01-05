@@ -11,6 +11,7 @@ type EnvVars = {
   GULLVEIG_URL_INTERNAL: string;
   FREY_URL_INTERNAL: string;
   HUGIN_URL_INTERNAL: string;
+  SKIRNIR_URL_INTERNAL: string;
   USERINFO_HOOK: string;
   USERINFO_HOOK_API_KEY: string;
   DB_MIMIR_HOST: string;
@@ -102,6 +103,14 @@ export class ConfigService {
       process.env.HUGIN_URL_INTERNAL ??
       this._envData.HUGIN_URL_INTERNAL ??
       'hugin.pantheon.internal'
+    );
+  }
+
+  get skirnirUrl() {
+    return (
+      process.env.SKIRNIR_URL_INTERNAL ??
+      this._envData.SKIRNIR_URL_INTERNAL ??
+      'skirnir.pantheon.internal'
     );
   }
 
