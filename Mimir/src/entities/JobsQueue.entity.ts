@@ -9,8 +9,10 @@ export class JobsQueueEntity {
   jobArguments!: string;
 
   @Property({ fieldName: 'job_name' })
-  jobName!: string;
+  jobName!: JobName;
 
   @Property({ fieldName: 'created_at', type: 'timestamp' })
   createdAt!: string;
 }
+
+export type JobName = 'achievements' | 'playerStats';
