@@ -12,16 +12,22 @@ export class SessionState {
     this._ruleset = ruleset;
     this._state = state ?? new SessionStateEntity();
 
-    if (playersIds.length !== 4) {
-      throw new Error(`Players count is not 4: ${JSON.stringify(playersIds)}`);
+    if (!state) {
+      // initialize state if not provided
+      if (playersIds.length !== 4) {
+        throw new Error(`Players count is not 4: ${JSON.stringify(playersIds)}`);
+      }
+      const startPoints = ruleset.rules.startPoints;
+      this._state.scores = {};
+      playersIds.forEach((playerId) => {
+        this._state.scores[playerId] = startPoints;
+      });
+      this._state.playerIds = playersIds;
     }
+  }
 
-    const startPoints = ruleset.rules.startPoints;
-    this._state.scores = {};
-    playersIds.forEach((playerId) => {
-      this._state.scores[playerId] = startPoints;
-    });
-    this._state.playerIds = playersIds;
+  get state(): SessionStateEntity {
+    return this._state;
   }
 
   protected _tobi(): boolean {

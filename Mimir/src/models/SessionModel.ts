@@ -1,4 +1,13 @@
-import { PersonEx, PlatformType, SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import {
+  EndingPolicy,
+  EventAdmin,
+  PersonEx,
+  PlatformType,
+  Round,
+  RoundOutcome,
+  SessionStatus,
+  TournamentGamesStatus,
+} from 'tsclients/proto/atoms.pb.js';
 import moment from 'moment-timezone';
 import { Model } from './Model.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
@@ -13,8 +22,15 @@ import { PlayerModel } from './PlayerModel.js';
 import { formatGameResult } from 'src/helpers/formatters.js';
 import { RoundModel } from './RoundModel.js';
 import { Populate } from '@mikro-orm/postgresql';
-import { GamesGetSessionOverviewResponse } from 'tsclients/proto/mimir.pb.js';
+import {
+  GamesAddRoundResponse,
+  GamesGetSessionOverviewResponse,
+  GamesPreviewRoundResponse,
+} from 'tsclients/proto/mimir.pb.js';
 import { EventModel } from './EventModel.js';
+import { RoundEntity } from 'src/entities/Round.entity.js';
+import { CronModel } from './CronModel.js';
+import { EventRegistrationModel } from './EventRegistrationModel.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -349,4 +365,250 @@ export class SessionModel extends Model {
       },
     };
   }
+
+  async addRound(gameHash: string, roundData: Round): Promise<GamesAddRoundResponse> {
+    const session = await this.findByRepresentationalHash([gameHash], ['event']);
+    if (session.length === 0 || session[0].status !== SessionStatus.SESSION_STATUS_INPROGRESS) {
+      throw new Error('Session not found');
+    }
+    const event = session[0].event;
+    if (event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
+      throw new Error("Sessions are ready, but not started yet. You can't add new round now");
+    }
+
+    const sessionState = new SessionState(
+      event.ruleset,
+      session[0].intermediateResults?.playerIds ?? [], // TODO check if this is populated properly on game start
+      session[0].intermediateResults
+    );
+
+    const round =
+      roundData.ron ??
+      roundData.tsumo ??
+      roundData.draw ??
+      roundData.abort ??
+      roundData.multiron ??
+      roundData.nagashi ??
+      roundData.chombo ??
+      null;
+
+    if (round?.roundIndex !== sessionState.getRound() || round.honba !== sessionState.getHonba()) {
+      throw new Error('This round is already recorded (or other round index/honba mismatch)');
+    }
+
+    const roundEntity = RoundEntity.fromMessage(
+      session[0],
+      event,
+      roundData,
+      session[0].intermediateResults!
+    );
+    this.repo.db.em.persist(roundEntity);
+    const lastScores = { ...sessionState.getScores() };
+    await this.updateSessionState(event, session[0], sessionState, roundEntity);
+    this.repo.db.em.persist(session[0]);
+    const currentScores = sessionState.getScores();
+
+    const diff = Object.fromEntries(
+      Object.keys(lastScores).map((key) => [+key, [lastScores[+key], currentScores[+key]]])
+    ) as Record<string, [number, number]>;
+
+    const whoPlays = sessionState.state.playerIds;
+    const eventRegModel = this.getModel(EventRegistrationModel);
+    const replacements = await eventRegModel.getSubstitutionPlayers(event.id);
+    const playerIds = whoPlays.map((id) => replacements[id] ?? id);
+    const adminIds = (await this.repo.frey.GetEventAdmins({ eventId: event.id })).admins.map(
+      (admin: EventAdmin) => admin.personId
+    );
+
+    this.repo.skirnir.trackSession(session[0].representationalHash!);
+    this.repo.skirnir.messageHandRecorded(playerIds, adminIds, event.id, diff, roundData);
+
+    if (sessionState.isFinished() && !event.syncEnd) {
+      const cronModel = this.getModel(CronModel);
+      await cronModel.scheduleRecalcAchievements(event.id);
+      this.repo.skirnir.messageClubSessionEnd(playerIds, event.id, sessionState.getScores());
+    }
+
+    // don't forget to store all persisted data to db
+    await this.repo.db.em.flush();
+    const chomboCounts = sessionState.getChombo();
+    return {
+      scores: Object.entries(sessionState.getScores()).map(([playerId, score]) => ({
+        playerId: +playerId,
+        score,
+        chomboCount: chomboCounts[+playerId],
+      })),
+      round: sessionState.getRound(),
+      honba: sessionState.getHonba(),
+      riichiBets: sessionState.getRiichiBets(),
+      prematurelyFinished: sessionState.state.prematurelyFinished,
+      roundJustChanged: sessionState.state.roundJustChanged,
+      isFinished: sessionState.isFinished(),
+      lastHandStarted: sessionState.lastHandStarted(),
+      lastOutcome: roundData,
+    };
+  }
+
+  async updateSessionState(
+    event: EventEntity,
+    session: SessionEntity,
+    sessionState: SessionState,
+    round: RoundEntity
+  ) {
+    const cronModel = this.getModel(CronModel);
+    const lastTimer = event.lastTimer;
+    const noTimeLeft =
+      event.useTimer &&
+      lastTimer &&
+      lastTimer + (event.gameDuration ?? 0) * 60 + session.extraTime < new Date().getTime();
+
+    switch (event.ruleset.rules.endingPolicy) {
+      case EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND: {
+        if (noTimeLeft && round.outcome !== RoundOutcome.ROUND_OUTCOME_CHOMBO) {
+          if (!sessionState.lastHandStarted()) {
+            sessionState.update(round);
+            sessionState.setLastHandStarted(true);
+          } else {
+            // this is red zone in fact
+            sessionState.update(round);
+            sessionState.forceFinish();
+          }
+        } else {
+          sessionState.update(round);
+          if (
+            noTimeLeft &&
+            sessionState.lastHandStarted() &&
+            round.outcome === RoundOutcome.ROUND_OUTCOME_CHOMBO &&
+            event.ruleset.rules.chomboEndsGame
+          ) {
+            sessionState.forceFinish();
+          }
+        }
+
+        if (sessionState.isFinished()) {
+          await cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds);
+          await this.prefinish(event, session, sessionState);
+        } else {
+          session.intermediateResults = sessionState.state;
+        }
+        break;
+      }
+      case EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND: {
+        sessionState.update(round);
+
+        if (
+          noTimeLeft &&
+          (round.outcome !== RoundOutcome.ROUND_OUTCOME_CHOMBO ||
+            event.ruleset.rules.chomboEndsGame)
+        ) {
+          sessionState.forceFinish();
+        }
+
+        if (sessionState.isFinished()) {
+          await cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds);
+          await this.prefinish(event, session, sessionState);
+        } else {
+          session.intermediateResults = sessionState.state;
+        }
+        break;
+      }
+      case EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED:
+      default: {
+        sessionState.update(round);
+
+        // We should finish game here for offline events, but online ones will be finished manually in model.
+        // Looks ugly :( But works as expected, so let it be until we find better solution.
+        if (!event.isOnline && sessionState.isFinished()) {
+          await cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds);
+          await this.prefinish(event, session, sessionState);
+        } else {
+          session.intermediateResults = sessionState.state;
+        }
+        break;
+      }
+    }
+  }
+
+  async prefinish(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
+    // pre-finish state is not applied for games without synchronous ending
+    if (!event.syncEnd) {
+      return this.finish(event, session, sessionState);
+    }
+
+    if (session.status === SessionStatus.SESSION_STATUS_PREFINISHED) {
+      return;
+    }
+
+    session.status = SessionStatus.SESSION_STATUS_PREFINISHED;
+    session.endDate = new Date().toISOString();
+    session.intermediateResults = sessionState.state;
+  }
+
+  async finish(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
+    if (session.status === SessionStatus.SESSION_STATUS_FINISHED) {
+      return;
+    }
+
+    // Set end date if it is empty; for prefinished games it won't be.
+    session.endDate ??= new Date().toISOString();
+    session.status = SessionStatus.SESSION_STATUS_FINISHED;
+    return this.finalizeGame(event, session, sessionState);
+  }
+
+  async finalizeGame(
+    event: EventEntity,
+    session: SessionEntity,
+    sessionState: SessionState,
+    useSavedReplacements = false
+  ) {
+    if (!useSavedReplacements) {
+      const eventRegModel = this.getModel(EventRegistrationModel);
+      // save replacements to session state for possible recalculations
+      const players = await eventRegModel.findByPlayerAndEvent(
+        session.intermediateResults?.playerIds ?? [],
+        session.event.id
+      );
+      const replacements = players.reduce(
+        (acc, player) => {
+          if (player.replacementId) {
+            acc[player.id] = player.replacementId;
+          }
+          return acc;
+        },
+        {} as Record<number, number>
+      );
+      sessionState.setReplacements(replacements);
+    }
+
+    const results = this.getSessionResults(event, session, sessionState);
+    const playerHistoryModel = this.getModel(PlayerHistoryModel);
+    results.forEach((result) => {
+      this.repo.db.em.persist(result);
+      // persists player history item inside
+      playerHistoryModel.makeNewHistoryItem(
+        event.ruleset,
+        result.playerId,
+        event.id,
+        session.id,
+        result.ratingDelta,
+        result.place,
+        result.chips
+      );
+    });
+
+    session.intermediateResults = sessionState.state;
+  }
+
+  getSessionResults(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
+    const resultsModel = this.getModel(SessionResultsModel);
+    return resultsModel.getUnfinishedSessionResults(
+      event.ruleset,
+      event.id,
+      session.id,
+      sessionState,
+      sessionState.state.playerIds
+    );
+  }
+
+  async previewRound(gameHash: string, roundData: Round): Promise<GamesPreviewRoundResponse> {}
 }

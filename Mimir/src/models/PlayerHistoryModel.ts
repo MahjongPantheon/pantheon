@@ -107,7 +107,7 @@ export class PlayerHistoryModel extends Model {
       prevItem.avgPlace = 0;
       prevItem.rating = ruleset.rules.startRating;
       prevItem.chips = chips;
-      await this.repo.db.em.persistAndFlush(prevItem);
+      this.repo.db.em.persist(prevItem);
     } else {
       prevItem = item;
     }
@@ -121,7 +121,7 @@ export class PlayerHistoryModel extends Model {
     newItem.rating = prevItem.rating + ratingDelta;
     newItem.chips = ruleset.rules.chipsValue > 0 ? (prevItem.chips ?? 0) + (chips ?? 0) : 0;
 
-    return this.updateAvgPlaceAndGamesCount(newItem, place);
+    this.repo.db.em.persist(this.updateAvgPlaceAndGamesCount(newItem, place));
   }
 
   public makeNewHistoryItemsForSession(
