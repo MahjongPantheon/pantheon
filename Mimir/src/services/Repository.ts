@@ -5,6 +5,7 @@ import { FreyService } from './Frey.js';
 import { LogService } from './Log.js';
 import { MetaService } from './Meta.js';
 import { MikroORM } from '@mikro-orm/postgresql';
+import { SkirnirService } from './Skirnir.js';
 
 export class Repository {
   protected _db: MikroORM;
@@ -24,6 +25,7 @@ export class Repository {
   protected static _cache?: CacheService;
   protected static _frey?: FreyService;
   protected static _log?: LogService;
+  protected static _skirnir?: SkirnirService;
 
   protected static get config(): ConfigService {
     Repository._config ??= new ConfigService(true);
@@ -59,5 +61,10 @@ export class Repository {
 
   get meta(): MetaService {
     return this._meta;
+  }
+
+  get skirnir(): SkirnirService {
+    Repository._skirnir ??= new SkirnirService(Repository.config.skirnirUrl, this);
+    return Repository._skirnir;
   }
 }
