@@ -31,6 +31,7 @@ import { EventModel } from './EventModel.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { CronModel } from './CronModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
+import { PaymentsInfo } from 'src/helpers/PointsCalc.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -455,6 +456,11 @@ export class SessionModel extends Model {
     sessionState: SessionState,
     round: RoundEntity
   ) {
+    let payments: PaymentsInfo = {
+      direct: {},
+      riichi: {},
+      honba: {},
+    };
     const cronModel = this.getModel(CronModel);
     const lastTimer = event.lastTimer;
     const noTimeLeft =
@@ -466,11 +472,11 @@ export class SessionModel extends Model {
       case EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND: {
         if (noTimeLeft && round.outcome !== RoundOutcome.ROUND_OUTCOME_CHOMBO) {
           if (!sessionState.lastHandStarted()) {
-            sessionState.update(round);
+            payments = sessionState.update(round);
             sessionState.setLastHandStarted(true);
           } else {
             // this is red zone in fact
-            sessionState.update(round);
+            payments = sessionState.update(round);
             sessionState.forceFinish();
           }
         } else {
@@ -494,7 +500,7 @@ export class SessionModel extends Model {
         break;
       }
       case EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND: {
-        sessionState.update(round);
+        payments = sessionState.update(round);
 
         if (
           noTimeLeft &&
@@ -514,7 +520,7 @@ export class SessionModel extends Model {
       }
       case EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED:
       default: {
-        sessionState.update(round);
+        payments = sessionState.update(round);
 
         // We should finish game here for offline events, but online ones will be finished manually in model.
         // Looks ugly :( But works as expected, so let it be until we find better solution.
@@ -527,6 +533,8 @@ export class SessionModel extends Model {
         break;
       }
     }
+
+    return payments;
   }
 
   async prefinish(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
@@ -610,5 +618,108 @@ export class SessionModel extends Model {
     );
   }
 
-  async previewRound(gameHash: string, roundData: Round): Promise<GamesPreviewRoundResponse> {}
+  async previewRound(gameHash: string, roundData: Round): Promise<GamesPreviewRoundResponse> {
+    const session = await this.findByRepresentationalHash([gameHash], ['event']);
+    if (session.length === 0 || session[0].status !== SessionStatus.SESSION_STATUS_INPROGRESS) {
+      throw new Error('Session not found');
+    }
+    const event = session[0].event;
+    if (event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
+      throw new Error("Sessions are ready, but not started yet. You can't add new round now");
+    }
+
+    const sessionState = new SessionState(
+      event.ruleset,
+      session[0].intermediateResults?.playerIds ?? [], // TODO check if this is populated properly on game start
+      session[0].intermediateResults
+    );
+
+    const round =
+      roundData.ron ??
+      roundData.tsumo ??
+      roundData.draw ??
+      roundData.abort ??
+      roundData.multiron ??
+      roundData.nagashi ??
+      roundData.chombo ??
+      null;
+
+    if (round?.roundIndex !== sessionState.getRound() || round.honba !== sessionState.getHonba()) {
+      throw new Error('This round is already recorded (or other round index/honba mismatch)');
+    }
+
+    const currentDealer = sessionState.getCurrentDealer();
+    const currentRoundIndex = sessionState.getRound();
+    const currentRiichi = sessionState.getRiichiBets();
+    const currentHonba = sessionState.getHonba();
+    const currentScores = sessionState.getScores();
+    const roundEntity = RoundEntity.fromMessage(
+      session[0],
+      event,
+      roundData,
+      session[0].intermediateResults!
+    );
+    const payments = await this.updateSessionState(event, session[0], sessionState, roundEntity);
+
+    const whoPlays = sessionState.state.playerIds;
+    const eventRegModel = this.getModel(EventRegistrationModel);
+    const replacements = await eventRegModel.getSubstitutionPlayers(event.id);
+    const playerIds = whoPlays.map((id) => replacements[id] ?? id);
+
+    if (sessionState.isFinished() && !event.syncEnd) {
+      const cronModel = this.getModel(CronModel);
+      await cronModel.scheduleRecalcAchievements(event.id);
+      this.repo.skirnir.messageClubSessionEnd(playerIds, event.id, sessionState.getScores());
+    }
+
+    // don't forget to store all persisted data to db
+    await this.repo.db.em.flush();
+    const chomboCounts = sessionState.getChombo();
+    const toPaymentLog = ([dir, amount]: [string, number]) => ({
+      from: +dir.split('<-')[1] || undefined,
+      to: +dir.split('<-')[0] || undefined,
+      amount,
+    });
+    return {
+      state: {
+        sessionHash: gameHash,
+        dealer: currentDealer,
+        roundIndex: currentRoundIndex,
+        riichi: currentRiichi,
+        honba: currentHonba,
+        riichiIds: (round as { riichiBets?: number[] }).riichiBets ?? [],
+        scores: Object.entries(sessionState.getScores()).map(([playerId, score]) => ({
+          playerId: +playerId,
+          score,
+          chomboCount: chomboCounts[+playerId],
+        })),
+        scoresDelta: Object.entries(sessionState.getScores()).map(([playerId, score]) => ({
+          playerId: +playerId,
+          score: score - currentScores[+playerId],
+          chomboCount: chomboCounts[+playerId],
+        })),
+        payments: {
+          direct: Object.entries(payments.direct).map(toPaymentLog),
+          riichi: Object.entries(payments.riichi).map(toPaymentLog),
+          honba: Object.entries(payments.honba).map(toPaymentLog),
+        },
+        round: sessionState.getRound(),
+        outcome: roundData.ron
+          ? RoundOutcome.ROUND_OUTCOME_RON
+          : roundData.tsumo
+            ? RoundOutcome.ROUND_OUTCOME_TSUMO
+            : roundData.draw
+              ? RoundOutcome.ROUND_OUTCOME_DRAW
+              : roundData.abort
+                ? RoundOutcome.ROUND_OUTCOME_ABORT
+                : roundData.nagashi
+                  ? RoundOutcome.ROUND_OUTCOME_NAGASHI
+                  : roundData.multiron
+                    ? RoundOutcome.ROUND_OUTCOME_MULTIRON
+                    : roundData.chombo
+                      ? RoundOutcome.ROUND_OUTCOME_CHOMBO
+                      : RoundOutcome.ROUND_OUTCOME_UNSPECIFIED,
+      },
+    };
+  }
 }
