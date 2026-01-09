@@ -3,6 +3,8 @@ import { SessionState } from './SessionState.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { HandEntity } from 'src/entities/Hand.entity.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
+import { EventEntity } from 'src/entities/Event.entity.js';
 
 type Vals = {
   outcome: RoundOutcome;
@@ -26,8 +28,8 @@ type Vals = {
 function makeRoundWithDefaults(vals: Vals): RoundEntity {
   const round = new RoundEntity();
   round.outcome = vals.outcome;
-  round.session.id = vals.sessionId;
-  round.event.id = vals.eventId;
+  round.session = { id: vals.sessionId } as SessionEntity;
+  round.event = { id: vals.eventId } as EventEntity;
   round.round = vals.roundIndex;
   round.riichi = vals.riichi;
   round.hands = vals.rounds.map((hand) => {

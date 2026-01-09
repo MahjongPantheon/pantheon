@@ -113,8 +113,8 @@ export class PointsCalc {
       }
     } else {
       scores[winnerId] += 1000 * riichiIdsArray.length;
-      scores[winnerId] += 1000 * riichiBetsCount;
-      this._lastPaymentsInfo.riichi[`${winnerId}<-`] = 1000 * riichiBetsCount;
+      scores[winnerId] += 1000 * (riichiBetsCount ?? 0);
+      this._lastPaymentsInfo.riichi[`${winnerId}<-`] = 1000 * (riichiBetsCount ?? 0);
     }
 
     // this condition we are checking only for double ron
@@ -126,9 +126,9 @@ export class PointsCalc {
         this._lastPaymentsInfo.honba[`${winnerId}<-${loserId}`] = honbaValue * honba;
       }
     } else {
-      scores[winnerId] += honbaValue * honba;
-      scores[loserId] -= honbaValue * honba;
-      this._lastPaymentsInfo.honba[`${winnerId}<-${loserId}`] = honbaValue * honba;
+      scores[winnerId] += honbaValue * (honba ?? 0);
+      scores[loserId] -= honbaValue * (honba ?? 0);
+      this._lastPaymentsInfo.honba[`${winnerId}<-${loserId}`] = honbaValue * (honba ?? 0);
     }
 
     return scores;

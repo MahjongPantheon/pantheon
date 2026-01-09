@@ -1,13 +1,20 @@
 import { ConfigService } from './Config.js';
-import { createSimpleLogger, Logger } from 'simple-node-logger';
+import pino from 'pino';
 
 export class LogService {
-  protected _logger: Logger;
+  protected _logger: pino.Logger;
   constructor(protected config: ConfigService) {
     if (config.logFacility === 'stdout') {
-      this._logger = createSimpleLogger();
+      this._logger = pino();
     } else {
-      this._logger = createSimpleLogger(config.logFacility);
+      this._logger = pino(
+        pino.destination({
+          dest: config.logFacility,
+          sync: false,
+          append: true,
+          mkdir: true,
+        })
+      );
     }
     this.info = this._logger.info.bind(this._logger);
     this.debug = this._logger.debug.bind(this._logger);
@@ -15,8 +22,8 @@ export class LogService {
     this.error = this._logger.error.bind(this._logger);
   }
 
-  info: Logger['info'];
-  debug: Logger['debug'];
-  warn: Logger['warn'];
-  error: Logger['error'];
+  info: pino.Logger['info'];
+  debug: pino.Logger['debug'];
+  warn: pino.Logger['warn'];
+  error: pino.Logger['error'];
 }

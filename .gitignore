@@ -87,6 +87,7 @@ Frey-dist/node_modules/*
 
 Mimir/node_modules/*
 Mimir/dist/*
+Mimir/temp
 Mimir-dist/.env.production
 Mimir-dist/node_modules/*
 
