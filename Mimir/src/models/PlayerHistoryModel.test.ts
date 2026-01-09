@@ -1,13 +1,12 @@
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { Model } from './Model.js';
 import { Repository } from 'src/services/Repository.js';
-import { MikroORM } from '@mikro-orm/postgresql';
-import config from '../mikro-orm.config.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { init } from 'src/tests/initOrm.js';
 
-const orm = await MikroORM.init(config());
+const orm = await init();
 
 describe('PlayerHistory', () => {
   const repo = Repository.instance({}, orm);
@@ -16,7 +15,7 @@ describe('PlayerHistory', () => {
   it('should update history item', () => {
     const item = new PlayerHistoryEntity();
     item.playerId = 2;
-    item.event = orm.em.getReference(EventEntity, 3);
+    item.event = { id: 3 } as EventEntity;
     item.sessionId = 4;
     item.avgPlace = 2.5;
     item.gamesPlayed = 4;
@@ -26,7 +25,7 @@ describe('PlayerHistory', () => {
 
     const expected = new PlayerHistoryEntity();
     expected.playerId = 2;
-    expected.event = orm.em.getReference(EventEntity, 3);
+    expected.event = { id: 3 } as EventEntity;
     expected.sessionId = 4;
     expected.avgPlace = 2.4;
     expected.gamesPlayed = 5;
@@ -41,7 +40,7 @@ describe('PlayerHistory', () => {
     const items: Record<number, PlayerHistoryEntity> = {};
     items[5] = new PlayerHistoryEntity();
     items[5].playerId = 5;
-    items[5].event = orm.em.getReference(EventEntity, 2);
+    items[5].event = { id: 2 } as EventEntity;
     items[5].sessionId = 3;
     items[5].avgPlace = 2.4;
     items[5].gamesPlayed = 5;
@@ -50,7 +49,7 @@ describe('PlayerHistory', () => {
 
     items[6] = new PlayerHistoryEntity();
     items[6].playerId = 6;
-    items[6].event = orm.em.getReference(EventEntity, 2);
+    items[6].event = { id: 2 } as EventEntity;
     items[6].sessionId = 3;
     items[6].avgPlace = 2.4;
     items[6].gamesPlayed = 5;
@@ -59,7 +58,7 @@ describe('PlayerHistory', () => {
 
     items[7] = new PlayerHistoryEntity();
     items[7].playerId = 7;
-    items[7].event = orm.em.getReference(EventEntity, 2);
+    items[7].event = { id: 2 } as EventEntity;
     items[7].sessionId = 3;
     items[7].avgPlace = 2.4;
     items[7].gamesPlayed = 5;
@@ -68,7 +67,7 @@ describe('PlayerHistory', () => {
 
     items[8] = new PlayerHistoryEntity();
     items[8].playerId = 8;
-    items[8].event = orm.em.getReference(EventEntity, 2);
+    items[8].event = { id: 2 } as EventEntity;
     items[8].sessionId = 3;
     items[8].avgPlace = 2.4;
     items[8].gamesPlayed = 5;
@@ -85,7 +84,7 @@ describe('PlayerHistory', () => {
     const expected: Record<number, PlayerHistoryEntity> = {};
     expected[5] = new PlayerHistoryEntity();
     expected[5].playerId = 5;
-    expected[5].event = orm.em.getReference(EventEntity, 2);
+    expected[5].event = { id: 2 } as EventEntity;
     expected[5].sessionId = 3;
     expected[5].avgPlace = 2.1666666666666665;
     expected[5].chips = 2;
@@ -94,7 +93,7 @@ describe('PlayerHistory', () => {
 
     expected[6] = new PlayerHistoryEntity();
     expected[6].playerId = 6;
-    expected[6].event = orm.em.getReference(EventEntity, 2);
+    expected[6].event = { id: 2 } as EventEntity;
     expected[6].sessionId = 3;
     expected[6].avgPlace = 2.3333333333333335;
     expected[6].chips = 3;
@@ -103,7 +102,7 @@ describe('PlayerHistory', () => {
 
     expected[7] = new PlayerHistoryEntity();
     expected[7].playerId = 7;
-    expected[7].event = orm.em.getReference(EventEntity, 2);
+    expected[7].event = { id: 2 } as EventEntity;
     expected[7].sessionId = 3;
     expected[7].avgPlace = 2.5;
     expected[7].chips = 0;
@@ -112,7 +111,7 @@ describe('PlayerHistory', () => {
 
     expected[8] = new PlayerHistoryEntity();
     expected[8].playerId = 8;
-    expected[8].event = orm.em.getReference(EventEntity, 2);
+    expected[8].event = { id: 2 } as EventEntity;
     expected[8].sessionId = 3;
     expected[8].avgPlace = 2.6666666666666665;
     expected[8].chips = -1;
@@ -129,7 +128,7 @@ describe('PlayerHistory', () => {
     const item2 = new PlayerHistoryEntity();
 
     item1.playerId = 7;
-    item1.event = orm.em.getReference(EventEntity, 2);
+    item1.event = { id: 2 } as EventEntity;
     item1.sessionId = 3;
     item1.avgPlace = 2.6;
     item1.chips = 1;
@@ -137,7 +136,7 @@ describe('PlayerHistory', () => {
     item1.rating = 1540;
 
     item2.playerId = 7;
-    item2.event = orm.em.getReference(EventEntity, 2);
+    item2.event = { id: 2 } as EventEntity;
     item2.sessionId = 3;
     item2.avgPlace = 2.2;
     item2.chips = 1;
@@ -146,7 +145,7 @@ describe('PlayerHistory', () => {
 
     const expected = new PlayerHistoryEntity();
     expected.playerId = 7;
-    expected.event = orm.em.getReference(EventEntity, 2);
+    expected.event = { id: 2 } as EventEntity;
     expected.sessionId = 3; // TODO: в этом поле нет смысла в данном случае
     expected.avgPlace = 2.4;
     expected.chips = 2;
@@ -161,7 +160,7 @@ describe('PlayerHistory', () => {
     ruleset.rules.startRating = 1500;
     const item1 = new PlayerHistoryEntity();
     item1.playerId = 7;
-    item1.event = orm.em.getReference(EventEntity, 2);
+    item1.event = { id: 2 } as EventEntity;
     item1.sessionId = 3;
     item1.avgPlace = 2.6;
     item1.chips = 1;
@@ -170,7 +169,7 @@ describe('PlayerHistory', () => {
 
     const item2 = new PlayerHistoryEntity();
     item2.playerId = 7;
-    item2.event = orm.em.getReference(EventEntity, 2);
+    item2.event = { id: 2 } as EventEntity;
     item2.sessionId = 3;
     item2.avgPlace = 2.2;
     item2.chips = 1;
@@ -179,7 +178,7 @@ describe('PlayerHistory', () => {
 
     const expected = new PlayerHistoryEntity();
     expected.playerId = 7;
-    expected.event = orm.em.getReference(EventEntity, 2);
+    expected.event = { id: 2 } as EventEntity;
     expected.sessionId = 3; // TODO: в этом поле нет смысла в данном случае
     expected.avgPlace = 1.5333333333333339;
     expected.chips = 0;
