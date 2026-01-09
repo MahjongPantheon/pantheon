@@ -14,9 +14,6 @@ export class SessionState {
 
     if (!state) {
       // initialize state if not provided
-      if (playersIds.length !== 4) {
-        throw new Error(`Players count is not 4: ${JSON.stringify(playersIds)}`);
-      }
       const startPoints = ruleset.rules.startPoints;
       this._state.scores = {};
       this._state.round = 1;
@@ -32,6 +29,17 @@ export class SessionState {
 
   get state(): SessionStateEntity {
     return this._state;
+  }
+
+  // Mostly for online events, as session state is created before players are known there
+  setPlayers(playersIds: number[]) {
+    if (playersIds.length !== 4) {
+      throw new Error(`Players count is not 4: ${JSON.stringify(playersIds)}`);
+    }
+    playersIds.forEach((playerId) => {
+      this._state.scores[playerId] = this._ruleset.rules.startPoints;
+    });
+    this._state.playerIds = playersIds;
   }
 
   protected _tobi(): boolean {

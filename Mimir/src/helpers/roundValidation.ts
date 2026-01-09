@@ -1,4 +1,6 @@
-import { RulesetEntity } from 'src/entities/db/Ruleset.entity.js';
+import { RoundEntity } from 'src/entities/Round.entity.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
 import {
   AbortResult,
   ChomboResult,
@@ -83,9 +85,9 @@ export function _checkMultiRon(
     throw new Error('Field #wins is required for multiron');
   }
   _checkOneOf(roundData, 'multiRon', [roundData.wins.length]);
+  _csvCheckZeroOrMoreOf(roundData, 'riichi', players);
 
   for (const ron of roundData.wins) {
-    _csvCheckZeroOrMoreOf(ron, 'riichi', players);
     _checkOneOf(ron, 'winnerId', players.split(',').map(Number));
     if (ron.paoPlayerId !== undefined) {
       _checkOneOf(ron, 'paoPlayerId', players.split(',').map(Number));
@@ -201,4 +203,14 @@ export function _checkYaku(yakuList: number[], possibleYakuList: number[]): void
       `Some yaku are not allowed in current game rules! ${JSON.stringify(invalidYaku)}`
     );
   }
+}
+
+export function validateAndCreateFromOnlineData(session: SessionEntity, round: Round): RoundEntity {
+  const roundEntity = new RoundEntity();
+  roundEntity.session = session;
+  roundEntity.event = session.event;
+
+  // TODO
+
+  return roundEntity;
 }
