@@ -5,6 +5,9 @@
   "description": "Mimir game management subsystem",
   "main": "index.js",
   "license": "GPLv3",
+  "scripts": {
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest"
+  },
   "dependencies": {
     "@mikro-orm/core": "^6.6.0",
     "@mikro-orm/migrations": "^6.6.0",
@@ -29,9 +32,9 @@
     "moment": "^2.30.1",
     "moment-timezone": "^0.6.0",
     "pg": "^8.16.3",
+    "pino": "^10.1.0",
     "protoscript": "^0.0.23",
     "redis": "^4.7.0",
-    "simple-node-logger": "^21.8.12",
     "ts-node": "^10.9.2",
     "tsclients": "file:../Common/tsclients",
     "tsx": "^4.20.3",
