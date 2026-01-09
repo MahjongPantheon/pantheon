@@ -19,6 +19,10 @@ export class SessionState {
       }
       const startPoints = ruleset.rules.startPoints;
       this._state.scores = {};
+      this._state.round = 1;
+      this._state.honba = 0;
+      this._state.riichiBets = 0;
+      this._state.chombo = {};
       playersIds.forEach((playerId) => {
         this._state.scores[playerId] = startPoints;
       });
@@ -174,8 +178,7 @@ export class SessionState {
    * Return id of current dealer
    */
   public getCurrentDealer(): number {
-    const players = Object.keys(this._state.scores).map(Number);
-    return players[(this._state.round - 1) % 4];
+    return this._state.playerIds[(this._state.round - 1) % 4];
   }
 
   /**

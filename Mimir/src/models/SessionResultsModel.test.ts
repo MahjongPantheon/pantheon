@@ -1,13 +1,10 @@
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { Model } from './Model.js';
-
-import config from '../mikro-orm.config.js';
-import { MikroORM } from '@mikro-orm/postgresql';
 import { Repository } from 'src/services/Repository.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { init } from 'src/tests/initOrm.js';
 
-const orm = await MikroORM.init(config());
-
+const orm = await init();
 describe('SessionResults', () => {
   const mdl = Model.getModel(Repository.instance({}, orm), SessionResultsModel);
 

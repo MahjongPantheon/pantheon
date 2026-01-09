@@ -7,7 +7,7 @@ import { metrics } from './middleware/metrics.js';
 import { injectRepository } from './middleware/injectRepository.js';
 
 import config from './mikro-orm.config.js';
-import { MikroORM } from '@mikro-orm/postgresql';
+import { MikroORM, RequestContext } from '@mikro-orm/postgresql';
 
 const orm = await MikroORM.init(config());
 
@@ -17,19 +17,26 @@ const app = createTwirpServer<Context, typeof mimirHandler, IncomingMessage>(mim
   debug: process.env.NODE_ENV !== 'production',
   prefix: '/v2',
 })
+  .use((_req, _res, next) => {
+    return RequestContext.create(orm.em, next);
+  })
   .use(injectRepository(orm))
   .use(metrics());
 
 app.on('requestReceived', (ctx) => {
-  ctx.repository.log.info('Request received', ctx.method?.name ?? 'Unknown');
+  ctx.repository.log.info({ message: 'Request received', method: ctx.method?.name ?? 'Unknown' });
 });
 
 app.on('responseSent', (ctx) => {
-  ctx.repository.log.info('Response sent', ctx.method?.name ?? 'Unknown');
+  ctx.repository.log.info({ message: 'Response sent', method: ctx.method?.name ?? 'Unknown' });
 });
 
 app.on('error', (ctx, err) => {
-  ctx.repository.log.error('Request errored', ctx.method?.name ?? 'Unknown', err);
+  ctx.repository.log.error({
+    message: 'Request errored',
+    method: ctx.method?.name ?? 'Unknown',
+    err,
+  });
 });
 
 const port = parseInt(process.env.PORT ?? '4001');
