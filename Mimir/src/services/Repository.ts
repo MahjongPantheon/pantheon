@@ -67,4 +67,8 @@ export class Repository {
     Repository._skirnir ??= new SkirnirService(Repository.config.skirnirUrl, this);
     return Repository._skirnir;
   }
+
+  mockFrey() {
+    Repository._frey = new FreyService(Repository.config, this.meta);
+  }
 }
