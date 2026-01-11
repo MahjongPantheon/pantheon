@@ -1,3 +1,4 @@
+import { HandEntity } from 'src/entities/Hand.entity.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
@@ -205,12 +206,32 @@ export function _checkYaku(yakuList: number[], possibleYakuList: number[]): void
   }
 }
 
-export function validateAndCreateFromOnlineData(session: SessionEntity, round: Round): RoundEntity {
+export function validateAndCreateFromOnlineData(
+  players: number[],
+  allPlayers: number[],
+  session: SessionEntity,
+  round: Round
+): RoundEntity {
+  checkRound(players, allPlayers, session.event.ruleset, round);
   const roundEntity = new RoundEntity();
   roundEntity.session = session;
   roundEntity.event = session.event;
 
-  // TODO
+  if (round.ron) {
+    roundEntity.hands = [HandEntity.fromMessage(round.ron, roundEntity)];
+  } else if (round.tsumo) {
+    roundEntity.hands = [HandEntity.fromMessage(round.tsumo, roundEntity)];
+  } else if (round.draw) {
+    roundEntity.hands = [HandEntity.fromMessage(round.draw, roundEntity)];
+  } else if (round.abort) {
+    roundEntity.hands = [HandEntity.fromMessage(round.abort, roundEntity)];
+  } else if (round.nagashi) {
+    roundEntity.hands = [HandEntity.fromMessage(round.nagashi, roundEntity)];
+  } else if (round.chombo) {
+    roundEntity.hands = [HandEntity.fromMessage(round.chombo, roundEntity)];
+  } else if (round.multiron) {
+    roundEntity.hands = round.multiron.wins.map((win) => HandEntity.fromMessage(win, roundEntity));
+  }
 
   return roundEntity;
 }
