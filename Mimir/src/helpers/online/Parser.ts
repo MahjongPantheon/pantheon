@@ -52,11 +52,19 @@ export class OnlineParser {
     // Process XML nodes
     await this._processXMLNodes(result, session, sessionState, kanNakiCache);
 
+    const regModel = Model.getModel(this._repo, EventRegistrationModel);
+    const allPlayers = await regModel.fetchRegisteredPlayersByEvent(event.id);
+
     const scores: Array<Record<number, number>> = [];
     const rounds: RoundEntity[] = [];
 
     for (const round of this._roundData) {
-      const savedRound = validateAndCreateFromOnlineData(session, round);
+      const savedRound = validateAndCreateFromOnlineData(
+        sessionState.state.playerIds,
+        allPlayers.map((player) => player.id),
+        session,
+        round
+      );
       rounds.push(savedRound);
       sessionState.update(savedRound);
       scores.push(sessionState.getScores());
