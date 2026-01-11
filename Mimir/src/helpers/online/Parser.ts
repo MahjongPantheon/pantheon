@@ -528,7 +528,8 @@ export class OnlineParser {
       return;
     }
 
-    const id = this._players[player];
+    const playerKeys = Object.keys(this._players);
+    const id = this._players[playerKeys[player]];
     if (id) {
       this._riichi.push(id);
     }
