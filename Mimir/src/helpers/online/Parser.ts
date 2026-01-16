@@ -1,4 +1,4 @@
-import { XMLParser } from 'fast-xml-parser';
+import expat from 'node-expat';
 import { fromTenhou } from '../yaku.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
@@ -33,14 +33,7 @@ export class OnlineParser {
     content: string,
     withChips = false
   ): Promise<[SessionEntity, Record<number, number>, RoundEntity[], string[]]> {
-    const parser = new XMLParser({
-      ignoreAttributes: false,
-      attributeNamePrefix: '@_',
-      isArray: (name) =>
-        ['N', 'AGARI', 'RYUUKYOKU', 'REACH', 'DORA', 'INIT', 'UN', 'GO'].includes(name),
-    });
-
-    const result = parser.parse(content);
+    const parser = new expat.Parser('UTF-8');
 
     const kanNakiCache: { m: string; who: string } = { m: '', who: '' };
     this._ankanCache = [[], [], [], []];
@@ -50,7 +43,7 @@ export class OnlineParser {
     session.event = event;
 
     // Process XML nodes
-    await this._processXMLNodes(result, session, sessionState, kanNakiCache);
+    await this._processXMLNodes(parser, content, session, sessionState, kanNakiCache);
 
     const regModel = Model.getModel(this._repo, EventRegistrationModel);
     const allPlayers = await regModel.fetchRegisteredPlayersByEvent(event.id);
@@ -94,61 +87,62 @@ export class OnlineParser {
    * Process XML nodes recursively
    */
   protected async _processXMLNodes(
-    obj: any,
+    parser: expat.Parser,
+    xmlContent: string,
     session: SessionEntity,
     sessionState: SessionState,
     kanNakiCache: { m: string; who: string }
   ): Promise<void> {
-    if (!obj || typeof obj !== 'object') return;
-
-    for (const key in obj) {
-      const value = obj[key];
-
-      // Handle N elements (melds)
-      if (key === 'N') {
-        const elements = Array.isArray(value) ? value : [value];
-        for (const elem of elements) {
-          if (elem['@_m'] && elem['@_who']) {
-            kanNakiCache.m = elem['@_m'];
-            kanNakiCache.who = elem['@_who'];
+    return new Promise((resolve, reject) => {
+      parser.on('startElement', (name: string, attrs: any) => {
+        // Handle N elements (melds)
+        if (name === 'N') {
+          for (const elem of attrs) {
+            if (elem['m'] && elem['who']) {
+              kanNakiCache.m = elem['m'];
+              kanNakiCache.who = elem['who'];
+            }
           }
         }
-      }
 
-      // Handle DORA elements
-      if (key === 'DORA') {
-        if (kanNakiCache) {
-          const who = parseInt(kanNakiCache.who);
-          this._ankanCache[who].push(kanNakiCache.m);
+        // Handle DORA elements
+        if (name === 'DORA') {
+          if (kanNakiCache) {
+            const who = parseInt(kanNakiCache.who);
+            this._ankanCache[who].push(kanNakiCache.m);
+          }
         }
-      }
 
-      // Handle other elements
-      if (key === 'UN') {
-        await this._tokenUN(value, session, sessionState);
-      } else if (key === 'AGARI') {
-        const elements = Array.isArray(value) ? value : [value];
-        for (const elem of elements) {
-          this._tokenAGARI(elem, sessionState);
+        // Handle other elements
+        if (name === 'UN') {
+          parser.pause();
+          this._tokenUN(attrs, session, sessionState)
+            .then(() => {
+              parser.resume();
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        } else if (name === 'AGARI') {
+          this._tokenAGARI(attrs, sessionState);
+        } else if (name === 'INIT') {
+          this._tokenINIT();
+        } else if (name === 'RYUUKYOKU') {
+          this._tokenRYUUKYOKU(attrs, sessionState);
+        } else if (name === 'REACH') {
+          this._tokenREACH(attrs);
+        } else if (name === 'GO') {
+          this._tokenGO(attrs, session);
         }
-      } else if (key === 'INIT') {
-        this._tokenINIT();
-      } else if (key === 'RYUUKYOKU') {
-        this._tokenRYUUKYOKU(value, sessionState);
-      } else if (key === 'REACH') {
-        const elements = Array.isArray(value) ? value : [value];
-        for (const elem of elements) {
-          this._tokenREACH(elem);
+      });
+      parser.on('endElement', (name: string) => {
+        if (name === 'mjloggm') {
+          resolve();
         }
-      } else if (key === 'GO') {
-        this._tokenGO(value, session);
-      }
-
-      // Recursively process nested objects
-      if (typeof value === 'object') {
-        await this._processXMLNodes(value, session, sessionState, kanNakiCache);
-      }
-    }
+      });
+      parser.on('error', (err: Error) => reject(err));
+      parser.write(xmlContent);
+    });
   }
 
   /**
@@ -262,10 +256,10 @@ export class OnlineParser {
   ): Promise<void> {
     if (Object.keys(this._players).length === 0) {
       const parsedPlayers: Record<string, number> = {
-        [decodeURIComponent(attributes['@_n0'] ?? '')]: 1,
-        [decodeURIComponent(attributes['@_n1'] ?? '')]: 1,
-        [decodeURIComponent(attributes['@_n2'] ?? '')]: 1,
-        [decodeURIComponent(attributes['@_n3'] ?? '')]: 1,
+        [decodeURIComponent(attributes['n0'] ?? '')]: 1,
+        [decodeURIComponent(attributes['n1'] ?? '')]: 1,
+        [decodeURIComponent(attributes['n2'] ?? '')]: 1,
+        [decodeURIComponent(attributes['n3'] ?? '')]: 1,
       };
 
       if (parsedPlayers['NoName']) {
@@ -304,7 +298,7 @@ export class OnlineParser {
       const playerKeys = Object.keys(parsedPlayers);
       const playersMap: Record<string, number> = {};
       playerKeys.forEach((key, idx) => {
-        playersMap[key] = players[idx].id;
+        playersMap[key] = Object.values(players)[idx].id;
       });
       this._players = playersMap;
     }
@@ -314,17 +308,17 @@ export class OnlineParser {
    * Token handler: AGARI (win)
    */
   protected _tokenAGARI(attributes: any, sessionState: SessionState): void {
-    const who = parseInt(attributes['@_who'] ?? '0');
+    const who = parseInt(attributes['who'] ?? '0');
     const playerKeys = Object.keys(this._players);
     const winner = playerKeys[who];
-    const loser = playerKeys[parseInt(attributes['@_fromWho'] ?? '0')];
-    const paoWho = attributes['@_paoWho'];
+    const loser = playerKeys[parseInt(attributes['fromWho'] ?? '0')];
+    const paoWho = attributes['paoWho'];
     const paoPlayer = paoWho ? playerKeys[parseInt(paoWho)] : null;
 
     let openHand = false;
     const winnerId = this._players[winner];
     if (winnerId && !this._riichi.includes(winnerId)) {
-      const mAttribute = attributes['@_m'];
+      const mAttribute = attributes['m'];
       if (mAttribute) {
         const winnerAnkanCount = this._ankanCache[who].length;
         const mValues = mAttribute.split(',');
@@ -338,10 +332,10 @@ export class OnlineParser {
 
     const outcomeType = winner === loser ? 'tsumo' : 'ron';
 
-    const tenAttr = attributes['@_ten'] ?? '';
+    const tenAttr = attributes['ten'] ?? '';
     const [fu] = tenAttr.split(',');
-    const yakuList = attributes['@_yaku'] ?? '';
-    const yakumanList = attributes['@_yakuman'] ?? '';
+    const yakuList = attributes['yaku'] ?? '';
+    const yakumanList = attributes['yakuman'] ?? '';
 
     const yakuData = fromTenhou(yakuList, yakumanList);
 
@@ -355,7 +349,7 @@ export class OnlineParser {
             loserId: this._players[loser],
             paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
             han: yakuData.han,
-            fu,
+            fu: +fu,
             dora: yakuData.dora,
             uradora: 0,
             kandora: 0,
@@ -373,7 +367,7 @@ export class OnlineParser {
             winnerId: this._players[winner],
             paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
             han: yakuData.han,
-            fu,
+            fu: +fu,
             dora: yakuData.dora,
             uradora: 0,
             kandora: 0,
@@ -387,7 +381,7 @@ export class OnlineParser {
         });
       }
 
-      this._checkScores.push(this._makeScores(attributes['@_sc'] ?? ''));
+      this._checkScores.push(this._makeScores(attributes['sc'] ?? ''));
     } else {
       // Double or triple ron, previous round record should be modified
       let roundRecord = this._roundData.pop()!;
@@ -404,8 +398,8 @@ export class OnlineParser {
               {
                 winnerId: roundRecord.ron.winnerId,
                 paoPlayerId: roundRecord.ron.paoPlayerId,
-                han: roundRecord.ron.han,
-                fu: roundRecord.ron.fu,
+                han: +roundRecord.ron.han,
+                fu: +roundRecord.ron.fu,
                 dora: roundRecord.ron.dora,
                 uradora: roundRecord.ron.uradora,
                 kandora: roundRecord.ron.kandora,
@@ -424,7 +418,7 @@ export class OnlineParser {
           winnerId: this._players[winner],
           paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
           han: yakuData.han,
-          fu,
+          fu: +fu,
           dora: yakuData.dora,
           uradora: 0,
           kandora: 0,
@@ -437,7 +431,7 @@ export class OnlineParser {
       this._roundData.push(roundRecord);
 
       this._checkScores.pop();
-      this._checkScores.push(this._makeScores(attributes['@_sc'] ?? ''));
+      this._checkScores.push(this._makeScores(attributes['sc'] ?? ''));
     }
 
     this._lastTokenIsAgari = true;
@@ -455,8 +449,8 @@ export class OnlineParser {
    * Token handler: RYUUKYOKU (draw)
    */
   protected _tokenRYUUKYOKU(attributes: any, sessionState: SessionState): void {
-    const rkType = attributes['@_type'];
-    const scoreString = attributes['@_sc'] ?? '';
+    const rkType = attributes['type'];
+    const scoreString = attributes['sc'] ?? '';
     this._checkScores.push(this._makeScores(scoreString));
 
     if (rkType && rkType !== 'nm') {
@@ -475,10 +469,10 @@ export class OnlineParser {
     const playerIds = Object.values(this._players);
 
     const tempaiStatuses = [
-      !!attributes['@_hai0'],
-      !!attributes['@_hai1'],
-      !!attributes['@_hai2'],
-      !!attributes['@_hai3'],
+      !!attributes['hai0'],
+      !!attributes['hai1'],
+      !!attributes['hai2'],
+      !!attributes['hai3'],
     ];
 
     if (playerIds.length !== tempaiStatuses.length) {
@@ -522,8 +516,8 @@ export class OnlineParser {
    * Token handler: REACH (riichi)
    */
   protected _tokenREACH(attributes: any): void {
-    const player = parseInt(attributes['@_who'] ?? '0');
-    if (attributes['@_step'] === '1') {
+    const player = parseInt(attributes['who'] ?? '0');
+    if (attributes['step'] === '1') {
       // Unconfirmed riichi, skip
       return;
     }
@@ -540,7 +534,7 @@ export class OnlineParser {
    */
   protected _tokenGO(attributes: any, session: SessionEntity): void {
     const eventLobby = session.event.lobbyId;
-    const lobby = parseInt(attributes['@_lobby'] ?? '0');
+    const lobby = parseInt(attributes['lobby'] ?? '0');
 
     if (eventLobby !== lobby) {
       throw new Error(`Provided replay doesn't belong to the event lobby ${eventLobby}`);

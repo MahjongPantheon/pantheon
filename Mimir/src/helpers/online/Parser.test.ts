@@ -6,25 +6,50 @@ import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayer
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
 import { init } from 'src/tests/initOrm.js';
-import { SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import { RoundOutcome, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { OnlineParser } from './Parser.js';
 import { Repository } from 'src/services/Repository.js';
 
-const orm = await init();
 /**
  * Replay parser integration test suite
  */
 describe('OnlinelogParserTest', () => {
   let event: EventEntity;
   let session: SessionEntity;
-  const repo = Repository.instance({}, orm);
+  let repo: Repository;
 
   beforeEach(async () => {
+    const orm = await init();
+    await orm.schema.createSchema();
+    repo = Repository.instance({}, orm);
+    await repo.cache.connect();
+    repo.mockFrey();
+
     event = new EventEntity();
     event.title = 'title';
     event.timezone = 'UTC';
     event.description = 'desc';
     event.lobbyId = 0;
+    event.isOnline = 1;
+    event.isTeam = 0;
+    event.syncStart = 0;
+    event.syncEnd = 0;
+    event.autoSeating = 0;
+    event.sortByGames = 0;
+    event.useTimer = 0;
+    event.usePenalty = 0;
+    event.allowPlayerAppend = 1;
+    event.statHost = '';
+    event.seriesLength = 0;
+    event.hideResults = 0;
+    event.hideAchievements = 0;
+    event.isPrescripted = 0;
+    event.minGamesCount = 0;
+    event.finished = 0;
+    event.nextGameStartTime = new Date().getTime();
+    event.timeToStart = Date.now();
+    event.isListed = 1;
+    event.allowViewOtherTables = 1;
     event.ruleset = RulesetEntity.createRuleset('tenhounet');
     orm.em.persist(event);
 
@@ -32,15 +57,23 @@ describe('OnlinelogParserTest', () => {
       const reg = new EventRegisteredPlayersEntity();
       reg.playerId = p;
       reg.event = event;
+      reg.ignoreSeating = 0;
       orm.em.persist(reg);
     }
 
     session = new SessionEntity();
     session.event = event;
+    session.extraTime = 0;
     session.intermediateResults = new SessionState(event.ruleset, [1, 2, 3, 4]).state;
     session.status = SessionStatus.SESSION_STATUS_INPROGRESS;
     session.replayHash = '';
     orm.em.persist(session);
+
+    await orm.em.flush();
+  });
+
+  afterAll(async () => {
+    await repo.db.close();
   });
 
   test('parseUsualGame', async () => {
@@ -51,7 +84,7 @@ describe('OnlinelogParserTest', () => {
     );
 
     expect(sessionEntity).toBeTruthy();
-    expect(results).toEqual(session.intermediateResults?.scores);
+    expect(sessionEntity.intermediateResults?.scores).toEqual(results);
 
     let openHands = 0;
     for (const round of rounds) {
@@ -177,7 +210,7 @@ describe('OnlinelogParserTest', () => {
 
   test('yakumanTsumoNoDealerWithoutPao', async () => {
     const content = readFileSync(
-      join(__dirname, 'testdata/suuankou_no_dealer_tsumo_no_pao.xml'),
+      join(import.meta.dirname, 'testdata/suuankou_no_dealer_tsumo_no_pao.xml'),
       'utf-8'
     );
     const [sessionEntity, results, rounds] = await new OnlineParser(repo).parseToSession(
@@ -188,7 +221,7 @@ describe('OnlinelogParserTest', () => {
     let paoApplyCount = 0;
     for (const round of rounds) {
       for (const hand of round.hands) {
-        if (hand.paoPlayerId !== undefined) {
+        if (hand.paoPlayerId) {
           paoApplyCount++;
         }
       }
@@ -212,7 +245,7 @@ describe('OnlinelogParserTest', () => {
     let paoApplyCount = 0;
     for (const round of rounds) {
       for (const hand of round.hands) {
-        if (hand.paoPlayerId !== undefined) {
+        if (hand.paoPlayerId) {
           paoApplyCount++;
         }
       }
@@ -236,7 +269,7 @@ describe('OnlinelogParserTest', () => {
     let paoApplyCount = 0;
     for (const round of rounds) {
       for (const hand of round.hands) {
-        if (hand.paoPlayerId !== undefined) {
+        if (hand.paoPlayerId) {
           paoApplyCount++;
         }
       }
@@ -260,7 +293,7 @@ describe('OnlinelogParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(13);
-    expect(rounds[10].outcome).toBe('abort');
+    expect(rounds[10].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
   });
 
   test('fourKanDraw', async () => {
@@ -273,7 +306,7 @@ describe('OnlinelogParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(11);
-    expect(rounds[5].outcome).toBe('abort');
+    expect(rounds[5].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
   });
 
   test('nineTerminalDraw', async () => {
@@ -289,7 +322,7 @@ describe('OnlinelogParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
-    expect(rounds[1].outcome).toBe('abort');
+    expect(rounds[1].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
   });
 
   test('fourWindDraw', async () => {
@@ -302,7 +335,7 @@ describe('OnlinelogParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
-    expect(rounds[7].outcome).toBe('abort');
+    expect(rounds[7].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
   });
 
   test('fourRiichiDraw', async () => {
@@ -318,6 +351,6 @@ describe('OnlinelogParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(13);
-    expect(rounds[6].outcome).toBe('abort');
+    expect(rounds[6].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
   });
 });
