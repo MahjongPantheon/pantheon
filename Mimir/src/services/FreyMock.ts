@@ -1,6 +1,3 @@
-import { ClientConfiguration } from 'twirpscript';
-import { ConfigService } from './Config.js';
-import { MetaService } from './Meta.js';
 import {
   AccessAddRuleForPersonPayload,
   AccessAddRuleForPersonResponse,
@@ -13,9 +10,6 @@ import {
   AccessGetOwnedEventIdsResponse,
   AccessGetSuperadminFlagPayload,
   AccessGetSuperadminFlagResponse,
-  AddRuleForPerson,
-  ApproveRegistration,
-  ApproveResetPassword,
   AuthApproveRegistrationPayload,
   AuthApproveRegistrationResponse,
   AuthApproveResetPasswordPayload,
@@ -26,29 +20,13 @@ import {
   AuthChangePasswordResponse,
   AuthMePayload,
   AuthMeResponse,
-  Authorize,
   AuthQuickAuthorizePayload,
   AuthQuickAuthorizeResponse,
   AuthRequestRegistrationPayload,
   AuthRequestRegistrationResponse,
   AuthRequestResetPasswordPayload,
   AuthRequestResetPasswordResponse,
-  ChangePassword,
-  CreateAccount,
-  DeleteRuleForPerson,
-  DepersonalizeAccount,
   DepersonalizePayload,
-  FindByMajsoulAccountId,
-  FindByTenhouIds,
-  FindByTitle,
-  GetEventAdmins,
-  GetEventReferees,
-  GetMajsoulNicknames,
-  GetNotificationsSettings,
-  GetOwnedEventIds,
-  GetPersonalInfo,
-  GetSuperadminFlag,
-  Me,
   PersonsCreateAccountPayload,
   PersonsCreateAccountResponse,
   PersonsFindByMajsoulIdsPayload,
@@ -64,11 +42,6 @@ import {
   PersonsGetPersonalInfoResponse,
   PersonsSetNotificationsSettingsPayload,
   PersonsUpdatePersonalInfoPayload,
-  QuickAuthorize,
-  RequestRegistration,
-  RequestResetPassword,
-  SetNotificationsSettings,
-  UpdatePersonalInfo,
 } from 'tsclients/proto/frey.pb.js';
 import { GenericSuccessResponse } from 'tsclients/proto/atoms.pb.js';
 import { FreyService } from './Frey.js';
@@ -111,116 +84,222 @@ export class FreyServiceMock extends FreyService {
   }
 
   DepersonalizeAccount(
-    depersonalizePayload: DepersonalizePayload
+    _depersonalizePayload: DepersonalizePayload
   ): Promise<GenericSuccessResponse> {
-    return DepersonalizeAccount(depersonalizePayload, this._config);
+    return Promise.resolve({ success: true });
   }
 
   ChangePassword(
-    authChangePasswordPayload: AuthChangePasswordPayload
+    _authChangePasswordPayload: AuthChangePasswordPayload
   ): Promise<AuthChangePasswordResponse> {
-    return ChangePassword(authChangePasswordPayload, this._config);
+    return Promise.resolve({ authToken: '123' });
   }
 
   RequestResetPassword(
-    authRequestResetPasswordPayload: AuthRequestResetPasswordPayload
+    _authRequestResetPasswordPayload: AuthRequestResetPasswordPayload
   ): Promise<AuthRequestResetPasswordResponse> {
-    return RequestResetPassword(authRequestResetPasswordPayload, this._config);
+    return Promise.resolve({ resetToken: '123' });
   }
 
   ApproveResetPassword(
-    authApproveResetPasswordPayload: AuthApproveResetPasswordPayload
+    _authApproveResetPasswordPayload: AuthApproveResetPasswordPayload
   ): Promise<AuthApproveResetPasswordResponse> {
-    return ApproveResetPassword(authApproveResetPasswordPayload, this._config);
+    return Promise.resolve({ newTmpPassword: '123' });
   }
 
   UpdatePersonalInfo(
-    personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload
+    _personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload
   ): Promise<GenericSuccessResponse> {
-    return UpdatePersonalInfo(personsUpdatePersonalInfoPayload, this._config);
+    return Promise.resolve({ success: true });
   }
 
   GetPersonalInfo(
     personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload
   ): Promise<PersonsGetPersonalInfoResponse> {
-    return GetPersonalInfo(personsGetPersonalInfoPayload, this._config);
+    return Promise.resolve({
+      people: personsGetPersonalInfoPayload.ids.map((id) => (
+        {
+          id,
+          city: 'city',
+          tenhouId: 'player' + id,
+          title: 'title',
+          country: 'country',
+          email: 'email',
+          phone: 'phone',
+          hasAvatar: false,
+          lastUpdate: new Date().toISOString(),
+          msNickname: 'msNickname',
+          msAccountId: 1,
+          telegramId: '121345',
+          notifications: 'notifications',
+        }
+      )),
+    });
   }
 
   FindByTenhouIds(
     personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return FindByTenhouIds(personsFindByTenhouIdsPayload, this._config);
+    let id = 1;
+    return Promise.resolve({
+      people: personsFindByTenhouIdsPayload.ids.map((tid) => ({
+        id: id++,
+        city: 'city',
+        tenhouId: tid,
+        title: 'title',
+        country: 'country',
+        email: 'email',
+        phone: 'phone',
+        hasAvatar: false,
+        lastUpdate: new Date().toISOString(),
+        msNickname: 'msNickname',
+        msAccountId: 1,
+        telegramId: '121345',
+        notifications: 'notifications',
+      })),
+    });
   }
 
   FindByMajsoulAccountId(
-    personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload
+    _personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload
   ): Promise<PersonsFindByTenhouIdsResponse> {
-    return FindByMajsoulAccountId(personsFindByMajsoulIdsPayload, this._config);
+    return Promise.resolve({
+      people: [
+        {
+          id: 1,
+          city: 'city',
+          tenhouId: 'tenhouId',
+          title: 'title',
+          country: 'country',
+          email: 'email',
+          phone: 'phone',
+          hasAvatar: false,
+          lastUpdate: new Date().toISOString(),
+          msNickname: 'msNickname',
+          msAccountId: 1,
+          telegramId: '121345',
+          notifications: 'notifications',
+        },
+      ],
+    });
   }
 
   FindByTitle(
-    personsFindByTitlePayload: PersonsFindByTitlePayload
+    _personsFindByTitlePayload: PersonsFindByTitlePayload
   ): Promise<PersonsFindByTitleResponse> {
-    return FindByTitle(personsFindByTitlePayload, this._config);
+    return Promise.resolve({
+      people: [
+        {
+          id: 1,
+          city: 'city',
+          tenhouId: 'tenhouId',
+          title: 'title',
+          hasAvatar: false,
+          lastUpdate: new Date().toISOString(),
+        },
+      ],
+    });
   }
 
   GetEventAdmins(
-    accessGetEventAdminsPayload: AccessGetEventAdminsPayload
+    _accessGetEventAdminsPayload: AccessGetEventAdminsPayload
   ): Promise<AccessGetEventAdminsResponse> {
-    return GetEventAdmins(accessGetEventAdminsPayload, this._config);
+    return Promise.resolve({
+      admins: [
+        {
+          ruleId: 1,
+          personId: 1,
+          personName: 'title',
+          hasAvatar: false,
+          lastUpdate: new Date().toISOString(),
+        },
+      ],
+    });
   }
 
   GetEventReferees(
-    accessGetEventRefereesPayload: AccessGetEventRefereesPayload
+    _accessGetEventRefereesPayload: AccessGetEventRefereesPayload
   ): Promise<AccessGetEventRefereesResponse> {
-    return GetEventReferees(accessGetEventRefereesPayload, this._config);
+    return Promise.resolve({
+      referees: [
+        {
+          ruleId: 1,
+          personId: 1,
+          personName: 'title',
+          hasAvatar: false,
+          lastUpdate: new Date().toISOString(),
+        },
+      ],
+    });
   }
 
   GetMajsoulNicknames(
-    personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload
+    _personsGetMajsoulNicknamesPayload: PersonsGetMajsoulNicknamesPayload
   ): Promise<PersonsGetMajsoulNicknamesResponse> {
-    return GetMajsoulNicknames(personsGetMajsoulNicknamesPayload, this._config);
+    return Promise.resolve({
+      mapping: [
+        {
+          personId: 1,
+          nickname: 'nickname',
+        },
+      ],
+    });
   }
 
   GetSuperadminFlag(
-    accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload
+    _accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload
   ): Promise<AccessGetSuperadminFlagResponse> {
-    return GetSuperadminFlag(accessGetSuperadminFlagPayload, this._config);
+    return Promise.resolve({
+      isAdmin: true,
+    });
   }
 
   GetOwnedEventIds(
-    accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload
+    _accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload
   ): Promise<AccessGetOwnedEventIdsResponse> {
-    return GetOwnedEventIds(accessGetOwnedEventIdsPayload, this._config);
+    return Promise.resolve({
+      eventIds: [1, 2, 3],
+    });
   }
 
   AddRuleForPerson(
-    accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload
+    _accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload
   ): Promise<AccessAddRuleForPersonResponse> {
-    return AddRuleForPerson(accessAddRuleForPersonPayload, this._config);
+    return Promise.resolve({
+      ruleId: 1,
+    });
   }
 
   DeleteRuleForPerson(
-    accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload
+    _accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload
   ): Promise<GenericSuccessResponse> {
-    return DeleteRuleForPerson(accessDeleteRuleForPersonPayload, this._config);
+    return Promise.resolve({
+      success: true,
+    });
   }
 
   CreateAccount(
-    personsCreateAccountPayload: PersonsCreateAccountPayload
+    _personsCreateAccountPayload: PersonsCreateAccountPayload
   ): Promise<PersonsCreateAccountResponse> {
-    return CreateAccount(personsCreateAccountPayload, this._config);
+    return Promise.resolve({
+      personId: 1,
+    });
   }
 
   GetNotificationsSettings(
-    personsGetNotificationsSettingsPayload: PersonsGetNotificationsSettingsPayload
+    _personsGetNotificationsSettingsPayload: PersonsGetNotificationsSettingsPayload
   ): Promise<PersonsGetNotificationsSettingsResponse> {
-    return GetNotificationsSettings(personsGetNotificationsSettingsPayload, this._config);
+    return Promise.resolve({
+      telegramId: '123',
+      notifications: '123',
+    });
   }
 
   SetNotificationsSettings(
-    personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload
+    _personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload
   ): Promise<GenericSuccessResponse> {
-    return SetNotificationsSettings(personsSetNotificationsSettingsPayload, this._config);
+    return Promise.resolve({
+      success: true,
+    });
   }
 }

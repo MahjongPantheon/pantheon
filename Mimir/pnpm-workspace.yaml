@@ -1,0 +1,3 @@
+onlyBuiltDependencies:
+  - node-expat
+  - sqlite3

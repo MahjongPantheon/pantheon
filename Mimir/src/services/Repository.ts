@@ -4,8 +4,9 @@ import { ConfigService } from './Config.js';
 import { FreyService } from './Frey.js';
 import { LogService } from './Log.js';
 import { MetaService } from './Meta.js';
-import { MikroORM } from '@mikro-orm/postgresql';
+import { MikroORM } from '@mikro-orm/core';
 import { SkirnirService } from './Skirnir.js';
+import { FreyServiceMock } from './FreyMock.js';
 
 export class Repository {
   protected _db: MikroORM;
@@ -68,7 +69,12 @@ export class Repository {
     return Repository._skirnir;
   }
 
+  // For testing purposes
   mockFrey() {
-    Repository._frey = new FreyService(Repository.config, this.meta);
+    Repository._frey = new FreyServiceMock(Repository.config, this.meta);
+  }
+
+  mockCache() {
+    Repository._cache ??= new CacheService(Repository.config);
   }
 }
