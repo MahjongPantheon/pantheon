@@ -18,10 +18,10 @@ export abstract class Model {
   }
 
   public static getModel<T extends Model>(repo: Repository, model: ModelClass<T>): T {
-    if (!this._modelRepo.has(model.constructor.name)) {
+    if (!this._modelRepo.has(model.prototype.constructor.name)) {
       // @ts-expect-error Typescript doesn't recognize generic constructable class
-      this._modelRepo.set(model.constructor.name, new model(repo));
+      this._modelRepo.set(model.prototype.constructor.name, new model(repo));
     }
-    return this._modelRepo.get(model.constructor.name) as T;
+    return this._modelRepo.get(model.prototype.constructor.name) as T;
   }
 }

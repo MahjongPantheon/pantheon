@@ -1,13 +1,15 @@
-import { defineConfig } from '@mikro-orm/postgresql';
+import { defineConfig } from '@mikro-orm/core';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { ConfigService } from './services/Config.js';
 import { SeedManager } from '@mikro-orm/seeder';
 import { Migrator } from '@mikro-orm/migrations';
+import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 const config = new ConfigService();
 
 export default () =>
   defineConfig({
+    driver: PostgreSqlDriver,
     dbName: config.test ? 'mimir2_unit' : config.db.dbname,
     user: config.db.username,
     password: config.db.password,
