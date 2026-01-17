@@ -47,6 +47,14 @@ import { GenericSuccessResponse } from 'tsclients/proto/atoms.pb.js';
 import { FreyService } from './Frey.js';
 
 export class FreyServiceMock extends FreyService {
+  _mockMajsoulNicknames: Record<number, string> = {};
+  _mockMajsoulIds: Record<number, number> = {};
+
+  mockMajsoul(ids: Record<number, number>, nicknames: Record<number, string>) {
+    this._mockMajsoulIds = ids;
+    this._mockMajsoulNicknames = nicknames;
+  }
+
   RequestRegistration(
     _authRequestRegistrationPayload: AuthRequestRegistrationPayload
   ): Promise<AuthRequestRegistrationResponse> {
@@ -117,23 +125,21 @@ export class FreyServiceMock extends FreyService {
     personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload
   ): Promise<PersonsGetPersonalInfoResponse> {
     return Promise.resolve({
-      people: personsGetPersonalInfoPayload.ids.map((id) => (
-        {
-          id,
-          city: 'city',
-          tenhouId: 'player' + id,
-          title: 'title',
-          country: 'country',
-          email: 'email',
-          phone: 'phone',
-          hasAvatar: false,
-          lastUpdate: new Date().toISOString(),
-          msNickname: 'msNickname',
-          msAccountId: 1,
-          telegramId: '121345',
-          notifications: 'notifications',
-        }
-      )),
+      people: personsGetPersonalInfoPayload.ids.map((id) => ({
+        id,
+        city: 'city',
+        tenhouId: 'player' + id,
+        title: 'title',
+        country: 'country',
+        email: 'email',
+        phone: 'phone',
+        hasAvatar: false,
+        lastUpdate: new Date().toISOString(),
+        msNickname: this._mockMajsoulNicknames[id] ?? 'msNickname',
+        msAccountId: this._mockMajsoulIds[id] ?? 1,
+        telegramId: '121345',
+        notifications: 'notifications',
+      })),
     });
   }
 
@@ -161,12 +167,12 @@ export class FreyServiceMock extends FreyService {
   }
 
   FindByMajsoulAccountId(
-    _personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload
+    personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload
   ): Promise<PersonsFindByTenhouIdsResponse> {
     return Promise.resolve({
-      people: [
+      people: personsFindByMajsoulIdsPayload.ids.map(({nickname, accountId}) => (
         {
-          id: 1,
+          id: +(Object.entries(this._mockMajsoulIds).find((el) => el[1] === accountId)?.[0] ?? '1'),
           city: 'city',
           tenhouId: 'tenhouId',
           title: 'title',
@@ -175,12 +181,11 @@ export class FreyServiceMock extends FreyService {
           phone: 'phone',
           hasAvatar: false,
           lastUpdate: new Date().toISOString(),
-          msNickname: 'msNickname',
-          msAccountId: 1,
+          msNickname: nickname,
+          msAccountId: accountId,
           telegramId: '121345',
           notifications: 'notifications',
-        },
-      ],
+        }))
     });
   }
 
