@@ -7,14 +7,14 @@ import { SessionState } from 'src/aggregates/SessionState.js';
 
 export class SessionResultsModel extends Model {
   findBySession(sessionId: number[]): Promise<SessionResultsEntity[]> {
-    return this.repo.db.em.find(SessionResultsEntity, {
-      session: this.repo.db.em.getReference(SessionEntity, sessionId),
+    return this.repo.em.find(SessionResultsEntity, {
+      session: this.repo.em.getReference(SessionEntity, sessionId),
     });
   }
 
   findByEvent(eventId: number[]): Promise<SessionResultsEntity[]> {
-    return this.repo.db.em.find(SessionResultsEntity, {
-      event: this.repo.db.em.getReference(EventEntity, eventId),
+    return this.repo.em.find(SessionResultsEntity, {
+      event: this.repo.em.getReference(EventEntity, eventId),
     });
   }
 
@@ -50,8 +50,8 @@ export class SessionResultsModel extends Model {
       }
 
       const entity = new SessionResultsEntity();
-      entity.event = this.repo.db.em.getReference(EventEntity, eventId);
-      entity.session = this.repo.db.em.getReference(SessionEntity, sessionId);
+      entity.event = this.repo.em.getReference(EventEntity, eventId);
+      entity.session = this.repo.em.getReference(SessionEntity, sessionId);
       entity.playerId = currentPlayerId;
       entity.score = score;
       entity.place = place;

@@ -47,7 +47,7 @@ type RiichiStats = {
 
 export class PlayerStatsModel extends Model {
   async scheduleRebuildPlayersStats(eventId: number) {
-    await this.repo.db.em.execute(`
+    await this.repo.em.execute(`
       insert into jobs_queue (created_at, job_name, job_arguments)
       select now(), 'playerStats', '{"playerId":' || player_id || ',"eventId":' || event_id || '}'
       from event_registered_players where event_id = ${eventId}
@@ -59,11 +59,11 @@ export class PlayerStatsModel extends Model {
     job.createdAt = moment.utc().format('YYYY-MM-DD hh:mm:ss');
     job.jobName = 'playerStats';
     job.jobArguments = JSON.stringify({ playerId });
-    await this.repo.db.em.persistAndFlush(job);
+    await this.repo.em.persistAndFlush(job);
   }
 
   async invalidateByPlayer(playerId: number) {
-    const statsCnt = await this.repo.db.em.count(PlayerStatsEntity, { playerId });
+    const statsCnt = await this.repo.em.count(PlayerStatsEntity, { playerId });
     if (statsCnt > 0) {
       await this.scheduleRebuildSinglePlayerStats(playerId);
     }
@@ -78,7 +78,7 @@ export class PlayerStatsModel extends Model {
 
     // Find precalculated stats if any
     if (input.eventIdList.length === 1 && !input.dateFrom && !input.dateTo) {
-      const stats = await this.repo.db.em.findAll(PlayerStatsEntity, {
+      const stats = await this.repo.em.findAll(PlayerStatsEntity, {
         where: {
           event: input.eventIdList[0],
           playerId: input.playerId,
@@ -143,7 +143,7 @@ export class PlayerStatsModel extends Model {
     dateFrom?: string,
     dateTo?: string
   ): Promise<PlayersGetPlayerStatsResponse> {
-    const events = await this.repo.db.em.findAll(EventEntity, { where: { id: eventIdList } });
+    const events = await this.repo.em.findAll(EventEntity, { where: { id: eventIdList } });
     if (events.length !== eventIdList.length) {
       throw new Error('Some of events were not found');
     }
@@ -204,9 +204,9 @@ export class PlayerStatsModel extends Model {
 
     // Save precalculated stats; don't support aggregated events
     if (eventIdList.length === 1 && !dateFrom && !dateTo) {
-      const stats = await this.repo.db.em.findOne(PlayerStatsEntity, {
+      const stats = await this.repo.em.findOne(PlayerStatsEntity, {
         playerId,
-        event: this.repo.db.em.getReference(EventEntity, eventIdList[0]),
+        event: this.repo.em.getReference(EventEntity, eventIdList[0]),
       });
 
       if (!stats) {
@@ -219,10 +219,10 @@ export class PlayerStatsModel extends Model {
           handsValueSummary: {},
           yakuSummary: {},
         };
-        entity.event = this.repo.db.em.getReference(EventEntity, eventIdList[0]);
+        entity.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
         entity.playerId = playerId;
         entity.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
-        this.repo.db.em.persist(PlayerStatsEntity);
+        this.repo.em.persist(PlayerStatsEntity);
       } else {
         stats.data = {
           ...data,
@@ -232,13 +232,13 @@ export class PlayerStatsModel extends Model {
           handsValueSummary: {},
           yakuSummary: {},
         };
-        stats.event = this.repo.db.em.getReference(EventEntity, eventIdList[0]);
+        stats.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
         stats.playerId = playerId;
         stats.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
-        this.repo.db.em.persist(stats);
+        this.repo.em.persist(stats);
       }
 
-      await this.repo.db.em.flush();
+      await this.repo.em.flush();
     }
 
     return data;
@@ -261,8 +261,8 @@ export class PlayerStatsModel extends Model {
       gamesById.set(game.id, game);
     }
 
-    const results = await this.repo.db.em.findAll(SessionResultsEntity, {
-      where: { session: games.map((game) => this.repo.db.em.getReference(SessionEntity, game.id)) },
+    const results = await this.repo.em.findAll(SessionResultsEntity, {
+      where: { session: games.map((game) => this.repo.em.getReference(SessionEntity, game.id)) },
     });
 
     const fullResults = new Map<
@@ -282,16 +282,16 @@ export class PlayerStatsModel extends Model {
   }
 
   async _fetchRounds(gameIds: number[]) {
-    const rounds = await this.repo.db.em.findAll(RoundEntity, {
-      where: { session: gameIds.map((id) => this.repo.db.em.getReference(SessionEntity, id)) },
+    const rounds = await this.repo.em.findAll(RoundEntity, {
+      where: { session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)) },
       populate: ['hands'],
     });
     return rounds;
   }
 
   async _fetchPlayerInfo(gameIds: number[]) {
-    const players = await this.repo.db.em.findAll(SessionPlayerEntity, {
-      where: { session: gameIds.map((id) => this.repo.db.em.getReference(SessionEntity, id)) },
+    const players = await this.repo.em.findAll(SessionPlayerEntity, {
+      where: { session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)) },
     });
     const playerIds = players.map((sp) => sp.playerId);
     const playerModel = this.getModel(PlayerModel);

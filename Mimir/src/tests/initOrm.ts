@@ -18,6 +18,5 @@ export async function init() {
     port: undefined,
     connect: false,
     preferTs: true,
-    allowGlobalContext: true,
   });
 }

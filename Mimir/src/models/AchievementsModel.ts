@@ -9,6 +9,6 @@ export class AchievementsModel extends Model {
     job.jobName = 'achievements';
     job.jobArguments = JSON.stringify({ eventId });
 
-    await this.repo.db.em.persistAndFlush(job);
+    await this.repo.em.persistAndFlush(job);
   }
 }
