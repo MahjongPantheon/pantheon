@@ -43,7 +43,7 @@ const makeEvent = (em: EntityManager) => {
 
 const makeRegs = (em: EntityManager, event: EventEntity) => {
   const regs = [];
-  for (const p of [1, 2, 3, 4]) {
+  for (const p of [1, 2, 3, 4, 5]) {
     const reg = new EventRegisteredPlayersEntity();
     reg.playerId = p;
     reg.event = event;
