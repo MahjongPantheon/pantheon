@@ -11,16 +11,16 @@ import { HandEntity } from 'src/entities/Hand.entity.js';
 
 export class RoundModel extends Model {
   async findBySessionIds(sessionIds: number[]) {
-    return this.repo.db.em.findAll(RoundEntity, {
-      where: { session: this.repo.db.em.getReference(SessionEntity, sessionIds) },
+    return this.repo.em.findAll(RoundEntity, {
+      where: { session: this.repo.em.getReference(SessionEntity, sessionIds) },
       populate: ['hands'],
     });
   }
 
   async findChomboInEvent(eventId: number) {
-    return this.repo.db.em.findAll(RoundEntity, {
+    return this.repo.em.findAll(RoundEntity, {
       where: {
-        event: this.repo.db.em.getReference(EventEntity, eventId),
+        event: this.repo.em.getReference(EventEntity, eventId),
         outcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
       },
       populate: ['hands'],
@@ -47,13 +47,13 @@ export class RoundModel extends Model {
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_RON;
       r.honba = round.ron.honba;
-      r.session = this.repo.db.em.getReference(SessionEntity, sessionId);
-      r.event = this.repo.db.em.getReference(EventEntity, eventId);
+      r.session = this.repo.em.getReference(SessionEntity, sessionId);
+      r.event = this.repo.em.getReference(EventEntity, eventId);
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
-      this.repo.db.em.persist(r.hands[0]);
-      this.repo.db.em.persist(r);
+      this.repo.em.persist(r.hands[0]);
+      this.repo.em.persist(r);
     }
 
     if (round.tsumo) {
@@ -64,13 +64,13 @@ export class RoundModel extends Model {
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_TSUMO;
       r.honba = round.tsumo.honba;
-      r.session = this.repo.db.em.getReference(SessionEntity, sessionId);
-      r.event = this.repo.db.em.getReference(EventEntity, eventId);
+      r.session = this.repo.em.getReference(SessionEntity, sessionId);
+      r.event = this.repo.em.getReference(EventEntity, eventId);
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
-      this.repo.db.em.persist(r.hands[0]);
-      this.repo.db.em.persist(r);
+      this.repo.em.persist(r.hands[0]);
+      this.repo.em.persist(r);
     }
 
     if (round.draw) {
@@ -81,13 +81,13 @@ export class RoundModel extends Model {
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_DRAW;
       r.honba = round.draw.honba;
-      r.session = this.repo.db.em.getReference(SessionEntity, sessionId);
-      r.event = this.repo.db.em.getReference(EventEntity, eventId);
+      r.session = this.repo.em.getReference(SessionEntity, sessionId);
+      r.event = this.repo.em.getReference(EventEntity, eventId);
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
-      this.repo.db.em.persist(r.hands[0]);
-      this.repo.db.em.persist(r);
+      this.repo.em.persist(r.hands[0]);
+      this.repo.em.persist(r);
     }
 
     if (round.abort) {
@@ -98,13 +98,13 @@ export class RoundModel extends Model {
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_ABORT;
       r.honba = round.abort.honba;
-      r.session = this.repo.db.em.getReference(SessionEntity, sessionId);
-      r.event = this.repo.db.em.getReference(EventEntity, eventId);
+      r.session = this.repo.em.getReference(SessionEntity, sessionId);
+      r.event = this.repo.em.getReference(EventEntity, eventId);
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
-      this.repo.db.em.persist(r.hands[0]);
-      this.repo.db.em.persist(r);
+      this.repo.em.persist(r.hands[0]);
+      this.repo.em.persist(r);
     }
 
     if (round.nagashi) {
@@ -115,13 +115,13 @@ export class RoundModel extends Model {
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_NAGASHI;
       r.honba = round.nagashi.honba;
-      r.session = this.repo.db.em.getReference(SessionEntity, sessionId);
-      r.event = this.repo.db.em.getReference(EventEntity, eventId);
+      r.session = this.repo.em.getReference(SessionEntity, sessionId);
+      r.event = this.repo.em.getReference(EventEntity, eventId);
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
-      this.repo.db.em.persist(r.hands[0]);
-      this.repo.db.em.persist(r);
+      this.repo.em.persist(r.hands[0]);
+      this.repo.em.persist(r);
     }
 
     if (round.chombo) {
@@ -131,13 +131,13 @@ export class RoundModel extends Model {
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_CHOMBO;
       r.honba = round.chombo.honba;
-      r.session = this.repo.db.em.getReference(SessionEntity, sessionId);
-      r.event = this.repo.db.em.getReference(EventEntity, eventId);
+      r.session = this.repo.em.getReference(SessionEntity, sessionId);
+      r.event = this.repo.em.getReference(EventEntity, eventId);
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
-      this.repo.db.em.persist(r.hands[0]);
-      this.repo.db.em.persist(r);
+      this.repo.em.persist(r.hands[0]);
+      this.repo.em.persist(r);
     }
 
     if (round.multiron) {
@@ -148,17 +148,17 @@ export class RoundModel extends Model {
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_MULTIRON;
       r.honba = round.multiron.honba;
-      r.session = this.repo.db.em.getReference(SessionEntity, sessionId);
-      r.event = this.repo.db.em.getReference(EventEntity, eventId);
+      r.session = this.repo.em.getReference(SessionEntity, sessionId);
+      r.event = this.repo.em.getReference(EventEntity, eventId);
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
       r.hands.forEach((hand) => {
-        this.repo.db.em.persist(hand);
+        this.repo.em.persist(hand);
       });
-      this.repo.db.em.persist(r);
+      this.repo.em.persist(r);
     }
 
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
   }
 }

@@ -88,9 +88,9 @@ export class PlayerModel extends Model {
 
   async findPlayerIdsForSessions(sessionIds: number[]): Promise<Array<[number, number]>> {
     return (
-      await this.repo.db.em.findAll(SessionPlayerEntity, {
+      await this.repo.em.findAll(SessionPlayerEntity, {
         fields: ['playerId', 'session.id'],
-        where: { session: sessionIds.map((id) => this.repo.db.em.getReference(SessionEntity, id)) },
+        where: { session: sessionIds.map((id) => this.repo.em.getReference(SessionEntity, id)) },
         orderBy: { order: 1 },
       })
     ).map((reg) => [reg.playerId, reg.session.id]);

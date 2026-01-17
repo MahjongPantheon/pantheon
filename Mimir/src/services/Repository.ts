@@ -4,17 +4,19 @@ import { ConfigService } from './Config.js';
 import { FreyService } from './Frey.js';
 import { LogService } from './Log.js';
 import { MetaService } from './Meta.js';
-import { MikroORM } from '@mikro-orm/core';
+import { EntityManager, MikroORM } from '@mikro-orm/core';
 import { SkirnirService } from './Skirnir.js';
 import { FreyServiceMock } from './FreyMock.js';
 
 export class Repository {
   protected _db: MikroORM;
+  protected _em: EntityManager;
   protected constructor(
     protected _meta: MetaService,
     protected _orm: MikroORM
   ) {
     this._db = _orm;
+    this._em = _orm.em.fork({ useContext: true });
   } // request/response, cookies, etc
   // Not a singleton: headers should be new on each request
   public static instance(headers: IncomingHttpHeaders, orm: MikroORM) {
@@ -48,6 +50,10 @@ export class Repository {
 
   get db(): MikroORM {
     return this._db;
+  }
+
+  get em(): EntityManager {
+    return this._em;
   }
 
   get cache(): CacheService {

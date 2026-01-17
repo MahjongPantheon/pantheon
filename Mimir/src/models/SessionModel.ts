@@ -35,18 +35,18 @@ import { PaymentsInfo } from 'src/helpers/PointsCalc.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
-    return this.repo.db.em.findOne(SessionEntity, { id });
+    return this.repo.em.findOne(SessionEntity, { id });
   }
 
   async findByReplayHashAndEvent(eventId: number, replayHash: string) {
-    return this.repo.db.em.findOne(SessionEntity, {
-      event: this.repo.db.em.getReference(EventEntity, eventId),
+    return this.repo.em.findOne(SessionEntity, {
+      event: this.repo.em.getReference(EventEntity, eventId),
       replayHash,
     });
   }
 
   async findAllInProgress() {
-    return this.repo.db.em.findAll(SessionEntity, {
+    return this.repo.em.findAll(SessionEntity, {
       where: { status: SessionStatus.SESSION_STATUS_INPROGRESS },
     });
   }
@@ -56,7 +56,7 @@ export class SessionModel extends Model {
     hashList: string[],
     populate?: Populate<SessionEntity, 'event'>
   ) {
-    return this.repo.db.em.findAll(SessionEntity, {
+    return this.repo.em.findAll(SessionEntity, {
       where: { representationalHash: hashList },
       populate,
     });
@@ -70,8 +70,8 @@ export class SessionModel extends Model {
     orderBy: keyof SessionEntity | null = null,
     order: 'asc' | 'desc' = 'desc'
   ) {
-    return this.repo.db.em.findAll(SessionEntity, {
-      where: { status, event: this.repo.db.em.getReference(EventEntity, eventIds) },
+    return this.repo.em.findAll(SessionEntity, {
+      where: { status, event: this.repo.em.getReference(EventEntity, eventIds) },
       ...(orderBy !== null
         ? {
             orderBy: { [orderBy]: order === 'asc' ? 1 : -1 },
@@ -83,7 +83,7 @@ export class SessionModel extends Model {
   }
 
   async getPlayersSeatingInEvent(eventId: number) {
-    const query = this.repo.db.em
+    const query = this.repo.em
       .getKnex()
       .from('session')
       .leftJoin('session_player', 'session_player.session_id', 'session.id')
@@ -92,7 +92,7 @@ export class SessionModel extends Model {
       .orderBy('session.id', 'asc')
       .orderBy('session_player.order', 'asc');
 
-    return this.repo.db.em.execute<{ player_id: number; order: number }[]>(query);
+    return this.repo.em.execute<{ player_id: number; order: number }[]>(query);
   }
 
   async findByPlayerAndEvent(
@@ -102,7 +102,7 @@ export class SessionModel extends Model {
     dateFrom?: string,
     dateTo?: string
   ) {
-    return this.repo.db.em
+    return this.repo.em
       .createQueryBuilder(SessionEntity)
       .leftJoin('session_player', 'sp')
       .where({
@@ -125,7 +125,7 @@ export class SessionModel extends Model {
     eventId: number,
     withStatus: SessionStatus | '*' = '*'
   ) {
-    return this.repo.db.em
+    return this.repo.em
       .createQueryBuilder(SessionEntity)
       .leftJoin('session_player', 'sp')
       .where({
@@ -139,8 +139,8 @@ export class SessionModel extends Model {
   }
 
   async getGamesCount(eventIdList: number[], withStatus: SessionStatus) {
-    return this.repo.db.em.count(SessionEntity, {
-      event: this.repo.db.em.getReference(EventEntity, eventIdList),
+    return this.repo.em.count(SessionEntity, {
+      event: this.repo.em.getReference(EventEntity, eventIdList),
       status: withStatus,
     });
   }
@@ -163,9 +163,9 @@ export class SessionModel extends Model {
     ]);
 
     const sessionPlayers = this.groupBySession(
-      await this.repo.db.em.findAll(SessionPlayerEntity, {
+      await this.repo.em.findAll(SessionPlayerEntity, {
         where: {
-          session: this.repo.db.em.getReference(
+          session: this.repo.em.getReference(
             SessionEntity,
             sessions.map((s) => s.id)
           ),
@@ -403,10 +403,10 @@ export class SessionModel extends Model {
       roundData,
       session[0].intermediateResults!
     );
-    this.repo.db.em.persist(roundEntity);
+    this.repo.em.persist(roundEntity);
     const lastScores = { ...sessionState.getScores() };
     await this.updateSessionState(event, session[0], sessionState, roundEntity);
-    this.repo.db.em.persist(session[0]);
+    this.repo.em.persist(session[0]);
     const currentScores = sessionState.getScores();
 
     const diff = Object.fromEntries(
@@ -431,7 +431,7 @@ export class SessionModel extends Model {
     }
 
     // don't forget to store all persisted data to db
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
     const chomboCounts = sessionState.getChombo();
     return {
       scores: Object.entries(sessionState.getScores()).map(([playerId, score]) => ({
@@ -591,7 +591,7 @@ export class SessionModel extends Model {
     const results = this.getSessionResults(event, session, sessionState);
     const playerHistoryModel = this.getModel(PlayerHistoryModel);
     results.forEach((result) => {
-      this.repo.db.em.persist(result);
+      this.repo.em.persist(result);
       // persists player history item inside
       playerHistoryModel.makeNewHistoryItem(
         event.ruleset,
@@ -673,7 +673,7 @@ export class SessionModel extends Model {
     }
 
     // don't forget to store all persisted data to db
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
     const chomboCounts = sessionState.getChombo();
     const toPaymentLog = ([dir, amount]: [string, number]) => ({
       from: +dir.split('<-')[1] || undefined,

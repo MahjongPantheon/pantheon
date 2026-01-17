@@ -38,7 +38,7 @@ import { EventRegistrationModel } from './EventRegistrationModel.js';
 
 export class EventModel extends Model {
   async findById(id: number[]) {
-    return await this.repo.db.em.findAll(EventEntity, {
+    return await this.repo.em.findAll(EventEntity, {
       where: {
         id,
       },
@@ -75,8 +75,8 @@ export class EventModel extends Model {
   }
 
   protected async _getSessionCounts(eventIds: number[]): Promise<Record<number, number>> {
-    const sessions = await this.repo.db.em.execute(
-      this.repo.db.em
+    const sessions = await this.repo.em.execute(
+      this.repo.em
         .getKnex()
         .from('sessions')
         .select('id', 'event_id', 'count(*) as session_count')
@@ -96,7 +96,7 @@ export class EventModel extends Model {
   async getEvents(
     eventsGetEventsPayload: EventsGetEventsPayload
   ): Promise<EventsGetEventsResponse> {
-    const [data, total] = await this.repo.db.em.findAndCount(
+    const [data, total] = await this.repo.em.findAndCount(
       EventEntity,
       {
         ...(eventsGetEventsPayload.filter
@@ -130,7 +130,7 @@ export class EventModel extends Model {
   async getEventsById(
     eventsGetEventsByIdPayload: EventsGetEventsByIdPayload
   ): Promise<EventsGetEventsByIdResponse> {
-    const data = await this.repo.db.em.findAll(EventEntity, {
+    const data = await this.repo.em.findAll(EventEntity, {
       where: {
         id: eventsGetEventsByIdPayload.ids,
       },
@@ -145,7 +145,7 @@ export class EventModel extends Model {
   }
 
   async getMyEvents(personId: number): Promise<PlayersGetMyEventsResponse> {
-    const regs = await this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
+    const regs = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
         playerId: personId,
       },
@@ -155,7 +155,7 @@ export class EventModel extends Model {
     const events =
       regs.length === 0
         ? []
-        : await this.repo.db.em.findAll(EventEntity, {
+        : await this.repo.em.findAll(EventEntity, {
             where: {
               id: regs.map((r) => r.event.id),
               finished: 0,
@@ -173,7 +173,7 @@ export class EventModel extends Model {
   }
 
   async getGameConfig(genericEventPayload: GenericEventPayload): Promise<GameConfig> {
-    const data = await this.repo.db.em.findOne(
+    const data = await this.repo.em.findOne(
       EventEntity,
       {
         id: genericEventPayload.eventId,
@@ -227,7 +227,7 @@ export class EventModel extends Model {
     dateFrom: string | null,
     dateTo: string | null
   ): Promise<EventsGetRatingTableResponse> {
-    const events = await this.repo.db.em.findAll(EventEntity, { where: { id: eventIdList } });
+    const events = await this.repo.em.findAll(EventEntity, { where: { id: eventIdList } });
     const mainEvent = events.find((e) => e.id === eventIdList[0]);
     if (!mainEvent) {
       throw new Error('Main event not found');
@@ -249,11 +249,11 @@ export class EventModel extends Model {
       await this.repo.frey.GetPersonalInfo({ ids: dataItems.map((item) => item.playerId) })
     ).people;
 
-    const regData = await this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
+    const regData = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: { event: mainEvent },
     });
 
-    const penalties = await this.repo.db.em.findAll(PenaltyEntity, {
+    const penalties = await this.repo.em.findAll(PenaltyEntity, {
       where: { event: events },
     });
 

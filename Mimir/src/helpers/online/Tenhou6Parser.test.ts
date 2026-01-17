@@ -8,9 +8,9 @@ import { PlatformType, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { Repository } from 'src/services/Repository.js';
 import { Tenhou6OnlineParser } from './Tenhou6Parser.js';
 import { FreyServiceMock } from 'src/services/FreyMock.js';
-import { MikroORM } from '@mikro-orm/core';
+import { EntityManager } from '@mikro-orm/core';
 
-const makeEvent = (orm: MikroORM) => {
+const makeEvent = (em: EntityManager) => {
   const event = new EventEntity();
   event.title = 'title';
   event.timezone = 'UTC';
@@ -37,18 +37,18 @@ const makeEvent = (orm: MikroORM) => {
   event.isListed = 1;
   event.allowViewOtherTables = 1;
   event.ruleset = RulesetEntity.createRuleset('tenhounet');
-  orm.em.persist(event);
+  em.persist(event);
   return event;
 }
 
-const makeRegs = (orm: MikroORM, event: EventEntity) => {
+const makeRegs = (em: EntityManager, event: EventEntity) => {
   const regs = [];
   for (const p of [1, 2, 3, 4]) {
     const reg = new EventRegisteredPlayersEntity();
     reg.playerId = p;
     reg.event = event;
     reg.ignoreSeating = 0;
-    orm.em.persist(reg);
+    em.persist(reg);
     regs.push(reg);
   }
   return regs;
@@ -57,7 +57,6 @@ const makeRegs = (orm: MikroORM, event: EventEntity) => {
 const makeRepo = async () => {
   const orm = await init();
   await orm.schema.createSchema();
-  orm.em.fork({ useContext: true })
   const repo = Repository.instance({}, orm);
   await repo.cache.connect();
   repo.mockFrey();
@@ -70,9 +69,9 @@ const makeRepo = async () => {
 
 const prepareTestEntities = async () => {
   const repo = await makeRepo();
-  const event = makeEvent(repo.db);
-  const regs = makeRegs(repo.db, event);
-  await repo.db.em.flush()
+  const event = makeEvent(repo.em);
+  const regs = makeRegs(repo.em, event);
+  await repo.em.flush()
   return [repo, event, regs] as const;
 }
 
@@ -114,7 +113,7 @@ describe('Tenhou6ParserTest', () => {
     );
 
     event.onlinePlatform = PlatformType.PLATFORM_TYPE_MAHJONGSOUL;
-    await repo.db.em.persistAndFlush(event);
+    await repo.em.persistAndFlush(event);
 
     const [sessionEntity, results, rounds] = await new Tenhou6OnlineParser(repo).parseToSession(
       event,
@@ -466,7 +465,7 @@ describe('Tenhou6ParserTest', () => {
     );
 
     event.onlinePlatform = PlatformType.PLATFORM_TYPE_MAHJONGSOUL;
-    await repo.db.em.persistAndFlush(event);
+    await repo.em.persistAndFlush(event);
 
     (repo.frey as FreyServiceMock).mockMajsoul(
       { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 },
@@ -477,7 +476,7 @@ describe('Tenhou6ParserTest', () => {
     reg.playerId = 5;
     reg.event = event;
     reg.ignoreSeating = 0;
-    await repo.db.em.persistAndFlush(reg);
+    await repo.em.persistAndFlush(reg);
 
     const [sessionEntity, results, rounds] = await new Tenhou6OnlineParser(repo).parseToSession(
       event,
