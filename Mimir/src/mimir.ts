@@ -87,6 +87,7 @@ import { SessionModel } from './models/SessionModel.js';
 import { PlayerModel } from './models/PlayerModel.js';
 import { EventGameSeriesModel } from './models/EventGameSeriesModel.js';
 import { PlayerStatsModel } from './models/PlayerStatsModel.js';
+import { OnlineSessionModel } from './models/OnlineSessionModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -236,11 +237,19 @@ export const mimirServer: Mimir<Context> = {
       gamesPreviewRoundPayload.roundData
     );
   },
-  AddOnlineReplay: function (
+  AddOnlineReplay: async function (
     gamesAddOnlineReplayPayload: GamesAddOnlineReplayPayload,
     context: Context
-  ): Promise<GamesAddOnlineReplayResponse> | GamesAddOnlineReplayResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<GamesAddOnlineReplayResponse> {
+    const onlineModel = Model.getModel(context.repository, OnlineSessionModel);
+    return onlineModel.addGame(gamesAddOnlineReplayPayload);
+  },
+  AddTypedOnlineReplay: function (
+    typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
+    context: Context
+  ): Promise<GamesAddOnlineReplayResponse> {
+    const onlineModel = Model.getModel(context.repository, OnlineSessionModel);
+    return onlineModel.addTypedGame(typedGamesAddOnlineReplayPayload);
   },
   GetLastResults: function (
     playersGetLastResultsPayload: PlayersGetLastResultsPayload,
@@ -504,12 +513,6 @@ export const mimirServer: Mimir<Context> = {
     genericSessionPayload: GenericSessionPayload,
     context: Context
   ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
-  },
-  AddTypedOnlineReplay: function (
-    typedGamesAddOnlineReplayPayload: TypedGamesAddOnlineReplayPayload,
-    context: Context
-  ): Promise<GamesAddOnlineReplayResponse> | GamesAddOnlineReplayResponse {
     throw new Error('Function not implemented.');
   },
   NotifyPlayersSessionStartsSoon: function (
