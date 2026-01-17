@@ -87,7 +87,7 @@ export class Tenhou6OnlineParser {
     replayHash: string,
     content: string,
     withChips = false,
-    platformId = PlatformType.PLATFORM_TYPE_TENHOUNET
+    platformId: PlatformType = PlatformType.PLATFORM_TYPE_TENHOUNET
   ): Promise<[SessionEntity, Record<number, number>, RoundEntity[], string[]]> {
     const tenhou6Model = new Tenhou6Model(content, platformId);
     const session = new SessionEntity();
@@ -279,7 +279,7 @@ export class Tenhou6OnlineParser {
       const players = await this.loadPlayers(tenhou6Model, parsedPlayers);
 
       if (Object.values(players).length !== Object.keys(parsedPlayers).length) {
-        const registeredPlayers = Object.values(players).map((p) => p.tenhouId); // TODO: mahjsoul?
+        const registeredPlayers = Object.values(players).map((p) => p.msNickname);
         const missedPlayers = playersLookup.filter((p) => !registeredPlayers.includes(p));
         const missedPlayersStr = missedPlayers.join(', ');
 
@@ -322,7 +322,7 @@ export class Tenhou6OnlineParser {
       for (const reg of regs) {
         const replacementId = reg.replacementId;
         const playerId = reg.playerId;
-        if (replacementId !== undefined && playerId !== undefined) {
+        if (replacementId && playerId) {
           backreplMap[replacementId] = playerId;
         }
       }
