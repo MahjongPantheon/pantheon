@@ -5,24 +5,24 @@ import { PlayerModel } from './PlayerModel.js';
 
 export class EventRegistrationModel extends Model {
   async findByPlayerAndEvent(ids: number[], eventId: number) {
-    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
+    return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
-        event: this.repo.db.em.getReference(EventEntity, eventId),
+        event: this.repo.em.getReference(EventEntity, eventId),
         playerId: ids,
       },
     });
   }
 
   async findByEventId(eventIds: number[]) {
-    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
+    return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
-        event: this.repo.db.em.getReference(EventEntity, eventIds),
+        event: this.repo.em.getReference(EventEntity, eventIds),
       },
     });
   }
 
   async findByPlayerId(playerId: number) {
-    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
+    return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
         playerId,
       },
@@ -30,10 +30,10 @@ export class EventRegistrationModel extends Model {
   }
 
   async findNextFreeLocalId(eventId: number) {
-    const result = await this.repo.db.em.findOne(
+    const result = await this.repo.em.findOne(
       EventRegisteredPlayersEntity,
       {
-        event: this.repo.db.em.getReference(EventEntity, eventId),
+        event: this.repo.em.getReference(EventEntity, eventId),
       },
       { orderBy: { localId: -1 } }
     );
@@ -46,7 +46,7 @@ export class EventRegistrationModel extends Model {
   }
 
   async updateLocalIds(eventId: number, idMap: Map<number, number>) {
-    return this.repo.db.em.upsertMany(
+    return this.repo.em.upsertMany(
       EventRegisteredPlayersEntity,
       [
         ...idMap.entries().map(([id, localId]) => ({
@@ -61,7 +61,7 @@ export class EventRegistrationModel extends Model {
   }
 
   async updateTeamNames(eventId: number, teamMap: Map<number, string>) {
-    return this.repo.db.em.upsertMany(
+    return this.repo.em.upsertMany(
       EventRegisteredPlayersEntity,
       [
         ...teamMap.entries().map(([id, teamName]) => ({
@@ -76,33 +76,33 @@ export class EventRegistrationModel extends Model {
   }
 
   async findRegisteredPlayersIdsByEvent(eventId: number) {
-    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.db.em.getReference(EventEntity, eventId) },
+    return this.repo.em.findAll(EventRegisteredPlayersEntity, {
+      where: { event: this.repo.em.getReference(EventEntity, eventId) },
     });
   }
 
   async findIgnoredPlayersIdsByEvent(eventIds: number[]) {
-    const result = await this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.db.em.getReference(EventEntity, eventIds), ignoreSeating: 1 },
+    const result = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
+      where: { event: this.repo.em.getReference(EventEntity, eventIds), ignoreSeating: 1 },
     });
     return result.map((reg) => reg.playerId);
   }
 
   async fetchPlayersRegData(eventIds: number[]) {
-    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.db.em.getReference(EventEntity, eventIds) },
+    return this.repo.em.findAll(EventRegisteredPlayersEntity, {
+      where: { event: this.repo.em.getReference(EventEntity, eventIds) },
     });
   }
 
   async fetchPlayersRegDataByIds(eventIds: number[], playerIds: number[]) {
-    return this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.db.em.getReference(EventEntity, eventIds), playerId: playerIds },
+    return this.repo.em.findAll(EventRegisteredPlayersEntity, {
+      where: { event: this.repo.em.getReference(EventEntity, eventIds), playerId: playerIds },
     });
   }
 
   async fetchRegisteredPlayersByEvent(eventId: number) {
-    const result = await this.repo.db.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.db.em.getReference(EventEntity, eventId) },
+    const result = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
+      where: { event: this.repo.em.getReference(EventEntity, eventId) },
     });
     const playerModel = this.getModel(PlayerModel);
     return playerModel.findById(result.map((reg) => reg.playerId));

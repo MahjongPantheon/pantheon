@@ -4,8 +4,8 @@ import { SessionEntity } from 'src/entities/Session.entity.js';
 
 export class PenaltyModel extends Model {
   async findBySession(sessionId: number[]) {
-    return this.repo.db.em.findAll(PenaltyEntity, {
-      where: { session: this.repo.db.em.getReference(SessionEntity, sessionId) },
+    return this.repo.em.findAll(PenaltyEntity, {
+      where: { session: this.repo.em.getReference(SessionEntity, sessionId) },
     });
   }
 }
