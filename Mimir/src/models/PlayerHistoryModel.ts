@@ -11,20 +11,20 @@ import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayer
 
 export class PlayerHistoryModel extends Model {
   async findLastByEvent(eventIds: number[]) {
-    const qb = this.repo.db.em
+    const qb = this.repo.em
       .getKnex()
       .from('player_history')
       .select([sql`max(id) as mx`, 'player_id', 'event_id'])
-      .where({ event: this.repo.db.em.getReference(EventEntity, eventIds) })
+      .where({ event: this.repo.em.getReference(EventEntity, eventIds) })
       .groupBy(['player_id', 'event_id']);
-    const ids = await this.repo.db.em.execute(qb);
-    return this.repo.db.em.findAll(PlayerHistoryEntity, {
+    const ids = await this.repo.em.execute(qb);
+    return this.repo.em.findAll(PlayerHistoryEntity, {
       where: { id: ids.map((i) => i.mx) },
     });
   }
 
   async findLastByEventAndDate(eventIds: number[], date: Moment | null) {
-    const qb = this.repo.db.em
+    const qb = this.repo.em
       .getKnex()
       .from('player_history')
       .leftJoin('session', 'session.id', 'player_history.session_id')
@@ -34,22 +34,22 @@ export class PlayerHistoryModel extends Model {
         'player_history.event_id',
       ])
       .where({
-        event: this.repo.db.em.getReference(EventEntity, eventIds),
+        event: this.repo.em.getReference(EventEntity, eventIds),
         ...(date ? { 'session.end_date': { $lt: date.utc().format('YYYY-MM-DD HH:mm:ss') } } : {}),
       })
       .groupBy(['player_history.player_id', 'player_history.event_id']);
 
-    const ids = await this.repo.db.em.execute(qb);
-    return this.repo.db.em.findAll(PlayerHistoryEntity, {
+    const ids = await this.repo.em.execute(qb);
+    return this.repo.em.findAll(PlayerHistoryEntity, {
       where: { id: ids.map((i) => i.mx) },
     });
   }
 
   async findLastByEventAndPlayer(eventId: number, playerId: number) {
-    return this.repo.db.em.findOne(
+    return this.repo.em.findOne(
       PlayerHistoryEntity,
       {
-        event: this.repo.db.em.getReference(EventEntity, eventId),
+        event: this.repo.em.getReference(EventEntity, eventId),
         playerId,
       },
       { orderBy: { id: -1 } }
@@ -57,7 +57,7 @@ export class PlayerHistoryModel extends Model {
   }
 
   async findAllLastByEventAndPlayer(eventId: number) {
-    const qb = this.repo.db.em
+    const qb = this.repo.em
       .getKnex()
       .from('player_history as ph1')
       .select('ph1.*')
@@ -65,12 +65,12 @@ export class PlayerHistoryModel extends Model {
       .where('ph1.event_id', '=', eventId)
       .where('ph2.games_played', '>', 'ph1.games_played')
       .where('ph2.id', 'is', null);
-    const result = await this.repo.db.em.execute(qb);
-    return result.map((row) => this.repo.db.em.map(PlayerHistoryEntity, row));
+    const result = await this.repo.em.execute(qb);
+    return result.map((row) => this.repo.em.map(PlayerHistoryEntity, row));
   }
 
   async findLastBySessionAndPlayer(sessionId: number, playerId: number) {
-    return this.repo.db.em.findOne(
+    return this.repo.em.findOne(
       PlayerHistoryEntity,
       {
         sessionId,
@@ -81,7 +81,7 @@ export class PlayerHistoryModel extends Model {
   }
 
   async findBySession(sessionId: number) {
-    return this.repo.db.em.findAll(PlayerHistoryEntity, {
+    return this.repo.em.findAll(PlayerHistoryEntity, {
       where: { sessionId },
     });
   }
@@ -101,27 +101,27 @@ export class PlayerHistoryModel extends Model {
     if (!item) {
       prevItem = new PlayerHistoryEntity();
       prevItem.playerId = playerId;
-      prevItem.event = this.repo.db.em.getReference(EventEntity, eventId);
+      prevItem.event = this.repo.em.getReference(EventEntity, eventId);
       prevItem.sessionId = sessionId;
       prevItem.gamesPlayed = 0;
       prevItem.avgPlace = 0;
       prevItem.rating = ruleset.rules.startRating;
       prevItem.chips = chips;
-      this.repo.db.em.persist(prevItem);
+      this.repo.em.persist(prevItem);
     } else {
       prevItem = item;
     }
 
     const newItem = new PlayerHistoryEntity();
     newItem.playerId = playerId;
-    newItem.event = this.repo.db.em.getReference(EventEntity, eventId);
+    newItem.event = this.repo.em.getReference(EventEntity, eventId);
     newItem.sessionId = sessionId;
     newItem.gamesPlayed = prevItem.gamesPlayed;
     newItem.avgPlace = prevItem.avgPlace;
     newItem.rating = prevItem.rating + ratingDelta;
     newItem.chips = ruleset.rules.chipsValue > 0 ? (prevItem.chips ?? 0) + (chips ?? 0) : 0;
 
-    this.repo.db.em.persist(this.updateAvgPlaceAndGamesCount(newItem, place));
+    this.repo.em.persist(this.updateAvgPlaceAndGamesCount(newItem, place));
   }
 
   public makeNewHistoryItemsForSession(
@@ -142,7 +142,7 @@ export class PlayerHistoryModel extends Model {
     for (const playerId in lastResultsMap) {
       const item = new PlayerHistoryEntity();
       item.playerId = parseInt(playerId, 10);
-      item.event = this.repo.db.em.getReference(EventEntity, eventId);
+      item.event = this.repo.em.getReference(EventEntity, eventId);
       item.sessionId = sessionId;
       item.gamesPlayed = lastResultsMap[playerId].gamesPlayed;
       item.avgPlace = lastResultsMap[playerId].avgPlace;

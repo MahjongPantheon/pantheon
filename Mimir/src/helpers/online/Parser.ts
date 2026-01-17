@@ -75,9 +75,9 @@ export class OnlineParser {
     }
 
     session.intermediateResults = sessionState.state;
-    this._repo.db.em.persist(session);
+    this._repo.em.persist(session);
     rounds.forEach((round) => {
-      this._repo.db.em.persist(round);
+      this._repo.em.persist(round);
     });
 
     return [session, this._parseOutcome(content), rounds, debug];
@@ -288,7 +288,7 @@ export class OnlineParser {
             const reg = new EventRegisteredPlayersEntity();
             reg.event = session.event;
             reg.playerId = playerId;
-            this._repo.db.em.persist(reg);
+            this._repo.em.persist(reg);
           }
         }
       }
