@@ -185,9 +185,7 @@ export class SessionModel extends Model {
         (acc, eventResults) => {
           acc[eventResults[0].event.id] = eventResults.reduce(
             (acc2, item) => {
-              if (!acc2[item.sessionId]) {
-                acc2[item.sessionId] = {};
-              }
+              acc2[item.sessionId] ??= {};
               acc2[item.sessionId][item.playerId] = item;
               return acc2;
             },
@@ -591,6 +589,7 @@ export class SessionModel extends Model {
     const results = this.getSessionResults(event, session, sessionState);
     const playerHistoryModel = this.getModel(PlayerHistoryModel);
     results.forEach((result) => {
+      // persist session history item
       this.repo.em.persist(result);
       // persists player history item inside
       playerHistoryModel.makeNewHistoryItem(
