@@ -4,9 +4,10 @@ import { ConfigService } from './Config.js';
 import { FreyService } from './Frey.js';
 import { LogService } from './Log.js';
 import { MetaService } from './Meta.js';
-import { EntityManager, MikroORM } from '@mikro-orm/core';
+import { MikroORM } from '@mikro-orm/core';
 import { SkirnirService } from './Skirnir.js';
 import { FreyServiceMock } from './FreyMock.js';
+import { EntityManager } from '@mikro-orm/postgresql';
 
 export class Repository {
   protected _db: MikroORM;
@@ -16,7 +17,7 @@ export class Repository {
     protected _orm: MikroORM
   ) {
     this._db = _orm;
-    this._em = _orm.em.fork({ useContext: true });
+    this._em = _orm.em.fork({ useContext: true }) as EntityManager;
   } // request/response, cookies, etc
   // Not a singleton: headers should be new on each request
   public static instance(headers: IncomingHttpHeaders, orm: MikroORM) {

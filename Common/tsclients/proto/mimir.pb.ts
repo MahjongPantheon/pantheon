@@ -394,7 +394,7 @@ export interface ClearStatCachePayload {
 
 export interface TypedGamesAddOnlineReplayPayload {
   eventId: number;
-  platformId: number;
+  platformId: protoAtoms.PlatformType;
   contentType: number;
   logTimestamp: number;
   replayHash: string;
