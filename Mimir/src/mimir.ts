@@ -89,6 +89,7 @@ import { EventGameSeriesModel } from './models/EventGameSeriesModel.js';
 import { PlayerStatsModel } from './models/PlayerStatsModel.js';
 import { OnlineSessionModel } from './models/OnlineSessionModel.js';
 import { SessionResultsModel } from './models/SessionResultsModel.js';
+import { PlayerInSessionModel } from './models/PlayerInSessionModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -217,7 +218,7 @@ export const mimirServer: Mimir<Context> = {
   GetPlayerStats: function (
     playersGetPlayerStatsPayload: PlayersGetPlayerStatsPayload,
     context: Context
-  ): Promise<PlayersGetPlayerStatsResponse> | PlayersGetPlayerStatsResponse {
+  ): Promise<PlayersGetPlayerStatsResponse> {
     const statsModel = Model.getModel(context.repository, PlayerStatsModel);
     return statsModel.getPlayerStats(playersGetPlayerStatsPayload);
   },
@@ -262,14 +263,11 @@ export const mimirServer: Mimir<Context> = {
   GetEventForEdit: function (
     eventsGetEventForEditPayload: EventsGetEventForEditPayload,
     context: Context
-  ): Promise<EventsGetEventForEditResponse> | EventsGetEventForEditResponse {
+  ): Promise<EventsGetEventForEditResponse> {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.getEventForEdit(eventsGetEventForEditPayload);
   },
-  CreateEvent: function (
-    eventData: EventData,
-    context: Context
-  ): Promise<GenericEventPayload> | GenericEventPayload {
+  CreateEvent: function (eventData: EventData, context: Context): Promise<GenericEventPayload> {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.createEvent(eventData);
   },
@@ -283,48 +281,51 @@ export const mimirServer: Mimir<Context> = {
   FinishEvent: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.finishEvent(genericEventPayload);
   },
   ToggleListed: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.toggleListed(genericEventPayload);
   },
   ToggleHideResults: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.toggleHideResults(genericEventPayload);
   },
   ToggleHideAchievements: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.toggleHideAchievements(genericEventPayload);
   },
   GetLastRound: function (
     playersGetLastRoundPayload: PlayersGetLastRoundPayload,
     context: Context
-  ): Promise<PlayersGetLastRoundResponse> | PlayersGetLastRoundResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<PlayersGetLastRoundResponse> {
+    const playerInSessionModel = Model.getModel(context.repository, PlayerInSessionModel);
+    return playerInSessionModel.getLastRound(playersGetLastRoundPayload);
   },
   GetAllRounds: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
-  ): Promise<PlayersGetAllRoundsResponse> | PlayersGetAllRoundsResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<PlayersGetAllRoundsResponse> {
+    const playerInSessionModel = Model.getModel(context.repository, PlayerInSessionModel);
+    return playerInSessionModel.getAllRounds(genericSessionPayload);
   },
   GetLastRoundByHash: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
-  ): Promise<PlayersGetLastRoundByHashResponse> | PlayersGetLastRoundByHashResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<PlayersGetLastRoundByHashResponse> {
+    const playerInSessionModel = Model.getModel(context.repository, PlayerInSessionModel);
+    return playerInSessionModel.getLastRoundByHash(genericSessionPayload);
   },
   RebuildScoring: function (
     genericEventPayload: GenericEventPayload,
