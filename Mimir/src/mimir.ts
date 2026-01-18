@@ -259,6 +259,27 @@ export const mimirServer: Mimir<Context> = {
     const sessionResultsModel = Model.getModel(context.repository, SessionResultsModel);
     return sessionResultsModel.getLastResults(playersGetLastResultsPayload);
   },
+  GetEventForEdit: function (
+    eventsGetEventForEditPayload: EventsGetEventForEditPayload,
+    context: Context
+  ): Promise<EventsGetEventForEditResponse> | EventsGetEventForEditResponse {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.getEventForEdit(eventsGetEventForEditPayload);
+  },
+  CreateEvent: function (
+    eventData: EventData,
+    context: Context
+  ): Promise<GenericEventPayload> | GenericEventPayload {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.createEvent(eventData);
+  },
+  UpdateEvent: function (
+    eventsUpdateEventPayload: EventsUpdateEventPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.updateEvent(eventsUpdateEventPayload);
+  },
   GetLastRound: function (
     playersGetLastRoundPayload: PlayersGetLastRoundPayload,
     context: Context
@@ -277,26 +298,8 @@ export const mimirServer: Mimir<Context> = {
   ): Promise<PlayersGetLastRoundByHashResponse> | PlayersGetLastRoundByHashResponse {
     throw new Error('Function not implemented.');
   },
-  GetEventForEdit: function (
-    eventsGetEventForEditPayload: EventsGetEventForEditPayload,
-    context: Context
-  ): Promise<EventsGetEventForEditResponse> | EventsGetEventForEditResponse {
-    throw new Error('Function not implemented.');
-  },
   RebuildScoring: function (
     genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
-  },
-  CreateEvent: function (
-    eventData: EventData,
-    context: Context
-  ): Promise<GenericEventPayload> | GenericEventPayload {
-    throw new Error('Function not implemented.');
-  },
-  UpdateEvent: function (
-    eventsUpdateEventPayload: EventsUpdateEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
     throw new Error('Function not implemented.');

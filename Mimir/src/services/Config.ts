@@ -12,6 +12,7 @@ type EnvVars = {
   FREY_URL_INTERNAL: string;
   HUGIN_URL_INTERNAL: string;
   SKIRNIR_URL_INTERNAL: string;
+  SIGRUN_URL: string;
   USERINFO_HOOK: string;
   USERINFO_HOOK_API_KEY: string;
   DB_MIMIR_HOST: string;
@@ -112,6 +113,10 @@ export class ConfigService {
       this._envData.SKIRNIR_URL_INTERNAL ??
       'skirnir.pantheon.internal'
     );
+  }
+
+  get sigrunUrl() {
+    return process.env.SIGRUN_URL ?? this._envData.SIGRUN_URL ?? 'http://sigrun.pantheon.internal';
   }
 
   get forsetiUrl() {
