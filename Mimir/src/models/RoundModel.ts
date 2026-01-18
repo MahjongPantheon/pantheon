@@ -8,6 +8,8 @@ import { Round, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { Moment } from 'moment';
 import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
 import { HandEntity } from 'src/entities/Hand.entity.js';
+import { SessionState } from 'src/aggregates/SessionState.js';
+import { PaymentsInfo, PointsCalc } from 'src/helpers/PointsCalc.js';
 
 export class RoundModel extends Model {
   async findBySessionIds(sessionIds: number[]) {
@@ -160,5 +162,128 @@ export class RoundModel extends Model {
     }
 
     await this.repo.em.flush();
+  }
+
+  getRoundPaymentsInfo(event: EventEntity, session: SessionEntity, round: RoundEntity) {
+    const sessionState = new SessionState(
+      event.ruleset,
+      session.intermediateResults?.playerIds ?? [],
+      session.intermediateResults
+    );
+
+    const calc = new PointsCalc();
+    switch (round.outcome) {
+      case RoundOutcome.ROUND_OUTCOME_RON: {
+        calc.ron(
+          event.ruleset.rules,
+          sessionState.getCurrentDealer() === round.hands[0].winnerId,
+          sessionState.getScores(),
+          round.hands[0].winnerId!,
+          round.hands[0].loserId!,
+          round.hands[0].han!,
+          round.hands[0].fu!,
+          round.riichi ?? [],
+          round.honba,
+          sessionState.getRiichiBets(),
+          round.hands[0].paoPlayerId,
+          null,
+          round.riichi?.length ?? 0
+        );
+        return calc.lastPaymentsInfo();
+      }
+      case RoundOutcome.ROUND_OUTCOME_TSUMO: {
+        calc.tsumo(
+          event.ruleset.rules,
+          sessionState.getCurrentDealer(),
+          sessionState.getScores(),
+          round.hands[0].winnerId!,
+          round.hands[0].han!,
+          round.hands[0].fu!,
+          round.riichi ?? [],
+          round.honba,
+          sessionState.getRiichiBets(),
+          round.hands[0].paoPlayerId
+        );
+        return calc.lastPaymentsInfo();
+      }
+      case RoundOutcome.ROUND_OUTCOME_DRAW: {
+        calc.draw(sessionState.getScores(), round.hands[0].tempai ?? [], round.riichi ?? []);
+        return calc.lastPaymentsInfo();
+      }
+      case RoundOutcome.ROUND_OUTCOME_ABORT: {
+        calc.abort(sessionState.getScores(), round.riichi ?? []);
+        return calc.lastPaymentsInfo();
+      }
+      case RoundOutcome.ROUND_OUTCOME_CHOMBO: {
+        calc.chombo(
+          event.ruleset.rules,
+          sessionState.getCurrentDealer(),
+          round.hands[0].loserId!,
+          sessionState.getScores()
+        );
+        return calc.lastPaymentsInfo();
+      }
+      case RoundOutcome.ROUND_OUTCOME_NAGASHI: {
+        calc.nagashi(
+          sessionState.getScores(),
+          sessionState.getCurrentDealer(),
+          round.riichi ?? [],
+          round.hands[0].nagashi ?? []
+        );
+        return calc.lastPaymentsInfo();
+      }
+      case RoundOutcome.ROUND_OUTCOME_MULTIRON: {
+        const riichiWinners = calc.assignRiichiBets(
+          round.hands.map((h) => h.winnerId!),
+          round.riichi ?? [],
+          round.hands[0].loserId!,
+          sessionState.getRiichiBets(),
+          sessionState.getHonba(),
+          sessionState.state.playerIds
+        );
+        calc.resetPaymentsInfo();
+        let payments: PaymentsInfo = {
+          direct: {},
+          riichi: {},
+          honba: {},
+        };
+        for (const hand of round.hands) {
+          calc.ron(
+            event.ruleset.rules,
+            sessionState.getCurrentDealer() === hand.winnerId,
+            sessionState.getScores(),
+            hand.winnerId!,
+            hand.loserId!,
+            hand.han!,
+            hand.fu!,
+            riichiWinners[hand.winnerId!].fromPlayers,
+            riichiWinners[hand.loserId!].honba,
+            riichiWinners[hand.winnerId!].fromTable,
+            round.hands[0].paoPlayerId,
+            null, // TODO: why closest winner is not required here?
+            round.riichi?.length ?? 0
+          );
+          const lastPayments = calc.lastPaymentsInfo();
+          payments = {
+            direct: {
+              ...payments.direct,
+              ...lastPayments.direct,
+            },
+            riichi: {
+              ...payments.riichi,
+              ...lastPayments.riichi,
+            },
+            honba: {
+              ...payments.honba,
+              ...lastPayments.honba,
+            },
+          };
+        }
+        return payments;
+      }
+      case RoundOutcome.ROUND_OUTCOME_UNSPECIFIED:
+      default:
+        throw new Error('Unrecognized round outcome');
+    }
   }
 }
