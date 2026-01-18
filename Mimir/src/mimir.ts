@@ -88,6 +88,7 @@ import { PlayerModel } from './models/PlayerModel.js';
 import { EventGameSeriesModel } from './models/EventGameSeriesModel.js';
 import { PlayerStatsModel } from './models/PlayerStatsModel.js';
 import { OnlineSessionModel } from './models/OnlineSessionModel.js';
+import { SessionResultsModel } from './models/SessionResultsModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -254,8 +255,9 @@ export const mimirServer: Mimir<Context> = {
   GetLastResults: function (
     playersGetLastResultsPayload: PlayersGetLastResultsPayload,
     context: Context
-  ): Promise<PlayersGetLastResultsResponse> | PlayersGetLastResultsResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<PlayersGetLastResultsResponse> {
+    const sessionResultsModel = Model.getModel(context.repository, SessionResultsModel);
+    return sessionResultsModel.getLastResults(playersGetLastResultsPayload);
   },
   GetLastRound: function (
     playersGetLastRoundPayload: PlayersGetLastRoundPayload,
