@@ -4,6 +4,11 @@ import { EventEntity } from 'src/entities/Event.entity.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { SessionState } from 'src/aggregates/SessionState.js';
+import { PlayerHistoryModel } from './PlayerHistoryModel.js';
+import {
+  PlayersGetLastResultsPayload,
+  PlayersGetLastResultsResponse,
+} from 'tsclients/proto/mimir.pb.js';
 
 export class SessionResultsModel extends Model {
   findBySession(sessionId: number[]): Promise<SessionResultsEntity[]> {
@@ -136,5 +141,18 @@ export class SessionResultsModel extends Model {
     }
 
     return this.calc(ruleset, sessionState, playerIds, eventId, sessionId);
+  }
+
+  async getLastResults(
+    input: PlayersGetLastResultsPayload
+  ): Promise<PlayersGetLastResultsResponse> {
+    const playerHistoryModel = this.getModel(PlayerHistoryModel);
+    const lastPlayerResult = await playerHistoryModel.findLastByEventAndPlayer(
+      input.eventId,
+      input.playerId
+    );
+    return {
+      results: lastPlayerResult ? await this.findBySession([lastPlayerResult.sessionId]) : [],
+    };
   }
 }
