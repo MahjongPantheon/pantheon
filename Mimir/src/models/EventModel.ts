@@ -27,6 +27,7 @@ import {
   SessionStatus,
   RegisteredPlayer,
   EventData,
+  GenericSuccessResponse,
 } from 'tsclients/proto/atoms.pb.js';
 import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
@@ -754,6 +755,94 @@ export class EventModel extends Model {
       // should be local event, nothing to update here
     }
 
+    await this.repo.em.persistAndFlush(event);
+
+    return { success: true };
+  }
+
+  async finishEvent(genericEventPayload: GenericEventPayload): Promise<GenericSuccessResponse> {
+    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+    if (!event) {
+      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+    ) {
+      throw new Error("You don't have the necessary permissions to update the event");
+    }
+
+    event.finished = 1;
+    await this.repo.em.persistAndFlush(event);
+
+    return { success: true };
+  }
+
+  async toggleListed(genericEventPayload: GenericEventPayload): Promise<GenericSuccessResponse> {
+    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+    if (!event) {
+      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+    ) {
+      throw new Error("You don't have the necessary permissions to update the event");
+    }
+
+    event.isListed = event.isListed === 1 ? 0 : 1;
+    await this.repo.em.persistAndFlush(event);
+
+    return { success: true };
+  }
+
+  async toggleHideResults(
+    genericEventPayload: GenericEventPayload
+  ): Promise<GenericSuccessResponse> {
+    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+    if (!event) {
+      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+    ) {
+      throw new Error("You don't have the necessary permissions to update the event");
+    }
+
+    event.hideResults = event.hideResults === 1 ? 0 : 1;
+    await this.repo.em.persistAndFlush(event);
+
+    return { success: true };
+  }
+
+  async toggleHideAchievements(
+    genericEventPayload: GenericEventPayload
+  ): Promise<GenericSuccessResponse> {
+    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+    if (!event) {
+      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+    ) {
+      throw new Error("You don't have the necessary permissions to update the event");
+    }
+
+    event.hideAchievements = event.hideAchievements === 1 ? 0 : 1;
     await this.repo.em.persistAndFlush(event);
 
     return { success: true };
