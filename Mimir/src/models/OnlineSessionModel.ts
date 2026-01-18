@@ -12,7 +12,7 @@ import { OnlineParser } from 'src/helpers/online/Parser.js';
 import { Tenhou6OnlineParser } from 'src/helpers/online/Tenhou6Parser.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { CronModel } from './CronModel.js';
-import { makeReplayLink } from 'src/helpers/formatters.js';
+import { formatRound, makeReplayLink } from 'src/helpers/formatters.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { SessionState } from 'src/aggregates/SessionState.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
@@ -178,7 +178,16 @@ export class OnlineSessionModel extends Model {
         replayLink: makeReplayLink(session.replayHash!, platformId),
         players: session.intermediateResults?.playerIds ?? [],
         finalResults: sessionResults,
-        rounds, // TODO: to Round atom
+        rounds: rounds.map((round) =>
+          formatRound(
+            round,
+            new SessionState(
+              event.ruleset,
+              session.intermediateResults?.playerIds ?? [],
+              round.lastSessionState
+            ).state
+          )
+        ),
       },
       players,
     };
