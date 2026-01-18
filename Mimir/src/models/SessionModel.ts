@@ -26,6 +26,8 @@ import {
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundResponse,
+  PlayersGetLastResultsPayload,
+  PlayersGetLastResultsResponse,
 } from 'tsclients/proto/mimir.pb.js';
 import { EventModel } from './EventModel.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
