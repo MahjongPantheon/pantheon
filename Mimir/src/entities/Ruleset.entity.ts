@@ -5,7 +5,7 @@ import { ComplexUma, EndingPolicy, RulesetConfig, Uma, UmaType } from 'tsclients
 @Embeddable()
 export class RulesetEntity {
   @Property()
-  baseRuleset!: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc';
+  baseRuleset!: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'custom';
 
   @Property()
   title!: string;
@@ -14,7 +14,7 @@ export class RulesetEntity {
   rules!: RulesetConfig;
 
   constructor(
-    baseRuleset: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc',
+    baseRuleset: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'custom',
     title: string,
     rules: RulesetConfig
   ) {
@@ -285,6 +285,8 @@ export class RulesetEntity {
           honbaValue: 300,
           doubleYakuman: [],
         });
+      case 'custom':
+        throw new Error('Custom ruleset creation not supported');
     }
   }
 

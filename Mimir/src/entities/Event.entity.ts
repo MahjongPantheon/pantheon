@@ -112,4 +112,7 @@ export class EventEntity {
 
   @Property({ fieldName: 'allow_view_other_tables' })
   allowViewOtherTables!: number;
+
+  @Property({ fieldName: 'allow_manual_add_replay' })
+  allowManualAddReplay!: number;
 }
