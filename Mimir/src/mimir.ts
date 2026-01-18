@@ -280,6 +280,34 @@ export const mimirServer: Mimir<Context> = {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.updateEvent(eventsUpdateEventPayload);
   },
+  FinishEvent: function (
+    genericEventPayload: GenericEventPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.finishEvent(genericEventPayload);
+  },
+  ToggleListed: function (
+    genericEventPayload: GenericEventPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.toggleListed(genericEventPayload);
+  },
+  ToggleHideResults: function (
+    genericEventPayload: GenericEventPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.toggleHideResults(genericEventPayload);
+  },
+  ToggleHideAchievements: function (
+    genericEventPayload: GenericEventPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.toggleHideAchievements(genericEventPayload);
+  },
   GetLastRound: function (
     playersGetLastRoundPayload: PlayersGetLastRoundPayload,
     context: Context
@@ -299,18 +327,6 @@ export const mimirServer: Mimir<Context> = {
     throw new Error('Function not implemented.');
   },
   RebuildScoring: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
-  },
-  FinishEvent: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
-  },
-  ToggleListed: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
@@ -350,18 +366,6 @@ export const mimirServer: Mimir<Context> = {
     eventsGetAchievementsPayload: EventsGetAchievementsPayload,
     context: Context
   ): Promise<EventsGetAchievementsResponse> | EventsGetAchievementsResponse {
-    throw new Error('Function not implemented.');
-  },
-  ToggleHideResults: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
-  },
-  ToggleHideAchievements: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
     throw new Error('Function not implemented.');
   },
   UpdatePlayersLocalIds: function (
