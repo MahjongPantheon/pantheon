@@ -3,6 +3,8 @@ import { Model } from './Model.js';
 import {
   EventsGetAllRegisteredPlayersPayload,
   EventsGetAllRegisteredPlayersResponse,
+  EventsGetEventForEditPayload,
+  EventsGetEventForEditResponse,
   EventsGetEventsByIdPayload,
   EventsGetEventsByIdResponse,
   EventsGetEventsPayload,
@@ -11,6 +13,7 @@ import {
   EventsGetLastGamesResponse,
   EventsGetRatingTableResponse,
   EventsGetTimerStateResponse,
+  EventsUpdateEventPayload,
   PlayersGetCurrentSessionsPayload,
   PlayersGetMyEventsResponse,
 } from 'tsclients/proto/mimir.pb.js';
@@ -23,6 +26,7 @@ import {
   TournamentGamesStatus,
   SessionStatus,
   RegisteredPlayer,
+  EventData,
 } from 'tsclients/proto/atoms.pb.js';
 import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
@@ -35,6 +39,9 @@ import { SessionResultsModel } from './SessionResultsModel.js';
 import { RoundModel } from './RoundModel.js';
 import { PlayerModel } from './PlayerModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+
+const ID_PLACEHOLDER = '##ID##';
 
 export class EventModel extends Model {
   async findById(id: number[]) {
@@ -562,5 +569,193 @@ export class EventModel extends Model {
         return data;
       }),
     };
+  }
+
+  async getEventForEdit(
+    eventsGetEventForEditPayload: EventsGetEventForEditPayload
+  ): Promise<EventsGetEventForEditResponse> {
+    const event = await this.repo.em.findOne(
+      EventEntity,
+      {
+        id: eventsGetEventForEditPayload.id,
+      },
+      { populate: ['onlinePlatform', 'ruleset'] }
+    );
+
+    if (!event) {
+      throw new Error(`Event ${eventsGetEventForEditPayload.id} not found`);
+    }
+
+    return {
+      id: eventsGetEventForEditPayload.id,
+      event: {
+        type: event.isOnline
+          ? EventType.EVENT_TYPE_ONLINE
+          : event.syncStart
+            ? EventType.EVENT_TYPE_TOURNAMENT
+            : EventType.EVENT_TYPE_LOCAL,
+        title: event.title,
+        description: event.description,
+        duration: event.gameDuration,
+        timezone: event.timezone,
+        lobbyId: event.lobbyId,
+        seriesLength: event.seriesLength,
+        minGames: event.minGamesCount,
+        isTeam: event.isTeam === 1,
+        isPrescripted: event.isPrescripted === 1,
+        autostart: event.timeToStart,
+        rulesetConfig: event.ruleset.rules,
+        isListed: event.isListed === 1,
+        isRatingShown: event.hideResults === 0,
+        achievementsShown: event.hideAchievements === 0,
+        allowViewOtherTables: event.allowViewOtherTables === 1,
+        platformId: event.onlinePlatform,
+      },
+      finished: event.finished === 1,
+    };
+  }
+
+  async createEvent(eventData: EventData): Promise<GenericEventPayload> {
+    if (!eventData.rulesetConfig) {
+      throw new Error('Ruleset configuration is required');
+    }
+
+    // Check if we have rights to create new event
+    if (!this.repo.meta.personId) {
+      throw new Error("You don't have the necessary permissions to create a new event");
+    }
+
+    const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
+    const event = new EventEntity();
+    event.title = eventData.title;
+    event.description = eventData.description;
+    event.gameDuration = eventData.duration;
+    event.timezone = eventData.timezone;
+    event.isListed = eventData.isListed ? 1 : 0;
+    event.hideResults = eventData.isRatingShown ? 0 : 1;
+    event.hideAchievements = eventData.achievementsShown ? 0 : 1;
+    event.seriesLength = eventData.seriesLength;
+    event.minGamesCount = eventData.minGames;
+    event.ruleset = new RulesetEntity('custom', 'custom', eventData.rulesetConfig);
+    event.allowViewOtherTables = eventData.allowViewOtherTables ? 1 : 0;
+    event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
+    event.onlinePlatform = eventData.platformId;
+    event.statHost = statHost;
+
+    switch (eventData.type) {
+      case EventType.EVENT_TYPE_TOURNAMENT:
+        event.allowPlayerAppend = 0;
+        event.autoSeating = eventData.isPrescripted ? 0 : 1;
+        event.syncStart = 1;
+        event.syncEnd = 1;
+        event.isOnline = 0;
+        event.useTimer = 1;
+        event.usePenalty = 1;
+        event.isTeam = eventData.isTeam ? 1 : 0;
+        event.timeToStart = eventData.autostart;
+        event.isPrescripted = eventData.isPrescripted ? 1 : 0;
+        break;
+      case EventType.EVENT_TYPE_ONLINE:
+        event.allowPlayerAppend = 0;
+        event.autoSeating = 0;
+        event.syncStart = 0;
+        event.syncEnd = 0;
+        event.isOnline = 1;
+        event.useTimer = 0;
+        event.usePenalty = 1;
+        event.isTeam = eventData.isTeam ? 1 : 0;
+        event.lobbyId = eventData.lobbyId;
+        event.isPrescripted = 0;
+        break;
+      case EventType.EVENT_TYPE_LOCAL:
+        event.allowPlayerAppend = 0;
+        event.autoSeating = 0;
+        event.syncStart = 0;
+        event.syncEnd = 0;
+        event.isOnline = 0;
+        event.useTimer = 0;
+        event.usePenalty = 1;
+        event.isTeam = 0;
+        event.isPrescripted = 0;
+        break;
+      case EventType.EVENT_TYPE_UNSPECIFIED:
+      case null:
+      case undefined:
+      default:
+        throw new Error('Invalid event type');
+    }
+
+    await this.repo.em.persistAndFlush(event);
+
+    await this.repo.frey.AddRuleForPerson({
+      eventId: event.id,
+      personId: this.repo.meta.personId,
+      ruleName: 'ADMIN_EVENT',
+      ruleValue: 1,
+    });
+
+    return { eventId: event.id };
+  }
+
+  async updateEvent(eventData: EventsUpdateEventPayload): Promise<GenericSuccessResponse> {
+    if (!eventData.event.rulesetConfig) {
+      throw new Error('Ruleset configuration is required');
+    }
+
+    const event = await this.repo.em.findOneOrFail(EventEntity, { id: eventData.id });
+    if (!event) {
+      throw new Error(`Event with id ${eventData.id} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventData.id))) {
+      throw new Error("You don't have the necessary permissions to update the event");
+    }
+
+    const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
+    event.title = eventData.event.title;
+    event.description = eventData.event.description;
+    event.gameDuration = eventData.event.duration;
+    event.timezone = eventData.event.timezone;
+    event.isListed = eventData.event.isListed ? 1 : 0;
+    event.hideResults = eventData.event.isRatingShown ? 0 : 1;
+    event.hideAchievements = eventData.event.achievementsShown ? 0 : 1;
+    event.seriesLength = eventData.event.seriesLength;
+    event.minGamesCount = eventData.event.minGames;
+    event.ruleset = new RulesetEntity('custom', 'custom', eventData.event.rulesetConfig);
+    event.allowViewOtherTables = eventData.event.allowViewOtherTables ? 1 : 0;
+    event.allowManualAddReplay = eventData.event.allowManualAddReplay ? 1 : 0;
+    event.statHost = statHost;
+
+    if (
+      this.repo.meta.personId &&
+      (await this.repo.frey.GetSuperadminFlag({ personId: this.repo.meta.personId }))
+    ) {
+      event.onlinePlatform = eventData.event.platformId;
+    } else {
+      if (event.isOnline) {
+        // fixes online event created by users
+        event.onlinePlatform = PlatformType.PLATFORM_TYPE_TENHOUNET;
+      }
+    }
+
+    if (event.syncStart) {
+      // should be a tournament
+      event.autoSeating = eventData.event.isPrescripted ? 0 : 1;
+      event.isTeam = eventData.event.isTeam ? 1 : 0;
+      event.timeToStart = eventData.event.autostart;
+      event.isPrescripted = eventData.event.isPrescripted ? 1 : 0;
+    } else if (event.isOnline) {
+      // should be online tournament
+      event.isTeam = eventData.event.isTeam ? 1 : 0;
+      event.lobbyId = eventData.event.lobbyId;
+    } else {
+      // should be local event, nothing to update here
+    }
+
+    await this.repo.em.persistAndFlush(event);
+
+    return { success: true };
   }
 }

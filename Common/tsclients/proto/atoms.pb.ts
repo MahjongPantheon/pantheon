@@ -454,6 +454,7 @@ export interface EventData {
   isRatingShown: boolean;
   achievementsShown: boolean;
   allowViewOtherTables: boolean;
+  allowManualAddReplay: boolean;
   platformId: PlatformType;
 }
 

@@ -463,6 +463,7 @@ message EventData {
   bool achievements_shown = 17;
   bool allow_view_other_tables = 18;
   PlatformType platform_id = 19;
+  bool allow_manual_add_replay = 20;
 }
 
 message TableState {
@@ -607,7 +608,7 @@ message RulesetConfig {
 }
 
 message MajsoulSearchEx {
-  string nickname= 1;
+  string nickname = 1;
   int32 account_id = 2;
 }
 
