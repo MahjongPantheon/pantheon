@@ -330,14 +330,16 @@ export const mimirServer: Mimir<Context> = {
   RebuildScoring: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<GenericSuccessResponse> {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.rebuildScoring(genericEventPayload.eventId);
   },
   GetTablesState: function (
     eventsGetTablesStatePayload: EventsGetTablesStatePayload,
     context: Context
-  ): Promise<EventsGetTablesStateResponse> | EventsGetTablesStateResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<EventsGetTablesStateResponse> {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.getTablesState(eventsGetTablesStatePayload);
   },
   StartTimer: function (
     genericEventPayload: GenericEventPayload,
