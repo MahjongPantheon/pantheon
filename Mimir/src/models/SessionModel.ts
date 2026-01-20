@@ -26,8 +26,6 @@ import {
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundResponse,
-  PlayersGetLastResultsPayload,
-  PlayersGetLastResultsResponse,
 } from 'tsclients/proto/mimir.pb.js';
 import { EventModel } from './EventModel.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
@@ -722,5 +720,46 @@ export class SessionModel extends Model {
                       : RoundOutcome.ROUND_OUTCOME_UNSPECIFIED,
       },
     };
+  }
+
+  async mayDefinalize(session: SessionEntity) {
+    if (session.status !== SessionStatus.SESSION_STATUS_FINISHED) {
+      return false;
+    }
+
+    if (!session.endDate || !(await this.isLastForPlayers(session))) {
+      return false;
+    }
+
+    const endDate = moment.tz(session.endDate, session.event.timezone);
+    const now = moment.tz(session.event.timezone);
+    return !(now.diff(endDate, 'days') > 0 || now.diff(endDate, 'hours') >= 3);
+  }
+
+  /**
+   * Check if current session is chronologically last for all its players.
+   * Exclude cancelled games, as they're not counted
+   */
+  async isLastForPlayers(session: SessionEntity) {
+    const query = this.repo.em
+      .getKnex()
+      .select('*')
+      .from('session_player')
+      .join('session', (qb) =>
+        qb
+          .on('session_player.session_id', 'session.id')
+          .andOnIn('session.event_id', [session.event.id])
+          .andOnNotIn('session.status', [SessionStatus.SESSION_STATUS_CANCELLED])
+      )
+      .whereIn('session_player.player_id', session.intermediateResults?.playerIds ?? [])
+      .orderBy('session_player.id', 'desc')
+      .limit(4);
+    const lastSessions = await this.repo.em.execute(query);
+    for (const lastSession of lastSessions) {
+      if (lastSession.id !== session.id) {
+        return false;
+      }
+    }
+    return true;
   }
 }

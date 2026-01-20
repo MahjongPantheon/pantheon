@@ -12,6 +12,8 @@ import {
   EventsGetLastGamesPayload,
   EventsGetLastGamesResponse,
   EventsGetRatingTableResponse,
+  EventsGetTablesStatePayload,
+  EventsGetTablesStateResponse,
   EventsGetTimerStateResponse,
   EventsUpdateEventPayload,
   PlayersGetCurrentSessionsPayload,
@@ -28,6 +30,7 @@ import {
   RegisteredPlayer,
   EventData,
   GenericSuccessResponse,
+  PersonEx,
 } from 'tsclients/proto/atoms.pb.js';
 import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
@@ -41,6 +44,9 @@ import { RoundModel } from './RoundModel.js';
 import { PlayerModel } from './PlayerModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
+import { SessionState } from 'src/aggregates/SessionState.js';
+import { RoundEntity } from 'src/entities/Round.entity.js';
 
 const ID_PLACEHOLDER = '##ID##';
 
@@ -846,5 +852,210 @@ export class EventModel extends Model {
     await this.repo.em.persistAndFlush(event);
 
     return { success: true };
+  }
+
+  async rebuildScoring(eventId: number) {
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error("You don't have the necessary permissions to update the event");
+    }
+
+    const sessionModel = this.getModel(SessionModel);
+    const sessions = await sessionModel.findByEventAndStatus(
+      [eventId],
+      [SessionStatus.SESSION_STATUS_FINISHED],
+      0,
+      null,
+      'id',
+      'asc'
+    );
+    if (sessions.length === 0) {
+      return { success: true };
+    }
+    await this.repo.em.populate(sessions, ['event']);
+
+    const sessionResults = await this.repo.em.findAll(SessionResultsEntity, {
+      where: { event: this.repo.em.getReference(EventEntity, eventId) },
+    });
+
+    this.repo.em.remove(sessionResults);
+
+    const playerResults = await this.repo.em.findAll(PlayerHistoryEntity, {
+      where: { event: this.repo.em.getReference(EventEntity, eventId) },
+    });
+
+    this.repo.em.remove(playerResults);
+
+    // flush all removals
+    await this.repo.em.flush();
+
+    for (const session of sessions) {
+      sessionModel.finalizeGame(
+        session.event,
+        session,
+        new SessionState(
+          session.event.ruleset,
+          session.intermediateResults?.playerIds ?? [],
+          session.intermediateResults
+        ),
+        true
+      );
+    }
+
+    // flush new data
+    await this.repo.em.flush();
+
+    return { success: true };
+  }
+
+  async getTablesState(
+    eventsGetTablesStatePayload: EventsGetTablesStatePayload
+  ): Promise<EventsGetTablesStateResponse> {
+    const eventModel = this.getModel(EventModel);
+    const events = await eventModel.findById([eventsGetTablesStatePayload.eventId]);
+
+    if (!events.length) {
+      throw new Error(`Event ${eventsGetTablesStatePayload.eventId} not found`);
+    }
+
+    const sessionModel = this.getModel(SessionModel);
+    const playerModel = this.getModel(PlayerModel);
+    const eventRegistrationModel = this.getModel(EventRegistrationModel);
+
+    const personId = this.repo.meta.personId;
+    const currentlyPlayedSession = personId
+      ? await sessionModel.findByPlayerAndEvent(personId, events[0].id)
+      : [];
+    const canViewOtherTables =
+      events[0].allowViewOtherTables ||
+      currentlyPlayedSession.length === 0 ||
+      (await playerModel.isEventAdmin(events[0].id)) ||
+      (await playerModel.isEventReferee(events[0].id));
+
+    if (!canViewOtherTables) {
+      throw new Error(`Viewing other tables is not allowed for this event`);
+    }
+
+    const registeredPlayers = (
+      await eventRegistrationModel.findRegisteredPlayersIdsByEvent(events[0].id)
+    ).filter((reg) => {
+      if (reg.ignoreSeating) {
+        return false;
+      }
+      if (events[0].isPrescripted && !reg.localId) {
+        return false;
+      }
+      return true;
+    });
+
+    const tablesCount = events[0].syncStart ? Math.floor(registeredPlayers.length / 4) : 10;
+
+    const lastGames = await sessionModel.findByEventAndStatus(
+      [events[0].id],
+      [
+        SessionStatus.SESSION_STATUS_FINISHED,
+        SessionStatus.SESSION_STATUS_PREFINISHED,
+        SessionStatus.SESSION_STATUS_INPROGRESS,
+      ],
+      0,
+      tablesCount,
+      'endDate'
+    );
+
+    return this._formatTablesState(
+      events[0],
+      lastGames,
+      registeredPlayers,
+      eventsGetTablesStatePayload.omitLastRound
+    );
+  }
+
+  async _formatTablesState(
+    event: EventEntity,
+    lastGames: SessionEntity[],
+    registeredPlayers: EventRegisteredPlayersEntity[],
+    omitLastRound = false
+  ): Promise<EventsGetTablesStateResponse> {
+    if (lastGames.length === 0) {
+      return { tables: [] };
+    }
+
+    await this.repo.em.populate(lastGames, ['event']);
+
+    const playerModel = this.getModel(PlayerModel);
+    const players = (
+      await playerModel.findById(registeredPlayers.map((player) => player.playerId))
+    ).reduce(
+      (acc, player) => {
+        acc[player.id] = player;
+        return acc;
+      },
+      {} as Record<number, PersonEx>
+    );
+
+    const roundModel = this.getModel(RoundModel);
+    const lastRounds = omitLastRound
+      ? {}
+      : (await roundModel.findBySessionIds(lastGames.map((game) => game.id))).reduce(
+          (acc, round) => {
+            if (!acc[round.session.id] || acc[round.session.id].id < round.id) {
+              acc[round.session.id] = round;
+            }
+
+            return acc;
+          },
+          {} as Record<number, RoundEntity>
+        );
+
+    const sessionStates = lastGames.map(
+      (game) =>
+        new SessionState(
+          event.ruleset,
+          game.intermediateResults?.playerIds ?? [],
+          game.intermediateResults
+        )
+    );
+
+    const sessionModel = this.getModel(SessionModel);
+    // TODO: looped db query
+    const definalizeFlags = await Promise.all(
+      lastGames.map((game) => sessionModel.mayDefinalize(game))
+    );
+
+    return {
+      tables: lastGames.map((game, gIndex) => {
+        const currentScores = sessionStates[game.id].getScores();
+        const chombo = sessionStates[game.id].getChombo();
+        const scores = Object.keys(currentScores).map((id) => ({
+          playerId: +id,
+          score: currentScores[+id],
+          chomboCount: chombo[+id],
+        }));
+        return {
+          status: game.status,
+          mayDefinalize: definalizeFlags[gIndex],
+          sessionHash: game.representationalHash,
+          tableIndex: game.tableIndex,
+          lastRound: lastRounds[game.id],
+          currentRoundIndex: sessionStates[game.id].getRound(),
+          scores,
+          players: registeredPlayers.map((p) => {
+            return {
+              id: p.id,
+              title: players[p.id].title,
+              localId: p.localId,
+              teamName: p.teamName,
+              tenhouId: players[p.id].tenhouId,
+              ignoreSeating: p.ignoreSeating,
+              replacedBy: p.replacementId,
+              hasAvatar: players[p.id].hasAvatar,
+              lastUpdate: players[p.id].lastUpdate,
+            };
+          }),
+          extraTime: game.extraTime,
+        };
+      }),
+    };
   }
 }

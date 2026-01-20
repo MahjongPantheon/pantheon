@@ -159,7 +159,13 @@ export class PlayerModel extends Model {
 
   async isEventAdmin(eventId: number) {
     const personId = this.repo.meta.personId;
-    const admins = await this.repo.frey.GetEventAdmins({ eventId });
-    return admins.admins.includes(personId);
+    const data = await this.repo.frey.GetEventAdmins({ eventId });
+    return data.admins.includes(personId);
+  }
+
+  async isEventReferee(eventId: number) {
+    const personId = this.repo.meta.personId;
+    const data = await this.repo.frey.GetEventReferees({ eventId });
+    return data.referees.includes(personId);
   }
 }
