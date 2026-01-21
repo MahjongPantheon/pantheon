@@ -3,21 +3,29 @@ namespace Mimir;
 
 ini_set('display_errors', 'On');
 ini_set('memory_limit', '1024M');
+require_once __DIR__ . '/../../src/Config.php';
+require_once __DIR__ . '/../../src/DataSource.php';
+require_once __DIR__ . '/../../src/Db.php';
+require_once __DIR__ . '/../../src/FreyClientTwirp.php';
+require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/helpers/PointsCalc.php';
 require_once __DIR__ . '/../../src/helpers/SessionState.php';
 require_once __DIR__ . '/../../src/primitives/Session.php';
 require_once __DIR__ . '/../../src/primitives/SessionResults.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
 require_once __DIR__ . '/../../src/models/Event.php';
+require_once __DIR__ . '/../../src/models/PlayerStat.php';
 
 define('ACH_SLEEP_INTERVAL', 2);
 
 /**
  * @param DataSource $ds
+ * @param Config $config
+ * @param Meta $meta
  * @param int $eventId
  * @return void
  */
-function runAchievements(DataSource $ds, $eventId)
+function runAchievements(DataSource $ds, Config $config, Meta $meta, $eventId)
 {
     try {
         $processedData = [];
@@ -70,7 +78,7 @@ function runAchievements(DataSource $ds, $eventId)
         $processedData['justAsPlanned'] = getJustAsPlanned($ds->local(), [$eventId], $players);
         sleep(ACH_SLEEP_INTERVAL);
         echo 'Running [carefulPlanning] on event #' . $eventId . PHP_EOL;
-        $processedData['carefulPlanning'] = getMinFeedsScore($eventId, $games, $players, $rounds);
+        $processedData['carefulPlanning'] = getMinFeedsScore($ds, $config, $meta, $eventId, $games, $players, $rounds);
         sleep(ACH_SLEEP_INTERVAL);
         echo 'Running [doraLord] on event #' . $eventId . PHP_EOL;
         $processedData['doraLord'] = getMaxAverageDoraCount($ds->local(), [$eventId], $players);
@@ -282,58 +290,11 @@ function getHonoredDonor(int $eventId, array $games, array $players, array $roun
 }
 
 /**
- * @param RoundPrimitive $round
- * @param SessionState $sessionState
- * @param array $payments
- * @return array
- * @throws \Exception
- */
-function addLoserPayment(RoundPrimitive $round, SessionState $sessionState, array $payments)
-{
-    if (!in_array($sessionState->getLastOutcome(), ['ron', 'multiron'])) {
-        return $payments;
-    }
-
-    $lastSessionState = $round->getLastSessionState();
-    $loserId = $round->getLoserId();
-
-    if (empty($loserId)) {
-        return $payments;
-    }
-
-    $loserHasRiichi = in_array($loserId, $round->getRiichiIds());
-
-    $lastScore = $lastSessionState->getScores()[$loserId];
-    $currentScore = $sessionState->getScores()[$loserId];
-
-    $payment = $lastScore - $currentScore;
-    if ($loserHasRiichi) {
-        $payment -= 1000;
-    }
-
-    if (empty($payments[$loserId])) {
-        $payments[$loserId] = [
-            'sum'   => 0,
-            'count' => 0
-        ];
-    }
-
-    $payments[$loserId]['sum'] += $payment;
-
-    if ($round instanceof MultiRoundPrimitive) {
-        $rounds = $round->rounds();
-        $multiRonCount = $rounds[0]->getMultiRon();
-        $payments[$loserId]['count'] += $multiRonCount;
-    } else {
-        $payments[$loserId]['count']++;
-    }
-
-    return $payments;
-}
-
-/**
  * Get players who has the smallest average cost of opponents hand that player has dealt
  *
+ * @param DataSource $ds
+ * @param Config $config
+ * @param Meta $meta
  * @param int $eventId
  * @param SessionPrimitive[] $games
  * @param array $players
@@ -341,30 +302,23 @@ function addLoserPayment(RoundPrimitive $round, SessionState $sessionState, arra
  * @return array
  * @throws \Exception
  */
-function getMinFeedsScore(int $eventId, array $games, array $players, array $rounds)
-{
-    $payments = [];
-    foreach ($games as $session) {
-        $lastRound = null;
-        foreach ($rounds[$session->getId()] as $round) {
-            if ($lastRound === null) {
-                $lastRound = $round;
-                continue;
-            }
-
-            $lastSessionState = $round->getLastSessionState();
-            $payments = addLoserPayment($lastRound, $lastSessionState, $payments);
-            $lastRound = $round;
-        }
-
-        if (!empty($lastRound)) {
-            $payments = addLoserPayment($lastRound, $session->getCurrentState(), $payments);
-        }
-    }
-
+function getMinFeedsScore(
+    DataSource $ds,
+    Config $config,
+    Meta $meta,
+    int $eventId,
+    array $games,
+    array $players,
+    array $rounds
+) {
+    playerStat = new PlayerStatModel($ds, $config, $meta)
     $feedsScores = [];
-    foreach ($payments as $key => $value) {
-        $feedsScores[$key] = $value['sum'] / $value['count'];
+    foreach ($players as $playerId => $playerInfo) {
+        $summary = playerStat->getStats([$eventId], $playerId)['win_summary'];
+        $feedCount = $summary['feed'];
+        if ($feedCount > 0) {
+            $feedsScores[$playerId] = $summary['points_lost_ron'] / $feedCount;
+        }
     }
 
     asort($feedsScores);
