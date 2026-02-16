@@ -1058,4 +1058,26 @@ export class EventModel extends Model {
       }),
     };
   }
+
+  async startTimer(eventId: number) {
+    const event = await this.repo.db.em.findOne(EventEntity, { id: eventId });
+    if (!event) throw new Error(`Event ${eventId} not found`);
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+    ) {
+      throw new Error("You don't have the necessary permissions to start timer");
+    }
+
+    if (event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
+      event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
+    }
+
+    event.lastTimer = Date.now();
+    await this.repo.db.em.persistAndFlush(event);
+    return { success: true };
+  }
 }
