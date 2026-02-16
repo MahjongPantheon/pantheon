@@ -23,6 +23,7 @@ import { formatGameResult } from 'src/helpers/formatters.js';
 import { RoundModel } from './RoundModel.js';
 import { Populate } from '@mikro-orm/postgresql';
 import {
+  AddExtraTimePayload,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundResponse,
@@ -761,5 +762,39 @@ export class SessionModel extends Model {
       }
     }
     return true;
+  }
+
+  async addExtraTime(addExtraTimePayload: AddExtraTimePayload) {
+    const sessions = await this.repo.db.em.find(
+      SessionEntity,
+      {
+        representationalHash: addExtraTimePayload.sessionHashList,
+      },
+      { populate: ['event'] }
+    );
+
+    if (!sessions.every((s) => s.event.id === sessions[0].event.id)) {
+      throw new Error('Sessions must belong to the same event');
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(
+        (await playerModel.isEventAdmin(sessions[0].event.id)) &&
+        (await playerModel.isEventReferee(sessions[0].event.id))
+      )
+    ) {
+      throw new Error("You don't have the necessary permissions to add extra time");
+    }
+
+    for (const session of sessions) {
+      session.extraTime += addExtraTimePayload.extraTime;
+      this.repo.db.em.persist(session);
+    }
+
+    await this.repo.db.em.flush();
+    return { success: true };
   }
 }
