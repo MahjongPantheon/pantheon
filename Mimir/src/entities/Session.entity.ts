@@ -51,6 +51,6 @@ export class SessionEntity {
   })
   replayHash?: string;
 
-  @Property({ fieldName: 'extra_time', comment: 'extra time for the session in minutes' })
+  @Property({ fieldName: 'extra_time', comment: 'extra time for the session in seconds' })
   extraTime!: number;
 }
