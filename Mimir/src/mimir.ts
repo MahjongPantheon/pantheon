@@ -344,247 +344,249 @@ export const mimirServer: Mimir<Context> = {
   StartTimer: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
+  ): Promise<GenericSuccessResponse> {
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.startTimer(genericEventPayload.eventId);
+  },
+  AddExtraTime: function (
+    addExtraTimePayload: AddExtraTimePayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> {
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.addExtraTime(addExtraTimePayload);
   },
   RegisterPlayer: function (
     eventsRegisterPlayerPayload: EventsRegisterPlayerPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   UnregisterPlayer: function (
     eventsUnregisterPlayerPayload: EventsUnregisterPlayerPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   UpdatePlayerSeatingFlag: function (
     eventsUpdatePlayerSeatingFlagPayload: EventsUpdatePlayerSeatingFlagPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   GetAchievements: function (
     eventsGetAchievementsPayload: EventsGetAchievementsPayload,
     context: Context
-  ): Promise<EventsGetAchievementsResponse> | EventsGetAchievementsResponse {
+  ): Promise<EventsGetAchievementsResponse> {
     throw new Error('Function not implemented.');
   },
   UpdatePlayersLocalIds: function (
     eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   UpdatePlayerReplacement: function (
     eventsUpdatePlayerReplacementPayload: EventsUpdatePlayerReplacementPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   UpdatePlayersTeams: function (
     eventsUpdatePlayersTeamsPayload: EventsUpdatePlayersTeamsPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   StartGame: function (
     gamesStartGamePayload: GamesStartGamePayload,
     context: Context
-  ): Promise<GenericSessionPayload> | GenericSessionPayload {
+  ): Promise<GenericSessionPayload> {
     throw new Error('Function not implemented.');
   },
   EndGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   CancelGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   FinalizeSession: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   DropLastRound: function (
     gamesDropLastRoundPayload: GamesDropLastRoundPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   DefinalizeGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   AddPenalty: function (
     gamesAddPenaltyPayload: GamesAddPenaltyPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   AddPenaltyGame: function (
     gamesAddPenaltyGamePayload: GamesAddPenaltyGamePayload,
     context: Context
-  ): Promise<GenericSessionPayload> | GenericSessionPayload {
+  ): Promise<GenericSessionPayload> {
     throw new Error('Function not implemented.');
   },
   GetPlayer: function (
     playersGetPlayerPayload: PlayersGetPlayerPayload,
     context: Context
-  ): Promise<PlayersGetPlayerResponse> | PlayersGetPlayerResponse {
+  ): Promise<PlayersGetPlayerResponse> {
     throw new Error('Function not implemented.');
   },
   GetCurrentSeating: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<EventsGetCurrentSeatingResponse> | EventsGetCurrentSeatingResponse {
+  ): Promise<EventsGetCurrentSeatingResponse> {
     throw new Error('Function not implemented.');
   },
   MakeShuffledSeating: function (
     seatingMakeShuffledSeatingPayload: SeatingMakeShuffledSeatingPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   MakeSwissSeating: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   ResetSeating: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   GenerateSwissSeating: function (
     seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
     context: Context
-  ): Promise<SeatingGenerateSwissSeatingResponse> | SeatingGenerateSwissSeatingResponse {
+  ): Promise<SeatingGenerateSwissSeatingResponse> {
     throw new Error('Function not implemented.');
   },
   MakeIntervalSeating: function (
     seatingMakeIntervalSeatingPayload: SeatingMakeIntervalSeatingPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   MakePrescriptedSeating: function (
     seatingMakePrescriptedSeatingPayload: SeatingMakePrescriptedSeatingPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   GetNextPrescriptedSeating: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<SeatingGetNextPrescriptedSeatingResponse> | SeatingGetNextPrescriptedSeatingResponse {
+  ): Promise<SeatingGetNextPrescriptedSeatingResponse> {
     throw new Error('Function not implemented.');
   },
   GetPrescriptedEventConfig: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<EventsGetPrescriptedEventConfigResponse> | EventsGetPrescriptedEventConfigResponse {
+  ): Promise<EventsGetPrescriptedEventConfigResponse> {
     throw new Error('Function not implemented.');
   },
   UpdatePrescriptedEventConfig: function (
     eventsUpdatePrescriptedEventConfigPayload: EventsUpdatePrescriptedEventConfigPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   InitStartingTimer: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   GetStartingTimer: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<EventsGetStartingTimerResponse> | EventsGetStartingTimerResponse {
+  ): Promise<EventsGetStartingTimerResponse> {
     throw new Error('Function not implemented.');
   },
   ClearStatCache: function (
     clearStatCachePayload: ClearStatCachePayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   ForceFinishGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   NotifyPlayersSessionStartsSoon: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   CallReferee: function (
     callRefereePayload: CallRefereePayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   RecalcAchievements: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   RecalcPlayerStats: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   ListPenalties: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<PenaltiesResponse> | PenaltiesResponse {
+  ): Promise<PenaltiesResponse> {
     throw new Error('Function not implemented.');
   },
   CancelPenalty: function (
     cancelPenaltyPayload: CancelPenaltyPayload,
     context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
-    throw new Error('Function not implemented.');
-  },
-  AddExtraTime: function (
-    addExtraTimePayload: AddExtraTimePayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> | GenericSuccessResponse {
+  ): Promise<GenericSuccessResponse> {
     throw new Error('Function not implemented.');
   },
   ListMyPenalties: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<PenaltiesResponse> | PenaltiesResponse {
+  ): Promise<PenaltiesResponse> {
     throw new Error('Function not implemented.');
   },
   ListChombo: function (
     genericEventPayload: GenericEventPayload,
     context: Context
-  ): Promise<ChomboResponse> | ChomboResponse {
+  ): Promise<ChomboResponse> {
     throw new Error('Function not implemented.');
   },
   GetCurrentStateForPlayer: function (
     getCurrentStatePayload: GetCurrentStatePayload,
     context: Context
-  ): Promise<GetCurrentStateResponse> | GetCurrentStateResponse {
+  ): Promise<GetCurrentStateResponse> {
     throw new Error('Function not implemented.');
   },
 };
