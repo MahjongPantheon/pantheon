@@ -63,13 +63,14 @@ Please note that db and pgadmin containers are not restarted during `make prod_r
 #### Email agent
 
 Pantheon provides container with pre-installed email agent (Hermod). If you want to send emails signed with DKIM, you will need to place your private keys
-to `Hermod/opendkim_keys` folder. Also following setting are required: 
+to `Hermod/opendkim_keys` folder. Also following setting are required:
+
 - Some unique key in `MAIL_ACTION_KEY` variable in your environment config.
 - Mailer root host in `ALLOWED_SENDER_DOMAINS` variable in your environment config. Mailer address also will be set to `noreply@[allowed domain]`.
 
 #### HTTPS
 
-You may use `bin/letsencrypt-scripts` and `nginx-reverse-proxy.example.conf` as an example and reference to set up your SSL certificates using Let's Encrypt. 
+You may use `bin/letsencrypt-scripts` and `nginx-reverse-proxy.example.conf` as an example and reference to set up your SSL certificates using Let's Encrypt.
 If you're not intending to use https, please disable corresponding directives in your reverse proxy nginx config.
 
 #### Setting up database backups
@@ -84,7 +85,7 @@ of the `Database` container (you can get to shell using `make shell_db`). If you
 
 Every 15 minutes the database dump is made. You may view history of backups using `make backup_show_history` in `Database` folder. To rollback your
 database to previous state you may use either included pgadmin4 container (running at 5632 port) or the one-liner command from the `Database` folder:
-`COMMIT=1234567 make backup_restore`, where `1234567` should be replaced with target commit hash (which can be found using `make backup_show_history` command). 
+`COMMIT=1234567 make backup_restore`, where `1234567` should be replaced with target commit hash (which can be found using `make backup_show_history` command).
 Please note that one-liner will rollback both mimir and frey databases!
 
 Please note that backups will consume quite much disk space. To clean up some space you may consider deleting the `/var/lib/postgresql/backup/.git` directory
@@ -92,13 +93,14 @@ and changing the `BACKUP_GIT_REMOTE` variable, followed by containers restart.
 
 ### Development environment
 
-Pantheon developer environment works on *nix hosts (mac, linux, *bsd). Windows-based systems 
+Pantheon developer environment works on *nix hosts (mac, linux, *bsd). Windows-based systems
 are not supported (while it still MAY work, it is not tested at all, also you may want to try
 using it under WSL in Windows 10+).
 
 #### Prerequisites
 
 First, please add the following entries to your `/etc/hosts` file so you could access pantheon services locally:
+
 ```
 127.0.0.1   bragi.pantheon.local
 127.0.0.1   forseti.pantheon.local
@@ -117,23 +119,24 @@ First, please add the following entries to your `/etc/hosts` file so you could a
 ```
 
 Second, make sure your **local port 80** is not used by any other software (like nginx, apache or another web server).
+
 - If the port is not used, everything should work as is. Please note that in this case Pantheon development environment will use port 80, and no other service using that port can be started until `make pantheon_stop` is run.
 - Otherwise, please refer to `Common/ReverseProxy/external-proxy.example.conf` file for a list of hosts configuration (for nginx). For other web servers, please use equivalent instructions. Modify configuration of your currently running web server to allow requests pass to the services from your local browser.
-- If there is some external nginx running inside docker container on your local machine, you can use `Common/ReverseProxy/nginx.conf` file to add pantheon configuration there. You'll also need to add the container to `pantheon_internal_net` docker network.  
+- If there is some external nginx running inside docker container on your local machine, you can use `Common/ReverseProxy/nginx.conf` file to add pantheon configuration there. You'll also need to add the container to `pantheon_internal_net` docker network.
 
 #### Installing and running
 
 Make sure you have Docker, Docker compose plugin and Docker buildx plugin installed and daemon running on your system. For debugging, please make sure all the php extensions are
-installed as well, see Dockerfile for a complete list. 
+installed as well, see Dockerfile for a complete list.
 
 _Note: on some linux distros almost every container-related command should be run as root. If nothing happens, or error
 is displayed, try adding `sudo` before `make`._
 
-1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process. 
+1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process.
    - As an option, you can run `make container_dev` to build containers from scratch on you local machine. This may take a long time.
 2. Run `make dev` to start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
 3. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
-to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
+   to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
 4. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
 
 Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
@@ -147,6 +150,7 @@ A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md)
 Local port 5532 will available for PostgreSQL connections - if you want to use external pgAdmin3/4 or any other client to access your databases.
 
 Services will be available at:
+
 - http://mimir.pantheon.local for **Mimir** game management API
 - http://sigrun.pantheon.local for **Sigrun** public interface
 - http://tyr.pantheon.local for **Tyr** mobile interface
@@ -171,14 +175,16 @@ Services will be available at:
 - http://dozzle.pantheon.local for docker logs viewer.
 
 **Mimir** and **Frey** use [twirp](https://github.com/twitchtv/twirp) interface to communicate with other services.
-See protocol description files in `Common` folder. 
-Please note: 
+See protocol description files in `Common` folder.
+Please note:
+
 - If you change the protocols, you should run `make proto_gen` in root repo folder to regenerate all protocol related code.
 - You always should change the proto files and never should change the generated code by hand.
 
 #### Upgrade to Frey v2
 
 Frey has been rewritten from scratch for better maintainability. To migrate to new version you'll need to:
+
 - Update containers with `make pull`
 - Update the code using `git fetch && git checkout origin/master`
 - Restart and rebuild everything using `make prod_restart && make prod_compile`
@@ -189,15 +195,17 @@ After the steps are completed, you may want to remove old `frey` database. To do
 #### End-to-end tests
 
 Pantheon services include e2e testing framework based on Playwright. To run it locally, make sure pantheon development
-environment is running (`make dev`) and use `make e2e_dev` command in separate terminal window. Note that it will run tests against 
+environment is running (`make dev`) and use `make e2e_dev` command in separate terminal window. Note that it will run tests against
 development build, so no SSR is tested locally.
 
 If you want to test full production build locally, you may stop the development environment and use following commands:
+
 ```
 make e2e_run
 make e2e_compile
 make e2e
 ```
+
 Remember to remove all the files created during the run before committing changes.
 
 #### Email agent
@@ -210,10 +218,12 @@ by target email relay (e.g. gmail rejects it in 100% of cases).
 
 Pantheon supports realtime notifications (currently only via Telegram, but Discord may also be added soon).
 To use this functionality you should register a bot in Telegram and set its nickname and secret token in Env/.env.production:
+
 ```
 BOT_TOKEN=yourtoken
 VITE_BOT_NICKNAME=bot_nickname
 ```
+
 After that your users should open the bot, start the conversation and follow the link it sends. After pressing
 the confirmation button, bot will be enabled for this particular user.
 
@@ -225,10 +235,11 @@ the confirmation button, bot will be enabled for this particular user.
 - Podman setup may conflict with apparmor policies. You may want either to disable apparmor service or to allow read-write access to pantheon directory for everybody.
 - Podman storage settings may cause errors in overlay management, so you might want to erase the config file: `sudo rm -f /etc/containers/storage.conf`.
 - In case of any other problems you might also try resetting podman to system defaults by running `podman system reset -f`. CAUTION: This will delete all running containers, images and volumes.
-- Development environment special notes: 
+- Development environment special notes:
   - For dev mode, when running podman in rootless mode (which is default), make sure you set `net.ipv4.ip_unprivileged_port_start=80` in your `/etc/sysctl.conf` to allow binding on port 80, otherwise reverse proxy won't be able to start when you run `make dev`.
 
 Basic all-in-one script for all the notes above:
+
 ```
 sudo aa-teardown || true
 sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $USER
@@ -247,4 +258,9 @@ Any pull request should pass all current code style checks; also all unit tests 
 ### External services
 
 One may want to use Pantheon API in some own external service. Please make sure you have protoc v3.21.9-r0 so generated
-binary code matches our protocol version. 
+binary code matches our protocol version.
+
+### License
+
+All Pantheon code except protocol files is licensed under the GNU GPL v3 License. See the LICENSE file for details.
+Protocol files are licensed under the Apache License, Version 2.0. See the LICENSE file in Common/proto folder for details.
