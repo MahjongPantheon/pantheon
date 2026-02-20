@@ -1,19 +1,15 @@
-/*  Pantheon common files
- *  Copyright (C) 2016  o.klimenko aka ctizen
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright 2020 o.klimenko aka ctizen
+//
+// Licensed under the Apache License, Version 2.0 (the "License"). You may not
+// use this file except in compliance with the License. A copy of the License is
+// located at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// or in the "license" file accompanying this file. This file is distributed on
+// an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+// express or implied. See the License for the specific language governing
+// permissions and limitations under the License.
 
 // protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
 syntax = "proto3";
@@ -23,56 +19,32 @@ package common;
 import "proto/atoms.proto";
 
 service Frey {
-  rpc RequestRegistration(AuthRequestRegistrationPayload)
-    returns (AuthRequestRegistrationResponse);
-  rpc ApproveRegistration(AuthApproveRegistrationPayload)
-    returns (AuthApproveRegistrationResponse);
-  rpc Authorize(AuthAuthorizePayload)
-    returns (AuthAuthorizeResponse);
-  rpc QuickAuthorize(AuthQuickAuthorizePayload)
-    returns (AuthQuickAuthorizeResponse);
-  rpc Me(AuthMePayload)
-    returns (AuthMeResponse);
-  rpc DepersonalizeAccount(DepersonalizePayload)
-    returns (GenericSuccessResponse);
-  rpc ChangePassword(AuthChangePasswordPayload)
-    returns (AuthChangePasswordResponse);
-  rpc RequestResetPassword(AuthRequestResetPasswordPayload)
-    returns (AuthRequestResetPasswordResponse);
-  rpc ApproveResetPassword(AuthApproveResetPasswordPayload)
-    returns (AuthApproveResetPasswordResponse);
-  rpc UpdatePersonalInfo(PersonsUpdatePersonalInfoPayload)
-    returns (GenericSuccessResponse);
-  rpc GetPersonalInfo(PersonsGetPersonalInfoPayload)
-    returns (PersonsGetPersonalInfoResponse);
-  rpc FindByTenhouIds(PersonsFindByTenhouIdsPayload)
-    returns (PersonsFindByTenhouIdsResponse);
-  rpc FindByMajsoulAccountId(PersonsFindByMajsoulIdsPayload)
-    returns (PersonsFindByTenhouIdsResponse);
-  rpc FindByTitle(PersonsFindByTitlePayload)
-    returns (PersonsFindByTitleResponse);
-  rpc GetEventAdmins(AccessGetEventAdminsPayload)
-    returns (AccessGetEventAdminsResponse);
-  rpc GetEventReferees(AccessGetEventRefereesPayload)
-    returns (AccessGetEventRefereesResponse);
-  rpc GetMajsoulNicknames(PersonsGetMajsoulNicknamesPayload)
-    returns (PersonsGetMajsoulNicknamesResponse);
+  rpc RequestRegistration(AuthRequestRegistrationPayload) returns (AuthRequestRegistrationResponse);
+  rpc ApproveRegistration(AuthApproveRegistrationPayload) returns (AuthApproveRegistrationResponse);
+  rpc Authorize(AuthAuthorizePayload) returns (AuthAuthorizeResponse);
+  rpc QuickAuthorize(AuthQuickAuthorizePayload) returns (AuthQuickAuthorizeResponse);
+  rpc Me(AuthMePayload) returns (AuthMeResponse);
+  rpc DepersonalizeAccount(DepersonalizePayload) returns (GenericSuccessResponse);
+  rpc ChangePassword(AuthChangePasswordPayload) returns (AuthChangePasswordResponse);
+  rpc RequestResetPassword(AuthRequestResetPasswordPayload) returns (AuthRequestResetPasswordResponse);
+  rpc ApproveResetPassword(AuthApproveResetPasswordPayload) returns (AuthApproveResetPasswordResponse);
+  rpc UpdatePersonalInfo(PersonsUpdatePersonalInfoPayload) returns (GenericSuccessResponse);
+  rpc GetPersonalInfo(PersonsGetPersonalInfoPayload) returns (PersonsGetPersonalInfoResponse);
+  rpc FindByTenhouIds(PersonsFindByTenhouIdsPayload) returns (PersonsFindByTenhouIdsResponse);
+  rpc FindByMajsoulAccountId(PersonsFindByMajsoulIdsPayload) returns (PersonsFindByTenhouIdsResponse);
+  rpc FindByTitle(PersonsFindByTitlePayload) returns (PersonsFindByTitleResponse);
+  rpc GetEventAdmins(AccessGetEventAdminsPayload) returns (AccessGetEventAdminsResponse);
+  rpc GetEventReferees(AccessGetEventRefereesPayload) returns (AccessGetEventRefereesResponse);
+  rpc GetMajsoulNicknames(PersonsGetMajsoulNicknamesPayload) returns (PersonsGetMajsoulNicknamesResponse);
 
   // admin
-  rpc GetSuperadminFlag(AccessGetSuperadminFlagPayload)
-    returns (AccessGetSuperadminFlagResponse);
-  rpc GetOwnedEventIds(AccessGetOwnedEventIdsPayload)
-    returns (AccessGetOwnedEventIdsResponse);
-  rpc AddRuleForPerson(AccessAddRuleForPersonPayload)
-    returns (AccessAddRuleForPersonResponse);
-  rpc DeleteRuleForPerson(AccessDeleteRuleForPersonPayload)
-    returns (GenericSuccessResponse);
-  rpc CreateAccount(PersonsCreateAccountPayload)
-    returns (PersonsCreateAccountResponse);
-  rpc GetNotificationsSettings(PersonsGetNotificationsSettingsPayload)
-    returns (PersonsGetNotificationsSettingsResponse);
-  rpc SetNotificationsSettings(PersonsSetNotificationsSettingsPayload)
-    returns (GenericSuccessResponse);
+  rpc GetSuperadminFlag(AccessGetSuperadminFlagPayload) returns (AccessGetSuperadminFlagResponse);
+  rpc GetOwnedEventIds(AccessGetOwnedEventIdsPayload) returns (AccessGetOwnedEventIdsResponse);
+  rpc AddRuleForPerson(AccessAddRuleForPersonPayload) returns (AccessAddRuleForPersonResponse);
+  rpc DeleteRuleForPerson(AccessDeleteRuleForPersonPayload) returns (GenericSuccessResponse);
+  rpc CreateAccount(PersonsCreateAccountPayload) returns (PersonsCreateAccountResponse);
+  rpc GetNotificationsSettings(PersonsGetNotificationsSettingsPayload) returns (PersonsGetNotificationsSettingsResponse);
+  rpc SetNotificationsSettings(PersonsSetNotificationsSettingsPayload) returns (GenericSuccessResponse);
 }
 
 message AuthRequestRegistrationPayload {
@@ -225,7 +197,7 @@ message PersonsUpdatePersonalInfoPayload {
   bool has_avatar = 8;
   string avatar_data = 9;
   optional string ms_nickname = 10;
-  optional int32 ms_friend_id  = 11;
+  optional int32 ms_friend_id = 11;
   optional int32 ms_account_id = 12;
 }
 
@@ -257,8 +229,7 @@ message PersonsFindByTitleResponse {
   repeated Person people = 1;
 }
 
-message DepersonalizePayload {
-}
+message DepersonalizePayload {}
 
 message PersonsGetMajsoulNicknamesPayload {
   repeated int32 ids = 1;
