@@ -1,4 +1,5 @@
 <?php
+
 namespace Mimir;
 
 ini_set('display_errors', 'On');
@@ -7,6 +8,7 @@ require_once __DIR__ . '/../../src/helpers/PointsCalc.php';
 require_once __DIR__ . '/../../src/helpers/SessionState.php';
 require_once __DIR__ . '/../../src/primitives/Session.php';
 require_once __DIR__ . '/../../src/primitives/SessionResults.php';
+require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
 require_once __DIR__ . '/../../src/models/Event.php';
 
@@ -27,6 +29,11 @@ function runAchievements(DataSource $ds, $eventId)
             SessionPrimitive::STATUS_FINISHED
         );
         $players = EventModel::getPlayersOfGames($ds, $games, $eventId);
+        $playerRegs = PlayerPrimitive::findPlayersForEvents($ds, [$eventId]);
+        // exclude replaced players from nominations
+        $players = array_filter($players, function ($player) use ($playerRegs) {
+            return empty($playerRegs['replacements'][$player['id']]);
+        });
         /** @var array $sessionIds */
         $sessionIds = array_map(function (SessionPrimitive $el) {
             return $el->getId();
@@ -121,7 +128,7 @@ function getRounds(DataSource $ds, array $sessionIds)
         if (empty($result[$item->getSessionId()])) {
             $result[$item->getSessionId()] = [];
         }
-        $result[$item->getSessionId()] []= $item;
+        $result[$item->getSessionId()][] = $item;
     }
 
     return $result;
@@ -160,7 +167,9 @@ function calcRiichiStat(int $eventId, array $games, array $players, array $round
             });
 
             $firstPlacePlayerId = array_values($firstPlace)[0]->getPlayerId();
-            $riichiStat[$eventId][$firstPlacePlayerId]['stole'] += $session->getCurrentState()->getRiichiBets();
+            if (!empty($riichiStat[$eventId][$firstPlacePlayerId])) {
+                $riichiStat[$eventId][$firstPlacePlayerId]['stole'] += $session->getCurrentState()->getRiichiBets();
+            }
         }
 
         foreach ($rounds[$session->getId()] as $round) {
@@ -171,19 +180,29 @@ function calcRiichiStat(int $eventId, array $games, array $players, array $round
 
                 foreach ($riichiIds as $riichiPlayerId) {
                     if ($riichiPlayerId == $winnerId) {
-                        $riichiStat[$eventId][$riichiPlayerId]['won'] ++;
+                        if (!empty($riichiStat[$eventId][$riichiPlayerId])) {
+                            $riichiStat[$eventId][$riichiPlayerId]['won']++;
+                        }
                     } else {
-                        $riichiStat[$eventId][$riichiPlayerId]['lost'] ++;
-                        $riichiStat[$eventId][$winnerId]['stole'] ++;
+                        if (!empty($riichiStat[$eventId][$riichiPlayerId])) {
+                            $riichiStat[$eventId][$riichiPlayerId]['lost']++;
+                        }
+                        if (!empty($riichiStat[$eventId][$winnerId])) {
+                            $riichiStat[$eventId][$winnerId]['stole']++;
+                        }
                     }
                 }
 
-                $riichiStat[$eventId][$winnerId]['stole'] += $round->getLastSessionState()->getRiichiBets();
+                if (!empty($riichiStat[$eventId][$winnerId])) {
+                    $riichiStat[$eventId][$winnerId]['stole'] += $round->getLastSessionState()->getRiichiBets();
+                }
             }
 
             if (in_array($round->getOutcome(), ['draw', 'abort'])) {
                 foreach ($riichiIds as $riichiPlayerId) {
-                    $riichiStat[$eventId][$riichiPlayerId]['lost'] ++;
+                    if (!empty($riichiStat[$eventId][$riichiPlayerId])) {
+                        $riichiStat[$eventId][$riichiPlayerId]['lost']++;
+                    }
                 }
             }
 
@@ -193,8 +212,8 @@ function calcRiichiStat(int $eventId, array $games, array $players, array $round
                 $winnerIds = $round->getWinnerIds();
 
                 foreach ($riichiIds as $playerId) {
-                    if (!in_array($playerId, $winnerIds)) {
-                        $riichiStat[$eventId][$playerId]['lost'] ++;
+                    if (!in_array($playerId, $winnerIds) && !empty($riichiStat[$eventId][$playerId])) {
+                        $riichiStat[$eventId][$playerId]['lost']++;
                     }
                 }
 
@@ -212,31 +231,39 @@ function calcRiichiStat(int $eventId, array $games, array $players, array $round
 
                     if ($rules->rules()->getDoubleronRiichiAtamahane() && $closestWinner) {
                         if ($closestWinner == $winnerId) {
-                            if (in_array($winnerId, $riichiIds)) {
-                                $riichiStat[$eventId][$winnerId]['won'] ++;
+                            if (in_array($winnerId, $riichiIds) && !empty($riichiStat[$eventId][$winnerId])) {
+                                $riichiStat[$eventId][$winnerId]['won']++;
                             }
 
                             $fromOthers = array_filter($riichiIds, function ($playerId) use ($winnerId) {
                                 return $playerId != $winnerId;
                             });
 
-                            $riichiStat[$eventId][$winnerId]['stole'] += count($fromOthers);
+                            if (!empty($riichiStat[$eventId][$winnerId])) {
+                                $riichiStat[$eventId][$winnerId]['stole'] += count($fromOthers);
+                            }
                         } else {
-                            $riichiStat[$eventId][$winnerId]['lost'] ++;
+                            if (!empty($riichiStat[$eventId][$winnerId])) {
+                                $riichiStat[$eventId][$winnerId]['lost']++;
+                            }
                         }
                     } else {
-                        if (in_array($winnerId, $riichiIds)) {
-                            $riichiStat[$eventId][$winnerId]['won'] ++;
+                        if (in_array($winnerId, $riichiIds) && !empty($riichiStat[$eventId][$winnerId])) {
+                            $riichiStat[$eventId][$winnerId]['won']++;
                         }
 
                         $fromOthers = array_filter($item['from_players'], function ($playerId) use ($winnerId) {
                             return $playerId != $winnerId;
                         });
 
-                        $riichiStat[$eventId][$winnerId]['stole'] += count($fromOthers);
+                        if (!empty($riichiStat[$eventId][$winnerId])) {
+                            $riichiStat[$eventId][$winnerId]['stole'] += count($fromOthers);
+                        }
                     }
 
-                    $riichiStat[$eventId][$winnerId]['stole'] += $item['from_table'];
+                    if (!empty($riichiStat[$eventId][$winnerId])) {
+                        $riichiStat[$eventId][$winnerId]['stole'] += $item['from_table'];
+                    }
                 }
             }
         }
@@ -364,6 +391,9 @@ function getMinFeedsScore(int $eventId, array $games, array $players, array $rou
 
     $feedsScores = [];
     foreach ($payments as $key => $value) {
+        if (empty($players[$key])) {
+            continue;
+        }
         $feedsScores[$key] = $value['sum'] / $value['count'];
     }
 
@@ -487,7 +517,7 @@ function getMaxFuHand(Db $db, array $eventIdList, array $players)
             continue;
         }
 
-        $names []= $players[$round['winner_id']]['title'];
+        $names[] = $players[$round['winner_id']]['title'];
     }
 
     return [
@@ -519,18 +549,18 @@ function getBestDealer(Db $db, array $eventIdList, array $players)
 
     $dealerWinnings = [];
 
-    for ($i = 1; $i < count($rounds); $i ++) {
+    for ($i = 1; $i < count($rounds); $i++) {
         $currentRound = $rounds[$i - 1];
         $nextRound = $rounds[$i];
 
-        if (// renchan with agari
+        if ( // renchan with agari
             $nextRound['session_id'] == $currentRound['session_id'] &&
             $nextRound['round'] == $currentRound['round']
         ) {
             if (!isset($dealerWinnings[$currentRound['winner_id']])) {
                 $dealerWinnings[$currentRound['winner_id']] = 0;
             }
-            $dealerWinnings[$currentRound['winner_id']] ++;
+            $dealerWinnings[$currentRound['winner_id']]++;
         }
     }
 
@@ -542,7 +572,7 @@ function getBestDealer(Db $db, array $eventIdList, array $players)
         if ($count < $bestCount) {
             continue;
         }
-        $bestDealers []= $players[$id]['title'];
+        $bestDealers[] = $players[$id]['title'];
     }
 
     return [
@@ -584,7 +614,7 @@ function getBestShithander(Db $db, array $eventIdList, array $players)
             continue;
         }
 
-        $names []= $players[$round['winner_id']]['title'];
+        $names[] = $players[$round['winner_id']]['title'];
     }
 
     return [
@@ -623,7 +653,7 @@ function getBestHandOfEvent(Db $db, array $eventIdList, array $players)
             continue;
         }
 
-        $names []= $players[$round['winner_id']]['title'];
+        $names[] = $players[$round['winner_id']]['title'];
     }
 
     return [
@@ -690,7 +720,7 @@ function getBraveSappers(Db $db, array $eventIdList, array $players)
             continue;
         }
 
-        $names []= $players[$round['loser_id']]['title'];
+        $names[] = $players[$round['loser_id']]['title'];
     }
 
     return [
@@ -749,7 +779,9 @@ function getDieHardData(Db $db, array $eventIdList, array $players)
             $names = [];
         }
 
-        $names []= $players[$round['loser_id']]['title'];
+        if (!empty($players[$round['loser_id']])) {
+            $names[] = $players[$round['loser_id']]['title'];
+        }
     }
 
     return [
@@ -790,7 +822,7 @@ function getBestTsumoistInSingleSession(Db $db, array $eventIdList, array $playe
             continue;
         }
 
-        $names []= $players[$round['winner_id']]['title'];
+        $names[] = $players[$round['winner_id']]['title'];
     }
 
     return [
@@ -819,6 +851,9 @@ function getDovakins(Db $db, array $eventIdList, array $players)
 
     $yakuhaiStats = [];
     foreach ($rounds as $round) {
+        if (empty($players[$round['winner_id']])) {
+            continue;
+        }
         $name = $players[$round['winner_id']]['title'];
         if (empty($yakuhaiStats[$name])) {
             $yakuhaiStats[$name] = 0;
@@ -828,7 +863,7 @@ function getDovakins(Db $db, array $eventIdList, array $players)
         foreach ($yaku as $id) {
             switch ($id) {
                 case Y_YAKUHAI1:
-                    $yakuhaiStats[$name] ++;
+                    $yakuhaiStats[$name]++;
                     break;
                 case Y_YAKUHAI2:
                     $yakuhaiStats[$name] += 2;
@@ -839,8 +874,7 @@ function getDovakins(Db $db, array $eventIdList, array $players)
                 case Y_YAKUHAI4:
                     $yakuhaiStats[$name] += 4;
                     break;
-                default:
-                    ;
+                default:;
             }
         }
     }
@@ -849,7 +883,7 @@ function getDovakins(Db $db, array $eventIdList, array $players)
     $arr = array_slice($yakuhaiStats, 0, 3);
     $retval = [];
     foreach ($arr as $k => $v) {
-        $retval []= ['count' => $v, 'name' => $k];
+        $retval[] = ['count' => $v, 'name' => $k];
     }
     return $retval;
 }
@@ -1060,8 +1094,7 @@ function getFavoriteAsapinApprentice(Db $db, array $eventIdList, array $players)
             case 3:
                 $amount = 1000;
                 break;
-            default:
-                ;
+            default:;
         }
 
         foreach ($tempai as $playerId) {
