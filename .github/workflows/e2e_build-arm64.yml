@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'Fenrir/**'
+      - "Fenrir/**"
 
 jobs:
   e2eBuildContainer:
@@ -40,9 +40,8 @@ jobs:
         with:
           context: ./Fenrir
           build-args: CONTAINER_ARCH=arm64
-          platforms: linux/amd64
+          platforms: linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest
-            ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:${{ github.sha }}
-
+            ghcr.io/mahjongpantheon/pantheon-fenrir-arm64:latest
+            ghcr.io/mahjongpantheon/pantheon-fenrir-arm64:${{ github.sha }}
