@@ -1,6 +1,8 @@
 function proxyAppend(url: string) {
-  if (window.location.host.startsWith('proxy.')) {
-    return url.replace('https://', 'https://proxy.');
+  const tyrHost = (import.meta.env.VITE_TYR_URL ?? '').replace('https://', '');
+  const proxyPrefix = window.location.host.replace(tyrHost, '');
+  if (proxyPrefix) {
+    return url.replace('https://', 'https://' + proxyPrefix);
   }
   return url;
 }

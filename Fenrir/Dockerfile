@@ -56,4 +56,3 @@ RUN mkdir -p /var/www/html/Common
 
 # Entry point
 CMD ["/entrypoint.sh"]
-

@@ -1,6 +1,8 @@
 function proxyAppend(url: string) {
-  if (window.location.host.startsWith('proxy.')) {
-    return url.replace('https://', 'https://proxy.');
+  const forsetiHost = (import.meta.env.VITE_FORSETI_URL ?? '').replace('https://', '');
+  const proxyPrefix = window.location.host.replace(forsetiHost, '');
+  if (proxyPrefix) {
+    return url.replace('https://', 'https://' + proxyPrefix);
   }
   return url;
 }

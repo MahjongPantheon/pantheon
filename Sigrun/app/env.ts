@@ -1,10 +1,11 @@
 function proxyAppend(url: string) {
-  if (typeof window !== 'undefined' && window.location.host.startsWith('proxy.')) {
-    return url.replace('https://', 'https://proxy.');
+  const sigrunHost = (import.meta.env.VITE_SIGRUN_URL ?? '').replace('https://', '');
+  const proxyPrefix = window.location.host.replace(sigrunHost, '');
+  if (proxyPrefix) {
+    return url.replace('https://', 'https://' + proxyPrefix);
   }
   return url;
 }
-
 export const env = {
   cookieDomain: (import.meta.env.VITE_COOKIE_DOMAIN as string) || null,
   urls: {
