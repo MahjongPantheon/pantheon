@@ -1,6 +1,7 @@
 function proxyAppend(url: string) {
   const sigrunHost = (import.meta.env.VITE_SIGRUN_URL ?? '').replace('https://', '');
-  const proxyPrefix = window.location.host.replace(sigrunHost, '');
+  const proxyPrefix =
+    typeof window !== 'undefined' ? window.location.host.replace(sigrunHost, '') : '';
   if (proxyPrefix) {
     return url.replace('https://', 'https://' + proxyPrefix);
   }

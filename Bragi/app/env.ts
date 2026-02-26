@@ -1,6 +1,7 @@
 function proxyAppend(url: string) {
   const bragiHost = (import.meta.env.VITE_BRAGI_URL ?? '').replace('https://', '');
-  const proxyPrefix = window.location.host.replace(bragiHost, '');
+  const proxyPrefix =
+    typeof window !== 'undefined' ? window.location.host.replace(bragiHost, '') : '';
   if (proxyPrefix) {
     return url.replace('https://', 'https://' + proxyPrefix);
   }
