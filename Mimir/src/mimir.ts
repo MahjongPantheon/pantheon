@@ -90,6 +90,7 @@ import { PlayerStatsModel } from './models/PlayerStatsModel.js';
 import { OnlineSessionModel } from './models/OnlineSessionModel.js';
 import { SessionResultsModel } from './models/SessionResultsModel.js';
 import { PlayerInSessionModel } from './models/PlayerInSessionModel.js';
+import { EventRegistrationModel } from './models/EventRegistrationModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -359,42 +360,55 @@ export const mimirServer: Mimir<Context> = {
     eventsRegisterPlayerPayload: EventsRegisterPlayerPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
+    return eventRegModel.registerPlayer(
+      eventsRegisterPlayerPayload.eventId,
+      eventsRegisterPlayerPayload.playerId
+    );
   },
   UnregisterPlayer: function (
     eventsUnregisterPlayerPayload: EventsUnregisterPlayerPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
+    return eventRegModel.unregisterPlayer(
+      eventsUnregisterPlayerPayload.eventId,
+      eventsUnregisterPlayerPayload.playerId
+    );
   },
   UpdatePlayerSeatingFlag: function (
     eventsUpdatePlayerSeatingFlagPayload: EventsUpdatePlayerSeatingFlagPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
-  },
-  GetAchievements: function (
-    eventsGetAchievementsPayload: EventsGetAchievementsPayload,
-    context: Context
-  ): Promise<EventsGetAchievementsResponse> {
-    throw new Error('Function not implemented.');
+    const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
+    return eventRegModel.updatePlayerSeatingFlag(eventsUpdatePlayerSeatingFlagPayload);
   },
   UpdatePlayersLocalIds: function (
     eventsUpdatePlayersLocalIdsPayload: EventsUpdatePlayersLocalIdsPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
+    return eventRegModel.updatePlayersLocalIds(eventsUpdatePlayersLocalIdsPayload);
   },
   UpdatePlayerReplacement: function (
     eventsUpdatePlayerReplacementPayload: EventsUpdatePlayerReplacementPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
+    return eventRegModel.updatePlayerReplacement(eventsUpdatePlayerReplacementPayload);
   },
   UpdatePlayersTeams: function (
     eventsUpdatePlayersTeamsPayload: EventsUpdatePlayersTeamsPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
+    const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
+    return eventRegModel.updatePlayersTeams(eventsUpdatePlayersTeamsPayload);
+  },
+
+  GetAchievements: function (
+    eventsGetAchievementsPayload: EventsGetAchievementsPayload,
+    context: Context
+  ): Promise<EventsGetAchievementsResponse> {
     throw new Error('Function not implemented.');
   },
   StartGame: function (
