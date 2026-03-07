@@ -2,6 +2,13 @@ import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayer
 import { Model } from './Model.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
+import {
+  EventsUpdatePlayerReplacementPayload,
+  EventsUpdatePlayerSeatingFlagPayload,
+  EventsUpdatePlayersLocalIdsPayload,
+  EventsUpdatePlayersTeamsPayload,
+} from 'tsclients/proto/mimir.pb.js';
+import { LocalIdMapping, TeamMapping } from 'tsclients/proto/atoms.pb.js';
 
 export class EventRegistrationModel extends Model {
   async findByPlayerAndEvent(ids: number[], eventId: number) {
@@ -45,12 +52,12 @@ export class EventRegistrationModel extends Model {
     return (result.localId ?? 0) + 1;
   }
 
-  async updateLocalIds(eventId: number, idMap: Map<number, number>) {
+  async updateLocalIds(eventId: number, idMap: LocalIdMapping[]) {
     return this.repo.em.upsertMany(
       EventRegisteredPlayersEntity,
       [
-        ...idMap.entries().map(([id, localId]) => ({
-          playerId: id,
+        ...idMap.map(({ playerId, localId }) => ({
+          playerId,
           eventId,
           localId,
           ignoreSeating: 0,
@@ -60,12 +67,12 @@ export class EventRegistrationModel extends Model {
     );
   }
 
-  async updateTeamNames(eventId: number, teamMap: Map<number, string>) {
+  async updateTeamNames(eventId: number, teamMap: TeamMapping[]) {
     return this.repo.em.upsertMany(
       EventRegisteredPlayersEntity,
       [
-        ...teamMap.entries().map(([id, teamName]) => ({
-          playerId: id,
+        ...teamMap.map(({ playerId, teamName }) => ({
+          playerId,
           eventId,
           teamName,
           ignoreSeating: 0,
@@ -159,5 +166,120 @@ export class EventRegistrationModel extends Model {
       replacements[reg.playerId] = reg.replacementId;
     }
     return replacements;
+  }
+
+  async registerPlayer(eventId: number, playerId: number) {
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error("You don't have the necessary permissions to register players");
+    }
+
+    const regItemOld = await this.findByPlayerAndEvent([playerId], eventId);
+    if (regItemOld.length > 0) {
+      throw new Error(`Player ${playerId} is already registered for event ${eventId}`);
+    }
+
+    const event = await this.repo.em.findOne(EventEntity, eventId);
+    if (!event) {
+      throw new Error(`Event ${eventId} not found`);
+    }
+
+    const regItem = new EventRegisteredPlayersEntity();
+    regItem.event = event;
+    regItem.playerId = playerId;
+    if (event.isPrescripted) {
+      regItem.localId = await this.findNextFreeLocalId(eventId);
+    }
+
+    await this.repo.em.persistAndFlush(regItem);
+    return { success: true };
+  }
+
+  async unregisterPlayer(eventId: number, playerId: number) {
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error("You don't have the necessary permissions to unregister players");
+    }
+
+    const regItem = await this.findByPlayerAndEvent([playerId], eventId);
+    if (regItem.length === 0) {
+      throw new Error(`Player ${playerId} is not registered for event ${eventId}`);
+    }
+
+    await this.repo.em.removeAndFlush(regItem[0]);
+    return { success: true };
+  }
+
+  async updatePlayerSeatingFlag(payload: EventsUpdatePlayerSeatingFlagPayload) {
+    const { eventId, playerId, ignoreSeating } = payload;
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error(
+        "You don't have the necessary permissions to toggle seating flag for players"
+      );
+    }
+
+    const regItem = await this.findByPlayerAndEvent([playerId], eventId);
+    if (regItem.length === 0) {
+      throw new Error(`Player ${playerId} is not registered for event ${eventId}`);
+    }
+
+    regItem[0].ignoreSeating = ignoreSeating ? 1 : 0;
+    await this.repo.em.persistAndFlush(regItem[0]);
+    return { success: true };
+  }
+
+  async updatePlayersLocalIds(payload: EventsUpdatePlayersLocalIdsPayload) {
+    const { eventId, idsToLocalIds } = payload;
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error("You don't have the necessary permissions to update players' local IDs");
+    }
+
+    await this.updateLocalIds(eventId, idsToLocalIds);
+    await this.repo.em.flush();
+    return { success: true };
+  }
+
+  async updatePlayerReplacement(payload: EventsUpdatePlayerReplacementPayload) {
+    const { eventId, playerId, replacementId } = payload;
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
+    ) {
+      throw new Error("You don't have the necessary permissions to update players' replacements");
+    }
+
+    const regItem = await this.findByPlayerAndEvent([playerId], eventId);
+    if (regItem.length === 0) {
+      throw new Error(`Player ${playerId} is not registered for event ${eventId}`);
+    }
+
+    regItem[0].replacementId = replacementId === -1 ? undefined : replacementId;
+    await this.repo.em.persistAndFlush(regItem[0]);
+    return { success: true };
+  }
+
+  async updatePlayersTeams(payload: EventsUpdatePlayersTeamsPayload) {
+    const { eventId, idsToTeamNames } = payload;
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error("You don't have the necessary permissions to update players' teams");
+    }
+
+    await this.updateTeamNames(eventId, idsToTeamNames);
+    await this.repo.em.flush();
+    return { success: true };
   }
 }
