@@ -1,6 +1,7 @@
 import {
   EndingPolicy,
   EventAdmin,
+  GenericSessionPayload,
   PersonEx,
   PlatformType,
   Round,
@@ -27,12 +28,18 @@ import {
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundResponse,
+  GamesStartGamePayload,
 } from 'tsclients/proto/mimir.pb.js';
 import { EventModel } from './EventModel.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { CronModel } from './CronModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PaymentsInfo } from 'src/helpers/PointsCalc.js';
+import { sha1 } from 'src/helpers/crypto.js';
+import { randomInt } from 'crypto';
+import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
+import { Context } from 'src/context.js';
+import { PlayerStatsModel } from './PlayerStatsModel.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -534,6 +541,99 @@ export class SessionModel extends Model {
     }
 
     return payments;
+  }
+
+  async startGame(gamesStartGamePayload: GamesStartGamePayload, context: Context) {
+    const eventModel = this.getModel(EventModel);
+    const event = await eventModel.findById([gamesStartGamePayload.eventId]);
+    if (!event.length) {
+      throw new Error(`Event id #${gamesStartGamePayload.eventId} not found`);
+    }
+
+    if (event[0].finished) {
+      throw new Error(`Event id #${gamesStartGamePayload.eventId} is already finished`);
+    }
+
+    const playerModel = this.getModel(PlayerModel);
+    const players = await playerModel.findById(gamesStartGamePayload.players);
+    if (players.length !== gamesStartGamePayload.players.length) {
+      throw new Error(`Some players do not exist in database`);
+    }
+
+    event[0].nextGameStartTime = 0;
+    this.repo.db.em.persist(event[0]);
+
+    const sessionState = new SessionState(event[0].ruleset, gamesStartGamePayload.players);
+
+    if (event[0].ruleset.rules.withYakitori) {
+      sessionState.setYakitori(
+        Object.fromEntries(gamesStartGamePayload.players.map((id) => [id, true]))
+      );
+    }
+
+    const newSession = this.repo.db.em.create(SessionEntity, {
+      event: event[0],
+      status: SessionStatus.SESSION_STATUS_INPROGRESS,
+      replayHash: null,
+      tableIndex: null,
+      extraTime: 0,
+      startDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+      representationalHash: sha1(
+        gamesStartGamePayload.players.join(',') +
+          moment().format('YYYY-MM-DD HH:mm') +
+          (process.env.SEED_REPEAT ? '' : randomInt(999999).toString())
+      ),
+      intermediateResults: this.repo.db.em.create(SessionStateEntity, sessionState.state),
+    });
+    this.repo.db.em.persist(newSession);
+
+    const sessionPlayers = gamesStartGamePayload.players.map((playerId, order) => {
+      return this.repo.db.em.create(SessionPlayerEntity, {
+        order: order + 1,
+        playerId,
+        session: newSession,
+      });
+    });
+    this.repo.db.em.persist(sessionPlayers);
+
+    this.repo.db.em.flush();
+
+    context.repository.skirnir.trackSession(newSession.representationalHash!);
+    return { sessionHash: newSession.representationalHash! };
+  }
+
+  async endGame(genericSessionPayload: GenericSessionPayload, context: Context) {
+    const session = await this.repo.db.em.findOne(SessionEntity, {
+      representationalHash: genericSessionPayload.sessionHash,
+      status: SessionStatus.SESSION_STATUS_INPROGRESS,
+    });
+    if (!session) {
+      throw new Error('Session not found');
+    }
+
+    if (
+      !context.repository.meta.personId ||
+      !session.intermediateResults?.playerIds.includes(context.repository.meta.personId)
+    ) {
+      throw new Error('You are not a participant in this session');
+    }
+
+    await this.prefinish(
+      session.event,
+      session,
+      new SessionState(
+        session.event.ruleset,
+        session.intermediateResults?.playerIds ?? [],
+        session.intermediateResults
+      )
+    );
+    this.repo.db.em.persist(session);
+    await this.repo.db.em.flush();
+
+    const playerStatsModel = this.getModel(PlayerStatsModel);
+    await playerStatsModel.scheduleRebuildPlayersStats(session.event.id);
+
+    return { success: true };
   }
 
   async prefinish(event: EventEntity, session: SessionEntity, sessionState: SessionState) {

@@ -404,24 +404,19 @@ export const mimirServer: Mimir<Context> = {
     const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
     return eventRegModel.updatePlayersTeams(eventsUpdatePlayersTeamsPayload);
   },
-
-  GetAchievements: function (
-    eventsGetAchievementsPayload: EventsGetAchievementsPayload,
-    context: Context
-  ): Promise<EventsGetAchievementsResponse> {
-    throw new Error('Function not implemented.');
-  },
   StartGame: function (
     gamesStartGamePayload: GamesStartGamePayload,
     context: Context
   ): Promise<GenericSessionPayload> {
-    throw new Error('Function not implemented.');
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.startGame(gamesStartGamePayload, context);
   },
   EndGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.endGame(genericSessionPayload, context);
   },
   CancelGame: function (
     genericSessionPayload: GenericSessionPayload,
@@ -457,6 +452,13 @@ export const mimirServer: Mimir<Context> = {
     gamesAddPenaltyGamePayload: GamesAddPenaltyGamePayload,
     context: Context
   ): Promise<GenericSessionPayload> {
+    throw new Error('Function not implemented.');
+  },
+
+  GetAchievements: function (
+    eventsGetAchievementsPayload: EventsGetAchievementsPayload,
+    context: Context
+  ): Promise<EventsGetAchievementsResponse> {
     throw new Error('Function not implemented.');
   },
   GetPlayer: function (
