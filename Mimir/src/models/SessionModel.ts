@@ -1037,4 +1037,44 @@ export class SessionModel extends Model {
     await this.repo.db.em.flush();
     return { success: true };
   }
+
+  async definalizeGame(hash: string) {
+    const session = await this.findByRepresentationalHash([hash]);
+    if (session.length === 0) {
+      throw new Error('Session not found');
+    }
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(
+        (await playerModel.isEventAdmin(session[0].event.id)) &&
+        (await playerModel.isEventReferee(session[0].event.id))
+      )
+    ) {
+      throw new Error("You don't have the necessary permissions to definalize game");
+    }
+
+    if (!this.mayDefinalize(session[0])) {
+      throw new Error('Session cannot be definalized');
+    }
+
+    const playerHistoryModel = this.getModel(PlayerHistoryModel);
+    const sessionResultsModel = this.getModel(SessionResultsModel);
+    const [playerResults, sessionResults] = await Promise.all([
+      playerHistoryModel.findBySession(session[0].id),
+      sessionResultsModel.findBySession([session[0].id]),
+    ]);
+    this.repo.db.em.remove(playerResults);
+    this.repo.db.em.remove(sessionResults);
+
+    session[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
+    this.repo.db.em.persist(session[0]);
+
+    const playerStatsModel = this.getModel(PlayerStatsModel);
+    await playerStatsModel.scheduleRebuildPlayersStats(session[0].event.id);
+
+    await this.repo.db.em.flush();
+    return { success: true };
+  }
 }

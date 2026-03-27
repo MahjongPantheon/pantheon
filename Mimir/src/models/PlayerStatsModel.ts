@@ -54,19 +54,12 @@ export class PlayerStatsModel extends Model {
     `);
   }
 
-  async scheduleRebuildSinglePlayerStats(playerId: number) {
+  async scheduleRebuildSinglePlayerStats(playerId: number, eventId: number) {
     const job = new JobsQueueEntity();
     job.createdAt = moment.utc().format('YYYY-MM-DD hh:mm:ss');
     job.jobName = 'playerStats';
-    job.jobArguments = JSON.stringify({ playerId });
+    job.jobArguments = JSON.stringify({ playerId, eventId });
     await this.repo.em.persistAndFlush(job);
-  }
-
-  async invalidateByPlayer(playerId: number) {
-    const statsCnt = await this.repo.em.count(PlayerStatsEntity, { playerId });
-    if (statsCnt > 0) {
-      await this.scheduleRebuildSinglePlayerStats(playerId);
-    }
   }
 
   async getPlayerStats(
