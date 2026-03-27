@@ -91,6 +91,7 @@ import { OnlineSessionModel } from './models/OnlineSessionModel.js';
 import { SessionResultsModel } from './models/SessionResultsModel.js';
 import { PlayerInSessionModel } from './models/PlayerInSessionModel.js';
 import { EventRegistrationModel } from './models/EventRegistrationModel.js';
+import { PenaltyModel } from './models/PenaltyModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -450,15 +451,16 @@ export const mimirServer: Mimir<Context> = {
     gamesAddPenaltyPayload: GamesAddPenaltyPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.addPenalty(gamesAddPenaltyPayload);
   },
   AddPenaltyGame: function (
     gamesAddPenaltyGamePayload: GamesAddPenaltyGamePayload,
     context: Context
   ): Promise<GenericSessionPayload> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.addPenaltyGame(gamesAddPenaltyGamePayload);
   },
-
   GetAchievements: function (
     eventsGetAchievementsPayload: EventsGetAchievementsPayload,
     context: Context
