@@ -40,6 +40,7 @@ import { randomInt } from 'crypto';
 import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
 import { Context } from 'src/context.js';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
+import { AchievementsModel } from './AchievementsModel.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -705,6 +706,89 @@ export class SessionModel extends Model {
     });
 
     session.intermediateResults = sessionState.state;
+  }
+
+  async cancelGame(payload: GenericSessionPayload) {
+    const session = await this.findByRepresentationalHash([payload.sessionHash]);
+    if (session.length === 0) {
+      throw new Error('Session not found');
+    }
+
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(
+        (await playerModel.isEventAdmin(session[0].event.id)) &&
+        (await playerModel.isEventReferee(session[0].event.id))
+      )
+    ) {
+      throw new Error("You don't have the necessary permissions to cancel game");
+    }
+
+    if (session[0].status !== SessionStatus.SESSION_STATUS_INPROGRESS) {
+      throw new Error('Session is not in progress');
+    }
+    session[0].status = SessionStatus.SESSION_STATUS_CANCELLED;
+    await this.repo.em.persistAndFlush(session[0]);
+
+    return { success: true };
+  }
+
+  async finalizeGames(eventId: number) {
+    const sessionModel = this.getModel(SessionModel);
+    const sessions = await sessionModel.findByEventAndStatus(
+      [eventId],
+      [SessionStatus.SESSION_STATUS_PREFINISHED]
+    );
+    if (sessions.length === 0) {
+      return { success: true };
+    }
+
+    const playerModel = this.getModel(PlayerModel);
+
+    if (
+      !this.repo.meta.personId ||
+      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+    ) {
+      throw new Error("You don't have the necessary permissions to finish games");
+    }
+
+    const achievementsModel = this.getModel(AchievementsModel);
+    const eventModel = this.getModel(EventModel);
+    const playerRegModel = this.getModel(EventRegistrationModel);
+
+    const [regs, event] = await Promise.all([
+      playerRegModel.findByEventId([eventId]),
+      eventModel.findById([eventId]),
+      achievementsModel.scheduleRebuildAchievements(eventId),
+    ]);
+
+    const playerMap = new Map(regs.map((reg) => [reg.playerId, reg.replacementId]));
+    const promises = [];
+    const skirnirPromises = [];
+    for (const session of sessions) {
+      const sessionState = new SessionState(
+        event[0].ruleset,
+        session.intermediateResults?.playerIds ?? [],
+        session.intermediateResults
+      );
+      promises.push(this.finish(session.event, session, sessionState));
+
+      const whoPlays = [...sessionState.state.playerIds];
+      for (let i = 0; i < sessionState.state.playerIds.length; i++) {
+        const replacementId = playerMap.get(sessionState.state.playerIds[i]);
+        if (replacementId) {
+          whoPlays[i] = replacementId;
+        }
+      }
+      skirnirPromises.push(
+        this.repo.skirnir.messageTournamentSessionEnd(whoPlays, eventId, sessionState.getScores())
+      );
+    }
+    await Promise.all(promises);
+    await this.repo.db.em.flush();
+    await Promise.all(skirnirPromises);
+    return { success: true };
   }
 
   getSessionResults(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
