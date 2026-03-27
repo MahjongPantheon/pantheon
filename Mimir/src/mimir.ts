@@ -443,7 +443,8 @@ export const mimirServer: Mimir<Context> = {
     genericSessionPayload: GenericSessionPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.definalizeGame(genericSessionPayload.sessionHash);
   },
   AddPenalty: function (
     gamesAddPenaltyPayload: GamesAddPenaltyPayload,
