@@ -26,6 +26,7 @@ import { Populate } from '@mikro-orm/postgresql';
 import {
   AddExtraTimePayload,
   GamesAddRoundResponse,
+  GamesDropLastRoundPayload,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundResponse,
   GamesStartGamePayload,
@@ -772,7 +773,11 @@ export class SessionModel extends Model {
         session.intermediateResults?.playerIds ?? [],
         session.intermediateResults
       );
-      promises.push(this.finish(session.event, session, sessionState));
+      promises.push(
+        this.finish(session.event, session, sessionState).then(() => {
+          this.repo.em.persist(session);
+        })
+      );
 
       const whoPlays = [...sessionState.state.playerIds];
       for (let i = 0; i < sessionState.state.playerIds.length; i++) {
@@ -977,6 +982,57 @@ export class SessionModel extends Model {
       session.extraTime += addExtraTimePayload.extraTime;
       this.repo.db.em.persist(session);
     }
+
+    await this.repo.db.em.flush();
+    return { success: true };
+  }
+
+  async dropLastRound(payload: GamesDropLastRoundPayload) {
+    const sessions = await this.findByRepresentationalHash([payload.sessionHash], ['event']);
+    if (sessions.length === 0) {
+      throw new Error('Session not found');
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(
+        (await playerModel.isEventAdmin(sessions[0].event.id)) &&
+        (await playerModel.isEventReferee(sessions[0].event.id))
+      )
+    ) {
+      throw new Error("You don't have the necessary permissions to drop last round");
+    }
+
+    if (sessions[0].status === SessionStatus.SESSION_STATUS_FINISHED) {
+      throw new Error('Cannot drop last round for a finished session');
+    }
+
+    const savedSessionState = new SessionState(
+      sessions[0].event.ruleset,
+      sessions[0].intermediateResults?.playerIds ?? [],
+      sessions[0].intermediateResults
+    );
+
+    for (const res of payload.intermediateResults) {
+      if (res.score !== savedSessionState.getScores()[res.playerId]) {
+        throw new Error("Can't cancel round: was it already cancelled by someone else?");
+      }
+    }
+
+    const roundModel = this.getModel(RoundModel);
+    const rounds = await roundModel.findBySessionIds([sessions[0].id]);
+
+    if (rounds.length === 0) {
+      throw new Error('No rounds to drop');
+    }
+
+    const lastRound = rounds.pop()!;
+    sessions[0].intermediateResults = lastRound.lastSessionState;
+    sessions[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
+    this.repo.db.em.remove(lastRound);
+    this.repo.db.em.persist(sessions[0]);
 
     await this.repo.db.em.flush();
     return { success: true };
