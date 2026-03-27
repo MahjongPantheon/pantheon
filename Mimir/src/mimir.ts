@@ -422,13 +422,15 @@ export const mimirServer: Mimir<Context> = {
     genericSessionPayload: GenericSessionPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.cancelGame(genericSessionPayload);
   },
   FinalizeSession: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.finalizeGames(genericEventPayload.eventId);
   },
   DropLastRound: function (
     gamesDropLastRoundPayload: GamesDropLastRoundPayload,
