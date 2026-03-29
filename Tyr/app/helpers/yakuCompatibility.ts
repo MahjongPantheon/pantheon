@@ -470,6 +470,7 @@ const combinableYaku = [
 
   [Y.IPPATSU, Y.MENZENTSUMO],
   [Y.IPPATSU, Y.HAITEI],
+  [Y.IPPATSU, Y.HOUTEI],
   [Y.IPPATSU, Y.CHANKAN],
   [Y.IPPATSU, Y.OPENRIICHI],
 
