@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Mimir;
 
 use Common\Chombo;
@@ -111,8 +112,7 @@ class EventsController extends Controller
             ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
             ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
             ->setAllowManualAddReplay($allowManualAddReplay ? 1 : 0)
-            ->setStatHost($statHost)
-        ;
+            ->setStatHost($statHost);
 
         if ($this->_meta->isSuperadmin()) {
             $event->setPlatformId($platformId === PlatformType::PLATFORM_TYPE_UNSPECIFIED ? null : $platformId);
@@ -133,7 +133,7 @@ class EventsController extends Controller
                     ->setUsePenalty(1)
                     ->setIsTeam(0)
                     ->setIsPrescripted(0)
-                    ;
+                ;
                 break;
             case 'tournament':
                 $event->setAllowPlayerAppend(0)
@@ -161,8 +161,7 @@ class EventsController extends Controller
                     ->setIsPrescripted(0)
                 ;
                 break;
-            default:
-                ;
+            default:;
         }
 
         $success = $event->save();
@@ -1124,6 +1123,11 @@ class EventsController extends Controller
                 'originalRules' => \Common\Ruleset::instance('ema')->rules()
             ],
             [
+                'id' => 'ema2025',
+                'description' => 'European Mahjong Association rules (rev.2025)',
+                'originalRules' => \Common\Ruleset::instance('ema2025')->rules()
+            ],
+            [
                 'id' => 'jpmlA',
                 'description' => 'Japanese Professional Mahjong League A rules',
                 'originalRules' => \Common\Ruleset::instance('jpmlA')->rules()
@@ -1368,7 +1372,8 @@ class EventsController extends Controller
             throw new InvalidParametersException('Penalty id#' . $penaltyId . ' not found in DB');
         }
 
-        if (!$this->_meta->isEventAdminById($penalty[0]->getEventId()) &&
+        if (
+            !$this->_meta->isEventAdminById($penalty[0]->getEventId()) &&
             !$this->_meta->isEventRefereeById($penalty[0]->getEventId())
         ) {
             throw new BadActionException("You don't have enough privileges to cancel penalties for this event");

@@ -46,7 +46,7 @@ export const TeamNamesTab: React.FC<{
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [teamNames, setTeamNames] = useState<Record<number, string>>(
+  const [teamNames, setTeamNames] = useState(
     players.reduce(
       (acc, val) => {
         acc[val.id] = val.teamName ?? '';

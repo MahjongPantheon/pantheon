@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Common;
+
 require_once __DIR__ . '/../i18n.php';
 
 class Ruleset
@@ -26,7 +28,8 @@ class Ruleset
      * @param string|RulesetConfig $customizedSettings
      * @throws \Exception
      */
-    public function __construct(string|RulesetConfig $customizedSettings) {
+    public function __construct(string|RulesetConfig $customizedSettings)
+    {
         if ($customizedSettings instanceof RulesetConfig) {
             $this->_rulesetCurrent = $customizedSettings;
         } else {
@@ -57,6 +60,7 @@ class Ruleset
     {
         switch ($rulesetName) {
             case 'ema':
+            case 'ema2025':
             case 'wrc':
             case 'jpmlA':
             case 'tenhounet':
@@ -165,9 +169,9 @@ class Ruleset
     public function oka(int $place)
     {
         if ($place === 1) {
-            return ($this->_rulesetCurrent->getOka() * 0.75) ;
+            return ($this->_rulesetCurrent->getOka() * 0.75);
         } else {
-            return -($this->_rulesetCurrent->getOka() / 4);
+            return - ($this->_rulesetCurrent->getOka() / 4);
         }
     }
 }

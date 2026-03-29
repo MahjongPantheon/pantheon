@@ -46,7 +46,7 @@ export const LocalIdsTab: React.FC<{
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [localIds, setLocalIds] = useState<Record<number, number>>(
+  const [localIds, setLocalIds] = useState(
     players.reduce(
       (acc, val) => {
         acc[val.id] = val.localId ?? 0;

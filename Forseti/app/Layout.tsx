@@ -103,7 +103,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const api = useApi();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
-  const [useDimmed, setUseDimmed] = useState<boolean>(storage.getDimmed());
+  const [useDimmed, setUseDimmed] = useState(storage.getDimmed());
 
   const analytics = useAnalytics();
   useEffect(() => {
