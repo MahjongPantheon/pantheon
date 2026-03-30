@@ -473,7 +473,8 @@ export const mimirServer: Mimir<Context> = {
     playersGetPlayerPayload: PlayersGetPlayerPayload,
     context: Context
   ): Promise<PlayersGetPlayerResponse> {
-    throw new Error('Function not implemented.');
+    const playerModel = Model.getModel(context.repository, PlayerModel);
+    return playerModel.getPlayer(playersGetPlayerPayload.id);
   },
   GetCurrentSeating: function (
     genericEventPayload: GenericEventPayload,
