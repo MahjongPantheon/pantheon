@@ -1,4 +1,4 @@
-import { PersonEx } from 'tsclients/proto/atoms.pb.js';
+import { PersonEx, Player } from 'tsclients/proto/atoms.pb.js';
 import { Model } from './Model.js';
 import { playerInfo } from 'src/helpers/cache/schema.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
@@ -167,5 +167,20 @@ export class PlayerModel extends Model {
     const personId = this.repo.meta.personId;
     const data = await this.repo.frey.GetEventReferees({ eventId });
     return data.referees.includes(personId);
+  }
+
+  async getPlayer(playerId: number): Promise<{ players: Player }> {
+    const data = await this.repo.frey.GetPersonalInfo({
+      ids: [playerId],
+    });
+    return {
+      players: {
+        id: data.people[0].id,
+        title: data.people[0].title,
+        tenhouId: data.people[0].tenhouId,
+        hasAvatar: data.people[0].hasAvatar,
+        lastUpdate: data.people[0].lastUpdate,
+      },
+    };
   }
 }
