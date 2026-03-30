@@ -92,6 +92,7 @@ import { SessionResultsModel } from './models/SessionResultsModel.js';
 import { PlayerInSessionModel } from './models/PlayerInSessionModel.js';
 import { EventRegistrationModel } from './models/EventRegistrationModel.js';
 import { PenaltyModel } from './models/PenaltyModel.js';
+import { AchievementsModel } from './models/AchievementsModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -465,7 +466,8 @@ export const mimirServer: Mimir<Context> = {
     eventsGetAchievementsPayload: EventsGetAchievementsPayload,
     context: Context
   ): Promise<EventsGetAchievementsResponse> {
-    throw new Error('Function not implemented.');
+    const achievementsModel = Model.getModel(context.repository, AchievementsModel);
+    return achievementsModel.getAchievements(eventsGetAchievementsPayload);
   },
   GetPlayer: function (
     playersGetPlayerPayload: PlayersGetPlayerPayload,
