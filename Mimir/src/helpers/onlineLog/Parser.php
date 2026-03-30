@@ -21,6 +21,7 @@ require_once __DIR__ . '/../../exceptions/Parser.php';
 require_once __DIR__ . '/../../helpers/YakuMap.php';
 require_once __DIR__ . '/../../primitives/Round.php';
 require_once __DIR__ . '/../../primitives/PlayerHistory.php';
+require_once __DIR__ . '/MeldDecoder.php';
 
 class OnlineParser
 {
@@ -55,9 +56,15 @@ class OnlineParser
      */
     protected $_ankanCache = [];
 
+    /**
+     * @var TenhouMeldDecoder $_meldDecoder
+     */
+    protected $_meldDecoder;
+
     public function __construct(DataSource $ds)
     {
         $this->_ds = $ds;
+        $this->_meldDecoder = new TenhouMeldDecoder();
     }
 
     /**
@@ -73,7 +80,6 @@ class OnlineParser
         $reader = new \XMLReader();
         $reader->XML($content);
 
-        $kanNakiCache = null;
         $this->_ankanCache = [[], [], [], []];
 
         while ($reader->read()) {
@@ -82,18 +88,11 @@ class OnlineParser
             }
 
             if ($reader->localName === 'N') {
-                $meld = $reader->getAttribute('m');
-                $nakiWho = $reader->getAttribute('who');
-                $kanNakiCache = ['m' => $meld, 'who' => $nakiWho];
-            } else if ($reader->localName !== 'DORA') {
-                $kanNakiCache = null;
-            }
-
-            if ($reader->localName === 'DORA') {
-                if (isset($kanNakiCache)) {
-                    $ankanArrays = $this->_ankanCache[$kanNakiCache['who']];
-                    array_push($ankanArrays, $kanNakiCache['m']);
-                    $this->_ankanCache[$kanNakiCache['who']] = $ankanArrays;
+                $meldTag = (int)$reader->getAttribute('m');
+                $nakiWho = (int)$reader->getAttribute('who');
+                $meld = $this->_meldDecoder->decode($meldTag);
+                if ($meld->type === Meld::KAN && $meld->opened === false) {
+                    array_push($this->_ankanCache[$nakiWho], $meld);
                 }
             }
 
