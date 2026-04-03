@@ -161,7 +161,8 @@ class EventsController extends Controller
                     ->setIsPrescripted(0)
                 ;
                 break;
-            default:;
+            default:
+                ;
         }
 
         $success = $event->save();
@@ -1372,8 +1373,7 @@ class EventsController extends Controller
             throw new InvalidParametersException('Penalty id#' . $penaltyId . ' not found in DB');
         }
 
-        if (
-            !$this->_meta->isEventAdminById($penalty[0]->getEventId()) &&
+        if (!$this->_meta->isEventAdminById($penalty[0]->getEventId()) &&
             !$this->_meta->isEventRefereeById($penalty[0]->getEventId())
         ) {
             throw new BadActionException("You don't have enough privileges to cancel penalties for this event");
