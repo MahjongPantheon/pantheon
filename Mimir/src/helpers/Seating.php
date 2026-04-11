@@ -25,7 +25,7 @@ class Seating
      *
      * @param array $playersMap [id => rating] - current rating table
      * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
-     * @param string $windShuffleMode - 'balanced' or 'random'
+     * @param ?string $windShuffleMode - null | 'balanced' | 'random' (default 'random')
      * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
     public static function swissSeating($playersMap, $previousSeatings, $windShuffleMode)
@@ -60,6 +60,9 @@ class Seating
             $seating[$indexToPlayer[$playerIndex]] = $indexToRating[$playerIndex];
         }
 
+        if (empty($windShuffleMode)) {
+            $windShuffleMode = 'random';
+        }
         if ($windShuffleMode == 'balanced') {
             return self::_balancedWindShuffle($seating, $previousSeatings);
         } else {
@@ -114,11 +117,11 @@ class Seating
      * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
      * @param int $groupsCount - shuffling groups count
      * @param int $randFactor - RNG init seed
-     * @param string $windShuffleMode - 'balanced' or 'random'
+     * @param ?string $windShuffleMode - null | 'balanced' | 'random' (default 'balanced')
      *
      * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
-    public static function shuffledSeating($playersMap, $previousSeatings, int $groupsCount, int $randFactor, string $windShuffleMode): array
+    public static function shuffledSeating($playersMap, $previousSeatings, int $groupsCount, int $randFactor, ?string $windShuffleMode): array
     {
         /*
          * Simple random search. Too many variables for real optimising methods :(
@@ -163,6 +166,9 @@ class Seating
             usleep(500); // sleep some time to reduce cpu load
         } // 6)
 
+        if (empty($windShuffleMode)) {
+            $windShuffleMode = 'balanced';
+        }
         if ($windShuffleMode == 'balanced') {
             return self::_balancedWindShuffle($bestSeating, $previousSeatings);
         } else {
@@ -607,12 +613,12 @@ class Seating
      * @param array $currentRatingList :ordered list
      * @param int $step
      * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
-     * @param string $windShuffleMode - 'balanced' or 'random'
+     * @param ?string $windShuffleMode - null | 'balanced' | 'random' (default 'random')
      *
      * @return array
      * @throws \Exception
      */
-    public static function makeIntervalSeating(array $currentRatingList, int $step, array $previousSeatings, string $windShuffleMode)
+    public static function makeIntervalSeating(array $currentRatingList, int $step, array $previousSeatings, ?string $windShuffleMode)
     {
         srand(crc32(microtime()));
         $tables = [];
@@ -665,6 +671,9 @@ class Seating
             }
         }
 
+        if (empty($windShuffleMode)) {
+            $windShuffleMode = 'random';
+        }
         if ($windShuffleMode == 'balanced') {
             return self::_balancedWindShuffle($flattenedGroups, $previousSeatings);
         } else {

@@ -36,7 +36,7 @@ class SeatingController extends Controller
      * @param int $eventId
      * @param int $groupsCount
      * @param int $seed
-     * @param string $windShuffleMode
+     * @param ?string $windShuffleMode
      * @throws InvalidParametersException
      * @throws AuthFailedException
      * @throws \Exception
@@ -92,7 +92,7 @@ class SeatingController extends Controller
      * This will also start games immediately if timer is not used.
      *
      * @param int $eventId
-     * @param string $windShuffleMode
+     * @param ?string $windShuffleMode
      * @throws InvalidParametersException
      * @throws AuthFailedException
      * @throws \Exception
@@ -147,7 +147,7 @@ class SeatingController extends Controller
      * It is here because of online tournaments.
      *
      * @param int $eventId
-     * @param string $windShuffleMode
+     * @param ?string $windShuffleMode
      * @param bool $substituteReplacementPlayers
      * @throws AuthFailedException
      * @throws InvalidParametersException
@@ -193,7 +193,7 @@ class SeatingController extends Controller
      *
      * @param int $eventId
      * @param int $step
-     * @param string $windShuffleMode
+     * @param ?string $windShuffleMode
      * @throws AuthFailedException
      * @throws DatabaseException
      * @throws InvalidParametersException
