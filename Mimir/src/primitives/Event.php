@@ -67,6 +67,7 @@ class EventPrimitive extends Primitive
         'platform_id'       => '_platformId',
         'allow_view_other_tables' => '_allowViewOtherTables',
         'manual_add_replay' => '_allowManualAddReplay',
+        'wind_shuffle_mode' => '_windShuffleMode',
     ];
 
     protected function _getFieldsTransforms()
@@ -101,6 +102,7 @@ class EventPrimitive extends Primitive
             '_isListed'           => $this->_integerTransform(),
             '_allowViewOtherTables' => $this->_integerTransform(),
             '_allowManualAddReplay' => $this->_integerTransform(),
+            '_windShuffleMode'    => $this->_stringTransform(true),
             '_rulesetConfig'      => [
                 'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->rules()->serializeToJsonString();
@@ -270,6 +272,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_allowManualAddReplay;
+    /**
+     * Wind shuffle mode: null | 'balanced' | 'random'
+     * @var string|null
+     */
+    protected $_windShuffleMode;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -956,6 +963,24 @@ class EventPrimitive extends Primitive
     public function setAllowManualAddReplay(int $allowManualAddReplay)
     {
         $this->_allowManualAddReplay = $allowManualAddReplay;
+        return $this;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getWindShuffleMode()
+    {
+        return $this->_windShuffleMode;
+    }
+
+    /**
+     * @param ?string $windShuffleMode
+     * @return EventPrimitive
+     */
+    public function setWindShuffleMode(?string $windShuffleMode)
+    {
+        $this->_windShuffleMode = $windShuffleMode;
         return $this;
     }
 }

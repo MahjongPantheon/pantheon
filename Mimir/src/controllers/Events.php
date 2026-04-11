@@ -57,6 +57,7 @@ class EventsController extends Controller
      * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
      * @param bool $allowManualAddReplay If manual add of replay is allowed
+     * @param ?string $windShuffleMode Wind shuffle mode: null | 'balanced' | 'random'
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -80,7 +81,8 @@ class EventsController extends Controller
         $allowViewOtherTables,
         $platformId,
         $rulesetConfig,
-        $allowManualAddReplay
+        $allowManualAddReplay,
+        $windShuffleMode
     ) {
         $this->_log->info('Creating new event...');
 
@@ -112,6 +114,7 @@ class EventsController extends Controller
             ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
             ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
             ->setAllowManualAddReplay($allowManualAddReplay ? 1 : 0)
+            ->setWindShuffleMode($windShuffleMode)
             ->setStatHost($statHost);
 
         if ($this->_meta->isSuperadmin()) {
@@ -210,6 +213,7 @@ class EventsController extends Controller
      * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
      * @param bool $allowManualAddReplay If manual add of replay is allowed
+     * @param ?string $windShuffleMode Wind shuffle mode: null | 'balanced' | 'random'
      * @return bool
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -233,7 +237,8 @@ class EventsController extends Controller
         $allowViewOtherTables,
         $platformId,
         $rulesetConfig,
-        $allowManualAddReplay
+        $allowManualAddReplay,
+        $windShuffleMode
     ) {
         $this->_log->info('Updating event with id #' . $id);
 
@@ -263,6 +268,7 @@ class EventsController extends Controller
             ->setMinGamesCount($minGamesCount)
             ->setAllowViewOtherTables($allowViewOtherTables ? 1 : 0)
             ->setAllowManualAddReplay($allowManualAddReplay ? 1 : 0)
+            ->setWindShuffleMode($windShuffleMode)
             ->setRulesetConfig(new Ruleset($rulesetConfig))
         ;
 
@@ -342,6 +348,7 @@ class EventsController extends Controller
             'isRatingShown' => !$event->getHideResults(),
             'allowViewOtherTables' => (bool)$event->getAllowViewOtherTables(),
             'allowManualAddReplay' => (bool)$event->getAllowManualAddReplay(),
+            'windShuffleMode' => $event->getWindShuffleMode(),
             'achievementsShown' => !$event->getHideAchievements(),
             'isFinished' => (bool)$event->getIsFinished(),
             'platformId' => $event->getPlatformId()
@@ -673,6 +680,7 @@ class EventsController extends Controller
             'isFinished'          => (bool)$event[0]->getIsFinished(),
             'lobbyId'             => $event[0]->getLobbyId(),
             'allowViewOtherTables' => (bool)$event[0]->getAllowViewOtherTables(),
+            'windShuffleMode'     => $event[0]->getWindShuffleMode(),
         ];
 
         $this->_log->info('Successfully received config for event id# ' . $eventId);

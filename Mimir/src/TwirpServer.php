@@ -328,6 +328,9 @@ final class TwirpServer implements Mimir
                 $data->setPlatformId(PlatformType::PLATFORM_TYPE_UNSPECIFIED);
             }
         }
+        if (!empty($ret['windShuffleMode'])) {
+            $data->setWindShuffleMode($ret['windShuffleMode']);
+        }
         return $data;
     }
 
@@ -942,6 +945,9 @@ final class TwirpServer implements Mimir
         if (!empty($ret['gamesStatus'])) {
             $gc->setGamesStatus(self::_toGamesStatus($ret['gamesStatus']));
         }
+        if (!empty($ret['windShuffleMode'])) {
+            $gc->setWindShuffleMode($ret['windShuffleMode']);
+        }
         return $gc;
     }
 
@@ -1356,7 +1362,8 @@ final class TwirpServer implements Mimir
                 $req->getAllowViewOtherTables(),
                 $req->getPlatformId(),
                 $req->getRulesetConfig(),
-                $req->getAllowManualAddReplay()
+                $req->getAllowManualAddReplay(),
+                $req->getWindShuffleMode()
             ));
     }
 
@@ -1389,7 +1396,8 @@ final class TwirpServer implements Mimir
                 $ev->getAllowViewOtherTables(),
                 $ev->getPlatformId(),
                 $ev->getRulesetConfig(),
-                $ev->getAllowManualAddReplay()
+                $ev->getAllowManualAddReplay(),
+                $ev->getWindShuffleMode()
             ));
     }
 
