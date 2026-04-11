@@ -152,6 +152,7 @@ export interface GameConfig {
   rulesetConfig: RulesetConfig;
   lobbyId: number;
   allowViewOtherTables: boolean;
+  windShuffleMode?: string | null | undefined;
 }
 
 export interface PlayerInRating {
@@ -457,6 +458,7 @@ export interface EventData {
   allowViewOtherTables: boolean;
   platformId: PlatformType;
   allowManualAddReplay: boolean;
+  windShuffleMode?: string | null | undefined;
 }
 
 export interface TableState {
@@ -1878,6 +1880,7 @@ export const GameConfig = {
       rulesetConfig: RulesetConfig.initialize(),
       lobbyId: 0,
       allowViewOtherTables: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -1963,6 +1966,9 @@ export const GameConfig = {
     }
     if (msg.allowViewOtherTables) {
       writer.writeBool(55, msg.allowViewOtherTables);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeString(56, msg.windShuffleMode);
     }
     return writer;
   },
@@ -2075,6 +2081,10 @@ export const GameConfig = {
         }
         case 55: {
           msg.allowViewOtherTables = reader.readBool();
+          break;
+        }
+        case 56: {
+          msg.windShuffleMode = reader.readString();
           break;
         }
         default: {
@@ -5653,6 +5663,7 @@ export const EventData = {
       allowViewOtherTables: false,
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -5717,6 +5728,9 @@ export const EventData = {
     }
     if (msg.allowManualAddReplay) {
       writer.writeBool(20, msg.allowManualAddReplay);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeString(21, msg.windShuffleMode);
     }
     return writer;
   },
@@ -5801,6 +5815,10 @@ export const EventData = {
         }
         case 20: {
           msg.allowManualAddReplay = reader.readBool();
+          break;
+        }
+        case 21: {
+          msg.windShuffleMode = reader.readString();
           break;
         }
         default: {
@@ -8823,6 +8841,7 @@ export const GameConfigJSON = {
       rulesetConfig: RulesetConfigJSON.initialize(),
       lobbyId: 0,
       allowViewOtherTables: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -8913,6 +8932,9 @@ export const GameConfigJSON = {
     }
     if (msg.allowViewOtherTables) {
       json["allowViewOtherTables"] = msg.allowViewOtherTables;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -9024,6 +9046,11 @@ export const GameConfigJSON = {
       json["allowViewOtherTables"] ?? json["allow_view_other_tables"];
     if (_allowViewOtherTables_) {
       msg.allowViewOtherTables = _allowViewOtherTables_;
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = _windShuffleMode_;
     }
     return msg;
   },
@@ -12105,6 +12132,7 @@ export const EventDataJSON = {
       allowViewOtherTables: false,
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -12174,6 +12202,9 @@ export const EventDataJSON = {
     }
     if (msg.allowManualAddReplay) {
       json["allowManualAddReplay"] = msg.allowManualAddReplay;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -12256,6 +12287,11 @@ export const EventDataJSON = {
       json["allowManualAddReplay"] ?? json["allow_manual_add_replay"];
     if (_allowManualAddReplay_) {
       msg.allowManualAddReplay = _allowManualAddReplay_;
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = _windShuffleMode_;
     }
     return msg;
   },
