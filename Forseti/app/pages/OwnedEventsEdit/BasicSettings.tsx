@@ -45,6 +45,11 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
     [EventType.EVENT_TYPE_ONLINE]: i18n._t('Online event'),
     [EventType.EVENT_TYPE_TOURNAMENT]: i18n._t('Tournament'),
   };
+  const windShuffleModes: Record<string, string> = {
+    '': i18n._t('Default wind shuffle'),
+    balanced: i18n._t('Balanced wind shuffle'),
+    random: i18n._t('Random wind shuffle'),
+  };
   return (
     <>
       <Stack>
@@ -141,6 +146,16 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           )}
           {...form.getInputProps('event.allowViewOtherTables', { type: 'checkbox' })}
         />
+        <Radio.Group
+          label={i18n._t('Wind shuffle mode')}
+          {...form.getInputProps('event.windShuffleMode')}
+        >
+          <Group mt='xs'>
+            {Object.keys(windShuffleModes).map((k) => (
+              <Radio key={'wsm_' + k} value={k} label={windShuffleModes[k]} />
+            ))}
+          </Group>
+        </Radio.Group>
       </Stack>
     </>
   );

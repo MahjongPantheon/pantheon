@@ -237,7 +237,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const onMakeIntervalSeating = useCallback((interval: number) => {
     setSeatingLoading(true);
     api
-      .makeIntervalSeating(eventId, interval)
+      .makeIntervalSeating(eventId, interval, eventConfig?.windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate interval seating'));
@@ -253,7 +253,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const onMakeRandomSeating = useCallback(() => {
     setSeatingLoading(true);
     api
-      .makeShuffledSeating(eventId)
+      .makeShuffledSeating(eventId, eventConfig?.windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate random seating'));
@@ -269,7 +269,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const onMakeSwissSeating = useCallback(() => {
     setSeatingLoading(true);
     api
-      .makeSwissSeating(eventId)
+      .makeSwissSeating(eventId, eventConfig?.windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate swiss seating'));

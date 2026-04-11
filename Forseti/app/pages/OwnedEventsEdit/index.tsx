@@ -89,6 +89,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         allowViewOtherTables: false,
         platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
         allowManualAddReplay: true,
+        windShuffleMode: '',
       },
       ruleset: {
         gameExpirationTime: 0, // online
