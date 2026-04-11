@@ -105,7 +105,13 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
             '12' => 1500
         ];
 
-        $seating = Seating::shuffledSeating($players, [], /* group count = */ 1, /* seed = */ 3464752);
+        $seating = Seating::shuffledSeating(
+            $players,
+            [],
+            /* group count = */ 1,
+            /* seed = */ 3464752,
+            /* wind shuffle mode = */ 'balanced'
+        );
         $this->assertEquals(12, count($seating));
         $this->assertEquals($seating, $players);
         $this->assertNotEquals(json_encode($seating), json_encode($players));
@@ -142,8 +148,9 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
         $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
-            /* group count = */ 1, /* seed = */
-            3462352
+            /* group count = */ 1,
+            /* seed = */ 3462352,
+            /* wind shuffle mode = */ 'balanced'
         );
         $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
         foreach ($intersections as $i) {
@@ -186,8 +193,9 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
         $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
-            /* group count = */ 1, /* seed = */
-            9486370
+            /* group count = */ 1,
+            /* seed = */ 9486370,
+            /* wind shuffle mode = */ 'balanced'
         );
 
         $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
@@ -231,8 +239,9 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
         $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
-            /* group count = */ 2, /* seed = */
-            3462352
+            /* group count = */ 2,
+            /* seed = */ 3462352,
+            /* wind shuffle mode = */ 'balanced'
         );
 
         list($winners, $losers) = array_chunk($seating, 8);
@@ -368,7 +377,7 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
             [12, 3, 9, 15]*/
         ];
 
-        $seating = Seating::swissSeating($players, $previousSeating);
+        $seating = Seating::swissSeating($players, $previousSeating, 'random');
 
         $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
         foreach ($intersections as $i) {
@@ -402,7 +411,7 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
             ['id' => 20, 'rating' => -90000],
         ];
 
-        $seating = Seating::makeIntervalSeating($players, 2);
+        $seating = Seating::makeIntervalSeating($players, 2, [], 'random');
         $this->assertEquals([
             1 => 100000,
             3 => 80000,
@@ -426,7 +435,7 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
             20 => -90000
         ], $seating, 'Seating with step 2');
 
-        $seating = Seating::makeIntervalSeating($players, 3);
+        $seating = Seating::makeIntervalSeating($players, 3, [], 'random');
         $this->assertEquals([
             1 => 100000,
             4 => 70000,
@@ -454,7 +463,7 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
             20 => -90000
         ], $seating, 'Seating with step 3');
 
-        $seating = Seating::makeIntervalSeating($players, 4);
+        $seating = Seating::makeIntervalSeating($players, 4, [], 'random');
         $this->assertEquals([
             1 => 100000,
             5 => 60000,
@@ -482,7 +491,7 @@ class SeatingTest extends \PHPUnit\Framework\TestCase
             20 => -90000
         ], $seating, 'Seating with step 4');
 
-        $seating = Seating::makeIntervalSeating($players, 5);
+        $seating = Seating::makeIntervalSeating($players, 5, [], 'random');
         $this->assertEquals([
             1 => 100000,
             6 => 50000,

@@ -1690,7 +1690,8 @@ final class TwirpServer implements Mimir
             ->setSuccess($this->_seatingController->makeShuffledSeating(
                 $req->getEventId(),
                 $req->getGroupsCount(),
-                $req->getSeed()
+                $req->getSeed(),
+                'balanced' // TODO $windShuffleMode
             ));
     }
 
@@ -1701,7 +1702,10 @@ final class TwirpServer implements Mimir
     public function MakeSwissSeating(array $ctx, GenericEventPayload $req): GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
-            ->setSuccess($this->_seatingController->makeSwissSeating($req->getEventId()));
+            ->setSuccess($this->_seatingController->makeSwissSeating(
+                $req->getEventId(),
+                'random' // TODO $windShuffleMode
+            ));
     }
 
     /**
@@ -1727,7 +1731,11 @@ final class TwirpServer implements Mimir
                             ->setPlayerId((int)$player)
                             ->setRating(0.);
                     }, $table));
-            }, $this->_seatingController->generateSwissSeating($req->getEventId(), $req->getSubstituteReplacementPlayers())));
+            }, $this->_seatingController->generateSwissSeating(
+                $req->getEventId(),
+                'random', // TODO $windShuffleMode
+                $req->getSubstituteReplacementPlayers()
+            )));
     }
 
     /**
@@ -1741,7 +1749,8 @@ final class TwirpServer implements Mimir
         return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->makeIntervalSeating(
                 $req->getEventId(),
-                $req->getStep()
+                $req->getStep(),
+                'random' // TODO $windShuffleMode
             ));
     }
 
