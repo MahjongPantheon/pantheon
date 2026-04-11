@@ -59,7 +59,7 @@ class Seating
             $seating[$indexToPlayer[$playerIndex]] = $indexToRating[$playerIndex];
         }
 
-        return self::_updatePlacesToRandom($seating) ?: [];
+        return self::_randomWindShuffle($seating) ?: [];
     }
 
     /**
@@ -160,7 +160,7 @@ class Seating
             usleep(500); // sleep some time to reduce cpu load
         } // 6)
 
-        return self::_updatePlacesAtEachTable($bestSeating, $previousSeatings);
+        return self::_balancedWindShuffle($bestSeating, $previousSeatings);
     }
 
     /**
@@ -235,7 +235,7 @@ class Seating
      * @param array $seating
      * @return array|null
      */
-    protected static function _updatePlacesToRandom(array $seating)
+    protected static function _randomWindShuffle(array $seating)
     {
         self::shuffleSeed();
         $tables = array_chunk($seating, 4, true);
@@ -255,7 +255,7 @@ class Seating
      * @param array $previousSeatings
      * @return array|null
      */
-    protected static function _updatePlacesAtEachTable(array $seating, array $previousSeatings)
+    protected static function _balancedWindShuffle(array $seating, array $previousSeatings)
     {
         $possiblePlacements = [
             '0123', '1023', '2013', '3012',
@@ -275,7 +275,7 @@ class Seating
             $bestResult = 10005000;
             $bestPlacement = [];
             foreach ($possiblePlacements as $placement) {
-                $newResult = self::_calcSubSums(
+                $newResult = self::_calcWindDistributionPenalty(
                     $table[$placement[0]],
                     $table[$placement[1]],
                     $table[$placement[2]],
@@ -312,7 +312,7 @@ class Seating
      *
      * @return float|int
      */
-    protected static function _calcSubSums(int $player1, int $player2, int $player3, int $player4, array $prevData)
+    protected static function _calcWindDistributionPenalty(int $player1, int $player2, int $player3, int $player4, array $prevData)
     {
         $totalsum = 0;
         foreach ([$player1, $player2, $player3, $player4] as $idx => $player) {
@@ -321,16 +321,19 @@ class Seating
 
             foreach ($prevData as $table) {
                 $idxAtTable = array_search($player, $table);
-                $buckets[$idxAtTable] ++;
+                if ($idxAtTable !== false) {
+                    $buckets[$idxAtTable] ++;
+                }
             }
 
+            // square the numbers to force buckets to be closer to each other, this works much better
             $totalsum += (
-                abs($buckets[0] - $buckets[1]) +
-                abs($buckets[0] - $buckets[2]) +
-                abs($buckets[0] - $buckets[3]) +
-                abs($buckets[1] - $buckets[2]) +
-                abs($buckets[1] - $buckets[3]) +
-                abs($buckets[2] - $buckets[3])
+                abs($buckets[0] - $buckets[1]) ** 2 +
+                abs($buckets[0] - $buckets[2]) ** 2 +
+                abs($buckets[0] - $buckets[3]) ** 2 +
+                abs($buckets[1] - $buckets[2]) ** 2 +
+                abs($buckets[1] - $buckets[3]) ** 2 +
+                abs($buckets[2] - $buckets[3]) ** 2
             );
         }
 
@@ -651,7 +654,7 @@ class Seating
             }
         }
 
-        return self::_updatePlacesToRandom($flattenedGroups) ?: [];
+        return self::_randomWindShuffle($flattenedGroups) ?: [];
     }
 
     /**
