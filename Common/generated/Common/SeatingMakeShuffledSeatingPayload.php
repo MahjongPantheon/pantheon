@@ -28,6 +28,10 @@ class SeatingMakeShuffledSeatingPayload extends \Google\Protobuf\Internal\Messag
      * Generated from protobuf field <code>int32 seed = 3;</code>
      */
     protected $seed = 0;
+    /**
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 4;</code>
+     */
+    protected $wind_shuffle_mode = null;
 
     /**
      * Constructor.
@@ -39,6 +43,7 @@ class SeatingMakeShuffledSeatingPayload extends \Google\Protobuf\Internal\Messag
      *     @type int $groups_count
      *     @type int $seed
      *           randomness factor
+     *     @type string $wind_shuffle_mode
      * }
      */
     public function __construct($data = NULL) {
@@ -112,6 +117,38 @@ class SeatingMakeShuffledSeatingPayload extends \Google\Protobuf\Internal\Messag
     {
         GPBUtil::checkInt32($var);
         $this->seed = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 4;</code>
+     * @return string
+     */
+    public function getWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode) ? $this->wind_shuffle_mode : '';
+    }
+
+    public function hasWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode);
+    }
+
+    public function clearWindShuffleMode()
+    {
+        unset($this->wind_shuffle_mode);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 4;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setWindShuffleMode($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->wind_shuffle_mode = $var;
 
         return $this;
     }

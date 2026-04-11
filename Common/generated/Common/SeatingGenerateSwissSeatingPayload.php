@@ -22,6 +22,10 @@ class SeatingGenerateSwissSeatingPayload extends \Google\Protobuf\Internal\Messa
      * Generated from protobuf field <code>bool substitute_replacement_players = 2;</code>
      */
     protected $substitute_replacement_players = false;
+    /**
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 3;</code>
+     */
+    protected $wind_shuffle_mode = null;
 
     /**
      * Constructor.
@@ -31,6 +35,7 @@ class SeatingGenerateSwissSeatingPayload extends \Google\Protobuf\Internal\Messa
      *
      *     @type int $event_id
      *     @type bool $substitute_replacement_players
+     *     @type string $wind_shuffle_mode
      * }
      */
     public function __construct($data = NULL) {
@@ -78,6 +83,38 @@ class SeatingGenerateSwissSeatingPayload extends \Google\Protobuf\Internal\Messa
     {
         GPBUtil::checkBool($var);
         $this->substitute_replacement_players = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 3;</code>
+     * @return string
+     */
+    public function getWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode) ? $this->wind_shuffle_mode : '';
+    }
+
+    public function hasWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode);
+    }
+
+    public function clearWindShuffleMode()
+    {
+        unset($this->wind_shuffle_mode);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 3;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setWindShuffleMode($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->wind_shuffle_mode = $var;
 
         return $this;
     }

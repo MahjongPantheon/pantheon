@@ -10,20 +10,16 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>common.SeatingMakeIntervalSeatingPayload</code>
+ * Generated from protobuf message <code>common.SeatingMakeSwissSeatingPayload</code>
  */
-class SeatingMakeIntervalSeatingPayload extends \Google\Protobuf\Internal\Message
+class SeatingMakeSwissSeatingPayload extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>int32 event_id = 1;</code>
      */
     protected $event_id = 0;
     /**
-     * Generated from protobuf field <code>int32 step = 2;</code>
-     */
-    protected $step = 0;
-    /**
-     * Generated from protobuf field <code>optional string wind_shuffle_mode = 3;</code>
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 2;</code>
      */
     protected $wind_shuffle_mode = null;
 
@@ -34,7 +30,6 @@ class SeatingMakeIntervalSeatingPayload extends \Google\Protobuf\Internal\Messag
      *     Optional. Data for populating the Message object.
      *
      *     @type int $event_id
-     *     @type int $step
      *     @type string $wind_shuffle_mode
      * }
      */
@@ -66,29 +61,7 @@ class SeatingMakeIntervalSeatingPayload extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * Generated from protobuf field <code>int32 step = 2;</code>
-     * @return int
-     */
-    public function getStep()
-    {
-        return $this->step;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 step = 2;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setStep($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->step = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>optional string wind_shuffle_mode = 3;</code>
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 2;</code>
      * @return string
      */
     public function getWindShuffleMode()
@@ -107,7 +80,7 @@ class SeatingMakeIntervalSeatingPayload extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * Generated from protobuf field <code>optional string wind_shuffle_mode = 3;</code>
+     * Generated from protobuf field <code>optional string wind_shuffle_mode = 2;</code>
      * @param string $var
      * @return $this
      */

@@ -340,11 +340,18 @@ export interface SeatingMakeShuffledSeatingPayload {
   eventId: number;
   groupsCount: number;
   seed: number;
+  windShuffleMode?: string | null | undefined;
+}
+
+export interface SeatingMakeSwissSeatingPayload {
+  eventId: number;
+  windShuffleMode?: string | null | undefined;
 }
 
 export interface SeatingGenerateSwissSeatingPayload {
   eventId: number;
   substituteReplacementPlayers: boolean;
+  windShuffleMode?: string | null | undefined;
 }
 
 export interface SeatingGenerateSwissSeatingResponse {
@@ -354,6 +361,7 @@ export interface SeatingGenerateSwissSeatingResponse {
 export interface SeatingMakeIntervalSeatingPayload {
   eventId: number;
   step: number;
+  windShuffleMode?: string | null | undefined;
 }
 
 export interface SeatingMakePrescriptedSeatingPayload {
@@ -1031,12 +1039,12 @@ export async function MakeShuffledSeating(
 }
 
 export async function MakeSwissSeating(
-  genericEventPayload: protoAtoms.GenericEventPayload,
+  seatingMakeSwissSeatingPayload: SeatingMakeSwissSeatingPayload,
   config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
     "/common.Mimir/MakeSwissSeating",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    SeatingMakeSwissSeatingPayload.encode(seatingMakeSwissSeatingPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
@@ -1917,12 +1925,12 @@ export async function MakeShuffledSeatingJSON(
 }
 
 export async function MakeSwissSeatingJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
+  seatingMakeSwissSeatingPayload: SeatingMakeSwissSeatingPayload,
   config?: ClientConfiguration,
 ): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
     "/common.Mimir/MakeSwissSeating",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    SeatingMakeSwissSeatingPayloadJSON.encode(seatingMakeSwissSeatingPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
@@ -2458,7 +2466,7 @@ export interface Mimir<Context = unknown> {
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
   MakeSwissSeating: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
+    seatingMakeSwissSeatingPayload: SeatingMakeSwissSeatingPayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
@@ -3181,8 +3189,8 @@ export function createMimir<Context>(service: Mimir<Context>) {
         name: "MakeSwissSeating",
         handler: service.MakeSwissSeating,
         input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
+          protobuf: SeatingMakeSwissSeatingPayload,
+          json: SeatingMakeSwissSeatingPayloadJSON,
         },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
@@ -8226,6 +8234,7 @@ export const SeatingMakeShuffledSeatingPayload = {
       eventId: 0,
       groupsCount: 0,
       seed: 0,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -8245,6 +8254,9 @@ export const SeatingMakeShuffledSeatingPayload = {
     }
     if (msg.seed) {
       writer.writeInt32(3, msg.seed);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeString(4, msg.windShuffleMode);
     }
     return writer;
   },
@@ -8269,6 +8281,90 @@ export const SeatingMakeShuffledSeatingPayload = {
         }
         case 3: {
           msg.seed = reader.readInt32();
+          break;
+        }
+        case 4: {
+          msg.windShuffleMode = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const SeatingMakeSwissSeatingPayload = {
+  /**
+   * Serializes SeatingMakeSwissSeatingPayload to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<SeatingMakeSwissSeatingPayload>,
+  ): Uint8Array {
+    return SeatingMakeSwissSeatingPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes SeatingMakeSwissSeatingPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): SeatingMakeSwissSeatingPayload {
+    return SeatingMakeSwissSeatingPayload._readMessage(
+      SeatingMakeSwissSeatingPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes SeatingMakeSwissSeatingPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<SeatingMakeSwissSeatingPayload>,
+  ): SeatingMakeSwissSeatingPayload {
+    return {
+      eventId: 0,
+      windShuffleMode: undefined,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<SeatingMakeSwissSeatingPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeString(2, msg.windShuffleMode);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: SeatingMakeSwissSeatingPayload,
+    reader: protoscript.BinaryReader,
+  ): SeatingMakeSwissSeatingPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.windShuffleMode = reader.readString();
           break;
         }
         default: {
@@ -8313,6 +8409,7 @@ export const SeatingGenerateSwissSeatingPayload = {
     return {
       eventId: 0,
       substituteReplacementPlayers: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -8329,6 +8426,9 @@ export const SeatingGenerateSwissSeatingPayload = {
     }
     if (msg.substituteReplacementPlayers) {
       writer.writeBool(2, msg.substituteReplacementPlayers);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeString(3, msg.windShuffleMode);
     }
     return writer;
   },
@@ -8349,6 +8449,10 @@ export const SeatingGenerateSwissSeatingPayload = {
         }
         case 2: {
           msg.substituteReplacementPlayers = reader.readBool();
+          break;
+        }
+        case 3: {
+          msg.windShuffleMode = reader.readString();
           break;
         }
         default: {
@@ -8471,6 +8575,7 @@ export const SeatingMakeIntervalSeatingPayload = {
     return {
       eventId: 0,
       step: 0,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -8487,6 +8592,9 @@ export const SeatingMakeIntervalSeatingPayload = {
     }
     if (msg.step) {
       writer.writeInt32(2, msg.step);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeString(3, msg.windShuffleMode);
     }
     return writer;
   },
@@ -8507,6 +8615,10 @@ export const SeatingMakeIntervalSeatingPayload = {
         }
         case 2: {
           msg.step = reader.readInt32();
+          break;
+        }
+        case 3: {
+          msg.windShuffleMode = reader.readString();
           break;
         }
         default: {
@@ -13807,6 +13919,7 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
       eventId: 0,
       groupsCount: 0,
       seed: 0,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -13826,6 +13939,9 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
     }
     if (msg.seed) {
       json["seed"] = msg.seed;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -13848,6 +13964,80 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
     const _seed_ = json["seed"];
     if (_seed_) {
       msg.seed = protoscript.parseNumber(_seed_);
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = _windShuffleMode_;
+    }
+    return msg;
+  },
+};
+
+export const SeatingMakeSwissSeatingPayloadJSON = {
+  /**
+   * Serializes SeatingMakeSwissSeatingPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<SeatingMakeSwissSeatingPayload>): string {
+    return JSON.stringify(
+      SeatingMakeSwissSeatingPayloadJSON._writeMessage(msg),
+    );
+  },
+
+  /**
+   * Deserializes SeatingMakeSwissSeatingPayload from JSON.
+   */
+  decode: function (json: string): SeatingMakeSwissSeatingPayload {
+    return SeatingMakeSwissSeatingPayloadJSON._readMessage(
+      SeatingMakeSwissSeatingPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes SeatingMakeSwissSeatingPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<SeatingMakeSwissSeatingPayload>,
+  ): SeatingMakeSwissSeatingPayload {
+    return {
+      eventId: 0,
+      windShuffleMode: undefined,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<SeatingMakeSwissSeatingPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: SeatingMakeSwissSeatingPayload,
+    json: any,
+  ): SeatingMakeSwissSeatingPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = _windShuffleMode_;
     }
     return msg;
   },
@@ -13884,6 +14074,7 @@ export const SeatingGenerateSwissSeatingPayloadJSON = {
     return {
       eventId: 0,
       substituteReplacementPlayers: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -13900,6 +14091,9 @@ export const SeatingGenerateSwissSeatingPayloadJSON = {
     }
     if (msg.substituteReplacementPlayers) {
       json["substituteReplacementPlayers"] = msg.substituteReplacementPlayers;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -13920,6 +14114,11 @@ export const SeatingGenerateSwissSeatingPayloadJSON = {
       json["substitute_replacement_players"];
     if (_substituteReplacementPlayers_) {
       msg.substituteReplacementPlayers = _substituteReplacementPlayers_;
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = _windShuffleMode_;
     }
     return msg;
   },
@@ -14024,6 +14223,7 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
     return {
       eventId: 0,
       step: 0,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -14040,6 +14240,9 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
     }
     if (msg.step) {
       json["step"] = msg.step;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -14058,6 +14261,11 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
     const _step_ = json["step"];
     if (_step_) {
       msg.step = protoscript.parseNumber(_step_);
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = _windShuffleMode_;
     }
     return msg;
   },
