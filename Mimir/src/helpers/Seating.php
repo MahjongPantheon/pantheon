@@ -268,13 +268,15 @@ class Seating
 
         $tables = array_chunk($seating, 4, true);
         $resultSeating = [];
+        self::shuffleSeed();
         foreach ($tables as $tableWithRatings) {
             /** @var int[] $table */
             $table = array_keys($tableWithRatings);
 
-            $bestResult = 10005000;
+            $bestResult = 1000 * 1000 * 1000;
             $bestPlacement = [];
-            foreach ($possiblePlacements as $placement) {
+            $shuffledPossiblePlacements = self::shuffle($possiblePlacements); // if some variants are equal, choose random
+            foreach ($shuffledPossiblePlacements as $placement) {
                 $newResult = self::_calcWindDistributionPenalty(
                     $table[$placement[0]],
                     $table[$placement[1]],
