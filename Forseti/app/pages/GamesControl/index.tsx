@@ -234,26 +234,29 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, []);
 
-  const onMakeIntervalSeating = useCallback((interval: number) => {
-    setSeatingLoading(true);
-    api
-      .makeIntervalSeating(eventId, interval, eventConfig?.windShuffleMode)
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to generate interval seating'));
-        }
-      })
-      .then(doReloadConfigAndTables)
-      .catch(errHandler)
-      .finally(() => {
-        setSeatingLoading(false);
-      });
-  }, []);
+  const onMakeIntervalSeating = useCallback(
+    (interval: number, windShuffleMode: string | null | undefined) => {
+      setSeatingLoading(true);
+      api
+        .makeIntervalSeating(eventId, interval, windShuffleMode)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to generate interval seating'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler)
+        .finally(() => {
+          setSeatingLoading(false);
+        });
+    },
+    []
+  );
 
-  const onMakeRandomSeating = useCallback(() => {
+  const onMakeRandomSeating = useCallback((windShuffleMode: string | null | undefined) => {
     setSeatingLoading(true);
     api
-      .makeShuffledSeating(eventId, eventConfig?.windShuffleMode)
+      .makeShuffledSeating(eventId, windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate random seating'));
@@ -266,10 +269,10 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       });
   }, []);
 
-  const onMakeSwissSeating = useCallback(() => {
+  const onMakeSwissSeating = useCallback((windShuffleMode: string | null | undefined) => {
     setSeatingLoading(true);
     api
-      .makeSwissSeating(eventId, eventConfig?.windShuffleMode)
+      .makeSwissSeating(eventId, windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate swiss seating'));

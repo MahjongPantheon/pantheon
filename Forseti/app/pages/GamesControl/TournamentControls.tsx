@@ -62,9 +62,9 @@ type TournamentControlsProps = {
   tablesState: TableState[];
   eventConfig: GameConfig | null;
   toggleResults: () => void;
-  makeRandomSeating: () => void;
-  makeIntervalSeating: (interval: number) => void;
-  makeSwissSeating: () => void;
+  makeRandomSeating: (windShuffleMode: string | null | undefined) => void;
+  makeIntervalSeating: (interval: number, windShuffleMode: string | null | undefined) => void;
+  makeSwissSeating: (windShuffleMode: string | null | undefined) => void;
   makeNextPredefinedSeating: (rndSeats: boolean) => void;
   startTimer: () => void;
   notifyPlayers: () => void;
@@ -131,7 +131,9 @@ export function TournamentControls({
               warning={i18n._t('Use random seating for next session?')}
               icon={<IconArrowsRandom />}
               color='indigo'
-              onConfirm={makeRandomSeating}
+              onConfirm={() => {
+                makeRandomSeating(eventConfig?.windShuffleMode);
+              }}
             />
             <Confirmation
               disabled={tablesState.length === 0}
@@ -164,7 +166,7 @@ export function TournamentControls({
               icon={<IconLineHeight />}
               color='green'
               onConfirm={() => {
-                makeIntervalSeating(parseInt(interval ?? '0', 10));
+                makeIntervalSeating(parseInt(interval ?? '0', 10), eventConfig?.windShuffleMode);
               }}
             />
             <Confirmation
@@ -179,7 +181,9 @@ export function TournamentControls({
               warning={i18n._t('Use swiss seating for next session?')}
               icon={<IconSortAscending2 />}
               color='grape'
-              onConfirm={makeSwissSeating}
+              onConfirm={() => {
+                makeSwissSeating(eventConfig?.windShuffleMode);
+              }}
             />
           </Stack>
         )}
