@@ -57,7 +57,7 @@ class EventsController extends Controller
      * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
      * @param bool $allowManualAddReplay If manual add of replay is allowed
-     * @param ?string $windShuffleMode Wind shuffle mode: null | 'balanced' | 'random'
+     * @param ?int $windShuffleMode Wind shuffle mode enum
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -213,7 +213,7 @@ class EventsController extends Controller
      * @param ?int $platformId For online tournaments, ID of the gaming platform to use
      * @param ?RulesetConfig $rulesetConfig
      * @param bool $allowManualAddReplay If manual add of replay is allowed
-     * @param ?string $windShuffleMode Wind shuffle mode: null | 'balanced' | 'random'
+     * @param ?int $windShuffleMode Wind shuffle mode enum
      * @return bool
      * @throws BadActionException
      * @throws InvalidParametersException

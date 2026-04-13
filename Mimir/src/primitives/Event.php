@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\WindShuffleMode;
+
 require_once __DIR__ . '/../Primitive.php';
 require_once __DIR__ . '/PlayerRegistration.php';
 require_once __DIR__ . '/../Ruleset.php';
@@ -102,7 +104,28 @@ class EventPrimitive extends Primitive
             '_isListed'           => $this->_integerTransform(),
             '_allowViewOtherTables' => $this->_integerTransform(),
             '_allowManualAddReplay' => $this->_integerTransform(),
-            '_windShuffleMode'    => $this->_stringTransform(true),
+            '_windShuffleMode'    => [
+                'serialize' => function (?int $windShuffleMode): ?string {
+                    switch ($windShuffleMode) {
+                        case WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM:
+                            return 'random';
+                        case WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED:
+                            return 'balanced';
+                        default:
+                            return null;
+                    }
+                },
+                'deserialize' => function (?string $windShuffleMode): int {
+                    switch ($windShuffleMode) {
+                        case 'random':
+                            return WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM;
+                        case 'balanced':
+                            return WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED;
+                        default:
+                            return WindShuffleMode::WIND_SHUFFLE_MODE_UNSPECIFIED;
+                    }
+                }
+            ],
             '_rulesetConfig'      => [
                 'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->rules()->serializeToJsonString();
@@ -273,8 +296,8 @@ class EventPrimitive extends Primitive
      */
     protected $_allowManualAddReplay;
     /**
-     * Wind shuffle mode: null | 'balanced' | 'random'
-     * @var string|null
+     * Wind shuffle mode enum
+     * @var ?int
      */
     protected $_windShuffleMode;
     /**
@@ -967,7 +990,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return ?string
+     * @return ?int
      */
     public function getWindShuffleMode()
     {
@@ -975,10 +998,10 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param ?string $windShuffleMode
+     * @param ?int $windShuffleMode
      * @return EventPrimitive
      */
-    public function setWindShuffleMode(?string $windShuffleMode)
+    public function setWindShuffleMode(?int $windShuffleMode)
     {
         $this->_windShuffleMode = $windShuffleMode;
         return $this;
