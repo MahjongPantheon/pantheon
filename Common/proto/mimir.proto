@@ -405,18 +405,18 @@ message SeatingMakeShuffledSeatingPayload {
   int32 event_id = 1;
   int32 groups_count = 2;
   int32 seed = 3; // randomness factor
-  optional string wind_shuffle_mode = 4;
+  optional WindShuffleMode wind_shuffle_mode = 4;
 }
 
 message SeatingMakeSwissSeatingPayload {
   int32 event_id = 1;
-  optional string wind_shuffle_mode = 2;
+  optional WindShuffleMode wind_shuffle_mode = 2;
 }
 
 message SeatingGenerateSwissSeatingPayload {
   int32 event_id = 1;
   bool substitute_replacement_players = 2;
-  optional string wind_shuffle_mode = 3;
+  optional WindShuffleMode wind_shuffle_mode = 3;
 }
 
 message SeatingGenerateSwissSeatingResponse {
@@ -426,7 +426,7 @@ message SeatingGenerateSwissSeatingResponse {
 message SeatingMakeIntervalSeatingPayload {
   int32 event_id = 1;
   int32 step = 2;
-  optional string wind_shuffle_mode = 3;
+  optional WindShuffleMode wind_shuffle_mode = 3;
 }
 
 message SeatingMakePrescriptedSeatingPayload {

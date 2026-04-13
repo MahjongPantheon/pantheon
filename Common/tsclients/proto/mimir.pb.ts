@@ -340,18 +340,18 @@ export interface SeatingMakeShuffledSeatingPayload {
   eventId: number;
   groupsCount: number;
   seed: number;
-  windShuffleMode?: string | null | undefined;
+  windShuffleMode?: protoAtoms.WindShuffleMode | null | undefined;
 }
 
 export interface SeatingMakeSwissSeatingPayload {
   eventId: number;
-  windShuffleMode?: string | null | undefined;
+  windShuffleMode?: protoAtoms.WindShuffleMode | null | undefined;
 }
 
 export interface SeatingGenerateSwissSeatingPayload {
   eventId: number;
   substituteReplacementPlayers: boolean;
-  windShuffleMode?: string | null | undefined;
+  windShuffleMode?: protoAtoms.WindShuffleMode | null | undefined;
 }
 
 export interface SeatingGenerateSwissSeatingResponse {
@@ -361,7 +361,7 @@ export interface SeatingGenerateSwissSeatingResponse {
 export interface SeatingMakeIntervalSeatingPayload {
   eventId: number;
   step: number;
-  windShuffleMode?: string | null | undefined;
+  windShuffleMode?: protoAtoms.WindShuffleMode | null | undefined;
 }
 
 export interface SeatingMakePrescriptedSeatingPayload {
@@ -8256,7 +8256,10 @@ export const SeatingMakeShuffledSeatingPayload = {
       writer.writeInt32(3, msg.seed);
     }
     if (msg.windShuffleMode != undefined) {
-      writer.writeString(4, msg.windShuffleMode);
+      writer.writeEnum(
+        4,
+        protoAtoms.WindShuffleMode._toInt(msg.windShuffleMode),
+      );
     }
     return writer;
   },
@@ -8284,7 +8287,9 @@ export const SeatingMakeShuffledSeatingPayload = {
           break;
         }
         case 4: {
-          msg.windShuffleMode = reader.readString();
+          msg.windShuffleMode = protoAtoms.WindShuffleMode._fromInt(
+            reader.readEnum(),
+          );
           break;
         }
         default: {
@@ -8344,7 +8349,10 @@ export const SeatingMakeSwissSeatingPayload = {
       writer.writeInt32(1, msg.eventId);
     }
     if (msg.windShuffleMode != undefined) {
-      writer.writeString(2, msg.windShuffleMode);
+      writer.writeEnum(
+        2,
+        protoAtoms.WindShuffleMode._toInt(msg.windShuffleMode),
+      );
     }
     return writer;
   },
@@ -8364,7 +8372,9 @@ export const SeatingMakeSwissSeatingPayload = {
           break;
         }
         case 2: {
-          msg.windShuffleMode = reader.readString();
+          msg.windShuffleMode = protoAtoms.WindShuffleMode._fromInt(
+            reader.readEnum(),
+          );
           break;
         }
         default: {
@@ -8428,7 +8438,10 @@ export const SeatingGenerateSwissSeatingPayload = {
       writer.writeBool(2, msg.substituteReplacementPlayers);
     }
     if (msg.windShuffleMode != undefined) {
-      writer.writeString(3, msg.windShuffleMode);
+      writer.writeEnum(
+        3,
+        protoAtoms.WindShuffleMode._toInt(msg.windShuffleMode),
+      );
     }
     return writer;
   },
@@ -8452,7 +8465,9 @@ export const SeatingGenerateSwissSeatingPayload = {
           break;
         }
         case 3: {
-          msg.windShuffleMode = reader.readString();
+          msg.windShuffleMode = protoAtoms.WindShuffleMode._fromInt(
+            reader.readEnum(),
+          );
           break;
         }
         default: {
@@ -8594,7 +8609,10 @@ export const SeatingMakeIntervalSeatingPayload = {
       writer.writeInt32(2, msg.step);
     }
     if (msg.windShuffleMode != undefined) {
-      writer.writeString(3, msg.windShuffleMode);
+      writer.writeEnum(
+        3,
+        protoAtoms.WindShuffleMode._toInt(msg.windShuffleMode),
+      );
     }
     return writer;
   },
@@ -8618,7 +8636,9 @@ export const SeatingMakeIntervalSeatingPayload = {
           break;
         }
         case 3: {
-          msg.windShuffleMode = reader.readString();
+          msg.windShuffleMode = protoAtoms.WindShuffleMode._fromInt(
+            reader.readEnum(),
+          );
           break;
         }
         default: {
@@ -13968,7 +13988,8 @@ export const SeatingMakeShuffledSeatingPayloadJSON = {
     const _windShuffleMode_ =
       json["windShuffleMode"] ?? json["wind_shuffle_mode"];
     if (_windShuffleMode_) {
-      msg.windShuffleMode = _windShuffleMode_;
+      msg.windShuffleMode =
+        protoAtoms.WindShuffleMode._fromInt(_windShuffleMode_);
     }
     return msg;
   },
@@ -14037,7 +14058,8 @@ export const SeatingMakeSwissSeatingPayloadJSON = {
     const _windShuffleMode_ =
       json["windShuffleMode"] ?? json["wind_shuffle_mode"];
     if (_windShuffleMode_) {
-      msg.windShuffleMode = _windShuffleMode_;
+      msg.windShuffleMode =
+        protoAtoms.WindShuffleMode._fromInt(_windShuffleMode_);
     }
     return msg;
   },
@@ -14118,7 +14140,8 @@ export const SeatingGenerateSwissSeatingPayloadJSON = {
     const _windShuffleMode_ =
       json["windShuffleMode"] ?? json["wind_shuffle_mode"];
     if (_windShuffleMode_) {
-      msg.windShuffleMode = _windShuffleMode_;
+      msg.windShuffleMode =
+        protoAtoms.WindShuffleMode._fromInt(_windShuffleMode_);
     }
     return msg;
   },
@@ -14265,7 +14288,8 @@ export const SeatingMakeIntervalSeatingPayloadJSON = {
     const _windShuffleMode_ =
       json["windShuffleMode"] ?? json["wind_shuffle_mode"];
     if (_windShuffleMode_) {
-      msg.windShuffleMode = _windShuffleMode_;
+      msg.windShuffleMode =
+        protoAtoms.WindShuffleMode._fromInt(_windShuffleMode_);
     }
     return msg;
   },
