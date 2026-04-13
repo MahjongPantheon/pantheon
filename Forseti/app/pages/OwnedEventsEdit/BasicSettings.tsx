@@ -20,7 +20,7 @@ import * as React from 'react';
 import { Text, Select, Stack, Textarea, TextInput, Radio, Group, Checkbox } from '@mantine/core';
 import { IconAbc, IconChecklist, IconMap2 } from '@tabler/icons-react';
 import { EventCustom, FormHandle } from './types';
-import { EventType, RulesetConfig } from 'tsclients/proto/atoms.pb';
+import { EventType, RulesetConfig, WindShuffleMode } from 'tsclients/proto/atoms.pb';
 
 type BasicSettingsProps = {
   form: FormHandle;
@@ -45,10 +45,10 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
     [EventType.EVENT_TYPE_ONLINE]: i18n._t('Online event'),
     [EventType.EVENT_TYPE_TOURNAMENT]: i18n._t('Tournament'),
   };
-  const windShuffleModes: Record<string, string> = {
-    '': i18n._t('Default wind shuffle'),
-    balanced: i18n._t('Balanced wind shuffle'),
-    random: i18n._t('Random wind shuffle'),
+  const windShuffleModes: Record<WindShuffleMode, string> = {
+    [WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED]: i18n._t('Default wind shuffle'),
+    [WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED]: i18n._t('Balanced wind shuffle'),
+    [WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM]: i18n._t('Random wind shuffle'),
   };
   return (
     <>
@@ -151,7 +151,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           {...form.getInputProps('event.windShuffleMode')}
         >
           <Group mt='xs'>
-            {Object.keys(windShuffleModes).map((k) => (
+            {(Object.keys(windShuffleModes) as WindShuffleMode[]).map((k) => (
               <Radio key={'wsm_' + k} value={k} label={windShuffleModes[k]} />
             ))}
           </Group>

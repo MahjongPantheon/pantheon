@@ -87,6 +87,7 @@ import {
   EventData,
   EventReferee,
   IntermediateResultOfSession,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
@@ -568,7 +569,7 @@ export class ApiService {
     return FinalizeSession({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
-  makeShuffledSeating(eventId: number, windShuffleMode: string | null | undefined) {
+  makeShuffledSeating(eventId: number, windShuffleMode: WindShuffleMode) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeShuffledSeating' });
     return MakeShuffledSeating(
       {
@@ -588,11 +589,7 @@ export class ApiService {
       });
   }
 
-  makeIntervalSeating(
-    eventId: number,
-    interval: number,
-    windShuffleMode: string | null | undefined
-  ) {
+  makeIntervalSeating(eventId: number, interval: number, windShuffleMode: WindShuffleMode) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeIntervalSeating' });
     return MakeIntervalSeating({ eventId, step: interval, windShuffleMode }, this._clientConfMimir)
       .then((r) => r.success)
@@ -604,7 +601,7 @@ export class ApiService {
       });
   }
 
-  makeSwissSeating(eventId: number, windShuffleMode: string | null | undefined) {
+  makeSwissSeating(eventId: number, windShuffleMode: WindShuffleMode) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeSwissSeating' });
     return MakeSwissSeating({ eventId, windShuffleMode }, this._clientConfMimir)
       .then((r) => r.success)

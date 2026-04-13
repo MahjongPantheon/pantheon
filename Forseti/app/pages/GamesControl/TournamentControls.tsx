@@ -23,6 +23,7 @@ import {
   SessionStatus,
   TableState,
   TournamentGamesStatus,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import {
   Box,
@@ -62,9 +63,9 @@ type TournamentControlsProps = {
   tablesState: TableState[];
   eventConfig: GameConfig | null;
   toggleResults: () => void;
-  makeRandomSeating: (windShuffleMode: string | null | undefined) => void;
-  makeIntervalSeating: (interval: number, windShuffleMode: string | null | undefined) => void;
-  makeSwissSeating: (windShuffleMode: string | null | undefined) => void;
+  makeRandomSeating: (windShuffleMode: WindShuffleMode) => void;
+  makeIntervalSeating: (interval: number, windShuffleMode: WindShuffleMode) => void;
+  makeSwissSeating: (windShuffleMode: WindShuffleMode) => void;
   makeNextPredefinedSeating: (rndSeats: boolean) => void;
   startTimer: () => void;
   notifyPlayers: () => void;
@@ -132,7 +133,9 @@ export function TournamentControls({
               icon={<IconArrowsRandom />}
               color='indigo'
               onConfirm={() => {
-                makeRandomSeating(eventConfig?.windShuffleMode);
+                makeRandomSeating(
+                  eventConfig?.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+                );
               }}
             />
             <Confirmation
@@ -166,7 +169,10 @@ export function TournamentControls({
               icon={<IconLineHeight />}
               color='green'
               onConfirm={() => {
-                makeIntervalSeating(parseInt(interval ?? '0', 10), eventConfig?.windShuffleMode);
+                makeIntervalSeating(
+                  parseInt(interval ?? '0', 10),
+                  eventConfig?.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+                );
               }}
             />
             <Confirmation
@@ -182,7 +188,9 @@ export function TournamentControls({
               icon={<IconSortAscending2 />}
               color='grape'
               onConfirm={() => {
-                makeSwissSeating(eventConfig?.windShuffleMode);
+                makeSwissSeating(
+                  eventConfig?.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+                );
               }}
             />
           </Stack>

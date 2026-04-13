@@ -26,6 +26,7 @@ import {
   IntermediateResultOfSession,
   RegisteredPlayer,
   TableState,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import { Container, LoadingOverlay } from '@mantine/core';
 
@@ -235,7 +236,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   }, []);
 
   const onMakeIntervalSeating = useCallback(
-    (interval: number, windShuffleMode: string | null | undefined) => {
+    (interval: number, windShuffleMode: WindShuffleMode) => {
       setSeatingLoading(true);
       api
         .makeIntervalSeating(eventId, interval, windShuffleMode)
@@ -253,7 +254,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
     []
   );
 
-  const onMakeRandomSeating = useCallback((windShuffleMode: string | null | undefined) => {
+  const onMakeRandomSeating = useCallback((windShuffleMode: WindShuffleMode) => {
     setSeatingLoading(true);
     api
       .makeShuffledSeating(eventId, windShuffleMode)
@@ -269,7 +270,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       });
   }, []);
 
-  const onMakeSwissSeating = useCallback((windShuffleMode: string | null | undefined) => {
+  const onMakeSwissSeating = useCallback((windShuffleMode: WindShuffleMode) => {
     setSeatingLoading(true);
     api
       .makeSwissSeating(eventId, windShuffleMode)

@@ -38,6 +38,7 @@ import {
   PlatformType,
   RulesetConfig,
   UmaType,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import { TopActionButton } from '../../components/TopActionButton';
 import { notifications } from '@mantine/notifications';
@@ -89,7 +90,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         allowViewOtherTables: false,
         platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
         allowManualAddReplay: true,
-        windShuffleMode: '',
+        windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED,
       },
       ruleset: {
         gameExpirationTime: 0, // online
