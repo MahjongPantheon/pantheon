@@ -45,11 +45,6 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
     [EventType.EVENT_TYPE_ONLINE]: i18n._t('Online event'),
     [EventType.EVENT_TYPE_TOURNAMENT]: i18n._t('Tournament'),
   };
-  const windShuffleModes: Record<WindShuffleMode, string> = {
-    [WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED]: i18n._t('Default wind shuffle'),
-    [WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED]: i18n._t('Balanced wind shuffle'),
-    [WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM]: i18n._t('Random wind shuffle'),
-  };
   return (
     <>
       <Stack>
@@ -146,16 +141,27 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           )}
           {...form.getInputProps('event.allowViewOtherTables', { type: 'checkbox' })}
         />
-        <Radio.Group
-          label={i18n._t('Wind shuffle mode')}
-          {...form.getInputProps('event.windShuffleMode')}
-        >
-          <Group mt='xs'>
-            {(Object.keys(windShuffleModes) as WindShuffleMode[]).map((k) => (
-              <Radio key={'wsm_' + k} value={k} label={windShuffleModes[k]} />
-            ))}
-          </Group>
-        </Radio.Group>
+        {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
+          <Radio.Group
+            label={i18n._t('Wind shuffle mode')}
+            description={i18n._t('How players on the same table are shuffled')}
+            withAsterisk
+            {...form.getInputProps('event.windShuffleMode')}
+          >
+            <Group mt='xs'>
+              <Radio
+                value={WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM}
+                label={i18n._t('Random wind shuffle')}
+                description={i18n._t('Shuffle players on the same table randomly')}
+              />
+              <Radio
+                value={WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED}
+                label={i18n._t('Balanced wind shuffle')}
+                description={i18n._t('Try to place players on winds they previously played less')}
+              />
+            </Group>
+          </Radio.Group>
+        )}
       </Stack>
     </>
   );
