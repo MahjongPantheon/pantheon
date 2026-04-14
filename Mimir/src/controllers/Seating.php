@@ -268,7 +268,7 @@ class SeatingController extends Controller
 
     /**
      * @param int $eventId
-     * @param bool $randomizeAtTables
+     * @param ?int $windShuffleMode
      * @return bool
      * @throws AuthFailedException
      * @throws DatabaseException
@@ -276,7 +276,7 @@ class SeatingController extends Controller
      * @throws InvalidUserException
      * @throws \Exception
      */
-    public function makePrescriptedSeating($eventId, $randomizeAtTables = false) // TODO support $windShuffleMode
+    public function makePrescriptedSeating($eventId, $windShuffleMode)
     {
         $this->_log->info('Creating new prescripted seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
@@ -285,6 +285,8 @@ class SeatingController extends Controller
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
+
+        list($playerRatingMap, $previousSeatings) = $this->_getData($eventId); // only for getting previous seatings for wind shuffle
 
         $seating = $this->_getNextPrescriptedSeating($eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
@@ -309,12 +311,11 @@ class SeatingController extends Controller
             }
 
             $playerIds = array_merge($playerIds, $table);
+        }
 
-            if ($randomizeAtTables) {
-                Seating::shuffleSeed();
-                $table = Seating::shuffle($table);
-            }
+        $playerIds = Seating::makeWindShuffle($playerIds, $previousSeatings, $windShuffleMode);
 
+        foreach (array_chunk($playerIds, 4) as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex); // TODO: here might be an exception inside loop!
 
