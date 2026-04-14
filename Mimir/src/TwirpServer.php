@@ -1774,7 +1774,7 @@ final class TwirpServer implements Mimir
         return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->makePrescriptedSeating(
                 $req->getEventId(),
-                $req->getRandomizeAtTables()
+                $req->getWindShuffleMode()
             ));
     }
 

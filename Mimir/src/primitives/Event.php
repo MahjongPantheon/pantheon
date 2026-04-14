@@ -111,6 +111,8 @@ class EventPrimitive extends Primitive
                             return 'random';
                         case WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED:
                             return 'balanced';
+                        case WindShuffleMode::WIND_SHUFFLE_MODE_PRESCRIPTED:
+                            return 'prescripted';
                         default:
                             return null;
                     }
@@ -121,6 +123,8 @@ class EventPrimitive extends Primitive
                             return WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM;
                         case 'balanced':
                             return WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED;
+                        case 'prescripted':
+                            return WindShuffleMode::WIND_SHUFFLE_MODE_PRESCRIPTED;
                         default:
                             return WindShuffleMode::WIND_SHUFFLE_MODE_UNSPECIFIED;
                     }
