@@ -19,8 +19,22 @@ namespace Mimir;
 
 use Common\WindShuffleMode;
 
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Logger;
+
 class Seating
 {
+    private static ?Logger $_log = null;
+
+    private static function _getLog(): Logger
+    {
+        if (self::$_log === null) {
+            self::$_log = new Logger('RiichiApi');
+            self::$_log->pushHandler(new ErrorLogHandler());
+        }
+        return self::$_log;
+    }
+
     /**
      * Swiss seating entry point
      * Wrapper for formats conformity
@@ -687,14 +701,18 @@ class Seating
     {
         switch ($windShuffleMode) {
             case WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM:
+                self::_getLog()->info('Using random wind shuffle for ' . count($seating) . ' players');
                 return self::_randomWindShuffle($seating);
             case WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED:
+                self::_getLog()->info('Using balanced wind shuffle for ' . count($seating) . ' players');
                 return self::_balancedWindShuffle($seating, $previousSeatings);
             case WindShuffleMode::WIND_SHUFFLE_MODE_PRESCRIPTED:
+                self::_getLog()->info('Using prescripted wind shuffle for ' . count($seating) . ' players');
                 return array_merge($seating, []); // copy
             default:
                 // fallback to random
                 // this includes empty and UNSPECIFIED values
+                self::_getLog()->info('Fallback to random wind shuffle for ' . count($seating) . ' players, enum value = ' . $windShuffleMode);
                 return self::_randomWindShuffle($seating);
         }
     }
