@@ -41,7 +41,8 @@ export type SessionStatus =
 export type WindShuffleMode =
   | "WIND_SHUFFLE_MODE_UNSPECIFIED"
   | "WIND_SHUFFLE_MODE_RANDOM"
-  | "WIND_SHUFFLE_MODE_BALANCED";
+  | "WIND_SHUFFLE_MODE_BALANCED"
+  | "WIND_SHUFFLE_MODE_PRESCRIPTED";
 
 export type UmaType =
   | "UMA_TYPE_UNSPECIFIED"
@@ -867,6 +868,7 @@ export const WindShuffleMode = {
   WIND_SHUFFLE_MODE_UNSPECIFIED: "WIND_SHUFFLE_MODE_UNSPECIFIED",
   WIND_SHUFFLE_MODE_RANDOM: "WIND_SHUFFLE_MODE_RANDOM",
   WIND_SHUFFLE_MODE_BALANCED: "WIND_SHUFFLE_MODE_BALANCED",
+  WIND_SHUFFLE_MODE_PRESCRIPTED: "WIND_SHUFFLE_MODE_PRESCRIPTED",
   /**
    * @private
    */
@@ -880,6 +882,9 @@ export const WindShuffleMode = {
       }
       case 2: {
         return "WIND_SHUFFLE_MODE_BALANCED";
+      }
+      case 3: {
+        return "WIND_SHUFFLE_MODE_PRESCRIPTED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -900,6 +905,9 @@ export const WindShuffleMode = {
       }
       case "WIND_SHUFFLE_MODE_BALANCED": {
         return 2;
+      }
+      case "WIND_SHUFFLE_MODE_PRESCRIPTED": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7996,6 +8004,7 @@ export const WindShuffleModeJSON = {
   WIND_SHUFFLE_MODE_UNSPECIFIED: "WIND_SHUFFLE_MODE_UNSPECIFIED",
   WIND_SHUFFLE_MODE_RANDOM: "WIND_SHUFFLE_MODE_RANDOM",
   WIND_SHUFFLE_MODE_BALANCED: "WIND_SHUFFLE_MODE_BALANCED",
+  WIND_SHUFFLE_MODE_PRESCRIPTED: "WIND_SHUFFLE_MODE_PRESCRIPTED",
   /**
    * @private
    */
@@ -8009,6 +8018,9 @@ export const WindShuffleModeJSON = {
       }
       case 2: {
         return "WIND_SHUFFLE_MODE_BALANCED";
+      }
+      case 3: {
+        return "WIND_SHUFFLE_MODE_PRESCRIPTED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -8029,6 +8041,9 @@ export const WindShuffleModeJSON = {
       }
       case "WIND_SHUFFLE_MODE_BALANCED": {
         return 2;
+      }
+      case "WIND_SHUFFLE_MODE_PRESCRIPTED": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {

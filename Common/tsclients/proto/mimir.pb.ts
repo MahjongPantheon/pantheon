@@ -366,7 +366,7 @@ export interface SeatingMakeIntervalSeatingPayload {
 
 export interface SeatingMakePrescriptedSeatingPayload {
   eventId: number;
-  randomizeAtTables: boolean;
+  windShuffleMode?: protoAtoms.WindShuffleMode | null | undefined;
 }
 
 export interface SeatingGetNextPrescriptedSeatingResponse {
@@ -8682,7 +8682,7 @@ export const SeatingMakePrescriptedSeatingPayload = {
   ): SeatingMakePrescriptedSeatingPayload {
     return {
       eventId: 0,
-      randomizeAtTables: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -8697,8 +8697,11 @@ export const SeatingMakePrescriptedSeatingPayload = {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
-    if (msg.randomizeAtTables) {
-      writer.writeBool(2, msg.randomizeAtTables);
+    if (msg.windShuffleMode != undefined) {
+      writer.writeEnum(
+        3,
+        protoAtoms.WindShuffleMode._toInt(msg.windShuffleMode),
+      );
     }
     return writer;
   },
@@ -8717,8 +8720,10 @@ export const SeatingMakePrescriptedSeatingPayload = {
           msg.eventId = reader.readInt32();
           break;
         }
-        case 2: {
-          msg.randomizeAtTables = reader.readBool();
+        case 3: {
+          msg.windShuffleMode = protoAtoms.WindShuffleMode._fromInt(
+            reader.readEnum(),
+          );
           break;
         }
         default: {
@@ -14325,7 +14330,7 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
   ): SeatingMakePrescriptedSeatingPayload {
     return {
       eventId: 0,
-      randomizeAtTables: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -14340,8 +14345,8 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
     if (msg.eventId) {
       json["eventId"] = msg.eventId;
     }
-    if (msg.randomizeAtTables) {
-      json["randomizeAtTables"] = msg.randomizeAtTables;
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -14357,10 +14362,11 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
     if (_eventId_) {
       msg.eventId = protoscript.parseNumber(_eventId_);
     }
-    const _randomizeAtTables_ =
-      json["randomizeAtTables"] ?? json["randomize_at_tables"];
-    if (_randomizeAtTables_) {
-      msg.randomizeAtTables = _randomizeAtTables_;
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode =
+        protoAtoms.WindShuffleMode._fromInt(_windShuffleMode_);
     }
     return msg;
   },

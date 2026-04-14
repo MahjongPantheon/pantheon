@@ -431,7 +431,7 @@ message SeatingMakeIntervalSeatingPayload {
 
 message SeatingMakePrescriptedSeatingPayload {
   int32 event_id = 1;
-  bool randomize_at_tables = 2;
+  optional WindShuffleMode wind_shuffle_mode = 3; // instead of 'bool randomize_at_tables'
 }
 
 message SeatingGetNextPrescriptedSeatingResponse {
