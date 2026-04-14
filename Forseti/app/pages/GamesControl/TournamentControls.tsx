@@ -25,17 +25,7 @@ import {
   TournamentGamesStatus,
   WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Group,
-  SegmentedControl,
-  Select,
-  Space,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { Box, Button, Group, SegmentedControl, Select, Space, Stack, Text } from '@mantine/core';
 import { useState } from 'react';
 import { Confirmation } from './Confirmation';
 import {
@@ -66,7 +56,7 @@ type TournamentControlsProps = {
   makeRandomSeating: (windShuffleMode: WindShuffleMode) => void;
   makeIntervalSeating: (interval: number, windShuffleMode: WindShuffleMode) => void;
   makeSwissSeating: (windShuffleMode: WindShuffleMode) => void;
-  makeNextPredefinedSeating: (rndSeats: boolean) => void;
+  makeNextPredefinedSeating: (windShuffleMode: WindShuffleMode) => void;
   startTimer: () => void;
   notifyPlayers: () => void;
   addExtraTime: (amount: number) => void;
@@ -93,7 +83,6 @@ export function TournamentControls({
   const i18n = useI18n();
   const [interval, setInterval] = useState<string | null>('1');
   const [extraTime, setExtraTime] = useState<string | null>('60');
-  const [rndSeats, setRndSeats] = useState(false);
   const currentStage = determineStage(tablesState, players, eventConfig, seatingLoading);
 
   return (
@@ -208,19 +197,15 @@ export function TournamentControls({
               text={i18n._t('Next seating')}
               warning={
                 <>
-                  <Checkbox
-                    label={i18n._t('Randomize seating by wind')}
-                    checked={rndSeats}
-                    onChange={(event) => setRndSeats(event.currentTarget.checked)}
-                  />
-                  <Space h='md' />
                   <Text>{i18n._t('Apply seating for next session?')}</Text>
                 </>
               }
               icon={<IconScript />}
               color='green'
               onConfirm={() => {
-                makeNextPredefinedSeating(rndSeats);
+                makeNextPredefinedSeating(
+                  eventConfig.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+                );
               }}
             />
           </Stack>
