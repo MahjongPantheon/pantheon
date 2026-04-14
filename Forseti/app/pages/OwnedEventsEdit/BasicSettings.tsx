@@ -159,6 +159,13 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
                 label={i18n._t('Balanced wind shuffle')}
                 description={i18n._t('Try to place players on winds they previously played less')}
               />
+              {form.getTransformedValues().event.isPrescripted && (
+                <Radio
+                  value={WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED}
+                  label={i18n._t('Prescripted wind shuffle')}
+                  description={i18n._t('Only for prescripted events, just follow the script')}
+                />
+              )}
             </Group>
           </Radio.Group>
         )}

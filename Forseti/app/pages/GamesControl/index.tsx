@@ -286,10 +286,10 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       });
   }, []);
 
-  const onMakePrescriptedSeating = useCallback((rndSeats: boolean) => {
+  const onMakePrescriptedSeating = useCallback((windShuffleMode: WindShuffleMode) => {
     setSeatingLoading(true);
     api
-      .makePrescriptedSeating(eventId, rndSeats)
+      .makePrescriptedSeating(eventId, windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate prescripted seating'));
