@@ -62,14 +62,7 @@ class Seating
             $seating[$indexToPlayer[$playerIndex]] = $indexToRating[$playerIndex];
         }
 
-        if (empty($windShuffleMode)) { // includes UNSPECIFIED
-            $windShuffleMode = WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM;
-        }
-        if ($windShuffleMode === WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED) {
-            return self::_balancedWindShuffle($seating, $previousSeatings);
-        } else {
-            return self::_randomWindShuffle($seating);
-        }
+        return self::makeWindShuffle($seating, $previousSeatings, $windShuffleMode);
     }
 
     /**
@@ -168,14 +161,7 @@ class Seating
             usleep(500); // sleep some time to reduce cpu load
         } // 6)
 
-        if (empty($windShuffleMode)) { // includes UNSPECIFIED
-            $windShuffleMode = WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED;
-        }
-        if ($windShuffleMode === WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED) {
-            return self::_balancedWindShuffle($bestSeating, $previousSeatings);
-        } else {
-            return self::_randomWindShuffle($bestSeating);
-        }
+        return self::makeWindShuffle($bestSeating, $previousSeatings, $windShuffleMode);
     }
 
     /**
@@ -673,14 +659,7 @@ class Seating
             }
         }
 
-        if (empty($windShuffleMode)) { // includes UNSPECIFIED
-            $windShuffleMode = WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM;
-        }
-        if ($windShuffleMode === WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED) {
-            return self::_balancedWindShuffle($flattenedGroups, $previousSeatings);
-        } else {
-            return self::_randomWindShuffle($flattenedGroups);
-        }
+        return self::makeWindShuffle($flattenedGroups, $previousSeatings, $windShuffleMode);
     }
 
     /**
@@ -688,12 +667,35 @@ class Seating
      * @param PlayerPrimitive[] $players [local_id => player_id, .... ]
      * @return array [id => int, local_id => int][][]
      */
-    public static function makePrescriptedSeating($prescriptForSession, $players) // TODO support $windShuffleMode
+    public static function makePrescriptedSeating($prescriptForSession, $players)
     {
         return array_map(function ($table) use ($players) {
             return array_map(function ($localId) use ($players) {
                 return ['id' => $players[$localId], 'local_id' => $localId];
             }, $table);
         }, $prescriptForSession);
+    }
+
+    /**
+     * Apply specified wind shuffle mode
+     * @param array $seating array of integers, each chunk of 4 elements is the table
+     * @param array $previousSeatings array of previously played tables, each table is the array of 4 integers
+     * @param ?int $windShuffleMode enum
+     * @return array input seating but with shuffled players on each table
+     */
+    public static function makeWindShuffle(array $seating, array $previousSeatings, ?int $windShuffleMode): array
+    {
+        switch ($windShuffleMode) {
+            case WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM:
+                return self::_randomWindShuffle($seating);
+            case WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED:
+                return self::_balancedWindShuffle($seating, $previousSeatings);
+            case WindShuffleMode::WIND_SHUFFLE_MODE_PRESCRIPTED:
+                return array_merge($seating, []); // copy
+            default:
+                // fallback to random
+                // this includes empty and UNSPECIFIED values
+                return self::_randomWindShuffle($seating);
+        }
     }
 }
