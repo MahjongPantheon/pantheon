@@ -1289,7 +1289,7 @@ function getFavoriteTsuchidaApprentice(Db $db, array $eventIdList, array $player
     }
 
     $filteredCandidates = array_filter($candidates, function ($chiitoitsuCount) {
-        return $chiitoitsuCount > 1;
+        return $chiitoitsuCount > 2;
     });
 
     arsort($filteredCandidates);
