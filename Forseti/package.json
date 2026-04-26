@@ -60,7 +60,7 @@
     "resolve-url-loader": "^5.0.0",
     "twirpscript": "^0.0.72",
     "protoscript": "^0.0.23",
-    "uuid": "^10.0.0",
+    "uuid": "^14.0.0",
     "wouter": "2.12.1"
   },
   "notes": {
