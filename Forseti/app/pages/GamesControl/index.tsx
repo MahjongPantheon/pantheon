@@ -26,6 +26,7 @@ import {
   IntermediateResultOfSession,
   RegisteredPlayer,
   TableState,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import { Container, LoadingOverlay } from '@mantine/core';
 
@@ -234,26 +235,29 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, []);
 
-  const onMakeIntervalSeating = useCallback((interval: number) => {
-    setSeatingLoading(true);
-    api
-      .makeIntervalSeating(eventId, interval)
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to generate interval seating'));
-        }
-      })
-      .then(doReloadConfigAndTables)
-      .catch(errHandler)
-      .finally(() => {
-        setSeatingLoading(false);
-      });
-  }, []);
+  const onMakeIntervalSeating = useCallback(
+    (interval: number, windShuffleMode: WindShuffleMode) => {
+      setSeatingLoading(true);
+      api
+        .makeIntervalSeating(eventId, interval, windShuffleMode)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to generate interval seating'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler)
+        .finally(() => {
+          setSeatingLoading(false);
+        });
+    },
+    []
+  );
 
-  const onMakeRandomSeating = useCallback(() => {
+  const onMakeRandomSeating = useCallback((windShuffleMode: WindShuffleMode) => {
     setSeatingLoading(true);
     api
-      .makeShuffledSeating(eventId)
+      .makeShuffledSeating(eventId, windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate random seating'));
@@ -266,10 +270,10 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       });
   }, []);
 
-  const onMakeSwissSeating = useCallback(() => {
+  const onMakeSwissSeating = useCallback((windShuffleMode: WindShuffleMode) => {
     setSeatingLoading(true);
     api
-      .makeSwissSeating(eventId)
+      .makeSwissSeating(eventId, windShuffleMode)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to generate swiss seating'));

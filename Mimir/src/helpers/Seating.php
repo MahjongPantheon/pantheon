@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\WindShuffleMode;
+
 class Seating
 {
     /**
@@ -25,9 +27,10 @@ class Seating
      *
      * @param array $playersMap [id => rating] - current rating table
      * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
+     * @param ?int $windShuffleMode - enum
      * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
-    public static function swissSeating($playersMap, $previousSeatings)
+    public static function swissSeating($playersMap, $previousSeatings, $windShuffleMode)
     {
         $indexToPlayer = array_keys($playersMap);
         $playerToIndex = array_flip($indexToPlayer);
@@ -59,7 +62,14 @@ class Seating
             $seating[$indexToPlayer[$playerIndex]] = $indexToRating[$playerIndex];
         }
 
-        return self::_updatePlacesToRandom($seating) ?: [];
+        if (empty($windShuffleMode)) { // includes UNSPECIFIED
+            $windShuffleMode = WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM;
+        }
+        if ($windShuffleMode === WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED) {
+            return self::_balancedWindShuffle($seating, $previousSeatings);
+        } else {
+            return self::_randomWindShuffle($seating);
+        }
     }
 
     /**
@@ -109,10 +119,11 @@ class Seating
      * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
      * @param int $groupsCount - shuffling groups count
      * @param int $randFactor - RNG init seed
+     * @param ?int $windShuffleMode - enum
      *
-     * @return array|null [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
+     * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
-    public static function shuffledSeating($playersMap, $previousSeatings, int $groupsCount, int $randFactor): ?array
+    public static function shuffledSeating($playersMap, $previousSeatings, int $groupsCount, int $randFactor, ?int $windShuffleMode): array
     {
         /*
          * Simple random search. Too many variables for real optimising methods :(
@@ -133,9 +144,6 @@ class Seating
             return [];
         }
 
-        if (empty($previousSeatings)) {
-            $previousSeatings = [];
-        }
         /** @var array[] $groups */
         $groups = array_chunk($playersMap, max(1, (int)ceil(count($playersMap) / $groupsCount)), true); // 1)
         for ($i = 0; $i < $maxIterations; $i++) {
@@ -160,7 +168,14 @@ class Seating
             usleep(500); // sleep some time to reduce cpu load
         } // 6)
 
-        return self::_updatePlacesAtEachTable($bestSeating, $previousSeatings);
+        if (empty($windShuffleMode)) { // includes UNSPECIFIED
+            $windShuffleMode = WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED;
+        }
+        if ($windShuffleMode === WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED) {
+            return self::_balancedWindShuffle($bestSeating, $previousSeatings);
+        } else {
+            return self::_randomWindShuffle($bestSeating);
+        }
     }
 
     /**
@@ -233,9 +248,9 @@ class Seating
      * Make sure players will sit on random winds
      *
      * @param array $seating
-     * @return array|null
+     * @return array
      */
-    protected static function _updatePlacesToRandom(array $seating)
+    protected static function _randomWindShuffle(array $seating)
     {
         self::shuffleSeed();
         $tables = array_chunk($seating, 4, true);
@@ -253,9 +268,9 @@ class Seating
      *
      * @param array $seating
      * @param array $previousSeatings
-     * @return array|null
+     * @return array
      */
-    protected static function _updatePlacesAtEachTable(array $seating, array $previousSeatings)
+    protected static function _balancedWindShuffle(array $seating, array $previousSeatings)
     {
         $possiblePlacements = [
             '0123', '1023', '2013', '3012',
@@ -268,14 +283,16 @@ class Seating
 
         $tables = array_chunk($seating, 4, true);
         $resultSeating = [];
+        self::shuffleSeed();
         foreach ($tables as $tableWithRatings) {
             /** @var int[] $table */
             $table = array_keys($tableWithRatings);
 
-            $bestResult = 10005000;
+            $bestResult = 1000 * 1000 * 1000;
             $bestPlacement = [];
-            foreach ($possiblePlacements as $placement) {
-                $newResult = self::_calcSubSums(
+            $shuffledPossiblePlacements = self::shuffle($possiblePlacements); // if some variants are equal, choose random
+            foreach ($shuffledPossiblePlacements as $placement) {
+                $newResult = self::_calcWindDistributionPenalty(
                     $table[$placement[0]],
                     $table[$placement[1]],
                     $table[$placement[2]],
@@ -312,7 +329,7 @@ class Seating
      *
      * @return float|int
      */
-    protected static function _calcSubSums(int $player1, int $player2, int $player3, int $player4, array $prevData)
+    protected static function _calcWindDistributionPenalty(int $player1, int $player2, int $player3, int $player4, array $prevData)
     {
         $totalsum = 0;
         foreach ([$player1, $player2, $player3, $player4] as $idx => $player) {
@@ -321,16 +338,19 @@ class Seating
 
             foreach ($prevData as $table) {
                 $idxAtTable = array_search($player, $table);
-                $buckets[$idxAtTable] ++;
+                if ($idxAtTable !== false) {
+                    $buckets[$idxAtTable] ++;
+                }
             }
 
+            // square the numbers to force buckets to be closer to each other, this works much better
             $totalsum += (
-                abs($buckets[0] - $buckets[1]) +
-                abs($buckets[0] - $buckets[2]) +
-                abs($buckets[0] - $buckets[3]) +
-                abs($buckets[1] - $buckets[2]) +
-                abs($buckets[1] - $buckets[3]) +
-                abs($buckets[2] - $buckets[3])
+                abs($buckets[0] - $buckets[1]) ** 2 +
+                abs($buckets[0] - $buckets[2]) ** 2 +
+                abs($buckets[0] - $buckets[3]) ** 2 +
+                abs($buckets[1] - $buckets[2]) ** 2 +
+                abs($buckets[1] - $buckets[3]) ** 2 +
+                abs($buckets[2] - $buckets[3]) ** 2
             );
         }
 
@@ -594,11 +614,13 @@ class Seating
      *
      * @param array $currentRatingList :ordered list
      * @param int $step
+     * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
+     * @param ?int $windShuffleMode - enum
      *
      * @return array
      * @throws \Exception
      */
-    public static function makeIntervalSeating(array $currentRatingList, int $step)
+    public static function makeIntervalSeating(array $currentRatingList, int $step, array $previousSeatings, ?int $windShuffleMode)
     {
         srand(crc32(microtime()));
         $tables = [];
@@ -651,7 +673,14 @@ class Seating
             }
         }
 
-        return self::_updatePlacesToRandom($flattenedGroups) ?: [];
+        if (empty($windShuffleMode)) { // includes UNSPECIFIED
+            $windShuffleMode = WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM;
+        }
+        if ($windShuffleMode === WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED) {
+            return self::_balancedWindShuffle($flattenedGroups, $previousSeatings);
+        } else {
+            return self::_randomWindShuffle($flattenedGroups);
+        }
     }
 
     /**
@@ -659,7 +688,7 @@ class Seating
      * @param PlayerPrimitive[] $players [local_id => player_id, .... ]
      * @return array [id => int, local_id => int][][]
      */
-    public static function makePrescriptedSeating($prescriptForSession, $players)
+    public static function makePrescriptedSeating($prescriptForSession, $players) // TODO support $windShuffleMode
     {
         return array_map(function ($table) use ($players) {
             return array_map(function ($localId) use ($players) {

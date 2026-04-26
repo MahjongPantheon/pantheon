@@ -20,7 +20,7 @@ import * as React from 'react';
 import { Text, Select, Stack, Textarea, TextInput, Radio, Group, Checkbox } from '@mantine/core';
 import { IconAbc, IconChecklist, IconMap2 } from '@tabler/icons-react';
 import { EventCustom, FormHandle } from './types';
-import { EventType, RulesetConfig } from 'tsclients/proto/atoms.pb';
+import { EventType, RulesetConfig, WindShuffleMode } from 'tsclients/proto/atoms.pb';
 
 type BasicSettingsProps = {
   form: FormHandle;
@@ -141,6 +141,27 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           )}
           {...form.getInputProps('event.allowViewOtherTables', { type: 'checkbox' })}
         />
+        {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
+          <Radio.Group
+            label={i18n._t('Wind shuffle mode')}
+            description={i18n._t('How players on the same table are shuffled')}
+            withAsterisk
+            {...form.getInputProps('event.windShuffleMode')}
+          >
+            <Group mt='xs'>
+              <Radio
+                value={WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM}
+                label={i18n._t('Random wind shuffle')}
+                description={i18n._t('Shuffle players on the same table randomly')}
+              />
+              <Radio
+                value={WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED}
+                label={i18n._t('Balanced wind shuffle')}
+                description={i18n._t('Try to place players on winds they previously played less')}
+              />
+            </Group>
+          </Radio.Group>
+        )}
       </Stack>
     </>
   );

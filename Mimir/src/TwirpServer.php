@@ -140,6 +140,7 @@ use Common\SeatingGetNextPrescriptedSeatingResponse;
 use Common\SeatingMakeIntervalSeatingPayload;
 use Common\SeatingMakePrescriptedSeatingPayload;
 use Common\SeatingMakeShuffledSeatingPayload;
+use Common\SeatingMakeSwissSeatingPayload;
 use Common\SeriesResult;
 use Common\SessionHistoryResult;
 use Common\SessionStatus;
@@ -326,6 +327,9 @@ final class TwirpServer implements Mimir
             } else {
                 $data->setPlatformId(PlatformType::PLATFORM_TYPE_UNSPECIFIED);
             }
+        }
+        if (!empty($ret['windShuffleMode'])) {
+            $data->setWindShuffleMode($ret['windShuffleMode']);
         }
         return $data;
     }
@@ -941,6 +945,9 @@ final class TwirpServer implements Mimir
         if (!empty($ret['gamesStatus'])) {
             $gc->setGamesStatus(self::_toGamesStatus($ret['gamesStatus']));
         }
+        if (!empty($ret['windShuffleMode'])) {
+            $gc->setWindShuffleMode($ret['windShuffleMode']);
+        }
         return $gc;
     }
 
@@ -1355,7 +1362,8 @@ final class TwirpServer implements Mimir
                 $req->getAllowViewOtherTables(),
                 $req->getPlatformId(),
                 $req->getRulesetConfig(),
-                $req->getAllowManualAddReplay()
+                $req->getAllowManualAddReplay(),
+                $req->getWindShuffleMode()
             ));
     }
 
@@ -1388,7 +1396,8 @@ final class TwirpServer implements Mimir
                 $ev->getAllowViewOtherTables(),
                 $ev->getPlatformId(),
                 $ev->getRulesetConfig(),
-                $ev->getAllowManualAddReplay()
+                $ev->getAllowManualAddReplay(),
+                $ev->getWindShuffleMode()
             ));
     }
 
@@ -1690,7 +1699,8 @@ final class TwirpServer implements Mimir
             ->setSuccess($this->_seatingController->makeShuffledSeating(
                 $req->getEventId(),
                 $req->getGroupsCount(),
-                $req->getSeed()
+                $req->getSeed(),
+                $req->getWindShuffleMode()
             ));
     }
 
@@ -1698,10 +1708,13 @@ final class TwirpServer implements Mimir
      * @throws InvalidParametersException
      * @throws AuthFailedException
      */
-    public function MakeSwissSeating(array $ctx, GenericEventPayload $req): GenericSuccessResponse
+    public function MakeSwissSeating(array $ctx, SeatingMakeSwissSeatingPayload $req): GenericSuccessResponse
     {
         return (new GenericSuccessResponse())
-            ->setSuccess($this->_seatingController->makeSwissSeating($req->getEventId()));
+            ->setSuccess($this->_seatingController->makeSwissSeating(
+                $req->getEventId(),
+                $req->getWindShuffleMode()
+            ));
     }
 
     /**
@@ -1727,7 +1740,11 @@ final class TwirpServer implements Mimir
                             ->setPlayerId((int)$player)
                             ->setRating(0.);
                     }, $table));
-            }, $this->_seatingController->generateSwissSeating($req->getEventId(), $req->getSubstituteReplacementPlayers())));
+            }, $this->_seatingController->generateSwissSeating(
+                $req->getEventId(),
+                $req->getWindShuffleMode(),
+                $req->getSubstituteReplacementPlayers()
+            )));
     }
 
     /**
@@ -1741,7 +1758,8 @@ final class TwirpServer implements Mimir
         return (new GenericSuccessResponse())
             ->setSuccess($this->_seatingController->makeIntervalSeating(
                 $req->getEventId(),
-                $req->getStep()
+                $req->getStep(),
+                $req->getWindShuffleMode()
             ));
     }
 

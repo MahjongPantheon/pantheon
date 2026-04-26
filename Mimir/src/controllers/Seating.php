@@ -36,12 +36,13 @@ class SeatingController extends Controller
      * @param int $eventId
      * @param int $groupsCount
      * @param int $seed
+     * @param ?int $windShuffleMode
      * @throws InvalidParametersException
      * @throws AuthFailedException
      * @throws \Exception
      * @return bool
      */
-    public function makeShuffledSeating($eventId, $groupsCount, $seed)
+    public function makeShuffledSeating($eventId, $groupsCount, $seed, $windShuffleMode)
     {
         $this->_log->info('Creating new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
@@ -54,7 +55,7 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list($playersMap, $tables) = $this->_getData($eventId);
-        $playerIds = array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed) ?? []);
+        $playerIds = array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed, $windShuffleMode));
         $seating = array_chunk($playerIds, 4);
 
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
@@ -91,12 +92,13 @@ class SeatingController extends Controller
      * This will also start games immediately if timer is not used.
      *
      * @param int $eventId
+     * @param ?int $windShuffleMode
      * @throws InvalidParametersException
      * @throws AuthFailedException
      * @throws \Exception
      * @return bool
      */
-    public function makeSwissSeating($eventId)
+    public function makeSwissSeating($eventId, $windShuffleMode)
     {
         $this->_log->info('Creating new swiss seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
@@ -109,7 +111,7 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list($playersMap, $tables) = $this->_getData($eventId);
-        $playerIds = array_keys(Seating::swissSeating($playersMap, $tables));
+        $playerIds = array_keys(Seating::swissSeating($playersMap, $tables, $windShuffleMode));
         $seating = array_chunk($playerIds, 4);
 
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
@@ -145,13 +147,14 @@ class SeatingController extends Controller
      * It is here because of online tournaments.
      *
      * @param int $eventId
+     * @param ?int $windShuffleMode
      * @param bool $substituteReplacementPlayers
      * @throws AuthFailedException
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array [[id, id, id, id], ... ]
      */
-    public function generateSwissSeating($eventId, $substituteReplacementPlayers = false)
+    public function generateSwissSeating($eventId, $windShuffleMode, $substituteReplacementPlayers = false)
     {
         $this->_checkIfAllowed($eventId);
         $this->_log->info('Generating new swiss seating for event #' . $eventId);
@@ -159,7 +162,7 @@ class SeatingController extends Controller
         list($playersMap, $tables) = $this->_getData($eventId);
 
         // TODO: check if unique works here; there should not be any repeating players is swiss seating results
-        $seating = array_unique(array_keys(Seating::swissSeating($playersMap, $tables)));
+        $seating = array_unique(array_keys(Seating::swissSeating($playersMap, $tables, $windShuffleMode)));
 
         if ($substituteReplacementPlayers) {
             $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
@@ -190,6 +193,7 @@ class SeatingController extends Controller
      *
      * @param int $eventId
      * @param int $step
+     * @param ?int $windShuffleMode
      * @throws AuthFailedException
      * @throws DatabaseException
      * @throws InvalidParametersException
@@ -197,7 +201,7 @@ class SeatingController extends Controller
      * @throws \Exception
      * @return bool
      */
-    public function makeIntervalSeating($eventId, $step)
+    public function makeIntervalSeating($eventId, $step, $windShuffleMode)
     {
         $this->_log->info('Creating new interval seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
@@ -230,8 +234,9 @@ class SeatingController extends Controller
             return !in_array($player['id'], $ignoredPlayerIds);
         }));
 
+        list($playersMap, $tables) = $this->_getData($eventId); // TODO use $playersMap instead of $currentRatingTable
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
-        $seating = array_keys(Seating::makeIntervalSeating($currentRatingTable, $step));
+        $seating = array_keys(Seating::makeIntervalSeating($currentRatingTable, $step, $tables, $windShuffleMode));
         $seating = array_chunk($seating, 4);
 
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
@@ -271,7 +276,7 @@ class SeatingController extends Controller
      * @throws InvalidUserException
      * @throws \Exception
      */
-    public function makePrescriptedSeating($eventId, $randomizeAtTables = false)
+    public function makePrescriptedSeating($eventId, $randomizeAtTables = false) // TODO support $windShuffleMode
     {
         $this->_log->info('Creating new prescripted seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);

@@ -22,6 +22,10 @@ class SeatingMakeIntervalSeatingPayload extends \Google\Protobuf\Internal\Messag
      * Generated from protobuf field <code>int32 step = 2;</code>
      */
     protected $step = 0;
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 3;</code>
+     */
+    protected $wind_shuffle_mode = null;
 
     /**
      * Constructor.
@@ -31,6 +35,7 @@ class SeatingMakeIntervalSeatingPayload extends \Google\Protobuf\Internal\Messag
      *
      *     @type int $event_id
      *     @type int $step
+     *     @type int $wind_shuffle_mode
      * }
      */
     public function __construct($data = NULL) {
@@ -78,6 +83,38 @@ class SeatingMakeIntervalSeatingPayload extends \Google\Protobuf\Internal\Messag
     {
         GPBUtil::checkInt32($var);
         $this->step = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 3;</code>
+     * @return int
+     */
+    public function getWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode) ? $this->wind_shuffle_mode : 0;
+    }
+
+    public function hasWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode);
+    }
+
+    public function clearWindShuffleMode()
+    {
+        unset($this->wind_shuffle_mode);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 3;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setWindShuffleMode($var)
+    {
+        GPBUtil::checkEnum($var, \Common\WindShuffleMode::class);
+        $this->wind_shuffle_mode = $var;
 
         return $this;
     }

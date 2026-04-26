@@ -94,6 +94,12 @@ enum SessionStatus {
   SESSION_STATUS_PLANNED = 5;
 }
 
+enum WindShuffleMode {
+  WIND_SHUFFLE_MODE_UNSPECIFIED = 0;
+  WIND_SHUFFLE_MODE_RANDOM = 1;
+  WIND_SHUFFLE_MODE_BALANCED = 2;
+}
+
 message Country {
   string code = 1;
   string name = 2;
@@ -152,6 +158,7 @@ message GameConfig {
   RulesetConfig ruleset_config = 53;
   int32 lobby_id = 54;
   bool allow_view_other_tables = 55;
+  optional WindShuffleMode wind_shuffle_mode = 56;
 }
 
 message PlayerInRating {
@@ -459,6 +466,7 @@ message EventData {
   bool allow_view_other_tables = 18;
   PlatformType platform_id = 19;
   bool allow_manual_add_replay = 20;
+  optional WindShuffleMode wind_shuffle_mode = 21;
 }
 
 message TableState {

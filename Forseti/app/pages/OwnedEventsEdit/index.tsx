@@ -34,10 +34,12 @@ import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { EventCustom, FormFields } from './types';
 import {
   EndingPolicy,
+  EventData,
   EventType,
   PlatformType,
   RulesetConfig,
   UmaType,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import { TopActionButton } from '../../components/TopActionButton';
 import { notifications } from '@mantine/notifications';
@@ -89,6 +91,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         allowViewOtherTables: false,
         platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
         allowManualAddReplay: true,
+        windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM, // so it's chosen by default when shown
       },
       ruleset: {
         gameExpirationTime: 0, // online
@@ -147,6 +150,12 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   });
 
   const setFormValues = (eventData: EventCustom, currentRuleset: RulesetConfig) => {
+    if (
+      eventData.type !== EventType.EVENT_TYPE_TOURNAMENT ||
+      eventData.windShuffleMode === undefined
+    ) {
+      eventData.windShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED;
+    }
     form.setValues({
       event: eventData,
       ruleset: {
@@ -310,8 +319,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   );
 };
 
-function makeEventData(vals: FormFields) {
-  return {
+function makeEventData(vals: FormFields): EventData {
+  const eventData: EventData = {
     ...vals.event,
     autostart: 0, // TODO: https://github.com/MahjongPantheon/pantheon/issues/282
     rulesetConfig: {
@@ -327,4 +336,11 @@ function makeEventData(vals: FormFields) {
         .map((v) => parseInt(v, 10)),
     },
   };
+  if (
+    eventData.type !== EventType.EVENT_TYPE_TOURNAMENT ||
+    eventData.windShuffleMode === undefined
+  ) {
+    eventData.windShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED;
+  }
+  return eventData;
 }

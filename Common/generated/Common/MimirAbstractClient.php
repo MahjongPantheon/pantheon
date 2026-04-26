@@ -1207,7 +1207,7 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function MakeSwissSeating(array $ctx, \Common\GenericEventPayload $in): \Common\GenericSuccessResponse
+    public function MakeSwissSeating(array $ctx, \Common\SeatingMakeSwissSeatingPayload $in): \Common\GenericSuccessResponse
     {
         $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Mimir');

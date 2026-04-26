@@ -116,6 +116,10 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool allow_view_other_tables = 55;</code>
      */
     protected $allow_view_other_tables = false;
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 56;</code>
+     */
+    protected $wind_shuffle_mode = null;
 
     /**
      * Constructor.
@@ -149,6 +153,7 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      *     @type \Common\RulesetConfig $ruleset_config
      *     @type int $lobby_id
      *     @type bool $allow_view_other_tables
+     *     @type int $wind_shuffle_mode
      * }
      */
     public function __construct($data = NULL) {
@@ -716,6 +721,38 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->allow_view_other_tables = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 56;</code>
+     * @return int
+     */
+    public function getWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode) ? $this->wind_shuffle_mode : 0;
+    }
+
+    public function hasWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode);
+    }
+
+    public function clearWindShuffleMode()
+    {
+        unset($this->wind_shuffle_mode);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 56;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setWindShuffleMode($var)
+    {
+        GPBUtil::checkEnum($var, \Common\WindShuffleMode::class);
+        $this->wind_shuffle_mode = $var;
 
         return $this;
     }

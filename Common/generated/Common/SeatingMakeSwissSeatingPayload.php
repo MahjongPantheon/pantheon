@@ -10,26 +10,16 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>common.SeatingMakeShuffledSeatingPayload</code>
+ * Generated from protobuf message <code>common.SeatingMakeSwissSeatingPayload</code>
  */
-class SeatingMakeShuffledSeatingPayload extends \Google\Protobuf\Internal\Message
+class SeatingMakeSwissSeatingPayload extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>int32 event_id = 1;</code>
      */
     protected $event_id = 0;
     /**
-     * Generated from protobuf field <code>int32 groups_count = 2;</code>
-     */
-    protected $groups_count = 0;
-    /**
-     * randomness factor
-     *
-     * Generated from protobuf field <code>int32 seed = 3;</code>
-     */
-    protected $seed = 0;
-    /**
-     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 4;</code>
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 2;</code>
      */
     protected $wind_shuffle_mode = null;
 
@@ -40,9 +30,6 @@ class SeatingMakeShuffledSeatingPayload extends \Google\Protobuf\Internal\Messag
      *     Optional. Data for populating the Message object.
      *
      *     @type int $event_id
-     *     @type int $groups_count
-     *     @type int $seed
-     *           randomness factor
      *     @type int $wind_shuffle_mode
      * }
      */
@@ -74,55 +61,7 @@ class SeatingMakeShuffledSeatingPayload extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * Generated from protobuf field <code>int32 groups_count = 2;</code>
-     * @return int
-     */
-    public function getGroupsCount()
-    {
-        return $this->groups_count;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 groups_count = 2;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setGroupsCount($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->groups_count = $var;
-
-        return $this;
-    }
-
-    /**
-     * randomness factor
-     *
-     * Generated from protobuf field <code>int32 seed = 3;</code>
-     * @return int
-     */
-    public function getSeed()
-    {
-        return $this->seed;
-    }
-
-    /**
-     * randomness factor
-     *
-     * Generated from protobuf field <code>int32 seed = 3;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setSeed($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->seed = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 4;</code>
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 2;</code>
      * @return int
      */
     public function getWindShuffleMode()
@@ -141,7 +80,7 @@ class SeatingMakeShuffledSeatingPayload extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 4;</code>
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 2;</code>
      * @param int $var
      * @return $this
      */

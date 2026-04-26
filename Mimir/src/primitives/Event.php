@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\WindShuffleMode;
+
 require_once __DIR__ . '/../Primitive.php';
 require_once __DIR__ . '/PlayerRegistration.php';
 require_once __DIR__ . '/../Ruleset.php';
@@ -67,6 +69,7 @@ class EventPrimitive extends Primitive
         'platform_id'       => '_platformId',
         'allow_view_other_tables' => '_allowViewOtherTables',
         'manual_add_replay' => '_allowManualAddReplay',
+        'wind_shuffle_mode' => '_windShuffleMode',
     ];
 
     protected function _getFieldsTransforms()
@@ -101,6 +104,28 @@ class EventPrimitive extends Primitive
             '_isListed'           => $this->_integerTransform(),
             '_allowViewOtherTables' => $this->_integerTransform(),
             '_allowManualAddReplay' => $this->_integerTransform(),
+            '_windShuffleMode'    => [
+                'serialize' => function (?int $windShuffleMode): ?string {
+                    switch ($windShuffleMode) {
+                        case WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM:
+                            return 'random';
+                        case WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED:
+                            return 'balanced';
+                        default:
+                            return null;
+                    }
+                },
+                'deserialize' => function (?string $windShuffleMode): int {
+                    switch ($windShuffleMode) {
+                        case 'random':
+                            return WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM;
+                        case 'balanced':
+                            return WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED;
+                        default:
+                            return WindShuffleMode::WIND_SHUFFLE_MODE_UNSPECIFIED;
+                    }
+                }
+            ],
             '_rulesetConfig'      => [
                 'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->rules()->serializeToJsonString();
@@ -270,6 +295,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_allowManualAddReplay;
+    /**
+     * Wind shuffle mode enum
+     * @var ?int
+     */
+    protected $_windShuffleMode;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -956,6 +986,24 @@ class EventPrimitive extends Primitive
     public function setAllowManualAddReplay(int $allowManualAddReplay)
     {
         $this->_allowManualAddReplay = $allowManualAddReplay;
+        return $this;
+    }
+
+    /**
+     * @return ?int
+     */
+    public function getWindShuffleMode()
+    {
+        return $this->_windShuffleMode;
+    }
+
+    /**
+     * @param ?int $windShuffleMode
+     * @return EventPrimitive
+     */
+    public function setWindShuffleMode(?int $windShuffleMode)
+    {
+        $this->_windShuffleMode = $windShuffleMode;
         return $this;
     }
 }

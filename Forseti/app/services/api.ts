@@ -87,6 +87,7 @@ import {
   EventData,
   EventReferee,
   IntermediateResultOfSession,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
@@ -568,13 +569,14 @@ export class ApiService {
     return FinalizeSession({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
-  makeShuffledSeating(eventId: number) {
+  makeShuffledSeating(eventId: number, windShuffleMode: WindShuffleMode) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeShuffledSeating' });
     return MakeShuffledSeating(
       {
         eventId,
         groupsCount: 1,
         seed: Math.floor(Math.random() * 1_000_000) % 1_000_000,
+        windShuffleMode,
       },
       this._clientConfMimir
     )
@@ -587,9 +589,9 @@ export class ApiService {
       });
   }
 
-  makeIntervalSeating(eventId: number, interval: number) {
+  makeIntervalSeating(eventId: number, interval: number, windShuffleMode: WindShuffleMode) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeIntervalSeating' });
-    return MakeIntervalSeating({ eventId, step: interval }, this._clientConfMimir)
+    return MakeIntervalSeating({ eventId, step: interval, windShuffleMode }, this._clientConfMimir)
       .then((r) => r.success)
       .catch(() => {
         // Seating took too long, nginx dropped connection, let's wait a bit
@@ -599,9 +601,9 @@ export class ApiService {
       });
   }
 
-  makeSwissSeating(eventId: number) {
+  makeSwissSeating(eventId: number, windShuffleMode: WindShuffleMode) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeSwissSeating' });
-    return MakeSwissSeating({ eventId }, this._clientConfMimir)
+    return MakeSwissSeating({ eventId, windShuffleMode }, this._clientConfMimir)
       .then((r) => r.success)
       .catch(() => {
         // Seating took too long, nginx dropped connection, let's wait a bit

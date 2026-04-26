@@ -92,6 +92,10 @@ class EventData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool allow_manual_add_replay = 20;</code>
      */
     protected $allow_manual_add_replay = false;
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 21;</code>
+     */
+    protected $wind_shuffle_mode = null;
 
     /**
      * Constructor.
@@ -120,6 +124,7 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     @type bool $allow_view_other_tables
      *     @type int $platform_id
      *     @type bool $allow_manual_add_replay
+     *     @type int $wind_shuffle_mode
      * }
      */
     public function __construct($data = NULL) {
@@ -551,6 +556,38 @@ class EventData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->allow_manual_add_replay = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 21;</code>
+     * @return int
+     */
+    public function getWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode) ? $this->wind_shuffle_mode : 0;
+    }
+
+    public function hasWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode);
+    }
+
+    public function clearWindShuffleMode()
+    {
+        unset($this->wind_shuffle_mode);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 21;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setWindShuffleMode($var)
+    {
+        GPBUtil::checkEnum($var, \Common\WindShuffleMode::class);
+        $this->wind_shuffle_mode = $var;
 
         return $this;
     }

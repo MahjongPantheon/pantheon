@@ -461,7 +461,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function MakeSwissSeating(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
+    public function MakeSwissSeating(array $ctx, \Common\SeatingMakeSwissSeatingPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *

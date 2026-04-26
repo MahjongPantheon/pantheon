@@ -38,6 +38,11 @@ export type SessionStatus =
   | "SESSION_STATUS_CANCELLED"
   | "SESSION_STATUS_PLANNED";
 
+export type WindShuffleMode =
+  | "WIND_SHUFFLE_MODE_UNSPECIFIED"
+  | "WIND_SHUFFLE_MODE_RANDOM"
+  | "WIND_SHUFFLE_MODE_BALANCED";
+
 export type UmaType =
   | "UMA_TYPE_UNSPECIFIED"
   | "UMA_TYPE_UMA_SIMPLE"
@@ -152,6 +157,7 @@ export interface GameConfig {
   rulesetConfig: RulesetConfig;
   lobbyId: number;
   allowViewOtherTables: boolean;
+  windShuffleMode?: WindShuffleMode | null | undefined;
 }
 
 export interface PlayerInRating {
@@ -457,6 +463,7 @@ export interface EventData {
   allowViewOtherTables: boolean;
   platformId: PlatformType;
   allowManualAddReplay: boolean;
+  windShuffleMode?: WindShuffleMode | null | undefined;
 }
 
 export interface TableState {
@@ -847,6 +854,52 @@ export const SessionStatus = {
       }
       case "SESSION_STATUS_PLANNED": {
         return 5;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
+export const WindShuffleMode = {
+  WIND_SHUFFLE_MODE_UNSPECIFIED: "WIND_SHUFFLE_MODE_UNSPECIFIED",
+  WIND_SHUFFLE_MODE_RANDOM: "WIND_SHUFFLE_MODE_RANDOM",
+  WIND_SHUFFLE_MODE_BALANCED: "WIND_SHUFFLE_MODE_BALANCED",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): WindShuffleMode {
+    switch (i) {
+      case 0: {
+        return "WIND_SHUFFLE_MODE_UNSPECIFIED";
+      }
+      case 1: {
+        return "WIND_SHUFFLE_MODE_RANDOM";
+      }
+      case 2: {
+        return "WIND_SHUFFLE_MODE_BALANCED";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as WindShuffleMode;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: WindShuffleMode): number {
+    switch (i) {
+      case "WIND_SHUFFLE_MODE_UNSPECIFIED": {
+        return 0;
+      }
+      case "WIND_SHUFFLE_MODE_RANDOM": {
+        return 1;
+      }
+      case "WIND_SHUFFLE_MODE_BALANCED": {
+        return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -1878,6 +1931,7 @@ export const GameConfig = {
       rulesetConfig: RulesetConfig.initialize(),
       lobbyId: 0,
       allowViewOtherTables: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -1963,6 +2017,9 @@ export const GameConfig = {
     }
     if (msg.allowViewOtherTables) {
       writer.writeBool(55, msg.allowViewOtherTables);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeEnum(56, WindShuffleMode._toInt(msg.windShuffleMode));
     }
     return writer;
   },
@@ -2075,6 +2132,10 @@ export const GameConfig = {
         }
         case 55: {
           msg.allowViewOtherTables = reader.readBool();
+          break;
+        }
+        case 56: {
+          msg.windShuffleMode = WindShuffleMode._fromInt(reader.readEnum());
           break;
         }
         default: {
@@ -5653,6 +5714,7 @@ export const EventData = {
       allowViewOtherTables: false,
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -5717,6 +5779,9 @@ export const EventData = {
     }
     if (msg.allowManualAddReplay) {
       writer.writeBool(20, msg.allowManualAddReplay);
+    }
+    if (msg.windShuffleMode != undefined) {
+      writer.writeEnum(21, WindShuffleMode._toInt(msg.windShuffleMode));
     }
     return writer;
   },
@@ -5801,6 +5866,10 @@ export const EventData = {
         }
         case 20: {
           msg.allowManualAddReplay = reader.readBool();
+          break;
+        }
+        case 21: {
+          msg.windShuffleMode = WindShuffleMode._fromInt(reader.readEnum());
           break;
         }
         default: {
@@ -7923,6 +7992,52 @@ export const SessionStatusJSON = {
   },
 } as const;
 
+export const WindShuffleModeJSON = {
+  WIND_SHUFFLE_MODE_UNSPECIFIED: "WIND_SHUFFLE_MODE_UNSPECIFIED",
+  WIND_SHUFFLE_MODE_RANDOM: "WIND_SHUFFLE_MODE_RANDOM",
+  WIND_SHUFFLE_MODE_BALANCED: "WIND_SHUFFLE_MODE_BALANCED",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): WindShuffleMode {
+    switch (i) {
+      case 0: {
+        return "WIND_SHUFFLE_MODE_UNSPECIFIED";
+      }
+      case 1: {
+        return "WIND_SHUFFLE_MODE_RANDOM";
+      }
+      case 2: {
+        return "WIND_SHUFFLE_MODE_BALANCED";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as WindShuffleMode;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: WindShuffleMode): number {
+    switch (i) {
+      case "WIND_SHUFFLE_MODE_UNSPECIFIED": {
+        return 0;
+      }
+      case "WIND_SHUFFLE_MODE_RANDOM": {
+        return 1;
+      }
+      case "WIND_SHUFFLE_MODE_BALANCED": {
+        return 2;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
 export const UmaTypeJSON = {
   UMA_TYPE_UNSPECIFIED: "UMA_TYPE_UNSPECIFIED",
   UMA_TYPE_UMA_SIMPLE: "UMA_TYPE_UMA_SIMPLE",
@@ -8823,6 +8938,7 @@ export const GameConfigJSON = {
       rulesetConfig: RulesetConfigJSON.initialize(),
       lobbyId: 0,
       allowViewOtherTables: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -8913,6 +9029,9 @@ export const GameConfigJSON = {
     }
     if (msg.allowViewOtherTables) {
       json["allowViewOtherTables"] = msg.allowViewOtherTables;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -9024,6 +9143,11 @@ export const GameConfigJSON = {
       json["allowViewOtherTables"] ?? json["allow_view_other_tables"];
     if (_allowViewOtherTables_) {
       msg.allowViewOtherTables = _allowViewOtherTables_;
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = WindShuffleMode._fromInt(_windShuffleMode_);
     }
     return msg;
   },
@@ -12105,6 +12229,7 @@ export const EventDataJSON = {
       allowViewOtherTables: false,
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
+      windShuffleMode: undefined,
       ...msg,
     };
   },
@@ -12174,6 +12299,9 @@ export const EventDataJSON = {
     }
     if (msg.allowManualAddReplay) {
       json["allowManualAddReplay"] = msg.allowManualAddReplay;
+    }
+    if (msg.windShuffleMode != undefined) {
+      json["windShuffleMode"] = msg.windShuffleMode;
     }
     return json;
   },
@@ -12256,6 +12384,11 @@ export const EventDataJSON = {
       json["allowManualAddReplay"] ?? json["allow_manual_add_replay"];
     if (_allowManualAddReplay_) {
       msg.allowManualAddReplay = _allowManualAddReplay_;
+    }
+    const _windShuffleMode_ =
+      json["windShuffleMode"] ?? json["wind_shuffle_mode"];
+    if (_windShuffleMode_) {
+      msg.windShuffleMode = WindShuffleMode._fromInt(_windShuffleMode_);
     }
     return msg;
   },
