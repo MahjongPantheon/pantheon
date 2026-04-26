@@ -685,7 +685,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       image: favoriteTsuchidaApprentice,
       label: i18n._t('The favorite apprentice of TSUCHIDA'),
       description: i18n._t(
-        'Given for largest chiitoitsu yaku count. You need to win more than once with this yaku. Chiitoitsu nomi it is also not counted.'
+        'Given for largest chiitoitsu yaku count. You need to win more than twice with this yaku. Chiitoitsu nomi it is also not counted.'
       ),
       content: achDataByKey[Achievement.FAVORITE_TSUCHIDA_APPRENTICE] ? (
         <Group align='flex-start' justify='space-between' pl={20}>

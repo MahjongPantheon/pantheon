@@ -1,8 +1,8 @@
 # Translations template for PROJECT.
-# Copyright (C) 2025 
+# Copyright (C) 2025
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -1016,7 +1016,7 @@ msgid "The favorite apprentice of TSUCHIDA"
 msgstr ""
 
 #: app/pages/Achievements.tsx:687:20
-msgid "Given for largest chiitoitsu yaku count. You need to win more than once with this yaku. Chiitoitsu nomi it is also not counted."
+msgid "Given for largest chiitoitsu yaku count. You need to win more than twice with this yaku. Chiitoitsu nomi it is also not counted."
 msgstr ""
 
 #: app/pages/Achievements.tsx:697:20
