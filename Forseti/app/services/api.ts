@@ -613,9 +613,9 @@ export class ApiService {
       });
   }
 
-  makePrescriptedSeating(eventId: number, randomizeAtTables: boolean) {
+  makePrescriptedSeating(eventId: number, windShuffleMode: WindShuffleMode) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakePrescriptedSeating' });
-    return MakePrescriptedSeating({ eventId, randomizeAtTables }, this._clientConfMimir)
+    return MakePrescriptedSeating({ eventId, windShuffleMode }, this._clientConfMimir)
       .then((r) => r.success)
       .catch(() => {
         // Seating took too long, nginx dropped connection, let's wait a bit

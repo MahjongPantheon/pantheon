@@ -24,11 +24,16 @@ class WindShuffleMode
      * Generated from protobuf enum <code>WIND_SHUFFLE_MODE_BALANCED = 2;</code>
      */
     const WIND_SHUFFLE_MODE_BALANCED = 2;
+    /**
+     * Generated from protobuf enum <code>WIND_SHUFFLE_MODE_PRESCRIPTED = 3;</code>
+     */
+    const WIND_SHUFFLE_MODE_PRESCRIPTED = 3;
 
     private static $valueToName = [
         self::WIND_SHUFFLE_MODE_UNSPECIFIED => 'WIND_SHUFFLE_MODE_UNSPECIFIED',
         self::WIND_SHUFFLE_MODE_RANDOM => 'WIND_SHUFFLE_MODE_RANDOM',
         self::WIND_SHUFFLE_MODE_BALANCED => 'WIND_SHUFFLE_MODE_BALANCED',
+        self::WIND_SHUFFLE_MODE_PRESCRIPTED => 'WIND_SHUFFLE_MODE_PRESCRIPTED',
     ];
 
     public static function name($value)

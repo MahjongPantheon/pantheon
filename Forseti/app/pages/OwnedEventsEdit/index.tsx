@@ -150,12 +150,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   });
 
   const setFormValues = (eventData: EventCustom, currentRuleset: RulesetConfig) => {
-    if (
-      eventData.type !== EventType.EVENT_TYPE_TOURNAMENT ||
-      eventData.windShuffleMode === undefined
-    ) {
-      eventData.windShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED;
-    }
+    setConsistentWindShuffleMode(eventData);
     form.setValues({
       event: eventData,
       ruleset: {
@@ -319,6 +314,17 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   );
 };
 
+function setConsistentWindShuffleMode(eventData: EventCustom | EventData) {
+  if (
+    eventData.type !== EventType.EVENT_TYPE_TOURNAMENT ||
+    eventData.windShuffleMode === undefined ||
+    (!eventData.isPrescripted &&
+      eventData.windShuffleMode == WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED)
+  ) {
+    eventData.windShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED;
+  }
+}
+
 function makeEventData(vals: FormFields): EventData {
   const eventData: EventData = {
     ...vals.event,
@@ -336,11 +342,6 @@ function makeEventData(vals: FormFields): EventData {
         .map((v) => parseInt(v, 10)),
     },
   };
-  if (
-    eventData.type !== EventType.EVENT_TYPE_TOURNAMENT ||
-    eventData.windShuffleMode === undefined
-  ) {
-    eventData.windShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED;
-  }
+  setConsistentWindShuffleMode(eventData);
   return eventData;
 }

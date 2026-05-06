@@ -19,9 +19,11 @@ class SeatingMakePrescriptedSeatingPayload extends \Google\Protobuf\Internal\Mes
      */
     protected $event_id = 0;
     /**
-     * Generated from protobuf field <code>bool randomize_at_tables = 2;</code>
+     * instead of 'bool randomize_at_tables'
+     *
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 3;</code>
      */
-    protected $randomize_at_tables = false;
+    protected $wind_shuffle_mode = null;
 
     /**
      * Constructor.
@@ -30,7 +32,8 @@ class SeatingMakePrescriptedSeatingPayload extends \Google\Protobuf\Internal\Mes
      *     Optional. Data for populating the Message object.
      *
      *     @type int $event_id
-     *     @type bool $randomize_at_tables
+     *     @type int $wind_shuffle_mode
+     *           instead of 'bool randomize_at_tables'
      * }
      */
     public function __construct($data = NULL) {
@@ -61,23 +64,37 @@ class SeatingMakePrescriptedSeatingPayload extends \Google\Protobuf\Internal\Mes
     }
 
     /**
-     * Generated from protobuf field <code>bool randomize_at_tables = 2;</code>
-     * @return bool
+     * instead of 'bool randomize_at_tables'
+     *
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 3;</code>
+     * @return int
      */
-    public function getRandomizeAtTables()
+    public function getWindShuffleMode()
     {
-        return $this->randomize_at_tables;
+        return isset($this->wind_shuffle_mode) ? $this->wind_shuffle_mode : 0;
+    }
+
+    public function hasWindShuffleMode()
+    {
+        return isset($this->wind_shuffle_mode);
+    }
+
+    public function clearWindShuffleMode()
+    {
+        unset($this->wind_shuffle_mode);
     }
 
     /**
-     * Generated from protobuf field <code>bool randomize_at_tables = 2;</code>
-     * @param bool $var
+     * instead of 'bool randomize_at_tables'
+     *
+     * Generated from protobuf field <code>optional .common.WindShuffleMode wind_shuffle_mode = 3;</code>
+     * @param int $var
      * @return $this
      */
-    public function setRandomizeAtTables($var)
+    public function setWindShuffleMode($var)
     {
-        GPBUtil::checkBool($var);
-        $this->randomize_at_tables = $var;
+        GPBUtil::checkEnum($var, \Common\WindShuffleMode::class);
+        $this->wind_shuffle_mode = $var;
 
         return $this;
     }
