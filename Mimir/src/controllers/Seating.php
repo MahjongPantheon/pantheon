@@ -286,7 +286,7 @@ class SeatingController extends Controller
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
 
-        list($playerRatingMap, $previousSeatings) = $this->_getData($eventId); // only for getting previous seatings for wind shuffle
+        [$playerRatingMap, $previousSeatings] = $this->_getData($eventId); // only for getting previous seatings for wind shuffle
 
         $seating = $this->_getNextPrescriptedSeating($eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
