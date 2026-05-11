@@ -4,6 +4,7 @@ import {
   GenericSessionPayload,
   GenericSuccessResponse,
   EventData,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb.js';
 import {
   AddExtraTimePayload,
@@ -94,6 +95,7 @@ import { EventRegistrationModel } from './models/EventRegistrationModel.js';
 import { PenaltyModel } from './models/PenaltyModel.js';
 import { AchievementsModel } from './models/AchievementsModel.js';
 import { SeatingModel } from './models/SeatingModel.js';
+import { randomInt } from 'node:crypto';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -495,7 +497,12 @@ export const mimirServer: Mimir<Context> = {
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.makeSwissSeating(
+      genericEventPayload.eventId,
+      randomInt(999999),
+      WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM // TODO
+    );
   },
   ResetSeating: function (
     genericEventPayload: GenericEventPayload,
