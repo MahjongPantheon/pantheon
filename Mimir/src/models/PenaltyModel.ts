@@ -22,6 +22,15 @@ export class PenaltyModel extends Model {
     });
   }
 
+  async findByEventId(eventId: number[], onlyActive = false) {
+    return this.repo.em.findAll(PenaltyEntity, {
+      where: {
+        event: this.repo.em.getReference(EventEntity, eventId),
+        cancelled: onlyActive ? 0 : undefined,
+      },
+    });
+  }
+
   async addPenalty(payload: GamesAddPenaltyPayload) {
     const playerModel = this.getModel(PlayerModel);
     if (

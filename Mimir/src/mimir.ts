@@ -488,7 +488,8 @@ export const mimirServer: Mimir<Context> = {
     seatingMakeShuffledSeatingPayload: SeatingMakeShuffledSeatingPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.makeShuffledSeating(seatingMakeShuffledSeatingPayload);
   },
   MakeSwissSeating: function (
     genericEventPayload: GenericEventPayload,

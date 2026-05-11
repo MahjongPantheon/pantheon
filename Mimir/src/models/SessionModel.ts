@@ -552,23 +552,31 @@ export class SessionModel extends Model {
     event[0].nextGameStartTime = 0;
     this.repo.db.em.persist(event[0]);
 
-    const sessionState = new SessionState(event[0].ruleset, gamesStartGamePayload.players);
+    const newSession = this.startSession(event[0], gamesStartGamePayload.players, null);
 
-    if (event[0].ruleset.rules.withYakitori) {
-      sessionState.setYakitori(
-        Object.fromEntries(gamesStartGamePayload.players.map((id) => [id, true]))
-      );
+    this.repo.db.em.flush();
+
+    context.repository.skirnir.trackSession(newSession.representationalHash!);
+    return { sessionHash: newSession.representationalHash! };
+  }
+
+  // Internal method to start arbitrary session from seating code or other sources
+  startSession(event: EventEntity, playerIds: number[], tableIndex: number | null) {
+    const sessionState = new SessionState(event.ruleset, playerIds);
+
+    if (event.ruleset.rules.withYakitori) {
+      sessionState.setYakitori(Object.fromEntries(playerIds.map((id) => [id, true])));
     }
 
     const newSession = this.repo.db.em.create(SessionEntity, {
-      event: event[0],
+      event,
       status: SessionStatus.SESSION_STATUS_INPROGRESS,
       replayHash: null,
-      tableIndex: null,
+      tableIndex,
       extraTime: 0,
       startDate: moment().format('YYYY-MM-DD HH:mm:ss'),
       representationalHash: sha1(
-        gamesStartGamePayload.players.join(',') +
+        playerIds.join(',') +
           moment().format('YYYY-MM-DD HH:mm') +
           (process.env.SEED_REPEAT ? '' : randomInt(999999).toString())
       ),
@@ -576,7 +584,7 @@ export class SessionModel extends Model {
     });
     this.repo.db.em.persist(newSession);
 
-    const sessionPlayers = gamesStartGamePayload.players.map((playerId, order) => {
+    const sessionPlayers = playerIds.map((playerId, order) => {
       return this.repo.db.em.create(SessionPlayerEntity, {
         order: order + 1,
         playerId,
@@ -585,10 +593,7 @@ export class SessionModel extends Model {
     });
     this.repo.db.em.persist(sessionPlayers);
 
-    this.repo.db.em.flush();
-
-    context.repository.skirnir.trackSession(newSession.representationalHash!);
-    return { sessionHash: newSession.representationalHash! };
+    return newSession;
   }
 
   async endGame(genericSessionPayload: GenericSessionPayload, context: Context) {
