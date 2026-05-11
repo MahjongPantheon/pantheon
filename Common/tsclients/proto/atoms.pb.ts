@@ -300,9 +300,9 @@ export interface GameResult {
   sessionHash: string;
   date?: string | null | undefined;
   replayLink: string;
-  players: number[];
   finalResults: FinalResultOfSession[];
   rounds: Round[];
+  players: PersonEx[];
 }
 
 export interface PlayerPlaceInSeries {
@@ -345,11 +345,13 @@ export interface RegisteredPlayer {
   title: string;
   localId?: number | null | undefined;
   teamName?: string | null | undefined;
-  tenhouId: string;
+  tenhouId?: string | null | undefined;
   ignoreSeating: boolean;
   replacedBy?: ReplacementPlayer | null | undefined;
   hasAvatar: boolean;
   lastUpdate: string;
+  majsoulId?: number | null | undefined;
+  majsoulNickname?: string | null | undefined;
 }
 
 export interface SessionHistoryResult {
@@ -462,7 +464,6 @@ export interface EventData {
   isRatingShown: boolean;
   achievementsShown: boolean;
   allowViewOtherTables: boolean;
-  allowManualAddReplay: boolean;
   platformId: PlatformType;
   allowManualAddReplay: boolean;
   windShuffleMode?: WindShuffleMode | null | undefined;
@@ -3794,9 +3795,9 @@ export const GameResult = {
       sessionHash: "",
       date: undefined,
       replayLink: "",
-      players: [],
       finalResults: [],
       rounds: [],
+      players: [],
       ...msg,
     };
   },
@@ -3817,9 +3818,6 @@ export const GameResult = {
     if (msg.replayLink) {
       writer.writeString(3, msg.replayLink);
     }
-    if (msg.players?.length) {
-      writer.writePackedInt32(4, msg.players);
-    }
     if (msg.finalResults?.length) {
       writer.writeRepeatedMessage(
         5,
@@ -3829,6 +3827,13 @@ export const GameResult = {
     }
     if (msg.rounds?.length) {
       writer.writeRepeatedMessage(7, msg.rounds as any, Round._writeMessage);
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        8,
+        msg.players as any,
+        PersonEx._writeMessage,
+      );
     }
     return writer;
   },
@@ -3855,14 +3860,6 @@ export const GameResult = {
           msg.replayLink = reader.readString();
           break;
         }
-        case 4: {
-          if (reader.isDelimited()) {
-            msg.players.push(...reader.readPackedInt32());
-          } else {
-            msg.players.push(reader.readInt32());
-          }
-          break;
-        }
         case 5: {
           const m = FinalResultOfSession.initialize();
           reader.readMessage(m, FinalResultOfSession._readMessage);
@@ -3873,6 +3870,12 @@ export const GameResult = {
           const m = Round.initialize();
           reader.readMessage(m, Round._readMessage);
           msg.rounds.push(m);
+          break;
+        }
+        case 8: {
+          const m = PersonEx.initialize();
+          reader.readMessage(m, PersonEx._readMessage);
+          msg.players.push(m);
           break;
         }
         default: {
@@ -4354,11 +4357,13 @@ export const RegisteredPlayer = {
       title: "",
       localId: undefined,
       teamName: undefined,
-      tenhouId: "",
+      tenhouId: undefined,
       ignoreSeating: false,
       replacedBy: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      majsoulId: undefined,
+      majsoulNickname: undefined,
       ...msg,
     };
   },
@@ -4382,7 +4387,7 @@ export const RegisteredPlayer = {
     if (msg.teamName != undefined) {
       writer.writeString(4, msg.teamName);
     }
-    if (msg.tenhouId) {
+    if (msg.tenhouId != undefined) {
       writer.writeString(5, msg.tenhouId);
     }
     if (msg.ignoreSeating) {
@@ -4396,6 +4401,12 @@ export const RegisteredPlayer = {
     }
     if (msg.lastUpdate) {
       writer.writeString(9, msg.lastUpdate);
+    }
+    if (msg.majsoulId != undefined) {
+      writer.writeInt32(10, msg.majsoulId);
+    }
+    if (msg.majsoulNickname != undefined) {
+      writer.writeString(11, msg.majsoulNickname);
     }
     return writer;
   },
@@ -4445,6 +4456,14 @@ export const RegisteredPlayer = {
         }
         case 9: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 10: {
+          msg.majsoulId = reader.readInt32();
+          break;
+        }
+        case 11: {
+          msg.majsoulNickname = reader.readString();
           break;
         }
         default: {
@@ -10558,9 +10577,9 @@ export const GameResultJSON = {
       sessionHash: "",
       date: undefined,
       replayLink: "",
-      players: [],
       finalResults: [],
       rounds: [],
+      players: [],
       ...msg,
     };
   },
@@ -10581,9 +10600,6 @@ export const GameResultJSON = {
     if (msg.replayLink) {
       json["replayLink"] = msg.replayLink;
     }
-    if (msg.players?.length) {
-      json["players"] = msg.players;
-    }
     if (msg.finalResults?.length) {
       json["finalResults"] = msg.finalResults.map(
         FinalResultOfSessionJSON._writeMessage,
@@ -10591,6 +10607,9 @@ export const GameResultJSON = {
     }
     if (msg.rounds?.length) {
       json["rounds"] = msg.rounds.map(RoundJSON._writeMessage);
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(PersonExJSON._writeMessage);
     }
     return json;
   },
@@ -10611,10 +10630,6 @@ export const GameResultJSON = {
     if (_replayLink_) {
       msg.replayLink = _replayLink_;
     }
-    const _players_ = json["players"];
-    if (_players_) {
-      msg.players = _players_.map(protoscript.parseNumber);
-    }
     const _finalResults_ = json["finalResults"] ?? json["final_results"];
     if (_finalResults_) {
       for (const item of _finalResults_) {
@@ -10629,6 +10644,14 @@ export const GameResultJSON = {
         const m = RoundJSON.initialize();
         RoundJSON._readMessage(m, item);
         msg.rounds.push(m);
+      }
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = PersonExJSON.initialize();
+        PersonExJSON._readMessage(m, item);
+        msg.players.push(m);
       }
     }
     return msg;
@@ -11057,11 +11080,13 @@ export const RegisteredPlayerJSON = {
       title: "",
       localId: undefined,
       teamName: undefined,
-      tenhouId: "",
+      tenhouId: undefined,
       ignoreSeating: false,
       replacedBy: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      majsoulId: undefined,
+      majsoulNickname: undefined,
       ...msg,
     };
   },
@@ -11085,7 +11110,7 @@ export const RegisteredPlayerJSON = {
     if (msg.teamName != undefined) {
       json["teamName"] = msg.teamName;
     }
-    if (msg.tenhouId) {
+    if (msg.tenhouId != undefined) {
       json["tenhouId"] = msg.tenhouId;
     }
     if (msg.ignoreSeating) {
@@ -11100,6 +11125,12 @@ export const RegisteredPlayerJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.majsoulId != undefined) {
+      json["majsoulId"] = msg.majsoulId;
+    }
+    if (msg.majsoulNickname != undefined) {
+      json["majsoulNickname"] = msg.majsoulNickname;
     }
     return json;
   },
@@ -11144,6 +11175,15 @@ export const RegisteredPlayerJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _majsoulId_ = json["majsoulId"] ?? json["majsoul_id"];
+    if (_majsoulId_) {
+      msg.majsoulId = protoscript.parseNumber(_majsoulId_);
+    }
+    const _majsoulNickname_ =
+      json["majsoulNickname"] ?? json["majsoul_nickname"];
+    if (_majsoulNickname_) {
+      msg.majsoulNickname = _majsoulNickname_;
     }
     return msg;
   },
