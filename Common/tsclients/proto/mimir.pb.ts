@@ -4369,7 +4369,6 @@ export const EventsGetLastGamesResponse = {
   ): EventsGetLastGamesResponse {
     return {
       games: [],
-      players: [],
       totalGames: 0,
       ...msg,
     };
@@ -4387,13 +4386,6 @@ export const EventsGetLastGamesResponse = {
         1,
         msg.games as any,
         protoAtoms.GameResult._writeMessage,
-      );
-    }
-    if (msg.players?.length) {
-      writer.writeRepeatedMessage(
-        2,
-        msg.players as any,
-        protoAtoms.Player._writeMessage,
       );
     }
     if (msg.totalGames) {
@@ -4416,12 +4408,6 @@ export const EventsGetLastGamesResponse = {
           const m = protoAtoms.GameResult.initialize();
           reader.readMessage(m, protoAtoms.GameResult._readMessage);
           msg.games.push(m);
-          break;
-        }
-        case 2: {
-          const m = protoAtoms.Player.initialize();
-          reader.readMessage(m, protoAtoms.Player._readMessage);
-          msg.players.push(m);
           break;
         }
         case 3: {
@@ -4467,7 +4453,6 @@ export const EventsGetGameResponse = {
   ): EventsGetGameResponse {
     return {
       game: protoAtoms.GameResult.initialize(),
-      players: [],
       ...msg,
     };
   },
@@ -4481,13 +4466,6 @@ export const EventsGetGameResponse = {
   ): protoscript.BinaryWriter {
     if (msg.game) {
       writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
-    }
-    if (msg.players?.length) {
-      writer.writeRepeatedMessage(
-        2,
-        msg.players as any,
-        protoAtoms.Player._writeMessage,
-      );
     }
     return writer;
   },
@@ -4504,12 +4482,6 @@ export const EventsGetGameResponse = {
       switch (field) {
         case 1: {
           reader.readMessage(msg.game, protoAtoms.GameResult._readMessage);
-          break;
-        }
-        case 2: {
-          const m = protoAtoms.Player.initialize();
-          reader.readMessage(m, protoAtoms.Player._readMessage);
-          msg.players.push(m);
           break;
         }
         default: {
@@ -5058,7 +5030,7 @@ export const EventsGetTimerStateResponse = {
       timeRemaining: 0,
       waitingForTimer: false,
       haveAutostart: false,
-      autostartTimer: false,
+      autostartTimer: 0,
       hideSeatingAfter: 0,
       ...msg,
     };
@@ -5087,7 +5059,7 @@ export const EventsGetTimerStateResponse = {
       writer.writeBool(5, msg.haveAutostart);
     }
     if (msg.autostartTimer) {
-      writer.writeBool(6, msg.autostartTimer);
+      writer.writeInt32(6, msg.autostartTimer);
     }
     if (msg.hideSeatingAfter) {
       writer.writeInt32(8, msg.hideSeatingAfter);
@@ -5126,7 +5098,7 @@ export const EventsGetTimerStateResponse = {
           break;
         }
         case 6: {
-          msg.autostartTimer = reader.readBool();
+          msg.autostartTimer = reader.readInt32();
           break;
         }
         case 8: {
@@ -9175,7 +9147,7 @@ export const TypedGamesAddOnlineReplayPayload = {
   ): TypedGamesAddOnlineReplayPayload {
     return {
       eventId: 0,
-      platformId: 0,
+      platformId: protoAtoms.PlatformType._fromInt(0),
       contentType: 0,
       logTimestamp: 0,
       replayHash: "",
@@ -9194,8 +9166,8 @@ export const TypedGamesAddOnlineReplayPayload = {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
-    if (msg.platformId) {
-      writer.writeInt32(2, msg.platformId);
+    if (msg.platformId && protoAtoms.PlatformType._toInt(msg.platformId)) {
+      writer.writeEnum(2, protoAtoms.PlatformType._toInt(msg.platformId));
     }
     if (msg.contentType) {
       writer.writeInt32(3, msg.contentType);
@@ -9227,7 +9199,7 @@ export const TypedGamesAddOnlineReplayPayload = {
           break;
         }
         case 2: {
-          msg.platformId = reader.readInt32();
+          msg.platformId = protoAtoms.PlatformType._fromInt(reader.readEnum());
           break;
         }
         case 3: {
@@ -10612,7 +10584,6 @@ export const EventsGetLastGamesResponseJSON = {
   ): EventsGetLastGamesResponse {
     return {
       games: [],
-      players: [],
       totalGames: 0,
       ...msg,
     };
@@ -10627,9 +10598,6 @@ export const EventsGetLastGamesResponseJSON = {
     const json: Record<string, unknown> = {};
     if (msg.games?.length) {
       json["games"] = msg.games.map(protoAtoms.GameResultJSON._writeMessage);
-    }
-    if (msg.players?.length) {
-      json["players"] = msg.players.map(protoAtoms.PlayerJSON._writeMessage);
     }
     if (msg.totalGames) {
       json["totalGames"] = msg.totalGames;
@@ -10650,14 +10618,6 @@ export const EventsGetLastGamesResponseJSON = {
         const m = protoAtoms.GameResultJSON.initialize();
         protoAtoms.GameResultJSON._readMessage(m, item);
         msg.games.push(m);
-      }
-    }
-    const _players_ = json["players"];
-    if (_players_) {
-      for (const item of _players_) {
-        const m = protoAtoms.PlayerJSON.initialize();
-        protoAtoms.PlayerJSON._readMessage(m, item);
-        msg.players.push(m);
       }
     }
     const _totalGames_ = json["totalGames"] ?? json["total_games"];
@@ -10694,7 +10654,6 @@ export const EventsGetGameResponseJSON = {
   ): EventsGetGameResponse {
     return {
       game: protoAtoms.GameResultJSON.initialize(),
-      players: [],
       ...msg,
     };
   },
@@ -10712,9 +10671,6 @@ export const EventsGetGameResponseJSON = {
         json["game"] = _game_;
       }
     }
-    if (msg.players?.length) {
-      json["players"] = msg.players.map(protoAtoms.PlayerJSON._writeMessage);
-    }
     return json;
   },
 
@@ -10728,14 +10684,6 @@ export const EventsGetGameResponseJSON = {
     const _game_ = json["game"];
     if (_game_) {
       protoAtoms.GameResultJSON._readMessage(msg.game, _game_);
-    }
-    const _players_ = json["players"];
-    if (_players_) {
-      for (const item of _players_) {
-        const m = protoAtoms.PlayerJSON.initialize();
-        protoAtoms.PlayerJSON._readMessage(m, item);
-        msg.players.push(m);
-      }
     }
     return msg;
   },
@@ -11200,7 +11148,7 @@ export const EventsGetTimerStateResponseJSON = {
       timeRemaining: 0,
       waitingForTimer: false,
       haveAutostart: false,
-      autostartTimer: false,
+      autostartTimer: 0,
       hideSeatingAfter: 0,
       ...msg,
     };
@@ -11267,7 +11215,7 @@ export const EventsGetTimerStateResponseJSON = {
     }
     const _autostartTimer_ = json["autostartTimer"] ?? json["autostart_timer"];
     if (_autostartTimer_) {
-      msg.autostartTimer = _autostartTimer_;
+      msg.autostartTimer = protoscript.parseNumber(_autostartTimer_);
     }
     const _hideSeatingAfter_ =
       json["hideSeatingAfter"] ?? json["hide_seating_after"];
@@ -14752,7 +14700,7 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
   ): TypedGamesAddOnlineReplayPayload {
     return {
       eventId: 0,
-      platformId: 0,
+      platformId: protoAtoms.PlatformType._fromInt(0),
       contentType: 0,
       logTimestamp: 0,
       replayHash: "",
@@ -14771,7 +14719,7 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
     if (msg.eventId) {
       json["eventId"] = msg.eventId;
     }
-    if (msg.platformId) {
+    if (msg.platformId && protoAtoms.PlatformTypeJSON._toInt(msg.platformId)) {
       json["platformId"] = msg.platformId;
     }
     if (msg.contentType) {
@@ -14802,7 +14750,7 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
     }
     const _platformId_ = json["platformId"] ?? json["platform_id"];
     if (_platformId_) {
-      msg.platformId = protoscript.parseNumber(_platformId_);
+      msg.platformId = protoAtoms.PlatformType._fromInt(_platformId_);
     }
     const _contentType_ = json["contentType"] ?? json["content_type"];
     if (_contentType_) {
