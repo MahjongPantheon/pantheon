@@ -93,6 +93,7 @@ import { PlayerInSessionModel } from './models/PlayerInSessionModel.js';
 import { EventRegistrationModel } from './models/EventRegistrationModel.js';
 import { PenaltyModel } from './models/PenaltyModel.js';
 import { AchievementsModel } from './models/AchievementsModel.js';
+import { SeatingModel } from './models/SeatingModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
@@ -480,7 +481,8 @@ export const mimirServer: Mimir<Context> = {
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<EventsGetCurrentSeatingResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.getCurrentSeating(genericEventPayload.eventId);
   },
   MakeShuffledSeating: function (
     seatingMakeShuffledSeatingPayload: SeatingMakeShuffledSeatingPayload,

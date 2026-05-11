@@ -92,19 +92,6 @@ export class SessionModel extends Model {
     });
   }
 
-  async getPlayersSeatingInEvent(eventId: number) {
-    const query = this.repo.em
-      .getKnex()
-      .from('session')
-      .leftJoin('session_player', 'session_player.session_id', 'session.id')
-      .select('session_player.player_id', 'session_player.order')
-      .where('session.event_id', '=', eventId)
-      .orderBy('session.id', 'asc')
-      .orderBy('session_player.order', 'asc');
-
-    return this.repo.em.execute<{ player_id: number; order: number }[]>(query);
-  }
-
   async findByPlayerAndEvent(
     playerId: number,
     eventId: number,
