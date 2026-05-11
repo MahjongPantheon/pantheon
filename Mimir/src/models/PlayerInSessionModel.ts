@@ -161,7 +161,7 @@ export class PlayerInSessionModel extends Model {
     return { rounds: results.reverse() };
   }
 
-  async getPlayersSeatingInEvent(eventId: number, limit: number) {
+  async getPlayersSeatingInEvent(eventId: number, limit?: number) {
     const query = this.repo.em
       .getKnex()
       .from('session_player')
@@ -174,11 +174,10 @@ export class PlayerInSessionModel extends Model {
       )
       .where('session.event_id', '=', eventId)
       .orderBy('session.id', 'desc')
-      .orderBy('session_player.order', 'asc')
-      .limit(limit);
+      .orderBy('session_player.order', 'asc');
 
     return this.repo.em.execute<
       { player_id: number; order: number; session_id: number; table_index: number }[]
-    >(query);
+    >(limit ? query.limit(limit) : query);
   }
 }
