@@ -4,7 +4,7 @@ import { EventEntity } from 'src/entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PlayerInSessionModel } from './PlayerInSessionModel.js';
-import { make_seating_shuffled } from 'mahjong-seatings-rs-node';
+import { make_seating_shuffled, make_seating_swiss } from 'mahjong-seatings-rs-node';
 import {
   EventsGetCurrentSeatingResponse,
   SeatingMakeShuffledSeatingPayload,
@@ -13,6 +13,7 @@ import {
   GenericSuccessResponse,
   SessionStatus,
   TournamentGamesStatus,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb.js';
 import { SessionModel } from './SessionModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
@@ -78,6 +79,55 @@ export class SeatingModel extends Model {
     payload: SeatingMakeShuffledSeatingPayload
   ): Promise<GenericSuccessResponse> {
     const { eventId, groupsCount, seed /*windShuffleMode*/ } = payload;
+
+    const seatingGetter = (
+      playersMap: Record<number, number>,
+      _seed: number,
+      __windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
+    ) =>
+      make_seating_shuffled({
+        playersMap,
+        groupsCount,
+        randFactor: seed,
+        // windShuffleMode, // TODO
+        previousSeatings,
+      });
+
+    return this.makeSeating(eventId, seed, seatingGetter, payload.windShuffleMode);
+  }
+
+  async makeSwissSeating(
+    eventId: number,
+    seed: number,
+    _windShuffleMode: WindShuffleMode
+  ): Promise<GenericSuccessResponse> {
+    const seatingGetter = (
+      playersMap: Record<number, number>,
+      _seed: number,
+      __windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
+    ) =>
+      make_seating_swiss({
+        playersMap,
+        randFactor: seed,
+        // windShuffleMode, // TODO
+        previousSeatings,
+      });
+    return this.makeSeating(eventId, seed, seatingGetter, _windShuffleMode);
+  }
+
+  async makeSeating(
+    eventId: number,
+    seed: number,
+    seatingGetter: (
+      playersMap: Record<number, number>,
+      seed: number,
+      windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
+    ) => number[][],
+    windShuffleMode: WindShuffleMode
+  ): Promise<GenericSuccessResponse> {
     await this._ensureActionAllowed(eventId);
 
     const sessionModel = this.getModel(SessionModel);
@@ -101,13 +151,7 @@ export class SeatingModel extends Model {
     const regs = await regModel.findByEventId([event.id]);
 
     const [playersMap, previousSeatings] = await this._getData(event, regs);
-    const seating = make_seating_shuffled({
-      playersMap,
-      groupsCount,
-      randFactor: seed,
-      // windShuffleMode, // TODO
-      previousSeatings,
-    });
+    const seating = seatingGetter(playersMap, seed, windShuffleMode, previousSeatings);
 
     const chunks = [];
     for (let i = 0; i < seating.length; i += 4) {
