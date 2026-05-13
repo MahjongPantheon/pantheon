@@ -4,7 +4,11 @@ import { EventEntity } from 'src/entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PlayerInSessionModel } from './PlayerInSessionModel.js';
-import { make_seating_shuffled, make_seating_swiss } from 'mahjong-seatings-rs-node';
+import {
+  make_seating_shuffled,
+  make_seating_swiss,
+  make_seating_interval,
+} from 'mahjong-seatings-rs-node';
 import {
   EventsGetCurrentSeatingResponse,
   SeatingMakeShuffledSeatingPayload,
@@ -113,6 +117,26 @@ export class SeatingModel extends Model {
         randFactor: seed,
         // windShuffleMode, // TODO
         previousSeatings,
+      });
+    return this.makeSeating(eventId, seed, seatingGetter, _windShuffleMode);
+  }
+
+  async makeIntervalSeating(
+    eventId: number,
+    step: number,
+    seed: number,
+    _windShuffleMode: WindShuffleMode
+  ): Promise<GenericSuccessResponse> {
+    const seatingGetter = (
+      playersMap: Record<number, number>,
+      _seed: number,
+      __windShuffleMode: WindShuffleMode
+    ) =>
+      make_seating_interval({
+        playersMap,
+        randFactor: seed,
+        step,
+        // windShuffleMode, // TODO
       });
     return this.makeSeating(eventId, seed, seatingGetter, _windShuffleMode);
   }
