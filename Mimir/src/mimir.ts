@@ -504,23 +504,17 @@ export const mimirServer: Mimir<Context> = {
       WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM // TODO
     );
   },
-  ResetSeating: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
-  },
-  GenerateSwissSeating: function (
-    seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
-    context: Context
-  ): Promise<SeatingGenerateSwissSeatingResponse> {
-    throw new Error('Function not implemented.');
-  },
   MakeIntervalSeating: function (
     seatingMakeIntervalSeatingPayload: SeatingMakeIntervalSeatingPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.makeIntervalSeating(
+      seatingMakeIntervalSeatingPayload.eventId,
+      seatingMakeIntervalSeatingPayload.step,
+      randomInt(999999),
+      seatingMakeIntervalSeatingPayload.windShuffleMode
+    );
   },
   MakePrescriptedSeating: function (
     seatingMakePrescriptedSeatingPayload: SeatingMakePrescriptedSeatingPayload,
@@ -544,6 +538,18 @@ export const mimirServer: Mimir<Context> = {
     eventsUpdatePrescriptedEventConfigPayload: EventsUpdatePrescriptedEventConfigPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
+    throw new Error('Function not implemented.');
+  },
+  ResetSeating: function (
+    genericEventPayload: GenericEventPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> {
+    throw new Error('Function not implemented.');
+  },
+  GenerateSwissSeating: function (
+    seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
+    context: Context
+  ): Promise<SeatingGenerateSwissSeatingResponse> {
     throw new Error('Function not implemented.');
   },
   InitStartingTimer: function (
