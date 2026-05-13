@@ -8,6 +8,7 @@ import {
   make_seating_shuffled,
   make_seating_swiss,
   make_seating_interval,
+  WindShuffle as MahjongWindShuffle,
 } from 'mahjong-seatings-rs-node';
 import {
   EventsGetCurrentSeatingResponse,
@@ -22,6 +23,13 @@ import {
 import { SessionModel } from './SessionModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PenaltyModel } from './PenaltyModel.js';
+
+// Should match the WindShuffle enum in mahjong-seatings-rs-node package
+const enum WindShuffle {
+  Random = 0,
+  Balanced = 1,
+  Prescripted = 2,
+}
 
 export class SeatingModel extends Model {
   public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
@@ -82,63 +90,65 @@ export class SeatingModel extends Model {
   async makeShuffledSeating(
     payload: SeatingMakeShuffledSeatingPayload
   ): Promise<GenericSuccessResponse> {
-    const { eventId, groupsCount, seed /*windShuffleMode*/ } = payload;
+    const { eventId, groupsCount, seed, windShuffleMode } = payload;
 
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
-      __windShuffleMode: WindShuffleMode,
+      _windShuffleMode: WindShuffleMode,
       previousSeatings: number[][]
     ) =>
       make_seating_shuffled({
         playersMap,
         groupsCount,
-        randFactor: seed,
-        // windShuffleMode, // TODO
+        randFactor: _seed,
+        windShuffle: this._getWindShuffleMode(_windShuffleMode),
         previousSeatings,
       });
 
-    return this.makeSeating(eventId, seed, seatingGetter, payload.windShuffleMode);
+    return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
   }
 
   async makeSwissSeating(
     eventId: number,
     seed: number,
-    _windShuffleMode: WindShuffleMode
+    windShuffleMode: WindShuffleMode
   ): Promise<GenericSuccessResponse> {
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
-      __windShuffleMode: WindShuffleMode,
+      _windShuffleMode: WindShuffleMode,
       previousSeatings: number[][]
     ) =>
       make_seating_swiss({
         playersMap,
-        randFactor: seed,
-        // windShuffleMode, // TODO
+        randFactor: _seed,
+        windShuffle: this._getWindShuffleMode(_windShuffleMode),
         previousSeatings,
       });
-    return this.makeSeating(eventId, seed, seatingGetter, _windShuffleMode);
+    return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
   }
 
   async makeIntervalSeating(
     eventId: number,
     step: number,
     seed: number,
-    _windShuffleMode: WindShuffleMode
+    windShuffleMode: WindShuffleMode
   ): Promise<GenericSuccessResponse> {
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
-      __windShuffleMode: WindShuffleMode
+      _windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
     ) =>
       make_seating_interval({
         playersMap,
         randFactor: seed,
         step,
-        // windShuffleMode, // TODO
+        windShuffle: this._getWindShuffleMode(_windShuffleMode),
+        previousSeatings,
       });
-    return this.makeSeating(eventId, seed, seatingGetter, _windShuffleMode);
+    return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
   }
 
   async makeSeating(
@@ -286,5 +296,19 @@ export class SeatingModel extends Model {
     }
 
     return [playersMap, seatingChunks];
+  }
+
+  private _getWindShuffleMode(windShuffleMode: WindShuffleMode): MahjongWindShuffle {
+    switch (windShuffleMode) {
+      case WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM:
+        return WindShuffle.Random as unknown as MahjongWindShuffle;
+      case WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED:
+        return WindShuffle.Balanced as unknown as MahjongWindShuffle;
+      case WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED:
+        return WindShuffle.Prescripted as unknown as MahjongWindShuffle;
+      case WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED:
+      default:
+        return WindShuffle.Random as unknown as MahjongWindShuffle;
+    }
   }
 }
