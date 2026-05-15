@@ -72,8 +72,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       mahjong-seatings-rs-node:
-        specifier: 2.0.1
-        version: 2.0.1
+        specifier: 2.1.0
+        version: 2.1.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -2660,8 +2660,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  mahjong-seatings-rs-node@2.0.1:
-    resolution: {integrity: sha512-+sljlcEpS3iNRqIsPo93w3rEfVdQvwHfDfeuH3JQdHObamCnjZdHfc2411hxBq+ZZxiclGyvrcwFN8r2n/6AkQ==}
+  mahjong-seatings-rs-node@2.1.0:
+    resolution: {integrity: sha512-4d5eDtktFofYGVw4g/6kDJ/YeO7NPuIeoxdYinHN1kvaSCK5hXw0LNoumohYOM52rycSFMY1QpfPpknDZvy+GA==}
 
   make-dir@4.0.0:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
@@ -6521,7 +6521,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  mahjong-seatings-rs-node@2.0.1: {}
+  mahjong-seatings-rs-node@2.1.0: {}
 
   make-dir@4.0.0:
     dependencies:

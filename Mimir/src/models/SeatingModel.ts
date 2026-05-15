@@ -12,7 +12,9 @@ import {
 } from 'mahjong-seatings-rs-node';
 import {
   EventsGetCurrentSeatingResponse,
+  SeatingMakeIntervalSeatingPayload,
   SeatingMakeShuffledSeatingPayload,
+  SeatingMakeSwissSeatingPayload,
 } from 'tsclients/proto/mimir.pb.js';
 import {
   GenericSuccessResponse,
@@ -23,13 +25,7 @@ import {
 import { SessionModel } from './SessionModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PenaltyModel } from './PenaltyModel.js';
-
-// Should match the WindShuffle enum in mahjong-seatings-rs-node package
-const enum WindShuffle {
-  Random = 0,
-  Balanced = 1,
-  Prescripted = 2,
-}
+import { randomInt } from 'node:crypto';
 
 export class SeatingModel extends Model {
   public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
@@ -109,11 +105,9 @@ export class SeatingModel extends Model {
     return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
   }
 
-  async makeSwissSeating(
-    eventId: number,
-    seed: number,
-    windShuffleMode: WindShuffleMode
-  ): Promise<GenericSuccessResponse> {
+  async makeSwissSeating(payload: SeatingMakeSwissSeatingPayload): Promise<GenericSuccessResponse> {
+    const { eventId, windShuffleMode } = payload;
+    const seed = randomInt(999999);
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
@@ -130,11 +124,10 @@ export class SeatingModel extends Model {
   }
 
   async makeIntervalSeating(
-    eventId: number,
-    step: number,
-    seed: number,
-    windShuffleMode: WindShuffleMode
+    payload: SeatingMakeIntervalSeatingPayload
   ): Promise<GenericSuccessResponse> {
+    const { eventId, step, windShuffleMode } = payload;
+    const seed = randomInt(999999);
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
@@ -301,14 +294,14 @@ export class SeatingModel extends Model {
   private _getWindShuffleMode(windShuffleMode: WindShuffleMode): MahjongWindShuffle {
     switch (windShuffleMode) {
       case WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM:
-        return WindShuffle.Random as unknown as MahjongWindShuffle;
+        return 'random';
       case WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED:
-        return WindShuffle.Balanced as unknown as MahjongWindShuffle;
+        return 'balanced';
       case WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED:
-        return WindShuffle.Prescripted as unknown as MahjongWindShuffle;
+        return 'prescripted';
       case WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED:
       default:
-        return WindShuffle.Random as unknown as MahjongWindShuffle;
+        return 'random';
     }
   }
 }
