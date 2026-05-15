@@ -132,14 +132,18 @@ export class EventRegistrationModel extends Model {
     return result;
   }
 
-  async findLocalIdsMapByEvent(eventId: number) {
+  async findLocalIdsMapByEvent(eventId: number, localToReal = false) {
     const items = await this.findByEventId([eventId]);
     const result = new Map<number, number>();
     for (const item of items) {
       if (!item.localId) {
         continue;
       }
-      result.set(item.playerId, item.localId);
+      if (localToReal) {
+        result.set(item.localId, item.playerId);
+      } else {
+        result.set(item.playerId, item.localId);
+      }
     }
     return result;
   }

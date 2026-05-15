@@ -8,11 +8,13 @@ import {
   make_seating_shuffled,
   make_seating_swiss,
   make_seating_interval,
+  update_wind_placing_only,
   WindShuffle as MahjongWindShuffle,
 } from 'mahjong-seatings-rs-node';
 import {
   EventsGetCurrentSeatingResponse,
   SeatingMakeIntervalSeatingPayload,
+  SeatingMakePrescriptedSeatingPayload,
   SeatingMakeShuffledSeatingPayload,
   SeatingMakeSwissSeatingPayload,
 } from 'tsclients/proto/mimir.pb.js';
@@ -26,6 +28,7 @@ import { SessionModel } from './SessionModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PenaltyModel } from './PenaltyModel.js';
 import { randomInt } from 'node:crypto';
+import { EventPrescriptEntity } from 'src/entities/EventPrescript.entity.js';
 
 export class SeatingModel extends Model {
   public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
@@ -144,6 +147,41 @@ export class SeatingModel extends Model {
     return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
   }
 
+  async makePrescriptedSeating(
+    payload: SeatingMakePrescriptedSeatingPayload
+  ): Promise<GenericSuccessResponse> {
+    const { eventId, windShuffleMode } = payload;
+    const seed = randomInt(999999);
+    const prescriptEntity = await this.repo.em.findOne(EventPrescriptEntity, {
+      event: this.repo.db.em.getReference(EventEntity, eventId),
+    });
+    if (!prescriptEntity) {
+      throw new Error('No prescript entity found for event');
+    }
+    const seating = await this._getNextPrescriptedSeating(
+      eventId,
+      prescriptEntity.script,
+      prescriptEntity.nextGame
+    );
+    const seatingGetter = (
+      _playersMap: Record<number, number>, // ignored in this case
+      _seed: number,
+      _windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
+    ) => {
+      return update_wind_placing_only({
+        playersMap: seating,
+        previousSeatings,
+        randFactor: _seed,
+        windShuffle: this._getWindShuffleMode(_windShuffleMode),
+      });
+    };
+    const result = await this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
+    prescriptEntity.nextGame++;
+    await this.repo.em.persistAndFlush(prescriptEntity);
+    return result;
+  }
+
   async makeSeating(
     eventId: number,
     seed: number,
@@ -210,6 +248,24 @@ export class SeatingModel extends Model {
     await Promise.all(promises);
 
     return { success: true };
+  }
+
+  private async _getNextPrescriptedSeating(
+    eventId: number,
+    script: string,
+    nextGameIndex: number
+  ): Promise<Record<number, number>> {
+    const seating = (this._unpackScript(script)[nextGameIndex] ?? []).flat(2);
+    // replace local ids with real ids
+    const regModel = this.getModel(EventRegistrationModel);
+    const localIdMap = await regModel.findLocalIdsMapByEvent(eventId, true);
+    return seating.map((localId) => localIdMap.get(localId)!);
+  }
+
+  private _unpackScript(script: string): number[][][] {
+    return script
+      .split('\n\n')
+      .map((table) => table.split('\n').map((row) => row.split('-').map(Number)));
   }
 
   private async _ensureActionAllowed(eventId: number): Promise<void> {
