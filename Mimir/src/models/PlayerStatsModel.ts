@@ -17,7 +17,7 @@ import { PersonEx, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { PointsCalc, RiichiBetAssignment } from 'src/helpers/PointsCalc.js';
 import { HandEntity } from 'src/entities/Hand.entity.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 
 type OutcomeStats = {
   ron: number;

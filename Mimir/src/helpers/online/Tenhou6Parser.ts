@@ -24,7 +24,7 @@ import { PersonEx, PlatformType, Round } from 'tsclients/proto/atoms.pb.js';
 import { Tenhou6Model } from './Tenhou6Model.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { validateAndCreateFromOnlineData } from '../roundValidation.js';
 import { Model } from 'src/models/Model.js';
 import { EventRegistrationModel } from 'src/models/EventRegistrationModel.js';

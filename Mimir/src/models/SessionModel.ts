@@ -18,7 +18,7 @@ import { SessionResultsModel } from './SessionResultsModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { PlayerModel } from './PlayerModel.js';
 import { formatGameResult } from 'src/helpers/formatters.js';
 import { RoundModel } from './RoundModel.js';

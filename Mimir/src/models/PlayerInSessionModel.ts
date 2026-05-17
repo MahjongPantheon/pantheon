@@ -9,7 +9,7 @@ import { GenericSessionPayload } from 'tsclients/proto/atoms.pb.js';
 import { SessionModel } from './SessionModel.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
 import { RoundModel } from './RoundModel.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { formatRound } from 'src/helpers/formatters.js';
 
 export class PlayerInSessionModel extends Model {

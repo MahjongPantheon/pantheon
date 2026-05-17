@@ -3,7 +3,7 @@ import { fromTenhou } from '../yaku.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { EventRegistrationModel } from 'src/models/EventRegistrationModel.js';
 import { Model } from 'src/models/Model.js';
 import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
