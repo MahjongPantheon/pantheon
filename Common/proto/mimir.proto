@@ -73,7 +73,6 @@ service Mimir {
   rpc GenerateSwissSeating(SeatingGenerateSwissSeatingPayload) returns (SeatingGenerateSwissSeatingResponse);
   rpc MakeIntervalSeating(SeatingMakeIntervalSeatingPayload) returns (GenericSuccessResponse);
   rpc MakePrescriptedSeating(SeatingMakePrescriptedSeatingPayload) returns (GenericSuccessResponse);
-  rpc GetNextPrescriptedSeating(GenericEventPayload) returns (SeatingGetNextPrescriptedSeatingResponse);
   rpc GetPrescriptedEventConfig(GenericEventPayload) returns (EventsGetPrescriptedEventConfigResponse);
   rpc UpdatePrescriptedEventConfig(EventsUpdatePrescriptedEventConfigPayload) returns (GenericSuccessResponse);
   rpc InitStartingTimer(GenericEventPayload) returns (GenericSuccessResponse);
@@ -430,10 +429,6 @@ message SeatingMakeIntervalSeatingPayload {
 message SeatingMakePrescriptedSeatingPayload {
   int32 event_id = 1;
   optional WindShuffleMode wind_shuffle_mode = 3; // instead of 'bool randomize_at_tables'
-}
-
-message SeatingGetNextPrescriptedSeatingResponse {
-  repeated PrescriptedTable tables = 1;
 }
 
 message EventsGetPrescriptedEventConfigResponse {

@@ -367,10 +367,6 @@ export interface SeatingMakePrescriptedSeatingPayload {
   windShuffleMode?: protoAtoms.WindShuffleMode | null | undefined;
 }
 
-export interface SeatingGetNextPrescriptedSeatingResponse {
-  tables: protoAtoms.PrescriptedTable[];
-}
-
 export interface EventsGetPrescriptedEventConfigResponse {
   eventId: number;
   nextSessionIndex: number;
@@ -1098,18 +1094,6 @@ export async function MakePrescriptedSeating(
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
-export async function GetNextPrescriptedSeating(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<SeatingGetNextPrescriptedSeatingResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/GetNextPrescriptedSeating",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
-  );
-  return SeatingGetNextPrescriptedSeatingResponse.decode(response);
 }
 
 export async function GetPrescriptedEventConfig(
@@ -1988,18 +1972,6 @@ export async function MakePrescriptedSeatingJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
-export async function GetNextPrescriptedSeatingJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<SeatingGetNextPrescriptedSeatingResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/GetNextPrescriptedSeating",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
-  );
-  return SeatingGetNextPrescriptedSeatingResponseJSON.decode(response);
-}
-
 export async function GetPrescriptedEventConfigJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
   config?: ClientConfiguration,
@@ -2493,12 +2465,6 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
-  GetNextPrescriptedSeating: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
-  ) =>
-    | Promise<SeatingGetNextPrescriptedSeatingResponse>
-    | SeatingGetNextPrescriptedSeatingResponse;
   GetPrescriptedEventConfig: (
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
@@ -3241,18 +3207,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
-        },
-      },
-      GetNextPrescriptedSeating: {
-        name: "GetNextPrescriptedSeating",
-        handler: service.GetNextPrescriptedSeating,
-        input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
-        },
-        output: {
-          protobuf: SeatingGetNextPrescriptedSeatingResponse,
-          json: SeatingGetNextPrescriptedSeatingResponseJSON,
         },
       },
       GetPrescriptedEventConfig: {
@@ -8694,86 +8648,6 @@ export const SeatingMakePrescriptedSeatingPayload = {
           msg.windShuffleMode = protoAtoms.WindShuffleMode._fromInt(
             reader.readEnum(),
           );
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const SeatingGetNextPrescriptedSeatingResponse = {
-  /**
-   * Serializes SeatingGetNextPrescriptedSeatingResponse to protobuf.
-   */
-  encode: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-  ): Uint8Array {
-    return SeatingGetNextPrescriptedSeatingResponse._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes SeatingGetNextPrescriptedSeatingResponse from protobuf.
-   */
-  decode: function (
-    bytes: ByteSource,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    return SeatingGetNextPrescriptedSeatingResponse._readMessage(
-      SeatingGetNextPrescriptedSeatingResponse.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes SeatingGetNextPrescriptedSeatingResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<SeatingGetNextPrescriptedSeatingResponse>,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    return {
-      tables: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.tables?.length) {
-      writer.writeRepeatedMessage(
-        1,
-        msg.tables as any,
-        protoAtoms.PrescriptedTable._writeMessage,
-      );
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: SeatingGetNextPrescriptedSeatingResponse,
-    reader: protoscript.BinaryReader,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          const m = protoAtoms.PrescriptedTable.initialize();
-          reader.readMessage(m, protoAtoms.PrescriptedTable._readMessage);
-          msg.tables.push(m);
           break;
         }
         default: {
@@ -14313,74 +14187,6 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
     if (_windShuffleMode_) {
       msg.windShuffleMode =
         protoAtoms.WindShuffleMode._fromInt(_windShuffleMode_);
-    }
-    return msg;
-  },
-};
-
-export const SeatingGetNextPrescriptedSeatingResponseJSON = {
-  /**
-   * Serializes SeatingGetNextPrescriptedSeatingResponse to JSON.
-   */
-  encode: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-  ): string {
-    return JSON.stringify(
-      SeatingGetNextPrescriptedSeatingResponseJSON._writeMessage(msg),
-    );
-  },
-
-  /**
-   * Deserializes SeatingGetNextPrescriptedSeatingResponse from JSON.
-   */
-  decode: function (json: string): SeatingGetNextPrescriptedSeatingResponse {
-    return SeatingGetNextPrescriptedSeatingResponseJSON._readMessage(
-      SeatingGetNextPrescriptedSeatingResponseJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes SeatingGetNextPrescriptedSeatingResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<SeatingGetNextPrescriptedSeatingResponse>,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    return {
-      tables: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.tables?.length) {
-      json["tables"] = msg.tables.map(
-        protoAtoms.PrescriptedTableJSON._writeMessage,
-      );
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: SeatingGetNextPrescriptedSeatingResponse,
-    json: any,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    const _tables_ = json["tables"];
-    if (_tables_) {
-      for (const item of _tables_) {
-        const m = protoAtoms.PrescriptedTableJSON.initialize();
-        protoAtoms.PrescriptedTableJSON._readMessage(m, item);
-        msg.tables.push(m);
-      }
     }
     return msg;
   },
