@@ -31,8 +31,6 @@ const makeEvent = (em: EntityManager) => {
   event.isPrescripted = 0;
   event.minGamesCount = 0;
   event.finished = 0;
-  event.nextGameStartTime = new Date().getTime();
-  event.timeToStart = Date.now();
   event.isListed = 1;
   event.allowViewOtherTables = 1;
   event.ruleset = RulesetEntity.createRuleset('tenhounet');
@@ -69,7 +67,6 @@ const prepareTestEntities = async () => {
   await repo.em.flush();
   return [repo, event, regs] as const;
 };
-
 
 /**
  * Replay parser integration test suite

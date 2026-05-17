@@ -202,9 +202,6 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           lastUpdateSecondsRemaining: 0,
           lastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
           waiting: false,
-          autostartSecondsRemaining: 0,
-          autostartLastUpdateSecondsRemaining: 0,
-          autostartLastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
         },
         loading: {
           ...state.loading,
