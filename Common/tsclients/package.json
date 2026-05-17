@@ -4,6 +4,9 @@
   "description": "Twirpscript compiled files",
   "license": "GPLv3",
   "type": "module",
+  "scripts": {
+    "build": "esbuild proto/*.ts --outdir=proto/"
+  },
   "dependencies": {
     "esbuild": "^0.25.8",
     "twirpscript": "^0.0.72",

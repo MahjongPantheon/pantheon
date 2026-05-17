@@ -21,6 +21,6 @@
     "experimentalDecorators": true,
     "types": [],
   },
-  "include": ["build.ts", "src/**/*", "cron/**/*"],
+  "include": ["build.ts", "src/**/*", "cron/**/*", "node_modules/tsclients/**/*"],
   "exclude": ["node_modules/**/*", "dist/**/*"],
 }
