@@ -162,9 +162,7 @@ export function _checkOneOf<T>(data: any, key: string, values: T[]): void {
 }
 
 export function _checkNumericArray(data: any, key: string, values: number[]): void {
-  const redundantVals = data[key]?.filter(
-    (val: number) => !values.includes(val)
-  ) ?? [];
+  const redundantVals = data[key]?.filter((val: number) => !values.includes(val)) ?? [];
 
   if (redundantVals.length > 0) {
     throw new Error(
@@ -219,7 +217,10 @@ export function validateAndCreateFromOnlineData(
   } else if (round.multiron) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_MULTIRON;
     roundEntity.riichi = round.multiron.riichiBets;
-    roundEntity.hands = round.multiron.wins.map((win) => ({...HandEntity.fromMessage(win, roundEntity), loserId: round.multiron.loserId}));
+    roundEntity.hands = round.multiron.wins.map((win) => ({
+      ...HandEntity.fromMessage(win, roundEntity),
+      loserId: round.multiron?.loserId,
+    }));
   }
 
   return roundEntity;
