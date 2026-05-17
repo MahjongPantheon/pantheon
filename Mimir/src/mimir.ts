@@ -73,7 +73,6 @@ import {
   PlayersGetPlayerStatsResponse,
   SeatingGenerateSwissSeatingPayload,
   SeatingGenerateSwissSeatingResponse,
-  SeatingGetNextPrescriptedSeatingResponse,
   SeatingMakeIntervalSeatingPayload,
   SeatingMakePrescriptedSeatingPayload,
   SeatingMakeShuffledSeatingPayload,
@@ -513,23 +512,19 @@ export const mimirServer: Mimir<Context> = {
     const seatingModel = Model.getModel(context.repository, SeatingModel);
     return seatingModel.makePrescriptedSeating(seatingMakePrescriptedSeatingPayload);
   },
-  GetNextPrescriptedSeating: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<SeatingGetNextPrescriptedSeatingResponse> {
-    throw new Error('Function not implemented.');
-  },
   GetPrescriptedEventConfig: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<EventsGetPrescriptedEventConfigResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.getPrescriptedConfig(genericEventPayload.eventId);
   },
   UpdatePrescriptedEventConfig: function (
     eventsUpdatePrescriptedEventConfigPayload: EventsUpdatePrescriptedEventConfigPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.updatePrescriptedConfig(eventsUpdatePrescriptedEventConfigPayload);
   },
   ResetSeating: function (
     genericEventPayload: GenericEventPayload,
