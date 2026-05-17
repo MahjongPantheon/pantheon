@@ -530,7 +530,8 @@ export const mimirServer: Mimir<Context> = {
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.resetSeating(genericEventPayload.eventId);
   },
   GenerateSwissSeating: function (
     seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
