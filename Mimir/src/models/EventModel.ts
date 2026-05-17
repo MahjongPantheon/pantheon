@@ -11,11 +11,13 @@ import {
   EventsGetEventsResponse,
   EventsGetLastGamesPayload,
   EventsGetLastGamesResponse,
+  EventsGetPrescriptedEventConfigResponse,
   EventsGetRatingTableResponse,
   EventsGetTablesStatePayload,
   EventsGetTablesStateResponse,
   EventsGetTimerStateResponse,
   EventsUpdateEventPayload,
+  EventsUpdatePrescriptedEventConfigPayload,
   PlayersGetCurrentSessionsPayload,
   PlayersGetMyEventsResponse,
 } from 'tsclients/proto/mimir.pb.js';
@@ -47,6 +49,8 @@ import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
 import { SessionState } from 'src/aggregates/SessionState.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
+import { EventPrescriptEntity } from 'src/entities/EventPrescript.entity.js';
+import { checkForErrors, unpackScript } from './EventPrescriptModel.js';
 
 const ID_PLACEHOLDER = '##ID##';
 
@@ -1078,6 +1082,59 @@ export class EventModel extends Model {
 
     event.lastTimer = Date.now();
     await this.repo.db.em.persistAndFlush(event);
+    return { success: true };
+  }
+
+  async getPrescriptedConfig(eventId: number): Promise<EventsGetPrescriptedEventConfigResponse> {
+    const prescript = await this.repo.db.em.findOne(EventPrescriptEntity, { id: eventId });
+    if (!prescript) {
+      throw new Error(`Event ${eventId} not found`);
+    }
+
+    if (!prescript.script) {
+      return {
+        eventId,
+        nextSessionIndex: 1,
+        prescript: '',
+        errors: ['No predefined seating yet'],
+      };
+    }
+
+    const regModel = this.getModel(EventRegistrationModel);
+    const regData = await regModel.findLocalIdsMapByEvent(eventId);
+
+    return {
+      eventId,
+      nextSessionIndex: prescript.nextGame + 1,
+      prescript: prescript.script,
+      errors: checkForErrors(unpackScript(prescript.script), regData),
+    };
+  }
+
+  async updatePrescriptedConfig(
+    payload: EventsUpdatePrescriptedEventConfigPayload
+  ): Promise<GenericSuccessResponse> {
+    const event = await this.repo.db.em.findOne(EventEntity, { id: payload.eventId });
+    if (!event) {
+      throw new Error(`Event ${payload.eventId} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(payload.eventId))) {
+      throw new Error(
+        "You don't have the necessary permissions to update the prescripted event config"
+      );
+    }
+
+    const prescript =
+      (await this.repo.db.em.findOne(EventPrescriptEntity, { id: payload.eventId })) ??
+      new EventPrescriptEntity();
+
+    prescript.event = event;
+    prescript.script = payload.prescript;
+    prescript.nextGame = payload.nextSessionIndex;
+    await this.repo.db.em.persistAndFlush(prescript);
     return { success: true };
   }
 }

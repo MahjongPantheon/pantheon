@@ -29,6 +29,7 @@ import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PenaltyModel } from './PenaltyModel.js';
 import { randomInt } from 'node:crypto';
 import { EventPrescriptEntity } from 'src/entities/EventPrescript.entity.js';
+import { unpackScript } from './EventPrescriptModel.js';
 
 export class SeatingModel extends Model {
   public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
@@ -255,17 +256,11 @@ export class SeatingModel extends Model {
     script: string,
     nextGameIndex: number
   ): Promise<Record<number, number>> {
-    const seating = (this._unpackScript(script)[nextGameIndex] ?? []).flat(2);
+    const seating = (unpackScript(script)[nextGameIndex] ?? []).flat(2);
     // replace local ids with real ids
     const regModel = this.getModel(EventRegistrationModel);
     const localIdMap = await regModel.findLocalIdsMapByEvent(eventId, true);
     return seating.map((localId) => localIdMap.get(localId)!);
-  }
-
-  private _unpackScript(script: string): number[][][] {
-    return script
-      .split('\n\n')
-      .map((table) => table.split('\n').map((row) => row.split('-').map(Number)));
   }
 
   private async _ensureActionAllowed(eventId: number): Promise<void> {
