@@ -551,31 +551,36 @@ export const mimirServer: Mimir<Context> = {
     genericSessionPayload: GenericSessionPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.forceFinishGame(genericSessionPayload.sessionHash);
   },
   NotifyPlayersSessionStartsSoon: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const playerModel = Model.getModel(context.repository, PlayerModel);
+    return playerModel.notifyGameStartingSoon(genericEventPayload.eventId);
   },
   CallReferee: function (
     callRefereePayload: CallRefereePayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const playerModel = Model.getModel(context.repository, PlayerModel);
+    return playerModel.callReferee(callRefereePayload.eventId, callRefereePayload.tableIndex);
   },
   RecalcAchievements: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.recalcAchievements(genericEventPayload.eventId);
   },
   RecalcPlayerStats: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.recalcPlayerStats(genericEventPayload.eventId);
   },
   ListPenalties: function (
     genericEventPayload: GenericEventPayload,

@@ -51,6 +51,8 @@ import { SessionState } from 'src/aggregates/SessionState.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { EventPrescriptEntity } from 'src/entities/EventPrescript.entity.js';
 import { checkForErrors, unpackScript } from './EventPrescriptModel.js';
+import { AchievementsModel } from './AchievementsModel.js';
+import { PlayerStatsModel } from './PlayerStatsModel.js';
 
 const ID_PLACEHOLDER = '##ID##';
 
@@ -1126,6 +1128,40 @@ export class EventModel extends Model {
     prescript.script = payload.prescript;
     prescript.nextGame = payload.nextSessionIndex;
     await this.repo.db.em.persistAndFlush(prescript);
+    return { success: true };
+  }
+
+  async recalcAchievements(eventId: number): Promise<GenericSuccessResponse> {
+    const event = await this.repo.db.em.findOne(EventEntity, { id: eventId });
+    if (!event) {
+      throw new Error(`Event ${eventId} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error("You don't have the necessary permissions to rebuild achievements");
+    }
+
+    const achievementsModel = this.getModel(AchievementsModel);
+    await achievementsModel.scheduleRebuildAchievements(eventId);
+    return { success: true };
+  }
+
+  async recalcPlayerStats(eventId: number): Promise<GenericSuccessResponse> {
+    const event = await this.repo.db.em.findOne(EventEntity, { id: eventId });
+    if (!event) {
+      throw new Error(`Event ${eventId} not found`);
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+      throw new Error("You don't have the necessary permissions to rebuild player stats");
+    }
+
+    const playerStatsModel = this.getModel(PlayerStatsModel);
+    await playerStatsModel.scheduleRebuildPlayersStats(eventId);
     return { success: true };
   }
 }
