@@ -544,7 +544,8 @@ export const mimirServer: Mimir<Context> = {
     clearStatCachePayload: ClearStatCachePayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const statsModel = Model.getModel(context.repository, PlayerStatsModel);
+    return statsModel.invalidatePlayerStats(clearStatCachePayload.playerId);
   },
   ForceFinishGame: function (
     genericSessionPayload: GenericSessionPayload,

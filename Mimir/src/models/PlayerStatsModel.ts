@@ -62,6 +62,20 @@ export class PlayerStatsModel extends Model {
     await this.repo.em.persistAndFlush(job);
   }
 
+  async invalidatePlayerStats(playerId: number) {
+    const stats = await this.repo.em.findAll(PlayerStatsEntity, {
+      where: {
+        playerId,
+      },
+    });
+    const promises = [];
+    for (const stat of stats) {
+      promises.push(this.scheduleRebuildSinglePlayerStats(playerId, stat.event.id));
+    }
+    await Promise.all(promises);
+    return { success: true };
+  }
+
   async getPlayerStats(
     input: PlayersGetPlayerStatsPayload
   ): Promise<PlayersGetPlayerStatsResponse> {
