@@ -1,12 +1,18 @@
 import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
 import { Model } from './Model.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
-import { GamesAddPenaltyGamePayload, GamesAddPenaltyPayload } from 'tsclients/proto/mimir.pb.js';
+import {
+  CancelPenaltyPayload,
+  ChomboResponse,
+  GamesAddPenaltyGamePayload,
+  GamesAddPenaltyPayload,
+  PenaltiesResponse,
+} from 'tsclients/proto/mimir.pb.js';
 import { PlayerModel } from './PlayerModel.js';
 import { EventModel } from './EventModel.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
 import { SessionModel } from './SessionModel.js';
-import { SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import { GenericSuccessResponse, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { SessionState } from 'src/aggregates/SessionState.js';
 import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
@@ -14,6 +20,7 @@ import { sha1 } from 'src/helpers/crypto.js';
 import { randomInt } from 'crypto';
 import moment from 'moment';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
+import { RoundModel } from './RoundModel.js';
 
 export class PenaltyModel extends Model {
   async findBySession(sessionId: number[]) {
@@ -27,6 +34,15 @@ export class PenaltyModel extends Model {
       where: {
         event: this.repo.em.getReference(EventEntity, eventId),
         cancelled: onlyActive ? 0 : undefined,
+      },
+    });
+  }
+
+  async findByEventAndPlayer(eventId: number, playerId: number) {
+    return this.repo.em.findAll(PenaltyEntity, {
+      where: {
+        event: this.repo.em.getReference(EventEntity, eventId),
+        playerId,
       },
     });
   }
@@ -161,5 +177,130 @@ export class PenaltyModel extends Model {
     await playerStatsModel.scheduleRebuildPlayersStats(payload.eventId);
 
     return { sessionHash: session.representationalHash! };
+  }
+
+  async listPenalties(eventId: number): Promise<PenaltiesResponse> {
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+    ) {
+      throw new Error("You don't have the necessary permissions to list penalties");
+    }
+
+    const penalties = await this.findByEventId([eventId]);
+    const referees = await playerModel.findById(penalties.map((p) => p.assignedBy));
+    return {
+      penalties: penalties.map((p) => ({
+        who: p.playerId,
+        amount: p.amount,
+        reason: p.reason,
+        assignedBy: p.assignedBy,
+        createdAt: p.createdAt,
+        isCancelled: p.cancelled,
+        cancellationReason: p.cancelledReason,
+        id: p.id,
+      })),
+      referees: referees.map((r) => ({
+        id: r.id,
+        title: r.title,
+        tenhouId: r.tenhouId,
+        hasAvatar: r.hasAvatar,
+        lastUpdate: r.lastUpdate,
+      })),
+    };
+  }
+
+  async listMyPenalties(eventId: number, personId: number | null): Promise<PenaltiesResponse> {
+    if (!personId) {
+      throw new Error('Unauthorized to use this endpoint');
+    }
+    const penalties = await this.findByEventAndPlayer(eventId, personId);
+    const playerModel = this.getModel(PlayerModel);
+    const referees = await playerModel.findById(penalties.map((p) => p.assignedBy));
+    return {
+      penalties: penalties.map((p) => ({
+        who: p.playerId,
+        amount: p.amount,
+        reason: p.reason,
+        assignedBy: p.assignedBy,
+        createdAt: p.createdAt,
+        isCancelled: p.cancelled,
+        cancellationReason: p.cancelledReason,
+        id: p.id,
+      })),
+      referees: referees.map((r) => ({
+        id: r.id,
+        title: r.title,
+        tenhouId: r.tenhouId,
+        hasAvatar: r.hasAvatar,
+        lastUpdate: r.lastUpdate,
+      })),
+    };
+  }
+
+  async cancelPenalty(payload: CancelPenaltyPayload): Promise<GenericSuccessResponse> {
+    const penalty = await this.repo.em.findOne(PenaltyEntity, { id: payload.penaltyId });
+    if (!penalty) {
+      throw new Error('Penalty not found');
+    }
+
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(
+        (await playerModel.isEventAdmin(penalty.event.id)) &&
+        (await playerModel.isEventReferee(penalty.event.id))
+      )
+    ) {
+      throw new Error("You don't have the necessary permissions to cancel penalties");
+    }
+
+    penalty.cancelled = 1;
+    penalty.cancelledReason = payload.reason ?? undefined;
+    await this.repo.em.persistAndFlush(penalty);
+    await this.repo.skirnir.messagePenaltyCancelled(
+      penalty.playerId,
+      penalty.event.id,
+      penalty.amount,
+      penalty.cancelledReason ?? ''
+    );
+    return { success: true };
+  }
+
+  async listChombo(eventId: number): Promise<ChomboResponse> {
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+    ) {
+      throw new Error("You don't have the necessary permissions to list chombo");
+    }
+
+    const event = await this.repo.em.findOne(EventEntity, eventId, { populate: ['ruleset'] });
+    if (!event) {
+      throw new Error('Event not found');
+    }
+
+    const roundModel = this.getModel(RoundModel);
+    const chombo = await roundModel.findChomboInEvent(eventId);
+    const players = await playerModel.findById(
+      chombo.flatMap((c) => c.hands.map((h) => h.loserId).filter((id): id is number => !!id))
+    );
+    return {
+      chombos: chombo.flatMap((c) =>
+        c.hands.map((h) => ({
+          playerId: h.loserId,
+          amount: event.ruleset.rules.chomboAmount,
+        }))
+      ),
+      players: players.map((p) => ({
+        id: p.id,
+        title: p.title,
+        hasAvatar: p.hasAvatar,
+        lastUpdate: p.lastUpdate,
+        tenhouId: p.tenhouId,
+      })),
+    };
   }
 }

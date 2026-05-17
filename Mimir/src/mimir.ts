@@ -30,7 +30,6 @@ import {
   EventsGetRatingTablePayload,
   EventsGetRatingTableResponse,
   EventsGetRulesetsResponse,
-  EventsGetStartingTimerResponse,
   EventsGetTablesStatePayload,
   EventsGetTablesStateResponse,
   EventsGetTimerStateResponse,
@@ -586,30 +585,48 @@ export const mimirServer: Mimir<Context> = {
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<PenaltiesResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.listPenalties(genericEventPayload.eventId);
   },
   CancelPenalty: function (
     cancelPenaltyPayload: CancelPenaltyPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.cancelPenalty(cancelPenaltyPayload);
   },
   ListMyPenalties: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<PenaltiesResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.listMyPenalties(
+      genericEventPayload.eventId,
+      context.repository.meta.personId
+    );
   },
   ListChombo: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<ChomboResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.listChombo(genericEventPayload.eventId);
   },
-  GetCurrentStateForPlayer: function (
+  GetCurrentStateForPlayer: async function (
     getCurrentStatePayload: GetCurrentStatePayload,
     context: Context
   ): Promise<GetCurrentStateResponse> {
-    throw new Error('Function not implemented.');
+    const gameConfig = await this.GetGameConfig(
+      { eventId: getCurrentStatePayload.eventId },
+      context
+    );
+    const sessions = await this.GetCurrentSessions(
+      { eventId: getCurrentStatePayload.eventId, playerId: getCurrentStatePayload.playerId },
+      context
+    );
+    return {
+      sessions: sessions.sessions,
+      config: gameConfig,
+    };
   },
 };
