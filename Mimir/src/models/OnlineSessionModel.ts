@@ -14,7 +14,7 @@ import { RoundEntity } from 'src/entities/Round.entity.js';
 import { CronModel } from './CronModel.js';
 import { formatRound, makeReplayLink } from 'src/helpers/formatters.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
 import { PlayerModel } from './PlayerModel.js';

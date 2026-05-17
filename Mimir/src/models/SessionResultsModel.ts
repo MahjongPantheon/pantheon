@@ -3,7 +3,7 @@ import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import {
   PlayersGetLastResultsPayload,

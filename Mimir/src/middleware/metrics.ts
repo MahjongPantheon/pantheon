@@ -22,9 +22,9 @@ export function metrics(): Middleware<Context, IncomingMessage> {
       return result;
     } catch (e: any) {
       ctx.repository.log.error(
+        e,
         'Request errored',
-        req.url?.replace('/v2/common.Mimir/', '') ?? 'Unknown',
-        e
+        req.url?.replace('/v2/common.Mimir/', '') ?? 'Unknown'
       );
       throw e;
     }

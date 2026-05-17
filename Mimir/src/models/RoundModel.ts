@@ -8,7 +8,7 @@ import { Round, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { Moment } from 'moment';
 import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
 import { HandEntity } from 'src/entities/Hand.entity.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { PaymentsInfo, PointsCalc } from 'src/helpers/PointsCalc.js';
 
 export class RoundModel extends Model {

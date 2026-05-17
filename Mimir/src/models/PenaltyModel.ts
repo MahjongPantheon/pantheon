@@ -13,7 +13,7 @@ import { EventModel } from './EventModel.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
 import { SessionModel } from './SessionModel.js';
 import { GenericSuccessResponse, SessionStatus } from 'tsclients/proto/atoms.pb.js';
-import { SessionState } from 'src/aggregates/SessionState.js';
+import { SessionState } from 'src/helpers/SessionState.js';
 import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { sha1 } from 'src/helpers/crypto.js';
