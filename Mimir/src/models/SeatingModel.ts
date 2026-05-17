@@ -13,6 +13,8 @@ import {
 } from 'mahjong-seatings-rs-node';
 import {
   EventsGetCurrentSeatingResponse,
+  SeatingGenerateSwissSeatingPayload,
+  SeatingGenerateSwissSeatingResponse,
   SeatingMakeIntervalSeatingPayload,
   SeatingMakePrescriptedSeatingPayload,
   SeatingMakeShuffledSeatingPayload,
@@ -106,7 +108,7 @@ export class SeatingModel extends Model {
         previousSeatings,
       });
 
-    return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
+    return this.makeSeatingAndStartGames(eventId, seed, seatingGetter, windShuffleMode);
   }
 
   async makeSwissSeating(payload: SeatingMakeSwissSeatingPayload): Promise<GenericSuccessResponse> {
@@ -124,7 +126,7 @@ export class SeatingModel extends Model {
         windShuffle: this._getWindShuffleMode(_windShuffleMode),
         previousSeatings,
       });
-    return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
+    return this.makeSeatingAndStartGames(eventId, seed, seatingGetter, windShuffleMode);
   }
 
   async makeIntervalSeating(
@@ -145,7 +147,7 @@ export class SeatingModel extends Model {
         windShuffle: this._getWindShuffleMode(_windShuffleMode),
         previousSeatings,
       });
-    return this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
+    return this.makeSeatingAndStartGames(eventId, seed, seatingGetter, windShuffleMode);
   }
 
   async makePrescriptedSeating(
@@ -177,78 +179,15 @@ export class SeatingModel extends Model {
         windShuffle: this._getWindShuffleMode(_windShuffleMode),
       });
     };
-    const result = await this.makeSeating(eventId, seed, seatingGetter, windShuffleMode);
+    const result = await this.makeSeatingAndStartGames(
+      eventId,
+      seed,
+      seatingGetter,
+      windShuffleMode
+    );
     prescriptEntity.nextGame++;
     await this.repo.em.persistAndFlush(prescriptEntity);
     return result;
-  }
-
-  async makeSeating(
-    eventId: number,
-    seed: number,
-    seatingGetter: (
-      playersMap: Record<number, number>,
-      seed: number,
-      windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
-    ) => number[][],
-    windShuffleMode: WindShuffleMode
-  ): Promise<GenericSuccessResponse> {
-    await this._ensureActionAllowed(eventId);
-
-    const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findByEventAndStatus(
-      [eventId],
-      [SessionStatus.SESSION_STATUS_INPROGRESS]
-    );
-    if (sessions.length === 0) {
-      throw new Error('No active session found for this event');
-    }
-
-    const event = await this.repo.em.findOne(EventEntity, eventId);
-    if (!event) {
-      throw new Error(`Event #${eventId} not found`);
-    }
-    if (event.useTimer) {
-      event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
-      this.repo.em.persist(event);
-    }
-    const regModel = this.getModel(EventRegistrationModel);
-    const regs = await regModel.findByEventId([event.id]);
-
-    const [playersMap, previousSeatings] = await this._getData(event, regs);
-    const seating = seatingGetter(playersMap, seed, windShuffleMode, previousSeatings);
-
-    const chunks = [];
-    for (let i = 0; i < seating.length; i += 4) {
-      chunks.push(seating.slice(i, i + 4).map((p) => p[0]));
-    }
-
-    const replacements: Record<number, number> = {};
-    for (const reg of regs) {
-      if (reg.replacementId) {
-        replacements[reg.playerId] = reg.replacementId;
-      }
-    }
-
-    let tableIndex = 1;
-    const promises = [];
-    for (const table of chunks) {
-      sessionModel.startSession(event, table, tableIndex);
-
-      for (const idx in table) {
-        if (replacements[table[idx]]) {
-          table[idx] = replacements[table[idx]];
-        }
-      }
-      promises.push(this.repo.skirnir.messageSeatingReady(table, tableIndex, eventId));
-      tableIndex++;
-    }
-
-    await this.repo.em.flush();
-    await Promise.all(promises);
-
-    return { success: true };
   }
 
   public async resetSeating(eventId: number): Promise<GenericSuccessResponse> {
@@ -280,6 +219,136 @@ export class SeatingModel extends Model {
     this.repo.db.em.remove(sessions);
 
     await this.repo.db.em.flush();
+    return { success: true };
+  }
+
+  async generateSwissSeating(
+    payload: SeatingGenerateSwissSeatingPayload
+  ): Promise<SeatingGenerateSwissSeatingResponse> {
+    const event = await this.repo.em.findOne(EventEntity, payload.eventId);
+    if (!event) {
+      throw new Error(`Event #${payload.eventId} not found`);
+    }
+
+    const seatingGetter = (
+      playersMap: Record<number, number>,
+      seed: number,
+      windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
+    ) =>
+      make_seating_swiss({
+        playersMap,
+        randFactor: seed,
+        windShuffle: this._getWindShuffleMode(windShuffleMode),
+        previousSeatings,
+      });
+
+    const { chunks, replacements } = await this.makeSeating(
+      event,
+      randomInt(999999),
+      seatingGetter,
+      payload.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM
+    );
+
+    if (payload.substituteReplacementPlayers) {
+      for (const table of chunks) {
+        for (const idx in table) {
+          if (replacements[table[idx]]) {
+            table[idx] = replacements[table[idx]];
+          }
+        }
+      }
+    }
+
+    return { tables: chunks.map((table) => ({ players: table })) };
+  }
+
+  private async makeSeating(
+    event: EventEntity,
+    seed: number,
+    seatingGetter: (
+      playersMap: Record<number, number>,
+      seed: number,
+      windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
+    ) => number[][],
+    windShuffleMode: WindShuffleMode
+  ) {
+    await this._ensureActionAllowed(event.id);
+
+    const sessionModel = this.getModel(SessionModel);
+    const sessions = await sessionModel.findByEventAndStatus(
+      [event.id],
+      [SessionStatus.SESSION_STATUS_INPROGRESS]
+    );
+    if (sessions.length === 0) {
+      throw new Error('No active session found for this event');
+    }
+
+    if (event.useTimer) {
+      event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
+      this.repo.em.persist(event);
+    }
+    const regModel = this.getModel(EventRegistrationModel);
+    const regs = await regModel.findByEventId([event.id]);
+
+    const [playersMap, previousSeatings] = await this._getData(event, regs);
+    const seating = seatingGetter(playersMap, seed, windShuffleMode, previousSeatings);
+
+    const chunks = [];
+    for (let i = 0; i < seating.length; i += 4) {
+      chunks.push(seating.slice(i, i + 4).map((p) => p[0]));
+    }
+
+    const replacements: Record<number, number> = {};
+    for (const reg of regs) {
+      if (reg.replacementId) {
+        replacements[reg.playerId] = reg.replacementId;
+      }
+    }
+
+    return { chunks, replacements };
+  }
+
+  private async makeSeatingAndStartGames(
+    eventId: number,
+    seed: number,
+    seatingGetter: (
+      playersMap: Record<number, number>,
+      seed: number,
+      windShuffleMode: WindShuffleMode,
+      previousSeatings: number[][]
+    ) => number[][],
+    windShuffleMode: WindShuffleMode
+  ): Promise<GenericSuccessResponse> {
+    const sessionModel = this.getModel(SessionModel);
+    const event = await this.repo.em.findOne(EventEntity, eventId);
+    if (!event) {
+      throw new Error(`Event #${eventId} not found`);
+    }
+    const { chunks, replacements } = await this.makeSeating(
+      event,
+      seed,
+      seatingGetter,
+      windShuffleMode
+    );
+    let tableIndex = 1;
+    const promises = [];
+    for (const table of chunks) {
+      sessionModel.startSession(event, table, tableIndex);
+
+      for (const idx in table) {
+        if (replacements[table[idx]]) {
+          table[idx] = replacements[table[idx]];
+        }
+      }
+      promises.push(this.repo.skirnir.messageSeatingReady(table, tableIndex, eventId));
+      tableIndex++;
+    }
+
+    await this.repo.em.flush();
+    await Promise.all(promises);
+
     return { success: true };
   }
 

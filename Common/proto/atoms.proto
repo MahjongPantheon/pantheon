@@ -512,7 +512,6 @@ message PlayerSeating {
 
 message PlayerSeatingSwiss {
   int32 player_id = 1;
-  float rating = 2;
 }
 
 message TableItemSwiss {
