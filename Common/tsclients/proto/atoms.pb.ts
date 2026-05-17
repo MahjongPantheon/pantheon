@@ -509,7 +509,6 @@ export interface PlayerSeating {
 
 export interface PlayerSeatingSwiss {
   playerId: number;
-  rating: number;
 }
 
 export interface TableItemSwiss {
@@ -6434,7 +6433,6 @@ export const PlayerSeatingSwiss = {
   initialize: function (msg?: Partial<PlayerSeatingSwiss>): PlayerSeatingSwiss {
     return {
       playerId: 0,
-      rating: 0,
       ...msg,
     };
   },
@@ -6448,9 +6446,6 @@ export const PlayerSeatingSwiss = {
   ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
-    }
-    if (msg.rating) {
-      writer.writeFloat(2, msg.rating);
     }
     return writer;
   },
@@ -6467,10 +6462,6 @@ export const PlayerSeatingSwiss = {
       switch (field) {
         case 1: {
           msg.playerId = reader.readInt32();
-          break;
-        }
-        case 2: {
-          msg.rating = reader.readFloat();
           break;
         }
         default: {
@@ -12897,7 +12888,6 @@ export const PlayerSeatingSwissJSON = {
   initialize: function (msg?: Partial<PlayerSeatingSwiss>): PlayerSeatingSwiss {
     return {
       playerId: 0,
-      rating: 0,
       ...msg,
     };
   },
@@ -12912,9 +12902,6 @@ export const PlayerSeatingSwissJSON = {
     if (msg.playerId) {
       json["playerId"] = msg.playerId;
     }
-    if (msg.rating) {
-      json["rating"] = msg.rating;
-    }
     return json;
   },
 
@@ -12928,10 +12915,6 @@ export const PlayerSeatingSwissJSON = {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = protoscript.parseNumber(_playerId_);
-    }
-    const _rating_ = json["rating"];
-    if (_rating_) {
-      msg.rating = protoscript.parseDouble(_rating_);
     }
     return msg;
   },
