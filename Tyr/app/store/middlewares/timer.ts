@@ -33,59 +33,14 @@ export const timerMw =
             timerStorage.clearInterval(timerStorage.timer);
           }
           timerStorage.timer = undefined;
-          if (timerStorage.autostartTimer) {
-            timerStorage.clearInterval(timerStorage.autostartTimer);
-          }
-
-          timerStorage.autostartTimer = timerStorage.setInterval(() => {
-            const timerNotRequired = !mw.getState().gameConfig?.useTimer;
-            if (timerNotRequired) {
-              if (timerStorage.autostartTimer) {
-                timerStorage.clearInterval(timerStorage.autostartTimer);
-              }
-              return;
-            }
-            // Calc delta to support mobile suspending with js timers stopping
-            const delta = now() - (mw.getState().timer?.autostartLastUpdateTimestamp ?? 0);
-            const timeRemaining =
-              (mw.getState().timer?.autostartLastUpdateSecondsRemaining ?? 0) - delta;
-            if (timeRemaining <= 0) {
-              // timer is finished
-              next({
-                type: UPDATE_TIMER_DATA,
-                payload: {
-                  ...action.payload,
-                  autostartLastUpdateTimestamp: now(),
-                  autostartSecondsRemaining: 0,
-                },
-              });
-              if (timerStorage.autostartTimer) {
-                timerStorage.clearInterval(timerStorage.autostartTimer);
-              }
-              timerStorage.autostartTimer = undefined;
-            } else {
-              next({
-                type: UPDATE_TIMER_DATA,
-                payload: {
-                  ...action.payload,
-                  autostartLastUpdateTimestamp: now(),
-                  autostartSecondsRemaining: timeRemaining,
-                },
-              });
-            }
-          }, 1000);
 
           next({
             type: UPDATE_TIMER_DATA,
             payload: {
               ...action.payload,
-              autostartLastUpdateTimestamp: now(),
             },
           });
         } else {
-          if (timerStorage.autostartTimer) {
-            timerStorage.clearInterval(timerStorage.autostartTimer);
-          }
           if (timerStorage.timer) {
             timerStorage.clearInterval(timerStorage.timer);
           }

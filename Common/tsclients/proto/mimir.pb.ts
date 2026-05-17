@@ -114,8 +114,6 @@ export interface EventsGetTimerStateResponse {
   finished: boolean;
   timeRemaining: number;
   waitingForTimer: boolean;
-  haveAutostart: boolean;
-  autostartTimer: number;
   hideSeatingAfter: number;
 }
 
@@ -378,10 +376,6 @@ export interface EventsUpdatePrescriptedEventConfigPayload {
   eventId: number;
   nextSessionIndex: number;
   prescript: string;
-}
-
-export interface EventsGetStartingTimerResponse {
-  timer: number;
 }
 
 export interface ClearStatCachePayload {
@@ -1120,30 +1114,6 @@ export async function UpdatePrescriptedEventConfig(
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
-export async function InitStartingTimer(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/InitStartingTimer",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
-export async function GetStartingTimer(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetStartingTimerResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/GetStartingTimer",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
-  );
-  return EventsGetStartingTimerResponse.decode(response);
 }
 
 export async function ClearStatCache(
@@ -1998,30 +1968,6 @@ export async function UpdatePrescriptedEventConfigJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
-export async function InitStartingTimerJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/InitStartingTimer",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponseJSON.decode(response);
-}
-
-export async function GetStartingTimerJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetStartingTimerResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/GetStartingTimer",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
-  );
-  return EventsGetStartingTimerResponseJSON.decode(response);
-}
-
 export async function ClearStatCacheJSON(
   clearStatCachePayload: ClearStatCachePayload,
   config?: ClientConfiguration,
@@ -2477,16 +2423,6 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
-  InitStartingTimer: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
-  ) =>
-    | Promise<protoAtoms.GenericSuccessResponse>
-    | protoAtoms.GenericSuccessResponse;
-  GetStartingTimer: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
-  ) => Promise<EventsGetStartingTimerResponse> | EventsGetStartingTimerResponse;
   ClearStatCache: (
     clearStatCachePayload: ClearStatCachePayload,
     context: Context,
@@ -3231,30 +3167,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
-        },
-      },
-      InitStartingTimer: {
-        name: "InitStartingTimer",
-        handler: service.InitStartingTimer,
-        input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
-        },
-        output: {
-          protobuf: protoAtoms.GenericSuccessResponse,
-          json: protoAtoms.GenericSuccessResponseJSON,
-        },
-      },
-      GetStartingTimer: {
-        name: "GetStartingTimer",
-        handler: service.GetStartingTimer,
-        input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
-        },
-        output: {
-          protobuf: EventsGetStartingTimerResponse,
-          json: EventsGetStartingTimerResponseJSON,
         },
       },
       ClearStatCache: {
@@ -4983,8 +4895,6 @@ export const EventsGetTimerStateResponse = {
       finished: false,
       timeRemaining: 0,
       waitingForTimer: false,
-      haveAutostart: false,
-      autostartTimer: 0,
       hideSeatingAfter: 0,
       ...msg,
     };
@@ -5008,12 +4918,6 @@ export const EventsGetTimerStateResponse = {
     }
     if (msg.waitingForTimer) {
       writer.writeBool(4, msg.waitingForTimer);
-    }
-    if (msg.haveAutostart) {
-      writer.writeBool(5, msg.haveAutostart);
-    }
-    if (msg.autostartTimer) {
-      writer.writeInt32(6, msg.autostartTimer);
     }
     if (msg.hideSeatingAfter) {
       writer.writeInt32(8, msg.hideSeatingAfter);
@@ -5045,14 +4949,6 @@ export const EventsGetTimerStateResponse = {
         }
         case 4: {
           msg.waitingForTimer = reader.readBool();
-          break;
-        }
-        case 5: {
-          msg.haveAutostart = reader.readBool();
-          break;
-        }
-        case 6: {
-          msg.autostartTimer = reader.readInt32();
           break;
         }
         case 8: {
@@ -8848,78 +8744,6 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
   },
 };
 
-export const EventsGetStartingTimerResponse = {
-  /**
-   * Serializes EventsGetStartingTimerResponse to protobuf.
-   */
-  encode: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-  ): Uint8Array {
-    return EventsGetStartingTimerResponse._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes EventsGetStartingTimerResponse from protobuf.
-   */
-  decode: function (bytes: ByteSource): EventsGetStartingTimerResponse {
-    return EventsGetStartingTimerResponse._readMessage(
-      EventsGetStartingTimerResponse.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes EventsGetStartingTimerResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetStartingTimerResponse>,
-  ): EventsGetStartingTimerResponse {
-    return {
-      timer: 0,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.timer) {
-      writer.writeInt32(1, msg.timer);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetStartingTimerResponse,
-    reader: protoscript.BinaryReader,
-  ): EventsGetStartingTimerResponse {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.timer = reader.readInt32();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
 export const ClearStatCachePayload = {
   /**
    * Serializes ClearStatCachePayload to protobuf.
@@ -11021,8 +10845,6 @@ export const EventsGetTimerStateResponseJSON = {
       finished: false,
       timeRemaining: 0,
       waitingForTimer: false,
-      haveAutostart: false,
-      autostartTimer: 0,
       hideSeatingAfter: 0,
       ...msg,
     };
@@ -11046,12 +10868,6 @@ export const EventsGetTimerStateResponseJSON = {
     }
     if (msg.waitingForTimer) {
       json["waitingForTimer"] = msg.waitingForTimer;
-    }
-    if (msg.haveAutostart) {
-      json["haveAutostart"] = msg.haveAutostart;
-    }
-    if (msg.autostartTimer) {
-      json["autostartTimer"] = msg.autostartTimer;
     }
     if (msg.hideSeatingAfter) {
       json["hideSeatingAfter"] = msg.hideSeatingAfter;
@@ -11082,14 +10898,6 @@ export const EventsGetTimerStateResponseJSON = {
       json["waitingForTimer"] ?? json["waiting_for_timer"];
     if (_waitingForTimer_) {
       msg.waitingForTimer = _waitingForTimer_;
-    }
-    const _haveAutostart_ = json["haveAutostart"] ?? json["have_autostart"];
-    if (_haveAutostart_) {
-      msg.haveAutostart = _haveAutostart_;
-    }
-    const _autostartTimer_ = json["autostartTimer"] ?? json["autostart_timer"];
-    if (_autostartTimer_) {
-      msg.autostartTimer = protoscript.parseNumber(_autostartTimer_);
     }
     const _hideSeatingAfter_ =
       json["hideSeatingAfter"] ?? json["hide_seating_after"];
@@ -14353,66 +14161,6 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
     const _prescript_ = json["prescript"];
     if (_prescript_) {
       msg.prescript = _prescript_;
-    }
-    return msg;
-  },
-};
-
-export const EventsGetStartingTimerResponseJSON = {
-  /**
-   * Serializes EventsGetStartingTimerResponse to JSON.
-   */
-  encode: function (msg: PartialDeep<EventsGetStartingTimerResponse>): string {
-    return JSON.stringify(
-      EventsGetStartingTimerResponseJSON._writeMessage(msg),
-    );
-  },
-
-  /**
-   * Deserializes EventsGetStartingTimerResponse from JSON.
-   */
-  decode: function (json: string): EventsGetStartingTimerResponse {
-    return EventsGetStartingTimerResponseJSON._readMessage(
-      EventsGetStartingTimerResponseJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes EventsGetStartingTimerResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetStartingTimerResponse>,
-  ): EventsGetStartingTimerResponse {
-    return {
-      timer: 0,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.timer) {
-      json["timer"] = msg.timer;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetStartingTimerResponse,
-    json: any,
-  ): EventsGetStartingTimerResponse {
-    const _timer_ = json["timer"];
-    if (_timer_) {
-      msg.timer = protoscript.parseNumber(_timer_);
     }
     return msg;
   },
