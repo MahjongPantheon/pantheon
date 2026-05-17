@@ -841,17 +841,6 @@ export class SessionModel extends Model {
     );
     const payments = await this.updateSessionState(event, session[0], sessionState, roundEntity);
 
-    const whoPlays = sessionState.state.playerIds;
-    const eventRegModel = this.getModel(EventRegistrationModel);
-    const replacements = await eventRegModel.getSubstitutionPlayers(event.id);
-    const playerIds = whoPlays.map((id) => replacements[id] ?? id);
-
-    if (sessionState.isFinished() && !event.syncEnd) {
-      const cronModel = this.getModel(CronModel);
-      await cronModel.scheduleRecalcAchievements(event.id);
-      this.repo.skirnir.messageClubSessionEnd(playerIds, event.id, sessionState.getScores());
-    }
-
     // don't forget to store all persisted data to db
     await this.repo.em.flush();
     const chomboCounts = sessionState.getChombo();
@@ -1066,6 +1055,49 @@ export class SessionModel extends Model {
     await playerStatsModel.scheduleRebuildPlayersStats(session[0].event.id);
 
     await this.repo.db.em.flush();
+    return { success: true };
+  }
+
+  async forceFinishGame(hash: string) {
+    const session = await this.findByRepresentationalHash([hash], ['event']);
+    if (session.length === 0) {
+      throw new Error('Session not found');
+    }
+
+    // Check if we have rights to update the event
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !(
+        (await playerModel.isEventAdmin(session[0].event.id)) &&
+        (await playerModel.isEventReferee(session[0].event.id))
+      )
+    ) {
+      throw new Error("You don't have the necessary permissions to force finish game");
+    }
+
+    const sessionState = new SessionState(
+      session[0].event.ruleset,
+      session[0].intermediateResults?.playerIds ?? [],
+      session[0].intermediateResults
+    );
+    await this.finish(session[0].event, session[0], sessionState);
+    await this.repo.db.em.flush();
+
+    const achievementsModel = this.getModel(AchievementsModel);
+    await achievementsModel.scheduleRebuildAchievements(session[0].event.id);
+
+    const whoPlays = sessionState.state.playerIds;
+    const eventRegModel = this.getModel(EventRegistrationModel);
+    const replacements = await eventRegModel.getSubstitutionPlayers(event.id);
+    const playerIds = whoPlays.map((id) => replacements[id] ?? id);
+
+    this.repo.skirnir.messageClubSessionEnd(
+      playerIds,
+      session[0].event.id,
+      sessionState.getScores()
+    );
+
     return { success: true };
   }
 }
