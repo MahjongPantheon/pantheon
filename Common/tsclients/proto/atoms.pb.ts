@@ -458,7 +458,6 @@ export interface EventData {
   minGames: number;
   isTeam: boolean;
   isPrescripted: boolean;
-  autostart: number;
   rulesetConfig: RulesetConfig;
   isListed: boolean;
   isRatingShown: boolean;
@@ -5733,7 +5732,6 @@ export const EventData = {
       minGames: 0,
       isTeam: false,
       isPrescripted: false,
-      autostart: 0,
       rulesetConfig: RulesetConfig.initialize(),
       isListed: false,
       isRatingShown: false,
@@ -5782,9 +5780,6 @@ export const EventData = {
     }
     if (msg.isPrescripted) {
       writer.writeBool(11, msg.isPrescripted);
-    }
-    if (msg.autostart) {
-      writer.writeInt32(12, msg.autostart);
     }
     if (msg.rulesetConfig) {
       writer.writeMessage(14, msg.rulesetConfig, RulesetConfig._writeMessage);
@@ -5861,10 +5856,6 @@ export const EventData = {
         }
         case 11: {
           msg.isPrescripted = reader.readBool();
-          break;
-        }
-        case 12: {
-          msg.autostart = reader.readInt32();
           break;
         }
         case 14: {
@@ -12268,7 +12259,6 @@ export const EventDataJSON = {
       minGames: 0,
       isTeam: false,
       isPrescripted: false,
-      autostart: 0,
       rulesetConfig: RulesetConfigJSON.initialize(),
       isListed: false,
       isRatingShown: false,
@@ -12317,9 +12307,6 @@ export const EventDataJSON = {
     }
     if (msg.isPrescripted) {
       json["isPrescripted"] = msg.isPrescripted;
-    }
-    if (msg.autostart) {
-      json["autostart"] = msg.autostart;
     }
     if (msg.rulesetConfig) {
       const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
@@ -12396,10 +12383,6 @@ export const EventDataJSON = {
     const _isPrescripted_ = json["isPrescripted"] ?? json["is_prescripted"];
     if (_isPrescripted_) {
       msg.isPrescripted = _isPrescripted_;
-    }
-    const _autostart_ = json["autostart"];
-    if (_autostart_) {
-      msg.autostart = protoscript.parseNumber(_autostart_);
     }
     const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {

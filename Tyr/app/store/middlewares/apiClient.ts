@@ -291,9 +291,6 @@ function updateCurrentGames(
           payload: {
             waiting: resp.sessions[0].timerState.waitingForTimer,
             secondsRemaining: resp.sessions[0].timerState.timeRemaining,
-            // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
-            autostartSecondsRemaining: 0, // resp.sessions[0].timerState.autostartTimer,
-            haveAutostart: resp.sessions[0].timerState.haveAutostart,
           },
         });
       }
@@ -332,9 +329,6 @@ function getOtherTable(sessionHash: string, api: IRiichiApi, dispatch: Dispatch<
         payload: {
           waiting: table.timerState.waitingForTimer,
           secondsRemaining: table.timerState.timeRemaining,
-          // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
-          autostartSecondsRemaining: 0, // resp.sessions[0].timerState.autostartTimer,
-          haveAutostart: table.timerState.haveAutostart,
         },
       });
     })
@@ -356,9 +350,6 @@ function getOtherTableReload(
         payload: {
           waiting: table.timerState.waitingForTimer,
           secondsRemaining: table.timerState.timeRemaining,
-          // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
-          autostartSecondsRemaining: 0, // resp.sessions[0].timerState.autostartTimer,
-          haveAutostart: table.timerState.haveAutostart,
         },
       });
     })

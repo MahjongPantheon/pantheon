@@ -549,7 +549,6 @@ export class SessionModel extends Model {
       throw new Error(`Some players do not exist in database`);
     }
 
-    event[0].nextGameStartTime = 0;
     this.repo.db.em.persist(event[0]);
 
     const newSession = this.startSession(event[0], gamesStartGamePayload.players, null);

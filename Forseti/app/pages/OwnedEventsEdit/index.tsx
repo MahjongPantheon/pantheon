@@ -328,7 +328,6 @@ function setConsistentWindShuffleMode(eventData: EventCustom | EventData) {
 function makeEventData(vals: FormFields): EventData {
   const eventData: EventData = {
     ...vals.event,
-    autostart: 0, // TODO: https://github.com/MahjongPantheon/pantheon/issues/282
     rulesetConfig: {
       ...vals.ruleset,
       allowedYaku: Object.keys(vals.ruleset.allowedYaku)

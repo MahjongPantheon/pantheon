@@ -540,18 +540,6 @@ export const mimirServer: Mimir<Context> = {
     const seatingModel = Model.getModel(context.repository, SeatingModel);
     return seatingModel.generateSwissSeating(seatingGenerateSwissSeatingPayload);
   },
-  InitStartingTimer: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
-  },
-  GetStartingTimer: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<EventsGetStartingTimerResponse> {
-    throw new Error('Function not implemented.');
-  },
   ClearStatCache: function (
     clearStatCachePayload: ClearStatCachePayload,
     context: Context

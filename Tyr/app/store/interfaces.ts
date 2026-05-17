@@ -67,9 +67,6 @@ export type TimerData = {
   lastUpdateSecondsRemaining: number;
   lastUpdateTimestamp: number;
   waiting: boolean;
-  autostartSecondsRemaining: number;
-  autostartLastUpdateSecondsRemaining: number;
-  autostartLastUpdateTimestamp: number;
 };
 
 export type ErrorState = {
@@ -160,7 +157,6 @@ export interface IAppState {
 
 export type TimerStorage = {
   timer?: number;
-  autostartTimer?: number;
   setInterval: (callback: () => any, milliseconds: number) => number;
   clearInterval: (handle: number) => void;
 };

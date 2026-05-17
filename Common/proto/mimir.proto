@@ -75,8 +75,6 @@ service Mimir {
   rpc MakePrescriptedSeating(SeatingMakePrescriptedSeatingPayload) returns (GenericSuccessResponse);
   rpc GetPrescriptedEventConfig(GenericEventPayload) returns (EventsGetPrescriptedEventConfigResponse);
   rpc UpdatePrescriptedEventConfig(EventsUpdatePrescriptedEventConfigPayload) returns (GenericSuccessResponse);
-  rpc InitStartingTimer(GenericEventPayload) returns (GenericSuccessResponse);
-  rpc GetStartingTimer(GenericEventPayload) returns (EventsGetStartingTimerResponse);
   rpc ClearStatCache(ClearStatCachePayload) returns (GenericSuccessResponse);
   rpc ForceFinishGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc AddTypedOnlineReplay(TypedGamesAddOnlineReplayPayload) returns (GamesAddOnlineReplayResponse);
@@ -190,8 +188,6 @@ message EventsGetTimerStateResponse {
   bool finished = 2;
   int32 time_remaining = 3;
   bool waiting_for_timer = 4;
-  bool have_autostart = 5;
-  int32 autostart_timer = 6;
   int32 hide_seating_after = 8;
 }
 
@@ -442,10 +438,6 @@ message EventsUpdatePrescriptedEventConfigPayload {
   int32 event_id = 1;
   int32 next_session_index = 2;
   string prescript = 3;
-}
-
-message EventsGetStartingTimerResponse {
-  int32 timer = 1; // seconds to start
 }
 
 message ClearStatCachePayload {

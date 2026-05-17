@@ -98,12 +98,6 @@ export class EventEntity {
   @Property({ fieldName: 'finished' })
   finished!: number;
 
-  @Property({ fieldName: 'next_game_start_time' })
-  nextGameStartTime!: number;
-
-  @Property({ fieldName: 'time_to_start' })
-  timeToStart!: number;
-
   @Property({ fieldName: 'is_listed' })
   isListed!: number;
 

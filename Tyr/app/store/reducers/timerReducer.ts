@@ -27,14 +27,6 @@ export function timerReducer(state: IAppState, action: AppActionTypes): IAppStat
           ...state.timer,
           waiting: action.payload.waiting,
           secondsRemaining: action.payload.secondsRemaining ?? 0,
-          autostartSecondsRemaining: action.payload.autostartSecondsRemaining ?? 0,
-          autostartLastUpdateSecondsRemaining: action.payload.autostartLastUpdateTimestamp
-            ? (action.payload.autostartSecondsRemaining ?? 0)
-            : (state.timer?.autostartLastUpdateSecondsRemaining ?? 0),
-          autostartLastUpdateTimestamp:
-            action.payload.autostartLastUpdateTimestamp ??
-            state.timer?.autostartLastUpdateTimestamp ??
-            0,
           lastUpdateTimestamp:
             action.payload.lastUpdateTimestamp ?? state.timer?.lastUpdateTimestamp ?? 0,
           lastUpdateSecondsRemaining: action.payload.lastUpdateTimestamp

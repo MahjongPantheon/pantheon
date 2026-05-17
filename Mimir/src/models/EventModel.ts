@@ -377,8 +377,6 @@ export class EventModel extends Model {
       timeRemaining: 0,
       waitingForTimer:
         event[0].gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY,
-      haveAutostart: event[0].nextGameStartTime > 0 && event[0].timeToStart > 0,
-      autostartTimer: event[0].nextGameStartTime - Date.now() / 1000,
       // show seating for 10 mins after start
       hideSeatingAfter: (event[0].gameDuration! - 10) * 60,
     };
@@ -417,8 +415,6 @@ export class EventModel extends Model {
           finished: true,
           timeRemaining: 0,
           waitingForTimer: false,
-          haveAutostart: false,
-          autostartTimer: 0,
           hideSeatingAfter: 0,
         };
       } else {
@@ -428,8 +424,6 @@ export class EventModel extends Model {
           timeRemaining: 0,
           waitingForTimer:
             event[0].gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY,
-          haveAutostart: event[0].nextGameStartTime > 0 && event[0].timeToStart > 0,
-          autostartTimer: event[0].nextGameStartTime - Date.now() / 1000,
           // show seating for 10 mins after start
           hideSeatingAfter: (event[0].gameDuration! - 10) * 60,
         };
@@ -614,7 +608,6 @@ export class EventModel extends Model {
         minGames: event.minGamesCount,
         isTeam: event.isTeam === 1,
         isPrescripted: event.isPrescripted === 1,
-        autostart: event.timeToStart,
         rulesetConfig: event.ruleset.rules,
         isListed: event.isListed === 1,
         isRatingShown: event.hideResults === 0,
@@ -663,7 +656,6 @@ export class EventModel extends Model {
         event.useTimer = 1;
         event.usePenalty = 1;
         event.isTeam = eventData.isTeam ? 1 : 0;
-        event.timeToStart = eventData.autostart;
         event.isPrescripted = eventData.isPrescripted ? 1 : 0;
         break;
       case EventType.EVENT_TYPE_ONLINE:
@@ -755,7 +747,6 @@ export class EventModel extends Model {
       // should be a tournament
       event.autoSeating = eventData.event.isPrescripted ? 0 : 1;
       event.isTeam = eventData.event.isTeam ? 1 : 0;
-      event.timeToStart = eventData.event.autostart;
       event.isPrescripted = eventData.event.isPrescripted ? 1 : 0;
     } else if (event.isOnline) {
       // should be online tournament
