@@ -6,16 +6,17 @@
   "main": "index.js",
   "license": "GPLv3",
   "scripts": {
+    "build": "tsx build.ts",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@mikro-orm/core": "^6.6.0",
-    "@mikro-orm/migrations": "^6.6.0",
-    "@mikro-orm/postgresql": "^6.6.0",
-    "@mikro-orm/reflection": "^6.6.0",
-    "@mikro-orm/seeder": "^6.6.0",
-    "@mikro-orm/sqlite": "^6.6.0",
+    "@mikro-orm/core": "6.6.0",
+    "@mikro-orm/migrations": "6.6.0",
+    "@mikro-orm/postgresql": "6.6.0",
+    "@mikro-orm/reflection": "6.6.0",
+    "@mikro-orm/seeder": "6.6.0",
+    "@mikro-orm/sqlite": "6.6.0",
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",

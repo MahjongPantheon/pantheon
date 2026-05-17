@@ -2,9 +2,10 @@ import { build } from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
 
 build({
-  entryPoints: ['app/server.ts'],
+  entryPoints: ['src/server.ts'],
   bundle: true,
   platform: 'node',
+  format: 'esm',
   target: 'node22',
   outfile: 'dist/server.js',
   plugins: [

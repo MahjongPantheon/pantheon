@@ -18,7 +18,9 @@
     "strict": true,
     "outDir": "dist",
     "declaration": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "types": [],
   },
-  "include": ["build.ts", "src/**/*", "cron/**/*"]
+  "include": ["build.ts", "src/**/*", "cron/**/*"],
+  "exclude": ["node_modules/**/*", "dist/**/*"],
 }
