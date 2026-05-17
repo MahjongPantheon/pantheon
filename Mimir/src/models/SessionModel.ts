@@ -1089,7 +1089,7 @@ export class SessionModel extends Model {
 
     const whoPlays = sessionState.state.playerIds;
     const eventRegModel = this.getModel(EventRegistrationModel);
-    const replacements = await eventRegModel.getSubstitutionPlayers(event.id);
+    const replacements = await eventRegModel.getSubstitutionPlayers(session[0].event.id);
     const playerIds = whoPlays.map((id) => replacements[id] ?? id);
 
     this.repo.skirnir.messageClubSessionEnd(

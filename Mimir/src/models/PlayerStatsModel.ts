@@ -13,7 +13,13 @@ import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
 import { SessionModel } from './SessionModel.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
 import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
-import { PersonEx, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+import {
+  HandValueStat,
+  PersonEx,
+  PlacesSummaryItem,
+  RoundOutcome,
+  YakuStat,
+} from 'tsclients/proto/atoms.pb.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { PointsCalc, RiichiBetAssignment } from 'src/helpers/PointsCalc.js';
 import { HandEntity } from 'src/entities/Hand.entity.js';
@@ -197,7 +203,13 @@ export class PlayerStatsModel extends Model {
     const data = {
       ratingHistory: this._getRatingHistorySequence(mainEvent.ruleset, playerId, games),
       scoreHistory: scoresAndPlayers.scores,
-      playersInfo: scoresAndPlayers.players,
+      playersInfo: Object.values(scoresAndPlayers.players).map((p: PersonEx) => ({
+        id: p.id,
+        title: p.title,
+        tenhouId: p.tenhouId,
+        hasAvatar: p.hasAvatar,
+        lastUpdate: p.lastUpdate,
+      })),
       placesSummary: await this._getPlacesSummary(playerId, games),
       totalPlayedGames: games.size,
       totalPlayedRounds: rounds.length,
@@ -222,9 +234,9 @@ export class PlayerStatsModel extends Model {
           ...data,
           scoreHistory: {},
           playersInfo: [],
-          placesSummary: {},
-          handsValueSummary: {},
-          yakuSummary: {},
+          placesSummary: [],
+          handsValueSummary: [],
+          yakuSummary: [],
         };
         entity.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
         entity.playerId = playerId;
@@ -235,9 +247,9 @@ export class PlayerStatsModel extends Model {
           ...data,
           scoreHistory: {},
           playersInfo: [],
-          placesSummary: {},
-          handsValueSummary: {},
-          yakuSummary: {},
+          placesSummary: [],
+          handsValueSummary: [],
+          yakuSummary: [],
         };
         stats.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
         stats.playerId = playerId;
@@ -380,14 +392,15 @@ export class PlayerStatsModel extends Model {
   async _getPlacesSummary(
     playerId: number,
     games: Map<number, { session: SessionEntity; results: Map<number, SessionResultsEntity> }>
-  ) {
+  ): Promise<PlacesSummaryItem[]> {
     return games.values().reduce((acc, game) => {
       const result = game.results.get(playerId);
       if (result) {
-        acc.set(result.place, (acc.get(result.place) ?? 0) + 1);
+        const place = result.place;
+        acc.push({ place, count: (acc.find((item) => item.place === place)?.count ?? 0) + 1 });
       }
       return acc;
-    }, new Map<number, number>());
+    }, [] as PlacesSummaryItem[]);
   }
 
   _getOutcomeSummary(
@@ -675,28 +688,30 @@ export class PlayerStatsModel extends Model {
     }
   }
 
-  _getHanSummary(playerId: number, rounds: RoundEntity[]) {
-    return rounds.reduce((acc, round) => {
-      round.hands.forEach((hand) => {
-        if (hand.winnerId === playerId) {
-          acc += hand.han ?? 0;
+  _getHanSummary(playerId: number, rounds: RoundEntity[]): HandValueStat[] {
+    const summary = new Map<number, number>();
+    for (const round of rounds) {
+      for (const hand of round.hands) {
+        if (hand.winnerId === playerId && hand.han) {
+          summary.set(hand.han, summary.get(hand.han)! + 1);
         }
-      });
-      return acc;
-    }, 0);
+      }
+    }
+    return Array.from(summary.entries()).map(([han, count]) => ({ hanCount: han, count }));
   }
 
-  _getYakuSummary(playerId: number, rounds: RoundEntity[]) {
-    return rounds.reduce((acc, round) => {
-      round.hands.forEach((hand) => {
-        if (hand.winnerId === playerId) {
-          (hand.yaku ?? []).forEach((yaku) => {
-            acc.set(yaku, (acc.get(yaku) ?? 0) + 1);
-          });
+  _getYakuSummary(playerId: number, rounds: RoundEntity[]): YakuStat[] {
+    const summary = new Map<number, number>();
+    for (const round of rounds) {
+      for (const hand of round.hands) {
+        if (hand.winnerId === playerId && hand.yaku) {
+          for (const yaku of hand.yaku) {
+            summary.set(yaku, (summary.get(yaku) ?? 0) + 1);
+          }
         }
-      });
-      return acc;
-    }, new Map<number, number>());
+      }
+    }
+    return Array.from(summary.entries()).map(([yaku, count]) => ({ yakuId: yaku, count }));
   }
 
   _getRiichiSummary(ruleset: RulesetEntity, playerId: number, rounds: RoundEntity[]): RiichiStats {

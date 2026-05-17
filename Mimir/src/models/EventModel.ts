@@ -91,6 +91,7 @@ export class EventModel extends Model {
       minGamesCount: e.minGamesCount,
       withYakitori: e.ruleset.rules.withYakitori,
       withChips: e.ruleset.rules.chipsValue > 0,
+      allowManualAddReplay: !!e.allowManualAddReplay,
     }));
   }
 
