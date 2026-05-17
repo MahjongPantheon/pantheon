@@ -251,6 +251,38 @@ export class SeatingModel extends Model {
     return { success: true };
   }
 
+  public async resetSeating(eventId: number): Promise<GenericSuccessResponse> {
+    await this._ensureActionAllowed(eventId);
+    const event = await this.repo.em.findOne(EventEntity, eventId);
+    if (
+      !event ||
+      event.gamesStatus !== TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
+    ) {
+      throw new Error(`Event #${eventId} not found or not in proper state`);
+    }
+
+    if (event.isPrescripted) {
+      const prescript = await this.repo.em.findOne(EventPrescriptEntity, { event });
+      if (prescript) {
+        prescript.nextGame--;
+        this.repo.db.em.persist(prescript);
+      }
+    }
+
+    event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
+    this.repo.db.em.persist(event);
+
+    const sessionModel = this.getModel(SessionModel);
+    const sessions = await sessionModel.findByEventAndStatus(
+      [eventId],
+      [SessionStatus.SESSION_STATUS_INPROGRESS]
+    );
+    this.repo.db.em.remove(sessions);
+
+    await this.repo.db.em.flush();
+    return { success: true };
+  }
+
   private async _getNextPrescriptedSeating(
     eventId: number,
     script: string,
