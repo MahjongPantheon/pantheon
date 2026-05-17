@@ -1,5 +1,5 @@
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
-import { PaymentsInfo, PointsCalc } from '../helpers/PointsCalc.js';
+import { PaymentsInfo, PointsCalc } from './PointsCalc.js';
 import { RoundEntity } from '../entities/Round.entity.js';
 import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { SessionStateEntity } from '../entities/SessionState.entity.js';

@@ -122,8 +122,6 @@ export async function migrateFromMimir1() {
                 is_prescripted: rec.is_prescripted,
                 min_games_count: rec.min_games_count,
                 finished: rec.finished,
-                next_game_start_time: rec.next_game_start_time,
-                time_to_start: rec.time_to_start,
                 is_listed: rec.is_listed,
                 online_platform:
                   rec.platform_id === 1 ? 'TENHOU' : rec.platform_id === 2 ? 'MAJSOUL' : null,
