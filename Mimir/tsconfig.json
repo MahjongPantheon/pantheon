@@ -19,7 +19,7 @@
     "outDir": "dist",
     "declaration": true,
     "experimentalDecorators": true,
-    "types": [],
+    "types": ["@types/jest"],
   },
   "include": ["build.ts", "src/**/*", "cron/**/*", "node_modules/tsclients/**/*"],
   "exclude": ["node_modules/**/*", "dist/**/*"],

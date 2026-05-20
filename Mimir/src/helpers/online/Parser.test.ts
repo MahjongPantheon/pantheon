@@ -33,6 +33,7 @@ const makeEvent = (em: EntityManager) => {
   event.finished = 0;
   event.isListed = 1;
   event.allowViewOtherTables = 1;
+  event.allowManualAddReplay = 1;
   event.ruleset = RulesetEntity.createRuleset('tenhounet');
   em.persist(event);
   return event;
