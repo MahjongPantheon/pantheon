@@ -1,4 +1,4 @@
-import expat from 'node-expat';
+import { SimpleXmlParser, XmlEvent } from './xmlparser.js';
 import { fromTenhou } from '../yaku.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
 import { RoundEntity } from 'src/entities/Round.entity.js';
@@ -19,10 +19,17 @@ export class OnlineParser {
   protected _players: Record<string, number> = {}; // tenhouNickname -> userId
   protected _riichi: number[] = [];
   protected _lastTokenIsAgari = false;
-  protected _ankanCache: string[][] = [];
+  protected _ankanCache: string[][] = [[], [], [], []];
+  protected _parser: SimpleXmlParser;
+  protected _kanNakiCache: { m: string; who: string } = { m: '', who: '' };
+  protected _sessionState?: SessionState;
+  protected _session?: SessionEntity;
 
   constructor(repo: Repository) {
     this._repo = repo;
+    this._parser = new SimpleXmlParser({
+      onEvent: this._handleEvent.bind(this),
+    });
   }
 
   /**
@@ -33,17 +40,11 @@ export class OnlineParser {
     content: string,
     withChips = false
   ): Promise<[SessionEntity, Record<number, number>, RoundEntity[], string[]]> {
-    const parser = new expat.Parser('UTF-8');
+    this._session = new SessionEntity();
+    this._sessionState = new SessionState(event.ruleset, []);
+    this._session.event = event;
 
-    const kanNakiCache: { m: string; who: string } = { m: '', who: '' };
-    this._ankanCache = [[], [], [], []];
-
-    const session = new SessionEntity();
-    const sessionState = new SessionState(event.ruleset, []);
-    session.event = event;
-
-    // Process XML nodes
-    await this._processXMLNodes(parser, content, session, sessionState, kanNakiCache);
+    await this._parser.write(content);
 
     const regModel = Model.getModel(this._repo, EventRegistrationModel);
     const allPlayers = await regModel.fetchRegisteredPlayersByEvent(event.id);
@@ -53,14 +54,14 @@ export class OnlineParser {
 
     for (const round of this._roundData) {
       const savedRound = validateAndCreateFromOnlineData(
-        sessionState.state.playerIds,
+        this._sessionState.state.playerIds,
         allPlayers.map((player) => player.id),
-        session,
+        this._session,
         round
       );
       rounds.push(savedRound);
-      sessionState.update(savedRound);
-      scores.push(sessionState.getScores());
+      this._sessionState.update(savedRound);
+      scores.push(this._sessionState.getScores());
     }
 
     const debug: string[] = [];
@@ -71,78 +72,53 @@ export class OnlineParser {
     }
 
     if (withChips) {
-      sessionState.setChips(this._parseChipsOutcome(content));
+      this._sessionState.setChips(this._parseChipsOutcome(content));
     }
 
-    session.intermediateResults = sessionState.state;
-    this._repo.em.persist(session);
+    this._session.intermediateResults = this._sessionState.state;
+    this._repo.em.persist(this._session);
     rounds.forEach((round) => {
       this._repo.em.persist(round);
     });
 
-    return [session, this._parseOutcome(content), rounds, debug];
+    return [this._session, this._parseOutcome(content), rounds, debug];
   }
 
-  /**
-   * Process XML nodes recursively
-   */
-  protected async _processXMLNodes(
-    parser: expat.Parser,
-    xmlContent: string,
-    session: SessionEntity,
-    sessionState: SessionState,
-    kanNakiCache: { m: string; who: string }
-  ): Promise<void> {
-    return new Promise((resolve, reject) => {
-      parser.on('startElement', (name: string, attrs: any) => {
-        // Handle N elements (melds)
-        if (name === 'N') {
-          for (const elem of attrs) {
-            if (elem['m'] && elem['who']) {
-              kanNakiCache.m = elem['m'];
-              kanNakiCache.who = elem['who'];
-            }
-          }
+  protected async _handleEvent(data: XmlEvent): Promise<void> {
+    if (data.type === 'startElement') {
+      // Handle N elements (melds)
+      if (data.name === 'N') {
+        if (data.attributes['m'] && data.attributes['who']) {
+          this._kanNakiCache.m = data.attributes['m'];
+          this._kanNakiCache.who = data.attributes['who'];
         }
+      }
 
-        // Handle DORA elements
-        if (name === 'DORA') {
-          if (kanNakiCache) {
-            const who = parseInt(kanNakiCache.who);
-            this._ankanCache[who].push(kanNakiCache.m);
-          }
+      // Handle DORA elements
+      if (data.name === 'DORA') {
+        if (this._kanNakiCache) {
+          const who = parseInt(this._kanNakiCache.who);
+          this._ankanCache[who].push(this._kanNakiCache.m);
         }
+      }
 
-        // Handle other elements
-        if (name === 'UN') {
-          parser.pause();
-          this._tokenUN(attrs, session, sessionState)
-            .then(() => {
-              parser.resume();
-            })
-            .catch((err) => {
-              reject(err);
-            });
-        } else if (name === 'AGARI') {
-          this._tokenAGARI(attrs, sessionState);
-        } else if (name === 'INIT') {
-          this._tokenINIT();
-        } else if (name === 'RYUUKYOKU') {
-          this._tokenRYUUKYOKU(attrs, sessionState);
-        } else if (name === 'REACH') {
-          this._tokenREACH(attrs);
-        } else if (name === 'GO') {
-          this._tokenGO(attrs, session);
-        }
-      });
-      parser.on('endElement', (name: string) => {
-        if (name === 'mjloggm') {
-          resolve();
-        }
-      });
-      parser.on('error', (err: Error) => reject(err));
-      parser.write(xmlContent);
-    });
+      // Handle other elements
+      if (data.name === 'UN') {
+        this._parser.pause();
+        await this._tokenUN(data.attributes, this._session!, this._sessionState!);
+        this._parser.resume();
+      } else if (data.name === 'AGARI') {
+        this._tokenAGARI(data.attributes, this._sessionState!);
+      } else if (data.name === 'INIT') {
+        this._tokenINIT();
+      } else if (data.name === 'RYUUKYOKU') {
+        this._tokenRYUUKYOKU(data.attributes, this._sessionState!);
+      } else if (data.name === 'REACH') {
+        this._tokenREACH(data.attributes);
+      } else if (data.name === 'GO') {
+        this._tokenGO(data.attributes, this._session!);
+      }
+    }
   }
 
   /**
