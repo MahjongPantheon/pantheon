@@ -80,7 +80,7 @@ export class EventEntity {
   @Property({ fieldName: 'series_length' })
   seriesLength!: number;
 
-  @Property({ fieldName: 'games_status', nullable: true })
+  @Property({ fieldName: 'games_status', type: 'varchar', nullable: true })
   gamesStatus?: TournamentGamesStatus;
 
   @Property({ fieldName: 'hide_results' })
@@ -101,7 +101,7 @@ export class EventEntity {
   @Property({ fieldName: 'is_listed' })
   isListed!: number;
 
-  @Property({ fieldName: 'online_platform', nullable: true })
+  @Property({ fieldName: 'online_platform', type: 'varchar', nullable: true })
   onlinePlatform?: PlatformType;
 
   @Property({ fieldName: 'allow_view_other_tables' })

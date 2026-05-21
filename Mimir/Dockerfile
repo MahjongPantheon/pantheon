@@ -9,6 +9,9 @@ RUN chmod 755 /entrypoint.sh
 # copy nginx configs
 COPY mimir-container.nginx.conf /etc/nginx/http.d/mimir.conf
 
+# copy supervisor config
+COPY supervisord.conf /etc/supervisord.conf
+
 # Copy cron defs
 COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
 
@@ -19,4 +22,3 @@ RUN mkdir -p /var/www/html/Common
 
 # Entry point
 CMD ["/entrypoint.sh"]
-

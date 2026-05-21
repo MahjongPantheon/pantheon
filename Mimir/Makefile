@@ -26,7 +26,7 @@ container_migrate: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Mimir container is not running, can't run migrations.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec tsx app/database/migrate.ts'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm-esm migration:up'; \
 	fi
 
 .PHONY: container_migrate_mimir1
@@ -34,7 +34,7 @@ container_migrate_mimir1: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Mimir container is not running, can't run migrations.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec tsx app/database/migrate.ts'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm migration:up'; \
 		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec tsx app/database/migrate_from_mimir1.ts'; \
 	fi
 
@@ -184,7 +184,7 @@ container_dev: get_container_id
 
 .PHONY: init_test_db
 init_test_db:
-	DB_FREY_NAME=mimir2_unit pnpm exec tsx app/database/migrate.ts
+	DB_FREY_NAME=mimir2_unit pnpm exec mikro-orm-esm migration:up
 
 .PHONY: container_init_test_db
 container_init_test_db: get_container_id
@@ -207,8 +207,9 @@ container_bootstrap_admin: get_container_id container_migrate
 	fi
 
 .PHONY: clean_test_db
+clean_test_db: export TEST=true
 clean_test_db:
-	pnpm exec tsx app/database/clean_test_db.ts
+	pnpm exec mikro-orm-esm schema:drop --run --drop-migrations-table
 
 .PHONY: container_clean_test_db
 container_clean_test_db: get_container_id
@@ -246,7 +247,6 @@ container_build: get_container_id
 .PHONY: prod_deps
 prod_deps:
 	cd ../Mimir-dist && NODE_ENV=production pnpm install
-	cd ../Common/tsclients && pnpm install
 
 .PHONY: container_prod_deps
 container_prod_deps: get_container_id
@@ -255,6 +255,19 @@ container_prod_deps: get_container_id
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make prod_deps' ; \
 	fi
+
+.PHONY: common_deps
+common_deps:
+	cd ../Common/tsclients && NODE_ENV=production pnpm install
+
+.PHONY: container_common_deps
+container_common_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Mimir container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make common_deps' ; \
+	fi
+
 
 .PHONY: prebuild
 prebuild:

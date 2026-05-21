@@ -8,7 +8,7 @@ export class JobsQueueEntity {
   @Property({ fieldName: 'job_arguments' })
   jobArguments!: string;
 
-  @Property({ fieldName: 'job_name' })
+  @Property({ fieldName: 'job_name', type: 'varchar' })
   jobName!: JobName;
 
   @Property({ fieldName: 'created_at', type: 'timestamp' })

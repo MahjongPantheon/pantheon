@@ -494,6 +494,7 @@ db_import:
 .PHONY: prod_deps
 prod_deps:
 	cd Mimir && ${MAKE} container_deps
+	cd Mimir && ${MAKE} container_common_deps
 	cd Frey && ${MAKE} container_deps
 	cd Tyr && ${MAKE} container_deps
 	cd Forseti && ${MAKE} container_deps

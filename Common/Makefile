@@ -4,3 +4,6 @@ lint:
 
 autofix:
 	./protolint -fix ./proto
+
+prod_deps:
+	cd tsclients && pnpm install

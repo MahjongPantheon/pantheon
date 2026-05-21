@@ -49,7 +49,6 @@ logs: get_container_id
 .PHONY: deps
 deps:
 	pnpm install
-	cd ../Common/tsclients && pnpm install
 
 .PHONY: container_deps
 container_deps: get_container_id

@@ -19,7 +19,7 @@ export class RoundEntity {
   @OneToMany(() => HandEntity, (hand) => hand.round)
   hands!: HandEntity[];
 
-  @Property({ comment: 'ron, tsumo, draw, abortive draw or chombo' })
+  @Property({ comment: 'ron, tsumo, draw, abortive draw or chombo', type: 'varchar' })
   outcome!: RoundOutcome;
 
   @Property({ comment: '1-4 means east1-4, 5-8 means south1-4, etc' })

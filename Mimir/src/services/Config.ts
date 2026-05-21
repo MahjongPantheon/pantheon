@@ -58,7 +58,7 @@ export class ConfigService {
   get db() {
     return {
       host: this.dbHost,
-      username: process.env.DB_MIMIR_USER ?? this._envData.DB_MIMIR_USER ?? 'mimir',
+      username: process.env.DB_MIMIR_USER ?? this._envData.DB_MIMIR_USER ?? 'mimir2',
       password: process.env.DB_MIMIR_PASSWORD ?? this._envData.DB_MIMIR_PASSWORD ?? 'pgpass',
       dbname: process.env.DB_MIMIR_NAME ?? this._envData.DB_MIMIR_NAME ?? 'mimir2',
       port: parseInt(this._envData.DB_MIMIR_PORT ?? '5432'),
