@@ -1,0 +1,3 @@
+* * * * * cd /var/www/html/Mimir && pnpm exec tsx /var/www/html/Mimir/cron/send_stats.ts
+* * * * * cd /var/www/html/Mimir && pnpm exec tsx /var/www/html/Mimir/cron/achievements.ts
+* * * * * cd /var/www/html/Mimir && pnpm exec tsx /var/www/html/Mimir/cron/player_stats.ts
