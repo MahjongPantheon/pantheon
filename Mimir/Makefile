@@ -34,8 +34,7 @@ container_migrate_mimir1: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Mimir container is not running, can't run migrations.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm migration:up'; \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec tsx app/database/migrate_from_mimir1.ts'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec tsx src/migrate_from_mimir1.ts'; \
 	fi
 
 .PHONY: logs
