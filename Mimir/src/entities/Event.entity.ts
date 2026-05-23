@@ -13,10 +13,10 @@ export class EventEntity {
   @Property({ fieldName: 'description', type: 'text' })
   description!: string;
 
-  @Property({ fieldName: 'start_time', nullable: true })
+  @Property({ fieldName: 'start_time', type: 'string', columnType: 'timestamp', nullable: true })
   startTime?: string;
 
-  @Property({ fieldName: 'end_time', nullable: true })
+  @Property({ fieldName: 'end_time', type: 'string', columnType: 'timestamp', nullable: true })
   endTime?: string;
 
   @Property({

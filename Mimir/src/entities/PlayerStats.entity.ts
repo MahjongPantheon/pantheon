@@ -66,6 +66,6 @@ export class PlayerStatsEntity {
   @Property({ type: 'json', comment: 'stats precalculated data' })
   data!: PlayerStatsData;
 
-  @Property({ fieldName: 'last_update', nullable: true })
+  @Property({ fieldName: 'last_update', type: 'string', columnType: 'timestamp', nullable: true })
   lastUpdate?: string;
 }

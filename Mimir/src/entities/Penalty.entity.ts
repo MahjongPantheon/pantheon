@@ -28,7 +28,7 @@ export class PenaltyEntity {
   @Property({ fieldName: 'cancelled_reason', nullable: true })
   cancelledReason?: string;
 
-  @Property({ fieldName: 'created_at', type: 'timestamp' })
+  @Property({ fieldName: 'created_at', type: 'string', columnType: 'timestamp' })
   createdAt!: string;
 
   @Property({ fieldName: 'reason', type: 'text' })

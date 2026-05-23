@@ -23,10 +23,10 @@ export class SessionEntity {
   })
   representationalHash?: string;
 
-  @Property({ fieldName: 'start_date', nullable: true })
+  @Property({ fieldName: 'start_date', type: 'string', columnType: 'timestamp', nullable: true })
   startDate?: string;
 
-  @Property({ fieldName: 'end_date', nullable: true })
+  @Property({ fieldName: 'end_date', type: 'string', columnType: 'timestamp', nullable: true })
   endDate?: string;
 
   @Embedded({

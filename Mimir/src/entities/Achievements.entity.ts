@@ -53,6 +53,6 @@ export class AchievementsEntity {
   @Property({ fieldName: 'data', type: 'json', comment: 'achievements precalculated data' })
   data!: AchievementsData;
 
-  @Property({ fieldName: 'last_update', type: 'timestamp', nullable: true })
+  @Property({ fieldName: 'last_update', type: 'string', columnType: 'timestamp', nullable: true })
   lastUpdate?: string;
 }
