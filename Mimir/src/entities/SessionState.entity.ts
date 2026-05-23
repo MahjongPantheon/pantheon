@@ -3,15 +3,15 @@ import { Embeddable, Property } from '@mikro-orm/postgresql';
 @Embeddable()
 export class SessionStateEntity {
   /** { player_id => score } */
-  @Property()
+  @Property({ type: 'json' })
   scores!: Record<number, number>;
 
   /** { player_id => chip } */
-  @Property()
+  @Property({ type: 'json' })
   chips!: Record<number, number>;
 
   /** { player_id => chombo_amount } */
-  @Property()
+  @Property({ type: 'json' })
   chombo!: Record<number, number>;
 
   /** 1e-4s */
@@ -51,14 +51,14 @@ export class SessionStateEntity {
   lastOutcome!: string;
 
   /** If player has yakitori indicator */
-  @Property()
+  @Property({ type: 'json' })
   yakitori!: Record<number, boolean>;
 
   /** Saved current replacements for proper recalculations */
-  @Property()
+  @Property({ type: 'json' })
   replacements!: Record<number, number>;
 
   /** Player IDs */
-  @Property()
+  @Property({ type: 'json' })
   playerIds!: number[];
 }

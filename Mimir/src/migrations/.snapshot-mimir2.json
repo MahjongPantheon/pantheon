@@ -36,23 +36,23 @@
         },
         "start_time": {
           "name": "start_time",
-          "type": "varchar(255)",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 255,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         },
         "end_time": {
           "name": "end_time",
-          "type": "varchar(255)",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 255,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         },
         "game_duration": {
           "name": "game_duration",
@@ -347,7 +347,7 @@
         },
         "last_update": {
           "name": "last_update",
-          "type": "timestamptz",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -599,7 +599,7 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamptz",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -773,13 +773,13 @@
         },
         "last_update": {
           "name": "last_update",
-          "type": "varchar(255)",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 255,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
       "name": "player_stats",
@@ -867,23 +867,23 @@
         },
         "start_date": {
           "name": "start_date",
-          "type": "varchar(255)",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 255,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         },
         "end_date": {
           "name": "end_date",
-          "type": "varchar(255)",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 255,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         },
         "intermediate_results": {
           "name": "intermediate_results",
@@ -1030,7 +1030,7 @@
         },
         "end_date": {
           "name": "end_date",
-          "type": "timestamptz",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -1038,123 +1038,14 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "last_session_state_scores": {
-          "name": "last_session_state_scores",
+        "last_session_state": {
+          "name": "last_session_state",
           "type": "jsonb",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "json"
-        },
-        "last_session_state_chips": {
-          "name": "last_session_state_chips",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "json"
-        },
-        "last_session_state_chombo": {
-          "name": "last_session_state_chombo",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "json"
-        },
-        "last_session_state_round": {
-          "name": "last_session_state_round",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "last_session_state_honba": {
-          "name": "last_session_state_honba",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "last_session_state_riichi_bets": {
-          "name": "last_session_state_riichi_bets",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "last_session_state_prematurely_finished": {
-          "name": "last_session_state_prematurely_finished",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "boolean"
-        },
-        "last_session_state_round_just_changed": {
-          "name": "last_session_state_round_just_changed",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "boolean"
-        },
-        "last_session_state_last_hand_started": {
-          "name": "last_session_state_last_hand_started",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "boolean"
-        },
-        "last_session_state_last_outcome": {
-          "name": "last_session_state_last_outcome",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "length": 255,
-          "mappedType": "string"
-        },
-        "last_session_state_yakitori": {
-          "name": "last_session_state_yakitori",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "json"
-        },
-        "last_session_state_replacements": {
-          "name": "last_session_state_replacements",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "json"
-        },
-        "last_session_state_player_ids": {
-          "name": "last_session_state_player_ids",
-          "type": "text[]",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "array"
         }
       },
       "name": "round",
@@ -1456,7 +1347,7 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamptz",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,

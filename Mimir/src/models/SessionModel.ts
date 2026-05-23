@@ -255,11 +255,11 @@ export class SessionModel extends Model {
       throw new Error('No session found in database');
     }
 
-    const [results, rounds, replacements] = await Promise.all([
+    const [results, rounds] = await Promise.all([
       sessionResultsModel.findBySession([session[0].id]),
       roundModel.findBySessionIds([session[0].id]),
-      players.playersData.replaceMap,
     ]);
+    const replacements = players.playersData.replaceMap;
 
     return {
       game: formatGameResult(

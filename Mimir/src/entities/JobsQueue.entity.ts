@@ -11,7 +11,7 @@ export class JobsQueueEntity {
   @Property({ fieldName: 'job_name', type: 'varchar' })
   jobName!: JobName;
 
-  @Property({ fieldName: 'created_at', type: 'timestamp' })
+  @Property({ fieldName: 'created_at', type: 'string', columnType: 'timestamp' })
   createdAt!: string;
 }
 

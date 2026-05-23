@@ -31,12 +31,14 @@ export class RoundEntity {
   @Property({ nullable: true, type: 'json', comment: 'list of user ids who called riichi' })
   riichi?: number[];
 
-  @Property({ nullable: true, type: 'timestamp', fieldName: 'end_date' })
+  @Property({ nullable: true, type: 'string', columnType: 'timestamp', fieldName: 'end_date' })
   endDate?: string;
 
   @Embedded({
     entity: () => SessionStateEntity,
     fieldName: 'last_session_state',
+    object: true,
+    nullable: true,
   })
   lastSessionState?: SessionStateEntity;
 
