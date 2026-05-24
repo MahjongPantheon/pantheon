@@ -170,22 +170,21 @@ export class FreyServiceMock extends FreyService {
     personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload
   ): Promise<PersonsFindByTenhouIdsResponse> {
     return Promise.resolve({
-      people: personsFindByMajsoulIdsPayload.ids.map(({nickname, accountId}) => (
-        {
-          id: +(Object.entries(this._mockMajsoulIds).find((el) => el[1] === accountId)?.[0] ?? '1'),
-          city: 'city',
-          tenhouId: 'tenhouId',
-          title: 'title',
-          country: 'country',
-          email: 'email',
-          phone: 'phone',
-          hasAvatar: false,
-          lastUpdate: new Date().toISOString(),
-          msNickname: nickname,
-          msAccountId: accountId,
-          telegramId: '121345',
-          notifications: 'notifications',
-        }))
+      people: personsFindByMajsoulIdsPayload.ids.map(({ nickname, accountId }) => ({
+        id: +(Object.entries(this._mockMajsoulIds).find((el) => el[1] === accountId)?.[0] ?? '1'),
+        city: 'city',
+        tenhouId: 'tenhouId',
+        title: 'title',
+        country: 'country',
+        email: 'email',
+        phone: 'phone',
+        hasAvatar: false,
+        lastUpdate: new Date().toISOString(),
+        msNickname: nickname,
+        msAccountId: accountId,
+        telegramId: '121345',
+        notifications: 'notifications',
+      })),
     });
   }
 

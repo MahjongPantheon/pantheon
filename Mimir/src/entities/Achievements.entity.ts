@@ -1,11 +1,5 @@
-import {
-  Entity,
-  Index,
-  ManyToOne,
-  PrimaryKey,
-  Property,
-} from "@mikro-orm/core";
-import { EventEntity } from "./Event.entity.js";
+import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { EventEntity } from './Event.entity.js';
 
 export type AchievementsData = Partial<{
   bestHand: {
@@ -48,26 +42,26 @@ export type AchievementsData = Partial<{
   riichiNomi: Array<{ name: string; count: number }>;
 }>;
 
-@Entity({ tableName: "achievements" })
-@Index({ properties: ["event"] })
+@Entity({ tableName: 'achievements' })
+@Index({ properties: ['event'] })
 export class AchievementsEntity {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne({ fieldName: "event_id" })
+  @ManyToOne({ fieldName: 'event_id' })
   event!: EventEntity;
 
   @Property({
-    fieldName: "data",
-    type: "json",
-    comment: "achievements precalculated data",
+    fieldName: 'data',
+    type: 'json',
+    comment: 'achievements precalculated data',
   })
   data!: AchievementsData;
 
   @Property({
-    fieldName: "last_update",
-    type: "string",
-    columnType: "timestamp",
+    fieldName: 'last_update',
+    type: 'string',
+    columnType: 'timestamp',
     nullable: true,
   })
   lastUpdate?: string;

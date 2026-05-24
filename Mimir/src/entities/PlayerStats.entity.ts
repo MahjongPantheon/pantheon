@@ -1,11 +1,5 @@
-import {
-  Entity,
-  Index,
-  ManyToOne,
-  PrimaryKey,
-  Property,
-} from "@mikro-orm/core";
-import { EventEntity } from "./Event.entity.js";
+import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { EventEntity } from './Event.entity.js';
 
 type PlayerStatsData = Partial<{
   ratingHistory: number[];
@@ -62,25 +56,25 @@ type PlayerStatsData = Partial<{
   lastUpdate: string;
 }>;
 
-@Entity({ tableName: "player_stats" })
-@Index({ properties: ["event", "playerId"] })
+@Entity({ tableName: 'player_stats' })
+@Index({ properties: ['event', 'playerId'] })
 export class PlayerStatsEntity {
   @PrimaryKey()
   id!: number;
 
-  @Property({ fieldName: "player_id" })
+  @Property({ fieldName: 'player_id' })
   playerId!: number;
 
-  @ManyToOne({ fieldName: "event_id" })
+  @ManyToOne({ fieldName: 'event_id' })
   event!: EventEntity;
 
-  @Property({ type: "json", comment: "stats precalculated data" })
+  @Property({ type: 'json', comment: 'stats precalculated data' })
   data!: PlayerStatsData;
 
   @Property({
-    fieldName: "last_update",
-    type: "string",
-    columnType: "timestamp",
+    fieldName: 'last_update',
+    type: 'string',
+    columnType: 'timestamp',
     nullable: true,
   })
   lastUpdate?: string;
