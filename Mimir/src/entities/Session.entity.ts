@@ -1,60 +1,53 @@
-import {
-  Embedded,
-  Entity,
-  Index,
-  ManyToOne,
-  PrimaryKey,
-  Property,
-} from "@mikro-orm/postgresql";
-import { EventEntity } from "./Event.entity.js";
-import { SessionStateEntity } from "./SessionState.entity.js";
+import { Embedded, Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/postgresql';
+import { EventEntity } from './Event.entity.js';
+import { SessionStateEntity } from './SessionState.entity.js';
 
-@Entity({ tableName: "session" })
-@Index({ properties: ["event"] })
-@Index({ properties: ["endDate"] })
-@Index({ properties: ["replayHash"] })
-@Index({ properties: ["representationalHash"] })
-@Index({ properties: ["status"] })
-@Index({ properties: ["tableIndex"] })
+@Entity({ tableName: 'session' })
+@Index({ properties: ['event'] })
+@Index({ properties: ['endDate'] })
+@Index({ properties: ['replayHash'] })
+@Index({ properties: ['representationalHash'] })
+@Index({ properties: ['status'] })
+@Index({ properties: ['tableIndex'] })
 export class SessionEntity {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne({ fieldName: "event_id" })
+  @ManyToOne({ fieldName: 'event_id' })
   event!: EventEntity;
 
   @Property({
     nullable: true,
-    comment: "planned / inprogress / prefinished / finished",
+    comment: 'planned / inprogress / prefinished / finished',
   })
   status?: string;
 
   @Property({
-    fieldName: "table_index",
+    fieldName: 'table_index',
     nullable: true,
-    comment: "table number in tournament",
+    comment: 'table number in tournament',
   })
   tableIndex?: number;
 
   @Property({
-    fieldName: "representational_hash",
+    fieldName: 'representational_hash',
     nullable: true,
-    comment: "hash to find this game from client mobile app",
+    comment: 'hash to find this game from client mobile app',
   })
   representationalHash?: string;
 
   @Property({
-    fieldName: "start_date",
-    type: "string",
-    columnType: "timestamp",
+    fieldName: 'start_date',
+    type: 'string',
+    columnType: 'timestamp',
     nullable: true,
   })
   startDate?: string;
 
   @Property({
-    fieldName: "end_date",
-    type: "string",
-    columnType: "timestamp",
+    fieldName: 'end_date',
+    type: 'string',
+    columnType: 'timestamp',
     nullable: true,
   })
   endDate?: string;
@@ -63,27 +56,27 @@ export class SessionEntity {
     entity: () => SessionStateEntity,
     nullable: true,
     object: true,
-    fieldName: "intermediate_results",
+    fieldName: 'intermediate_results',
   })
   intermediateResults?: SessionStateEntity;
 
   @Property({
-    fieldName: "orig_link",
+    fieldName: 'orig_link',
     nullable: true,
-    comment: "original tenhou game link, for access to replay",
+    comment: 'original tenhou game link, for access to replay',
   })
   origLink?: string;
 
   @Property({
-    fieldName: "replay_hash",
+    fieldName: 'replay_hash',
     nullable: true,
-    comment: "tenhou game hash, for deduplication",
+    comment: 'tenhou game hash, for deduplication',
   })
   replayHash?: string;
 
   @Property({
-    fieldName: "extra_time",
-    comment: "extra time for the session in seconds",
+    fieldName: 'extra_time',
+    comment: 'extra time for the session in seconds',
   })
   extraTime!: number;
 }

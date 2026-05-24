@@ -1,40 +1,34 @@
-import {
-  Entity,
-  Index,
-  ManyToOne,
-  PrimaryKey,
-  Property,
-} from "@mikro-orm/core";
-import { EventEntity } from "./Event.entity.js";
-import { SessionEntity } from "./Session.entity.js";
+import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { EventEntity } from './Event.entity.js';
+import { SessionEntity } from './Session.entity.js';
 
-@Entity({ tableName: "session_results" })
-@Index({ properties: ["event"] })
-@Index({ properties: ["session"] })
+@Entity({ tableName: 'session_results' })
+@Index({ properties: ['event'] })
+@Index({ properties: ['session'] })
 export class SessionResultsEntity {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne({ fieldName: "event_id" })
+  @ManyToOne({ fieldName: 'event_id' })
   event!: EventEntity;
 
-  @ManyToOne({ fieldName: "session_id" })
+  @ManyToOne({ fieldName: 'session_id' })
   session!: SessionEntity;
 
-  @Property({ fieldName: "player_id" })
+  @Property({ fieldName: 'player_id' })
   playerId!: number;
 
   @Property()
   place!: number;
 
   @Property({
-    comment: "how many points player has at the end, before any uma/oka calc",
+    comment: 'how many points player has at the end, before any uma/oka calc',
   })
   score!: number;
 
   @Property({
-    fieldName: "rating_delta",
-    comment: "resulting score after uma/oka and starting points subtraction",
+    fieldName: 'rating_delta',
+    comment: 'resulting score after uma/oka and starting points subtraction',
   })
   ratingDelta!: number;
 
