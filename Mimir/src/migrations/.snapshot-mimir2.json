@@ -311,6 +311,36 @@
       "schema": "public",
       "indexes": [
         {
+          "keyName": "event_title_index",
+          "columnNames": [
+            "title"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "event_lobby_id_index",
+          "columnNames": [
+            "lobby_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "event_finished_index",
+          "columnNames": [
+            "finished"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
           "keyName": "event_pkey",
           "columnNames": [
             "id"
@@ -369,6 +399,16 @@
       "name": "achievements",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "achievements_event_id_index",
+          "columnNames": [
+            "event_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "achievements_pkey",
           "columnNames": [
@@ -449,6 +489,16 @@
           "constraint": true,
           "primary": false,
           "unique": true
+        },
+        {
+          "keyName": "event_prescript_event_id_index",
+          "columnNames": [
+            "event_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
         },
         {
           "keyName": "event_prescript_pkey",
@@ -549,6 +599,27 @@
       "schema": "public",
       "indexes": [
         {
+          "keyName": "event_registered_players_ignore_seating_index",
+          "columnNames": [
+            "ignore_seating"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "event_registered_players_event_id_player_id_index",
+          "columnNames": [
+            "event_id",
+            "player_id"
+          ],
+          "composite": true,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
           "keyName": "event_registered_players_pkey",
           "columnNames": [
             "id"
@@ -621,6 +692,16 @@
       "name": "jobs_queue",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "jobs_queue_created_at_index",
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "jobs_queue_pkey",
           "columnNames": [
@@ -715,6 +796,16 @@
       "schema": "public",
       "indexes": [
         {
+          "keyName": "player_history_event_id_index",
+          "columnNames": [
+            "event_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
           "keyName": "player_history_pkey",
           "columnNames": [
             "id"
@@ -795,6 +886,17 @@
       "name": "player_stats",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "player_stats_event_id_player_id_index",
+          "columnNames": [
+            "event_id",
+            "player_id"
+          ],
+          "composite": true,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "player_stats_pkey",
           "columnNames": [
@@ -941,6 +1043,66 @@
       "schema": "public",
       "indexes": [
         {
+          "keyName": "session_table_index_index",
+          "columnNames": [
+            "table_index"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "session_status_index",
+          "columnNames": [
+            "status"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "session_representational_hash_index",
+          "columnNames": [
+            "representational_hash"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "session_replay_hash_index",
+          "columnNames": [
+            "replay_hash"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "session_end_date_index",
+          "columnNames": [
+            "end_date"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "session_event_id_index",
+          "columnNames": [
+            "event_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
           "keyName": "session_pkey",
           "columnNames": [
             "id"
@@ -1061,6 +1223,36 @@
       "name": "round",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "round_outcome_index",
+          "columnNames": [
+            "outcome"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "round_session_id_index",
+          "columnNames": [
+            "session_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "round_event_id_index",
+          "columnNames": [
+            "event_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "round_pkey",
           "columnNames": [
@@ -1253,6 +1445,16 @@
       "schema": "public",
       "indexes": [
         {
+          "keyName": "hand_round_id_index",
+          "columnNames": [
+            "round_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
           "keyName": "hand_pkey",
           "columnNames": [
             "id"
@@ -1379,6 +1581,66 @@
       "schema": "public",
       "indexes": [
         {
+          "keyName": "penalty_player_id_index",
+          "columnNames": [
+            "player_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "penalty_created_at_index",
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "penalty_cancelled_index",
+          "columnNames": [
+            "cancelled"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "penalty_assigned_by_index",
+          "columnNames": [
+            "assigned_by"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "penalty_session_id_index",
+          "columnNames": [
+            "session_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "penalty_event_id_index",
+          "columnNames": [
+            "event_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
           "keyName": "penalty_pkey",
           "columnNames": [
             "id"
@@ -1462,6 +1724,17 @@
       "name": "session_players",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "session_players_session_id_player_id_index",
+          "columnNames": [
+            "session_id",
+            "player_id"
+          ],
+          "composite": true,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "session_players_pkey",
           "columnNames": [
@@ -1570,6 +1843,26 @@
       "name": "session_results",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "session_results_session_id_index",
+          "columnNames": [
+            "session_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "session_results_event_id_index",
+          "columnNames": [
+            "event_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "session_results_pkey",
           "columnNames": [

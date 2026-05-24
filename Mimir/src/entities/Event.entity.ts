@@ -1,4 +1,10 @@
-import { Embedded, Entity, PrimaryKey, Property } from "@mikro-orm/postgresql";
+import {
+  Embedded,
+  Entity,
+  Index,
+  PrimaryKey,
+  Property,
+} from "@mikro-orm/postgresql";
 import { RulesetEntity } from "./Ruleset.entity.js";
 import {
   PlatformType,
@@ -7,6 +13,9 @@ import {
 } from "tsclients/proto/atoms.pb.js";
 
 @Entity({ tableName: "event" })
+@Index({ properties: ["finished"] })
+@Index({ properties: ["lobbyId"] })
+@Index({ properties: ["title"] })
 export class EventEntity {
   @PrimaryKey()
   id!: number;

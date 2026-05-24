@@ -1,17 +1,27 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { SessionEntity } from './Session.entity.js';
+import {
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryKey,
+  Property,
+} from "@mikro-orm/core";
+import { SessionEntity } from "./Session.entity.js";
 
-@Entity({ tableName: 'session_players' })
+@Entity({ tableName: "session_players" })
+@Index({ properties: ["session", "playerId"] })
 export class SessionPlayerEntity {
   @PrimaryKey()
   id!: number;
 
-  @Property({ comment: 'Order of the player at the table, 1 = first east, 2 = first south, etc' })
+  @Property({
+    comment:
+      "Order of the player at the table, 1 = first east, 2 = first south, etc",
+  })
   order!: number;
 
-  @Property({ fieldName: 'player_id' })
+  @Property({ fieldName: "player_id" })
   playerId!: number;
 
-  @ManyToOne({ fieldName: 'session_id' })
+  @ManyToOne({ fieldName: "session_id" })
   session!: SessionEntity;
 }

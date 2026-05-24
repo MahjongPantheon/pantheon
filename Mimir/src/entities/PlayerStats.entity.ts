@@ -1,5 +1,11 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { EventEntity } from './Event.entity.js';
+import {
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryKey,
+  Property,
+} from "@mikro-orm/core";
+import { EventEntity } from "./Event.entity.js";
 
 type PlayerStatsData = Partial<{
   ratingHistory: number[];
@@ -47,25 +53,35 @@ type PlayerStatsData = Partial<{
   };
   handsValueSummary: Record<number, number>;
   yakuSummary: Record<number, number>;
-  riichiSummary: { riichiWon: number; riichiLost: number; feedUnderRiichi: number };
+  riichiSummary: {
+    riichiWon: number;
+    riichiLost: number;
+    feedUnderRiichi: number;
+  };
   doraStat: { count: number; average: number };
   lastUpdate: string;
 }>;
 
-@Entity({ tableName: 'player_stats' })
+@Entity({ tableName: "player_stats" })
+@Index({ properties: ["event", "playerId"] })
 export class PlayerStatsEntity {
   @PrimaryKey()
   id!: number;
 
-  @Property({ fieldName: 'player_id' })
+  @Property({ fieldName: "player_id" })
   playerId!: number;
 
-  @ManyToOne({ fieldName: 'event_id' })
+  @ManyToOne({ fieldName: "event_id" })
   event!: EventEntity;
 
-  @Property({ type: 'json', comment: 'stats precalculated data' })
+  @Property({ type: "json", comment: "stats precalculated data" })
   data!: PlayerStatsData;
 
-  @Property({ fieldName: 'last_update', type: 'string', columnType: 'timestamp', nullable: true })
+  @Property({
+    fieldName: "last_update",
+    type: "string",
+    columnType: "timestamp",
+    nullable: true,
+  })
   lastUpdate?: string;
 }

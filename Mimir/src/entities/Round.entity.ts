@@ -1,42 +1,65 @@
-import { Embedded, Entity, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { SessionEntity } from './Session.entity.js';
-import { EventEntity } from './Event.entity.js';
-import { HandEntity } from './Hand.entity.js';
-import { SessionStateEntity } from './SessionState.entity.js';
-import { Round, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+import {
+  Embedded,
+  Entity,
+  Index,
+  ManyToOne,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from "@mikro-orm/core";
+import { SessionEntity } from "./Session.entity.js";
+import { EventEntity } from "./Event.entity.js";
+import { HandEntity } from "./Hand.entity.js";
+import { SessionStateEntity } from "./SessionState.entity.js";
+import { Round, RoundOutcome } from "tsclients/proto/atoms.pb.js";
 
-@Entity({ tableName: 'round' })
+@Entity({ tableName: "round" })
+@Index({ properties: ["event"] })
+@Index({ properties: ["session"] })
+@Index({ properties: ["outcome"] })
 export class RoundEntity {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne({ fieldName: 'session_id' })
+  @ManyToOne({ fieldName: "session_id" })
   session!: SessionEntity;
 
-  @ManyToOne({ fieldName: 'event_id' })
+  @ManyToOne({ fieldName: "event_id" })
   event!: EventEntity;
 
   @OneToMany(() => HandEntity, (hand) => hand.round)
   hands!: HandEntity[];
 
-  @Property({ comment: 'ron, tsumo, draw, abortive draw or chombo', type: 'varchar' })
+  @Property({
+    comment: "ron, tsumo, draw, abortive draw or chombo",
+    type: "varchar",
+  })
   outcome!: RoundOutcome;
 
-  @Property({ comment: '1-4 means east1-4, 5-8 means south1-4, etc' })
+  @Property({ comment: "1-4 means east1-4, 5-8 means south1-4, etc" })
   round!: number;
 
-  @Property({ comment: 'count of honba sticks' })
+  @Property({ comment: "count of honba sticks" })
   honba!: number;
 
-  @Property({ nullable: true, type: 'json', comment: 'list of user ids who called riichi' })
+  @Property({
+    nullable: true,
+    type: "json",
+    comment: "list of user ids who called riichi",
+  })
   riichi?: number[];
 
-  @Property({ nullable: true, type: 'string', columnType: 'timestamp', fieldName: 'end_date' })
+  @Property({
+    nullable: true,
+    type: "string",
+    columnType: "timestamp",
+    fieldName: "end_date",
+  })
   endDate?: string;
 
   @Embedded({
     entity: () => SessionStateEntity,
-    fieldName: 'last_session_state',
+    fieldName: "last_session_state",
     object: true,
     nullable: true,
   })
@@ -46,7 +69,7 @@ export class RoundEntity {
     sessionRef: SessionEntity,
     eventRef: EventEntity,
     round: Round,
-    lastSessionState: SessionStateEntity
+    lastSessionState: SessionStateEntity,
   ) {
     const entity = new RoundEntity();
     entity.session = sessionRef;
@@ -89,7 +112,9 @@ export class RoundEntity {
       entity.riichi = round.nagashi.riichiBets;
     } else if (round.multiron) {
       entity.outcome = RoundOutcome.ROUND_OUTCOME_MULTIRON;
-      entity.hands = round.multiron.wins.map((win) => HandEntity.fromMessage(win));
+      entity.hands = round.multiron.wins.map((win) =>
+        HandEntity.fromMessage(win),
+      );
       entity.round = round.multiron.roundIndex;
       entity.honba = round.multiron.honba;
       entity.riichi = round.multiron.riichiBets;

@@ -194,6 +194,17 @@ export async function migrateFromMimir1() {
         flushPromises.length = 0; // clear array
       }
     }
+
+    await em.transactional(async (emt) => {
+      const result = await emt
+        .getConnection()
+        .execute("select (max(round.id) + 1) as next_id from round");
+
+      const nextId = Number(result[0].next_id);
+      await emt
+        .getConnection()
+        .execute(`select setval('round_id_seq', ${nextId})`);
+    });
   }
 
   await orm.em.transactional(async (em) => {
