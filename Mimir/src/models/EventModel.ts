@@ -99,9 +99,10 @@ export class EventModel extends Model {
     const sessions = await this.repo.em.execute(
       this.repo.em
         .getKnex()
-        .from('sessions')
-        .select('id', 'event_id', 'count(*) as session_count')
+        .from('session')
+        .select('event_id')
         .where('event_id', 'in', eventIds)
+        .count('id as session_count')
         .groupBy('event_id')
     );
 
@@ -134,6 +135,7 @@ export class EventModel extends Model {
           : {}),
       },
       {
+        populate: ['ruleset'],
         limit: Math.min(eventsGetEventsPayload.limit, 100),
         offset: eventsGetEventsPayload.offset,
         orderBy: { id: -1 },

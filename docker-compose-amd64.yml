@@ -154,6 +154,12 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4001:80"
+      - "4201:4201"
+      - "4201:4201/udp"
+      - "4401:4401"
+      - "4401:4401/udp"
+      - "4411:4411"
+      - "4411:4411/udp"
     depends_on:
       - frey.pantheon.internal
       - db.pantheon.internal
@@ -472,7 +478,7 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     volumes:
-      - 'grafanastorage01:/var/lib/grafana'
+      - "grafanastorage01:/var/lib/grafana"
     networks:
       internal_net:
         aliases:
