@@ -12,7 +12,7 @@ export default {
   ...(process.env.DEBUG
     ? {}
     : {
-        // globalSetup: './app/tests/setup.ts',
-        // globalTeardown: './app/tests/teardown.ts',
+        globalSetup: './src/tests/setup.ts',
+        globalTeardown: './src/tests/teardown.ts',
       }),
 };

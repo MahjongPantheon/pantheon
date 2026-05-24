@@ -4,6 +4,8 @@ import { SqliteDriver } from '@mikro-orm/sqlite';
 
 process.env.TEST = 'true';
 
+// For tests that do not require full postgres setup
+
 export async function init() {
   return await MikroORM.init({
     ...config(),
