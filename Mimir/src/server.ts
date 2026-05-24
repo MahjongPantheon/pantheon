@@ -24,15 +24,21 @@ const app = createTwirpServer<Context, typeof mimirHandler, IncomingMessage>(mim
   .use(metrics());
 
 app.on('requestReceived', (ctx) => {
-  ctx.repository.log.info({ message: 'Request received', method: ctx.method?.name ?? 'Unknown' });
+  console.log({
+    message: 'Request received',
+    method: ctx.method?.name ?? 'Unknown',
+  });
 });
 
 app.on('responseSent', (ctx) => {
-  ctx.repository.log.info({ message: 'Response sent', method: ctx.method?.name ?? 'Unknown' });
+  console.log({
+    message: 'Response sent',
+    method: ctx.method?.name ?? 'Unknown',
+  });
 });
 
 app.on('error', (ctx, err) => {
-  ctx.repository.log.error({
+  console.error({
     message: 'Request errored',
     method: ctx.method?.name ?? 'Unknown',
     err,

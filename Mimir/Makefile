@@ -173,7 +173,7 @@ container_autofix: get_container_id
 	fi
 
 dev:
-	pnpm exec tsx watch --inspect=0.0.0.0:4204/debug app/server.ts
+	pnpm exec tsx watch --inspect=0.0.0.0:4201/debug src/server.ts
 
 .PHONY: container_dev
 container_dev: get_container_id
