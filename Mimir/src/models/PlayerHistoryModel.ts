@@ -14,8 +14,9 @@ export class PlayerHistoryModel extends Model {
     const qb = this.repo.em
       .getKnex()
       .from('player_history')
-      .select([sql`max(id) as mx`, 'player_id', 'event_id'])
-      .where({ event: this.repo.em.getReference(EventEntity, eventIds) })
+      .select(['player_id', 'event_id'])
+      .where({ event_id: eventIds })
+      .max('id as mx')
       .groupBy(['player_id', 'event_id']);
     const ids = await this.repo.em.execute(qb);
     return this.repo.em.findAll(PlayerHistoryEntity, {
@@ -28,15 +29,12 @@ export class PlayerHistoryModel extends Model {
       .getKnex()
       .from('player_history')
       .leftJoin('session', 'session.id', 'player_history.session_id')
-      .select([
-        sql`max(player_history.id) as mx`,
-        'player_history.player_id',
-        'player_history.event_id',
-      ])
+      .select(['player_history.player_id', 'player_history.event_id'])
       .where({
-        event: this.repo.em.getReference(EventEntity, eventIds),
+        event_id: eventIds,
         ...(date ? { 'session.end_date': { $lt: date.utc().format('YYYY-MM-DD HH:mm:ss') } } : {}),
       })
+      .max('player_history.id as mx')
       .groupBy(['player_history.player_id', 'player_history.event_id']);
 
     const ids = await this.repo.em.execute(qb);
@@ -304,13 +302,13 @@ export class PlayerHistoryModel extends Model {
     );
     return items.map((item) => {
       item.avgScore = item.rating / item.gamesPlayed;
-      item.playerTitle = playersMap[item.playerId].title;
-      item.playerTenhouId = playersMap[item.playerId].tenhouId;
+      item.playerTitle = playersMap[item.playerId]?.title;
+      item.playerTenhouId = playersMap[item.playerId]?.tenhouId;
       item.playerTeamName = teamNames[item.playerId];
-      item.playerHasAvatar = playersMap[item.playerId].hasAvatar;
-      item.playerLastUpdate = playersMap[item.playerId].lastUpdate;
-      item.penaltiesAmount = penaltiesMap[item.playerId].penaltiesAmount;
-      item.penaltiesCount = penaltiesMap[item.playerId].penaltiesCount;
+      item.playerHasAvatar = playersMap[item.playerId]?.hasAvatar;
+      item.playerLastUpdate = playersMap[item.playerId]?.lastUpdate;
+      item.penaltiesAmount = penaltiesMap[item.playerId]?.penaltiesAmount;
+      item.penaltiesCount = penaltiesMap[item.playerId]?.penaltiesCount;
       return item;
     });
   }
