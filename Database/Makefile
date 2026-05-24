@@ -113,4 +113,10 @@ create_mimir2_db: get_container_id
 		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres sh -c "bash /create_mimir2_db.sh"' ; \
 	fi
 
-
+.PHONY: ensure_mimir_migrations_privileges
+ensure_mimir_migrations_privileges: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Database container is not running, can't ensure privileges.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres sh -c "bash /ensure_mimir_migrations_privileges.sh"' ; \
+	fi
