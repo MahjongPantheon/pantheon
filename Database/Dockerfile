@@ -14,8 +14,10 @@ RUN mkdir -p /container-entrypoint-initdb.d
 COPY dbinit_mimir2.sql /container-entrypoint-initdb.d/dbinit_mimir2.sql
 COPY dbinit_frey2.sql /container-entrypoint-initdb.d/dbinit_frey2.sql
 COPY dbinit_hugin.sql /container-entrypoint-initdb.d/dbinit_hugin.sql
+COPY mimir_privileges.sql /container-entrypoint-initdb.d/mimir_privileges.sql
 COPY create_frey2_db.sh /create_frey2_db.sh
 COPY create_mimir2_db.sh /create_mimir2_db.sh
+COPY ensure_mimir_migrations_privileges.sh /ensure_mimir_migrations_privileges.sh
 COPY Makefile /var/lib/postgresql/Makefile
 
 # Copy cron defs
@@ -36,4 +38,3 @@ COPY ErrMailer.php /var/lib/postgresql/ErrMailer.php
 
 # Entry point
 CMD ["/entrypoint.sh"]
-

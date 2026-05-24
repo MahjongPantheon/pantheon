@@ -228,6 +228,7 @@ migrate_frey1:
 
 .PHONY: migrate_mimir1
 migrate_mimir1:
+	cd Database && ${MAKE} ensure_mimir_migrations_privileges
 	cd Mimir && ${MAKE} container_migrate_mimir1
 
 .PHONY: shell_tyr
