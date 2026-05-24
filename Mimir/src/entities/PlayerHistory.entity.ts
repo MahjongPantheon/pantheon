@@ -1,30 +1,37 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { EventEntity } from './Event.entity.js';
+import {
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryKey,
+  Property,
+} from "@mikro-orm/core";
+import { EventEntity } from "./Event.entity.js";
 
-@Entity({ tableName: 'player_history' })
+@Entity({ tableName: "player_history" })
+@Index({ properties: ["event"] })
 export class PlayerHistoryEntity {
   @PrimaryKey()
   id!: number;
 
-  @Property({ fieldName: 'player_id' })
+  @Property({ fieldName: "player_id" })
   playerId!: number;
 
-  @ManyToOne({ fieldName: 'event_id' })
+  @ManyToOne({ fieldName: "event_id" })
   event!: EventEntity;
 
-  @Property({ fieldName: 'session_id' })
+  @Property({ fieldName: "session_id" })
   sessionId!: number;
 
-  @Property({ fieldName: 'avg_place' })
+  @Property({ fieldName: "avg_place" })
   avgPlace!: number;
 
-  @Property({ fieldName: 'chips', nullable: true })
+  @Property({ fieldName: "chips", nullable: true })
   chips?: number;
 
-  @Property({ fieldName: 'games_played' })
+  @Property({ fieldName: "games_played" })
   gamesPlayed!: number;
 
-  @Property({ fieldName: 'rating' })
+  @Property({ fieldName: "rating" })
   rating!: number;
 
   // Calculated fields not saved to DB
