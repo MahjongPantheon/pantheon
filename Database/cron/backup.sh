@@ -7,9 +7,9 @@ pg_dump --clean -Z0 -Fd mimir -f ~/backup/mimir
 pg_dump --clean -Z0 -Fd hugin -f ~/backup/hugin
 cd /var/lib/postgresql/backup || exit
 
-cd frey2 && ls | xargs lzma && cd ..
-cd mimir && ls | xargs lzma && cd ..
-cd hugin && ls | xargs lzma && cd ..
+cd frey2 && zstd -T4 -9 --rm * && cd ..
+cd mimir && zstd -T4 -9 --rm * && cd ..
+cd hugin && zstd -T4 -9 --rm * && cd ..
 
 git add .
 git commit -m "Backup @ `date`"
