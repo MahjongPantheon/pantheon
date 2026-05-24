@@ -295,6 +295,16 @@
           "primary": false,
           "nullable": false,
           "mappedType": "integer"
+        },
+        "wind_shuffle_mode": {
+          "name": "wind_shuffle_mode",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
+          "mappedType": "string"
         }
       },
       "name": "event",
