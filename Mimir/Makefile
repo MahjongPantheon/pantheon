@@ -76,7 +76,7 @@ container_eslint: get_container_id
 .PHONY: prettier
 prettier:
 	echo "======= Mimir: prettier ======"
-	pnpm exec prettier -c ./app
+	pnpm exec prettier -c ./src
 
 .PHONY: container_prettier
 container_prettier: get_container_id
@@ -100,8 +100,10 @@ container_typecheck: get_container_id
 	fi
 
 .PHONY: test
+test: export NODE_OPTIONS=--experimental-vm-modules
 test:
 	echo "======= Mimir: test ======"
+	make init_test_db
 	pnpm exec jest
 
 .PHONY: container_test
@@ -114,8 +116,10 @@ container_test: get_container_id
 
 .PHONY: test_verbose
 test_verbose: export TEST_VERBOSE=true
+test: export NODE_OPTIONS=--experimental-vm-modules
 test_verbose:
 	echo "======= Mimir: test ======"
+	make init_test_db
 	pnpm exec jest
 
 .PHONY: container_test_verbose
@@ -129,24 +133,22 @@ container_test_verbose: get_container_id
 .PHONY: run_test_server
 run_test_server: export TEST_VERBOSE=true
 run_test_server:
-	@echo "${GREEN}Running test server on port 4404${NC}"
+	@echo "${GREEN}Running test server on port 4401${NC}"
 	@echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"
 	@echo "Use 'make test_noserver' in separate terminal to run jest on already started server"
-	pnpm exec tsx watch --inspect=0.0.0.0:4404/debug app/tests/testserver.ts
+	pnpm exec tsx watch --inspect=0.0.0.0:4401/debug src/tests/testserver.ts
 
 .PHONY: container_run_test_server
 container_run_test_server: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Mimir container is not running.${NC}"; \
 	else \
-	  echo "${GREEN}Running test server on port 4404${NC}"; \
-		echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"; \
-		echo "Use 'make container_test_noserver' in separate terminal to run jest on already started server"; \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec tsx watch --inspect=0.0.0.0:4404/debug app/tests/testserver.ts' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make run_test_server' ; \
 	fi
 
 .PHONY: test_noserver
 test_noserver: export DEBUG=true
+test: export NODE_OPTIONS=--experimental-vm-modules
 test_noserver:
 	echo "======= Mimir: test_noserver ======"
 	pnpm exec jest
@@ -162,7 +164,7 @@ container_test_noserver: get_container_id
 .PHONY: autofix
 autofix:
 	pnpm exec eslint . --fix
-	pnpm exec prettier -w ./app
+	pnpm exec prettier -w ./src
 
 .PHONY: container_autofix
 container_autofix: get_container_id
@@ -185,7 +187,8 @@ container_dev: get_container_id
 
 .PHONY: init_test_db
 init_test_db:
-	DB_FREY_NAME=mimir2_unit pnpm exec mikro-orm-esm migration:up
+	DB_MIMIR_NAME=mimir2_unit pnpm exec mikro-orm-esm schema:drop --run --drop-migrations-table
+	DB_MIMIR_NAME=mimir2_unit pnpm exec mikro-orm-esm migration:up
 
 .PHONY: container_init_test_db
 container_init_test_db: get_container_id
@@ -197,7 +200,7 @@ container_init_test_db: get_container_id
 
 .PHONY: bootstrap_admin
 bootstrap_admin:
-	pnpm exec tsx app/database/bootstrap_admin.ts
+	pnpm exec tsx src/database/bootstrap_admin.ts
 
 .PHONY: container_bootstrap_admin
 container_bootstrap_admin: get_container_id container_migrate

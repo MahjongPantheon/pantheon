@@ -15,7 +15,7 @@ export function metrics(): Middleware<Context, IncomingMessage> {
           {
             m: 'method_exec_duration_' + req.url?.replace('/v2/common.Mimir/', ''),
             v: duration,
-            s: 'frey',
+            s: 'mimir',
           },
         ]),
       });

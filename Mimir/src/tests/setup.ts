@@ -2,7 +2,7 @@ import { spawn } from 'child_process';
 
 export default async function setup() {
   return new Promise<void>((resolve) => {
-    const child = spawn('/usr/bin/pnpm', ['exec', 'tsx', 'app/tests/testserver.ts'], {
+    const child = spawn('/usr/bin/pnpm', ['exec', 'tsx', 'src/tests/testserver.ts'], {
       shell: true,
       stdio: 'pipe',
       // cwd: __dirname + '../../',
@@ -17,6 +17,7 @@ export default async function setup() {
           }
 
           if (str.includes('Test server listening on port 4301')) {
+            console.log('Test server spawned successfully');
             resolve();
           }
         });
