@@ -1,5 +1,5 @@
-import { SessionResultsModel } from './SessionResultsModel.js';
-import { Model } from './Model.js';
+import { SessionResultsModel } from '../SessionResultsModel.js';
+import { Model } from '../Model.js';
 import { Repository } from 'src/services/Repository.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import { init } from 'src/tests/initOrm.js';

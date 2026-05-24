@@ -104,7 +104,7 @@ test: export NODE_OPTIONS=--experimental-vm-modules
 test:
 	echo "======= Mimir: test ======"
 	make init_test_db
-	pnpm exec jest
+	pnpm exec jest --coverage
 
 .PHONY: container_test
 container_test: get_container_id

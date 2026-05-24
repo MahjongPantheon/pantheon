@@ -90,6 +90,7 @@ export class FreyService {
       headers.set('X-Current-Event-Id', meta.currentEventId?.toString() ?? '');
       const resp = await fetch(url, {
         ...opts,
+        body: opts.body?.toString(),
         headers,
       });
 

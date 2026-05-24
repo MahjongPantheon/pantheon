@@ -45,7 +45,7 @@ export class SkirnirService {
     let settings = {};
     try {
       settings = JSON.parse(notifications);
-    } catch (_e) {
+    } catch {
       settings = {};
     }
     return { ...notificationsDefaults, ...settings };
