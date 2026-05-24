@@ -1,5 +1,5 @@
-import { PlayerHistoryModel } from './PlayerHistoryModel.js';
-import { Model } from './Model.js';
+import { PlayerHistoryModel } from '../PlayerHistoryModel.js';
+import { Model } from '../Model.js';
 import { Repository } from 'src/services/Repository.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';

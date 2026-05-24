@@ -71,7 +71,7 @@ export class Downloader {
         throw new Error('Log parameter not found');
       }
       return log;
-    } catch (_error) {
+    } catch {
       throw new Error('Received parameter is not valid URL');
     }
   }
@@ -93,7 +93,7 @@ export class Downloader {
 
       const content = await response.text();
       return [content, response.status];
-    } catch (_error) {
+    } catch {
       return ['', 0];
     }
   }

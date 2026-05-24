@@ -163,7 +163,7 @@ export default [
       'server.js',
       'eslint.config.mjs',
       'proto.config.mjs',
-      'jest.config.js',
+      'jest.config.mjs',
     ],
   },
 ];

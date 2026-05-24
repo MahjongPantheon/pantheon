@@ -86,10 +86,12 @@ Frey/node_modules/*
 Frey/dist/*
 Frey-dist/.env.production
 Frey-dist/node_modules/*
+Frey/coverage/*
 
 Mimir/node_modules/*
 Mimir/dist/*
-Mimir/temp
+Mimir/temp/*
+Mimir/coverage/*
 Mimir-dist/.env.production
 Mimir-dist/node_modules/*
 

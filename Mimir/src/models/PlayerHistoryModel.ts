@@ -2,7 +2,6 @@ import { Moment } from 'moment-timezone';
 import { Model } from './Model.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
-import { sql } from '@mikro-orm/core';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 import moment from 'moment';
 import { PersonEx } from 'tsclients/proto/atoms.pb.js';

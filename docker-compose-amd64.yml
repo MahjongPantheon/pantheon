@@ -172,6 +172,8 @@ services:
     environment:
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db.pantheon.internal
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:

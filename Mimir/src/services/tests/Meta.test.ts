@@ -1,5 +1,5 @@
-import { ConfigService } from './Config.js';
-import { MetaService } from './Meta.js';
+import { ConfigService } from '../Config.js';
+import { MetaService } from '../Meta.js';
 
 describe('Cookies parser', () => {
   const meta = new MetaService({}, new ConfigService());
