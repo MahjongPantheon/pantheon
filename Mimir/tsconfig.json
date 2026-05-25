@@ -12,8 +12,8 @@
     "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
     "target": "ES2022",
     "strict": true,
     "outDir": "dist",
@@ -21,6 +21,6 @@
     "experimentalDecorators": true,
     "types": ["@types/jest"],
   },
-  "include": ["build.ts", "src/**/*", "cron/**/*", "node_modules/tsclients/**/*"],
+  "include": ["build.ts", "src/**/*", "cron/**/*"],
   "exclude": ["node_modules/**/*", "dist/**/*"],
 }

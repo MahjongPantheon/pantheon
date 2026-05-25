@@ -444,7 +444,7 @@ export class SkirnirService {
     const admins = await this._repo.frey.GetEventAdmins({ eventId });
     const referees = await this._repo.frey.GetEventReferees({ eventId });
 
-    return [...admins.admins, ...referees.referees].map((item) => parseInt(item.id, 10));
+    return [...admins.admins, ...referees.referees].map((item) => item.personId);
   }
 
   protected _getPlayersMap(

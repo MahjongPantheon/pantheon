@@ -5,6 +5,7 @@ import { PersonEx, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
 import { SessionEntity } from 'src/entities/Session.entity.js';
+import { EventsGetGamesSeriesResponse } from 'tsclients/proto/mimir.pb.js';
 
 type SeriesResult = {
   placesSum: number;
@@ -17,7 +18,7 @@ type SeriesResult = {
 };
 
 export class EventGameSeriesModel extends Model {
-  async getGamesSeries(event: EventEntity) {
+  async getGamesSeries(event: EventEntity): Promise<EventsGetGamesSeriesResponse['results']> {
     if (event.seriesLength < 1) {
       throw new Error('This event does not support series');
     }
@@ -198,8 +199,8 @@ export class EventGameSeriesModel extends Model {
         hashes,
         places
       ),
-      currentSeriesScores: result.currentSeriesScores,
-      currentSeriesPlaces: result.currentSeriesPlaces,
+      currentSeriesScores: result.currentSeriesScores ?? 0,
+      currentSeriesPlaces: result.currentSeriesPlaces ?? 0,
       currentSeriesAvgPlace: this.formatAvgPlace(
         result.currentSeriesPlaces!,
         result.currentSeries?.length ?? 0
@@ -216,7 +217,7 @@ export class EventGameSeriesModel extends Model {
     const result = [];
     for (const seriesId of seriesIds) {
       result.push({
-        hash: hashes[playerId],
+        sessionHash: hashes[playerId],
         place: places[seriesId][playerId],
       });
     }

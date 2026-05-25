@@ -9,12 +9,18 @@ import {
   PlayersGetLastResultsPayload,
   PlayersGetLastResultsResponse,
 } from 'tsclients/proto/mimir.pb.js';
+import { PlayerModel } from './PlayerModel.js';
+import { PersonEx, SessionHistoryResult } from 'tsclients/proto/atoms.pb.js';
 
 export class SessionResultsModel extends Model {
   findBySession(sessionId: number[]): Promise<SessionResultsEntity[]> {
-    return this.repo.em.find(SessionResultsEntity, {
-      session: this.repo.em.getReference(SessionEntity, sessionId),
-    });
+    return this.repo.em.find(
+      SessionResultsEntity,
+      {
+        session: this.repo.em.getReference(SessionEntity, sessionId),
+      },
+      { populate: ['session'] }
+    );
   }
 
   findByEvent(eventId: number[]): Promise<SessionResultsEntity[]> {
@@ -151,8 +157,33 @@ export class SessionResultsModel extends Model {
       input.eventId,
       input.playerId
     );
+
+    let lastResults: SessionHistoryResult[] = [];
+    if (lastPlayerResult) {
+      const results = await this.findBySession([lastPlayerResult.sessionId]);
+      const playerModel = this.getModel(PlayerModel);
+      const players = (await playerModel.findById(results.map((result) => result.playerId))).reduce(
+        (acc, p) => {
+          acc[p.id] = p;
+          return acc;
+        },
+        {} as Record<number, PersonEx>
+      );
+
+      lastResults = results.map((result) => ({
+        sessionHash: result.session.representationalHash ?? '',
+        eventId: result.event.id,
+        playerId: result.playerId,
+        score: result.score,
+        ratingDelta: result.ratingDelta,
+        place: result.place,
+        title: players[result.playerId]?.title,
+        hasAvatar: players[result.playerId]?.hasAvatar,
+        lastUpdate: players[result.playerId]?.lastUpdate,
+      }));
+    }
     return {
-      results: lastPlayerResult ? await this.findBySession([lastPlayerResult.sessionId]) : [],
+      results: lastResults,
     };
   }
 }

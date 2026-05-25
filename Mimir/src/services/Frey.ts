@@ -88,7 +88,7 @@ export class FreyService {
     this._config.rpcTransport = async (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', meta.currentEventId?.toString() ?? '');
-      // @ts-expect-error inconsistent types of opts.body
+      // Note: IDE might warn about inconsistent types of opts.body; this is not the case here.
       const resp = await fetch(url, {
         ...opts,
         headers,
