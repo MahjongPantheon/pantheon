@@ -122,4 +122,105 @@ export class RoundEntity {
     entity.lastSessionState = lastSessionState;
     return entity;
   }
+
+  static toMessage(entity: RoundEntity): Round {
+    if (entity.outcome === RoundOutcome.ROUND_OUTCOME_RON) {
+      return {
+        ron: {
+          roundIndex: entity.round,
+          honba: entity.honba,
+          riichiBets: entity.riichi ?? [],
+          winnerId: entity.hands[0].winnerId!,
+          loserId: entity.hands[0].loserId!,
+          paoPlayerId: entity.hands[0].paoPlayerId!,
+          openHand: entity.hands[0].openHand!,
+          han: entity.hands[0].han!,
+          fu: entity.hands[0].fu!,
+          yaku: entity.hands[0].yaku ?? [],
+          dora: entity.hands[0].dora!,
+          uradora: entity.hands[0].uradora!,
+          kandora: entity.hands[0].kandora!,
+          kanuradora: entity.hands[0].kanuradora!,
+        },
+      };
+    } else if (entity.outcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
+      return {
+        tsumo: {
+          roundIndex: entity.round,
+          honba: entity.honba,
+          riichiBets: entity.riichi ?? [],
+          winnerId: entity.hands[0].winnerId!,
+          paoPlayerId: entity.hands[0].paoPlayerId!,
+          openHand: entity.hands[0].openHand!,
+          han: entity.hands[0].han!,
+          fu: entity.hands[0].fu!,
+          yaku: entity.hands[0].yaku ?? [],
+          dora: entity.hands[0].dora!,
+          uradora: entity.hands[0].uradora!,
+          kandora: entity.hands[0].kandora!,
+          kanuradora: entity.hands[0].kanuradora!,
+        },
+      };
+    } else if (entity.outcome === RoundOutcome.ROUND_OUTCOME_MULTIRON) {
+      return {
+        multiron: {
+          roundIndex: entity.round,
+          honba: entity.honba,
+          riichiBets: entity.riichi ?? [],
+          loserId: entity.hands[0].loserId!,
+          multiRon: entity.hands.length + 1,
+          wins: entity.hands.map((hand) => ({
+            roundIndex: hand.round,
+            winnerId: hand.winnerId!,
+            paoPlayerId: hand.paoPlayerId!,
+            openHand: hand.openHand!,
+            han: hand.han!,
+            fu: hand.fu!,
+            yaku: hand.yaku ?? [],
+            dora: hand.dora!,
+            uradora: hand.uradora!,
+            kandora: hand.kandora!,
+            kanuradora: hand.kanuradora!,
+          })),
+        },
+      };
+    } else if (entity.outcome === RoundOutcome.ROUND_OUTCOME_DRAW) {
+      return {
+        draw: {
+          roundIndex: entity.round,
+          honba: entity.honba,
+          riichiBets: entity.riichi ?? [],
+          tempai: entity.hands[0].tempai ?? [],
+        },
+      };
+    } else if (entity.outcome === RoundOutcome.ROUND_OUTCOME_ABORT) {
+      return {
+        abort: {
+          roundIndex: entity.round,
+          honba: entity.honba,
+          riichiBets: entity.riichi ?? [],
+        },
+      };
+    } else if (entity.outcome === RoundOutcome.ROUND_OUTCOME_CHOMBO) {
+      return {
+        chombo: {
+          roundIndex: entity.round,
+          honba: entity.honba,
+          loserId: entity.hands[0].loserId!,
+        },
+      };
+    } else if (entity.outcome === RoundOutcome.ROUND_OUTCOME_NAGASHI) {
+      return {
+        nagashi: {
+          roundIndex: entity.round,
+          honba: entity.honba,
+          riichiBets: entity.riichi ?? [],
+          tempai: entity.hands[0].tempai ?? [],
+          nagashi: entity.hands[0].nagashi ?? [],
+        },
+      };
+    } else {
+      return {};
+    }
+  }
 }

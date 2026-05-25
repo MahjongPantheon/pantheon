@@ -10,6 +10,15 @@ import {
   TsumoResult,
 } from 'tsclients/proto/atoms.pb.js';
 
+type HandMessage =
+  | RonResult
+  | TsumoResult
+  | DrawResult
+  | AbortResult
+  | ChomboResult
+  | NagashiResult
+  | MultironWin;
+
 @Entity({ tableName: 'hand' })
 @Index({ properties: ['round'] })
 export class HandEntity {
@@ -78,17 +87,7 @@ export class HandEntity {
   })
   openHand?: boolean;
 
-  static fromMessage(
-    message:
-      | RonResult
-      | TsumoResult
-      | DrawResult
-      | AbortResult
-      | ChomboResult
-      | NagashiResult
-      | MultironWin,
-    r?: RoundEntity
-  ) {
+  static fromMessage(message: HandMessage, r?: RoundEntity) {
     const hand = new HandEntity();
     if ('han' in message) {
       hand.han = message.han;

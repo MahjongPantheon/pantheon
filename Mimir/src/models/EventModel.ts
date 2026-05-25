@@ -19,6 +19,7 @@ import {
   EventsUpdateEventPayload,
   EventsUpdatePrescriptedEventConfigPayload,
   PlayersGetCurrentSessionsPayload,
+  PlayersGetCurrentSessionsResponse,
   PlayersGetMyEventsResponse,
 } from 'tsclients/proto/mimir.pb.js';
 import {
@@ -33,6 +34,7 @@ import {
   EventData,
   GenericSuccessResponse,
   PersonEx,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb.js';
 import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
 import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
@@ -303,20 +305,20 @@ export class EventModel extends Model {
     return {
       list: data.map((item) => ({
         id: item.playerId,
-        title: item.playerTitle,
-        tenhouId: item.playerTenhouId,
+        title: item.playerTitle!,
+        tenhouId: item.playerTenhouId ?? '',
         rating: item.rating,
         chips: item.chips ?? 0,
         winnerZone:
           item.rating - (item.penaltiesAmount ?? 0) >= mainEvent.ruleset.rules.startRating,
-        avgPlace: item.avgPlace,
-        avgScore: item.avgScore,
-        gamesPlayed: item.gamesPlayed,
-        teamName: item.playerTeamName,
-        hasAvatar: item.playerHasAvatar,
-        lastUpdate: item.playerLastUpdate,
-        penaltiesAmount: item.penaltiesAmount,
-        penaltiesCount: item.penaltiesCount,
+        avgPlace: item.avgPlace ?? 0,
+        avgScore: item.avgScore ?? 0,
+        gamesPlayed: item.gamesPlayed ?? 0,
+        teamName: item.playerTeamName ?? '',
+        hasAvatar: item.playerHasAvatar ?? false,
+        lastUpdate: item.playerLastUpdate ?? '',
+        penaltiesAmount: item.penaltiesAmount ?? 0,
+        penaltiesCount: item.penaltiesCount ?? 0,
       })),
     };
   }
@@ -488,7 +490,9 @@ export class EventModel extends Model {
     );
   }
 
-  async getCurrentGames(playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload) {
+  async getCurrentGames(
+    playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload
+  ): Promise<PlayersGetCurrentSessionsResponse> {
     const event = await this.findById([playersGetCurrentSessionsPayload.eventId]);
 
     if (event.length === 0) {
@@ -501,6 +505,7 @@ export class EventModel extends Model {
       playersGetCurrentSessionsPayload.eventId,
       SessionStatus.SESSION_STATUS_INPROGRESS
     );
+    const sessionMap = new Map(sessions.map((s) => [s.id, s]));
 
     const timerState = await this.getTimerStateForSessions(
       playersGetCurrentSessionsPayload.eventId,
@@ -508,7 +513,6 @@ export class EventModel extends Model {
     );
 
     const { players, replaceMap } = await sessionModel.getPlayersOfGames(sessions, true);
-    const playerModel = this.getModel(PlayerModel);
 
     return {
       sessions: sessions.map((s) => ({
@@ -516,7 +520,23 @@ export class EventModel extends Model {
         status: s.status!,
         sessionHash: s.representationalHash!,
         timerState: timerState[s.representationalHash!],
-        players: playerModel.substituteReplacements(players.get(s.id)!, replaceMap),
+        players: players.get(s.id)!.map((p) => ({
+          id: p.id,
+          title: p.title,
+          score: sessionMap.get(s.id)!.intermediateResults?.scores[p.id] ?? 0,
+          replacedBy: replaceMap.has(p.id)
+            ? {
+                id: replaceMap.get(p.id)!.id,
+                title: replaceMap.get(p.id)!.title,
+                hasAvatar: replaceMap.get(p.id)!.hasAvatar,
+                lastUpdate: replaceMap.get(p.id)!.lastUpdate,
+              }
+            : undefined,
+          ratingDelta: 0, // unused, remove some day
+          hasAvatar: p.hasAvatar,
+          lastUpdate: p.lastUpdate,
+          yakitori: sessionMap.get(s.id)!.intermediateResults?.yakitori[p.id] ?? false,
+        })),
       })),
     };
   }
@@ -606,9 +626,9 @@ export class EventModel extends Model {
             : EventType.EVENT_TYPE_LOCAL,
         title: event.title,
         description: event.description,
-        duration: event.gameDuration,
+        duration: event.gameDuration ?? 0,
         timezone: event.timezone,
-        lobbyId: event.lobbyId,
+        lobbyId: event.lobbyId ?? 0,
         seriesLength: event.seriesLength,
         minGames: event.minGamesCount,
         isTeam: event.isTeam === 1,
@@ -618,7 +638,9 @@ export class EventModel extends Model {
         isRatingShown: event.hideResults === 0,
         achievementsShown: event.hideAchievements === 0,
         allowViewOtherTables: event.allowViewOtherTables === 1,
-        platformId: event.onlinePlatform,
+        platformId: event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+        allowManualAddReplay: !!event.allowManualAddReplay,
+        windShuffleMode: event.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED,
       },
       finished: event.finished === 1,
     };
@@ -994,6 +1016,20 @@ export class EventModel extends Model {
       {} as Record<number, PersonEx>
     );
 
+    const replacements = (
+      await playerModel.findById(
+        registeredPlayers
+          .map((player) => player.replacementId)
+          .filter((id): id is number => id !== undefined)
+      )
+    ).reduce(
+      (acc, player) => {
+        acc[player.id] = player;
+        return acc;
+      },
+      {} as Record<number, PersonEx>
+    );
+
     const roundModel = this.getModel(RoundModel);
     const lastRounds = omitLastRound
       ? {}
@@ -1033,11 +1069,22 @@ export class EventModel extends Model {
           chomboCount: chombo[+id],
         }));
         return {
-          status: game.status,
+          status:
+            game.status === 'planned'
+              ? SessionStatus.SESSION_STATUS_PLANNED
+              : game.status === 'inprogress'
+                ? SessionStatus.SESSION_STATUS_INPROGRESS
+                : game.status === 'prefinished'
+                  ? SessionStatus.SESSION_STATUS_PREFINISHED
+                  : game.status === 'finished'
+                    ? SessionStatus.SESSION_STATUS_FINISHED
+                    : game.status === 'cancelled'
+                      ? SessionStatus.SESSION_STATUS_CANCELLED
+                      : SessionStatus.SESSION_STATUS_UNSPECIFIED,
           mayDefinalize: definalizeFlags[gIndex],
-          sessionHash: game.representationalHash,
+          sessionHash: game.representationalHash!,
           tableIndex: game.tableIndex,
-          lastRound: lastRounds[game.id],
+          lastRound: RoundEntity.toMessage(lastRounds[game.id]),
           currentRoundIndex: sessionStates[game.id].getRound(),
           scores,
           players: registeredPlayers.map((p) => {
@@ -1047,8 +1094,8 @@ export class EventModel extends Model {
               localId: p.localId,
               teamName: p.teamName,
               tenhouId: players[p.id].tenhouId,
-              ignoreSeating: p.ignoreSeating,
-              replacedBy: p.replacementId,
+              ignoreSeating: !!p.ignoreSeating,
+              replacedBy: p.replacementId ? replacements[p.replacementId] : undefined,
               hasAvatar: players[p.id].hasAvatar,
               lastUpdate: players[p.id].lastUpdate,
             };
