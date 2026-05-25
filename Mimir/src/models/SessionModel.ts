@@ -272,6 +272,13 @@ export class SessionModel extends Model {
     };
   }
 
+  /**
+   * Get players and substitutions
+   * Note: all sessions must belong to the same event
+   * @param sessions
+   * @param substituteReplacementPlayers
+   * @returns
+   */
   async getPlayersOfGames(
     sessions: SessionEntity[],
     substituteReplacementPlayers = true
@@ -279,6 +286,15 @@ export class SessionModel extends Model {
     players: Map<number, PersonEx[]>; // session -> players ordered
     replaceMap: Map<number, PersonEx>; // player -> replacement player
   }> {
+    if (sessions.length === 0) {
+      return { players: new Map(), replaceMap: new Map() };
+    }
+    const eventId = sessions[0].event.id;
+    // invariant check
+    if (sessions.some((s) => s.event.id !== eventId)) {
+      throw new Error('All sessions must belong to the same event');
+    }
+
     const playerModel = this.getModel(PlayerModel);
     const {
       playersData: { players, replaceMap },
