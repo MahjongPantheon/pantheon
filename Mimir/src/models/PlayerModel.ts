@@ -159,14 +159,16 @@ export class PlayerModel extends Model {
 
   async isEventAdmin(eventId: number) {
     const personId = this.repo.meta.personId;
+    if (!personId) return false;
     const data = await this.repo.frey.GetEventAdmins({ eventId });
-    return data.admins.includes(personId);
+    return data.admins.some((admin) => admin.personId === personId);
   }
 
   async isEventReferee(eventId: number) {
     const personId = this.repo.meta.personId;
+    if (!personId) return false;
     const data = await this.repo.frey.GetEventReferees({ eventId });
-    return data.referees.includes(personId);
+    return data.referees.some((referee) => referee.personId === personId);
   }
 
   async getPlayer(playerId: number): Promise<{ players: Player }> {

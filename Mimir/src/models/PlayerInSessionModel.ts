@@ -11,6 +11,7 @@ import { SessionEntity } from 'src/entities/Session.entity.js';
 import { RoundModel } from './RoundModel.js';
 import { SessionState } from 'src/helpers/SessionState.js';
 import { formatRound } from 'src/helpers/formatters.js';
+import { toPaymentLog } from 'src/helpers/PointsCalc.js';
 
 export class PlayerInSessionModel extends Model {
   async getLastRound(input: PlayersGetLastRoundPayload): Promise<PlayersGetLastRoundResponse> {
@@ -66,12 +67,12 @@ export class PlayerInSessionModel extends Model {
 
     return {
       round: {
-        sessionHash: session.representationalHash,
+        sessionHash: session.representationalHash ?? '',
         dealer: lastSessionState.getCurrentDealer(),
         roundIndex: lastRound.round,
         riichi: lastSessionState.getRiichiBets(),
         honba: lastSessionState.getHonba(),
-        riichiIds: lastRound.riichi,
+        riichiIds: lastRound.riichi ?? [],
         scores: Object.keys(currentScores).map((playerId) => ({
           playerId: +playerId,
           score: currentScores[+playerId],
@@ -82,7 +83,7 @@ export class PlayerInSessionModel extends Model {
           score: scoresDelta[+playerId],
           chomboCount: (chombo[+playerId] ?? 0) - (lastChombo[+playerId] ?? 0),
         })),
-        payments: paymentsInfo,
+        payments: toPaymentLog(paymentsInfo),
         round: formatRound(lastRound, lastSessionState.state),
         outcome: lastRound.outcome,
       },
@@ -134,12 +135,12 @@ export class PlayerInSessionModel extends Model {
       }
 
       results.push({
-        sessionHash: session.representationalHash,
+        sessionHash: session.representationalHash ?? '',
         dealer: lastSessionState.getCurrentDealer(),
         roundIndex: round.round,
         riichi: lastSessionState.getRiichiBets(),
         honba: lastSessionState.getHonba(),
-        riichiIds: round.riichi,
+        riichiIds: round.riichi ?? [],
         scores: Object.keys(currentScores).map((playerId) => ({
           playerId: +playerId,
           score: currentScores[+playerId],
@@ -150,7 +151,7 @@ export class PlayerInSessionModel extends Model {
           score: scoresDelta[+playerId],
           chomboCount: (chombo[+playerId] ?? 0) - (lastChombo[+playerId] ?? 0),
         })),
-        payments: paymentsInfo,
+        payments: toPaymentLog(paymentsInfo),
         round: formatRound(round, lastSessionState.state),
         outcome: round.outcome,
       });

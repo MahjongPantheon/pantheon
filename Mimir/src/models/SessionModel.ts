@@ -353,6 +353,7 @@ export class SessionModel extends Model {
         lastUpdate: player.lastUpdate,
         score: sessionState.getScores()[player.id],
         yakitori: sessionState.getYakitori()[player.id],
+        ratingDelta: 0, // probably unused, check and remove some day
         replacedBy: replaceMap.has(player.id)
           ? {
               id: replaceMap.get(player.id)!.id,
@@ -367,12 +368,19 @@ export class SessionModel extends Model {
       ],
       state: {
         dealer: sessionState.getCurrentDealer(),
-        round: sessionState.getRound(),
-        riichi: sessionState.getRiichiBets(),
-        honba: sessionState.getHonba(),
-        scores: sessionState.getScores(),
+        roundIndex: sessionState.getRound(),
+        riichiCount: sessionState.getRiichiBets(),
+        honbaCount: sessionState.getHonba(),
+        scores: Object.entries(sessionState.getScores()).map(([playerId, score]) => ({
+          playerId: +playerId,
+          score,
+          chomboCount: sessionState.getChombo()[+playerId] ?? 0,
+        })),
         finished: sessionState.isFinished(),
-        chombo: sessionState.getChombo(),
+        chombo: Object.entries(sessionState.getChombo()).map(([playerId, amount]) => ({
+          playerId: +playerId,
+          amount,
+        })),
         lastHandStarted: sessionState.lastHandStarted(),
       },
     };
@@ -457,7 +465,21 @@ export class SessionModel extends Model {
       roundJustChanged: sessionState.state.roundJustChanged,
       isFinished: sessionState.isFinished(),
       lastHandStarted: sessionState.lastHandStarted(),
-      lastOutcome: roundData,
+      lastOutcome: roundData.ron
+        ? RoundOutcome.ROUND_OUTCOME_RON
+        : roundData.tsumo
+          ? RoundOutcome.ROUND_OUTCOME_TSUMO
+          : roundData.draw
+            ? RoundOutcome.ROUND_OUTCOME_DRAW
+            : roundData.abort
+              ? RoundOutcome.ROUND_OUTCOME_ABORT
+              : roundData.nagashi
+                ? RoundOutcome.ROUND_OUTCOME_NAGASHI
+                : roundData.multiron
+                  ? RoundOutcome.ROUND_OUTCOME_MULTIRON
+                  : roundData.chombo
+                    ? RoundOutcome.ROUND_OUTCOME_CHOMBO
+                    : RoundOutcome.ROUND_OUTCOME_UNSPECIFIED,
     };
   }
 
@@ -888,7 +910,7 @@ export class SessionModel extends Model {
           riichi: Object.entries(payments.riichi).map(toPaymentLog),
           honba: Object.entries(payments.honba).map(toPaymentLog),
         },
-        round: sessionState.getRound(),
+        round: roundData,
         outcome: roundData.ron
           ? RoundOutcome.ROUND_OUTCOME_RON
           : roundData.tsumo

@@ -115,28 +115,31 @@ export class PlayerStatsModel extends Model {
               })),
             })
           ),
-          playersInfo: stats[0].data.playersInfo!,
+          playersInfo: stats[0].data.playersInfo!.map((i) => ({
+            ...i,
+            tenhouId: i.tenhouId ?? '',
+          })),
           placesSummary: Object.entries(stats[0].data.placesSummary ?? {}).map(
             ([place, count]) => ({
-              place,
+              place: +place,
               count,
             })
           ),
           totalPlayedGames: stats[0].data.totalPlayedGames ?? 0,
           totalPlayedRounds: stats[0].data.totalPlayedRounds ?? 0,
-          winSummary: stats[0].data.winSummary,
+          winSummary: stats[0].data.winSummary!,
           handsValueSummary: Object.entries(stats[0].data.handsValueSummary ?? {}).map(
-            ([handValue, count]) => ({
-              handValue,
+            ([hanCount, count]) => ({
+              hanCount: +hanCount,
               count,
             })
           ),
-          yakuSummary: Object.entries(stats[0].data.yakuSummary ?? {}).map(([yaku, count]) => ({
-            yaku,
+          yakuSummary: Object.entries(stats[0].data.yakuSummary ?? {}).map(([yakuId, count]) => ({
+            yakuId: +yakuId,
             count,
           })),
-          riichiSummary: stats[0].data.riichiSummary,
-          doraStat: stats[0].data.doraStat,
+          riichiSummary: stats[0].data.riichiSummary!,
+          doraStat: stats[0].data.doraStat!,
           lastUpdate: stats[0].data.lastUpdate ?? new Date().toISOString(),
         };
       }
@@ -200,9 +203,11 @@ export class PlayerStatsModel extends Model {
       playerInfo
     );
 
-    const data = {
+    const data: PlayersGetPlayerStatsResponse = {
       ratingHistory: this._getRatingHistorySequence(mainEvent.ruleset, playerId, games),
-      scoreHistory: scoresAndPlayers.scores,
+      scoreHistory: scoresAndPlayers.scores.map((s) => ({
+        tables: s.map((t) => ({ ...t, sessionHash: t.sessionHash ?? '' })),
+      })),
       playersInfo: Object.values(scoresAndPlayers.players).map((p: PersonEx) => ({
         id: p.id,
         title: p.title,
@@ -349,7 +354,7 @@ export class PlayerStatsModel extends Model {
             eventId: game.session.event.id,
             title: playerInfo.get(playerId)?.title ?? '',
             hasAvatar: playerInfo.get(playerId)?.hasAvatar ?? false,
-            lastUpdate: playerInfo.get(playerId)?.lastUpdate ?? new Date(),
+            lastUpdate: playerInfo.get(playerId)?.lastUpdate ?? new Date().toString(),
             playerId: playerId,
             score: game.results.get(playerId)?.score ?? ruleset.rules.startRating,
             ratingDelta: game.results.get(playerId)?.ratingDelta ?? 0,

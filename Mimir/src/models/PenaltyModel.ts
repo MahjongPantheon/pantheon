@@ -197,7 +197,7 @@ export class PenaltyModel extends Model {
         reason: p.reason,
         assignedBy: p.assignedBy,
         createdAt: p.createdAt,
-        isCancelled: p.cancelled,
+        isCancelled: !!p.cancelled,
         cancellationReason: p.cancelledReason,
         id: p.id,
       })),
@@ -225,7 +225,7 @@ export class PenaltyModel extends Model {
         reason: p.reason,
         assignedBy: p.assignedBy,
         createdAt: p.createdAt,
-        isCancelled: p.cancelled,
+        isCancelled: !!p.cancelled,
         cancellationReason: p.cancelledReason,
         id: p.id,
       })),
@@ -290,7 +290,7 @@ export class PenaltyModel extends Model {
     return {
       chombos: chombo.flatMap((c) =>
         c.hands.map((h) => ({
-          playerId: h.loserId,
+          playerId: h.loserId!,
           amount: event.ruleset.rules.chomboAmount,
         }))
       ),
