@@ -1,4 +1,4 @@
-import { RulesetConfig } from 'tsclients/proto/atoms.pb.js';
+import { PaymentLog, RulesetConfig } from 'tsclients/proto/atoms.pb.js';
 
 export interface PaymentsInfo {
   direct: Record<string, number>;
@@ -528,4 +528,24 @@ export class PointsCalc {
 
     return result;
   }
+}
+
+export function toPaymentLog(paymentsInfo: PaymentsInfo): PaymentLog {
+  const result: PaymentLog = {
+    direct: [],
+    honba: [],
+    riichi: [],
+  };
+
+  for (const [type, payment] of Object.entries(paymentsInfo)) {
+    for (const [playerIds, amount] of Object.entries(payment)) {
+      result[type as 'direct' | 'riichi' | 'honba'].push({
+        to: Number(playerIds.split('<-')[0]),
+        from: Number(playerIds.split('<-')[1]),
+        amount: amount as number,
+      });
+    }
+  }
+
+  return result;
 }

@@ -173,10 +173,10 @@ export class OnlineSessionModel extends Model {
 
     return {
       game: {
-        sessionHash: session.representationalHash,
+        sessionHash: session.representationalHash ?? '',
         date: session.endDate,
         replayLink: makeReplayLink(session.replayHash!, platformId),
-        players: session.intermediateResults?.playerIds ?? [],
+        players,
         finalResults: sessionResults,
         rounds: rounds.map((round) =>
           formatRound(

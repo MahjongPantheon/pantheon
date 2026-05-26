@@ -79,13 +79,16 @@ export class SeatingModel extends Model {
     return {
       seating: seating
         .map((seat) => ({
-          ...seat,
+          playerId: seat.player_id,
+          order: seat.order,
+          tableIndex: seat.table_index,
+          sessionId: seat.session_id,
+          playerTitle: playerById[seat.player_id]?.title,
           rating: ratings[seat.player_id] ?? 0,
-          title: playerById[seat.player_id]?.title,
           hasAvatar: playerById[seat.player_id]?.hasAvatar ?? false,
           lastUpdate: playerById[seat.player_id]?.lastUpdate,
         }))
-        .filter((s) => !!s.table_index),
+        .filter((s) => !!s.tableIndex),
     };
   }
 
@@ -97,8 +100,8 @@ export class SeatingModel extends Model {
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
-      _windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
+      previousSeatings: number[][],
+      _windShuffleMode?: WindShuffleMode
     ) =>
       make_seating_shuffled({
         playersMap,
@@ -108,7 +111,12 @@ export class SeatingModel extends Model {
         previousSeatings,
       });
 
-    return this.makeSeatingAndStartGames(eventId, seed, seatingGetter, windShuffleMode);
+    return this.makeSeatingAndStartGames(
+      eventId,
+      seed,
+      seatingGetter,
+      windShuffleMode ?? undefined
+    );
   }
 
   async makeSwissSeating(payload: SeatingMakeSwissSeatingPayload): Promise<GenericSuccessResponse> {
@@ -117,8 +125,8 @@ export class SeatingModel extends Model {
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
-      _windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
+      previousSeatings: number[][],
+      _windShuffleMode?: WindShuffleMode
     ) =>
       make_seating_swiss({
         playersMap,
@@ -126,7 +134,12 @@ export class SeatingModel extends Model {
         windShuffle: this._getWindShuffleMode(_windShuffleMode),
         previousSeatings,
       });
-    return this.makeSeatingAndStartGames(eventId, seed, seatingGetter, windShuffleMode);
+    return this.makeSeatingAndStartGames(
+      eventId,
+      seed,
+      seatingGetter,
+      windShuffleMode ?? undefined
+    );
   }
 
   async makeIntervalSeating(
@@ -137,8 +150,8 @@ export class SeatingModel extends Model {
     const seatingGetter = (
       playersMap: Record<number, number>,
       _seed: number,
-      _windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
+      previousSeatings: number[][],
+      _windShuffleMode?: WindShuffleMode
     ) =>
       make_seating_interval({
         playersMap,
@@ -147,7 +160,12 @@ export class SeatingModel extends Model {
         windShuffle: this._getWindShuffleMode(_windShuffleMode),
         previousSeatings,
       });
-    return this.makeSeatingAndStartGames(eventId, seed, seatingGetter, windShuffleMode);
+    return this.makeSeatingAndStartGames(
+      eventId,
+      seed,
+      seatingGetter,
+      windShuffleMode ?? undefined
+    );
   }
 
   async makePrescriptedSeating(
@@ -169,8 +187,8 @@ export class SeatingModel extends Model {
     const seatingGetter = (
       _playersMap: Record<number, number>, // ignored in this case
       _seed: number,
-      _windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
+      previousSeatings: number[][],
+      _windShuffleMode?: WindShuffleMode
     ) => {
       return update_wind_placing_only({
         playersMap: seating,
@@ -183,7 +201,7 @@ export class SeatingModel extends Model {
       eventId,
       seed,
       seatingGetter,
-      windShuffleMode
+      windShuffleMode ?? undefined
     );
     prescriptEntity.nextGame++;
     await this.repo.em.persistAndFlush(prescriptEntity);
@@ -233,8 +251,8 @@ export class SeatingModel extends Model {
     const seatingGetter = (
       playersMap: Record<number, number>,
       seed: number,
-      windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
+      previousSeatings: number[][],
+      windShuffleMode?: WindShuffleMode
     ) =>
       make_seating_swiss({
         playersMap,
@@ -260,7 +278,9 @@ export class SeatingModel extends Model {
       }
     }
 
-    return { tables: chunks.map((table) => ({ players: table })) };
+    return {
+      tables: chunks.map((table) => ({ players: table.map((playerId) => ({ playerId })) })),
+    };
   }
 
   private async makeSeating(
@@ -269,10 +289,10 @@ export class SeatingModel extends Model {
     seatingGetter: (
       playersMap: Record<number, number>,
       seed: number,
-      windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
+      previousSeatings: number[][],
+      windShuffleMode?: WindShuffleMode
     ) => number[][],
-    windShuffleMode: WindShuffleMode
+    windShuffleMode?: WindShuffleMode
   ) {
     await this._ensureActionAllowed(event.id);
 
@@ -293,7 +313,7 @@ export class SeatingModel extends Model {
     const regs = await regModel.findByEventId([event.id]);
 
     const [playersMap, previousSeatings] = await this._getData(event, regs);
-    const seating = seatingGetter(playersMap, seed, windShuffleMode, previousSeatings);
+    const seating = seatingGetter(playersMap, seed, previousSeatings, windShuffleMode);
 
     const chunks = [];
     for (let i = 0; i < seating.length; i += 4) {
@@ -316,10 +336,10 @@ export class SeatingModel extends Model {
     seatingGetter: (
       playersMap: Record<number, number>,
       seed: number,
-      windShuffleMode: WindShuffleMode,
-      previousSeatings: number[][]
+      previousSeatings: number[][],
+      windShuffleMode?: WindShuffleMode
     ) => number[][],
-    windShuffleMode: WindShuffleMode
+    windShuffleMode?: WindShuffleMode
   ): Promise<GenericSuccessResponse> {
     const sessionModel = this.getModel(SessionModel);
     const event = await this.repo.em.findOne(EventEntity, eventId);
@@ -443,7 +463,9 @@ export class SeatingModel extends Model {
     return [playersMap, seatingChunks];
   }
 
-  private _getWindShuffleMode(windShuffleMode: WindShuffleMode): MahjongWindShuffle {
+  private _getWindShuffleMode(
+    windShuffleMode: WindShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+  ): MahjongWindShuffle {
     switch (windShuffleMode) {
       case WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM:
         return 'random';
