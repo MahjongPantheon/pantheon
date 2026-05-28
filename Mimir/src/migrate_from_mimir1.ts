@@ -71,6 +71,28 @@ export async function migrateFromMimir1() {
     }
   }
 
+  function rewriteIntermediateResults(results: string): string {
+    const parsed = JSON.parse(results);
+
+    const newResults = {
+      chips: parsed._chips ?? {},
+      honba: parsed._honba,
+      round: parsed._round,
+      chombo: parsed._chombo ?? {},
+      scores: parsed._scores,
+      yakitori: parsed._yakitori ?? {},
+      player_ids: Object.keys(parsed._scores).map(Number),
+      riichi_bets: parsed._riichiBets,
+      last_outcome: parsed._lastOutcome,
+      replacements: parsed._replacements ?? {},
+      last_hand_started: parsed._lastHandStarted,
+      round_just_changed: parsed._roundJustChanged,
+      prematurely_finished: parsed._prematurelyFinished,
+    };
+
+    return JSON.stringify(newResults);
+  }
+
   async function migrateRounds(em: MikroORM['em']) {
     const limit = 10;
     console.log('\nMigrating rounds into rounds/hands tables; NOTE: this is gonna be quite slow');
@@ -124,6 +146,7 @@ export async function migrateFromMimir1() {
         r.outcome = toOutcome(group[0].outcome);
         r.round = group[0].round;
         r.riichi = group[0].riichi ? group[0].riichi.split(',').map(Number) : [];
+        r.endDate = group[0].end_date;
         // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         const state = JSON.parse(group[0].last_session_state || '{}');
         r.lastSessionState = new SessionStateEntity();
@@ -456,6 +479,8 @@ export async function migrateFromMimir1() {
                 // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
                 if (!rec.intermediate_results) {
                   rec.intermediate_results = '{}';
+                } else {
+                  rec.intermediate_results = rewriteIntermediateResults(rec.intermediate_results);
                 }
                 if (rec.id > lastId) {
                   lastId = rec.id;
