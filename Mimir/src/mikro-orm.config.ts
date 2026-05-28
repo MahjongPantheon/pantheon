@@ -24,4 +24,14 @@ export default () =>
     // enable debug mode to log SQL queries and discovery information
     debug: false,
     extensions: [SeedManager, Migrator],
+    seeder: config.test
+      ? {
+          path: './seeders',
+          pathTs: undefined,
+          defaultSeeder: 'TestSeeder',
+          glob: '!(*.d).{js,ts}',
+          emit: 'ts',
+          fileName: (className: string) => className,
+        }
+      : undefined,
   });
