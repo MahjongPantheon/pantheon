@@ -1,5 +1,5 @@
 import type { EntityManager } from '@mikro-orm/core';
-import { EventEntity } from 'src/entities/Event.entity';
+import { EventEntity } from '../entities/Event.entity.js';
 
 export const eventRegisteredPlayers = (em: EntityManager) => [
   {

@@ -2,7 +2,7 @@
 // Note: cautiously remove previous comment for type checking and expect great lags
 
 import type { EntityManager } from '@mikro-orm/core';
-import { EventEntity } from 'src/entities/Event.entity';
+import { EventEntity } from '../entities/Event.entity.js';
 
 export type THistory = {
   id: number;
