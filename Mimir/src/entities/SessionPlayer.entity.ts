@@ -1,5 +1,5 @@
 import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { SessionEntity } from './Session.entity.js';
+import type { SessionEntity } from './Session.entity.js';
 
 @Entity({ tableName: 'session_players' })
 @Index({ properties: ['session', 'playerId'] })

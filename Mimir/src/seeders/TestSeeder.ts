@@ -73,12 +73,12 @@ export class TestSeeder extends Seeder {
       doubleronRiichiAtamahane: true,
       riichiGoesToWinner: true,
       tonpuusen: false,
-      withAbortives: false,
+      withAbortives: true,
       withAtamahane: false,
       withButtobi: false,
       withKiriageMangan: false,
       withLeadingDealerGameOver: false,
-      withNagashiMangan: false,
+      withNagashiMangan: true,
       withWinningDealerHonbaSkipped: false,
       withYakitori: false,
       chipsValue: 0,
@@ -181,7 +181,7 @@ export class TestSeeder extends Seeder {
       lobbyId: null,
       ruleset: ruleset1,
       timezone: 'Europe/Berlin',
-      seriesLength: 0,
+      seriesLength: 4,
       gamesStatus: TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED,
       hideResults: 0,
       hideAchievements: 0,
@@ -218,7 +218,7 @@ export class TestSeeder extends Seeder {
       res.lastHandStarted = r.intermediateResults.last_hand_started ?? false;
       res.roundJustChanged = r.intermediateResults.round_just_changed ?? false;
       res.prematurelyFinished = r.intermediateResults.prematurely_finished ?? false;
-      return em.create(SessionEntity, { ...r, intermediateResults: res });
+      return em.create(SessionEntity, { ...r, intermediateResults: res, players: [] });
     });
   }
 

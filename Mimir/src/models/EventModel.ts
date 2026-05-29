@@ -288,7 +288,17 @@ export class EventModel extends Model {
       regData,
       penalties
     );
-    const data = playerHistoryModel.sortItems(orderBy, playerItems, historyItems);
+    const data = playerHistoryModel.sortItems(
+      orderBy,
+      playerItems.reduce(
+        (acc, p) => {
+          acc[p.id] = p;
+          return acc;
+        },
+        {} as Record<number, PersonEx>
+      ),
+      historyItems
+    );
 
     if (order === 'desc') {
       data.reverse();
@@ -337,8 +347,8 @@ export class EventModel extends Model {
     const games = await sessionModel.findByEventAndStatus(
       eventList.map((event) => event.id),
       [SessionStatus.SESSION_STATUS_FINISHED],
-      limit,
       offset,
+      limit,
       orderBy,
       order
     );
@@ -959,17 +969,17 @@ export class EventModel extends Model {
       throw new Error(`Viewing other tables is not allowed for this event`);
     }
 
-    const registeredPlayers = (
-      await eventRegistrationModel.findRegisteredPlayersIdsByEvent(events[0].id)
-    ).filter((reg) => {
-      if (reg.ignoreSeating) {
-        return false;
+    const registeredPlayers = (await eventRegistrationModel.findByEventId([events[0].id])).filter(
+      (reg) => {
+        if (reg.ignoreSeating) {
+          return false;
+        }
+        if (events[0].isPrescripted && !reg.localId) {
+          return false;
+        }
+        return true;
       }
-      if (events[0].isPrescripted && !reg.localId) {
-        return false;
-      }
-      return true;
-    });
+    );
 
     const tablesCount = events[0].syncStart ? Math.floor(registeredPlayers.length / 4) : 10;
 
@@ -1107,14 +1117,14 @@ export class EventModel extends Model {
   }
 
   async startTimer(eventId: number) {
-    const event = await this.repo.db.em.findOne(EventEntity, { id: eventId });
+    const event = await this.repo.em.findOne(EventEntity, { id: eventId });
     if (!event) throw new Error(`Event ${eventId} not found`);
 
     // Check if we have rights to update the event
     const playerModel = this.getModel(PlayerModel);
     if (
       !this.repo.meta.personId ||
-      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
     ) {
       throw new Error("You don't have the necessary permissions to start timer");
     }
@@ -1124,12 +1134,12 @@ export class EventModel extends Model {
     }
 
     event.lastTimer = Date.now();
-    await this.repo.db.em.persistAndFlush(event);
+    await this.repo.em.persistAndFlush(event);
     return { success: true };
   }
 
   async getPrescriptedConfig(eventId: number): Promise<EventsGetPrescriptedEventConfigResponse> {
-    const prescript = await this.repo.db.em.findOne(EventPrescriptEntity, { id: eventId });
+    const prescript = await this.repo.em.findOne(EventPrescriptEntity, { id: eventId });
     if (!prescript) {
       throw new Error(`Event ${eventId} not found`);
     }
@@ -1157,7 +1167,7 @@ export class EventModel extends Model {
   async updatePrescriptedConfig(
     payload: EventsUpdatePrescriptedEventConfigPayload
   ): Promise<GenericSuccessResponse> {
-    const event = await this.repo.db.em.findOne(EventEntity, { id: payload.eventId });
+    const event = await this.repo.em.findOne(EventEntity, { id: payload.eventId });
     if (!event) {
       throw new Error(`Event ${payload.eventId} not found`);
     }
@@ -1171,18 +1181,18 @@ export class EventModel extends Model {
     }
 
     const prescript =
-      (await this.repo.db.em.findOne(EventPrescriptEntity, { id: payload.eventId })) ??
+      (await this.repo.em.findOne(EventPrescriptEntity, { id: payload.eventId })) ??
       new EventPrescriptEntity();
 
     prescript.event = event;
     prescript.script = payload.prescript;
     prescript.nextGame = payload.nextSessionIndex;
-    await this.repo.db.em.persistAndFlush(prescript);
+    await this.repo.em.persistAndFlush(prescript);
     return { success: true };
   }
 
   async recalcAchievements(eventId: number): Promise<GenericSuccessResponse> {
-    const event = await this.repo.db.em.findOne(EventEntity, { id: eventId });
+    const event = await this.repo.em.findOne(EventEntity, { id: eventId });
     if (!event) {
       throw new Error(`Event ${eventId} not found`);
     }
@@ -1199,7 +1209,7 @@ export class EventModel extends Model {
   }
 
   async recalcPlayerStats(eventId: number): Promise<GenericSuccessResponse> {
-    const event = await this.repo.db.em.findOne(EventEntity, { id: eventId });
+    const event = await this.repo.em.findOne(EventEntity, { id: eventId });
     if (!event) {
       throw new Error(`Event ${eventId} not found`);
     }

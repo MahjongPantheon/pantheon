@@ -36,8 +36,8 @@ export class AchievementsModel extends Model {
     let lastUpdate = '';
 
     if (!events[0].hideAchievements || isAdmin) {
-      const achievements = await this.repo.db.em.findAll(AchievementsEntity, {
-        where: { event: this.repo.db.em.getReference(EventEntity, payload.eventId) },
+      const achievements = await this.repo.em.findAll(AchievementsEntity, {
+        where: { event: this.repo.em.getReference(EventEntity, payload.eventId) },
       });
       const achievementData = achievements[0].data;
       lastUpdate = moment

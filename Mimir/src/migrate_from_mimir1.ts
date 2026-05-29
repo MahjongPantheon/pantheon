@@ -8,7 +8,7 @@ import { HandEntity } from './entities/Hand.entity.js';
 import { EventEntity } from './entities/Event.entity.js';
 import { SessionEntity } from './entities/Session.entity.js';
 import { SessionStateEntity } from './entities/SessionState.entity.js';
-import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+import { RoundOutcome, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 
 process.env.NODE_ENV = 'development';
 
@@ -476,6 +476,19 @@ export async function migrateFromMimir1() {
             .insert(
               rows.map((rec) => {
                 delete rec.okr_ignore;
+                if (rec.status === 'finished') {
+                  rec.status = SessionStatus.SESSION_STATUS_FINISHED;
+                } else if (rec.status === 'prefinished') {
+                  rec.status = SessionStatus.SESSION_STATUS_PREFINISHED;
+                } else if (rec.status === 'inprogress') {
+                  rec.status = SessionStatus.SESSION_STATUS_INPROGRESS;
+                } else if (rec.status === 'planned') {
+                  rec.status = SessionStatus.SESSION_STATUS_PLANNED;
+                } else if (rec.status === 'cancelled') {
+                  rec.status = SessionStatus.SESSION_STATUS_CANCELLED;
+                } else {
+                  rec.status = SessionStatus.SESSION_STATUS_UNSPECIFIED;
+                }
                 // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
                 if (!rec.intermediate_results) {
                   rec.intermediate_results = '{}';

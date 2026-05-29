@@ -1,5 +1,14 @@
-import { Embedded, Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/postgresql';
+import {
+  Embedded,
+  Entity,
+  Index,
+  ManyToOne,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/postgresql';
 import { EventEntity } from './Event.entity.js';
+import { SessionPlayerEntity } from './SessionPlayer.entity.js';
 import { SessionStateEntity } from './SessionState.entity.js';
 
 @Entity({ tableName: 'session' })
@@ -15,6 +24,9 @@ export class SessionEntity {
 
   @ManyToOne({ fieldName: 'event_id' })
   event!: EventEntity;
+
+  @OneToMany(() => SessionPlayerEntity, (sp) => sp.session)
+  players!: SessionPlayerEntity[];
 
   @Property({
     nullable: true,

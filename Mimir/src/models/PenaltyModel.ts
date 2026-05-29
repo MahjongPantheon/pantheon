@@ -21,6 +21,7 @@ import { randomInt } from 'crypto';
 import moment from 'moment';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
 import { RoundModel } from './RoundModel.js';
+import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
 
 export class PenaltyModel extends Model {
   async findBySession(sessionId: number[]) {
@@ -52,7 +53,7 @@ export class PenaltyModel extends Model {
     if (
       !this.repo.meta.personId ||
       !(
-        (await playerModel.isEventAdmin(payload.eventId)) &&
+        (await playerModel.isEventAdmin(payload.eventId)) ||
         (await playerModel.isEventReferee(payload.eventId))
       )
     ) {
@@ -122,7 +123,7 @@ export class PenaltyModel extends Model {
       throw new Error('Some players were not found');
     }
 
-    const session = this.repo.db.em.create(SessionEntity, {
+    const session = this.repo.em.create(SessionEntity, {
       event: this.repo.em.getReference(EventEntity, payload.eventId),
       status: SessionStatus.SESSION_STATUS_INPROGRESS,
       representationalHash: sha1(
@@ -133,9 +134,10 @@ export class PenaltyModel extends Model {
       intermediateResults: new SessionState(event[0].ruleset, payload.players).state,
       replayHash: null,
       tableIndex: null,
+      players: [],
       extraTime: 0,
     });
-    await this.repo.db.em.persistAndFlush(session);
+    await this.repo.em.persistAndFlush(session);
 
     const playerHistoryModel = this.getModel(PlayerHistoryModel);
 
@@ -143,16 +145,22 @@ export class PenaltyModel extends Model {
     let i = 1;
     const promises = [];
     for (const playerId of payload.players) {
-      const sessionResult = this.repo.db.em.create(SessionResultsEntity, {
+      const sessionPlayer = this.repo.em.create(SessionPlayerEntity, {
+        session: this.repo.em.getReference(SessionEntity, session.id),
+        playerId,
+        order: i,
+      });
+      this.repo.em.persist(sessionPlayer);
+      const sessionResult = this.repo.em.create(SessionResultsEntity, {
         event: event[0],
         session,
         playerId,
-        place: i,
+        place: i, // place doesn't matter, everybode get same penalty
         score: event[0].ruleset.rules.startPoints,
         ratingDelta: penalty,
         chips: null,
       });
-      this.repo.db.em.persist(sessionResult);
+      this.repo.em.persist(sessionResult);
       promises.push(
         playerHistoryModel.makeNewHistoryItem(
           event[0].ruleset,
@@ -169,9 +177,9 @@ export class PenaltyModel extends Model {
 
     session.endDate = new Date().toISOString();
     session.status = SessionStatus.SESSION_STATUS_FINISHED;
-    this.repo.db.em.persist(session);
+    this.repo.em.persist(session);
 
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
 
     const playerStatsModel = this.getModel(PlayerStatsModel);
     await playerStatsModel.scheduleRebuildPlayersStats(payload.eventId);
@@ -183,7 +191,7 @@ export class PenaltyModel extends Model {
     const playerModel = this.getModel(PlayerModel);
     if (
       !this.repo.meta.personId ||
-      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
     ) {
       throw new Error("You don't have the necessary permissions to list penalties");
     }
@@ -249,7 +257,7 @@ export class PenaltyModel extends Model {
     if (
       !this.repo.meta.personId ||
       !(
-        (await playerModel.isEventAdmin(penalty.event.id)) &&
+        (await playerModel.isEventAdmin(penalty.event.id)) ||
         (await playerModel.isEventReferee(penalty.event.id))
       )
     ) {
@@ -272,7 +280,7 @@ export class PenaltyModel extends Model {
     const playerModel = this.getModel(PlayerModel);
     if (
       !this.repo.meta.personId ||
-      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
     ) {
       throw new Error("You don't have the necessary permissions to list chombo");
     }

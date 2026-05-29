@@ -81,11 +81,10 @@ export class FreyService {
       baseURL: config.freyUrl,
     };
 
-    const headers = new Headers();
-    headers.append('X-Auth-Token', meta.authToken ?? '');
-    headers.append('X-Current-Person-Id', meta.personId?.toString() ?? '');
-
     this._config.rpcTransport = async (url, opts) => {
+      const headers = new Headers();
+      headers.append('X-Auth-Token', meta.authToken ?? '');
+      headers.append('X-Current-Person-Id', meta.personId?.toString() ?? '');
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', meta.currentEventId?.toString() ?? '');
       // Note: IDE might warn about inconsistent types of opts.body; this is not the case here.
