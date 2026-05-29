@@ -21,12 +21,16 @@ shell: get_container_id
 		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && /bin/sh -l' ; \
 	fi
 
+.PHONY: migrate
+migrate:
+	pnpm exec mikro-orm-esm migration:up
+
 .PHONY: container_migrate
 container_migrate: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Mimir container is not running, can't run migrations.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm-esm migration:up'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make migrate'; \
 	fi
 
 .PHONY: container_migrate_mimir1
@@ -205,9 +209,22 @@ bootstrap_admin:
 .PHONY: container_bootstrap_admin
 container_bootstrap_admin: get_container_id container_migrate
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Mimir container is not running, can't run seeding.${NC}"; \
+		echo "${RED}Mimir container is not running, can't run bootstrapping.${NC}"; \
 	else \
 	  $(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make bootstrap_admin' ; \
+	fi
+
+.PHONY: seed_test_db
+seed_test_db: export TEST=true
+seed_test_db: clean_test_db migrate
+	pnpm exec mikro-orm-esm seeder:run --class=TestSeeder
+
+.PHONY: container_seed_test_db
+container_seed_test_db: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Mimir container is not running, can't run seeding.${NC}"; \
+	else \
+	  $(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make seed_test_db' ; \
 	fi
 
 .PHONY: clean_test_db

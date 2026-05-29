@@ -1,6 +1,6 @@
 import type { EntityManager } from '@mikro-orm/core';
-import { EventEntity } from 'src/entities/Event.entity';
-import { SessionEntity } from 'src/entities/Session.entity';
+import { EventEntity } from '../entities/Event.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 
 export type TSessionResult = {
   id: number;

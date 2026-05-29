@@ -3,9 +3,9 @@
 
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import type { EntityManager } from '@mikro-orm/core';
-import { EventEntity } from 'src/entities/Event.entity';
-import { SessionEntity } from 'src/entities/Session.entity';
-import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { EventEntity } from '../entities/Event.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 
 type TRound = {
   id: number;
@@ -42,7 +42,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -67,7 +67,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -92,7 +92,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -117,7 +117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -142,7 +142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -167,7 +167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -192,7 +192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -217,7 +217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -242,7 +242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -267,7 +267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -292,7 +292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [24],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -317,7 +317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -342,7 +342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2, 24],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -367,7 +367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -392,7 +392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -417,7 +417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -442,7 +442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -467,7 +467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -492,7 +492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -517,7 +517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -542,7 +542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -567,7 +567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [187],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -592,7 +592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -617,7 +617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -642,7 +642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -667,7 +667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -692,7 +692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -717,7 +717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -742,7 +742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -767,7 +767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -792,7 +792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -817,7 +817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -842,7 +842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -867,7 +867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -892,7 +892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [5],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -917,7 +917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [5],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -942,7 +942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -967,7 +967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -992,7 +992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -1017,7 +1017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -1042,7 +1042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -1067,7 +1067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [10],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1092,7 +1092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1117,7 +1117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1142,7 +1142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1167,7 +1167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -1192,7 +1192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -1217,7 +1217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -1242,7 +1242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -1267,7 +1267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -1292,7 +1292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -1317,7 +1317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1342,7 +1342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1367,7 +1367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1392,7 +1392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1417,7 +1417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1442,7 +1442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1467,7 +1467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -1492,7 +1492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1517,7 +1517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1542,7 +1542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1567,7 +1567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1592,7 +1592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -1617,7 +1617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -1642,7 +1642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -1667,7 +1667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -1692,7 +1692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -1717,7 +1717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 9,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -1742,7 +1742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1767,7 +1767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1792,7 +1792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1817,7 +1817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [24, 281],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1842,7 +1842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -1867,7 +1867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -1892,7 +1892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -1917,7 +1917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -1942,7 +1942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -1967,7 +1967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -1992,7 +1992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -2017,7 +2017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -2042,7 +2042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 9,
     honba: 8,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 8,
@@ -2067,7 +2067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [10],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2092,7 +2092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2117,7 +2117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2142,7 +2142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2167,7 +2167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [10],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2192,7 +2192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -2217,7 +2217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -2242,7 +2242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 4,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -2267,7 +2267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2292,7 +2292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2317,7 +2317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2342,7 +2342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2367,7 +2367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2392,7 +2392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2417,7 +2417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [10],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2442,7 +2442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2467,7 +2467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [11, 10],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2492,7 +2492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2517,7 +2517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2542,7 +2542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2567,7 +2567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -2592,7 +2592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -2617,7 +2617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -2642,7 +2642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -2667,7 +2667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -2692,7 +2692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -2717,7 +2717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 8,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 8,
@@ -2742,7 +2742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 9,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 9,
@@ -2767,7 +2767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2792,7 +2792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2817,7 +2817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2842,7 +2842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -2867,7 +2867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -2892,7 +2892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -2917,7 +2917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [97],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -2942,7 +2942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 4,
     riichi: [187],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -2967,7 +2967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -2992,7 +2992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -3017,7 +3017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -3042,7 +3042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 8,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 8,
@@ -3067,7 +3067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 9,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 9,
@@ -3092,7 +3092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 10,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 10,
@@ -3117,7 +3117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 11,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 11,
@@ -3142,7 +3142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 12,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 12,
@@ -3167,7 +3167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 13,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 13,
@@ -3192,7 +3192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 14,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 14,
@@ -3217,7 +3217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 15,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 15,
@@ -3242,7 +3242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3267,7 +3267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -3292,7 +3292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -3317,7 +3317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -3342,7 +3342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -3367,7 +3367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -3392,7 +3392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -3417,7 +3417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -3442,7 +3442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 8,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 8,
@@ -3467,7 +3467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3492,7 +3492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3517,7 +3517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3542,7 +3542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3567,7 +3567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3592,7 +3592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -3617,7 +3617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -3642,7 +3642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3667,7 +3667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [11],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -3692,7 +3692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -3717,7 +3717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3742,7 +3742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3767,7 +3767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -3792,7 +3792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3817,7 +3817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3842,7 +3842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -3867,7 +3867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -3892,7 +3892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -3917,7 +3917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -3942,7 +3942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -3967,7 +3967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -3992,7 +3992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -4017,7 +4017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4042,7 +4042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4067,7 +4067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4092,7 +4092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4117,7 +4117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -4142,7 +4142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [24],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4167,7 +4167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -4192,7 +4192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -4217,7 +4217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -4242,7 +4242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -4267,7 +4267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -4292,7 +4292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -4317,7 +4317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -4342,7 +4342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4367,7 +4367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -4392,7 +4392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -4417,7 +4417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -4442,7 +4442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -4467,7 +4467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -4492,7 +4492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -4517,7 +4517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -4542,7 +4542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 9,
     honba: 8,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 8,
@@ -4567,7 +4567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4592,7 +4592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -4617,7 +4617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -4642,7 +4642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -4667,7 +4667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -4692,7 +4692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -4717,7 +4717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 6,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -4742,7 +4742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 7,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 7,
@@ -4767,7 +4767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 8,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 8,
@@ -4792,7 +4792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [195],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4817,7 +4817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [433, 195],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -4842,7 +4842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [195],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4867,7 +4867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4892,7 +4892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4917,7 +4917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [195, 433],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -4942,7 +4942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -4967,7 +4967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -4992,7 +4992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5017,7 +5017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5042,7 +5042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5067,7 +5067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5092,7 +5092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5117,7 +5117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5142,7 +5142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5167,7 +5167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5192,7 +5192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5217,7 +5217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5242,7 +5242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5267,7 +5267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5292,7 +5292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5317,7 +5317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5342,7 +5342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5367,7 +5367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5392,7 +5392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5417,7 +5417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5442,7 +5442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [26],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5467,7 +5467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5492,7 +5492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1411, 1516],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5517,7 +5517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [26],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5542,7 +5542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [51, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5567,7 +5567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5592,7 +5592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5617,7 +5617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5642,7 +5642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5667,7 +5667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5692,7 +5692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5717,7 +5717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5742,7 +5742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [2815, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5767,7 +5767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5792,7 +5792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -5817,7 +5817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5842,7 +5842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5867,7 +5867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5892,7 +5892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5917,7 +5917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5942,7 +5942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5967,7 +5967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -5992,7 +5992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6017,7 +6017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6042,7 +6042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6067,7 +6067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6092,7 +6092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6117,7 +6117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6142,7 +6142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6167,7 +6167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6192,7 +6192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6217,7 +6217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6242,7 +6242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6267,7 +6267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6292,7 +6292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6317,7 +6317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6342,7 +6342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6367,7 +6367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6392,7 +6392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6417,7 +6417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6442,7 +6442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6467,7 +6467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6492,7 +6492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6517,7 +6517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6542,7 +6542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6567,7 +6567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6592,7 +6592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6617,7 +6617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6642,7 +6642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6667,7 +6667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6692,7 +6692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6717,7 +6717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6742,7 +6742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -6767,7 +6767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6792,7 +6792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6817,7 +6817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [962, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6842,7 +6842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6867,7 +6867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3071, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6892,7 +6892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6917,7 +6917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6942,7 +6942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6967,7 +6967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -6992,7 +6992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7017,7 +7017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7042,7 +7042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7067,7 +7067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7092,7 +7092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7117,7 +7117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7142,7 +7142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7167,7 +7167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7192,7 +7192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7217,7 +7217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7242,7 +7242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7267,7 +7267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7292,7 +7292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7317,7 +7317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7342,7 +7342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7367,7 +7367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7392,7 +7392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7417,7 +7417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7442,7 +7442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7467,7 +7467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7492,7 +7492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7517,7 +7517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7542,7 +7542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7567,7 +7567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7592,7 +7592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7617,7 +7617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7642,7 +7642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7667,7 +7667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7692,7 +7692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1665, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7717,7 +7717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7742,7 +7742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7767,7 +7767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7792,7 +7792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7817,7 +7817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7842,7 +7842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7867,7 +7867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7892,7 +7892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7917,7 +7917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7942,7 +7942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7967,7 +7967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -7992,7 +7992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8017,7 +8017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8042,7 +8042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8067,7 +8067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8092,7 +8092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8117,7 +8117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2106, 3071, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8142,7 +8142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8167,7 +8167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8192,7 +8192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8217,7 +8217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8242,7 +8242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8267,7 +8267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8292,7 +8292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8317,7 +8317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8342,7 +8342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8367,7 +8367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572, 1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8392,7 +8392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1665, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8417,7 +8417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8442,7 +8442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8467,7 +8467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8492,7 +8492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8517,7 +8517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8542,7 +8542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8567,7 +8567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2931, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8592,7 +8592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8617,7 +8617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8642,7 +8642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8667,7 +8667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8692,7 +8692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8717,7 +8717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8742,7 +8742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8767,7 +8767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8792,7 +8792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8817,7 +8817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8842,7 +8842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [51, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8867,7 +8867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8892,7 +8892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8917,7 +8917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [156, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8942,7 +8942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8967,7 +8967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -8992,7 +8992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9017,7 +9017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9042,7 +9042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9067,7 +9067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9092,7 +9092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9117,7 +9117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9142,7 +9142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9167,7 +9167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9192,7 +9192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9217,7 +9217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9242,7 +9242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9267,7 +9267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9292,7 +9292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9317,7 +9317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9342,7 +9342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9367,7 +9367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9392,7 +9392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9417,7 +9417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9442,7 +9442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9467,7 +9467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9492,7 +9492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1151, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9517,7 +9517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9542,7 +9542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9567,7 +9567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9592,7 +9592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9617,7 +9617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9642,7 +9642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [961, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9667,7 +9667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9692,7 +9692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9717,7 +9717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [1665, 961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9742,7 +9742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9767,7 +9767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9792,7 +9792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9817,7 +9817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9842,7 +9842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [1151, 1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9867,7 +9867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9892,7 +9892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [961, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -9917,7 +9917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9942,7 +9942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9967,7 +9967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2106, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -9992,7 +9992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10017,7 +10017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10042,7 +10042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10067,7 +10067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10092,7 +10092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10117,7 +10117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [961, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10142,7 +10142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2105, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10167,7 +10167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10192,7 +10192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10217,7 +10217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10242,7 +10242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10267,7 +10267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [961, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10292,7 +10292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10317,7 +10317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10342,7 +10342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10367,7 +10367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10392,7 +10392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10417,7 +10417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10442,7 +10442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10467,7 +10467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2105, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10492,7 +10492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10517,7 +10517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10542,7 +10542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10567,7 +10567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10592,7 +10592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10617,7 +10617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10642,7 +10642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2796, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10667,7 +10667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10692,7 +10692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10717,7 +10717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10742,7 +10742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10767,7 +10767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10792,7 +10792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10817,7 +10817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10842,7 +10842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10867,7 +10867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10892,7 +10892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10917,7 +10917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10942,7 +10942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10967,7 +10967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -10992,7 +10992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11017,7 +11017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11042,7 +11042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11067,7 +11067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11092,7 +11092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11117,7 +11117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11142,7 +11142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11167,7 +11167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11192,7 +11192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11217,7 +11217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2796, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11242,7 +11242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11267,7 +11267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [573, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11292,7 +11292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11317,7 +11317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11342,7 +11342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2796, 2597, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11367,7 +11367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11392,7 +11392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3071, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11417,7 +11417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11442,7 +11442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11467,7 +11467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11492,7 +11492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11517,7 +11517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11542,7 +11542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11567,7 +11567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [51, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11592,7 +11592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11617,7 +11617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11642,7 +11642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2815, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11667,7 +11667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11692,7 +11692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11717,7 +11717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11742,7 +11742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [50, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11767,7 +11767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11792,7 +11792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [50, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11817,7 +11817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11842,7 +11842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11867,7 +11867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11892,7 +11892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11917,7 +11917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [50, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11942,7 +11942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11967,7 +11967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2815, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -11992,7 +11992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12017,7 +12017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12042,7 +12042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12067,7 +12067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12092,7 +12092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [73, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12117,7 +12117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12142,7 +12142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12167,7 +12167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12192,7 +12192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2960, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12217,7 +12217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [573, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12242,7 +12242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12267,7 +12267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12292,7 +12292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12317,7 +12317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12342,7 +12342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2960, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12367,7 +12367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12392,7 +12392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12417,7 +12417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12442,7 +12442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12467,7 +12467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12492,7 +12492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12517,7 +12517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12542,7 +12542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12567,7 +12567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12592,7 +12592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12617,7 +12617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -12642,7 +12642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12667,7 +12667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12692,7 +12692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12717,7 +12717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12742,7 +12742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12767,7 +12767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12792,7 +12792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12817,7 +12817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2105, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12842,7 +12842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12867,7 +12867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12892,7 +12892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12917,7 +12917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2960, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12942,7 +12942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12967,7 +12967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -12992,7 +12992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13017,7 +13017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2960, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13042,7 +13042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13067,7 +13067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13092,7 +13092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13117,7 +13117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13142,7 +13142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13167,7 +13167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2960, 573, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13192,7 +13192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13217,7 +13217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13242,7 +13242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13267,7 +13267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13292,7 +13292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994, 573, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13317,7 +13317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13342,7 +13342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13367,7 +13367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13392,7 +13392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 3,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13417,7 +13417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 3,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13442,7 +13442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13467,7 +13467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13492,7 +13492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13517,7 +13517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13542,7 +13542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13567,7 +13567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13592,7 +13592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 3,
     riichi: [573, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13617,7 +13617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13642,7 +13642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [73, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -13667,7 +13667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13692,7 +13692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13717,7 +13717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13742,7 +13742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13767,7 +13767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2482, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13792,7 +13792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13817,7 +13817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13842,7 +13842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13867,7 +13867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13892,7 +13892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13917,7 +13917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13942,7 +13942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13967,7 +13967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -13992,7 +13992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14017,7 +14017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14042,7 +14042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14067,7 +14067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14092,7 +14092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14117,7 +14117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14142,7 +14142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14167,7 +14167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [573, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14192,7 +14192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14217,7 +14217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14242,7 +14242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14267,7 +14267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14292,7 +14292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14317,7 +14317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14342,7 +14342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1151, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14367,7 +14367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2482, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14392,7 +14392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14417,7 +14417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14442,7 +14442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1151, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14467,7 +14467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14492,7 +14492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14517,7 +14517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14542,7 +14542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14567,7 +14567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14592,7 +14592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14617,7 +14617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14642,7 +14642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14667,7 +14667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14692,7 +14692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14717,7 +14717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14742,7 +14742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14767,7 +14767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14792,7 +14792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1665, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14817,7 +14817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14842,7 +14842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14867,7 +14867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091, 1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14892,7 +14892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14917,7 +14917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14942,7 +14942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14967,7 +14967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -14992,7 +14992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15017,7 +15017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15042,7 +15042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15067,7 +15067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15092,7 +15092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15117,7 +15117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15142,7 +15142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15167,7 +15167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15192,7 +15192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15217,7 +15217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15242,7 +15242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15267,7 +15267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15292,7 +15292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15317,7 +15317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15342,7 +15342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15367,7 +15367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2931, 3091, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15392,7 +15392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15417,7 +15417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15442,7 +15442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15467,7 +15467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15492,7 +15492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15517,7 +15517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2931, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15542,7 +15542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15567,7 +15567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15592,7 +15592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15617,7 +15617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15642,7 +15642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15667,7 +15667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15692,7 +15692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15717,7 +15717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15742,7 +15742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15767,7 +15767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2106, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15792,7 +15792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15817,7 +15817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15842,7 +15842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15867,7 +15867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1002, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15892,7 +15892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15917,7 +15917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15942,7 +15942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15967,7 +15967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2796, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -15992,7 +15992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16017,7 +16017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16042,7 +16042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16067,7 +16067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16092,7 +16092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16117,7 +16117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16142,7 +16142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16167,7 +16167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16192,7 +16192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16217,7 +16217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16242,7 +16242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2106, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16267,7 +16267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2106, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16292,7 +16292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16317,7 +16317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16342,7 +16342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16367,7 +16367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16392,7 +16392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16417,7 +16417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16442,7 +16442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [573, 961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16467,7 +16467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16492,7 +16492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16517,7 +16517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16542,7 +16542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [156, 961, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16567,7 +16567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16592,7 +16592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16617,7 +16617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [961, 156, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16642,7 +16642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16667,7 +16667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16692,7 +16692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [573, 961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16717,7 +16717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16742,7 +16742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16767,7 +16767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16792,7 +16792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16817,7 +16817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16842,7 +16842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16867,7 +16867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16892,7 +16892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16917,7 +16917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3091, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16942,7 +16942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16967,7 +16967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -16992,7 +16992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17017,7 +17017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17042,7 +17042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17067,7 +17067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17092,7 +17092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17117,7 +17117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17142,7 +17142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17167,7 +17167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17192,7 +17192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17217,7 +17217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17242,7 +17242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17267,7 +17267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17292,7 +17292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2106, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17317,7 +17317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17342,7 +17342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17367,7 +17367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17392,7 +17392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17417,7 +17417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17442,7 +17442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2994, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17467,7 +17467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17492,7 +17492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17517,7 +17517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17542,7 +17542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17567,7 +17567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17592,7 +17592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2994, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17617,7 +17617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17642,7 +17642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17667,7 +17667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17692,7 +17692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17717,7 +17717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17742,7 +17742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17767,7 +17767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2106, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17792,7 +17792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17817,7 +17817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17842,7 +17842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [73, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17867,7 +17867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17892,7 +17892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17917,7 +17917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17942,7 +17942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17967,7 +17967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -17992,7 +17992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18017,7 +18017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18042,7 +18042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18067,7 +18067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18092,7 +18092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18117,7 +18117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18142,7 +18142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18167,7 +18167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18192,7 +18192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18217,7 +18217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2931, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18242,7 +18242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18267,7 +18267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18292,7 +18292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2106, 2931, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18317,7 +18317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18342,7 +18342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18367,7 +18367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18392,7 +18392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18417,7 +18417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18442,7 +18442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18467,7 +18467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18492,7 +18492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18517,7 +18517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18542,7 +18542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18567,7 +18567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18592,7 +18592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18617,7 +18617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18642,7 +18642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18667,7 +18667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18692,7 +18692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18717,7 +18717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18742,7 +18742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18767,7 +18767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18792,7 +18792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18817,7 +18817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [73, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18842,7 +18842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18867,7 +18867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18892,7 +18892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18917,7 +18917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18942,7 +18942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18967,7 +18967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1665, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -18992,7 +18992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19017,7 +19017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19042,7 +19042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19067,7 +19067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1665, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19092,7 +19092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19117,7 +19117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19142,7 +19142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19167,7 +19167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19192,7 +19192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19217,7 +19217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19242,7 +19242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19267,7 +19267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1665, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19292,7 +19292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19317,7 +19317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19342,7 +19342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19367,7 +19367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19392,7 +19392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19417,7 +19417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19442,7 +19442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19467,7 +19467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19492,7 +19492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19517,7 +19517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19542,7 +19542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19567,7 +19567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [573, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19592,7 +19592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [573, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19617,7 +19617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19642,7 +19642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19667,7 +19667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19692,7 +19692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19717,7 +19717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19742,7 +19742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19767,7 +19767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19792,7 +19792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19817,7 +19817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1665, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19842,7 +19842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19867,7 +19867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -19892,7 +19892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -19917,7 +19917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -19942,7 +19942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -19967,7 +19967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -19992,7 +19992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -20017,7 +20017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -20042,7 +20042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -20067,7 +20067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -20092,7 +20092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -20117,7 +20117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -20142,7 +20142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -20167,7 +20167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20192,7 +20192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20217,7 +20217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20242,7 +20242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20267,7 +20267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20292,7 +20292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20317,7 +20317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20342,7 +20342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20367,7 +20367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20392,7 +20392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20417,7 +20417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20442,7 +20442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20467,7 +20467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20492,7 +20492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20517,7 +20517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20542,7 +20542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20567,7 +20567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20592,7 +20592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20617,7 +20617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20642,7 +20642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20667,7 +20667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20692,7 +20692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20717,7 +20717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20742,7 +20742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20767,7 +20767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20792,7 +20792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [573, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20817,7 +20817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2815, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20842,7 +20842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20867,7 +20867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20892,7 +20892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20917,7 +20917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815, 1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20942,7 +20942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20967,7 +20967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -20992,7 +20992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21017,7 +21017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21042,7 +21042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21067,7 +21067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21092,7 +21092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21117,7 +21117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21142,7 +21142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21167,7 +21167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21192,7 +21192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21217,7 +21217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21242,7 +21242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21267,7 +21267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21292,7 +21292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21317,7 +21317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21342,7 +21342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21367,7 +21367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1151, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21392,7 +21392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21417,7 +21417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21442,7 +21442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21467,7 +21467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21492,7 +21492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21517,7 +21517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21542,7 +21542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21567,7 +21567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21592,7 +21592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21617,7 +21617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21642,7 +21642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21667,7 +21667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21692,7 +21692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21717,7 +21717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [573, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21742,7 +21742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21767,7 +21767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21792,7 +21792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21817,7 +21817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21842,7 +21842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21867,7 +21867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21892,7 +21892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21917,7 +21917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21942,7 +21942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21967,7 +21967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -21992,7 +21992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22017,7 +22017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22042,7 +22042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22067,7 +22067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22092,7 +22092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22117,7 +22117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22142,7 +22142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22167,7 +22167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22192,7 +22192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22217,7 +22217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22242,7 +22242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22267,7 +22267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22292,7 +22292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22317,7 +22317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22342,7 +22342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22367,7 +22367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22392,7 +22392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22417,7 +22417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22442,7 +22442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22467,7 +22467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22492,7 +22492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22517,7 +22517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22542,7 +22542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22567,7 +22567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22592,7 +22592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1151, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22617,7 +22617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22642,7 +22642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22667,7 +22667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22692,7 +22692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22717,7 +22717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22742,7 +22742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22767,7 +22767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22792,7 +22792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22817,7 +22817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22842,7 +22842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22867,7 +22867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22892,7 +22892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22917,7 +22917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22942,7 +22942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22967,7 +22967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -22992,7 +22992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2106, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23017,7 +23017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23042,7 +23042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23067,7 +23067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23092,7 +23092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23117,7 +23117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23142,7 +23142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23167,7 +23167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23192,7 +23192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23217,7 +23217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23242,7 +23242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23267,7 +23267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23292,7 +23292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23317,7 +23317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23342,7 +23342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23367,7 +23367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23392,7 +23392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23417,7 +23417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994, 2106, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23442,7 +23442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1151, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23467,7 +23467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23492,7 +23492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23517,7 +23517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23542,7 +23542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23567,7 +23567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23592,7 +23592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23617,7 +23617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23642,7 +23642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23667,7 +23667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23692,7 +23692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23717,7 +23717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23742,7 +23742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23767,7 +23767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23792,7 +23792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23817,7 +23817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23842,7 +23842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23867,7 +23867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23892,7 +23892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23917,7 +23917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23942,7 +23942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23967,7 +23967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -23992,7 +23992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24017,7 +24017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24042,7 +24042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24067,7 +24067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24092,7 +24092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24117,7 +24117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24142,7 +24142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24167,7 +24167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24192,7 +24192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24217,7 +24217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24242,7 +24242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24267,7 +24267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24292,7 +24292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24317,7 +24317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3071, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24342,7 +24342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24367,7 +24367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2482, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24392,7 +24392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24417,7 +24417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24442,7 +24442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24467,7 +24467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24492,7 +24492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24517,7 +24517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24542,7 +24542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24567,7 +24567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24592,7 +24592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2931, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24617,7 +24617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2482, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24642,7 +24642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24667,7 +24667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3091, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24692,7 +24692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24717,7 +24717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2482, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24742,7 +24742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24767,7 +24767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24792,7 +24792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24817,7 +24817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24842,7 +24842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24867,7 +24867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24892,7 +24892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24917,7 +24917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24942,7 +24942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24967,7 +24967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [961, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -24992,7 +24992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25017,7 +25017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25042,7 +25042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25067,7 +25067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25092,7 +25092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [961, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25117,7 +25117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25142,7 +25142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25167,7 +25167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25192,7 +25192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25217,7 +25217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2105, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25242,7 +25242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25267,7 +25267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25292,7 +25292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25317,7 +25317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25342,7 +25342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25367,7 +25367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25392,7 +25392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25417,7 +25417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25442,7 +25442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25467,7 +25467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25492,7 +25492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25517,7 +25517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25542,7 +25542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25567,7 +25567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25592,7 +25592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25617,7 +25617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25642,7 +25642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25667,7 +25667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25692,7 +25692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25717,7 +25717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25742,7 +25742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25767,7 +25767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25792,7 +25792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [50, 3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25817,7 +25817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [3071, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25842,7 +25842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25867,7 +25867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25892,7 +25892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25917,7 +25917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25942,7 +25942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25967,7 +25967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -25992,7 +25992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26017,7 +26017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26042,7 +26042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26067,7 +26067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26092,7 +26092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26117,7 +26117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26142,7 +26142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26167,7 +26167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26192,7 +26192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26217,7 +26217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [961, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26242,7 +26242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26267,7 +26267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26292,7 +26292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26317,7 +26317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26342,7 +26342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26367,7 +26367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2060, 961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26392,7 +26392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26417,7 +26417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961, 1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26442,7 +26442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26467,7 +26467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26492,7 +26492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1151, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26517,7 +26517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26542,7 +26542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2060, 961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26567,7 +26567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1665, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26592,7 +26592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1151],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26617,7 +26617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26642,7 +26642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26667,7 +26667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26692,7 +26692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26717,7 +26717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26742,7 +26742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2931, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26767,7 +26767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26792,7 +26792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26817,7 +26817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26842,7 +26842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26867,7 +26867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26892,7 +26892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26917,7 +26917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26942,7 +26942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26967,7 +26967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -26992,7 +26992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27017,7 +27017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27042,7 +27042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2796, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27067,7 +27067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27092,7 +27092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27117,7 +27117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2994, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27142,7 +27142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27167,7 +27167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27192,7 +27192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27217,7 +27217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27242,7 +27242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27267,7 +27267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [2796, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27292,7 +27292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27317,7 +27317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27342,7 +27342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27367,7 +27367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27392,7 +27392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 3,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27417,7 +27417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 3,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27442,7 +27442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 3,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27467,7 +27467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -27492,7 +27492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27517,7 +27517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27542,7 +27542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27567,7 +27567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [50, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27592,7 +27592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27617,7 +27617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27642,7 +27642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27667,7 +27667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27692,7 +27692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27717,7 +27717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27742,7 +27742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27767,7 +27767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27792,7 +27792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27817,7 +27817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27842,7 +27842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27867,7 +27867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27892,7 +27892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27917,7 +27917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [50, 962, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27942,7 +27942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27967,7 +27967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -27992,7 +27992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28017,7 +28017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28042,7 +28042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28067,7 +28067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28092,7 +28092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28117,7 +28117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28142,7 +28142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28167,7 +28167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28192,7 +28192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [2796, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28217,7 +28217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28242,7 +28242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28267,7 +28267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28292,7 +28292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28317,7 +28317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28342,7 +28342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28367,7 +28367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28392,7 +28392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28417,7 +28417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28442,7 +28442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28467,7 +28467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28492,7 +28492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28517,7 +28517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28542,7 +28542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28567,7 +28567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28592,7 +28592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28617,7 +28617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28642,7 +28642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -28667,7 +28667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28692,7 +28692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28717,7 +28717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28742,7 +28742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28767,7 +28767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28792,7 +28792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28817,7 +28817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28842,7 +28842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28867,7 +28867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28892,7 +28892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28917,7 +28917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28942,7 +28942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28967,7 +28967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -28992,7 +28992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29017,7 +29017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [156, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29042,7 +29042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29067,7 +29067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29092,7 +29092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29117,7 +29117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29142,7 +29142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29167,7 +29167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29192,7 +29192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29217,7 +29217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29242,7 +29242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29267,7 +29267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29292,7 +29292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29317,7 +29317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29342,7 +29342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29367,7 +29367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29392,7 +29392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29417,7 +29417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29442,7 +29442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29467,7 +29467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29492,7 +29492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29517,7 +29517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29542,7 +29542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29567,7 +29567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29592,7 +29592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29617,7 +29617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29642,7 +29642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29667,7 +29667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29692,7 +29692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29717,7 +29717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29742,7 +29742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29767,7 +29767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29792,7 +29792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [961, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29817,7 +29817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [961, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29842,7 +29842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [73, 2105, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29867,7 +29867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29892,7 +29892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29917,7 +29917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29942,7 +29942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29967,7 +29967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -29992,7 +29992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30017,7 +30017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30042,7 +30042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30067,7 +30067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30092,7 +30092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30117,7 +30117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [73, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30142,7 +30142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30167,7 +30167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30192,7 +30192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30217,7 +30217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30242,7 +30242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30267,7 +30267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30292,7 +30292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30317,7 +30317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30342,7 +30342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30367,7 +30367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30392,7 +30392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30417,7 +30417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30442,7 +30442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30467,7 +30467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30492,7 +30492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30517,7 +30517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30542,7 +30542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -30567,7 +30567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597, 73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30592,7 +30592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30617,7 +30617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30642,7 +30642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30667,7 +30667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30692,7 +30692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30717,7 +30717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30742,7 +30742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30767,7 +30767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30792,7 +30792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -30817,7 +30817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -30842,7 +30842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -30867,7 +30867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -30892,7 +30892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -30917,7 +30917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -30942,7 +30942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -30967,7 +30967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -30992,7 +30992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -31017,7 +31017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -31042,7 +31042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31067,7 +31067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31092,7 +31092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31117,7 +31117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31142,7 +31142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2105, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31167,7 +31167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [573, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31192,7 +31192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31217,7 +31217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2105, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31242,7 +31242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2105, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31267,7 +31267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2105, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31292,7 +31292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31317,7 +31317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31342,7 +31342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31367,7 +31367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31392,7 +31392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31417,7 +31417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31442,7 +31442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31467,7 +31467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31492,7 +31492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31517,7 +31517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31542,7 +31542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2105, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31567,7 +31567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31592,7 +31592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31617,7 +31617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [51, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31642,7 +31642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31667,7 +31667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31692,7 +31692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2105, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31717,7 +31717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31742,7 +31742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [573, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31767,7 +31767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2105, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31792,7 +31792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31817,7 +31817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31842,7 +31842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31867,7 +31867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31892,7 +31892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31917,7 +31917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31942,7 +31942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31967,7 +31967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -31992,7 +31992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32017,7 +32017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32042,7 +32042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32067,7 +32067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32092,7 +32092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32117,7 +32117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32142,7 +32142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32167,7 +32167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32192,7 +32192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2796, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32217,7 +32217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32242,7 +32242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32267,7 +32267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32292,7 +32292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32317,7 +32317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32342,7 +32342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32367,7 +32367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [50, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32392,7 +32392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32417,7 +32417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32442,7 +32442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32467,7 +32467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32492,7 +32492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32517,7 +32517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32542,7 +32542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32567,7 +32567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32592,7 +32592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32617,7 +32617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32642,7 +32642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1665, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32667,7 +32667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32692,7 +32692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815, 50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32717,7 +32717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32742,7 +32742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32767,7 +32767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32792,7 +32792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [961, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32817,7 +32817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32842,7 +32842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32867,7 +32867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32892,7 +32892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32917,7 +32917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32942,7 +32942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32967,7 +32967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -32992,7 +32992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33017,7 +33017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33042,7 +33042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33067,7 +33067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33092,7 +33092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33117,7 +33117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33142,7 +33142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33167,7 +33167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002, 3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33192,7 +33192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [961, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33217,7 +33217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33242,7 +33242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33267,7 +33267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33292,7 +33292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33317,7 +33317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33342,7 +33342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1002, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33367,7 +33367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33392,7 +33392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33417,7 +33417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33442,7 +33442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33467,7 +33467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33492,7 +33492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33517,7 +33517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2106, 2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33542,7 +33542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33567,7 +33567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33592,7 +33592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33617,7 +33617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2105],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33642,7 +33642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1002, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33667,7 +33667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33692,7 +33692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2105, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33717,7 +33717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33742,7 +33742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33767,7 +33767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33792,7 +33792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -33817,7 +33817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [962, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -33842,7 +33842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [1002, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -33867,7 +33867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -33892,7 +33892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -33917,7 +33917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -33942,7 +33942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [1002, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -33967,7 +33967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [1002, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -33992,7 +33992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [2597, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -34017,7 +34017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -34042,7 +34042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -34067,7 +34067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [1002, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -34092,7 +34092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34117,7 +34117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34142,7 +34142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34167,7 +34167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34192,7 +34192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34217,7 +34217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34242,7 +34242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34267,7 +34267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34292,7 +34292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [156, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34317,7 +34317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34342,7 +34342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34367,7 +34367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34392,7 +34392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34417,7 +34417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34442,7 +34442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34467,7 +34467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34492,7 +34492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2796, 2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34517,7 +34517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34542,7 +34542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34567,7 +34567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34592,7 +34592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34617,7 +34617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34642,7 +34642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34667,7 +34667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34692,7 +34692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [962, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34717,7 +34717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34742,7 +34742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34767,7 +34767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34792,7 +34792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34817,7 +34817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34842,7 +34842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34867,7 +34867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34892,7 +34892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2482, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34917,7 +34917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34942,7 +34942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34967,7 +34967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -34992,7 +34992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35017,7 +35017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35042,7 +35042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35067,7 +35067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35092,7 +35092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35117,7 +35117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35142,7 +35142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35167,7 +35167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35192,7 +35192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2060, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35217,7 +35217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35242,7 +35242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35267,7 +35267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35292,7 +35292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35317,7 +35317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35342,7 +35342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35367,7 +35367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35392,7 +35392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002, 961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35417,7 +35417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35442,7 +35442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35467,7 +35467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35492,7 +35492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35517,7 +35517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35542,7 +35542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35567,7 +35567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35592,7 +35592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1002, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35617,7 +35617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [961, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35642,7 +35642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35667,7 +35667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35692,7 +35692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35717,7 +35717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35742,7 +35742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35767,7 +35767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35792,7 +35792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35817,7 +35817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35842,7 +35842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35867,7 +35867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35892,7 +35892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35917,7 +35917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35942,7 +35942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [3091, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35967,7 +35967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -35992,7 +35992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36017,7 +36017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36042,7 +36042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36067,7 +36067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36092,7 +36092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36117,7 +36117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36142,7 +36142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36167,7 +36167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [962, 2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36192,7 +36192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2106, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36217,7 +36217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36242,7 +36242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36267,7 +36267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36292,7 +36292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36317,7 +36317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36342,7 +36342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597, 2106, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36367,7 +36367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36392,7 +36392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36417,7 +36417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36442,7 +36442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2597, 99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36467,7 +36467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36492,7 +36492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36517,7 +36517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36542,7 +36542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [99, 235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -36567,7 +36567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36592,7 +36592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [99, 1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -36617,7 +36617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -36642,7 +36642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -36667,7 +36667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36692,7 +36692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -36717,7 +36717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36742,7 +36742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -36767,7 +36767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36792,7 +36792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36817,7 +36817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -36842,7 +36842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36867,7 +36867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [304, 2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36892,7 +36892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2387, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36917,7 +36917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -36942,7 +36942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -36967,7 +36967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -36992,7 +36992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -37017,7 +37017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -37042,7 +37042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37067,7 +37067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37092,7 +37092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37117,7 +37117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37142,7 +37142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37167,7 +37167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37192,7 +37192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37217,7 +37217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37242,7 +37242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37267,7 +37267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37292,7 +37292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2924],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37317,7 +37317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37342,7 +37342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37367,7 +37367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37392,7 +37392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37417,7 +37417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37442,7 +37442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37467,7 +37467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37492,7 +37492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37517,7 +37517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37542,7 +37542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37567,7 +37567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37592,7 +37592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37617,7 +37617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37642,7 +37642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -37667,7 +37667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37692,7 +37692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37717,7 +37717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37742,7 +37742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37767,7 +37767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2902],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37792,7 +37792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37817,7 +37817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37842,7 +37842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37867,7 +37867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [2517, 393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37892,7 +37892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37917,7 +37917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2902],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37942,7 +37942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -37967,7 +37967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -37992,7 +37992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -38017,7 +38017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 3,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -38042,7 +38042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -38067,7 +38067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -38092,7 +38092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38117,7 +38117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38142,7 +38142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38167,7 +38167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38192,7 +38192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -38217,7 +38217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -38242,7 +38242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 4,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -38267,7 +38267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38292,7 +38292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38317,7 +38317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [743, 761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38342,7 +38342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38367,7 +38367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38392,7 +38392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -38417,7 +38417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 3,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -38442,7 +38442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 4,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -38467,7 +38467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38492,7 +38492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38517,7 +38517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38542,7 +38542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38567,7 +38567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38592,7 +38592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38617,7 +38617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2318, 147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38642,7 +38642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38667,7 +38667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38692,7 +38692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -38717,7 +38717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -38742,7 +38742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 4,
     riichi: [147, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -38767,7 +38767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38792,7 +38792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [743, 147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38817,7 +38817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38842,7 +38842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -38867,7 +38867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38892,7 +38892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38917,7 +38917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38942,7 +38942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38967,7 +38967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -38992,7 +38992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39017,7 +39017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39042,7 +39042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39067,7 +39067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39092,7 +39092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39117,7 +39117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39142,7 +39142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39167,7 +39167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39192,7 +39192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39217,7 +39217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39242,7 +39242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39267,7 +39267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39292,7 +39292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [2517, 99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -39317,7 +39317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39342,7 +39342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39367,7 +39367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39392,7 +39392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39417,7 +39417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [99, 2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39442,7 +39442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39467,7 +39467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39492,7 +39492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39517,7 +39517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -39542,7 +39542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -39567,7 +39567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [338],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39592,7 +39592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39617,7 +39617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39642,7 +39642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39667,7 +39667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39692,7 +39692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [338],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39717,7 +39717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39742,7 +39742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -39767,7 +39767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -39792,7 +39792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -39817,7 +39817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -39842,7 +39842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -39867,7 +39867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1468, 393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39892,7 +39892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1834],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39917,7 +39917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [304, 1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39942,7 +39942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39967,7 +39967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -39992,7 +39992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40017,7 +40017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40042,7 +40042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2924, 1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40067,7 +40067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40092,7 +40092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40117,7 +40117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1667, 2902],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40142,7 +40142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40167,7 +40167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40192,7 +40192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [2902, 1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40217,7 +40217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40242,7 +40242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40267,7 +40267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40292,7 +40292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40317,7 +40317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40342,7 +40342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40367,7 +40367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40392,7 +40392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2994, 2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40417,7 +40417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40442,7 +40442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40467,7 +40467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40492,7 +40492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40517,7 +40517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -40542,7 +40542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40567,7 +40567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40592,7 +40592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40617,7 +40617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40642,7 +40642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40667,7 +40667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40692,7 +40692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [338, 147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -40717,7 +40717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40742,7 +40742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40767,7 +40767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [338],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40792,7 +40792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -40817,7 +40817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40842,7 +40842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40867,7 +40867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40892,7 +40892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40917,7 +40917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40942,7 +40942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40967,7 +40967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1028, 2902, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -40992,7 +40992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [743, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41017,7 +41017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41042,7 +41042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41067,7 +41067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41092,7 +41092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41117,7 +41117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41142,7 +41142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41167,7 +41167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41192,7 +41192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41217,7 +41217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41242,7 +41242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41267,7 +41267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41292,7 +41292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [761, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41317,7 +41317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41342,7 +41342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41367,7 +41367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41392,7 +41392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41417,7 +41417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41442,7 +41442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41467,7 +41467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41492,7 +41492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41517,7 +41517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41542,7 +41542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41567,7 +41567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -41592,7 +41592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -41617,7 +41617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 4,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -41642,7 +41642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41667,7 +41667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41692,7 +41692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -41717,7 +41717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -41742,7 +41742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -41767,7 +41767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41792,7 +41792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41817,7 +41817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -41842,7 +41842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41867,7 +41867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41892,7 +41892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41917,7 +41917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41942,7 +41942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41967,7 +41967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -41992,7 +41992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42017,7 +42017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42042,7 +42042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42067,7 +42067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42092,7 +42092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42117,7 +42117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1407, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42142,7 +42142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42167,7 +42167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42192,7 +42192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42217,7 +42217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42242,7 +42242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42267,7 +42267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42292,7 +42292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42317,7 +42317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42342,7 +42342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42367,7 +42367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2572, 761, 2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42392,7 +42392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42417,7 +42417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2318, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42442,7 +42442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2318, 761, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42467,7 +42467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42492,7 +42492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42517,7 +42517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42542,7 +42542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42567,7 +42567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42592,7 +42592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42617,7 +42617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42642,7 +42642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -42667,7 +42667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42692,7 +42692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42717,7 +42717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42742,7 +42742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42767,7 +42767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42792,7 +42792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42817,7 +42817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42842,7 +42842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [393, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42867,7 +42867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42892,7 +42892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [147, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42917,7 +42917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42942,7 +42942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -42967,7 +42967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1468, 1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -42992,7 +42992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [1002, 147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43017,7 +43017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -43042,7 +43042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1028, 147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43067,7 +43067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43092,7 +43092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43117,7 +43117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43142,7 +43142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43167,7 +43167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43192,7 +43192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -43217,7 +43217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43242,7 +43242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43267,7 +43267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597, 1407, 2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43292,7 +43292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43317,7 +43317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43342,7 +43342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43367,7 +43367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43392,7 +43392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43417,7 +43417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43442,7 +43442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43467,7 +43467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43492,7 +43492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43517,7 +43517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -43542,7 +43542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43567,7 +43567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43592,7 +43592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [1834],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -43617,7 +43617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43642,7 +43642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43667,7 +43667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43692,7 +43692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43717,7 +43717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -43742,7 +43742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [86, 1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43767,7 +43767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43792,7 +43792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43817,7 +43817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43842,7 +43842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43867,7 +43867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43892,7 +43892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2924],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -43917,7 +43917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -43942,7 +43942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [2924],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -43967,7 +43967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 3,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -43992,7 +43992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44017,7 +44017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44042,7 +44042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44067,7 +44067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44092,7 +44092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44117,7 +44117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44142,7 +44142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44167,7 +44167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44192,7 +44192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44217,7 +44217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2902],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44242,7 +44242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44267,7 +44267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [948, 2387, 1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44292,7 +44292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44317,7 +44317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44342,7 +44342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44367,7 +44367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [147, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44392,7 +44392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44417,7 +44417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2572, 99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44442,7 +44442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44467,7 +44467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44492,7 +44492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44517,7 +44517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [393, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44542,7 +44542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44567,7 +44567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -44592,7 +44592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44617,7 +44617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44642,7 +44642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44667,7 +44667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44692,7 +44692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -44717,7 +44717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -44742,7 +44742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [86, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44767,7 +44767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44792,7 +44792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -44817,7 +44817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -44842,7 +44842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44867,7 +44867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2517, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44892,7 +44892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44917,7 +44917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -44942,7 +44942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44967,7 +44967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -44992,7 +44992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45017,7 +45017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1834],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45042,7 +45042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45067,7 +45067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [1834, 2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45092,7 +45092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45117,7 +45117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45142,7 +45142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45167,7 +45167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45192,7 +45192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -45217,7 +45217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -45242,7 +45242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45267,7 +45267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2902, 761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45292,7 +45292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45317,7 +45317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994, 761, 1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45342,7 +45342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45367,7 +45367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45392,7 +45392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45417,7 +45417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45442,7 +45442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45467,7 +45467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45492,7 +45492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45517,7 +45517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45542,7 +45542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [338],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45567,7 +45567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45592,7 +45592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45617,7 +45617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45642,7 +45642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45667,7 +45667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -45692,7 +45692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45717,7 +45717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2387, 338],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45742,7 +45742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45767,7 +45767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2597, 2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45792,7 +45792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45817,7 +45817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45842,7 +45842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45867,7 +45867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45892,7 +45892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45917,7 +45917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45942,7 +45942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -45967,7 +45967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -45992,7 +45992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46017,7 +46017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46042,7 +46042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46067,7 +46067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2924, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46092,7 +46092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -46117,7 +46117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46142,7 +46142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46167,7 +46167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -46192,7 +46192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46217,7 +46217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46242,7 +46242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46267,7 +46267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46292,7 +46292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46317,7 +46317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46342,7 +46342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46367,7 +46367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46392,7 +46392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46417,7 +46417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46442,7 +46442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46467,7 +46467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46492,7 +46492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [948, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46517,7 +46517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46542,7 +46542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46567,7 +46567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46592,7 +46592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46617,7 +46617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46642,7 +46642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46667,7 +46667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46692,7 +46692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46717,7 +46717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46742,7 +46742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -46767,7 +46767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46792,7 +46792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46817,7 +46817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2924, 1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46842,7 +46842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2924],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46867,7 +46867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2517, 1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46892,7 +46892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46917,7 +46917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46942,7 +46942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [1028, 761, 1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -46967,7 +46967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -46992,7 +46992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47017,7 +47017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47042,7 +47042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47067,7 +47067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47092,7 +47092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [393, 761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47117,7 +47117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47142,7 +47142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47167,7 +47167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47192,7 +47192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47217,7 +47217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47242,7 +47242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1834, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47267,7 +47267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1729, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47292,7 +47292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [743, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47317,7 +47317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1729, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47342,7 +47342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47367,7 +47367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47392,7 +47392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47417,7 +47417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47442,7 +47442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47467,7 +47467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47492,7 +47492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47517,7 +47517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47542,7 +47542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47567,7 +47567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -47592,7 +47592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47617,7 +47617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47642,7 +47642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47667,7 +47667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47692,7 +47692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47717,7 +47717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [2902],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47742,7 +47742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -47767,7 +47767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 3,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -47792,7 +47792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 4,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -47817,7 +47817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 5,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 5,
@@ -47842,7 +47842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 6,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 6,
@@ -47867,7 +47867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47892,7 +47892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -47917,7 +47917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47942,7 +47942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47967,7 +47967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -47992,7 +47992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -48017,7 +48017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -48042,7 +48042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48067,7 +48067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48092,7 +48092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -48117,7 +48117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597, 99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48142,7 +48142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48167,7 +48167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [235, 99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -48192,7 +48192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [99, 235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48217,7 +48217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48242,7 +48242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -48267,7 +48267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48292,7 +48292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48317,7 +48317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48342,7 +48342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48367,7 +48367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48392,7 +48392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48417,7 +48417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48442,7 +48442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48467,7 +48467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48492,7 +48492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48517,7 +48517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48542,7 +48542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48567,7 +48567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48592,7 +48592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2960, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48617,7 +48617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48642,7 +48642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48667,7 +48667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [73],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48692,7 +48692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48717,7 +48717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48742,7 +48742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48767,7 +48767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48792,7 +48792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48817,7 +48817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48842,7 +48842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -48867,7 +48867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48892,7 +48892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1834, 1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48917,7 +48917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48942,7 +48942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -48967,7 +48967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -48992,7 +48992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2994, 2597, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49017,7 +49017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49042,7 +49042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49067,7 +49067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49092,7 +49092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49117,7 +49117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49142,7 +49142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49167,7 +49167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -49192,7 +49192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -49217,7 +49217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2994, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49242,7 +49242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49267,7 +49267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49292,7 +49292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49317,7 +49317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49342,7 +49342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [2924],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49367,7 +49367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49392,7 +49392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49417,7 +49417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49442,7 +49442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [761, 2924],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49467,7 +49467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49492,7 +49492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [235, 761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49517,7 +49517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49542,7 +49542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49567,7 +49567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [304, 2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49592,7 +49592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49617,7 +49617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49642,7 +49642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49667,7 +49667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49692,7 +49692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49717,7 +49717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49742,7 +49742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49767,7 +49767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -49792,7 +49792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -49817,7 +49817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49842,7 +49842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49867,7 +49867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -49892,7 +49892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49917,7 +49917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [99, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49942,7 +49942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2387, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -49967,7 +49967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -49992,7 +49992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [2387, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -50017,7 +50017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -50042,7 +50042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50067,7 +50067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50092,7 +50092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50117,7 +50117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -50142,7 +50142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -50167,7 +50167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50192,7 +50192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50217,7 +50217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -50242,7 +50242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -50267,7 +50267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 3,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -50292,7 +50292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50317,7 +50317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [393, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50342,7 +50342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [948, 393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -50367,7 +50367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50392,7 +50392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50417,7 +50417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50442,7 +50442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50467,7 +50467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -50492,7 +50492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -50517,7 +50517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -50542,7 +50542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 4,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -50567,7 +50567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50592,7 +50592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50617,7 +50617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50642,7 +50642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50667,7 +50667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50692,7 +50692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50717,7 +50717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [1729, 2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -50742,7 +50742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50767,7 +50767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50792,7 +50792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50817,7 +50817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50842,7 +50842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50867,7 +50867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50892,7 +50892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2960, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50917,7 +50917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50942,7 +50942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50967,7 +50967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -50992,7 +50992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51017,7 +51017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51042,7 +51042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2931, 962],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51067,7 +51067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51092,7 +51092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51117,7 +51117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51142,7 +51142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51167,7 +51167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2318, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51192,7 +51192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51217,7 +51217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51242,7 +51242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51267,7 +51267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2318, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51292,7 +51292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51317,7 +51317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -51342,7 +51342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51367,7 +51367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1834, 235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51392,7 +51392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51417,7 +51417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [99, 1834],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51442,7 +51442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1834],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51467,7 +51467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2924, 99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51492,7 +51492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51517,7 +51517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51542,7 +51542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51567,7 +51567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51592,7 +51592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51617,7 +51617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51642,7 +51642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51667,7 +51667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51692,7 +51692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51717,7 +51717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [1468, 393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51742,7 +51742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51767,7 +51767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2517, 1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51792,7 +51792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51817,7 +51817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51842,7 +51842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51867,7 +51867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -51892,7 +51892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -51917,7 +51917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51942,7 +51942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -51967,7 +51967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -51992,7 +51992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52017,7 +52017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52042,7 +52042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [338],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52067,7 +52067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52092,7 +52092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52117,7 +52117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52142,7 +52142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52167,7 +52167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -52192,7 +52192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 3,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -52217,7 +52217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 4,
     riichi: [2387],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -52242,7 +52242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52267,7 +52267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52292,7 +52292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52317,7 +52317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52342,7 +52342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [304],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -52367,7 +52367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52392,7 +52392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52417,7 +52417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52442,7 +52442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52467,7 +52467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [304, 147, 948],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -52492,7 +52492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52517,7 +52517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52542,7 +52542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52567,7 +52567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2902],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52592,7 +52592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2033, 1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52617,7 +52617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52642,7 +52642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52667,7 +52667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52692,7 +52692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52717,7 +52717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52742,7 +52742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52767,7 +52767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52792,7 +52792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -52817,7 +52817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -52842,7 +52842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 4,
     riichi: [1407],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 4,
@@ -52867,7 +52867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52892,7 +52892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52917,7 +52917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [1068, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -52942,7 +52942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2994, 1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52967,7 +52967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -52992,7 +52992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53017,7 +53017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1068, 2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53042,7 +53042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53067,7 +53067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2994, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53092,7 +53092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53117,7 +53117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53142,7 +53142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53167,7 +53167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1834, 1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53192,7 +53192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53217,7 +53217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -53242,7 +53242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53267,7 +53267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53292,7 +53292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53317,7 +53317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [235],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53342,7 +53342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1834],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53367,7 +53367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53392,7 +53392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [1834, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53417,7 +53417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -53442,7 +53442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 3,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -53467,7 +53467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53492,7 +53492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53517,7 +53517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53542,7 +53542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [761, 338],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -53567,7 +53567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2517],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53592,7 +53592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53617,7 +53617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53642,7 +53642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53667,7 +53667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1028],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53692,7 +53692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53717,7 +53717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [761],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53742,7 +53742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [304, 743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53767,7 +53767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53792,7 +53792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [99, 86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53817,7 +53817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53842,7 +53842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53867,7 +53867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53892,7 +53892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53917,7 +53917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [99, 86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -53942,7 +53942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -53967,7 +53967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [99],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -53992,7 +53992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 3,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 3,
@@ -54017,7 +54017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [743],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54042,7 +54042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [86],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54067,7 +54067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -54092,7 +54092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54117,7 +54117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54142,7 +54142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54167,7 +54167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54192,7 +54192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54217,7 +54217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54242,7 +54242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54267,7 +54267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [1667],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54292,7 +54292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [2318, 2924],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54317,7 +54317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54342,7 +54342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2318],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54367,7 +54367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54392,7 +54392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [1175, 1068, 1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54417,7 +54417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54442,7 +54442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54467,7 +54467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1468],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54492,7 +54492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [1068, 1175],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54517,7 +54517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [1175, 1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -54542,7 +54542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54567,7 +54567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54592,7 +54592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1068],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54617,7 +54617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54642,7 +54642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54667,7 +54667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54692,7 +54692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54717,7 +54717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54742,7 +54742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2033],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54767,7 +54767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [393],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54792,7 +54792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54817,7 +54817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [393, 1729],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54842,7 +54842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54867,7 +54867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54892,7 +54892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54917,7 +54917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -54942,7 +54942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2902],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -54967,7 +54967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -54992,7 +54992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994, 147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55017,7 +55017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -55042,7 +55042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55067,7 +55067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -55092,7 +55092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55117,7 +55117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55142,7 +55142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55167,7 +55167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [147],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55192,7 +55192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -55217,7 +55217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55242,7 +55242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55267,7 +55267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [50, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55292,7 +55292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55317,7 +55317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55342,7 +55342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55367,7 +55367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3071, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55392,7 +55392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55417,7 +55417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55442,7 +55442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55467,7 +55467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55492,7 +55492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55517,7 +55517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55542,7 +55542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55567,7 +55567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2572, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55592,7 +55592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55617,7 +55617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55642,7 +55642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55667,7 +55667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55692,7 +55692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [50],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55717,7 +55717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55742,7 +55742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55767,7 +55767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55792,7 +55792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55817,7 +55817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55842,7 +55842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55867,7 +55867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55892,7 +55892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55917,7 +55917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55942,7 +55942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55967,7 +55967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -55992,7 +55992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56017,7 +56017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56042,7 +56042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56067,7 +56067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56092,7 +56092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56117,7 +56117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56142,7 +56142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [3091, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56167,7 +56167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56192,7 +56192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [3091, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56217,7 +56217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56242,7 +56242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56267,7 +56267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56292,7 +56292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56317,7 +56317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56342,7 +56342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56367,7 +56367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56392,7 +56392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56417,7 +56417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56442,7 +56442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56467,7 +56467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56492,7 +56492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [3091],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56517,7 +56517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56542,7 +56542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [156, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56567,7 +56567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56592,7 +56592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56617,7 +56617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56642,7 +56642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56667,7 +56667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56692,7 +56692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56717,7 +56717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2482, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56742,7 +56742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2960, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56767,7 +56767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56792,7 +56792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56817,7 +56817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56842,7 +56842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56867,7 +56867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56892,7 +56892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56917,7 +56917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56942,7 +56942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56967,7 +56967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -56992,7 +56992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57017,7 +57017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57042,7 +57042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57067,7 +57067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57092,7 +57092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57117,7 +57117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57142,7 +57142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2482, 51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57167,7 +57167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57192,7 +57192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57217,7 +57217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2960, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57242,7 +57242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [51],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57267,7 +57267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57292,7 +57292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57317,7 +57317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57342,7 +57342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57367,7 +57367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57392,7 +57392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57417,7 +57417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57442,7 +57442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57467,7 +57467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57492,7 +57492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57517,7 +57517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57542,7 +57542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57567,7 +57567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57592,7 +57592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57617,7 +57617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57642,7 +57642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57667,7 +57667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57692,7 +57692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57717,7 +57717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57742,7 +57742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2106, 2960],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57767,7 +57767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57792,7 +57792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57817,7 +57817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2106],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57842,7 +57842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57867,7 +57867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57892,7 +57892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57917,7 +57917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57942,7 +57942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1665],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57967,7 +57967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -57992,7 +57992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2960, 2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58017,7 +58017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58042,7 +58042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58067,7 +58067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 2,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58092,7 +58092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 2,
     riichi: [961],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58117,7 +58117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58142,7 +58142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58167,7 +58167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58192,7 +58192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58217,7 +58217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58242,7 +58242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 2,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58267,7 +58267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58292,7 +58292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58317,7 +58317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 2,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 2,
@@ -58342,7 +58342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58367,7 +58367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58392,7 +58392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58417,7 +58417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58442,7 +58442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58467,7 +58467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58492,7 +58492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58517,7 +58517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58542,7 +58542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58567,7 +58567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -58592,7 +58592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58617,7 +58617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58642,7 +58642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [573, 156, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58667,7 +58667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58692,7 +58692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58717,7 +58717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58742,7 +58742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58767,7 +58767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58792,7 +58792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58817,7 +58817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58842,7 +58842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2796, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58867,7 +58867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58892,7 +58892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58917,7 +58917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58942,7 +58942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58967,7 +58967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -58992,7 +58992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3091, 156],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59017,7 +59017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59042,7 +59042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59067,7 +59067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59092,7 +59092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59117,7 +59117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59142,7 +59142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59167,7 +59167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59192,7 +59192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59217,7 +59217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59242,7 +59242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [7],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59267,7 +59267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [1002, 7],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59292,7 +59292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59317,7 +59317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59342,7 +59342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59367,7 +59367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59392,7 +59392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59417,7 +59417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [7],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59442,7 +59442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [7],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59467,7 +59467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [7],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59492,7 +59492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59517,7 +59517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59542,7 +59542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59567,7 +59567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59592,7 +59592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59617,7 +59617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 1,
     riichi: [2572, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59642,7 +59642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 1,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59667,7 +59667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 1,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59692,7 +59692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59717,7 +59717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59742,7 +59742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59767,7 +59767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 1,
     riichi: [2572, 2482, 2060],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59792,7 +59792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59817,7 +59817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59842,7 +59842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 1,
     riichi: [2994, 2572],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59867,7 +59867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 1,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59892,7 +59892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 1,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 1,
@@ -59917,7 +59917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59942,7 +59942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59967,7 +59967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -59992,7 +59992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2482],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60017,7 +60017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60042,7 +60042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60067,7 +60067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60092,7 +60092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60117,7 +60117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60142,7 +60142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60167,7 +60167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60192,7 +60192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60217,7 +60217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60242,7 +60242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60267,7 +60267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60292,7 +60292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60317,7 +60317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60342,7 +60342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60367,7 +60367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2994, 2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60392,7 +60392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60417,7 +60417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60442,7 +60442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60467,7 +60467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2796, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60492,7 +60492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60517,7 +60517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60542,7 +60542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60567,7 +60567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60592,7 +60592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60617,7 +60617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60642,7 +60642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2796],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60667,7 +60667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [2597],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60692,7 +60692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2796, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60717,7 +60717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60742,7 +60742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60767,7 +60767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60792,7 +60792,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60817,7 +60817,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60842,7 +60842,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60867,7 +60867,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60892,7 +60892,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60917,7 +60917,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60942,7 +60942,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60967,7 +60967,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -60992,7 +60992,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61017,7 +61017,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61042,7 +61042,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [3071],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61067,7 +61067,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61092,7 +61092,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61117,7 +61117,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61142,7 +61142,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61167,7 +61167,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [1002],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61192,7 +61192,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2931],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61217,7 +61217,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61242,7 +61242,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61267,7 +61267,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61292,7 +61292,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61317,7 +61317,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61342,7 +61342,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61367,7 +61367,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61392,7 +61392,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61417,7 +61417,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [573, 2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61442,7 +61442,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61467,7 +61467,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61492,7 +61492,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 1,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61517,7 +61517,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 2,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61542,7 +61542,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 3,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61567,7 +61567,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61592,7 +61592,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61617,7 +61617,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 4,
     honba: 0,
     riichi: [2815],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61642,7 +61642,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 5,
     honba: 0,
     riichi: [2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61667,7 +61667,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 6,
     honba: 0,
     riichi: [573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61692,7 +61692,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 7,
     honba: 0,
     riichi: [2815, 2994],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61717,7 +61717,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61742,7 +61742,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [2815, 573],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,
@@ -61767,7 +61767,7 @@ export const rounds: (em: EntityManager) => TRound[] = (em) => [
     round: 8,
     honba: 0,
     riichi: [],
-    endDate: new Date().toString(),
+    endDate: new Date().toUTCString(),
     lastSessionState: {
       chips: {},
       honba: 0,

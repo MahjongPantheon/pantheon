@@ -1,5 +1,5 @@
 import type { EntityManager } from '@mikro-orm/core';
-import { SessionEntity } from 'src/entities/Session.entity';
+import { SessionEntity } from '../entities/Session.entity.js';
 
 export type TSessionPlayers = {
   id: number;

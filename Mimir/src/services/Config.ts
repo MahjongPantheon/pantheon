@@ -35,14 +35,19 @@ export class ConfigService {
   protected _envData: Partial<EnvVars>;
   constructor(printEnv?: boolean) {
     this._development = process.env.NODE_ENV !== 'production';
+    this._test = Boolean(process.env.TEST);
     this._envData =
       dotenv.config({
         path: this._development ? '.env.development' : '.env.production',
       })?.parsed ?? {};
     process.env.TZ = this._envData.TZ ?? 'UTC';
-    this._test = Boolean(process.env.TEST) || Boolean(this._envData.TEST);
+    this._test ||= Boolean(this._envData.TEST);
     if (printEnv) {
-      console.log('[Mimir] Running with env (defaults not listed):', this._envData);
+      console.log('[Mimir] Running with env (defaults not listed):', {
+        ...this._envData,
+        TEST: this._test,
+        DEVELOPMENT: this._development,
+      });
     }
   }
 

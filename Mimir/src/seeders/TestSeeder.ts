@@ -1,26 +1,26 @@
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { EventEntity } from 'src/entities/Event.entity';
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity';
-import { RoundEntity } from 'src/entities/Round.entity';
-import { RulesetEntity } from 'src/entities/Ruleset.entity';
-import { PenaltyEntity } from 'src/entities/Penalty.entity';
-import { SessionEntity } from 'src/entities/Session.entity';
-import { HandEntity } from 'src/entities/Hand.entity';
+import { EndingPolicy, TournamentGamesStatus } from 'tsclients/proto/atoms.pb.js';
 
-import { SessionStateEntity } from 'src/entities/SessionState.entity';
-import { EndingPolicy, TournamentGamesStatus } from 'tsclients/proto/atoms.pb';
-import { sessions } from './session';
-import { rounds } from './round';
-import { THand, hands } from './hand';
+import { EventEntity } from '../entities/Event.entity.js';
+import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
+import { RoundEntity } from '../entities/Round.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
+import { PenaltyEntity } from '../entities/Penalty.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { HandEntity } from '../entities/Hand.entity.js';
+import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
+import { SessionStateEntity } from '../entities/SessionState.entity.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
+import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 
-import { eventRegisteredPlayers } from './event_registered_players';
-import { playerHistory } from './player_history';
-import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity';
-import { sessionPlayers } from './session_players';
-import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity';
-import { sessionResults } from './session_results';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity';
+import { sessions } from './session.js';
+import { rounds } from './round.js';
+import { THand, hands } from './hand.js';
+import { eventRegisteredPlayers } from './event_registered_players.js';
+import { playerHistory } from './player_history.js';
+import { sessionPlayers } from './session_players.js';
+import { sessionResults } from './session_results.js';
 
 /*
   - id=19: test club rating
@@ -33,6 +33,7 @@ export class TestSeeder extends Seeder {
     await this.populateEvents(em);
     // achievements and player stats should be populated by cron
     await this.populateEventRegistrations(em);
+    await this.populateSessions(em);
     await this.populateRounds(em);
     await this.populateHands(em);
     await this.populatePenalties(em);
@@ -108,7 +109,7 @@ export class TestSeeder extends Seeder {
       useTimer: 0,
       usePenalty: 0,
       allowPlayerAppend: 1,
-      statHost: 'https://sigrun.pantheon.local/event/##ID##/info',
+      statHost: 'http://sigrun.pantheon.local/event/##ID##/info',
       lobbyId: null,
       ruleset: ruleset1,
       timezone: 'Europe/Berlin',
@@ -142,7 +143,7 @@ export class TestSeeder extends Seeder {
       useTimer: 0,
       usePenalty: 1,
       allowPlayerAppend: 0,
-      statHost: 'https://sigrun.pantheon.local/event/##ID##/info',
+      statHost: 'http://sigrun.pantheon.local/event/##ID##/info',
       lobbyId: 15159,
       ruleset: ruleset1,
       timezone: 'Europe/Berlin',
@@ -176,7 +177,7 @@ export class TestSeeder extends Seeder {
       useTimer: 1,
       usePenalty: 1,
       allowPlayerAppend: 0,
-      statHost: 'https://sigrun.pantheon.local/event/##ID##/info',
+      statHost: 'http://sigrun.pantheon.local/event/##ID##/info',
       lobbyId: null,
       ruleset: ruleset1,
       timezone: 'Europe/Berlin',

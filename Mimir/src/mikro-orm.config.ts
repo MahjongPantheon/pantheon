@@ -26,8 +26,8 @@ export default () =>
     extensions: [SeedManager, Migrator],
     seeder: config.test
       ? {
-          path: './seeders',
-          pathTs: undefined,
+          path: import.meta.dirname + '/seeders',
+          pathTs: import.meta.dirname + '/seeders',
           defaultSeeder: 'TestSeeder',
           glob: '!(*.d).{js,ts}',
           emit: 'ts',
