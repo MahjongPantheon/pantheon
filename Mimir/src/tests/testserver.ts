@@ -7,7 +7,6 @@ import { injectRepository } from '../middleware/injectRepository.js';
 
 import config from '../mikro-orm.config.js';
 import { MikroORM } from '@mikro-orm/postgresql';
-process.env.TEST = 'true';
 
 const orm = await MikroORM.init(config());
 const mimirHandler = [Mimir.createMimir(mimirServer)];

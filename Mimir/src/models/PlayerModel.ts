@@ -83,7 +83,8 @@ export class PlayerModel extends Model {
   async findPlayersForEvents(eventIds: number[]) {
     const regModel = this.getModel(EventRegistrationModel);
     const registrationData = await regModel.findReplacementMapByEvent(eventIds);
-    return this._findPlayers(eventIds, registrationData);
+    const playerIds = (await regModel.findByEventId(eventIds)).map((p) => p.playerId);
+    return this._findPlayers(playerIds, registrationData);
   }
 
   async findPlayerIdsForSessions(sessionIds: number[]): Promise<Array<[number, number]>> {

@@ -1,3 +1,4 @@
+- Заменить использование lastSessionState / intermediateResults на session.players
 - Доделать кроны
 - Написать автотесты на сервис
 - Доделать WindShuffleMode

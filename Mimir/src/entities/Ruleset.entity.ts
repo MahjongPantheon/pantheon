@@ -10,7 +10,7 @@ export class RulesetEntity {
   @Property()
   title!: string;
 
-  @Property()
+  @Property({ type: 'json' })
   rules!: RulesetConfig;
 
   constructor(

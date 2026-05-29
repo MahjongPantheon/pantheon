@@ -174,7 +174,7 @@ export class SeatingModel extends Model {
     const { eventId, windShuffleMode } = payload;
     const seed = randomInt(999999);
     const prescriptEntity = await this.repo.em.findOne(EventPrescriptEntity, {
-      event: this.repo.db.em.getReference(EventEntity, eventId),
+      event: this.repo.em.getReference(EventEntity, eventId),
     });
     if (!prescriptEntity) {
       throw new Error('No prescript entity found for event');
@@ -222,21 +222,21 @@ export class SeatingModel extends Model {
       const prescript = await this.repo.em.findOne(EventPrescriptEntity, { event });
       if (prescript) {
         prescript.nextGame--;
-        this.repo.db.em.persist(prescript);
+        this.repo.em.persist(prescript);
       }
     }
 
     event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
-    this.repo.db.em.persist(event);
+    this.repo.em.persist(event);
 
     const sessionModel = this.getModel(SessionModel);
     const sessions = await sessionModel.findByEventAndStatus(
       [eventId],
       [SessionStatus.SESSION_STATUS_INPROGRESS]
     );
-    this.repo.db.em.remove(sessions);
+    this.repo.em.remove(sessions);
 
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
     return { success: true };
   }
 
@@ -393,7 +393,7 @@ export class SeatingModel extends Model {
     const playerModel = this.getModel(PlayerModel);
     if (
       !this.repo.meta.personId ||
-      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
     ) {
       throw new Error("You don't have the necessary permissions to make new seating");
     }

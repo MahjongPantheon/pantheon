@@ -22,5 +22,5 @@
     "types": ["@types/jest"],
   },
   "include": ["build.ts", "src/**/*", "cron/**/*"],
-  "exclude": ["node_modules/**/*", "dist/**/*"],
+  "exclude": ["node_modules/**/*", "dist/**/*", "src/seeders/*"],
 }

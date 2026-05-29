@@ -129,7 +129,7 @@ export class FreyServiceMock extends FreyService {
         id,
         city: 'city',
         tenhouId: 'player' + id,
-        title: 'title',
+        title: 'title' + id,
         country: 'country',
         email: 'email',
         phone: 'phone',

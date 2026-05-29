@@ -5,7 +5,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 11,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'b345d349dafef472c3d2facc2a3a1d5dd1182186',
     startDate: '2021-10-28 23:35:53',
@@ -31,7 +31,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 65,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ea9665c2c8b773701c463957e5be7f31cbbaf573',
     startDate: '2021-11-23 22:41:07',
@@ -57,7 +57,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 765,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'db3293f66b4573d39e64b901605cfce304c0e94f',
     startDate: '2022-02-06 16:17:47',
@@ -83,7 +83,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 5617,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '8e34115293dbac4001d8c763b5c045f9189c46ef',
     startDate: '2022-11-13 16:18:17',
@@ -109,7 +109,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 5907,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '0ef2b8bd5fe15335631dbf81ef4f335cb77667e3',
     startDate: '2022-12-03 23:49:36',
@@ -136,7 +136,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 9533,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'fffdcb6e06f18054c8e1e8d488b0731b1d83cc54',
     startDate: '2023-06-06 20:55:14',
@@ -163,7 +163,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 9562,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '6b7517c8f7d3699d997dbd7f5371c49aacaf474c',
     startDate: '2023-06-08 22:03:01',
@@ -190,7 +190,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 14953,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '88790f2eb940efedd9629406e9c12558fc72f3fa',
     startDate: '2024-01-04 16:24:49',
@@ -217,7 +217,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 15806,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '0f7a0cd13bfd4e1216893d8b3fbdee2b0e9cc35d',
     startDate: '2024-02-05 19:56:33',
@@ -244,7 +244,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 15984,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '2f766b5165fedbe5447251927281853c420af972',
     startDate: '2024-02-10 22:59:28',
@@ -271,7 +271,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 18231,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'c4ff977889128d73208d50f88ca0d004a6095665',
     startDate: '2024-04-19 19:54:11',
@@ -298,7 +298,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 19585,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '6a9238a851325e578477e8be117163bc9cdb32f0',
     startDate: '2024-05-18 22:06:05',
@@ -325,7 +325,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 19778,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e5214e0fed21c1b5ee88b76296e5eeb47715f9b3',
     startDate: '2024-05-24 23:37:06',
@@ -352,7 +352,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 19779,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '5b8aa371850274762b3ad5c49d5c255f20c53ae9',
     startDate: '2024-05-24 23:53:56',
@@ -379,7 +379,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 19780,
     event: em.getReference(EventEntity, 19),
-    status: 'inprogress',
+    status: 'SESSION_STATUS_INPROGRESS',
     tableIndex: null,
     representationalHash: '750cd6015c59aed57ebd9260d03fb80adb3b83f7',
     startDate: '2024-05-24 23:54:06',
@@ -406,7 +406,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 21535,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '8c8db37e45870340031a2c8d065507f6115e29bf',
     startDate: '2024-07-21 20:55:35',
@@ -433,7 +433,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 23806,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '3dcd5075f0427ecd27d59b6d3bc6a1ec84b5a0f8',
     startDate: '2024-09-29 02:13:25',
@@ -460,7 +460,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 24711,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '7e83307f22e3efba65a89e40da831fa8780f2e9a',
     startDate: '2024-10-26 11:15:16',
@@ -487,7 +487,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 26085,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'b05daf4fca4528396de1ed078b7535c14e4143e9',
     startDate: '2024-12-10 23:45:08',
@@ -514,7 +514,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 29514,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ba81ec925d80bba537034e12a63b5e9e83e2cac2',
     startDate: '2025-02-28 17:11:25',
@@ -541,7 +541,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 34796,
     event: em.getReference(EventEntity, 19),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '3b007e58508355e3460ad224d7b53c49a6389ada',
     startDate: '2025-06-22 18:41:33',
@@ -568,7 +568,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 37430,
     event: em.getReference(EventEntity, 19),
-    status: 'inprogress',
+    status: 'SESSION_STATUS_INPROGRESS',
     tableIndex: null,
     representationalHash: 'a8641159b995c45432ef77ef3955145f99b0d222',
     startDate: '2025-08-26 16:13:07',
@@ -595,7 +595,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 47072,
     event: em.getReference(EventEntity, 19),
-    status: 'inprogress',
+    status: 'SESSION_STATUS_INPROGRESS',
     tableIndex: null,
     representationalHash: '106c9aa61ff7449c30d7c44091d7e9998eef9d6b',
     startDate: '2026-03-09 03:21:15',
@@ -622,7 +622,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 48384,
     event: em.getReference(EventEntity, 19),
-    status: 'inprogress',
+    status: 'SESSION_STATUS_INPROGRESS',
     tableIndex: null,
     representationalHash: '2296c2ee7c4bc632b4f1efefd3bab73f2350812a',
     startDate: '2026-04-04 08:22:51',
@@ -635,7 +635,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 48513,
     event: em.getReference(EventEntity, 19),
-    status: 'inprogress',
+    status: 'SESSION_STATUS_INPROGRESS',
     tableIndex: null,
     representationalHash: '595692296276a0c99c9d254f46487ca8e3014fc7',
     startDate: '2026-04-04 23:48:27',
@@ -662,7 +662,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49040,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '5ae253a19f9fad8c9e4d913d7bc99cd22c063b4b',
     startDate: '2026-04-13 16:52:43',
@@ -689,7 +689,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49044,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'a048cc5cd24069ef3f98f1598d903a95ea2f6647',
     startDate: '2026-04-13 17:45:45',
@@ -716,7 +716,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49048,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '5c9af628eef9e9988ac38dcdf12a854a5a58ffb4',
     startDate: '2026-04-13 18:21:56',
@@ -743,7 +743,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49049,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '9c330d084d47a0fd3d77ed59a3fa45e673462817',
     startDate: '2026-04-13 18:22:14',
@@ -770,7 +770,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49098,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '50b7d9797951d1b9f708991e4afefbb0d22d5e1b',
     startDate: '2026-04-14 18:20:50',
@@ -797,7 +797,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49099,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '224d771a82ae0487883f00246d79572c1d3b7988',
     startDate: '2026-04-14 18:22:50',
@@ -824,7 +824,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49140,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '85d07b05fb8f97f414c1b9f996bfed7d55455113',
     startDate: '2026-04-16 16:14:07',
@@ -851,7 +851,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49141,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '633d287b82f17ae7ebccfe19f671808c1b3d2c6a',
     startDate: '2026-04-16 16:18:35',
@@ -878,7 +878,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49144,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'cd00ddc042c3ecc861aeb56845b2236c6fe9313f',
     startDate: '2026-04-16 16:49:20',
@@ -905,7 +905,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49145,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ad391f3fa96ea5d8187d4a9d7741f8efe507a608',
     startDate: '2026-04-16 16:58:19',
@@ -932,7 +932,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49215,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'd6c901b348b7c6e78eecb13da4b2a23ab928df92',
     startDate: '2026-04-17 17:19:18',
@@ -959,7 +959,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49309,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ba59f1f866bc1a40b7d5e664793f0e3015d5be9a',
     startDate: '2026-04-18 12:33:45',
@@ -986,7 +986,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49310,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '2863426b7a81a44a02fb955968c464174206a6eb',
     startDate: '2026-04-18 12:34:06',
@@ -1013,7 +1013,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49315,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'fc944da37429ea543f96e56478a5cdd253399cec',
     startDate: '2026-04-18 13:39:22',
@@ -1040,7 +1040,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49322,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '0868f200043bbf4b591d75f785a20fbd686f1ea9',
     startDate: '2026-04-18 14:21:28',
@@ -1067,7 +1067,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49343,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e236c83832c0348fd4efb92f8bd8facbe7ad78b8',
     startDate: '2026-04-18 17:42:12',
@@ -1094,7 +1094,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49348,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '5f26c6c59b6df5fc8596c710fc281b0a192c10cb',
     startDate: '2026-04-18 18:16:41',
@@ -1121,7 +1121,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49350,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'd04f3ad5222e4b5d8e8fa98360d3f7c50b28be48',
     startDate: '2026-04-18 18:37:42',
@@ -1148,7 +1148,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49351,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'd46b74f59cdb6ce41b4cb103302fb8d03efd032f',
     startDate: '2026-04-18 18:38:33',
@@ -1175,7 +1175,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49352,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '1d75a9836ce024ff8d251ece319e1da2f1737293',
     startDate: '2026-04-18 18:38:57',
@@ -1202,7 +1202,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49353,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'f03c3dd8a4ce1461a13ec34be035d49b2d5db8bf',
     startDate: '2026-04-18 18:39:05',
@@ -1229,7 +1229,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49398,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '39f65f6ce581ea7418a5c0509274a92786588ef8',
     startDate: '2026-04-19 08:36:10',
@@ -1256,7 +1256,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49401,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ab175378ebf46918801e903e6cc600d875db39bd',
     startDate: '2026-04-19 09:18:43',
@@ -1283,7 +1283,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49416,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '558634092c159fd278a73952283233b4a2a7c39e',
     startDate: '2026-04-19 10:54:16',
@@ -1310,7 +1310,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49417,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '99f3acce551abf418f796067d9629695032f9805',
     startDate: '2026-04-19 10:54:34',
@@ -1337,7 +1337,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49418,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '9dd8aa04ec7d403915aa96df0e5dcabaf5cedbd1',
     startDate: '2026-04-19 10:54:54',
@@ -1364,7 +1364,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49419,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '7a353e1e2065caadf6d6fd0b11ff26600c8899b0',
     startDate: '2026-04-19 10:55:06',
@@ -1391,7 +1391,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49429,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '6a75122604f7271a0638689dfb35a4c1e1285544',
     startDate: '2026-04-19 12:44:09',
@@ -1418,7 +1418,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49436,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '96cbaacd1df16add440a4324a39020ce78b95319',
     startDate: '2026-04-19 13:19:51',
@@ -1445,7 +1445,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49438,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '6a16a8874367ea8c20f18e269586ace843404e18',
     startDate: '2026-04-19 13:56:35',
@@ -1472,7 +1472,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49441,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '787c3f640376f1c32c54eaf09ff639d0696ea643',
     startDate: '2026-04-19 14:43:46',
@@ -1499,7 +1499,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49451,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'f438a3faa3d6377e399cd162668f5fa45769f9db',
     startDate: '2026-04-19 18:42:55',
@@ -1526,7 +1526,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49452,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '44b107d38dfcc19a9148cb243b067d91ee61fbe3',
     startDate: '2026-04-19 18:44:50',
@@ -1553,7 +1553,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49465,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'f4db9b71fb0462f86d93e3ad14c47245a7009ed5',
     startDate: '2026-04-20 13:53:23',
@@ -1580,7 +1580,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49474,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '942cb46e4f3a8bc8193cb2bb3f3184f21c4c5939',
     startDate: '2026-04-20 17:05:10',
@@ -1607,7 +1607,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49490,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'cdb235bf886ffc6d21a5833313eeea5fab62e416',
     startDate: '2026-04-21 09:05:54',
@@ -1634,7 +1634,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49491,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'bb22eac91881de4324e2b2de85c5eee9510ce9a1',
     startDate: '2026-04-21 09:07:48',
@@ -1661,7 +1661,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49492,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'c10ed03176372f50c75d847406914aa8f76b975c',
     startDate: '2026-04-21 09:08:01',
@@ -1688,7 +1688,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49536,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '3d05a0fb7e432184628ce5db465c7fdc80bfdbc5',
     startDate: '2026-04-22 07:46:02',
@@ -1715,7 +1715,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49567,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '0bd71cc25c6969d5069954bdbb75e5a06ce51472',
     startDate: '2026-04-23 15:33:40',
@@ -1742,7 +1742,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49568,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '4a8aaf5521e98ffde265ad0e0ae8f84e3200fe60',
     startDate: '2026-04-23 15:33:50',
@@ -1769,7 +1769,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49572,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '4fc7af0552877b4dcdc24984b4a6b2a283026071',
     startDate: '2026-04-23 16:37:15',
@@ -1796,7 +1796,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49577,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '2830cc45cbf4685d6e92c1dff5c34d2f6fc510e8',
     startDate: '2026-04-23 17:18:44',
@@ -1823,7 +1823,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49615,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '81d0445139bab2d95d7327cf275b4cd09c022b6d',
     startDate: '2026-04-24 15:35:07',
@@ -1850,7 +1850,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49631,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'dec3f33376b8da52e7451dd671d96e84799cfb44',
     startDate: '2026-04-24 16:38:42',
@@ -1877,7 +1877,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49659,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'f74e11d7a59397e95d7a348b4378d882fd4dcc97',
     startDate: '2026-04-25 07:38:38',
@@ -1904,7 +1904,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49665,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '99872dbc689ea96d58f2f7b19a9671336088cb23',
     startDate: '2026-04-25 09:33:02',
@@ -1931,7 +1931,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49666,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'a5c73518bb3231f0a1eb543d3368075d7a258255',
     startDate: '2026-04-25 09:33:31',
@@ -1958,7 +1958,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49689,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'c03e0786b5220226f1ccff190e50f6e12ea09a1e',
     startDate: '2026-04-25 13:44:19',
@@ -1985,7 +1985,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49692,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'a9cdf963092b724bbc0d9710bb35f83e648c07ab',
     startDate: '2026-04-25 14:15:40',
@@ -2012,7 +2012,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49767,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '8c7324a4dddccdc2e4720b34e6d8c0a75c434914',
     startDate: '2026-04-26 13:28:39',
@@ -2039,7 +2039,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49770,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '2b7b9d4490a22075341ba69604002752410c148e',
     startDate: '2026-04-26 13:57:39',
@@ -2066,7 +2066,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49789,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '13c48a77cfa2f59e8f06e8baaa078f6fa1f5cb52',
     startDate: '2026-04-26 18:09:26',
@@ -2093,7 +2093,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49790,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '2ccbdcde365cde8539636080289213fe39367cab',
     startDate: '2026-04-26 18:09:37',
@@ -2120,7 +2120,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49791,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e5480eb9a9c10449a02f84d16cf027cdea57e1d0',
     startDate: '2026-04-26 18:39:46',
@@ -2147,7 +2147,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49793,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '44fa6c66a473d311a3c651db40a58c7794a528fd',
     startDate: '2026-04-26 19:34:32',
@@ -2174,7 +2174,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49798,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '9b0dfe8db12bdcfbdb113d5c3625fd88cbe16dca',
     startDate: '2026-04-27 13:46:20',
@@ -2201,7 +2201,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49800,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '47aea9f9e321a64739354ba0dc94a5a5889bcacd',
     startDate: '2026-04-27 14:36:08',
@@ -2228,7 +2228,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49811,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'b3194c9878e6ce1f605dad3510b47c439d145b70',
     startDate: '2026-04-27 16:45:23',
@@ -2255,7 +2255,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49812,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '3abb7e97aa15520d4e4d3f22f6cd4ffd9d3a21c1',
     startDate: '2026-04-27 16:51:28',
@@ -2282,7 +2282,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49813,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '732d4c4fc4a3f68e6bdb06d6a6b3bbceebf84184',
     startDate: '2026-04-27 17:26:26',
@@ -2309,7 +2309,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49815,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '7a822e3fcc7009d43966a13275b5b61665631be1',
     startDate: '2026-04-27 17:40:54',
@@ -2336,7 +2336,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49849,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '8d3b91425065c53e70de0b6b8591f2fe5ec02152',
     startDate: '2026-04-28 17:57:17',
@@ -2363,7 +2363,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49850,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'cf177611d13da038820e9b2b9d3fece15cec01ff',
     startDate: '2026-04-28 17:57:25',
@@ -2390,7 +2390,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49868,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '24d59a08d9d7ccb0303999569b6b65f778b57ae0',
     startDate: '2026-04-29 15:47:21',
@@ -2417,7 +2417,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49873,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ad09262ae193d44a229a4a4986d85ed02f58a0da',
     startDate: '2026-04-29 16:25:50',
@@ -2444,7 +2444,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49896,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '6545afa7509e4f9d9be82527053871cfd772bed3',
     startDate: '2026-04-30 14:40:32',
@@ -2471,7 +2471,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49899,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '28fa0e6d35e20214f176b7494089191b01bffa5c',
     startDate: '2026-04-30 15:21:09',
@@ -2498,7 +2498,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49902,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '15cdece26aef77a1f43fdb52484e88866161163c',
     startDate: '2026-04-30 15:54:14',
@@ -2525,7 +2525,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49953,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '0facf13f206647d2bb378663cafbaba9102bfc0c',
     startDate: '2026-05-01 09:42:47',
@@ -2552,7 +2552,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 49965,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '3616ee8e702186e58f1dce130e4394b84b35743b',
     startDate: '2026-05-01 10:09:00',
@@ -2579,7 +2579,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50147,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'c04ef7c629901d467902f817e53641a9f4f87233',
     startDate: '2026-05-02 11:31:42',
@@ -2606,7 +2606,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50173,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ebe240ec8e05b6aa7d82bf5325741f6eb0991576',
     startDate: '2026-05-02 12:16:55',
@@ -2633,7 +2633,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50268,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '25aba871157a69d7f4ed5b0718ebbcfa412b2e82',
     startDate: '2026-05-03 07:35:05',
@@ -2660,7 +2660,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50403,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '29a9dca2435846567d1b717198292bf2a40c5695',
     startDate: '2026-05-05 15:30:12',
@@ -2687,7 +2687,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50404,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'ed66ff6792293e353c1d9fafd390795dc3ca3281',
     startDate: '2026-05-05 15:30:35',
@@ -2714,7 +2714,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50424,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '3b81f53b59507681e80ca5c1dceae5e5a9d68d85',
     startDate: '2026-05-05 19:28:13',
@@ -2741,7 +2741,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50425,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e9b0a52c6f3f9bc71afefc4db0f7e78f5e8cf0bb',
     startDate: '2026-05-05 19:28:23',
@@ -2768,7 +2768,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50451,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '5a66d10bb503f973ebf6069e82296aac6586162b',
     startDate: '2026-05-06 16:41:19',
@@ -2795,7 +2795,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50452,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '8fd3bec5c5b338b02f3351c42dc9353584c6b567',
     startDate: '2026-05-06 16:41:33',
@@ -2822,7 +2822,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50462,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '6c4be59ee06e554e2e0534616a8514e9e47751fd',
     startDate: '2026-05-07 05:47:15',
@@ -2849,7 +2849,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50491,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '97653f2b2f888e3704dd438311a231a2367c0278',
     startDate: '2026-05-07 20:51:50',
@@ -2876,7 +2876,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50492,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e634df8ba3eee7650be9a6d906c806d793970574',
     startDate: '2026-05-07 21:43:12',
@@ -2903,7 +2903,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50541,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '29eb1da54d825c303c05cccbbe35c60db5863a7d',
     startDate: '2026-05-08 18:00:51',
@@ -2930,7 +2930,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50547,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '16cfcc09332004a8b74db82dbed202aae1fe1d9e',
     startDate: '2026-05-08 18:47:36',
@@ -2957,7 +2957,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50551,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '61250fe1e0d8506334757d92039b88bfe7f02fac',
     startDate: '2026-05-08 19:25:41',
@@ -2984,7 +2984,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50623,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '3e4f16fda5c95ae8e460da1f0827e2f8614f5885',
     startDate: '2026-05-09 18:13:46',
@@ -3011,7 +3011,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50625,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'f1f363a94b162b7b359a4e687a3bdb94b0118abf',
     startDate: '2026-05-09 18:53:44',
@@ -3038,7 +3038,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50635,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'bc862ee812c163e5132c1e3b4e916bacb4c3572f',
     startDate: '2026-05-10 07:39:58',
@@ -3065,7 +3065,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50639,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '0903c9020d74779aba568e1490b82aeeb8193824',
     startDate: '2026-05-10 08:26:45',
@@ -3092,7 +3092,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50644,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'dcb33d6948ec94aa36215781494c0fad8ea46476',
     startDate: '2026-05-10 09:01:54',
@@ -3119,7 +3119,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50651,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '1b5655b42a46fb4f6b21ffef4e9343d5e0961ec9',
     startDate: '2026-05-10 09:36:35',
@@ -3146,7 +3146,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50705,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'd165e4bde3c1df020f634e5347ad7399e91ae830',
     startDate: '2026-05-10 20:16:06',
@@ -3173,7 +3173,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50706,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '27c2a899c3216feebc63ba15f32b3c1a599c5e8d',
     startDate: '2026-05-10 20:45:26',
@@ -3200,7 +3200,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50738,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e642bde8fd9857c8c3911e8f69358b69ba84fcc5',
     startDate: '2026-05-11 12:34:08',
@@ -3227,7 +3227,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50745,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '965f987ae5629fc72ac09ddc5903511b8b4133bc',
     startDate: '2026-05-11 13:07:59',
@@ -3254,7 +3254,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50779,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '9534553fb9542a9164710b23f4ea934505e757ab',
     startDate: '2026-05-11 17:30:48',
@@ -3281,7 +3281,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50781,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '559724ec09b30ad4863b2d3384b3050394c5cd20',
     startDate: '2026-05-11 18:04:37',
@@ -3308,7 +3308,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50787,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '5275c9eb8dcd2a99ace45facc28255aaa462b7c5',
     startDate: '2026-05-11 21:27:44',
@@ -3335,7 +3335,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50788,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '9235778f54b51e724d12e67c5a88c910eb993ce2',
     startDate: '2026-05-11 21:27:53',
@@ -3362,7 +3362,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50805,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '496017dcd635711ebf2e3142bed32a7729c93135',
     startDate: '2026-05-12 16:41:46',
@@ -3389,7 +3389,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50810,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'b559eafdfdbac7316042bb500d4c9b426205bf3c',
     startDate: '2026-05-12 17:22:02',
@@ -3416,7 +3416,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50968,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '57c38b7b03b23dd319566ad33ff8d5ef6f830ad7',
     startDate: '2026-05-14 15:13:09',
@@ -3443,7 +3443,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50969,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'fae1bdab7d5dbc405ccc874be900f1055eca98a4',
     startDate: '2026-05-14 16:06:42',
@@ -3470,7 +3470,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50978,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '770df38e2f70ee0d55e645947b74e94c1d357078',
     startDate: '2026-05-14 17:35:30',
@@ -3497,7 +3497,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50981,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '26d98de5a9be1873020f2d11cf727c923f491cc7',
     startDate: '2026-05-14 18:25:26',
@@ -3524,7 +3524,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50984,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'd0a63d64445da859c159bdc0dc6b44d78efa5935',
     startDate: '2026-05-14 20:59:50',
@@ -3551,7 +3551,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 50985,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '761fc777ba78fd531f26754921f58474a4d48a1a',
     startDate: '2026-05-14 21:00:07',
@@ -3578,7 +3578,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51053,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: '9da7147cca27e5a2ee80af0778be3839fd63dfab',
     startDate: '2026-05-16 06:56:00',
@@ -3605,7 +3605,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51054,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: 'bfa793f2044c852e9859931f022fd095c1116d47',
     startDate: '2026-05-16 06:56:00',
@@ -3632,7 +3632,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51055,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: 'f3197ced7ab5d5a67887215fffa955013b080f97',
     startDate: '2026-05-16 06:56:00',
@@ -3659,7 +3659,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51056,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: 'a94268c7e937797671caa62fb192025ed04d6aae',
     startDate: '2026-05-16 06:56:00',
@@ -3686,7 +3686,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51057,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: '4a7c399d77f47a177c5d5157b186d29978e9231b',
     startDate: '2026-05-16 06:56:00',
@@ -3713,7 +3713,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51058,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: '310a0b6ba34d3d283d9908b876863607b86d3dff',
     startDate: '2026-05-16 06:56:00',
@@ -3740,7 +3740,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51059,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: 'b17ae672127f8234b5f6b466b8a7c716dcb6876d',
     startDate: '2026-05-16 06:56:00',
@@ -3767,7 +3767,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51068,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: 'ad3389dee71900a5f01593a3e18d221681746a82',
     startDate: '2026-05-16 08:37:30',
@@ -3794,7 +3794,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51069,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: '9cde5a0c691cf0e62c3c070c2e531ec197be47e7',
     startDate: '2026-05-16 08:37:30',
@@ -3821,7 +3821,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51070,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: '3ae9bf0e4a804e8cf87f792f3b9f1b4435506a1b',
     startDate: '2026-05-16 08:37:30',
@@ -3848,7 +3848,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51071,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: '97d0ce696473d3ce492b3994562e7a501bd1f6d3',
     startDate: '2026-05-16 08:37:30',
@@ -3875,7 +3875,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51072,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: '015d8352019933ef3e979e94ff0ce0329941d0d2',
     startDate: '2026-05-16 08:37:30',
@@ -3902,7 +3902,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51073,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: 'd50f5c8f8849563617cd979da7fe5f0ee7a91e93',
     startDate: '2026-05-16 08:37:30',
@@ -3929,7 +3929,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51074,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: 'cf0c8186dbf3cb9a71645a5196ee51342329fc34',
     startDate: '2026-05-16 08:37:30',
@@ -3956,7 +3956,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51091,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: '7512329085e8f653b4aa36b5c34e7d5fc7629567',
     startDate: '2026-05-16 11:20:10',
@@ -3983,7 +3983,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51092,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: '4172c9a6e199ca766c549b7ec6f6f65d342fe551',
     startDate: '2026-05-16 11:20:10',
@@ -4010,7 +4010,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51093,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: '0a01f135f55ca70c6c2d18a456f0953d439e6874',
     startDate: '2026-05-16 11:20:10',
@@ -4037,7 +4037,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51094,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: 'a02553d16aac1a140250f7a2ea163d8298fced1c',
     startDate: '2026-05-16 11:20:10',
@@ -4064,7 +4064,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51095,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: 'fd6f864577433631fd0fba75bf47a67942e950ec',
     startDate: '2026-05-16 11:20:10',
@@ -4091,7 +4091,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51096,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: '358223bb2655b6fc5fe1739a0b8ed08ff4c03b85',
     startDate: '2026-05-16 11:20:10',
@@ -4118,7 +4118,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51097,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: 'c1be1fb0980b3abab0020de6b2c07859153b76c7',
     startDate: '2026-05-16 11:20:10',
@@ -4145,7 +4145,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51111,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: '5ae541a6658f0ca0230bf4e19712c42d04c6288d',
     startDate: '2026-05-16 12:53:55',
@@ -4172,7 +4172,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51112,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: '2e1930d7473a455ff5bc8fd65f0ac88c3a7b2520',
     startDate: '2026-05-16 12:53:55',
@@ -4199,7 +4199,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51113,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: 'b1507d47ff949c7bc9dac9b4d2d5b7e904e591f3',
     startDate: '2026-05-16 12:53:55',
@@ -4226,7 +4226,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51114,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: 'ca93d2aa9e6b516b53cfeb80ebd792f9af71c3bb',
     startDate: '2026-05-16 12:53:55',
@@ -4253,7 +4253,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51115,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: 'eda3726b128a66e1b975bfe1c86981e605531deb',
     startDate: '2026-05-16 12:53:55',
@@ -4280,7 +4280,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51116,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: 'fcacaf8710f518aa1f81ccdb2f637dbeef4ec3fd',
     startDate: '2026-05-16 12:53:55',
@@ -4307,7 +4307,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51117,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: '804d4d4c5de06410e406f4410152956e2fda4e18',
     startDate: '2026-05-16 12:53:55',
@@ -4334,7 +4334,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51126,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: '91fadaa4b0c9d22f42a768a8a37650e80e72621f',
     startDate: '2026-05-16 14:36:46',
@@ -4361,7 +4361,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51127,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: '9b5fe2ba1215bfe3b3cc666ff200d5be34f06b2b',
     startDate: '2026-05-16 14:36:46',
@@ -4388,7 +4388,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51128,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: 'c5bc2970cd15299be58a6b2930f8d11539e47a8d',
     startDate: '2026-05-16 14:36:46',
@@ -4415,7 +4415,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51129,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: '827e0c89e28fe663da5efe8808befa13e339286b',
     startDate: '2026-05-16 14:36:46',
@@ -4442,7 +4442,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51130,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: '6afb8ca9fd119b66b227e3a28520b4ca5eaceecb',
     startDate: '2026-05-16 14:36:46',
@@ -4469,7 +4469,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51131,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: 'ba7b91e44b2c7b27702b5b7392b74a6f846601fc',
     startDate: '2026-05-16 14:36:46',
@@ -4496,7 +4496,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51132,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: '96672e05fa23397b1bf1765d6e22280575b6eced',
     startDate: '2026-05-16 14:36:46',
@@ -4523,7 +4523,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51174,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: '70370592ad5d4ab06ab809bc122949913f4fc4f3',
     startDate: '2026-05-17 06:28:02',
@@ -4550,7 +4550,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51175,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: 'e3d6ceb4ba5eaf24c6557b602c97cca5962738c0',
     startDate: '2026-05-17 06:28:02',
@@ -4577,7 +4577,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51176,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: 'a6b200f6b8e27c1d6905c44db1f0c25d3f960160',
     startDate: '2026-05-17 06:28:02',
@@ -4604,7 +4604,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51177,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: 'f00d7734a1cc18bfba54e55ef88b7c2e66f760c9',
     startDate: '2026-05-17 06:28:02',
@@ -4631,7 +4631,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51178,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: 'ef258fb8aec0aef2b9dbba9553069135b72d5ac5',
     startDate: '2026-05-17 06:28:02',
@@ -4658,7 +4658,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51179,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: '5d8779d57db0cf40603ab418035c565a45a27c53',
     startDate: '2026-05-17 06:28:02',
@@ -4685,7 +4685,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51180,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: '929928bc9956dbfba77ef3cb4d5192beb043341f',
     startDate: '2026-05-17 06:28:02',
@@ -4712,7 +4712,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51183,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '59eb19ff1840132e3f1429d639e1018bad4b1009',
     startDate: '2026-05-17 07:25:56',
@@ -4739,7 +4739,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51187,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'f83b476549beaa32ad26eda94b844e635305cb28',
     startDate: '2026-05-17 08:03:39',
@@ -4766,7 +4766,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51190,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: 'c34a668207c429270b7c159e8ff4f6ca4cc7ebca',
     startDate: '2026-05-17 08:36:58',
@@ -4793,7 +4793,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51191,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: 'c43006902b86ab2a9d131f9a151f97992f09d71d',
     startDate: '2026-05-17 08:36:58',
@@ -4820,7 +4820,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51192,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: '85a484954bf12c147809de626e56835b89c2c761',
     startDate: '2026-05-17 08:36:58',
@@ -4847,7 +4847,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51193,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: '0b516454382463295ca7ca3508f2e6d93397ec6d',
     startDate: '2026-05-17 08:36:58',
@@ -4874,7 +4874,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51194,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: 'fd64de806f3e20be2f8774ed4a30df6b2b718e5c',
     startDate: '2026-05-17 08:36:59',
@@ -4901,7 +4901,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51195,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: '5448e14dde7dd027d6b08ca56dcadf979fccfdb9',
     startDate: '2026-05-17 08:36:59',
@@ -4928,7 +4928,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51196,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: '7c802464ac33bad1223eb495990ba95b14d10558',
     startDate: '2026-05-17 08:36:59',
@@ -4955,7 +4955,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51197,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '1da52a43c08a5c0c3d522431c9477cbdccc60c78',
     startDate: '2026-05-17 08:47:40',
@@ -4982,7 +4982,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51208,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: '0ce7f70372d39ae41cc3bf595184acbd90376763',
     startDate: '2026-05-17 10:48:18',
@@ -5009,7 +5009,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51209,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: '17a57457cc79c798b207d5437799308bff784c5b',
     startDate: '2026-05-17 10:48:18',
@@ -5036,7 +5036,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51210,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: 'ffb1d60e7fc6e2a4efcfb05ba7b4338fb3e687ab',
     startDate: '2026-05-17 10:48:18',
@@ -5063,7 +5063,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51211,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: '04fa464e2bd0963f418cfaf9da2f200bdfe0c786',
     startDate: '2026-05-17 10:48:18',
@@ -5090,7 +5090,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51212,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: 'd570e953ea807922275186b5c07dfcd463031f75',
     startDate: '2026-05-17 10:48:18',
@@ -5117,7 +5117,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51213,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: '6e986dc4f7709f3530b07ae5d36f15206d647e1a',
     startDate: '2026-05-17 10:48:18',
@@ -5144,7 +5144,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51214,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: '9df52bb9e59c0944ef8582f1821e89409c9ea4a1',
     startDate: '2026-05-17 10:48:18',
@@ -5171,7 +5171,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51235,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 1,
     representationalHash: 'e7a35da5c1196ef3edf7b1f09e2a8bd583f81395',
     startDate: '2026-05-17 13:05:20',
@@ -5198,7 +5198,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51236,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 2,
     representationalHash: '5a733a7e8d3cb37fdcd92814f8ac27b49c632269',
     startDate: '2026-05-17 13:05:20',
@@ -5225,7 +5225,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51237,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 3,
     representationalHash: '04eb5246b30d879d2faf9fdcb62057eb6e1d548d',
     startDate: '2026-05-17 13:05:20',
@@ -5252,7 +5252,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51238,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 4,
     representationalHash: '6bd7116a097f1641fdf84567fbcb3bd37a8e6e5c',
     startDate: '2026-05-17 13:05:20',
@@ -5279,7 +5279,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51239,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 5,
     representationalHash: '955fcc6d2fddd1018a90cabc17940cae8cd238f8',
     startDate: '2026-05-17 13:05:20',
@@ -5306,7 +5306,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51240,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 6,
     representationalHash: '6a08c64ccb46bc3eba7168d3727fa1971aa749b1',
     startDate: '2026-05-17 13:05:20',
@@ -5333,7 +5333,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51241,
     event: em.getReference(EventEntity, 889),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: 7,
     representationalHash: '898fd10f2b7af00c7802b63376a9d62afda73635',
     startDate: '2026-05-17 13:05:20',
@@ -5360,7 +5360,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51277,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '002adc1a8ce997d57d997d6d05a6ef823c557d48',
     startDate: '2026-05-18 12:01:12',
@@ -5387,7 +5387,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51279,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '21fc3da38bef45c3b08e44b2e358df87beddc2e4',
     startDate: '2026-05-18 12:36:29',
@@ -5414,7 +5414,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51289,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '82a8cc2b87f0b389f4ce373b2437bb85458d4331',
     startDate: '2026-05-18 16:45:20',
@@ -5441,7 +5441,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51290,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'f87bb4b62288bc07914fb4d567beebbcae85a113',
     startDate: '2026-05-18 16:45:30',
@@ -5468,7 +5468,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51294,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '9fc1d00d1b1035aed999811b9e3a425e4ff079ce',
     startDate: '2026-05-18 17:41:53',
@@ -5495,7 +5495,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51322,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'c661565ccf72fc0854ac0aafec8ede9f3eba85cf',
     startDate: '2026-05-19 16:45:09',
@@ -5522,7 +5522,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51327,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '021d268b9a0d8609897d86dbe63baeec6721329c',
     startDate: '2026-05-19 17:30:12',
@@ -5549,7 +5549,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51331,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '8a53abc800ff9d0f457d2e68f7146152ace230be',
     startDate: '2026-05-19 18:27:59',
@@ -5576,7 +5576,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51339,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '2369575e15abf580de1e88afe1f839fb88960023',
     startDate: '2026-05-19 20:26:38',
@@ -5603,7 +5603,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51344,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '49732f10978948f9895082346bd54c845da10622',
     startDate: '2026-05-20 10:44:50',
@@ -5630,7 +5630,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51345,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '42d81327a9b865daca4166ac0344286761d687fd',
     startDate: '2026-05-20 11:18:24',
@@ -5657,7 +5657,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51347,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'c0f9fde7e68299393c6bdd83705dc5493a15df84',
     startDate: '2026-05-20 12:06:08',
@@ -5684,7 +5684,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51367,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'b97603a355016a441e20587f7f8b9e88f5c52bb9',
     startDate: '2026-05-20 16:32:07',
@@ -5711,7 +5711,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51402,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '89c227049ab6404658938699eb7cb6b4f8e885fa',
     startDate: '2026-05-21 17:46:12',
@@ -5738,7 +5738,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51403,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '0caded399ae46fc8aca5a150a2c284a510925dc9',
     startDate: '2026-05-21 18:17:27',
@@ -5765,7 +5765,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51408,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '4689dbcab28415ea417e3722e0b1baad86756528',
     startDate: '2026-05-21 22:37:13',
@@ -5792,7 +5792,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51409,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '6677fcae9cd2af6eff1cf336f601416797ed02f6',
     startDate: '2026-05-21 22:39:49',
@@ -5819,7 +5819,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51414,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '683eec0e62364bdbd4b778d8585fd4ecd78d3003',
     startDate: '2026-05-22 11:32:51',
@@ -5846,7 +5846,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51415,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e3cdce32e9e5a1d6103603b6f5a80a5adf6f1955',
     startDate: '2026-05-22 11:33:38',
@@ -5873,7 +5873,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51538,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '5c2904ee8bee581cef972ae80df75bc0159c0c87',
     startDate: '2026-05-23 15:27:51',
@@ -5900,7 +5900,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51539,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'e006847ed9827d5a6650f7b698fefa8bc1a329d2',
     startDate: '2026-05-23 15:28:07',
@@ -5927,7 +5927,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51545,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: 'c4b59c8787a5df0041036080438679890a5be9a6',
     startDate: '2026-05-23 16:20:52',
@@ -5954,7 +5954,7 @@ export const sessions = (em: EntityManager) => [
   {
     id: 51546,
     event: em.getReference(EventEntity, 863),
-    status: 'finished',
+    status: 'SESSION_STATUS_FINISHED',
     tableIndex: null,
     representationalHash: '8ab3c2b818e54b59cda8a07f59d971b79fb59329',
     startDate: '2026-05-23 16:20:59',

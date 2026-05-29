@@ -328,6 +328,7 @@ export class PointsCalc {
             scores[playerId] -= 12000;
           } else {
             scores[playerId] += 4000;
+            this._lastPaymentsInfo.direct[`${playerId}<-${loserId}`] = 4000;
           }
         }
       } else {
@@ -336,8 +337,10 @@ export class PointsCalc {
             scores[playerId] -= 8000;
           } else if (playerId === currentDealer) {
             scores[playerId] += 4000;
+            this._lastPaymentsInfo.direct[`${playerId}<-${loserId}`] = 4000;
           } else {
             scores[playerId] += 2000;
+            this._lastPaymentsInfo.direct[`${playerId}<-${loserId}`] = 2000;
           }
         }
       }

@@ -64,7 +64,7 @@ export class SessionModel extends Model {
   // TODO: memoize
   async findByRepresentationalHash(
     hashList: string[],
-    populate?: Populate<SessionEntity, 'event'>
+    populate?: Populate<SessionEntity, 'event' | 'event.ruleset' | 'event.ruleset.rules'>
   ) {
     return this.repo.em.findAll(SessionEntity, {
       where: { representationalHash: hashList },
@@ -81,7 +81,10 @@ export class SessionModel extends Model {
     order: 'asc' | 'desc' = 'desc'
   ) {
     return this.repo.em.findAll(SessionEntity, {
-      where: { status, event: this.repo.em.getReference(EventEntity, eventIds) },
+      where: {
+        status,
+        event: { $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)) },
+      },
       ...(orderBy !== null
         ? {
             orderBy: { [orderBy]: order === 'asc' ? 1 : -1 },
@@ -100,8 +103,8 @@ export class SessionModel extends Model {
     dateTo?: string
   ) {
     return this.repo.em
-      .createQueryBuilder(SessionEntity)
-      .leftJoin('session_player', 'sp')
+      .createQueryBuilder(SessionEntity, 'session')
+      .leftJoin('players', 'sp')
       .where({
         'sp.player_id': playerId,
         'session.event_id': eventId,
@@ -124,7 +127,7 @@ export class SessionModel extends Model {
   ) {
     return this.repo.em
       .createQueryBuilder(SessionEntity)
-      .leftJoin('session_player', 'sp')
+      .leftJoin('session_players', 'sp')
       .where({
         ...(withStatus !== '*' ? { 'session.status': withStatus } : {}),
         'sp.player_id': playerId,
@@ -137,7 +140,7 @@ export class SessionModel extends Model {
 
   async getGamesCount(eventIdList: number[], withStatus: SessionStatus) {
     return this.repo.em.count(SessionEntity, {
-      event: this.repo.em.getReference(EventEntity, eventIdList),
+      event: { $in: eventIdList.map((id) => this.repo.em.getReference(EventEntity, id)) },
       status: withStatus,
     });
   }
@@ -513,7 +516,7 @@ export class SessionModel extends Model {
             sessionState.forceFinish();
           }
         } else {
-          sessionState.update(round);
+          payments = sessionState.update(round);
           if (
             noTimeLeft &&
             sessionState.lastHandStarted() &&
@@ -587,11 +590,11 @@ export class SessionModel extends Model {
       throw new Error(`Some players do not exist in database`);
     }
 
-    this.repo.db.em.persist(event[0]);
+    this.repo.em.persist(event[0]);
 
     const newSession = this.startSession(event[0], gamesStartGamePayload.players, null);
 
-    this.repo.db.em.flush();
+    this.repo.em.flush();
 
     context.repository.skirnir.trackSession(newSession.representationalHash!);
     return { sessionHash: newSession.representationalHash! };
@@ -605,36 +608,37 @@ export class SessionModel extends Model {
       sessionState.setYakitori(Object.fromEntries(playerIds.map((id) => [id, true])));
     }
 
-    const newSession = this.repo.db.em.create(SessionEntity, {
+    const newSession = this.repo.em.create(SessionEntity, {
       event,
       status: SessionStatus.SESSION_STATUS_INPROGRESS,
       replayHash: null,
       tableIndex,
       extraTime: 0,
       startDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+      players: [],
       representationalHash: sha1(
         playerIds.join(',') +
           moment().format('YYYY-MM-DD HH:mm') +
           (process.env.SEED_REPEAT ? '' : randomInt(999999).toString())
       ),
-      intermediateResults: this.repo.db.em.create(SessionStateEntity, sessionState.state),
+      intermediateResults: this.repo.em.create(SessionStateEntity, sessionState.state),
     });
-    this.repo.db.em.persist(newSession);
+    this.repo.em.persist(newSession);
 
     const sessionPlayers = playerIds.map((playerId, order) => {
-      return this.repo.db.em.create(SessionPlayerEntity, {
+      return this.repo.em.create(SessionPlayerEntity, {
         order: order + 1,
         playerId,
         session: newSession,
       });
     });
-    this.repo.db.em.persist(sessionPlayers);
+    this.repo.em.persist(sessionPlayers);
 
     return newSession;
   }
 
   async endGame(genericSessionPayload: GenericSessionPayload, context: Context) {
-    const session = await this.repo.db.em.findOne(SessionEntity, {
+    const session = await this.repo.em.findOne(SessionEntity, {
       representationalHash: genericSessionPayload.sessionHash,
       status: SessionStatus.SESSION_STATUS_INPROGRESS,
     });
@@ -658,8 +662,8 @@ export class SessionModel extends Model {
         session.intermediateResults
       )
     );
-    this.repo.db.em.persist(session);
-    await this.repo.db.em.flush();
+    this.repo.em.persist(session);
+    await this.repo.em.flush();
 
     const playerStatsModel = this.getModel(PlayerStatsModel);
     await playerStatsModel.scheduleRebuildPlayersStats(session.event.id);
@@ -748,7 +752,7 @@ export class SessionModel extends Model {
     if (
       !this.repo.meta.personId ||
       !(
-        (await playerModel.isEventAdmin(session[0].event.id)) &&
+        (await playerModel.isEventAdmin(session[0].event.id)) ||
         (await playerModel.isEventReferee(session[0].event.id))
       )
     ) {
@@ -778,7 +782,7 @@ export class SessionModel extends Model {
 
     if (
       !this.repo.meta.personId ||
-      !((await playerModel.isEventAdmin(eventId)) && (await playerModel.isEventReferee(eventId)))
+      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
     ) {
       throw new Error("You don't have the necessary permissions to finish games");
     }
@@ -820,7 +824,7 @@ export class SessionModel extends Model {
       );
     }
     await Promise.all(promises);
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
     await Promise.all(skirnirPromises);
     return { success: true };
   }
@@ -837,7 +841,10 @@ export class SessionModel extends Model {
   }
 
   async previewRound(gameHash: string, roundData: Round): Promise<GamesPreviewRoundResponse> {
-    const session = await this.findByRepresentationalHash([gameHash], ['event']);
+    const session = await this.findByRepresentationalHash(
+      [gameHash],
+      ['event', 'event.ruleset', 'event.ruleset.rules']
+    );
     if (session.length === 0 || session[0].status !== SessionStatus.SESSION_STATUS_INPROGRESS) {
       throw new Error('Session not found');
     }
@@ -879,15 +886,13 @@ export class SessionModel extends Model {
     );
     const payments = await this.updateSessionState(event, session[0], sessionState, roundEntity);
 
-    // don't forget to store all persisted data to db
-    await this.repo.em.flush();
     const chomboCounts = sessionState.getChombo();
     const toPaymentLog = ([dir, amount]: [string, number]) => ({
       from: +dir.split('<-')[1] || undefined,
       to: +dir.split('<-')[0] || undefined,
       amount,
     });
-    return {
+    const results = {
       state: {
         sessionHash: gameHash,
         dealer: currentDealer,
@@ -906,9 +911,15 @@ export class SessionModel extends Model {
           chomboCount: chomboCounts[+playerId],
         })),
         payments: {
-          direct: Object.entries(payments.direct).map(toPaymentLog),
-          riichi: Object.entries(payments.riichi).map(toPaymentLog),
-          honba: Object.entries(payments.honba).map(toPaymentLog),
+          direct: Object.entries(payments.direct)
+            .map(toPaymentLog)
+            .filter((i) => i.amount),
+          riichi: Object.entries(payments.riichi)
+            .map(toPaymentLog)
+            .filter((i) => i.amount),
+          honba: Object.entries(payments.honba)
+            .map(toPaymentLog)
+            .filter((i) => i.amount),
         },
         round: roundData,
         outcome: roundData.ron
@@ -928,6 +939,8 @@ export class SessionModel extends Model {
                       : RoundOutcome.ROUND_OUTCOME_UNSPECIFIED,
       },
     };
+
+    return results;
   }
 
   async mayDefinalize(session: SessionEntity) {
@@ -952,15 +965,15 @@ export class SessionModel extends Model {
     const query = this.repo.em
       .getKnex()
       .select('*')
-      .from('session_player')
+      .from('session_players')
       .join('session', (qb) =>
         qb
-          .on('session_player.session_id', 'session.id')
+          .on('session_players.session_id', 'session.id')
           .andOnIn('session.event_id', [session.event.id])
           .andOnNotIn('session.status', [SessionStatus.SESSION_STATUS_CANCELLED])
       )
-      .whereIn('session_player.player_id', session.intermediateResults?.playerIds ?? [])
-      .orderBy('session_player.id', 'desc')
+      .whereIn('session_players.player_id', session.intermediateResults?.playerIds ?? [])
+      .orderBy('session_players.id', 'desc')
       .limit(4);
     const lastSessions = await this.repo.em.execute(query);
     for (const lastSession of lastSessions) {
@@ -972,7 +985,7 @@ export class SessionModel extends Model {
   }
 
   async addExtraTime(addExtraTimePayload: AddExtraTimePayload) {
-    const sessions = await this.repo.db.em.find(
+    const sessions = await this.repo.em.find(
       SessionEntity,
       {
         representationalHash: addExtraTimePayload.sessionHashList,
@@ -989,7 +1002,7 @@ export class SessionModel extends Model {
     if (
       !this.repo.meta.personId ||
       !(
-        (await playerModel.isEventAdmin(sessions[0].event.id)) &&
+        (await playerModel.isEventAdmin(sessions[0].event.id)) ||
         (await playerModel.isEventReferee(sessions[0].event.id))
       )
     ) {
@@ -998,10 +1011,10 @@ export class SessionModel extends Model {
 
     for (const session of sessions) {
       session.extraTime += addExtraTimePayload.extraTime;
-      this.repo.db.em.persist(session);
+      this.repo.em.persist(session);
     }
 
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
     return { success: true };
   }
 
@@ -1016,7 +1029,7 @@ export class SessionModel extends Model {
     if (
       !this.repo.meta.personId ||
       !(
-        (await playerModel.isEventAdmin(sessions[0].event.id)) &&
+        (await playerModel.isEventAdmin(sessions[0].event.id)) ||
         (await playerModel.isEventReferee(sessions[0].event.id))
       )
     ) {
@@ -1049,10 +1062,10 @@ export class SessionModel extends Model {
     const lastRound = rounds.pop()!;
     sessions[0].intermediateResults = lastRound.lastSessionState;
     sessions[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
-    this.repo.db.em.remove(lastRound);
-    this.repo.db.em.persist(sessions[0]);
+    this.repo.em.remove(lastRound);
+    this.repo.em.persist(sessions[0]);
 
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
     return { success: true };
   }
 
@@ -1066,7 +1079,7 @@ export class SessionModel extends Model {
     if (
       !this.repo.meta.personId ||
       !(
-        (await playerModel.isEventAdmin(session[0].event.id)) &&
+        (await playerModel.isEventAdmin(session[0].event.id)) ||
         (await playerModel.isEventReferee(session[0].event.id))
       )
     ) {
@@ -1083,16 +1096,16 @@ export class SessionModel extends Model {
       playerHistoryModel.findBySession(session[0].id),
       sessionResultsModel.findBySession([session[0].id]),
     ]);
-    this.repo.db.em.remove(playerResults);
-    this.repo.db.em.remove(sessionResults);
+    this.repo.em.remove(playerResults);
+    this.repo.em.remove(sessionResults);
 
     session[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
-    this.repo.db.em.persist(session[0]);
+    this.repo.em.persist(session[0]);
 
     const playerStatsModel = this.getModel(PlayerStatsModel);
     await playerStatsModel.scheduleRebuildPlayersStats(session[0].event.id);
 
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
     return { success: true };
   }
 
@@ -1107,7 +1120,7 @@ export class SessionModel extends Model {
     if (
       !this.repo.meta.personId ||
       !(
-        (await playerModel.isEventAdmin(session[0].event.id)) &&
+        (await playerModel.isEventAdmin(session[0].event.id)) ||
         (await playerModel.isEventReferee(session[0].event.id))
       )
     ) {
@@ -1120,7 +1133,7 @@ export class SessionModel extends Model {
       session[0].intermediateResults
     );
     await this.finish(session[0].event, session[0], sessionState);
-    await this.repo.db.em.flush();
+    await this.repo.em.flush();
 
     const achievementsModel = this.getModel(AchievementsModel);
     await achievementsModel.scheduleRebuildAchievements(session[0].event.id);

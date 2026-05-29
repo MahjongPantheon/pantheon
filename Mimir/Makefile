@@ -107,8 +107,9 @@ container_typecheck: get_container_id
 test: export NODE_OPTIONS=--experimental-vm-modules
 test:
 	echo "======= Mimir: test ======"
-	make init_test_db
-	pnpm exec jest --coverage
+	#make seed_test_db
+	pnpm exec jest --coverage --runInBand
+	#node --inspect=0.0.0.0:4411 node_modules/jest/bin/jest.js --runInBand -t 'Mimir Twirp API'
 
 .PHONY: container_test
 container_test: get_container_id
@@ -135,6 +136,7 @@ container_test_verbose: get_container_id
 	fi
 
 .PHONY: run_test_server
+run_test_server: export TEST=true
 run_test_server: export TEST_VERBOSE=true
 run_test_server:
 	@echo "${GREEN}Running test server on port 4401${NC}"
@@ -151,8 +153,9 @@ container_run_test_server: get_container_id
 	fi
 
 .PHONY: test_noserver
-test_noserver: export DEBUG=true
-test: export NODE_OPTIONS=--experimental-vm-modules
+test_noserver: export TEST=true
+test_noserver: export NO_SERVER=true
+test_noserver: export NODE_OPTIONS=--experimental-vm-modules
 test_noserver:
 	echo "======= Mimir: test_noserver ======"
 	pnpm exec jest

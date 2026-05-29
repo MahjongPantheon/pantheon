@@ -47,7 +47,7 @@ export class EventGameSeriesModel extends Model {
         playersData[sessionResult.playerId] = [];
       }
       playersData[sessionResult.playerId].push({
-        sessionId: sessionResult.id,
+        sessionId: sessionResult.session.id,
         score: sessionResult.score,
         place: 0,
       });

@@ -14,7 +14,7 @@ export class PlayerHistoryModel extends Model {
       .getKnex()
       .from('player_history')
       .select(['player_id', 'event_id'])
-      .where({ event_id: eventIds })
+      .whereIn('event_id', eventIds)
       .max('id as mx')
       .groupBy(['player_id', 'event_id']);
     const ids = await this.repo.em.execute(qb);
@@ -29,8 +29,8 @@ export class PlayerHistoryModel extends Model {
       .from('player_history')
       .leftJoin('session', 'session.id', 'player_history.session_id')
       .select(['player_history.player_id', 'player_history.event_id'])
+      .whereIn('event_id', eventIds)
       .where({
-        event_id: eventIds,
         ...(date ? { 'session.end_date': { $lt: date.utc().format('YYYY-MM-DD HH:mm:ss') } } : {}),
       })
       .max('player_history.id as mx')
@@ -56,12 +56,12 @@ export class PlayerHistoryModel extends Model {
   async findAllLastByEventAndPlayer(eventId: number) {
     const qb = this.repo.em
       .getKnex()
-      .from('player_history as ph1')
-      .select('ph1.*')
-      .leftJoin('player_history as ph2', 'ph2.event_id', 'ph1.event_id')
-      .where('ph1.event_id', '=', eventId)
-      .where('ph2.games_played', '>', 'ph1.games_played')
-      .where('ph2.id', 'is', null);
+      .from('player_history')
+      .select('*')
+      .distinctOn('player_id')
+      .where('event_id', '=', eventId)
+      .orderBy('player_id')
+      .orderBy('games_played', 'desc');
     const result = await this.repo.em.execute(qb);
     return result.map((row) => this.repo.em.map(PlayerHistoryEntity, row));
   }

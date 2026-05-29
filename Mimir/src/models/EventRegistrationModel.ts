@@ -15,7 +15,7 @@ export class EventRegistrationModel extends Model {
     return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
         event: this.repo.em.getReference(EventEntity, eventId),
-        playerId: ids,
+        playerId: { $in: ids },
       },
     });
   }
@@ -23,7 +23,7 @@ export class EventRegistrationModel extends Model {
   async findByEventId(eventIds: number[]) {
     return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
-        event: this.repo.em.getReference(EventEntity, eventIds),
+        event: { $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)) },
       },
     });
   }
@@ -80,12 +80,6 @@ export class EventRegistrationModel extends Model {
       ],
       { onConflictFields: ['teamName'] }
     );
-  }
-
-  async findRegisteredPlayersIdsByEvent(eventId: number) {
-    return this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.em.getReference(EventEntity, eventId) },
-    });
   }
 
   async findIgnoredPlayersIdsByEvent(eventIds: number[]) {
