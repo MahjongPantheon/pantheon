@@ -1,5 +1,12 @@
 import { Yaku } from 'src/helpers/yaku.js';
 import { MimirTest } from '../services/MimirTest.js';
+import {
+  EventType,
+  PlatformType,
+  RulesetConfig,
+  WindShuffleMode,
+} from 'tsclients/proto/atoms.pb.js';
+import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
 
 const CLUB_RATING_EVENT_ID = 19;
 const TOURNAMENT_EVENT_ID = 889;
@@ -10,6 +17,10 @@ async function timeout(ms: number) {
     setTimeout(resolve, ms);
   });
 }
+
+// Note: tests hardly rely on database contents created by TestSeeder
+// Make sure to run TestSeeder before running these tests manually
+// On CI and when using `make test` from project root, TestSeeder is automatically run
 
 describe('Mimir Twirp API', () => {
   const mimirClient = new MimirTest();
@@ -1026,20 +1037,274 @@ describe('Mimir Twirp API', () => {
     ).rejects.toThrow();
   });
 
+  test('DropLastRound: valid drop', async () => {
+    const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
+    await timeout(100);
+    const response = await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        abort: {
+          roundIndex: 1,
+          honba: 0,
+          riichiBets: [10, 97],
+        },
+      },
+    });
+    await timeout(100);
+    const sessionOverview = await mimirClient.GetSessionOverview(sessionHash);
+    expect(sessionOverview.state.roundIndex).toBe(1);
+    expect(sessionOverview.state.honbaCount).toBe(1);
+    const dropResponse = await mimirClient.DropLastRound(sessionHash, response.scores);
+    expect(dropResponse.success).toBe(true);
+    await timeout(100);
+    const sessionOverview2 = await mimirClient.GetSessionOverview(sessionHash);
+    expect(sessionOverview2.state.roundIndex).toBe(1);
+    expect(sessionOverview2.state.honbaCount).toBe(0);
+  });
+
+  test('DropLastRound: invalid drop', async () => {
+    const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
+    await timeout(100);
+    const response = await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        abort: {
+          roundIndex: 1,
+          honba: 0,
+          riichiBets: [10, 97],
+        },
+      },
+    });
+    // add one more round and try dropping previous one
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        abort: {
+          roundIndex: 1,
+          honba: 1,
+          riichiBets: [10, 97],
+        },
+      },
+    });
+    await timeout(100);
+    const sessionOverview = await mimirClient.GetSessionOverview(sessionHash);
+    expect(sessionOverview.state.roundIndex).toBe(1);
+    expect(sessionOverview.state.honbaCount).toBe(2);
+    expect(mimirClient.DropLastRound(sessionHash, response.scores)).rejects.toThrow();
+  });
+
+  test('ForceFinishGame: valid finish', async () => {
+    const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
+    await timeout(100);
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        abort: {
+          roundIndex: 1,
+          honba: 0,
+          riichiBets: [10, 97],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        abort: {
+          roundIndex: 1,
+          honba: 1,
+          riichiBets: [10, 97],
+        },
+      },
+    });
+    await timeout(100);
+    const result = await mimirClient.ForceFinishGame(sessionHash);
+    expect(result.success).toBe(true);
+    await timeout(100);
+    const sessionOverview = await mimirClient.GetSessionOverview(sessionHash);
+    expect(sessionOverview.state.roundIndex).toBe(1);
+    expect(sessionOverview.state.honbaCount).toBe(2);
+    expect(sessionOverview.state.finished).toBe(true);
+  });
+
+  test('GetLastResults: valid result', async () => {
+    const results = await mimirClient.GetLastResults(393, TOURNAMENT_EVENT_ID);
+    expect(results.results).toEqual([
+      {
+        eventId: TOURNAMENT_EVENT_ID,
+        hasAvatar: false,
+        lastUpdate: expect.any(String),
+        place: 3,
+        playerId: 393,
+        ratingDelta: -17800,
+        score: 22200,
+        sessionHash: expect.any(String),
+        title: 'title393',
+      },
+      {
+        eventId: TOURNAMENT_EVENT_ID,
+        hasAvatar: false,
+        lastUpdate: expect.any(String),
+        place: 2,
+        playerId: 948,
+        ratingDelta: 10900,
+        score: 30900,
+        sessionHash: expect.any(String),
+        title: 'title948',
+      },
+      {
+        eventId: TOURNAMENT_EVENT_ID,
+        hasAvatar: false,
+        lastUpdate: expect.any(String),
+        place: 4,
+        playerId: 1729,
+        ratingDelta: -40500,
+        score: 19500,
+        sessionHash: expect.any(String),
+        title: 'title1729',
+      },
+      {
+        eventId: TOURNAMENT_EVENT_ID,
+        hasAvatar: false,
+        lastUpdate: expect.any(String),
+        place: 1,
+        playerId: 2033,
+        ratingDelta: 47400,
+        score: 47400,
+        sessionHash: expect.any(String),
+        title: 'title2033',
+      },
+    ]);
+  });
+
+  test('GetLastResults: unregistered player', async () => {
+    const results = await mimirClient.GetLastResults(100500, TOURNAMENT_EVENT_ID);
+    expect(results.results).toEqual([]);
+  });
+
+  test('GetLastRound: valid result, finished game', async () => {
+    const results = await mimirClient.GetLastRound(393, TOURNAMENT_EVENT_ID);
+    expect(results.round.scores).toEqual([
+      { chomboCount: 0, playerId: 393, score: 22200 },
+      { chomboCount: 0, playerId: 948, score: 30900 },
+      { chomboCount: 0, playerId: 1729, score: 19500 },
+      { chomboCount: 0, playerId: 2033, score: 47400 },
+    ]);
+  });
+
+  test('GetLastRound: valid result, unfinished game', async () => {
+    const results = await mimirClient.GetLastRound(1516, CLUB_RATING_EVENT_ID);
+    expect(results.round.scores).toEqual([
+      { chomboCount: 0, playerId: 26, score: 25400 },
+      { chomboCount: 0, playerId: 97, score: 39700 },
+      { chomboCount: 0, playerId: 1411, score: 26500 },
+      { chomboCount: 0, playerId: 1516, score: 28400 },
+    ]);
+  });
+
+  test('GetLastRound: unregistered player', async () => {
+    await expect(mimirClient.GetLastRound(100500, CLUB_RATING_EVENT_ID)).rejects.toThrow();
+  });
+
+  test('GetAllRounds: valid result, finished game', async () => {
+    const results = await mimirClient.GetAllRounds('e7a35da5c1196ef3edf7b1f09e2a8bd583f81395');
+    expect(results.rounds.length).toBeGreaterThan(0);
+  });
+
+  test('GetAllRounds: valid result, unfinished game', async () => {
+    const results = await mimirClient.GetAllRounds('106c9aa61ff7449c30d7c44091d7e9998eef9d6b');
+    expect(results.rounds.length).toBeGreaterThan(0);
+  });
+
+  test('GetAllRounds: non-existing game', async () => {
+    expect(mimirClient.GetAllRounds('non-existing-game')).rejects.toThrow();
+  });
+
+  test('GetLastRoundByHash: valid result, finished game', async () => {
+    const results = await mimirClient.GetLastRoundByHash(
+      'e7a35da5c1196ef3edf7b1f09e2a8bd583f81395'
+    );
+    expect(results.round.scores).toEqual([
+      {
+        chomboCount: 0,
+        playerId: 235,
+        score: 40600,
+      },
+      {
+        chomboCount: 0,
+        playerId: 1002,
+        score: 2900,
+      },
+      {
+        chomboCount: 0,
+        playerId: 1834,
+        score: 38100,
+      },
+      {
+        chomboCount: 0,
+        playerId: 2572,
+        score: 37400,
+      },
+    ]);
+  });
+
+  test('GetLastRoundByHash: valid result, unfinished game', async () => {
+    const results = await mimirClient.GetLastRoundByHash(
+      '106c9aa61ff7449c30d7c44091d7e9998eef9d6b'
+    );
+    expect(results.round.scores).toEqual([
+      {
+        chomboCount: 0,
+        playerId: 2,
+        score: 13700,
+      },
+      {
+        chomboCount: 0,
+        playerId: 26,
+        score: 79100,
+      },
+      {
+        chomboCount: 0,
+        playerId: 187,
+        score: 13700,
+      },
+      {
+        chomboCount: 0,
+        playerId: 1516,
+        score: 13500,
+      },
+    ]);
+  });
+
+  test('GetLastRoundByHash: non-existing game', async () => {
+    expect(mimirClient.GetLastRoundByHash('non-existing-game')).rejects.toThrow();
+  });
+
+  test('CreateEvent', async () => {
+    const result = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: 'test event',
+      description: 'test event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    expect(result.eventId).toBeDefined();
+  });
+
   /*
 
-
-
-EndGame
-FinalizeSession
-DropLastRound
-DefinalizeGame
-
-
-GetLastResults
-GetLastRound
-GetAllRounds
-GetLastRoundByHash
 
 
 CreateEvent
@@ -1079,7 +1344,6 @@ GetPrescriptedEventConfig
 UpdatePrescriptedEventConfig
 
 ClearStatCache
-ForceFinishGame
 
 NotifyPlayersSessionStartsSoon
 CallReferee
@@ -1104,6 +1368,10 @@ RecalcPlayerStats
 GetAchievements
 GetPlayerStats
 ToggleHideAchievements
+
+
+FinalizeSession
+DefinalizeGame
 
   */
 });

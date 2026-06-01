@@ -40,6 +40,26 @@ export class TestSeeder extends Seeder {
     await this.populatePlayerHistory(em);
     await this.populateSessionPlayers(em);
     await this.populateSessionResults(em);
+
+    await em.flush();
+
+    const tables = [
+      'event',
+      'event_registered_players',
+      'session',
+      'round',
+      'hand',
+      'penalty',
+      'player_history',
+      'session_players',
+      'session_results',
+    ];
+    for (const table of tables) {
+      console.log(`select setval('${table}_id_seq', (select max(id) + 1 from ${table}))`);
+      await em
+        .getConnection()
+        .execute(`select setval('${table}_id_seq', (select max(id) + 1 from ${table}))`);
+    }
   }
 
   protected async populateEvents(em: EntityManager): Promise<void> {

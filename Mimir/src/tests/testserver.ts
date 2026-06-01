@@ -6,7 +6,7 @@ import { createServer, IncomingMessage } from 'http';
 import { injectRepository } from '../middleware/injectRepository.js';
 
 import config from '../mikro-orm.config.js';
-import { MikroORM } from '@mikro-orm/postgresql';
+import { MikroORM, RequestContext } from '@mikro-orm/postgresql';
 
 const orm = await MikroORM.init(config());
 const mimirHandler = [Mimir.createMimir(mimirServer)];
@@ -14,7 +14,11 @@ const mimirHandler = [Mimir.createMimir(mimirServer)];
 const app = createTwirpServer<Context, typeof mimirHandler, IncomingMessage>(mimirHandler, {
   debug: process.env.NODE_ENV !== 'production',
   prefix: '/v2',
-}).use(injectRepository(orm));
+})
+  .use((_req, _res, next) => {
+    return RequestContext.create(orm.em, next);
+  })
+  .use(injectRepository(orm));
 
 createServer(app).listen(4301, () => {
   console.log(`Test server listening on port 4301`);

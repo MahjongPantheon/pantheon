@@ -161,7 +161,7 @@ export class SessionState {
   }
 
   public getYakitori(): Record<number, boolean> {
-    return this._state.yakitori;
+    return this._state.yakitori ?? {};
   }
 
   public setYakitori(yakitori: Record<number, boolean>): SessionState {
@@ -170,7 +170,7 @@ export class SessionState {
   }
 
   public getChips(): Record<number, number> {
-    return this._state.chips;
+    return this._state.chips ?? {};
   }
 
   public setChips(chips: Record<number, number>): SessionState {
@@ -179,7 +179,7 @@ export class SessionState {
   }
 
   public getChombo(): Record<number, number> {
-    return this._state.chombo;
+    return this._state.chombo ?? {};
   }
 
   /**
