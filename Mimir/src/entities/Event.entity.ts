@@ -61,9 +61,6 @@ export class EventEntity {
   @Property({ fieldName: 'auto_seating' })
   autoSeating!: number;
 
-  @Property({ fieldName: 'sort_by_games' })
-  sortByGames!: number;
-
   @Property({ fieldName: 'use_timer' })
   useTimer!: number;
 

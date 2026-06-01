@@ -234,7 +234,6 @@ export class EventModel extends Model {
       rulesetConfig: data.ruleset.rules,
       rulesetTitle: data.ruleset.title,
       seriesLength: data.seriesLength,
-      sortByGames: !!data.sortByGames,
       syncEnd: !!data.syncEnd,
       syncStart: !!data.syncStart,
       timezone: data.timezone,
@@ -302,10 +301,6 @@ export class EventModel extends Model {
 
     if (order === 'desc') {
       data.reverse();
-    }
-
-    if (mainEvent.sortByGames) {
-      data.sort((a, b) => b.gamesPlayed - a.gamesPlayed);
     }
 
     if (onlyMinGames) {

@@ -147,7 +147,6 @@ message GameConfig {
   bool auto_seating = 38;
   bool sync_start = 39;
   bool sync_end = 40;
-  bool sort_by_games = 41;
   bool allow_player_append = 42;
   int32 series_length = 45;
   int32 min_games_count = 46;
