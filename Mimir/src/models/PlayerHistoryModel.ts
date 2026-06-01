@@ -158,7 +158,7 @@ export class PlayerHistoryModel extends Model {
   }
 
   public updateAvgPlaceAndGamesCount(item: PlayerHistoryEntity, place: number) {
-    item = { ...item };
+    item = item.clone();
     let placesSum = item.gamesPlayed * item.avgPlace;
     placesSum += place;
     item.gamesPlayed += 1;

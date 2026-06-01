@@ -37,4 +37,25 @@ export class PlayerHistoryEntity {
   playerLastUpdate?: string;
   penaltiesAmount?: number;
   penaltiesCount?: number;
+
+  clone(): PlayerHistoryEntity {
+    const cloned = new PlayerHistoryEntity();
+    cloned.id = this.id;
+    cloned.playerId = this.playerId;
+    cloned.event = this.event;
+    cloned.sessionId = this.sessionId;
+    cloned.avgPlace = this.avgPlace;
+    cloned.chips = this.chips;
+    cloned.gamesPlayed = this.gamesPlayed;
+    cloned.rating = this.rating;
+    cloned.avgScore = this.avgScore;
+    cloned.playerTitle = this.playerTitle;
+    cloned.playerTenhouId = this.playerTenhouId;
+    cloned.playerTeamName = this.playerTeamName;
+    cloned.playerHasAvatar = this.playerHasAvatar;
+    cloned.playerLastUpdate = this.playerLastUpdate;
+    cloned.penaltiesAmount = this.penaltiesAmount;
+    cloned.penaltiesCount = this.penaltiesCount;
+    return cloned;
+  }
 }

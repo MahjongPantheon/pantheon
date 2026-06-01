@@ -1,11 +1,16 @@
 import {
+  EventData,
   GameConfig,
+  GenericEventPayload,
   GenericSessionPayload,
   GenericSuccessResponse,
+  IntermediateResultOfSession,
 } from 'tsclients/proto/atoms.pb';
 import {
   AddRound,
   CancelGame,
+  CreateEvent,
+  DropLastRound,
   EventsGetAllRegisteredPlayersResponse,
   EventsGetEventsByIdResponse,
   EventsGetEventsPayload,
@@ -17,12 +22,14 @@ import {
   EventsGetRatingTableResponse,
   EventsGetRulesetsResponse,
   EventsGetTimerStateResponse,
+  ForceFinishGame,
   GamesAddRoundPayload,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundPayload,
   GamesPreviewRoundResponse,
   GetAllRegisteredPlayers,
+  GetAllRounds,
   GetCurrentSessions,
   GetEvents,
   GetEventsById,
@@ -30,12 +37,19 @@ import {
   GetGameConfig,
   GetGamesSeries,
   GetLastGames,
+  GetLastResults,
+  GetLastRound,
+  GetLastRoundByHash,
   GetMyEvents,
   GetRatingTable,
   GetRulesets,
   GetSessionOverview,
   GetTimerState,
+  PlayersGetAllRoundsResponse,
   PlayersGetCurrentSessionsResponse,
+  PlayersGetLastResultsResponse,
+  PlayersGetLastRoundByHashResponse,
+  PlayersGetLastRoundResponse,
   PlayersGetMyEventsResponse,
   PreviewRound,
   StartGame,
@@ -168,6 +182,37 @@ export class MimirTest {
 
   async CancelGame(sessionHash: string): Promise<GenericSuccessResponse> {
     return CancelGame({ sessionHash }, this._config);
+  }
+
+  async DropLastRound(
+    sessionHash: string,
+    intermediateResults: IntermediateResultOfSession[]
+  ): Promise<GenericSuccessResponse> {
+    return DropLastRound({ sessionHash, intermediateResults }, this._config);
+  }
+
+  async ForceFinishGame(sessionHash: string): Promise<GenericSuccessResponse> {
+    return ForceFinishGame({ sessionHash }, this._config);
+  }
+
+  async GetLastResults(playerId: number, eventId: number): Promise<PlayersGetLastResultsResponse> {
+    return GetLastResults({ playerId, eventId }, this._config);
+  }
+
+  async GetLastRound(playerId: number, eventId: number): Promise<PlayersGetLastRoundResponse> {
+    return GetLastRound({ playerId, eventId }, this._config);
+  }
+
+  async GetAllRounds(sessionHash: string): Promise<PlayersGetAllRoundsResponse> {
+    return GetAllRounds({ sessionHash }, this._config);
+  }
+
+  async GetLastRoundByHash(sessionHash: string): Promise<PlayersGetLastRoundByHashResponse> {
+    return GetLastRoundByHash({ sessionHash }, this._config);
+  }
+
+  async CreateEvent(eventData: EventData): Promise<GenericEventPayload> {
+    return CreateEvent(eventData, this._config);
   }
 
   async ToggleListed(eventId: number): Promise<GenericSuccessResponse> {

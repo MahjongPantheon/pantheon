@@ -61,4 +61,22 @@ export class SessionStateEntity {
   /** Player IDs */
   @Property({ type: 'json' })
   playerIds!: number[];
+
+  clone(): SessionStateEntity {
+    const clone = new SessionStateEntity();
+    clone.scores = { ...this.scores };
+    clone.chips = { ...this.chips };
+    clone.chombo = { ...this.chombo };
+    clone.round = this.round;
+    clone.honba = this.honba;
+    clone.riichiBets = this.riichiBets;
+    clone.prematurelyFinished = this.prematurelyFinished;
+    clone.roundJustChanged = this.roundJustChanged;
+    clone.lastHandStarted = this.lastHandStarted;
+    clone.lastOutcome = this.lastOutcome;
+    clone.yakitori = { ...this.yakitori };
+    clone.replacements = { ...this.replacements };
+    clone.playerIds = [...this.playerIds];
+    return clone;
+  }
 }

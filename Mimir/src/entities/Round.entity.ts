@@ -69,7 +69,7 @@ export class RoundEntity {
     sessionRef: SessionEntity,
     eventRef: EventEntity,
     round: Round,
-    lastSessionState: SessionStateEntity
+    lastSessionState?: SessionStateEntity
   ) {
     const entity = new RoundEntity();
     entity.session = sessionRef;

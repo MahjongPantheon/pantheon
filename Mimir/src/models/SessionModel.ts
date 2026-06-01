@@ -103,21 +103,20 @@ export class SessionModel extends Model {
     dateTo?: string
   ) {
     return this.repo.em
-      .createQueryBuilder(SessionEntity, 'session')
+      .createQueryBuilder(SessionEntity)
       .leftJoin('players', 'sp')
       .where({
         'sp.player_id': playerId,
-        'session.event_id': eventId,
-        ...(withStatus !== '*' ? { 'session.status': withStatus } : {}),
+        event_id: eventId,
+        ...(withStatus !== '*' ? { status: withStatus } : {}),
         ...(dateFrom
-          ? { 'session.start_date': { gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss') } }
+          ? { start_date: { gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss') } }
           : {}),
-        ...(dateTo
-          ? { 'session.end_date': { lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss') } }
-          : {}),
+        ...(dateTo ? { end_date: { lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss') } } : {}),
       })
-      .groupBy('session.id')
-      .execute<SessionEntity[]>('all', true); // TODO verify proper entities are returned
+      .groupBy('id')
+      .execute()
+      .then((result) => result.map((item) => this.repo.em.map(SessionEntity, item)));
   }
 
   async findLastByPlayerAndEvent(
@@ -127,15 +126,16 @@ export class SessionModel extends Model {
   ) {
     return this.repo.em
       .createQueryBuilder(SessionEntity)
-      .leftJoin('session_players', 'sp')
+      .leftJoin('players', 'sp')
       .where({
-        ...(withStatus !== '*' ? { 'session.status': withStatus } : {}),
+        ...(withStatus !== '*' ? { status: withStatus } : {}),
         'sp.player_id': playerId,
-        'session.event_id': eventId,
+        event_id: eventId,
       })
-      .orderBy({ 'session.id': -1 })
+      .orderBy({ id: -1 })
       .limit(1)
-      .execute<SessionEntity[]>('get', true); // TODO verify proper entity is returned
+      .execute()
+      .then((result) => result.map((item) => this.repo.em.map(SessionEntity, item)));
   }
 
   async getGamesCount(eventIdList: number[], withStatus: SessionStatus) {
@@ -423,7 +423,7 @@ export class SessionModel extends Model {
       session[0],
       event,
       roundData,
-      session[0].intermediateResults!
+      session[0].intermediateResults ? session[0].intermediateResults.clone() : undefined
     );
     this.repo.em.persist(roundEntity);
     const lastScores = { ...sessionState.getScores() };
@@ -848,7 +848,7 @@ export class SessionModel extends Model {
       session[0],
       event,
       roundData,
-      session[0].intermediateResults!
+      session[0].intermediateResults
     );
     const payments = await this.updateSessionState(event, session[0], sessionState, roundEntity);
 
@@ -1028,6 +1028,7 @@ export class SessionModel extends Model {
     const lastRound = rounds.pop()!;
     sessions[0].intermediateResults = lastRound.lastSessionState;
     sessions[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
+    this.repo.em.remove(lastRound.hands);
     this.repo.em.remove(lastRound);
     this.repo.em.persist(sessions[0]);
 
@@ -1099,6 +1100,8 @@ export class SessionModel extends Model {
       session[0].intermediateResults
     );
     await this.finish(session[0].event, session[0], sessionState);
+    sessionState.forceFinish();
+    this.repo.em.persist(session[0]);
     await this.repo.em.flush();
 
     const achievementsModel = this.getModel(AchievementsModel);

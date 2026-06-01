@@ -17,7 +17,7 @@ export class PlayerInSessionModel extends Model {
   async getLastRound(input: PlayersGetLastRoundPayload): Promise<PlayersGetLastRoundResponse> {
     const sessionModel = this.getModel(SessionModel);
     const sessions = await sessionModel.findLastByPlayerAndEvent(input.playerId, input.eventId);
-    this.repo.em.populate(sessions, ['event']);
+    await this.repo.em.populate(sessions, ['event']);
     if (sessions.length === 0) {
       throw new Error(`Session not found for player ${input.playerId} and event ${input.eventId}`);
     }
