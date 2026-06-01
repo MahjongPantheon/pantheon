@@ -677,6 +677,7 @@ export class EventModel extends Model {
     event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
     event.onlinePlatform = eventData.platformId;
     event.statHost = statHost;
+    event.finished = 0;
 
     switch (eventData.type) {
       case EventType.EVENT_TYPE_TOURNAMENT:

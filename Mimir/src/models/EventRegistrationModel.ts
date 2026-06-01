@@ -9,6 +9,7 @@ import {
   EventsUpdatePlayersTeamsPayload,
 } from 'tsclients/proto/mimir.pb.js';
 import { LocalIdMapping, TeamMapping } from 'tsclients/proto/atoms.pb.js';
+import { SessionEntity } from 'src/entities/Session.entity.js';
 
 export class EventRegistrationModel extends Model {
   async findByPlayerAndEvent(ids: number[], eventId: number) {
@@ -183,9 +184,16 @@ export class EventRegistrationModel extends Model {
       throw new Error(`Event ${eventId} not found`);
     }
 
+    if (!event.allowPlayerAppend) {
+      const sessionsOfEvent = await this.repo.em.count(SessionEntity, { event: eventId });
+      if (sessionsOfEvent > 0) {
+        throw new Error(`Cannot register players for event ${eventId} as it is already started`);
+      }
+    }
     const regItem = new EventRegisteredPlayersEntity();
     regItem.event = event;
     regItem.playerId = playerId;
+    regItem.ignoreSeating = 0;
     if (event.isPrescripted) {
       regItem.localId = await this.findNextFreeLocalId(eventId);
     }

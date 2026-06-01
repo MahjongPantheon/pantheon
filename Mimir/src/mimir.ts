@@ -140,6 +140,7 @@ export const mimirServer: Mimir<Context> = {
     return model.getMyEvents(context.repository.meta.personId);
   },
 
+  // TODO: remove? looks redundant
   GetGameConfig: async function (
     genericEventPayload: GenericEventPayload,
     context: Context
@@ -609,14 +610,14 @@ export const mimirServer: Mimir<Context> = {
     getCurrentStatePayload: GetCurrentStatePayload,
     context: Context
   ): Promise<GetCurrentStateResponse> {
-    const gameConfig = await this.GetGameConfig(
-      { eventId: getCurrentStatePayload.eventId },
-      context
-    );
-    const sessions = await this.GetCurrentSessions(
-      { eventId: getCurrentStatePayload.eventId, playerId: getCurrentStatePayload.playerId },
-      context
-    );
+    const model = Model.getModel(context.repository, EventModel);
+    const gameConfig = await model.getGameConfig({ eventId: getCurrentStatePayload.eventId });
+    const eventModel = Model.getModel(context.repository, EventModel);
+    const sessions = await eventModel.getCurrentGames({
+      eventId: getCurrentStatePayload.eventId,
+      playerId: getCurrentStatePayload.playerId,
+    });
+
     return {
       sessions: sessions.sessions,
       config: gameConfig,
