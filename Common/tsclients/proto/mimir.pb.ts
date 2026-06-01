@@ -906,18 +906,6 @@ export async function StartGame(
   return protoAtoms.GenericSessionPayload.decode(response);
 }
 
-export async function EndGame(
-  genericSessionPayload: protoAtoms.GenericSessionPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/EndGame",
-    protoAtoms.GenericSessionPayload.encode(genericSessionPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
 export async function CancelGame(
   genericSessionPayload: protoAtoms.GenericSessionPayload,
   config?: ClientConfiguration,
@@ -1754,18 +1742,6 @@ export async function StartGameJSON(
   return protoAtoms.GenericSessionPayloadJSON.decode(response);
 }
 
-export async function EndGameJSON(
-  genericSessionPayload: protoAtoms.GenericSessionPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/EndGame",
-    protoAtoms.GenericSessionPayloadJSON.encode(genericSessionPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponseJSON.decode(response);
-}
-
 export async function CancelGameJSON(
   genericSessionPayload: protoAtoms.GenericSessionPayload,
   config?: ClientConfiguration,
@@ -2323,12 +2299,6 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<protoAtoms.GenericSessionPayload>
     | protoAtoms.GenericSessionPayload;
-  EndGame: (
-    genericSessionPayload: protoAtoms.GenericSessionPayload,
-    context: Context,
-  ) =>
-    | Promise<protoAtoms.GenericSuccessResponse>
-    | protoAtoms.GenericSuccessResponse;
   CancelGame: (
     genericSessionPayload: protoAtoms.GenericSessionPayload,
     context: Context,
@@ -2963,18 +2933,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: protoAtoms.GenericSessionPayload,
           json: protoAtoms.GenericSessionPayloadJSON,
-        },
-      },
-      EndGame: {
-        name: "EndGame",
-        handler: service.EndGame,
-        input: {
-          protobuf: protoAtoms.GenericSessionPayload,
-          json: protoAtoms.GenericSessionPayloadJSON,
-        },
-        output: {
-          protobuf: protoAtoms.GenericSuccessResponse,
-          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       CancelGame: {
