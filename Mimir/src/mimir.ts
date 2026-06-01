@@ -413,13 +413,6 @@ export const mimirServer: Mimir<Context> = {
     const sessionModel = Model.getModel(context.repository, SessionModel);
     return sessionModel.startGame(gamesStartGamePayload, context);
   },
-  EndGame: function (
-    genericSessionPayload: GenericSessionPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> {
-    const sessionModel = Model.getModel(context.repository, SessionModel);
-    return sessionModel.endGame(genericSessionPayload, context);
-  },
   CancelGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context

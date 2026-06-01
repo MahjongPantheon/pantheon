@@ -637,40 +637,6 @@ export class SessionModel extends Model {
     return newSession;
   }
 
-  async endGame(genericSessionPayload: GenericSessionPayload, context: Context) {
-    const session = await this.repo.em.findOne(SessionEntity, {
-      representationalHash: genericSessionPayload.sessionHash,
-      status: SessionStatus.SESSION_STATUS_INPROGRESS,
-    });
-    if (!session) {
-      throw new Error('Session not found');
-    }
-
-    if (
-      !context.repository.meta.personId ||
-      !session.intermediateResults?.playerIds.includes(context.repository.meta.personId)
-    ) {
-      throw new Error('You are not a participant in this session');
-    }
-
-    await this.prefinish(
-      session.event,
-      session,
-      new SessionState(
-        session.event.ruleset,
-        session.intermediateResults?.playerIds ?? [],
-        session.intermediateResults
-      )
-    );
-    this.repo.em.persist(session);
-    await this.repo.em.flush();
-
-    const playerStatsModel = this.getModel(PlayerStatsModel);
-    await playerStatsModel.scheduleRebuildPlayersStats(session.event.id);
-
-    return { success: true };
-  }
-
   async prefinish(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
     // pre-finish state is not applied for games without synchronous ending
     if (!event.syncEnd) {

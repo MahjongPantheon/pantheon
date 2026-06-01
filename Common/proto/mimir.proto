@@ -58,7 +58,6 @@ service Mimir {
   rpc UpdatePlayerReplacement(EventsUpdatePlayerReplacementPayload) returns (GenericSuccessResponse);
   rpc UpdatePlayersTeams(EventsUpdatePlayersTeamsPayload) returns (GenericSuccessResponse);
   rpc StartGame(GamesStartGamePayload) returns (GenericSessionPayload);
-  rpc EndGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc CancelGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc FinalizeSession(GenericEventPayload) returns (GenericSuccessResponse);
   rpc DropLastRound(GamesDropLastRoundPayload) returns (GenericSuccessResponse);
