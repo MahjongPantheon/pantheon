@@ -1,12 +1,8 @@
 import { Yaku } from 'src/helpers/yaku.js';
 import { MimirTest } from '../services/MimirTest.js';
-import {
-  EventType,
-  PlatformType,
-  RulesetConfig,
-  WindShuffleMode,
-} from 'tsclients/proto/atoms.pb.js';
+import { EventType, PlatformType, WindShuffleMode } from 'tsclients/proto/atoms.pb.js';
 import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { v4 } from 'uuid';
 
 const CLUB_RATING_EVENT_ID = 19;
 const TOURNAMENT_EVENT_ID = 889;
@@ -20,7 +16,7 @@ async function timeout(ms: number) {
 
 // Note: tests hardly rely on database contents created by TestSeeder
 // Make sure to run TestSeeder before running these tests manually
-// On CI and when using `make test` from project root, TestSeeder is automatically run
+// On CI and when using `make test` from project root, TestSeeder is automatically run on fresh database
 
 describe('Mimir Twirp API', () => {
   const mimirClient = new MimirTest();
@@ -36,6 +32,30 @@ describe('Mimir Twirp API', () => {
     expect(rulesets.rulesetTitles).toBeDefined();
   });
 
+  test('CreateEvent', async () => {
+    const result = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: 'test event',
+      description: 'test event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    expect(result.eventId).toBeDefined();
+  });
+
   test('GetEvents: limit 1 offset 0', async () => {
     const events = await mimirClient.GetEvents({
       limit: 1,
@@ -44,7 +64,7 @@ describe('Mimir Twirp API', () => {
       filter: '',
     });
     expect(events).toBeDefined();
-    expect(events.total).toEqual(3);
+    expect(events.total).toBeGreaterThanOrEqual(3);
     expect(events.events.length).toEqual(1);
   });
 
@@ -56,19 +76,19 @@ describe('Mimir Twirp API', () => {
       filter: '',
     });
     expect(events).toBeDefined();
-    expect(events.total).toEqual(3);
+    expect(events.total).toBeGreaterThanOrEqual(3);
     expect(events.events.length).toEqual(1);
   });
 
-  test('GetEvents: limit 1 offset 4', async () => {
+  test('GetEvents: limit 1 offset very big', async () => {
     const events = await mimirClient.GetEvents({
       limit: 1,
-      offset: 4,
+      offset: 4000,
       filterUnlisted: false,
       filter: '',
     });
     expect(events).toBeDefined();
-    expect(events.total).toEqual(3);
+    expect(events.total).toBeGreaterThanOrEqual(3);
     expect(events.events.length).toEqual(0);
   });
 
@@ -94,44 +114,6 @@ describe('Mimir Twirp API', () => {
     expect(events).toBeDefined();
     expect(events.total).toEqual(0);
     expect(events.events.length).toEqual(0);
-  });
-
-  test('ToggleListed: unlist event', async () => {
-    const response = await mimirClient.ToggleListed(CLUB_RATING_EVENT_ID);
-    expect(response).toBeDefined();
-    expect(response.success).toEqual(true);
-
-    const events = await mimirClient.GetEvents({
-      limit: 20,
-      offset: 0,
-      filterUnlisted: true,
-      filter: 'Club',
-    });
-    expect(events).toBeDefined();
-    expect(events.total).toEqual(0);
-    expect(events.events.length).toEqual(0);
-
-    const eventsAll = await mimirClient.GetEvents({
-      limit: 20,
-      offset: 0,
-      filterUnlisted: false,
-      filter: 'Club',
-    });
-    expect(eventsAll).toBeDefined();
-    expect(eventsAll.total).toEqual(1);
-    expect(eventsAll.events.length).toEqual(1);
-
-    await mimirClient.ToggleListed(CLUB_RATING_EVENT_ID);
-
-    const eventsOrig = await mimirClient.GetEvents({
-      limit: 20,
-      offset: 0,
-      filterUnlisted: true,
-      filter: 'Club',
-    });
-    expect(eventsOrig).toBeDefined();
-    expect(eventsOrig.total).toEqual(1);
-    expect(eventsOrig.events.length).toEqual(1);
   });
 
   test('GetEventsById', async () => {
@@ -1279,8 +1261,24 @@ describe('Mimir Twirp API', () => {
     expect(mimirClient.GetLastRoundByHash('non-existing-game')).rejects.toThrow();
   });
 
-  test('CreateEvent', async () => {
-    const result = await mimirClient.CreateEvent({
+  test('GetEventForEdit', async () => {
+    const result = await mimirClient.GetEventForEdit(CLUB_RATING_EVENT_ID);
+    expect(result).toBeDefined();
+    expect(result.id).toBe(CLUB_RATING_EVENT_ID);
+  });
+
+  test('UpdateEvent', async () => {
+    const { event } = await mimirClient.GetEventForEdit(ONLINE_TOURNAMENT_EVENT_ID);
+    event.title = 'Modified Online Tournament';
+    const result = await mimirClient.UpdateEvent(ONLINE_TOURNAMENT_EVENT_ID, event);
+    expect(result.success).toBe(true);
+    await timeout(100);
+    const updatedEvent = await mimirClient.GetEventForEdit(ONLINE_TOURNAMENT_EVENT_ID);
+    expect(updatedEvent.event.title).toBe('Modified Online Tournament');
+  });
+
+  test('FinishEvent', async () => {
+    const { eventId } = await mimirClient.CreateEvent({
       type: EventType.EVENT_TYPE_LOCAL,
       title: 'test event',
       description: 'test event desc',
@@ -1300,38 +1298,246 @@ describe('Mimir Twirp API', () => {
       allowManualAddReplay: false,
       windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
     });
-    expect(result.eventId).toBeDefined();
+    const result = await mimirClient.FinishEvent(eventId);
+    expect(result.success).toBe(true);
+    const updatedEvent = await mimirClient.GetEventsById([eventId]);
+    expect(updatedEvent.events[0].finished).toBe(true);
+  });
+
+  test('RegisterPlayer / UnregisterPlayer: club rating', async () => {
+    const result = await mimirClient.RegisterPlayer(ONLINE_TOURNAMENT_EVENT_ID, 100);
+    expect(result.success).toBe(true);
+    const unregisterResult = await mimirClient.UnregisterPlayer(ONLINE_TOURNAMENT_EVENT_ID, 100);
+    expect(unregisterResult.success).toBe(true);
+  });
+
+  test('RegisterPlayer failure: tournament rating which is already started', async () => {
+    expect(mimirClient.RegisterPlayer(TOURNAMENT_EVENT_ID, 100)).rejects.toThrow();
+  });
+
+  test('UpdatePlayerSeatingFlag', async () => {
+    const result = await mimirClient.UpdatePlayerSeatingFlag(TOURNAMENT_EVENT_ID, 743, true);
+    expect(result.success).toBe(true);
+    await timeout(100);
+    const regs = await mimirClient.GetAllRegisteredPlayers([TOURNAMENT_EVENT_ID]);
+    expect(regs.players.find((p) => p.id === 743)!.ignoreSeating).toBe(true);
+    const result2 = await mimirClient.UpdatePlayerSeatingFlag(TOURNAMENT_EVENT_ID, 743, false);
+    expect(result2.success).toBe(true);
+    await timeout(100);
+    const regs2 = await mimirClient.GetAllRegisteredPlayers([TOURNAMENT_EVENT_ID]);
+    expect(regs2.players.find((p) => p.id === 743)!.ignoreSeating).toBe(false);
+  });
+
+  test('ToggleListed: unlist event', async () => {
+    const id = v4();
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: 'listable event ' + id,
+      description: 'listable event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    await timeout(100);
+
+    const response = await mimirClient.ToggleListed(eventId);
+    expect(response).toBeDefined();
+    expect(response.success).toEqual(true);
+    await timeout(100);
+
+    const events = await mimirClient.GetEvents({
+      limit: 20,
+      offset: 0,
+      filterUnlisted: true,
+      filter: id,
+    });
+    expect(events).toBeDefined();
+    expect(events.total).toEqual(0);
+    expect(events.events.length).toEqual(0);
+
+    const eventsAll = await mimirClient.GetEvents({
+      limit: 20,
+      offset: 0,
+      filterUnlisted: false,
+      filter: id,
+    });
+    expect(eventsAll).toBeDefined();
+    expect(eventsAll.total).toEqual(1);
+    expect(eventsAll.events.length).toEqual(1);
+
+    await mimirClient.ToggleListed(eventId);
+    await timeout(100);
+
+    const eventsOrig = await mimirClient.GetEvents({
+      limit: 20,
+      offset: 0,
+      filterUnlisted: true,
+      filter: id,
+    });
+    expect(eventsOrig).toBeDefined();
+    expect(eventsOrig.total).toEqual(1);
+    expect(eventsOrig.events.length).toEqual(1);
+  });
+
+  test('ToggleHideResults', async () => {
+    const id = v4();
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: 'listable event ' + id,
+      description: 'listable event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    await timeout(100);
+
+    const response = await mimirClient.ToggleHideResults(eventId);
+    expect(response).toBeDefined();
+    expect(response.success).toEqual(true);
+    await timeout(100);
+
+    const events = await mimirClient.GetEvents({
+      limit: 20,
+      offset: 0,
+      filterUnlisted: false,
+      filter: id,
+    });
+    expect(events).toBeDefined();
+    expect(events.events[0].isRatingShown).toEqual(false);
+
+    await mimirClient.ToggleHideResults(eventId);
+    await timeout(100);
+
+    const eventsOrig = await mimirClient.GetEvents({
+      limit: 20,
+      offset: 0,
+      filterUnlisted: false,
+      filter: id,
+    });
+    expect(eventsOrig).toBeDefined();
+    expect(eventsOrig.events[0].isRatingShown).toEqual(true);
+  });
+
+  test('ToggleHideAchievements', async () => {
+    const id = v4();
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: 'listable event ' + id,
+      description: 'listable event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    await timeout(100);
+
+    const response = await mimirClient.ToggleHideAchievements(eventId);
+    expect(response).toBeDefined();
+    expect(response.success).toEqual(true);
+    await timeout(100);
+
+    const events = await mimirClient.GetEvents({
+      limit: 20,
+      offset: 0,
+      filterUnlisted: false,
+      filter: id,
+    });
+    expect(events).toBeDefined();
+    expect(events.events[0].achievementsShown).toEqual(false);
+
+    await mimirClient.ToggleHideAchievements(eventId);
+    await timeout(100);
+
+    const eventsOrig = await mimirClient.GetEvents({
+      limit: 20,
+      offset: 0,
+      filterUnlisted: false,
+      filter: id,
+    });
+    expect(eventsOrig).toBeDefined();
+    expect(eventsOrig.events[0].achievementsShown).toEqual(true);
+  });
+
+  test('UpdatePlayerReplacement', async () => {
+    const response = await mimirClient.UpdatePlayerReplacement(TOURNAMENT_EVENT_ID, 1834, 100500);
+    expect(response).toBeDefined();
+    expect(response.success).toEqual(true);
+    await timeout(100);
+    const regs = await mimirClient.GetAllRegisteredPlayers([TOURNAMENT_EVENT_ID]);
+    expect(regs.players.find((p) => p.id === 1834)!.replacedBy).toBeDefined();
+    expect(regs.players.find((p) => p.id === 1834)!.replacedBy!.id).toEqual(100500);
+
+    const response2 = await mimirClient.UpdatePlayerReplacement(TOURNAMENT_EVENT_ID, 1834, -1);
+    expect(response2).toBeDefined();
+    expect(response2.success).toEqual(true);
+    await timeout(100);
+    const regs2 = await mimirClient.GetAllRegisteredPlayers([TOURNAMENT_EVENT_ID]);
+    expect(regs2.players.find((p) => p.id === 1834)!.replacedBy).toBeUndefined();
+  });
+
+  test('GetPlayer', async () => {
+    const response = await mimirClient.GetPlayer(1834);
+    expect(response).toBeDefined();
+    expect(response.players).toBeDefined();
+    expect(response.players.id).toEqual(1834);
+  });
+
+  test('GetCurrentStateForPlayer', async () => {
+    const response = await mimirClient.GetCurrentStateForPlayer(CLUB_RATING_EVENT_ID, 1516);
+    expect(response).toBeDefined();
+    expect(response.config).toBeDefined();
+    expect(response.sessions.length).toEqual(3);
   });
 
   /*
 
+GetCurrentStateForPlayer
 
+AddPenalty
+ListPenalties
+CancelPenalty
+AddExtraTime
+ListMyPenalties
+ListChombo
 
-CreateEvent
-GetEventForEdit
-UpdateEvent
-FinishEvent
+FinalizeSession
+DefinalizeGame
 
-GetTablesState
-
-
-
-RegisterPlayer
-UnregisterPlayer
-UpdatePlayerSeatingFlag
-
-ToggleHideResults
-
-UpdatePlayersLocalIds
-UpdatePlayerReplacement
-UpdatePlayersTeams
-
-
-
-GetPlayer
-
-
-GetTimerState - todo check after time started/seating ready
 StartTimer
 GetCurrentSeating
 MakeShuffledSeating
@@ -1343,35 +1549,24 @@ MakePrescriptedSeating
 GetPrescriptedEventConfig
 UpdatePrescriptedEventConfig
 
-ClearStatCache
+GetTimerState - todo check after time started/seating ready
+GetTablesState - todo check after time started/seating ready
 
-NotifyPlayersSessionStartsSoon
-CallReferee
-GetCurrentStateForPlayer
-
-AddPenalty
-ListPenalties
-CancelPenalty
-AddExtraTime
-ListMyPenalties
-ListChombo
+UpdatePlayersTeams - todo after team event is ready
+UpdatePlayersLocalIds - todo after prescripted event is ready
 
 AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-
+ClearStatCache
+NotifyPlayersSessionStartsSoon
+CallReferee
 RebuildScoring
-
 RecalcAchievements
 RecalcPlayerStats
 GetAchievements
 GetPlayerStats
-ToggleHideAchievements
-
-
-FinalizeSession
-DefinalizeGame
 
   */
 });

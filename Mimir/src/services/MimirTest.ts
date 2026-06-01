@@ -12,6 +12,7 @@ import {
   CreateEvent,
   DropLastRound,
   EventsGetAllRegisteredPlayersResponse,
+  EventsGetEventForEditResponse,
   EventsGetEventsByIdResponse,
   EventsGetEventsPayload,
   EventsGetEventsResponse,
@@ -22,6 +23,7 @@ import {
   EventsGetRatingTableResponse,
   EventsGetRulesetsResponse,
   EventsGetTimerStateResponse,
+  FinishEvent,
   ForceFinishGame,
   GamesAddRoundPayload,
   GamesAddRoundResponse,
@@ -31,6 +33,9 @@ import {
   GetAllRegisteredPlayers,
   GetAllRounds,
   GetCurrentSessions,
+  GetCurrentStateForPlayer,
+  GetCurrentStateResponse,
+  GetEventForEdit,
   GetEvents,
   GetEventsById,
   GetGame,
@@ -41,6 +46,7 @@ import {
   GetLastRound,
   GetLastRoundByHash,
   GetMyEvents,
+  GetPlayer,
   GetRatingTable,
   GetRulesets,
   GetSessionOverview,
@@ -51,9 +57,17 @@ import {
   PlayersGetLastRoundByHashResponse,
   PlayersGetLastRoundResponse,
   PlayersGetMyEventsResponse,
+  PlayersGetPlayerResponse,
   PreviewRound,
+  RegisterPlayer,
   StartGame,
+  ToggleHideAchievements,
+  ToggleHideResults,
   ToggleListed,
+  UnregisterPlayer,
+  UpdateEvent,
+  UpdatePlayerReplacement,
+  UpdatePlayerSeatingFlag,
 } from 'tsclients/proto/mimir.pb.js';
 import { ClientConfiguration } from 'twirpscript';
 
@@ -215,7 +229,62 @@ export class MimirTest {
     return CreateEvent(eventData, this._config);
   }
 
+  async GetEventForEdit(eventId: number): Promise<EventsGetEventForEditResponse> {
+    return GetEventForEdit({ id: eventId }, this._config);
+  }
+
+  async UpdateEvent(eventId: number, eventData: EventData): Promise<GenericSuccessResponse> {
+    return UpdateEvent({ id: eventId, event: eventData }, this._config);
+  }
+
+  async FinishEvent(eventId: number): Promise<GenericSuccessResponse> {
+    return FinishEvent({ eventId }, this._config);
+  }
+
+  async RegisterPlayer(eventId: number, playerId: number): Promise<GenericSuccessResponse> {
+    return RegisterPlayer({ eventId, playerId }, this._config);
+  }
+
+  async UnregisterPlayer(eventId: number, playerId: number): Promise<GenericSuccessResponse> {
+    return UnregisterPlayer({ eventId, playerId }, this._config);
+  }
+
+  async UpdatePlayerSeatingFlag(
+    eventId: number,
+    playerId: number,
+    ignoreSeating: boolean
+  ): Promise<GenericSuccessResponse> {
+    return UpdatePlayerSeatingFlag({ eventId, playerId, ignoreSeating }, this._config);
+  }
+
   async ToggleListed(eventId: number): Promise<GenericSuccessResponse> {
     return ToggleListed({ eventId }, this._config);
+  }
+
+  async ToggleHideResults(eventId: number): Promise<GenericSuccessResponse> {
+    return ToggleHideResults({ eventId }, this._config);
+  }
+
+  async ToggleHideAchievements(eventId: number): Promise<GenericSuccessResponse> {
+    return ToggleHideAchievements({ eventId }, this._config);
+  }
+
+  async UpdatePlayerReplacement(
+    eventId: number,
+    playerId: number,
+    replacementId: number
+  ): Promise<GenericSuccessResponse> {
+    return UpdatePlayerReplacement({ eventId, playerId, replacementId }, this._config);
+  }
+
+  async GetPlayer(playerId: number): Promise<PlayersGetPlayerResponse> {
+    return GetPlayer({ id: playerId }, this._config);
+  }
+
+  async GetCurrentStateForPlayer(
+    eventId: number,
+    playerId: number
+  ): Promise<GetCurrentStateResponse> {
+    return GetCurrentStateForPlayer({ eventId, playerId }, this._config);
   }
 }

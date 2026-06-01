@@ -160,7 +160,7 @@ export class TestSeeder extends Seeder {
       autoSeating: 0,
       useTimer: 0,
       usePenalty: 1,
-      allowPlayerAppend: 0,
+      allowPlayerAppend: 1,
       statHost: 'http://sigrun.pantheon.local/event/##ID##/info',
       lobbyId: 15159,
       ruleset: ruleset1,
