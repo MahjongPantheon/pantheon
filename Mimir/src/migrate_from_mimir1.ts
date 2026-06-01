@@ -248,7 +248,6 @@ export async function migrateFromMimir1() {
                   sync_start: rec.sync_start,
                   sync_end: rec.sync_end,
                   auto_seating: rec.auto_seating,
-                  sort_by_games: rec.sort_by_games,
                   use_timer: rec.use_timer,
                   use_penalty: rec.use_penalty,
                   allow_player_append: rec.allow_player_append,

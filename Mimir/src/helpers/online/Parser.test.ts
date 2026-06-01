@@ -20,7 +20,6 @@ const makeEvent = (em: EntityManager) => {
   event.syncStart = 0;
   event.syncEnd = 0;
   event.autoSeating = 0;
-  event.sortByGames = 0;
   event.useTimer = 0;
   event.usePenalty = 0;
   event.allowPlayerAppend = 1;

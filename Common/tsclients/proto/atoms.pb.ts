@@ -146,7 +146,6 @@ export interface GameConfig {
   autoSeating: boolean;
   syncStart: boolean;
   syncEnd: boolean;
-  sortByGames: boolean;
   allowPlayerAppend: boolean;
   seriesLength: number;
   minGamesCount: number;
@@ -1927,7 +1926,6 @@ export const GameConfig = {
       autoSeating: false,
       syncStart: false,
       syncEnd: false,
-      sortByGames: false,
       allowPlayerAppend: false,
       seriesLength: 0,
       minGamesCount: 0,
@@ -1989,9 +1987,6 @@ export const GameConfig = {
     }
     if (msg.syncEnd) {
       writer.writeBool(40, msg.syncEnd);
-    }
-    if (msg.sortByGames) {
-      writer.writeBool(41, msg.sortByGames);
     }
     if (msg.allowPlayerAppend) {
       writer.writeBool(42, msg.allowPlayerAppend);
@@ -2092,10 +2087,6 @@ export const GameConfig = {
         }
         case 40: {
           msg.syncEnd = reader.readBool();
-          break;
-        }
-        case 41: {
-          msg.sortByGames = reader.readBool();
           break;
         }
         case 42: {
@@ -8943,7 +8934,6 @@ export const GameConfigJSON = {
       autoSeating: false,
       syncStart: false,
       syncEnd: false,
-      sortByGames: false,
       allowPlayerAppend: false,
       seriesLength: 0,
       minGamesCount: 0,
@@ -9005,9 +8995,6 @@ export const GameConfigJSON = {
     }
     if (msg.syncEnd) {
       json["syncEnd"] = msg.syncEnd;
-    }
-    if (msg.sortByGames) {
-      json["sortByGames"] = msg.sortByGames;
     }
     if (msg.allowPlayerAppend) {
       json["allowPlayerAppend"] = msg.allowPlayerAppend;
@@ -9109,10 +9096,6 @@ export const GameConfigJSON = {
     const _syncEnd_ = json["syncEnd"] ?? json["sync_end"];
     if (_syncEnd_) {
       msg.syncEnd = _syncEnd_;
-    }
-    const _sortByGames_ = json["sortByGames"] ?? json["sort_by_games"];
-    if (_sortByGames_) {
-      msg.sortByGames = _sortByGames_;
     }
     const _allowPlayerAppend_ =
       json["allowPlayerAppend"] ?? json["allow_player_append"];
