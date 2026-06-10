@@ -311,8 +311,7 @@ class EventModel extends Model
         $previousScores = $round->getLastSessionState()->getScores();
         $scoresBefore = [];
         $scoresDelta = [];
-        for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
-            $id = $session->getPlayersIds()[$i];
+        foreach ($session->getRealPlayersIds() as $id) {
             $scoresBefore[$id] = $previousScores[$id];
             $scoresDelta[$id] = $currentScores[$id] - $previousScores[$id];
         }

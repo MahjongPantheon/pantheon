@@ -102,12 +102,19 @@ class SessionState
     public function __construct(\Common\Ruleset $rules, array $playersIds)
     {
         $this->_rules = $rules;
-        if (count($playersIds) != 4) {
-            throw new InvalidParametersException('Players count is not 4: ' . json_encode($playersIds));
+        // Sessions always carry 4 seats; in sanma the 4th one is a ghost
+        // that never takes part in scoring, so it's not tracked in _scores.
+        $playersIds = array_values(array_filter($playersIds, function ($id) {
+            return $id != \Common\Constants::GHOST_PLAYER_ID;
+        }));
+        if (count($playersIds) != $rules->playerCount()) {
+            throw new InvalidParametersException(
+                'Players count is not ' . $rules->playerCount() . ': ' . json_encode($playersIds)
+            );
         }
         $sc = array_combine(
             $playersIds,
-            array_fill(0, 4, $rules->rules()->getStartPoints())
+            array_fill(0, count($playersIds), $rules->rules()->getStartPoints())
         );
         $this->_scores = $sc;
     }
@@ -181,8 +188,19 @@ class SessionState
      */
     protected function _buttobi()
     {
-        $scores = array_values($this->getScores());
-        return $scores[0] < 0 || $scores[1] < 0 || $scores[2] < 0 || $scores[3] < 0;
+        return min(array_values($this->getScores())) < 0;
+    }
+
+    /**
+     * Index of the last round (oorasu) of a regular game:
+     * 8 for hanchan / 4 for tonpuusen with 4 players,
+     * 6 for hanchan / 3 for tonpuusen with 3 players (sanma).
+     *
+     * @return int
+     */
+    protected function _maxRegularRound()
+    {
+        return $this->_rules->playerCount() * ($this->_rules->rules()->getTonpuusen() ? 1 : 2);
     }
 
     /**
@@ -198,7 +216,7 @@ class SessionState
             return false; // should play last round at least once!
         }
 
-        if ($this->getRound() !== ($this->_rules->rules()->getTonpuusen() ? 4 : 8)) {
+        if ($this->getRound() !== $this->_maxRegularRound()) {
             return false; // not oorasu
         }
 
@@ -212,7 +230,7 @@ class SessionState
      */
     protected function _lastPossibleRoundWasPlayed()
     {
-        $roundsCount = $this->_rules->rules()->getTonpuusen() ? 4 : 8;
+        $roundsCount = $this->_maxRegularRound();
 
         if ($this->getRound() <= $roundsCount) {
             return false;
@@ -222,7 +240,7 @@ class SessionState
             return false; // chombo should not finish game
         }
 
-        $additionalRounds = $this->_rules->rules()->getPlayAdditionalRounds() ? 4 : 0;
+        $additionalRounds = $this->_rules->rules()->getPlayAdditionalRounds() ? $this->_rules->playerCount() : 0;
         $maxPossibleRound = $roundsCount + $additionalRounds;
         if ($this->getRound() > $maxPossibleRound) {
             return true;
@@ -412,7 +430,7 @@ class SessionState
     public function getCurrentDealer()
     {
         $players = array_keys($this->_scores);
-        return intval($players[($this->_round - 1) % 4]);
+        return intval($players[($this->_round - 1) % count($players)]);
     }
 
     /**
@@ -597,6 +615,7 @@ class SessionState
     protected function _updateAfterDraw(RoundPrimitive $round)
     {
         $this->_scores = PointsCalc::draw(
+            $this->_rules,
             $this->getScores(),
             $round->getTempaiIds(),
             $round->getRiichiIds()
@@ -662,6 +681,7 @@ class SessionState
     protected function _updateAfterNagashi(RoundPrimitive $round)
     {
         $this->_scores = PointsCalc::nagashi(
+            $this->_rules,
             $this->getScores(),
             $this->getCurrentDealer(),
             $round->getRiichiIds(),

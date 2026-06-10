@@ -13,6 +13,7 @@ type IProps = {
   south?: string;
   west?: string;
   north?: string;
+  showNorth?: boolean;
   canSave: boolean;
   onBackClick: () => void;
   onShuffleClick: () => void;
@@ -28,6 +29,7 @@ export const NewGame = (props: IProps) => {
     south,
     west,
     north,
+    showNorth = true,
     canSave,
     onBackClick,
     onShuffleClick,
@@ -59,12 +61,14 @@ export const NewGame = (props: IProps) => {
             playerName={west}
             onPlayerClick={() => onPlayerClick('西')}
           />
-          <StaticSelector
-            wind='北'
-            placeholder={loc._t('select player')}
-            playerName={north}
-            onPlayerClick={() => onPlayerClick('北')}
-          />
+          {showNorth && (
+            <StaticSelector
+              wind='北'
+              placeholder={loc._t('select player')}
+              playerName={north}
+              onPlayerClick={() => onPlayerClick('北')}
+            />
+          )}
         </div>
 
         <div className={styles.buttons}>

@@ -54,9 +54,9 @@ class SeatingController extends Controller
 
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
-        list($playersMap, $tables) = $this->_getData($eventId);
-        $playerIds = array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed, $windShuffleMode));
-        $seating = array_chunk($playerIds, 4);
+        list($playersMap, $tables, $tableSize) = $this->_getData($eventId);
+        $playerIds = array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed, $windShuffleMode, $tableSize));
+        $seating = array_chunk($playerIds, $tableSize);
 
         $skirnir = new SkirnirClient($this->_ds, $this->_config->getStringValue('skirnirUrl'));
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
@@ -102,6 +102,7 @@ class SeatingController extends Controller
     {
         $this->_log->info('Creating new swiss seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
+        $this->_assertNotSanma($eventId, 'Swiss seating');
 
         $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
@@ -157,6 +158,7 @@ class SeatingController extends Controller
     public function generateSwissSeating($eventId, $windShuffleMode, $substituteReplacementPlayers = false)
     {
         $this->_checkIfAllowed($eventId);
+        $this->_assertNotSanma($eventId, 'Swiss seating');
         $this->_log->info('Generating new swiss seating for event #' . $eventId);
 
         list($playersMap, $tables) = $this->_getData($eventId);
@@ -205,6 +207,7 @@ class SeatingController extends Controller
     {
         $this->_log->info('Creating new interval seating for event #' . $eventId);
         $this->_checkIfAllowed($eventId);
+        $this->_assertNotSanma($eventId, 'Interval seating');
 
         $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
@@ -286,7 +289,7 @@ class SeatingController extends Controller
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
 
-        [$playerRatingMap, $previousSeatings] = $this->_getData($eventId); // only for getting previous seatings for wind shuffle
+        [$playerRatingMap, $previousSeatings, $tableSize] = $this->_getData($eventId); // only for getting previous seatings for wind shuffle
 
         $seating = $this->_getNextPrescriptedSeating($eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
@@ -305,7 +308,7 @@ class SeatingController extends Controller
                 return $el['id'];
             }, $table));
 
-            if (empty($table) || count($table) != 4) {
+            if (empty($table) || count($table) != $tableSize) {
                 $this->_log->info('Failed to form a table from predefined seating at event #' . $eventId);
                 continue;
             }
@@ -313,9 +316,9 @@ class SeatingController extends Controller
             $playerIds = array_merge($playerIds, $table);
         }
 
-        $playerIds = Seating::makeWindShuffle($playerIds, $previousSeatings, $windShuffleMode);
+        $playerIds = Seating::makeWindShuffle($playerIds, $previousSeatings, $windShuffleMode, $tableSize);
 
-        foreach (array_chunk($playerIds, 4) as $table) {
+        foreach (array_chunk($playerIds, $tableSize) as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex); // TODO: here might be an exception inside loop!
 
@@ -529,8 +532,26 @@ class SeatingController extends Controller
     }
 
     /**
+     * Seating modes that were not adapted to 3-player tables must not
+     * be used in sanma events.
+     *
      * @param int $eventId
-     * @return array
+     * @param string $seatingKind
+     * @throws InvalidParametersException
+     * @throws \Exception
+     * @return void
+     */
+    protected function _assertNotSanma(int $eventId, string $seatingKind): void
+    {
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (!empty($event) && $event[0]->getRulesetConfig()->rules()->getWithSanma()) {
+            throw new InvalidParametersException($seatingKind . ' is not supported for 3-player events');
+        }
+    }
+
+    /**
+     * @param int $eventId
+     * @return array [playersMap, previous seating tables, table size]
      * @throws InvalidParametersException
      * @throws \Exception
      */
@@ -583,13 +604,17 @@ class SeatingController extends Controller
             }
         }
 
+        // Sanma tables are stored with the ghost seat included; strip it here so
+        // the seating algorithms see exactly $tableSize real players per table.
+        $tableSize = $event[0]->getRulesetConfig()->playerCount();
         $seatingInfo = SessionPrimitive::getPlayersSeatingInEvent($this->_ds, $eventId);
         $tables = array_chunk(array_filter(array_map(function ($el) {
             return $el['player_id'];
         }, $seatingInfo), function ($playerId) use (&$ignoredPlayerIds) {
-            return !in_array($playerId, $ignoredPlayerIds);
-        }), 4);
+            return !in_array($playerId, $ignoredPlayerIds)
+                && $playerId != \Common\Constants::GHOST_PLAYER_ID;
+        }), $tableSize);
 
-        return [$playersMap, $tables];
+        return [$playersMap, $tables, $tableSize];
     }
 }

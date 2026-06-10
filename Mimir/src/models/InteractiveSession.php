@@ -69,6 +69,15 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException('Event is already finished');
         }
 
+        if ($event[0]->getRulesetConfig()->rules()->getWithSanma()) {
+            if (count($playerIds) !== 3) {
+                throw new InvalidParametersException('Sanma event sessions require exactly 3 players');
+            }
+            // The ghost seat always sits North to keep 4-player data structures intact
+            $playerIds = array_values($playerIds);
+            $playerIds []= \Common\Constants::GHOST_PLAYER_ID;
+        }
+
         $players = PlayerPrimitive::findById($this->_ds, $playerIds);
         $players = array_filter(array_map(function ($id) use (&$players) {
             // Re-sort players to match request order - important!
@@ -101,6 +110,9 @@ class InteractiveSessionModel extends Model
         if ($event[0]->getRulesetConfig()->rules()->getWithYakitori()) {
             $yakitori = [];
             foreach ($playerIds as $id) {
+                if ($id == \Common\Constants::GHOST_PLAYER_ID) {
+                    continue;
+                }
                 $yakitori[$id] = true;
             }
             $newSession->getCurrentState()->setYakitori($yakitori);
@@ -181,7 +193,7 @@ class InteractiveSessionModel extends Model
         return array_reduce($games, function ($acc, SessionPrimitive $p) use ($skirnir, $playerMap) {
             $success = $p->finish();
             if ($success) {
-                $whoPlays = $p->getPlayersIds();
+                $whoPlays = $p->getRealPlayersIds();
                 foreach ($whoPlays as $k => $v) {
                     if (!empty($playerMap[$v])) {
                         $whoPlays[$k] = $playerMap[$v];
@@ -283,8 +295,7 @@ class InteractiveSessionModel extends Model
 
             $scoresBefore = [];
             $scoresDelta = [];
-            for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
-                $id = $session->getPlayersIds()[$i];
+            foreach ($session->getRealPlayersIds() as $id) {
                 $scoresBefore[$id] = $currentScores[$id];
                 $scoresDelta[$id] = $clonedStateAfterUpdate->getScores()[$id] - $currentScores[$id];
             }
@@ -517,7 +528,7 @@ class InteractiveSessionModel extends Model
         }
 
         // Check for duplicate cancellations of same round
-        $scores = array_combine($session[0]->getPlayersIds(), $session[0]->getCurrentState()->getScores());
+        $scores = array_combine($session[0]->getRealPlayersIds(), $session[0]->getCurrentState()->getScores());
         foreach ($intermediateResults as $result) {
             if ($scores[$result->getPlayerId()] !== $result->getScore()) {
                 throw new InvalidParametersException('Can\'t cancel round: was it already cancelled by someone else?');

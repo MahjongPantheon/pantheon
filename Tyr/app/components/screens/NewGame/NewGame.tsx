@@ -27,12 +27,17 @@ import { Loader } from '../../base/Loader/Loader';
 import { NewGame as NewGamePage } from '../../pages/NewGame/NewGame';
 
 export const NewGame = (props: IComponentProps) => {
+  const isSanma = !!props.state.gameConfig?.rulesetConfig?.withSanma;
+  const seatsCount = isSanma ? 3 : 4;
+
   const canSave = () => {
     if (!props.state.newGameSelectedUsers) {
       return false;
     }
 
-    return props.state.newGameSelectedUsers.every((player) => player.id !== -1);
+    return props.state.newGameSelectedUsers
+      .slice(0, seatsCount)
+      .every((player) => player.id !== -1);
   };
 
   const onBackClick = () => {
@@ -46,7 +51,10 @@ export const NewGame = (props: IComponentProps) => {
   const onSaveClick = () => {
     const { dispatch, state } = props;
     if (canSave() && state.newGameSelectedUsers) {
-      dispatch({ type: START_GAME_INIT, payload: state.newGameSelectedUsers.map((p) => p.id) });
+      dispatch({
+        type: START_GAME_INIT,
+        payload: state.newGameSelectedUsers.slice(0, seatsCount).map((p) => p.id),
+      });
     }
   };
 
@@ -71,7 +79,8 @@ export const NewGame = (props: IComponentProps) => {
       east={props.state.newGameSelectedUsers[0].title}
       south={props.state.newGameSelectedUsers[1].title}
       west={props.state.newGameSelectedUsers[2].title}
-      north={props.state.newGameSelectedUsers[3].title}
+      north={isSanma ? undefined : props.state.newGameSelectedUsers[3].title}
+      showNorth={!isSanma}
       canSave={canSave()}
       onBackClick={onBackClick}
       onShuffleClick={onShuffleClick}
