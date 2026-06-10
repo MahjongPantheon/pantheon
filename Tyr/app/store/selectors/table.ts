@@ -56,21 +56,51 @@ const playerOffsets = {
   kamicha: 3,
 };
 
+/**
+ * Maps a relative seat (self/shimocha/toimen/kamicha) to an absolute index in a
+ * players array of the given size. In sanma (3 players), the "toimen" (across)
+ * seat doesn't exist - it belongs to the removed ghost player - so it returns
+ * null. The "kamicha" seat then becomes the other remaining player.
+ */
+function getRelativeIndex(
+  who: keyof typeof playerOffsets,
+  baseIndex: number,
+  playerCount: number
+): number | null {
+  if (playerCount === 3) {
+    if (who === 'toimen') {
+      return null;
+    }
+    if (who === 'kamicha') {
+      return (baseIndex + 2) % playerCount;
+    }
+  }
+  return (playerOffsets[who] + baseIndex) % playerCount;
+}
+
+function getWindForPlayer(playerIndex: number, roundIndex: number, playerCount: number) {
+  const winds = playerCount === 3 ? (['e', 's', 'w'] as const) : (['e', 's', 'w', 'n'] as const);
+  return winds[(2 * playerCount + playerIndex - (roundIndex - 1)) % playerCount];
+}
+
 export function getPlayerData(
   who: keyof typeof playerOffsets,
   state: IAppState
 ): Omit<PlayerPlaceProps, 'buttons' | 'onPlayerClick'> | null {
-  const playerIndex =
-    (playerOffsets[who] + (state.players?.findIndex((p) => p.id === state.currentPlayerId) ?? 0)) %
-    4;
-  const player = state.players?.[playerIndex];
-  const currentWind = (['e', 's', 'w', 'n'] as const)[
-    (8 + playerIndex - ((state.sessionState?.roundIndex ?? 1) - 1)) % 4
-  ];
+  const playerCount = state.players?.length ?? 4;
+  const selfIndex = state.players?.findIndex((p) => p.id === state.currentPlayerId) ?? 0;
+  const playerIndex = getRelativeIndex(who, selfIndex, playerCount);
+  const player = playerIndex === null ? undefined : state.players?.[playerIndex];
 
-  if (!player) {
+  if (!player || playerIndex === null) {
     return null;
   }
+
+  const currentWind = getWindForPlayer(
+    playerIndex,
+    state.sessionState?.roundIndex ?? 1,
+    playerCount
+  );
 
   let points: number | string = player.score;
   let pointsMode = PlayerPointsMode.IDLE;
@@ -158,10 +188,10 @@ export function getPlayerButtons(
   state: IAppState,
   dispatch: Dispatch
 ): ButtonsProps | null {
-  const playerIndex =
-    (playerOffsets[who] + (state.players?.findIndex((p) => p.id === state.currentPlayerId) ?? 0)) %
-    4;
-  const player = state.players?.[playerIndex];
+  const playerCount = state.players?.length ?? 4;
+  const selfIndex = state.players?.findIndex((p) => p.id === state.currentPlayerId) ?? 0;
+  const playerIndex = getRelativeIndex(who, selfIndex, playerCount);
+  const player = playerIndex === null ? undefined : state.players?.[playerIndex];
   const rotateActionIcons =
     who === 'toimen' ? 'flip' : who === 'kamicha' ? 'ccw' : who === 'shimocha' ? 'cw' : undefined;
 
@@ -268,10 +298,10 @@ export function getNagashiPlayerButtons(
   state: IAppState,
   dispatch: Dispatch
 ): ButtonsProps | null {
-  const playerIndex =
-    (playerOffsets[who] + (state.players?.findIndex((p) => p.id === state.currentPlayerId) ?? 0)) %
-    4;
-  const player = state.players?.[playerIndex];
+  const playerCount = state.players?.length ?? 4;
+  const selfIndex = state.players?.findIndex((p) => p.id === state.currentPlayerId) ?? 0;
+  const playerIndex = getRelativeIndex(who, selfIndex, playerCount);
+  const player = playerIndex === null ? undefined : state.players?.[playerIndex];
   const rotateActionIcons =
     who === 'toimen' ? 'flip' : who === 'kamicha' ? 'ccw' : who === 'shimocha' ? 'cw' : undefined;
 
@@ -354,16 +384,20 @@ export function getOtherTablePlayerData(
   who: keyof typeof playerOffsets,
   state: IAppState
 ): Omit<PlayerPlaceProps, 'buttons' | 'onPlayerClick'> | null {
-  const playerIndex = (playerOffsets[who] + (state.overviewViewShift ?? 0)) % 4;
-  const player =
-    state.currentOtherTablePlayers?.[(playerOffsets[who] + (state.overviewViewShift ?? 0)) % 4];
-  const currentWind = (['e', 's', 'w', 'n'] as const)[
-    (8 + playerIndex - ((state.currentOtherTable?.state?.roundIndex ?? 1) - 1)) % 4
-  ];
+  const playerCount = state.currentOtherTablePlayers?.length ?? 4;
+  const baseIndex = (((state.overviewViewShift ?? 0) % playerCount) + playerCount) % playerCount;
+  const playerIndex = getRelativeIndex(who, baseIndex, playerCount);
+  const player = playerIndex === null ? undefined : state.currentOtherTablePlayers?.[playerIndex];
 
-  if (!player) {
+  if (!player || playerIndex === null) {
     return null;
   }
+
+  const currentWind = getWindForPlayer(
+    playerIndex,
+    state.currentOtherTable?.state?.roundIndex ?? 1,
+    playerCount
+  );
 
   let points: number | string = player.score;
   let pointsMode = PlayerPointsMode.IDLE;
@@ -515,13 +549,21 @@ export function getArrows(state: IAppState): Omit<ResultArrowsProps, 'width' | '
 
   const payments = getPaymentsInfo(state);
 
+  const playerCount = state.players?.length ?? 4;
   const selfIndex = state.players?.findIndex((p) => p.id === state.currentPlayerId) ?? 0;
-  const sideByPlayer: Record<number, PlayerSide> = {
-    [state.players?.[selfIndex].id!]: PlayerSide.BOTTOM,
-    [state.players?.[(selfIndex + 1) % 4].id!]: PlayerSide.RIGHT,
-    [state.players?.[(selfIndex + 2) % 4].id!]: PlayerSide.TOP,
-    [state.players?.[(selfIndex + 3) % 4].id!]: PlayerSide.LEFT,
-  };
+  const sideByPlayer: Record<number, PlayerSide> =
+    playerCount === 3
+      ? {
+          [state.players?.[selfIndex].id!]: PlayerSide.BOTTOM,
+          [state.players?.[(selfIndex + 1) % playerCount].id!]: PlayerSide.RIGHT,
+          [state.players?.[(selfIndex + 2) % playerCount].id!]: PlayerSide.LEFT,
+        }
+      : {
+          [state.players?.[selfIndex].id!]: PlayerSide.BOTTOM,
+          [state.players?.[(selfIndex + 1) % playerCount].id!]: PlayerSide.RIGHT,
+          [state.players?.[(selfIndex + 2) % playerCount].id!]: PlayerSide.TOP,
+          [state.players?.[(selfIndex + 3) % playerCount].id!]: PlayerSide.LEFT,
+        };
 
   const arrows: PlayerArrow[] = [];
   payments.forEach((item) => {

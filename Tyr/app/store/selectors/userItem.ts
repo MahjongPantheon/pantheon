@@ -85,7 +85,10 @@ export function loseDisabled(state: IAppState, userData: PlayerInSession) {
   ); // and it should not be current winner
 }
 
-// no more than 3 players may have nagashi
+// no more than (playerCount - 1) players may have nagashi
 export function nagashiDisabled(state: IAppState, userData: PlayerInSession) {
-  return getNagashiUsers(state).length >= 3 && -1 === getNagashiUsers(state).indexOf(userData);
+  const maxNagashi = (state.players?.length ?? 4) - 1;
+  return (
+    getNagashiUsers(state).length >= maxNagashi && -1 === getNagashiUsers(state).indexOf(userData)
+  );
 }

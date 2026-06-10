@@ -606,7 +606,7 @@ No backend (Mimir) changes were required for this milestone — `EventPrescript.
 
 ---
 
-## Milestone 4 — Tyr (mobile assistant)
+## Milestone 4 — Tyr (mobile assistant) ✅ DONE
 
 Tyr delegates all scoring to Mimir (`PreviewRound`/`AddRound` via
 `Tyr/app/services/riichiApiTwirp.ts:164,186`) — **no scoring math in Tyr**; only UI/topology
@@ -632,6 +632,95 @@ changes.
   3-player list — verify "all tempai" logic uses `players.length`, not literal 4.
 - Kita: no UI change — verify the dora selector's max bound allows sanma-typical counts (≥ 12).
 - Tests: extend the Vitest suites for `table.ts` selectors with 3-player fixtures.
+
+### 4.1 Implementation notes (as built)
+
+**`Tyr/app/services/riichiApiTwirp.ts`.** `getGameOverview()` now post-processes the
+`GetSessionOverview` response: `players: overview.players.filter((p) => p.id !== GHOST_PLAYER_ID)`.
+This is the single highest-leverage change from the plan — `getGameOverview()` backs
+`GET_GAME_OVERVIEW_SUCCESS`, `GET_OTHER_TABLE_SUCCESS` and `GET_OTHER_TABLE_RELOAD` (all three
+dispatch sites in `Tyr/app/store/middlewares/apiClient.ts` call it), so both `state.players` and
+`state.currentOtherTablePlayers` see exactly 3 entries for sanma games with no further plumbing.
+*Deviation from plan*: the plan suggested filtering in `apiClient.ts`; filtering one level down in
+`riichiApiTwirp.ts` covers the same three call sites with a single change and keeps the API layer
+responsible for normalizing server responses.
+
+**`Tyr/app/store/selectors/table.ts`.** Added two helpers:
+- `getRelativeIndex(who, baseIndex, playerCount)` — maps a relative seat
+  (`self`/`shimocha`/`toimen`/`kamicha`) to an absolute players-array index. For `playerCount === 3`,
+  `toimen` (the seat across the table — physically the removed North/ghost seat) returns `null`,
+  and `kamicha` maps to `(baseIndex + 2) % 3` (the only other remaining player). For
+  `playerCount === 4` it's the original `(playerOffsets[who] + baseIndex) % 4`.
+- `getWindForPlayer(playerIndex, roundIndex, playerCount)` — winds array is `['e','s','w']` for
+  3 players (no `'n'` ever produced) or `['e','s','w','n']` for 4; the non-negativity offset is
+  generalized from the literal `8` to `2 * playerCount`.
+
+`getPlayerData`, `getPlayerButtons`, `getNagashiPlayerButtons` and `getOtherTablePlayerData` were
+rewritten in terms of these helpers; each now returns `null` for the `toimen` slot in sanma (the
+caller already does `getPlayerData(...) ?? {}`, and `PlayerPlace` renders an empty wrapper when
+`id` is undefined — so the "across" seat in `FourSidedScreen` is simply empty, exactly as planned).
+
+`getArrows()`'s `sideByPlayer` map is now built conditionally: for `playerCount === 3` only
+`BOTTOM` (self), `RIGHT` (`(selfIndex+1)%3`) and `LEFT` (`(selfIndex+2)%3`) are assigned — `TOP` is
+never used, so `TopLeftArrow`/`TopRightArrow`/`TopBottomArrow` simply find no matching arrow and
+render nothing.
+
+**`Tyr/app/store/reducers/mimirReducer.ts`.** `TABLE_ROTATE_CLOCKWISE`/`TABLE_ROTATE_COUNTERCLOCKWISE`
+no longer wrap `overviewViewShift` with `% 4` — they just increment/decrement it
+(`overviewViewShift ?? 0) ± 1`). `getOtherTablePlayerData` now normalizes it with
+`(((shift % playerCount) + playerCount) % playerCount)`, which is correct for both 3- and 4-player
+tables and handles negative shifts from counterclockwise rotation.
+
+**`Tyr/app/components/screens/NewGame/NewGame.tsx`, `Tyr/app/components/pages/NewGame/NewGame.tsx`,
+`Tyr/app/store/reducers/mimirReducer.ts` (RANDOMIZE_NEWGAME_PLAYERS).** These were already
+implemented in an earlier session segment per the plan: `isSanma`/`seatsCount` gate `canSave()`/
+`onSaveClick()` to the first 3 seats, `showNorth` hides the North `StaticSelector`, and shuffle
+only randomizes the first 3 seats (4th slot stays the unused `defaultPlayer` placeholder so
+`newGameSelectedUsers.length !== 4` remains a valid loading guard unchanged).
+
+**Loading guards generalized to `expectedPlayersCount = gameConfig?.rulesetConfig.withSanma ? 3 : 4`**
+in `TableCurrentGame.tsx`, `OtherTableView.tsx`, `TableNagashiSelect.tsx`, `TableRoundPreview.tsx`
+and `TableSelectPlayers.tsx` — previously hardcoded `state.players.length !== 4` /
+`state.currentOtherTablePlayers.length !== 4`, which would have left sanma games stuck on the
+loader forever once the ghost was filtered out at the API layer.
+
+**`Tyr/app/store/selectors/userItem.ts` — `nagashiDisabled()`.** *Deviation from / addition to
+plan*: not explicitly named in the Milestone 4 bullets, but auditing "all tempai"-style logic
+turned up a hardcoded cap of `3` ("no more than 3 players may have nagashi"). Cross-checked against
+`Mimir/src/helpers/PointsCalc.php::nagashi()`, which throws if
+`count($nagashiIds) > count($currentScores) - 1`. Generalized the frontend cap to
+`(state.players?.length ?? 4) - 1` (3 for 4p, 2 for sanma) to match the backend invariant exactly.
+The other "all tempai" / multi-winner check (`disableTripleRon`, `getWinningUsers().length >= 2`)
+needed no change: with 3 players the maximum possible winners alongside one loser is already 2, so
+the existing threshold is correct for both player counts.
+
+**Table screens / `FourSidedScreen` / `ResultArrows`.** No structural changes needed beyond the
+selector work above — `TablePrimaryView`, `TableSelectPlayerStatus` and `TableRoundPreview` all
+spread `getPlayerData(...) ?? {}` into `PlayerPlace`, which already renders an empty slot when `id`
+is `undefined`. Confirmed via code reading that this produces the "empty `toimen` slot" layout
+described in the plan without any JSX changes.
+
+**Kita / dora selector.** `Tyr/app/store/selectors/navbar.ts::doraOptions()` already returns
+`[0, 1, ..., 16]` for the default (non-`jpmlA`) ruleset — comfortably above the sanma-typical
+maximum of 12 kan-dora-equivalents. No change needed.
+
+**Tests.** Added `Tyr/app/store/selectors/table.test.ts` (Vitest), covering:
+- `getPlayerData`: full 4-seat mapping (incl. `'n'` wind) for 4p; 3-seat mapping with `toimen`
+  returning `null` and no `'n'` wind for sanma; seat rotation by `currentPlayerId` for sanma.
+- `getOtherTablePlayerData`: 3-seat mapping for sanma, including a negative `overviewViewShift`
+  (counterclockwise rotation) wrapping correctly modulo 3.
+- `getArrows`: for sanma, a payment arrow resolves to `RIGHT → BOTTOM` sides (never `TOP`).
+
+```text
+make tyr_typecheck → clean (tsc --noEmit, no errors)
+make tyr_eslint    → clean (no errors/warnings)
+prettier -c        → All matched files use Prettier code style!
+make container_test (Tyr) → 2 files, 14 tests passed (8 pre-existing + 6 new)
+```
+
+No backend (Mimir) or proto changes were required — `InteractiveSession.php` already appends
+`GHOST_PLAYER_ID` on `StartGame` for sanma events (audited from Milestone 0/1), so Tyr's 3-id
+`StartGame` payload is handled correctly server-side.
 
 ---
 

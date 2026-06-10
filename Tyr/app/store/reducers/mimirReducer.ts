@@ -458,12 +458,12 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
     case TABLE_ROTATE_CLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift ?? 0) + 1) % 4,
+        overviewViewShift: (state.overviewViewShift ?? 0) + 1,
       };
     case TABLE_ROTATE_COUNTERCLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift ?? 0) + 3) % 4,
+        overviewViewShift: (state.overviewViewShift ?? 0) - 1,
       };
     case GET_GAME_OVERVIEW_INIT:
       return {

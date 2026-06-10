@@ -42,6 +42,7 @@ import { Penalty, SessionStatus } from 'tsclients/proto/atoms.pb';
 
 import { handleReleaseTag } from './releaseTags';
 import { env } from '../helpers/env';
+import { GHOST_PLAYER_ID } from '../../../Common/constants';
 
 export class RiichiApiTwirpService implements IRiichiApi {
   private _authToken: string | null = null;
@@ -136,7 +137,12 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getGameOverview(sessionHashcode: string) {
-    return GetSessionOverview({ sessionHash: sessionHashcode }, this._clientConfMimir);
+    return GetSessionOverview({ sessionHash: sessionHashcode }, this._clientConfMimir).then(
+      (overview) => ({
+        ...overview,
+        players: overview.players.filter((p) => p.id !== GHOST_PLAYER_ID),
+      })
+    );
   }
 
   getCurrentState(playerId: number, eventId: number): Promise<GetCurrentStateResponse> {

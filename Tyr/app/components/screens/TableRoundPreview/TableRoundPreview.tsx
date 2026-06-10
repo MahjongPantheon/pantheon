@@ -30,11 +30,12 @@ import { i18n } from '../../i18n';
 
 export const TableRoundPreview = ({ state, dispatch }: IComponentProps) => {
   const loc = useContext(i18n);
+  const expectedPlayersCount = state.gameConfig?.rulesetConfig.withSanma ? 3 : 4;
   const isLoading =
     state.loading.events ||
     state.loading.players ||
     !state.players ||
-    state.players.length !== 4 ||
+    state.players.length !== expectedPlayersCount ||
     !state.changesOverview ||
     state.loading.overview;
 

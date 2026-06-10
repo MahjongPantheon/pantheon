@@ -57,12 +57,13 @@ export const TableCurrentGame = ({ state, dispatch }: IComponentProps) => {
     }, 3000);
   }
 
+  const expectedPlayersCount = state.gameConfig?.rulesetConfig.withSanma ? 3 : 4;
   const isLoading =
     state.loading.events ||
     state.loading.games ||
     !state.gameOverviewReady ||
     !state.players ||
-    state.players.length !== 4 ||
+    state.players.length !== expectedPlayersCount ||
     state.loading.addRound ||
     state.loading.overview;
 
