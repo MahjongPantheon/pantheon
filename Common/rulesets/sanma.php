@@ -1,0 +1,82 @@
+<?php
+/*  Pantheon common files
+ *  Copyright (C) 2016  o.klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace Common;
+
+require_once __DIR__ . '/../YakuMap.php';
+require_once __DIR__ . '/../generated/Common/EndingPolicy.php';
+require_once __DIR__ . '/../generated/Common/Uma.php';
+require_once __DIR__ . '/../generated/Common/UmaType.php';
+require_once __DIR__ . '/../generated/Common/RulesetConfig.php';
+
+// Default 3-player (sanma) ruleset. The session always carries a "ghost" 4th seat
+// (Common\Constants::GHOST_PLAYER_ID) that is never scored; only place1..place3 of
+// the uma are used. Tsumo loss applies by default (sanmaNoTsumoLoss = false).
+return (new RulesetConfig())
+    ->setWithSanma(true)
+    ->setSanmaNoTsumoLoss(false)
+    ->setSanmaDrawPayments(3000)   // total exchanged on exhaustive draw
+    ->setSanmaChomboPayments(6000) // paid to EACH other player on chombo
+    // place4 is unused in sanma (the ghost 4th seat is never scored)
+    ->setUma((new Uma())
+        ->setPlace1(15000)
+        ->setPlace2(0)
+        ->setPlace3(-15000)
+        ->setPlace4(0)
+    )
+    ->setUmaType(UmaType::UMA_TYPE_UMA_SIMPLE)
+    ->setEqualizeUma(true)
+    ->setWithWinningDealerHonbaSkipped(false)
+    ->setOka(0)
+    ->setHonbaValue(300)
+    ->setReplacementPlayerFixedPoints(-15000)
+    ->setReplacementPlayerOverrideUma(-15000)
+    ->setAllowedYaku(YakuMap::listExcept([
+        Y_OPENRIICHI,
+        Y_SUUANKOUTANKI,
+        Y_CHUURENPOUTOPURE,
+        Y_KOKUSHIMUSOU13
+    ]))
+    ->setChipsValue(0)
+    ->setChomboAmount(20000)
+    ->setDoubleronHonbaAtamahane(false)
+    ->setDoubleronRiichiAtamahane(false)
+    ->setEndingPolicy(EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND)
+    ->setExtraChomboPayments(false)
+    ->setGameExpirationTime(0)
+    ->setGoalPoints(40000)
+    ->setMaxPenalty(20000)
+    ->setMinPenalty(100)
+    ->setPenaltyStep(100)
+    ->setPlayAdditionalRounds(false)
+    ->setRiichiGoesToWinner(true)
+    ->setStartPoints(35000)
+    ->setStartRating(0)
+    ->setTonpuusen(false)
+    ->setWithAbortives(false)
+    ->setWithAtamahane(false)
+    ->setWithButtobi(false)
+    ->setWithKazoe(false)
+    ->setWithKiriageMangan(false)
+    ->setWithKuitan(true)
+    ->setWithLeadingDealerGameOver(false)
+    ->setWithMultiYakumans(false)
+    ->setWithNagashiMangan(false)
+    ->setChomboEndsGame(false)
+    ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII])
+    ->setDoubleYakuman([]);

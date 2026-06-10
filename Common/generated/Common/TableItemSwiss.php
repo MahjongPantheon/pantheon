@@ -15,7 +15,7 @@ use Google\Protobuf\Internal\GPBUtil;
 class TableItemSwiss extends \Google\Protobuf\Internal\Message
 {
     /**
-     * should be 4 elements
+     * 4 elements (3 real players + ghost for sanma events)
      *
      * Generated from protobuf field <code>repeated .common.PlayerSeatingSwiss players = 1;</code>
      */
@@ -28,7 +28,7 @@ class TableItemSwiss extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type array<\Common\PlayerSeatingSwiss>|\Google\Protobuf\Internal\RepeatedField $players
-     *           should be 4 elements
+     *           4 elements (3 real players + ghost for sanma events)
      * }
      */
     public function __construct($data = NULL) {
@@ -37,7 +37,7 @@ class TableItemSwiss extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * should be 4 elements
+     * 4 elements (3 real players + ghost for sanma events)
      *
      * Generated from protobuf field <code>repeated .common.PlayerSeatingSwiss players = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
@@ -48,7 +48,7 @@ class TableItemSwiss extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * should be 4 elements
+     * 4 elements (3 real players + ghost for sanma events)
      *
      * Generated from protobuf field <code>repeated .common.PlayerSeatingSwiss players = 1;</code>
      * @param array<\Common\PlayerSeatingSwiss>|\Google\Protobuf\Internal\RepeatedField $var

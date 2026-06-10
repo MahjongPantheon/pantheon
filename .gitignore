@@ -11,6 +11,7 @@
 php-errors.log
 tmp/*.log
 package-lock.json
+.github/
 
 .env.e2e
 

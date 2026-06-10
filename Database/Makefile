@@ -39,7 +39,7 @@ db_export: get_container_id
 		echo "${RED}Database container is not running, can't export db.${NC}"; \
 	else \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
-    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd frey -f /var/lib/postgresql/export/frey' ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd frey2 -f /var/lib/postgresql/export/frey2' ; \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_dump --clean -Z0 -Fd mimir -f /var/lib/postgresql/export/mimir'; \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar czf export.tar.gz export'; \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export'; \
@@ -55,7 +55,7 @@ db_import: get_container_id
     $(CONTAINER_COMMAND) cp ./export.tar.gz $(RUNNING_CONTAINER_ID):/var/lib/postgresql/export.tar.gz ; \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres mkdir -p /var/lib/postgresql/export' ; \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/lib/postgresql && su-exec postgres tar xf export.tar.gz'; \
-    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_restore -d frey --clean /var/lib/postgresql/export/frey' ; \
+    $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_restore -d frey2 --clean /var/lib/postgresql/export/frey2' ; \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres pg_restore -d mimir --clean /var/lib/postgresql/export/mimir'; \
     $(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'su-exec postgres rm -rf /var/lib/postgresql/export /var/lib/postgresql/export.tar.gz'; \
   fi

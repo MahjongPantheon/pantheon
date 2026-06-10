@@ -511,10 +511,16 @@ export interface PlayerSeatingSwiss {
 }
 
 export interface TableItemSwiss {
+  /**
+   * 4 elements (3 real players + ghost for sanma events)
+   */
   players: PlayerSeatingSwiss[];
 }
 
 export interface PrescriptedTable {
+  /**
+   * 4 elements (3 real players + ghost for sanma events)
+   */
   players: RegisteredPlayer[];
 }
 
@@ -534,6 +540,9 @@ export interface SessionState {
   chombo: Chombo[];
 }
 
+/**
+ * For sanma (3-player) events place4 is unused and ignored.
+ */
 export interface Uma {
   place1: number;
   place2: number;
@@ -588,6 +597,23 @@ export interface RulesetConfig {
   chomboEndsGame: boolean;
   honbaValue: number;
   doubleYakuman: number[];
+  /**
+   * Sanma (3-player) settings. When with_sanma is false the rest are ignored.
+   * 3-player mode for this event
+   */
+  withSanma: boolean;
+  /**
+   * Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
+   */
+  sanmaNoTsumoLoss: boolean;
+  /**
+   * Total points exchanged on exhaustive draw; 0/unset means 3000.
+   */
+  sanmaDrawPayments: number;
+  /**
+   * Points paid to EACH other player on chombo; 0/unset means 6000.
+   */
+  sanmaChomboPayments: number;
 }
 
 export interface MajsoulSearchEx {
@@ -7058,6 +7084,10 @@ export const RulesetConfig = {
       chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
+      withSanma: false,
+      sanmaNoTsumoLoss: false,
+      sanmaDrawPayments: 0,
+      sanmaChomboPayments: 0,
       ...msg,
     };
   },
@@ -7188,6 +7218,18 @@ export const RulesetConfig = {
     }
     if (msg.doubleYakuman?.length) {
       writer.writePackedInt32(40, msg.doubleYakuman);
+    }
+    if (msg.withSanma) {
+      writer.writeBool(41, msg.withSanma);
+    }
+    if (msg.sanmaNoTsumoLoss) {
+      writer.writeBool(42, msg.sanmaNoTsumoLoss);
+    }
+    if (msg.sanmaDrawPayments) {
+      writer.writeInt32(43, msg.sanmaDrawPayments);
+    }
+    if (msg.sanmaChomboPayments) {
+      writer.writeInt32(44, msg.sanmaChomboPayments);
     }
     return writer;
   },
@@ -7372,6 +7414,22 @@ export const RulesetConfig = {
           } else {
             msg.doubleYakuman.push(reader.readInt32());
           }
+          break;
+        }
+        case 41: {
+          msg.withSanma = reader.readBool();
+          break;
+        }
+        case 42: {
+          msg.sanmaNoTsumoLoss = reader.readBool();
+          break;
+        }
+        case 43: {
+          msg.sanmaDrawPayments = reader.readInt32();
+          break;
+        }
+        case 44: {
+          msg.sanmaChomboPayments = reader.readInt32();
           break;
         }
         default: {
@@ -13399,6 +13457,10 @@ export const RulesetConfigJSON = {
       chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
+      withSanma: false,
+      sanmaNoTsumoLoss: false,
+      sanmaDrawPayments: 0,
+      sanmaChomboPayments: 0,
       ...msg,
     };
   },
@@ -13535,6 +13597,18 @@ export const RulesetConfigJSON = {
     }
     if (msg.doubleYakuman?.length) {
       json["doubleYakuman"] = msg.doubleYakuman;
+    }
+    if (msg.withSanma) {
+      json["withSanma"] = msg.withSanma;
+    }
+    if (msg.sanmaNoTsumoLoss) {
+      json["sanmaNoTsumoLoss"] = msg.sanmaNoTsumoLoss;
+    }
+    if (msg.sanmaDrawPayments) {
+      json["sanmaDrawPayments"] = msg.sanmaDrawPayments;
+    }
+    if (msg.sanmaChomboPayments) {
+      json["sanmaChomboPayments"] = msg.sanmaChomboPayments;
     }
     return json;
   },
@@ -13724,6 +13798,25 @@ export const RulesetConfigJSON = {
     const _doubleYakuman_ = json["doubleYakuman"] ?? json["double_yakuman"];
     if (_doubleYakuman_) {
       msg.doubleYakuman = _doubleYakuman_.map(protoscript.parseNumber);
+    }
+    const _withSanma_ = json["withSanma"] ?? json["with_sanma"];
+    if (_withSanma_) {
+      msg.withSanma = _withSanma_;
+    }
+    const _sanmaNoTsumoLoss_ =
+      json["sanmaNoTsumoLoss"] ?? json["sanma_no_tsumo_loss"];
+    if (_sanmaNoTsumoLoss_) {
+      msg.sanmaNoTsumoLoss = _sanmaNoTsumoLoss_;
+    }
+    const _sanmaDrawPayments_ =
+      json["sanmaDrawPayments"] ?? json["sanma_draw_payments"];
+    if (_sanmaDrawPayments_) {
+      msg.sanmaDrawPayments = protoscript.parseNumber(_sanmaDrawPayments_);
+    }
+    const _sanmaChomboPayments_ =
+      json["sanmaChomboPayments"] ?? json["sanma_chombo_payments"];
+    if (_sanmaChomboPayments_) {
+      msg.sanmaChomboPayments = protoscript.parseNumber(_sanmaChomboPayments_);
     }
     return msg;
   },

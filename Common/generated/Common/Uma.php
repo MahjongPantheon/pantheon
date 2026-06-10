@@ -10,6 +10,8 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
+ * For sanma (3-player) events place4 is unused and ignored.
+ *
  * Generated from protobuf message <code>common.Uma</code>
  */
 class Uma extends \Google\Protobuf\Internal\Message

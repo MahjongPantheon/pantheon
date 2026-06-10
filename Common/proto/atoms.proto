@@ -514,11 +514,13 @@ message PlayerSeatingSwiss {
 }
 
 message TableItemSwiss {
-  repeated PlayerSeatingSwiss players = 1; // should be 4 elements
+  // 4 elements (3 real players + ghost for sanma events)
+  repeated PlayerSeatingSwiss players = 1;
 }
 
 message PrescriptedTable {
-  repeated RegisteredPlayer players = 1; // should be 4 elements
+  // 4 elements (3 real players + ghost for sanma events)
+  repeated RegisteredPlayer players = 1;
 }
 
 message Chombo {
@@ -537,6 +539,7 @@ message SessionState {
   repeated Chombo chombo = 9;
 }
 
+// For sanma (3-player) events place4 is unused and ignored.
 message Uma {
   int32 place1 = 1;
   int32 place2 = 2;
@@ -609,6 +612,15 @@ message RulesetConfig {
   bool chombo_ends_game = 38;
   int32 honba_value = 39;
   repeated int32 double_yakuman = 40;
+  // Sanma (3-player) settings. When with_sanma is false the rest are ignored.
+  // 3-player mode for this event
+  bool with_sanma = 41;
+  // Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
+  bool sanma_no_tsumo_loss = 42;
+  // Total points exchanged on exhaustive draw; 0/unset means 3000.
+  int32 sanma_draw_payments = 43;
+  // Points paid to EACH other player on chombo; 0/unset means 6000.
+  int32 sanma_chombo_payments = 44;
 }
 
 message MajsoulSearchEx {

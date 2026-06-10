@@ -174,6 +174,31 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated int32 double_yakuman = 40;</code>
      */
     private $double_yakuman;
+    /**
+     * Sanma (3-player) settings. When with_sanma is false the rest are ignored.
+     * 3-player mode for this event
+     *
+     * Generated from protobuf field <code>bool with_sanma = 41;</code>
+     */
+    protected $with_sanma = false;
+    /**
+     * Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
+     *
+     * Generated from protobuf field <code>bool sanma_no_tsumo_loss = 42;</code>
+     */
+    protected $sanma_no_tsumo_loss = false;
+    /**
+     * Total points exchanged on exhaustive draw; 0/unset means 3000.
+     *
+     * Generated from protobuf field <code>int32 sanma_draw_payments = 43;</code>
+     */
+    protected $sanma_draw_payments = 0;
+    /**
+     * Points paid to EACH other player on chombo; 0/unset means 6000.
+     *
+     * Generated from protobuf field <code>int32 sanma_chombo_payments = 44;</code>
+     */
+    protected $sanma_chombo_payments = 0;
 
     /**
      * Constructor.
@@ -221,6 +246,15 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      *     @type bool $chombo_ends_game
      *     @type int $honba_value
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $double_yakuman
+     *     @type bool $with_sanma
+     *           Sanma (3-player) settings. When with_sanma is false the rest are ignored.
+     *           3-player mode for this event
+     *     @type bool $sanma_no_tsumo_loss
+     *           Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
+     *     @type int $sanma_draw_payments
+     *           Total points exchanged on exhaustive draw; 0/unset means 3000.
+     *     @type int $sanma_chombo_payments
+     *           Points paid to EACH other player on chombo; 0/unset means 6000.
      * }
      */
     public function __construct($data = NULL) {
@@ -1124,6 +1158,112 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
         $this->double_yakuman = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Sanma (3-player) settings. When with_sanma is false the rest are ignored.
+     * 3-player mode for this event
+     *
+     * Generated from protobuf field <code>bool with_sanma = 41;</code>
+     * @return bool
+     */
+    public function getWithSanma()
+    {
+        return $this->with_sanma;
+    }
+
+    /**
+     * Sanma (3-player) settings. When with_sanma is false the rest are ignored.
+     * 3-player mode for this event
+     *
+     * Generated from protobuf field <code>bool with_sanma = 41;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setWithSanma($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->with_sanma = $var;
+
+        return $this;
+    }
+
+    /**
+     * Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
+     *
+     * Generated from protobuf field <code>bool sanma_no_tsumo_loss = 42;</code>
+     * @return bool
+     */
+    public function getSanmaNoTsumoLoss()
+    {
+        return $this->sanma_no_tsumo_loss;
+    }
+
+    /**
+     * Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
+     *
+     * Generated from protobuf field <code>bool sanma_no_tsumo_loss = 42;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setSanmaNoTsumoLoss($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->sanma_no_tsumo_loss = $var;
+
+        return $this;
+    }
+
+    /**
+     * Total points exchanged on exhaustive draw; 0/unset means 3000.
+     *
+     * Generated from protobuf field <code>int32 sanma_draw_payments = 43;</code>
+     * @return int
+     */
+    public function getSanmaDrawPayments()
+    {
+        return $this->sanma_draw_payments;
+    }
+
+    /**
+     * Total points exchanged on exhaustive draw; 0/unset means 3000.
+     *
+     * Generated from protobuf field <code>int32 sanma_draw_payments = 43;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setSanmaDrawPayments($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->sanma_draw_payments = $var;
+
+        return $this;
+    }
+
+    /**
+     * Points paid to EACH other player on chombo; 0/unset means 6000.
+     *
+     * Generated from protobuf field <code>int32 sanma_chombo_payments = 44;</code>
+     * @return int
+     */
+    public function getSanmaChomboPayments()
+    {
+        return $this->sanma_chombo_payments;
+    }
+
+    /**
+     * Points paid to EACH other player on chombo; 0/unset means 6000.
+     *
+     * Generated from protobuf field <code>int32 sanma_chombo_payments = 44;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setSanmaChomboPayments($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->sanma_chombo_payments = $var;
 
         return $this;
     }
