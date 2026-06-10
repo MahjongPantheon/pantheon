@@ -139,8 +139,13 @@ class PlayerPrimitive extends Primitive
         $fetchedData = [];
         $fetchedRemote = [];
 
+        // Ghost player (sanma 4th seat) is local-only: never ask Frey about it
+        $realIds = array_values(array_filter($ids, function ($id) {
+            return $id != \Common\Constants::GHOST_PLAYER_ID;
+        }));
+
         if (!$skipCache) {
-            foreach ($ids as $id) {
+            foreach ($realIds as $id) {
                 $info = $ds->memcache()->get('player_info_' . $id);
                 if (!$info) {
                     $missingIds [] = $id;
@@ -149,7 +154,7 @@ class PlayerPrimitive extends Primitive
                 }
             }
         } else {
-            $missingIds = $ids;
+            $missingIds = $realIds;
         }
 
         if (count($missingIds) > 0) {
@@ -163,6 +168,10 @@ class PlayerPrimitive extends Primitive
 
         $allData = [];
         foreach ($ids as $id) {
+            if ($id == \Common\Constants::GHOST_PLAYER_ID) {
+                $allData []= self::_ghostPlayerData();
+                continue;
+            }
             if (!empty($fetchedData[$id])) {
                 $allData []= $fetchedData[$id];
             }
@@ -181,6 +190,25 @@ class PlayerPrimitive extends Primitive
                 ->setNotifications($item['notifications'] ? (string)$item['notifications'] : '')
                 ->_setId($item['id']);
         }, $allData);
+    }
+
+    /**
+     * Synthesized personal data for the sanma ghost seat
+     * (\Common\Constants::GHOST_PLAYER_ID): it has no Frey account.
+     *
+     * @return array
+     */
+    protected static function _ghostPlayerData()
+    {
+        return [
+            'id' => \Common\Constants::GHOST_PLAYER_ID,
+            'title' => '—',
+            'tenhou_id' => '',
+            'has_avatar' => false,
+            'last_update' => '',
+            'telegram_id' => null,
+            'notifications' => null,
+        ];
     }
 
     /**
@@ -300,9 +328,15 @@ class PlayerPrimitive extends Primitive
             $playersIndexed[$player->getId()] = $player;
         }
 
-        $playersOrdered = array_map(function ($playerId) use (&$playersIndexed) {
-            return $playersIndexed[$playerId];
-        }, $sessions[0]->getPlayersIds());
+        $playersOrdered = [];
+        foreach ($sessions[0]->getPlayersIds() as $playerId) {
+            if (!empty($playersIndexed[$playerId])) {
+                $playersOrdered []= $playersIndexed[$playerId];
+            } elseif ($playerId == \Common\Constants::GHOST_PLAYER_ID) {
+                // Ghost seat has no event registration, so it's absent from reg data
+                $playersOrdered []= self::findById($ds, [$playerId])[0];
+            }
+        }
 
         return [
             'players' => $playersOrdered,

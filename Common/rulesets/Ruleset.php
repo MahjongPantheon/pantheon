@@ -76,7 +76,7 @@ class Ruleset
      * Number of real (scored) players at a table: 3 for sanma, 4 otherwise.
      * The sanma "ghost" 4th seat is never counted here.
      *
-     * @return int
+     * @return positive-int
      */
     public function playerCount(): int
     {

@@ -36,8 +36,9 @@ class RoundsHelper
     public static function checkRound(SessionPrimitive $game, array $roundData): void
     {
         self::_checkOneOf($roundData, 'outcome', ['ron', 'multiron', 'tsumo', 'draw', 'abort', 'chombo', 'nagashi']);
-        self::_checkPlayers($game->getPlayersIds(), $game->getEvent()->getRegisteredPlayersIds());
-        $playerIds = implode(',', $game->getPlayersIds());
+        // Ghost seat (sanma) has no event registration and can't take part in any round
+        self::_checkPlayers($game->getRealPlayersIds(), $game->getEvent()->getRegisteredPlayersIds());
+        $playerIds = implode(',', $game->getRealPlayersIds());
         $yakuList = iterator_to_array($game->getEvent()->getRulesetConfig()->rules()->getAllowedYaku()); // omg :(
         switch ($roundData['outcome']) {
             case 'ron':

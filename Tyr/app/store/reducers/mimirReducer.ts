@@ -401,7 +401,11 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         },
       };
     case RANDOMIZE_NEWGAME_PLAYERS: {
-      const newArr = rand(([] as RegisteredPlayer[]).concat(state.newGameSelectedUsers ?? []));
+      const isSanma = !!state.gameConfig?.rulesetConfig?.withSanma;
+      const seatsCount = isSanma ? 3 : 4;
+      const currentUsers = ([] as RegisteredPlayer[]).concat(state.newGameSelectedUsers ?? []);
+      const shuffledSeats = rand(currentUsers.slice(0, seatsCount));
+      const newArr = isSanma ? [...shuffledSeats, defaultPlayer] : shuffledSeats;
       return {
         ...state,
         newGameSelectedUsers: newArr,

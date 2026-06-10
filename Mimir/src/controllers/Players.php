@@ -187,7 +187,7 @@ class PlayersController extends Controller
                                 'last_update' => $regData['replacements'][$p->getId()]->getLastUpdate(),
                             ],
                     ];
-                }, $session->getPlayers(), $session->getCurrentState()->getScores())
+                }, $session->getRealPlayers(), $session->getCurrentState()->getScores())
             ];
         }, $sessions);
 
@@ -235,7 +235,7 @@ class PlayersController extends Controller
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
             ];
-        }, $session->getPlayers());
+        }, $session->getRealPlayers());
 
         $this->_log->info('Successfully got prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
@@ -277,7 +277,7 @@ class PlayersController extends Controller
         if (empty($sId)) {
             throw new InvalidParametersException('Attempted to use deidented primitive');
         }
-        $tmpResults = SessionResultsPrimitive::findByPlayersAndSession($this->_ds, $sId, $session->getPlayersIds());
+        $tmpResults = SessionResultsPrimitive::findByPlayersAndSession($this->_ds, $sId, $session->getRealPlayersIds());
 
         /** @var SessionResultsPrimitive[] $sessionResults */
         $sessionResults = [];
@@ -298,7 +298,7 @@ class PlayersController extends Controller
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
             ];
-        }, $session->getPlayers());
+        }, $session->getRealPlayers());
 
         $this->_log->info('Successfully got last session results for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
@@ -422,8 +422,7 @@ class PlayersController extends Controller
         $previousScores = $lastRound->getLastSessionState()->getScores();
         $scoresBefore = [];
         $scoresDelta = [];
-        for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
-            $id = $session->getPlayersIds()[$i];
+        foreach ($session->getRealPlayersIds() as $id) {
             $scoresBefore[$id] = $previousScores[$id];
             $scoresDelta[$id] = $currentScores[$id] - $previousScores[$id];
         }
@@ -694,6 +693,7 @@ class PlayersController extends Controller
                 break;
             case 'draw':
                 PointsCalc::draw(
+                    $session->getEvent()->getRulesetConfig(),
                     $sessionState->getScores(),
                     $round->getTempaiIds(),
                     $round->getRiichiIds()
@@ -715,6 +715,7 @@ class PlayersController extends Controller
                 break;
             case 'nagashi':
                 PointsCalc::nagashi(
+                    $session->getEvent()->getRulesetConfig(),
                     $sessionState->getScores(),
                     $sessionState->getCurrentDealer(),
                     $round->getRiichiIds(),

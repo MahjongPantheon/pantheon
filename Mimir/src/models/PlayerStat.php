@@ -190,7 +190,7 @@ class PlayerStatModel extends Model
                     $result['chips'] = (int) $results[$playerId]->getChips();
                 }
                 return $result;
-            }, $session->getPlayersIds());
+            }, $session->getRealPlayersIds());
         }, $games);
 
         return [

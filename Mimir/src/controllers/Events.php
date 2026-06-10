@@ -89,6 +89,7 @@ class EventsController extends Controller
         if (empty($rulesetConfig)) {
             throw new BadActionException('Ruleset configuration must be supplied');
         }
+        $this->_validateSanmaSettings($rulesetConfig);
 
         // Check we have rights to create new event
         if (!$this->_meta->getCurrentPersonId()) {
@@ -245,6 +246,7 @@ class EventsController extends Controller
         if (empty($rulesetConfig)) {
             throw new BadActionException('Ruleset configuration must be supplied');
         }
+        $this->_validateSanmaSettings($rulesetConfig);
 
         $event = EventPrimitive::findById($this->_ds, [$id]);
         if (empty($event)) {
@@ -1118,6 +1120,33 @@ class EventsController extends Controller
     }
 
     /**
+     * Validate sanma-specific ruleset fields on event creation/update.
+     *
+     * @param string|\Common\RulesetConfig $rulesetConfig
+     * @throws BadActionException
+     * @throws \Exception
+     * @return void
+     */
+    protected function _validateSanmaSettings($rulesetConfig): void
+    {
+        $rules = (new \Common\Ruleset($rulesetConfig))->rules();
+        if (!$rules->getWithSanma()) {
+            return;
+        }
+        if ($rules->getSanmaNoTsumoLoss()) {
+            throw new BadActionException('Sanma without tsumo loss is not supported yet');
+        }
+        // Draw payments total is split in half between two players, so it
+        // must produce valid scores (multiples of 100) after the split.
+        if ($rules->getSanmaDrawPayments() < 0 || $rules->getSanmaDrawPayments() % 200 !== 0) {
+            throw new BadActionException('Sanma draw payments total must be a positive multiple of 200');
+        }
+        if ($rules->getSanmaChomboPayments() < 0 || $rules->getSanmaChomboPayments() % 100 !== 0) {
+            throw new BadActionException('Sanma chombo payment must be a positive multiple of 100');
+        }
+    }
+
+    /**
      * Get available rulesets list
      *
      * @return array
@@ -1155,6 +1184,11 @@ class EventsController extends Controller
                 'id' => 'tenhounet',
                 'description' => 'Tenhou.net compatible rules',
                 'originalRules' => \Common\Ruleset::instance('tenhounet')->rules()
+            ],
+            [
+                'id' => 'sanma',
+                'description' => 'Three-player riichi (sanma) rules',
+                'originalRules' => \Common\Ruleset::instance('sanma')->rules()
             ]
         ];
 

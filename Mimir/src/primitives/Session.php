@@ -681,6 +681,34 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * Player ids without the sanma ghost seat. The ghost never pays, receives
+     * points or produces results, so anything that aggregates per-player data
+     * should use this list instead of getPlayersIds().
+     *
+     * @return int[]
+     */
+    public function getRealPlayersIds()
+    {
+        return array_values(array_filter($this->_playersIds, function ($id) {
+            return $id != \Common\Constants::GHOST_PLAYER_ID;
+        }));
+    }
+
+    /**
+     * Player entities without the sanma ghost seat.
+     *
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     * @return \Mimir\PlayerPrimitive[]
+     */
+    public function getRealPlayers()
+    {
+        return array_values(array_filter($this->getPlayers(), function (PlayerPrimitive $player) {
+            return $player->getId() != \Common\Constants::GHOST_PLAYER_ID;
+        }));
+    }
+
+    /**
      * @param string|null $replayHash
      * @return $this
      */
@@ -1031,26 +1059,20 @@ class SessionPrimitive extends Primitive
     public function getSessionResults()
     {
         if ($this->getEvent()->getRulesetConfig()->rules()->getRiichiGoesToWinner()) {
-            $placesMap = SessionResultsPrimitive::calcPlacesMap($this->getCurrentState()->getScores(), $this->getPlayersIds());
+            $placesMap = SessionResultsPrimitive::calcPlacesMap($this->getCurrentState()->getScores(), $this->getRealPlayersIds());
             // Split riichi bets in case of bump
             $scores = array_map(function ($el) {
                 return $el['score'];
             }, array_values($placesMap));
 
             $firstPlacesCount = 1;
-            if ($scores[1] === $scores[0]) {
-                $firstPlacesCount = 2;
-                if ($scores[2] === $scores[1]) {
-                    $firstPlacesCount = 3;
-                    if ($scores[3] === $scores[2]) { // oh wow lol
-                        $firstPlacesCount = 4;
-                    }
-                }
+            while ($firstPlacesCount < count($scores) && $scores[$firstPlacesCount] === $scores[0]) {
+                $firstPlacesCount++; // oh wow lol
             }
 
             $riichiBetAmount = (int)(100 * floor(($this->getCurrentState()->getRiichiBets() * 10.) / $firstPlacesCount));
 
-            foreach ($this->getPlayers() as $player) {
+            foreach ($this->getRealPlayers() as $player) {
                 if ($placesMap[$player->getId()]['place'] <= $firstPlacesCount) {
                     $this->getCurrentState()->giveRiichiBetsToPlayer($player->getId(), $riichiBetAmount);
                 }
@@ -1061,8 +1083,8 @@ class SessionPrimitive extends Primitive
             return (new SessionResultsPrimitive($this->_ds))
                 ->setPlayer($player)
                 ->setSession($this)
-                ->calc($this->getEvent()->getRulesetConfig(), $this->getCurrentState(), $this->getPlayersIds());
-        }, $this->getPlayers());
+                ->calc($this->getEvent()->getRulesetConfig(), $this->getCurrentState(), $this->getRealPlayersIds());
+        }, $this->getRealPlayers());
     }
 
     /**
@@ -1089,6 +1111,9 @@ class SessionPrimitive extends Primitive
      */
     public function isLastForPlayers()
     {
+        // Ghost seat is excluded: it "plays" every sanma session of the event,
+        // so including it would alias all sanma sessions together.
+        $realPlayersIds = $this->getRealPlayersIds();
         $last = $this->_ds->table(self::REL_USER)
             ->join(
                 self::$_table,
@@ -1096,9 +1121,9 @@ class SessionPrimitive extends Primitive
                 'AND ' . self::$_table . ".event_id = " . $this->_eventId . ' '.
                 'AND ' . self::$_table . ".status != 'cancelled'"
             )
-            ->whereIn('player_id', $this->getPlayersIds())
+            ->whereIn('player_id', $realPlayersIds)
             ->orderByDesc(self::REL_USER . '.id')
-            ->limit(4)
+            ->limit(count($realPlayersIds))
             ->findArray();
 
         foreach ($last as $item) {

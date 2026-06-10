@@ -165,7 +165,14 @@ ema:   uma all equal → [0,0,0,0]   uma 2nd==3rd tied → [15000,0,0,-15000]   
 
 ---
 
-## Milestone 1 — Mimir core (with-tsumo-loss mode only)
+## Milestone 1 — Mimir core (with-tsumo-loss mode only) ✅ DONE
+
+> **Status: implemented and verified.** All of 1.1–1.8 are in the tree. The full Mimir PHPUnit
+> suite passes (290 tests, 2121 assertions, no failures; the 37 "risky" tests are pre-existing
+> assertion-less integration smoke tests unrelated to sanma), PHPStan level 8 is clean, and PHPCS
+> (PSR-2) is clean on all changed source files. New sanma test files cover PointsCalc, SessionState,
+> Seating and a full InteractiveSession flow. See **1.10 Implementation notes** at the end of this
+> milestone for exactly what was built, deviations from the plan above, and verification output.
 
 ### 1.1 Ghost plumbing in primitives
 
@@ -313,13 +320,146 @@ has no FK.
   for triples; swiss/interval rejected for sanma.
 - Run `make mimir_analyze` (PHPStan level 8 will catch loose array assumptions) and `make test`.
 
+### 1.10 Implementation notes (as built)
+
+**Ghost plumbing (1.1).** Built as planned:
+
+- `Player.php` — `findById()` filters `GHOST_PLAYER_ID` out of the cache/Frey lookup (`$realIds`),
+  then re-inserts a synthesized record (new `_ghostPlayerData()`: `title => '—'`, empty tenhou id,
+  `has_avatar => false`, null telegram/notifications) at its original position, **preserving
+  request order**. `findPlayersForSession()`'s reorder loop now guards the ghost (no event
+  registration row) and resolves it via `findById`.
+- `Session.php` — added **both** `getRealPlayersIds()` and `getRealPlayers()` (the plan only named
+  the ids accessor; the entities accessor was needed by `getSessionResults()` and several
+  controllers). `getSessionResults()` uses them for `calcPlacesMap`, the riichi-bump loop and the
+  results `array_map`. The riichi-bump first-places counter was rewritten from the hardcoded
+  `$scores[0..3]` ladder to a `while ($firstPlacesCount < count($scores) && …)` loop (generic for
+  3 or 4). `isLastForPlayers()` excludes the ghost from the `whereIn` and uses
+  `limit(count($realPlayersIds))`.
+- `SessionResults.php` — `_sort()`'s `while (count($result) < 4)` became `< count($map)`.
+
+**SessionState (1.2).** The constructor filters the sentinel and validates
+`count == $rules->playerCount()`, storing only real players in `_scores` — the linchpin that makes
+every PointsCalc payment loop ghost-free. Added a private `_maxRegularRound()` helper
+(`playerCount * (tonpuusen ? 1 : 2)` → 6/3 sanma, 8/4 yonma) used by both
+`_dealerIsLeaderOnOorasu()` and `_lastPossibleRoundWasPlayed()`; `_buttobi()` became
+`min(array_values(getScores())) < 0`; `getCurrentDealer()` uses `% count($players)`;
+`additionalRounds` uses `playerCount()`.
+
+**PointsCalc (1.3).** As planned, with these concrete shapes:
+
+- `tsumo()` winner total in `_calcPoints()` branches on `getWithSanma()`: dealer `2 * doubleRounded`,
+  child `doubleRounded + rounded`. Honba credit to the winner was generalized to
+  `(honbaValue / 3) * (count($currentScores) - 1) * $honba` — i.e. it follows the number of real
+  payers (2 in sanma → 200/honba, 3 in yonma → 300/honba) rather than a hardcoded constant.
+- `draw()`, `nagashi()` both gained a leading `\Common\Ruleset $rules` parameter. Every call site
+  was updated: `SessionState::_updateAfterDraw`/`_updateAfterNagashi`, **and the dry-run preview
+  paths in `controllers/Players.php`** (`PreviewRound`) which also call these statics directly.
+- `draw()` sanma branch reads `getSanmaDrawPayments() ?: 3000`; 1 tenpai → `+T` / each noten
+  `-T/2`; 2 tenpai → each tenpai `+T/2` / noten `-T`; 0 or 3 tenpai → no payment; >3 throws.
+- `chombo()` sanma branch (under the existing `getExtraChomboPayments()` guard) pays a flat
+  `getSanmaChomboPayments() ?: 6000` to each other player, offender `-2P`, no oya/ko distinction.
+- `nagashi()` uses mangan-tsumo equivalents with tsumo loss (dealer `+8000`, non-dealer `+6000`);
+  the owner-count guard became `> count($currentScores) - 1`.
+- `assignRiichiBets()` builds its ring from `getRealPlayersIds()`.
+
+**InteractiveSession (1.4).** `startGame()` requires exactly 3 ids for sanma and appends
+`GHOST_PLAYER_ID` as the 4th before `findById`; the yakitori-init loop skips the sentinel. Score-diff
+loops in this model (and the equivalents in `models/Event.php`, `controllers/Players.php`) iterate
+`getRealPlayersIds()`. `finishGame`'s Skirnir `whoPlays` uses real ids so the ghost is never
+notified.
+
+**Seating (1.5).** `controllers/Seating.php::_getData()` now returns a third element `$tableSize`
+(= `playerCount()`) and strips `GHOST_PLAYER_ID` (in addition to ignored players) when chunking
+the previous-seating data. Shuffled and prescripted paths chunk by `$tableSize`; a new
+`_assertNotSanma()` helper throws `InvalidParametersException` from the Swiss and Interval entry
+points. `helpers/Seating.php` threaded a `$tableSize = 4` param (defaulted, so yonma callers are
+untouched) through `shuffledSeating`, `makeIntersectionsTable`, `makeWindShuffle`,
+`_calculateIntersectionFactor`, `_randomWindShuffle`, `_balancedWindShuffle`. Two notable
+generalizations: `makeIntersectionsTable` builds the intersection-pair list with nested loops
+(triples → `[0,1],[0,2],[1,2]`); `_calcWindDistributionPenalty` was refactored from four positional
+`$playerN` params to a single `int[] $tablePlayers` array with `array_fill`'d buckets and a nested
+pairwise sum, and `_balancedWindShuffle` gained a 3-seat placement table (`012,021,102,120,201,210`).
+
+**Events (1.6).** `getRulesets()` exposes the `sanma` template. A new `_validateSanmaSettings()`
+runs on both create and update: rejects `sanmaNoTsumoLoss = true` (deferred to M6), and requires
+`sanmaDrawPayments` to be a non-negative multiple of **200** (so the `T/2` split stays a valid
+multiple of 100) and `sanmaChomboPayments` a non-negative multiple of 100.
+
+**Ghost-filter audit (1.7) — bugs found and fixed during this milestone.** Beyond the planned
+`PlayerStat`/`Round`-validator/score-diff changes, three real null-dereference bugs were found in
+`controllers/Players.php` where code mapped over `getPlayers()` (4 entries incl. ghost) while
+indexing per-player data that only exists for the 3 real players:
+
+- `getCurrentSessions()` zipped `getPlayers()` against `getCurrentState()->getScores()` (3 entries)
+  → ghost row with a null score. → switched to `getRealPlayers()`.
+- `getPrefinishedSessionResults()` and `getLastResults()` indexed `$sessionResults[$p->getId()]`
+  (built only for real players) → `->getPlace()` on null for the ghost. → switched to
+  `getRealPlayers()` / `getRealPlayersIds()`.
+
+Sites deliberately **left echoing the ghost** (clients filter it, per the design): `Event.php`
+game-player listings (`getPlayersOfGames`, `getGames`), `Round`/`MultiRound::getLastSessionState`
+(passes the full 4-id list to the sanma-aware `SessionState` constructor, which filters it),
+`InteractiveSession::_checkAuth` and the Skirnir registration filters (`-1` matches no
+registration), and `OnlineSession` (majsoul-parsed online sanma is out of scope for this iteration).
+
+**PHPStan fix (positive-int).** Replacing the literal `array_chunk(…, 4)` with the `$tableSize`
+variable produced 5 level-8 errors (`array_chunk` `$length` expects `int<1, max>`). Fixed by
+narrowing types rather than runtime `max(1, …)`: `Ruleset::playerCount()` is annotated
+`@return positive-int`, and every `$tableSize` param in `helpers/Seating.php` is annotated
+`@param positive-int`. PHPStan reads Common signatures for type info (even though Common isn't in
+its analyzed `paths`), so this propagates cleanly.
+
+**Tests (1.9 — as built).** Sanma tests live in **separate files** (not folded into the existing
+suites): `tests/helpers/SanmaPointsCalcTest.php` (class `SanmaPointsTest`, 12 tests — tsumo
+with-loss child/dealer mangan, honba 200/honba, ron unchanged, draw default+custom 1/2 tenpai,
+draw+riichi, flat chombo default+custom, nagashi, too-many-owners throw),
+`tests/helpers/SanmaSessionStateTest.php` (dealer rotation over 3 seats, hanchan/tonpuusen end,
+buttobi, oorasu agariyame, ghost absent from scores), `tests/helpers/SanmaSeatingTest.php`
+(table-size-3 shuffle + triple intersection table), `tests/models/SanmaSessionTest.php` (full
+start-3-ids → ghost auto-append → rounds → finish = exactly 3 results/history rows). The existing
+yonma `PointsCalcTest.php` was updated only to thread the new `$rules` arg into `draw()`/`nagashi()`
+calls and still passes unchanged (51 tests). **Note:** these new test classes' names don't match
+their filenames (e.g. `SanmaPointsTest` in `SanmaPointsCalcTest.php`), which PHPUnit flags as a
+deprecation — this matches the pre-existing convention in this codebase (`PointsTest` in
+`PointsCalcTest.php`, etc.) and the full-directory / `--filter <Class>` runs work fine.
+
+**Verification output (in the Mimir container):**
+
+```text
+php bin/unit.php  → OK (incomplete/risky): Tests: 290, Assertions: 2121, Risky: 37
+  SanmaPointsTest        OK (12 tests, 21 assertions)
+  SanmaSessionStateTest  OK (10 tests, 32 assertions)
+  SanmaSeatingTest       OK (4 tests, 31 assertions)
+  SanmaSessionTest       OK (5 tests, 17 assertions)
+  PointsTest (yonma)     OK (51 tests, 154 assertions)
+phpstan analyze (level 8)  → [OK] No errors
+phpcs --standard=PSR2 (10 changed src files)  → no violations
+```
+
 ---
 
-## Milestone 2 — Frey
+## Milestone 2 — Frey ✅ DONE
 
-**No changes.** Frey owns identity only; the ghost is a sentinel, never an account, and
-`PlayerPrimitive::findById` short-circuits it before `Frey::GetPersonalInfo` is ever called.
-State this explicitly in the PR description.
+**No changes — verified.** Frey owns identity only; the ghost is a sentinel, never an account.
+`PlayerPrimitive::findById` (`Mimir/src/primitives/Player.php:139-187`) splits `GHOST_PLAYER_ID`
+out of `$realIds` before any cache lookup or `Frey::getPersonalInfo()` call, and re-inserts the
+synthesized `_ghostPlayerData()` record afterwards — so Frey's `GetPersonalInfo` never sees `-1`.
+
+Audited every other `$ds->remote()->...` call site in Mimir for the same hazard
+(`grep -n "_ds->remote()->" Mimir/src -r`):
+
+- `Player.php:225,264` (`findByTenhouIds`, `findByMajsoulAccountId`) — inputs are tenhou/majsoul
+  ids from external data, never the local sentinel.
+- `Event.php:412` and `Events.php:451` (`getMajsoulNicknames`) — operate on `PlayerPrimitive[]`
+  built from `PlayerRegistrationPrimitive` (event registrations); the ghost is never registered
+  for an event, so it never appears in `$players`.
+- `EventRatingTable.php:174` (`getMajsoulNicknames`) — operates on `PlayerHistoryPrimitive[]`,
+  which (per Milestone 1.1) is only created for real players via `getRealPlayersIds()`.
+- `InteractiveSession.php:393`, `SkirnirClient.php:411-412`, `Events.php:182` — event
+  admins/referees/ACL rules, unrelated to session players.
+
+No code changes required. State this explicitly in the PR description.
 
 ---
 
