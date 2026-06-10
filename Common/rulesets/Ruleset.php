@@ -52,7 +52,7 @@ class Ruleset
 
     /**
      * Make a ruleset based on default
-     * @param string $rulesetName ema|wrc|jpmlA|tenhounet
+     * @param string $rulesetName ema|ema2025|wrc|jpmlA|tenhounet|rrc|sanma
      * @return Ruleset
      * @throws \Exception
      */
@@ -65,10 +65,22 @@ class Ruleset
             case 'jpmlA':
             case 'tenhounet':
             case 'rrc':
+            case 'sanma':
                 return new Ruleset(require __DIR__ . '/' . $rulesetName . '.php');
             default:
                 throw new \Exception('Ruleset not found');
         }
+    }
+
+    /**
+     * Number of real (scored) players at a table: 3 for sanma, 4 otherwise.
+     * The sanma "ghost" 4th seat is never counted here.
+     *
+     * @return int
+     */
+    public function playerCount(): int
+    {
+        return $this->_rulesetCurrent->getWithSanma() ? 3 : 4;
     }
 
     /**
@@ -81,6 +93,21 @@ class Ruleset
     protected function _equalizeUma(array $score, array $uma)
     {
         rsort($score);
+
+        if ($this->_rulesetCurrent->getWithSanma()) {
+            // 3-player equalization: ghost is already excluded from $score/$uma.
+            if ($score[0] === $score[1] && $score[1] === $score[2]) {
+                return [0, 0, 0]; // exceptional case: all equal score
+            }
+            if ($score[0] === $score[1]) {
+                $uma[0] = $uma[1] = ($uma[0] + $uma[1]) / 2;
+            }
+            if ($score[1] === $score[2]) {
+                $uma[1] = $uma[2] = ($uma[1] + $uma[2]) / 2;
+            }
+            return $uma;
+        }
+
         if ($score[0] === $score[1] && $score[1] === $score[2] && $score[2] === $score[3]) {
             return [0, 0, 0, 0]; // exceptional case: all equal score
         }
@@ -152,6 +179,11 @@ class Ruleset
                 $this->_rulesetCurrent->getUma()->getPlace4()
             ];
 
+        // Sanma has only 3 places; the ghost 4th seat never produces a result.
+        if ($this->_rulesetCurrent->getWithSanma()) {
+            $uma = array_slice($uma, 0, 3);
+        }
+
         if ($this->_rulesetCurrent->getEqualizeUma()) {
             return $this->_equalizeUma($scores, $uma);
         }
@@ -168,6 +200,15 @@ class Ruleset
      */
     public function oka(int $place)
     {
+        if ($this->_rulesetCurrent->getWithSanma()) {
+            // 3 players: winner takes the other two antes (2/3 of the pot),
+            // each of the two losers pays 1/3.
+            if ($place === 1) {
+                return ($this->_rulesetCurrent->getOka() * 2 / 3);
+            } else {
+                return - ($this->_rulesetCurrent->getOka() / 3);
+            }
+        }
         if ($place === 1) {
             return ($this->_rulesetCurrent->getOka() * 0.75);
         } else {
