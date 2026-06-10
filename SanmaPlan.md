@@ -463,7 +463,7 @@ No code changes required. State this explicitly in the PR description.
 
 ---
 
-## Milestone 3 — Forseti (admin) and Sigrun (public stats)
+## Milestone 3 — Forseti (admin) and Sigrun (public stats) ✅ DONE
 
 ### Forseti
 
@@ -492,6 +492,117 @@ No code changes required. State this explicitly in the PR description.
   (mode + draw payments + chombo payments) in the rules overview.
 - Audit ghost leakage in recent-games/round-by-round views (rounds never reference the ghost;
   only session player lists do).
+
+### 3.1 Implementation notes (as built)
+
+**Forseti `OwnedEventsEdit/index.tsx`.** Added sanma defaults to the form's `ruleset`
+`initialValues`: `withSanma: false`, `sanmaNoTsumoLoss: false`, `sanmaDrawPayments: 3000`,
+`sanmaChomboPayments: 6000` — alongside the pre-existing `withYakitori`/`yakitoriPenalty`/etc.
+defaults.
+
+**Forseti `OwnedEventsEdit/RulesetSettings.tsx`.** Added a new "Three-player game (sanma)"
+section before "Game duration": a `Checkbox` bound to `ruleset.withSanma`, and — shown only
+when `withSanma` is checked — two `NumberInput`s for `ruleset.sanmaDrawPayments` (default 3000)
+and `ruleset.sanmaChomboPayments` (default 6000), plus a `Radio.Group` for tsumo-loss mapping the
+boolean `ruleset.sanmaNoTsumoLoss` to `'loss'`/`'no_loss'` string values. Per the plan, the
+`'no_loss'` option is rendered `disabled` with a "(coming soon)" label, deferred to Milestone 6.
+Imports gained `Group` and `Radio` from `@mantine/core` (the icons `IconCash`/`IconHandStop` were
+already imported and reused).
+
+**Forseti `OwnedEventsEdit/UmaSelect.tsx`.** Added `const isSanma =
+!!form.getTransformedValues().ruleset.withSanma`. `<SimpleGrid cols={2}>` →
+`<SimpleGrid cols={isSanma ? 3 : 2}>`. Wrapped in `{!isSanma && (...)}`: the simple-uma "4th
+place" `NumberInput`, the "4th" row label in the complex-uma header column, and all three
+`place4` `NumberInput`s (`complexUma.neg3`, `complexUma.neg1`, `complexUma.otherwise`).
+
+**Forseti `GamesControl/TournamentControls.tsx`.** Added `const isSanma =
+!!eventConfig?.rulesetConfig.withSanma`. The "Not ready" message now branches on `isSanma` to
+report "not divisible by 3" vs "not divisible by 4". The entire "Interval seating" and "Swiss
+seating" `<Confirmation>` blocks are each wrapped in `{!isSanma && (...)}` (the server rejects
+these for sanma per Milestone 1.5's `_assertNotSanma()`, so they're hidden rather than shown
+disabled). In `determineStage()`, introduced `const seatsCount = eventConfig?.rulesetConfig
+.withSanma ? 3 : 4`; the `playersFiltered.length % 4 !== 0` check and both `Math.round(... / 4)`
+seating-readiness checks now use `seatsCount`.
+
+- *Deviation from plan*: the plan called for "a sanma variant of the wind-shuffle/seating label
+  (`1-2-3`)". No such literal `1-2-3`/`1-2-3-4` wind-shuffle label exists in
+  `TournamentControls.tsx` — the only `1-2-3-4`-style strings are the **interval-seating**
+  dropdown options (`1-2-3-4`, `1-3-5-7`, etc.), which are now moot since interval seating is
+  hidden entirely for sanma. The "1-2-3" sanma example was instead implemented in
+  `EventPrescript.tsx` (see below), which is the actual seating-script UI that needed a 3-player
+  variant.
+
+**Forseti `GamesControl/GamesList.tsx`.** Added `import { GHOST_PLAYER_ID } from
+'../../../../Common/constants'`. The per-table player `<Stack>` now does
+`t.players.filter((p) => p.id !== GHOST_PLAYER_ID).map(...)` before rendering each player's
+`Badge`/`PlayerAvatar`/score `Text` — this was the only spot under `GamesControl/` that rendered
+a raw player list without already filtering by score/id.
+
+**Forseti `EventPrescript.tsx`.** Added `const scriptExampleSanma` (a 3-per-row `id-id-id`
+example: `1-2-3` / `4-5-6` then `1-4-2` / `5-3-6`) and `const [isSanma, setIsSanma] =
+useState(false)`. The loading `useEffect` now also calls `api.getGameConfig(eventId)` and sets
+`isSanma` from `config.rulesetConfig.withSanma`. The `<Code block>` example and the instructional
+text below it now branch on `isSanma`, showing the 3-player example/wording when the event's
+ruleset has `withSanma: true`. No validation changes were needed in
+`EventPrescript.php::getCheckErrors()` — confirmed (read-only) that it's already table-size
+agnostic and accepts rows of any length.
+
+**Sigrun `components/GameListing.tsx`.** Added `import { GHOST_PLAYER_ID } from
+'../../../Common/constants'` and `const finalResults = game.finalResults.filter((result) =>
+result.playerId !== GHOST_PLAYER_ID)`; the results `.map()` now iterates `finalResults`. Since
+`winds[idx]` is indexed by the post-filter `idx` (0-2 for sanma, 0-3 for yonma), no separate winds
+slicing was needed — filtering the ghost out of `finalResults` first achieves the same effect as
+slicing `['東','南','西','北']` to 3.
+
+**Sigrun `components/PlayerStatsListing.tsx`.** **No change** — audited (read-only) Mimir's
+`PlayerStat.php::_getPlacesSummary()`, which only iterates real players and never assigns
+`place === 4` to a real player in sanma games (the ghost, always last with score 0, is excluded
+from the summary entirely). `placeLabels[item.place]` therefore already omits the 4th-place row
+for sanma without any frontend change.
+
+**Sigrun `pages/PlayerStats.tsx`.** Added `import { GHOST_PLAYER_ID } from
+'../../../Common/constants'`; the selected-game seat list now does `selectedGame.tables
+.filter((seat) => seat.playerId !== GHOST_PLAYER_ID).map((seat, idx) => ...)`, mirroring the
+`GameListing.tsx` approach (`winds[idx]` again indexes correctly post-filter).
+
+- *Deviation from plan*: this file wasn't named in the Milestone 3 plan text, but it has the same
+  ghost-leakage shape as `GameListing.tsx` (a per-seat player list rendered from
+  `SessionHistoryResultTable.tables`), so it was fixed alongside it as part of the "audit ghost
+  leakage" item.
+
+**Sigrun `pages/EventRulesOverview/UmaSelect.tsx`.** Mirrors the Forseti `UmaSelect.tsx` change
+for the read-only view: `const isSanma = !!config.rulesetConfig.withSanma`; `SimpleGrid cols={2}`
+→ `cols={isSanma ? 3 : 2}`; the simple-uma 4th-place `NumberInput`, the complex-uma "4th" label,
+and all three `place4` `NumberInput`s are wrapped in `{!isSanma && (...)}`.
+
+**Sigrun `pages/EventRulesOverview/RulesetSettings.tsx`.** Added a read-only "Three-player game
+(sanma)" section, shown only `{!!config.rulesetConfig.withSanma && (...)}`, mirroring Forseti's
+editable section: a checked `Checkbox`, two read-only `NumberInput`s for `sanmaDrawPayments` and
+`sanmaChomboPayments`, and a `Radio.Group` showing `sanmaNoTsumoLoss` as `'loss'`/`'no_loss'`
+(both options enabled here, unlike Forseti's editor, since this is a read-only display of
+whatever the organizer configured). Imports gained `Group` and `Radio` from `@mantine/core`
+(`IconCash`/`IconHandStop` already imported).
+
+**Ghost-leakage audit — recent-games / round-by-round views.** Grepped Sigrun for other
+`finalResults`/`tables`/player-list iterations (`RecentGames.tsx`, `Game.tsx`,
+`RatingTable.tsx`, `TablesState.tsx`). Only `GameListing.tsx` (used by `RecentGames.tsx` and
+`Game.tsx`) and `PlayerStats.tsx` iterate per-seat session results; both are now filtered. Round
+logs (`Game.tsx`'s round-by-round display) are sourced from `Round`/`MultiRound` data, which never
+references the ghost (per the Milestone 1.7 audit), so no further changes were needed.
+
+**Verification output:**
+
+```text
+make forseti_typecheck   → clean (tsc --noEmit, no errors)
+make forseti_eslint      → clean (no errors/warnings)
+make forseti_prettier    → All matched files use Prettier code style!
+make sigrun_typecheck    → clean (tsc --noEmit, no errors)
+make sigrun_eslint       → clean (no errors/warnings)
+make sigrun_prettier     → All matched files use Prettier code style!
+```
+
+No backend (Mimir) changes were required for this milestone — `EventPrescript.php` and
+`PlayerStat.php` were audited and confirmed already sanma-compatible from Milestone 1.
 
 ---
 

@@ -83,6 +83,7 @@ export function TournamentControls({
   const i18n = useI18n();
   const [interval, setInterval] = useState<string | null>('1');
   const [extraTime, setExtraTime] = useState<string | null>('60');
+  const isSanma = !!eventConfig?.rulesetConfig.withSanma;
   const currentStage = determineStage(tablesState, players, eventConfig, seatingLoading);
 
   return (
@@ -104,7 +105,11 @@ export function TournamentControls({
         />
         {currentStage === Stage.NOT_READY && (
           <Box>
-            {i18n._t("Can't generate seating: count of registered players is not divisible by 4")}
+            {isSanma
+              ? i18n._t("Can't generate seating: count of registered players is not divisible by 3")
+              : i18n._t(
+                  "Can't generate seating: count of registered players is not divisible by 4"
+                )}
           </Box>
         )}
         {currentStage === Stage.READY_BUT_NOT_STARTED && !eventConfig?.isPrescripted && (
@@ -127,61 +132,65 @@ export function TournamentControls({
                 );
               }}
             />
-            <Confirmation
-              disabled={tablesState.length === 0}
-              i18n={i18n}
-              title={
-                tablesState.length === 0
-                  ? i18n._t("Interval seating can't be used for first session in tournament")
-                  : i18n._t('Use interval seating for next session')
-              }
-              text={i18n._t('Interval seating')}
-              warning={
-                <>
-                  <Select
-                    label={i18n._t('Select interval')}
-                    value={interval}
-                    onChange={setInterval}
-                    data={[
-                      { value: '1', label: '1-2-3-4' },
-                      { value: '2', label: '1-3-5-7' },
-                      { value: '3', label: '1-4-7-11' },
-                      { value: '4', label: '1-5-9-13' },
-                      { value: '5', label: '1-6-11-16' },
-                      { value: '6', label: '1-7-13-19' },
-                    ]}
-                  />
-                  <Space h='md' />
-                  <Text>{i18n._t('Use interval seating for next session?')}</Text>
-                </>
-              }
-              icon={<IconLineHeight />}
-              color='green'
-              onConfirm={() => {
-                makeIntervalSeating(
-                  parseInt(interval ?? '0', 10),
-                  eventConfig?.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
-                );
-              }}
-            />
-            <Confirmation
-              disabled={tablesState.length === 0}
-              i18n={i18n}
-              title={
-                tablesState.length === 0
-                  ? i18n._t("Swiss seating can't be used for first session in tournament")
-                  : i18n._t('Use swiss seating for next session')
-              }
-              text={i18n._t('Swiss seating')}
-              warning={i18n._t('Use swiss seating for next session?')}
-              icon={<IconSortAscending2 />}
-              color='grape'
-              onConfirm={() => {
-                makeSwissSeating(
-                  eventConfig?.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
-                );
-              }}
-            />
+            {!isSanma && (
+              <Confirmation
+                disabled={tablesState.length === 0}
+                i18n={i18n}
+                title={
+                  tablesState.length === 0
+                    ? i18n._t("Interval seating can't be used for first session in tournament")
+                    : i18n._t('Use interval seating for next session')
+                }
+                text={i18n._t('Interval seating')}
+                warning={
+                  <>
+                    <Select
+                      label={i18n._t('Select interval')}
+                      value={interval}
+                      onChange={setInterval}
+                      data={[
+                        { value: '1', label: '1-2-3-4' },
+                        { value: '2', label: '1-3-5-7' },
+                        { value: '3', label: '1-4-7-11' },
+                        { value: '4', label: '1-5-9-13' },
+                        { value: '5', label: '1-6-11-16' },
+                        { value: '6', label: '1-7-13-19' },
+                      ]}
+                    />
+                    <Space h='md' />
+                    <Text>{i18n._t('Use interval seating for next session?')}</Text>
+                  </>
+                }
+                icon={<IconLineHeight />}
+                color='green'
+                onConfirm={() => {
+                  makeIntervalSeating(
+                    parseInt(interval ?? '0', 10),
+                    eventConfig?.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+                  );
+                }}
+              />
+            )}
+            {!isSanma && (
+              <Confirmation
+                disabled={tablesState.length === 0}
+                i18n={i18n}
+                title={
+                  tablesState.length === 0
+                    ? i18n._t("Swiss seating can't be used for first session in tournament")
+                    : i18n._t('Use swiss seating for next session')
+                }
+                text={i18n._t('Swiss seating')}
+                warning={i18n._t('Use swiss seating for next session?')}
+                icon={<IconSortAscending2 />}
+                color='grape'
+                onConfirm={() => {
+                  makeSwissSeating(
+                    eventConfig?.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+                  );
+                }}
+              />
+            )}
           </Stack>
         )}
         {currentStage === Stage.READY_BUT_NOT_STARTED && !!eventConfig?.isPrescripted && (
@@ -342,8 +351,9 @@ function determineStage(
   );
 
   const playersFiltered = players.filter((p) => !p.ignoreSeating);
+  const seatsCount = eventConfig?.rulesetConfig.withSanma ? 3 : 4;
 
-  if (playersFiltered.length % 4 !== 0) {
+  if (playersFiltered.length % seatsCount !== 0) {
     return Stage.NOT_READY;
   }
 
@@ -357,14 +367,14 @@ function determineStage(
 
   if (eventConfig?.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
     if (!eventConfig?.isPrescripted) {
-      if (notFinishedTablesCount === Math.round(playersFiltered.length / 4)) {
+      if (notFinishedTablesCount === Math.round(playersFiltered.length / seatsCount)) {
         return Stage.SEATING_READY;
       } else {
         return Stage.SEATING_INPROGRESS;
       }
     } else {
       const assignedPlayersCount = playersFiltered.reduce((acc, p) => acc + (p.localId ? 1 : 0), 0);
-      if (notFinishedTablesCount === Math.round(assignedPlayersCount / 4)) {
+      if (notFinishedTablesCount === Math.round(assignedPlayersCount / seatsCount)) {
         return Stage.SEATING_READY;
       } else {
         return Stage.SEATING_INPROGRESS;

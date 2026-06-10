@@ -49,6 +49,7 @@ import {
 } from '@tabler/icons-react';
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
+import { GHOST_PLAYER_ID } from '../../../../Common/constants';
 import { I18nService } from '../../services/i18n';
 import { yakuList } from '../../helpers/yaku';
 import { useI18n } from '../../hooks/i18n';
@@ -137,47 +138,49 @@ export function GamesList({
                   )}
                 </Stack>
                 <Stack spacing='0'>
-                  {t.players.map((p) => {
-                    const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
-                    return (
-                      <Group key={`pl_${p.id}`}>
-                        <Badge
-                          style={{ minWidth: '64px' }}
-                          variant='outline'
-                          color={
-                            score === eventConfig?.rulesetConfig.startPoints
-                              ? 'blue'
-                              : score > (eventConfig?.rulesetConfig.startPoints ?? 0)
-                                ? 'green'
-                                : 'red'
-                          }
-                        >
-                          {score}
-                        </Badge>
-                        <PlayerAvatar p={p} size='sm' />
-                        <Text
-                          weight='bold'
-                          style={
-                            matches
-                              ? {
-                                  textOverflow: 'ellipsis',
-                                  overflow: 'hidden',
-                                  maxWidth: '160px',
-                                }
-                              : {
-                                  textOverflow: 'ellipsis',
-                                  overflow: 'hidden',
-                                  maxWidth: '320px',
-                                }
-                          }
-                        >
-                          {p.title}
-                          {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
-                          {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
-                        </Text>
-                      </Group>
-                    );
-                  })}
+                  {t.players
+                    .filter((p) => p.id !== GHOST_PLAYER_ID)
+                    .map((p) => {
+                      const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
+                      return (
+                        <Group key={`pl_${p.id}`}>
+                          <Badge
+                            style={{ minWidth: '64px' }}
+                            variant='outline'
+                            color={
+                              score === eventConfig?.rulesetConfig.startPoints
+                                ? 'blue'
+                                : score > (eventConfig?.rulesetConfig.startPoints ?? 0)
+                                  ? 'green'
+                                  : 'red'
+                            }
+                          >
+                            {score}
+                          </Badge>
+                          <PlayerAvatar p={p} size='sm' />
+                          <Text
+                            weight='bold'
+                            style={
+                              matches
+                                ? {
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    maxWidth: '160px',
+                                  }
+                                : {
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    maxWidth: '320px',
+                                  }
+                            }
+                          >
+                            {p.title}
+                            {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
+                            {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
+                          </Text>
+                        </Group>
+                      );
+                    })}
                 </Stack>
                 <Box style={{ flex: 1 }}>
                   {!!t.extraTime && (

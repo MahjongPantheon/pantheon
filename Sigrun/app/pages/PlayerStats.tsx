@@ -46,6 +46,7 @@ import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
 import { useStorage } from 'hooks/storage';
 import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
+import { GHOST_PLAYER_ID } from '../../../Common/constants';
 
 const HandsGraph = React.lazy(() => import('../components/HandsGraph'));
 const YakuGraph = React.lazy(() => import('../components/YakuGraph'));
@@ -235,78 +236,80 @@ export const PlayerStats: React.FC<{
           <Divider size='xs' />
           <Space h='md' />
           <Stack gap={0}>
-            {selectedGame.tables.map((seat, idx) => (
-              <Group grow key={`pl_${idx}`}>
-                <DataCmp
-                  gap='xs'
-                  style={{
-                    padding: '10px',
-                    backgroundColor:
-                      idx % 2
-                        ? isDark
-                          ? theme.colors.dark[7]
-                          : theme.colors.gray[1]
-                        : 'transparent',
-                  }}
-                >
-                  <Group style={{ flex: 1 }}>
-                    <Badge
-                      w={50}
-                      size='xl'
-                      color={calcDimmedBackground(isDimmed, isDark, '#e7f5ff')}
-                      c={calcDimmedText(isDimmed, isDark)}
-                      radius='sm'
-                      style={{ padding: 0, fontSize: '22px' }}
-                    >
-                      {winds[idx]}
-                    </Badge>
-                    <PlayerAvatar
-                      p={{
-                        title: seat.title,
-                        id: seat.playerId,
-                        hasAvatar: seat.hasAvatar,
-                        lastUpdate: seat.lastUpdate,
-                      }}
-                    />
-                    {seat.playerId === player.id ? (
-                      <Text fw={700}>{seat.title}</Text>
-                    ) : (
-                      <Anchor
-                        href={getPlayerUrl(seat.playerId)}
-                        onClick={(e) => {
-                          navigate(getPlayerUrl(seat.playerId));
-                          e.preventDefault();
-                        }}
+            {selectedGame.tables
+              .filter((seat) => seat.playerId !== GHOST_PLAYER_ID)
+              .map((seat, idx) => (
+                <Group grow key={`pl_${idx}`}>
+                  <DataCmp
+                    gap='xs'
+                    style={{
+                      padding: '10px',
+                      backgroundColor:
+                        idx % 2
+                          ? isDark
+                            ? theme.colors.dark[7]
+                            : theme.colors.gray[1]
+                          : 'transparent',
+                    }}
+                  >
+                    <Group style={{ flex: 1 }}>
+                      <Badge
+                        w={50}
+                        size='xl'
+                        color={calcDimmedBackground(isDimmed, isDark, '#e7f5ff')}
+                        c={calcDimmedText(isDimmed, isDark)}
+                        radius='sm'
+                        style={{ padding: 0, fontSize: '22px' }}
                       >
-                        {seat.title}
-                      </Anchor>
-                    )}
-                  </Group>
-                  <Group gap={2} grow={!largeScreen}>
-                    <Badge
-                      w={65}
-                      size='lg'
-                      color={calcDimmedBackground(isDimmed, isDark)}
-                      c={calcDimmedText(isDimmed, isDark)}
-                      radius='sm'
-                      style={{ padding: 0 }}
-                    >
-                      {seat.score}
-                    </Badge>
-                    <Badge
-                      w={75}
-                      size='lg'
-                      variant='filled'
-                      color={seat.ratingDelta > 0 ? 'lime' : 'red'}
-                      radius='sm'
-                      style={{ padding: 0 }}
-                    >
-                      {seat.ratingDelta}
-                    </Badge>
-                  </Group>
-                </DataCmp>
-              </Group>
-            ))}
+                        {winds[idx]}
+                      </Badge>
+                      <PlayerAvatar
+                        p={{
+                          title: seat.title,
+                          id: seat.playerId,
+                          hasAvatar: seat.hasAvatar,
+                          lastUpdate: seat.lastUpdate,
+                        }}
+                      />
+                      {seat.playerId === player.id ? (
+                        <Text fw={700}>{seat.title}</Text>
+                      ) : (
+                        <Anchor
+                          href={getPlayerUrl(seat.playerId)}
+                          onClick={(e) => {
+                            navigate(getPlayerUrl(seat.playerId));
+                            e.preventDefault();
+                          }}
+                        >
+                          {seat.title}
+                        </Anchor>
+                      )}
+                    </Group>
+                    <Group gap={2} grow={!largeScreen}>
+                      <Badge
+                        w={65}
+                        size='lg'
+                        color={calcDimmedBackground(isDimmed, isDark)}
+                        c={calcDimmedText(isDimmed, isDark)}
+                        radius='sm'
+                        style={{ padding: 0 }}
+                      >
+                        {seat.score}
+                      </Badge>
+                      <Badge
+                        w={75}
+                        size='lg'
+                        variant='filled'
+                        color={seat.ratingDelta > 0 ? 'lime' : 'red'}
+                        radius='sm'
+                        style={{ padding: 0 }}
+                      >
+                        {seat.ratingDelta}
+                      </Badge>
+                    </Group>
+                  </DataCmp>
+                </Group>
+              ))}
           </Stack>
           <Space h='md' />
           <Divider size='xs' />

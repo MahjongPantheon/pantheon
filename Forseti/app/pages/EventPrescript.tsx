@@ -48,6 +48,13 @@ const scriptExample = `1-2-3-4
 2-4-6-8
 `;
 
+const scriptExampleSanma = `1-2-3
+4-5-6
+
+1-4-2
+5-3-6
+`;
+
 export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const eventId = parseInt(id ?? '0', 10);
   const api = useApi();
@@ -59,6 +66,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
   const [nextSessionIndex, setNextSessionIndex] = useState<number | ''>(1);
   const [script, setScript] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
+  const [isSanma, setIsSanma] = useState(false);
   const i18n = useI18n();
   api.setEventId(eventId);
   usePageTitle(i18n._t('Predefined seating configuration'));
@@ -84,7 +92,12 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
     nprogress.reset();
     nprogress.start();
     setIsLoading(true);
-    loadConfig().finally(() => {
+    Promise.all([
+      loadConfig(),
+      api.getGameConfig(eventId).then((config) => {
+        setIsSanma(!!config.rulesetConfig.withSanma);
+      }),
+    ]).finally(() => {
       setIsLoading(false);
       nprogress.complete();
     });
@@ -136,12 +149,16 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
         )}
         <Space h='lg' />
         <Code block color='teal'>
-          {scriptExample}
+          {isSanma ? scriptExampleSanma : scriptExample}
         </Code>
         <Space h='lg' />
-        {i18n._t(
-          'In this example, two tables play two games. Numbers in seating are called "Local IDs". They persist between games and are defined at Manage players page of the event.'
-        )}
+        {isSanma
+          ? i18n._t(
+              'In this example, two tables play two games with 3 players each (1-2-3). Numbers in seating are called "Local IDs". They persist between games and are defined at Manage players page of the event.'
+            )
+          : i18n._t(
+              'In this example, two tables play two games. Numbers in seating are called "Local IDs". They persist between games and are defined at Manage players page of the event.'
+            )}
       </Modal>
 
       <NumberInput
