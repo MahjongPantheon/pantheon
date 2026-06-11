@@ -69,10 +69,8 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           <NumberInput
             hideControls
             leftSection={<IconCash size='1rem' />}
-            label={i18n._t('Draw payments (sanma)')}
-            description={i18n._t(
-              'Amount of points paid by tenpai players to noten players (and vice versa) on a draw'
-            )}
+            label={i18n._t('Ryuukyoku payments (sanma)')}
+            description={i18n._t('Sum of points paid by players in noten to players in tenpai')}
             value={config.rulesetConfig.sanmaDrawPayments}
             onChange={() => {}}
           />
@@ -88,9 +86,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           />
           <Radio.Group
             label={i18n._t('Tsumo loss')}
-            description={i18n._t(
-              'Whether the dealer pays double on tsumo even when the winner is the dealer themselves (tsumo loss), or not'
-            )}
+            description={i18n._t('Wether tsumo payments are scored the same as in yonma')}
             value={config.rulesetConfig.sanmaNoTsumoLoss ? 'no_loss' : 'loss'}
             onChange={() => {}}
           >

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-10 21:34Z\n"
+"POT-Creation-Date: 2026-06-12 15:58Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,7 +77,7 @@ msgstr ""
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
 #: app/store/selectors/round.ts:191:14
 #: app/store/selectors/table.ts:166:25
-#: app/store/selectors/table.ts:450:14
+#: app/store/selectors/table.ts:452:14
 msgid "Chombo"
 msgstr ""
 
@@ -250,13 +250,13 @@ msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
 #: app/store/selectors/table.ts:175:25
-#: app/store/selectors/table.ts:442:14
+#: app/store/selectors/table.ts:444:14
 msgid "Ron"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
 #: app/store/selectors/table.ts:172:25
-#: app/store/selectors/table.ts:444:14
+#: app/store/selectors/table.ts:446:14
 msgid "Tsumo"
 msgstr ""
 
@@ -610,14 +610,14 @@ msgstr ""
 msgid "Tsumo, %1"
 msgstr ""
 
-#: app/store/selectors/table.ts:446:14
+#: app/store/selectors/table.ts:448:14
 msgid "Draw"
 msgstr ""
 
-#: app/store/selectors/table.ts:448:14
+#: app/store/selectors/table.ts:450:14
 msgid "Abort"
 msgstr ""
 
-#: app/store/selectors/table.ts:452:14
+#: app/store/selectors/table.ts:454:14
 msgid "Nagashi"
 msgstr ""

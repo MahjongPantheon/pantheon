@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-10 21:34Z\n"
+"POT-Creation-Date: 2026-06-12 15:58Z\n"
 "PO-Revision-Date: 2025-12-13 22:19+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -182,7 +182,7 @@ msgstr "(цумо, пао: <b>%1</b>)"
 msgid "1 player with score less than starting"
 msgstr "1 игрок в минусе"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:202:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:198:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "Руки стоимостью в 13+ хан считаются якуманом, а не санбайманом."
 
@@ -274,7 +274,7 @@ msgstr "Добавить онлайн-игру"
 msgid "Add replay"
 msgstr "Добавить игру"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:112:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:108:16
 msgid "Agariyame"
 msgstr "Агарияме"
 
@@ -287,7 +287,7 @@ msgstr "Агрегированное событие"
 msgid "All players"
 msgstr "Все игроки"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:193:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:189:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -297,11 +297,11 @@ msgstr ""
 "отмечено, выигравшие риичи-ставки всегда будут возвращены победителям, "
 "первому победителю достанутся только не выигравшие ставки."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:157:16
 msgid "Allow abortive draws"
 msgstr "Разрешить абортивные ничьи"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:128:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:124:16
 msgid "Allow bankruptcy"
 msgstr "Банкротство"
 
@@ -309,17 +309,17 @@ msgstr "Банкротство"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:250:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:246:18
 msgid "Amount of chombo penalty"
 msgstr "Размер штрафа чомбо"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:251:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:247:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr ""
 "Количество очков, вычитаемое из очков игрока за каждый штраф чомбо после "
 "окончания игры."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:268:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:264:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr ""
 "Количество очков, вычитаемое из очков игрока, который ни разу не выиграл за "
@@ -338,19 +338,11 @@ msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "Количество игровых очков у каждого игрока в начале игры"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:216:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:22
 msgid "Amount of points given to player at 1st place"
 msgstr "Количество бонусных очков за первое место в игре"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
-msgid ""
-"Amount of points paid by tenpai players to noten players (and vice versa) on "
-"a draw"
-msgstr ""
-"Количество очков, которое игроки в темпай платят игрокам без темпай (и "
-"наоборот) при ничьей"
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:83:26
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:26
 msgid ""
 "Amount of points paid by the offending player to each of the other players "
 "on a chombo"
@@ -358,7 +350,7 @@ msgstr ""
 "Количество очков, которое нарушивший правила игрок платит каждому из "
 "остальных игроков при чомбо"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:142:24
 msgid "Amount of score player should get to end the game."
 msgstr "Количество очков, которое нужно набрать для завершения игры."
 
@@ -366,7 +358,7 @@ msgstr "Количество очков, которое нужно набрат�
 msgid "And your riichi bet, please"
 msgstr "И Ваша риичи палочка"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:153:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:149:16
 msgid "Atamahane"
 msgstr "Атамахане"
 
@@ -483,7 +475,7 @@ msgstr "Стоимость чипа"
 msgid "Chombo in last round ends game"
 msgstr "Чомбо в последней раздаче завершает игру"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:82:20
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:80:20
 msgid "Chombo payments (sanma)"
 msgstr "Штраф за чомбо (санма)"
 
@@ -491,7 +483,7 @@ msgstr "Штраф за чомбо (санма)"
 msgid "Chombo penalties: "
 msgstr "Штрафов чомбо: "
 
-#: app/components/GameListing.tsx:222:16
+#: app/components/GameListing.tsx:224:16
 msgid "Chombo: %1"
 msgstr "Чомбо: %1"
 
@@ -508,7 +500,7 @@ msgstr "Чууренпото 9-ти сторонний"
 msgid "Close game preview"
 msgstr "Закрыть предпросмотр"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:192:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:188:16
 msgid "Collect riichi bets by atamahane"
 msgstr "Риичи по атамахане"
 
@@ -586,7 +578,7 @@ msgstr "Описание события \"%1\", предоставленное �
 msgid "Die Hard"
 msgstr "Крепкий орешек"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:120:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:116:16
 msgid "Disable renchans"
 msgstr "Выключить ренчаны"
 
@@ -607,11 +599,7 @@ msgstr "Повелитель дор"
 msgid "Double Yakuman:"
 msgstr "Двойной якуман:"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
-msgid "Draw payments (sanma)"
-msgstr "Выплаты при ничьей (санма)"
-
-#: app/components/GameListing.tsx:218:14
+#: app/components/GameListing.tsx:220:14
 msgid "Draw: %1"
 msgstr "Ничья: %1"
 
@@ -623,11 +611,11 @@ msgstr "Ничьих: "
 msgid "Edit my profile"
 msgstr "Редактировать мой профиль"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:166:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "Включить возможность записи исхода \"Нагаши манган\""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:230:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:16
 msgid "Equalize uma"
 msgstr "Выравнивание умы"
 
@@ -685,7 +673,7 @@ msgstr "Фиксированное число итоговых очков у и�
 msgid "Fixed uma for replacement player"
 msgstr "Фиксированная ума для игрока замены"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:104:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:25
 msgid "Game duration"
 msgstr "Длительность сессии"
 
@@ -816,7 +804,7 @@ msgstr "Дается за максимальное число побед из д
 msgid "Given for winning the largest number riichi nomi hands."
 msgstr "Дается за максимальное число побед c риичи-номи."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:145:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:141:18
 msgid "Goal score"
 msgstr "Целевое количество очков"
 
@@ -836,15 +824,15 @@ msgstr "Хайтей"
 msgid "Hands value"
 msgstr "Стоимость рук"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:208:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "Руки стоимостью в 4/30 и 3/60 округляются до мангана."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:223:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:219:16
 msgid "Honba Value"
 msgstr "Стоимость хонбы"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:185:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:181:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -876,7 +864,7 @@ msgstr "Как игровые сессии завершаются во врем�
 msgid "I saw them dancing"
 msgstr "Задолбал!"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:231:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:227:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -885,7 +873,7 @@ msgstr ""
 "бонус, равный среднему их бонусу. В ином случае ума назначается по порядку "
 "хода."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:135:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -895,7 +883,7 @@ msgstr ""
 "в западных раундах (в ханчане) или в южных раундах (в тонпусене), до тех пор "
 "пока кто-либо не наберет заданное число очков"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:113:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:109:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
@@ -951,11 +939,11 @@ msgstr "Джунчан"
 msgid "Just as planned"
 msgstr "Как и планировалось"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:201:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:197:16
 msgid "Kazoe yakuman"
 msgstr "Казое якуман"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:207:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:203:16
 msgid "Kiriage mangan"
 msgstr "Кириаге манган"
 
@@ -1048,11 +1036,11 @@ msgstr "Дополнительная статистика"
 msgid "Multiple yakumans"
 msgstr "Суммирование якуманов"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:165:16
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/GameListing.tsx:227:16
+#: app/components/GameListing.tsx:229:16
 msgid "Nagashi: %1"
 msgstr "Нагаши манган: %1"
 
@@ -1064,7 +1052,7 @@ msgstr "Следующая игра"
 msgid "Ninja"
 msgstr "Ниндзя"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:99:45
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:95:45
 msgid "No tsumo loss"
 msgstr "Без доплаты за цумо"
 
@@ -1072,7 +1060,7 @@ msgstr "Без доплаты за цумо"
 msgid "No yakumans have been collected"
 msgstr "Ни одного якумана собрано не было"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:215:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:211:16
 msgid "Oka bonus"
 msgstr "Ока"
 
@@ -1084,7 +1072,7 @@ msgstr "Онлайн-рейтинг"
 msgid "Online event settings"
 msgstr "Настройки онлайн-события"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:154:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:150:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1117,11 +1105,11 @@ msgstr "Over 9000 fu"
 msgid "Pao rule enabled for:"
 msgstr "Пао разрешено для:"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:239:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:235:16
 msgid "Pay chombo as reverse mangan"
 msgstr "Чомбо как обратный манган"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:240:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:236:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
@@ -1129,15 +1117,15 @@ msgstr ""
 "Выплата штрафа чомбо производится на месте в размере обратного мангана. Если "
 "не отмечено, штраф чомбо будет вычтен из очков игрока после умы в конце игры."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:184:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:180:16
 msgid "Pay for honba by atamahane"
 msgstr "Хонба по атамахане"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:199:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:25
 msgid "Payments and scores"
 msgstr "Выплаты и очки"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:237:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:233:25
 msgid "Penalties"
 msgstr "Штрафы"
 
@@ -1161,11 +1149,11 @@ msgstr "Место / результат"
 msgid "Places stats"
 msgstr "Статистика по местам"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:134:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:130:16
 msgid "Play additional rounds"
 msgstr "Дополнительные раунды"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:107:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:103:22
 msgid "Play only east rounds"
 msgstr "Играть только восточные раунды"
 
@@ -1278,7 +1266,7 @@ msgstr "Риичи"
 msgid "Riichi Nomi"
 msgstr "Риичи-номи"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:174:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:25
 msgid "Riichi and honba"
 msgstr "Риичи и хонба"
 
@@ -1286,11 +1274,11 @@ msgstr "Риичи и хонба"
 msgid "Riichi bets: "
 msgstr "Ставок риичи: "
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:176:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:172:16
 msgid "Riichi goes to winner"
 msgstr "Риичи уходит победителю"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:173:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1306,11 +1294,11 @@ msgstr "Список турниров и рейтингов"
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/components/GameListing.tsx:212:14
+#: app/components/GameListing.tsx:214:14
 msgid "Ron: %1"
 msgstr "Рон: %1"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:151:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:25
 msgid "Round outcomes"
 msgstr "Исходы раздач"
 
@@ -1352,6 +1340,10 @@ msgstr "Рянпейко"
 #: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:278:34
 msgid "Ryuuiisou"
 msgstr "Рюисо"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
+msgid "Ryuukyoku payments (sanma)"
+msgstr "Выплаты при ничьей (санма)"
 
 #: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
@@ -1458,6 +1450,10 @@ msgstr ""
 "Просмотр одиночной игры в событии \"%1\", предоставленный системой Mahjong "
 "Pantheon"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr "Сумма очков, которую игроки в нотэн платят игрокам в тэмпай"
+
 #: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
 msgstr "Сууанко"
@@ -1535,7 +1531,7 @@ msgstr "Любимый ученик Цучиды"
 msgid "The great dealer"
 msgstr "Восточный мастер"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:158:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -1610,7 +1606,7 @@ msgstr "Переключить приглушенную цветовую схе�
 msgid "Toitoi"
 msgstr "Тойтой"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:106:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:102:16
 msgid "Tonpuusen"
 msgstr "Тонпусены"
 
@@ -1635,8 +1631,8 @@ msgstr "Турнир"
 msgid "Tournament settings"
 msgstr "Настройки турнира"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:90:20
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:98:42
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:88:20
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:94:42
 msgid "Tsumo loss"
 msgstr "С доплатой за цумо"
 
@@ -1644,7 +1640,7 @@ msgstr "С доплатой за цумо"
 msgid "Tsumo payments: "
 msgstr "Выплаты по цумо: "
 
-#: app/components/GameListing.tsx:215:14
+#: app/components/GameListing.tsx:217:14
 msgid "Tsumo: %1"
 msgstr "Цумо: %1"
 
@@ -1672,11 +1668,11 @@ msgstr "Ума за 3 место"
 msgid "Uma penalty for 4th place"
 msgstr "Ума за 4 место"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:260:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:256:22
 msgid "Use yakitori rule"
 msgstr "Использовать правило якитори"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:224:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:220:22
 msgid "Value of one honba stick"
 msgstr "Сколько стоит один индикатор хонбы"
 
@@ -1692,11 +1688,15 @@ msgstr "Подробнее об игре"
 msgid "We need more gold"
 msgstr "Нужно больше золота"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:129:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:26
+msgid "Wether tsumo payments are scored the same as in yonma"
+msgstr "Начисляются ли очки за цумо так же, как в йонма"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:125:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "Когда игрок уходит в минус по очкам, игра немедленно завершается"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:121:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:117:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
@@ -1716,14 +1716,6 @@ msgid ""
 msgstr ""
 "Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
 "прервать игру"
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:26
-msgid ""
-"Whether the dealer pays double on tsumo even when the winner is the dealer "
-"themselves (tsumo loss), or not"
-msgstr ""
-"Платит ли дилер двойную ставку при цумо, даже если победитель — сам дилер "
-"(доплата за цумо), или нет"
 
 #: app/components/PlayerStatsListing.tsx:157:15
 msgid "Win stats"
@@ -1753,11 +1745,11 @@ msgstr "С темпаем: "
 msgid "Without declared riichi: "
 msgstr "Без объявления риичи: "
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:259:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:255:16
 msgid "Yakitori"
 msgstr "Якитори"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:267:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:263:18
 msgid "Yakitori penalty"
 msgstr "Штраф за якитори"
 
@@ -1822,5 +1814,15 @@ msgstr "нет"
 msgid "yakuman!"
 msgstr "якуман!"
 
+#~ msgid "Draw payments (sanma)"
+#~ msgstr "Выплаты при ничьей (санма)"
+
 #~ msgid "Game link"
 #~ msgstr "Ссылка на игру"
+
+#~ msgid ""
+#~ "Whether the dealer pays double on tsumo even when the winner is the "
+#~ "dealer themselves (tsumo loss), or not"
+#~ msgstr ""
+#~ "Платит ли дилер двойную ставку при цумо, даже если победитель — сам дилер "
+#~ "(доплата за цумо), или нет"

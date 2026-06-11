@@ -8,7 +8,6 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-12 15:58Z\n"
-"POT-Creation-Date: 2026-06-10 21:34Z\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -45,7 +44,6 @@ msgid "%1 ← %2"
 msgstr ""
 
 #: app/store/selectors/table.ts:450:14
-#: app/store/selectors/table.ts:448:14
 msgid "Abort"
 msgstr "Abbruch"
 
@@ -94,7 +92,6 @@ msgstr ""
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
 #: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:166:25
 #: app/store/selectors/table.ts:452:14
-#: app/store/selectors/table.ts:450:14
 msgid "Chombo"
 msgstr ""
 
@@ -135,7 +132,6 @@ msgid "Dora %1"
 msgstr ""
 
 #: app/store/selectors/table.ts:448:14
-#: app/store/selectors/table.ts:446:14
 msgid "Draw"
 msgstr "Unentschieden"
 
@@ -258,7 +254,6 @@ msgid "Multiron, from %1"
 msgstr "Multiron, von %1"
 
 #: app/store/selectors/table.ts:454:14
-#: app/store/selectors/table.ts:452:14
 msgid "Nagashi"
 msgstr ""
 
@@ -385,7 +380,6 @@ msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
 #: app/store/selectors/table.ts:175:25 app/store/selectors/table.ts:444:14
-#: app/store/selectors/table.ts:175:25 app/store/selectors/table.ts:442:14
 msgid "Ron"
 msgstr ""
 
@@ -501,7 +495,6 @@ msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
 #: app/store/selectors/table.ts:172:25 app/store/selectors/table.ts:446:14
-#: app/store/selectors/table.ts:172:25 app/store/selectors/table.ts:444:14
 msgid "Tsumo"
 msgstr ""
 
