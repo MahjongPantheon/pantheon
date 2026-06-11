@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-10 21:34Z\n"
+"POT-Creation-Date: 2026-06-11 11:01Z\n"
 "PO-Revision-Date: 2024-04-12 22:46+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -320,19 +320,11 @@ msgstr "대국 시작 시 주어지는 시작 점수"
 msgid "Amount of points given to player at 1st place"
 msgstr "대국 1위 작사에게 주어지는 오카 점수"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
-msgid ""
-"Amount of points paid by tenpai players to noten players (and vice versa) on "
-"a draw"
-msgstr ""
-"유국 시 텐파이 작사가 노텐 작사에게 (또는 그 반대로) 지급하는 점수"
-
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:83:26
 msgid ""
 "Amount of points paid by the offending player to each of the other players "
 "on a chombo"
-msgstr ""
-"촌보 발생 시 위반한 작사가 다른 각 작사에게 지급하는 점수"
+msgstr "촌보 발생 시 위반한 작사가 다른 각 작사에게 지급하는 점수"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:146:24
 msgid "Amount of score player should get to end the game."
@@ -582,10 +574,6 @@ msgstr "도라 대마왕"
 #, fuzzy
 msgid "Double Yakuman:"
 msgstr "헤아림 역만"
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
-msgid "Draw payments (sanma)"
-msgstr "유국 시 점수 지급 (산마)"
 
 #: app/components/GameListing.tsx:218:14
 msgid "Draw: %1"
@@ -1134,8 +1122,8 @@ msgid ""
 "Play with 3 players instead of 4. The North seat is removed; uma and seating "
 "are adjusted accordingly."
 msgstr ""
-"4인 대신 3인으로 진행합니다. 북가 좌석이 제거되며, 우마와 좌석 배정이 그에 "
-"맞게 조정됩니다."
+"4인 대신 3인으로 진행합니다. 북가 좌석이 제거되며, 우마와 좌석 배정이 그에 맞"
+"게 조정됩니다."
 
 #: app/pages/RatingTable.tsx:587:7
 msgid "Player ID"
@@ -1308,6 +1296,10 @@ msgstr "량페코"
 msgid "Ryuuiisou"
 msgstr "녹일색"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
+msgid "Ryuukyoku payments (sanma)"
+msgstr "유국 시 점수 지급 (산마)"
+
 #: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr "산안커"
@@ -1408,6 +1400,10 @@ msgstr "단순 순위 기반"
 #: app/pages/Game.tsx:67:24
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 단일 대국 미리보기"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr "노텐 작사가 텐파이 작사에게 지급하는 점수의 합계"
 
 #: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
@@ -1642,6 +1638,10 @@ msgstr "해당 대국 세부내용 보기"
 msgid "We need more gold"
 msgstr "우린 부자가 될 거야"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:26
+msgid "Wether tsumo payments are scored the same as in yonma"
+msgstr "쯔모 점수 계산이 욘마와 동일한지 여부"
+
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:129:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "작사 중 하나의 점수가 0점 미만이 될 경우 대국이 종료됨"
@@ -1663,14 +1663,6 @@ msgid ""
 "When time is out, finish current hand, play one more, and then interrup the "
 "session"
 msgstr "타이머 종료 시점에서 진행중인 국 및 그 다음 국까지 진행하고 대국 종료"
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:26
-msgid ""
-"Whether the dealer pays double on tsumo even when the winner is the dealer "
-"themselves (tsumo loss), or not"
-msgstr ""
-"쯔모 시 화료자가 장가 자신이더라도 장가가 두 배를 지불하는지 여부 (쯔모 손"
-"실)"
 
 #: app/components/PlayerStatsListing.tsx:157:15
 msgid "Win stats"
@@ -1769,5 +1761,15 @@ msgstr "없음"
 msgid "yakuman!"
 msgstr "역만!"
 
+#~ msgid "Draw payments (sanma)"
+#~ msgstr "유국 시 점수 지급 (산마)"
+
 #~ msgid "Game link"
 #~ msgstr "대국 링크"
+
+#~ msgid ""
+#~ "Whether the dealer pays double on tsumo even when the winner is the "
+#~ "dealer themselves (tsumo loss), or not"
+#~ msgstr ""
+#~ "쯔모 시 화료자가 장가 자신이더라도 장가가 두 배를 지불하는지 여부 (쯔모 손"
+#~ "실)"

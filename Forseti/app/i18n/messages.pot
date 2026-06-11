@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-10 21:34Z\n"
+"POT-Creation-Date: 2026-06-11 10:59Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1241,7 +1241,7 @@ msgid "Draw payments (sanma)"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:72:26
-msgid "Amount of points paid by tenpai players to noten players (and vice versa) on a draw"
+msgid "Sum of points paid by players in noten to players in tenpai"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:20
@@ -1257,7 +1257,7 @@ msgid "Tsumo loss"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:91:26
-msgid "Whether the dealer pays double on tsumo even when the winner is the dealer themselves (tsumo loss), or not"
+msgid "Wether tsumo payments are scored the same as in yonma"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:100:42

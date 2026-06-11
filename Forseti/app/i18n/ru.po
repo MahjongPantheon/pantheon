@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-10 21:34Z\n"
+"POT-Creation-Date: 2026-06-11 10:59Z\n"
 "PO-Revision-Date: 2025-10-19 23:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -226,14 +226,6 @@ msgstr "Количество игровых очков у каждого игр�
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:206:22
 msgid "Amount of points given to player at 1st place"
 msgstr "Количество бонусных очков за первое место в игре"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:72:26
-msgid ""
-"Amount of points paid by tenpai players to noten players (and vice versa) on "
-"a draw"
-msgstr ""
-"Количество очков, которое игроки в темпай платят игрокам без темпай (и "
-"наоборот) при ничьей"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:82:26
 msgid ""
@@ -1046,8 +1038,8 @@ msgid ""
 msgstr ""
 "В этом примере два стола играют две игры по три игрока за столом (1-2-3). "
 "Числа в скрипте рассадки называются \"локальными идентификаторами\" (Local "
-"ID). Они сохраняются между играми, администратор может их задать на "
-"странице \"Управление игроками\"."
+"ID). Они сохраняются между играми, администратор может их задать на странице "
+"\"Управление игроками\"."
 
 #: app/pages/EventPrescript.tsx:159:13
 msgid ""
@@ -2148,6 +2140,10 @@ msgstr "Подсистема"
 msgid "Success"
 msgstr "Успешно"
 
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:72:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr "Сумма очков, которую игроки в нотэн платят игрокам в тэмпай"
+
 #: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
 msgstr "Сууанко"
@@ -2454,6 +2450,10 @@ msgstr "Видимость"
 msgid "Visibility management"
 msgstr "Управление видимостью"
 
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:91:26
+msgid "Wether tsumo payments are scored the same as in yonma"
+msgstr "Начисляются ли очки за цумо так же, как в йонма"
+
 #: app/pages/ProfileManage.tsx:329:18
 msgid "What will NOT be deleted:"
 msgstr "Что НЕ будет удалено:"
@@ -2486,14 +2486,6 @@ msgid ""
 msgstr ""
 "Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
 "прервать игру"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:91:26
-msgid ""
-"Whether the dealer pays double on tsumo even when the winner is the dealer "
-"themselves (tsumo loss), or not"
-msgstr ""
-"Платит ли дилер двойную ставку при цумо, даже если победитель — сам дилер "
-"(доплата за цумо), или нет"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:146:20
 msgid "Wind shuffle mode"
@@ -2665,6 +2657,13 @@ msgstr "показать / скрыть"
 #~ "после применения рангового бонуса (умы) после завершения сессии. "
 #~ "Внимание: штраф может быть применен только во время игры. Если игра уже "
 #~ "завершилась, штраф можно применить только в следующей игре."
+
+#~ msgid ""
+#~ "Whether the dealer pays double on tsumo even when the winner is the "
+#~ "dealer themselves (tsumo loss), or not"
+#~ msgstr ""
+#~ "Платит ли дилер двойную ставку при цумо, даже если победитель — сам дилер "
+#~ "(доплата за цумо), или нет"
 
 #~ msgid ""
 #~ "You have provided your tenhou login string instead of your username. You "

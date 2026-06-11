@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-10 21:34Z\n"
+"POT-Creation-Date: 2026-06-11 11:01Z\n"
 "PO-Revision-Date: 2025-12-13 22:19+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -342,14 +342,6 @@ msgstr "Количество игровых очков у каждого игр�
 msgid "Amount of points given to player at 1st place"
 msgstr "Количество бонусных очков за первое место в игре"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
-msgid ""
-"Amount of points paid by tenpai players to noten players (and vice versa) on "
-"a draw"
-msgstr ""
-"Количество очков, которое игроки в темпай платят игрокам без темпай (и "
-"наоборот) при ничьей"
-
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:83:26
 msgid ""
 "Amount of points paid by the offending player to each of the other players "
@@ -606,10 +598,6 @@ msgstr "Повелитель дор"
 #, fuzzy
 msgid "Double Yakuman:"
 msgstr "Двойной якуман:"
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
-msgid "Draw payments (sanma)"
-msgstr "Выплаты при ничьей (санма)"
 
 #: app/components/GameListing.tsx:218:14
 msgid "Draw: %1"
@@ -1353,6 +1341,10 @@ msgstr "Рянпейко"
 msgid "Ryuuiisou"
 msgstr "Рюисо"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
+msgid "Ryuukyoku payments (sanma)"
+msgstr "Выплаты при ничьей (санма)"
+
 #: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr "Сананко"
@@ -1457,6 +1449,10 @@ msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Просмотр одиночной игры в событии \"%1\", предоставленный системой Mahjong "
 "Pantheon"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr "Сумма очков, которую игроки в нотэн платят игрокам в тэмпай"
 
 #: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
@@ -1692,6 +1688,10 @@ msgstr "Подробнее об игре"
 msgid "We need more gold"
 msgstr "Нужно больше золота"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:26
+msgid "Wether tsumo payments are scored the same as in yonma"
+msgstr "Начисляются ли очки за цумо так же, как в йонма"
+
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:129:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "Когда игрок уходит в минус по очкам, игра немедленно завершается"
@@ -1716,14 +1716,6 @@ msgid ""
 msgstr ""
 "Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
 "прервать игру"
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:26
-msgid ""
-"Whether the dealer pays double on tsumo even when the winner is the dealer "
-"themselves (tsumo loss), or not"
-msgstr ""
-"Платит ли дилер двойную ставку при цумо, даже если победитель — сам дилер "
-"(доплата за цумо), или нет"
 
 #: app/components/PlayerStatsListing.tsx:157:15
 msgid "Win stats"
@@ -1822,5 +1814,15 @@ msgstr "нет"
 msgid "yakuman!"
 msgstr "якуман!"
 
+#~ msgid "Draw payments (sanma)"
+#~ msgstr "Выплаты при ничьей (санма)"
+
 #~ msgid "Game link"
 #~ msgstr "Ссылка на игру"
+
+#~ msgid ""
+#~ "Whether the dealer pays double on tsumo even when the winner is the "
+#~ "dealer themselves (tsumo loss), or not"
+#~ msgstr ""
+#~ "Платит ли дилер двойную ставку при цумо, даже если победитель — сам дилер "
+#~ "(доплата за цумо), или нет"
