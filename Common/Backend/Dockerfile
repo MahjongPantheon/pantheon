@@ -58,6 +58,7 @@ RUN apk update && \
     tzdata \
     supervisor \
     rsyslog \
+    zstd \
     musl \
     musl-utils \
     opendkim-utils \
@@ -125,4 +126,3 @@ RUN mkdir /home/user && chown user: /home/user
 # Copy protoc plugins
 COPY bin/protoc-gen-twirp_php /usr/bin/protoc-gen-twirp_php
 RUN chmod +x /usr/bin/protoc-gen-twirp_php
-
