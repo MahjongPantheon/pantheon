@@ -24,6 +24,7 @@ require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
+require_once __DIR__ . '/../../src/controllers/Games.php';
 
 /**
  * Full 3-player (sanma) game flow: ghost seat auto-appended on game start,
@@ -184,6 +185,43 @@ class SanmaSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(-2000 + 0, $byPlayer[3]->getRatingDelta());
         $this->assertEquals(-4000 - 15000, $byPlayer[1]->getRatingDelta());
         $this->assertEquals(0, $deltaSum);
+    }
+
+    /**
+     * Regression: getSessionOverview must include the ghost seat without crashing.
+     * The ghost (-1) is not tracked in _scores, so its score lookup returns null;
+     * the controller must coalesce it to a valid int (0), otherwise the protobuf
+     * int field setter throws "Cannot convert '' to integer" and the whole
+     * GetSessionOverview response 500s (which logs the player out of Tyr).
+     */
+    public function testSessionOverviewIncludesGhostWithValidScore()
+    {
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
+        $hash = $session->startGame($this->_event->getId(), $this->_playerIds());
+
+        // @ suppresses the "headers already sent" warning from the base
+        // Controller constructor's sendVersionHeader() under the CLI SAPI.
+        $controller = @(new GamesController(
+            $this->_ds,
+            new \Monolog\Logger('test'),
+            $this->_config,
+            $this->_meta
+        ));
+        $overview = $controller->getSessionOverview($hash);
+
+        $byPlayer = [];
+        foreach ($overview['players'] as $player) {
+            $byPlayer[$player['id']] = $player;
+        }
+
+        // Ghost seat is present (Tyr filters it client-side) ...
+        $this->assertArrayHasKey(\Common\Constants::GHOST_PLAYER_ID, $byPlayer);
+        // ... and its score must be a valid integer, never null.
+        $this->assertSame(0, $byPlayer[\Common\Constants::GHOST_PLAYER_ID]['score']);
+        // Real players keep their actual scores.
+        $this->assertEquals(35000, $byPlayer[1]['score']);
+        $this->assertEquals(35000, $byPlayer[2]['score']);
+        $this->assertEquals(35000, $byPlayer[3]['score']);
     }
 
     public function testGameFinishesAfterSouth3()
