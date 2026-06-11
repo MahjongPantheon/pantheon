@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-07 21:43Z\n"
+"POT-Creation-Date: 2026-06-10 21:34Z\n"
 "PO-Revision-Date: 2025-08-08 00:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -45,24 +45,24 @@ msgstr "%1 хан, %2 фу"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/store/selectors/table.ts:414:14
+#: app/store/selectors/table.ts:448:14
 msgid "Abort"
 msgstr "Абортивная ничья"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
-#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:163:25
 msgid "Abortive draw"
 msgstr "Абортивная ничья"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:117:31
 msgid "Call referee"
 msgstr "Вызвать судью"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:125:12
 msgid "Call referee for your table?"
 msgstr "Вызвать судью за ваш стол?"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:122:33
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -92,8 +92,8 @@ msgstr "Чинрото"
 
 #: app/components/base/Player/Player.tsx:59:58
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
-#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
-#: app/store/selectors/table.ts:416:14
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:166:25
+#: app/store/selectors/table.ts:450:14
 msgid "Chombo"
 msgstr "Чомбо"
 
@@ -105,7 +105,7 @@ msgstr "Чууренпото"
 msgid "Chuuren poutou 9-side"
 msgstr "Чууренпото 9-ти сторонний"
 
-#: app/components/pages/NewGame/NewGame.tsx:72:14
+#: app/components/pages/NewGame/NewGame.tsx:76:14
 msgid "Clear players"
 msgstr "Очистить"
 
@@ -133,7 +133,7 @@ msgstr "Дайсуши"
 msgid "Dora %1"
 msgstr "Дора %1"
 
-#: app/store/selectors/table.ts:412:14
+#: app/store/selectors/table.ts:446:14
 msgid "Draw"
 msgstr "Ничья"
 
@@ -150,7 +150,7 @@ msgid "Event title"
 msgstr "Название события"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
-#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:169:25
 msgid "Exhaustive draw"
 msgstr "Ничья"
 
@@ -163,7 +163,7 @@ msgstr "Не удалось загрузить штрафы. Проблемы с
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
-#: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
+#: app/components/screens/OtherTableView/OtherTableView.tsx:69:49
 msgid "Game has finished"
 msgstr "Игра закончена"
 
@@ -257,12 +257,12 @@ msgstr "Мензенцумо"
 msgid "Multiron, from %1"
 msgstr "Мультирон с %1"
 
-#: app/store/selectors/table.ts:418:14
+#: app/store/selectors/table.ts:452:14
 msgid "Nagashi"
 msgstr "Нагаши манган"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
-#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:178:25
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
@@ -347,7 +347,7 @@ msgstr "Пожалуйста, вернитесь назад и нажмите к
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:129:10
 msgid "Referee has been requested to your table!"
 msgstr "Судья был вызван за ваш стол!"
 
@@ -380,7 +380,7 @@ msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
-#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
+#: app/store/selectors/table.ts:175:25 app/store/selectors/table.ts:442:14
 msgid "Ron"
 msgstr "Рон"
 
@@ -420,7 +420,7 @@ msgstr "Выбрать другое событие"
 msgid "Select event"
 msgstr "Выбрать событие"
 
-#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:55:27
 msgid "Select nagashi"
 msgstr "Выбрать нагаши"
 
@@ -432,7 +432,7 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
-#: app/components/pages/NewGame/NewGame.tsx:81:14
+#: app/components/pages/NewGame/NewGame.tsx:85:14
 msgid "Shuffle players"
 msgstr "Перемешать"
 
@@ -444,7 +444,7 @@ msgstr "Регистрация"
 msgid "Single device mode"
 msgstr "Режим одного устройства"
 
-#: app/components/pages/NewGame/NewGame.tsx:91:14
+#: app/components/pages/NewGame/NewGame.tsx:95:14
 msgid "Start game"
 msgstr "Начать игру"
 
@@ -493,7 +493,7 @@ msgid "Toitoi"
 msgstr "Тойтой"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
-#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
+#: app/store/selectors/table.ts:172:25 app/store/selectors/table.ts:444:14
 msgid "Tsumo"
 msgstr "Цумо"
 
@@ -563,10 +563,10 @@ msgctxt "Name of registration link"
 msgid "register"
 msgstr "регистрация"
 
-#: app/components/pages/NewGame/NewGame.tsx:46:26
-#: app/components/pages/NewGame/NewGame.tsx:52:26
-#: app/components/pages/NewGame/NewGame.tsx:58:26
-#: app/components/pages/NewGame/NewGame.tsx:64:26
+#: app/components/pages/NewGame/NewGame.tsx:48:26
+#: app/components/pages/NewGame/NewGame.tsx:54:26
+#: app/components/pages/NewGame/NewGame.tsx:60:26
+#: app/components/pages/NewGame/NewGame.tsx:67:28
 msgid "select player"
 msgstr "выбрать игрока"
 

@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2025 
+# Copyright (C) 2026 
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-13 20:12+0100\n"
+"POT-Creation-Date: 2026-06-10 21:34Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,8 +76,8 @@ msgstr ""
 #: app/components/base/Player/Player.tsx:59:58
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
 #: app/store/selectors/round.ts:191:14
-#: app/store/selectors/table.ts:136:25
-#: app/store/selectors/table.ts:416:14
+#: app/store/selectors/table.ts:166:25
+#: app/store/selectors/table.ts:450:14
 msgid "Chombo"
 msgstr ""
 
@@ -185,22 +185,22 @@ msgstr ""
 msgid "Game log"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:46:26
-#: app/components/pages/NewGame/NewGame.tsx:52:26
-#: app/components/pages/NewGame/NewGame.tsx:58:26
-#: app/components/pages/NewGame/NewGame.tsx:64:26
+#: app/components/pages/NewGame/NewGame.tsx:48:26
+#: app/components/pages/NewGame/NewGame.tsx:54:26
+#: app/components/pages/NewGame/NewGame.tsx:60:26
+#: app/components/pages/NewGame/NewGame.tsx:67:28
 msgid "select player"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:72:14
+#: app/components/pages/NewGame/NewGame.tsx:76:14
 msgid "Clear players"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:81:14
+#: app/components/pages/NewGame/NewGame.tsx:85:14
 msgid "Shuffle players"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:91:14
+#: app/components/pages/NewGame/NewGame.tsx:95:14
 msgid "Start game"
 msgstr ""
 
@@ -249,32 +249,32 @@ msgid "Turn on if you use a single device for all players"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
-#: app/store/selectors/table.ts:145:25
-#: app/store/selectors/table.ts:408:14
+#: app/store/selectors/table.ts:175:25
+#: app/store/selectors/table.ts:442:14
 msgid "Ron"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
-#: app/store/selectors/table.ts:142:25
-#: app/store/selectors/table.ts:410:14
+#: app/store/selectors/table.ts:172:25
+#: app/store/selectors/table.ts:444:14
 msgid "Tsumo"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
 #: app/store/selectors/round.ts:166:14
-#: app/store/selectors/table.ts:139:25
+#: app/store/selectors/table.ts:169:25
 msgid "Exhaustive draw"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
 #: app/store/selectors/round.ts:178:14
-#: app/store/selectors/table.ts:133:25
+#: app/store/selectors/table.ts:163:25
 msgid "Abortive draw"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
 #: app/store/selectors/round.ts:204:14
-#: app/store/selectors/table.ts:148:25
+#: app/store/selectors/table.ts:178:25
 msgid "Nagashi mangan"
 msgstr ""
 
@@ -286,7 +286,7 @@ msgstr ""
 msgid "Event title"
 msgstr ""
 
-#: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
+#: app/components/screens/OtherTableView/OtherTableView.tsx:69:49
 msgid "Game has finished"
 msgstr ""
 
@@ -294,23 +294,23 @@ msgstr ""
 msgid "Player name"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:117:31
 msgid "Call referee"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:122:33
 msgid "Cancel"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:125:12
 msgid "Call referee for your table?"
 msgstr ""
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:129:10
 msgid "Referee has been requested to your table!"
 msgstr ""
 
-#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:55:27
 msgid "Select nagashi"
 msgstr ""
 
@@ -610,14 +610,14 @@ msgstr ""
 msgid "Tsumo, %1"
 msgstr ""
 
-#: app/store/selectors/table.ts:412:14
+#: app/store/selectors/table.ts:446:14
 msgid "Draw"
 msgstr ""
 
-#: app/store/selectors/table.ts:414:14
+#: app/store/selectors/table.ts:448:14
 msgid "Abort"
 msgstr ""
 
-#: app/store/selectors/table.ts:418:14
+#: app/store/selectors/table.ts:452:14
 msgid "Nagashi"
 msgstr ""
