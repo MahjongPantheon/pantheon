@@ -907,9 +907,6 @@ Forseti option stays disabled.
 
 - No-tsumo-loss table edge cells and honba variant (Milestone 6).
 
-Resolved decisions (now part of the plan above):
 
-- **Chombo**: flat payment of `sanmaChomboPayments` (default 6000) to each of the other two
-  players, regardless of oya/child — configurable in ruleset tuning (Milestones 0.1, 1.3, 3).
-- **Nagashi**: mangan-tsumo payments — non-oya receives 2000/4000, oya receives 4000 from each
-  (Milestone 1.3).
+
+## Milestone 6
