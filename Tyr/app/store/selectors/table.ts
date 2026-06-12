@@ -343,6 +343,7 @@ export function getTableStatus(
       riichiCount: state.sessionState?.riichiCount ?? 0,
       honbaCount: state.sessionState?.honbaCount ?? 0,
       lastHandStarted: state.sessionState?.lastHandStarted,
+      playersCount: state.gameConfig?.rulesetConfig.withSanma ? 3 : 4,
     },
 
     timerState: {
@@ -370,6 +371,7 @@ export function getOtherTableStatus(
       riichiCount: state.currentOtherTable?.state?.riichiCount ?? 0,
       honbaCount: state.currentOtherTable?.state?.honbaCount ?? 0,
       lastHandStarted: state.currentOtherTable?.state?.lastHandStarted,
+      playersCount: state.gameConfig?.rulesetConfig.withSanma ? 3 : 4,
     },
 
     timerState: {
