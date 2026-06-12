@@ -233,16 +233,20 @@ class PointsCalc
         $currentScores[$winnerId] += 1000 * count($riichiIds);
         $currentScores[$winnerId] += 1000 * $riichiBetsCount;
         self::$_lastPaymentsInfo['riichi'][$winnerId . '<-'] = 1000 * $riichiBetsCount;
-        // Winner gets the sum of payer contributions: honbaValue/3 from each
-        // of the other players (3 in a 4-player game, 2 in sanma).
-        $currentScores[$winnerId] += ($honbaValue / 3) * (count($currentScores) - 1) * $honba;
+        // The total honba payment ($honbaValue) is split evenly among the paying
+        // opponents: that's 3 in a 4-player game and 2 in sanma. Divide by the
+        // actual opponent count so each pays the correct share and the winner
+        // always receives the full $honbaValue per honba.
+        $opponentCount = count($currentScores) - 1;
+        $honbaShare = $opponentCount > 0 ? ($honbaValue / $opponentCount) : 0;
+        $currentScores[$winnerId] += $honbaShare * $opponentCount * $honba;
 
         foreach ($currentScores as $playerId => $value) {
             if ($playerId == $winnerId) {
                 continue;
             }
-            $currentScores[$playerId] -= ($honbaValue / 3) * $honba;
-            self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $playerId] = ($honbaValue / 3) * $honba;
+            $currentScores[$playerId] -= $honbaShare * $honba;
+            self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $playerId] = $honbaShare * $honba;
         }
 
         return $currentScores;

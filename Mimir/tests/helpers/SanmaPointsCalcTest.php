@@ -125,7 +125,9 @@ class SanmaPointsTest extends \PHPUnit\Framework\TestCase
 
     public function testTsumoHonba()
     {
-        // 100 per payer per honba: winner receives 200/honba (not 300)
+        // The total honba (honbaValue, default 300) is split between the two
+        // payers in sanma: 150 per payer per honba, so the winner receives the
+        // full 300/honba (same as a ron), not 200.
         $actualPoints = PointsCalc::tsumo(
             $this->_ruleset,
             2, // dealer
@@ -139,7 +141,7 @@ class SanmaPointsTest extends \PHPUnit\Framework\TestCase
             null // pao player id
         );
 
-        $this->assertEquals([1 => 6400, -4200, -2200], $actualPoints);
+        $this->assertEquals([1 => 6600, -4300, -2300], $actualPoints);
     }
 
     public function testRonUnchanged()
