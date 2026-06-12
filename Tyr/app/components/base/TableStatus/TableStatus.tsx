@@ -16,7 +16,10 @@ import { EndingPolicy } from 'tsclients/proto/atoms.pb';
 export const TableStatus = (props: TableStatusProps) => {
   const loc = useContext(i18n);
 
-  const tableIndex = roundToString(props.tableStatus.roundIndex ?? 0);
+  const tableIndex = roundToString(
+    props.tableStatus.roundIndex ?? 0,
+    props.tableStatus.playersCount
+  );
 
   const timeRemaining = getTimeRemaining({
     useTimer: props.timerState.useTimer,

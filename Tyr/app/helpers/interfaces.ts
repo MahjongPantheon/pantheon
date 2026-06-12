@@ -203,6 +203,7 @@ export type TableStatus = {
     riichiCount: number;
     honbaCount: number;
     lastHandStarted?: boolean;
+    playersCount: number;
   };
 
   timerState: {

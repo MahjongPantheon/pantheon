@@ -133,7 +133,7 @@ export function GamesList({
                       size='lg'
                       title={i18n._t('Current round')}
                     >
-                      {makeRound(t.currentRoundIndex)}
+                      {makeRound(t.currentRoundIndex, eventConfig?.rulesetConfig.withSanma ? 3 : 4)}
                     </ActionIcon>
                   )}
                 </Stack>
@@ -391,27 +391,20 @@ function getBadge(
   }
 }
 
-const winds = [
-  '?',
-  '東1',
-  '東2',
-  '東3',
-  '東4',
-  '南1',
-  '南2',
-  '南3',
-  '南4',
-  '西1',
-  '西2',
-  '西3',
-  '西4',
-  '北1',
-  '北2',
-  '北3',
-  '北4',
-];
-function makeRound(roundIndex: number) {
-  return winds[roundIndex] ?? '?';
+function makeRound(roundIndex: number, playersCount = 4) {
+  if (roundIndex < 1) {
+    return '?';
+  }
+  if (roundIndex > 3 * playersCount) {
+    return `北${roundIndex - 3 * playersCount}`;
+  }
+  if (roundIndex > 2 * playersCount) {
+    return `西${roundIndex - 2 * playersCount}`;
+  }
+  if (roundIndex > playersCount) {
+    return `南${roundIndex - playersCount}`;
+  }
+  return `東${roundIndex}`;
 }
 
 function formatRound(round: Round, players: Record<number, RegisteredPlayer>, i18n: I18nService) {

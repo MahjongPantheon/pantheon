@@ -66,6 +66,8 @@ export const GameListing: React.FC<GameListingProps> = ({
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const dateTime = game.date?.slice(0, -3) ?? '';
   const finalResults = game.finalResults.filter((result) => result.playerId !== GHOST_PLAYER_ID);
+  // Real player count (3 for sanma, 4 otherwise) drives round-label decoding
+  const playersCount = finalResults.length || 4;
 
   const outcomes = { ron: 0, tsumo: 0, draw: 0, chombo: 0, nagashi: 0 };
   const yakitori = withYakitori
@@ -229,7 +231,7 @@ export const GameListing: React.FC<GameListingProps> = ({
           )}
         </Group>
         <List>
-          {makeLog(game.rounds, players, i18n).map((item, idxLog) => (
+          {makeLog(game.rounds, players, i18n, playersCount).map((item, idxLog) => (
             <li
               style={{
                 listStyleType: 'none',

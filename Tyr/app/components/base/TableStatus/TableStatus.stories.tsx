@@ -42,6 +42,7 @@ export const Default = {
 
     tableStatus: {
       roundIndex: 5,
+      playersCount: 4,
       riichiCount: 2,
       honbaCount: 3,
       lastHandStarted: false,
@@ -65,6 +66,7 @@ export const NoTimer = {
 
     tableStatus: {
       roundIndex: 5,
+      playersCount: 4,
       riichiCount: 2,
       honbaCount: 3,
       lastHandStarted: false,
@@ -86,6 +88,7 @@ export const LastHand = {
 
     tableStatus: {
       roundIndex: 5,
+      playersCount: 4,
       riichiCount: 2,
       honbaCount: 3,
       lastHandStarted: true,
@@ -110,6 +113,7 @@ export const OtherTable = {
 
     tableStatus: {
       roundIndex: 5,
+      playersCount: 4,
       riichiCount: 2,
       honbaCount: 3,
       lastHandStarted: false,
