@@ -1220,7 +1220,9 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_gamesController->addRound(
             $req->getSessionHash(),
-            empty($req->getRoundData()) ? [] : self::_toPlainRoundData([$req->getRoundData()])[0]
+            empty($req->getRoundData()) ? [] : self::_toPlainRoundData([$req->getRoundData()])[0],
+            false,
+            $req->hasOutcomeTimerSecondsRemaining() ? $req->getOutcomeTimerSecondsRemaining() : null
         );
         if (!is_array($ret)) {
             throw new InvalidParametersException();

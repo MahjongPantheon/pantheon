@@ -89,6 +89,7 @@ export const GET_ALL_ROUNDS_SUCCESS = 'GET_ALL_ROUNDS_SUCCESS';
 export const GET_ALL_ROUNDS_FAIL = 'GET_ALL_ROUNDS_FAIL';
 export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_TIMER_DATA = 'UPDATE_TIMER_DATA';
+export const SET_HAND_END_TIMER = 'SET_HAND_END_TIMER';
 export const GET_CHANGES_OVERVIEW_INIT = 'GET_CHANGES_OVERVIEW_INIT';
 export const GET_CHANGES_OVERVIEW_SUCCESS = 'GET_CHANGES_OVERVIEW_SUCCESS';
 export const GET_CHANGES_OVERVIEW_FAIL = 'GET_CHANGES_OVERVIEW_FAIL';
@@ -396,6 +397,13 @@ interface UpdateTimerDataAction {
     autostartLastUpdateTimestamp?: number;
   };
 }
+// Match-timer seconds remaining captured when the outcome menu is opened
+// (~ when the win was announced). Sent with AddRound to classify the hand
+// against the buzzer instead of the later submission time.
+interface SetHandEndTimerAction {
+  type: typeof SET_HAND_END_TIMER;
+  payload: number | undefined;
+}
 
 interface GetChangesOverviewActionInit {
   type: typeof GET_CHANGES_OVERVIEW_INIT;
@@ -656,6 +664,7 @@ export type AppActionTypes =
   | GetUserinfoActionFail
   | SetTimerAction
   | UpdateTimerDataAction
+  | SetHandEndTimerAction
   | GetChangesOverviewActionSuccess
   | GetChangesOverviewActionFail
   | GetLastResultsActionSuccess

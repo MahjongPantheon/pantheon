@@ -803,18 +803,25 @@ class SessionPrimitive extends Primitive
      * @return false|array
      * @throws InvalidParametersException|EntityNotFoundException
      */
-    public function updateCurrentState(RoundPrimitive $round)
+    public function updateCurrentState(RoundPrimitive $round, ?int $outcomeTimerSecondsRemaining = null)
     {
         $lastTimer = $this->getEvent()->getLastTimer(); // may be null if timer is not set!
 
+        // Classify expiry by when the hand actually ended, not when it was submitted.
+        // The client sends the match-timer reading captured the moment the win was
+        // announced (outcome menu opened); without it, the ~30s scoring gap would
+        // misclassify an in-time hand as the first post-buzzer one and drop a hand.
+        // Falls back to server time() when the client value is absent (online replays).
+        $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
+            $outcomeTimerSecondsRemaining !== null
+                ? ($outcomeTimerSecondsRemaining <= 0)
+                : ($lastTimer + (
+                    $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime()
+                ) < time())
+        );
+
         switch ($this->getEvent()->getRulesetConfig()->rules()->getEndingPolicy()) {
             case EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND:
-                $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
-                    $lastTimer + (
-                        $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime()
-                    ) < time()
-                );
-
                 $chomboCountsAsHand = $this->getEvent()->getRulesetConfig()
                     ->rules()->getChomboCountsAsHand();
                 if ($noTimeLeft && ($round->getOutcome() !== 'chombo' || $chomboCountsAsHand)) {
@@ -849,12 +856,6 @@ class SessionPrimitive extends Primitive
             case EndingPolicy::ENDING_POLICY_EP_END_AFTER_HAND:
                 $this->getCurrentState()->update($round);
                 $success = $this->save();
-
-                $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
-                    $lastTimer + (
-                        $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime()
-                    ) < time()
-                );
 
                 // should finish game if it's in red zone, except case when chombo was made
                 if ($noTimeLeft && (

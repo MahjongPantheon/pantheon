@@ -320,6 +320,63 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->_chomboCountsAsHandHelper(false));
     }
 
+    /**
+     * The buzzer must be evaluated against when the hand actually ended (the win was
+     * announced / outcome menu opened), not when the score was submitted. The client sends
+     * the match-timer reading at that moment; a positive value means the hand ended in-time
+     * even if the server clock has since passed the limit during the ~30s scoring gap.
+     */
+    private function _lastHandStartedForTimerValue(?int $outcomeTimerSecondsRemaining): bool
+    {
+        $ruleset = \Common\Ruleset::instance('jpmlA');
+        $ruleset->rules()
+            ->setEndingPolicy(\Common\EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND);
+        $this->_event
+            ->setRulesetConfig($ruleset)
+            ->setUseTimer(1)
+            ->setGameDuration(60)
+            ->setLastTimer(time() - 100000) // server clock long past => time is up
+            ->save();
+
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
+        $hash = $session->startGame(
+            $this->_event->getId(),
+            array_map(function (PlayerPrimitive $p) {
+                return $p->getId();
+            }, $this->_players)
+        );
+
+        $session->addRound($hash, [
+            'round_index' => 1,
+            'honba' => 0,
+            'outcome' => 'draw',
+            'tempai' => '',
+            'riichi' => ''
+        ], false, $outcomeTimerSecondsRemaining);
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
+        return $sessionPrimitive->getCurrentState()->lastHandStarted();
+    }
+
+    public function testHandWonBeforeBuzzerIsNotCountedAsExtraHand()
+    {
+        // Win announced with time still on the clock (submitted after expiry during the
+        // scoring gap) => treated as in-time, so the one-more-hand flag stays unset.
+        $this->assertFalse($this->_lastHandStartedForTimerValue(5));
+    }
+
+    public function testHandWonAfterBuzzerStartsLastHand()
+    {
+        // Win announced at/after the buzzer => one-more-hand flag is set.
+        $this->assertTrue($this->_lastHandStartedForTimerValue(0));
+    }
+
+    public function testTimerClassificationFallsBackToServerClockWhenClientValueAbsent()
+    {
+        // No client value (online replay / old client) => fall back to server time().
+        $this->assertTrue($this->_lastHandStartedForTimerValue(null));
+    }
+
     public function testAddRoundNagashi()
     {
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);

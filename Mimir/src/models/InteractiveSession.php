@@ -243,7 +243,7 @@ class InteractiveSessionModel extends Model
      * @throws \Exception
      * @return bool|array Success?|Results of dry run
      */
-    public function addRound(string $gameHashcode, array $roundData, bool $dry = false)
+    public function addRound(string $gameHashcode, array $roundData, bool $dry = false, ?int $outcomeTimerSecondsRemaining = null)
     {
         $session = $this->_findGame($gameHashcode, SessionPrimitive::STATUS_INPROGRESS);
         $this->_checkAuth($session->getPlayersIds());
@@ -361,7 +361,7 @@ class InteractiveSessionModel extends Model
         $lastScores = $session->getCurrentState()->getScores();
         $success = $round->save();
         if ($success) {
-            $data = $session->updateCurrentState($round);
+            $data = $session->updateCurrentState($round, $outcomeTimerSecondsRemaining);
             $currentScores = $session->getCurrentState()->getScores();
             $diff = [];
             foreach ($lastScores as $playerId => $score) {

@@ -82,6 +82,10 @@ export interface IAppState {
   currentScreen: AppScreen;
   currentSessionHash?: string;
   currentOutcome?: AppOutcome;
+  // Match-timer seconds remaining when the outcome menu was opened for the
+  // round currently being recorded (~ when the win was announced). Sent with
+  // AddRound so the server classifies the hand against the buzzer.
+  currentHandEndTimerRemaining?: number;
   currentPlayerDisplayName?: string;
   currentPlayerHasAvatar?: boolean;
   currentPlayerLastUpdate: string;
