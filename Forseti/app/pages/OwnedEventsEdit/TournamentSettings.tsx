@@ -73,6 +73,13 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         {...form.getInputProps('ruleset.chomboEndsGame', { type: 'checkbox' })}
       />
       <Checkbox
+        label={i18n._t('Chombo after time is out counts as hand')}
+        description={i18n._t(
+          'If set, once the timer is out a chombo counts as a played hand (using up the "one more hand"), whether it is the last or the second to last hand. Only applies to the "play one more hand" ending policy.'
+        )}
+        {...form.getInputProps('ruleset.chomboCountsAsHand', { type: 'checkbox' })}
+      />
+      <Checkbox
         label={i18n._t('Team tournament')}
         {...form.getInputProps('event.isTeam', { type: 'checkbox' })}
       />

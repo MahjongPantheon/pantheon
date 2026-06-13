@@ -174,6 +174,14 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated int32 double_yakuman = 40;</code>
      */
     private $double_yakuman;
+    /**
+     * When time is out under the one-more-hand policy, count a chombo as a played
+     * hand (consumes the one-more-hand allowance), instead of treating it as a free
+     * do-over. Independent of chombo_ends_game.
+     *
+     * Generated from protobuf field <code>bool chombo_counts_as_hand = 45;</code>
+     */
+    protected $chombo_counts_as_hand = false;
 
     /**
      * Constructor.
@@ -221,6 +229,10 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      *     @type bool $chombo_ends_game
      *     @type int $honba_value
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $double_yakuman
+     *     @type bool $chombo_counts_as_hand
+     *           When time is out under the one-more-hand policy, count a chombo as a played
+     *           hand (consumes the one-more-hand allowance), instead of treating it as a free
+     *           do-over. Independent of chombo_ends_game.
      * }
      */
     public function __construct($data = NULL) {
@@ -1124,6 +1136,36 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
         $this->double_yakuman = $arr;
+
+        return $this;
+    }
+
+    /**
+     * When time is out under the one-more-hand policy, count a chombo as a played
+     * hand (consumes the one-more-hand allowance), instead of treating it as a free
+     * do-over. Independent of chombo_ends_game.
+     *
+     * Generated from protobuf field <code>bool chombo_counts_as_hand = 45;</code>
+     * @return bool
+     */
+    public function getChomboCountsAsHand()
+    {
+        return $this->chombo_counts_as_hand;
+    }
+
+    /**
+     * When time is out under the one-more-hand policy, count a chombo as a played
+     * hand (consumes the one-more-hand allowance), instead of treating it as a free
+     * do-over. Independent of chombo_ends_game.
+     *
+     * Generated from protobuf field <code>bool chombo_counts_as_hand = 45;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setChomboCountsAsHand($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->chombo_counts_as_hand = $var;
 
         return $this;
     }

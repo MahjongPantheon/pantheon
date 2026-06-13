@@ -815,7 +815,9 @@ class SessionPrimitive extends Primitive
                     ) < time()
                 );
 
-                if ($noTimeLeft && $round->getOutcome() !== 'chombo') {
+                $chomboCountsAsHand = $this->getEvent()->getRulesetConfig()
+                    ->rules()->getChomboCountsAsHand();
+                if ($noTimeLeft && ($round->getOutcome() !== 'chombo' || $chomboCountsAsHand)) {
                     if (!$this->getCurrentState()->lastHandStarted()) {
                         $this->getCurrentState()->update($round);
                         $this->getCurrentState()->setLastHandStarted(); // call before '->save' to save in one shot
