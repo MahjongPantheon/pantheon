@@ -86,6 +86,7 @@ postfix_set_relay_tls_level() {
 	if [ -z "$RELAYHOST_TLS_LEVEL" ]; then
 		info "Setting smtp_tls_security_level: ${emphasis}may${reset}"
 		postconf -e "smtp_tls_security_level=may"
+
 	else
 		notice "Setting smtp_tls_security_level: ${emphasis}$RELAYHOST_TLS_LEVEL${reset}"
 		postconf -e "smtp_tls_security_level=$RELAYHOST_TLS_LEVEL"
@@ -99,6 +100,14 @@ postfix_setup_relayhost() {
 		# Alternately, this could be a folder, like this:
 		# smtp_tls_CApath
 		postconf -e "smtp_tls_CAfile=/etc/ssl/certs/ca-certificates.crt"
+
+		if [[ "$RELAYHOST" =~ :465$ ]]; then
+			notice "Relayhost uses implicit TLS on port ${emphasis}465${reset}"
+			postconf -e "smtp_tls_wrappermode=yes"
+			postconf -e "smtp_tls_security_level=encrypt"
+		else
+			postconf -e "smtp_tls_wrappermode=no"
+		fi
 
 		if [ -n "$RELAYHOST_USERNAME" ] && [ -n "$RELAYHOST_PASSWORD" ]; then
 			echo -e " using username ${emphasis}$RELAYHOST_USERNAME${reset} and password ${emphasis}(redacted)${reset}."
@@ -117,6 +126,7 @@ postfix_setup_relayhost() {
 		postconf -# smtp_sasl_auth_enable
 		postconf -# smtp_sasl_password_maps
 		postconf -# smtp_sasl_security_options
+		postconf -# smtp_tls_wrappermode
 	fi
 }
 
