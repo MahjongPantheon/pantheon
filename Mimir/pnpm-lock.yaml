@@ -77,6 +77,9 @@ importers:
       moment-timezone:
         specifier: ^0.6.0
         version: 0.6.2
+      node-cron:
+        specifier: ^4.5.0
+        version: 4.5.0
       pg:
         specifier: ^8.16.3
         version: 8.21.0
@@ -2991,6 +2994,10 @@ packages:
   node-addon-api@8.7.0:
     resolution: {integrity: sha512-9MdFxmkKaOYVTV+XVRG8ArDwwQ77XIgIPyKASB1k3JPq3M8fGQQQE3YpMOrKm6g//Ktx8ivZr8xo1Qmtqub+GA==}
     engines: {node: ^18 || ^20 || >= 21}
+
+  node-cron@4.5.0:
+    resolution: {integrity: sha512-4Trh+kjvbXokyJkwQumvD5YAgeJfgHLR/sKyu71uSmxfCR5QMO1hldpvmFZOICN5pLgNY+J5Y8+ar3XKo5/4tQ==}
+    engines: {node: '>=20'}
 
   node-gyp-build@4.8.4:
     resolution: {integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==}
@@ -6981,6 +6988,8 @@ snapshots:
   node-addon-api@7.1.1: {}
 
   node-addon-api@8.7.0: {}
+
+  node-cron@4.5.0: {}
 
   node-gyp-build@4.8.4: {}
 
