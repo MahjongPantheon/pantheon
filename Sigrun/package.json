@@ -82,7 +82,7 @@
     "vite": "^6.3.5",
     "vite-plugin-pwa": "^1.0.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.3"
+    "vitest": "^4.1.0"
   },
   "pnpm": {
     "neverBuiltDependencies": []
