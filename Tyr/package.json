@@ -71,7 +71,7 @@
     "vite-plugin-pwa": "^1.0.0",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.3"
+    "vitest": "^3.2.6"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
