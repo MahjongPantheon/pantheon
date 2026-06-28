@@ -3,6 +3,7 @@ import { Repository } from 'src/services/Repository.js';
 import config from '../src/mikro-orm.config.js';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { sendStats } from './send_stats.js';
+import { rebuildPlayerStats } from './player_stats.js';
 
 let _repo: Promise<Repository> | undefined;
 
@@ -19,6 +20,14 @@ cron.schedule(
   '* * * * *',
   async () => {
     await initRepo().then((repo) => sendStats(repo));
+  },
+  { noOverlap: true }
+);
+
+cron.schedule(
+  '* * * * *',
+  async () => {
+    await initRepo().then((repo) => rebuildPlayerStats(repo));
   },
   { noOverlap: true }
 );
