@@ -12,12 +12,10 @@ COPY mimir-container.nginx.conf /etc/nginx/http.d/mimir.conf
 # copy supervisor config
 COPY supervisord.conf /etc/supervisord.conf
 
-# Copy cron defs
-COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
-
 # Folders init
 RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Mimir
+RUN mkdir -p /var/www/html/Mimir-dist
 RUN mkdir -p /var/www/html/Common
 
 # Entry point
