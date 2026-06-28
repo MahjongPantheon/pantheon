@@ -4,42 +4,42 @@ import { EventEntity } from './Event.entity.js';
 export type AchievementsData = Partial<{
   bestHand: {
     han: number;
-    names: string[];
+    playerIds: number[];
   };
   bestTsumoist: {
     tsumo: number;
-    names: string[];
+    playerIds: number[];
   };
-  dovakins: Array<{ count: number; name: string }>;
+  dovakins: Array<{ count: number; playerId: number }>;
   yakumans: Array<{
-    name: string;
+    playerId: number;
     yaku: number;
   }>;
   shithander: {
     handsCount: number;
-    names: string[];
+    playerIds: number[];
   };
   bestDealer: {
-    names: string[];
+    playerIds: number[];
     bestWinCount: number;
   };
   bestFu: {
     fu: number;
-    names: string[];
+    playerIds: number[];
   };
   impossibleWait: Array<{
-    name: string;
+    playerId: number;
     hand: { hand: number; fu?: number };
   }>;
-  honoredDonor: Array<{ name: string; count: number }>;
-  doraLord: Array<{ name: string; count: number }>;
-  catchEmAll: Array<{ name: string; count: number }>;
-  favoriteAsapinApprentice: Array<{ name: string; score: number }>;
-  andYourRiichiBet: Array<{ name: string; count: number }>;
-  covetousKnight: Array<{ name: string; count: number }>;
-  ninja: Array<{ name: string; count: number }>;
-  needMoreGold: Array<{ name: string; score: number }>;
-  riichiNomi: Array<{ name: string; count: number }>;
+  honoredDonor: Array<{ playerId: number; count: number }>;
+  doraLord: Array<{ playerId: number; count: number }>;
+  catchEmAll: Array<{ playerId: number; count: number }>;
+  favoriteAsapinApprentice: Array<{ playerId: number; score: number }>;
+  andYourRiichiBet: Array<{ playerId: number; count: number }>;
+  covetousKnight: Array<{ playerId: number; count: number }>;
+  ninja: Array<{ playerId: number; count: number }>;
+  needMoreGold: Array<{ playerId: number; score: number }>;
+  riichiNomi: Array<{ playerId: number; count: number }>;
 }>;
 
 @Entity({ tableName: 'achievements' })

@@ -9,6 +9,7 @@ import {
 } from 'tsclients/proto/mimir.pb.js';
 import { AchievementsEntity } from 'src/entities/Achievements.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
+import { getMaxFuHand } from './achievements/maxFuHand.js';
 
 export class AchievementsModel extends Model {
   async scheduleRebuildAchievements(eventId: number) {
@@ -60,5 +61,22 @@ export class AchievementsModel extends Model {
       achievements: results,
       lastUpdate,
     };
+  }
+
+  async precalculateAchievements(eventId: number) {
+    const achievements =
+      (await this.repo.em.findOne(AchievementsEntity, {
+        event: this.repo.em.getReference(EventEntity, eventId),
+      })) ?? new AchievementsEntity();
+
+    const maxFu = await getMaxFuHand(eventId, this.repo);
+
+    achievements.data = {
+      bestFu: maxFu,
+
+      // TODO
+    };
+
+    await this.repo.db.em.persistAndFlush(achievements);
   }
 }
