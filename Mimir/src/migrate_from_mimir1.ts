@@ -291,33 +291,34 @@ export async function migrateFromMimir1() {
       }
     );
 
-    await migrateTable(
-      'achievements',
-      em,
-      async (limit, offset) => {
-        return (
-          await oldDb.query(
-            `select * from achievements order by id asc limit ${limit} offset ${offset}`
-          )
-        ).rows;
-      },
-      async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('achievements')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
-        return lastId;
-      }
-    );
+    // We don't migrate achievements here, recalculate everything by cron
+    // await migrateTable(
+    //   'achievements',
+    //   em,
+    //   async (limit, offset) => {
+    //     return (
+    //       await oldDb.query(
+    //         `select * from achievements order by id asc limit ${limit} offset ${offset}`
+    //       )
+    //     ).rows;
+    //   },
+    //   async (rows, lastId) => {
+    //     await em.getConnection().execute(
+    //       em
+    //         .getKnex()
+    //         .into('achievements')
+    //         .insert(
+    //           rows.map((rec) => {
+    //             if (rec.id > lastId) {
+    //               lastId = rec.id;
+    //             }
+    //             return rec;
+    //           })
+    //         )
+    //     );
+    //     return lastId;
+    //   }
+    // );
 
     await migrateTable(
       'event_prescript',
