@@ -92,6 +92,7 @@ export class SessionModel extends Model {
         : {}),
       limit: limit ?? undefined,
       offset,
+      populate: ['players'],
     });
   }
 
