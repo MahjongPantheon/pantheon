@@ -40,6 +40,7 @@ export type AchievementsData = Partial<{
   ninja: Array<{ playerId: number; count: number }>;
   needMoreGold: Array<{ playerId: number; score: number }>;
   riichiNomi: Array<{ playerId: number; count: number }>;
+  carefulPlanning: Array<{ playerId: number; score: number }>;
 }>;
 
 @Entity({ tableName: 'achievements' })

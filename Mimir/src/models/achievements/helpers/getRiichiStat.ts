@@ -1,14 +1,13 @@
 import { EventEntity } from 'src/entities/Event.entity';
-import { RoundEntity } from 'src/entities/Round.entity';
 import { SessionResultsEntity } from 'src/entities/SessionResults.entity';
 import { PointsCalc } from 'src/helpers/PointsCalc';
 import { Model } from 'src/models/Model';
 import { PlayerModel } from 'src/models/PlayerModel';
-import { RoundModel } from 'src/models/RoundModel';
-import { SessionModel } from 'src/models/SessionModel';
 import { SessionResultsModel } from 'src/models/SessionResultsModel';
 import { Repository } from 'src/services/Repository';
-import { RoundOutcome, SessionStatus } from 'tsclients/proto/atoms.pb';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { getGamesOfEvent } from './getGamesOfEvent';
+import { getRoundsOfSessions } from './getRoundsOfSessions';
 
 export type RiichiStat = {
   lastCalc: Date;
@@ -62,11 +61,7 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
     });
   }
 
-  const sessionModel = Model.getModel(repo, SessionModel);
-  const sessions = await sessionModel.findByEventAndStatus(
-    [event.id],
-    [SessionStatus.SESSION_STATUS_FINISHED]
-  );
+  const sessions = await getGamesOfEvent(event.id, repo);
 
   const sessionResultsModel = Model.getModel(repo, SessionResultsModel);
   const sessionResults = (
@@ -82,16 +77,9 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
     {} as Record<number, SessionResultsEntity[]>
   );
 
-  const roundModel = Model.getModel(repo, RoundModel);
-  const rounds = (await roundModel.findBySessionIds(sessions.map((s) => s.id))).reduce(
-    (acc, res) => {
-      if (!acc[res.session.id]) {
-        acc[res.session.id] = [];
-      }
-      acc[res.session.id].push(res);
-      return acc;
-    },
-    {} as Record<number, RoundEntity[]>
+  const rounds = await getRoundsOfSessions(
+    sessions.map((s) => s.id),
+    repo
   );
 
   const rules = event.ruleset.rules;

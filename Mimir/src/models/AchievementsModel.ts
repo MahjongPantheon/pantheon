@@ -10,6 +10,8 @@ import {
 import { AchievementsEntity } from 'src/entities/Achievements.entity.js';
 import { EventEntity } from 'src/entities/Event.entity.js';
 import { getMaxFuHand } from './achievements/maxFuHand.js';
+import { getHonoredDonor } from './achievements/honoredDonor.js';
+import { getMinFeedScore } from './achievements/minFeedScore.js';
 
 export class AchievementsModel extends Model {
   async scheduleRebuildAchievements(eventId: number) {
@@ -70,9 +72,13 @@ export class AchievementsModel extends Model {
       })) ?? new AchievementsEntity();
 
     const maxFu = await getMaxFuHand(eventId, this.repo);
+    const honoredDonor = await getHonoredDonor(eventId, this.repo);
+    const minFeedScore = await getMinFeedScore(eventId, this.repo);
 
     achievements.data = {
       bestFu: maxFu,
+      honoredDonor,
+      carefulPlanning: minFeedScore,
 
       // TODO
     };
