@@ -6,14 +6,9 @@ import { SessionState } from 'src/helpers/SessionState';
 import { EventEntity } from 'src/entities/Event.entity';
 import { addLoserPayment } from './helpers/addLoserPayment';
 
-export async function getMinFeedScore(eventId: number, repo: Repository) {
-  const event = await repo.db.em.findOneOrFail(
-    EventEntity,
-    { id: eventId },
-    { populate: ['ruleset'] }
-  );
+export async function getMinFeedScore(event: EventEntity, repo: Repository) {
   let payments: Map<number, { sum: number; count: number }> = new Map();
-  const sessions = await getGamesOfEvent(eventId, repo);
+  const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
     repo
