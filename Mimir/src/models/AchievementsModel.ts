@@ -12,6 +12,8 @@ import { EventEntity } from 'src/entities/Event.entity.js';
 import { getMaxFuHand } from './achievements/maxFuHand.js';
 import { getHonoredDonor } from './achievements/honoredDonor.js';
 import { getMinFeedScore } from './achievements/minFeedScore.js';
+import { getMaxStolenRiichiBetsCount } from './achievements/maxStolenRiichiBetsCount.js';
+import { getMinLostRiichiBetsCount } from './achievements/minLostRiichiBetsCount.js';
 
 export class AchievementsModel extends Model {
   async scheduleRebuildAchievements(eventId: number) {
@@ -71,14 +73,24 @@ export class AchievementsModel extends Model {
         event: this.repo.em.getReference(EventEntity, eventId),
       })) ?? new AchievementsEntity();
 
+    const event = await this.repo.db.em.findOneOrFail(
+      EventEntity,
+      { id: eventId },
+      { populate: ['ruleset'] }
+    );
+
     const maxFu = await getMaxFuHand(eventId, this.repo);
-    const honoredDonor = await getHonoredDonor(eventId, this.repo);
-    const minFeedScore = await getMinFeedScore(eventId, this.repo);
+    const honoredDonor = await getHonoredDonor(event, this.repo);
+    const minFeedScore = await getMinFeedScore(event, this.repo);
+    const maxStolenRiichiBetsCount = await getMaxStolenRiichiBetsCount(event, this.repo);
+    const minLostRiichiBetsCount = await getMinLostRiichiBetsCount(event, this.repo);
 
     achievements.data = {
       bestFu: maxFu,
       honoredDonor,
       carefulPlanning: minFeedScore,
+      andYourRiichiBet: maxStolenRiichiBetsCount,
+      covetousKnight: minLostRiichiBetsCount,
 
       // TODO
     };
