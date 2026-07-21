@@ -14,6 +14,8 @@ import { getHonoredDonor } from './achievements/honoredDonor.js';
 import { getMinFeedScore } from './achievements/minFeedScore.js';
 import { getMaxStolenRiichiBetsCount } from './achievements/maxStolenRiichiBetsCount.js';
 import { getMinLostRiichiBetsCount } from './achievements/minLostRiichiBetsCount.js';
+import { getBestTsumoistInSingleSession } from './achievements/bestTsumoist.js';
+import { getBestDealer } from './achievements/bestDealer.js';
 
 export class AchievementsModel extends Model {
   async scheduleRebuildAchievements(eventId: number) {
@@ -84,13 +86,17 @@ export class AchievementsModel extends Model {
     const minFeedScore = await getMinFeedScore(event, this.repo);
     const maxStolenRiichiBetsCount = await getMaxStolenRiichiBetsCount(event, this.repo);
     const minLostRiichiBetsCount = await getMinLostRiichiBetsCount(event, this.repo);
+    const bestTsumoist = await getBestTsumoistInSingleSession(event, this.repo);
+    const bestDealer = await getBestDealer(event, this.repo);
 
     achievements.data = {
-      bestFu: maxFu,
-      honoredDonor,
-      carefulPlanning: minFeedScore,
       andYourRiichiBet: maxStolenRiichiBetsCount,
+      bestDealer,
+      bestFu: maxFu,
+      bestTsumoist,
+      carefulPlanning: minFeedScore,
       covetousKnight: minLostRiichiBetsCount,
+      honoredDonor,
 
       // TODO
     };
@@ -98,3 +104,52 @@ export class AchievementsModel extends Model {
     await this.repo.db.em.persistAndFlush(achievements);
   }
 }
+
+/*
+
+echo 'Running [bestHand] on event #' . $eventId . PHP_EOL;
+$processedData['bestHand'] = getBestHandOfEvent($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [braveSapper] on event #' . $eventId . PHP_EOL;
+$processedData['braveSapper'] = getBraveSappers($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [dieHard] on event #' . $eventId . PHP_EOL;
+$processedData['dieHard'] = getDieHardData($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [dovakins] on event #' . $eventId . PHP_EOL;
+$processedData['dovakins'] = getDovakins($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [yakumans] on event #' . $eventId . PHP_EOL;
+$processedData['yakumans'] = getYakumans($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [shithander] on event #' . $eventId . PHP_EOL;
+$processedData['shithander'] = getBestShithander($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [impossibleWait] on event #' . $eventId . PHP_EOL;
+$processedData['impossibleWait'] = getImpossibleWait($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [justAsPlanned] on event #' . $eventId . PHP_EOL;
+$processedData['justAsPlanned'] = getJustAsPlanned($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [doraLord] on event #' . $eventId . PHP_EOL;
+$processedData['doraLord'] = getMaxAverageDoraCount($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [catchEmAll] on event #' . $eventId . PHP_EOL;
+$processedData['catchEmAll'] = getMaxDifferentYakuCount($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [favoriteAsapinApprentice] on event #' . $eventId . PHP_EOL;
+$processedData['favoriteAsapinApprentice'] = getFavoriteAsapinApprentice($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [ninja] on event #' . $eventId . PHP_EOL;
+$processedData['ninja'] = getNinja($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [needMoreGold] on event #' . $eventId . PHP_EOL;
+$processedData['needMoreGold'] = getNeedMoreGold($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [riichiNomi] on event #' . $eventId . PHP_EOL;
+$processedData['riichiNomi'] = getRiichiNomi($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+echo 'Running [favoriteTsuchidaApprentice] on event #' . $eventId . PHP_EOL;
+$processedData['favoriteTsuchidaApprentice'] = getFavoriteTsuchidaApprentice($ds->local(), [$eventId], $players);
+sleep(ACH_SLEEP_INTERVAL);
+*/
