@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepclone from 'deep-clone';
+import deepclone from '../../helpers/deepClone';
 import { initialState } from '../state';
 import {
   AppActionTypes,
@@ -35,7 +35,7 @@ import { IAppState } from '../interfaces';
 export function commonReducer(state: IAppState, action: AppActionTypes): IAppState {
   switch (action.type) {
     case INIT_STATE:
-      return deepclone<any, any>(initialState) as IAppState;
+      return deepclone(initialState);
     case SET_CREDENTIALS:
       return {
         ...state,

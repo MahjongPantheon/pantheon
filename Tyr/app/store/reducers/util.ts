@@ -18,7 +18,6 @@
 import { IAppState } from '../interfaces';
 import {
   AppOutcome,
-  AppOutcomeRon,
   DrawOutcomeProps,
   LoseOutcomeProps,
   WinOutcomeProps,
@@ -86,7 +85,7 @@ export function modifyWinOutcome(
               ...fields,
             },
           },
-        } as AppOutcomeRon,
+        },
       };
     default:
       throw new Error('Wrong outcome modifier used');

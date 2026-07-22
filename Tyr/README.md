@@ -1,5 +1,6 @@
 ## Tyr: mobile game manager
-![Tyr](app/tyrico.png?raw=true "Tyr")
+
+![Tyr](app/tyrico.png?raw=true 'Tyr')
 
 **Tyr** is a tool for online game recording in japanese (riichi) mahjong sessions. Tyr uses [Frey](https://github.com/MahjongPantheon/pantheon/tree/master/Frey)\
 (user data storage) and [Mimir](https://github.com/MahjongPantheon/pantheon/tree/master/Mimir) (games data storage) as backend.

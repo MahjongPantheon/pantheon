@@ -67,6 +67,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
+      // @ts-expect-error TODO: update node & types?
       return fetch(url, {
         ...opts,
         headers,

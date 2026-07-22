@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import deepclone from 'deep-clone';
+import deepclone from '../../helpers/deepClone';
 import {
   ADD_ROUND_FAIL,
   ADD_ROUND_INIT,
@@ -572,7 +572,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       };
     case ADD_ROUND_SUCCESS:
       if (action.payload.isFinished) {
-        const cleanState = deepclone<any, any>(initialState) as IAppState;
+        const cleanState = deepclone(initialState);
         return {
           ...cleanState,
           eventsList: state.eventsList,
