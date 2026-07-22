@@ -20,8 +20,7 @@
     "i18n-po-json": "https://github.com/ctizen/i18n-po-json#2.0.8",
     "i18n-stex": "https://github.com/ctizen/stex#2.1.2",
     "lodash.debounce": "^4.0.8",
-    "nodemon": "^3.1.7",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.23.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {

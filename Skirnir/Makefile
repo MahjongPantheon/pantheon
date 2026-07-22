@@ -103,7 +103,7 @@ prebuild:
 	cp -f pnpm-lock.yaml ../Skirnir-dist/
 
 dev:
-	./node_modules/.bin/nodemon app/server.ts
+	./node_modules/.bin/tsx --watch app/server.ts
 
 PHONY: i18n_extract
 i18n_extract:
