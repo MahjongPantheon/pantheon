@@ -12,10 +12,10 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "rootDir": "./app",
+    "rootDir": "./app"
   },
   "ts-node": {
-    "esm": true,
+    "esm": true
   },
-  "include": ["app"],
+  "include": ["app"]
 }
