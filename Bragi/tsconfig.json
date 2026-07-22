@@ -14,7 +14,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": { "*": ["./*"] },
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals"]
   },
-  "include": ["./app"],
+  "include": ["./app"]
 }
