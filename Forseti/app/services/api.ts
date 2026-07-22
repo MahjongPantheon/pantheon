@@ -133,6 +133,7 @@ export class ApiService {
     this._clientConfFrey.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
+      // @ts-expect-error TODO: fix body type; update node & typings?
       return fetch(url, {
         ...opts,
         headers,
@@ -685,11 +686,10 @@ export class ApiService {
       let notifications = {};
       try {
         notifications = JSON.parse(r.notifications);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (e) {
+      } catch {
         notifications = {};
       }
-      return { id: r.telegramId, notifications: notifications as Record<string, number> };
+      return { id: r.telegramId, notifications };
     });
   }
 
