@@ -76,7 +76,7 @@ import {
   setNotificationsSettings,
   updatePersonalInfo,
 } from './models/persons';
-import { wrapError } from 'helpers/errors';
+import { wrapError } from './helpers/errors';
 
 export const freyClient: Frey<Context> = {
   async AddRuleForPerson(

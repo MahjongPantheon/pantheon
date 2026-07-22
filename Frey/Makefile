@@ -59,30 +59,30 @@ container_deps: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
 	fi
 
-.PHONY: eslint
-eslint:
-	echo "======= Frey: eslint ======"
-	pnpm exec eslint .
+.PHONY: oxlint
+oxlint:
+	echo "======= Frey: oxlint ======"
+	pnpm exec oxlint .
 
-.PHONY: container_eslint
-container_eslint: get_container_id
+.PHONY: container_oxlint
+container_oxlint: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make eslint' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make oxlint' ; \
 	fi
 
-.PHONY: prettier
-prettier:
-	echo "======= Frey: prettier ======"
-	pnpm exec prettier -c ./app
+.PHONY: oxfmt
+oxfmt:
+	echo "======= Frey: oxfmt ======"
+	pnpm exec oxfmt --check
 
-.PHONY: container_prettier
-container_prettier: get_container_id
+.PHONY: container_oxfmt
+container_oxfmt: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make prettier' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make oxfmt' ; \
 	fi
 
 .PHONY: typecheck
@@ -160,8 +160,8 @@ container_test_noserver: get_container_id
 
 .PHONY: autofix
 autofix:
-	pnpm exec eslint . --fix
-	pnpm exec prettier -w ./app
+	pnpm exec oxlint . --fix
+	pnpm exec oxfmt
 
 .PHONY: container_autofix
 container_autofix: get_container_id
