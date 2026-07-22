@@ -291,37 +291,37 @@ dump_last_mail:
 dump_users:
 	cd Frey && ${MAKE} container_dump_users
 
-.PHONY: bragi_eslint
-bragi_eslint:
-	cd Bragi && ${MAKE} container_eslint > ../tmp/bragi_eslint.log 2>&1
+.PHONY: bragi_oxlint
+bragi_oxlint:
+	cd Bragi && ${MAKE} container_oxlint > ../tmp/bragi_oxlint.log 2>&1
 
-.PHONY: bragi_prettier
-bragi_prettier:
-	cd Bragi && ${MAKE} container_prettier > ../tmp/bragi_prettier.log 2>&1
+.PHONY: bragi_oxfmt
+bragi_oxfmt:
+	cd Bragi && ${MAKE} container_oxfmt > ../tmp/bragi_oxfmt.log 2>&1
 
 .PHONY: bragi_typecheck
 bragi_typecheck:
 	cd Bragi && ${MAKE} container_typecheck > ../tmp/bragi_typecheck.log 2>&1
 
-.PHONY: forseti_eslint
-forseti_eslint:
-	cd Forseti && ${MAKE} container_eslint > ../tmp/forseti_eslint.log 2>&1
+.PHONY: forseti_oxlint
+forseti_oxlint:
+	cd Forseti && ${MAKE} container_oxlint > ../tmp/forseti_oxlint.log 2>&1
 
-.PHONY: forseti_prettier
-forseti_prettier:
-	cd Forseti && ${MAKE} container_prettier > ../tmp/forseti_prettier.log 2>&1
+.PHONY: forseti_oxfmt
+forseti_oxfmt:
+	cd Forseti && ${MAKE} container_oxfmt > ../tmp/forseti_oxfmt.log 2>&1
 
 .PHONY: forseti_typecheck
 forseti_typecheck:
 	cd Forseti && ${MAKE} container_typecheck > ../tmp/forseti_typecheck.log 2>&1
 
-.PHONY: frey_eslint
-frey_eslint:
-	cd Frey && ${MAKE} container_eslint > ../tmp/frey_lint.log 2>&1
+.PHONY: frey_oxlint
+frey_oxlint:
+	cd Frey && ${MAKE} container_oxlint > ../tmp/frey_lint.log 2>&1
 
-.PHONY: frey_prettier
-frey_prettier:
-	cd Frey && ${MAKE} container_prettier > ../tmp/frey_prettier.log 2>&1
+.PHONY: frey_oxfmt
+frey_oxfmt:
+	cd Frey && ${MAKE} container_oxfmt > ../tmp/frey_oxfmt.log 2>&1
 
 .PHONY: frey_typecheck
 frey_typecheck:
@@ -359,49 +359,49 @@ mimir_lint:
 mimir_analyze:
 	cd Mimir && ${MAKE} container_analyze > ../tmp/mimir_analyze.log 2>&1
 
-.PHONY: skirnir_eslint
-skirnir_eslint:
-	cd Skirnir && ${MAKE} container_eslint > ../tmp/skirnir_eslint.log 2>&1
+.PHONY: skirnir_oxlint
+skirnir_oxlint:
+	cd Skirnir && ${MAKE} container_oxlint > ../tmp/skirnir_oxlint.log 2>&1
 
-.PHONY: skirnir_prettier
-skirnir_prettier:
-	cd Skirnir && ${MAKE} container_prettier > ../tmp/skirnir_prettier.log 2>&1
+.PHONY: skirnir_oxfmt
+skirnir_oxfmt:
+	cd Skirnir && ${MAKE} container_oxfmt > ../tmp/skirnir_oxfmt.log 2>&1
 
 .PHONY: skirnir_typecheck
 skirnir_typecheck:
 	cd Skirnir && ${MAKE} container_typecheck > ../tmp/skirnir_typecheck.log 2>&1
 
-.PHONY: sigrun_eslint
-sigrun_eslint:
-	cd Sigrun && ${MAKE} container_eslint > ../tmp/sigrun_eslint.log 2>&1
+.PHONY: sigrun_oxlint
+sigrun_oxlint:
+	cd Sigrun && ${MAKE} container_oxlint > ../tmp/sigrun_oxlint.log 2>&1
 
-.PHONY: sigrun_prettier
-sigrun_prettier:
-	cd Sigrun && ${MAKE} container_prettier > ../tmp/sigrun_prettier.log 2>&1
+.PHONY: sigrun_oxfmt
+sigrun_oxfmt:
+	cd Sigrun && ${MAKE} container_oxfmt > ../tmp/sigrun_oxfmt.log 2>&1
 
 .PHONY: sigrun_typecheck
 sigrun_typecheck:
 	cd Sigrun && ${MAKE} container_typecheck > ../tmp/sigrun_typecheck.log 2>&1
 
-.PHONY: tyr_eslint
-tyr_eslint:
-	cd Tyr && ${MAKE} container_eslint > ../tmp/tyr_eslint.log 2>&1
+.PHONY: tyr_oxlint
+tyr_oxlint:
+	cd Tyr && ${MAKE} container_oxlint > ../tmp/tyr_oxlint.log 2>&1
 
-.PHONY: tyr_prettier
-tyr_prettier:
-	cd Tyr && ${MAKE} container_prettier > ../tmp/tyr_prettier.log 2>&1
+.PHONY: tyr_oxfmt
+tyr_oxfmt:
+	cd Tyr && ${MAKE} container_oxfmt > ../tmp/tyr_oxfmt.log 2>&1
 
 .PHONY: tyr_typecheck
 tyr_typecheck:
 	cd Tyr && ${MAKE} container_typecheck > ../tmp/tyr_typecheck.log 2>&1
 
-.PHONY: fenrir_eslint
-fenrir_eslint:
-	cd Fenrir && ${MAKE} container_eslint > ../tmp/fenrir_eslint.log 2>&1
+.PHONY: fenrir_oxlint
+fenrir_oxlint:
+	cd Fenrir && ${MAKE} container_oxlint > ../tmp/fenrir_oxlint.log 2>&1
 
-.PHONY: fenrir_prettier
-fenrir_prettier:
-	cd Fenrir && ${MAKE} container_prettier > ../tmp/fenrir_prettier.log 2>&1
+.PHONY: fenrir_oxfmt
+fenrir_oxfmt:
+	cd Fenrir && ${MAKE} container_oxfmt > ../tmp/fenrir_oxfmt.log 2>&1
 
 .PHONY: fenrir_typecheck
 fenrir_typecheck:
@@ -409,17 +409,17 @@ fenrir_typecheck:
 
 .PHONY: lint
 lint:
-	${MAKE} -j16 bragi_eslint bragi_prettier bragi_typecheck \
-		forseti_eslint forseti_prettier forseti_typecheck \
-		frey_eslint frey_prettier frey_typecheck \
+	${MAKE} -j16 bragi_oxlint bragi_oxfmt bragi_typecheck \
+	forseti_oxlint forseti_oxfmt forseti_typecheck \
+	frey_oxlint frey_oxfmt frey_typecheck \
 		gullveig_lint gullveig_analyze \
 		meili_lint meili_analyze \
 		hugin_lint hugin_analyze \
 		mimir_lint mimir_analyze \
-		skirnir_eslint skirnir_prettier skirnir_typecheck \
-		sigrun_eslint sigrun_prettier sigrun_typecheck \
-		tyr_eslint tyr_prettier tyr_typecheck \
-		fenrir_eslint fenrir_prettier fenrir_typecheck || { \
+		skirnir_oxlint skirnir_oxfmt skirnir_typecheck \
+		sigrun_oxlint sigrun_oxfmt sigrun_typecheck \
+		tyr_oxlint tyr_oxfmt tyr_typecheck \
+		fenrir_oxlint fenrir_oxfmt fenrir_typecheck || { \
 			LINT_RESULT=$$? ;\
 			cat tmp/* ;\
 			exit $$LINT_RESULT ;\
