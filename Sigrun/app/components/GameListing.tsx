@@ -35,7 +35,7 @@ import { useI18n } from '../hooks/i18n';
 import { makeLog } from '../helpers/gameLog';
 import { IconShare } from '@tabler/icons-react';
 import { YakitoriIndicator } from './YakitoriIndicator';
-import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
+import { calcDimmedBackground, calcDimmedText } from '../helpers/theme';
 
 type GameListingProps = {
   eventId: string;

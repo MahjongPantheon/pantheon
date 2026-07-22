@@ -1,6 +1,6 @@
 ## Sigrun: ratings and games frontend
 
-![Sigrun](assets/ico/favicon.png?raw=true "Sigrun")
+![Sigrun](assets/ico/favicon.png?raw=true 'Sigrun')
 
 **Sigrun** is a frontend for [Frey](https://github.com/MahjongPantheon/pantheon/tree/master/Frey) (user data storage) and
 [Mimir](https://github.com/MahjongPantheon/pantheon/tree/master/Mimir) (games data storage).

@@ -39,7 +39,7 @@ import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
-import { useStorage } from 'hooks/storage';
+import { useStorage } from '../hooks/storage';
 
 const PERPAGE = 10;
 export const RecentGames: React.FC<{

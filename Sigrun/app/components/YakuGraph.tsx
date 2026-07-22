@@ -41,7 +41,7 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
   }
 
   yakuStat.forEach((stat) => {
-    yaku.set(stat.yakuId as YakuId, stat.count);
+    yaku.set(stat.yakuId, stat.count);
     switch (stat.yakuId) {
       case YakuId.YAKUHAI1:
         totalYakuhai += stat.count;

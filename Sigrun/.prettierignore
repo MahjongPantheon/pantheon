@@ -1,6 +1,0 @@
-build
-coverage
-app/i18n
-node_modules
-dist
-pnpm-lock.yaml

@@ -57,8 +57,8 @@ import { globalsCtx } from '../hooks/globals';
 import { TeamTable } from '../components/TeamTable';
 import { Meta } from '../components/Meta';
 import { authCtx } from '../hooks/auth';
-import { useStorage } from 'hooks/storage';
-import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
+import { useStorage } from '../hooks/storage';
+import { calcDimmedBackground, calcDimmedText } from '../helpers/theme';
 
 export const RatingTable: React.FC<{
   params: {
