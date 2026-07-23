@@ -23,7 +23,7 @@ const dayTheme = {
   primaryColor: '#1565C0',
   secondaryColor: '#B8C0D1',
   textColor: '#000000',
-} as Theme;
+};
 
 const nightTheme = {
   name: 'night',
@@ -31,7 +31,7 @@ const nightTheme = {
   primaryColor: '#1565C0',
   secondaryColor: '#37445C',
   textColor: '#E6E6E6',
-} as Theme;
+};
 
 const junkmatTheme = {
   name: 'junkmat',
@@ -39,7 +39,7 @@ const junkmatTheme = {
   primaryColor: '#5f9be0',
   secondaryColor: '#a4b2c8',
   textColor: '#E6E6E6',
-} as Theme;
+};
 
 const oledTheme = {
   name: 'oled',
@@ -47,9 +47,9 @@ const oledTheme = {
   primaryColor: '#5f9be0',
   secondaryColor: '#a4b2c8',
   textColor: '#E6E6E6',
-} as Theme;
+};
 
-export const themes = [dayTheme, nightTheme, junkmatTheme, oledTheme];
+export const themes: Theme[] = [dayTheme, nightTheme, junkmatTheme, oledTheme];
 
 export type Theme = {
   name: string;

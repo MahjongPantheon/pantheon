@@ -61,7 +61,7 @@ export default defineConfig({
   },
   server: {
     port: 4007,
-    allowedHosts: ['forseti.pantheon.local']
+    allowedHosts: ['forseti.pantheon.local'],
   },
   build: {
     rollupOptions: {

@@ -5,19 +5,17 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ES2022",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "baseUrl": "app"
+    "rootDir": "./app"
   },
   "ts-node": {
     "esm": true
   },
-  "include": ["app"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["app"]
 }

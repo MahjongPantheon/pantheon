@@ -32,7 +32,7 @@ import {
   InvalidInputError,
   NotFoundError,
 } from '../helpers/errors';
-import { env } from 'helpers/env';
+import { env } from '../helpers/env';
 
 export async function authorize(
   db: Database,

@@ -30,30 +30,30 @@ deps:
 	pnpm install
 	pnpm exec playwright install --with-deps
 
-PHONY: eslint
-eslint:
-	echo "======= Fenrir: eslint ======"
-	./node_modules/.bin/eslint .
+PHONY: oxlint
+oxlint:
+	echo "======= Fenrir: oxlint ======"
+	./node_modules/.bin/oxlint .
 
-PHONY: container_eslint
-container_eslint: get_container_id
+PHONY: container_oxlint
+container_oxlint: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make eslint' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make oxlint' ; \
 	fi
 
-PHONY: prettier
-prettier:
-	echo "======= Fenrir: prettier ======"
-	./node_modules/.bin/prettier -c ./tests
+PHONY: oxfmt
+oxfmt:
+	echo "======= Fenrir: oxfmt ======"
+	./node_modules/.bin/oxfmt --check
 
-PHONY: container_prettier
-container_prettier: get_container_id
+PHONY: container_oxfmt
+container_oxfmt: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make prettier' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make oxfmt' ; \
 	fi
 
 PHONY: typecheck
@@ -71,9 +71,8 @@ container_typecheck: get_container_id
 
 PHONY: autofix
 autofix:
-	./node_modules/.bin/eslint . --fix
-	./node_modules/.bin/prettier -w ./tests
-
+	./node_modules/.bin/oxlint . --fix
+	./node_modules/.bin/oxfmt
 run:
 	env | sort
 	CI=true ./node_modules/.bin/playwright test

@@ -44,8 +44,8 @@ import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconInfoCircle, IconX } from '@tabler/icons-react';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
-import { useStorage } from 'hooks/storage';
-import { calcDimmedBackground, calcDimmedText } from 'helpers/theme';
+import { useStorage } from '../hooks/storage';
+import { calcDimmedBackground, calcDimmedText } from '../helpers/theme';
 
 const HandsGraph = React.lazy(() => import('../components/HandsGraph'));
 const YakuGraph = React.lazy(() => import('../components/YakuGraph'));

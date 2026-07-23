@@ -25,7 +25,7 @@ import { EventType, Player } from 'tsclients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
-import { useStorage } from 'hooks/storage';
+import { useStorage } from '../hooks/storage';
 
 export const Game: React.FC<{
   params: {

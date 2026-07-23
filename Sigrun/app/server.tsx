@@ -27,7 +27,7 @@ import { JSDOM } from 'jsdom';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
 import createEmotionServer from '@emotion/server/create-instance';
-import { emotionCache } from 'emotion/cache';
+import { emotionCache } from './emotion/cache';
 
 const stylesServer = createEmotionServer(emotionCache);
 

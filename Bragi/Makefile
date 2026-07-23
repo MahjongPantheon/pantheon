@@ -29,30 +29,30 @@ PHONY: deps
 deps:
 	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
-PHONY: eslint
-eslint:
-	echo "======= Bragi: eslint ======"
-	./node_modules/.bin/eslint .
+PHONY: oxlint
+oxlint:
+	echo "======= Bragi: oxlint ======"
+	./node_modules/.bin/oxlint .
 
-PHONY: container_eslint
-container_eslint: get_container_id
+PHONY: container_oxlint
+container_oxlint: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Bragi container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make eslint' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make oxlint' ; \
 	fi
 
-PHONY: prettier
-prettier:
-	echo "======= Bragi: prettier ======"
-	./node_modules/.bin/prettier -c ./app
+PHONY: oxfmt
+oxfmt:
+	echo "======= Bragi: oxfmt ======"
+	./node_modules/.bin/oxfmt --check
 
-PHONY: container_prettier
-container_prettier: get_container_id
+PHONY: container_oxfmt
+container_oxfmt: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Bragi container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make prettier' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make oxfmt' ; \
 	fi
 
 PHONY: typecheck
@@ -83,8 +83,8 @@ container_test: get_container_id
 
 PHONY: autofix
 autofix:
-	./node_modules/.bin/eslint . --fix
-	./node_modules/.bin/prettier -w ./app
+	./node_modules/.bin/oxlint . --fix
+	./node_modules/.bin/oxfmt
 
 PHONY: build
 build:
@@ -235,4 +235,3 @@ container_warmup: get_container_id
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'for i in $$(seq 1 8); do curl http://bragi.pantheon.internal > /dev/null; done' ; \
 	fi
-

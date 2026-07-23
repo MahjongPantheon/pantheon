@@ -17,7 +17,7 @@
 
 import { AppShell, MantineProvider, ScrollArea, createTheme } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
-import { Main } from 'Main';
+import { Main } from './Main';
 import { AppHeader } from './components/AppHeader';
 import { AnalyticsProvider, useAnalytics } from './hooks/analytics';
 import { StorageProvider, useStorage } from './hooks/storage';
@@ -37,8 +37,8 @@ import { MainMenu } from './components/MainMenu';
 import { AddOnlineReplayModal } from './components/AddOnlineReplayModal';
 import { useRoute } from 'wouter';
 import { fontLoader } from './helpers/fontLoader';
-import { getThemeOptions } from 'helpers/theme';
-import { colorSchemeManager } from 'helpers/colorSchemeManager';
+import { getThemeOptions } from './helpers/theme';
+import { colorSchemeManager } from './helpers/colorSchemeManager';
 import '@mantine/core/styles.css';
 import './App.css';
 

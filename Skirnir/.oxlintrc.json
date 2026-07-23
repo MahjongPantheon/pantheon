@@ -1,0 +1,133 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["unicorn", "react", "typescript"],
+  "jsPlugins": ["eslint-plugin-unused-imports"],
+  "categories": {
+    "correctness": "off"
+  },
+  "options": {
+    "typeAware": true
+  },
+  "env": {
+    "builtin": true,
+    "es2020": true
+  },
+  "ignorePatterns": [
+    "build",
+    "coverage",
+    "node_modules",
+    "dist",
+    "pnpm-lock.yaml",
+    "server.js",
+    "eslint.config.mjs",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
+  "rules": {
+    "no-unexpected-multiline": ["error"],
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".tsx"]
+      }
+    ],
+    "unused-imports/no-unused-imports": "error",
+    "array-callback-return": ["error"],
+    "getter-return": ["error"],
+    "no-async-promise-executor": ["error"],
+    "no-class-assign": ["error"],
+    "no-cond-assign": ["error"],
+    "no-constant-binary-expression": ["error"],
+    "no-constant-condition": ["error"],
+    "no-constructor-return": ["error"],
+    "no-debugger": ["error"],
+    "no-dupe-class-members": ["error"],
+    "no-dupe-else-if": ["error"],
+    "no-dupe-keys": ["error"],
+    "no-duplicate-case": ["error"],
+    "no-duplicate-imports": ["error"],
+    "no-empty-pattern": ["error"],
+    "no-ex-assign": ["error"],
+    "no-fallthrough": ["error"],
+    "no-func-assign": ["error"],
+    "no-import-assign": ["error"],
+    "no-inner-declarations": ["error"],
+    "no-invalid-regexp": ["error"],
+    "no-irregular-whitespace": ["error"],
+    "no-obj-calls": ["error"],
+    "no-promise-executor-return": ["error"],
+    "no-self-assign": ["error"],
+    "no-self-compare": ["error"],
+    "no-setter-return": ["error"],
+    "no-template-curly-in-string": ["error"],
+    "no-unmodified-loop-condition": ["error"],
+    "no-unreachable": ["error"],
+    "no-unreachable-loop": ["error"],
+    "no-unsafe-finally": ["error"],
+    "no-unsafe-negation": ["error"],
+    "no-unsafe-optional-chaining": ["error"],
+    "no-unused-private-class-members": ["error"],
+    "use-isnan": ["error"],
+    "valid-typeof": ["error"],
+    "no-eval": ["error"],
+    "no-implied-eval": ["error"],
+    "no-multi-assign": ["error"],
+    "no-useless-return": ["error"],
+    "prefer-const": ["error"],
+    "no-shadow": ["error"],
+    "no-unused-expressions": ["error"],
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": false,
+        "variables": true
+      }
+    ],
+    "no-useless-constructor": ["error"],
+    "typescript/await-thenable": "error",
+    "typescript/consistent-type-assertions": [
+      "error",
+      {
+        "assertionStyle": "as",
+        "objectLiteralTypeAssertions": "allow"
+      }
+    ],
+    "typescript/no-confusing-void-expression": [
+      "error",
+      {
+        "ignoreArrowShorthand": true
+      }
+    ],
+    "typescript/no-extra-non-null-assertion": ["error"],
+    "typescript/no-extraneous-class": ["error"],
+    "typescript/no-inferrable-types": ["error"],
+    "typescript/no-invalid-void-type": ["error"],
+    "typescript/no-misused-new": ["error"],
+    "typescript/no-unnecessary-type-arguments": ["error"],
+    "typescript/no-unnecessary-type-assertion": ["error"],
+    "typescript/no-unnecessary-type-constraint": ["error"],
+    "typescript/no-var-requires": ["error"],
+    "typescript/prefer-for-of": ["error"],
+    "typescript/prefer-includes": ["error"],
+    "typescript/prefer-nullish-coalescing": ["error"],
+    "typescript/prefer-readonly": ["error"],
+    "typescript/prefer-string-starts-ends-with": ["error"],
+    "typescript/prefer-ts-expect-error": ["error"],
+    "typescript/require-array-sort-compare": [
+      "error",
+      {
+        "ignoreStringArrays": true
+      }
+    ],
+    "typescript/restrict-plus-operands": ["error"],
+    "typescript/switch-exhaustiveness-check": ["error"],
+    "typescript/no-non-null-asserted-nullish-coalescing": ["error"]
+  }
+}

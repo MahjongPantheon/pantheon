@@ -20,25 +20,20 @@
     "i18n-po-json": "https://github.com/ctizen/i18n-po-json#2.0.8",
     "i18n-stex": "https://github.com/ctizen/stex#2.1.2",
     "lodash.debounce": "^4.0.8",
-    "nodemon": "^3.1.7",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.23.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.11.0",
     "@types/express": "^4.17.21",
     "@types/lodash.debounce": "^4.0.9",
-    "@typescript-eslint/eslint-plugin": "^8.34.1",
-    "@typescript-eslint/parser": "^8.34.1",
-    "eslint": "^9.29.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.3.3",
-    "typescript": "5.8.3"
+    "oxfmt": "0.60.0",
+    "oxlint": "1.75.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "typescript": "7.0.2"
   },
   "pnpm": {
     "neverBuiltDependencies": []

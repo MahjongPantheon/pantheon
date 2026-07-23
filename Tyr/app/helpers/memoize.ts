@@ -84,7 +84,7 @@ export function memoize<T extends Function>(fn: T, o?: any): T {
       i = k.length - (i + 1);
       // set change timeout only when new value computed, hits will not push out the tte, but it is arguable they should not
       // @ts-expect-error
-      return !c || c(i, v, k), (v[i] = fn.apply(this, (k[i] = arguments)));
+      return (!c || c(i, v, k), (v[i] = fn.apply(this, (k[i] = arguments))));
       // @ts-expect-error
     }.bind(this);
   }

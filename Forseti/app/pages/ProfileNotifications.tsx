@@ -41,7 +41,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
         rc: 1,
         pa: 1,
         ha: 0,
-      } as Record<string, number>,
+      },
     },
 
     validate: {
@@ -60,7 +60,16 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
       setIsLoading(false);
       form.setValues({
         id: resp.id ? resp.id : (id ?? ''),
-        notifications: resp.notifications,
+        notifications: resp.notifications as {
+          sr: number;
+          ss: number;
+          h: number;
+          ce: number;
+          te: number;
+          rc: number;
+          pa: number;
+          ha: number;
+        },
       });
     });
   }, []);

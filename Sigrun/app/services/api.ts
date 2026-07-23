@@ -85,6 +85,7 @@ export class ApiService {
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
+      // @ts-expect-error TODO: update types & node?
       return fetch(url, {
         ...opts,
         headers,

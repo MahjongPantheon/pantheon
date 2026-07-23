@@ -1,7 +1,8 @@
 ## Forseti: user and ratings control panel
-![Forseti](app/forsetiico.png?raw=true "Forseti")
 
-**Forseti** provides control panel for user profiles and mahjong sessions and events. 
+![Forseti](app/forsetiico.png?raw=true 'Forseti')
+
+**Forseti** provides control panel for user profiles and mahjong sessions and events.
 
 Features:
 

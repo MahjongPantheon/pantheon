@@ -34,7 +34,7 @@ export default defineConfig({
   },
   server: {
     port: 4008,
-    allowedHosts: ['bragi.pantheon.local']
+    allowedHosts: ['bragi.pantheon.local'],
   },
   build: {
     rollupOptions: {
