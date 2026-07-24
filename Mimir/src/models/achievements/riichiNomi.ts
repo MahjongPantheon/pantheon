@@ -1,43 +1,59 @@
-/*
-function getRiichiNomi(Db $db, array $eventIdList, array $players)
-{
-    $rounds = $db->table('round')
-        ->select('winner_id')
-        ->select('riichi')
-        ->whereIn('event_id', $eventIdList)
-        ->whereIn('outcome', ['multiron', 'ron'])
-        ->where('han', 1)
-        ->findArray();
+import { Repository } from "../../services/Repository";
+import { EventEntity } from "../../entities/Event.entity";
+import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
+import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
+import { RoundOutcome } from "tsclients/proto/atoms.pb";
+import { Yaku } from "../../helpers/yaku";
 
-    $filteredRounds = array_filter($rounds, function ($round) {
-        return in_array($round['winner_id'], explode(',', $round['riichi']));
-    });
+export async function getRiichiNomi(event: EventEntity, repo: Repository) {
+  const sessions = await getGamesOfEvent(event.id, repo);
+  const rounds = await getRoundsOfSessions(
+    sessions.map((s) => s.id),
+    repo,
+  );
 
-    $counts = [];
-    if ($filteredRounds) {
-        foreach ($filteredRounds as $round) {
-            if (empty($players[$round['winner_id']])) {
-                continue;
-            }
-            $name = $players[$round['winner_id']]['title'];
-            if (empty($counts[$name])) {
-                $counts[$name] = 0;
-            }
+  const riichiNomiCounts = new Map<number, number>();
 
-            $counts[$name]++;
+  for (const session of sessions) {
+    for (const round of rounds[session.id]) {
+      if (
+        round.outcome !== RoundOutcome.ROUND_OUTCOME_RON &&
+        round.outcome !== RoundOutcome.ROUND_OUTCOME_MULTIRON
+      ) {
+        continue;
+      }
+
+      for (const hand of round.hands) {
+        if (hand.han !== 1) {
+          continue;
         }
-    }
+        if (!hand.yaku?.includes(Yaku.RIICHI)) {
+          continue;
+        }
+        if (!riichiNomiCounts.has(hand.winnerId!)) {
+          riichiNomiCounts.set(hand.winnerId!, 0);
+        }
 
-    arsort($counts);
-    return array_map(
-        function ($name, $count) {
-            return [
-                'name' => $name,
-                'count' => $count
-            ];
-        },
-        array_slice(array_keys($counts), 0, 5),
-        array_slice(array_values($counts), 0, 5)
-    );
+        riichiNomiCounts.set(
+          hand.winnerId!,
+          riichiNomiCounts.get(hand.winnerId!)! + 1,
+        );
+      }
+    }
+  }
+
+  const bestCountsSorted = [...riichiNomiCounts.entries()].sort(
+    (a, b) => b[1] - a[1],
+  );
+  const bestCount = bestCountsSorted[0][1];
+  const playerIds = [];
+  for (const [playerId, count] of bestCountsSorted) {
+    if (count === bestCount) {
+      playerIds.push(playerId);
+    } else {
+      break;
+    }
+  }
+
+  return { count: bestCount, playerIds };
 }
-*/

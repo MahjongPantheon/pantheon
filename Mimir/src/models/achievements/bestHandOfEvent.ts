@@ -1,31 +1,39 @@
-/*
-function getBestHandOfEvent(Db $db, array $eventIdList, array $players)
-{
-    $rounds = $db->table('round')
-        ->select('han')
-        ->select('winner_id')
-        ->whereIn('event_id', $eventIdList)
-        ->whereNotNull('winner_id')
-        ->orderByDesc('han')
-        ->limit(10)
-        ->findArray();
-    $maxHan = 0;
-    $names = [];
-    foreach ($rounds as $round) {
-        if ($maxHan === 0) {
-            $maxHan = $round['han'];
-        }
+import { RoundOutcome } from "tsclients/proto/atoms.pb";
+import { EventEntity } from "../../entities/Event.entity";
+import { Repository } from "../../services/Repository";
+import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
+import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
 
-        if ($round['han'] < $maxHan) {
-            continue;
-        }
+export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
+  const sessions = await getGamesOfEvent(event.id, repo);
+  const rounds = await getRoundsOfSessions(
+    sessions.map((s) => s.id),
+    repo,
+  );
 
-        $names[] = $players[$round['winner_id']]['title'];
+  let maxHan = 0;
+  let ids: number[] = [];
+  for (const session of sessions) {
+    for (const round of rounds[session.id]) {
+      if (
+        round.outcome === RoundOutcome.ROUND_OUTCOME_RON ||
+        round.outcome === RoundOutcome.ROUND_OUTCOME_TSUMO ||
+        round.outcome === RoundOutcome.ROUND_OUTCOME_MULTIRON
+      ) {
+        for (const hand of round.hands) {
+          if (hand.han! + (hand.dora ?? 0) > maxHan) {
+            maxHan = hand.han! + (hand.dora ?? 0);
+            ids = [hand.winnerId!];
+          } else if (hand.han! + (hand.dora ?? 0) === maxHan) {
+            ids.push(hand.winnerId!);
+          }
+        }
+      }
     }
+  }
 
-    return [
-        'han' => $maxHan,
-        'names' => $names
-    ];
+  return {
+    han: maxHan,
+    playerIds: ids,
+  };
 }
-*/

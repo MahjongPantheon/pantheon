@@ -1,19 +1,12 @@
-/*
-function getNeedMoreGold(Db $db, array $eventIdList, array $players)
-{
-    $results = $db->table('session_results')
-        ->select('player_id')
-        ->select('score')
-        ->whereIn('event_id', $eventIdList)
-        ->orderByDesc('score')
-        ->limit(3)
-        ->findArray();
-    foreach ($results as &$result) {
-        if (empty($players[$result['player_id']])) {
-            continue;
-        }
-        $result['title'] = $players[$result['player_id']]['title'];
-    }
-    return $results;
+import { Repository } from "../../services/Repository";
+import { EventEntity } from "../../entities/Event.entity";
+import { SessionResultsEntity } from "../../entities/SessionResults.entity";
+
+export async function getNeedMoreGold(event: EventEntity, repo: Repository) {
+  const results = await repo.db.em.findAll(SessionResultsEntity, {
+    where: { event },
+    orderBy: { score: -1 },
+    limit: 3,
+  });
+  return results.map((r) => ({ playerId: r.playerId, score: r.score }));
 }
-*/
