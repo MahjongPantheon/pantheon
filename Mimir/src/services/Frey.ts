@@ -87,7 +87,7 @@ export class FreyService {
       headers.append('X-Current-Person-Id', meta.personId?.toString() ?? '');
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', meta.currentEventId?.toString() ?? '');
-      // Note: IDE might warn about inconsistent types of opts.body; this is not the case here.
+      // @ts-expect-error Note: IDE might warn about inconsistent types of opts.body; this is not the case here.
       const resp = await fetch(url, {
         ...opts,
         headers,

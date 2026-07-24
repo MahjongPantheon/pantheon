@@ -1,9 +1,9 @@
 import { PersonEx, Player } from 'tsclients/proto/atoms.pb.js';
 import { Model } from './Model.js';
-import { playerInfo } from 'src/helpers/cache/schema.js';
+import { playerInfo } from '../helpers/cache/schema.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
-import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 import { SessionModel } from './SessionModel.js';
 
 export class PlayerModel extends Model {
@@ -91,7 +91,9 @@ export class PlayerModel extends Model {
     return (
       await this.repo.em.findAll(SessionPlayerEntity, {
         fields: ['playerId', 'session.id'],
-        where: { session: sessionIds.map((id) => this.repo.em.getReference(SessionEntity, id)) },
+        where: {
+          session: sessionIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
+        },
         orderBy: { order: 1 },
       })
     ).map((reg) => [reg.playerId, reg.session.id]);
@@ -102,7 +104,10 @@ export class PlayerModel extends Model {
     const session = await sessionModel.findByRepresentationalHash(sessionHashList, ['event']);
     if (session.length === 0) {
       return {
-        playersData: { players: [] as PersonEx[], replaceMap: new Map<number, PersonEx>() },
+        playersData: {
+          players: [] as PersonEx[],
+          replaceMap: new Map<number, PersonEx>(),
+        },
         playerBySession: [],
       };
     }

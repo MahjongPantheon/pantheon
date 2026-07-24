@@ -1,12 +1,14 @@
-import { Repository } from 'src/services/Repository.js';
+import { Repository } from '../src/services/Repository.js';
 import { raw, EntityManager } from '@mikro-orm/postgresql';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionEntity } from '../src/entities/Session.entity.js';
 import { SessionStatus } from 'tsclients/proto/atoms.pb.js';
-import { JobsQueueEntity } from 'src/entities/JobsQueue.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { JobsQueueEntity } from '../src/entities/JobsQueue.entity.js';
+import { EventEntity } from '../src/entities/Event.entity.js';
 
 export async function sendStats(repo: Repository) {
-  const em: EntityManager = repo.db.em.fork({ useContext: true }) as EntityManager;
+  const em: EntityManager = repo.db.em.fork({
+    useContext: true,
+  }) as EntityManager;
 
   const [playedGames, staleGames, jobsQueueSize, eventsCount, emptyEventsCount, achievementsCount] =
     await Promise.all([

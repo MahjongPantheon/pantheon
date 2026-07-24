@@ -1,10 +1,10 @@
 import { PlayerHistoryModel } from '../PlayerHistoryModel.js';
 import { Model } from '../Model.js';
-import { Repository } from 'src/services/Repository.js';
-import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { init } from 'src/tests/initOrm.js';
+import { Repository } from '../../services/Repository.js';
+import { PlayerHistoryEntity } from '../../entities/PlayerHistory.entity.js';
+import { EventEntity } from '../../entities/Event.entity.js';
+import { RulesetEntity } from '../../entities/Ruleset.entity.js';
+import { init } from '../../tests/initOrm.js';
 
 const orm = await init();
 

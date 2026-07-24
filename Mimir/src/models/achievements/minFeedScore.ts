@@ -1,9 +1,9 @@
-import { Repository } from 'src/services/Repository';
+import { Repository } from '../../services/Repository';
 import { getGamesOfEvent } from './helpers/getGamesOfEvent';
 import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
-import { RoundEntity } from 'src/entities/Round.entity';
-import { SessionState } from 'src/helpers/SessionState';
-import { EventEntity } from 'src/entities/Event.entity';
+import { RoundEntity } from '../../entities/Round.entity';
+import { SessionState } from '../../helpers/SessionState';
+import { EventEntity } from '../../entities/Event.entity';
 import { addLoserPayment } from './helpers/addLoserPayment';
 
 export async function getMinFeedScore(event: EventEntity, repo: Repository) {

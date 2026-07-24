@@ -1,8 +1,8 @@
 import { SessionResultsModel } from '../SessionResultsModel.js';
 import { Model } from '../Model.js';
-import { Repository } from 'src/services/Repository.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { init } from 'src/tests/initOrm.js';
+import { Repository } from '../../services/Repository.js';
+import { RulesetEntity } from '../../entities/Ruleset.entity.js';
+import { init } from '../../tests/initOrm.js';
 
 const orm = await init();
 describe('SessionResults', () => {

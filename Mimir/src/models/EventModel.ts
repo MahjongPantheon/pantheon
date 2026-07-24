@@ -1,4 +1,4 @@
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 import { Model } from './Model.js';
 import {
   EventsGetAllRegisteredPlayersPayload,
@@ -36,22 +36,22 @@ import {
   PersonEx,
   WindShuffleMode,
 } from 'tsclients/proto/atoms.pb.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
-import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
+import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
+import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
 import { SessionModel } from './SessionModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
-import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { formatGameResult } from 'src/helpers/formatters.js';
+import { PenaltyEntity } from '../entities/Penalty.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { formatGameResult } from '../helpers/formatters.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { RoundModel } from './RoundModel.js';
 import { PlayerModel } from './PlayerModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
-import { SessionState } from 'src/helpers/SessionState.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { EventPrescriptEntity } from 'src/entities/EventPrescript.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
+import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
+import { SessionState } from '../helpers/SessionState.js';
+import { RoundEntity } from '../entities/Round.entity.js';
+import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
 import { checkForErrors, unpackScript } from './EventPrescriptModel.js';
 import { AchievementsModel } from './AchievementsModel.js';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
@@ -108,13 +108,10 @@ export class EventModel extends Model {
         .groupBy('event_id')
     );
 
-    return sessions.reduce(
-      (acc, session) => {
-        acc[session.event_id] = session.session_count;
-        return acc;
-      },
-      {} as Record<number, number>
-    );
+    return sessions.reduce((acc, session) => {
+      acc[session.event_id] = session.session_count;
+      return acc;
+    }, {});
   }
 
   async getEvents(
@@ -251,7 +248,9 @@ export class EventModel extends Model {
     dateFrom: string | null,
     dateTo: string | null
   ): Promise<EventsGetRatingTableResponse> {
-    const events = await this.repo.em.findAll(EventEntity, { where: { id: eventIdList } });
+    const events = await this.repo.em.findAll(EventEntity, {
+      where: { id: eventIdList },
+    });
     const mainEvent = events.find((e) => e.id === eventIdList[0]);
     if (!mainEvent) {
       throw new Error('Main event not found');
@@ -270,7 +269,9 @@ export class EventModel extends Model {
           dateTo
         );
     const playerItems = (
-      await this.repo.frey.GetPersonalInfo({ ids: dataItems.map((item) => item.playerId) })
+      await this.repo.frey.GetPersonalInfo({
+        ids: dataItems.map((item) => item.playerId),
+      })
     ).people;
 
     const regData = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
@@ -738,7 +739,9 @@ export class EventModel extends Model {
       throw new Error('Ruleset configuration is required');
     }
 
-    const event = await this.repo.em.findOneOrFail(EventEntity, { id: eventData.id });
+    const event = await this.repo.em.findOneOrFail(EventEntity, {
+      id: eventData.id,
+    });
     if (!event) {
       throw new Error(`Event with id ${eventData.id} not found`);
     }
@@ -766,7 +769,9 @@ export class EventModel extends Model {
 
     if (
       this.repo.meta.personId &&
-      (await this.repo.frey.GetSuperadminFlag({ personId: this.repo.meta.personId }))
+      (await this.repo.frey.GetSuperadminFlag({
+        personId: this.repo.meta.personId,
+      }))
     ) {
       event.onlinePlatform = eventData.event.platformId;
     } else {
@@ -1135,7 +1140,9 @@ export class EventModel extends Model {
   }
 
   async getPrescriptedConfig(eventId: number): Promise<EventsGetPrescriptedEventConfigResponse> {
-    const prescript = await this.repo.em.findOne(EventPrescriptEntity, { id: eventId });
+    const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
+      id: eventId,
+    });
     if (!prescript) {
       throw new Error(`Event ${eventId} not found`);
     }
@@ -1163,7 +1170,9 @@ export class EventModel extends Model {
   async updatePrescriptedConfig(
     payload: EventsUpdatePrescriptedEventConfigPayload
   ): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, { id: payload.eventId });
+    const event = await this.repo.em.findOne(EventEntity, {
+      id: payload.eventId,
+    });
     if (!event) {
       throw new Error(`Event ${payload.eventId} not found`);
     }
@@ -1177,8 +1186,9 @@ export class EventModel extends Model {
     }
 
     const prescript =
-      (await this.repo.em.findOne(EventPrescriptEntity, { id: payload.eventId })) ??
-      new EventPrescriptEntity();
+      (await this.repo.em.findOne(EventPrescriptEntity, {
+        id: payload.eventId,
+      })) ?? new EventPrescriptEntity();
 
     prescript.event = event;
     prescript.script = payload.prescript;

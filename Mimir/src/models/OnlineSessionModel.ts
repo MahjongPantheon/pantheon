@@ -4,19 +4,19 @@ import {
   TypedGamesAddOnlineReplayPayload,
 } from 'tsclients/proto/mimir.pb.js';
 import { Model } from './Model.js';
-import { Downloader } from 'src/helpers/online/Downloader.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { Downloader } from '../helpers/online/Downloader.js';
+import { EventEntity } from '../entities/Event.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 import { PlatformType, RulesetConfig, SessionStatus } from 'tsclients/proto/atoms.pb.js';
-import { OnlineParser } from 'src/helpers/online/Parser.js';
-import { Tenhou6OnlineParser } from 'src/helpers/online/Tenhou6Parser.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
+import { OnlineParser } from '../helpers/online/Parser.js';
+import { Tenhou6OnlineParser } from '../helpers/online/Tenhou6Parser.js';
+import { RoundEntity } from '../entities/Round.entity.js';
 import { CronModel } from './CronModel.js';
-import { formatRound, makeReplayLink } from 'src/helpers/formatters.js';
+import { formatRound, makeReplayLink } from '../helpers/formatters.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
-import { SessionState } from 'src/helpers/SessionState.js';
+import { SessionState } from '../helpers/SessionState.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
-import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
+import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
 import { PlayerModel } from './PlayerModel.js';
 
 enum ContentType {
@@ -175,7 +175,7 @@ export class OnlineSessionModel extends Model {
       game: {
         sessionHash: session.representationalHash ?? '',
         date: session.endDate,
-        replayLink: makeReplayLink(session.replayHash!, platformId),
+        replayLink: makeReplayLink(session.replayHash ?? null, platformId),
         players,
         finalResults: sessionResults,
         rounds: rounds.map((round) =>

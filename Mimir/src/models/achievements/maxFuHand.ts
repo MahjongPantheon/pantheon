@@ -1,6 +1,6 @@
-import { EventEntity } from 'src/entities/Event.entity';
-import { RoundEntity } from 'src/entities/Round.entity';
-import { Repository } from 'src/services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
+import { RoundEntity } from '../../entities/Round.entity';
+import { Repository } from '../../services/Repository';
 
 export async function getMaxFuHand(eventId: number, repo: Repository) {
   const rounds = await repo.db.em.findAll(RoundEntity, {

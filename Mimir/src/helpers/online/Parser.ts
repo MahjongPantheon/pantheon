@@ -1,14 +1,14 @@
 import { SimpleXmlParser, XmlEvent } from './xmlparser.js';
 import { fromTenhou } from '../yaku.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { SessionState } from 'src/helpers/SessionState.js';
-import { EventRegistrationModel } from 'src/models/EventRegistrationModel.js';
-import { Model } from 'src/models/Model.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
-import { Repository } from 'src/services/Repository.js';
-import { PlayerModel } from 'src/models/PlayerModel.js';
+import { SessionEntity } from '../../entities/Session.entity.js';
+import { RoundEntity } from '../../entities/Round.entity.js';
+import { EventEntity } from '../../entities/Event.entity.js';
+import { SessionState } from '../../helpers/SessionState.js';
+import { EventRegistrationModel } from '../../models/EventRegistrationModel.js';
+import { Model } from '../../models/Model.js';
+import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
+import { Repository } from '../../services/Repository.js';
+import { PlayerModel } from '../../models/PlayerModel.js';
 import { validateAndCreateFromOnlineData } from '../roundValidation.js';
 import { Round } from 'tsclients/proto/atoms.pb.js';
 

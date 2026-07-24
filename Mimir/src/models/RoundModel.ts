@@ -1,15 +1,15 @@
-import { checkRound } from 'src/helpers/roundValidation.js';
+import { checkRound } from '../helpers/roundValidation.js';
 import { Model } from './Model.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { RoundEntity } from '../entities/Round.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { Round, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { Moment } from 'moment';
-import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
-import { HandEntity } from 'src/entities/Hand.entity.js';
-import { SessionState } from 'src/helpers/SessionState.js';
-import { PaymentsInfo, PointsCalc } from 'src/helpers/PointsCalc.js';
+import { SessionStateEntity } from '../entities/SessionState.entity.js';
+import { HandEntity } from '../entities/Hand.entity.js';
+import { SessionState } from '../helpers/SessionState.js';
+import { PaymentsInfo, PointsCalc } from '../helpers/PointsCalc.js';
 
 export class RoundModel extends Model {
   async findBySessionIds(sessionIds: number[]) {

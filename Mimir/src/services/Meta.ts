@@ -1,8 +1,8 @@
 import acceptLanguage from 'accept-language';
 import { IncomingHttpHeaders } from 'http';
-import { Storage } from '../../../Common/storage.js';
-import { StorageStrategyServer } from '../../../Common/storageStrategyServer.js';
-import { ConfigService } from './Config.js';
+import { Storage } from '../../../Common/storage';
+import { StorageStrategyServer } from '../../../Common/storageStrategyServer';
+import { ConfigService } from './Config';
 
 acceptLanguage.languages(['en-US', 'de-DE', 'ru-RU']);
 

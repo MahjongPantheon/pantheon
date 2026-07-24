@@ -1,6 +1,6 @@
-import { Repository } from 'src/services/Repository';
+import { Repository } from '../../services/Repository';
 import { calcRiichiStat } from './helpers/getRiichiStat';
-import { EventEntity } from 'src/entities/Event.entity';
+import { EventEntity } from '../../entities/Event.entity';
 
 export async function getHonoredDonor(event: EventEntity, repo: Repository) {
   try {

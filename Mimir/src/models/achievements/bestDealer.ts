@@ -1,5 +1,5 @@
-import { Repository } from 'src/services/Repository';
-import { EventEntity } from 'src/entities/Event.entity';
+import { Repository } from '../../services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
 import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
 import { getGamesOfEvent } from './helpers/getGamesOfEvent';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';

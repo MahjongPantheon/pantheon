@@ -1,7 +1,7 @@
-import { RoundEntity } from 'src/entities/Round.entity';
-import { Model } from 'src/models/Model';
-import { RoundModel } from 'src/models/RoundModel';
-import { Repository } from 'src/services/Repository';
+import { RoundEntity } from '../../../entities/Round.entity';
+import { Model } from '../../../models/Model';
+import { RoundModel } from '../../../models/RoundModel';
+import { Repository } from '../../../services/Repository';
 
 const roundsCache: Map<string, { lastCalc: Date; rounds: Record<number, RoundEntity[]> }> =
   new Map();
@@ -30,9 +30,7 @@ export async function getRoundsOfSessions(sessionIds: number[], repo: Repository
   const roundModel = Model.getModel(repo, RoundModel);
   const rounds = (await roundModel.findBySessionIds(sessionIds)).reduce(
     (acc, res) => {
-      if (!acc[res.session.id]) {
-        acc[res.session.id] = [];
-      }
+      acc[res.session.id] ??= [];
       acc[res.session.id].push(res);
       return acc;
     },

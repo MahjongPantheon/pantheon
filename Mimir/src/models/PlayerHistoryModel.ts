@@ -1,12 +1,12 @@
 import { Moment } from 'moment-timezone';
 import { Model } from './Model.js';
-import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import moment from 'moment';
 import { PersonEx } from 'tsclients/proto/atoms.pb.js';
-import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
+import { PenaltyEntity } from '../entities/Penalty.entity.js';
+import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
 
 export class PlayerHistoryModel extends Model {
   async findLastByEvent(eventIds: number[]) {
@@ -31,7 +31,13 @@ export class PlayerHistoryModel extends Model {
       .select(['player_history.player_id', 'player_history.event_id'])
       .whereIn('event_id', eventIds)
       .where({
-        ...(date ? { 'session.end_date': { $lt: date.utc().format('YYYY-MM-DD HH:mm:ss') } } : {}),
+        ...(date
+          ? {
+              'session.end_date': {
+                $lt: date.utc().format('YYYY-MM-DD HH:mm:ss'),
+              },
+            }
+          : {}),
       })
       .max('player_history.id as mx')
       .groupBy(['player_history.player_id', 'player_history.event_id']);

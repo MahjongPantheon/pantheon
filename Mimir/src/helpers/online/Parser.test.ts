@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { init } from 'src/tests/initOrm.js';
+import { EventEntity } from '../../entities/Event.entity.js';
+import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
+import { RulesetEntity } from '../../entities/Ruleset.entity.js';
+import { init } from '../../tests/initOrm.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { OnlineParser } from './Parser.js';
-import { Repository } from 'src/services/Repository.js';
+import { Repository } from '../../services/Repository.js';
 import { EntityManager } from '@mikro-orm/core';
 
 const makeEvent = (em: EntityManager) => {
