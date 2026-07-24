@@ -1,18 +1,18 @@
-import { JobsQueueEntity } from 'src/entities/JobsQueue.entity.js';
+import { JobsQueueEntity } from '../entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
 import moment from 'moment';
-import { PlayerStatsEntity } from 'src/entities/PlayerStats.entity.js';
+import { PlayerStatsEntity } from '../entities/PlayerStats.entity.js';
 import {
   PlayersGetPlayerStatsPayload,
   PlayersGetPlayerStatsResponse,
 } from 'tsclients/proto/mimir.pb.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 import { SessionModel } from './SessionModel.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
+import { RoundEntity } from '../entities/Round.entity.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 import {
   HandValueStat,
   PersonEx,
@@ -20,10 +20,10 @@ import {
   RoundOutcome,
   YakuStat,
 } from 'tsclients/proto/atoms.pb.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { PointsCalc, RiichiBetAssignment } from 'src/helpers/PointsCalc.js';
-import { HandEntity } from 'src/entities/Hand.entity.js';
-import { SessionState } from 'src/helpers/SessionState.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
+import { PointsCalc, RiichiBetAssignment } from '../helpers/PointsCalc.js';
+import { HandEntity } from '../entities/Hand.entity.js';
+import { SessionState } from '../helpers/SessionState.js';
 
 type OutcomeStats = {
   ron: number;
@@ -159,7 +159,9 @@ export class PlayerStatsModel extends Model {
     dateFrom?: string,
     dateTo?: string
   ): Promise<PlayersGetPlayerStatsResponse> {
-    const events = await this.repo.em.findAll(EventEntity, { where: { id: eventIdList } });
+    const events = await this.repo.em.findAll(EventEntity, {
+      where: { id: eventIdList },
+    });
     if (events.length !== eventIdList.length) {
       throw new Error('Some of events were not found');
     }
@@ -286,7 +288,9 @@ export class PlayerStatsModel extends Model {
     }
 
     const results = await this.repo.em.findAll(SessionResultsEntity, {
-      where: { session: games.map((game) => this.repo.em.getReference(SessionEntity, game.id)) },
+      where: {
+        session: games.map((game) => this.repo.em.getReference(SessionEntity, game.id)),
+      },
     });
 
     const fullResults = new Map<
@@ -307,7 +311,9 @@ export class PlayerStatsModel extends Model {
 
   async _fetchRounds(gameIds: number[]) {
     const rounds = await this.repo.em.findAll(RoundEntity, {
-      where: { session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)) },
+      where: {
+        session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
+      },
       populate: ['hands'],
     });
     return rounds;
@@ -315,7 +321,9 @@ export class PlayerStatsModel extends Model {
 
   async _fetchPlayerInfo(gameIds: number[]) {
     const players = await this.repo.em.findAll(SessionPlayerEntity, {
-      where: { session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)) },
+      where: {
+        session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
+      },
     });
     const playerIds = players.map((sp) => sp.playerId);
     const playerModel = this.getModel(PlayerModel);
@@ -402,7 +410,10 @@ export class PlayerStatsModel extends Model {
       const result = game.results.get(playerId);
       if (result) {
         const place = result.place;
-        acc.push({ place, count: (acc.find((item) => item.place === place)?.count ?? 0) + 1 });
+        acc.push({
+          place,
+          count: (acc.find((item) => item.place === place)?.count ?? 0) + 1,
+        });
       }
       return acc;
     }, [] as PlacesSummaryItem[]);
@@ -702,7 +713,10 @@ export class PlayerStatsModel extends Model {
         }
       }
     }
-    return Array.from(summary.entries()).map(([han, count]) => ({ hanCount: han, count }));
+    return Array.from(summary.entries()).map(([han, count]) => ({
+      hanCount: han,
+      count,
+    }));
   }
 
   _getYakuSummary(playerId: number, rounds: RoundEntity[]): YakuStat[] {
@@ -716,7 +730,10 @@ export class PlayerStatsModel extends Model {
         }
       }
     }
-    return Array.from(summary.entries()).map(([yaku, count]) => ({ yakuId: yaku, count }));
+    return Array.from(summary.entries()).map(([yaku, count]) => ({
+      yakuId: yaku,
+      count,
+    }));
   }
 
   _getRiichiSummary(ruleset: RulesetEntity, playerId: number, rounds: RoundEntity[]): RiichiStats {

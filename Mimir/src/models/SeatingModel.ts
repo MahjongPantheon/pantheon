@@ -1,6 +1,6 @@
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
+import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
 import { Model } from './Model.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PlayerInSessionModel } from './PlayerInSessionModel.js';
@@ -30,7 +30,7 @@ import { SessionModel } from './SessionModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PenaltyModel } from './PenaltyModel.js';
 import { randomInt } from 'node:crypto';
-import { EventPrescriptEntity } from 'src/entities/EventPrescript.entity.js';
+import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
 import { unpackScript } from './EventPrescriptModel.js';
 
 export class SeatingModel extends Model {
@@ -44,7 +44,10 @@ export class SeatingModel extends Model {
     const startRating = event.ruleset?.rules.startRating;
 
     const registrations = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.em.getReference(EventEntity, eventId), ignoreSeating: 0 },
+      where: {
+        event: this.repo.em.getReference(EventEntity, eventId),
+        ignoreSeating: 0,
+      },
     });
 
     const regIds = registrations.map((r) => r.id);
@@ -219,7 +222,9 @@ export class SeatingModel extends Model {
     }
 
     if (event.isPrescripted) {
-      const prescript = await this.repo.em.findOne(EventPrescriptEntity, { event });
+      const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
+        event,
+      });
       if (prescript) {
         prescript.nextGame--;
         this.repo.em.persist(prescript);
@@ -279,7 +284,9 @@ export class SeatingModel extends Model {
     }
 
     return {
-      tables: chunks.map((table) => ({ players: table.map((playerId) => ({ playerId })) })),
+      tables: chunks.map((table) => ({
+        players: table.map((playerId) => ({ playerId })),
+      })),
     };
   }
 

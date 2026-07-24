@@ -1,7 +1,7 @@
-import { HandEntity } from 'src/entities/Hand.entity.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { HandEntity } from '../entities/Hand.entity.js';
+import { RoundEntity } from '../entities/Round.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 import {
   AbortResult,
   ChomboResult,

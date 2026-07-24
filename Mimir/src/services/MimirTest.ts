@@ -102,7 +102,7 @@ export class MimirTest {
       headers.append('X-Current-Person-Id', this._personId?.toString() ?? '');
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId?.toString() ?? '');
-      // Note: IDE might warn about inconsistent types of opts.body; this is not the case here.
+      // @ts-expect-error Note: IDE might warn about inconsistent types of opts.body; this is not the case here.
       const resp = await fetch(url, {
         ...opts,
         headers,

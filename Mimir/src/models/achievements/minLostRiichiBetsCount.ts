@@ -1,5 +1,5 @@
-import { Repository } from 'src/services/Repository';
-import { EventEntity } from 'src/entities/Event.entity';
+import { Repository } from '../../services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
 import { calcRiichiStat } from './helpers/getRiichiStat';
 
 export async function getMinLostRiichiBetsCount(event: EventEntity, repo: Repository) {

@@ -1,26 +1,22 @@
 {
   "compilerOptions": {
+    "target": "esnext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "module": "Preserve",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": ".",
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
-    "module": "Preserve",
-    "moduleResolution": "bundler",
-    "target": "ES2022",
-    "strict": true,
-    "outDir": "dist",
-    "declaration": true,
     "experimentalDecorators": true,
-    "types": ["@types/jest"],
+    "emitDecoratorMetadata": true,
+    "types": ["@types/jest"]
   },
   "include": ["build.ts", "src/**/*", "cron/**/*"],
-  "exclude": ["node_modules/**/*", "dist/**/*", "src/seeders/*"],
+  "exclude": ["node_modules/**/*", "dist/**/*", "src/seeders/*"]
 }

@@ -1,10 +1,10 @@
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 import { Model } from './Model.js';
 import { SessionModel } from './SessionModel.js';
 import { PersonEx, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 import { EventsGetGamesSeriesResponse } from 'tsclients/proto/mimir.pb.js';
 
 type SeriesResult = {

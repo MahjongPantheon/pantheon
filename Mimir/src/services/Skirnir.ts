@@ -1,9 +1,9 @@
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { PersonEx, Round } from 'tsclients/proto/atoms.pb.js';
-import { Model } from 'src/models/Model.js';
+import { Model } from '../models/Model.js';
 import { Repository } from './Repository.js';
-import { EventModel } from 'src/models/EventModel.js';
-import { PlayerModel } from 'src/models/PlayerModel.js';
+import { EventModel } from '../models/EventModel.js';
+import { PlayerModel } from '../models/PlayerModel.js';
 
 enum Notifications {
   SessionSeatingReady = 'sr',
@@ -395,7 +395,12 @@ export class SkirnirService {
 
   protected _getFilteredIdsByPermissions(
     type: keyof typeof notificationsDefaults,
-    settings: Array<{ id: number; title: string; telegramId: string; notifications: string }>
+    settings: Array<{
+      id: number;
+      title: string;
+      telegramId: string;
+      notifications: string;
+    }>
   ): string[] {
     const ids: string[] = [];
 
@@ -429,9 +434,14 @@ export class SkirnirService {
     return [isTestEvent, event.title, event.ruleset];
   }
 
-  protected async _fetchNotificationSettings(
-    playerIds: number[]
-  ): Promise<Array<{ id: number; title: string; telegramId: string; notifications: string }>> {
+  protected async _fetchNotificationSettings(playerIds: number[]): Promise<
+    Array<{
+      id: number;
+      title: string;
+      telegramId: string;
+      notifications: string;
+    }>
+  > {
     const playerModel = Model.getModel(this._repo, PlayerModel);
     const players = await playerModel.findById(playerIds, true);
 
@@ -448,7 +458,12 @@ export class SkirnirService {
   }
 
   protected _getPlayersMap(
-    settings: Array<{ id: number; title: string; telegramId: string; notifications: string }>
+    settings: Array<{
+      id: number;
+      title: string;
+      telegramId: string;
+      notifications: string;
+    }>
   ): Record<number, string> {
     const map: Record<number, string> = {};
 

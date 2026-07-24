@@ -19,18 +19,18 @@
  * @Author Steven Vch. <unstatik@staremax.com>
  */
 
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionEntity } from '../../entities/Session.entity.js';
 import { PersonEx, PlatformType, Round } from 'tsclients/proto/atoms.pb.js';
 import { Tenhou6Model } from './Tenhou6Model.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { SessionState } from 'src/helpers/SessionState.js';
+import { RoundEntity } from '../../entities/Round.entity.js';
+import { EventEntity } from '../../entities/Event.entity.js';
+import { SessionState } from '../../helpers/SessionState.js';
 import { validateAndCreateFromOnlineData } from '../roundValidation.js';
-import { Model } from 'src/models/Model.js';
-import { EventRegistrationModel } from 'src/models/EventRegistrationModel.js';
-import { Repository } from 'src/services/Repository.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
-import { PlayerModel } from 'src/models/PlayerModel.js';
+import { Model } from '../../models/Model.js';
+import { EventRegistrationModel } from '../../models/EventRegistrationModel.js';
+import { Repository } from '../../services/Repository.js';
+import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
+import { PlayerModel } from '../../models/PlayerModel.js';
 import { fromTenhou } from '../yaku.js';
 
 interface TokenUnItem {

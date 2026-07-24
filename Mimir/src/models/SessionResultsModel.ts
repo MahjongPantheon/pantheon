@@ -1,9 +1,9 @@
 import { Model } from './Model.js';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { SessionState } from 'src/helpers/SessionState.js';
+import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
+import { SessionState } from '../helpers/SessionState.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import {
   PlayersGetLastResultsPayload,

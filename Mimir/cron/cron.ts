@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { Repository } from 'src/services/Repository.js';
+import { Repository } from '../src/services/Repository.js';
 import config from '../src/mikro-orm.config.js';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { sendStats } from './send_stats.js';

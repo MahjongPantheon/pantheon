@@ -7,11 +7,11 @@ import {
 import { Model } from './Model.js';
 import { GenericSessionPayload } from 'tsclients/proto/atoms.pb.js';
 import { SessionModel } from './SessionModel.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 import { RoundModel } from './RoundModel.js';
-import { SessionState } from 'src/helpers/SessionState.js';
-import { formatRound } from 'src/helpers/formatters.js';
-import { toPaymentLog } from 'src/helpers/PointsCalc.js';
+import { SessionState } from '../helpers/SessionState.js';
+import { formatRound } from '../helpers/formatters.js';
+import { toPaymentLog } from '../helpers/PointsCalc.js';
 
 export class PlayerInSessionModel extends Model {
   async getLastRound(input: PlayersGetLastRoundPayload): Promise<PlayersGetLastRoundResponse> {
@@ -178,7 +178,12 @@ export class PlayerInSessionModel extends Model {
       .orderBy('session_players.order', 'asc');
 
     return this.repo.em.execute<
-      { player_id: number; order: number; session_id: number; table_index: number }[]
+      {
+        player_id: number;
+        order: number;
+        session_id: number;
+        table_index: number;
+      }[]
     >(limit ? query.limit(limit) : query);
   }
 }

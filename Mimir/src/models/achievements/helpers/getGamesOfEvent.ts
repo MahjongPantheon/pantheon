@@ -1,7 +1,7 @@
-import { SessionEntity } from 'src/entities/Session.entity';
-import { Model } from 'src/models/Model';
-import { SessionModel } from 'src/models/SessionModel';
-import { Repository } from 'src/services/Repository';
+import { SessionEntity } from '../../../entities/Session.entity';
+import { Model } from '../../../models/Model';
+import { SessionModel } from '../../../models/SessionModel';
+import { Repository } from '../../../services/Repository';
 import { SessionStatus } from 'tsclients/proto/atoms.pb';
 
 const gamesCache: Map<number, { lastCalc: Date; games: SessionEntity[] }> = new Map();

@@ -11,16 +11,16 @@ import {
 } from 'tsclients/proto/atoms.pb.js';
 import moment from 'moment-timezone';
 import { Model } from './Model.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 import { SessionResultsModel } from './SessionResultsModel.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { PlayerHistoryEntity } from 'src/entities/PlayerHistory.entity.js';
-import { SessionState } from 'src/helpers/SessionState.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
+import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
+import { SessionState } from '../helpers/SessionState.js';
 import { PlayerModel } from './PlayerModel.js';
-import { formatGameResult } from 'src/helpers/formatters.js';
+import { formatGameResult } from '../helpers/formatters.js';
 import { RoundModel } from './RoundModel.js';
 import { Populate } from '@mikro-orm/postgresql';
 import {
@@ -32,14 +32,14 @@ import {
   GamesStartGamePayload,
 } from 'tsclients/proto/mimir.pb.js';
 import { EventModel } from './EventModel.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
+import { RoundEntity } from '../entities/Round.entity.js';
 import { CronModel } from './CronModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
-import { PaymentsInfo } from 'src/helpers/PointsCalc.js';
-import { sha1 } from 'src/helpers/crypto.js';
+import { PaymentsInfo } from '../helpers/PointsCalc.js';
+import { sha1 } from '../helpers/crypto.js';
 import { randomInt } from 'crypto';
-import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
-import { Context } from 'src/context.js';
+import { SessionStateEntity } from '../entities/SessionState.entity.js';
+import { Context } from '../context.js';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
 import { AchievementsModel } from './AchievementsModel.js';
 
@@ -83,7 +83,9 @@ export class SessionModel extends Model {
     return this.repo.em.findAll(SessionEntity, {
       where: {
         status,
-        event: { $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)) },
+        event: {
+          $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)),
+        },
       },
       ...(orderBy !== null
         ? {
@@ -111,9 +113,19 @@ export class SessionModel extends Model {
         event_id: eventId,
         ...(withStatus !== '*' ? { status: withStatus } : {}),
         ...(dateFrom
-          ? { start_date: { gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss') } }
+          ? {
+              start_date: {
+                gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss'),
+              },
+            }
           : {}),
-        ...(dateTo ? { end_date: { lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss') } } : {}),
+        ...(dateTo
+          ? {
+              end_date: {
+                lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss'),
+              },
+            }
+          : {}),
       })
       .groupBy('id')
       .execute()
@@ -141,7 +153,9 @@ export class SessionModel extends Model {
 
   async getGamesCount(eventIdList: number[], withStatus: SessionStatus) {
     return this.repo.em.count(SessionEntity, {
-      event: { $in: eventIdList.map((id) => this.repo.em.getReference(EventEntity, id)) },
+      event: {
+        $in: eventIdList.map((id) => this.repo.em.getReference(EventEntity, id)),
+      },
       status: withStatus,
     });
   }

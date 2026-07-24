@@ -1,5 +1,5 @@
-import { RoundEntity } from 'src/entities/Round.entity';
-import { SessionState } from 'src/helpers/SessionState';
+import { RoundEntity } from '../../../entities/Round.entity';
+import { SessionState } from '../../../helpers/SessionState';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export type PaymentList = Map<number, { sum: number; count: number }>;

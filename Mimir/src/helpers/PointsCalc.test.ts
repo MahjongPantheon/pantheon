@@ -1,4 +1,4 @@
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { PointsCalc } from './PointsCalc.js';
 
 describe('PointsCalc', () => {
@@ -532,7 +532,12 @@ describe('PointsCalc', () => {
       4: 0,
     };
 
-    expect(new PointsCalc().draw(currentScores, [], [])).toEqual({ 1: 0, 2: 0, 3: 0, 4: 0 });
+    expect(new PointsCalc().draw(currentScores, [], [])).toEqual({
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+    });
 
     expect(new PointsCalc().draw(currentScores, [1], [])).toEqual({
       1: 3000,

@@ -1,10 +1,10 @@
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { SessionState } from './SessionState.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { HandEntity } from 'src/entities/Hand.entity.js';
+import { RoundEntity } from '../entities/Round.entity.js';
+import { HandEntity } from '../entities/Hand.entity.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 
 type Vals = {
   outcome: RoundOutcome;

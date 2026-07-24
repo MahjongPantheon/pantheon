@@ -1,9 +1,12 @@
-import { JobsQueueEntity } from 'src/entities/JobsQueue.entity.js';
+import { JobsQueueEntity } from '../entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
 
 export class CronModel extends Model {
   public async getPendingJobs(limit: number) {
-    return this.repo.em.findAll(JobsQueueEntity, { orderBy: { createdAt: 'asc' }, limit });
+    return this.repo.em.findAll(JobsQueueEntity, {
+      orderBy: { createdAt: 'asc' },
+      limit,
+    });
   }
 
   public async scheduleRecalcStats(eventId: number, playerIds: number[]) {

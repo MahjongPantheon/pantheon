@@ -1,6 +1,6 @@
-import { PenaltyEntity } from 'src/entities/Penalty.entity.js';
+import { PenaltyEntity } from '../entities/Penalty.entity.js';
 import { Model } from './Model.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 import {
   CancelPenaltyPayload,
   ChomboResponse,
@@ -10,18 +10,18 @@ import {
 } from 'tsclients/proto/mimir.pb.js';
 import { PlayerModel } from './PlayerModel.js';
 import { EventModel } from './EventModel.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 import { SessionModel } from './SessionModel.js';
 import { GenericSuccessResponse, SessionStatus } from 'tsclients/proto/atoms.pb.js';
-import { SessionState } from 'src/helpers/SessionState.js';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
+import { SessionState } from '../helpers/SessionState.js';
+import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
-import { sha1 } from 'src/helpers/crypto.js';
+import { sha1 } from '../helpers/crypto.js';
 import { randomInt } from 'crypto';
 import moment from 'moment';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
 import { RoundModel } from './RoundModel.js';
-import { SessionPlayerEntity } from 'src/entities/SessionPlayer.entity.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 
 export class PenaltyModel extends Model {
   async findBySession(sessionId: number[]) {
@@ -248,7 +248,9 @@ export class PenaltyModel extends Model {
   }
 
   async cancelPenalty(payload: CancelPenaltyPayload): Promise<GenericSuccessResponse> {
-    const penalty = await this.repo.em.findOne(PenaltyEntity, { id: payload.penaltyId });
+    const penalty = await this.repo.em.findOne(PenaltyEntity, {
+      id: payload.penaltyId,
+    });
     if (!penalty) {
       throw new Error('Penalty not found');
     }
@@ -285,7 +287,9 @@ export class PenaltyModel extends Model {
       throw new Error("You don't have the necessary permissions to list chombo");
     }
 
-    const event = await this.repo.em.findOne(EventEntity, eventId, { populate: ['ruleset'] });
+    const event = await this.repo.em.findOne(EventEntity, eventId, {
+      populate: ['ruleset'],
+    });
     if (!event) {
       throw new Error('Event not found');
     }

@@ -1,10 +1,10 @@
-import { EventEntity } from 'src/entities/Event.entity';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity';
-import { PointsCalc } from 'src/helpers/PointsCalc';
-import { Model } from 'src/models/Model';
-import { PlayerModel } from 'src/models/PlayerModel';
-import { SessionResultsModel } from 'src/models/SessionResultsModel';
-import { Repository } from 'src/services/Repository';
+import { EventEntity } from '../../../entities/Event.entity';
+import { SessionResultsEntity } from '../../../entities/SessionResults.entity';
+import { PointsCalc } from '../../../helpers/PointsCalc';
+import { Model } from '../../../models/Model';
+import { PlayerModel } from '../../../models/PlayerModel';
+import { SessionResultsModel } from '../../../models/SessionResultsModel';
+import { Repository } from '../../../services/Repository';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 import { getGamesOfEvent } from './getGamesOfEvent';
 import { getRoundsOfSessions } from './getRoundsOfSessions';
@@ -68,9 +68,7 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
     await sessionResultsModel.findBySession(sessions.map((s) => s.id))
   ).reduce(
     (acc, res) => {
-      if (!acc[res.session.id]) {
-        acc[res.session.id] = [];
-      }
+      acc[res.session.id] ??= [];
       acc[res.session.id].push(res);
       return acc;
     },

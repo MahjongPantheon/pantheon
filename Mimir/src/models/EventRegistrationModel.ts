@@ -1,6 +1,6 @@
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
+import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
 import { Model } from './Model.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
 import {
   EventsUpdatePlayerReplacementPayload,
@@ -9,7 +9,7 @@ import {
   EventsUpdatePlayersTeamsPayload,
 } from 'tsclients/proto/mimir.pb.js';
 import { LocalIdMapping, TeamMapping } from 'tsclients/proto/atoms.pb.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
 
 export class EventRegistrationModel extends Model {
   async findByPlayerAndEvent(ids: number[], eventId: number) {
@@ -24,7 +24,9 @@ export class EventRegistrationModel extends Model {
   async findByEventId(eventIds: number[]) {
     return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
-        event: { $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)) },
+        event: {
+          $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)),
+        },
       },
     });
   }
@@ -85,7 +87,10 @@ export class EventRegistrationModel extends Model {
 
   async findIgnoredPlayersIdsByEvent(eventIds: number[]) {
     const result = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.em.getReference(EventEntity, eventIds), ignoreSeating: 1 },
+      where: {
+        event: this.repo.em.getReference(EventEntity, eventIds),
+        ignoreSeating: 1,
+      },
     });
     return result.map((reg) => reg.playerId);
   }
@@ -98,7 +103,10 @@ export class EventRegistrationModel extends Model {
 
   async fetchPlayersRegDataByIds(eventIds: number[], playerIds: number[]) {
     return this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.em.getReference(EventEntity, eventIds), playerId: playerIds },
+      where: {
+        event: this.repo.em.getReference(EventEntity, eventIds),
+        playerId: playerIds,
+      },
     });
   }
 
@@ -185,7 +193,9 @@ export class EventRegistrationModel extends Model {
     }
 
     if (!event.allowPlayerAppend) {
-      const sessionsOfEvent = await this.repo.em.count(SessionEntity, { event: eventId });
+      const sessionsOfEvent = await this.repo.em.count(SessionEntity, {
+        event: eventId,
+      });
       if (sessionsOfEvent > 0) {
         throw new Error(`Cannot register players for event ${eventId} as it is already started`);
       }

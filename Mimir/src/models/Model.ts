@@ -1,4 +1,4 @@
-import type { Repository } from 'src/services/Repository.js';
+import type { Repository } from '../services/Repository.js';
 
 type ModelClass<T extends Model> = Function & {
   prototype: T;
@@ -13,8 +13,10 @@ export abstract class Model {
 
   public getModel<T extends Model>(model: ModelClass<T>): T {
     if (!Model._modelRepo.get(this.repo)!.has(model.prototype.constructor.name)) {
-      // @ts-expect-error Typescript doesn't recognize generic constructable class
-      Model._modelRepo.get(this.repo)!.set(model.prototype.constructor.name, new model(this.repo));
+      Model._modelRepo
+        .get(this.repo)!
+        // @ts-expect-error Typescript doesn't recognize generic constructable class
+        .set(model.prototype.constructor.name, new model(this.repo));
     }
     return Model._modelRepo.get(this.repo)!.get(model.prototype.constructor.name) as T;
   }
@@ -24,8 +26,10 @@ export abstract class Model {
       this._modelRepo.set(repo, new Map());
     }
     if (!this._modelRepo.get(repo)!.has(model.prototype.constructor.name)) {
-      // @ts-expect-error Typescript doesn't recognize generic constructable class
-      this._modelRepo.get(repo)!.set(model.prototype.constructor.name, new model(repo));
+      this._modelRepo
+        .get(repo)!
+        // @ts-expect-error Typescript doesn't recognize generic constructable class
+        .set(model.prototype.constructor.name, new model(repo));
     }
     return this._modelRepo.get(repo)!.get(model.prototype.constructor.name) as T;
   }

@@ -1,13 +1,13 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { EventEntity } from 'src/entities/Event.entity.js';
-import { EventRegisteredPlayersEntity } from 'src/entities/EventRegisteredPlayers.entity.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
-import { init } from 'src/tests/initOrm.js';
+import { EventEntity } from '../../entities/Event.entity.js';
+import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
+import { RulesetEntity } from '../../entities/Ruleset.entity.js';
+import { init } from '../../tests/initOrm.js';
 import { PlatformType, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
-import { Repository } from 'src/services/Repository.js';
+import { Repository } from '../../services/Repository.js';
 import { Tenhou6OnlineParser } from './Tenhou6Parser.js';
-import { FreyServiceMock } from 'src/services/FreyMock.js';
+import { FreyServiceMock } from '../../services/FreyMock.js';
 import { EntityManager } from '@mikro-orm/core';
 
 const makeEvent = (em: EntityManager) => {
@@ -449,7 +449,13 @@ describe('Tenhou6ParserTest', () => {
 
     (repo.frey as FreyServiceMock).mockMajsoul(
       { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 },
-      { 1: 'TPlayer1', 2: 'プレーヤー2', 3: 'プレーヤー3', 4: 'プレーヤー4', 5: 'TPlayer1' }
+      {
+        1: 'TPlayer1',
+        2: 'プレーヤー2',
+        3: 'プレーヤー3',
+        4: 'プレーヤー4',
+        5: 'TPlayer1',
+      }
     );
 
     const reg = new EventRegisteredPlayersEntity();

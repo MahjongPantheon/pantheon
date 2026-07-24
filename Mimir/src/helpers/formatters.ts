@@ -6,10 +6,10 @@ import {
   Round as RoundResult,
 } from 'tsclients/proto/atoms.pb.js';
 import { base64decode } from './crypto.js';
-import { SessionEntity } from 'src/entities/Session.entity.js';
-import { SessionResultsEntity } from 'src/entities/SessionResults.entity.js';
-import { RoundEntity } from 'src/entities/Round.entity.js';
-import { SessionStateEntity } from 'src/entities/SessionState.entity.js';
+import { SessionEntity } from '../entities/Session.entity.js';
+import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
+import { RoundEntity } from '../entities/Round.entity.js';
+import { SessionStateEntity } from '../entities/SessionState.entity.js';
 
 export function formatGameResult(
   session: SessionEntity,
@@ -21,7 +21,7 @@ export function formatGameResult(
   return {
     sessionHash: session.representationalHash!,
     date: session.endDate,
-    replayLink: makeReplayLink(session.replayHash!, sessionPlatform),
+    replayLink: makeReplayLink(session.replayHash ?? null, sessionPlatform),
     players,
     finalResults: results.map((result) => ({
       playerId: result.playerId,

@@ -1,7 +1,7 @@
-import { Yaku } from 'src/helpers/yaku.js';
+import { Yaku } from '../helpers/yaku.js';
 import { MimirTest } from '../services/MimirTest.js';
 import { EventType, PlatformType, WindShuffleMode } from 'tsclients/proto/atoms.pb.js';
-import { RulesetEntity } from 'src/entities/Ruleset.entity.js';
+import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { v4 } from 'uuid';
 
 const CLUB_RATING_EVENT_ID = 19;

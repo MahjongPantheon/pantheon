@@ -1,4 +1,4 @@
-import { JobsQueueEntity } from 'src/entities/JobsQueue.entity.js';
+import { JobsQueueEntity } from '../entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
 import moment from 'moment-timezone';
 import { EventModel } from './EventModel.js';
@@ -7,8 +7,8 @@ import {
   EventsGetAchievementsPayload,
   EventsGetAchievementsResponse,
 } from 'tsclients/proto/mimir.pb.js';
-import { AchievementsEntity } from 'src/entities/Achievements.entity.js';
-import { EventEntity } from 'src/entities/Event.entity.js';
+import { AchievementsEntity } from '../entities/Achievements.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
 import { getMaxFuHand } from './achievements/maxFuHand.js';
 import { getHonoredDonor } from './achievements/honoredDonor.js';
 import { getMinFeedScore } from './achievements/minFeedScore.js';
@@ -44,7 +44,9 @@ export class AchievementsModel extends Model {
 
     if (!events[0].hideAchievements || isAdmin) {
       const achievements = await this.repo.em.findAll(AchievementsEntity, {
-        where: { event: this.repo.em.getReference(EventEntity, payload.eventId) },
+        where: {
+          event: this.repo.em.getReference(EventEntity, payload.eventId),
+        },
       });
       const achievementData = achievements[0].data;
       lastUpdate = moment
