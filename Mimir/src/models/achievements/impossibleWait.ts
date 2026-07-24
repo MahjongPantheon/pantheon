@@ -1,27 +1,67 @@
-/*
-function getImpossibleWait(Db $db, array $eventIdList, array $players)
-{
-    $rounds = $db->table('round')
-        ->select('loser_id')
-        ->select('riichi')
-        ->select('han')
-        ->select('fu')
-        ->whereIn('event_id', $eventIdList)
-        ->whereIn('outcome', ['multiron', 'ron'])
-        ->orderByDesc('han')
-        ->orderByDesc('fu')
-        ->limit(100) // limit here for performance reasons
-        ->findArray();
+import { Repository } from "../../services/Repository";
+import { EventEntity } from "../../entities/Event.entity";
+import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
+import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
+import { RoundOutcome } from "tsclients/proto/atoms.pb";
+import { PointsCalc } from "../../helpers/PointsCalc";
 
-    $filteredRounds = array_filter($rounds, function ($round) use (&$players) {
-        return !empty($players[$round['loser_id']]) && !in_array($round['loser_id'], explode(',', $round['riichi']));
-    });
+export async function getImpossibleWait(event: EventEntity, repo: Repository) {
+  const sessions = await getGamesOfEvent(event.id, repo);
+  const rounds = await getRoundsOfSessions(
+    sessions.map((s) => s.id),
+    repo,
+  );
 
-    return array_map(function ($round) use (&$players) {
-        return [
-            'name' => $players[$round['loser_id']]['title'],
-            'hand' => ['han' => $round['han'], 'fu' => $round['han'] > 4 ? null : $round['fu']]
-        ];
-    }, array_slice($filteredRounds, 0, 10));
+  const throwAmounts: {
+    playerId: number;
+    amount: number;
+    hand: { han: number; fu?: number };
+  }[] = [];
+
+  for (const session of sessions) {
+    const sessionPlayersOrdered = session.players.sort(
+      (p1, p2) => p1.order - p2.order,
+    );
+    for (const round of rounds[session.id]) {
+      if (
+        round.outcome !== RoundOutcome.ROUND_OUTCOME_RON &&
+        round.outcome !== RoundOutcome.ROUND_OUTCOME_MULTIRON
+      ) {
+        continue;
+      }
+      const currentDealerId =
+        sessionPlayersOrdered[(round.round - 1) % 4].playerId;
+
+      for (const hand of round.hands) {
+        if ((round.riichi ?? []).includes(hand.loserId!)) {
+          continue;
+        }
+        const calc = new PointsCalc();
+        calc.ron(
+          event.ruleset.rules,
+          hand.winnerId === currentDealerId,
+          Object.fromEntries(sessionPlayersOrdered.map((id) => [id, 0])),
+          hand.winnerId!,
+          hand.loserId!,
+          hand.han!,
+          hand.fu!,
+          [],
+          0,
+          0,
+          null,
+          null,
+          0,
+        );
+        const payment =
+          calc.lastPaymentsInfo().direct[`${hand.winnerId!}<-${hand.loserId!}`];
+        throwAmounts.push({
+          playerId: hand.loserId!,
+          amount: payment,
+          hand: { han: hand.han!, fu: hand.fu },
+        });
+      }
+    }
+  }
+
+  return throwAmounts.sort((a, b) => b.amount - a.amount).slice(0, 10);
 }
-*/

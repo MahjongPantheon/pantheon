@@ -1,60 +1,48 @@
-/*
-function getFavoriteAsapinApprentice(Db $db, array $eventIdList, array $players)
-{
-    $rounds = $db->table('round')
-        ->select('tempai')
-        ->whereIn('event_id', $eventIdList)
-        ->where('outcome', 'draw')
-        ->whereNotEqual('tempai', '')
-        ->findArray();
+import { Repository } from "../../services/Repository";
+import { EventEntity } from "../../entities/Event.entity";
+import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
+import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
+import { RoundOutcome } from "tsclients/proto/atoms.pb";
 
-    $payments = [];
-    foreach ($rounds as $round) {
-        $tempai = explode(',', $round['tempai']);
-        $amount = 0;
-        switch (count($tempai)) {
-            case 1:
-                $amount = 3000;
-                break;
-            case 2:
-                $amount = 1500;
-                break;
-            case 3:
-                $amount = 1000;
-                break;
-            default:;
+export async function getFavoriteAsapinApprentice(
+  event: EventEntity,
+  repo: Repository,
+) {
+  const sessions = await getGamesOfEvent(event.id, repo);
+  const rounds = await getRoundsOfSessions(
+    sessions.map((s) => s.id),
+    repo,
+  );
+
+  const tempaiWinAmounts = new Map<number, number>();
+
+  for (const session of sessions) {
+    for (const round of rounds[session.id]) {
+      if (round.outcome !== RoundOutcome.ROUND_OUTCOME_DRAW) {
+        continue;
+      }
+      const tempaiPayment =
+        {
+          0: 0,
+          1: 3000,
+          2: 1500,
+          3: 1000,
+        }[(round.hands[0].tempai ?? []).length] ?? 0;
+
+      for (const playerId of round.hands[0].tempai ?? []) {
+        if (!tempaiWinAmounts.has(playerId)) {
+          tempaiWinAmounts.set(playerId, 0);
         }
-
-        foreach ($tempai as $playerId) {
-            if (empty($payments[$playerId])) {
-                $payments[$playerId] = 0;
-            }
-
-            $payments[$playerId] += $amount;
-        }
+        tempaiWinAmounts.set(
+          playerId,
+          tempaiWinAmounts.get(playerId)! + tempaiPayment,
+        );
+      }
     }
+  }
 
-    $filteredPayments = array_filter($payments, function ($payment) {
-        return $payment != 0;
-    });
-
-    foreach ($filteredPayments as $playerId => $payment) {
-        if (empty($players[$playerId])) {
-            unset($filteredPayments[$playerId]);
-        }
-    }
-
-    arsort($filteredPayments);
-
-    return array_map(
-        function ($playerId, $payment) use ($players) {
-            return [
-                'name' => $players[$playerId]['title'],
-                'score' => $payment
-            ];
-        },
-        array_slice(array_keys($filteredPayments), 0, 5),
-        array_slice(array_values($filteredPayments), 0, 5)
-    );
+  return [...tempaiWinAmounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([playerId, score]) => ({ playerId, score }));
 }
-*/
