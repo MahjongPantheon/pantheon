@@ -1,10 +1,10 @@
-import { PersonEx, Player } from 'tsclients/proto/atoms.pb.js';
-import { Model } from './Model.js';
-import { playerInfo } from '../helpers/cache/schema.js';
-import { EventRegistrationModel } from './EventRegistrationModel.js';
-import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
-import { SessionEntity } from '../entities/Session.entity.js';
-import { SessionModel } from './SessionModel.js';
+import { PersonEx, Player } from "tsclients/proto/atoms.pb.js";
+import { Model } from "./Model.js";
+import { playerInfo } from "../helpers/cache/schema.js";
+import { EventRegistrationModel } from "./EventRegistrationModel.js";
+import { SessionPlayerEntity } from "../entities/SessionPlayer.entity.js";
+import { SessionEntity } from "../entities/Session.entity.js";
+import { SessionModel } from "./SessionModel.js";
 
 export class PlayerModel extends Model {
   async findById(ids: number[], skipCache = false): Promise<PersonEx[]> {
@@ -22,8 +22,8 @@ export class PlayerModel extends Model {
             })
             .catch(() => {
               missingIds.push(id);
-            })
-        )
+            }),
+        ),
       );
     } else {
       missingIds = ids;
@@ -35,7 +35,9 @@ export class PlayerModel extends Model {
       });
       const promises: Promise<boolean>[] = [];
       data.people.forEach((person) => {
-        promises.push(this.repo.cache.client.set(playerInfo(person.id), person, 300));
+        promises.push(
+          this.repo.cache.client.set(playerInfo(person.id), person, 300),
+        );
         fetchedRemote.set(person.id, person);
       });
       await Promise.all(promises);
@@ -61,47 +63,59 @@ export class PlayerModel extends Model {
         acc[player.tenhouId] = player;
         return acc;
       },
-      {} as Record<string, PersonEx>
+      {} as Record<string, PersonEx>,
     );
   }
 
   async findMajsoulAccounts(
-    ids: [string, number][] // ms_nickname, ms_account_id
+    ids: [string, number][], // ms_nickname, ms_account_id
   ): Promise<Record<string, PersonEx>> {
     const data = await this.repo.frey.FindByMajsoulAccountId({
       ids: ids.map(([nickname, accountId]) => ({ nickname, accountId })),
     });
     return data.people.reduce(
       (acc, player) => {
-        acc[player.msNickname + '-' + player.msAccountId] = player;
+        acc[player.msNickname + "-" + player.msAccountId] = player;
         return acc;
       },
-      {} as Record<string, PersonEx>
+      {} as Record<string, PersonEx>,
     );
   }
 
   async findPlayersForEvents(eventIds: number[]) {
     const regModel = this.getModel(EventRegistrationModel);
     const registrationData = await regModel.findReplacementMapByEvent(eventIds);
-    const playerIds = (await regModel.findByEventId(eventIds)).map((p) => p.playerId);
+    const playerIds = (await regModel.findByEventId(eventIds)).map(
+      (p) => p.playerId,
+    );
     return this._findPlayers(playerIds, registrationData);
   }
 
-  async findPlayerIdsForSessions(sessionIds: number[]): Promise<Array<[number, number]>> {
+  async findPlayerIdsForSessions(
+    sessionIds: number[],
+  ): Promise<Array<[number, number]>> {
     return (
       await this.repo.em.findAll(SessionPlayerEntity, {
-        fields: ['playerId', 'session.id'],
+        fields: ["playerId", "session.id"],
         where: {
-          session: sessionIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
+          session: sessionIds.map((id) =>
+            this.repo.em.getReference(SessionEntity, id),
+          ),
         },
         orderBy: { order: 1 },
       })
     ).map((reg) => [reg.playerId, reg.session.id]);
   }
 
-  async findPlayersForSessions(sessionHashList: string[], substituteReplacements = false) {
+  async findPlayersForSessions(
+    sessionHashList: string[],
+    substituteReplacements = false,
+  ) {
     const sessionModel = this.getModel(SessionModel);
-    const session = await sessionModel.findByRepresentationalHash(sessionHashList, ['event']);
+    const session = await sessionModel.findByRepresentationalHash(
+      sessionHashList,
+      ["event"],
+    );
     if (session.length === 0) {
       return {
         playersData: {
@@ -111,14 +125,16 @@ export class PlayerModel extends Model {
         playerBySession: [],
       };
     }
-    const playerBySession = await this.findPlayerIdsForSessions(session.map((s) => s.id));
+    const playerBySession = await this.findPlayerIdsForSessions(
+      session.map((s) => s.id),
+    );
 
     const playerIds = playerBySession.map((p) => p[0]);
 
     const regModel = this.getModel(EventRegistrationModel);
     const registrationData = await regModel.fetchPlayersRegDataByIds(
       [session[0].event.id],
-      playerIds
+      playerIds,
     );
     const replacements = new Map<number, number>();
     if (substituteReplacements) {
@@ -131,13 +147,15 @@ export class PlayerModel extends Model {
 
     const playersData = await this._findPlayers(playerIds, replacements);
     // reorder players to match order at the table
-    playersData.players.sort((a, b) => playerIds.indexOf(a.id) - playerIds.indexOf(b.id));
+    playersData.players.sort(
+      (a, b) => playerIds.indexOf(a.id) - playerIds.indexOf(b.id),
+    );
     return { playersData, playerBySession };
   }
 
   async _findPlayers(
     ids: number[],
-    replacements: Map<number, number> // replacementId -> id : note backward map
+    replacements: Map<number, number>, // replacementId -> id : note backward map
   ) {
     const players = await this.findById(ids);
     const replaceMap = new Map<number, PersonEx>();
@@ -154,7 +172,10 @@ export class PlayerModel extends Model {
     return { players, replaceMap };
   }
 
-  substituteReplacements(players: PersonEx[], replacements: Map<number, PersonEx>) {
+  substituteReplacements(
+    players: PersonEx[],
+    replacements: Map<number, PersonEx>,
+  ) {
     return players.map((p) => {
       if (replacements.has(p.id)) {
         return replacements.get(p.id)!;
@@ -166,6 +187,8 @@ export class PlayerModel extends Model {
   async isEventAdmin(eventId: number) {
     const personId = this.repo.meta.personId;
     if (!personId) return false;
+    const isSuperadmin = await this.repo.frey.GetSuperadminFlag({ personId });
+    if (isSuperadmin) return true;
     const data = await this.repo.frey.GetEventAdmins({ eventId });
     return data.admins.some((admin) => admin.personId === personId);
   }
@@ -197,7 +220,9 @@ export class PlayerModel extends Model {
     const whoPlays = await regModel.findByEventId([eventId]);
     const eventRegModel = this.getModel(EventRegistrationModel);
     const replacements = await eventRegModel.getSubstitutionPlayers(eventId);
-    const playerIds = whoPlays.map((player) => replacements[player.id] ?? player.id);
+    const playerIds = whoPlays.map(
+      (player) => replacements[player.id] ?? player.id,
+    );
     await this.repo.skirnir.messageSessionStartingSoon(playerIds, eventId);
     return { success: true };
   }

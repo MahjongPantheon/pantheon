@@ -94,7 +94,7 @@ export class AchievementsModel extends Model {
         event: this.repo.em.getReference(EventEntity, eventId),
       })) ?? new AchievementsEntity();
 
-    const event = await this.repo.db.em.findOneOrFail(
+    const event = await this.repo.em.findOneOrFail(
       EventEntity,
       { id: eventId },
       { populate: ["ruleset"] },
@@ -157,6 +157,6 @@ export class AchievementsModel extends Model {
       yakumans,
     };
 
-    await this.repo.db.em.persistAndFlush(achievements);
+    await this.repo.em.persistAndFlush(achievements);
   }
 }

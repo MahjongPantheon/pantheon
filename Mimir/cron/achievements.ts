@@ -4,7 +4,7 @@ import { Model } from "../src/models/Model";
 import { AchievementsModel } from "../src/models/AchievementsModel.js";
 
 export async function rebuildAchievements(repo: Repository) {
-  const jobs = await repo.db.em.findAll(JobsQueueEntity, {
+  const jobs = await repo.em.findAll(JobsQueueEntity, {
     where: {
       jobName: "achievements",
     },

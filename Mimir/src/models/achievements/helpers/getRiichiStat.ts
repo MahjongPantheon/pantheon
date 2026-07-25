@@ -1,13 +1,13 @@
-import { EventEntity } from '../../../entities/Event.entity';
-import { SessionResultsEntity } from '../../../entities/SessionResults.entity';
-import { PointsCalc } from '../../../helpers/PointsCalc';
-import { Model } from '../../../models/Model';
-import { PlayerModel } from '../../../models/PlayerModel';
-import { SessionResultsModel } from '../../../models/SessionResultsModel';
-import { Repository } from '../../../services/Repository';
-import { RoundOutcome } from 'tsclients/proto/atoms.pb';
-import { getGamesOfEvent } from './getGamesOfEvent';
-import { getRoundsOfSessions } from './getRoundsOfSessions';
+import { EventEntity } from "../../../entities/Event.entity";
+import { SessionResultsEntity } from "../../../entities/SessionResults.entity";
+import { PointsCalc } from "../../../helpers/PointsCalc";
+import { Model } from "../../../models/Model";
+import { PlayerModel } from "../../../models/PlayerModel";
+import { SessionResultsModel } from "../../../models/SessionResultsModel";
+import { Repository } from "../../../services/Repository";
+import { RoundOutcome } from "tsclients/proto/atoms.pb";
+import { getGamesOfEvent } from "./getGamesOfEvent";
+import { getRoundsOfSessions } from "./getRoundsOfSessions";
 
 export type RiichiStat = {
   lastCalc: Date;
@@ -38,7 +38,10 @@ function cleanup() {
   });
 }
 
-export async function calcRiichiStat(repo: Repository, event: EventEntity): Promise<RiichiStat> {
+export async function calcRiichiStat(
+  repo: Repository,
+  event: EventEntity,
+): Promise<RiichiStat> {
   cleanup();
   if (calcCache.has(event.id)) {
     return calcCache.get(event.id)!;
@@ -72,19 +75,21 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
       acc[res.session.id].push(res);
       return acc;
     },
-    {} as Record<number, SessionResultsEntity[]>
+    {} as Record<number, SessionResultsEntity[]>,
   );
 
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo
+    repo,
   );
 
   const rules = event.ruleset.rules;
   for (const session of sessions) {
     if (rules.riichiGoesToWinner) {
       // find riichi bets collected in the end of the game by first place
-      const firstPlace = sessionResults[session.id].find((res) => res.place === 1);
+      const firstPlace = sessionResults[session.id].find(
+        (res) => res.place === 1,
+      );
       const firstPlacePlayerId = firstPlace?.playerId;
       if (firstPlacePlayerId && stat.data.has(firstPlacePlayerId)) {
         stat.data.set(firstPlacePlayerId, {
@@ -121,7 +126,8 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
         }
 
         if (stat.data.has(winnerId)) {
-          stat.data.get(winnerId)!.stole += round.lastSessionState?.riichiBets ?? 0;
+          stat.data.get(winnerId)!.stole +=
+            round.lastSessionState?.riichiBets ?? 0;
         }
       }
 
@@ -139,7 +145,10 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
       if (round.outcome === RoundOutcome.ROUND_OUTCOME_MULTIRON) {
         const winnerIds = round.hands.map((h) => h.winnerId!);
         for (const riichiPlayerId of riichiIds) {
-          if (!winnerIds.includes(riichiPlayerId) && stat.data.has(riichiPlayerId)) {
+          if (
+            !winnerIds.includes(riichiPlayerId) &&
+            stat.data.has(riichiPlayerId)
+          ) {
             stat.data.get(riichiPlayerId)!.lost++;
           }
         }
@@ -151,7 +160,9 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
           round.hands[0].loserId!,
           lastSessionState?.riichiBets ?? 0,
           lastSessionState?.honba ?? 0,
-          session.players.sort((p1, p2) => p1.order - p2.order).map((p) => p.id)
+          [...session.players]
+            .sort((p1, p2) => p1.order - p2.order)
+            .map((p) => p.id),
         );
 
         Object.entries(riichiWinners).forEach(([winnerId, item]) => {
