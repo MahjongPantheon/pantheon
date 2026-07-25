@@ -14,7 +14,7 @@ import { PaymentsInfo, PointsCalc } from '../helpers/PointsCalc.js';
 export class RoundModel extends Model {
   async findBySessionIds(sessionIds: number[]) {
     return this.repo.em.findAll(RoundEntity, {
-      where: { session: this.repo.em.getReference(SessionEntity, sessionIds) },
+      where: { session: { id: { $in: sessionIds } } },
       populate: ['hands'],
     });
   }

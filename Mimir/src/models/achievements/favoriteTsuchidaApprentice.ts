@@ -1,18 +1,15 @@
-import { Repository } from "../../services/Repository";
-import { EventEntity } from "../../entities/Event.entity";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { RoundOutcome } from "tsclients/proto/atoms.pb";
-import { Yaku } from "../../helpers/yaku";
+import { Repository } from '../../services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { Yaku } from '../../helpers/yaku';
 
-export async function getFavoriteTsuchidaApprentice(
-  event: EventEntity,
-  repo: Repository,
-) {
+export async function getFavoriteTsuchidaApprentice(event: EventEntity, repo: Repository) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
   const chiitoitsuCounts = new Map<number, number>();
@@ -28,19 +25,13 @@ export async function getFavoriteTsuchidaApprentice(
       }
 
       for (const hand of round.hands) {
-        if (
-          !hand.yaku?.includes(Yaku.CHIITOITSU) ||
-          (hand.han ?? 0) + (hand.dora ?? 0) <= 2
-        ) {
+        if (!hand.yaku?.includes(Yaku.CHIITOITSU) || (hand.han ?? 0) + (hand.dora ?? 0) <= 2) {
           continue;
         }
         if (!chiitoitsuCounts.has(hand.winnerId!)) {
           chiitoitsuCounts.set(hand.winnerId!, 1);
         } else {
-          chiitoitsuCounts.set(
-            hand.winnerId!,
-            chiitoitsuCounts.get(hand.winnerId!)! + 1,
-          );
+          chiitoitsuCounts.set(hand.winnerId!, chiitoitsuCounts.get(hand.winnerId!)! + 1);
         }
       }
     }

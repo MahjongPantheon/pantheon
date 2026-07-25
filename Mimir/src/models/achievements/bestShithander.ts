@@ -1,17 +1,17 @@
-import { RoundOutcome } from "tsclients/proto/atoms.pb";
-import { EventEntity } from "../../entities/Event.entity";
-import { Repository } from "../../services/Repository";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { EventEntity } from '../../entities/Event.entity';
+import { Repository } from '../../services/Repository';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
 
 export async function getBestShithander(event: EventEntity, repo: Repository) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
-  let ids: Record<number, number> = {};
+  const ids: Record<number, number> = {};
   for (const session of sessions) {
     for (const round of rounds[session.id]) {
       if (
@@ -30,7 +30,7 @@ export async function getBestShithander(event: EventEntity, repo: Repository) {
   }
 
   const sorted = Object.entries(ids).sort((a, b) => b[1] - a[1]);
-  let max = sorted[0][1];
+  const max = sorted[0][1];
   const best: number[] = [];
   for (const [id, count] of sorted) {
     if (count === max) {

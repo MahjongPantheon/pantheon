@@ -25,7 +25,9 @@ export class EventRegistrationModel extends Model {
     return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
         event: {
-          $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)),
+          id: {
+            $in: eventIds,
+          },
         },
       },
     });
@@ -97,14 +99,20 @@ export class EventRegistrationModel extends Model {
 
   async fetchPlayersRegData(eventIds: number[]) {
     return this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: this.repo.em.getReference(EventEntity, eventIds) },
+      where: {
+        event: {
+          id: { $in: eventIds },
+        },
+      },
     });
   }
 
   async fetchPlayersRegDataByIds(eventIds: number[], playerIds: number[]) {
     return this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
-        event: this.repo.em.getReference(EventEntity, eventIds),
+        event: {
+          id: { $in: eventIds },
+        },
         playerId: playerIds,
       },
     });

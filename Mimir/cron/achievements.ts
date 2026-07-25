@@ -1,12 +1,12 @@
-import { Repository } from "../src/services/Repository.js";
-import { JobsQueueEntity } from "../src/entities/JobsQueue.entity";
-import { Model } from "../src/models/Model";
-import { AchievementsModel } from "../src/models/AchievementsModel.js";
+import { Repository } from '../src/services/Repository.js';
+import { JobsQueueEntity } from '../src/entities/JobsQueue.entity';
+import { Model } from '../src/models/Model';
+import { AchievementsModel } from '../src/models/AchievementsModel.js';
 
 export async function rebuildAchievements(repo: Repository) {
   const jobs = await repo.em.findAll(JobsQueueEntity, {
     where: {
-      jobName: "achievements",
+      jobName: 'achievements',
     },
   });
 

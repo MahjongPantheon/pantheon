@@ -1,17 +1,17 @@
-import { Repository } from "../../services/Repository";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
-import { RoundEntity } from "../../entities/Round.entity";
-import { SessionState } from "../../helpers/SessionState";
-import { EventEntity } from "../../entities/Event.entity";
-import { addLoserPayment } from "./helpers/addLoserPayment";
+import { Repository } from '../../services/Repository';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
+import { RoundEntity } from '../../entities/Round.entity';
+import { SessionState } from '../../helpers/SessionState';
+import { EventEntity } from '../../entities/Event.entity';
+import { addLoserPayment } from './helpers/addLoserPayment';
 
 export async function getMinFeedScore(event: EventEntity, repo: Repository) {
   let payments: Map<number, { sum: number; count: number }> = new Map();
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
   for (const session of sessions) {
@@ -22,26 +22,17 @@ export async function getMinFeedScore(event: EventEntity, repo: Repository) {
       } else {
         const currentSessionState = new SessionState(
           event.ruleset,
-          [...session.players]
-            .sort((p1, p2) => p1.order - p2.order)
-            .map((p) => p.id),
-          round.lastSessionState,
+          [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+          round.lastSessionState
         );
 
         const lastSessionState = new SessionState(
           event.ruleset,
-          [...session.players]
-            .sort((p1, p2) => p1.order - p2.order)
-            .map((p) => p.id),
-          lastRound.lastSessionState,
+          [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+          lastRound.lastSessionState
         );
 
-        payments = addLoserPayment(
-          round,
-          lastSessionState,
-          currentSessionState,
-          payments,
-        );
+        payments = addLoserPayment(round, lastSessionState, currentSessionState, payments);
         lastRound = round;
       }
     }
@@ -49,26 +40,17 @@ export async function getMinFeedScore(event: EventEntity, repo: Repository) {
     if (lastRound) {
       const currentSessionState = new SessionState(
         event.ruleset,
-        [...session.players]
-          .sort((p1, p2) => p1.order - p2.order)
-          .map((p) => p.id),
-        lastRound.lastSessionState,
+        [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+        lastRound.lastSessionState
       );
 
       const lastSessionState = new SessionState(
         event.ruleset,
-        [...session.players]
-          .sort((p1, p2) => p1.order - p2.order)
-          .map((p) => p.id),
-        session.intermediateResults,
+        [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+        session.intermediateResults
       );
 
-      payments = addLoserPayment(
-        lastRound,
-        lastSessionState,
-        currentSessionState,
-        payments,
-      );
+      payments = addLoserPayment(lastRound, lastSessionState, currentSessionState, payments);
     }
   }
 

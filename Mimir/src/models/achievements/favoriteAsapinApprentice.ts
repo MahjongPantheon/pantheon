@@ -1,17 +1,14 @@
-import { Repository } from "../../services/Repository";
-import { EventEntity } from "../../entities/Event.entity";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { RoundOutcome } from "tsclients/proto/atoms.pb";
+import { Repository } from '../../services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
-export async function getFavoriteAsapinApprentice(
-  event: EventEntity,
-  repo: Repository,
-) {
+export async function getFavoriteAsapinApprentice(event: EventEntity, repo: Repository) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
   const tempaiWinAmounts = new Map<number, number>();
@@ -33,10 +30,7 @@ export async function getFavoriteAsapinApprentice(
         if (!tempaiWinAmounts.has(playerId)) {
           tempaiWinAmounts.set(playerId, 0);
         }
-        tempaiWinAmounts.set(
-          playerId,
-          tempaiWinAmounts.get(playerId)! + tempaiPayment,
-        );
+        tempaiWinAmounts.set(playerId, tempaiWinAmounts.get(playerId)! + tempaiPayment);
       }
     }
   }

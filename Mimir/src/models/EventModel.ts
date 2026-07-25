@@ -249,7 +249,9 @@ export class EventModel extends Model {
     dateTo: string | null
   ): Promise<EventsGetRatingTableResponse> {
     const events = await this.repo.em.findAll(EventEntity, {
-      where: { id: eventIdList },
+      where: {
+        id: { $in: eventIdList },
+      },
     });
     const mainEvent = events.find((e) => e.id === eventIdList[0]);
     if (!mainEvent) {
@@ -279,7 +281,11 @@ export class EventModel extends Model {
     });
 
     const penalties = await this.repo.em.findAll(PenaltyEntity, {
-      where: { event: events },
+      where: {
+        event: {
+          id: { $in: eventIdList },
+        },
+      },
     });
 
     const historyItems = playerHistoryModel.mergeData(
