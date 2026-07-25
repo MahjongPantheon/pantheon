@@ -1,12 +1,12 @@
-import { Repository } from '../src/services/Repository.js';
-import { JobsQueueEntity } from '../src/entities/JobsQueue.entity';
-import { Model } from '../src/models/Model';
-import { PlayerStatsModel } from '../src/models/PlayerStatsModel';
+import { Repository } from "../src/services/Repository.js";
+import { JobsQueueEntity } from "../src/entities/JobsQueue.entity";
+import { Model } from "../src/models/Model";
+import { PlayerStatsModel } from "../src/models/PlayerStatsModel";
 
 export async function rebuildPlayerStats(repo: Repository) {
-  const jobs = await repo.db.em.findAll(JobsQueueEntity, {
+  const jobs = await repo.em.findAll(JobsQueueEntity, {
     where: {
-      jobName: 'playerStats',
+      jobName: "playerStats",
     },
   });
 
@@ -22,7 +22,7 @@ export async function rebuildPlayerStats(repo: Repository) {
       playerModel.getPlayerStats({
         playerId: +playerId,
         eventIdList: [+eventId],
-      })
+      }),
     );
   }
 

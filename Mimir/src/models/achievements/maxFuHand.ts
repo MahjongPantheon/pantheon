@@ -1,17 +1,15 @@
-import { EventEntity } from '../../entities/Event.entity';
-import { RoundEntity } from '../../entities/Round.entity';
-import { Repository } from '../../services/Repository';
+import { EventEntity } from "../../entities/Event.entity";
+import { RoundEntity } from "../../entities/Round.entity";
+import { Repository } from "../../services/Repository";
 
 export async function getMaxFuHand(eventId: number, repo: Repository) {
-  const rounds = await repo.db.em.findAll(RoundEntity, {
-    fields: ['hands.fu', 'hands.winnerId'],
-    populate: ['hands'],
+  const rounds = await repo.em.findAll(RoundEntity, {
+    fields: ["hands.fu", "hands.winnerId"],
+    populate: ["hands"],
     where: {
-      event: repo.db.em.getReference(EventEntity, eventId),
+      event: repo.em.getReference(EventEntity, eventId),
       hands: {
-        $not: {
-          fu: null,
-        },
+        fu: { $ne: null },
       },
     },
     orderBy: {

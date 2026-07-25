@@ -19,7 +19,7 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
   }[] = [];
 
   for (const session of sessions) {
-    const sessionPlayersOrdered = session.players.sort(
+    const sessionPlayersOrdered = [...session.players].sort(
       (p1, p2) => p1.order - p2.order,
     );
     for (const round of rounds[session.id]) {

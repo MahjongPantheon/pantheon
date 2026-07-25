@@ -1,14 +1,17 @@
-import { Repository } from '../../services/Repository';
-import { EventEntity } from '../../entities/Event.entity';
-import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
-import { getGamesOfEvent } from './helpers/getGamesOfEvent';
-import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { Repository } from "../../services/Repository";
+import { EventEntity } from "../../entities/Event.entity";
+import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
+import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
+import { RoundOutcome } from "tsclients/proto/atoms.pb";
 
-export async function getBestTsumoistInSingleSession(event: EventEntity, repo: Repository) {
+export async function getBestTsumoistInSingleSession(
+  event: EventEntity,
+  repo: Repository,
+) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo
+    repo,
   );
 
   const bestTsumoCounts = new Map<number, number>();
@@ -23,18 +26,27 @@ export async function getBestTsumoistInSingleSession(event: EventEntity, repo: R
       if (!tsumoCount.has(round.hands[0].winnerId!)) {
         tsumoCount.set(round.hands[0].winnerId!, 1);
       } else {
-        tsumoCount.set(round.hands[0].winnerId!, tsumoCount.get(round.hands[0].winnerId!)! + 1);
+        tsumoCount.set(
+          round.hands[0].winnerId!,
+          tsumoCount.get(round.hands[0].winnerId!)! + 1,
+        );
       }
     }
 
     for (const [playerId, count] of tsumoCount.entries()) {
-      if (!bestTsumoCounts.has(playerId) || count > bestTsumoCounts.get(playerId)!) {
+      if (
+        !bestTsumoCounts.has(playerId) ||
+        count > bestTsumoCounts.get(playerId)!
+      ) {
         bestTsumoCounts.set(playerId, count);
       }
     }
   }
 
-  const bestTsumoCountsSorted = [...bestTsumoCounts.entries()].sort((a, b) => b[1] - a[1]);
+  const bestTsumoCountsSorted = [...bestTsumoCounts.entries()].sort(
+    (a, b) => b[1] - a[1],
+  );
+  debugger;
   const bestTsumoCount = bestTsumoCountsSorted[0][1];
   const playerIds = [];
   for (const [playerId, count] of bestTsumoCountsSorted) {
