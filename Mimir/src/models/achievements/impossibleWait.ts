@@ -1,15 +1,15 @@
-import { Repository } from "../../services/Repository";
-import { EventEntity } from "../../entities/Event.entity";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { RoundOutcome } from "tsclients/proto/atoms.pb";
-import { PointsCalc } from "../../helpers/PointsCalc";
+import { Repository } from '../../services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { PointsCalc } from '../../helpers/PointsCalc';
 
 export async function getImpossibleWait(event: EventEntity, repo: Repository) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
   const throwAmounts: {
@@ -19,9 +19,7 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
   }[] = [];
 
   for (const session of sessions) {
-    const sessionPlayersOrdered = [...session.players].sort(
-      (p1, p2) => p1.order - p2.order,
-    );
+    const sessionPlayersOrdered = [...session.players].sort((p1, p2) => p1.order - p2.order);
     for (const round of rounds[session.id]) {
       if (
         round.outcome !== RoundOutcome.ROUND_OUTCOME_RON &&
@@ -29,8 +27,7 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
       ) {
         continue;
       }
-      const currentDealerId =
-        sessionPlayersOrdered[(round.round - 1) % 4].playerId;
+      const currentDealerId = sessionPlayersOrdered[(round.round - 1) % 4].playerId;
 
       for (const hand of round.hands) {
         if ((round.riichi ?? []).includes(hand.loserId!)) {
@@ -50,10 +47,9 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
           0,
           null,
           null,
-          0,
+          0
         );
-        const payment =
-          calc.lastPaymentsInfo().direct[`${hand.winnerId!}<-${hand.loserId!}`];
+        const payment = calc.lastPaymentsInfo().direct[`${hand.winnerId!}<-${hand.loserId!}`];
         throwAmounts.push({
           playerId: hand.loserId!,
           amount: payment,

@@ -1,15 +1,15 @@
-import { Repository } from "../../services/Repository";
-import { EventEntity } from "../../entities/Event.entity";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { RoundOutcome } from "tsclients/proto/atoms.pb";
-import { Yaku } from "../../helpers/yaku";
+import { Repository } from '../../services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { Yaku } from '../../helpers/yaku';
 
 export async function getRiichiNomi(event: EventEntity, repo: Repository) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
   const riichiNomiCounts = new Map<number, number>();
@@ -34,17 +34,12 @@ export async function getRiichiNomi(event: EventEntity, repo: Repository) {
           riichiNomiCounts.set(hand.winnerId!, 0);
         }
 
-        riichiNomiCounts.set(
-          hand.winnerId!,
-          riichiNomiCounts.get(hand.winnerId!)! + 1,
-        );
+        riichiNomiCounts.set(hand.winnerId!, riichiNomiCounts.get(hand.winnerId!)! + 1);
       }
     }
   }
 
-  const bestCountsSorted = [...riichiNomiCounts.entries()].sort(
-    (a, b) => b[1] - a[1],
-  );
+  const bestCountsSorted = [...riichiNomiCounts.entries()].sort((a, b) => b[1] - a[1]);
   const bestCount = bestCountsSorted[0][1];
   const playerIds = [];
   for (const [playerId, count] of bestCountsSorted) {

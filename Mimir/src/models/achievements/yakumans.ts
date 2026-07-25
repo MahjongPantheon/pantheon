@@ -1,19 +1,18 @@
-import { Repository } from "../../services/Repository";
-import { EventEntity } from "../../entities/Event.entity";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { RoundOutcome } from "tsclients/proto/atoms.pb";
-import { Yaku } from "../../helpers/yaku";
+import { Repository } from '../../services/Repository';
+import { EventEntity } from '../../entities/Event.entity';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { Yaku } from '../../helpers/yaku';
 
 export async function getYakumans(event: EventEntity, repo: Repository) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
-  const yakumans: { playerId: number; yakuman?: number[]; kazoe?: boolean }[] =
-    [];
+  const yakumans: { playerId: number; yakuman?: number[]; kazoe?: boolean }[] = [];
 
   for (const session of sessions) {
     for (const round of rounds[session.id]) {
@@ -46,7 +45,7 @@ export async function getYakumans(event: EventEntity, repo: Repository) {
                 Yaku.SUUANKOUTANKI,
                 Yaku.CHUURENPOUTOPURE,
                 Yaku.KOKUSHIMUSOU13,
-              ].includes(y),
+              ].includes(y)
             ),
           });
         }

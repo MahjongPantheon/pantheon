@@ -69,13 +69,10 @@ export const RecentGames: React.FC<{
   if (!games || !events) {
     return null;
   }
-  const players = games?.players?.reduce(
-    (acc, p) => {
-      acc[p.id] = p;
-      return acc;
-    },
-    {} as Record<number, Player>
-  );
+  const players = games?.players?.reduce((acc, p) => {
+    acc[p.id] = p;
+    return acc;
+  }, {});
 
   return (
     events && (

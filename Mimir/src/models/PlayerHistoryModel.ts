@@ -19,7 +19,7 @@ export class PlayerHistoryModel extends Model {
       .groupBy(['player_id', 'event_id']);
     const ids = await this.repo.em.execute(qb);
     return this.repo.em.findAll(PlayerHistoryEntity, {
-      where: { id: ids.map((i) => i.mx) },
+      where: { id: { $in: ids.map((i) => i.mx) } },
     });
   }
 
@@ -44,7 +44,9 @@ export class PlayerHistoryModel extends Model {
 
     const ids = await this.repo.em.execute(qb);
     return this.repo.em.findAll(PlayerHistoryEntity, {
-      where: { id: ids.map((i) => i.mx) },
+      where: {
+        id: { $in: ids.map((i) => i.mx) },
+      },
     });
   }
 

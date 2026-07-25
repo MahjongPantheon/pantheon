@@ -67,7 +67,7 @@ export class SessionModel extends Model {
     populate?: Populate<SessionEntity, 'event' | 'event.ruleset' | 'event.ruleset.rules'>
   ) {
     return this.repo.em.findAll(SessionEntity, {
-      where: { representationalHash: hashList },
+      where: { representationalHash: { $in: hashList } },
       populate,
     });
   }
@@ -84,7 +84,9 @@ export class SessionModel extends Model {
       where: {
         status,
         event: {
-          $in: eventIds.map((id) => this.repo.em.getReference(EventEntity, id)),
+          id: {
+            $in: eventIds,
+          },
         },
       },
       ...(orderBy !== null
@@ -154,7 +156,9 @@ export class SessionModel extends Model {
   async getGamesCount(eventIdList: number[], withStatus: SessionStatus) {
     return this.repo.em.count(SessionEntity, {
       event: {
-        $in: eventIdList.map((id) => this.repo.em.getReference(EventEntity, id)),
+        id: {
+          $in: eventIdList,
+        },
       },
       status: withStatus,
     });

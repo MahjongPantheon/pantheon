@@ -26,7 +26,7 @@ import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 export class PenaltyModel extends Model {
   async findBySession(sessionId: number[]) {
     return this.repo.em.findAll(PenaltyEntity, {
-      where: { session: this.repo.em.getReference(SessionEntity, sessionId) },
+      where: { session: { id: { $in: sessionId } } },
     });
   }
 

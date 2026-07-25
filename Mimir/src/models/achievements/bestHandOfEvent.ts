@@ -1,14 +1,14 @@
-import { RoundOutcome } from "tsclients/proto/atoms.pb";
-import { EventEntity } from "../../entities/Event.entity";
-import { Repository } from "../../services/Repository";
-import { getGamesOfEvent } from "./helpers/getGamesOfEvent";
-import { getRoundsOfSessions } from "./helpers/getRoundsOfSessions";
+import { RoundOutcome } from 'tsclients/proto/atoms.pb';
+import { EventEntity } from '../../entities/Event.entity';
+import { Repository } from '../../services/Repository';
+import { getGamesOfEvent } from './helpers/getGamesOfEvent';
+import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
 
 export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
   const sessions = await getGamesOfEvent(event.id, repo);
   const rounds = await getRoundsOfSessions(
     sessions.map((s) => s.id),
-    repo,
+    repo
   );
 
   let maxHan = 0;

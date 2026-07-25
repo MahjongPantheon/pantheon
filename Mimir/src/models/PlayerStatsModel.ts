@@ -160,7 +160,9 @@ export class PlayerStatsModel extends Model {
     dateTo?: string
   ): Promise<PlayersGetPlayerStatsResponse> {
     const events = await this.repo.em.findAll(EventEntity, {
-      where: { id: eventIdList },
+      where: {
+        id: { $in: eventIdList },
+      },
     });
     if (events.length !== eventIdList.length) {
       throw new Error('Some of events were not found');
