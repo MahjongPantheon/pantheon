@@ -13,10 +13,14 @@ export const TabbedView = ({ tabs, onTabChange }: IProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     inViewThreshold: 0,
+    duration: 20,
+    dragFree: true,
   });
   const [emblaRefContent, emblaApiContent] = useEmblaCarousel({
     loop: false,
     inViewThreshold: 0,
+    duration: 20,
+    dragFree: true,
   });
 
   const [canScrollNext, setCanScrollNext] = useState(false);
@@ -25,7 +29,19 @@ export const TabbedView = ({ tabs, onTabChange }: IProps) => {
   useEffect(() => {
     setCanScrollNext(!!emblaApi?.canScrollNext());
     setCanScrollPrev(!!emblaApi?.canScrollPrev());
-  });
+
+    emblaApi?.on('select', (api) => {
+      onTabChange?.(api.selectedScrollSnap());
+      emblaApiContent?.scrollTo(api.selectedScrollSnap());
+      setCanScrollNext(api.canScrollNext());
+      setCanScrollPrev(api.canScrollPrev());
+    });
+    emblaApiContent?.on('select', (api) => {
+      emblaApi?.scrollTo(api.selectedScrollSnap());
+      setCanScrollNext(api.canScrollNext());
+      setCanScrollPrev(api.canScrollPrev());
+    });
+  }, [emblaApi, emblaApiContent]);
 
   const scrollPrev = () => {
     emblaApi?.scrollPrev();
@@ -35,17 +51,6 @@ export const TabbedView = ({ tabs, onTabChange }: IProps) => {
     emblaApi?.scrollNext();
     emblaApiContent?.scrollNext();
   };
-  emblaApi?.on('select', (api) => {
-    onTabChange?.(api.selectedScrollSnap());
-    emblaApiContent?.scrollTo(api.selectedScrollSnap());
-    setCanScrollNext(api.canScrollNext());
-    setCanScrollPrev(api.canScrollPrev());
-  });
-  emblaApiContent?.on('select', (api) => {
-    emblaApi?.scrollTo(api.selectedScrollSnap());
-    setCanScrollNext(api.canScrollNext());
-    setCanScrollPrev(api.canScrollPrev());
-  });
 
   return (
     <div className={styles.tabWrapper}>
