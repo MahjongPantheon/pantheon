@@ -19,6 +19,8 @@
 .tabHeader {
   display: flex;
   justify-content: center;
+  flex: 0 0 100%;
+  min-width: 0;
 }
 
 .tabContentView {
@@ -32,10 +34,21 @@
 .tabContent {
   height: calc(100svh - 126px);
   position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
 }
 
 .previousTab,
 .nextTab {
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+}
+
+.tabViewport {
+  overflow: hidden;
+}
+
+.tabContainer {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
 }
