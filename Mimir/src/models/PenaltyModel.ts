@@ -34,7 +34,7 @@ export class PenaltyModel extends Model {
     return this.repo.em.findAll(PenaltyEntity, {
       where: {
         event: this.repo.em.getReference(EventEntity, eventId),
-        cancelled: onlyActive ? 0 : undefined,
+        ...(onlyActive ? { cancelled: 0 } : {}),
       },
     });
   }
