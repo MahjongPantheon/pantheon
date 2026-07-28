@@ -1524,13 +1524,42 @@ describe('Mimir Twirp API', () => {
     expect(response.sessions.length).toEqual(3);
   });
 
+  test('AddPenalty & ListPenalties & CancelPenalty', async () => {
+    const listBase = await mimirClient.ListPenalties(TOURNAMENT_EVENT_ID);
+    const basePenalties = listBase.penalties.length;
+
+    const reason = 'Test' + v4();
+
+    const response = await mimirClient.AddPenalty({
+      eventId: TOURNAMENT_EVENT_ID,
+      playerId: 1834,
+      amount: 1000,
+      reason,
+    });
+    expect(response).toBeDefined();
+    expect(response.success).toEqual(true);
+
+    const list = await mimirClient.ListPenalties(TOURNAMENT_EVENT_ID);
+    expect(list.penalties).toHaveLength(basePenalties + 1);
+    expect(list.penalties.find((p) => p.reason?.includes(reason))?.reason).toEqual(reason);
+
+    const cancellationReason = 'Cancelled ' + v4();
+
+    const cancelResponse = await mimirClient.CancelPenalty(
+      list.penalties.find((p) => p.reason?.includes(reason))!.id,
+      cancellationReason
+    );
+    expect(cancelResponse).toBeDefined();
+    expect(cancelResponse.success).toEqual(true);
+
+    const finalList = await mimirClient.ListPenalties(TOURNAMENT_EVENT_ID);
+    expect(finalList.penalties.find((p) => p.reason?.includes(reason))?.cancellationReason).toEqual(
+      cancellationReason
+    );
+  });
+
   /*
 
-GetCurrentStateForPlayer
-
-AddPenalty
-ListPenalties
-CancelPenalty
 AddExtraTime
 ListMyPenalties
 ListChombo

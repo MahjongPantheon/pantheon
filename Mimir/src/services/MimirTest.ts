@@ -7,8 +7,10 @@ import {
   IntermediateResultOfSession,
 } from 'tsclients/proto/atoms.pb';
 import {
+  AddPenalty,
   AddRound,
   CancelGame,
+  CancelPenalty,
   CreateEvent,
   DropLastRound,
   EventsGetAllRegisteredPlayersResponse,
@@ -25,6 +27,7 @@ import {
   EventsGetTimerStateResponse,
   FinishEvent,
   ForceFinishGame,
+  GamesAddPenaltyPayload,
   GamesAddRoundPayload,
   GamesAddRoundResponse,
   GamesGetSessionOverviewResponse,
@@ -51,6 +54,8 @@ import {
   GetRulesets,
   GetSessionOverview,
   GetTimerState,
+  ListPenalties,
+  PenaltiesResponse,
   PlayersGetAllRoundsResponse,
   PlayersGetCurrentSessionsResponse,
   PlayersGetLastResultsResponse,
@@ -286,5 +291,17 @@ export class MimirTest {
     playerId: number
   ): Promise<GetCurrentStateResponse> {
     return GetCurrentStateForPlayer({ eventId, playerId }, this._config);
+  }
+
+  async AddPenalty(payload: GamesAddPenaltyPayload): Promise<GenericSuccessResponse> {
+    return AddPenalty(payload, this._config);
+  }
+
+  async ListPenalties(eventId: number): Promise<PenaltiesResponse> {
+    return ListPenalties({ eventId }, this._config);
+  }
+
+  async CancelPenalty(penaltyId: number, reason?: string): Promise<GenericSuccessResponse> {
+    return CancelPenalty({ penaltyId, reason }, this._config);
   }
 }
