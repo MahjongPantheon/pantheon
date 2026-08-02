@@ -20,6 +20,14 @@ const app = createTwirpServer<Context, typeof mimirHandler, IncomingMessage>(mim
   })
   .use(injectRepository(orm));
 
+app.on('error', (ctx, err) => {
+  console.error({
+    message: 'Request errored',
+    method: ctx.method?.name ?? 'Unknown',
+    err,
+  });
+});
+
 createServer(app).listen(4301, () => {
   console.log(`Test server listening on port 4301`);
 });

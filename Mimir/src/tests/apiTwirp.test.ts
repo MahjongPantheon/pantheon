@@ -1558,21 +1558,401 @@ describe('Mimir Twirp API', () => {
     );
   });
 
+  test('ListMyPenalties', async () => {
+    mimirClient.setPersonId(1834); // player registered for club event
+    const penalties = await mimirClient.ListMyPenalties(TOURNAMENT_EVENT_ID);
+    mimirClient.setPersonId(1); // reset to not bother other tests
+    expect(penalties.penalties.length).toBeGreaterThan(0);
+    expect(penalties.penalties[0].who).toEqual(1834);
+  });
+
+  test('ListChombo', async () => {
+    const chombo = await mimirClient.ListChombo(TOURNAMENT_EVENT_ID);
+    expect(chombo.chombos.length).toEqual(1);
+    expect(chombo.players.length).toEqual(1);
+  });
+
+  test('GetCurrentSeating', async () => {
+    const seating = await mimirClient.GetCurrentSeating(TOURNAMENT_EVENT_ID);
+    expect(seating.seating.length).toBeGreaterThan(0);
+  });
+
+  test('MakeShuffledSeating', async () => {
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_TOURNAMENT,
+      title: 'test tournament' + v4(),
+      description: 'test event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    await mimirClient.RegisterPlayer(eventId, 2517);
+    await mimirClient.RegisterPlayer(eventId, 743);
+    await mimirClient.RegisterPlayer(eventId, 338);
+    await mimirClient.RegisterPlayer(eventId, 1834);
+    await mimirClient.RegisterPlayer(eventId, 99);
+    await mimirClient.RegisterPlayer(eventId, 1667);
+    await mimirClient.RegisterPlayer(eventId, 948);
+    await mimirClient.RegisterPlayer(eventId, 2597);
+
+    const success = await mimirClient.MakeShuffledSeating(
+      eventId,
+      1,
+      12345,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    expect(success.success).toBe(true);
+    const seating = await mimirClient.GetCurrentSeating(eventId);
+    expect(seating.seating).toEqual(
+      [
+        {
+          order: 1,
+          playerId: 1667,
+          tableIndex: 2,
+        },
+        {
+          order: 2,
+          playerId: 948,
+          tableIndex: 2,
+        },
+        {
+          order: 3,
+          playerId: 743,
+          tableIndex: 2,
+        },
+        {
+          order: 4,
+          playerId: 338,
+          tableIndex: 2,
+        },
+        {
+          order: 1,
+          playerId: 99,
+          tableIndex: 1,
+        },
+        {
+          order: 2,
+          playerId: 2597,
+          tableIndex: 1,
+        },
+        {
+          order: 3,
+          playerId: 2517,
+          tableIndex: 1,
+        },
+        {
+          order: 4,
+          playerId: 1834,
+          tableIndex: 1,
+        },
+      ].map((item) => ({
+        ...item,
+        hasAvatar: expect.any(Boolean),
+        lastUpdate: expect.any(String),
+        playerTitle: expect.any(String),
+        rating: expect.any(Number),
+        sessionId: expect.any(Number),
+      }))
+    );
+  });
+
+  test('MakeSwissSeating', async () => {
+    const success = await mimirClient.MakeSwissSeating(
+      TOURNAMENT_EVENT_ID,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    expect(success.success).toBe(true);
+    const seating = await mimirClient.GetCurrentSeating(TOURNAMENT_EVENT_ID);
+    await mimirClient.ResetSeating(TOURNAMENT_EVENT_ID);
+    expect(seating.seating).toEqual(
+      [
+        {
+          order: 1,
+          playerId: 147,
+          tableIndex: 7,
+        },
+        {
+          order: 2,
+          playerId: 2994,
+          tableIndex: 7,
+        },
+        {
+          order: 3,
+          playerId: 1729,
+          tableIndex: 7,
+        },
+        {
+          order: 4,
+          playerId: 393,
+          tableIndex: 7,
+        },
+        {
+          order: 1,
+          playerId: 86,
+          tableIndex: 6,
+        },
+        {
+          order: 2,
+          playerId: 2318,
+          tableIndex: 6,
+        },
+        {
+          order: 3,
+          playerId: 338,
+          tableIndex: 6,
+        },
+        {
+          order: 4,
+          playerId: 1407,
+          tableIndex: 6,
+        },
+        {
+          order: 1,
+          playerId: 2033,
+          tableIndex: 5,
+        },
+        {
+          order: 2,
+          playerId: 2517,
+          tableIndex: 5,
+        },
+        {
+          order: 3,
+          playerId: 1068,
+          tableIndex: 5,
+        },
+        {
+          order: 4,
+          playerId: 2572,
+          tableIndex: 5,
+        },
+        {
+          order: 1,
+          playerId: 235,
+          tableIndex: 4,
+        },
+        {
+          order: 2,
+          playerId: 1002,
+          tableIndex: 4,
+        },
+        {
+          order: 3,
+          playerId: 743,
+          tableIndex: 4,
+        },
+        {
+          order: 4,
+          playerId: 1667,
+          tableIndex: 4,
+        },
+        {
+          order: 1,
+          playerId: 2924,
+          tableIndex: 3,
+        },
+        {
+          order: 2,
+          playerId: 2597,
+          tableIndex: 3,
+        },
+        {
+          order: 3,
+          playerId: 1028,
+          tableIndex: 3,
+        },
+        {
+          order: 4,
+          playerId: 304,
+          tableIndex: 3,
+        },
+        {
+          order: 1,
+          playerId: 761,
+          tableIndex: 2,
+        },
+        {
+          order: 2,
+          playerId: 99,
+          tableIndex: 2,
+        },
+        {
+          order: 3,
+          playerId: 948,
+          tableIndex: 2,
+        },
+        {
+          order: 4,
+          playerId: 1175,
+          tableIndex: 2,
+        },
+        {
+          order: 1,
+          playerId: 2387,
+          tableIndex: 1,
+        },
+        {
+          order: 2,
+          playerId: 1834,
+          tableIndex: 1,
+        },
+        {
+          order: 3,
+          playerId: 1468,
+          tableIndex: 1,
+        },
+        {
+          order: 4,
+          playerId: 2902,
+          tableIndex: 1,
+        },
+      ].map((item) => ({
+        ...item,
+        hasAvatar: expect.any(Boolean),
+        lastUpdate: expect.any(String),
+        playerTitle: expect.any(String),
+        rating: expect.any(Number),
+        sessionId: expect.any(Number),
+      }))
+    );
+  });
+
+  test('GenerateSwissSeating', async () => {
+    const seating = await mimirClient.GenerateSwissSeating(
+      TOURNAMENT_EVENT_ID,
+      false,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    expect(seating.tables).toEqual([
+      {
+        players: [
+          {
+            playerId: 2387,
+          },
+          {
+            playerId: 1834,
+          },
+          {
+            playerId: 1468,
+          },
+          {
+            playerId: 2902,
+          },
+        ],
+      },
+      {
+        players: [
+          {
+            playerId: 761,
+          },
+          {
+            playerId: 99,
+          },
+          {
+            playerId: 948,
+          },
+          {
+            playerId: 1175,
+          },
+        ],
+      },
+      {
+        players: [
+          {
+            playerId: 2924,
+          },
+          {
+            playerId: 2597,
+          },
+          {
+            playerId: 1028,
+          },
+          {
+            playerId: 304,
+          },
+        ],
+      },
+      {
+        players: [
+          {
+            playerId: 235,
+          },
+          {
+            playerId: 1002,
+          },
+          {
+            playerId: 743,
+          },
+          {
+            playerId: 1667,
+          },
+        ],
+      },
+      {
+        players: [
+          {
+            playerId: 2033,
+          },
+          {
+            playerId: 2517,
+          },
+          {
+            playerId: 1068,
+          },
+          {
+            playerId: 2572,
+          },
+        ],
+      },
+      {
+        players: [
+          {
+            playerId: 86,
+          },
+          {
+            playerId: 2318,
+          },
+          {
+            playerId: 338,
+          },
+          {
+            playerId: 1407,
+          },
+        ],
+      },
+      {
+        players: [
+          {
+            playerId: 147,
+          },
+          {
+            playerId: 2994,
+          },
+          {
+            playerId: 1729,
+          },
+          {
+            playerId: 393,
+          },
+        ],
+      },
+    ]);
+  });
+
   /*
 
-AddExtraTime
-ListMyPenalties
-ListChombo
-
-FinalizeSession
-DefinalizeGame
-
-StartTimer
-GetCurrentSeating
-MakeShuffledSeating
-MakeSwissSeating
-ResetSeating
-GenerateSwissSeating
 MakeIntervalSeating
 MakePrescriptedSeating
 GetPrescriptedEventConfig
@@ -1580,6 +1960,12 @@ UpdatePrescriptedEventConfig
 
 GetTimerState - todo check after time started/seating ready
 GetTablesState - todo check after time started/seating ready
+
+StartTimer
+AddExtraTime
+
+FinalizeSession
+DefinalizeGame
 
 UpdatePlayersTeams - todo after team event is ready
 UpdatePlayersLocalIds - todo after prescripted event is ready

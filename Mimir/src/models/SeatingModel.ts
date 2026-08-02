@@ -29,9 +29,10 @@ import {
 import { SessionModel } from './SessionModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PenaltyModel } from './PenaltyModel.js';
-import { randomInt } from 'node:crypto';
 import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
 import { unpackScript } from './EventPrescriptModel.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
+import { randomInt } from '../helpers/crypto.js';
 
 export class SeatingModel extends Model {
   public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
@@ -239,7 +240,12 @@ export class SeatingModel extends Model {
       [eventId],
       [SessionStatus.SESSION_STATUS_INPROGRESS]
     );
-    this.repo.em.remove(sessions);
+    const sp = await this.repo.em.findAll(SessionPlayerEntity, {
+      where: { session: { id: { $in: sessions.map((s) => s.id) } } },
+    });
+
+    sp.map((e) => this.repo.em.remove(e));
+    sessions.map((s) => this.repo.em.remove(s));
 
     await this.repo.em.flush();
     return { success: true };
@@ -306,10 +312,10 @@ export class SeatingModel extends Model {
     const sessionModel = this.getModel(SessionModel);
     const sessions = await sessionModel.findByEventAndStatus(
       [event.id],
-      [SessionStatus.SESSION_STATUS_INPROGRESS]
+      [SessionStatus.SESSION_STATUS_INPROGRESS, SessionStatus.SESSION_STATUS_PREFINISHED]
     );
-    if (sessions.length === 0) {
-      throw new Error('No active session found for this event');
+    if (sessions.length > 0) {
+      throw new Error('Cannot make new seating while games are still in progress');
     }
 
     if (event.useTimer) {

@@ -37,7 +37,6 @@ import { CronModel } from './CronModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PaymentsInfo } from '../helpers/PointsCalc.js';
 import { sha1 } from '../helpers/crypto.js';
-import { randomInt } from 'crypto';
 import { SessionStateEntity } from '../entities/SessionState.entity.js';
 import { Context } from '../context.js';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
@@ -635,11 +634,7 @@ export class SessionModel extends Model {
       extraTime: 0,
       startDate: moment().format('YYYY-MM-DD HH:mm:ss'),
       players: [],
-      representationalHash: sha1(
-        playerIds.join(',') +
-          moment().format('YYYY-MM-DD HH:mm') +
-          (process.env.SEED_REPEAT ? '' : randomInt(999999).toString())
-      ),
+      representationalHash: sha1(playerIds.join(',') + new Date().getTime().toString()),
       intermediateResults: this.repo.em.create(SessionStateEntity, sessionState.state),
     });
     this.repo.em.persist(newSession);

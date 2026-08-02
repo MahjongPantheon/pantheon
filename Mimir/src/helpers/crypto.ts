@@ -1,4 +1,4 @@
-import { createHash } from 'crypto';
+import { createHash, randomInt as ri } from 'crypto';
 
 export function sha384(input: string): string {
   return createHash('sha3-384').update(input).digest('hex');
@@ -18,6 +18,13 @@ export function base64encode(input: string): string {
 
 export function base64decode(input: string): string {
   return Buffer.from(input, 'base64').toString('utf8');
+}
+
+export function randomInt(max: number): number {
+  if (process.env.NODE_ENV === 'test') {
+    return 123456; // fixed seed for testing purposes
+  }
+  return ri(max);
 }
 
 /**

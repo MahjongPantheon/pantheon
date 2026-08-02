@@ -17,8 +17,6 @@ import { SessionState } from '../helpers/SessionState.js';
 import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { sha1 } from '../helpers/crypto.js';
-import { randomInt } from 'crypto';
-import moment from 'moment';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
 import { RoundModel } from './RoundModel.js';
 import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
@@ -126,11 +124,7 @@ export class PenaltyModel extends Model {
     const session = this.repo.em.create(SessionEntity, {
       event: this.repo.em.getReference(EventEntity, payload.eventId),
       status: SessionStatus.SESSION_STATUS_INPROGRESS,
-      representationalHash: sha1(
-        payload.players.join(',') +
-          moment().format('YYYY-MM-DD HH:mm') +
-          (process.env.SEED_REPEAT ? '' : randomInt(999999).toString())
-      ),
+      representationalHash: sha1(payload.players.join(',') + new Date().getTime().toString()),
       intermediateResults: new SessionState(event[0].ruleset, payload.players).state,
       replayHash: null,
       tableIndex: null,

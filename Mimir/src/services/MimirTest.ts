@@ -5,6 +5,7 @@ import {
   GenericSessionPayload,
   GenericSuccessResponse,
   IntermediateResultOfSession,
+  WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import {
   AddPenalty,
@@ -25,6 +26,7 @@ import {
   EventsGetRatingTableResponse,
   EventsGetRulesetsResponse,
   EventsGetTimerStateResponse,
+  EventsUpdatePrescriptedEventConfigPayload,
   FinishEvent,
   ForceFinishGame,
   GamesAddPenaltyPayload,
@@ -33,8 +35,10 @@ import {
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundPayload,
   GamesPreviewRoundResponse,
+  GenerateSwissSeating,
   GetAllRegisteredPlayers,
   GetAllRounds,
+  GetCurrentSeating,
   GetCurrentSessions,
   GetCurrentStateForPlayer,
   GetCurrentStateResponse,
@@ -50,11 +54,18 @@ import {
   GetLastRoundByHash,
   GetMyEvents,
   GetPlayer,
+  GetPrescriptedEventConfig,
   GetRatingTable,
   GetRulesets,
   GetSessionOverview,
   GetTimerState,
+  ListChombo,
+  ListMyPenalties,
   ListPenalties,
+  MakeIntervalSeating,
+  MakePrescriptedSeating,
+  MakeShuffledSeating,
+  MakeSwissSeating,
   PenaltiesResponse,
   PlayersGetAllRoundsResponse,
   PlayersGetCurrentSessionsResponse,
@@ -65,6 +76,7 @@ import {
   PlayersGetPlayerResponse,
   PreviewRound,
   RegisterPlayer,
+  ResetSeating,
   StartGame,
   ToggleHideAchievements,
   ToggleHideResults,
@@ -73,6 +85,7 @@ import {
   UpdateEvent,
   UpdatePlayerReplacement,
   UpdatePlayerSeatingFlag,
+  UpdatePrescriptedEventConfig,
 } from 'tsclients/proto/mimir.pb.js';
 import { ClientConfiguration } from 'twirpscript';
 
@@ -116,8 +129,8 @@ export class MimirTest {
       if (!resp.ok) {
         const err = await resp.json();
         // Twirp server error handling
-        if (err.code && err.meta && err.meta.cause) {
-          throw new Error(err.meta.cause);
+        if (err.code) {
+          throw new Error(err.msg + ' - ' + (err.meta?.cause ?? 'cause unknown'));
         }
       }
       return resp;
@@ -301,7 +314,63 @@ export class MimirTest {
     return ListPenalties({ eventId }, this._config);
   }
 
+  async ListMyPenalties(eventId: number) {
+    return ListMyPenalties({ eventId }, this._config);
+  }
+
   async CancelPenalty(penaltyId: number, reason?: string): Promise<GenericSuccessResponse> {
     return CancelPenalty({ penaltyId, reason }, this._config);
+  }
+
+  async ListChombo(eventId: number) {
+    return ListChombo({ eventId }, this._config);
+  }
+
+  async GetCurrentSeating(eventId: number) {
+    return GetCurrentSeating({ eventId }, this._config);
+  }
+
+  async MakeShuffledSeating(
+    eventId: number,
+    groupsCount: number,
+    seed: number,
+    windShuffleMode?: WindShuffleMode
+  ) {
+    return MakeShuffledSeating({ eventId, groupsCount, seed, windShuffleMode }, this._config);
+  }
+
+  async MakeSwissSeating(eventId: number, windShuffleMode?: WindShuffleMode) {
+    return MakeSwissSeating({ eventId, windShuffleMode }, this._config);
+  }
+
+  async ResetSeating(eventId: number) {
+    return ResetSeating({ eventId }, this._config);
+  }
+
+  async GenerateSwissSeating(
+    eventId: number,
+    substituteReplacementPlayers: boolean,
+    windShuffleMode?: WindShuffleMode
+  ) {
+    return GenerateSwissSeating(
+      { eventId, substituteReplacementPlayers, windShuffleMode },
+      this._config
+    );
+  }
+
+  async MakeIntervalSeating(eventId: number, step: number, windShuffleMode?: WindShuffleMode) {
+    return MakeIntervalSeating({ eventId, step, windShuffleMode }, this._config);
+  }
+
+  async MakePrescriptedSeating(eventId: number) {
+    return MakePrescriptedSeating({ eventId }, this._config);
+  }
+
+  async GetPrescriptedEventConfig(eventId: number) {
+    return GetPrescriptedEventConfig({ eventId }, this._config);
+  }
+
+  async UpdatePrescriptedEventConfig(payload: EventsUpdatePrescriptedEventConfigPayload) {
+    return UpdatePrescriptedEventConfig(payload, this._config);
   }
 }
