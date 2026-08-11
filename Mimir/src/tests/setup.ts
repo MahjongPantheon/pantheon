@@ -20,9 +20,9 @@ export default async function setup() {
         .toString()
         .split('\n')
         .forEach((str: string) => {
-          if (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE === 'true') {
-            console.log(str);
-          }
+          //if (process.env.NODE_ENV === 'test' && process.env.TEST_VERBOSE === 'true') {
+          console.log(str);
+          // }
 
           if (str.includes('Test server listening on port')) {
             console.log('Test server spawned successfully');

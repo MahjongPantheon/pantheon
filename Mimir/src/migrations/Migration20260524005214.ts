@@ -126,6 +126,10 @@ export class Migration20260524005214 extends Migration {
     );
 
     this.addSql(
+      `alter table "event_registered_players" add constraint "event_registered_players_event_id_local_id_unique" unique ("event_id", "local_id");`
+    );
+
+    this.addSql(
       `alter table "player_history" add constraint "player_history_event_id_foreign" foreign key ("event_id") references "event" ("id") on update cascade;`
     );
 

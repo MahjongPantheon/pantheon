@@ -27,6 +27,13 @@ export function randomInt(max: number): number {
   return ri(max);
 }
 
+export function randomSign(): number {
+  if (process.env.NODE_ENV === 'test') {
+    return 1; // fixed seed for testing purposes
+  }
+  return ri(2) === 0 ? -1 : 1;
+}
+
 /**
   @note function is not multibyte-safe
  */

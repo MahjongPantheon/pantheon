@@ -1147,13 +1147,10 @@ export class EventModel extends Model {
 
   async getPrescriptedConfig(eventId: number): Promise<EventsGetPrescriptedEventConfigResponse> {
     const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
-      id: eventId,
+      event: { id: eventId },
     });
-    if (!prescript) {
-      throw new Error(`Event ${eventId} not found`);
-    }
 
-    if (!prescript.script) {
+    if (!prescript || !prescript.script) {
       return {
         eventId,
         nextSessionIndex: 1,
@@ -1198,7 +1195,7 @@ export class EventModel extends Model {
 
     prescript.event = event;
     prescript.script = payload.prescript;
-    prescript.nextGame = payload.nextSessionIndex;
+    prescript.nextGame = payload.nextSessionIndex - 1;
     await this.repo.em.persistAndFlush(prescript);
     return { success: true };
   }

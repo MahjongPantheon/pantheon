@@ -32,7 +32,8 @@ import { PenaltyModel } from './PenaltyModel.js';
 import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
 import { unpackScript } from './EventPrescriptModel.js';
 import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
-import { randomInt } from '../helpers/crypto.js';
+import { randomInt, randomSign } from '../helpers/crypto.js';
+import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
 
 export class SeatingModel extends Model {
   public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
@@ -102,7 +103,7 @@ export class SeatingModel extends Model {
     const { eventId, groupsCount, seed, windShuffleMode } = payload;
 
     const seatingGetter = (
-      playersMap: Record<number, number>,
+      playersMap: Array<[number, number]>,
       _seed: number,
       previousSeatings: number[][],
       _windShuffleMode?: WindShuffleMode
@@ -127,7 +128,7 @@ export class SeatingModel extends Model {
     const { eventId, windShuffleMode } = payload;
     const seed = randomInt(999999);
     const seatingGetter = (
-      playersMap: Record<number, number>,
+      playersMap: Array<[number, number]>,
       _seed: number,
       previousSeatings: number[][],
       _windShuffleMode?: WindShuffleMode
@@ -152,7 +153,7 @@ export class SeatingModel extends Model {
     const { eventId, step, windShuffleMode } = payload;
     const seed = randomInt(999999);
     const seatingGetter = (
-      playersMap: Record<number, number>,
+      playersMap: Array<[number, number]>,
       _seed: number,
       previousSeatings: number[][],
       _windShuffleMode?: WindShuffleMode
@@ -188,14 +189,15 @@ export class SeatingModel extends Model {
       prescriptEntity.script,
       prescriptEntity.nextGame
     );
+
     const seatingGetter = (
-      _playersMap: Record<number, number>, // ignored in this case
+      _playersMap: Array<[number, number]>, // ignored in this case
       _seed: number,
       previousSeatings: number[][],
       _windShuffleMode?: WindShuffleMode
     ) => {
       return update_wind_placing_only({
-        playersMap: seating,
+        playersMap: seating.map((id) => [id, 0]), // zero rating as it does not really matter in case of prescripted seating
         previousSeatings,
         randFactor: _seed,
         windShuffle: this._getWindShuffleMode(_windShuffleMode),
@@ -260,7 +262,7 @@ export class SeatingModel extends Model {
     }
 
     const seatingGetter = (
-      playersMap: Record<number, number>,
+      playersMap: Array<[number, number]>,
       seed: number,
       previousSeatings: number[][],
       windShuffleMode?: WindShuffleMode
@@ -300,7 +302,7 @@ export class SeatingModel extends Model {
     event: EventEntity,
     seed: number,
     seatingGetter: (
-      playersMap: Record<number, number>,
+      playersMap: Array<[number, number]>,
       seed: number,
       previousSeatings: number[][],
       windShuffleMode?: WindShuffleMode
@@ -347,7 +349,7 @@ export class SeatingModel extends Model {
     eventId: number,
     seed: number,
     seatingGetter: (
-      playersMap: Record<number, number>,
+      playersMap: Array<[number, number]>,
       seed: number,
       previousSeatings: number[][],
       windShuffleMode?: WindShuffleMode
@@ -389,7 +391,7 @@ export class SeatingModel extends Model {
     eventId: number,
     script: string,
     nextGameIndex: number
-  ): Promise<Record<number, number>> {
+  ): Promise<number[]> {
     const seating = (unpackScript(script)[nextGameIndex] ?? []).flat(2);
     // replace local ids with real ids
     const regModel = this.getModel(EventRegistrationModel);
@@ -416,10 +418,48 @@ export class SeatingModel extends Model {
     }
   }
 
+  private async _getPlayersMap(
+    event: EventEntity,
+    regs: EventRegisteredPlayersEntity[],
+    history: PlayerHistoryEntity[],
+    ignoredPlayerIds: number[],
+    penaltyByPlayer: Record<number, { amount: number; count: number }>
+  ) {
+    const playersMap: Array<[number, number]> = [];
+    const playersProcessed = new Set<number>();
+
+    // First step is adding players that already played games
+    for (const item of history) {
+      if (ignoredPlayerIds.includes(item.playerId)) {
+        continue;
+      }
+      playersMap.push([item.playerId, item.rating - (penaltyByPlayer[item.playerId]?.amount ?? 0)]);
+      playersProcessed.add(item.playerId);
+    }
+
+    // Second step is adding players that didn't play yet
+    // this situation is possible only in online tournament
+    // when we added replacement player
+    const initialRating = event.ruleset?.rules.startRating ?? 0;
+    for (const reg of regs) {
+      if (ignoredPlayerIds.includes(reg.playerId)) {
+        continue;
+      }
+      if (!playersProcessed.has(reg.playerId)) {
+        playersMap.push([reg.playerId, initialRating]);
+      }
+    }
+
+    // sort by rating desc, random on tiebreak
+    playersMap.sort((a, b) => (b[1] > a[1] ? 1 : b[1] < a[1] ? -1 : randomSign()));
+
+    return playersMap;
+  }
+
   private async _getData(
     event: EventEntity,
     regs: EventRegisteredPlayersEntity[]
-  ): Promise<[Record<number, number>, number[][]]> {
+  ): Promise<[Array<[number, number]>, number[][]]> {
     const regModel = this.getModel(EventRegistrationModel);
     const ignoredPlayerIds = await regModel.findIgnoredPlayersIdsByEvent([event.id]);
 
@@ -439,28 +479,6 @@ export class SeatingModel extends Model {
 
     const historyModel = this.getModel(PlayerHistoryModel);
     const history = await historyModel.findLastByEvent([event.id]);
-    const playersMap: Record<number, number> = {};
-
-    // First step is adding players that already played games
-    for (const item of history) {
-      if (ignoredPlayerIds.includes(item.playerId)) {
-        continue;
-      }
-      playersMap[item.playerId] = item.rating - (penaltyByPlayer[item.playerId]?.amount ?? 0);
-    }
-
-    // Second step is adding players that didn't play yet
-    // this situation is possible only in online tournament
-    // when we added replacement player
-    const initialRating = event.ruleset?.rules.startRating ?? 0;
-    for (const reg of regs) {
-      if (ignoredPlayerIds.includes(reg.playerId)) {
-        continue;
-      }
-      if (!playersMap[reg.playerId]) {
-        playersMap[reg.playerId] = initialRating;
-      }
-    }
 
     const playerInSessionModel = this.getModel(PlayerInSessionModel);
     const previousSeatings = await playerInSessionModel.getPlayersSeatingInEvent(event.id);
@@ -473,7 +491,10 @@ export class SeatingModel extends Model {
       seatingChunks.push(tables.slice(i, i + 4));
     }
 
-    return [playersMap, seatingChunks];
+    return [
+      await this._getPlayersMap(event, regs, history, ignoredPlayerIds, penaltyByPlayer),
+      seatingChunks,
+    ];
   }
 
   private _getWindShuffleMode(

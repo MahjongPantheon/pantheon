@@ -31,7 +31,7 @@
     "i18n-dialect": "https://github.com/ctizen/i18n-dialect#2.0.2",
     "i18n-proto": "^1.0.5",
     "lodash.debounce": "^4.0.8",
-    "mahjong-seatings-rs-node": "2.1.0",
+    "mahjong-seatings-rs-node": "3.0.0",
     "moment": "^2.30.1",
     "moment-timezone": "^0.6.0",
     "node-cron": "^4.5.0",

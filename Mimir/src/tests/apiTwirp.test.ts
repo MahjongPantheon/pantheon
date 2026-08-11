@@ -1680,142 +1680,172 @@ describe('Mimir Twirp API', () => {
       [
         {
           order: 1,
-          playerId: 147,
+          playerId: 1068,
+          rating: -69800,
           tableIndex: 7,
         },
         {
           order: 2,
           playerId: 2994,
+          rating: -285400,
           tableIndex: 7,
         },
         {
           order: 3,
-          playerId: 1729,
-          tableIndex: 7,
-        },
-        {
-          order: 4,
-          playerId: 393,
-          tableIndex: 7,
-        },
-        {
-          order: 1,
-          playerId: 86,
-          tableIndex: 6,
-        },
-        {
-          order: 2,
-          playerId: 2318,
-          tableIndex: 6,
-        },
-        {
-          order: 3,
-          playerId: 338,
-          tableIndex: 6,
-        },
-        {
-          order: 4,
-          playerId: 1407,
-          tableIndex: 6,
-        },
-        {
-          order: 1,
-          playerId: 2033,
-          tableIndex: 5,
-        },
-        {
-          order: 2,
           playerId: 2517,
+          rating: 92500,
+          tableIndex: 7,
+        },
+        {
+          order: 4,
+          playerId: 1667,
+          rating: -7600,
+          tableIndex: 7,
+        },
+        {
+          order: 1,
+          playerId: 1175,
+          rating: -59100,
+          tableIndex: 6,
+        },
+        {
+          order: 2,
+          playerId: 1002,
+          rating: 99100,
+          tableIndex: 6,
+        },
+        {
+          order: 3,
+          playerId: 99,
+          rating: 93100,
+          tableIndex: 6,
+        },
+        {
+          order: 4,
+          playerId: 2902,
+          rating: -137100,
+          tableIndex: 6,
+        },
+        {
+          order: 1,
+          playerId: 1729,
+          rating: -168600,
+          tableIndex: 5,
+        },
+        {
+          order: 2,
+          playerId: 393,
+          rating: -23900,
           tableIndex: 5,
         },
         {
           order: 3,
-          playerId: 1068,
+          playerId: 2387,
+          rating: 61100,
           tableIndex: 5,
         },
         {
           order: 4,
           playerId: 2572,
+          rating: 107200,
           tableIndex: 5,
         },
         {
           order: 1,
           playerId: 235,
+          rating: 117300,
           tableIndex: 4,
         },
         {
           order: 2,
-          playerId: 1002,
+          playerId: 743,
+          rating: 77500,
           tableIndex: 4,
         },
         {
           order: 3,
-          playerId: 743,
+          playerId: 948,
+          rating: -58900,
           tableIndex: 4,
         },
         {
           order: 4,
-          playerId: 1667,
+          playerId: 1468,
+          rating: -11100,
           tableIndex: 4,
         },
         {
           order: 1,
           playerId: 2924,
+          rating: 61600,
           tableIndex: 3,
         },
         {
           order: 2,
           playerId: 2597,
+          rating: -148200,
           tableIndex: 3,
         },
         {
           order: 3,
           playerId: 1028,
+          rating: 117700,
           tableIndex: 3,
         },
         {
           order: 4,
           playerId: 304,
+          rating: -13500,
           tableIndex: 3,
         },
         {
           order: 1,
-          playerId: 761,
+          playerId: 86,
+          rating: 23000,
           tableIndex: 2,
         },
         {
           order: 2,
-          playerId: 99,
+          playerId: 2318,
+          rating: 34000,
           tableIndex: 2,
         },
         {
           order: 3,
-          playerId: 948,
+          playerId: 761,
+          rating: 151700,
           tableIndex: 2,
         },
         {
           order: 4,
-          playerId: 1175,
+          playerId: 1407,
+          rating: -95500,
           tableIndex: 2,
         },
         {
           order: 1,
-          playerId: 2387,
+          playerId: 338,
+          rating: 61100,
           tableIndex: 1,
         },
         {
           order: 2,
           playerId: 1834,
+          rating: 153500,
           tableIndex: 1,
         },
         {
           order: 3,
-          playerId: 1468,
+          playerId: 147,
+          // player from he bottom of the table is placed on the 1st
+          // table - this is fine, it's how swiss seating works
+          rating: -170900,
           tableIndex: 1,
         },
         {
           order: 4,
-          playerId: 2902,
+          playerId: 2033,
+          rating: -40800,
           tableIndex: 1,
         },
       ].map((item) => ({
@@ -1823,7 +1853,6 @@ describe('Mimir Twirp API', () => {
         hasAvatar: expect.any(Boolean),
         lastUpdate: expect.any(String),
         playerTitle: expect.any(String),
-        rating: expect.any(Number),
         sessionId: expect.any(Number),
       }))
     );
@@ -1839,32 +1868,32 @@ describe('Mimir Twirp API', () => {
       {
         players: [
           {
-            playerId: 2387,
+            playerId: 338,
           },
           {
             playerId: 1834,
           },
           {
-            playerId: 1468,
+            playerId: 147,
           },
           {
-            playerId: 2902,
+            playerId: 2033,
           },
         ],
       },
       {
         players: [
           {
+            playerId: 86,
+          },
+          {
+            playerId: 2318,
+          },
+          {
             playerId: 761,
           },
           {
-            playerId: 99,
-          },
-          {
-            playerId: 948,
-          },
-          {
-            playerId: 1175,
+            playerId: 1407,
           },
         ],
       },
@@ -1890,26 +1919,26 @@ describe('Mimir Twirp API', () => {
             playerId: 235,
           },
           {
-            playerId: 1002,
-          },
-          {
             playerId: 743,
           },
           {
-            playerId: 1667,
+            playerId: 948,
+          },
+          {
+            playerId: 1468,
           },
         ],
       },
       {
         players: [
           {
-            playerId: 2033,
+            playerId: 1729,
           },
           {
-            playerId: 2517,
+            playerId: 393,
           },
           {
-            playerId: 1068,
+            playerId: 2387,
           },
           {
             playerId: 2572,
@@ -1919,44 +1948,322 @@ describe('Mimir Twirp API', () => {
       {
         players: [
           {
-            playerId: 86,
+            playerId: 1175,
           },
           {
-            playerId: 2318,
+            playerId: 1002,
           },
           {
-            playerId: 338,
+            playerId: 99,
           },
           {
-            playerId: 1407,
+            playerId: 2902,
           },
         ],
       },
       {
         players: [
           {
-            playerId: 147,
+            playerId: 1068,
           },
           {
             playerId: 2994,
           },
           {
-            playerId: 1729,
+            playerId: 2517,
           },
           {
-            playerId: 393,
+            playerId: 1667,
           },
         ],
       },
     ]);
   });
 
-  /*
+  test('MakeIntervalSeating', async () => {
+    const success = await mimirClient.MakeIntervalSeating(
+      TOURNAMENT_EVENT_ID,
+      3,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    expect(success.success).toBe(true);
+    const seating = await mimirClient.GetCurrentSeating(TOURNAMENT_EVENT_ID);
+    await mimirClient.ResetSeating(TOURNAMENT_EVENT_ID);
+    expect(seating.seating).toEqual(
+      [
+        {
+          order: 1,
+          playerId: 147,
+          tableIndex: 7,
+        },
+        {
+          order: 2,
+          playerId: 2994,
+          tableIndex: 7,
+        },
+        {
+          order: 3,
+          playerId: 1729,
+          tableIndex: 7,
+        },
+        {
+          order: 4,
+          playerId: 2597,
+          tableIndex: 7,
+        },
+        {
+          order: 1,
+          playerId: 1667,
+          tableIndex: 6,
+        },
+        {
+          order: 2,
+          playerId: 393,
+          tableIndex: 6,
+        },
+        {
+          order: 3,
+          playerId: 2902,
+          tableIndex: 6,
+        },
+        {
+          order: 4,
+          playerId: 1175,
+          tableIndex: 6,
+        },
+        {
+          order: 1,
+          playerId: 86,
+          tableIndex: 5,
+        },
+        {
+          order: 2,
+          playerId: 304,
+          tableIndex: 5,
+        },
+        {
+          order: 3,
+          playerId: 948,
+          tableIndex: 5,
+        },
+        {
+          order: 4,
+          playerId: 1407,
+          tableIndex: 5,
+        },
+        {
+          order: 1,
+          playerId: 1068,
+          tableIndex: 4,
+        },
+        {
+          order: 2,
+          playerId: 2318,
+          tableIndex: 4,
+        },
+        {
+          order: 3,
+          playerId: 1468,
+          tableIndex: 4,
+        },
+        {
+          order: 4,
+          playerId: 2033,
+          tableIndex: 4,
+        },
+        {
+          order: 1,
+          playerId: 338,
+          tableIndex: 3,
+        },
+        {
+          order: 2,
+          playerId: 743,
+          tableIndex: 3,
+        },
+        {
+          order: 3,
+          playerId: 1028,
+          tableIndex: 3,
+        },
+        {
+          order: 4,
+          playerId: 1002,
+          tableIndex: 3,
+        },
+        {
+          order: 1,
+          playerId: 761,
+          tableIndex: 2,
+        },
+        {
+          order: 2,
+          playerId: 2517,
+          tableIndex: 2,
+        },
+        {
+          order: 3,
+          playerId: 2387,
+          tableIndex: 2,
+        },
+        {
+          order: 4,
+          playerId: 2572,
+          tableIndex: 2,
+        },
+        {
+          order: 1,
+          playerId: 2924,
+          tableIndex: 1,
+        },
+        {
+          order: 2,
+          playerId: 1834,
+          tableIndex: 1,
+        },
+        {
+          order: 3,
+          playerId: 99,
+          tableIndex: 1,
+        },
+        {
+          order: 4,
+          playerId: 235,
+          tableIndex: 1,
+        },
+      ].map((item) => ({
+        ...item,
+        hasAvatar: expect.any(Boolean),
+        lastUpdate: expect.any(String),
+        playerTitle: expect.any(String),
+        rating: expect.any(Number),
+        sessionId: expect.any(Number),
+      }))
+    );
+  });
 
-MakeIntervalSeating
-MakePrescriptedSeating
-GetPrescriptedEventConfig
-UpdatePrescriptedEventConfig
+  test('PrescriptedSeating', async () => {
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_TOURNAMENT,
+      title: 'test tournament' + v4(),
+      description: 'test event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: true,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    await timeout(100);
+    await mimirClient.RegisterPlayer(eventId, 2517);
+    await mimirClient.RegisterPlayer(eventId, 743);
+    await mimirClient.RegisterPlayer(eventId, 338);
+    await mimirClient.RegisterPlayer(eventId, 1834);
+    await mimirClient.RegisterPlayer(eventId, 99);
+    await mimirClient.RegisterPlayer(eventId, 1667);
+    await mimirClient.RegisterPlayer(eventId, 948);
+    await mimirClient.RegisterPlayer(eventId, 2597);
+
+    await mimirClient.UpdatePlayersLocalIds({
+      eventId,
+      idsToLocalIds: [
+        { playerId: 2517, localId: 1 },
+        { playerId: 743, localId: 2 },
+        { playerId: 338, localId: 3 },
+        { playerId: 1834, localId: 4 },
+        { playerId: 99, localId: 5 },
+        { playerId: 1667, localId: 6 },
+        { playerId: 948, localId: 7 },
+        { playerId: 2597, localId: 8 },
+      ],
+    });
+
+    const prescript = ['1-2-3-4', '5-6-7-8', '', '1-3-5-7', '2-4-6-8'].join('\n');
+
+    const config = await mimirClient.GetPrescriptedEventConfig(eventId);
+    expect(config).toEqual({
+      eventId,
+      nextSessionIndex: 1,
+      prescript: '',
+      errors: ['No predefined seating yet'],
+    });
+
+    await mimirClient.UpdatePrescriptedEventConfig({
+      eventId,
+      prescript,
+      nextSessionIndex: 1,
+    });
+    await timeout(100);
+    const configAfterUpdate = await mimirClient.GetPrescriptedEventConfig(eventId);
+    expect(configAfterUpdate.eventId).toEqual(eventId);
+    expect(configAfterUpdate.nextSessionIndex).toEqual(1);
+    expect(configAfterUpdate.prescript).toEqual(prescript);
+
+    await mimirClient.MakePrescriptedSeating(eventId);
+    const seating = await mimirClient.GetCurrentSeating(eventId);
+    expect(seating.seating).toEqual(
+      [
+        {
+          order: 1,
+          playerId: 948,
+          tableIndex: 2,
+        },
+        {
+          order: 2,
+          playerId: 99,
+          tableIndex: 2,
+        },
+        {
+          order: 3,
+          playerId: 2597,
+          tableIndex: 2,
+        },
+        {
+          order: 4,
+          playerId: 1667,
+          tableIndex: 2,
+        },
+        {
+          order: 1,
+          playerId: 743,
+          tableIndex: 1,
+        },
+        {
+          order: 2,
+          playerId: 338,
+          tableIndex: 1,
+        },
+        {
+          order: 3,
+          playerId: 1834,
+          tableIndex: 1,
+        },
+        {
+          order: 4,
+          playerId: 2517,
+          tableIndex: 1,
+        },
+      ].map((item) => ({
+        ...item,
+        hasAvatar: expect.any(Boolean),
+        lastUpdate: expect.any(String),
+        playerTitle: expect.any(String),
+        rating: expect.any(Number),
+        sessionId: expect.any(Number),
+      }))
+    );
+  });
+
+  /*
 
 GetTimerState - todo check after time started/seating ready
 GetTablesState - todo check after time started/seating ready
@@ -1968,7 +2275,6 @@ FinalizeSession
 DefinalizeGame
 
 UpdatePlayersTeams - todo after team event is ready
-UpdatePlayersLocalIds - todo after prescripted event is ready
 
 AddPenaltyGame
 AddOnlineReplay

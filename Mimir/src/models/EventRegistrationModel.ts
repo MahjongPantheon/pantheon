@@ -60,15 +60,13 @@ export class EventRegistrationModel extends Model {
   async updateLocalIds(eventId: number, idMap: LocalIdMapping[]) {
     return this.repo.em.upsertMany(
       EventRegisteredPlayersEntity,
-      [
-        ...idMap.map(({ playerId, localId }) => ({
-          playerId,
-          eventId,
-          localId,
-          ignoreSeating: 0,
-        })),
-      ],
-      { onConflictFields: ['localId'] }
+      idMap.map(({ playerId, localId }) => ({
+        playerId,
+        event: this.repo.em.getReference(EventEntity, eventId),
+        localId,
+        ignoreSeating: 0,
+      })),
+      { onConflictFields: ['event', 'localId'] }
     );
   }
 

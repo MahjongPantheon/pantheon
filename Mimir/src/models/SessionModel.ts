@@ -310,11 +310,13 @@ export class SessionModel extends Model {
     if (sessions.length === 0) {
       return { players: new Map(), replaceMap: new Map() };
     }
-    const eventId = sessions[0].event.id;
-    // invariant check
-    if (sessions.some((s) => s.event.id !== eventId)) {
-      throw new Error('All sessions must belong to the same event');
-    }
+
+    // Note: invariant check is desired, though it conflicts with listing of games in aggregated event
+    // Thus it's omitted here for now.
+    // const eventId = sessions[0].event.id;
+    // if (sessions.some((s) => s.event.id !== eventId)) {
+    //  throw new Error('All sessions must belong to the same event');
+    // }
 
     const playerModel = this.getModel(PlayerModel);
     const {
