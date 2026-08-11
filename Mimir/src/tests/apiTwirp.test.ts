@@ -24,6 +24,8 @@ describe('Mimir Twirp API', () => {
     // prepare test data in db
   });
 
+  afterAll(() => {});
+
   test('GetRulesets', async () => {
     const rulesets = await mimirClient.GetRulesets();
     expect(rulesets).toBeDefined();

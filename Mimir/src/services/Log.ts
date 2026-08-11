@@ -22,6 +22,11 @@ export class LogService {
     this.error = this._logger.error.bind(this._logger);
   }
 
+  destroy() {
+    this._logger.flush();
+    this._logger.removeAllListeners();
+  }
+
   info: pino.Logger['info'];
   debug: pino.Logger['debug'];
   warn: pino.Logger['warn'];

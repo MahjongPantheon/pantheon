@@ -6,7 +6,12 @@ import { init } from '../../tests/initOrm.js';
 
 const orm = await init();
 describe('SessionResults', () => {
-  const mdl = Model.getModel(Repository.instance({}, orm), SessionResultsModel);
+  const repo = Repository.instance({}, orm);
+  const mdl = Model.getModel(repo, SessionResultsModel);
+
+  afterAll(async () => {
+    await repo.destroy();
+  });
 
   it('should calculate places map', () => {
     const scores = {

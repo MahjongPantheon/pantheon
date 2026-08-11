@@ -12,6 +12,10 @@ describe('PlayerHistory', () => {
   const repo = Repository.instance({}, orm);
   const mdl = Model.getModel(repo, PlayerHistoryModel);
 
+  afterAll(async () => {
+    await repo.destroy();
+  });
+
   it('should update history item', () => {
     const item = new PlayerHistoryEntity();
     item.playerId = 2;

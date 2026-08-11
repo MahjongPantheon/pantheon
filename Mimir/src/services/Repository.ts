@@ -84,4 +84,10 @@ export class Repository {
   mockCache() {
     Repository._cache ??= new CacheService(Repository.config);
   }
+
+  // mainly for tests
+  async destroy() {
+    this.log.destroy();
+    await this.db.close();
+  }
 }

@@ -108,7 +108,8 @@ test: export NODE_OPTIONS=--experimental-vm-modules
 test:
 	echo "======= Mimir: test ======"
 	#make seed_test_db
-	pnpm exec jest --coverage --runInBand
+	pnpm exec jest --runInBand
+	# For debugging:
 	#node --inspect=0.0.0.0:4411 node_modules/jest/bin/jest.js --runInBand -t 'Mimir Twirp API'
 
 .PHONY: container_test

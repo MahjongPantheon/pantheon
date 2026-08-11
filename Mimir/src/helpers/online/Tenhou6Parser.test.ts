@@ -100,6 +100,7 @@ describe('Tenhou6ParserTest', () => {
 
     expect(rounds.length).toBe(9);
     expect(openHands).toBe(3);
+    await repo.destroy();
   });
 
   test('parseTensoulGame', async () => {
@@ -140,6 +141,7 @@ describe('Tenhou6ParserTest', () => {
     expect(openHands).toBe(5);
     expect(riichiCount).toBe(4);
     expect(tempaiCount).toBe(3);
+    await repo.destroy();
   });
 
   test('parseYakumanDoubleRon', async () => {
@@ -156,6 +158,7 @@ describe('Tenhou6ParserTest', () => {
 
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
+    await repo.destroy();
   });
 
   test('parseDoubleRonAndHonbaBets', async () => {
@@ -172,6 +175,7 @@ describe('Tenhou6ParserTest', () => {
 
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
+    await repo.destroy();
   });
 
   test('parseDoubleRonAndRiichiBets', async () => {
@@ -188,6 +192,7 @@ describe('Tenhou6ParserTest', () => {
 
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
+    await repo.destroy();
   });
 
   test('parseNagashiMangan', async () => {
@@ -204,6 +209,7 @@ describe('Tenhou6ParserTest', () => {
 
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
+    await repo.destroy();
   });
 
   test('parseTripleYakuman', async () => {
@@ -220,6 +226,7 @@ describe('Tenhou6ParserTest', () => {
 
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
+    await repo.destroy();
   });
 
   test('parseHanchanWithWestRound', async () => {
@@ -233,6 +240,7 @@ describe('Tenhou6ParserTest', () => {
 
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
+    await repo.destroy();
   });
 
   test('parseRonWithPao', async () => {
@@ -250,6 +258,7 @@ describe('Tenhou6ParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds[2].hands[0].paoPlayerId).toBe(4);
+    await repo.destroy();
   });
 
   test('parseTsumoWithPao', async () => {
@@ -267,6 +276,7 @@ describe('Tenhou6ParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds[1].hands[0].paoPlayerId).toBe(4);
+    await repo.destroy();
   });
 
   test('yakumanTsumoNoDealerWithoutPao', async () => {
@@ -293,6 +303,7 @@ describe('Tenhou6ParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(paoApplyCount).toBe(0);
+    await repo.destroy();
   });
 
   test('yakumanTsumoDealerWithoutPao', async () => {
@@ -319,6 +330,7 @@ describe('Tenhou6ParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(paoApplyCount).toBe(0);
+    await repo.destroy();
   });
 
   test('yakumanRonWithoutPao', async () => {
@@ -345,6 +357,7 @@ describe('Tenhou6ParserTest', () => {
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(paoApplyCount).toBe(0);
+    await repo.destroy();
   });
 
   test('tripleRonDraw', async () => {
@@ -363,6 +376,7 @@ describe('Tenhou6ParserTest', () => {
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(13);
     expect(rounds[10].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
+    await repo.destroy();
   });
 
   test('fourKanDraw', async () => {
@@ -381,6 +395,7 @@ describe('Tenhou6ParserTest', () => {
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(11);
     expect(rounds[5].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
+    await repo.destroy();
   });
 
   test('nineTerminalDraw', async () => {
@@ -399,6 +414,7 @@ describe('Tenhou6ParserTest', () => {
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
     expect(rounds[1].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
+    await repo.destroy();
   });
 
   test('fourWindDraw', async () => {
@@ -417,6 +433,7 @@ describe('Tenhou6ParserTest', () => {
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
     expect(rounds[7].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
+    await repo.destroy();
   });
 
   test('fourRiichiDraw', async () => {
@@ -435,6 +452,7 @@ describe('Tenhou6ParserTest', () => {
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(13);
     expect(rounds[6].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
+    await repo.destroy();
   });
 
   test('parseTensoulGameWithSameNicknames', async () => {
@@ -492,5 +510,6 @@ describe('Tenhou6ParserTest', () => {
     expect(openHands).toBe(1);
     expect(riichiCount).toBe(5);
     expect(tempaiCount).toBe(0);
+    await repo.destroy();
   });
 });
