@@ -27,9 +27,11 @@ import {
   EventsGetRatingTablePayload,
   EventsGetRatingTableResponse,
   EventsGetRulesetsResponse,
+  EventsGetTablesStatePayload,
   EventsGetTimerStateResponse,
   EventsUpdatePlayersLocalIdsPayload,
   EventsUpdatePrescriptedEventConfigPayload,
+  FinalizeSession,
   FinishEvent,
   ForceFinishGame,
   GamesAddPenaltyPayload,
@@ -61,6 +63,7 @@ import {
   GetRatingTable,
   GetRulesets,
   GetSessionOverview,
+  GetTablesState,
   GetTimerState,
   ListChombo,
   ListMyPenalties,
@@ -391,5 +394,13 @@ export class MimirTest {
 
   async AddExtraTime(payload: AddExtraTimePayload) {
     return AddExtraTime(payload, this._config);
+  }
+
+  async GetTablesState(payload: EventsGetTablesStatePayload) {
+    return GetTablesState(payload, this._config);
+  }
+
+  async FinalizeSession(eventId: number) {
+    return FinalizeSession({ eventId }, this._config);
   }
 }

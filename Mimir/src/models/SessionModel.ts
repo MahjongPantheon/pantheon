@@ -425,6 +425,9 @@ export class SessionModel extends Model {
       session[0].intermediateResults
     );
 
+    console.log(roundData);
+    console.log(sessionState.getRound(), sessionState.getHonba());
+
     const round =
       roundData.ron ??
       roundData.tsumo ??
@@ -522,7 +525,8 @@ export class SessionModel extends Model {
     const noTimeLeft =
       event.useTimer &&
       lastTimer &&
-      lastTimer + (event.gameDuration ?? 0) * 60 + session.extraTime < new Date().getTime();
+      lastTimer + (event.gameDuration ?? 0) * 60 + (session.extraTime ?? 0) <
+        Math.floor(new Date().getTime() / 1000);
 
     switch (event.ruleset.rules.endingPolicy) {
       case EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND: {

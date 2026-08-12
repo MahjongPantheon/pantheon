@@ -1081,8 +1081,8 @@ export class EventModel extends Model {
 
     return {
       tables: lastGames.map((game, gIndex) => {
-        const currentScores = sessionStates[game.id].getScores();
-        const chombo = sessionStates[game.id].getChombo();
+        const currentScores = sessionStates[gIndex].getScores();
+        const chombo = sessionStates[gIndex].getChombo();
         const scores = Object.keys(currentScores).map((id) => ({
           playerId: +id,
           score: currentScores[+id],
@@ -1090,36 +1090,39 @@ export class EventModel extends Model {
         }));
         return {
           status:
-            game.status === 'planned'
+            game.status === SessionStatus.SESSION_STATUS_PLANNED
               ? SessionStatus.SESSION_STATUS_PLANNED
-              : game.status === 'inprogress'
+              : game.status === SessionStatus.SESSION_STATUS_INPROGRESS
                 ? SessionStatus.SESSION_STATUS_INPROGRESS
-                : game.status === 'prefinished'
+                : game.status === SessionStatus.SESSION_STATUS_PREFINISHED
                   ? SessionStatus.SESSION_STATUS_PREFINISHED
-                  : game.status === 'finished'
+                  : game.status === SessionStatus.SESSION_STATUS_FINISHED
                     ? SessionStatus.SESSION_STATUS_FINISHED
-                    : game.status === 'cancelled'
+                    : game.status === SessionStatus.SESSION_STATUS_CANCELLED
                       ? SessionStatus.SESSION_STATUS_CANCELLED
                       : SessionStatus.SESSION_STATUS_UNSPECIFIED,
           mayDefinalize: definalizeFlags[gIndex],
           sessionHash: game.representationalHash!,
           tableIndex: game.tableIndex,
-          lastRound: RoundEntity.toMessage(lastRounds[game.id]),
-          currentRoundIndex: sessionStates[game.id].getRound(),
+          lastRound: omitLastRound ? null : RoundEntity.toMessage(lastRounds[game.id]),
+          currentRoundIndex: sessionStates[gIndex].getRound(),
           scores,
-          players: registeredPlayers.map((p) => {
-            return {
-              id: p.id,
-              title: players[p.id].title,
-              localId: p.localId,
-              teamName: p.teamName,
-              tenhouId: players[p.id].tenhouId,
-              ignoreSeating: !!p.ignoreSeating,
-              replacedBy: p.replacementId ? replacements[p.replacementId] : undefined,
-              hasAvatar: players[p.id].hasAvatar,
-              lastUpdate: players[p.id].lastUpdate,
-            };
-          }),
+          players: [...game.players]
+            .sort((a, b) => a.order - b.order)
+            .map((p) => {
+              const reg = registeredPlayers.find((r) => r.playerId === p.playerId)!;
+              return {
+                id: p.playerId,
+                title: players[p.playerId].title,
+                localId: reg.localId,
+                teamName: reg.teamName,
+                tenhouId: players[p.playerId].tenhouId,
+                ignoreSeating: !!reg.ignoreSeating,
+                replacedBy: reg.replacementId ? replacements[reg.replacementId] : undefined,
+                hasAvatar: players[p.playerId].hasAvatar,
+                lastUpdate: players[p.playerId].lastUpdate,
+              };
+            }),
           extraTime: game.extraTime,
         };
       }),

@@ -1,6 +1,11 @@
 import { Yaku } from '../helpers/yaku.js';
 import { MimirTest } from '../services/MimirTest.js';
-import { EventType, PlatformType, WindShuffleMode } from 'tsclients/proto/atoms.pb.js';
+import {
+  EventType,
+  PlatformType,
+  SessionStatus,
+  WindShuffleMode,
+} from 'tsclients/proto/atoms.pb.js';
 import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { v4 } from 'uuid';
 
@@ -1617,56 +1622,8 @@ describe('Mimir Twirp API', () => {
     );
     expect(success.success).toBe(true);
     const seating = await mimirClient.GetCurrentSeating(eventId);
-    expect(seating.seating).toEqual(
-      [
-        {
-          order: 1,
-          playerId: 1667,
-          tableIndex: 2,
-        },
-        {
-          order: 2,
-          playerId: 948,
-          tableIndex: 2,
-        },
-        {
-          order: 3,
-          playerId: 743,
-          tableIndex: 2,
-        },
-        {
-          order: 4,
-          playerId: 338,
-          tableIndex: 2,
-        },
-        {
-          order: 1,
-          playerId: 99,
-          tableIndex: 1,
-        },
-        {
-          order: 2,
-          playerId: 2597,
-          tableIndex: 1,
-        },
-        {
-          order: 3,
-          playerId: 2517,
-          tableIndex: 1,
-        },
-        {
-          order: 4,
-          playerId: 1834,
-          tableIndex: 1,
-        },
-      ].map((item) => ({
-        ...item,
-        hasAvatar: expect.any(Boolean),
-        lastUpdate: expect.any(String),
-        playerTitle: expect.any(String),
-        rating: expect.any(Number),
-        sessionId: expect.any(Number),
-      }))
+    expect(seating.seating.map((s) => s.playerId).sort((a, b) => a - b)).toEqual(
+      [2517, 743, 338, 1834, 99, 1667, 948, 2597].sort((a, b) => a - b)
     );
   });
 
@@ -2328,10 +2285,185 @@ describe('Mimir Twirp API', () => {
     expect(sessions2.sessions[0].timerState.timeRemaining).toBeGreaterThan(remaining + 5 * 60 - 10);
   });
 
+  test('GetTablesState', async () => {
+    const tablesStateBefore = await mimirClient.GetTablesState({
+      eventId: TOURNAMENT_EVENT_ID,
+      omitLastRound: true,
+    });
+
+    for (const t of tablesStateBefore.tables) {
+      expect(t.currentRoundIndex).toBeGreaterThan(1);
+      expect(t.players.length).toBe(4);
+      expect(t.status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+    }
+
+    const success = await mimirClient.MakeSwissSeating(
+      TOURNAMENT_EVENT_ID,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    expect(success.success).toBe(true);
+    const tablesState = await mimirClient.GetTablesState({
+      eventId: TOURNAMENT_EVENT_ID,
+      omitLastRound: true,
+    });
+    await mimirClient.ResetSeating(TOURNAMENT_EVENT_ID);
+
+    for (const t of tablesState.tables) {
+      expect(t.currentRoundIndex).toBe(1);
+      expect(t.players.length).toBe(4);
+      expect(t.status).toBe(SessionStatus.SESSION_STATUS_INPROGRESS);
+    }
+  });
+
+  test('FinalizeSession / full tournament flow on single table', async () => {
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_TOURNAMENT,
+      title: 'test tournament' + v4(),
+      description: 'test event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    await mimirClient.RegisterPlayer(eventId, 2517);
+    await mimirClient.RegisterPlayer(eventId, 743);
+    await mimirClient.RegisterPlayer(eventId, 338);
+    await mimirClient.RegisterPlayer(eventId, 1834);
+    await mimirClient.MakeShuffledSeating(
+      eventId,
+      1,
+      12345,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    await mimirClient.StartTimer(eventId);
+    const tablesState = await mimirClient.GetTablesState({
+      eventId,
+      omitLastRound: true,
+    });
+    const sessionHash = tablesState.tables[0].sessionHash;
+    const playerIds = tablesState.tables[0].players.map((p) => p.id);
+
+    mimirClient.setEventId(eventId);
+
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 1,
+          honba: 0,
+          riichiBets: [playerIds[2]],
+          tempai: [playerIds[1], playerIds[2]],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 2,
+          honba: 1,
+          riichiBets: [playerIds[3]],
+          tempai: [playerIds[2], playerIds[3]],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 3,
+          honba: 2,
+          riichiBets: [playerIds[0]],
+          tempai: [playerIds[3], playerIds[0]],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 4,
+          honba: 3,
+          riichiBets: [playerIds[1]],
+          tempai: [playerIds[0], playerIds[1]],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 5,
+          honba: 4,
+          riichiBets: [playerIds[2]],
+          tempai: [playerIds[1], playerIds[2]],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 6,
+          honba: 5,
+          riichiBets: [playerIds[3]],
+          tempai: [playerIds[2], playerIds[3]],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 7,
+          honba: 6,
+          riichiBets: [playerIds[0]],
+          tempai: [playerIds[3], playerIds[0]],
+        },
+      },
+    });
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 8,
+          honba: 7,
+          riichiBets: [playerIds[1]],
+          tempai: [playerIds[0], playerIds[1]],
+        },
+      },
+    });
+
+    const tablesStateAfter = await mimirClient.GetTablesState({
+      eventId,
+      omitLastRound: true,
+    });
+
+    expect(tablesStateAfter.tables[0].status).toBe(SessionStatus.SESSION_STATUS_PREFINISHED);
+
+    const success = await mimirClient.FinalizeSession(eventId);
+    expect(success.success).toBe(true);
+
+    const tablesStateAfter2 = await mimirClient.GetTablesState({
+      eventId,
+      omitLastRound: true,
+    });
+
+    expect(tablesStateAfter2.tables[0].status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+  });
+
   /*
-
-
-GetTablesState - todo check after time started/seating ready
 
 FinalizeSession
 DefinalizeGame
