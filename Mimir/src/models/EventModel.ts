@@ -403,12 +403,15 @@ export class EventModel extends Model {
       timerState.started = false;
       timerState.finished = false;
       timerState.timeRemaining = 0;
-    } else if (event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 > Date.now() / 1000) {
+    } else if (
+      event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 >
+      Math.floor(Date.now() / 1000)
+    ) {
       // game in progress
       timerState.started = true;
       timerState.finished = false;
       timerState.timeRemaining =
-        event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 - Date.now() / 1000;
+        event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 - Math.floor(Date.now() / 1000);
     }
     return timerState;
   }
@@ -452,7 +455,7 @@ export class EventModel extends Model {
           timerState[session.representationalHash!].timeRemaining = 0;
         } else if (
           event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 + session.extraTime >
-          Date.now() / 1000
+          Math.floor(Date.now() / 1000)
         ) {
           // game in progress
           timerState[session.representationalHash!].started = true;
@@ -461,7 +464,7 @@ export class EventModel extends Model {
             event[0].lastTimer +
             (event[0].gameDuration ?? 0) * 60 +
             session.extraTime -
-            Date.now() / 1000;
+            Math.floor(Date.now() / 1000);
         }
       }
     }
@@ -547,7 +550,7 @@ export class EventModel extends Model {
           ratingDelta: 0, // unused, remove some day
           hasAvatar: p.hasAvatar,
           lastUpdate: p.lastUpdate,
-          yakitori: sessionMap.get(s.id)!.intermediateResults?.yakitori[p.id] ?? false,
+          yakitori: sessionMap.get(s.id)!.intermediateResults?.yakitori?.[p.id] ?? false,
         })),
       })),
     };
@@ -1140,7 +1143,7 @@ export class EventModel extends Model {
       event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
     }
 
-    event.lastTimer = Date.now();
+    event.lastTimer = Math.floor(Date.now() / 1000);
     await this.repo.em.persistAndFlush(event);
     return { success: true };
   }

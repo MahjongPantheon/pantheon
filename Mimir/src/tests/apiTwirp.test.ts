@@ -2265,13 +2265,73 @@ describe('Mimir Twirp API', () => {
     );
   });
 
+  test('GetTimerState: general state flow / StartTimer / AddExtraTime', async () => {
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_TOURNAMENT,
+      title: 'test tournament' + v4(),
+      description: 'test event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    await mimirClient.RegisterPlayer(eventId, 2517);
+    await mimirClient.RegisterPlayer(eventId, 743);
+    await mimirClient.RegisterPlayer(eventId, 338);
+    await mimirClient.RegisterPlayer(eventId, 1834);
+
+    const state1 = await mimirClient.GetTimerState(eventId);
+    expect(state1.started).toBe(false);
+    expect(state1.waitingForTimer).toBe(false);
+
+    const success = await mimirClient.MakeShuffledSeating(
+      eventId,
+      1,
+      12345,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    expect(success.success).toBe(true);
+
+    const state2 = await mimirClient.GetTimerState(eventId);
+    expect(state2.started).toBe(false);
+    expect(state2.waitingForTimer).toBe(true);
+
+    await mimirClient.StartTimer(eventId);
+
+    const state3 = await mimirClient.GetTimerState(eventId);
+    expect(state3.started).toBe(true);
+    expect(state3.waitingForTimer).toBe(false);
+
+    const sessions = await mimirClient.GetCurrentSessions(2517, eventId);
+    expect(sessions.sessions.length).toBe(1);
+    expect(sessions.sessions[0].timerState.timeRemaining).toBeGreaterThan(0);
+    const remaining = sessions.sessions[0].timerState.timeRemaining;
+
+    const success2 = await mimirClient.AddExtraTime({
+      sessionHashList: [sessions.sessions[0].sessionHash],
+      extraTime: 5 * 60,
+    });
+    expect(success2.success).toBe(true);
+
+    const sessions2 = await mimirClient.GetCurrentSessions(2517, eventId);
+    expect(sessions2.sessions[0].timerState.timeRemaining).toBeGreaterThan(remaining + 5 * 60 - 10);
+  });
+
   /*
 
-GetTimerState - todo check after time started/seating ready
-GetTablesState - todo check after time started/seating ready
 
-StartTimer
-AddExtraTime
+GetTablesState - todo check after time started/seating ready
 
 FinalizeSession
 DefinalizeGame

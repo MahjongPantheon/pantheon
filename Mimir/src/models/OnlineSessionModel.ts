@@ -208,7 +208,7 @@ export class OnlineSessionModel extends Model {
       return;
     }
 
-    const currentTime = Date.now();
+    const currentTime = Math.floor(Date.now() / 1000);
     const expirationTimeMs = rules.gameExpirationTime * 60 * 60 * 1000;
 
     if (currentTime - logTimestamp < expirationTimeMs) {
@@ -239,7 +239,7 @@ export class OnlineSessionModel extends Model {
         0
       );
 
-      const currentTime = Date.now();
+      const currentTime = Math.floor(Date.now() / 1000);
       const gameTime = date.getTime();
       const expirationTimeMs = rules.gameExpirationTime * 60 * 60 * 1000;
 

@@ -8,6 +8,8 @@ import {
   WindShuffleMode,
 } from 'tsclients/proto/atoms.pb';
 import {
+  AddExtraTime,
+  AddExtraTimePayload,
   AddPenalty,
   AddRound,
   CancelGame,
@@ -79,6 +81,7 @@ import {
   RegisterPlayer,
   ResetSeating,
   StartGame,
+  StartTimer,
   ToggleHideAchievements,
   ToggleHideResults,
   ToggleListed,
@@ -380,5 +383,13 @@ export class MimirTest {
     payload: EventsUpdatePlayersLocalIdsPayload
   ): Promise<GenericSuccessResponse> {
     return UpdatePlayersLocalIds(payload, this._config);
+  }
+
+  async StartTimer(eventId: number) {
+    return StartTimer({ eventId }, this._config);
+  }
+
+  async AddExtraTime(payload: AddExtraTimePayload) {
+    return AddExtraTime(payload, this._config);
   }
 }
