@@ -27,6 +27,7 @@ kill:
 
 PHONY: deps
 deps:
+	rm -rf node_modules
 	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
 PHONY: oxlint
@@ -91,7 +92,7 @@ build:
 
 .PHONY: prod_deps
 prod_deps:
-	cd ../Skirnir-dist && NODE_ENV=production pnpm install
+	cd ../Skirnir-dist && rm -rf node_modules && NODE_ENV=production pnpm install
 
 .PHONY: prebuild
 prebuild:

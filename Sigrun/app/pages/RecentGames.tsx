@@ -33,7 +33,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
-import { EventType, Player } from 'tsclients/proto/atoms.pb';
+import { EventType, PersonEx, Player } from 'tsclients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
@@ -69,10 +69,6 @@ export const RecentGames: React.FC<{
   if (!games || !events) {
     return null;
   }
-  const players = games?.players?.reduce((acc, p) => {
-    acc[p.id] = p;
-    return acc;
-  }, {});
 
   return (
     events && (
@@ -111,7 +107,13 @@ export const RecentGames: React.FC<{
                   withYakitori={events?.[0]?.withYakitori}
                   eventId={eventId}
                   game={game}
-                  players={players}
+                  players={game.players.reduce(
+                    (acc, p) => {
+                      acc[p.id] = p;
+                      return acc;
+                    },
+                    {} as Record<number, PersonEx>
+                  )}
                   rowStyle={{
                     padding: '16px',
                     backgroundColor:

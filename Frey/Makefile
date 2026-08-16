@@ -48,6 +48,7 @@ logs: get_container_id
 
 .PHONY: deps
 deps:
+	rm -rf node_modules
 	pnpm install
 
 .PHONY: container_deps
@@ -244,8 +245,9 @@ container_build: get_container_id
 
 .PHONY: prod_deps
 prod_deps:
+	cd ../Frey-dist && rm -rf node_modules
 	cd ../Frey-dist && NODE_ENV=production pnpm install
-	cd ../Common/tsclients && pnpm install
+	cd ../Common/tsclients && rm -rf node_modules && pnpm install
 
 .PHONY: container_prod_deps
 container_prod_deps: get_container_id
@@ -273,6 +275,7 @@ container_prebuild: get_container_id
 .PHONY: proto_gen
 proto_gen:
 	pnpm exec twirpscript
+	cd ../Common/tsclients && pnpm run build
 
 .PHONY: container_proto_gen
 container_proto_gen: get_container_id

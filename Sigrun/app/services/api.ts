@@ -24,6 +24,7 @@ import {
   GetEventsById,
   GetGame,
   GetGameConfig,
+  GetGameJSON,
   GetGamesSeries,
   GetLastGames,
   GetPlayer,
@@ -176,7 +177,8 @@ export class ApiService {
 
   getGame(sessionHash: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetGame' });
-    return GetGame({ sessionHash: sessionHash }, this._clientConfMimir);
+    // return GetGameJSON({ sessionHash }, this._clientConfMimir);
+    return GetGame({ sessionHash }, this._clientConfMimir);
   }
 
   getGameSeries(eventId: number) {

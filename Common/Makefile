@@ -6,4 +6,4 @@ autofix:
 	./protolint -fix ./proto
 
 prod_deps:
-	cd tsclients && pnpm install
+	cd tsclients && rm -rf node_modules && pnpm install

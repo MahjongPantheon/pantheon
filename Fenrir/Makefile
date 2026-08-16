@@ -27,6 +27,7 @@ kill:
 
 PHONY: deps
 deps:
+	rm -rf node_modules
 	pnpm install
 	pnpm exec playwright install --with-deps
 

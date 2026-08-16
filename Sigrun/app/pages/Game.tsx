@@ -21,7 +21,7 @@ import { useApi } from '../hooks/api';
 import { Container, Divider, Space } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
-import { EventType, Player } from 'tsclients/proto/atoms.pb';
+import { EventType, PersonEx, Player } from 'tsclients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
@@ -50,10 +50,13 @@ export const Game: React.FC<{
   if (game === undefined || !events) {
     return null;
   }
-  const players = game?.players?.reduce((acc, p) => {
-    acc[p.id] = p;
-    return acc;
-  }, {});
+  const players = game?.game.players?.reduce(
+    (acc, p) => {
+      acc[p.id] = p;
+      return acc;
+    },
+    {} as Record<number, PersonEx>
+  );
 
   return (
     game?.game &&

@@ -42,7 +42,6 @@ Thumbs.db
 Common/protoc-bin/
 Common/node-geoip/node_modules/
 Common/tsclients/node_modules/
-Common/tsclients/proto/*.js
 
 Database/export.tar.gz
 

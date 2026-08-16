@@ -1,6 +1,6 @@
 {
   "name": "tsclients",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Twirpscript compiled files",
   "license": "GPLv3",
   "type": "module",

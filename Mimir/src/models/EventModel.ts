@@ -372,7 +372,7 @@ export class EventModel extends Model {
           eventList[0].onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
           players.players.get(g.id) ?? [],
           sessionResults,
-          rounds
+          rounds.filter((r) => r.session.id === g.id)
         )
       ),
       totalGames: gamesCount,

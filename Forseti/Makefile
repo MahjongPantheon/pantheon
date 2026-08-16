@@ -27,6 +27,7 @@ kill:
 
 PHONY: deps
 deps:
+	rm -rf node_modules
 	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
 PHONY: oxlint

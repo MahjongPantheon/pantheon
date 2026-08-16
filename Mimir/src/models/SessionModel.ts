@@ -280,13 +280,15 @@ export class SessionModel extends Model {
       sessionResultsModel.findBySession([session[0].id]),
       roundModel.findBySessionIds([session[0].id]),
     ]);
-    const replacements = players.playersData.replaceMap;
 
     return {
       game: formatGameResult(
         session[0],
         session[0].event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
-        playerModel.substituteReplacements(players.playersData.players, replacements),
+        playerModel.substituteReplacements(
+          players.playersData.players,
+          players.playersData.replaceMap
+        ),
         results,
         rounds
       ),

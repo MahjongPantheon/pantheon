@@ -27,6 +27,7 @@ kill:
 
 PHONY: deps
 deps:
+	rm -rf node_modules
 	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
 
 PHONY: oxlint
@@ -95,6 +96,7 @@ build:
 
 .PHONY: prod_deps
 prod_deps:
+	rm -rf node_modules
 	cd ../Bragi-dist && NODE_ENV=production pnpm install
 
 .PHONY: prebuild
