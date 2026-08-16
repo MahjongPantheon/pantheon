@@ -252,6 +252,7 @@ export class EventModel extends Model {
       where: {
         id: { $in: eventIdList },
       },
+      populate: ['ruleset'],
     });
     const mainEvent = events.find((e) => e.id === eventIdList[0]);
     if (!mainEvent) {
@@ -321,7 +322,7 @@ export class EventModel extends Model {
         rating: item.rating,
         chips: item.chips ?? 0,
         winnerZone:
-          item.rating - (item.penaltiesAmount ?? 0) >= mainEvent.ruleset.rules.startRating,
+          item.rating - (item.penaltiesAmount ?? 0) >= (mainEvent.ruleset.rules.startRating ?? 0),
         avgPlace: item.avgPlace ?? 0,
         avgScore: item.avgScore ?? 0,
         gamesPlayed: item.gamesPlayed ?? 0,

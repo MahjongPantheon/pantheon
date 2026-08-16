@@ -9,6 +9,7 @@ import { EventEntity } from './entities/Event.entity.js';
 import { SessionEntity } from './entities/Session.entity.js';
 import { SessionStateEntity } from './entities/SessionState.entity.js';
 import { RoundOutcome, SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import { camelCaseKeys } from './helpers/toCamelCase.js';
 
 process.env.NODE_ENV = 'development';
 
@@ -348,6 +349,8 @@ export async function migrateFromMimir1() {
       }
     );
 
+    const uniqSet = new Set<string>();
+
     await migrateTable(
       'event_registered_players',
       em,
@@ -365,6 +368,10 @@ export async function migrateFromMimir1() {
             .into('event_registered_players')
             .insert(
               rows.map((rec) => {
+                if (rec.local_id && uniqSet.has(rec.event_id + '_' + rec.local_id)) {
+                  rec.local_id = null;
+                }
+                uniqSet.add(rec.event_id + '_' + rec.local_id);
                 if (rec.id > lastId) {
                   lastId = rec.id;
                 }
@@ -452,6 +459,8 @@ export async function migrateFromMimir1() {
                 if (rec.id > lastId) {
                   lastId = rec.id;
                 }
+                const data = JSON.parse(rec.data);
+                rec.data = JSON.stringify(camelCaseKeys(data));
                 return rec;
               })
             )
