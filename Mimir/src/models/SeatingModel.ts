@@ -30,7 +30,7 @@ import { SessionModel } from './SessionModel.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { PenaltyModel } from './PenaltyModel.js';
 import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
-import { unpackScript } from './EventPrescriptModel.js';
+import { unpackScript } from '../helpers/eventPrescript.js';
 import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 import { randomInt, randomSign } from '../helpers/crypto.js';
 import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
@@ -55,13 +55,14 @@ export class SeatingModel extends Model {
     const regIds = registrations.map((r) => r.id);
 
     const playerModel = this.getModel(PlayerModel);
-    const players = await playerModel.findById(regIds);
-
     const historyModel = this.getModel(PlayerHistoryModel);
-    const history = await historyModel.findLastByEvent([eventId]);
-
     const playerInSessionModel = this.getModel(PlayerInSessionModel);
-    const seating = await playerInSessionModel.getPlayersSeatingInEvent(eventId, regIds.length);
+
+    const [players, history, seating] = await Promise.all([
+      playerModel.findById(regIds),
+      historyModel.findLastByEvent([eventId]),
+      playerInSessionModel.getPlayersSeatingInEvent(eventId, regIds.length),
+    ]);
 
     const ratings: Record<number, number> = {};
     for (const player of players) {
@@ -312,6 +313,8 @@ export class SeatingModel extends Model {
     await this._ensureActionAllowed(event.id);
 
     const sessionModel = this.getModel(SessionModel);
+    const regModel = this.getModel(EventRegistrationModel);
+
     const sessions = await sessionModel.findByEventAndStatus(
       [event.id],
       [SessionStatus.SESSION_STATUS_INPROGRESS, SessionStatus.SESSION_STATUS_PREFINISHED]
@@ -324,7 +327,7 @@ export class SeatingModel extends Model {
       event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
       this.repo.em.persist(event);
     }
-    const regModel = this.getModel(EventRegistrationModel);
+
     const regs = await regModel.findByEventId([event.id]);
 
     const [playersMap, previousSeatings] = await this._getData(event, regs);
@@ -461,10 +464,17 @@ export class SeatingModel extends Model {
     regs: EventRegisteredPlayersEntity[]
   ): Promise<[Array<[number, number]>, number[][]]> {
     const regModel = this.getModel(EventRegistrationModel);
-    const ignoredPlayerIds = await regModel.findIgnoredPlayersIdsByEvent([event.id]);
-
     const penaltyModel = this.getModel(PenaltyModel);
-    const penalties = await penaltyModel.findByEventId([event.id], true);
+    const historyModel = this.getModel(PlayerHistoryModel);
+    const playerInSessionModel = this.getModel(PlayerInSessionModel);
+
+    const [ignoredPlayerIds, penalties, history, previousSeatings] = await Promise.all([
+      regModel.findIgnoredPlayersIdsByEvent([event.id]),
+      penaltyModel.findByEventId([event.id], true),
+      historyModel.findLastByEvent([event.id]),
+      playerInSessionModel.getPlayersSeatingInEvent(event.id),
+    ]);
+
     const penaltyByPlayer = penalties.reduce(
       (acc, penalty) => {
         if (!acc[penalty.playerId]) {
@@ -476,12 +486,6 @@ export class SeatingModel extends Model {
       },
       {} as Record<number, { amount: number; count: number }>
     );
-
-    const historyModel = this.getModel(PlayerHistoryModel);
-    const history = await historyModel.findLastByEvent([event.id]);
-
-    const playerInSessionModel = this.getModel(PlayerInSessionModel);
-    const previousSeatings = await playerInSessionModel.getPlayersSeatingInEvent(event.id);
 
     const tables = previousSeatings
       .map((s) => s.player_id)

@@ -31,6 +31,7 @@ import { getNeedMoreGold } from './achievements/needMoreGold.js';
 import { getNinja } from './achievements/ninja.js';
 import { getRiichiNomi } from './achievements/riichiNomi.js';
 import { getYakumans } from './achievements/yakumans.js';
+import { runWithLimit } from '../helpers/promises.js';
 
 export class AchievementsModel extends Model {
   async scheduleRebuildAchievements(eventId: number) {
@@ -98,53 +99,42 @@ export class AchievementsModel extends Model {
       { populate: ['ruleset'] }
     );
 
-    const bestFu = await getMaxFuHand(eventId, this.repo);
-    const honoredDonor = await getHonoredDonor(event, this.repo);
-    const carefulPlanning = await getMinFeedScore(event, this.repo);
-    const andYourRiichiBet = await getMaxStolenRiichiBetsCount(event, this.repo);
-    const covetousKnight = await getMinLostRiichiBetsCount(event, this.repo);
-    const bestTsumoist = await getBestTsumoistInSingleSession(event, this.repo);
-    const bestDealer = await getBestDealer(event, this.repo);
-    const bestHand = await getBestHandOfEvent(event, this.repo);
-    const shithander = await getBestShithander(event, this.repo);
-    const braveSapper = await getBraveSapper(event, this.repo);
-    const dieHard = await getDieHard(event, this.repo);
-    const dovakins = await getDovakin(event, this.repo);
-    const favoriteAsapinApprentice = await getFavoriteAsapinApprentice(event, this.repo);
-    const favoriteTsuchidaApprentice = await getFavoriteTsuchidaApprentice(event, this.repo);
-    const catchEmAll = await getCatchThemAll(event, this.repo);
-    const impossibleWait = await getImpossibleWait(event, this.repo);
-    const justAsPlanned = await getJustAsPlanned(event, this.repo);
-    const doraLord = await getMaxAverageDoraCount(event, this.repo);
-    const needMoreGold = await getNeedMoreGold(event, this.repo);
-    const ninja = await getNinja(event, this.repo);
-    const riichiNomi = await getRiichiNomi(event, this.repo);
-    const yakumans = await getYakumans(event, this.repo);
+    const { values, errors } = await runWithLimit(
+      {
+        bestFu: () => getMaxFuHand(eventId, this.repo),
+        honoredDonor: () => getHonoredDonor(event, this.repo),
+        carefulPlanning: () => getMinFeedScore(event, this.repo),
+        andYourRiichiBet: () => getMaxStolenRiichiBetsCount(event, this.repo),
+        covetousKnight: () => getMinLostRiichiBetsCount(event, this.repo),
+        bestTsumoist: () => getBestTsumoistInSingleSession(event, this.repo),
+        bestDealer: () => getBestDealer(event, this.repo),
+        bestHand: () => getBestHandOfEvent(event, this.repo),
+        shithander: () => getBestShithander(event, this.repo),
+        braveSapper: () => getBraveSapper(event, this.repo),
+        dieHard: () => getDieHard(event, this.repo),
+        dovakins: () => getDovakin(event, this.repo),
+        favoriteAsapinApprentice: () => getFavoriteAsapinApprentice(event, this.repo),
+        favoriteTsuchidaApprentice: () => getFavoriteTsuchidaApprentice(event, this.repo),
+        catchEmAll: () => getCatchThemAll(event, this.repo),
+        impossibleWait: () => getImpossibleWait(event, this.repo),
+        justAsPlanned: () => getJustAsPlanned(event, this.repo),
+        doraLord: () => getMaxAverageDoraCount(event, this.repo),
+        needMoreGold: () => getNeedMoreGold(event, this.repo),
+        ninja: () => getNinja(event, this.repo),
+        riichiNomi: () => getRiichiNomi(event, this.repo),
+        yakumans: () => getYakumans(event, this.repo),
+      },
+      3,
+      500
+    );
 
-    achievements.data = {
-      andYourRiichiBet,
-      bestDealer,
-      bestFu,
-      bestHand,
-      bestTsumoist,
-      braveSapper,
-      carefulPlanning,
-      catchEmAll,
-      covetousKnight,
-      dieHard,
-      dovakins,
-      favoriteAsapinApprentice,
-      favoriteTsuchidaApprentice,
-      honoredDonor,
-      shithander,
-      impossibleWait,
-      justAsPlanned,
-      doraLord,
-      needMoreGold,
-      ninja,
-      riichiNomi,
-      yakumans,
-    };
+    if (Object.keys(errors).length > 0) {
+      Object.entries(errors).forEach(([key, value]) => {
+        console.error(`[${key} @ #${event.id}]: Error: ${value}`);
+      });
+    }
+
+    achievements.data = values;
     achievements.event = event;
     achievements.lastUpdate = new Date().toISOString();
 

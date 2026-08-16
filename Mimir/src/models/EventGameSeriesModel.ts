@@ -30,10 +30,12 @@ export class EventGameSeriesModel extends Model {
       [event.id],
       [SessionStatus.SESSION_STATUS_FINISHED]
     );
-    const sessionResults = await sessionResultsModel.findByEvent([event.id]);
+    const [sessionResults, { players }] = await Promise.all([
+      sessionResultsModel.findByEvent([event.id]),
+      sessionModel.getPlayersOfGames(games, false),
+    ]);
     const playersData = this.getPlayersData(sessionResults, event.seriesLength);
     const series = this.findBestSeriesResults(playersData, event.seriesLength);
-    const { players } = await sessionModel.getPlayersOfGames(games, false);
     return this.formatSeriesResults(players, games, sessionResults, series);
   }
 

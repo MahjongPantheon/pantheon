@@ -197,9 +197,11 @@ export class PlayerStatsModel extends Model {
 
     const gameIds = Array.from(games.keys());
 
-    const rounds = await this._fetchRounds(gameIds);
-    const playerInfo = await this._fetchPlayerInfo(gameIds);
-    const playerBySession = await playerModel.findPlayerIdsForSessions(gameIds);
+    const [rounds, playerInfo, playerBySession] = await Promise.all([
+      this._fetchRounds(gameIds),
+      this._fetchPlayerInfo(gameIds),
+      playerModel.findPlayerIdsForSessions(gameIds),
+    ]);
     const scoresAndPlayers = await this._getScoreHistoryAndPlayers(
       mainEvent.ruleset,
       playerBySession,

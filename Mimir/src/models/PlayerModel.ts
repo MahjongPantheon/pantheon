@@ -196,9 +196,11 @@ export class PlayerModel extends Model {
 
   async notifyGameStartingSoon(eventId: number) {
     const regModel = this.getModel(EventRegistrationModel);
-    const whoPlays = await regModel.findByEventId([eventId]);
     const eventRegModel = this.getModel(EventRegistrationModel);
-    const replacements = await eventRegModel.getSubstitutionPlayers(eventId);
+    const [whoPlays, replacements] = await Promise.all([
+      regModel.findByEventId([eventId]),
+      eventRegModel.getSubstitutionPlayers(eventId),
+    ]);
     const playerIds = whoPlays.map((player) => replacements[player.id] ?? player.id);
     await this.repo.skirnir.messageSessionStartingSoon(playerIds, eventId);
     return { success: true };

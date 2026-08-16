@@ -244,14 +244,18 @@ export class PlayerHistoryModel extends Model {
     const dateToUtc = dateTo ? moment.tz(dateTo, timezone).utc() : null;
 
     if (dateFromUtc && dateToUtc) {
-      const itemsFrom = await this.findLastByEventAndDate(eventIds, dateFromUtc);
-      const itemsTo = await this.findLastByEventAndDate(eventIds, dateToUtc);
+      const [itemsFrom, itemsTo] = await Promise.all([
+        this.findLastByEventAndDate(eventIds, dateFromUtc),
+        this.findLastByEventAndDate(eventIds, dateToUtc),
+      ]);
       return this.calculateHistory(itemsFrom, itemsTo, ruleset);
     }
 
     if (dateFromUtc && !dateToUtc) {
-      const itemsFrom = await this.findLastByEventAndDate(eventIds, dateFromUtc);
-      const itemsTo = await this.findLastByEvent(eventIds);
+      const [itemsFrom, itemsTo] = await Promise.all([
+        this.findLastByEventAndDate(eventIds, dateFromUtc),
+        this.findLastByEvent(eventIds),
+      ]);
       return this.calculateHistory(itemsFrom, itemsTo, ruleset);
     }
 

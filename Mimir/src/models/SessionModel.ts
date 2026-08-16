@@ -460,14 +460,18 @@ export class SessionModel extends Model {
 
     const whoPlays = sessionState.state.playerIds;
     const eventRegModel = this.getModel(EventRegistrationModel);
-    const replacements = await eventRegModel.getSubstitutionPlayers(event.id);
-    const playerIds = whoPlays.map((id) => replacements[id] ?? id);
-    const adminIds = (await this.repo.frey.GetEventAdmins({ eventId: event.id })).admins.map(
-      (admin: EventAdmin) => admin.personId
-    );
+    const [replacements, adminIds] = await Promise.all([
+      eventRegModel.getSubstitutionPlayers(event.id),
+      this.repo.frey
+        .GetEventAdmins({ eventId: event.id })
+        .then(({ admins }) => admins.map((admin: EventAdmin) => admin.personId)),
+    ]);
 
-    this.repo.skirnir.trackSession(session[0].representationalHash!);
-    this.repo.skirnir.messageHandRecorded(playerIds, adminIds, event.id, diff, roundData);
+    const playerIds = whoPlays.map((id) => replacements[id] ?? id);
+    await Promise.all([
+      this.repo.skirnir.trackSession(session[0].representationalHash!),
+      this.repo.skirnir.messageHandRecorded(playerIds, adminIds, event.id, diff, roundData),
+    ]);
 
     if (sessionState.isFinished() && !event.syncEnd) {
       const cronModel = this.getModel(CronModel);
@@ -552,8 +556,10 @@ export class SessionModel extends Model {
         }
 
         if (sessionState.isFinished()) {
-          await cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds);
-          await this.prefinish(event, session, sessionState);
+          await Promise.all([
+            cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
+            this.prefinish(event, session, sessionState),
+          ]);
         } else {
           session.intermediateResults = sessionState.state;
         }
@@ -571,8 +577,10 @@ export class SessionModel extends Model {
         }
 
         if (sessionState.isFinished()) {
-          await cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds);
-          await this.prefinish(event, session, sessionState);
+          await Promise.all([
+            cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
+            this.prefinish(event, session, sessionState),
+          ]);
         } else {
           session.intermediateResults = sessionState.state;
         }
@@ -585,8 +593,10 @@ export class SessionModel extends Model {
         // We should finish game here for offline events, but online ones will be finished manually in model.
         // Looks ugly :( But works as expected, so let it be until we find better solution.
         if (!event.isOnline && sessionState.isFinished()) {
-          await cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds);
-          await this.prefinish(event, session, sessionState);
+          await Promise.all([
+            cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
+            this.prefinish(event, session, sessionState),
+          ]);
         } else {
           session.intermediateResults = sessionState.state;
         }
@@ -620,7 +630,7 @@ export class SessionModel extends Model {
 
     this.repo.em.flush();
 
-    context.repository.skirnir.trackSession(newSession.representationalHash!);
+    await context.repository.skirnir.trackSession(newSession.representationalHash!);
     return { sessionHash: newSession.representationalHash! };
   }
 

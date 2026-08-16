@@ -52,7 +52,7 @@ import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 import { SessionState } from '../helpers/SessionState.js';
 import { RoundEntity } from '../entities/Round.entity.js';
 import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
-import { checkForErrors, unpackScript } from './EventPrescriptModel.js';
+import { checkForErrors, unpackScript } from '../helpers/eventPrescript.js';
 import { AchievementsModel } from './AchievementsModel.js';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
 
@@ -270,23 +270,22 @@ export class EventModel extends Model {
           dateFrom,
           dateTo
         );
-    const playerItems = (
-      await this.repo.frey.GetPersonalInfo({
+
+    const [{ people: playerItems }, regData, penalties] = await Promise.all([
+      this.repo.frey.GetPersonalInfo({
         ids: dataItems.map((item) => item.playerId),
-      })
-    ).people;
-
-    const regData = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: { event: mainEvent },
-    });
-
-    const penalties = await this.repo.em.findAll(PenaltyEntity, {
-      where: {
-        event: {
-          id: { $in: eventIdList },
+      }),
+      this.repo.em.findAll(EventRegisteredPlayersEntity, {
+        where: { event: mainEvent },
+      }),
+      this.repo.em.findAll(PenaltyEntity, {
+        where: {
+          event: {
+            id: { $in: eventIdList },
+          },
         },
-      },
-    });
+      }),
+    ]);
 
     const historyItems = playerHistoryModel.mergeData(
       playerHistoryModel.mergeSeveralEvents(dataItems, mainEvent.ruleset),
@@ -355,16 +354,15 @@ export class EventModel extends Model {
       order
     );
 
-    const gamesCount = await sessionModel.getGamesCount(
-      eventList.map((event) => event.id),
-      SessionStatus.SESSION_STATUS_FINISHED
-    );
-
-    const sessionResults = await sessionResultsModel.findBySession(games.map((game) => game.id));
-
-    const rounds = await roundModel.findBySessionIds(games.map((game) => game.id));
-
-    const players = await sessionModel.getPlayersOfGames(games);
+    const [gamesCount, sessionResults, rounds, players] = await Promise.all([
+      sessionModel.getGamesCount(
+        eventList.map((event) => event.id),
+        SessionStatus.SESSION_STATUS_FINISHED
+      ),
+      sessionResultsModel.findBySession(games.map((game) => game.id)),
+      roundModel.findBySessionIds(games.map((game) => game.id)),
+      sessionModel.getPlayersOfGames(games),
+    ]);
 
     return {
       games: games.map((g) =>
@@ -522,12 +520,10 @@ export class EventModel extends Model {
     );
     const sessionMap = new Map(sessions.map((s) => [s.id, s]));
 
-    const timerState = await this.getTimerStateForSessions(
-      playersGetCurrentSessionsPayload.eventId,
-      sessions
-    );
-
-    const { players, replaceMap } = await sessionModel.getPlayersOfGames(sessions, true);
+    const [timerState, { players, replaceMap }] = await Promise.all([
+      this.getTimerStateForSessions(playersGetCurrentSessionsPayload.eventId, sessions),
+      sessionModel.getPlayersOfGames(sessions, true),
+    ]);
 
     return {
       sessions: sessions.map((s) => ({
@@ -567,26 +563,23 @@ export class EventModel extends Model {
       throw new Error('One or more events not found');
     }
     const needLocalIds = events.length === 1 && events[0].isPrescripted;
+
     const playerModel = this.getModel(PlayerModel);
-    const { players, replaceMap } = await playerModel.findPlayersForEvents(
-      eventsGetAllRegisteredPlayersPayload.eventIds
-    );
     const eventRegModel = this.getModel(EventRegistrationModel);
-    const ignoredPlayers = await eventRegModel.findIgnoredPlayersIdsByEvent(
-      eventsGetAllRegisteredPlayersPayload.eventIds
-    );
-    let localMap: Map<number, number> = new Map();
-    let teamNames: Map<number, string> = new Map();
-    if (needLocalIds) {
-      localMap = new Map(
-        (await eventRegModel.findLocalIdsMapByEvent(events[0].id))
-          .entries()
-          .map(([key, value]) => [value, key])
-      );
-    }
-    if (events[0].isTeam) {
-      teamNames = await eventRegModel.findTeamNameMapByEvent(events[0].id);
-    }
+
+    const [{ players, replaceMap }, ignoredPlayers, localMap, teamNames] = await Promise.all([
+      playerModel.findPlayersForEvents(eventsGetAllRegisteredPlayersPayload.eventIds),
+      eventRegModel.findIgnoredPlayersIdsByEvent(eventsGetAllRegisteredPlayersPayload.eventIds),
+      needLocalIds
+        ? eventRegModel
+            .findLocalIdsMapByEvent(events[0].id)
+            .then((m) => new Map(m.entries().map(([key, value]) => [value, key])))
+        : Promise.resolve(new Map<number, number>()),
+      events[0].isTeam
+        ? eventRegModel.findTeamNameMapByEvent(events[0].id)
+        : Promise.resolve(new Map<number, string>()),
+    ]);
+
     return {
       players: players.map((player) => {
         const localId = localMap.get(player.id);
@@ -731,14 +724,16 @@ export class EventModel extends Model {
         throw new Error('Invalid event type');
     }
 
-    await this.repo.em.persistAndFlush(event);
+    await Promise.all([
+      this.repo.em.persistAndFlush(event),
 
-    await this.repo.frey.AddRuleForPerson({
-      eventId: event.id,
-      personId: this.repo.meta.personId,
-      ruleName: 'ADMIN_EVENT',
-      ruleValue: 1,
-    });
+      this.repo.frey.AddRuleForPerson({
+        eventId: event.id,
+        personId: this.repo.meta.personId,
+        ruleName: 'ADMIN_EVENT',
+        ruleValue: 1,
+      }),
+    ]);
 
     return { eventId: event.id };
   }
@@ -917,16 +912,17 @@ export class EventModel extends Model {
     }
     await this.repo.em.populate(sessions, ['event']);
 
-    const sessionResults = await this.repo.em.findAll(SessionResultsEntity, {
-      where: { event: this.repo.em.getReference(EventEntity, eventId) },
-    });
+    const [sessionResults, playerResults] = await Promise.all([
+      this.repo.em.findAll(SessionResultsEntity, {
+        where: { event: this.repo.em.getReference(EventEntity, eventId) },
+      }),
+
+      this.repo.em.findAll(PlayerHistoryEntity, {
+        where: { event: this.repo.em.getReference(EventEntity, eventId) },
+      }),
+    ]);
 
     this.repo.em.remove(sessionResults);
-
-    const playerResults = await this.repo.em.findAll(PlayerHistoryEntity, {
-      where: { event: this.repo.em.getReference(EventEntity, eventId) },
-    });
-
     this.repo.em.remove(playerResults);
 
     // flush all removals

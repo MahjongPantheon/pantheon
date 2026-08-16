@@ -163,13 +163,15 @@ export class OnlineSessionModel extends Model {
     );
 
     session.status = SessionStatus.SESSION_STATUS_FINISHED;
-    await this.repo.em.persistAndFlush([session, ...playerHistoryItems, ...sessionResults]);
 
     const playerModel = this.getModel(PlayerModel);
-    const players = await playerModel.findById(playerIds);
-
     const cronModel = this.getModel(CronModel);
-    await cronModel.scheduleRecalcAchievements(event.id);
+
+    const [players] = await Promise.all([
+      playerModel.findById(playerIds),
+      this.repo.em.persistAndFlush([session, ...playerHistoryItems, ...sessionResults]),
+      cronModel.scheduleRecalcAchievements(event.id),
+    ]);
 
     return {
       game: {

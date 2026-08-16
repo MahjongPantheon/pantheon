@@ -2465,7 +2465,6 @@ describe('Mimir Twirp API', () => {
 
   /*
 
-FinalizeSession
 DefinalizeGame
 
 UpdatePlayersTeams - todo after team event is ready
