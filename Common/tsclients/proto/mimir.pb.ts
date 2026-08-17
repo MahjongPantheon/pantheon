@@ -280,6 +280,7 @@ export interface EventsGetAchievementsPayload {
 export interface EventsGetAchievementsResponse {
   achievements: protoAtoms.Achievement[];
   lastUpdate: string;
+  players: protoAtoms.PersonEx[];
 }
 
 export interface EventsUpdatePlayersLocalIdsPayload {
@@ -7102,6 +7103,7 @@ export const EventsGetAchievementsResponse = {
     return {
       achievements: [],
       lastUpdate: "",
+      players: [],
       ...msg,
     };
   },
@@ -7122,6 +7124,13 @@ export const EventsGetAchievementsResponse = {
     }
     if (msg.lastUpdate) {
       writer.writeString(2, msg.lastUpdate);
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        3,
+        msg.players as any,
+        protoAtoms.PersonEx._writeMessage,
+      );
     }
     return writer;
   },
@@ -7144,6 +7153,12 @@ export const EventsGetAchievementsResponse = {
         }
         case 2: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 3: {
+          const m = protoAtoms.PersonEx.initialize();
+          reader.readMessage(m, protoAtoms.PersonEx._readMessage);
+          msg.players.push(m);
           break;
         }
         default: {
@@ -12752,6 +12767,7 @@ export const EventsGetAchievementsResponseJSON = {
     return {
       achievements: [],
       lastUpdate: "",
+      players: [],
       ...msg,
     };
   },
@@ -12770,6 +12786,9 @@ export const EventsGetAchievementsResponseJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(protoAtoms.PersonExJSON._writeMessage);
     }
     return json;
   },
@@ -12792,6 +12811,14 @@ export const EventsGetAchievementsResponseJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = protoAtoms.PersonExJSON.initialize();
+        protoAtoms.PersonExJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
     }
     return msg;
   },

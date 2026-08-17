@@ -10,7 +10,8 @@ export async function getMinLostRiichiBetsCount(event: EventEntity, repo: Reposi
       playerId: i.playerId,
       count: i.lost,
     }));
-  } catch {
+  } catch (e) {
+    console.error(e);
     return [];
   }
 }

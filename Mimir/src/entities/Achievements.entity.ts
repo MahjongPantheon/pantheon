@@ -83,4 +83,32 @@ export class AchievementsEntity {
     nullable: true,
   })
   lastUpdate?: string;
+
+  getAllPlayersIds(): number[] {
+    const ids = [
+      this.data.andYourRiichiBet?.map((item) => item.playerId) ?? [],
+      this.data.braveSapper?.playerIds ?? [],
+      this.data.dieHard?.playerIds ?? [],
+      this.data.justAsPlanned?.playerIds ?? [],
+      this.data.honoredDonor?.map((item) => item.playerId) ?? [],
+      this.data.doraLord?.map((item) => item.playerId) ?? [],
+      this.data.catchEmAll?.playerIds ?? [],
+      this.data.favoriteAsapinApprentice?.map((item) => item.playerId) ?? [],
+      this.data.favoriteTsuchidaApprentice?.map((item) => item.playerId) ?? [],
+      this.data.covetousKnight?.map((item) => item.playerId) ?? [],
+      this.data.ninja?.playerIds ?? [],
+      this.data.needMoreGold?.map((item) => item.playerId) ?? [],
+      this.data.riichiNomi?.playerIds ?? [],
+      this.data.carefulPlanning?.map((item) => item.playerId) ?? [],
+      this.data.bestDealer?.playerIds ?? [],
+      this.data.bestFu?.playerIds ?? [],
+      this.data.bestHand?.playerIds ?? [],
+      this.data.bestTsumoist?.playerIds ?? [],
+      this.data.dovakins?.playerIds ?? [],
+      this.data.impossibleWait?.map((item) => item.playerId) ?? [],
+      this.data.yakumans?.map((item) => item.playerId) ?? [],
+      this.data.shithander?.playerIds ?? [],
+    ].flat();
+    return [...new Set(ids)];
+  }
 }

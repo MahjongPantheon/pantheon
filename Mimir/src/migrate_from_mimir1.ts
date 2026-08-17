@@ -84,7 +84,7 @@ export async function migrateFromMimir1() {
       yakitori: parsed._yakitori ?? {},
       player_ids: Object.keys(parsed._scores).map(Number),
       riichi_bets: parsed._riichiBets,
-      last_outcome: parsed._lastOutcome,
+      last_outcome: toOutcome(parsed._lastOutcome ?? ''),
       replacements: parsed._replacements ?? {},
       last_hand_started: parsed._lastHandStarted,
       round_just_changed: parsed._roundJustChanged,
@@ -158,7 +158,7 @@ export async function migrateFromMimir1() {
         r.lastSessionState.lastHandStarted = state._lastHandStarted ?? false;
         r.lastSessionState.prematurelyFinished = state._prematurelyFinished ?? false;
         r.lastSessionState.roundJustChanged = state._roundJustChanged ?? true;
-        r.lastSessionState.lastOutcome = state._lastOutcome ?? '';
+        r.lastSessionState.lastOutcome = toOutcome(state._lastOutcome ?? '');
         r.lastSessionState.yakitori =
           state._yakitori && state._playerIds
             ? Object.fromEntries(

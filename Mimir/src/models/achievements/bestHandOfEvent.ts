@@ -12,7 +12,7 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
   );
 
   let maxHan = 0;
-  let ids: number[] = [];
+  let ids = new Set<number>();
   for (const session of sessions) {
     for (const round of rounds[session.id]) {
       if (
@@ -21,11 +21,12 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
         round.outcome === RoundOutcome.ROUND_OUTCOME_MULTIRON
       ) {
         for (const hand of round.hands) {
-          if (hand.han! + (hand.dora ?? 0) > maxHan) {
-            maxHan = hand.han! + (hand.dora ?? 0);
-            ids = [hand.winnerId!];
-          } else if (hand.han! + (hand.dora ?? 0) === maxHan) {
-            ids.push(hand.winnerId!);
+          if (hand.han! > maxHan) {
+            maxHan = hand.han!;
+            ids.clear();
+            ids.add(hand.winnerId!);
+          } else if (hand.han! === maxHan) {
+            ids.add(hand.winnerId!);
           }
         }
       }
@@ -34,6 +35,6 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
 
   return {
     han: maxHan,
-    playerIds: ids,
+    playerIds: Array.from(ids),
   };
 }

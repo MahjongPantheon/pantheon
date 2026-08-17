@@ -31,10 +31,10 @@ export async function getBestShithander(event: EventEntity, repo: Repository) {
 
   const sorted = Object.entries(ids).sort((a, b) => b[1] - a[1]);
   const max = sorted[0][1];
-  const best: number[] = [];
+  const best = new Set<number>();
   for (const [id, count] of sorted) {
     if (count === max) {
-      best.push(+id);
+      best.add(+id);
     } else {
       break;
     }
@@ -42,6 +42,6 @@ export async function getBestShithander(event: EventEntity, repo: Repository) {
 
   return {
     handsCount: max,
-    playerIds: best,
+    playerIds: Array.from(best),
   };
 }

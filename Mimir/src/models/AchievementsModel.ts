@@ -32,6 +32,7 @@ import { getNinja } from './achievements/ninja.js';
 import { getRiichiNomi } from './achievements/riichiNomi.js';
 import { getYakumans } from './achievements/yakumans.js';
 import { runWithLimit } from '../helpers/promises.js';
+import { filterPersonalData } from '../helpers/filterPersonalData.js';
 
 export class AchievementsModel extends Model {
   async scheduleRebuildAchievements(eventId: number) {
@@ -56,6 +57,7 @@ export class AchievementsModel extends Model {
     const isAdmin = this.repo.meta.personId && (await playerModel.isEventAdmin(payload.eventId));
 
     const results: EventsGetAchievementsResponse['achievements'] = [];
+    let players: EventsGetAchievementsResponse['players'] = [];
     let lastUpdate = '';
 
     if (!events[0].hideAchievements || isAdmin) {
@@ -79,11 +81,14 @@ export class AchievementsModel extends Model {
           });
         }
       }
+      const playersIds = achievements[0].getAllPlayersIds();
+      players = filterPersonalData(await playerModel.findById(playersIds));
     }
 
     return {
       achievements: results,
       lastUpdate,
+      players,
     };
   }
 

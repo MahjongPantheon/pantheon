@@ -341,6 +341,7 @@ message EventsGetAchievementsPayload {
 message EventsGetAchievementsResponse {
   repeated Achievement achievements = 1;
   string last_update = 2;
+  repeated PersonEx players = 3;
 }
 
 message EventsUpdatePlayersLocalIdsPayload {

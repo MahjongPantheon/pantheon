@@ -36,14 +36,14 @@ export async function getBestTsumoistInSingleSession(event: EventEntity, repo: R
 
   const bestTsumoCountsSorted = [...bestTsumoCounts.entries()].sort((a, b) => b[1] - a[1]);
   const bestTsumoCount = bestTsumoCountsSorted[0][1];
-  const playerIds = [];
+  const playerIds = new Set<number>();
   for (const [playerId, count] of bestTsumoCountsSorted) {
     if (count === bestTsumoCount) {
-      playerIds.push(playerId);
+      playerIds.add(playerId);
     } else {
       break;
     }
   }
 
-  return { tsumo: bestTsumoCount, playerIds };
+  return { tsumo: bestTsumoCount, playerIds: Array.from(playerIds) };
 }

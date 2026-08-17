@@ -249,6 +249,7 @@ export class ApiService {
     });
     return GetAchievements({ eventId, achievementsList }, this._clientConfMimir).catch(() => ({
       achievements: [],
+      players: [],
       lastUpdate: new Date().toISOString(),
     }));
   }

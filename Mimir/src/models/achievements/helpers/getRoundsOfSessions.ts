@@ -30,8 +30,8 @@ export async function getRoundsOfSessions(sessionIds: number[], repo: Repository
   const roundModel = Model.getModel(repo, RoundModel);
   const rounds = (await roundModel.findBySessionIds(sessionIds)).reduce(
     (acc, res) => {
-      acc[res.session.id] ??= [];
-      acc[res.session.id].push(res);
+      acc[+res.session.id] ??= [];
+      acc[+res.session.id].push(res);
       return acc;
     },
     {} as Record<number, RoundEntity[]>

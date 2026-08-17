@@ -21,7 +21,7 @@ export async function getMaxFuHand(eventId: number, repo: Repository) {
   });
 
   let maxFu = 0;
-  let playerIds = [];
+  let playerIds = new Set<number>();
   for (const round of rounds) {
     for (const hand of round.hands) {
       if (!hand.winnerId) {
@@ -29,17 +29,17 @@ export async function getMaxFuHand(eventId: number, repo: Repository) {
       }
       if (hand.fu && hand.fu > maxFu) {
         maxFu = hand.fu;
-        playerIds = [];
-        playerIds.push(hand.winnerId);
+        playerIds.clear();
+        playerIds.add(hand.winnerId);
       }
       if (hand.fu === maxFu) {
-        playerIds.push(hand.winnerId);
+        playerIds.add(hand.winnerId);
       }
     }
   }
 
   return {
-    playerIds,
+    playerIds: Array.from(playerIds),
     fu: maxFu,
   };
 }

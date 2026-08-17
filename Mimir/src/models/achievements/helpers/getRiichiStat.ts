@@ -151,7 +151,7 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
           round.hands[0].loserId!,
           lastSessionState?.riichiBets ?? 0,
           lastSessionState?.honba ?? 0,
-          [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id)
+          [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.playerId)
         );
 
         Object.entries(riichiWinners).forEach(([winnerId, item]) => {

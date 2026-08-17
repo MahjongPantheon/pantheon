@@ -12,7 +12,8 @@ export async function getMaxStolenRiichiBetsCount(event: EventEntity, repo: Repo
       playerId: i.playerId,
       count: i.stole,
     }));
-  } catch {
+  } catch (e) {
+    console.error(e);
     return [];
   }
 }

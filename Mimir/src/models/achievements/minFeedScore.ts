@@ -16,19 +16,22 @@ export async function getMinFeedScore(event: EventEntity, repo: Repository) {
 
   for (const session of sessions) {
     let lastRound: null | RoundEntity = null;
+    const playerIds = [...session.players]
+      .sort((p1, p2) => p1.order - p2.order)
+      .map((p) => p.playerId);
     for (const round of rounds[session.id]) {
       if (lastRound === null) {
         lastRound = round;
       } else {
         const currentSessionState = new SessionState(
           event.ruleset,
-          [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+          playerIds,
           round.lastSessionState
         );
 
         const lastSessionState = new SessionState(
           event.ruleset,
-          [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+          playerIds,
           lastRound.lastSessionState
         );
 
@@ -40,13 +43,13 @@ export async function getMinFeedScore(event: EventEntity, repo: Repository) {
     if (lastRound) {
       const currentSessionState = new SessionState(
         event.ruleset,
-        [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+        playerIds,
         lastRound.lastSessionState
       );
 
       const lastSessionState = new SessionState(
         event.ruleset,
-        [...session.players].sort((p1, p2) => p1.order - p2.order).map((p) => p.id),
+        playerIds,
         session.intermediateResults
       );
 
@@ -56,8 +59,9 @@ export async function getMinFeedScore(event: EventEntity, repo: Repository) {
 
   const feedScores: Array<{ playerId: number; score: number }> = [];
   payments.forEach((item, playerId) => {
-    feedScores.push({ playerId, score: item.sum / item.count });
+    feedScores.push({ playerId, score: Math.abs(Math.round(item.sum / item.count)) });
   });
   const result = feedScores.sort((s1, s2) => s1.score - s2.score).slice(0, 5);
+
   return result;
 }

@@ -44,14 +44,14 @@ export async function getCatchThemAll(event: EventEntity, repo: Repository) {
 
   const bestCountsSorted = [...yakuCollected.entries()].sort((a, b) => b[1].size - a[1].size);
   const bestCount = bestCountsSorted[0][1].size;
-  const playerIds = [];
+  const playerIds = new Set<number>();
   for (const [playerId, yakuList] of bestCountsSorted) {
     if (yakuList.size === bestCount) {
-      playerIds.push(playerId);
+      playerIds.add(playerId);
     } else {
       break;
     }
   }
 
-  return { count: bestCount, playerIds };
+  return { count: bestCount, playerIds: Array.from(playerIds) };
 }

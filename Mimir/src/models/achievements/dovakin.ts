@@ -31,16 +31,16 @@ export async function getDovakin(event: EventEntity, repo: Repository) {
         for (const yaku of hand.yaku ?? []) {
           switch (yaku) {
             case Yaku.YAKUHAI1:
-              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.loserId!)! + 1);
+              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.winnerId!)! + 1);
               break;
             case Yaku.YAKUHAI2:
-              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.loserId!)! + 2);
+              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.winnerId!)! + 2);
               break;
             case Yaku.YAKUHAI3:
-              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.loserId!)! + 3);
+              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.winnerId!)! + 3);
               break;
             case Yaku.YAKUHAI4:
-              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.loserId!)! + 4);
+              yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.winnerId!)! + 4);
               break;
             default:
           }
@@ -51,14 +51,14 @@ export async function getDovakin(event: EventEntity, repo: Repository) {
 
   const bestCountsSorted = [...yakuhaiCounts.entries()].sort((a, b) => b[1] - a[1]);
   const bestCount = bestCountsSorted[0][1];
-  const playerIds = [];
+  const playerIds = new Set<number>();
   for (const [playerId, count] of bestCountsSorted) {
     if (count === bestCount) {
-      playerIds.push(playerId);
+      playerIds.add(playerId);
     } else {
       break;
     }
   }
 
-  return { count: bestCount, playerIds };
+  return { count: bestCount, playerIds: Array.from(playerIds) };
 }

@@ -41,14 +41,14 @@ export async function getRiichiNomi(event: EventEntity, repo: Repository) {
 
   const bestCountsSorted = [...riichiNomiCounts.entries()].sort((a, b) => b[1] - a[1]);
   const bestCount = bestCountsSorted[0][1];
-  const playerIds = [];
+  const playerIds = new Set<number>();
   for (const [playerId, count] of bestCountsSorted) {
     if (count === bestCount) {
-      playerIds.push(playerId);
+      playerIds.add(playerId);
     } else {
       break;
     }
   }
 
-  return { count: bestCount, playerIds };
+  return { count: bestCount, playerIds: Array.from(playerIds) };
 }

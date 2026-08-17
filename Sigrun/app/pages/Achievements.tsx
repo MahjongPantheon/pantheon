@@ -64,6 +64,7 @@ import { useContext } from 'react';
 import { authCtx } from '../hooks/auth';
 import { globalsCtx } from '../hooks/globals';
 import { useMediaQuery } from '@mantine/hooks';
+import { PersonEx } from 'tsclients/proto/atoms.pb';
 
 enum Achievement {
   BEST_HAND = 'bestHand',
@@ -135,6 +136,14 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
     return null;
   }
 
+  const playerById = achievementsData.players.reduce(
+    (acc, val) => {
+      acc[val.id] = val;
+      return acc;
+    },
+    {} as Record<number, PersonEx>
+  );
+
   const achDataByKey = achievementsData.achievements.reduce(
     (acc, val) => {
       try {
@@ -161,8 +170,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_HAND] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_HAND].names.map((name: string, idx: number) => (
-              <List.Item key={`li_${idx}`}>{name}</List.Item>
+            {achDataByKey[Achievement.BEST_HAND].playerIds.map((playerId: number, idx: number) => (
+              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -181,8 +190,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_FU] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_FU].names.map((name: string, idx: number) => (
-              <List.Item key={`li_${idx}`}>{name}</List.Item>
+            {achDataByKey[Achievement.BEST_FU].playerIds.map((playerId: number, idx: number) => (
+              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -201,9 +210,11 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_TSUMOIST] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_TSUMOIST].names.map((name: string, idx: number) => (
-              <List.Item key={`li_${idx}`}>{name}</List.Item>
-            ))}
+            {achDataByKey[Achievement.BEST_TSUMOIST].playerIds.map(
+              (playerId: number, idx: number) => (
+                <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+              )
+            )}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._pt('Achievements badge', '%1 tsumo', [
@@ -223,16 +234,16 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.DIE_HARD] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.DIE_HARD].names.map((name: string, idx: number) => (
-              <List.Item key={`li_${idx}`}>{name}</List.Item>
+            {achDataByKey[Achievement.DIE_HARD].playerIds.map((playerId: number, idx: number) => (
+              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
               'Achievements badge',
               ['%1 feed', '%1 feeds'],
-              achDataByKey[Achievement.DIE_HARD].feed,
-              [achDataByKey[Achievement.DIE_HARD].feed ?? '0']
+              achDataByKey[Achievement.DIE_HARD].count ?? 0,
+              [achDataByKey[Achievement.DIE_HARD].count ?? '0']
             )}
           </Badge>
         </Group>
@@ -248,16 +259,18 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BRAVE_SAPPER] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BRAVE_SAPPER].names.map((name: string, idx: number) => (
-              <List.Item key={`li_${idx}`}>{name}</List.Item>
-            ))}
+            {achDataByKey[Achievement.BRAVE_SAPPER].playerIds.map(
+              (playerId: number, idx: number) => (
+                <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+              )
+            )}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
               'Achievements badge',
               ['%1 feed', '%1 feeds'],
-              achDataByKey[Achievement.BRAVE_SAPPER].feed,
-              [achDataByKey[Achievement.BRAVE_SAPPER].feed ?? '0']
+              achDataByKey[Achievement.BRAVE_SAPPER].count ?? 0,
+              [achDataByKey[Achievement.BRAVE_SAPPER].count ?? '0']
             )}
           </Badge>
         </Group>
@@ -273,18 +286,18 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.DOVAKINS] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.DOVAKINS].map(
-              (item: { name: string; count: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {i18n._npt('Achievements badge', ['%1 yakuhai', '%1 yakuhais'], item.count, [
-                    item.count || '0',
-                  ])}
-                </List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.DOVAKINS].playerIds.map((playerId: number, idx: number) => (
+              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+            ))}
           </List>
-          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
+            {i18n._npt(
+              'Achievements badge',
+              ['%1 yakuhai', '%1 yakuhais'],
+              achDataByKey[Achievement.DOVAKINS].count,
+              [achDataByKey[Achievement.DOVAKINS].count ?? '0']
+            )}
+          </Badge>
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -298,9 +311,11 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_DEALER] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_DEALER].names.map((name: string, idx: number) => (
-              <List.Item key={`li_${idx}`}>{name}</List.Item>
-            ))}
+            {achDataByKey[Achievement.BEST_DEALER].playerIds.map(
+              (playerId: number, idx: number) => (
+                <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+              )
+            )}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
@@ -323,8 +338,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.SHITHANDER] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.SHITHANDER].names.map((name: string, idx: number) => (
-              <List.Item key={`li_${idx}`}>{name}</List.Item>
+            {achDataByKey[Achievement.SHITHANDER].playerIds.map((playerId: number, idx: number) => (
+              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -350,9 +365,15 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           {achDataByKey[Achievement.YAKUMANS].length > 0 ? (
             <List>
               {achDataByKey[Achievement.YAKUMANS].map(
-                (item: { name: string; yaku: string }, idx: number) => (
+                (item: { playerId: number; yakuman: number[]; kazoe: boolean }, idx: number) => (
                   <List.Item key={`li_${idx}`}>
-                    <b>{item.name}</b>, {yMap.get(parseInt(item.yaku, 10))}
+                    <b>{playerById[item.playerId].title}</b>,{' '}
+                    {[
+                      ...item.yakuman.map((yaku) => yMap.get(yaku)),
+                      item.kazoe ? i18n._t('Kazoe yakuman') : '',
+                    ]
+                      .filter(Boolean)
+                      .join(', ')}
                   </List.Item>
                 )
               )}
@@ -377,15 +398,24 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.IMPOSSIBLE_WAIT].map(
-              (item: { name: string; hand: { han: number; fu: number } }, idx: number) => (
+              (
+                item: { playerId: number; hand: { han: number; fu: number }; amount: number },
+                idx: number
+              ) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {item.hand.fu
-                    ? i18n._pt('Achievements badge', '%1 han, %2 fu', [
-                        item.hand.han || '0',
-                        item.hand.fu || '0',
-                      ])
-                    : i18n._pt('Achievements badge', '%1 han', [item.hand.han || '0'])}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
+                  {item.hand.han < 0
+                    ? i18n._pt('Achievements badge', 'yakuman (%1)', [item.amount || '0'])
+                    : item.hand.fu
+                      ? i18n._pt('Achievements badge', '%1 han, %2 fu (%3)', [
+                          item.hand.han || '0',
+                          item.hand.fu || '0',
+                          item.amount || '0',
+                        ])
+                      : i18n._pt('Achievements badge', '%1 han (%2)', [
+                          item.hand.han || '0',
+                          item.amount || '0',
+                        ])}
                 </List.Item>
               )
             )}
@@ -405,9 +435,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.HONORED_DONOR].map(
-              (item: { name: string; count: number }, idx: number) => (
+              (item: { playerId: number; count: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._npt('Achievements badge', ['%1 bet', '%1 bets'], item.count, [
                     item.count || '0',
                   ])}
@@ -429,16 +459,22 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.JUST_AS_PLANNED] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.JUST_AS_PLANNED].map(
-              (item: { name: string; count: number }, idx: number) => (
+            {achDataByKey[Achievement.JUST_AS_PLANNED].playerIds.map(
+              (playerId: number, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {i18n._pt('Achievements badge', '%1 ippatsu', [item.count || '0'])}
+                  <b>{playerById[playerId].title}</b>
                 </List.Item>
               )
             )}
           </List>
-          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
+            {i18n._npt(
+              'Achievements badge',
+              ['%1 ippatsu', '%1 ippatsu'],
+              achDataByKey[Achievement.JUST_AS_PLANNED].count,
+              [achDataByKey[Achievement.JUST_AS_PLANNED].count ?? '0']
+            )}
+          </Badge>
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -455,9 +491,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.CAREFUL_PLANNING].map(
-              (item: { name: string; score: number }, idx: number) => (
+              (item: { playerId: number; score: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
                 </List.Item>
               )
@@ -478,12 +514,15 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.DORA_LORD].map(
-              (item: { name: string; count: number }, idx: number) => (
+              (item: { playerId: number; average: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {i18n._npt('Achievements badge', ['%1 dora', '%1 dora'], Math.floor(item.count), [
-                    item.count || '0',
-                  ])}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
+                  {i18n._npt(
+                    'Achievements badge',
+                    ['%1 dora', '%1 dora'],
+                    +item.average.toFixed(2),
+                    [item.average || '0']
+                  )}
                 </List.Item>
               )
             )}
@@ -504,16 +543,22 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.CATCH_EM_ALL] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.CATCH_EM_ALL].map(
-              (item: { name: string; count: number }, idx: number) => (
+            {achDataByKey[Achievement.CATCH_EM_ALL].playerIds.map(
+              (playerId: number, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {i18n._pt('Achievements badge', '%1 yaku', [item.count || '0'])}
+                  <b>{playerById[playerId].title}</b>
                 </List.Item>
               )
             )}
           </List>
-          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
+            {i18n._npt(
+              'Achievements badge',
+              ['%1 yaku', '%1 yaku'],
+              achDataByKey[Achievement.CATCH_EM_ALL].count,
+              [achDataByKey[Achievement.CATCH_EM_ALL].count ?? '0']
+            )}
+          </Badge>
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -530,9 +575,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.FAVORITE_ASAPIN_APPRENTICE].map(
-              (item: { name: string; score: number }, idx: number) => (
+              (item: { playerId: number; score: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
                 </List.Item>
               )
@@ -555,9 +600,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.AND_YOUR_RIICHI_BET].map(
-              (item: { name: string; count: number }, idx: number) => (
+              (item: { playerId: number; count: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._npt(
                     'Achievements badge',
                     ['%1 riichi bet', '%1 riichi bets'],
@@ -583,9 +628,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.COVETOUS_KNIGHT].map(
-              (item: { name: string; count: number }, idx: number) => (
+              (item: { playerId: number; count: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._npt(
                     'Achievements badge',
                     ['%1 riichi bet', '%1 riichi bets'],
@@ -610,18 +655,20 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.NINJA] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.NINJA].map(
-              (item: { name: string; count: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {i18n._npt('Achievements badge', ['%1 win', '%1 wins'], item.count, [
-                    item.count || '0',
-                  ])}
-                </List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.NINJA].playerIds.map((playerId: number, idx: number) => (
+              <List.Item key={`li_${idx}`}>
+                <b>{playerById[playerId].title}</b>
+              </List.Item>
+            ))}
           </List>
-          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
+            {i18n._npt(
+              'Achievements badge',
+              ['%1 win', '%1 wins'],
+              achDataByKey[Achievement.NINJA].count,
+              [achDataByKey[Achievement.NINJA].count ?? '0']
+            )}
+          </Badge>
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -638,9 +685,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.NEED_MORE_GOLD].map(
-              (item: { title: string; score: number }, idx: number) => (
+              (item: { playerId: number; score: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.title}</b>:{' '}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
                 </List.Item>
               )
@@ -660,21 +707,22 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.RIICHI_NOMI] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.RIICHI_NOMI].map(
-              (item: { name: string; count: number }, idx: number) => (
+            {achDataByKey[Achievement.RIICHI_NOMI].playerIds.map(
+              (playerId: number, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {i18n._npt(
-                    'Achievements badge',
-                    ['%1 riichi nomi hand', '%1 riichi nomi hands'],
-                    item.count,
-                    [item.count || '0']
-                  )}
+                  <b>{playerById[playerId].title}</b>
                 </List.Item>
               )
             )}
           </List>
-          <Badge color='teal' pl={22} leftSection={<IconAward />} variant='filled' size='xl' />
+          <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
+            {i18n._npt(
+              'Achievements badge',
+              ['%1 riichi nomi hand', '%1 riichi nomi hands'],
+              achDataByKey[Achievement.RIICHI_NOMI].count,
+              [achDataByKey[Achievement.RIICHI_NOMI].count ?? '0']
+            )}
+          </Badge>
         </Group>
       ) : (
         <Alert color='yellow'>{i18n._t("Couldn't get nomination details")}</Alert>
@@ -691,10 +739,10 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.FAVORITE_TSUCHIDA_APPRENTICE].map(
-              (item: { name: string; count: number }, idx: number) => (
+              (item: { playerId: number; count: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{item.name}</b>:{' '}
-                  {i18n._pt('Achievements badge', '%1 chiitoitsu count', [item.count || '0'])}
+                  <b>{playerById[item.playerId].title}</b>:{' '}
+                  {i18n._pt('Achievements badge', '%1 chiitoitsu', [item.count || '0'])}
                 </List.Item>
               )
             )}

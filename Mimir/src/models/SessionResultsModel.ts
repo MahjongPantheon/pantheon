@@ -17,7 +17,7 @@ export class SessionResultsModel extends Model {
     return this.repo.em.find(
       SessionResultsEntity,
       {
-        session: this.repo.em.getReference(SessionEntity, sessionId),
+        session: { id: { $in: sessionId } },
       },
       { populate: ['session'] }
     );

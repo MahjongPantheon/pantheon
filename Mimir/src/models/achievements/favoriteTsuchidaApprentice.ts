@@ -38,7 +38,7 @@ export async function getFavoriteTsuchidaApprentice(event: EventEntity, repo: Re
   }
 
   return [...chiitoitsuCounts.entries()]
-    .filter(([, count]) => count > 0)
+    .filter(([, count]) => count >= 2)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5)
     .map(([playerId, count]) => ({ playerId, count }));

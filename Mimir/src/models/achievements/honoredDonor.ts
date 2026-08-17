@@ -7,7 +7,8 @@ export async function getHonoredDonor(event: EventEntity, repo: Repository) {
     const riichiStat = await calcRiichiStat(repo, event);
     const sortedDesc = [...riichiStat.data.values()].sort((s1, s2) => s2.lost - s1.lost);
     return sortedDesc.slice(0, 5).map((s) => ({ playerId: s.playerId, count: s.lost }));
-  } catch {
+  } catch (e) {
+    console.error(e);
     return [];
   }
 }
