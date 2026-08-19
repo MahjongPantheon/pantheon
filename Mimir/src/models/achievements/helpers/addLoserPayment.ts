@@ -5,26 +5,26 @@ import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 export type PaymentList = Map<number, { sum: number; count: number }>;
 
 export function addLoserPayment(
-  round: RoundEntity,
-  lastSessionState: SessionState,
+  currentRound: RoundEntity,
   currentSessionState: SessionState,
+  nextSessionState: SessionState,
   payments: PaymentList
 ): PaymentList {
   if (
-    currentSessionState.getLastOutcome() !== RoundOutcome.ROUND_OUTCOME_RON &&
-    currentSessionState.getLastOutcome() !== RoundOutcome.ROUND_OUTCOME_MULTIRON
+    nextSessionState.getLastOutcome() !== RoundOutcome.ROUND_OUTCOME_RON &&
+    nextSessionState.getLastOutcome() !== RoundOutcome.ROUND_OUTCOME_MULTIRON
   ) {
     return payments;
   }
 
-  const loserId = round.hands[0].loserId;
+  const loserId = currentRound.hands[0].loserId;
   if (!loserId) {
     return payments;
   }
 
-  const loserHasRiichi = round.riichi?.includes(loserId) ?? false;
-  const lastScore = lastSessionState.getScores()[loserId];
-  const currentScore = currentSessionState.getScores()[loserId];
+  const loserHasRiichi = currentRound.riichi?.includes(loserId) ?? false;
+  const lastScore = currentSessionState.getScores()[loserId];
+  const currentScore = nextSessionState.getScores()[loserId];
   const payment = lastScore - currentScore - (loserHasRiichi ? 1000 : 0);
 
   if (!payments.has(loserId)) {
@@ -32,6 +32,6 @@ export function addLoserPayment(
   }
 
   payments.get(loserId)!.sum += payment;
-  payments.get(loserId)!.count += round.hands.length;
+  payments.get(loserId)!.count += currentRound.hands.length;
   return payments;
 }

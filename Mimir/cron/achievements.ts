@@ -19,7 +19,9 @@ export async function rebuildAchievements(repo: Repository) {
   for (const job of jobs) {
     const { eventId } = JSON.parse(job.jobArguments);
     promises.push(achievementsModel.precalculateAchievements(eventId));
+    repo.em.remove(job);
   }
 
   await Promise.all(promises);
+  await repo.em.flush();
 }

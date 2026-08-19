@@ -15,6 +15,7 @@ export class RoundModel extends Model {
   async findBySessionIds(sessionIds: number[]) {
     return this.repo.em.findAll(RoundEntity, {
       where: { session: { id: { $in: sessionIds } } },
+      orderBy: { id: 1 },
       populate: ['hands'],
     });
   }

@@ -15,45 +15,46 @@ export async function getMinFeedScore(event: EventEntity, repo: Repository) {
   );
 
   for (const session of sessions) {
-    let lastRound: null | RoundEntity = null;
+    let currentRound: null | RoundEntity = null;
     const playerIds = [...session.players]
       .sort((p1, p2) => p1.order - p2.order)
       .map((p) => p.playerId);
-    for (const round of rounds[session.id]) {
-      if (lastRound === null) {
-        lastRound = round;
+
+    for (const nextRound of rounds[session.id]) {
+      if (currentRound === null) {
+        currentRound = nextRound;
       } else {
+        const nextSessionState = new SessionState(
+          event.ruleset,
+          playerIds,
+          nextRound.lastSessionState
+        );
+
         const currentSessionState = new SessionState(
           event.ruleset,
           playerIds,
-          round.lastSessionState
+          currentRound.lastSessionState
         );
 
-        const lastSessionState = new SessionState(
-          event.ruleset,
-          playerIds,
-          lastRound.lastSessionState
-        );
-
-        payments = addLoserPayment(round, lastSessionState, currentSessionState, payments);
-        lastRound = round;
+        payments = addLoserPayment(currentRound, currentSessionState, nextSessionState, payments);
+        currentRound = nextRound;
       }
     }
 
-    if (lastRound) {
+    if (currentRound) {
       const currentSessionState = new SessionState(
         event.ruleset,
         playerIds,
-        lastRound.lastSessionState
+        currentRound.lastSessionState
       );
 
-      const lastSessionState = new SessionState(
+      const nextSessionState = new SessionState(
         event.ruleset,
         playerIds,
         session.intermediateResults
       );
 
-      payments = addLoserPayment(lastRound, lastSessionState, currentSessionState, payments);
+      payments = addLoserPayment(currentRound, currentSessionState, nextSessionState, payments);
     }
   }
 
