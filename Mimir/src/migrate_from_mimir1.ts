@@ -8,7 +8,7 @@ import { HandEntity } from './entities/Hand.entity.js';
 import { EventEntity } from './entities/Event.entity.js';
 import { SessionEntity } from './entities/Session.entity.js';
 import { SessionStateEntity } from './entities/SessionState.entity.js';
-import { RoundOutcome, SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import { RoundOutcome, SessionStatus, TournamentGamesStatus } from 'tsclients/proto/atoms.pb.js';
 import { camelCaseKeys } from './helpers/toCamelCase.js';
 
 process.env.NODE_ENV = 'development';
@@ -261,7 +261,12 @@ export async function migrateFromMimir1() {
                   }),
                   timezone: rec.timezone,
                   series_length: rec.series_length,
-                  games_status: rec.games_status,
+                  games_status:
+                    rec.games_status === 'seating_ready'
+                      ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
+                      : rec.games_status === 'started'
+                        ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED
+                        : TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_UNSPECIFIED,
                   hide_results: rec.hide_results,
                   hide_achievements: rec.hide_achievements,
                   is_prescripted: rec.is_prescripted,

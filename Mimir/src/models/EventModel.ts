@@ -1024,7 +1024,7 @@ export class EventModel extends Model {
 
     const playerModel = this.getModel(PlayerModel);
     const players = (
-      await playerModel.findById(registeredPlayers.map((player) => player.playerId))
+      await playerModel.findById(registeredPlayers.map((player) => +player.playerId))
     ).reduce(
       (acc, player) => {
         acc[player.id] = player;
@@ -1036,7 +1036,7 @@ export class EventModel extends Model {
     const replacements = (
       await playerModel.findById(
         registeredPlayers
-          .map((player) => player.replacementId)
+          .map((player) => (player.replacementId ? +player.replacementId : undefined))
           .filter((id): id is number => id !== undefined)
       )
     ).reduce(

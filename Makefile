@@ -228,8 +228,14 @@ migrate_frey1:
 
 .PHONY: migrate_mimir1
 migrate_mimir1:
-	cd Database && ${MAKE} ensure_mimir_migrations_privileges
-	cd Mimir && ${MAKE} container_migrate_mimir1
+	@printf "${RED}This will completely remove ALL data from the new database and import the data from mimir1 database.${NC}" ; \
+  printf "\n" ; \
+  printf "Are you sure you want to continue? (y/N)" ; \
+	read answer ; \
+	if [ "$$answer" = "Y" ] || [ "$$answer" = "y" ]  ; then \
+		cd Database && ${MAKE} ensure_mimir_migrations_privileges && cd .. ; \
+		cd Mimir && ${MAKE} container_migrate_mimir1 ; \
+	fi
 
 .PHONY: shell_tyr
 shell_tyr:
