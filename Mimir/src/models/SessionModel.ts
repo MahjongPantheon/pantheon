@@ -338,6 +338,7 @@ export class SessionModel extends Model {
         }
       }
     }
+
     return {
       players: result,
       replaceMap,
@@ -426,9 +427,6 @@ export class SessionModel extends Model {
       session[0].intermediateResults?.playerIds ?? [], // TODO check if this is populated properly on game start
       session[0].intermediateResults
     );
-
-    console.log(roundData);
-    console.log(sessionState.getRound(), sessionState.getHonba());
 
     const round =
       roundData.ron ??

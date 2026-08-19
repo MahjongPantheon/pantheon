@@ -18,7 +18,6 @@ export function formatGameResult(
   results: SessionResultsEntity[],
   rounds: RoundEntity[]
 ): GameResult {
-  console.log(players);
   return {
     sessionHash: session.representationalHash!,
     date: session.endDate,
