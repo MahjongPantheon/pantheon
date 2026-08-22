@@ -38,6 +38,8 @@ import { ReactNode, useEffect, useState } from 'react';
 import { IconAlarm } from '@tabler/icons-react';
 import { PlayerSeating } from 'tsclients/proto/atoms.pb';
 import sound from '../../assets/snd/5min.wav';
+import gong from '../../assets/snd/gong.mp3';
+import gong2 from '../../assets/snd/gong2.mp3';
 import { useI18n } from '../hooks/i18n';
 import { Meta } from '../components/Meta';
 import { useMediaQuery } from '@mantine/hooks';
@@ -46,6 +48,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   const events = useEvent(eventId);
   const i18n = useI18n();
   const [, setSoundPlayed] = useState(false);
+  const [, setGongPlayed] = useState(false);
   const [, setCurrentTimer] = useState(0);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
@@ -67,6 +70,19 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   });
 
   useEffect(() => {
+    if (!events) {
+      return;
+    }
+    if (!(window as any).__gongSound) {
+      if (events?.[0]?.title?.toLowerCase().includes('волк')) {
+        (window as any).__gongSound = new Audio(gong2); // buffers automatically when created
+      } else {
+        (window as any).__gongSound = new Audio(gong); // buffers automatically when created
+      }
+    }
+  }, [events]);
+
+  useEffect(() => {
     let shouldUpdateTimerFromServer = true;
     let hideSeatingAfter = 0;
     const timer = setInterval(() => {
@@ -82,6 +98,14 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
           setSoundPlayed((old) => {
             if (newState.finished && !old) {
               (window as any).__endingSound.play();
+              return true;
+            } else {
+              return old;
+            }
+          });
+          setGongPlayed((old) => {
+            if (newState.started && !old) {
+              (window as any).__gongSound.play();
               return true;
             } else {
               return old;
