@@ -10,7 +10,9 @@ import {
   PlayersGetLastResultsResponse,
 } from 'tsclients/proto/mimir.pb.js';
 import { PlayerModel } from './PlayerModel.js';
-import { PersonEx, SessionHistoryResult } from 'tsclients/proto/atoms.pb.js';
+import { PersonEx, SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import { EventModel } from './EventModel.js';
+import { SessionModel } from './SessionModel.js';
 
 export class SessionResultsModel extends Model {
   findBySession(sessionId: number[]): Promise<SessionResultsEntity[]> {
@@ -41,13 +43,16 @@ export class SessionResultsModel extends Model {
       ruleset,
       placesMap,
       state.getScores(),
-      state.getReplacements()
+      state.getReplacements() ?? {}
     );
 
     return allPlayerIds.map((currentPlayerId) => {
       const chips = ruleset.rules.chipsValue > 0 ? state.getChips()[currentPlayerId] : 0;
       const score = state.getScores()[currentPlayerId];
       const place = placesMap[currentPlayerId];
+
+      // TODO: почему-то тут пусто, видимо не назначается замена при сохранении стейта в раунд и сессию
+      console.error(place, state.getReplacements());
 
       let ratingDeltaForPlayer = ratingDelta[currentPlayerId];
       if (ruleset.rules.chipsValue > 0) {
@@ -81,7 +86,7 @@ export class SessionResultsModel extends Model {
     map.sort((a, b) => b[1] - a[1]);
     return map.reduce(
       (acc, [playerId], idx) => {
-        acc[playerId] = idx + 1;
+        acc[+playerId] = idx + 1;
         return acc;
       },
       {} as Record<number, number>
@@ -120,7 +125,7 @@ export class SessionResultsModel extends Model {
     sessionId: number,
     sessionState: SessionState,
     playerIds: number[]
-  ) {
+  ): SessionResultsEntity[] {
     const scores = sessionState.getScores();
     if (ruleset.rules.riichiGoesToWinner) {
       const placesMap = this.calcPlacesMap(scores);
@@ -149,16 +154,15 @@ export class SessionResultsModel extends Model {
     return this.calc(ruleset, sessionState, playerIds, eventId, sessionId);
   }
 
-  async getLastResults(
+  async getFinishedSessionResults(
     input: PlayersGetLastResultsPayload
-  ): Promise<PlayersGetLastResultsResponse> {
+  ): Promise<[SessionResultsEntity[], Record<number, PersonEx>]> {
     const playerHistoryModel = this.getModel(PlayerHistoryModel);
     const lastPlayerResult = await playerHistoryModel.findLastByEventAndPlayer(
       input.eventId,
       input.playerId
     );
 
-    let lastResults: SessionHistoryResult[] = [];
     if (lastPlayerResult) {
       const results = await this.findBySession([lastPlayerResult.sessionId]);
       const playerModel = this.getModel(PlayerModel);
@@ -169,21 +173,92 @@ export class SessionResultsModel extends Model {
         },
         {} as Record<number, PersonEx>
       );
+      return [results, players];
+    }
+    return [[], {}];
+  }
 
-      lastResults = results.map((result) => ({
-        sessionHash: result.session.representationalHash ?? '',
-        eventId: result.event.id,
-        playerId: result.playerId,
-        score: result.score,
-        ratingDelta: result.ratingDelta,
-        place: result.place,
-        title: players[result.playerId]?.title,
-        hasAvatar: players[result.playerId]?.hasAvatar,
-        lastUpdate: players[result.playerId]?.lastUpdate,
-      }));
+  async getPrefinishedSessionResults(
+    input: PlayersGetLastResultsPayload,
+    event: EventEntity
+  ): Promise<[SessionResultsEntity[], Record<number, PersonEx>]> {
+    const sessionModel = this.getModel(SessionModel);
+    const lastSession = await sessionModel.findLastByPlayerAndEvent(
+      input.playerId,
+      input.eventId,
+      SessionStatus.SESSION_STATUS_PREFINISHED
+    );
+    await this.repo.em.populate(lastSession, ['players']);
+    if (lastSession.length > 0) {
+      const playerIds = lastSession[0].players.map((player) => player.playerId);
+      const sessionState = new SessionState(
+        event.ruleset,
+        playerIds,
+        lastSession[0].intermediateResults
+      );
+      const playerModel = this.getModel(PlayerModel);
+      const players = (await playerModel.findById(playerIds)).reduce(
+        (acc, p) => {
+          acc[p.id] = p;
+          return acc;
+        },
+        {} as Record<number, PersonEx>
+      );
+      return [
+        this.getUnfinishedSessionResults(
+          event.ruleset,
+          event.id,
+          lastSession[0].id,
+          sessionState,
+          playerIds
+        ),
+        players,
+      ];
+    }
+    return [[], {}];
+  }
+
+  async getLastResults(
+    input: PlayersGetLastResultsPayload
+  ): Promise<PlayersGetLastResultsResponse> {
+    const eventModel = this.getModel(EventModel);
+    const event = await eventModel.findById([input.eventId]);
+    if (event.length === 0) {
+      return {
+        results: [],
+      };
+    }
+
+    let results: SessionResultsEntity[] = [];
+    let players: Record<number, PersonEx> = {};
+    if (event[0].syncEnd) {
+      // try to get prefinished results
+      [results, players] = await this.getPrefinishedSessionResults(input, event[0]);
+      if (results.length === 0) {
+        // fallback to finished results
+        [results, players] = await this.getFinishedSessionResults(input);
+      }
+    } else {
+      [results, players] = await this.getFinishedSessionResults(input);
+    }
+
+    if (results.length > 0) {
+      return {
+        results: results.map((result) => ({
+          sessionHash: result.session.representationalHash ?? '',
+          eventId: result.event.id,
+          playerId: result.playerId,
+          score: result.score,
+          ratingDelta: result.ratingDelta,
+          place: result.place,
+          title: players[result.playerId]?.title,
+          hasAvatar: players[result.playerId]?.hasAvatar,
+          lastUpdate: players[result.playerId]?.lastUpdate,
+        })),
+      };
     }
     return {
-      results: lastResults,
+      results: [],
     };
   }
 }

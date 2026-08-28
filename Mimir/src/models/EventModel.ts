@@ -1101,7 +1101,10 @@ export class EventModel extends Model {
           mayDefinalize: definalizeFlags[gIndex],
           sessionHash: game.representationalHash!,
           tableIndex: game.tableIndex,
-          lastRound: omitLastRound ? null : RoundEntity.toMessage(lastRounds[game.id]),
+          lastRound:
+            omitLastRound || !lastRounds[game.id]
+              ? null
+              : RoundEntity.toMessage(lastRounds[game.id]),
           currentRoundIndex: sessionStates[gIndex].getRound(),
           scores,
           players: [...game.players]

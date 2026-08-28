@@ -392,9 +392,9 @@ export class RulesetEntity {
 
   getOka(place: number) {
     if (place === 1) {
-      return this.rules.oka * 0.75;
+      return (this.rules.oka ?? 0) * 0.75;
     } else {
-      return -this.rules.oka / 4;
+      return -(this.rules.oka ?? 0) / 4;
     }
   }
 }
