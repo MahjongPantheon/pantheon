@@ -326,8 +326,10 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
      * the match-timer reading at that moment; a positive value means the hand ended in-time
      * even if the server clock has since passed the limit during the ~30s scoring gap.
      */
-    private function _lastHandStartedForTimerValue(?int $outcomeTimerSecondsRemaining): bool
-    {
+    private function _lastHandStartedForTimerValue(
+        ?int $outcomeTimerSecondsRemaining,
+        int $secondsPastBuzzer = 30
+    ): bool {
         $ruleset = \Common\Ruleset::instance('jpmlA');
         $ruleset->rules()
             ->setEndingPolicy(\Common\EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND);
@@ -335,7 +337,8 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
             ->setRulesetConfig($ruleset)
             ->setUseTimer(1)
             ->setGameDuration(60)
-            ->setLastTimer(time() - 100000) // server clock long past => time is up
+            // negative $secondsPastBuzzer puts the server clock before the buzzer
+            ->setLastTimer(time() - (60 * 60 + $secondsPastBuzzer))
             ->save();
 
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
@@ -375,6 +378,72 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
     {
         // No client value (online replay / old client) => fall back to server time().
         $this->assertTrue($this->_lastHandStartedForTimerValue(null));
+    }
+
+    public function testClientCannotEndGameWhileServerClockHasTimeLeft()
+    {
+        // Client reads 0 but the server still has 10 minutes on the clock - e.g. extra time
+        // was granted and the client has not refreshed. The server clock wins, so the game
+        // must not start counting down its last hands.
+        $this->assertFalse($this->_lastHandStartedForTimerValue(0, -600));
+    }
+
+    public function testStaleClientCannotKeepExpiredGameAlive()
+    {
+        // Client claims 5 minutes left long after the buzzer. Beyond any plausible scoring
+        // gap, so the claim is ignored and the server clock ends the game.
+        $this->assertTrue($this->_lastHandStartedForTimerValue(300, 1000));
+    }
+
+    /**
+     * EMA 2025 (7.4): after the time signal the current hand is finished and one more hand
+     * is played, and "a chombo after the time signal is treated as one of the remaining
+     * hands". So a chombo during that last hand uses it up and ends the game, rather than
+     * being replayed.
+     */
+    public function testChomboInLastHandEndsGame()
+    {
+        $this->_event
+            ->setRulesetConfig(\Common\Ruleset::instance('ema2025'))
+            ->setUseTimer(1)
+            ->setGameDuration(60)
+            ->setLastTimer(time() - (60 * 60 + 30)) // just past the buzzer
+            ->save();
+
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
+        $hash = $session->startGame(
+            $this->_event->getId(),
+            array_map(function (PlayerPrimitive $p) {
+                return $p->getId();
+            }, $this->_players)
+        );
+
+        // The hand that was in progress when the signal sounded: finished, one more to go.
+        $this->assertNotEmpty($session->addRound($hash, [
+            'round_index' => 1,
+            'honba' => 0,
+            'outcome' => 'draw',
+            'tempai' => '',
+            'riichi' => ''
+        ]));
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
+        $this->assertTrue($sessionPrimitive->getCurrentState()->lastHandStarted());
+        $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
+
+        // Chombo during that last hand: counts as the hand, so the game is over.
+        $this->assertNotEmpty($session->addRound($hash, [
+            'round_index' => 2,
+            'honba' => 1,
+            'outcome' => 'chombo',
+            'loser_id' => 2,
+        ]));
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
+        $this->assertTrue($sessionPrimitive->getCurrentState()->isFinished());
+        $this->assertEquals(SessionPrimitive::STATUS_FINISHED, $sessionPrimitive->getStatus());
+        // ...and the penalty was still recorded, not swallowed by the early finish
+        $this->assertEquals(-20000, $sessionPrimitive->getCurrentState()->getChombo()[2]);
     }
 
     public function testAddRoundNagashi()
