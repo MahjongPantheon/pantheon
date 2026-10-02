@@ -27,6 +27,7 @@ type UmaSelectProps = {
 };
 
 export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
+  const isSanma = !!form.getTransformedValues().ruleset.withSanma;
   return (
     <>
       <Radio.Group
@@ -39,7 +40,7 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
         </Group>
       </Radio.Group>
       {form.getTransformedValues().ruleset.umaType === UmaType.UMA_TYPE_UMA_SIMPLE && (
-        <SimpleGrid cols={2}>
+        <SimpleGrid cols={isSanma ? 3 : 2}>
           <NumberInput
             hideControls
             label={i18n._t('Uma bonus for 1st place')}
@@ -58,12 +59,14 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
             defaultValue={-5000}
             {...form.getInputProps('ruleset.uma.place3')}
           />
-          <NumberInput
-            hideControls
-            label={i18n._t('Uma penalty for 4th place')}
-            defaultValue={-15000}
-            {...form.getInputProps('ruleset.uma.place4')}
-          />
+          {!isSanma && (
+            <NumberInput
+              hideControls
+              label={i18n._t('Uma penalty for 4th place')}
+              defaultValue={-15000}
+              {...form.getInputProps('ruleset.uma.place4')}
+            />
+          )}
         </SimpleGrid>
       )}
       {form.getTransformedValues().ruleset.umaType === UmaType.UMA_TYPE_UMA_COMPLEX && (
@@ -79,9 +82,11 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
             <Text h='34px' align='right'>
               {i18n._t('3rd')}
             </Text>
-            <Text h='34px' align='right'>
-              {i18n._t('4th')}
-            </Text>
+            {!isSanma && (
+              <Text h='34px' align='right'>
+                {i18n._t('4th')}
+              </Text>
+            )}
           </Stack>
           <Stack w='21%'>
             <Center>
@@ -102,11 +107,13 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
               defaultValue={8000}
               {...form.getInputProps('ruleset.complexUma.neg3.place3')}
             />
-            <NumberInput
-              hideControls
-              defaultValue={8000}
-              {...form.getInputProps('ruleset.complexUma.neg3.place4')}
-            />
+            {!isSanma && (
+              <NumberInput
+                hideControls
+                defaultValue={8000}
+                {...form.getInputProps('ruleset.complexUma.neg3.place4')}
+              />
+            )}
           </Stack>
           <Stack w='21%'>
             <Center>
@@ -127,11 +134,13 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
               defaultValue={8000}
               {...form.getInputProps('ruleset.complexUma.neg1.place3')}
             />
-            <NumberInput
-              hideControls
-              defaultValue={8000}
-              {...form.getInputProps('ruleset.complexUma.neg1.place4')}
-            />
+            {!isSanma && (
+              <NumberInput
+                hideControls
+                defaultValue={8000}
+                {...form.getInputProps('ruleset.complexUma.neg1.place4')}
+              />
+            )}
           </Stack>
           <Stack w='21%'>
             <Text>{i18n._t('Otherwise')}</Text>
@@ -150,11 +159,13 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
               defaultValue={8000}
               {...form.getInputProps('ruleset.complexUma.otherwise.place3')}
             />
-            <NumberInput
-              hideControls
-              defaultValue={8000}
-              {...form.getInputProps('ruleset.complexUma.otherwise.place4')}
-            />
+            {!isSanma && (
+              <NumberInput
+                hideControls
+                defaultValue={8000}
+                {...form.getInputProps('ruleset.complexUma.otherwise.place4')}
+              />
+            )}
           </Stack>
         </Group>
       )}

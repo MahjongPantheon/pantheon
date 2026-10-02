@@ -169,7 +169,7 @@ msgctxt "Tsumo item partial"
 msgid "(tsumo, pao: <b>%1</b>)"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:113:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:120:22
 msgid "1 player with score less than starting"
 msgstr "Ein Spieler ist unter den Startpunkten"
 
@@ -177,7 +177,7 @@ msgstr "Ein Spieler ist unter den Startpunkten"
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13+ han Hände werden als Yakuman, nicht als sanbaiman, gewertet."
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:74:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:77:16
 msgid "1st"
 msgstr "1ter"
 
@@ -185,7 +185,7 @@ msgstr "1ter"
 msgid "1st place: "
 msgstr "1ter Platz:"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:77:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:80:16
 msgid "2nd"
 msgstr "2ter"
 
@@ -193,11 +193,11 @@ msgstr "2ter"
 msgid "2nd place: "
 msgstr "2ter Platz:"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:88:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:93:22
 msgid "3 players with score less than starting"
 msgstr "Drei Spieler sind unter den Startpunkten"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:80:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:83:16
 msgid "3rd"
 msgstr "3ter"
 
@@ -205,7 +205,7 @@ msgstr "3ter"
 msgid "3rd place: "
 msgstr "3ter Platz:"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:83:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:87:18
 msgid "4th"
 msgstr "4ter"
 
@@ -479,7 +479,7 @@ msgstr ""
 msgid "Chuuren poutou 9-side"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:224:24
+#: app/pages/PlayerStats.tsx:225:24
 msgid "Close game preview"
 msgstr "Spiel Vorschau schließen"
 
@@ -495,7 +495,7 @@ msgstr "Zuletzt genutzt"
 msgid "Common stats"
 msgstr "Allgemeine Statistiken:"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:38:62
+#: app/pages/EventRulesOverview/UmaSelect.tsx:39:62
 msgid "Complex position-based"
 msgstr "Komplex Positionsbasiert"
 
@@ -734,8 +734,8 @@ msgstr "Größter Gewinn eines Hanchans im Turnier."
 
 #: app/pages/Achievements.tsx:687:20
 msgid ""
-"Given for largest chiitoitsu yaku count. You need to win more than once with "
-"this yaku. Chiitoitsu nomi it is also not counted."
+"Given for largest chiitoitsu yaku count. You need to win more than twice "
+"with this yaku. Chiitoitsu nomi it is also not counted."
 msgstr ""
 
 #: app/pages/Achievements.tsx:297:20
@@ -956,7 +956,7 @@ msgstr ""
 msgid "Last series"
 msgstr "Letzte Serie:"
 
-#: app/pages/Achievements.tsx:756:18 app/pages/PlayerStats.tsx:134:18
+#: app/pages/Achievements.tsx:756:18 app/pages/PlayerStats.tsx:135:18
 msgid "Last update: %1"
 msgstr "Letztes Update: %1"
 
@@ -1020,7 +1020,7 @@ msgstr ""
 msgid "Nagashi: %1"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:202:24
+#: app/pages/PlayerStats.tsx:203:24
 msgid "Next game"
 msgstr "Nächstes Spiel"
 
@@ -1069,7 +1069,7 @@ msgstr "Menü öffnen"
 msgid "Open riichi"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:137:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:146:20
 msgid "Otherwise"
 msgstr "Sonstiges"
 
@@ -1117,7 +1117,7 @@ msgstr ""
 msgid "Place"
 msgstr "Platzierung"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:72:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:75:22
 msgid "Place / Session result"
 msgstr "Platzierung / Match Ergebniss"
 
@@ -1133,6 +1133,14 @@ msgstr "Weitere Runden erlauben"
 msgid "Play only east rounds"
 msgstr "Nur Ostrunden"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:63:26
+msgid ""
+"Play with 3 players instead of 4. The North seat is removed; uma and seating "
+"are adjusted accordingly."
+msgstr ""
+"Spiel mit 3 statt 4 Spielern. Der Nordplatz entfällt; Uma und Sitzordnung "
+"werden entsprechend angepasst."
+
 #: app/pages/RatingTable.tsx:587:7
 msgid "Player ID"
 msgstr "Spieler ID"
@@ -1141,14 +1149,14 @@ msgstr "Spieler ID"
 msgid "Player name"
 msgstr "Spielername"
 
-#: app/pages/PlayerStats.tsx:117:22
+#: app/pages/PlayerStats.tsx:118:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 "Spieler Statistiken für %1 im Turnier \"%2\" von Mahjong Pantheon zur "
 "Verfügung gestellt"
 
-#: app/pages/PlayerStats.tsx:116:37
+#: app/pages/PlayerStats.tsx:117:37
 msgid "Player stats"
 msgstr "Spieler Statistiken"
 
@@ -1161,7 +1169,7 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "Zum Event angemeldete Spieler"
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:185:24
 msgid "Previous game"
 msgstr "Letztes Spiel"
 
@@ -1311,6 +1319,10 @@ msgstr ""
 msgid "Ryuuiisou"
 msgstr ""
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
+msgid "Ryuukyoku payments (sanma)"
+msgstr "Unentschieden-Zahlungen (Sanma)"
+
 #: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr ""
@@ -1404,13 +1416,17 @@ msgstr ""
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: Riichi Mahjong Wertung und Statistiken"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:37:61
+#: app/pages/EventRulesOverview/UmaSelect.tsx:38:61
 msgid "Simple rank-based"
 msgstr "Rang basiert"
 
 #: app/pages/Game.tsx:67:24
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Spielvorschau \"%1\"  von Mahjong Pantheon zur Verfügung gestellt"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr "Summe der Punkte, die Noten-Spieler an Tenpai-Spieler zahlen"
 
 #: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
@@ -1499,6 +1515,11 @@ msgstr ""
 #: app/pages/Achievements.tsx:372:14
 msgid "This can't be your wait"
 msgstr "Das kann nicht wahr sein"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:29
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:62:20
+msgid "Three-player game (sanma)"
+msgstr "Drei-Spieler-Spiel (Sanma)"
 
 #: app/pages/Timer.tsx:152:19
 msgid "Timer"
@@ -1601,23 +1622,23 @@ msgstr ""
 msgid "Tsuuiisou"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:45:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:46:20
 msgid "Uma bonus for 1st place"
 msgstr "Uma Bonus für den ersten Platz"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:51:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:52:20
 msgid "Uma bonus for 2nd place"
 msgstr "Uma Bonus für den zweiten Platz"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:32:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:33:16
 msgid "Uma bonus type"
 msgstr "Uma Variante"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:57:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:58:20
 msgid "Uma penalty for 3rd place"
 msgstr "Uma Bonus für den dritten Platz"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:63:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:65:22
 msgid "Uma penalty for 4th place"
 msgstr "Uma Bonus für den vierten Platz"
 
@@ -1633,7 +1654,7 @@ msgstr ""
 msgid "View game"
 msgstr "Spiel ansehen"
 
-#: app/pages/PlayerStats.tsx:177:16
+#: app/pages/PlayerStats.tsx:178:16
 msgid "View selected game details"
 msgstr "Details für ausgewähltes Spiel"
 
@@ -1765,5 +1786,15 @@ msgstr "keine"
 msgid "yakuman!"
 msgstr ""
 
+#~ msgid "Draw payments (sanma)"
+#~ msgstr "Unentschieden-Zahlungen (Sanma)"
+
 #~ msgid "Game link"
 #~ msgstr "Link zum Spiel"
+
+#~ msgid ""
+#~ "Whether the dealer pays double on tsumo even when the winner is the "
+#~ "dealer themselves (tsumo loss), or not"
+#~ msgstr ""
+#~ "Ob der Dealer bei Tsumo den doppelten Betrag zahlt, auch wenn der "
+#~ "Gewinner der Dealer selbst ist (Tsumo-Verlust), oder nicht"

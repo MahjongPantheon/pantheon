@@ -402,7 +402,11 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         },
       };
     case RANDOMIZE_NEWGAME_PLAYERS: {
-      const newArr = rand(([] as RegisteredPlayer[]).concat(state.newGameSelectedUsers ?? []));
+      const isSanma = !!state.gameConfig?.rulesetConfig?.withSanma;
+      const seatsCount = isSanma ? 3 : 4;
+      const currentUsers = ([] as RegisteredPlayer[]).concat(state.newGameSelectedUsers ?? []);
+      const shuffledSeats = rand(currentUsers.slice(0, seatsCount));
+      const newArr = isSanma ? [...shuffledSeats, defaultPlayer] : shuffledSeats;
       return {
         ...state,
         newGameSelectedUsers: newArr,
@@ -455,12 +459,12 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
     case TABLE_ROTATE_CLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift ?? 0) + 1) % 4,
+        overviewViewShift: (state.overviewViewShift ?? 0) + 1,
       };
     case TABLE_ROTATE_COUNTERCLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift ?? 0) + 3) % 4,
+        overviewViewShift: (state.overviewViewShift ?? 0) - 1,
       };
     case GET_GAME_OVERVIEW_INIT:
       return {

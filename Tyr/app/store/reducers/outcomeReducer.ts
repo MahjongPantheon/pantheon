@@ -50,7 +50,10 @@ import { PlayerInSession, RoundOutcome } from 'tsclients/proto/atoms.pb';
  * Get id of player who is dealer in this round
  */
 function getDealerId(outcome: AppOutcome, playersList: PlayerInSession[]): number {
-  let players = [playersList[0], playersList[1], playersList[2], playersList[3]];
+  // Use the real player count (3 for sanma, 4 otherwise) — the ghost seat is
+  // already filtered out of state.players, so hardcoding a 4th index would
+  // produce an undefined player and crash dealer-dependent outcomes.
+  let players = playersList.slice();
   for (let i = 1; i < outcome.roundIndex; i++) {
     players = [players.pop()!].concat(players);
   }

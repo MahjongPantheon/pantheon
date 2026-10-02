@@ -495,23 +495,23 @@ class PointsTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(
             [1 => 0, 0, 0, 0],
-            PointsCalc::draw($this->_currentScores, [], [])
+            PointsCalc::draw($this->_ruleset, $this->_currentScores, [], [])
         );
         $this->assertEquals(
             [1 => 3000, -1000, -1000, -1000],
-            PointsCalc::draw($this->_currentScores, [1], [])
+            PointsCalc::draw($this->_ruleset, $this->_currentScores, [1], [])
         );
         $this->assertEquals(
             [1 => 1500, -1500, 1500, -1500],
-            PointsCalc::draw($this->_currentScores, [1, 3], [])
+            PointsCalc::draw($this->_ruleset, $this->_currentScores, [1, 3], [])
         );
         $this->assertEquals(
             [1 => 1000, -3000, 1000, 1000],
-            PointsCalc::draw($this->_currentScores, [1, 3, 4], [])
+            PointsCalc::draw($this->_ruleset, $this->_currentScores, [1, 3, 4], [])
         );
         $this->assertEquals(
             [1 => -1000, -1000, 0, -1000],
-            PointsCalc::draw($this->_currentScores, [1, 2, 3, 4], [1, 2, 4])
+            PointsCalc::draw($this->_ruleset, $this->_currentScores, [1, 2, 3, 4], [1, 2, 4])
         );
     }
 
@@ -674,22 +674,22 @@ class PointsTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(
             [1 => 12000, -4000, -4000, -4000],
-            PointsCalc::nagashi($this->_currentScores, 1, [], [1])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [], [1])
         );
 
         $this->assertEquals(
             [1 => 12000, -4000, -5000, -5000],
-            PointsCalc::nagashi($this->_currentScores, 1, [3,4], [1])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [3,4], [1])
         );
 
         $this->assertEquals(
             [1 => -4000, 8000, -2000, -2000],
-            PointsCalc::nagashi($this->_currentScores, 1, [], [2])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [], [2])
         );
 
         $this->assertEquals(
             [1 => -4000, 8000, -2000, -3000],
-            PointsCalc::nagashi($this->_currentScores, 1, [4], [2])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [4], [2])
         );
     }
 
@@ -697,32 +697,32 @@ class PointsTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(
             [1 => 8000, 4000, -6000, -6000],
-            PointsCalc::nagashi($this->_currentScores, 1, [], [1,2])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [], [1,2])
         );
 
         $this->assertEquals(
             [1 => 8000, 3000, -6000, -7000],
-            PointsCalc::nagashi($this->_currentScores, 1, [2,4], [1,2])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [2,4], [1,2])
         );
 
         $this->assertEquals(
             [1 => -8000, 6000, 6000, -4000],
-            PointsCalc::nagashi($this->_currentScores, 1, [], [2,3])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [], [2,3])
         );
 
         $this->assertEquals(
             [1 => -9000, 6000, 6000, -5000],
-            PointsCalc::nagashi($this->_currentScores, 1, [1,4], [2,3])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [1,4], [2,3])
         );
 
         $this->assertEquals(
             [1 => 4000, 2000, 2000, -8000],
-            PointsCalc::nagashi($this->_currentScores, 1, [], [1,2,3])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [], [1,2,3])
         );
 
         $this->assertEquals(
             [1 => -12000, 4000, 4000, 4000],
-            PointsCalc::nagashi($this->_currentScores, 1, [], [2,3,4])
+            PointsCalc::nagashi($this->_ruleset, $this->_currentScores, 1, [], [2,3,4])
         );
     }
 }

@@ -84,25 +84,24 @@ class Seating
      *
      * @param array $seating
      * @param array $previousSeatings
+     * @param positive-int $tableSize 4 for regular games, 3 for sanma
      * @return array
      */
-    public static function makeIntersectionsTable(array $seating, array $previousSeatings)
+    public static function makeIntersectionsTable(array $seating, array $previousSeatings, int $tableSize = 4)
     {
-        $possibleIntersections = [
-            [0, 1],
-            [0, 2],
-            [0, 3],
-            [1, 2],
-            [1, 3],
-            [2, 3]
-        ];
+        $possibleIntersections = [];
+        for ($i = 0; $i < $tableSize; $i++) {
+            for ($j = $i + 1; $j < $tableSize; $j++) {
+                $possibleIntersections []= [$i, $j];
+            }
+        }
 
         // push new seating to our array, but reformat it first
         $newSeating = [];
         foreach ($seating as $player => $rating) {
             $newSeating []= $player;
         }
-        $newSeating = array_chunk($newSeating, 4);
+        $newSeating = array_chunk($newSeating, $tableSize);
         $seatings = array_merge($previousSeatings, $newSeating);
 
         $intersectionData = [];
@@ -127,10 +126,11 @@ class Seating
      * @param int $groupsCount - shuffling groups count
      * @param int $randFactor - RNG init seed
      * @param ?int $windShuffleMode - enum
+     * @param positive-int $tableSize 4 for regular games, 3 for sanma
      *
-     * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
+     * @return array [ id => rating, ... ] flattened players list, each $tableSize are a table ordered as esw(n).
      */
-    public static function shuffledSeating($playersMap, $previousSeatings, int $groupsCount, int $randFactor, ?int $windShuffleMode): array
+    public static function shuffledSeating($playersMap, $previousSeatings, int $groupsCount, int $randFactor, ?int $windShuffleMode, int $tableSize = 4): array
     {
         /*
          * Simple random search. Too many variables for real optimising methods :(
@@ -167,7 +167,7 @@ class Seating
                 }
             }
 
-            $newFactor = self::_calculateIntersectionFactor($flattenedGroups, $previousSeatings); // 4)
+            $newFactor = self::_calculateIntersectionFactor($flattenedGroups, $previousSeatings, $tableSize); // 4)
             if ($newFactor < $factor) {
                 $factor = $newFactor;
                 $bestSeating = $flattenedGroups; // 5)
@@ -175,7 +175,7 @@ class Seating
             usleep(500); // sleep some time to reduce cpu load
         } // 6)
 
-        return self::makeWindShuffle($bestSeating, $previousSeatings, $windShuffleMode);
+        return self::makeWindShuffle($bestSeating, $previousSeatings, $windShuffleMode, $tableSize);
     }
 
     /**
@@ -185,15 +185,16 @@ class Seating
      *
      * @param array $seating [id => rating] - Seating candidate
      * @param array $previousSeatings [ [id, id, id, id] ... ] - Previous seatings info
+     * @param positive-int $tableSize 4 for regular games, 3 for sanma
      *
      * @return float|int
      */
-    protected static function _calculateIntersectionFactor(array $seating, array $previousSeatings)
+    protected static function _calculateIntersectionFactor(array $seating, array $previousSeatings, int $tableSize = 4)
     {
         $factor = 0;
         $crossings = [];
 
-        $tablesCount = floor(count($seating) / 4);
+        $tablesCount = floor(count($seating) / $tableSize);
         $games = array_chunk($previousSeatings, max(1, (int)$tablesCount));
 
         // push new seating to our array, but reformat it first
@@ -201,13 +202,13 @@ class Seating
         foreach ($seating as $player => $rating) {
             $newSeating []= $player;
         }
-        $newSeating = array_chunk($newSeating, 4);
+        $newSeating = array_chunk($newSeating, $tableSize);
         $games []= $newSeating;
 
         foreach ($games as $gameIdx => $tables) {
-            foreach ($tables as $game) { // this should be (12 * games count) iterations
-                for ($i = 0; $i < count($game); $i++) { // strictly 4 iterations!
-                    for ($j = 0; $j < count($game); $j++) { // strictly 3 iterations!
+            foreach ($tables as $game) {
+                for ($i = 0; $i < count($game); $i++) { // strictly $tableSize iterations!
+                    for ($j = 0; $j < count($game); $j++) { // strictly ($tableSize - 1) iterations!
                         if ($j == $i) {
                             continue;
                         }
@@ -248,12 +249,13 @@ class Seating
      * Make sure players will sit on random winds
      *
      * @param array $seating
+     * @param positive-int $tableSize 4 for regular games, 3 for sanma
      * @return array
      */
-    protected static function _randomWindShuffle(array $seating)
+    protected static function _randomWindShuffle(array $seating, int $tableSize = 4)
     {
         self::shuffleSeed();
-        $tables = array_chunk($seating, 4, true);
+        $tables = array_chunk($seating, $tableSize, true);
         $resultSeating = [];
         foreach ($tables as $tableWithRatings) {
             $resultSeating += self::shuffle($tableWithRatings);
@@ -268,20 +270,26 @@ class Seating
      *
      * @param array $seating
      * @param array $previousSeatings
+     * @param positive-int $tableSize 4 for regular games, 3 for sanma
      * @return array
      */
-    protected static function _balancedWindShuffle(array $seating, array $previousSeatings)
+    protected static function _balancedWindShuffle(array $seating, array $previousSeatings, int $tableSize = 4)
     {
-        $possiblePlacements = [
-            '0123', '1023', '2013', '3012',
-            '0132', '1032', '2031', '3021',
-            '0213', '1203', '2103', '3102',
-            '0231', '1230', '2130', '3120',
-            '0312', '1302', '2301', '3201',
-            '0321', '1320', '2310', '3210',
-        ];
+        $possiblePlacements = $tableSize === 3
+            ? [
+                '012', '021', '102',
+                '120', '201', '210',
+            ]
+            : [
+                '0123', '1023', '2013', '3012',
+                '0132', '1032', '2031', '3021',
+                '0213', '1203', '2103', '3102',
+                '0231', '1230', '2130', '3120',
+                '0312', '1302', '2301', '3201',
+                '0321', '1320', '2310', '3210',
+            ];
 
-        $tables = array_chunk($seating, 4, true);
+        $tables = array_chunk($seating, $tableSize, true);
         $resultSeating = [];
         self::shuffleSeed();
         foreach ($tables as $tableWithRatings) {
@@ -292,22 +300,18 @@ class Seating
             $bestPlacement = [];
             $shuffledPossiblePlacements = self::shuffle($possiblePlacements); // if some variants are equal, choose random
             foreach ($shuffledPossiblePlacements as $placement) {
-                $newResult = self::_calcWindDistributionPenalty(
-                    $table[$placement[0]],
-                    $table[$placement[1]],
-                    $table[$placement[2]],
-                    $table[$placement[3]],
-                    $previousSeatings
-                );
+                $tablePlayers = [];
+                for ($i = 0; $i < $tableSize; $i++) {
+                    $tablePlayers []= $table[(int)$placement[$i]];
+                }
+                $newResult = self::_calcWindDistributionPenalty($tablePlayers, $previousSeatings);
 
                 if ($newResult < $bestResult) {
                     $bestResult = $newResult;
-                    $bestPlacement = [
-                        $table[$placement[0]] => $tableWithRatings[$table[$placement[0]]],
-                        $table[$placement[1]] => $tableWithRatings[$table[$placement[1]]],
-                        $table[$placement[2]] => $tableWithRatings[$table[$placement[2]]],
-                        $table[$placement[3]] => $tableWithRatings[$table[$placement[3]]],
-                    ];
+                    $bestPlacement = [];
+                    foreach ($tablePlayers as $player) {
+                        $bestPlacement[$player] = $tableWithRatings[$player];
+                    }
                 }
             }
 
@@ -321,19 +325,17 @@ class Seating
      * Calculate index of distribution equality for seating at particular
      * winds. Ideally, we want that seating, which produces smallest index.
      *
-     * @param int $player1
-     * @param int $player2
-     * @param int $player3
-     * @param int $player4
-     * @param array $prevData - [ [id, id, id, id] ...] - assumed players are sorted as eswn at each table!
+     * @param int[] $tablePlayers players of a single table in seating order
+     * @param array $prevData - [ [id, id, id, (id)] ...] - assumed players are sorted as esw(n) at each table!
      *
      * @return float|int
      */
-    protected static function _calcWindDistributionPenalty(int $player1, int $player2, int $player3, int $player4, array $prevData)
+    protected static function _calcWindDistributionPenalty(array $tablePlayers, array $prevData)
     {
         $totalsum = 0;
-        foreach ([$player1, $player2, $player3, $player4] as $idx => $player) {
-            $buckets = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
+        $seats = count($tablePlayers);
+        foreach ($tablePlayers as $idx => $player) {
+            $buckets = array_fill(0, $seats, 0);
             $buckets[$idx] ++;
 
             foreach ($prevData as $table) {
@@ -344,14 +346,11 @@ class Seating
             }
 
             // square the numbers to force buckets to be closer to each other, this works much better
-            $totalsum += (
-                abs($buckets[0] - $buckets[1]) ** 2 +
-                abs($buckets[0] - $buckets[2]) ** 2 +
-                abs($buckets[0] - $buckets[3]) ** 2 +
-                abs($buckets[1] - $buckets[2]) ** 2 +
-                abs($buckets[1] - $buckets[3]) ** 2 +
-                abs($buckets[2] - $buckets[3]) ** 2
-            );
+            for ($i = 0; $i < $seats; $i++) {
+                for ($j = $i + 1; $j < $seats; $j++) {
+                    $totalsum += abs($buckets[$i] - $buckets[$j]) ** 2;
+                }
+            }
         }
 
         return $totalsum;
@@ -692,20 +691,21 @@ class Seating
 
     /**
      * Apply specified wind shuffle mode
-     * @param array $seating array of integers, each chunk of 4 elements is the table
-     * @param array $previousSeatings array of previously played tables, each table is the array of 4 integers
+     * @param array $seating array of integers, each chunk of $tableSize elements is the table
+     * @param array $previousSeatings array of previously played tables, each table is the array of $tableSize integers
      * @param ?int $windShuffleMode enum
+     * @param positive-int $tableSize 4 for regular games, 3 for sanma
      * @return array input seating but with shuffled players on each table
      */
-    public static function makeWindShuffle(array $seating, array $previousSeatings, ?int $windShuffleMode): array
+    public static function makeWindShuffle(array $seating, array $previousSeatings, ?int $windShuffleMode, int $tableSize = 4): array
     {
         switch ($windShuffleMode) {
             case WindShuffleMode::WIND_SHUFFLE_MODE_RANDOM:
                 self::_getLog()->info('Using random wind shuffle for ' . count($seating) . ' players');
-                return self::_randomWindShuffle($seating);
+                return self::_randomWindShuffle($seating, $tableSize);
             case WindShuffleMode::WIND_SHUFFLE_MODE_BALANCED:
                 self::_getLog()->info('Using balanced wind shuffle for ' . count($seating) . ' players');
-                return self::_balancedWindShuffle($seating, $previousSeatings);
+                return self::_balancedWindShuffle($seating, $previousSeatings, $tableSize);
             case WindShuffleMode::WIND_SHUFFLE_MODE_PRESCRIPTED:
                 self::_getLog()->info('Using prescripted wind shuffle for ' . count($seating) . ' players');
                 return array_merge($seating, []); // copy
@@ -713,7 +713,7 @@ class Seating
                 // fallback to random
                 // this includes empty and UNSPECIFIED values
                 self::_getLog()->info('Fallback to random wind shuffle for ' . count($seating) . ' players, enum value = ' . $windShuffleMode);
-                return self::_randomWindShuffle($seating);
+                return self::_randomWindShuffle($seating, $tableSize);
         }
     }
 }

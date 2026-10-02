@@ -1,8 +1,8 @@
 # Translations template for PROJECT.
-# Copyright (C) 2025
+# Copyright (C) 2026 
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
-#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -1037,7 +1037,7 @@ msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 
 #: app/pages/Achievements.tsx:756:18
-#: app/pages/PlayerStats.tsx:134:18
+#: app/pages/PlayerStats.tsx:135:18
 msgid "Last update: %1"
 msgstr ""
 
@@ -1449,63 +1449,63 @@ msgstr ""
 msgid "You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set."
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:32:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:33:16
 msgid "Uma bonus type"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:37:61
+#: app/pages/EventRulesOverview/UmaSelect.tsx:38:61
 msgid "Simple rank-based"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:38:62
+#: app/pages/EventRulesOverview/UmaSelect.tsx:39:62
 msgid "Complex position-based"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:45:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:46:20
 msgid "Uma bonus for 1st place"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:51:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:52:20
 msgid "Uma bonus for 2nd place"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:57:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:58:20
 msgid "Uma penalty for 3rd place"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:63:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:65:22
 msgid "Uma penalty for 4th place"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:72:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:75:22
 msgid "Place / Session result"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:74:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:77:16
 msgid "1st"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:77:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:80:16
 msgid "2nd"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:80:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:83:16
 msgid "3rd"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:83:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:87:18
 msgid "4th"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:88:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:93:22
 msgid "3 players with score less than starting"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:113:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:120:22
 msgid "1 player with score less than starting"
 msgstr ""
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:137:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:146:20
 msgid "Otherwise"
 msgstr ""
 
@@ -1549,27 +1549,27 @@ msgstr ""
 msgid "View game"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:116:37
+#: app/pages/PlayerStats.tsx:117:37
 msgid "Player stats"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:117:22
+#: app/pages/PlayerStats.tsx:118:22
 msgid "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:177:16
+#: app/pages/PlayerStats.tsx:178:16
 msgid "View selected game details"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:185:24
 msgid "Previous game"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:202:24
+#: app/pages/PlayerStats.tsx:203:24
 msgid "Next game"
 msgstr ""
 
-#: app/pages/PlayerStats.tsx:224:24
+#: app/pages/PlayerStats.tsx:225:24
 msgid "Close game preview"
 msgstr ""
 

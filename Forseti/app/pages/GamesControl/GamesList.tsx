@@ -49,6 +49,7 @@ import {
 } from '@tabler/icons-react';
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
+import { GHOST_PLAYER_ID } from '../../../../Common/constants';
 import { I18nService } from '../../services/i18n';
 import { yakuList } from '../../helpers/yaku';
 import { useI18n } from '../../hooks/i18n';
@@ -132,52 +133,54 @@ export function GamesList({
                       size='lg'
                       title={i18n._t('Current round')}
                     >
-                      {makeRound(t.currentRoundIndex)}
+                      {makeRound(t.currentRoundIndex, eventConfig?.rulesetConfig.withSanma ? 3 : 4)}
                     </ActionIcon>
                   )}
                 </Stack>
                 <Stack spacing='0'>
-                  {t.players.map((p) => {
-                    const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
-                    return (
-                      <Group key={`pl_${p.id}`}>
-                        <Badge
-                          style={{ minWidth: '64px' }}
-                          variant='outline'
-                          color={
-                            score === eventConfig?.rulesetConfig.startPoints
-                              ? 'blue'
-                              : score > (eventConfig?.rulesetConfig.startPoints ?? 0)
-                                ? 'green'
-                                : 'red'
-                          }
-                        >
-                          {score}
-                        </Badge>
-                        <PlayerAvatar p={p} size='sm' />
-                        <Text
-                          weight='bold'
-                          style={
-                            matches
-                              ? {
-                                  textOverflow: 'ellipsis',
-                                  overflow: 'hidden',
-                                  maxWidth: '160px',
-                                }
-                              : {
-                                  textOverflow: 'ellipsis',
-                                  overflow: 'hidden',
-                                  maxWidth: '320px',
-                                }
-                          }
-                        >
-                          {p.title}
-                          {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
-                          {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
-                        </Text>
-                      </Group>
-                    );
-                  })}
+                  {t.players
+                    .filter((p) => p.id !== GHOST_PLAYER_ID)
+                    .map((p) => {
+                      const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
+                      return (
+                        <Group key={`pl_${p.id}`}>
+                          <Badge
+                            style={{ minWidth: '64px' }}
+                            variant='outline'
+                            color={
+                              score === eventConfig?.rulesetConfig.startPoints
+                                ? 'blue'
+                                : score > (eventConfig?.rulesetConfig.startPoints ?? 0)
+                                  ? 'green'
+                                  : 'red'
+                            }
+                          >
+                            {score}
+                          </Badge>
+                          <PlayerAvatar p={p} size='sm' />
+                          <Text
+                            weight='bold'
+                            style={
+                              matches
+                                ? {
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    maxWidth: '160px',
+                                  }
+                                : {
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    maxWidth: '320px',
+                                  }
+                            }
+                          >
+                            {p.title}
+                            {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
+                            {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
+                          </Text>
+                        </Group>
+                      );
+                    })}
                 </Stack>
                 <Box style={{ flex: 1 }}>
                   {!!t.extraTime && (
@@ -388,27 +391,20 @@ function getBadge(
   }
 }
 
-const winds = [
-  '?',
-  '東1',
-  '東2',
-  '東3',
-  '東4',
-  '南1',
-  '南2',
-  '南3',
-  '南4',
-  '西1',
-  '西2',
-  '西3',
-  '西4',
-  '北1',
-  '北2',
-  '北3',
-  '北4',
-];
-function makeRound(roundIndex: number) {
-  return winds[roundIndex] ?? '?';
+function makeRound(roundIndex: number, playersCount = 4) {
+  if (roundIndex < 1) {
+    return '?';
+  }
+  if (roundIndex > 3 * playersCount) {
+    return `北${roundIndex - 3 * playersCount}`;
+  }
+  if (roundIndex > 2 * playersCount) {
+    return `西${roundIndex - 2 * playersCount}`;
+  }
+  if (roundIndex > playersCount) {
+    return `南${roundIndex - playersCount}`;
+  }
+  return `東${roundIndex}`;
 }
 
 function formatRound(round: Round, players: Record<number, RegisteredPlayer>, i18n: I18nService) {

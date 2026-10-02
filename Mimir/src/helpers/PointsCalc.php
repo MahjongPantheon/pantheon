@@ -233,20 +233,27 @@ class PointsCalc
         $currentScores[$winnerId] += 1000 * count($riichiIds);
         $currentScores[$winnerId] += 1000 * $riichiBetsCount;
         self::$_lastPaymentsInfo['riichi'][$winnerId . '<-'] = 1000 * $riichiBetsCount;
-        $currentScores[$winnerId] += $honbaValue * $honba;
+        // The total honba payment ($honbaValue) is split evenly among the paying
+        // opponents: that's 3 in a 4-player game and 2 in sanma. Divide by the
+        // actual opponent count so each pays the correct share and the winner
+        // always receives the full $honbaValue per honba.
+        $opponentCount = count($currentScores) - 1;
+        $honbaShare = $opponentCount > 0 ? ($honbaValue / $opponentCount) : 0;
+        $currentScores[$winnerId] += $honbaShare * $opponentCount * $honba;
 
         foreach ($currentScores as $playerId => $value) {
             if ($playerId == $winnerId) {
                 continue;
             }
-            $currentScores[$playerId] -= ($honbaValue / 3) * $honba;
-            self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $playerId] = ($honbaValue / 3) * $honba;
+            $currentScores[$playerId] -= $honbaShare * $honba;
+            self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $playerId] = $honbaShare * $honba;
         }
 
         return $currentScores;
     }
 
     /**
+     * @param \Common\Ruleset $rules
      * @param int[] $currentScores
      * @param int[] $tempaiIds
      * @param int[] $riichiIds
@@ -255,6 +262,7 @@ class PointsCalc
      * @throws InvalidParametersException
      */
     public static function draw(
+        \Common\Ruleset $rules,
         array $currentScores,
         array $tempaiIds,
         array $riichiIds
@@ -269,8 +277,40 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi']['<-' . $playerId] = 1000;
         }
 
-        if (count($tempaiIds) === 0 || count($tempaiIds) === 4) {
+        if (count($tempaiIds) === 0 || count($tempaiIds) === count($currentScores)) {
             return $currentScores;
+        }
+
+        if ($rules->rules()->getWithSanma()) {
+            // Configurable total: receivers split it equally among tempai
+            // players, payers split it equally among noten players.
+            $total = $rules->rules()->getSanmaDrawPayments() ?: 3000;
+            if (count($tempaiIds) === 1) {
+                foreach ($currentScores as $playerId => $value) {
+                    if ($playerId == $tempaiIds[0]) {
+                        $currentScores[$playerId] += $total;
+                    } else {
+                        $currentScores[$playerId] -= intdiv($total, 2);
+                        self::$_lastPaymentsInfo['direct'][$tempaiIds[0] . '<-' . $playerId] = intdiv($total, 2);
+                    }
+                }
+                return $currentScores;
+            }
+
+            if (count($tempaiIds) === 2) {
+                foreach ($currentScores as $playerId => $value) {
+                    if (in_array($playerId, $tempaiIds)) {
+                        $currentScores[$playerId] += intdiv($total, 2);
+                    } else {
+                        $currentScores[$playerId] -= $total;
+                        self::$_lastPaymentsInfo['direct'][$tempaiIds[0] . '<-' . $playerId] = intdiv($total, 2);
+                        self::$_lastPaymentsInfo['direct'][$tempaiIds[1] . '<-' . $playerId] = intdiv($total, 2);
+                    }
+                }
+                return $currentScores;
+            }
+
+            throw new InvalidParametersException('More than 3 players tempai in a sanma game? o_0');
         }
 
         if (count($tempaiIds) === 1) {
@@ -359,7 +399,18 @@ class PointsCalc
         }
 
         if ($rules->rules()->getExtraChomboPayments()) {
-            if ($currentDealer == $loserId) {
+            if ($rules->rules()->getWithSanma()) {
+                // Flat configurable payment to each other player,
+                // regardless of the offender being dealer or not.
+                $payment = $rules->rules()->getSanmaChomboPayments() ?: 6000;
+                foreach ($currentScores as $playerId => $value) {
+                    if ($playerId == $loserId) {
+                        $currentScores[$playerId] -= 2 * $payment;
+                    } else {
+                        $currentScores[$playerId] += $payment;
+                    }
+                }
+            } elseif ($currentDealer == $loserId) {
                 foreach ($currentScores as $playerId => $value) {
                     if ($playerId == $loserId) {
                         $currentScores[$playerId] -= 12000;
@@ -384,6 +435,7 @@ class PointsCalc
     }
 
     /**
+     * @param \Common\Ruleset $rules
      * @param int[] $currentScores
      * @param int|string $currentDealer
      * @param int[] $riichiIds
@@ -393,6 +445,7 @@ class PointsCalc
      * @throws InvalidParametersException
      */
     public static function nagashi(
+        \Common\Ruleset $rules,
         array $currentScores,
         $currentDealer,
         array $riichiIds,
@@ -408,17 +461,22 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi']['<-' . $playerId] = 1000;
         }
 
-        if (count($nagashiIds) > 3) {
-            throw new InvalidParametersException('More than 3 players have nagashi');
+        if (count($nagashiIds) > count($currentScores) - 1) {
+            throw new InvalidParametersException(
+                'More than ' . (count($currentScores) - 1) . ' players have nagashi'
+            );
         }
 
+        // Mangan tsumo equivalents; in sanma the winner collects from 2
+        // players only (tsumo loss), while per-payer values are the same.
+        $isSanma = $rules->rules()->getWithSanma();
         foreach ($nagashiIds as $nagashiOwnerId) {
             foreach ($currentScores as $playerId => $value) {
                 if ($playerId == $nagashiOwnerId) {
                     if ($currentDealer == $playerId) {
-                        $currentScores[$playerId] += 12000;
+                        $currentScores[$playerId] += $isSanma ? 8000 : 12000;
                     } else {
-                        $currentScores[$playerId] += 8000;
+                        $currentScores[$playerId] += $isSanma ? 6000 : 8000;
                     }
                 } else {
                     if ($currentDealer == $nagashiOwnerId || $currentDealer == $playerId) {
@@ -486,6 +544,18 @@ class PointsCalc
         }
 
         if ($tsumo) {
+            if ($rules->rules()->getWithSanma()) {
+                // Tsumo loss: per-payer values are unchanged, but there are
+                // only 2 payers (one ko in non-dealer case), so the winner
+                // collects less than in a 4-player game.
+                return [
+                    'winner' => $dealer
+                        ? (int)(2 * $doubleRounded)
+                        : (int)($doubleRounded + $rounded),
+                    'dealer' => (int)-$doubleRounded,
+                    'player' => (int)-$rounded
+                ];
+            }
             return [
                 'winner' => $dealer
                     ? (int)(3 * $doubleRounded)
@@ -536,7 +606,7 @@ class PointsCalc
         // Find player who gets non-winning riichi bets
         // First we double the array to form a ring to simplify traversal
         // Then we find winner closest to current loser - he'll get all riichi (like with atamahane rule).
-        $playersRing = array_merge($session->getPlayersIds(), $session->getPlayersIds());
+        $playersRing = array_merge($session->getRealPlayersIds(), $session->getRealPlayersIds());
         $closestWinner = null;
         for ($i = 0; $i < count($playersRing); $i++) {
             if ($loserId == $playersRing[$i]) {

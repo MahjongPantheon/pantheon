@@ -164,7 +164,7 @@ msgctxt "Tsumo item partial"
 msgid "(tsumo, pao: <b>%1</b>)"
 msgstr "(쯔모, 책임지불(파오): <b>%1</b>)"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:113:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:120:22
 msgid "1 player with score less than starting"
 msgstr "1명의 작사가 시작 점수보다 낮은 점수를 기록함"
 
@@ -172,7 +172,7 @@ msgstr "1명의 작사가 시작 점수보다 낮은 점수를 기록함"
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13판 이상의 화료는 삼배만이 아닌 역만으로 취급됨"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:74:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:77:16
 msgid "1st"
 msgstr "1위"
 
@@ -180,7 +180,7 @@ msgstr "1위"
 msgid "1st place: "
 msgstr "1위: "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:77:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:80:16
 msgid "2nd"
 msgstr "2위"
 
@@ -188,11 +188,11 @@ msgstr "2위"
 msgid "2nd place: "
 msgstr "2위: "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:88:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:93:22
 msgid "3 players with score less than starting"
 msgstr "3명의 작사가 시작 점수보다 낮은 점수를 기록함"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:80:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:83:16
 msgid "3rd"
 msgstr "3위"
 
@@ -200,7 +200,7 @@ msgstr "3위"
 msgid "3rd place: "
 msgstr "3위: "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:83:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:87:18
 msgid "4th"
 msgstr "4위"
 
@@ -472,7 +472,7 @@ msgstr "구련보등"
 msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
 
-#: app/pages/PlayerStats.tsx:224:24
+#: app/pages/PlayerStats.tsx:225:24
 msgid "Close game preview"
 msgstr "대국 미리보기 닫기"
 
@@ -488,7 +488,7 @@ msgstr "일반 동작"
 msgid "Common stats"
 msgstr "일반 통계"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:38:62
+#: app/pages/EventRulesOverview/UmaSelect.tsx:39:62
 msgid "Complex position-based"
 msgstr "복잡한 위치 기반"
 
@@ -719,8 +719,8 @@ msgstr "단일 대국에서 가장 높은 종료 점수를 기록한 작사."
 
 #: app/pages/Achievements.tsx:687:20
 msgid ""
-"Given for largest chiitoitsu yaku count. You need to win more than once with "
-"this yaku. Chiitoitsu nomi it is also not counted."
+"Given for largest chiitoitsu yaku count. You need to win more than twice "
+"with this yaku. Chiitoitsu nomi it is also not counted."
 msgstr ""
 
 #: app/pages/Achievements.tsx:297:20
@@ -941,7 +941,7 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 최근 대국, �
 msgid "Last series"
 msgstr "최근 시리즈"
 
-#: app/pages/Achievements.tsx:756:18 app/pages/PlayerStats.tsx:134:18
+#: app/pages/Achievements.tsx:756:18 app/pages/PlayerStats.tsx:135:18
 msgid "Last update: %1"
 msgstr "마지막 업데이트: %1"
 
@@ -1004,7 +1004,7 @@ msgstr "유국만관"
 msgid "Nagashi: %1"
 msgstr "유국만관: %1"
 
-#: app/pages/PlayerStats.tsx:202:24
+#: app/pages/PlayerStats.tsx:203:24
 msgid "Next game"
 msgstr "다음 대국"
 
@@ -1053,7 +1053,7 @@ msgstr "메뉴 열기"
 msgid "Open riichi"
 msgstr "오픈 리치"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:137:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:146:20
 msgid "Otherwise"
 msgstr "기타"
 
@@ -1101,7 +1101,7 @@ msgstr "핑후"
 msgid "Place"
 msgstr "순위"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:72:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:75:22
 msgid "Place / Session result"
 msgstr "대국 결과"
 
@@ -1117,6 +1117,14 @@ msgstr "남입 / 서입"
 msgid "Play only east rounds"
 msgstr "동장전만 진행함"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:63:26
+msgid ""
+"Play with 3 players instead of 4. The North seat is removed; uma and seating "
+"are adjusted accordingly."
+msgstr ""
+"4인 대신 3인으로 진행합니다. 북가 좌석이 제거되며, 우마와 좌석 배정이 그에 맞"
+"게 조정됩니다."
+
 #: app/pages/RatingTable.tsx:587:7
 msgid "Player ID"
 msgstr "작사 ID"
@@ -1125,12 +1133,12 @@ msgstr "작사 ID"
 msgid "Player name"
 msgstr "작사 이름"
 
-#: app/pages/PlayerStats.tsx:117:22
+#: app/pages/PlayerStats.tsx:118:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%2\"의 작사 %1의 통계"
 
-#: app/pages/PlayerStats.tsx:116:37
+#: app/pages/PlayerStats.tsx:117:37
 msgid "Player stats"
 msgstr "작사 통계"
 
@@ -1143,7 +1151,7 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "이벤트 등록 작사 목록"
 
-#: app/pages/PlayerStats.tsx:184:24
+#: app/pages/PlayerStats.tsx:185:24
 msgid "Previous game"
 msgstr "이전 대국"
 
@@ -1288,6 +1296,10 @@ msgstr "량페코"
 msgid "Ryuuiisou"
 msgstr "녹일색"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
+msgid "Ryuukyoku payments (sanma)"
+msgstr "유국 시 점수 지급 (산마)"
+
 #: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
 msgstr "산안커"
@@ -1381,13 +1393,17 @@ msgstr ""
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: 리치 마작 점수 및 통계"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:37:61
+#: app/pages/EventRulesOverview/UmaSelect.tsx:38:61
 msgid "Simple rank-based"
 msgstr "단순 순위 기반"
 
 #: app/pages/Game.tsx:67:24
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 단일 대국 미리보기"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr "노텐 작사가 텐파이 작사에게 지급하는 점수의 합계"
 
 #: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
@@ -1479,6 +1495,11 @@ msgstr ""
 #: app/pages/Achievements.tsx:372:14
 msgid "This can't be your wait"
 msgstr "이게 네 대기패일 리 없어"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:29
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:62:20
+msgid "Three-player game (sanma)"
+msgstr "3인 마작 (산마)"
 
 #: app/pages/Timer.tsx:152:19
 msgid "Timer"
@@ -1577,23 +1598,23 @@ msgstr "쯔모: %1"
 msgid "Tsuuiisou"
 msgstr "자일색"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:45:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:46:20
 msgid "Uma bonus for 1st place"
 msgstr "1위 우마 보너스"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:51:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:52:20
 msgid "Uma bonus for 2nd place"
 msgstr "2위 우마 보너스"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:32:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:33:16
 msgid "Uma bonus type"
 msgstr "우마 보너스 종류"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:57:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:58:20
 msgid "Uma penalty for 3rd place"
 msgstr "3위 우마 벌부"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:63:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:65:22
 msgid "Uma penalty for 4th place"
 msgstr "4위 우마 벌부"
 
@@ -1609,7 +1630,7 @@ msgstr ""
 msgid "View game"
 msgstr "대국 보기"
 
-#: app/pages/PlayerStats.tsx:177:16
+#: app/pages/PlayerStats.tsx:178:16
 msgid "View selected game details"
 msgstr "해당 대국 세부내용 보기"
 
@@ -1740,5 +1761,15 @@ msgstr "없음"
 msgid "yakuman!"
 msgstr "역만!"
 
+#~ msgid "Draw payments (sanma)"
+#~ msgstr "유국 시 점수 지급 (산마)"
+
 #~ msgid "Game link"
 #~ msgstr "대국 링크"
+
+#~ msgid ""
+#~ "Whether the dealer pays double on tsumo even when the winner is the "
+#~ "dealer themselves (tsumo loss), or not"
+#~ msgstr ""
+#~ "쯔모 시 화료자가 장가 자신이더라도 장가가 두 배를 지불하는지 여부 (쯔모 손"
+#~ "실)"

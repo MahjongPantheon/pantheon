@@ -35,11 +35,12 @@ import SaveIcon from '../../../img/icons/check.svg?react';
 
 export const OtherTableView = ({ state, dispatch }: IComponentProps) => {
   const loc = useContext(i18n);
+  const expectedPlayersCount = state.gameConfig?.rulesetConfig.withSanma ? 3 : 4;
   const isLoading =
     state.loading.events ||
     !state.currentOtherTable ||
     !state.currentOtherTablePlayers ||
-    state.currentOtherTablePlayers.length !== 4 ||
+    state.currentOtherTablePlayers.length !== expectedPlayersCount ||
     state.loading.otherTable ||
     state.loading.overview;
 

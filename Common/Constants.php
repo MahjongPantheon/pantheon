@@ -1,5 +1,6 @@
-/* Tyr - Japanese mahjong assistant application
- * Copyright (C) 2016 Oleg Klimenko aka ctizen
+<?php
+/*  Pantheon common files
+ *  Copyright (C) 2016  o.klimenko aka ctizen
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,19 +16,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export function roundToString(value: string | number, playersCount = 4): string {
-  const v = parseInt(value.toString(), 10);
-  if (v < 1) {
-    return '?';
-  }
-  if (v > 3 * playersCount) {
-    return `北${v - 3 * playersCount}`;
-  }
-  if (v > 2 * playersCount) {
-    return `西${v - 2 * playersCount}`;
-  }
-  if (v > playersCount) {
-    return `南${v - playersCount}`;
-  }
-  return `東${v}`;
+namespace Common;
+
+class Constants
+{
+    /**
+     * Sentinel player id for the "ghost" 4th seat used to model 3-player (sanma)
+     * sessions on top of the 4-player data structures. The ghost always sits North,
+     * never deals, never pays or receives points, and is excluded from placements,
+     * uma/oka, ratings and statistics.
+     *
+     * Must NOT be 0: proto3 int32 defaults to 0 and PointsCalc uses empty() guards
+     * on winner/loser ids, so 0 would be indistinguishable from "unset".
+     */
+    const GHOST_PLAYER_ID = -1;
 }

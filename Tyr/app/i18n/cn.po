@@ -42,19 +42,19 @@ msgid "Abort"
 msgstr "中途流局"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
-#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:163:25
 msgid "Abortive draw"
 msgstr "中途流局"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:117:31
 msgid "Call referee"
 msgstr "呼叫裁判"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:125:12
 msgid "Call referee for your table?"
 msgstr "叫裁判到你的桌子来吗？"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:122:33
 msgid "Cancel"
 msgstr "取消"
 
@@ -98,7 +98,7 @@ msgstr "九莲宝灯"
 msgid "Chuuren poutou 9-side"
 msgstr "九莲宝灯"
 
-#: app/components/pages/NewGame/NewGame.tsx:72:14
+#: app/components/pages/NewGame/NewGame.tsx:76:14
 msgid "Clear players"
 msgstr "清除玩家"
 
@@ -143,7 +143,7 @@ msgid "Event title"
 msgstr "活动名称"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
-#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:169:25
 msgid "Exhaustive draw"
 msgstr "流局"
 
@@ -156,7 +156,7 @@ msgstr ""
 msgid "Forgot password?"
 msgstr "忘记密码了吗?"
 
-#: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
+#: app/components/screens/OtherTableView/OtherTableView.tsx:69:49
 msgid "Game has finished"
 msgstr ""
 
@@ -254,7 +254,7 @@ msgid "Nagashi"
 msgstr "流局"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
-#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:178:25
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
@@ -340,7 +340,7 @@ msgstr "如需选择/取消 役：立直，请返回确认立直玩家"
 msgid "Previous game"
 msgstr "上一场对局"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:129:10
 msgid "Referee has been requested to your table!"
 msgstr ""
 
@@ -413,7 +413,7 @@ msgstr "选择其他活动或比赛"
 msgid "Select event"
 msgstr "选择活动或比赛"
 
-#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:55:27
 #, fuzzy
 msgid "Select nagashi"
 msgstr "选择包牌玩家"
@@ -426,7 +426,7 @@ msgstr "小三元"
 msgid "Shousuushii"
 msgstr "小四喜"
 
-#: app/components/pages/NewGame/NewGame.tsx:81:14
+#: app/components/pages/NewGame/NewGame.tsx:85:14
 msgid "Shuffle players"
 msgstr "洗牌玩家"
 
@@ -438,7 +438,7 @@ msgstr "注册"
 msgid "Single device mode"
 msgstr "单设备模式"
 
-#: app/components/pages/NewGame/NewGame.tsx:91:14
+#: app/components/pages/NewGame/NewGame.tsx:95:14
 msgid "Start game"
 msgstr "开始游戏"
 
@@ -558,10 +558,10 @@ msgctxt "Name of registration link"
 msgid "register"
 msgstr "注册"
 
-#: app/components/pages/NewGame/NewGame.tsx:46:26
-#: app/components/pages/NewGame/NewGame.tsx:52:26
-#: app/components/pages/NewGame/NewGame.tsx:58:26
-#: app/components/pages/NewGame/NewGame.tsx:64:26
+#: app/components/pages/NewGame/NewGame.tsx:48:26
+#: app/components/pages/NewGame/NewGame.tsx:54:26
+#: app/components/pages/NewGame/NewGame.tsx:60:26
+#: app/components/pages/NewGame/NewGame.tsx:67:28
 msgid "select player"
 msgstr "选择玩家"
 

@@ -48,19 +48,19 @@ msgid "Abort"
 msgstr "도중유국"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
-#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:163:25
 msgid "Abortive draw"
 msgstr "도중유국"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:117:31
 msgid "Call referee"
 msgstr "심판 호출"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:125:12
 msgid "Call referee for your table?"
 msgstr "심판을 호출하시겠습니까?"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:122:33
 msgid "Cancel"
 msgstr "취소"
 
@@ -104,7 +104,7 @@ msgstr "구련보등"
 msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
 
-#: app/components/pages/NewGame/NewGame.tsx:72:14
+#: app/components/pages/NewGame/NewGame.tsx:76:14
 msgid "Clear players"
 msgstr "작사 초기화"
 
@@ -149,7 +149,7 @@ msgid "Event title"
 msgstr "이벤트"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
-#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:169:25
 msgid "Exhaustive draw"
 msgstr "유국"
 
@@ -162,7 +162,7 @@ msgstr ""
 msgid "Forgot password?"
 msgstr "비밀번호 찾기"
 
-#: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
+#: app/components/screens/OtherTableView/OtherTableView.tsx:69:49
 msgid "Game has finished"
 msgstr ""
 
@@ -260,7 +260,7 @@ msgid "Nagashi"
 msgstr "유국만관"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
-#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:178:25
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
@@ -345,7 +345,7 @@ msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 
 msgid "Previous game"
 msgstr "이전 대국"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:129:10
 msgid "Referee has been requested to your table!"
 msgstr "심판이 호출되었습니다!"
 
@@ -418,7 +418,7 @@ msgstr "다른 이벤트 선택"
 msgid "Select event"
 msgstr "이벤트 선택"
 
-#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:55:27
 msgid "Select nagashi"
 msgstr "나가시 선택"
 
@@ -430,7 +430,7 @@ msgstr "소삼원"
 msgid "Shousuushii"
 msgstr "소사희"
 
-#: app/components/pages/NewGame/NewGame.tsx:81:14
+#: app/components/pages/NewGame/NewGame.tsx:85:14
 msgid "Shuffle players"
 msgstr "작사 셔플"
 
@@ -442,7 +442,7 @@ msgstr "회원가입"
 msgid "Single device mode"
 msgstr "단일 기기 모드"
 
-#: app/components/pages/NewGame/NewGame.tsx:91:14
+#: app/components/pages/NewGame/NewGame.tsx:95:14
 msgid "Start game"
 msgstr "대국 시작"
 
@@ -562,10 +562,10 @@ msgctxt "Name of registration link"
 msgid "register"
 msgstr "회원가입"
 
-#: app/components/pages/NewGame/NewGame.tsx:46:26
-#: app/components/pages/NewGame/NewGame.tsx:52:26
-#: app/components/pages/NewGame/NewGame.tsx:58:26
-#: app/components/pages/NewGame/NewGame.tsx:64:26
+#: app/components/pages/NewGame/NewGame.tsx:48:26
+#: app/components/pages/NewGame/NewGame.tsx:54:26
+#: app/components/pages/NewGame/NewGame.tsx:60:26
+#: app/components/pages/NewGame/NewGame.tsx:67:28
 msgid "select player"
 msgstr "작사 선택"
 

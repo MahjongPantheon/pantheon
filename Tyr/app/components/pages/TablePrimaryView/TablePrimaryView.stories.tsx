@@ -77,6 +77,7 @@ export const Default = {
 
       tableStatus: {
         roundIndex: 5,
+        playersCount: 4,
         riichiCount: 2,
         honbaCount: 3,
         lastHandStarted: false,
