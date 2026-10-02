@@ -273,6 +273,53 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($session->addRound($hash, $roundData));
     }
 
+    /**
+     * Under the one-more-hand policy with an expired timer, a chombo should consume the
+     * one-more-hand trigger (set lastHandStarted) only when chomboCountsAsHand is enabled;
+     * otherwise it stays a free do-over.
+     */
+    private function _chomboCountsAsHandHelper(bool $flag): bool
+    {
+        $ruleset = \Common\Ruleset::instance('jpmlA');
+        $ruleset->rules()
+            ->setEndingPolicy(\Common\EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND)
+            ->setChomboCountsAsHand($flag);
+        $this->_event
+            ->setRulesetConfig($ruleset)
+            ->setUseTimer(1)
+            ->setGameDuration(60)
+            ->setLastTimer(time() - 100000) // long past => no time left
+            ->save();
+
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
+        $hash = $session->startGame(
+            $this->_event->getId(),
+            array_map(function (PlayerPrimitive $p) {
+                return $p->getId();
+            }, $this->_players)
+        );
+
+        $session->addRound($hash, [
+            'round_index' => 1,
+            'honba' => 0,
+            'outcome'   => 'chombo',
+            'loser_id'  => 2,
+        ]);
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
+        return $sessionPrimitive->getCurrentState()->lastHandStarted();
+    }
+
+    public function testChomboCountsAsHandWhenEnabled()
+    {
+        $this->assertTrue($this->_chomboCountsAsHandHelper(true));
+    }
+
+    public function testChomboDoesNotCountAsHandWhenDisabled()
+    {
+        $this->assertFalse($this->_chomboCountsAsHandHelper(false));
+    }
+
     public function testAddRoundNagashi()
     {
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);

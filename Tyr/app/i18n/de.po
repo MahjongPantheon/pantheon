@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-07 21:43Z\n"
+"POT-Creation-Date: 2026-06-12 15:58Z\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: app/components/base/TableStatus/TableStatus.tsx:96:16
+#: app/components/base/TableStatus/TableStatus.tsx:99:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "Noch %1 Hand "
@@ -43,7 +43,7 @@ msgstr ""
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/store/selectors/table.ts:414:14
+#: app/store/selectors/table.ts:450:14
 msgid "Abort"
 msgstr "Abbruch"
 
@@ -90,8 +90,8 @@ msgstr ""
 
 #: app/components/base/Player/Player.tsx:59:58
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
-#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
-#: app/store/selectors/table.ts:416:14
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:166:25
+#: app/store/selectors/table.ts:452:14
 msgid "Chombo"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 msgid "Dora %1"
 msgstr ""
 
-#: app/store/selectors/table.ts:412:14
+#: app/store/selectors/table.ts:448:14
 msgid "Draw"
 msgstr "Unentschieden"
 
@@ -253,7 +253,7 @@ msgstr ""
 msgid "Multiron, from %1"
 msgstr "Multiron, von %1"
 
-#: app/store/selectors/table.ts:418:14
+#: app/store/selectors/table.ts:454:14
 msgid "Nagashi"
 msgstr ""
 
@@ -379,7 +379,7 @@ msgid "Rinshan kaihou"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
-#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
+#: app/store/selectors/table.ts:175:25 app/store/selectors/table.ts:444:14
 msgid "Ron"
 msgstr ""
 
@@ -464,7 +464,7 @@ msgstr ""
 msgid "Suukantsu"
 msgstr ""
 
-#: app/components/base/TableStatus/TableStatus.tsx:47:45
+#: app/components/base/TableStatus/TableStatus.tsx:50:45
 msgid "Table #%1"
 msgstr "Tisch #%1"
 
@@ -494,7 +494,7 @@ msgid "Toitoi"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
-#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
+#: app/store/selectors/table.ts:172:25 app/store/selectors/table.ts:446:14
 msgid "Tsumo"
 msgstr ""
 

@@ -609,6 +609,10 @@ message RulesetConfig {
   bool chombo_ends_game = 38;
   int32 honba_value = 39;
   repeated int32 double_yakuman = 40;
+  // When time is out under the one-more-hand policy, count a chombo as a played
+  // hand (consumes the one-more-hand allowance), instead of treating it as a free
+  // do-over. Independent of chombo_ends_game.
+  bool chombo_counts_as_hand = 45;
 }
 
 message MajsoulSearchEx {

@@ -86,5 +86,6 @@ return (new RulesetConfig())
     ->setWithMultiYakumans(false)
     ->setWithNagashiMangan(false)
     ->setChomboEndsGame(false)
+    ->setChomboCountsAsHand(false)
     ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU])
     ->setDoubleYakuman([]);

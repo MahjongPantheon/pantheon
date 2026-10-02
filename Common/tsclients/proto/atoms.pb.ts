@@ -588,6 +588,12 @@ export interface RulesetConfig {
   chomboEndsGame: boolean;
   honbaValue: number;
   doubleYakuman: number[];
+  /**
+   * When time is out under the one-more-hand policy, count a chombo as a played
+   * hand (consumes the one-more-hand allowance), instead of treating it as a free
+   * do-over. Independent of chombo_ends_game.
+   */
+  chomboCountsAsHand: boolean;
 }
 
 export interface MajsoulSearchEx {
@@ -7058,6 +7064,7 @@ export const RulesetConfig = {
       chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
+      chomboCountsAsHand: false,
       ...msg,
     };
   },
@@ -7188,6 +7195,9 @@ export const RulesetConfig = {
     }
     if (msg.doubleYakuman?.length) {
       writer.writePackedInt32(40, msg.doubleYakuman);
+    }
+    if (msg.chomboCountsAsHand) {
+      writer.writeBool(45, msg.chomboCountsAsHand);
     }
     return writer;
   },
@@ -7372,6 +7382,10 @@ export const RulesetConfig = {
           } else {
             msg.doubleYakuman.push(reader.readInt32());
           }
+          break;
+        }
+        case 45: {
+          msg.chomboCountsAsHand = reader.readBool();
           break;
         }
         default: {
@@ -13399,6 +13413,7 @@ export const RulesetConfigJSON = {
       chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
+      chomboCountsAsHand: false,
       ...msg,
     };
   },
@@ -13535,6 +13550,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.doubleYakuman?.length) {
       json["doubleYakuman"] = msg.doubleYakuman;
+    }
+    if (msg.chomboCountsAsHand) {
+      json["chomboCountsAsHand"] = msg.chomboCountsAsHand;
     }
     return json;
   },
@@ -13724,6 +13742,11 @@ export const RulesetConfigJSON = {
     const _doubleYakuman_ = json["doubleYakuman"] ?? json["double_yakuman"];
     if (_doubleYakuman_) {
       msg.doubleYakuman = _doubleYakuman_.map(protoscript.parseNumber);
+    }
+    const _chomboCountsAsHand_ =
+      json["chomboCountsAsHand"] ?? json["chombo_counts_as_hand"];
+    if (_chomboCountsAsHand_) {
+      msg.chomboCountsAsHand = _chomboCountsAsHand_;
     }
     return msg;
   },

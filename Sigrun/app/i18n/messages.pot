@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-13 20:12+0100\n"
+"POT-Creation-Date: 2026-06-12 15:58Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,23 +99,23 @@ msgstr ""
 msgid "Online event"
 msgstr ""
 
-#: app/components/GameListing.tsx:210:14
+#: app/components/GameListing.tsx:214:14
 msgid "Ron: %1"
 msgstr ""
 
-#: app/components/GameListing.tsx:213:14
+#: app/components/GameListing.tsx:217:14
 msgid "Tsumo: %1"
 msgstr ""
 
-#: app/components/GameListing.tsx:216:14
+#: app/components/GameListing.tsx:220:14
 msgid "Draw: %1"
 msgstr ""
 
-#: app/components/GameListing.tsx:220:16
+#: app/components/GameListing.tsx:224:16
 msgid "Chombo: %1"
 msgstr ""
 
-#: app/components/GameListing.tsx:225:16
+#: app/components/GameListing.tsx:229:16
 msgid "Nagashi: %1"
 msgstr ""
 
@@ -426,92 +426,92 @@ msgstr ""
 msgid "Yaku collected over all time"
 msgstr ""
 
-#: app/helpers/gameLog.ts:23:20
+#: app/helpers/gameLog.ts:28:20
 msgctxt "Riichi bets count"
 msgid "none"
 msgstr ""
 
-#: app/helpers/gameLog.ts:28:11
+#: app/helpers/gameLog.ts:33:11
 msgctxt "Ron log item partial"
 msgid "<b>%1</b>, pao: <b>%2</b>"
 msgstr ""
 
-#: app/helpers/gameLog.ts:33:14
+#: app/helpers/gameLog.ts:38:14
 msgctxt "Ron log item"
 msgid "%1: <b>%2</b> - %3 (%4), %5. Riichi bets: %6"
 msgstr ""
 
-#: app/helpers/gameLog.ts:45:11
+#: app/helpers/gameLog.ts:50:11
 msgctxt "Tsumo item partial"
 msgid "(tsumo, pao: <b>%1</b>)"
 msgstr ""
 
-#: app/helpers/gameLog.ts:48:11
+#: app/helpers/gameLog.ts:53:11
 msgctxt "Tsumo log item partial"
 msgid "(tsumo)"
 msgstr ""
 
-#: app/helpers/gameLog.ts:49:14
+#: app/helpers/gameLog.ts:54:14
 msgctxt "Tsumo log item"
 msgid "%1: <b>%2</b> - %3 %4, %5. Riichi bets: %6"
 msgstr ""
 
-#: app/helpers/gameLog.ts:60:14
+#: app/helpers/gameLog.ts:65:14
 msgctxt "Draw log item"
 msgid "%1: Exhaustive draw (tenpai: %2). Riichi bets: %3"
 msgstr ""
 
-#: app/helpers/gameLog.ts:63:13
+#: app/helpers/gameLog.ts:68:13
 msgid "all tenpai"
 msgstr ""
 
-#: app/helpers/gameLog.ts:64:59
+#: app/helpers/gameLog.ts:69:59
 msgid "all noten"
 msgstr ""
 
-#: app/helpers/gameLog.ts:70:14
+#: app/helpers/gameLog.ts:75:14
 msgctxt "Abortive draw log item"
 msgid "%1: Abortive draw. Riichi bets: %2"
 msgstr ""
 
-#: app/helpers/gameLog.ts:77:14
+#: app/helpers/gameLog.ts:82:14
 msgctxt "Chombo log item"
 msgid "%1: Chombo (<b>%2</b>)"
 msgstr ""
 
-#: app/helpers/gameLog.ts:84:14
+#: app/helpers/gameLog.ts:89:14
 msgctxt "Nagashi log item"
 msgid "%1: Nagashi mangan (<b>%2</b>). Riichi bets: %3"
 msgstr ""
 
-#: app/helpers/gameLog.ts:97:17
+#: app/helpers/gameLog.ts:102:17
 msgctxt "Multiron item partial"
 msgid "<b>%1</b> (pao: <b>%2</b>)"
 msgstr ""
 
-#: app/helpers/gameLog.ts:102:20
+#: app/helpers/gameLog.ts:107:20
 msgctxt "Multiron inner log item"
 msgid "<li>%1 - %2, %3</li>"
 msgstr ""
 
-#: app/helpers/gameLog.ts:111:9
+#: app/helpers/gameLog.ts:116:9
 msgctxt "Multiron outer log item"
 msgid "%1: Ron (<b>%2</b>). Riichi bets: %3"
 msgstr ""
 
-#: app/helpers/gameLog.ts:149:19
+#: app/helpers/gameLog.ts:147:19
 msgid "dora %1"
 msgstr ""
 
-#: app/helpers/gameLog.ts:156:12
+#: app/helpers/gameLog.ts:154:12
 msgid "yakuman!"
 msgstr ""
 
-#: app/helpers/gameLog.ts:159:12
+#: app/helpers/gameLog.ts:157:12
 msgid "%1 han"
 msgstr ""
 
-#: app/helpers/gameLog.ts:161:10
+#: app/helpers/gameLog.ts:159:10
 msgid "%1 han, %2 fu"
 msgstr ""
 
@@ -1155,191 +1155,229 @@ msgstr ""
 msgid "Amount of points given to every player in the beginning of every session"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:58:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:29
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:62:20
+msgid "Three-player game (sanma)"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:63:26
+msgid "Play with 3 players instead of 4. The North seat is removed; uma and seating are adjusted accordingly."
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
+msgid "Ryuukyoku payments (sanma)"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:80:20
+msgid "Chombo payments (sanma)"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:26
+msgid "Amount of points paid by the offending player to each of the other players on a chombo"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:88:20
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:94:42
+msgid "Tsumo loss"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:26
+msgid "Wether tsumo payments are scored the same as in yonma"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:95:45
+msgid "No tsumo loss"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:25
 msgid "Game duration"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:102:16
 msgid "Tonpuusen"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:61:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:103:22
 msgid "Play only east rounds"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:66:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:108:16
 msgid "Agariyame"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:67:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:109:22
 msgid "If the dealer holds the 1st place after last hand in session, the game ends regardless of his winning hand or tempai."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:74:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:116:16
 msgid "Disable renchans"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:75:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:117:22
 msgid "When dealer wins, or stays tempai after draw, seat winds will be changed. Honba is added only after draw."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:82:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:124:16
 msgid "Allow bankruptcy"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:83:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:125:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:88:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:130:16
 msgid "Play additional rounds"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:22
 msgid "If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:99:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:141:18
 msgid "Goal score"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:142:24
 msgid "Amount of score player should get to end the game."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:105:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:25
 msgid "Round outcomes"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:107:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:149:16
 msgid "Atamahane"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:108:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:150:22
 msgid "Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:115:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:157:16
 msgid "Allow abortive draws"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:116:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:158:22
 msgid "There will be a separate \"Abortive draw\" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:123:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:165:16
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:124:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:166:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:128:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:25
 msgid "Riichi and honba"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:130:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:172:16
 msgid "Riichi goes to winner"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:173:22
 msgid "Riichi left on table in case of draw in the end of the session will be given to session winner"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:180:16
 msgid "Pay for honba by atamahane"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:139:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:181:22
 msgid "Honba payments will be given only to the first winner. If not checked, payment will be given to all winners."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:188:16
 msgid "Collect riichi bets by atamahane"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:189:22
 msgid "All riichi bets on the table will be given to the first winner. If not checked, winning riichi bets will always be given back, lost bets would be given to the first winner."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:153:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:25
 msgid "Payments and scores"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:155:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:197:16
 msgid "Kazoe yakuman"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:156:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:198:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:203:16
 msgid "Kiriage mangan"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:211:16
 msgid "Oka bonus"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:22
 msgid "Amount of points given to player at 1st place"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:219:16
 msgid "Honba Value"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:220:22
 msgid "Value of one honba stick"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:184:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:16
 msgid "Equalize uma"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:185:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:227:22
 msgid "If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:191:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:233:25
 msgid "Penalties"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:193:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:235:16
 msgid "Pay chombo as reverse mangan"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:194:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:236:22
 msgid "Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:246:18
 msgid "Amount of chombo penalty"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:205:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:247:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:213:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:255:16
 msgid "Yakitori"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:214:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:256:22
 msgid "Use yakitori rule"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:221:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:263:18
 msgid "Yakitori penalty"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:222:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:264:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr ""
 

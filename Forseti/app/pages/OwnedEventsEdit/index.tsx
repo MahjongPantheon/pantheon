@@ -137,6 +137,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         withYakitori: false,
         yakitoriPenalty: 0,
         chomboEndsGame: false,
+        chomboCountsAsHand: false,
         doubleYakuman: {},
       },
     },
