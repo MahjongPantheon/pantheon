@@ -155,6 +155,13 @@ export interface PlayersGetPlayerStatsResponse {
 export interface GamesAddRoundPayload {
   sessionHash: string;
   roundData: protoAtoms.Round;
+  /**
+   * Match-timer seconds remaining at the moment the player opened the outcome
+   * menu (~ when the win was announced and the hand ended). Used to classify
+   * whether the hand ended before/after the buzzer, instead of the submission
+   * time. Absent on online replays / non-timer events.
+   */
+  outcomeTimerSecondsRemaining?: number | null | undefined;
 }
 
 export interface GamesAddRoundResponse {
@@ -5615,6 +5622,7 @@ export const GamesAddRoundPayload = {
     return {
       sessionHash: "",
       roundData: protoAtoms.Round.initialize(),
+      outcomeTimerSecondsRemaining: undefined,
       ...msg,
     };
   },
@@ -5631,6 +5639,9 @@ export const GamesAddRoundPayload = {
     }
     if (msg.roundData) {
       writer.writeMessage(2, msg.roundData, protoAtoms.Round._writeMessage);
+    }
+    if (msg.outcomeTimerSecondsRemaining != undefined) {
+      writer.writeInt32(3, msg.outcomeTimerSecondsRemaining);
     }
     return writer;
   },
@@ -5651,6 +5662,10 @@ export const GamesAddRoundPayload = {
         }
         case 2: {
           reader.readMessage(msg.roundData, protoAtoms.Round._readMessage);
+          break;
+        }
+        case 3: {
+          msg.outcomeTimerSecondsRemaining = reader.readInt32();
           break;
         }
         default: {
@@ -11704,6 +11719,7 @@ export const GamesAddRoundPayloadJSON = {
     return {
       sessionHash: "",
       roundData: protoAtoms.RoundJSON.initialize(),
+      outcomeTimerSecondsRemaining: undefined,
       ...msg,
     };
   },
@@ -11724,6 +11740,9 @@ export const GamesAddRoundPayloadJSON = {
         json["roundData"] = _roundData_;
       }
     }
+    if (msg.outcomeTimerSecondsRemaining != undefined) {
+      json["outcomeTimerSecondsRemaining"] = msg.outcomeTimerSecondsRemaining;
+    }
     return json;
   },
 
@@ -11741,6 +11760,14 @@ export const GamesAddRoundPayloadJSON = {
     const _roundData_ = json["roundData"] ?? json["round_data"];
     if (_roundData_) {
       protoAtoms.RoundJSON._readMessage(msg.roundData, _roundData_);
+    }
+    const _outcomeTimerSecondsRemaining_ =
+      json["outcomeTimerSecondsRemaining"] ??
+      json["outcome_timer_seconds_remaining"];
+    if (_outcomeTimerSecondsRemaining_) {
+      msg.outcomeTimerSecondsRemaining = protoscript.parseNumber(
+        _outcomeTimerSecondsRemaining_,
+      );
     }
     return msg;
   },

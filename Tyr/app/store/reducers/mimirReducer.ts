@@ -63,6 +63,7 @@ import {
   SELECT_NEWGAME_PLAYER_NORTH,
   SELECT_NEWGAME_PLAYER_SOUTH,
   SELECT_NEWGAME_PLAYER_WEST,
+  SET_HAND_END_TIMER,
   SET_NEWGAME_PLAYERS,
   START_GAME_FAIL,
   START_GAME_INIT,
@@ -596,7 +597,13 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           addRound: false,
         },
         currentOutcome: undefined,
+        currentHandEndTimerRemaining: undefined,
         currentScreen: 'currentGame',
+      };
+    case SET_HAND_END_TIMER:
+      return {
+        ...state,
+        currentHandEndTimerRemaining: action.payload,
       };
     case ADD_ROUND_FAIL:
       return {

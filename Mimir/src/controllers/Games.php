@@ -137,14 +137,17 @@ class GamesController extends Controller
      * @param string $gameHashcode Hashcode of game
      * @param array $roundData Structure of round data
      * @param bool $dry Dry run (without saving to db)
+     * @param int|null $outcomeTimerSecondsRemaining Match-timer seconds left when the win was
+     *        announced (outcome menu opened), used to classify the hand against the buzzer
      * @throws BadActionException
      * @throws \Exception
      * @return bool|array Results|Results of dry run|False in case of error
      */
-    public function addRound($gameHashcode, $roundData, $dry = false)
+    public function addRound($gameHashcode, $roundData, $dry = false, ?int $outcomeTimerSecondsRemaining = null)
     {
         $this->_log->info('Adding new round to game # ' . $gameHashcode);
-        $result = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->addRound($gameHashcode, $roundData, $dry);
+        $result = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
+            ->addRound($gameHashcode, $roundData, $dry, $outcomeTimerSecondsRemaining);
         $this->_log->info(($result ? 'Successfully added' : 'Failed to add') . ' new round to game # ' . $gameHashcode);
         return $result;
     }

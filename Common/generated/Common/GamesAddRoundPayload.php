@@ -22,6 +22,15 @@ class GamesAddRoundPayload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.common.Round round_data = 2;</code>
      */
     protected $round_data = null;
+    /**
+     * Match-timer seconds remaining at the moment the player opened the outcome
+     * menu (~ when the win was announced and the hand ended). Used to classify
+     * whether the hand ended before/after the buzzer, instead of the submission
+     * time. Absent on online replays / non-timer events.
+     *
+     * Generated from protobuf field <code>optional int32 outcome_timer_seconds_remaining = 3;</code>
+     */
+    protected $outcome_timer_seconds_remaining = null;
 
     /**
      * Constructor.
@@ -31,6 +40,11 @@ class GamesAddRoundPayload extends \Google\Protobuf\Internal\Message
      *
      *     @type string $session_hash
      *     @type \Common\Round $round_data
+     *     @type int $outcome_timer_seconds_remaining
+     *           Match-timer seconds remaining at the moment the player opened the outcome
+     *           menu (~ when the win was announced and the hand ended). Used to classify
+     *           whether the hand ended before/after the buzzer, instead of the submission
+     *           time. Absent on online replays / non-timer events.
      * }
      */
     public function __construct($data = NULL) {
@@ -88,6 +102,48 @@ class GamesAddRoundPayload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\Round::class);
         $this->round_data = $var;
+
+        return $this;
+    }
+
+    /**
+     * Match-timer seconds remaining at the moment the player opened the outcome
+     * menu (~ when the win was announced and the hand ended). Used to classify
+     * whether the hand ended before/after the buzzer, instead of the submission
+     * time. Absent on online replays / non-timer events.
+     *
+     * Generated from protobuf field <code>optional int32 outcome_timer_seconds_remaining = 3;</code>
+     * @return int
+     */
+    public function getOutcomeTimerSecondsRemaining()
+    {
+        return isset($this->outcome_timer_seconds_remaining) ? $this->outcome_timer_seconds_remaining : 0;
+    }
+
+    public function hasOutcomeTimerSecondsRemaining()
+    {
+        return isset($this->outcome_timer_seconds_remaining);
+    }
+
+    public function clearOutcomeTimerSecondsRemaining()
+    {
+        unset($this->outcome_timer_seconds_remaining);
+    }
+
+    /**
+     * Match-timer seconds remaining at the moment the player opened the outcome
+     * menu (~ when the win was announced and the hand ended). Used to classify
+     * whether the hand ended before/after the buzzer, instead of the submission
+     * time. Absent on online replays / non-timer events.
+     *
+     * Generated from protobuf field <code>optional int32 outcome_timer_seconds_remaining = 3;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setOutcomeTimerSecondsRemaining($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->outcome_timer_seconds_remaining = $var;
 
         return $this;
     }

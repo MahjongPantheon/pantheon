@@ -232,6 +232,11 @@ message PlayersGetPlayerStatsResponse {
 message GamesAddRoundPayload {
   string session_hash = 1;
   Round round_data = 2;
+  // Match-timer seconds remaining at the moment the player opened the outcome
+  // menu (~ when the win was announced and the hand ended). Used to classify
+  // whether the hand ended before/after the buzzer, instead of the submission
+  // time. Absent on online replays / non-timer events.
+  optional int32 outcome_timer_seconds_remaining = 3;
 }
 
 message GamesAddRoundResponse {

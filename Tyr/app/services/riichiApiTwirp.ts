@@ -190,7 +190,14 @@ export class RiichiApiTwirpService implements IRiichiApi {
     if (!sessionHash || !roundData) {
       return Promise.reject();
     }
-    return AddRound({ sessionHash, roundData }, this._clientConfMimir);
+    return AddRound(
+      {
+        sessionHash,
+        roundData,
+        outcomeTimerSecondsRemaining: state.currentHandEndTimerRemaining,
+      },
+      this._clientConfMimir
+    );
   }
 
   getTablesState(eventId: number) {

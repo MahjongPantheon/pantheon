@@ -161,6 +161,14 @@ class SessionPrimitive extends Primitive
     const STATUS_CANCELLED = 'cancelled';
 
     /**
+     * How long past the buzzer the client's "this hand ended before the signal" claim is
+     * still plausible, in seconds: the gap between announcing a win and submitting scores,
+     * generous enough for a disputed han/fu count.
+     * @see updateCurrentState
+     */
+    const SCORING_GAP_GRACE_TIME = 240;
+
+    /**
      * planned / inprogress / prefinished / finished
      * @var string
      */
@@ -803,18 +811,35 @@ class SessionPrimitive extends Primitive
      * @return false|array
      * @throws InvalidParametersException|EntityNotFoundException
      */
-    public function updateCurrentState(RoundPrimitive $round)
+    public function updateCurrentState(RoundPrimitive $round, ?int $outcomeTimerSecondsRemaining = null)
     {
         $lastTimer = $this->getEvent()->getLastTimer(); // may be null if timer is not set!
+        $timerRuns = !empty($this->getEvent()->getUseTimer()) && !empty($lastTimer);
+
+        // Expiry is decided by the server clock: it is the only one that knows about extra
+        // time granted mid-game or a restarted timer. Seconds past the buzzer, <= 0 while
+        // time remains.
+        $overrun = $timerRuns
+            ? time() - ($lastTimer + $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime())
+            : 0;
+
+        // Classify expiry by when the hand actually ended, not when it was submitted. The
+        // client sends the match-timer reading captured the moment the win was announced
+        // (outcome menu opened); a positive value means the hand ended in time even though
+        // the scores arrived after the buzzer, and without it the scoring gap would
+        // misclassify an in-time hand as the first post-buzzer one and drop a hand.
+        // It may only *withhold* expiry, and only for as long as scoring plausibly takes:
+        // it can never assert expiry by itself, so a client that has not seen extra time
+        // being granted cannot end the game early, and a wrong one cannot stall it for more
+        // than a single hand. Absent (online replays, old clients) means server clock only.
+        $endedBeforeBuzzer = $outcomeTimerSecondsRemaining !== null
+            && $outcomeTimerSecondsRemaining > 0
+            && $overrun <= self::SCORING_GAP_GRACE_TIME;
+
+        $noTimeLeft = $timerRuns && $overrun > 0 && !$endedBeforeBuzzer;
 
         switch ($this->getEvent()->getRulesetConfig()->rules()->getEndingPolicy()) {
             case EndingPolicy::ENDING_POLICY_EP_ONE_MORE_HAND:
-                $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
-                    $lastTimer + (
-                        $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime()
-                    ) < time()
-                );
-
                 $chomboCountsAsHand = $this->getEvent()->getRulesetConfig()
                     ->rules()->getChomboCountsAsHand();
                 if ($noTimeLeft && ($round->getOutcome() !== 'chombo' || $chomboCountsAsHand)) {
@@ -849,12 +874,6 @@ class SessionPrimitive extends Primitive
             case EndingPolicy::ENDING_POLICY_EP_END_AFTER_HAND:
                 $this->getCurrentState()->update($round);
                 $success = $this->save();
-
-                $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
-                    $lastTimer + (
-                        $this->getEvent()->getGameDuration() * 60 + $this->getExtraTime()
-                    ) < time()
-                );
 
                 // should finish game if it's in red zone, except case when chombo was made
                 if ($noTimeLeft && (
