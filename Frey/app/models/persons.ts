@@ -426,6 +426,7 @@ export async function getPersonalInfo(
   let withPrivateData = false;
   if (
     currentPersonData[0]?.is_superadmin ||
+    context.personId === payload.ids[0] ||
     rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0
   ) {
     await verifyHash(context.authToken ?? '', currentPersonData[0]?.auth_hash);
@@ -568,11 +569,22 @@ export async function updatePersonalInfo(
 
   promises.push(db.updateTable('person').set(value).where('id', '=', payload.id).execute());
 
-  const soulAcc = await db
-    .selectFrom('majsoul_platform_account')
-    .where('person_id', '=', payload.id)
-    .selectAll()
-    .execute();
+  let soulAcc: Array<{
+    account_id: number;
+    friend_id: number;
+    id: number;
+    nickname: string;
+    person_id: number;
+  }> = [];
+  try {
+    soulAcc = await db
+      .selectFrom('majsoul_platform_account')
+      .where('person_id', '=', payload.id)
+      .selectAll()
+      .execute();
+  } catch {
+    // no account found - it's fine
+  }
 
   const msValue: Partial<RowMajsoulPlatformAccount> = {
     ...(soulAcc.length > 0 ? soulAcc[0] : {}),

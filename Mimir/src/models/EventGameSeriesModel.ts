@@ -6,6 +6,7 @@ import { SessionResultsModel } from './SessionResultsModel.js';
 import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 import { SessionEntity } from '../entities/Session.entity.js';
 import { EventsGetGamesSeriesResponse } from 'tsclients/proto/mimir.pb.js';
+import { filterPersonalDataSingle } from '../helpers/filterPersonalData.js';
 
 type SeriesResult = {
   placesSum: number;
@@ -190,7 +191,9 @@ export class EventGameSeriesModel extends Model {
     );
 
     return results.map((result) => ({
-      player: players.get(result.sessionIds[0])!.find((player) => player.id === result.playerId)!,
+      player: filterPersonalDataSingle(
+        players.get(result.sessionIds[0])!.find((player) => player.id === result.playerId)
+      ),
       bestSeries: this.formatSeries(result.sessionIds, result.playerId ?? 0, hashes, places),
       bestSeriesScores: result.scoresSum,
       bestSeriesPlaces: result.placesSum,

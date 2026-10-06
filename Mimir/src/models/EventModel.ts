@@ -55,6 +55,7 @@ import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
 import { checkForErrors, unpackScript } from '../helpers/eventPrescript.js';
 import { AchievementsModel } from './AchievementsModel.js';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
+import { filterPersonalDataSingle } from '../helpers/filterPersonalData.js';
 
 const ID_PLACEHOLDER = '##ID##';
 
@@ -1027,7 +1028,7 @@ export class EventModel extends Model {
       await playerModel.findById(registeredPlayers.map((player) => +player.playerId))
     ).reduce(
       (acc, player) => {
-        acc[player.id] = player;
+        acc[player.id] = filterPersonalDataSingle(player);
         return acc;
       },
       {} as Record<number, PersonEx>

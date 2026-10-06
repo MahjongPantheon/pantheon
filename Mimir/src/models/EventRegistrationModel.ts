@@ -10,6 +10,7 @@ import {
 } from 'tsclients/proto/mimir.pb.js';
 import { LocalIdMapping, TeamMapping } from 'tsclients/proto/atoms.pb.js';
 import { SessionEntity } from '../entities/Session.entity.js';
+import { filterPersonalData } from '../helpers/filterPersonalData.js';
 
 export class EventRegistrationModel extends Model {
   async findByPlayerAndEvent(ids: number[], eventId: number) {
@@ -121,7 +122,9 @@ export class EventRegistrationModel extends Model {
       where: { event: this.repo.em.getReference(EventEntity, eventId) },
     });
     const playerModel = this.getModel(PlayerModel);
-    return playerModel.findById(result.map((reg) => reg.playerId));
+    return playerModel
+      .findById(result.map((reg) => reg.playerId))
+      .then((players) => filterPersonalData(players));
   }
 
   /**

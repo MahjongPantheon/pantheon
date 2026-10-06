@@ -23,29 +23,27 @@ const app = createTwirpServer<Context, typeof mimirHandler, IncomingMessage>(mim
   .use(injectRepository(orm))
   .use(metrics());
 
-if (process.env.NODE_ENV === 'production') {
-  app.on('requestReceived', (ctx) => {
-    console.log({
-      message: 'Request received',
-      method: ctx.method?.name ?? 'Unknown',
-    });
+app.on('requestReceived', (ctx) => {
+  console.error({
+    message: 'Request received',
+    method: ctx.method?.name ?? 'Unknown',
   });
+});
 
-  app.on('responseSent', (ctx) => {
-    console.log({
-      message: 'Response sent',
-      method: ctx.method?.name ?? 'Unknown',
-    });
+app.on('responseSent', (ctx) => {
+  console.error({
+    message: 'Response sent',
+    method: ctx.method?.name ?? 'Unknown',
   });
+});
 
-  app.on('error', (ctx, err) => {
-    console.error({
-      message: 'Request errored',
-      method: ctx.method?.name ?? 'Unknown',
-      err,
-    });
+app.on('error', (ctx, err) => {
+  console.error({
+    message: 'Request errored',
+    method: ctx.method?.name ?? 'Unknown',
+    err,
   });
-}
+});
 
 const port = parseInt(process.env.PORT ?? '4001');
 createServer(app).listen(port, () => console.log(`Server listening on port ${port}`));

@@ -5,6 +5,7 @@ import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 import { SessionEntity } from '../entities/Session.entity.js';
 import { SessionModel } from './SessionModel.js';
+import { filterPersonalData, filterPersonalDataSingle } from '../helpers/filterPersonalData.js';
 
 export class PlayerModel extends Model {
   async findById(ids: number[], skipCache = false): Promise<PersonEx[]> {
@@ -51,14 +52,14 @@ export class PlayerModel extends Model {
       }
     }
 
-    return allData;
+    return filterPersonalData(allData);
   }
 
   async findByTenhouId(ids: string[]): Promise<Record<string, PersonEx>> {
     const data = await this.repo.frey.FindByTenhouIds({ ids });
     return data.people.reduce(
       (acc, player) => {
-        acc[player.tenhouId] = player;
+        acc[player.tenhouId] = filterPersonalDataSingle(player);
         return acc;
       },
       {} as Record<string, PersonEx>
@@ -73,7 +74,7 @@ export class PlayerModel extends Model {
     });
     return data.people.reduce(
       (acc, player) => {
-        acc[player.msNickname + '-' + player.msAccountId] = player;
+        acc[player.msNickname + '-' + player.msAccountId] = filterPersonalDataSingle(player);
         return acc;
       },
       {} as Record<string, PersonEx>
