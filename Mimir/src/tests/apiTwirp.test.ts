@@ -335,6 +335,9 @@ describe('Mimir Twirp API', () => {
     expect(games.totalGames).toEqual(63);
     expect(games.games).toBeDefined();
     expect(games.games.length).toEqual(10);
+    expect(games.games[0].players[0].email).toBe('');
+    expect(games.games[0].players[0].phone).toBe('');
+    expect(games.games[0].players[0].telegramId).toBe('');
   });
 
   test('GetLastGames: basic with offset', async () => {
@@ -343,6 +346,9 @@ describe('Mimir Twirp API', () => {
     expect(games.totalGames).toEqual(63);
     expect(games.games).toBeDefined();
     expect(games.games.length).toEqual(10);
+    expect(games.games[0].players[0].email).toBe('');
+    expect(games.games[0].players[0].phone).toBe('');
+    expect(games.games[0].players[0].telegramId).toBe('');
   });
 
   test('GetLastGames: basic with offset beyond total', async () => {
@@ -363,12 +369,18 @@ describe('Mimir Twirp API', () => {
     expect(games.totalGames).toEqual(134 + 63);
     expect(games.games).toBeDefined();
     expect(games.games.length).toEqual(10);
+    expect(games.games[0].players[0].email).toBe('');
+    expect(games.games[0].players[0].phone).toBe('');
+    expect(games.games[0].players[0].telegramId).toBe('');
   });
 
   test('GetGame: existing', async () => {
     const game = await mimirClient.GetGame('ba81ec925d80bba537034e12a63b5e9e83e2cac2');
     expect(game).toBeDefined();
     expect(game.game.sessionHash).toEqual('ba81ec925d80bba537034e12a63b5e9e83e2cac2');
+    expect(game.game.players[0].email).toBe('');
+    expect(game.game.players[0].phone).toBe('');
+    expect(game.game.players[0].telegramId).toBe('');
   });
 
   test('GetGame: non-existing', async () => {
