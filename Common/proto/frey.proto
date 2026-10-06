@@ -45,6 +45,28 @@ service Frey {
   rpc CreateAccount(PersonsCreateAccountPayload) returns (PersonsCreateAccountResponse);
   rpc GetNotificationsSettings(PersonsGetNotificationsSettingsPayload) returns (PersonsGetNotificationsSettingsResponse);
   rpc SetNotificationsSettings(PersonsSetNotificationsSettingsPayload) returns (GenericSuccessResponse);
+
+  // Test data helpers require E2E_TEST_MODE=1 and an authenticated superadmin.
+  // A failed batch may leave preceding changes in place.
+  rpc E2eCreateAccounts(E2eCreateAccountsPayload)
+      returns (E2eCreateAccountsResponse);
+  rpc E2eRegisterPlayers(E2eEventPlayersPayload)
+      returns (GenericSuccessResponse);
+  rpc E2eUnregisterPlayers(E2eEventPlayersPayload)
+      returns (GenericSuccessResponse);
+}
+
+message E2eCreateAccountsPayload {
+  repeated PersonsCreateAccountPayload people = 1;
+}
+
+message E2eCreateAccountsResponse {
+  repeated int32 person_ids = 1;
+}
+
+message E2eEventPlayersPayload {
+  int32 event_id = 1;
+  repeated int32 person_ids = 2;
 }
 
 message AuthRequestRegistrationPayload {

@@ -198,6 +198,30 @@ export async function SetNotificationsSettings(personsSetNotificationsSettingsPa
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
+export async function E2eCreateAccounts(e2eCreateAccountsPayload, config) {
+  const response = await PBrequest(
+    "/common.Frey/E2eCreateAccounts",
+    E2eCreateAccountsPayload.encode(e2eCreateAccountsPayload),
+    config
+  );
+  return E2eCreateAccountsResponse.decode(response);
+}
+export async function E2eRegisterPlayers(e2eEventPlayersPayload, config) {
+  const response = await PBrequest(
+    "/common.Frey/E2eRegisterPlayers",
+    E2eEventPlayersPayload.encode(e2eEventPlayersPayload),
+    config
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+export async function E2eUnregisterPlayers(e2eEventPlayersPayload, config) {
+  const response = await PBrequest(
+    "/common.Frey/E2eUnregisterPlayers",
+    E2eEventPlayersPayload.encode(e2eEventPlayersPayload),
+    config
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
 export async function RequestRegistrationJSON(authRequestRegistrationPayload, config) {
   const response = await JSONrequest(
     "/common.Frey/RequestRegistration",
@@ -396,6 +420,30 @@ export async function SetNotificationsSettingsJSON(personsSetNotificationsSettin
     PersonsSetNotificationsSettingsPayloadJSON.encode(
       personsSetNotificationsSettingsPayload
     ),
+    config
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+export async function E2eCreateAccountsJSON(e2eCreateAccountsPayload, config) {
+  const response = await JSONrequest(
+    "/common.Frey/E2eCreateAccounts",
+    E2eCreateAccountsPayloadJSON.encode(e2eCreateAccountsPayload),
+    config
+  );
+  return E2eCreateAccountsResponseJSON.decode(response);
+}
+export async function E2eRegisterPlayersJSON(e2eEventPlayersPayload, config) {
+  const response = await JSONrequest(
+    "/common.Frey/E2eRegisterPlayers",
+    E2eEventPlayersPayloadJSON.encode(e2eEventPlayersPayload),
+    config
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+export async function E2eUnregisterPlayersJSON(e2eEventPlayersPayload, config) {
+  const response = await JSONrequest(
+    "/common.Frey/E2eUnregisterPlayers",
+    E2eEventPlayersPayloadJSON.encode(e2eEventPlayersPayload),
     config
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
@@ -685,10 +733,239 @@ export function createFrey(service) {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON
         }
+      },
+      E2eCreateAccounts: {
+        name: "E2eCreateAccounts",
+        handler: service.E2eCreateAccounts,
+        input: {
+          protobuf: E2eCreateAccountsPayload,
+          json: E2eCreateAccountsPayloadJSON
+        },
+        output: {
+          protobuf: E2eCreateAccountsResponse,
+          json: E2eCreateAccountsResponseJSON
+        }
+      },
+      E2eRegisterPlayers: {
+        name: "E2eRegisterPlayers",
+        handler: service.E2eRegisterPlayers,
+        input: {
+          protobuf: E2eEventPlayersPayload,
+          json: E2eEventPlayersPayloadJSON
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON
+        }
+      },
+      E2eUnregisterPlayers: {
+        name: "E2eUnregisterPlayers",
+        handler: service.E2eUnregisterPlayers,
+        input: {
+          protobuf: E2eEventPlayersPayload,
+          json: E2eEventPlayersPayloadJSON
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON
+        }
       }
     }
   };
 }
+export const E2eCreateAccountsPayload = {
+  /**
+   * Serializes E2eCreateAccountsPayload to protobuf.
+   */
+  encode: function(msg) {
+    return E2eCreateAccountsPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes E2eCreateAccountsPayload from protobuf.
+   */
+  decode: function(bytes) {
+    return E2eCreateAccountsPayload._readMessage(
+      E2eCreateAccountsPayload.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes E2eCreateAccountsPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      people: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.people?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.people,
+        PersonsCreateAccountPayload._writeMessage
+      );
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = PersonsCreateAccountPayload.initialize();
+          reader.readMessage(m, PersonsCreateAccountPayload._readMessage);
+          msg.people.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const E2eCreateAccountsResponse = {
+  /**
+   * Serializes E2eCreateAccountsResponse to protobuf.
+   */
+  encode: function(msg) {
+    return E2eCreateAccountsResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes E2eCreateAccountsResponse from protobuf.
+   */
+  decode: function(bytes) {
+    return E2eCreateAccountsResponse._readMessage(
+      E2eCreateAccountsResponse.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes E2eCreateAccountsResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      personIds: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.personIds?.length) {
+      writer.writePackedInt32(1, msg.personIds);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          if (reader.isDelimited()) {
+            msg.personIds.push(...reader.readPackedInt32());
+          } else {
+            msg.personIds.push(reader.readInt32());
+          }
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const E2eEventPlayersPayload = {
+  /**
+   * Serializes E2eEventPlayersPayload to protobuf.
+   */
+  encode: function(msg) {
+    return E2eEventPlayersPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes E2eEventPlayersPayload from protobuf.
+   */
+  decode: function(bytes) {
+    return E2eEventPlayersPayload._readMessage(
+      E2eEventPlayersPayload.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes E2eEventPlayersPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      eventId: 0,
+      personIds: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.personIds?.length) {
+      writer.writePackedInt32(2, msg.personIds);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          if (reader.isDelimited()) {
+            msg.personIds.push(...reader.readPackedInt32());
+          } else {
+            msg.personIds.push(reader.readInt32());
+          }
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
 export const AuthRequestRegistrationPayload = {
   /**
    * Serializes AuthRequestRegistrationPayload to protobuf.
@@ -3456,6 +3733,158 @@ export const PersonsSetNotificationsSettingsPayload = {
           break;
         }
       }
+    }
+    return msg;
+  }
+};
+export const E2eCreateAccountsPayloadJSON = {
+  /**
+   * Serializes E2eCreateAccountsPayload to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(E2eCreateAccountsPayloadJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes E2eCreateAccountsPayload from JSON.
+   */
+  decode: function(json) {
+    return E2eCreateAccountsPayloadJSON._readMessage(
+      E2eCreateAccountsPayloadJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes E2eCreateAccountsPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      people: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.people?.length) {
+      json["people"] = msg.people.map(
+        PersonsCreateAccountPayloadJSON._writeMessage
+      );
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _people_ = json["people"];
+    if (_people_) {
+      for (const item of _people_) {
+        const m = PersonsCreateAccountPayloadJSON.initialize();
+        PersonsCreateAccountPayloadJSON._readMessage(m, item);
+        msg.people.push(m);
+      }
+    }
+    return msg;
+  }
+};
+export const E2eCreateAccountsResponseJSON = {
+  /**
+   * Serializes E2eCreateAccountsResponse to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(E2eCreateAccountsResponseJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes E2eCreateAccountsResponse from JSON.
+   */
+  decode: function(json) {
+    return E2eCreateAccountsResponseJSON._readMessage(
+      E2eCreateAccountsResponseJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes E2eCreateAccountsResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      personIds: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.personIds?.length) {
+      json["personIds"] = msg.personIds;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _personIds_ = json["personIds"] ?? json["person_ids"];
+    if (_personIds_) {
+      msg.personIds = _personIds_.map(protoscript.parseNumber);
+    }
+    return msg;
+  }
+};
+export const E2eEventPlayersPayloadJSON = {
+  /**
+   * Serializes E2eEventPlayersPayload to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(E2eEventPlayersPayloadJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes E2eEventPlayersPayload from JSON.
+   */
+  decode: function(json) {
+    return E2eEventPlayersPayloadJSON._readMessage(
+      E2eEventPlayersPayloadJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes E2eEventPlayersPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      eventId: 0,
+      personIds: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.personIds?.length) {
+      json["personIds"] = msg.personIds;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _personIds_ = json["personIds"] ?? json["person_ids"];
+    if (_personIds_) {
+      msg.personIds = _personIds_.map(protoscript.parseNumber);
     }
     return msg;
   }

@@ -16,6 +16,19 @@ import * as protoAtoms from "./atoms.pb";
 //                 Types                  //
 //========================================//
 
+export interface E2eCreateAccountsPayload {
+  people: PersonsCreateAccountPayload[];
+}
+
+export interface E2eCreateAccountsResponse {
+  personIds: number[];
+}
+
+export interface E2eEventPlayersPayload {
+  eventId: number;
+  personIds: number[];
+}
+
 export interface AuthRequestRegistrationPayload {
   email: string;
   title: string;
@@ -522,6 +535,46 @@ export async function SetNotificationsSettings(
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
+/**
+ * Test data helpers require E2E_TEST_MODE=1 and an authenticated superadmin.
+ * A failed batch may leave preceding changes in place.
+ */
+export async function E2eCreateAccounts(
+  e2eCreateAccountsPayload: E2eCreateAccountsPayload,
+  config?: ClientConfiguration,
+): Promise<E2eCreateAccountsResponse> {
+  const response = await PBrequest(
+    "/common.Frey/E2eCreateAccounts",
+    E2eCreateAccountsPayload.encode(e2eCreateAccountsPayload),
+    config,
+  );
+  return E2eCreateAccountsResponse.decode(response);
+}
+
+export async function E2eRegisterPlayers(
+  e2eEventPlayersPayload: E2eEventPlayersPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Frey/E2eRegisterPlayers",
+    E2eEventPlayersPayload.encode(e2eEventPlayersPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function E2eUnregisterPlayers(
+  e2eEventPlayersPayload: E2eEventPlayersPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Frey/E2eUnregisterPlayers",
+    E2eEventPlayersPayload.encode(e2eEventPlayersPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
 //========================================//
 //            Frey JSON Client            //
 //========================================//
@@ -827,6 +880,46 @@ export async function SetNotificationsSettingsJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+/**
+ * Test data helpers require E2E_TEST_MODE=1 and an authenticated superadmin.
+ * A failed batch may leave preceding changes in place.
+ */
+export async function E2eCreateAccountsJSON(
+  e2eCreateAccountsPayload: E2eCreateAccountsPayload,
+  config?: ClientConfiguration,
+): Promise<E2eCreateAccountsResponse> {
+  const response = await JSONrequest(
+    "/common.Frey/E2eCreateAccounts",
+    E2eCreateAccountsPayloadJSON.encode(e2eCreateAccountsPayload),
+    config,
+  );
+  return E2eCreateAccountsResponseJSON.decode(response);
+}
+
+export async function E2eRegisterPlayersJSON(
+  e2eEventPlayersPayload: E2eEventPlayersPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Frey/E2eRegisterPlayers",
+    E2eEventPlayersPayloadJSON.encode(e2eEventPlayersPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
+export async function E2eUnregisterPlayersJSON(
+  e2eEventPlayersPayload: E2eEventPlayersPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Frey/E2eUnregisterPlayers",
+    E2eEventPlayersPayloadJSON.encode(e2eEventPlayersPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 //========================================//
 //                  Frey                  //
 //========================================//
@@ -949,6 +1042,26 @@ export interface Frey<Context = unknown> {
     | PersonsGetNotificationsSettingsResponse;
   SetNotificationsSettings: (
     personsSetNotificationsSettingsPayload: PersonsSetNotificationsSettingsPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  /**
+   * Test data helpers require E2E_TEST_MODE=1 and an authenticated superadmin.
+   * A failed batch may leave preceding changes in place.
+   */
+  E2eCreateAccounts: (
+    e2eCreateAccountsPayload: E2eCreateAccountsPayload,
+    context: Context,
+  ) => Promise<E2eCreateAccountsResponse> | E2eCreateAccountsResponse;
+  E2eRegisterPlayers: (
+    e2eEventPlayersPayload: E2eEventPlayersPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  E2eUnregisterPlayers: (
+    e2eEventPlayersPayload: E2eEventPlayersPayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
@@ -1241,6 +1354,42 @@ export function createFrey<Context>(service: Frey<Context>) {
           json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
+      E2eCreateAccounts: {
+        name: "E2eCreateAccounts",
+        handler: service.E2eCreateAccounts,
+        input: {
+          protobuf: E2eCreateAccountsPayload,
+          json: E2eCreateAccountsPayloadJSON,
+        },
+        output: {
+          protobuf: E2eCreateAccountsResponse,
+          json: E2eCreateAccountsResponseJSON,
+        },
+      },
+      E2eRegisterPlayers: {
+        name: "E2eRegisterPlayers",
+        handler: service.E2eRegisterPlayers,
+        input: {
+          protobuf: E2eEventPlayersPayload,
+          json: E2eEventPlayersPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      E2eUnregisterPlayers: {
+        name: "E2eUnregisterPlayers",
+        handler: service.E2eUnregisterPlayers,
+        input: {
+          protobuf: E2eEventPlayersPayload,
+          json: E2eEventPlayersPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
     },
   } as const;
 }
@@ -1248,6 +1397,238 @@ export function createFrey<Context>(service: Frey<Context>) {
 //========================================//
 //        Protobuf Encode / Decode        //
 //========================================//
+
+export const E2eCreateAccountsPayload = {
+  /**
+   * Serializes E2eCreateAccountsPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<E2eCreateAccountsPayload>): Uint8Array {
+    return E2eCreateAccountsPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes E2eCreateAccountsPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): E2eCreateAccountsPayload {
+    return E2eCreateAccountsPayload._readMessage(
+      E2eCreateAccountsPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes E2eCreateAccountsPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<E2eCreateAccountsPayload>,
+  ): E2eCreateAccountsPayload {
+    return {
+      people: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<E2eCreateAccountsPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.people?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.people as any,
+        PersonsCreateAccountPayload._writeMessage,
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: E2eCreateAccountsPayload,
+    reader: protoscript.BinaryReader,
+  ): E2eCreateAccountsPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = PersonsCreateAccountPayload.initialize();
+          reader.readMessage(m, PersonsCreateAccountPayload._readMessage);
+          msg.people.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const E2eCreateAccountsResponse = {
+  /**
+   * Serializes E2eCreateAccountsResponse to protobuf.
+   */
+  encode: function (msg: PartialDeep<E2eCreateAccountsResponse>): Uint8Array {
+    return E2eCreateAccountsResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes E2eCreateAccountsResponse from protobuf.
+   */
+  decode: function (bytes: ByteSource): E2eCreateAccountsResponse {
+    return E2eCreateAccountsResponse._readMessage(
+      E2eCreateAccountsResponse.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes E2eCreateAccountsResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<E2eCreateAccountsResponse>,
+  ): E2eCreateAccountsResponse {
+    return {
+      personIds: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<E2eCreateAccountsResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.personIds?.length) {
+      writer.writePackedInt32(1, msg.personIds);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: E2eCreateAccountsResponse,
+    reader: protoscript.BinaryReader,
+  ): E2eCreateAccountsResponse {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          if (reader.isDelimited()) {
+            msg.personIds.push(...reader.readPackedInt32());
+          } else {
+            msg.personIds.push(reader.readInt32());
+          }
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const E2eEventPlayersPayload = {
+  /**
+   * Serializes E2eEventPlayersPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<E2eEventPlayersPayload>): Uint8Array {
+    return E2eEventPlayersPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes E2eEventPlayersPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): E2eEventPlayersPayload {
+    return E2eEventPlayersPayload._readMessage(
+      E2eEventPlayersPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes E2eEventPlayersPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<E2eEventPlayersPayload>,
+  ): E2eEventPlayersPayload {
+    return {
+      eventId: 0,
+      personIds: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<E2eEventPlayersPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.personIds?.length) {
+      writer.writePackedInt32(2, msg.personIds);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: E2eEventPlayersPayload,
+    reader: protoscript.BinaryReader,
+  ): E2eEventPlayersPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          if (reader.isDelimited()) {
+            msg.personIds.push(...reader.readPackedInt32());
+          } else {
+            msg.personIds.push(reader.readInt32());
+          }
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
 
 export const AuthRequestRegistrationPayload = {
   /**
@@ -4640,6 +5021,194 @@ export const PersonsSetNotificationsSettingsPayload = {
 //========================================//
 //          JSON Encode / Decode          //
 //========================================//
+
+export const E2eCreateAccountsPayloadJSON = {
+  /**
+   * Serializes E2eCreateAccountsPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<E2eCreateAccountsPayload>): string {
+    return JSON.stringify(E2eCreateAccountsPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes E2eCreateAccountsPayload from JSON.
+   */
+  decode: function (json: string): E2eCreateAccountsPayload {
+    return E2eCreateAccountsPayloadJSON._readMessage(
+      E2eCreateAccountsPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes E2eCreateAccountsPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<E2eCreateAccountsPayload>,
+  ): E2eCreateAccountsPayload {
+    return {
+      people: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<E2eCreateAccountsPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.people?.length) {
+      json["people"] = msg.people.map(
+        PersonsCreateAccountPayloadJSON._writeMessage,
+      );
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: E2eCreateAccountsPayload,
+    json: any,
+  ): E2eCreateAccountsPayload {
+    const _people_ = json["people"];
+    if (_people_) {
+      for (const item of _people_) {
+        const m = PersonsCreateAccountPayloadJSON.initialize();
+        PersonsCreateAccountPayloadJSON._readMessage(m, item);
+        msg.people.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
+export const E2eCreateAccountsResponseJSON = {
+  /**
+   * Serializes E2eCreateAccountsResponse to JSON.
+   */
+  encode: function (msg: PartialDeep<E2eCreateAccountsResponse>): string {
+    return JSON.stringify(E2eCreateAccountsResponseJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes E2eCreateAccountsResponse from JSON.
+   */
+  decode: function (json: string): E2eCreateAccountsResponse {
+    return E2eCreateAccountsResponseJSON._readMessage(
+      E2eCreateAccountsResponseJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes E2eCreateAccountsResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<E2eCreateAccountsResponse>,
+  ): E2eCreateAccountsResponse {
+    return {
+      personIds: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<E2eCreateAccountsResponse>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.personIds?.length) {
+      json["personIds"] = msg.personIds;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: E2eCreateAccountsResponse,
+    json: any,
+  ): E2eCreateAccountsResponse {
+    const _personIds_ = json["personIds"] ?? json["person_ids"];
+    if (_personIds_) {
+      msg.personIds = _personIds_.map(protoscript.parseNumber);
+    }
+    return msg;
+  },
+};
+
+export const E2eEventPlayersPayloadJSON = {
+  /**
+   * Serializes E2eEventPlayersPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<E2eEventPlayersPayload>): string {
+    return JSON.stringify(E2eEventPlayersPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes E2eEventPlayersPayload from JSON.
+   */
+  decode: function (json: string): E2eEventPlayersPayload {
+    return E2eEventPlayersPayloadJSON._readMessage(
+      E2eEventPlayersPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes E2eEventPlayersPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<E2eEventPlayersPayload>,
+  ): E2eEventPlayersPayload {
+    return {
+      eventId: 0,
+      personIds: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<E2eEventPlayersPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.personIds?.length) {
+      json["personIds"] = msg.personIds;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: E2eEventPlayersPayload,
+    json: any,
+  ): E2eEventPlayersPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _personIds_ = json["personIds"] ?? json["person_ids"];
+    if (_personIds_) {
+      msg.personIds = _personIds_.map(protoscript.parseNumber);
+    }
+    return msg;
+  },
+};
 
 export const AuthRequestRegistrationPayloadJSON = {
   /**
