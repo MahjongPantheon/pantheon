@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 21:55Z\n"
+"POT-Creation-Date: 2026-10-06 20:39Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2102,60 +2102,60 @@ msgstr ""
 msgid "Please enter you telegram ID"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:86:36
+#: app/pages/ProfileNotifications.tsx:95:36
 msgid "Failed to set notifications settings."
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:99:10
+#: app/pages/ProfileNotifications.tsx:108:10
 msgid "Notifications from Pantheon are supported via Telegram. Please configure your Telegram bot to use the service (see README)."
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:110:18
-#: app/pages/ProfileNotifications.tsx:112:24
+#: app/pages/ProfileNotifications.tsx:119:18
+#: app/pages/ProfileNotifications.tsx:121:24
 msgid "Your telegram ID"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:117:18
+#: app/pages/ProfileNotifications.tsx:126:18
 msgid "Notify when seating for tournament sessions is ready"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:122:18
+#: app/pages/ProfileNotifications.tsx:131:18
 msgid "Notify when next tournament session is about to start (except online)"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:127:18
+#: app/pages/ProfileNotifications.tsx:136:18
 msgid "Notify when session in tournament has ended (except online)"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:132:18
+#: app/pages/ProfileNotifications.tsx:141:18
 msgid "Notify when a hand has been recorded"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:137:18
+#: app/pages/ProfileNotifications.tsx:146:18
 msgid "Notify when any hand has been recorded for any event you are administrator or referee of"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:144:18
+#: app/pages/ProfileNotifications.tsx:153:18
 msgid "Notify when session in club event has ended"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:149:18
+#: app/pages/ProfileNotifications.tsx:158:18
 msgid "Notify when you are requested as referee"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:155:14
+#: app/pages/ProfileNotifications.tsx:164:14
 msgid "Notifications from Pantheon are supported via Telegram. Please use the following link to register with Telegram bot: "
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:160:16
+#: app/pages/ProfileNotifications.tsx:169:16
 msgid "Open Pantheon bot"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:165:28
+#: app/pages/ProfileNotifications.tsx:174:28
 msgid "Settings saved!"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:165:57
+#: app/pages/ProfileNotifications.tsx:174:57
 msgid "Update settings"
 msgstr ""
 
