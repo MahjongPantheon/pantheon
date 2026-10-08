@@ -2329,7 +2329,11 @@ describe('Mimir Twirp API', () => {
 
   const gameFlowPlayerIds = [2517, 743, 338, 1834];
 
-  const createEventWithRegisteredPlayers = async (type: EventType, titlePrefix: string) => {
+  const createEventWithRegisteredPlayers = async (
+    type: EventType,
+    titlePrefix: string,
+    isTeam = false
+  ) => {
     const { eventId } = await mimirClient.CreateEvent({
       type,
       title: titlePrefix + v4(),
@@ -2339,7 +2343,7 @@ describe('Mimir Twirp API', () => {
       lobbyId: 0,
       seriesLength: 0,
       minGames: 0,
-      isTeam: false,
+      isTeam,
       isPrescripted: false,
       rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
       isListed: true,
@@ -2458,9 +2462,42 @@ describe('Mimir Twirp API', () => {
     expect(tablesStateAfter.tables[0].status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
   });
 
-  /*
+  test('UpdatePlayersTeams applies team names to a single-table tournament', async () => {
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_TOURNAMENT,
+      'test team tournament ',
+      true
+    );
+    await mimirClient.MakeShuffledSeating(
+      eventId,
+      1,
+      12345,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+    const tablesState = await mimirClient.GetTablesState({ eventId, omitLastRound: true });
+    expect(tablesState.tables).toHaveLength(1);
+    expect(tablesState.tables[0].currentRoundIndex).toBe(1);
 
-UpdatePlayersTeams - todo after team event is ready
+    const idsToTeamNames = [
+      { playerId: 2517, teamName: 'East' },
+      { playerId: 743, teamName: 'East' },
+      { playerId: 338, teamName: 'West' },
+      { playerId: 1834, teamName: 'West' },
+    ];
+    const result = await mimirClient.UpdatePlayersTeams({ eventId, idsToTeamNames });
+    expect(result.success).toBe(true);
+
+    const { players } = await mimirClient.GetAllRegisteredPlayers([eventId]);
+    expect(players).toHaveLength(gameFlowPlayerIds.length);
+    expect(Object.fromEntries(players.map((player) => [player.id, player.teamName]))).toEqual({
+      2517: 'East',
+      743: 'East',
+      338: 'West',
+      1834: 'West',
+    });
+  });
+
+  /*
 
 AddPenaltyGame
 AddOnlineReplay

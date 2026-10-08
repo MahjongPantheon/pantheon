@@ -72,18 +72,18 @@ export class EventRegistrationModel extends Model {
   }
 
   async updateTeamNames(eventId: number, teamMap: TeamMapping[]) {
-    return this.repo.em.upsertMany(
-      EventRegisteredPlayersEntity,
-      [
-        ...teamMap.map(({ playerId, teamName }) => ({
-          playerId,
-          eventId,
-          teamName,
-          ignoreSeating: 0,
-        })),
-      ],
-      { onConflictFields: ['teamName'] }
+    const registrations = await this.findByEventId([eventId]);
+    const byPlayerId = new Map(
+      registrations.map((registration) => [registration.playerId, registration])
     );
+    for (const { playerId, teamName } of teamMap) {
+      const registration = byPlayerId.get(playerId);
+      if (!registration) {
+        throw new Error(`Player ${playerId} is not registered for event ${eventId}`);
+      }
+      registration.teamName = teamName;
+    }
+    await this.repo.em.flush();
   }
 
   async findIgnoredPlayersIdsByEvent(eventIds: number[]) {
@@ -304,7 +304,6 @@ export class EventRegistrationModel extends Model {
     }
 
     await this.updateTeamNames(eventId, idsToTeamNames);
-    await this.repo.em.flush();
     return { success: true };
   }
 }

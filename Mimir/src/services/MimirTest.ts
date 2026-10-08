@@ -31,6 +31,7 @@ import {
   EventsGetTablesStatePayload,
   EventsGetTimerStateResponse,
   EventsUpdatePlayersLocalIdsPayload,
+  EventsUpdatePlayersTeamsPayload,
   EventsUpdatePrescriptedEventConfigPayload,
   FinalizeSession,
   FinishEvent,
@@ -94,6 +95,7 @@ import {
   UpdatePlayerReplacement,
   UpdatePlayerSeatingFlag,
   UpdatePlayersLocalIds,
+  UpdatePlayersTeams,
   UpdatePrescriptedEventConfig,
 } from 'tsclients/proto/mimir.pb.js';
 import { ClientConfiguration } from 'twirpscript';
@@ -387,6 +389,12 @@ export class MimirTest {
     payload: EventsUpdatePlayersLocalIdsPayload
   ): Promise<GenericSuccessResponse> {
     return UpdatePlayersLocalIds(payload, this._config);
+  }
+
+  async UpdatePlayersTeams(
+    payload: EventsUpdatePlayersTeamsPayload
+  ): Promise<GenericSuccessResponse> {
+    return UpdatePlayersTeams(payload, this._config);
   }
 
   async StartTimer(eventId: number) {
