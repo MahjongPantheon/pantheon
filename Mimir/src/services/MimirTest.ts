@@ -14,6 +14,7 @@ import {
   AddRound,
   CancelGame,
   CancelPenalty,
+  ClearStatCache,
   CreateEvent,
   DefinalizeGame,
   DropLastRound,
@@ -415,5 +416,9 @@ export class MimirTest {
 
   async DefinalizeGame(sessionHash: string): Promise<GenericSuccessResponse> {
     return DefinalizeGame({ sessionHash }, this._config);
+  }
+
+  async ClearStatCache(playerId: number): Promise<GenericSuccessResponse> {
+    return ClearStatCache({ playerId }, this._config);
   }
 }

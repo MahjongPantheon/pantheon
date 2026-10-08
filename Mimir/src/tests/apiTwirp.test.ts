@@ -7,6 +7,8 @@ import {
   WindShuffleMode,
 } from 'tsclients/proto/atoms.pb.js';
 import { RulesetEntity } from '../entities/Ruleset.entity.js';
+import { ConfigService } from '../services/Config.js';
+import { Client } from 'pg';
 import { v4 } from 'uuid';
 
 const CLUB_RATING_EVENT_ID = 19;
@@ -2497,13 +2499,51 @@ describe('Mimir Twirp API', () => {
     });
   });
 
+  test('ClearStatCache schedules a rebuild for a registered player', async () => {
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_LOCAL,
+      'test stats invalidation '
+    );
+    const playerId = gameFlowPlayerIds[0];
+    const jobArguments = JSON.stringify({ playerId, eventId });
+    const config = new ConfigService().db;
+    const db = new Client({
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    try {
+      const jobsBefore = await db.query(
+        'select id from jobs_queue where job_name = $1 and job_arguments = $2',
+        ['playerStats', jobArguments]
+      );
+      expect(jobsBefore.rows).toHaveLength(0);
+
+      const response = await mimirClient.ClearStatCache(playerId);
+      expect(response.success).toBe(true);
+      const jobsAfter = await db.query(
+        'select id from jobs_queue where job_name = $1 and job_arguments = $2',
+        ['playerStats', jobArguments]
+      );
+      expect(jobsAfter.rows).toHaveLength(1);
+    } finally {
+      await db.query('delete from jobs_queue where job_name = $1 and job_arguments = $2', [
+        'playerStats',
+        jobArguments,
+      ]);
+      await db.end();
+    }
+  });
+
   /*
 
 AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-ClearStatCache
 NotifyPlayersSessionStartsSoon
 CallReferee
 RebuildScoring

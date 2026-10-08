@@ -2,6 +2,7 @@ import { JobsQueueEntity } from '../entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
 import moment from 'moment';
 import { PlayerStatsEntity } from '../entities/PlayerStats.entity.js';
+import { EventRegistrationModel } from './EventRegistrationModel.js';
 import {
   PlayersGetPlayerStatsPayload,
   PlayersGetPlayerStatsResponse,
@@ -69,16 +70,11 @@ export class PlayerStatsModel extends Model {
   }
 
   async invalidatePlayerStats(playerId: number) {
-    const stats = await this.repo.em.findAll(PlayerStatsEntity, {
-      where: {
-        playerId,
-      },
-    });
-    const promises = [];
-    for (const stat of stats) {
-      promises.push(this.scheduleRebuildSinglePlayerStats(playerId, stat.event.id));
+    const registrations = await this.getModel(EventRegistrationModel).findByPlayerId(playerId);
+    const eventIds = new Set(registrations.map((registration) => registration.event.id));
+    for (const eventId of eventIds) {
+      await this.scheduleRebuildSinglePlayerStats(playerId, eventId);
     }
-    await Promise.all(promises);
     return { success: true };
   }
 
