@@ -2327,10 +2327,12 @@ describe('Mimir Twirp API', () => {
     }
   });
 
-  const preparePrefinishedTournamentTable = async () => {
+  const gameFlowPlayerIds = [2517, 743, 338, 1834];
+
+  const createEventWithRegisteredPlayers = async (type: EventType, titlePrefix: string) => {
     const { eventId } = await mimirClient.CreateEvent({
-      type: EventType.EVENT_TYPE_TOURNAMENT,
-      title: 'test tournament' + v4(),
+      type,
+      title: titlePrefix + v4(),
       description: 'test event desc',
       duration: 75,
       timezone: 'UTC',
@@ -2348,10 +2350,33 @@ describe('Mimir Twirp API', () => {
       allowManualAddReplay: false,
       windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
     });
-    await mimirClient.RegisterPlayer(eventId, 2517);
-    await mimirClient.RegisterPlayer(eventId, 743);
-    await mimirClient.RegisterPlayer(eventId, 338);
-    await mimirClient.RegisterPlayer(eventId, 1834);
+    for (const playerId of gameFlowPlayerIds) {
+      await mimirClient.RegisterPlayer(eventId, playerId);
+    }
+    return eventId;
+  };
+
+  const addEightDrawRounds = async (sessionHash: string, playerIds: number[]) => {
+    for (let roundIndex = 1; roundIndex <= 8; roundIndex++) {
+      await mimirClient.AddRound({
+        sessionHash,
+        roundData: {
+          draw: {
+            roundIndex,
+            honba: roundIndex - 1,
+            riichiBets: [playerIds[(roundIndex + 1) % 4]],
+            tempai: [playerIds[roundIndex % 4], playerIds[(roundIndex + 1) % 4]],
+          },
+        },
+      });
+    }
+  };
+
+  const preparePrefinishedTournamentTable = async () => {
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_TOURNAMENT,
+      'test tournament '
+    );
     await mimirClient.MakeShuffledSeating(
       eventId,
       1,
@@ -2367,141 +2392,20 @@ describe('Mimir Twirp API', () => {
     const playerIds = tablesState.tables[0].players.map((p) => p.id);
 
     mimirClient.setEventId(eventId);
-
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 1,
-          honba: 0,
-          riichiBets: [playerIds[2]],
-          tempai: [playerIds[1], playerIds[2]],
-        },
-      },
-    });
-
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 2,
-          honba: 1,
-          riichiBets: [playerIds[3]],
-          tempai: [playerIds[2], playerIds[3]],
-        },
-      },
-    });
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 3,
-          honba: 2,
-          riichiBets: [playerIds[0]],
-          tempai: [playerIds[3], playerIds[0]],
-        },
-      },
-    });
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 4,
-          honba: 3,
-          riichiBets: [playerIds[1]],
-          tempai: [playerIds[0], playerIds[1]],
-        },
-      },
-    });
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 5,
-          honba: 4,
-          riichiBets: [playerIds[2]],
-          tempai: [playerIds[1], playerIds[2]],
-        },
-      },
-    });
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 6,
-          honba: 5,
-          riichiBets: [playerIds[3]],
-          tempai: [playerIds[2], playerIds[3]],
-        },
-      },
-    });
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 7,
-          honba: 6,
-          riichiBets: [playerIds[0]],
-          tempai: [playerIds[3], playerIds[0]],
-        },
-      },
-    });
-    await mimirClient.AddRound({
-      sessionHash,
-      roundData: {
-        draw: {
-          roundIndex: 8,
-          honba: 7,
-          riichiBets: [playerIds[1]],
-          tempai: [playerIds[0], playerIds[1]],
-        },
-      },
-    });
+    await addEightDrawRounds(sessionHash, playerIds);
 
     return { eventId, sessionHash };
   };
 
   const prepareFinishedClubGame = async () => {
-    const { eventId } = await mimirClient.CreateEvent({
-      type: EventType.EVENT_TYPE_LOCAL,
-      title: 'test club event ' + v4(),
-      description: 'test event desc',
-      duration: 75,
-      timezone: 'UTC',
-      lobbyId: 0,
-      seriesLength: 0,
-      minGames: 0,
-      isTeam: false,
-      isPrescripted: false,
-      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
-      isListed: true,
-      isRatingShown: true,
-      achievementsShown: true,
-      allowViewOtherTables: true,
-      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
-      allowManualAddReplay: false,
-      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
-    });
-    const playerIds = [2517, 743, 338, 1834];
-    for (const playerId of playerIds) {
-      await mimirClient.RegisterPlayer(eventId, playerId);
-    }
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_LOCAL,
+      'test club event '
+    );
 
     mimirClient.setEventId(eventId);
-    const { sessionHash } = await mimirClient.StartGame(eventId, playerIds);
-    for (let roundIndex = 1; roundIndex <= 8; roundIndex++) {
-      await mimirClient.AddRound({
-        sessionHash,
-        roundData: {
-          draw: {
-            roundIndex,
-            honba: roundIndex - 1,
-            riichiBets: [playerIds[(roundIndex + 1) % 4]],
-            tempai: [playerIds[roundIndex % 4], playerIds[(roundIndex + 1) % 4]],
-          },
-        },
-      });
-    }
+    const { sessionHash } = await mimirClient.StartGame(eventId, gameFlowPlayerIds);
+    await addEightDrawRounds(sessionHash, gameFlowPlayerIds);
 
     return { eventId, sessionHash };
   };
