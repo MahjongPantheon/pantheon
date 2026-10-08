@@ -64,6 +64,7 @@ import {
   GetLastRoundByHash,
   GetMyEvents,
   GetPlayer,
+  GetPlayerStats,
   GetPrescriptedEventConfig,
   GetRatingTable,
   GetRulesets,
@@ -434,6 +435,10 @@ export class MimirTest {
 
   async GetAchievements(eventId: number, achievementsList: string[]) {
     return GetAchievements({ eventId, achievementsList }, this._config);
+  }
+
+  async GetPlayerStats(playerId: number, eventId: number) {
+    return GetPlayerStats({ playerId, eventIdList: [eventId] }, this._config);
   }
 
   async RecalcPlayerStats(eventId: number): Promise<GenericSuccessResponse> {

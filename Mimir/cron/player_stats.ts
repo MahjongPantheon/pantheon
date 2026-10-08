@@ -15,16 +15,20 @@ export async function rebuildPlayerStats(repo: Repository) {
   }
 
   const playerModel = Model.getModel(repo, PlayerStatsModel);
-  const promises = [];
-  for (const job of jobs) {
-    const { playerId, eventId } = JSON.parse(job.jobArguments);
-    promises.push(
-      playerModel.getPlayerStats({
-        playerId: +playerId,
-        eventIdList: [+eventId],
-      })
-    );
+  const results = await Promise.allSettled(
+    jobs.map((job) => {
+      const { playerId, eventId } = JSON.parse(job.jobArguments);
+      return playerModel.getPlayerStats(
+        { playerId: +playerId, eventIdList: [+eventId] },
+        { forceRebuild: true, deferFlush: true }
+      );
+    })
+  );
+  const failed = results.find((result) => result.status === 'rejected');
+  if (failed?.status === 'rejected') {
+    throw failed.reason;
   }
 
-  await Promise.all(promises);
+  repo.em.remove(jobs);
+  await repo.em.flush();
 }

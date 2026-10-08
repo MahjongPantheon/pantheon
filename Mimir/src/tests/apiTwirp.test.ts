@@ -179,6 +179,61 @@ describe('Mimir Twirp API', () => {
     }
   }, 30000);
 
+  test('GetPlayerStats returns stats built by the cron worker', async () => {
+    const eventId = CLUB_RATING_EVENT_ID;
+    const playerId = 2;
+    const config = new ConfigService().db;
+    const db = new Client({
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    try {
+      const registered = await db.query(
+        'select player_id from event_registered_players where event_id = $1',
+        [eventId]
+      );
+      const statsBefore = await db.query('select id from player_stats where event_id = $1', [
+        eventId,
+      ]);
+      expect(statsBefore.rows).toHaveLength(0);
+
+      await mimirClient.RecalcPlayerStats(eventId);
+      const workerResponse = await fetch('http://localhost:4301/__test__/cron/player-stats', {
+        method: 'POST',
+      });
+      expect(workerResponse.status).toBe(204);
+      const pendingJobs = await db.query(
+        "select id from jobs_queue where job_name = $1 and job_arguments::jsonb ->> 'eventId' = $2",
+        ['playerStats', String(eventId)]
+      );
+      expect(pendingJobs.rows).toHaveLength(0);
+
+      const statsAfter = await db.query(
+        'select player_id, data, last_update from player_stats where event_id = $1',
+        [eventId]
+      );
+      expect(statsAfter.rows.map((row) => row.player_id).sort((a, b) => a - b)).toEqual(
+        registered.rows.map((row) => row.player_id).sort((a, b) => a - b)
+      );
+      const playerStats = statsAfter.rows.find((row) => row.player_id === playerId);
+      expect(playerStats.last_update).toBeDefined();
+      expect(playerStats.data.totalPlayedGames).toBeGreaterThan(0);
+      expect(playerStats.data.totalPlayedRounds).toBeGreaterThan(0);
+      expect(playerStats.data.ratingHistory).toHaveLength(playerStats.data.totalPlayedGames + 1);
+
+      const response = await mimirClient.GetPlayerStats(playerId, eventId);
+      expect(response.totalPlayedGames).toBe(playerStats.data.totalPlayedGames);
+      expect(response.totalPlayedRounds).toBe(playerStats.data.totalPlayedRounds);
+      expect(response.ratingHistory).toEqual(playerStats.data.ratingHistory);
+    } finally {
+      await db.end();
+    }
+  }, 60000);
+
   test('GetMyEvents', async () => {
     mimirClient.setPersonId(195); // player registered for club event
     const events = await mimirClient.GetMyEvents();
@@ -2752,7 +2807,6 @@ AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-GetPlayerStats
 
   */
 });

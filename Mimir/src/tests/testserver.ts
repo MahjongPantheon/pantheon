@@ -7,6 +7,7 @@ import { injectRepository } from '../middleware/injectRepository.js';
 import { SkirnirServiceMock } from '../services/SkirnirMock.js';
 import { Repository } from '../services/Repository.js';
 import { rebuildAchievements } from '../../cron/achievements.js';
+import { rebuildPlayerStats } from '../../cron/player_stats.js';
 
 import config from '../mikro-orm.config.js';
 import { MikroORM, RequestContext } from '@mikro-orm/postgresql';
@@ -41,6 +42,18 @@ createServer(async (req, res) => {
       console.error(error);
       res.writeHead(500);
       res.end('Achievements worker failed');
+    }
+    return;
+  }
+  if (req.method === 'POST' && req.url === '/__test__/cron/player-stats') {
+    try {
+      await rebuildPlayerStats(Repository.instance({}, orm));
+      res.writeHead(204);
+      res.end();
+    } catch (error) {
+      console.error(error);
+      res.writeHead(500);
+      res.end('Player stats worker failed');
     }
     return;
   }

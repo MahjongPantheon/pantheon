@@ -25,6 +25,7 @@ import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { PointsCalc, RiichiBetAssignment } from '../helpers/PointsCalc.js';
 import { HandEntity } from '../entities/Hand.entity.js';
 import { SessionState } from '../helpers/SessionState.js';
+import { Collection } from '@mikro-orm/core';
 
 type OutcomeStats = {
   ron: number;
@@ -79,14 +80,20 @@ export class PlayerStatsModel extends Model {
   }
 
   async getPlayerStats(
-    input: PlayersGetPlayerStatsPayload
+    input: PlayersGetPlayerStatsPayload,
+    options: { forceRebuild?: boolean; deferFlush?: boolean } = {}
   ): Promise<PlayersGetPlayerStatsResponse> {
     if (input.eventIdList.length === 0) {
       throw new Error('Event ID list cannot be empty');
     }
 
     // Find precalculated stats if any
-    if (input.eventIdList.length === 1 && !input.dateFrom && !input.dateTo) {
+    if (
+      !options.forceRebuild &&
+      input.eventIdList.length === 1 &&
+      !input.dateFrom &&
+      !input.dateTo
+    ) {
       const stats = await this.repo.em.findAll(PlayerStatsEntity, {
         where: {
           event: input.eventIdList[0],
@@ -145,7 +152,8 @@ export class PlayerStatsModel extends Model {
       input.eventIdList,
       input.playerId,
       input.dateFrom ?? undefined,
-      input.dateTo ?? undefined
+      input.dateTo ?? undefined,
+      options.deferFlush
     );
   }
 
@@ -153,7 +161,8 @@ export class PlayerStatsModel extends Model {
     eventIdList: number[],
     playerId: number,
     dateFrom?: string,
-    dateTo?: string
+    dateTo?: string,
+    deferFlush = false
   ): Promise<PlayersGetPlayerStatsResponse> {
     const events = await this.repo.em.findAll(EventEntity, {
       where: {
@@ -248,7 +257,7 @@ export class PlayerStatsModel extends Model {
         entity.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
         entity.playerId = playerId;
         entity.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
-        this.repo.em.persist(PlayerStatsEntity);
+        this.repo.em.persist(entity);
       } else {
         stats.data = {
           ...data,
@@ -264,7 +273,9 @@ export class PlayerStatsModel extends Model {
         this.repo.em.persist(stats);
       }
 
-      await this.repo.em.flush();
+      if (!deferFlush) {
+        await this.repo.em.flush();
+      }
     }
 
     return data;
@@ -277,7 +288,7 @@ export class PlayerStatsModel extends Model {
     dateTo?: string
   ): Promise<Map<number, { session: SessionEntity; results: Map<number, SessionResultsEntity> }>> {
     const sessionModel = this.getModel(SessionModel);
-    const games = await sessionModel.findByPlayerAndEvent(event, playerId, '*', dateFrom, dateTo);
+    const games = await sessionModel.findByPlayerAndEvent(playerId, event, '*', dateFrom, dateTo);
     if (games.length === 0) {
       return new Map();
     }
@@ -316,7 +327,10 @@ export class PlayerStatsModel extends Model {
       },
       populate: ['hands'],
     });
-    return rounds;
+    return rounds.map((round) => ({
+      ...round,
+      hands: (round.hands as unknown as Collection<HandEntity>).getItems(),
+    }));
   }
 
   async _fetchPlayerInfo(gameIds: number[]) {
@@ -426,6 +440,15 @@ export class PlayerStatsModel extends Model {
   ): OutcomeStats {
     return rounds.reduce(
       (acc, round) => {
+        if (round.hands.length === 0) {
+          if (
+            round.outcome === RoundOutcome.ROUND_OUTCOME_DRAW ||
+            round.outcome === RoundOutcome.ROUND_OUTCOME_ABORT
+          ) {
+            acc.draw++;
+          }
+          return acc;
+        }
         const riichiIds = round.riichi ?? [];
         switch (round.outcome) {
           case RoundOutcome.ROUND_OUTCOME_RON: {
@@ -709,7 +732,7 @@ export class PlayerStatsModel extends Model {
     for (const round of rounds) {
       for (const hand of round.hands) {
         if (hand.winnerId === playerId && hand.han) {
-          summary.set(hand.han, summary.get(hand.han)! + 1);
+          summary.set(hand.han, (summary.get(hand.han) ?? 0) + 1);
         }
       }
     }
