@@ -10,7 +10,7 @@ test('Register link from assistant', async ({ page, context }) => {
   await page.goto(process.env.TYR_URL!);
   const [newTab] = await Promise.all([
     context.waitForEvent('page'),
-    page.getByTestId('button_signup').click({ timeout: 10_000 }),
+    page.getByTestId('tyr-login-signup').click({ timeout: 10_000 }),
   ]);
   await expect(newTab.getByRole('heading', { name: 'Register new account' })).toBeVisible();
 });
@@ -19,7 +19,7 @@ test('Reset password link from assistant', async ({ page, context }) => {
   await page.goto(process.env.TYR_URL!);
   const [newTab] = await Promise.all([
     context.waitForEvent('page'),
-    page.getByTestId('button_forgot').click(),
+    page.getByTestId('tyr-login-recovery').click(),
   ]);
   await expect(newTab.getByText(/Recover password/)).toBeVisible();
 });

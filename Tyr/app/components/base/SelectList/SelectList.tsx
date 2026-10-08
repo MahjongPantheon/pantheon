@@ -9,14 +9,16 @@ type IProps = {
   }>;
   currentSelection: number;
   onSelect: (selection: number) => void;
+  testIdPrefix?: string;
 };
 
-export const SelectList = ({ items, currentSelection, onSelect }: IProps) => {
+export const SelectList = ({ items, currentSelection, onSelect, testIdPrefix }: IProps) => {
   return (
     <div className={styles.wrapper}>
       {items.map((item, idx) => (
         <div
           key={`listItem_${idx}`}
+          data-testid={testIdPrefix ? `${testIdPrefix}-${item.id}` : undefined}
           className={clsx(styles.listItem, currentSelection === item.id ? styles.selected : null)}
           onClick={() => onSelect(item.id)}
         >

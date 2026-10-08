@@ -168,6 +168,7 @@ export const App = (props: IProps) => {
   return (
     <div
       id='screen'
+      data-testid='tyr-app'
       className={clsx(
         styles.App,
         themes.common,
@@ -175,11 +176,15 @@ export const App = (props: IProps) => {
         haveNySpecs ? styles.newyear : null
       )}
     >
-      <div className={clsx(styles.AppWrap, isInStandaloneMode ? styles.pwafix : null)}>
+      <div
+        className={clsx(styles.AppWrap, isInStandaloneMode ? styles.pwafix : null)}
+        data-testid={`tyr-screen-${state.currentScreen}`}
+      >
         <i18n.Provider value={i18nService}>
           <CurrentScreen state={state} dispatch={dispatch} newyear={haveNySpecs} />
           {state.riichiNotificationShown && (
             <ModalDialog
+              testIdPrefix='tyr-riichi-dialog'
               onClose={() => {
                 dispatch({ type: TOGGLE_RIICHI_NOTIFICATION, payload: false });
               }}
@@ -193,6 +198,7 @@ export const App = (props: IProps) => {
           )}
           {state.networkDialogShown && (
             <ModalDialog
+              testIdPrefix='tyr-network-dialog'
               onClose={() => {}}
               actionSecondary={() => {
                 dispatch({ type: FORCE_LOGOUT, payload: undefined });

@@ -23,6 +23,7 @@ export const NumberSelect = ({
     arrowUp?: string;
     arrowDown?: string;
     dropdownSelector?: string;
+    optionPrefix?: string;
   };
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -80,6 +81,7 @@ export const NumberSelect = ({
         {options.map((item, idx) => (
           <PopupMenuItem
             key={`pmi_${idx}`}
+            testId={testId?.optionPrefix ? `${testId.optionPrefix}-${item.value}` : undefined}
             label={item.label}
             onClick={() => {
               onChange?.(idx);

@@ -33,8 +33,12 @@ export const LogView = (props: IProps) => {
   );
 
   return (
-    <div className={styles.wrapper}>
-      {!results.length && <div className={styles.noResults}>{loc._t('No results found')}</div>}
+    <div className={styles.wrapper} data-testid='tyr-game-log'>
+      {!results.length && (
+        <div className={styles.noResults} data-testid='tyr-game-log-empty'>
+          {loc._t('No results found')}
+        </div>
+      )}
       {!!results.length && (
         <>
           <div className={styles.header}>
@@ -77,7 +81,13 @@ export const LogView = (props: IProps) => {
         </>
       )}
       <BottomPanel>
-        <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+        <Button
+          variant='light'
+          icon={<BackIcon />}
+          size='lg'
+          onClick={onBackClick}
+          testId='tyr-game-log-back'
+        />
         <div className={styles.bottomTitle}>{loc._t('Game log')}</div>
       </BottomPanel>
     </div>

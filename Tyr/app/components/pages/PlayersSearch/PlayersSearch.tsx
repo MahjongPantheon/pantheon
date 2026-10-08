@@ -35,10 +35,17 @@ export const PlayersSearch = (props: IProps) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-player-search'>
       <div className={styles.topBar}>
-        <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+        <Button
+          variant='light'
+          icon={<BackIcon />}
+          size='lg'
+          onClick={onBackClick}
+          testId='tyr-player-search-back'
+        />
         <TextField
+          testId='tyr-player-search-query'
           type='text'
           variant='underline'
           size='fullwidth'
@@ -48,6 +55,7 @@ export const PlayersSearch = (props: IProps) => {
       </div>
       <div className={styles.content}>
         <SelectList
+          testIdPrefix='tyr-player-search-result'
           items={foundUsers
             .filter((u) => u.title !== '')
             .map((p) => ({

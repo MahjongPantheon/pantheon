@@ -10,6 +10,7 @@ export type IProps = {
   pointsMode?: PlayerPointsMode;
   penaltyPoints?: number;
   upsideDown?: boolean;
+  testId?: string;
 };
 
 export const PlayerPoints = (props: IProps) => {
@@ -27,6 +28,7 @@ export const PlayerPoints = (props: IProps) => {
     >
       <div
         className={clsx(styles.points, pointsClasses[props.pointsMode ?? PlayerPointsMode.IDLE])}
+        data-testid={props.testId}
       >
         {props.points}
       </div>

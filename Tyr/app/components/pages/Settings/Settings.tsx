@@ -89,21 +89,39 @@ export const Settings = (props: IProps) => {
   } = props;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-settings'>
       <div className={styles.topPanel}>
-        <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+        <Button
+          variant='light'
+          icon={<BackIcon />}
+          size='lg'
+          onClick={onBackClick}
+          testId='tyr-settings-back'
+        />
         {player.id && <Player {...player} size='md' />}
-        <Button variant='light' icon={<LogoutIcon />} size='lg' onClick={onLogout} />
+        <Button
+          variant='light'
+          icon={<LogoutIcon />}
+          size='lg'
+          onClick={onLogout}
+          testId='tyr-settings-logout'
+        />
       </div>
       <Button
         variant='contained'
         size='fullwidth'
         rightIcon={<LinkIcon />}
         onClick={onClickGotoPersonalArea}
+        testId='tyr-settings-personal-area'
       >
         {loc._t('Go to personal area')}
       </Button>
-      <Button variant='contained' size='fullwidth' onClick={() => onEventSelect()}>
+      <Button
+        variant='contained'
+        size='fullwidth'
+        onClick={() => onEventSelect()}
+        testId='tyr-settings-select-event'
+      >
         {loc._t('Select another event')}
       </Button>
       <hr className={styles.separator} />
@@ -113,6 +131,7 @@ export const Settings = (props: IProps) => {
           label: flags[lang],
           onSelect: () => onLangChange(lang),
           selected: lang === currentLanguage,
+          testId: `tyr-settings-language-${lang}`,
         }))}
       />
       <hr className={styles.separator} />
@@ -127,6 +146,7 @@ export const Settings = (props: IProps) => {
         onChange={onSingleDeviceModeChange}
         label={loc._t('Single device mode')}
         description={loc._t('Turn on if you use a single device for all players')}
+        testId='tyr-settings-single-device-mode'
       />
     </div>
   );

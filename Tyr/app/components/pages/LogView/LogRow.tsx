@@ -19,7 +19,11 @@ export const LogRow = (props: LogRowProps) => {
   }, [index, selectRound]);
 
   return (
-    <div className={styles.logRowContainer} onClick={onRoundClick}>
+    <div
+      className={styles.logRowContainer}
+      onClick={onRoundClick}
+      data-testid={`tyr-game-log-round-${index}`}
+    >
       <div className={styles.logRow}>
         <div className={styles.roundCell}>{round}</div>
         {players.map((player, idx) => (

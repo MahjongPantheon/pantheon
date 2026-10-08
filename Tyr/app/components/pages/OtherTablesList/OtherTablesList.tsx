@@ -35,15 +35,24 @@ const roundsMap: { [key: number]: string } = {
 export const OtherTablesList = ({ onTableClick, onBackClick, tables }: IProps) => {
   const loc = useContext(i18n);
   return (
-    <div className={styles.wrapper}>
-      <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+    <div className={styles.wrapper} data-testid='tyr-other-tables'>
+      <Button
+        variant='light'
+        icon={<BackIcon />}
+        size='lg'
+        onClick={onBackClick}
+        testId='tyr-other-tables-back'
+      />
       <div className={styles.list}>
         {tables.length === 0 && (
-          <div className={styles.empty}>{loc._t('No tables are playing right now')}</div>
+          <div className={styles.empty} data-testid='tyr-other-tables-empty'>
+            {loc._t('No tables are playing right now')}
+          </div>
         )}
         {tables.map((table) => (
           <div
             key={table.sessionHash}
+            data-testid={`tyr-other-tables-table-${table.sessionHash}`}
             className={styles.table}
             onClick={() => onTableClick(table.sessionHash)}
           >

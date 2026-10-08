@@ -17,6 +17,7 @@ export type IProps = {
   deadButton?: PlayerButtonMode;
   onDeadButtonClick?: () => void;
   rotateActionIcons?: 'cw' | 'ccw' | 'flip';
+  testIdPrefix?: string;
 };
 
 export const PlayerButtons = (props: IProps) => {
@@ -36,6 +37,7 @@ export const PlayerButtons = (props: IProps) => {
     >
       {!!props.riichiButton && (
         <RiichiBigIcon
+          data-testid={props.testIdPrefix ? `${props.testIdPrefix}-riichi` : undefined}
           onClick={props.onRiichiButtonClick}
           className={clsx(
             styles.riichiButton,
@@ -54,6 +56,7 @@ export const PlayerButtons = (props: IProps) => {
       >
         {!!props.winButton && (
           <Toggle
+            testId={props.testIdPrefix ? `${props.testIdPrefix}-win` : undefined}
             size='lg'
             disabled={props.winButton === PlayerButtonMode.DISABLE}
             selected={props.winButton === PlayerButtonMode.PRESSED}
@@ -64,6 +67,7 @@ export const PlayerButtons = (props: IProps) => {
         )}
         {!!props.loseButton && (
           <Toggle
+            testId={props.testIdPrefix ? `${props.testIdPrefix}-lose` : undefined}
             size='lg'
             disabled={props.loseButton === PlayerButtonMode.DISABLE}
             selected={props.loseButton === PlayerButtonMode.PRESSED}
@@ -74,6 +78,7 @@ export const PlayerButtons = (props: IProps) => {
         )}
         {!!props.deadButton && (
           <Toggle
+            testId={props.testIdPrefix ? `${props.testIdPrefix}-dead` : undefined}
             size='lg'
             disabled={props.deadButton === PlayerButtonMode.DISABLE}
             selected={props.deadButton === PlayerButtonMode.PRESSED}

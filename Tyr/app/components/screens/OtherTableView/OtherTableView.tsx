@@ -64,7 +64,7 @@ export const OtherTableView = ({ state, dispatch }: IComponentProps) => {
   if (state.currentOtherTable?.state.finished) {
     return (
       <>
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} data-testid='tyr-other-table-finished'>
           <div className={styles.gameFinished}>{loc._t('Game has finished')}</div>
           <div className={styles.buttons}>
             <Button
@@ -72,6 +72,7 @@ export const OtherTableView = ({ state, dispatch }: IComponentProps) => {
               onClick={() => dispatch({ type: GOTO_NEXT_SCREEN })}
               size='lg'
               icon={<SaveIcon />}
+              testId='tyr-other-table-finished-confirm'
             />
           </div>
         </div>

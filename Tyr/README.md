@@ -14,6 +14,14 @@ Features:
 - Live preview of timer (in tournament mode).
 - Ability to start the game with arbitrary player list (in regular mode).
 
+### UI test selectors
+
+Key controls and state displays use `data-testid` values beginning with `tyr-` so
+Fenrir can select them without depending on translated text or CSS. Use the
+screen/action name for a single control (for example, `tyr-home-new-game`) and
+append a stable event, player, or table ID for repeated items. Keep each new
+value unique across the frontend services.
+
 ### Legend
 
 **Týr** (/ˈtɪər/) is norse one-handed god, associated with law, warriors and glory. See wikipedia for details :)

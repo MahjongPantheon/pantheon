@@ -8,17 +8,19 @@ export const PopupMenuItem = ({
   icon,
   rightIcon,
   onClick,
+  testId,
 }: {
   variant?: 'normal' | 'primary';
   label: string | ReactElement;
   icon?: ReactElement;
   rightIcon?: ReactElement;
   onClick?: () => void;
+  testId?: string;
 }) => {
   variant ??= 'normal';
   return (
     <div
-      data-testid='popup_menu_item'
+      data-testid={testId}
       className={clsx(styles.menuItem, variant === 'primary' && styles.menuItemPrimary)}
       onClick={onClick}
     >

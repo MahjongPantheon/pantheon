@@ -31,8 +31,14 @@ export const Penalties = ({
 
   if (error) {
     return (
-      <div className={styles.wrapper}>
-        <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+      <div className={styles.wrapper} data-testid='tyr-penalties-error'>
+        <Button
+          variant='light'
+          icon={<BackIcon />}
+          size='lg'
+          onClick={onBackClick}
+          testId='tyr-penalties-error-back'
+        />
         <div className={styles.heading}>
           {loc._t('Failed to load penalties. Connection issues?')}
         </div>
@@ -41,8 +47,14 @@ export const Penalties = ({
   }
 
   return (
-    <div className={styles.wrapper}>
-      <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+    <div className={styles.wrapper} data-testid='tyr-penalties'>
+      <Button
+        variant='light'
+        icon={<BackIcon />}
+        size='lg'
+        onClick={onBackClick}
+        testId='tyr-penalties-back'
+      />
       <div className={styles.heading}>{loc._t('Your penalties in current event')}</div>
       <hr className={styles.separator} />
       <div className={styles.content}>
@@ -50,6 +62,7 @@ export const Penalties = ({
           penaltiesList?.map((p, idx) => (
             <div
               key={`pen_${idx}`}
+              data-testid={`tyr-penalties-item-${idx}`}
               className={clsx(styles.item, p.isCancelled ? styles.itemCancelled : null)}
             >
               <b>{p.amount > 0 ? `-${p.amount}` : loc._t('Notice')}</b>
@@ -57,7 +70,11 @@ export const Penalties = ({
             </div>
           ))
         ) : (
-          <div className={styles.item} style={{ textAlign: 'center', marginTop: '20px' }}>
+          <div
+            className={styles.item}
+            style={{ textAlign: 'center', marginTop: '20px' }}
+            data-testid='tyr-penalties-empty'
+          >
             {loc._t("You don't have any penalties in this event 🎉")}
           </div>
         )}

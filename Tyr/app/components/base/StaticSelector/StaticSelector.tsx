@@ -22,13 +22,20 @@ type IProps = {
   playerName?: string;
   wind: string;
   onPlayerClick: () => void;
+  testId?: string;
 };
 
-export const StaticSelector = ({ playerName, placeholder, wind, onPlayerClick }: IProps) => {
+export const StaticSelector = ({
+  playerName,
+  placeholder,
+  wind,
+  onPlayerClick,
+  testId,
+}: IProps) => {
   return (
     <div className={styles.dropdown}>
       <div className={styles.wind}>{wind}</div>
-      <div className={styles.player} onClick={onPlayerClick}>
+      <div className={styles.player} onClick={onPlayerClick} data-testid={testId}>
         {playerName ? (
           <div className={styles.playerName}>{playerName}</div>
         ) : (

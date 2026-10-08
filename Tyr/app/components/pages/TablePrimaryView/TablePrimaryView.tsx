@@ -62,13 +62,19 @@ export const TablePrimaryView = (props: IProps) => {
   ]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-table'>
       <div className={styles.mainArea}>
         <FourSidedScreen
-          sideUp={<PlayerPlace upsideDown={props.topRowUpsideDown} {...toimen} />}
-          sideLeft={<PlayerPlace {...kamicha} />}
-          sideDown={<PlayerPlace {...self} />}
-          sideRight={<PlayerPlace {...shimocha} />}
+          sideUp={
+            <PlayerPlace
+              upsideDown={props.topRowUpsideDown}
+              {...toimen}
+              testIdPrefix='tyr-table-player-toimen'
+            />
+          }
+          sideLeft={<PlayerPlace {...kamicha} testIdPrefix='tyr-table-player-kamicha' />}
+          sideDown={<PlayerPlace {...self} testIdPrefix='tyr-table-player-self' />}
+          sideRight={<PlayerPlace {...shimocha} testIdPrefix='tyr-table-player-shimocha' />}
           center={
             <TableStatus
               {...centerDims}
@@ -80,26 +86,38 @@ export const TablePrimaryView = (props: IProps) => {
         />
         {!!props.onAddNewGame && (
           <PopupMenu isOpen={newGameOpen} onClose={() => setNewGameOpen(false)}>
-            <PopupMenuItem onClick={() => props.onAddNewGame?.('ron')} label={loc._t('Ron')} />
-            <PopupMenuItem onClick={() => props.onAddNewGame?.('tsumo')} label={loc._t('Tsumo')} />
+            <PopupMenuItem
+              onClick={() => props.onAddNewGame?.('ron')}
+              label={loc._t('Ron')}
+              testId='tyr-table-outcome-ron'
+            />
+            <PopupMenuItem
+              onClick={() => props.onAddNewGame?.('tsumo')}
+              label={loc._t('Tsumo')}
+              testId='tyr-table-outcome-tsumo'
+            />
             <PopupMenuItem
               onClick={() => props.onAddNewGame?.('draw')}
               label={loc._t('Exhaustive draw')}
+              testId='tyr-table-outcome-draw'
             />
             {props.rulesetConfig.withAbortives && (
               <PopupMenuItem
                 onClick={() => props.onAddNewGame?.('abort')}
                 label={loc._t('Abortive draw')}
+                testId='tyr-table-outcome-abort'
               />
             )}
             <PopupMenuItem
               onClick={() => props.onAddNewGame?.('chombo')}
               label={loc._t('Chombo')}
+              testId='tyr-table-outcome-chombo'
             />
             {props.rulesetConfig.withNagashiMangan && (
               <PopupMenuItem
                 onClick={() => props.onAddNewGame?.('nagashi')}
                 label={loc._t('Nagashi mangan')}
+                testId='tyr-table-outcome-nagashi'
               />
             )}
           </PopupMenu>
@@ -107,22 +125,47 @@ export const TablePrimaryView = (props: IProps) => {
       </div>
       <BottomPanel>
         {!!props.onGoHome && (
-          <Button variant='light' icon={<HomeIcon />} size='lg' onClick={props.onGoHome} />
+          <Button
+            variant='light'
+            icon={<HomeIcon />}
+            size='lg'
+            onClick={props.onGoHome}
+            testId='tyr-table-home'
+          />
         )}
         {!!props.onGoBack && (
-          <Button variant='light' icon={<BackIcon />} size='lg' onClick={props.onGoBack} />
+          <Button
+            variant='light'
+            icon={<BackIcon />}
+            size='lg'
+            onClick={props.onGoBack}
+            testId='tyr-table-back'
+          />
         )}
-        <Button variant='light' icon={<RefreshIcon />} size='lg' onClick={props.onRefresh} />
+        <Button
+          variant='light'
+          icon={<RefreshIcon />}
+          size='lg'
+          onClick={props.onRefresh}
+          testId='tyr-table-refresh'
+        />
         {!!props.onAddNewGame && (
           <Button
             variant='light'
             icon={<AddNewIcon />}
             size='lg'
             onClick={() => setNewGameOpen(!newGameOpen)}
+            testId='tyr-table-add-round'
           />
         )}
         {!!props.onGotoGameLog && (
-          <Button variant='light' icon={<GameLogIcon />} size='lg' onClick={props.onGotoGameLog} />
+          <Button
+            variant='light'
+            icon={<GameLogIcon />}
+            size='lg'
+            onClick={props.onGotoGameLog}
+            testId='tyr-table-game-log'
+          />
         )}
       </BottomPanel>
     </div>
