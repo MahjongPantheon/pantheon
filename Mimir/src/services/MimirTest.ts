@@ -88,6 +88,7 @@ import {
   PreviewRound,
   RegisterPlayer,
   RecalcAchievements,
+  RecalcPlayerStats,
   RebuildScoring,
   ResetSeating,
   StartGame,
@@ -428,6 +429,10 @@ export class MimirTest {
 
   async RecalcAchievements(eventId: number): Promise<GenericSuccessResponse> {
     return RecalcAchievements({ eventId }, this._config);
+  }
+
+  async RecalcPlayerStats(eventId: number): Promise<GenericSuccessResponse> {
+    return RecalcPlayerStats({ eventId }, this._config);
   }
 
   async ClearStatCache(playerId: number): Promise<GenericSuccessResponse> {

@@ -2620,6 +2620,42 @@ describe('Mimir Twirp API', () => {
     }
   });
 
+  test('RecalcPlayerStats schedules a job for each registered player', async () => {
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_LOCAL,
+      'test player stats recalculation '
+    );
+    const config = new ConfigService().db;
+    const db = new Client({
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    const jobQuery =
+      "select job_arguments from jobs_queue where job_name = $1 and job_arguments::jsonb ->> 'eventId' = $2";
+    const jobParams = ['playerStats', String(eventId)];
+    try {
+      const jobsBefore = await db.query(jobQuery, jobParams);
+      expect(jobsBefore.rows).toHaveLength(0);
+
+      await mimirClient.RecalcPlayerStats(eventId);
+
+      const jobsAfter = await db.query(jobQuery, jobParams);
+      expect(
+        jobsAfter.rows.map((row) => JSON.parse(row.job_arguments).playerId).sort((a, b) => a - b)
+      ).toEqual([...gameFlowPlayerIds].sort((a, b) => a - b));
+    } finally {
+      await db.query(
+        "delete from jobs_queue where job_name = $1 and job_arguments::jsonb ->> 'eventId' = $2",
+        jobParams
+      );
+      await db.end();
+    }
+  });
+
   test('NotifyPlayersSessionStartsSoon sends registered player IDs to Skirnir', async () => {
     const eventId = await createEventWithRegisteredPlayers(
       EventType.EVENT_TYPE_TOURNAMENT,
@@ -2669,7 +2705,6 @@ AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-RecalcPlayerStats
 GetAchievements
 GetPlayerStats
 
