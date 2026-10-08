@@ -132,6 +132,53 @@ describe('Mimir Twirp API', () => {
     expect(events.events[0].id).toEqual(CLUB_RATING_EVENT_ID);
   });
 
+  test('GetAchievements returns achievements built by the cron worker', async () => {
+    const config = new ConfigService().db;
+    const db = new Client({
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    try {
+      const achievementsBefore = await db.query('select id from achievements where event_id = $1', [
+        CLUB_RATING_EVENT_ID,
+      ]);
+      expect(achievementsBefore.rows).toHaveLength(0);
+
+      await mimirClient.RecalcAchievements(CLUB_RATING_EVENT_ID);
+      const workerResponse = await fetch('http://localhost:4301/__test__/cron/achievements', {
+        method: 'POST',
+      });
+      expect(workerResponse.status).toBe(204);
+
+      const achievementsAfter = await db.query(
+        'select data, last_update from achievements where event_id = $1',
+        [CLUB_RATING_EVENT_ID]
+      );
+      expect(achievementsAfter.rows).toHaveLength(1);
+      expect(achievementsAfter.rows[0].last_update).toBeDefined();
+      const topResults = await db.query(
+        'select player_id, score from session_results where event_id = $1 order by score desc limit 3',
+        [CLUB_RATING_EVENT_ID]
+      );
+      expect(achievementsAfter.rows[0].data.needMoreGold).toEqual(
+        topResults.rows.map((result) => ({ playerId: result.player_id, score: result.score }))
+      );
+
+      const response = await mimirClient.GetAchievements(CLUB_RATING_EVENT_ID, ['needMoreGold']);
+      expect(response.achievements).toHaveLength(1);
+      expect(response.achievements[0].achievementId).toBe('needMoreGold');
+      expect(JSON.parse(response.achievements[0].achievementData)).toEqual(
+        achievementsAfter.rows[0].data.needMoreGold
+      );
+    } finally {
+      await db.end();
+    }
+  }, 30000);
+
   test('GetMyEvents', async () => {
     mimirClient.setPersonId(195); // player registered for club event
     const events = await mimirClient.GetMyEvents();
@@ -2705,7 +2752,6 @@ AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-GetAchievements
 GetPlayerStats
 
   */

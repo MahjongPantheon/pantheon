@@ -5,6 +5,8 @@ import { Context } from '../context.js';
 import { createServer, IncomingMessage } from 'http';
 import { injectRepository } from '../middleware/injectRepository.js';
 import { SkirnirServiceMock } from '../services/SkirnirMock.js';
+import { Repository } from '../services/Repository.js';
+import { rebuildAchievements } from '../../cron/achievements.js';
 
 import config from '../mikro-orm.config.js';
 import { MikroORM, RequestContext } from '@mikro-orm/postgresql';
@@ -29,7 +31,19 @@ app.on('error', (ctx, err) => {
   });
 });
 
-createServer((req, res) => {
+createServer(async (req, res) => {
+  if (req.method === 'POST' && req.url === '/__test__/cron/achievements') {
+    try {
+      await rebuildAchievements(Repository.instance({}, orm));
+      res.writeHead(204);
+      res.end();
+    } catch (error) {
+      console.error(error);
+      res.writeHead(500);
+      res.end('Achievements worker failed');
+    }
+    return;
+  }
   if (req.method === 'GET' && req.url === '/__test__/skirnir/session-starting-soon') {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(SkirnirServiceMock.sessionStartingSoonCalls));

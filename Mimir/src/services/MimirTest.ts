@@ -47,6 +47,7 @@ import {
   GenerateSwissSeating,
   GetAllRegisteredPlayers,
   GetAllRounds,
+  GetAchievements,
   GetCurrentSeating,
   GetCurrentSessions,
   GetCurrentStateForPlayer,
@@ -429,6 +430,10 @@ export class MimirTest {
 
   async RecalcAchievements(eventId: number): Promise<GenericSuccessResponse> {
     return RecalcAchievements({ eventId }, this._config);
+  }
+
+  async GetAchievements(eventId: number, achievementsList: string[]) {
+    return GetAchievements({ eventId, achievementsList }, this._config);
   }
 
   async RecalcPlayerStats(eventId: number): Promise<GenericSuccessResponse> {
