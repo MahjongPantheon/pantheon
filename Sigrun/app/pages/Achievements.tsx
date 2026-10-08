@@ -784,7 +784,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   }
 
   return (
-    <Container p={largeScreen ? 'md' : 0}>
+    <Container data-testid='sigrun-achievements-page' p={largeScreen ? 'md' : 0}>
       <Meta
         title={`${events?.[0].title} - ${i18n._t('Achievements')} - Sigrun`}
         description={i18n._t('Achievements list for the event "%1" provided by Mahjong Pantheon', [
@@ -813,7 +813,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       <Accordion chevronPosition='right' variant='contained' multiple={true}>
         {ach.map((item, idx) => (
           <Accordion.Item value={item.id} key={`ach_${idx}`}>
-            <Accordion.Control>
+            <Accordion.Control data-testid={`sigrun-achievement-toggle-${item.id}`}>
               <AccordionLabel {...item} />
             </Accordion.Control>
             <Accordion.Panel>

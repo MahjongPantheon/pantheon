@@ -7,15 +7,18 @@ import { modalsCtx } from '../hooks/modals';
 export const AddOnlineReplayLink = ({
   onClick,
   showLabel,
+  testId,
 }: {
   onClick?: () => void;
   showLabel?: boolean;
+  testId: string;
 }) => {
   const modals = useContext(modalsCtx);
   const i18n = useI18n();
 
   return (
     <NavLink
+      data-testid={testId}
       style={{ borderLeft: '10px solid #7e95c4', marginBottom: '2px', textDecoration: 'none' }}
       styles={{ label: { fontSize: '18px' } }}
       leftSection={<IconNetwork size={24} />}

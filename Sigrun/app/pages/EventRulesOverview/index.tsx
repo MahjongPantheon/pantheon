@@ -61,7 +61,7 @@ export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
   const event = events[0];
   return (
     <>
-      <Container>
+      <Container data-testid='sigrun-rules-page'>
         <Meta
           title={`${events?.[0].title} - ${i18n._t('Rules overview')} - Sigrun`}
           description={i18n._t('Rules overview for the event "%1" provided by Mahjong Pantheon', [

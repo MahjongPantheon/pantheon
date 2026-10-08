@@ -34,6 +34,7 @@ type MainMenuProps = {
   saveLang: (lang: string) => void;
   toggleDimmed: () => void;
   showLabels: boolean;
+  testIdScope: 'drawer' | 'sidebar';
 };
 
 export const MainMenu = ({
@@ -42,6 +43,7 @@ export const MainMenu = ({
   saveLang,
   toggleDimmed,
   showLabels,
+  testIdScope,
 }: MainMenuProps) => {
   const i18n = useI18n();
   const globals = useContext(globalsCtx);
@@ -65,6 +67,7 @@ export const MainMenu = ({
               {globals.data.eventId?.length === 1 &&
                 (auth.ownEvents.includes(globals.data.eventId?.[0]) || auth.isSuperadmin) && (
                   <MainMenuLink
+                    testId={`sigrun-menu-${testIdScope}-event-admin`}
                     external={ExternalTarget.FORSETI}
                     href={`${env.urls.forseti}/ownedEvents/edit/${globals.data.eventId?.[0]}`}
                     icon={<IconAdjustmentsAlt size={20} />}
@@ -74,6 +77,7 @@ export const MainMenu = ({
                   />
                 )}
               <MainMenuLink
+                testId={`sigrun-menu-${testIdScope}-event-info`}
                 href={`/event/${globals.data.eventId?.join('.')}/info`}
                 icon={<IconNotes size={24} />}
                 text={showLabels ? i18n._pt('Event menu', 'Description') : ''}
@@ -81,6 +85,7 @@ export const MainMenu = ({
                 onClick={closeMenu}
               />
               <MainMenuLink
+                testId={`sigrun-menu-${testIdScope}-event-rules`}
                 href={`/event/${globals.data.eventId?.join('.')}/rules`}
                 icon={<IconListCheck size={24} />}
                 text={showLabels ? i18n._pt('Event menu', 'Rules overview') : ''}
@@ -88,6 +93,7 @@ export const MainMenu = ({
                 onClick={closeMenu}
               />
               <MainMenuLink
+                testId={`sigrun-menu-${testIdScope}-recent-games`}
                 href={`/event/${globals.data.eventId?.join('.')}/games`}
                 icon={<IconOlympics size={24} />}
                 text={showLabels ? i18n._pt('Event menu', 'Recent games') : ''}
@@ -95,6 +101,7 @@ export const MainMenu = ({
                 onClick={closeMenu}
               />
               <MainMenuLink
+                testId={`sigrun-menu-${testIdScope}-rating-table`}
                 href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
                 icon={<IconChartBar size={24} />}
                 text={showLabels ? i18n._pt('Event menu', 'Rating table') : ''}
@@ -103,6 +110,7 @@ export const MainMenu = ({
               />
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT && (
                 <MainMenuLink
+                  testId={`sigrun-menu-${testIdScope}-tables-state`}
                   href={`/event/${globals.data.eventId?.join('.')}/tablesState`}
                   icon={<IconClipboardData size={24} />}
                   text={showLabels ? i18n._pt('Event menu', 'Tables state') : ''}
@@ -112,6 +120,7 @@ export const MainMenu = ({
               )}
               {globals.data.type === EventType.EVENT_TYPE_ONLINE && (
                 <MainMenuLink
+                  testId={`sigrun-menu-${testIdScope}-registered-players`}
                   href={`/event/${globals.data.eventId?.[0]}/playersList`}
                   icon={<IconUsers size={24} />}
                   text={showLabels ? i18n._pt('Event menu', 'Registered players') : ''}
@@ -121,6 +130,7 @@ export const MainMenu = ({
               )}
               {globals.data.eventId?.length === 1 && (
                 <MainMenuLink
+                  testId={`sigrun-menu-${testIdScope}-achievements`}
                   href={`/event/${globals.data.eventId?.join('.')}/achievements`}
                   icon={<IconAward size={24} />}
                   text={showLabels ? i18n._pt('Event menu', 'Achievements') : ''}
@@ -130,6 +140,7 @@ export const MainMenu = ({
               )}
               {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
                 <MainMenuLink
+                  testId={`sigrun-menu-${testIdScope}-series-rating`}
                   href={`/event/${globals.data.eventId?.join('.')}/seriesRating`}
                   icon={<IconChartLine size={24} />}
                   text={showLabels ? i18n._pt('Event menu', 'Series rating') : ''}
@@ -140,6 +151,7 @@ export const MainMenu = ({
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
                 globals.data.eventId?.length === 1 && (
                   <MainMenuLink
+                    testId={`sigrun-menu-${testIdScope}-timer`}
                     href={`/event/${globals.data.eventId?.join('.')}/timer`}
                     icon={<IconAlarm size={24} />}
                     text={showLabels ? i18n._pt('Event menu', 'Timer & seating') : ''}
@@ -151,7 +163,11 @@ export const MainMenu = ({
                 globals.data.platformType === PlatformType.PLATFORM_TYPE_TENHOUNET &&
                 globals.data.eventId?.length === 1 &&
                 globals.data.allowManualAddReplay && (
-                  <AddOnlineReplayLink showLabel={showLabels} onClick={closeMenu} />
+                  <AddOnlineReplayLink
+                    showLabel={showLabels}
+                    onClick={closeMenu}
+                    testId={`sigrun-menu-${testIdScope}-add-online-game`}
+                  />
                 )}
             </>
           )}
@@ -163,6 +179,7 @@ export const MainMenu = ({
             labelPosition='center'
           />
           <MainMenuLink
+            testId={`sigrun-menu-${testIdScope}-events-list`}
             href='/'
             icon={<IconList size={20} />}
             text={showLabels ? i18n._t('To events list') : ''}
@@ -171,6 +188,7 @@ export const MainMenu = ({
           />
           {isLoggedIn && (
             <MainMenuLink
+              testId={`sigrun-menu-${testIdScope}-edit-profile`}
               external={ExternalTarget.FORSETI}
               href={`${env.urls.forseti}/profile/manage`}
               icon={<IconAdjustmentsAlt size={20} />}
@@ -181,6 +199,7 @@ export const MainMenu = ({
           )}
           {!isLoggedIn && (
             <MainMenuLink
+              testId={`sigrun-menu-${testIdScope}-sign-in`}
               external={ExternalTarget.FORSETI}
               href={`${env.urls.forseti}/profile/login`}
               icon={<IconLogin size={20} />}
@@ -191,6 +210,7 @@ export const MainMenu = ({
           )}
           {!isLoggedIn && (
             <MainMenuLink
+              testId={`sigrun-menu-${testIdScope}-sign-up`}
               external={ExternalTarget.FORSETI}
               href={`${env.urls.forseti}/profile/signup`}
               icon={<IconUserPlus size={20} />}
@@ -200,6 +220,7 @@ export const MainMenu = ({
             />
           )}
           <MainMenuLink
+            testId={`sigrun-menu-${testIdScope}-open-assistant`}
             external={ExternalTarget.TYR}
             href={env.urls.tyr}
             icon={<IconDeviceMobileShare size={20} />}
@@ -210,6 +231,7 @@ export const MainMenu = ({
         </Stack>
         <Group mt={0} gap={0}>
           <NavLink
+            data-testid={`sigrun-menu-${testIdScope}-language`}
             styles={{
               label: { fontSize: '18px' },
               children: { paddingLeft: 0 },
@@ -220,6 +242,7 @@ export const MainMenu = ({
             title={i18n._t('Language')}
           >
             <NavLink
+              data-testid={`sigrun-menu-${testIdScope}-language-en`}
               onClick={() => {
                 saveLang('en');
                 closeMenu?.();
@@ -228,6 +251,7 @@ export const MainMenu = ({
               label={showLabels ? 'en' : ''}
             />
             <NavLink
+              data-testid={`sigrun-menu-${testIdScope}-language-ru`}
               onClick={() => {
                 saveLang('ru');
                 closeMenu?.();
@@ -236,6 +260,7 @@ export const MainMenu = ({
               label={showLabels ? 'ru' : ''}
             />
             <NavLink
+              data-testid={`sigrun-menu-${testIdScope}-language-de`}
               onClick={() => {
                 saveLang('de');
                 closeMenu?.();
@@ -244,6 +269,7 @@ export const MainMenu = ({
               label={showLabels ? 'de' : ''}
             />
             <NavLink
+              data-testid={`sigrun-menu-${testIdScope}-language-ko`}
               onClick={() => {
                 saveLang('ko');
                 closeMenu?.();
@@ -253,6 +279,7 @@ export const MainMenu = ({
             />
           </NavLink>
           <NavLink
+            data-testid={`sigrun-menu-${testIdScope}-dimmed-colors`}
             styles={{ label: { fontSize: '18px' } }}
             leftSection={<IconSun size={20} />}
             onClick={() => {
@@ -263,6 +290,7 @@ export const MainMenu = ({
             title={i18n._t('Toggle dimmed colors')}
           />
           <NavLink
+            data-testid={`sigrun-menu-${testIdScope}-color-scheme`}
             styles={{ label: { fontSize: '18px' } }}
             leftSection={isDark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
             onClick={() => {

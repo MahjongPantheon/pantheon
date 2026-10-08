@@ -51,7 +51,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
   }
 
   return (
-    <Container>
+    <Container data-testid='sigrun-event-info-page'>
       <Meta
         title={
           events?.length === 1
@@ -99,6 +99,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
                   }}
                 />
                 <Anchor
+                  data-testid={`sigrun-event-admin-link-${admin.personId}`}
                   href={`/event/${eventId}/player/${admin.personId}`}
                   fz='13'
                   onClick={(e) => {
@@ -128,6 +129,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
                     }}
                   />
                   <Anchor
+                    data-testid={`sigrun-event-referee-link-${referee.personId}`}
                     href={`/event/${eventId}/player/${referee.personId}`}
                     fz='13'
                     onClick={(e) => {

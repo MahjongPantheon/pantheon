@@ -76,7 +76,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
   );
 
   return (
-    <Container>
+    <Container data-testid='sigrun-events-page'>
       <Meta
         title={`${i18n._t('Event list')} - Sigrun`}
         description={i18n._t('List of all events registered with Mahjong Pantheon')}
@@ -98,6 +98,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
           const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
           return (
             <Group
+              data-testid={`sigrun-event-row-${e.id}`}
               key={`ev_${idx}`}
               style={{
                 padding: '10px',
@@ -107,6 +108,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
             >
               <EventTypeIcon event={e} />
               <a
+                data-testid={`sigrun-event-rating-link-${e.id}`}
                 href={`/event/${e.id}/order/rating`}
                 onClick={(ev) => {
                   navigate(`/event/${e.id}/order/rating`);
@@ -122,6 +124,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
                 style={{ flex: 1, maxWidth: largeScreen ? 'calc(100% - 150px)' : '100%' }}
               >
                 <a
+                  data-testid={`sigrun-event-info-link-${e.id}`}
                   style={{
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
@@ -156,6 +159,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
       <Space h='md' />
       <Center>
         <Pagination
+          data-testid='sigrun-events-pagination'
           size={largeScreen ? 'md' : 'sm'}
           value={parseInt(page, 10)}
           onChange={(p) => {

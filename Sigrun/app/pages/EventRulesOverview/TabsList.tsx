@@ -35,16 +35,25 @@ type TabsProps = {
 export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
   return (
     <>
-      <Tabs.Tab value='ruleset_tuning' leftSection={<IconAdjustments size='0.8rem' />}>
+      <Tabs.Tab
+        data-testid='sigrun-rules-tab-ruleset'
+        value='ruleset_tuning'
+        leftSection={<IconAdjustments size='0.8rem' />}
+      >
         {i18n._t('Ruleset details')}
       </Tabs.Tab>
       {eventType === EventType.EVENT_TYPE_LOCAL && (
-        <Tabs.Tab value={EventType.EVENT_TYPE_LOCAL} leftSection={<IconFriends size='0.8rem' />}>
+        <Tabs.Tab
+          data-testid='sigrun-rules-tab-local'
+          value={EventType.EVENT_TYPE_LOCAL}
+          leftSection={<IconFriends size='0.8rem' />}
+        >
           {i18n._t('Local event settings')}
         </Tabs.Tab>
       )}
       {eventType === EventType.EVENT_TYPE_TOURNAMENT && (
         <Tabs.Tab
+          data-testid='sigrun-rules-tab-tournament'
           value={EventType.EVENT_TYPE_TOURNAMENT}
           leftSection={<IconTournament size='0.8rem' />}
         >
@@ -52,11 +61,19 @@ export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
         </Tabs.Tab>
       )}
       {eventType === EventType.EVENT_TYPE_ONLINE && (
-        <Tabs.Tab value={EventType.EVENT_TYPE_ONLINE} leftSection={<IconNetwork size='0.8rem' />}>
+        <Tabs.Tab
+          data-testid='sigrun-rules-tab-online'
+          value={EventType.EVENT_TYPE_ONLINE}
+          leftSection={<IconNetwork size='0.8rem' />}
+        >
           {i18n._t('Online event settings')}
         </Tabs.Tab>
       )}
-      <Tabs.Tab value='yaku_tuning' leftSection={<IconListCheck size='0.8rem' />}>
+      <Tabs.Tab
+        data-testid='sigrun-rules-tab-yaku'
+        value='yaku_tuning'
+        leftSection={<IconListCheck size='0.8rem' />}
+      >
         {i18n._t('Yaku settings')}
       </Tabs.Tab>
     </>

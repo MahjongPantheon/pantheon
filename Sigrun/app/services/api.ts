@@ -24,7 +24,6 @@ import {
   GetEventsById,
   GetGame,
   GetGameConfig,
-  GetGameJSON,
   GetGamesSeries,
   GetLastGames,
   GetPlayer,

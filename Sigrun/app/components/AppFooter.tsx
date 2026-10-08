@@ -33,6 +33,7 @@ export function AppFooter() {
       <Container style={{ flex: 1 }}>
         <Group justify='space-between'>
           <ActionIcon
+            data-testid='sigrun-footer-back-to-top'
             variant='subtle'
             c='blue'
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -44,11 +45,17 @@ export function AppFooter() {
           <Group style={{ display: largeScreen ? 'inherit' : 'none' }} align='flex-start'>
             {globals.data.eventId && (
               <Stack gap={0}>
-                <Anchor c='gray' size='xs' href={`/event/${globals.data.eventId?.join('.')}/info`}>
+                <Anchor
+                  data-testid='sigrun-footer-event-info'
+                  c='gray'
+                  size='xs'
+                  href={`/event/${globals.data.eventId?.join('.')}/info`}
+                >
                   {i18n._t('Description')}
                 </Anchor>
                 {globals.data.eventId?.length === 1 && (
                   <Anchor
+                    data-testid='sigrun-footer-event-rules'
                     c='gray'
                     size='xs'
                     href={`/event/${globals.data.eventId?.join('.')}/rules`}
@@ -60,10 +67,16 @@ export function AppFooter() {
             )}
             {globals.data.eventId && (
               <Stack gap={0}>
-                <Anchor c='gray' size='xs' href={`/event/${globals.data.eventId?.join('.')}/games`}>
+                <Anchor
+                  data-testid='sigrun-footer-recent-games'
+                  c='gray'
+                  size='xs'
+                  href={`/event/${globals.data.eventId?.join('.')}/games`}
+                >
                   {i18n._t('Recent games')}
                 </Anchor>
                 <Anchor
+                  data-testid='sigrun-footer-rating-table'
                   c='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId?.join('.')}/order/rating`}
@@ -75,6 +88,7 @@ export function AppFooter() {
             <Stack gap={0}>
               {globals.data.eventId?.length === 1 && (
                 <Anchor
+                  data-testid='sigrun-footer-achievements'
                   c='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId.join('.')}/achievements`}
@@ -84,6 +98,7 @@ export function AppFooter() {
               )}
               {globals.data.hasSeries && globals.data.eventId?.length === 1 && (
                 <Anchor
+                  data-testid='sigrun-footer-series-rating'
                   c='gray'
                   size='xs'
                   href={`/event/${globals.data.eventId.join('.')}/seriesRating`}
@@ -96,6 +111,7 @@ export function AppFooter() {
               {globals.data.type === EventType.EVENT_TYPE_TOURNAMENT &&
                 globals.data.eventId?.length === 1 && (
                   <Anchor
+                    data-testid='sigrun-footer-timer'
                     c='gray'
                     size='xs'
                     href={`/event/${globals.data.eventId.join('.')}/timer`}

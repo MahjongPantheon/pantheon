@@ -49,6 +49,7 @@ export const AddOnlineReplayModal = () => {
 
   return (
     <Modal
+      data-testid='sigrun-add-online-game-modal'
       opened={modals.onlineModalShown}
       onClose={modals.hideOnlineModal}
       overlayProps={{
@@ -61,6 +62,7 @@ export const AddOnlineReplayModal = () => {
     >
       <LoadingOverlay visible={onlineLoading} />
       <TextInput
+        data-testid='sigrun-add-online-game-replay-url'
         placeholder='http://tenhou.net/0/?log=XXXXXXXXXXgm-XXXX-XXXXX-XXXXXXXX'
         label={'Enter replay URL'}
         error={onlineError}
@@ -70,7 +72,9 @@ export const AddOnlineReplayModal = () => {
       />
       <Space h='md' />
       <Group justify='flex-end'>
-        <Button onClick={tryAddOnline}>{i18n._t('Add replay')}</Button>
+        <Button data-testid='sigrun-add-online-game-submit' onClick={tryAddOnline}>
+          {i18n._t('Add replay')}
+        </Button>
       </Group>
     </Modal>
   );

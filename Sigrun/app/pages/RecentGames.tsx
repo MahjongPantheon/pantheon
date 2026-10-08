@@ -72,7 +72,7 @@ export const RecentGames: React.FC<{
 
   return (
     events && (
-      <Container>
+      <Container data-testid='sigrun-recent-games-page'>
         <Meta
           title={
             events?.length === 1
@@ -133,6 +133,7 @@ export const RecentGames: React.FC<{
         <Space h='md' />
         <Center>
           <Pagination
+            data-testid='sigrun-recent-games-pagination'
             size={largeScreen ? 'md' : 'sm'}
             value={parseInt(page, 10)}
             onChange={(p) => {

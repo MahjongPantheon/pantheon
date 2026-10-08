@@ -111,7 +111,7 @@ export const PlayerStats: React.FC<{
   }
 
   return (
-    <Container>
+    <Container data-testid='sigrun-player-stats-page'>
       <Meta
         title={`${player.title} - ${i18n._t('Player stats')} - Sigrun`}
         description={i18n._t(
@@ -151,15 +151,17 @@ export const PlayerStats: React.FC<{
       <Divider size='xs' />
       <Space h='md' />
       <Suspense fallback={<Loader />}>
-        <RatingGraph
-          lastSelectionHash={lastSelectionHash}
-          lastSelectionX={lastSelectionX}
-          setLastSelectionHash={setLastSelectionHash}
-          setLastSelectionX={setLastSelectionX}
-          playerStats={playerStats}
-          onSelectGame={setSelectedGame}
-          playerId={parseInt(playerId, 10)}
-        />
+        <div data-testid='sigrun-player-stats-rating-graph'>
+          <RatingGraph
+            lastSelectionHash={lastSelectionHash}
+            lastSelectionX={lastSelectionX}
+            setLastSelectionHash={setLastSelectionHash}
+            setLastSelectionX={setLastSelectionX}
+            playerStats={playerStats}
+            onSelectGame={setSelectedGame}
+            playerId={parseInt(playerId, 10)}
+          />
+        </div>
       </Suspense>
       <Space h='md' />
       <Divider size='xs' />
@@ -168,6 +170,7 @@ export const PlayerStats: React.FC<{
         <>
           <Group justify='space-between'>
             <Anchor
+              data-testid='sigrun-player-stats-selected-game-link'
               href={`/event/${eventId}/game/${selectedGame.tables[0].sessionHash}`}
               onClick={(e) => {
                 navigate(`/event/${eventId}/game/${selectedGame.tables[0].sessionHash}`);
@@ -178,6 +181,7 @@ export const PlayerStats: React.FC<{
             </Anchor>
             <Group>
               <ActionIcon
+                data-testid='sigrun-player-stats-previous-game'
                 size='lg'
                 color='blue'
                 variant='filled'
@@ -196,6 +200,7 @@ export const PlayerStats: React.FC<{
                 <IconChevronLeft size='1.5rem' />
               </ActionIcon>
               <ActionIcon
+                data-testid='sigrun-player-stats-next-game'
                 size='lg'
                 color='blue'
                 variant='filled'
@@ -218,6 +223,7 @@ export const PlayerStats: React.FC<{
               </ActionIcon>
               <Space w='xl' />
               <ActionIcon
+                data-testid='sigrun-player-stats-close-game-preview'
                 size='lg'
                 color='red'
                 variant='filled'
@@ -272,6 +278,7 @@ export const PlayerStats: React.FC<{
                       <Text fw={700}>{seat.title}</Text>
                     ) : (
                       <Anchor
+                        data-testid={`sigrun-player-stats-preview-player-link-${seat.playerId}`}
                         href={getPlayerUrl(seat.playerId)}
                         onClick={(e) => {
                           navigate(getPlayerUrl(seat.playerId));

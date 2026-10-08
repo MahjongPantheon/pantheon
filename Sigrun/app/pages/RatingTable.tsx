@@ -176,7 +176,7 @@ export const RatingTable: React.FC<{
 
   return (
     events && (
-      <Container>
+      <Container data-testid='sigrun-rating-page'>
         <Meta
           title={
             events?.length === 1
@@ -197,6 +197,7 @@ export const RatingTable: React.FC<{
             </h2>
             {orderBy !== 'team' && events.length === 1 && (
               <Button
+                data-testid='sigrun-rating-download-csv'
                 variant='light'
                 size='xs'
                 leftSection={<IconDownload size='1.1rem' />}
@@ -224,6 +225,7 @@ export const RatingTable: React.FC<{
               <Group gap='md' grow={!largeScreen}>
                 {globals.data.isTeam && (
                   <Badge
+                    data-testid='sigrun-rating-sort-team'
                     size='lg'
                     color='grape'
                     radius='sm'
@@ -247,6 +249,7 @@ export const RatingTable: React.FC<{
                   </Badge>
                 )}
                 <Badge
+                  data-testid='sigrun-rating-sort-rating'
                   size='lg'
                   color='lime'
                   radius='sm'
@@ -269,6 +272,7 @@ export const RatingTable: React.FC<{
                   {i18n._t('Rating')}
                 </Badge>
                 <Badge
+                  data-testid='sigrun-rating-sort-games-and-rating'
                   size='lg'
                   color='purple'
                   radius='sm'
@@ -292,6 +296,7 @@ export const RatingTable: React.FC<{
                 </Badge>
                 {events?.[0]?.withChips && (
                   <Badge
+                    data-testid='sigrun-rating-sort-chips'
                     size='lg'
                     color='orange'
                     radius='sm'
@@ -317,6 +322,7 @@ export const RatingTable: React.FC<{
               </Group>
               <Group gap='md' grow={!largeScreen}>
                 <Badge
+                  data-testid='sigrun-rating-sort-average-score'
                   size='lg'
                   color='green'
                   radius='sm'
@@ -339,6 +345,7 @@ export const RatingTable: React.FC<{
                   {i18n._t('Average score')}
                 </Badge>
                 <Badge
+                  data-testid='sigrun-rating-sort-average-place'
                   size='lg'
                   radius='sm'
                   color={calcDimmedBackground(isDimmed, isDark)}
@@ -375,6 +382,7 @@ export const RatingTable: React.FC<{
                 <DataCmp justify='flex-end' gap='md'>
                   <Group gap='md' grow={!largeScreen}>
                     <Badge
+                      data-testid='sigrun-rating-filter-all-players'
                       size='lg'
                       color='lime'
                       radius='sm'
@@ -392,6 +400,7 @@ export const RatingTable: React.FC<{
                       {i18n._t('All players')}
                     </Badge>
                     <Badge
+                      data-testid='sigrun-rating-filter-min-games'
                       size='lg'
                       color='orange'
                       radius='sm'
@@ -430,6 +439,7 @@ export const RatingTable: React.FC<{
               {(players ?? []).map((player, idx) => {
                 return (
                   <DataCmp
+                    data-testid={`sigrun-rating-player-row-${player.id}`}
                     key={`pl_${idx}`}
                     gap='xs'
                     style={{
@@ -456,6 +466,7 @@ export const RatingTable: React.FC<{
                       <PlayerAvatar p={player} />
                       <Stack gap={2}>
                         <Anchor
+                          data-testid={`sigrun-rating-player-link-${player.id}`}
                           href={getPlayerUrl(player.id)}
                           onClick={(e) => {
                             navigate(getPlayerUrl(player.id));
