@@ -2559,13 +2559,34 @@ describe('Mimir Twirp API', () => {
     );
   });
 
+  test('CallReferee sends event and table IDs to Skirnir', async () => {
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_TOURNAMENT,
+      'test referee call '
+    );
+    await mimirClient.MakeShuffledSeating(
+      eventId,
+      1,
+      12345,
+      WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+    );
+
+    const tableIndex = 1;
+    const response = await mimirClient.CallReferee(eventId, tableIndex);
+    expect(response.success).toBe(true);
+
+    const calls = (await fetch('http://localhost:4301/__test__/skirnir/call-referee').then(
+      (mockResponse) => mockResponse.json()
+    )) as Array<{ eventId: number; tableIndex: number }>;
+    expect(calls.filter((call) => call.eventId === eventId)).toEqual([{ eventId, tableIndex }]);
+  });
+
   /*
 
 AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-CallReferee
 RebuildScoring
 RecalcAchievements
 RecalcPlayerStats

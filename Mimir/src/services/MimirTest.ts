@@ -14,6 +14,7 @@ import {
   AddRound,
   CancelGame,
   CancelPenalty,
+  CallReferee,
   ClearStatCache,
   CreateEvent,
   DefinalizeGame,
@@ -425,5 +426,9 @@ export class MimirTest {
 
   async NotifyPlayersSessionStartsSoon(eventId: number): Promise<GenericSuccessResponse> {
     return NotifyPlayersSessionStartsSoon({ eventId }, this._config);
+  }
+
+  async CallReferee(eventId: number, tableIndex: number): Promise<GenericSuccessResponse> {
+    return CallReferee({ eventId, tableIndex }, this._config);
   }
 }

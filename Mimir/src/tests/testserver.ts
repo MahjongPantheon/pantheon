@@ -35,6 +35,11 @@ createServer((req, res) => {
     res.end(JSON.stringify(SkirnirServiceMock.sessionStartingSoonCalls));
     return;
   }
+  if (req.method === 'GET' && req.url === '/__test__/skirnir/call-referee') {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(SkirnirServiceMock.callRefereeCalls));
+    return;
+  }
   app(req, res);
 }).listen(4301, () => {
   console.log(`Test server listening on port 4301`);
