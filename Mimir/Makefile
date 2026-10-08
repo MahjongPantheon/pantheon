@@ -104,10 +104,10 @@ container_typecheck: get_container_id
 	fi
 
 .PHONY: test
+test: export TEST=true
 test: export NODE_OPTIONS=--experimental-vm-modules
-test:
+test: seed_test_db
 	echo "======= Mimir: test ======"
-	#make seed_test_db
 	pnpm exec jest --runInBand
 	# For debugging:
 	#node --inspect=0.0.0.0:4411 node_modules/jest/bin/jest.js --runInBand -t 'Mimir Twirp API'
@@ -121,11 +121,11 @@ container_test: get_container_id
 	fi
 
 .PHONY: test_verbose
+test_verbose: export TEST=true
 test_verbose: export TEST_VERBOSE=true
-test: export NODE_OPTIONS=--experimental-vm-modules
-test_verbose:
+test_verbose: export NODE_OPTIONS=--experimental-vm-modules
+test_verbose: seed_test_db
 	echo "======= Mimir: test ======"
-	make init_test_db
 	pnpm exec jest
 
 .PHONY: container_test_verbose

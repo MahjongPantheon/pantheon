@@ -1,5 +1,12 @@
 import { createUser, getAdminCreds, makeFreyClient, makeUniqueEmail } from '../helpers';
 
+const expectPeopleInAnyOrder = (people: unknown[], expected: object[]) => {
+  expect(people).toHaveLength(expected.length);
+  expect(people).toEqual(
+    expect.arrayContaining(expected.map((person) => expect.objectContaining(person)))
+  );
+};
+
 describe('Search for users', () => {
   const frey = makeFreyClient();
 
@@ -88,169 +95,154 @@ describe('Search for users', () => {
   it('should find users by title', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
-      frey.FindByTitle(
-        { query: 'Davi' },
-        {
-          headers: {
-            'x-current-person-id': authData.personId.toString(),
-            'x-auth-token': authData.authToken,
-          },
-        }
-      )
-    ).resolves.toMatchObject({
-      people: [
-        {
-          city: 'testcity',
-          tenhouId: 'davig1',
-          title: 'David Guetta',
+    const { people } = await frey.FindByTitle(
+      { query: 'Davi' },
+      {
+        headers: {
+          'x-current-person-id': authData.personId.toString(),
+          'x-auth-token': authData.authToken,
         },
-        {
-          city: 'testcity',
-          tenhouId: 'davij1',
-          title: 'David Johnson',
-        },
-      ],
-    });
+      }
+    );
+    expectPeopleInAnyOrder(people, [
+      {
+        city: 'testcity',
+        tenhouId: 'davig1',
+        title: 'David Guetta',
+      },
+      {
+        city: 'testcity',
+        tenhouId: 'davij1',
+        title: 'David Johnson',
+      },
+    ]);
   });
 
   it('should find users by tenhou id', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
-      frey.FindByTenhouIds(
-        { ids: ['davig1', 'davij1'] },
-        {
-          headers: {
-            'x-current-person-id': authData.personId.toString(),
-            'x-auth-token': authData.authToken,
-          },
-        }
-      )
-    ).resolves.toMatchObject({
-      people: [
-        {
-          city: 'testcity',
-          tenhouId: 'davig1',
-          title: 'David Guetta',
+    const { people } = await frey.FindByTenhouIds(
+      { ids: ['davig1', 'davij1'] },
+      {
+        headers: {
+          'x-current-person-id': authData.personId.toString(),
+          'x-auth-token': authData.authToken,
         },
-        {
-          city: 'testcity',
-          tenhouId: 'davij1',
-          title: 'David Johnson',
-        },
-      ],
-    });
+      }
+    );
+    expectPeopleInAnyOrder(people, [
+      {
+        city: 'testcity',
+        tenhouId: 'davig1',
+        title: 'David Guetta',
+      },
+      {
+        city: 'testcity',
+        tenhouId: 'davij1',
+        title: 'David Johnson',
+      },
+    ]);
   });
 
   it('should find users by tenhou id with private data as superadmin', async () => {
     const adminCreds = await getAdminCreds();
-    return expect(() =>
-      frey.FindByTenhouIds(
-        { ids: ['davig1', 'davij1'] },
-        {
-          headers: {
-            'x-current-person-id': adminCreds.id.toString(),
-            'x-auth-token': adminCreds.hash,
-          },
-        }
-      )
-    ).resolves.toMatchObject({
-      people: [
-        {
-          city: 'testcity',
-          tenhouId: 'davig1',
-          title: 'David Guetta',
-          email: expect.anything(),
-          phone: '123321',
+    const { people } = await frey.FindByTenhouIds(
+      { ids: ['davig1', 'davij1'] },
+      {
+        headers: {
+          'x-current-person-id': adminCreds.id.toString(),
+          'x-auth-token': adminCreds.hash,
         },
-        {
-          city: 'testcity',
-          tenhouId: 'davij1',
-          title: 'David Johnson',
-          email: expect.anything(),
-          phone: '123321',
-        },
-      ],
-    });
+      }
+    );
+    expectPeopleInAnyOrder(people, [
+      {
+        city: 'testcity',
+        tenhouId: 'davig1',
+        title: 'David Guetta',
+        email: expect.anything(),
+        phone: '123321',
+      },
+      {
+        city: 'testcity',
+        tenhouId: 'davij1',
+        title: 'David Johnson',
+        email: expect.anything(),
+        phone: '123321',
+      },
+    ]);
   });
 
   it('should find users by majsoul nickname', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
-      frey.FindByMajsoulAccountId(
-        {
-          ids: [
-            { nickname: 'davig2', accountId: 0 },
-            { nickname: 'davij2', accountId: 1 },
-          ],
+    const { people } = await frey.FindByMajsoulAccountId(
+      {
+        ids: [
+          { nickname: 'davig2', accountId: 0 },
+          { nickname: 'davij2', accountId: 1 },
+        ],
+      },
+      {
+        headers: {
+          'x-current-person-id': authData.personId.toString(),
+          'x-auth-token': authData.authToken,
         },
-        {
-          headers: {
-            'x-current-person-id': authData.personId.toString(),
-            'x-auth-token': authData.authToken,
-          },
-        }
-      )
-    ).resolves.toMatchObject({
-      people: [
-        {
-          city: 'testcity',
-          tenhouId: 'davig1',
-          title: 'David Guetta',
-          msNickname: 'davig2',
-          msAccountId: 321,
-        },
-        {
-          city: 'testcity',
-          tenhouId: 'davij1',
-          title: 'David Johnson',
-          msNickname: 'davij2',
-          msAccountId: 543,
-        },
-      ],
-    });
+      }
+    );
+    expectPeopleInAnyOrder(people, [
+      {
+        city: 'testcity',
+        tenhouId: 'davig1',
+        title: 'David Guetta',
+        msNickname: 'davig2',
+        msAccountId: 321,
+      },
+      {
+        city: 'testcity',
+        tenhouId: 'davij1',
+        title: 'David Johnson',
+        msNickname: 'davij2',
+        msAccountId: 543,
+      },
+    ]);
   });
 
   it('should find users by majsoul nickname with personal data as superadmin', async () => {
     const adminCreds = await getAdminCreds();
-    return expect(() =>
-      frey.FindByMajsoulAccountId(
-        {
-          ids: [
-            { nickname: 'davig2', accountId: 0 },
-            { nickname: 'davij2', accountId: 1 },
-          ],
+    const { people } = await frey.FindByMajsoulAccountId(
+      {
+        ids: [
+          { nickname: 'davig2', accountId: 0 },
+          { nickname: 'davij2', accountId: 1 },
+        ],
+      },
+      {
+        headers: {
+          'x-current-person-id': adminCreds.id.toString(),
+          'x-auth-token': adminCreds.hash,
         },
-        {
-          headers: {
-            'x-current-person-id': adminCreds.id.toString(),
-            'x-auth-token': adminCreds.hash,
-          },
-        }
-      )
-    ).resolves.toMatchObject({
-      people: [
-        {
-          city: 'testcity',
-          tenhouId: 'davig1',
-          title: 'David Guetta',
-          email: expect.anything(),
-          phone: '123321',
-          msNickname: 'davig2',
-          msAccountId: 321,
-        },
-        {
-          city: 'testcity',
-          tenhouId: 'davij1',
-          title: 'David Johnson',
-          email: expect.anything(),
-          phone: '123321',
-          msNickname: 'davij2',
-          msAccountId: 543,
-        },
-      ],
-    });
+      }
+    );
+    expectPeopleInAnyOrder(people, [
+      {
+        city: 'testcity',
+        tenhouId: 'davig1',
+        title: 'David Guetta',
+        email: expect.anything(),
+        phone: '123321',
+        msNickname: 'davig2',
+        msAccountId: 321,
+      },
+      {
+        city: 'testcity',
+        tenhouId: 'davij1',
+        title: 'David Johnson',
+        email: expect.anything(),
+        phone: '123321',
+        msNickname: 'davij2',
+        msAccountId: 543,
+      },
+    ]);
   });
 });

@@ -139,12 +139,10 @@ describe('Get misc data', () => {
   });
 
   it('should get event admins', async () => {
-    return expect(() =>
-      frey.GetEventAdmins({
-        eventId: 200,
-      })
-    ).resolves.toEqual({
-      admins: [
+    const { admins } = await frey.GetEventAdmins({ eventId: 200 });
+    expect(admins).toHaveLength(2);
+    expect(admins).toEqual(
+      expect.arrayContaining([
         {
           hasAvatar: false,
           lastUpdate: expect.anything(),
@@ -159,8 +157,8 @@ describe('Get misc data', () => {
           personName: expect.anything(),
           ruleId: expect.anything(),
         },
-      ],
-    });
+      ])
+    );
   });
 
   it('should get event referees', async () => {
@@ -206,12 +204,12 @@ describe('Get misc data', () => {
   });
 
   it('should get majsoul data', async () => {
-    return expect(() =>
-      frey.GetMajsoulNicknames({
-        ids: [adminAuthData.personId, anotherAdminData.personId, refereeData.personId],
-      })
-    ).resolves.toEqual({
-      mapping: [
+    const { mapping } = await frey.GetMajsoulNicknames({
+      ids: [adminAuthData.personId, anotherAdminData.personId, refereeData.personId],
+    });
+    expect(mapping).toHaveLength(3);
+    expect(mapping).toEqual(
+      expect.arrayContaining([
         {
           nickname: 'adminaccount',
           personId: adminAuthData.personId,
@@ -224,7 +222,7 @@ describe('Get misc data', () => {
           nickname: 'refereeeaccount',
           personId: refereeData.personId,
         },
-      ],
-    });
+      ])
+    );
   });
 });
