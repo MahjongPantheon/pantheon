@@ -19,7 +19,7 @@ interface RunWithLimitResult<T extends Record<string, () => Promise<any>>> {
 export async function runWithLimit<T extends Record<string, () => Promise<any>>>(
   getters: T,
   limit: number,
-  timeout: number = 0
+  timeout = 0
 ): Promise<RunWithLimitResult<T>> {
   if (!Number.isFinite(limit) || limit <= 0) {
     throw new Error('limit must be a positive number');
@@ -32,7 +32,10 @@ export async function runWithLimit<T extends Record<string, () => Promise<any>>>
 
   let nextIndex = 0;
 
-  const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+  const delay = (ms: number) =>
+    new Promise<void>((resolve) => {
+      setTimeout(resolve, ms);
+    });
 
   async function worker(): Promise<void> {
     while (true) {
@@ -48,7 +51,7 @@ export async function runWithLimit<T extends Record<string, () => Promise<any>>>
         const value = await getter();
         values[key] = value as ValuesOf<T>[typeof key];
       } catch (error) {
-        errors[key] = error as ErrorsOf<T>[typeof key];
+        errors[key] = error;
       }
 
       if (timeout > 0 && nextIndex < keys.length) {

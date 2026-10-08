@@ -360,11 +360,11 @@ gullveig_analyze:
 
 .PHONY: meili_lint
 meili_lint:
-	cd Gullveig && ${MAKE} container_lint > ../tmp/meili_lint.log 2>&1
+	cd Meili && ${MAKE} container_lint > ../tmp/meili_lint.log 2>&1
 
 .PHONY: meili_analyze
 meili_analyze:
-	cd Gullveig && ${MAKE} container_analyze > ../tmp/meili_analyze.log 2>&1
+	cd Meili && ${MAKE} container_analyze > ../tmp/meili_analyze.log 2>&1
 
 .PHONY: hugin_lint
 hugin_lint:
@@ -374,17 +374,17 @@ hugin_lint:
 hugin_analyze:
 	cd Hugin && ${MAKE} container_analyze > ../tmp/hugin_analyze.log 2>&1
 
-.PHONY: mimir_eslint
-mimir_eslint:
-	cd Frey && ${MAKE} container_eslint > ../tmp/mimir_lint.log 2>&1
+.PHONY: mimir_oxlint
+mimir_oxlint:
+	cd Mimir && ${MAKE} container_oxlint > ../tmp/mimir_oxlint.log 2>&1
 
-.PHONY: mimir_prettier
-mimir_prettier:
-	cd Frey && ${MAKE} container_prettier > ../tmp/mimir_prettier.log 2>&1
+.PHONY: mimir_oxfmt
+mimir_oxfmt:
+	cd Mimir && ${MAKE} container_oxfmt > ../tmp/mimir_oxfmt.log 2>&1
 
 .PHONY: mimir_typecheck
 mimir_typecheck:
-	cd Frey && ${MAKE} container_typecheck > ../tmp/mimir_typecheck.log 2>&1
+	cd Mimir && ${MAKE} container_typecheck > ../tmp/mimir_typecheck.log 2>&1
 
 .PHONY: skirnir_oxlint
 skirnir_oxlint:

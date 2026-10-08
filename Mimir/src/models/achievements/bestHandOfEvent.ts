@@ -12,7 +12,7 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
   );
 
   let maxHan = 0;
-  let ids = new Set<number>();
+  const ids = new Set<number>();
   for (const session of sessions) {
     for (const round of rounds[session.id]) {
       if (

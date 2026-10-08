@@ -21,7 +21,7 @@ export async function getMaxFuHand(eventId: number, repo: Repository) {
   });
 
   let maxFu = 0;
-  let playerIds = new Set<number>();
+  const playerIds = new Set<number>();
   for (const round of rounds) {
     for (const hand of round.hands) {
       if (!hand.winnerId) {
