@@ -233,7 +233,13 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
 
   return isLoading ? null : (
     <>
-      <Modal opened={stopEventModalOpened} onClose={stopEventModalClose} size='auto' centered>
+      <Modal
+        data-testid='forseti-owned-events-stop-modal'
+        opened={stopEventModalOpened}
+        onClose={stopEventModalClose}
+        size='auto'
+        centered
+      >
         <Text>
           {i18n._t('Stop event "%1" (id #%2)? This action can\'t be undone!', [
             stopEventData.title,
@@ -241,10 +247,15 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
           ])}
         </Text>
         <Group mt='xl' grow>
-          <Button variant='outline' onClick={stopEventModalClose}>
+          <Button
+            data-testid='forseti-owned-events-stop-cancel'
+            variant='outline'
+            onClick={stopEventModalClose}
+          >
             {i18n._t('Cancel')}
           </Button>
           <Button
+            data-testid='forseti-owned-events-stop-confirm'
             color='red'
             variant='filled'
             onClick={() => {
@@ -256,11 +267,12 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
           </Button>
         </Group>
       </Modal>
-      <Container pos='relative' sx={{ minHeight: '400px' }}>
+      <Container data-testid='forseti-owned-events-page' pos='relative' sx={{ minHeight: '400px' }}>
         <Stack justify='flex-start' spacing='0'>
           {events.map((event, idx) => {
             return (
               <Group
+                data-testid={`forseti-owned-event-row-${event.id}`}
                 key={`ev_${idx}`}
                 style={{
                   padding: '10px',
@@ -312,8 +324,17 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  <Link to={`/ownedEvents/edit/${event.id}`}>{event.title}</Link>
-                  <a href={`${env.urls.sigrun}/event/${event.id}/info`} target='_blank'>
+                  <Link
+                    data-testid={`forseti-owned-event-settings-link-${event.id}`}
+                    to={`/ownedEvents/edit/${event.id}`}
+                  >
+                    {event.title}
+                  </Link>
+                  <a
+                    data-testid={`forseti-owned-event-public-link-${event.id}`}
+                    href={`${env.urls.sigrun}/event/${event.id}/info`}
+                    target='_blank'
+                  >
                     <ActionIcon
                       title={i18n._t('Open event page in new tab')}
                       loading={visibilityLoading[event.id]}
@@ -329,12 +350,18 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                   {!event.finished && (
                     <Menu shadow='md' width={200}>
                       <Menu.Target>
-                        <Button color='grape'>{i18n._t('Actions')}</Button>
+                        <Button
+                          data-testid={`forseti-owned-event-actions-${event.id}`}
+                          color='grape'
+                        >
+                          {i18n._t('Actions')}
+                        </Button>
                       </Menu.Target>
                       <Menu.Dropdown>
                         <Menu.Label>{i18n._t('Event management')}</Menu.Label>
                         {privilegesLevel >= PrivilegesLevel.ADMIN && (
                           <MenuItemLink
+                            testId={`forseti-owned-event-menu-settings-${event.id}`}
                             href={`/ownedEvents/edit/${event.id}`}
                             title={i18n._t('Edit event settings')}
                             icon={<IconTool />}
@@ -343,6 +370,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                         )}
                         {privilegesLevel >= PrivilegesLevel.ADMIN && (
                           <MenuItemLink
+                            testId={`forseti-owned-event-menu-privileges-${event.id}`}
                             href={`/ownedEvents/privileges/${event.id}`}
                             title={i18n._t('Manage administrators and referees in event')}
                             icon={<IconMilitaryRank />}
@@ -350,18 +378,21 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                           />
                         )}
                         <MenuItemLink
+                          testId={`forseti-owned-event-menu-players-${event.id}`}
                           href={`/event/${event.id}/players`}
                           title={i18n._t('Manage players')}
                           icon={<IconFriends />}
                           text={i18n._t('Manage players')}
                         />
                         <MenuItemLink
+                          testId={`forseti-owned-event-menu-penalties-${event.id}`}
                           href={`/event/${event.id}/penalties`}
                           title={i18n._t('Manage penalties')}
                           icon={<IconAlertOctagon />}
                           text={i18n._t('Penalties')}
                         />
                         <MenuItemLink
+                          testId={`forseti-owned-event-menu-games-${event.id}`}
                           href={`/event/${event.id}/games`}
                           title={i18n._t('Manage current games')}
                           icon={<IconOlympics />}
@@ -369,6 +400,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                         />
                         {event.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
                           <MenuItemLink
+                            testId={`forseti-owned-event-menu-seating-${event.id}`}
                             href={`/event/${event.id}/prescript`}
                             title={i18n._t('Manage predefined seating')}
                             icon={<IconScript />}
@@ -381,6 +413,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                             <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
                             {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
                               <Menu.Item
+                                data-testid={`forseti-owned-event-menu-rebuild-scoring-${event.id}`}
                                 title={i18n._t('Rebuild scoring')}
                                 onClick={() => rebuildScoring(event.id)}
                                 icon={<IconRefreshAlert />}
@@ -390,6 +423,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                             )}
 
                             <Menu.Item
+                              data-testid={`forseti-owned-event-menu-finish-${event.id}`}
                               title={i18n._t('Finish event')}
                               color='red'
                               icon={<IconHandStop />}
@@ -415,6 +449,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                   <Menu shadow='md' width={200}>
                     <Menu.Target>
                       <ActionIcon
+                        data-testid={`forseti-owned-event-visibility-${event.id}`}
                         title={i18n._t('Visibility')}
                         loading={
                           visibilityLoading[event.id] ||
@@ -432,6 +467,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       <Menu.Label>{i18n._t('Visibility management')}</Menu.Label>
                       {privilegesLevel >= PrivilegesLevel.ADMIN && (
                         <Menu.Item
+                          data-testid={`forseti-owned-event-toggle-listed-${event.id}`}
                           title={i18n._t('Toggle visibility in ratings global list')}
                           icon={event.isListed ? <IconSquareCheckFilled /> : <IconSquare />}
                           onClick={() => toggleVisibility(event.id)}
@@ -440,6 +476,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                         </Menu.Item>
                       )}
                       <Menu.Item
+                        data-testid={`forseti-owned-event-toggle-rating-${event.id}`}
                         title={i18n._t('Toggle visibility of rating table')}
                         icon={event.isRatingShown ? <IconSquareCheckFilled /> : <IconSquare />}
                         onClick={() => onToggleResults(event.id)}
@@ -447,6 +484,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                         {i18n._t('Rating table visible')}
                       </Menu.Item>
                       <Menu.Item
+                        data-testid={`forseti-owned-event-toggle-achievements-${event.id}`}
                         title={i18n._t('Toggle visibility of achievements')}
                         icon={event.achievementsShown ? <IconSquareCheckFilled /> : <IconSquare />}
                         onClick={() => onToggleAchievements(event.id)}
@@ -465,7 +503,13 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
         <>
           <Space h='xl' />
           <Center>
-            <Pagination total={totalPages} siblings={2} value={currentPage} onChange={setPage} />
+            <Pagination
+              data-testid='forseti-owned-events-pagination'
+              total={totalPages}
+              siblings={2}
+              value={currentPage}
+              onChange={setPage}
+            />
           </Center>
         </>
       )}

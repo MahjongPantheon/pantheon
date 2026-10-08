@@ -84,6 +84,7 @@ export const LocalIdsTab: React.FC<{
         <Stack justify='flex-start' spacing='0'>
           {players.map((p, idx) => (
             <Group
+              data-testid={`forseti-players-local-id-row-${p.id}`}
               key={`ev_${p.id}`}
               style={{
                 padding: '10px',
@@ -98,6 +99,7 @@ export const LocalIdsTab: React.FC<{
               <Group>
                 <Text>{i18n._t('Local ID')}</Text>
                 <NumberInput
+                  data-testid={`forseti-players-local-id-input-${p.id}`}
                   value={localIds[p.id]}
                   onChange={(v) => setLocalIds({ ...localIds, [p.id]: v || 0 })}
                 />
@@ -107,6 +109,7 @@ export const LocalIdsTab: React.FC<{
         </Stack>
         <Filler h='150px' />
         <TopActionButton
+          testId='forseti-players-local-ids-save'
           title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
           loading={isSaving || isSaved}
           icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}

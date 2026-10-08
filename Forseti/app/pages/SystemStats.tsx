@@ -203,27 +203,35 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
   }, [stats, selectedItem, selectedSubsystem, isDark]);
 
   return (
-    <Container>
+    <Container data-testid='forseti-system-stats-page'>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       <Group position='apart'>
         <Group>
           <Link to='/stats/lastday'>
-            <Button variant='filled'>{i18n._t('Last 24h')}</Button>
+            <Button data-testid='forseti-system-stats-last-day' variant='filled'>
+              {i18n._t('Last 24h')}
+            </Button>
           </Link>
           <Link to='/stats/lastmonth'>
-            <Button variant='filled'>{i18n._t('Last 30d')}</Button>
+            <Button data-testid='forseti-system-stats-last-month' variant='filled'>
+              {i18n._t('Last 30d')}
+            </Button>
           </Link>
           <Link to='/stats/lastyear'>
-            <Button variant='filled'>{i18n._t('Last 12mon')}</Button>
+            <Button data-testid='forseti-system-stats-last-year' variant='filled'>
+              {i18n._t('Last 12mon')}
+            </Button>
           </Link>
         </Group>
         <Select
+          data-testid='forseti-system-stats-data-slice'
           label={i18n._t('Data slice')}
           value={selectedItem}
           onChange={(val) => setSelectedItem(val as HuginKeys)}
           data={keys.map((i) => ({ value: i, label: i }))}
         />
         <Select
+          data-testid='forseti-system-stats-subsystem'
           label={i18n._t('Subsystem')}
           value={selectedSubsystem}
           onChange={(val) => setSelectedSubsystem(val as Subsystems)}

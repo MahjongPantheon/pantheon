@@ -34,11 +34,13 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
         description={i18n._t(
           'Tanyao costs 1 han on open hand. If not checked, tanyao does not work on open hand.'
         )}
+        data-testid='forseti-event-settings-yaku-settings-ruleset-with-kuitan'
         {...form.getInputProps('ruleset.withKuitan', { type: 'checkbox' })}
       />
       <Checkbox
         label={i18n._t('Multiple yakumans')}
         description={i18n._t('Allow combination of yakumans, e.g. tsuuisou + daisangen')}
+        data-testid='forseti-event-settings-yaku-settings-ruleset-with-multi-yakumans'
         {...form.getInputProps('ruleset.withMultiYakumans', { type: 'checkbox' })}
       />
       <Title order={4}>{i18n._t('Yaku allowed')}</Title>
@@ -52,6 +54,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
       >
         {yakuList.map((y, idx) => (
           <Checkbox
+            data-testid={`forseti-event-settings-yaku-allowed-${y.id}`}
             key={`yaku_${idx}`}
             label={y.name(i18n)}
             {...form.getInputProps(`ruleset.allowedYaku.${y.id}`, { type: 'checkbox' })}
@@ -69,6 +72,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
       >
         {yakuWithPao.map((y, idx) => (
           <Checkbox
+            data-testid={`forseti-event-settings-yaku-pao-${y.id}`}
             key={`yaku_${idx}`}
             label={y.name(i18n)}
             {...form.getInputProps(`ruleset.yakuWithPao.${y.id}`, { type: 'checkbox' })}
@@ -86,6 +90,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
       >
         {doubleYakuman.map((y, idx) => (
           <Checkbox
+            data-testid={`forseti-event-settings-yaku-double-${y.id}`}
             key={`yaku_${idx}`}
             label={y.name(i18n)}
             {...form.getInputProps(`ruleset.doubleYakuman.${y.id}`, { type: 'checkbox' })}

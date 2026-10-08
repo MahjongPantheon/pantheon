@@ -65,6 +65,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
               label: 'MahjongSoul',
             },
           ]}
+          data-testid='forseti-event-settings-online-settings-event-platform-id'
           {...form.getInputProps('event.platformId')}
         />
       )}
@@ -72,10 +73,12 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         withAsterisk
         icon={<IconUsers size='1rem' />}
         label={i18n._t('Lobby ID')}
+        data-testid='forseti-event-settings-online-settings-event-lobby-id'
         {...form.getInputProps('event.lobbyId')}
       />
       <Checkbox
         label={i18n._t('Team tournament')}
+        data-testid='forseti-event-settings-online-settings-event-is-team'
         {...form.getInputProps('event.isTeam', { type: 'checkbox' })}
       />
       <Checkbox
@@ -83,9 +86,11 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         description={i18n._t(
           'If checked, any player participating in event will be able to add new replays through user interface. Disable this if you have any external tool which adds replays automatically.'
         )}
+        data-testid='forseti-event-settings-online-settings-event-allow-manual-add-replay'
         {...form.getInputProps('event.allowManualAddReplay', { type: 'checkbox' })}
       />
       <NumberInput
+        data-testid='forseti-event-settings-online-settings-ruleset-game-expiration-time'
         {...form.getInputProps('ruleset.gameExpirationTime')}
         icon={<IconHourglass size='1rem' />}
         label={i18n._t('Game expiration time (in hours)')}
@@ -96,6 +101,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         min={0}
       />
       <NumberInput
+        data-testid='forseti-event-settings-online-settings-ruleset-chips-value'
         {...form.getInputProps('ruleset.chipsValue')}
         icon={<IconCoins size='1rem' />}
         label={i18n._t('Chips value')}
@@ -107,6 +113,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         min={0}
       />
       <NumberInput
+        data-testid='forseti-event-settings-online-settings-event-series-length'
         {...form.getInputProps('event.seriesLength')}
         icon={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
@@ -118,6 +125,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         min={0}
       />
       <NumberInput
+        data-testid='forseti-event-settings-online-settings-event-min-games'
         {...form.getInputProps('event.minGames')}
         icon={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
@@ -130,6 +138,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       />
       <NumberInput
         icon={<IconUserX size='1rem' />}
+        data-testid='forseti-event-settings-online-settings-ruleset-replacement-player-fixed-points'
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
@@ -140,6 +149,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       />
       <NumberInput
         icon={<IconUserX size='1rem' />}
+        data-testid='forseti-event-settings-online-settings-ruleset-replacement-player-override-uma'
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(

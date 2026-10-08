@@ -220,13 +220,14 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
 
   return (
     <>
-      <Container>
+      <Container data-testid='forseti-admin-profile-page'>
         <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <TextInput
             withAsterisk
             icon={<IconMailQuestion size='1rem' />}
             description={i18n._t("Enter player's e-mail address")}
+            data-testid='forseti-profile-manage-admin-email'
             {...form.getInputProps('email')}
           />
           <Space h='md' />
@@ -236,6 +237,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             description={i18n._t(
               'This is a title that will be shown in rating table and in mobile assistant. Please select some unique title, like nickname or name+surname.'
             )}
+            data-testid='forseti-profile-manage-admin-title'
             {...form.getInputProps('title')}
           />
           {!id && (
@@ -245,6 +247,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
                 withAsterisk
                 description={i18n._t('Enter strong password')}
                 icon={<IconLock size='1rem' />}
+                data-testid='forseti-profile-manage-admin-password'
                 {...form.getInputProps('password')}
               />
             </>
@@ -257,24 +260,28 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             nothingFound={i18n._t('Nothing found')}
             maxDropdownHeight={280}
             data={countries}
+            data-testid='forseti-profile-manage-admin-country'
             {...form.getInputProps('country')}
           />
           <Space h='md' />
           <TextInput
             description={i18n._t('Enter city of the player')}
             icon={<IconMapPin size='1rem' />}
+            data-testid='forseti-profile-manage-admin-city'
             {...form.getInputProps('city')}
           />
           <Space h='md' />
           <TextInput
             description={i18n._t("Enter player's phone")}
             icon={<IconPhoneCall size='1rem' />}
+            data-testid='forseti-profile-manage-admin-phone'
             {...form.getInputProps('phone')}
           />
           <Space h='md' />
           <TextInput
             icon={<IconIdBadge2 size='1rem' />}
             description={i18n._t('Tenhou nickname')}
+            data-testid='forseti-profile-manage-admin-tenhou-id'
             {...form.getInputProps('tenhouId')}
           />
           <Space h='md' />
@@ -283,6 +290,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             description={i18n._t(
               'If checked, uploaded avatar will be shown instead of default circle with initials. If no avatar is uploaded, the default circle will be shown.'
             )}
+            data-testid='forseti-profile-manage-admin-has-avatar'
             {...form.getInputProps('hasAvatar', { type: 'checkbox' })}
           />
           <Space h='md' />
@@ -293,7 +301,11 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
                   radius='xl'
                   src={avatarData ?? `${env.urls.gullveig}/files/avatars/user_${playerEditId}.jpg`}
                 ></Avatar>
-                <FileUploadButton i18n={i18n} onChange={updateAvatar} />
+                <FileUploadButton
+                  i18n={i18n}
+                  onChange={updateAvatar}
+                  testId='forseti-admin-profile-avatar-upload'
+                />
               </Group>
               <div
                 style={{
@@ -311,6 +323,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             </>
           )}
           <TopActionButton
+            testId='forseti-admin-profile-save'
             title={
               isSaved
                 ? id

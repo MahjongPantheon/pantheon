@@ -80,12 +80,13 @@ export const ProfileResetPassword: React.FC = () => {
       <form onSubmit={form.onSubmit(submitForm)}>
         <Container>
           <TextInput
+            data-testid='forseti-reset-password-email'
             icon={<IconLogin size='1rem' />}
             placeholder={i18n._t('Your e-mail address')}
             {...form.getInputProps('email')}
           />
           <Group position='right' mt='md'>
-            <Button disabled={isLoading} type='submit'>
+            <Button data-testid='forseti-reset-password-submit' disabled={isLoading} type='submit'>
               {i18n._t('Request password reset')}
             </Button>
           </Group>

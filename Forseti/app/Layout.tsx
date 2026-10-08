@@ -402,6 +402,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                       <Navbar width={{ base: 350 }} p='xs'>
                         <Navbar.Section grow component={ScrollArea} mx='-xs' px='xs'>
                           <MainMenu
+                            testIdScope='sidebar'
                             title={title}
                             dark={dark}
                             toggleColorScheme={toggleColorScheme}

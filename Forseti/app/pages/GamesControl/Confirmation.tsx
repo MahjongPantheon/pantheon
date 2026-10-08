@@ -31,6 +31,7 @@ export function Confirmation({
   onCancel,
   i18n,
   disabled,
+  testId,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -41,6 +42,7 @@ export function Confirmation({
   onCancel?: () => void;
   i18n: I18nService;
   disabled?: boolean;
+  testId: string;
 }) {
   const [opened, setOpened] = useState(false);
 
@@ -56,6 +58,7 @@ export function Confirmation({
     >
       <Popover.Target>
         <Button
+          data-testid={`${testId}-open`}
           disabled={!!disabled}
           leftIcon={icon}
           title={title}
@@ -71,6 +74,7 @@ export function Confirmation({
             {warning}
           </Text>
           <ActionIcon
+            data-testid={`${testId}-confirm`}
             style={{ flex: 0 }}
             variant='filled'
             color='red'

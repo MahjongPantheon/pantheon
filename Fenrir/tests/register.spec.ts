@@ -29,28 +29,28 @@ test('Register and login from admin panel', async ({ page }) => {
 
   // Register
   await page.goto(process.env.FORSETI_URL + '/profile/signup');
-  await page.getByTestId('email_field').fill(email);
-  await page.getByTestId('title_field').fill('Test account');
-  await page.getByTestId('password_field').fill('SomeStrongPassword123321');
-  await page.getByTestId('agreement_checkbox').click();
-  await page.getByTestId('register_submit_button').click();
+  await page.getByTestId('forseti-signup-email').fill(email);
+  await page.getByTestId('forseti-signup-title').fill('Test account');
+  await page.getByTestId('forseti-signup-password').fill('SomeStrongPassword123321');
+  await page.getByTestId('forseti-signup-privacy-policy').click();
+  await page.getByTestId('forseti-signup-submit').click();
 
   // Register success, get mail
-  await expect(page.getByTestId('register_success')).toBeVisible();
+  await expect(page.getByTestId('forseti-signup-success')).toBeVisible();
   const message = await getLastMail();
   const link = message.match(/https?:\/\/(.*)/)?.[0]?.replace(/https?:\/\/[^\/]+/, '');
   expect(link).toBeTruthy();
 
   // Follow link in message and confirm signup
   await page.goto(process.env.FORSETI_URL! + link);
-  await expect(page.getByTestId('confirmation_success')).toBeVisible();
-  await page.getByTestId('goto_login').click();
+  await expect(page.getByTestId('forseti-confirm-success')).toBeVisible();
+  await page.getByTestId('forseti-confirm-go-to-login').click();
 
   // Proceed to login
   await expect(page.getByText(/Login to your account/)).toBeVisible();
-  await page.getByTestId('email_field').fill(email);
-  await page.getByTestId('password_field').fill('SomeStrongPassword123321');
-  await page.getByTestId('login_button').click();
+  await page.getByTestId('forseti-login-email').fill(email);
+  await page.getByTestId('forseti-login-password').fill('SomeStrongPassword123321');
+  await page.getByTestId('forseti-login-submit').click();
 
   // Check we've logged in
   await expect(page.getByText(/Manage my events/)).toBeVisible();

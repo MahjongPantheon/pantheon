@@ -21,7 +21,7 @@ import { authCtx } from '../hooks/auth';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { usePageTitle } from '../hooks/pageTitle';
-import { Chombo, GameConfig, Penalty, Player } from 'tsclients/proto/atoms.pb';
+import { Chombo, GameConfig, Penalty, Player, RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 import { Container, LoadingOverlay, Space } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
@@ -39,7 +39,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
   const [isLoading, setIsLoading] = useState(false);
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
   const [playersList, setPlayersList] = useState<Array<{ label: string; value: string }>>([]);
-  const [playersListFull, setPlayersListFull] = useState<Record<number, Player>>({});
+  const [playersListFull, setPlayersListFull] = useState<Record<number, RegisteredPlayer>>({});
   const [penaltiesList, setPenaltiesList] = useState<Penalty[]>([]);
   const [refereesList, setRefereesList] = useState<Record<number, Player>>({});
   const [chomboList, setChomboList] = useState<Chombo[]>([]);
@@ -73,7 +73,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
               acc[p.id] = p;
               return acc;
             },
-            {} as Record<number, Player>
+            {} as Record<number, RegisteredPlayer>
           )
         );
         setPenaltiesList(penalties.penalties);
@@ -119,7 +119,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
   }
 
   return (
-    <Container>
+    <Container data-testid='forseti-penalties-page'>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       <PenaltyForm
         eventId={id}

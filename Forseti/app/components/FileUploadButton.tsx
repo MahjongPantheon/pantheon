@@ -7,9 +7,11 @@ import { notifications } from '@mantine/notifications';
 export const FileUploadButton = ({
   i18n,
   onChange,
+  testId,
 }: {
   i18n: I18nService;
   onChange: (file?: File) => void;
+  testId: string;
 }) => {
   // Create a reference to the hidden file input element
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
@@ -35,8 +37,11 @@ export const FileUploadButton = ({
   };
   return (
     <>
-      <Button onClick={handleClick}>{i18n._t('Select an avatar')}</Button>
+      <Button data-testid={`${testId}-button`} onClick={handleClick}>
+        {i18n._t('Select an avatar')}
+      </Button>
       <input
+        data-testid={`${testId}-input`}
         type='file'
         ref={hiddenFileInput}
         onChange={handleChange}

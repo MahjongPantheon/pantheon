@@ -33,6 +33,7 @@ export const RecalcPlayerStatsModal = () => {
 
   return (
     <Modal
+      data-testid='forseti-recalculate-player-stats-modal'
       opened={modals.recalcPlayerStatsModalShown}
       onClose={modals.hideRecalcPlayerStatsModal}
       size='auto'
@@ -45,10 +46,15 @@ export const RecalcPlayerStatsModal = () => {
         )}
       </Text>
       <Group mt='xl' grow>
-        <Button variant='outline' onClick={modals.hideRecalcPlayerStatsModal}>
+        <Button
+          data-testid='forseti-recalculate-player-stats-cancel'
+          variant='outline'
+          onClick={modals.hideRecalcPlayerStatsModal}
+        >
           {i18n._t('Cancel')}
         </Button>
         <Button
+          data-testid='forseti-recalculate-player-stats-confirm'
           color='red'
           variant='filled'
           onClick={() => {

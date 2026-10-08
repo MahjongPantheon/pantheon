@@ -257,7 +257,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
 
   return (
     <>
-      <Container pos='relative'>
+      <Container data-testid='forseti-event-settings-page' pos='relative'>
         <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs keepMounted={false} defaultValue='basic'>
@@ -299,6 +299,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           </Tabs>
           {!isFinished && (
             <TopActionButton
+              testId='forseti-event-settings-save'
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
               loading={isSaving || isLoading || isSaved}
               icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}

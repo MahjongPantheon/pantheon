@@ -30,6 +30,7 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ form, i18n }) => {
   return (
     <>
       <NumberInput
+        data-testid='forseti-event-settings-local-settings-event-series-length'
         {...form.getInputProps('event.seriesLength')}
         icon={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
@@ -41,6 +42,7 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ form, i18n }) => {
         min={0}
       />
       <NumberInput
+        data-testid='forseti-event-settings-local-settings-event-min-games'
         {...form.getInputProps('event.minGames')}
         icon={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}

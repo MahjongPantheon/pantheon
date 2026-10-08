@@ -104,7 +104,7 @@ export const ProfileSignup: React.FC = () => {
       <>
         <Container>
           <Alert
-            data-testid='register_success'
+            data-testid='forseti-signup-success'
             icon={<IconCircleCheck size='1rem' />}
             title={i18n._t('Success')}
             color='green'
@@ -121,14 +121,14 @@ export const ProfileSignup: React.FC = () => {
       <Container>
         <form onSubmit={form.onSubmit(submitForm)}>
           <TextInput
-            data-testid='email_field'
+            data-testid='forseti-signup-email'
             icon={<IconMailQuestion size='1rem' />}
             description={i18n._t('Enter your e-mail address')}
             {...form.getInputProps('email')}
           />
           <Space h='md' />
           <TextInput
-            data-testid='title_field'
+            data-testid='forseti-signup-title'
             icon={<IconSignature size='1rem' />}
             description={i18n._t(
               "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
@@ -137,7 +137,7 @@ export const ProfileSignup: React.FC = () => {
           />
           <Space h='md' />
           <PasswordInput
-            data-testid='password_field'
+            data-testid='forseti-signup-password'
             description={i18n._t('Enter strong password')}
             icon={<IconLock size='1rem' />}
             {...form.getInputProps('password')}
@@ -145,19 +145,17 @@ export const ProfileSignup: React.FC = () => {
           <Space h='md' />
           <Checkbox
             mt='md'
-            data-testid='agreement_checkbox'
+            data-testid='forseti-signup-privacy-policy'
             label={i18n._t("I've read the privacy policy listed below and accept its terms")}
             {...form.getInputProps('privacyPolicy', { type: 'checkbox' })}
           />
           <Group position='right' mt='md'>
             <Link to='/profile/login'>
-              <Button variant='outline'>{i18n._t('Already registered?')}</Button>
+              <Button data-testid='forseti-signup-go-to-login' variant='outline'>
+                {i18n._t('Already registered?')}
+              </Button>
             </Link>
-            <Button
-              type='submit'
-              data-testid='register_submit_button'
-              disabled={registerInProgress}
-            >
+            <Button type='submit' data-testid='forseti-signup-submit' disabled={registerInProgress}>
               {i18n._t('Register new account')}
             </Button>
           </Group>
@@ -168,7 +166,11 @@ export const ProfileSignup: React.FC = () => {
 
         <Group>
           <h2>Privacy Policy</h2>
-          <Button onClick={toggle} variant='subtle'>
+          <Button
+            data-testid='forseti-signup-toggle-privacy-policy'
+            onClick={toggle}
+            variant='subtle'
+          >
             {i18n._t('show / hide')}
           </Button>
         </Group>

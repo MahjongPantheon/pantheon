@@ -355,7 +355,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   }
 
   return (
-    <Container>
+    <Container data-testid='forseti-games-control-page'>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       {eventConfig?.syncStart && (
         <TournamentControls
@@ -386,6 +386,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         onAddExtraTime={onAddExtraTimeForTable}
       />
       <TopActionButton
+        testId='forseti-games-control-save'
         color='green'
         title={i18n._t('Refresh data [%1]', [secsUntilReload <= 0 ? '0' : secsUntilReload])}
         loading={false}

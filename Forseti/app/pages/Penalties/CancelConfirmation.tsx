@@ -27,12 +27,14 @@ export function CancelConfirmation({
   color,
   onConfirm,
   disabled,
+  testId,
 }: {
   icon: React.ReactNode;
   title: string;
   color: MantineColor;
   onConfirm: (reason: string) => void;
   disabled?: boolean;
+  testId: string;
 }) {
   const i18n = useI18n();
   const [opened, setOpened] = useState(false);
@@ -47,6 +49,7 @@ export function CancelConfirmation({
     <Popover position='bottom' withArrow shadow='md' opened={opened} onChange={setOpened}>
       <Popover.Target>
         <ActionIcon
+          data-testid={`${testId}-open`}
           style={{ flex: 0 }}
           variant='filled'
           disabled={!!disabled}
@@ -62,13 +65,22 @@ export function CancelConfirmation({
           <Text size='sm' style={{ flex: 1, minWidth: '222px' }}>
             {i18n._t('Enter a reason for cancellation and confirm it.')}
           </Text>
-          <TextInput value={reason} onChange={(e) => setReason(e.target.value)} />
+          <TextInput
+            data-testid={`${testId}-reason`}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
           {cancellationReasons.map((r, idx) => (
-            <Button key={`btn_${idx}`} onClick={() => setReason(r)}>
+            <Button
+              data-testid={`${testId}-suggestion-${idx}`}
+              key={`btn_${idx}`}
+              onClick={() => setReason(r)}
+            >
               {r}
             </Button>
           ))}
           <Button
+            data-testid={`${testId}-confirm`}
             rightIcon={<IconArrowRight />}
             variant='filled'
             color='red'

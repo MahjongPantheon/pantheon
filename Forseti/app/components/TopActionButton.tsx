@@ -27,6 +27,7 @@ export type TopActionButtonProps = {
   icon: React.ReactNode;
   onClick: () => void;
   color?: MantineColor;
+  testId: string;
 };
 
 // Button rendered at the top of the page, used to submit forms
@@ -36,6 +37,7 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
   icon,
   onClick,
   color,
+  testId,
 }) => {
   const actionButtonRef = useContext(actionButtonCtx);
   return (
@@ -43,6 +45,7 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
       {actionButtonRef.current &&
         createPortal(
           <Button
+            data-testid={testId}
             color={color ?? 'red'}
             size='xs'
             loading={loading}

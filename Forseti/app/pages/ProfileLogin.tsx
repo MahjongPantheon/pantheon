@@ -77,23 +77,25 @@ export const ProfileLogin: React.FC = () => {
     <form onSubmit={form.onSubmit(submitForm)}>
       <Container>
         <TextInput
-          data-testid='email_field'
+          data-testid='forseti-login-email'
           icon={<IconLogin size='1rem' />}
           placeholder={i18n._t('Your e-mail address')}
           {...form.getInputProps('email')}
         />
         <Space h='md' />
         <PasswordInput
-          data-testid='password_field'
+          data-testid='forseti-login-password'
           placeholder={i18n._t('Your password')}
           icon={<IconLock size='1rem' />}
           {...form.getInputProps('password')}
         />
         <Group position='right' mt='md'>
           <Link to='/profile/resetPassword'>
-            <Button variant='outline'>{i18n._t('Forgot your password?')}</Button>
+            <Button data-testid='forseti-login-forgot-password' variant='outline'>
+              {i18n._t('Forgot your password?')}
+            </Button>
           </Link>
-          <Button type='submit' data-testid='login_button'>
+          <Button type='submit' data-testid='forseti-login-submit'>
             {i18n._t('Proceed with sign in')}
           </Button>
         </Group>

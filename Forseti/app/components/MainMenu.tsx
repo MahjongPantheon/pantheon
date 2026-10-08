@@ -43,6 +43,7 @@ type MainMenuProps = {
   toggleDimmed: () => void;
   saveLang: (lang: string) => void;
   eventData: Event | null;
+  testIdScope: 'drawer' | 'sidebar';
 };
 
 export const MainMenu = ({
@@ -53,6 +54,7 @@ export const MainMenu = ({
   toggleDimmed,
   saveLang,
   eventData,
+  testIdScope,
 }: MainMenuProps) => {
   const i18n = useI18n();
   const api = useApi();
@@ -81,6 +83,7 @@ export const MainMenu = ({
               labelPosition='center'
             />
             <MainMenuLink
+              testId={`forseti-menu-${testIdScope}-event-page`}
               external={ExternalTarget.SIGRUN}
               href={`${env.urls.sigrun}/event/${eventId}/info`}
               icon={<IconExternalLink size={18} />}
@@ -89,6 +92,7 @@ export const MainMenu = ({
             />
             {privilegesLevel >= PrivilegesLevel.ADMIN && (
               <MainMenuLink
+                testId={`forseti-menu-${testIdScope}-event-settings`}
                 href={`/ownedEvents/edit/${eventId}`}
                 icon={<IconTool size={18} />}
                 text={i18n._t('Settings')}
@@ -99,6 +103,7 @@ export const MainMenu = ({
               <>
                 {privilegesLevel >= PrivilegesLevel.ADMIN && (
                   <MainMenuLink
+                    testId={`forseti-menu-${testIdScope}-event-privileges`}
                     href={`/ownedEvents/privileges/${eventId}`}
                     icon={<IconMilitaryRank size={18} />}
                     text={i18n._t('Manage privileges')}
@@ -107,6 +112,7 @@ export const MainMenu = ({
                 )}
                 {privilegesLevel >= PrivilegesLevel.REFEREE && (
                   <MainMenuLink
+                    testId={`forseti-menu-${testIdScope}-event-players`}
                     href={`/event/${eventId}/players`}
                     icon={<IconFriends size={18} />}
                     text={i18n._t('Manage players')}
@@ -116,12 +122,14 @@ export const MainMenu = ({
                 {eventData.type !== EventType.EVENT_TYPE_ONLINE && (
                   <>
                     <MainMenuLink
+                      testId={`forseti-menu-${testIdScope}-event-penalties`}
                       href={`event/${eventId}/penalties`}
                       icon={<IconAlertOctagon size={18} />}
                       text={i18n._t('Penalties')}
                       onClick={closeMenu}
                     />
                     <MainMenuLink
+                      testId={`forseti-menu-${testIdScope}-event-games`}
                       href={`/event/${eventId}/games`}
                       icon={<IconOlympics size={18} />}
                       text={i18n._t('Manage games')}
@@ -131,6 +139,7 @@ export const MainMenu = ({
                 )}
                 {eventData?.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
                   <MainMenuLink
+                    testId={`forseti-menu-${testIdScope}-event-seating`}
                     href={`/event/${eventId}/prescript`}
                     icon={<IconScript size={18} />}
                     text={i18n._t('Predefined seating')}
@@ -150,6 +159,7 @@ export const MainMenu = ({
             )}
             {privilegesLevel === PrivilegesLevel.SUPERADMIN && eventData && !eventData.finished && (
               <NavLink
+                data-testid={`forseti-menu-${testIdScope}-rebuild-scoring`}
                 label={i18n._t('Rebuild scoring')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
                 onClick={() => {
@@ -161,6 +171,7 @@ export const MainMenu = ({
             )}
             {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
               <NavLink
+                data-testid={`forseti-menu-${testIdScope}-recalculate-achievements`}
                 label={i18n._t('Recalculate achievements')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
                 icon={<IconRefresh />}
@@ -176,6 +187,7 @@ export const MainMenu = ({
             )}
             {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
               <NavLink
+                data-testid={`forseti-menu-${testIdScope}-recalculate-player-stats`}
                 label={i18n._t('Recalculate players stats')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
                 icon={<IconRefresh />}
@@ -191,6 +203,7 @@ export const MainMenu = ({
             )}
             {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
               <NavLink
+                data-testid={`forseti-menu-${testIdScope}-finish-event`}
                 label={i18n._t('Finish event')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
                 icon={<IconHandStop />}
@@ -214,6 +227,7 @@ export const MainMenu = ({
           labelPosition='center'
         />
         <MainMenuLink
+          testId={`forseti-menu-${testIdScope}-all-events`}
           external={ExternalTarget.SIGRUN}
           href={`${env.urls.sigrun}`}
           icon={<IconExternalLink size={18} />}
@@ -222,6 +236,7 @@ export const MainMenu = ({
         />
         {isLoggedIn && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-my-events`}
             href={'/ownedEvents'}
             icon={<IconList size={20} />}
             text={i18n._t('My events')}
@@ -230,6 +245,7 @@ export const MainMenu = ({
         )}
         {isLoggedIn && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-create-event`}
             href={'/ownedEvents/new'}
             icon={<IconTimelineEventPlus size={20} />}
             text={i18n._t('Create new event')}
@@ -238,6 +254,7 @@ export const MainMenu = ({
         )}
         {!isLoggedIn && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-sign-in`}
             href={'/profile/login'}
             icon={<IconLogin size={18} />}
             text={i18n._t('Sign in')}
@@ -246,6 +263,7 @@ export const MainMenu = ({
         )}
         {!isLoggedIn && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-sign-up`}
             href='/profile/signup'
             icon={<IconUserPlus size={18} />}
             text={i18n._t('Sign up')}
@@ -254,6 +272,7 @@ export const MainMenu = ({
         )}
         {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-register-player`}
             href='/profile/signupAdmin'
             icon={<IconUserPlus size={18} />}
             text={i18n._t('Register player')}
@@ -262,6 +281,7 @@ export const MainMenu = ({
         )}
         {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-system-stats`}
             href='/stats'
             icon={<IconChartArea size={18} />}
             text={i18n._t('System stats')}
@@ -270,6 +290,7 @@ export const MainMenu = ({
         )}
         {isLoggedIn && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-edit-profile`}
             href='/profile/manage'
             icon={<IconUserCircle size={18} />}
             text={i18n._t('Edit profile')}
@@ -278,6 +299,7 @@ export const MainMenu = ({
         )}
         {isLoggedIn && !!import.meta.env.VITE_BOT_NICKNAME && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-notifications`}
             href='/profile/notifications'
             icon={<IconNotification size={18} />}
             text={i18n._t('Notifications')}
@@ -286,6 +308,7 @@ export const MainMenu = ({
         )}
         {isLoggedIn && (
           <MainMenuLink
+            testId={`forseti-menu-${testIdScope}-sign-out`}
             href='/profile/logout'
             icon={<IconLogout size={18} />}
             text={i18n._t('Sign out')}
@@ -293,6 +316,7 @@ export const MainMenu = ({
           />
         )}
         <MainMenuLink
+          testId={`forseti-menu-${testIdScope}-open-assistant`}
           external={ExternalTarget.TYR}
           href={env.urls.tyr}
           icon={<IconDeviceMobileShare size={20} />}
@@ -302,11 +326,13 @@ export const MainMenu = ({
       </Stack>
       <Group mt={0} spacing={0}>
         <NavLink
+          data-testid={`forseti-menu-${testIdScope}-language`}
           styles={{ label: { fontSize: '18px' }, children: { paddingLeft: 0 } }}
           icon={<IconLanguageHiragana size={20} />}
           label={i18n._t('Language')}
         >
           <NavLink
+            data-testid={`forseti-menu-${testIdScope}-language-en`}
             onClick={() => {
               saveLang('en');
               closeMenu?.();
@@ -315,6 +341,7 @@ export const MainMenu = ({
             label='en'
           />
           <NavLink
+            data-testid={`forseti-menu-${testIdScope}-language-ru`}
             onClick={() => {
               saveLang('ru');
               closeMenu?.();
@@ -323,6 +350,7 @@ export const MainMenu = ({
             label='ru'
           />
           <NavLink
+            data-testid={`forseti-menu-${testIdScope}-language-de`}
             onClick={() => {
               saveLang('de');
               closeMenu?.();
@@ -331,6 +359,7 @@ export const MainMenu = ({
             label='de'
           />
           <NavLink
+            data-testid={`forseti-menu-${testIdScope}-language-ko`}
             onClick={() => {
               saveLang('ko');
               closeMenu?.();
@@ -340,6 +369,7 @@ export const MainMenu = ({
           />
         </NavLink>
         <NavLink
+          data-testid={`forseti-menu-${testIdScope}-dimmed-colors`}
           styles={{ label: { fontSize: '18px' } }}
           icon={<IconSun size={20} />}
           onClick={() => {
@@ -349,6 +379,7 @@ export const MainMenu = ({
           label={i18n._t('Toggle dimmed colors')}
         />
         <NavLink
+          data-testid={`forseti-menu-${testIdScope}-color-scheme`}
           styles={{ label: { fontSize: '18px' } }}
           icon={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
           onClick={() => {

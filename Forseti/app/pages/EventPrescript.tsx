@@ -123,9 +123,10 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
   }
 
   return (
-    <Container>
+    <Container data-testid='forseti-event-prescript-page'>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       <Modal
+        data-testid='forseti-event-prescript-instructions-modal'
         opened={opened}
         onClose={close}
         title={<Text weight='bold'>{i18n._t('Event script filling instruction')}</Text>}
@@ -145,6 +146,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
       </Modal>
 
       <NumberInput
+        data-testid='forseti-event-prescript-next-session-index'
         label={i18n._t('Next session index')}
         description={i18n._t(
           'This is the index of next session script (starting from 1). Each time new session starts, this value is increased automatically.'
@@ -155,11 +157,16 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
       <Space h='xl' />
       <Group grow align='flex-start'>
         <Textarea
+          data-testid='forseti-event-prescript-script'
           placeholder={i18n._t('Please enter event script here')}
           label={
             <Group>
               <Text weight='bold'>{i18n._t('Event script')}</Text>{' '}
-              <Button variant='subtle' onClick={open}>
+              <Button
+                data-testid='forseti-event-prescript-instructions-open'
+                variant='subtle'
+                onClick={open}
+              >
                 {i18n._t('Instructions')}
               </Button>
             </Group>
@@ -185,6 +192,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
         </Box>
       </Group>
       <TopActionButton
+        testId='forseti-event-prescript-save'
         title={isSaved ? i18n._t('Script updated!') : i18n._t('Update script')}
         loading={isSaving || isLoading || isSaved}
         icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}

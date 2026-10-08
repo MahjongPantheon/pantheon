@@ -32,6 +32,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
     <>
       <NumberInput
         icon={<IconClockPlay size='1rem' />}
+        data-testid='forseti-event-settings-tournament-settings-event-duration'
         {...form.getInputProps('event.duration')}
         label={i18n._t('Session duration in minutes')}
         description={i18n._t(
@@ -44,19 +45,23 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
       <Radio.Group
         label={i18n._t('Session ending policy')}
         description={i18n._t('How game sessions should end during the tournament')}
+        data-testid='forseti-event-settings-tournament-settings-ruleset-ending-policy'
         {...form.getInputProps('ruleset.endingPolicy')}
       >
         <Space h='md' />
         <Stack spacing='xs'>
           <Radio
+            data-testid='forseti-event-settings-ending-policy-natural'
             value={EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED}
             label={i18n._t('Do not interrupt session until it ends')}
           />
           <Radio
+            data-testid='forseti-event-settings-ending-policy-after-hand'
             value={EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND}
             label={i18n._t('When time is out, finish current hand and interrupt the session')}
           />
           <Radio
+            data-testid='forseti-event-settings-ending-policy-one-more-hand'
             value={EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND}
             label={i18n._t(
               'When time is out, finish current hand, play one more, and then interrup the session'
@@ -70,10 +75,12 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         description={i18n._t(
           'If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game'
         )}
+        data-testid='forseti-event-settings-tournament-settings-ruleset-chombo-ends-game'
         {...form.getInputProps('ruleset.chomboEndsGame', { type: 'checkbox' })}
       />
       <Checkbox
         label={i18n._t('Team tournament')}
+        data-testid='forseti-event-settings-tournament-settings-event-is-team'
         {...form.getInputProps('event.isTeam', { type: 'checkbox' })}
       />
       <Checkbox
@@ -81,10 +88,12 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         description={i18n._t(
           'You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set.'
         )}
+        data-testid='forseti-event-settings-tournament-settings-event-is-prescripted'
         {...form.getInputProps('event.isPrescripted', { type: 'checkbox' })}
       />
       <NumberInput
         icon={<IconUserX size='1rem' />}
+        data-testid='forseti-event-settings-tournament-settings-ruleset-replacement-player-fixed-points'
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
@@ -95,6 +104,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
       />
       <NumberInput
         icon={<IconUserX size='1rem' />}
+        data-testid='forseti-event-settings-tournament-settings-ruleset-replacement-player-override-uma'
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(
