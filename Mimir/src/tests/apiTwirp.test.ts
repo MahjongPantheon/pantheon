@@ -2582,6 +2582,44 @@ describe('Mimir Twirp API', () => {
     }
   });
 
+  test('RecalcAchievements schedules an achievements job for the event', async () => {
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_LOCAL,
+      'test achievements recalculation '
+    );
+    const jobArguments = JSON.stringify({ eventId });
+    const config = new ConfigService().db;
+    const db = new Client({
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    try {
+      const jobsBefore = await db.query(
+        'select id from jobs_queue where job_name = $1 and job_arguments = $2',
+        ['achievements', jobArguments]
+      );
+      expect(jobsBefore.rows).toHaveLength(0);
+
+      await mimirClient.RecalcAchievements(eventId);
+
+      const jobsAfter = await db.query(
+        'select id from jobs_queue where job_name = $1 and job_arguments = $2',
+        ['achievements', jobArguments]
+      );
+      expect(jobsAfter.rows).toHaveLength(1);
+    } finally {
+      await db.query('delete from jobs_queue where job_name = $1 and job_arguments = $2', [
+        'achievements',
+        jobArguments,
+      ]);
+      await db.end();
+    }
+  });
+
   test('NotifyPlayersSessionStartsSoon sends registered player IDs to Skirnir', async () => {
     const eventId = await createEventWithRegisteredPlayers(
       EventType.EVENT_TYPE_TOURNAMENT,
@@ -2631,7 +2669,6 @@ AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-RecalcAchievements
 RecalcPlayerStats
 GetAchievements
 GetPlayerStats
