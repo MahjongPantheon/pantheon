@@ -940,7 +940,7 @@ export class SessionModel extends Model {
   }
 
   async mayDefinalize(session: SessionEntity) {
-    if (session.status !== SessionStatus.SESSION_STATUS_FINISHED) {
+    if (session.event.syncEnd || session.status !== SessionStatus.SESSION_STATUS_FINISHED) {
       return false;
     }
 
@@ -1067,7 +1067,7 @@ export class SessionModel extends Model {
   }
 
   async definalizeGame(hash: string) {
-    const session = await this.findByRepresentationalHash([hash]);
+    const session = await this.findByRepresentationalHash([hash], ['event']);
     if (session.length === 0) {
       throw new Error('Session not found');
     }
@@ -1083,7 +1083,7 @@ export class SessionModel extends Model {
       throw new Error("You don't have the necessary permissions to definalize game");
     }
 
-    if (!this.mayDefinalize(session[0])) {
+    if (!(await this.mayDefinalize(session[0]))) {
       throw new Error('Session cannot be definalized');
     }
 

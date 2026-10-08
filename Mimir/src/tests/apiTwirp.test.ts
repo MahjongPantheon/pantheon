@@ -2327,7 +2327,7 @@ describe('Mimir Twirp API', () => {
     }
   });
 
-  test('FinalizeSession / full tournament flow on single table', async () => {
+  const preparePrefinishedTournamentTable = async () => {
     const { eventId } = await mimirClient.CreateEvent({
       type: EventType.EVENT_TYPE_TOURNAMENT,
       title: 'test tournament' + v4(),
@@ -2379,6 +2379,7 @@ describe('Mimir Twirp API', () => {
         },
       },
     });
+
     await mimirClient.AddRound({
       sessionHash,
       roundData: {
@@ -2457,6 +2458,57 @@ describe('Mimir Twirp API', () => {
       },
     });
 
+    return { eventId, sessionHash };
+  };
+
+  const prepareFinishedClubGame = async () => {
+    const { eventId } = await mimirClient.CreateEvent({
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: 'test club event ' + v4(),
+      description: 'test event desc',
+      duration: 75,
+      timezone: 'UTC',
+      lobbyId: 0,
+      seriesLength: 0,
+      minGames: 0,
+      isTeam: false,
+      isPrescripted: false,
+      rulesetConfig: RulesetEntity.createRuleset('rrc').rules,
+      isListed: true,
+      isRatingShown: true,
+      achievementsShown: true,
+      allowViewOtherTables: true,
+      platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+      allowManualAddReplay: false,
+      windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED,
+    });
+    const playerIds = [2517, 743, 338, 1834];
+    for (const playerId of playerIds) {
+      await mimirClient.RegisterPlayer(eventId, playerId);
+    }
+
+    mimirClient.setEventId(eventId);
+    const { sessionHash } = await mimirClient.StartGame(eventId, playerIds);
+    for (let roundIndex = 1; roundIndex <= 8; roundIndex++) {
+      await mimirClient.AddRound({
+        sessionHash,
+        roundData: {
+          draw: {
+            roundIndex,
+            honba: roundIndex - 1,
+            riichiBets: [playerIds[(roundIndex + 1) % 4]],
+            tempai: [playerIds[roundIndex % 4], playerIds[(roundIndex + 1) % 4]],
+          },
+        },
+      });
+    }
+
+    return { eventId, sessionHash };
+  };
+
+  test('FinalizeSession / full tournament flow on single table', async () => {
+    const { eventId } = await preparePrefinishedTournamentTable();
+
     const tablesStateAfter = await mimirClient.GetTablesState({
       eventId,
       omitLastRound: true,
@@ -2475,9 +2527,34 @@ describe('Mimir Twirp API', () => {
     expect(tablesStateAfter2.tables[0].status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
   });
 
-  /*
+  test('DefinalizeGame / full club game flow on single table', async () => {
+    const { eventId, sessionHash } = await prepareFinishedClubGame();
+    const tablesStateFinalized = await mimirClient.GetTablesState({ eventId, omitLastRound: true });
+    expect(tablesStateFinalized.tables[0].status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+    expect(tablesStateFinalized.tables[0].mayDefinalize).toBe(true);
 
-DefinalizeGame
+    const definalized = await mimirClient.DefinalizeGame(sessionHash);
+    expect(definalized.success).toBe(true);
+    const tablesStateDefinalized = await mimirClient.GetTablesState({
+      eventId,
+      omitLastRound: true,
+    });
+    expect(tablesStateDefinalized.tables[0].status).toBe(SessionStatus.SESSION_STATUS_INPROGRESS);
+  });
+
+  test('DefinalizeGame rejects tournament games', async () => {
+    const { eventId, sessionHash } = await preparePrefinishedTournamentTable();
+    const finalized = await mimirClient.FinalizeSession(eventId);
+    expect(finalized.success).toBe(true);
+    const tablesState = await mimirClient.GetTablesState({ eventId, omitLastRound: true });
+    expect(tablesState.tables[0].status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+    expect(tablesState.tables[0].mayDefinalize).toBe(false);
+    await expect(mimirClient.DefinalizeGame(sessionHash)).rejects.toThrow();
+    const tablesStateAfter = await mimirClient.GetTablesState({ eventId, omitLastRound: true });
+    expect(tablesStateAfter.tables[0].status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+  });
+
+  /*
 
 UpdatePlayersTeams - todo after team event is ready
 

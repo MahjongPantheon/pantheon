@@ -15,6 +15,7 @@ import {
   CancelGame,
   CancelPenalty,
   CreateEvent,
+  DefinalizeGame,
   DropLastRound,
   EventsGetAllRegisteredPlayersResponse,
   EventsGetEventForEditResponse,
@@ -402,5 +403,9 @@ export class MimirTest {
 
   async FinalizeSession(eventId: number) {
     return FinalizeSession({ eventId }, this._config);
+  }
+
+  async DefinalizeGame(sessionHash: string): Promise<GenericSuccessResponse> {
+    return DefinalizeGame({ sessionHash }, this._config);
   }
 }
