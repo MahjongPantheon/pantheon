@@ -87,6 +87,7 @@ import {
   PlayersGetPlayerResponse,
   PreviewRound,
   RegisterPlayer,
+  RebuildScoring,
   ResetSeating,
   StartGame,
   StartTimer,
@@ -418,6 +419,10 @@ export class MimirTest {
 
   async DefinalizeGame(sessionHash: string): Promise<GenericSuccessResponse> {
     return DefinalizeGame({ sessionHash }, this._config);
+  }
+
+  async RebuildScoring(eventId: number): Promise<GenericSuccessResponse> {
+    return RebuildScoring({ eventId }, this._config);
   }
 
   async ClearStatCache(playerId: number): Promise<GenericSuccessResponse> {

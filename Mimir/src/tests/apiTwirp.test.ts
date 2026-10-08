@@ -2464,6 +2464,50 @@ describe('Mimir Twirp API', () => {
     expect(tablesStateAfter.tables[0].status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
   });
 
+  test('RebuildScoring recreates results for a finished event', async () => {
+    const { eventId } = await preparePrefinishedTournamentTable();
+    await mimirClient.FinalizeSession(eventId);
+
+    const config = new ConfigService().db;
+    const db = new Client({
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    try {
+      const resultsBefore = await db.query(
+        'select id, player_id, rating_delta from session_results where event_id = $1 order by player_id',
+        [eventId]
+      );
+      expect(resultsBefore.rows).toHaveLength(gameFlowPlayerIds.length);
+      await db.query('update session_results set rating_delta = $1 where id = $2', [
+        123456789,
+        resultsBefore.rows[0].id,
+      ]);
+
+      const response = await mimirClient.RebuildScoring(eventId);
+      expect(response.success).toBe(true);
+
+      const resultsAfter = await db.query(
+        'select id, player_id, rating_delta from session_results where event_id = $1 order by player_id',
+        [eventId]
+      );
+      expect(resultsAfter.rows).toHaveLength(gameFlowPlayerIds.length);
+      expect(resultsAfter.rows.map((result) => result.player_id).sort((a, b) => a - b)).toEqual(
+        [...gameFlowPlayerIds].sort((a, b) => a - b)
+      );
+      expect(resultsAfter.rows.every((result) => result.rating_delta !== 123456789)).toBe(true);
+      expect(resultsAfter.rows.map((result) => result.id)).not.toEqual(
+        resultsBefore.rows.map((result) => result.id)
+      );
+    } finally {
+      await db.end();
+    }
+  });
+
   test('UpdatePlayersTeams applies team names to a single-table tournament', async () => {
     const eventId = await createEventWithRegisteredPlayers(
       EventType.EVENT_TYPE_TOURNAMENT,
@@ -2587,7 +2631,6 @@ AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-RebuildScoring
 RecalcAchievements
 RecalcPlayerStats
 GetAchievements
