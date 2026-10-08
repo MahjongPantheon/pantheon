@@ -75,6 +75,7 @@ import {
   MakePrescriptedSeating,
   MakeShuffledSeating,
   MakeSwissSeating,
+  NotifyPlayersSessionStartsSoon,
   PenaltiesResponse,
   PlayersGetAllRoundsResponse,
   PlayersGetCurrentSessionsResponse,
@@ -420,5 +421,9 @@ export class MimirTest {
 
   async ClearStatCache(playerId: number): Promise<GenericSuccessResponse> {
     return ClearStatCache({ playerId }, this._config);
+  }
+
+  async NotifyPlayersSessionStartsSoon(eventId: number): Promise<GenericSuccessResponse> {
+    return NotifyPlayersSessionStartsSoon({ eventId }, this._config);
   }
 }

@@ -5,7 +5,8 @@ import { FreyService } from './Frey.js';
 import { LogService } from './Log.js';
 import { MetaService } from './Meta.js';
 import { MikroORM } from '@mikro-orm/core';
-import { SkirnirService } from './Skirnir.js';
+import { ISkirnirService, SkirnirService } from './Skirnir.js';
+import { SkirnirServiceMock } from './SkirnirMock.js';
 import { FreyServiceMock } from './FreyMock.js';
 import { EntityManager } from '@mikro-orm/postgresql';
 
@@ -29,7 +30,7 @@ export class Repository {
   protected static _cache?: CacheService;
   protected static _frey?: FreyService;
   protected static _log?: LogService;
-  protected static _skirnir?: SkirnirService;
+  protected static _skirnir?: ISkirnirService;
 
   protected static get config(): ConfigService {
     Repository._config ??= new ConfigService(true);
@@ -71,7 +72,7 @@ export class Repository {
     return this._meta;
   }
 
-  get skirnir(): SkirnirService {
+  get skirnir(): ISkirnirService {
     Repository._skirnir ??= new SkirnirService(Repository.config.skirnirUrl, this);
     return Repository._skirnir;
   }
@@ -83,6 +84,10 @@ export class Repository {
 
   mockCache() {
     Repository._cache ??= new CacheService(Repository.config);
+  }
+
+  mockSkirnir() {
+    Repository._skirnir ??= new SkirnirServiceMock(Repository.config.skirnirUrl, this);
   }
 
   // mainly for tests

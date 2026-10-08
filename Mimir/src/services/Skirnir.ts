@@ -1,7 +1,7 @@
 import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { PersonEx, Round } from 'tsclients/proto/atoms.pb.js';
 import { Model } from '../models/Model.js';
-import { Repository } from './Repository.js';
+import type { Repository } from './Repository.js';
 import { EventModel } from '../models/EventModel.js';
 import { PlayerModel } from '../models/PlayerModel.js';
 
@@ -32,7 +32,43 @@ function _t(str: string): string {
   return str;
 }
 
-export class SkirnirService {
+export interface ISkirnirService {
+  messageSeatingReady(playerIds: number[], table: number, eventId: number): Promise<void>;
+  messageSessionStartingSoon(playerIds: number[], eventId: number): Promise<void>;
+  messageCallReferee(eventId: number, tableId: number): Promise<void>;
+  trackSession(sessionHash: string): Promise<void>;
+  messageHandRecorded(
+    playerIds: number[],
+    adminIds: number[],
+    eventId: number,
+    diff: Record<string, [number, number]>,
+    round: Round
+  ): Promise<void>;
+  messageClubSessionEnd(
+    playerIds: number[],
+    eventId: number,
+    results: Record<number, number>
+  ): Promise<void>;
+  messageTournamentSessionEnd(
+    playerIds: number[],
+    eventId: number,
+    results: Record<number, number>
+  ): Promise<void>;
+  messagePenaltyApplied(
+    playerId: number,
+    eventId: number,
+    amount: number,
+    reason: string
+  ): Promise<void>;
+  messagePenaltyCancelled(
+    playerId: number,
+    eventId: number,
+    amount: number,
+    reason: string
+  ): Promise<void>;
+}
+
+export class SkirnirService implements ISkirnirService {
   private readonly _apiUrl: string;
   private readonly _repo: Repository;
 

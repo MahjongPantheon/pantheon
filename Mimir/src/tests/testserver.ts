@@ -4,6 +4,7 @@ import { createTwirpServer } from 'twirpscript';
 import { Context } from '../context.js';
 import { createServer, IncomingMessage } from 'http';
 import { injectRepository } from '../middleware/injectRepository.js';
+import { SkirnirServiceMock } from '../services/SkirnirMock.js';
 
 import config from '../mikro-orm.config.js';
 import { MikroORM, RequestContext } from '@mikro-orm/postgresql';
@@ -28,6 +29,13 @@ app.on('error', (ctx, err) => {
   });
 });
 
-createServer(app).listen(4301, () => {
+createServer((req, res) => {
+  if (req.method === 'GET' && req.url === '/__test__/skirnir/session-starting-soon') {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(SkirnirServiceMock.sessionStartingSoonCalls));
+    return;
+  }
+  app(req, res);
+}).listen(4301, () => {
   console.log(`Test server listening on port 4301`);
 });

@@ -202,7 +202,7 @@ export class PlayerModel extends Model {
       regModel.findByEventId([eventId]),
       eventRegModel.getSubstitutionPlayers(eventId),
     ]);
-    const playerIds = whoPlays.map((player) => replacements[player.id] ?? player.id);
+    const playerIds = whoPlays.map((player) => replacements[player.playerId] ?? player.playerId);
     await this.repo.skirnir.messageSessionStartingSoon(playerIds, eventId);
     return { success: true };
   }

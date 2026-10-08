@@ -10,6 +10,7 @@ export function injectRepository(orm: MikroORM): Middleware<Context, IncomingMes
     if (process.env.TEST) {
       ctx.repository.mockCache();
       ctx.repository.mockFrey();
+      ctx.repository.mockSkirnir();
     }
     await ctx.repository.cache.connect();
     return next();

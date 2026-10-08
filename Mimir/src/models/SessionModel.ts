@@ -628,7 +628,7 @@ export class SessionModel extends Model {
 
     const newSession = this.startSession(event[0], gamesStartGamePayload.players, null);
 
-    this.repo.em.flush();
+    await this.repo.em.flush();
 
     await context.repository.skirnir.trackSession(newSession.representationalHash!);
     return { sessionHash: newSession.representationalHash! };

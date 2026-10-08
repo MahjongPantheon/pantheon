@@ -2538,13 +2538,33 @@ describe('Mimir Twirp API', () => {
     }
   });
 
+  test('NotifyPlayersSessionStartsSoon sends registered player IDs to Skirnir', async () => {
+    const eventId = await createEventWithRegisteredPlayers(
+      EventType.EVENT_TYPE_TOURNAMENT,
+      'test session notification '
+    );
+    const response = await mimirClient.NotifyPlayersSessionStartsSoon(eventId);
+    expect(response.success).toBe(true);
+
+    const messages = (await fetch(
+      'http://localhost:4301/__test__/skirnir/session-starting-soon'
+    ).then((mockResponse) => mockResponse.json())) as Array<{
+      playerIds: number[];
+      eventId: number;
+    }>;
+    const eventMessages = messages.filter((message) => message.eventId === eventId);
+    expect(eventMessages).toHaveLength(1);
+    expect(eventMessages[0].playerIds.sort((a, b) => a - b)).toEqual(
+      [...gameFlowPlayerIds].sort((a, b) => a - b)
+    );
+  });
+
   /*
 
 AddPenaltyGame
 AddOnlineReplay
 AddTypedOnlineReplay
 
-NotifyPlayersSessionStartsSoon
 CallReferee
 RebuildScoring
 RecalcAchievements
