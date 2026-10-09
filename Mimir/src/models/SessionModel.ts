@@ -986,7 +986,7 @@ export class SessionModel extends Model {
       return false;
     }
 
-    const endDate = moment.tz(session.endDate, session.event.timezone);
+    const endDate = moment.utc(session.endDate).tz(session.event.timezone);
     const now = moment.tz(session.event.timezone);
     return !(now.diff(endDate, 'days') > 0 || now.diff(endDate, 'hours') >= 3);
   }
