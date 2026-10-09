@@ -49,6 +49,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
+    "@jest/globals": "^30.4.1",
     "@mikro-orm/cli": "6.6.0",
     "@swc/core": "^1.13.2",
     "@swc/jest": "^0.2.39",

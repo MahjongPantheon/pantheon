@@ -117,6 +117,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.5.0
         version: 19.8.1
+      '@jest/globals':
+        specifier: ^30.4.1
+        version: 30.4.1
       '@mikro-orm/cli':
         specifier: 6.6.0
         version: 6.6.0(pg@8.21.0)(sqlite3@5.1.7)

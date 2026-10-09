@@ -147,7 +147,7 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
         const lastSessionState = round.lastSessionState;
         const riichiWinners = new PointsCalc().assignRiichiBets(
           winnerIds,
-          riichiIds,
+          [...riichiIds],
           round.hands[0].loserId!,
           lastSessionState?.riichiBets ?? 0,
           lastSessionState?.honba ?? 0,
