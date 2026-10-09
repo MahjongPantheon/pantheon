@@ -3,6 +3,7 @@ import { mimirServer } from '../mimir.js';
 import { createTwirpServer } from 'twirpscript';
 import { Context } from '../context.js';
 import { createServer, IncomingMessage } from 'http';
+import { takeCoverage } from 'node:v8';
 import { injectRepository } from '../middleware/injectRepository.js';
 import { SkirnirServiceMock } from '../services/SkirnirMock.js';
 import { Repository } from '../services/Repository.js';
@@ -33,6 +34,12 @@ app.on('error', (ctx, err) => {
 });
 
 createServer(async (req, res) => {
+  if (process.env.NODE_V8_COVERAGE && req.method === 'POST' && req.url === '/__test__/coverage') {
+    takeCoverage();
+    res.writeHead(204);
+    res.end();
+    return;
+  }
   if (req.method === 'POST' && req.url === '/__test__/cron/achievements') {
     try {
       await rebuildAchievements(Repository.instance({}, orm));

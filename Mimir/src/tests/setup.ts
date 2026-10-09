@@ -1,19 +1,37 @@
-import { spawn } from 'child_process';
+import { ChildProcess, spawn } from 'child_process';
+import { mkdir, rm } from 'node:fs/promises';
+import { resolve as resolvePath } from 'node:path';
 
-export default async function setup() {
-  return new Promise<void>((resolve) => {
+declare global {
+  var mimirTestServer: ChildProcess | undefined;
+}
+
+export default async function setup(config: {
+  collectCoverage: boolean;
+  coverageDirectory: string;
+}) {
+  const coverageDirectory = resolvePath(config.coverageDirectory, 'server-v8');
+  if (config.collectCoverage && !process.env.NO_SERVER) {
+    await rm(coverageDirectory, { recursive: true, force: true });
+    await mkdir(coverageDirectory, { recursive: true });
+  }
+  return new Promise<void>((resolve, reject) => {
     if (process.env.NO_SERVER) {
       resolve();
       return;
     }
-    const child = spawn('/usr/bin/pnpm', ['exec', 'tsx', 'src/tests/testserver.ts'], {
-      shell: true,
+    const child = spawn(process.execPath, ['--import', 'tsx', 'src/tests/testserver.ts'], {
       stdio: 'pipe',
       env: {
         ...process.env,
         TEST: 'true',
+        NODE_V8_COVERAGE: config.collectCoverage ? coverageDirectory : '',
       },
-      // cwd: __dirname + '../../',
+    });
+    globalThis.mimirTestServer = child;
+    child.on('error', reject);
+    child.on('exit', (code, signal) => {
+      reject(new Error(`Test server exited before becoming ready (${signal ?? code})`));
     });
     child.stdout.on('data', (data) => {
       data
