@@ -54,6 +54,49 @@ describe('Session state', () => {
   const sessionId = 1234;
   const eventId = 321;
 
+  it('resumes from an independent copy of the saved state', () => {
+    const saved = new SessionState(ruleset, playerIds).state;
+    saved.chips = { 1: 2 };
+    saved.chombo = { 1: 1 };
+    saved.yakitori = { 1: true };
+    saved.replacements = { 1: 5 };
+    const snapshot = saved.clone();
+    const resumed = new SessionState(ruleset, playerIds, saved);
+
+    expect(resumed.state).toEqual(saved);
+    expect(resumed.state).not.toBe(saved);
+    for (const key of [
+      'scores',
+      'chips',
+      'chombo',
+      'yakitori',
+      'replacements',
+      'playerIds',
+    ] as const) {
+      expect(resumed.state[key]).not.toBe(saved[key]);
+    }
+
+    resumed.update(
+      makeRoundWithDefaults({
+        outcome: RoundOutcome.ROUND_OUTCOME_RON,
+        sessionId,
+        eventId,
+        roundIndex: 1,
+        riichi: [3],
+        rounds: [{ han: 3, fu: 30, winnerId: 2, loserId: 1 }],
+      })
+    );
+    resumed.state.chips[1]++;
+    resumed.state.chombo[1]++;
+    resumed.state.yakitori[1] = false;
+    resumed.state.replacements[1] = 6;
+    resumed.state.playerIds.reverse();
+
+    expect(resumed.getRound()).toBe(2);
+    expect(resumed.getScores()[1]).toBeLessThan(saved.scores[1]);
+    expect(saved).toEqual(snapshot);
+  });
+
   it('updates after basic ron', () => {
     const round: RoundEntity = makeRoundWithDefaults({
       outcome: RoundOutcome.ROUND_OUTCOME_RON,
