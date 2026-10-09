@@ -19,6 +19,18 @@ Frey is a simple authentication service with abilities of personal data storage.
 
 ### Developer information
 
+#### Test coverage
+
+`make test` runs Jest and the external test server with V8 coverage enabled.
+The server flushes its counters before teardown; `c8` maps them back to the
+TypeScript sources, and `nyc` merges them with Jest's coverage. The combined
+text, HTML, LCOV, and JSON reports are written to `Frey/coverage/` (open
+`coverage/index.html` for the HTML report). Each run clears the previous reports
+and preserves Jest's failing exit status while still reporting coverage.
+
+The debug flows (`make test_verbose` and `make test_noserver`) continue to run
+Jest directly without collecting server coverage.
+
 #### E2E test data RPCs
 
 The Frey Twirp API at `/v2/common.Frey/` includes `E2eCreateAccounts`,

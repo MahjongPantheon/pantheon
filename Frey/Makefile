@@ -101,7 +101,7 @@ container_typecheck: get_container_id
 .PHONY: test
 test:
 	echo "======= Frey: test ======"
-	pnpm exec jest
+	node app/tests/coverage.cjs
 
 .PHONY: container_test
 container_test: get_container_id
