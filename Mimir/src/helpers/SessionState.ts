@@ -10,7 +10,7 @@ export class SessionState {
 
   constructor(ruleset: RulesetEntity, playersIds: number[], state?: SessionStateEntity) {
     this._ruleset = ruleset;
-    this._state = state ?? new SessionStateEntity();
+    this._state = state?.clone() ?? new SessionStateEntity();
 
     if (!state) {
       // initialize state if not provided

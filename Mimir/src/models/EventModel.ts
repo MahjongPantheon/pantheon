@@ -726,16 +726,15 @@ export class EventModel extends Model {
         throw new Error('Invalid event type');
     }
 
-    await Promise.all([
-      this.repo.em.persistAndFlush(event),
+    await this.repo.em.persistAndFlush(event);
+    await this.repo.em.refresh(event);
 
-      this.repo.frey.AddRuleForPerson({
-        eventId: event.id,
-        personId: this.repo.meta.personId,
-        ruleName: 'ADMIN_EVENT',
-        ruleValue: 1,
-      }),
-    ]);
+    await this.repo.frey.AddRuleForPerson({
+      eventId: event.id,
+      personId: this.repo.meta.personId,
+      ruleName: 'ADMIN_EVENT',
+      ruleValue: 1,
+    });
 
     return { eventId: event.id };
   }

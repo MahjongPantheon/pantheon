@@ -517,7 +517,8 @@ export class SessionModel extends Model {
     event: EventEntity,
     session: SessionEntity,
     sessionState: SessionState,
-    round: RoundEntity
+    round: RoundEntity,
+    preventSaving = false
   ) {
     let payments: PaymentsInfo = {
       direct: {},
@@ -557,11 +558,15 @@ export class SessionModel extends Model {
 
         if (sessionState.isFinished()) {
           await Promise.all([
-            cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
-            this.prefinish(event, session, sessionState),
+            preventSaving
+              ? Promise.resolve()
+              : cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
+            this.prefinish(event, session, sessionState, preventSaving),
           ]);
         } else {
-          session.intermediateResults = sessionState.state;
+          if (!preventSaving) {
+            session.intermediateResults = sessionState.state;
+          }
         }
         break;
       }
@@ -578,11 +583,15 @@ export class SessionModel extends Model {
 
         if (sessionState.isFinished()) {
           await Promise.all([
-            cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
-            this.prefinish(event, session, sessionState),
+            preventSaving
+              ? Promise.resolve()
+              : cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
+            this.prefinish(event, session, sessionState, preventSaving),
           ]);
         } else {
-          session.intermediateResults = sessionState.state;
+          if (!preventSaving) {
+            session.intermediateResults = sessionState.state;
+          }
         }
         break;
       }
@@ -594,11 +603,15 @@ export class SessionModel extends Model {
         // Looks ugly :( But works as expected, so let it be until we find better solution.
         if (!event.isOnline && sessionState.isFinished()) {
           await Promise.all([
-            cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
-            this.prefinish(event, session, sessionState),
+            preventSaving
+              ? Promise.resolve()
+              : cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
+            this.prefinish(event, session, sessionState, preventSaving),
           ]);
         } else {
-          session.intermediateResults = sessionState.state;
+          if (!preventSaving) {
+            session.intermediateResults = sessionState.state;
+          }
         }
         break;
       }
@@ -667,37 +680,52 @@ export class SessionModel extends Model {
     return newSession;
   }
 
-  async prefinish(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
+  async prefinish(
+    event: EventEntity,
+    session: SessionEntity,
+    sessionState: SessionState,
+    preventSaving = false
+  ) {
     // pre-finish state is not applied for games without synchronous ending
     if (!event.syncEnd) {
-      return this.finish(event, session, sessionState);
+      return this.finish(event, session, sessionState, preventSaving);
     }
 
     if (session.status === SessionStatus.SESSION_STATUS_PREFINISHED) {
       return;
     }
 
-    session.status = SessionStatus.SESSION_STATUS_PREFINISHED;
-    session.endDate = new Date().toISOString();
-    session.intermediateResults = sessionState.state;
+    if (!preventSaving) {
+      session.status = SessionStatus.SESSION_STATUS_PREFINISHED;
+      session.endDate = new Date().toISOString();
+      session.intermediateResults = sessionState.state;
+    }
   }
 
-  async finish(event: EventEntity, session: SessionEntity, sessionState: SessionState) {
+  async finish(
+    event: EventEntity,
+    session: SessionEntity,
+    sessionState: SessionState,
+    preventSaving = false
+  ) {
     if (session.status === SessionStatus.SESSION_STATUS_FINISHED) {
       return;
     }
 
-    // Set end date if it is empty; for prefinished games it won't be.
-    session.endDate ??= new Date().toISOString();
-    session.status = SessionStatus.SESSION_STATUS_FINISHED;
-    return this.finalizeGame(event, session, sessionState);
+    if (!preventSaving) {
+      // Set end date if it is empty; for prefinished games it won't be.
+      session.endDate ??= new Date().toISOString();
+      session.status = SessionStatus.SESSION_STATUS_FINISHED;
+    }
+    return this.finalizeGame(event, session, sessionState, false, preventSaving);
   }
 
   async finalizeGame(
     event: EventEntity,
     session: SessionEntity,
     sessionState: SessionState,
-    useSavedReplacements = false
+    useSavedReplacements = false,
+    preventSaving = false
   ) {
     if (!useSavedReplacements) {
       const eventRegModel = this.getModel(EventRegistrationModel);
@@ -718,24 +746,28 @@ export class SessionModel extends Model {
       sessionState.setReplacements(replacements);
     }
 
-    const results = this.getSessionResults(event, session, sessionState);
-    const playerHistoryModel = this.getModel(PlayerHistoryModel);
-    results.forEach((result) => {
-      // persist session history item
-      this.repo.em.persist(result);
-      // persists player history item inside
-      playerHistoryModel.makeNewHistoryItem(
-        event.ruleset,
-        result.playerId,
-        event.id,
-        session.id,
-        result.ratingDelta,
-        result.place,
-        result.chips
+    if (!preventSaving) {
+      const results = this.getSessionResults(event, session, sessionState);
+      const playerHistoryModel = this.getModel(PlayerHistoryModel);
+      await Promise.all(
+        results.map((result) => {
+          // persist session history item
+          this.repo.em.persist(result);
+          // persists player history item inside
+          return playerHistoryModel.makeNewHistoryItem(
+            event.ruleset,
+            result.playerId,
+            event.id,
+            session.id,
+            result.ratingDelta,
+            result.place,
+            result.chips
+          );
+        })
       );
-    });
-
-    session.intermediateResults = sessionState.state;
+      session.intermediateResults = sessionState.state;
+      await this.repo.em.flush();
+    }
   }
 
   async cancelGame(payload: GenericSessionPayload) {
@@ -880,7 +912,13 @@ export class SessionModel extends Model {
       roundData,
       session[0].intermediateResults
     );
-    const payments = await this.updateSessionState(event, session[0], sessionState, roundEntity);
+    const payments = await this.updateSessionState(
+      event,
+      session[0],
+      sessionState,
+      roundEntity,
+      true
+    );
 
     const chomboCounts = sessionState.getChombo();
     const toPaymentLog = ([dir, amount]: [string, number]) => ({
