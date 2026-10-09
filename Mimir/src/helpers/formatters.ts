@@ -10,17 +10,22 @@ import { SessionEntity } from '../entities/Session.entity.js';
 import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 import { RoundEntity } from '../entities/Round.entity.js';
 import { SessionStateEntity } from '../entities/SessionState.entity.js';
+import { EventEntity } from '../entities/Event.entity.js';
+import moment from 'moment-timezone';
 
 export function formatGameResult(
   session: SessionEntity,
   sessionPlatform: PlatformType,
   players: PersonEx[],
   results: SessionResultsEntity[],
-  rounds: RoundEntity[]
+  rounds: RoundEntity[],
+  event: EventEntity
 ): GameResult {
   return {
     sessionHash: session.representationalHash!,
-    date: session.endDate,
+    date: session.endDate
+      ? moment.utc(session.endDate).tz(event.timezone).format('YYYY-MM-DD hh:mm:ss')
+      : undefined,
     replayLink: makeReplayLink(session.replayHash ?? null, sessionPlatform),
     players,
     finalResults: results.map((result) => ({

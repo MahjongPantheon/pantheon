@@ -95,7 +95,7 @@ export class SessionModel extends Model {
         : {}),
       limit: limit ?? undefined,
       offset,
-      populate: ['players'],
+      populate: ['players', 'event'],
     });
   }
 
@@ -290,7 +290,8 @@ export class SessionModel extends Model {
           players.playersData.replaceMap
         ),
         results,
-        rounds
+        rounds,
+        session[0].event
       ),
     };
   }
