@@ -387,7 +387,13 @@ export class EventModel extends Model {
     }
 
     if (!event[0].useTimer) {
-      throw new Error('Timer is not enabled for this event');
+      return {
+        started: false,
+        finished: false,
+        timeRemaining: 0,
+        waitingForTimer: false,
+        hideSeatingAfter: 0,
+      };
     }
 
     const timerState: EventsGetTimerStateResponse = {
