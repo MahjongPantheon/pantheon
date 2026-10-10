@@ -89,7 +89,7 @@ export class EventRegistrationModel extends Model {
   async findIgnoredPlayersIdsByEvent(eventIds: number[]) {
     const result = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
       where: {
-        event: this.repo.em.getReference(EventEntity, eventIds),
+        event: { id: { $in: eventIds } },
         ignoreSeating: 1,
       },
     });

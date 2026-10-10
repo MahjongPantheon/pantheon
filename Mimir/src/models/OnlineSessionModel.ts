@@ -107,8 +107,8 @@ export class OnlineSessionModel extends Model {
       const parser = new Tenhou6OnlineParser(this.repo);
       [session, , rounds] = await parser.parseToSession(
         event,
-        content,
         replayHash,
+        content,
         withChips,
         platformId
       );

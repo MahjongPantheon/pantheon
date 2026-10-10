@@ -100,7 +100,7 @@ export class PlayerHistoryModel extends Model {
     place: number,
     chips?: number
   ) {
-    const item = await this.findLastByEventAndPlayer(playerId, eventId);
+    const item = await this.findLastByEventAndPlayer(eventId, playerId);
 
     let prevItem: PlayerHistoryEntity;
     if (!item) {

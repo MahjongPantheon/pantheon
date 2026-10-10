@@ -67,6 +67,8 @@ describe('SessionResults', () => {
       3: -30000, // replacement
       4: 50000 - 30000 - 5000,
     };
-    expect(mdl.calcRatingDelta(ruleset, placesMap, scores, replacements)).toEqual(expected);
+    expect(mdl.calcRatingDelta([1, 2, 3, 4], ruleset, placesMap, scores, replacements)).toEqual(
+      expected
+    );
   });
 });

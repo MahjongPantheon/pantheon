@@ -145,11 +145,11 @@ export function makeReplayLink(hash: string | null, platform: PlatformType) {
     return '';
   }
 
-  if (platform === PlatformType.PLATFORM_TYPE_MAHJONGSOUL) {
+  if (platform === PlatformType.PLATFORM_TYPE_TENHOUNET) {
     return base64decode('aHR0cDovL3RlbmhvdS5uZXQv') + '0/?log=' + hash;
   }
 
-  if (platform === PlatformType.PLATFORM_TYPE_TENHOUNET) {
+  if (platform === PlatformType.PLATFORM_TYPE_MAHJONGSOUL) {
     return base64decode('aHR0cHM6Ly9tYWhqb25nc291bC5nYW1lLnlvLXN0YXIuY29t') + '/?paipu=' + hash;
   }
 

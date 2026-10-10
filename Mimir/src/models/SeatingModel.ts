@@ -55,16 +55,16 @@ export class SeatingModel extends Model {
           },
         });
 
-        const regIds = registrations.map((r) => r.id);
+        const playerIds = registrations.map((r) => r.playerId);
 
         const playerModel = this.getModel(PlayerModel);
         const historyModel = this.getModel(PlayerHistoryModel);
         const playerInSessionModel = this.getModel(PlayerInSessionModel);
 
         const [players, history, seating] = await Promise.all([
-          playerModel.findById(regIds),
+          playerModel.findById(playerIds),
           historyModel.findLastByEvent([eventId]),
-          playerInSessionModel.getPlayersSeatingInEvent(eventId, regIds.length),
+          playerInSessionModel.getPlayersSeatingInEvent(eventId, playerIds.length),
         ]);
 
         const ratings: Record<number, number> = {};

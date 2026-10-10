@@ -630,9 +630,7 @@ export class EventModel extends Model {
           playerModel.findPlayersForEvents(eventsGetAllRegisteredPlayersPayload.eventIds),
           eventRegModel.findIgnoredPlayersIdsByEvent(eventsGetAllRegisteredPlayersPayload.eventIds),
           needLocalIds
-            ? eventRegModel
-                .findLocalIdsMapByEvent(events[0].id)
-                .then((m) => new Map(m.entries().map(([key, value]) => [value, key])))
+            ? eventRegModel.findLocalIdsMapByEvent(events[0].id)
             : Promise.resolve(new Map<number, number>()),
           events[0].isTeam
             ? eventRegModel.findTeamNameMapByEvent(events[0].id)

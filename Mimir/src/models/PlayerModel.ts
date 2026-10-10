@@ -126,7 +126,7 @@ export class PlayerModel extends Model {
     if (substituteReplacements) {
       for (const registration of registrationData) {
         if (registration.replacementId) {
-          replacements.set(registration.replacementId, registration.id);
+          replacements.set(registration.replacementId, registration.playerId);
         }
       }
     }

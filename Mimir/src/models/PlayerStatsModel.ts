@@ -369,7 +369,7 @@ export class PlayerStatsModel extends Model {
     playerInfo: Map<number, PersonEx>
   ) {
     const withChips = ruleset.rules.chipsValue > 0;
-    const playersBySessionGrouped = playerBySession.reduce((acc, [sessionId, playerId]) => {
+    const playersBySessionGrouped = playerBySession.reduce((acc, [playerId, sessionId]) => {
       const players = acc.get(sessionId) ?? [];
       players.push(playerId);
       acc.set(sessionId, players);

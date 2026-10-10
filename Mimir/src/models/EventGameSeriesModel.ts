@@ -228,7 +228,7 @@ export class EventGameSeriesModel extends Model {
     const result = [];
     for (const seriesId of seriesIds) {
       result.push({
-        sessionHash: hashes[playerId],
+        sessionHash: hashes[seriesId],
         place: places[seriesId][playerId],
       });
     }

@@ -90,6 +90,11 @@ describe('Online replay import', () => {
         contentType
       );
       expect(parser).toHaveBeenCalledTimes(1);
+      expect(parser).toHaveBeenCalledWith(
+        ...(contentType === 1
+          ? [event, 'replay-content', false]
+          : [event, 'replay-hash', 'replay-content', false, PlatformType.PLATFORM_TYPE_TENHOUNET])
+      );
       expect(result.game.sessionHash).toBe('session-hash');
       expect(result.game.rounds).toHaveLength(2);
       expect(result.players.map((p) => p.id)).toEqual(ids);
