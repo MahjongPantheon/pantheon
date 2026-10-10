@@ -41,6 +41,7 @@ export class SessionResultsModel extends Model {
   ): SessionResultsEntity[] {
     const placesMap = this.calcPlacesMap(state.getScores());
     const ratingDelta = this.calcRatingDelta(
+      state.state.playerIds,
       ruleset,
       placesMap,
       state.getScores(),
@@ -96,6 +97,7 @@ export class SessionResultsModel extends Model {
 
   // for a single table
   public calcRatingDelta(
+    orderedPlayers: number[],
     ruleset: RulesetEntity,
     placesMap: Record<number, number>,
     scores: Record<number, number>,
@@ -104,6 +106,11 @@ export class SessionResultsModel extends Model {
     const ratingDelta: Record<number, number> = {};
     const umaList = ruleset.getUma(Object.values(scores));
     Object.entries(scores)
+      .sort(
+        (a, b) =>
+          orderedPlayers.indexOf(parseInt(a[0].toString(), 10)) -
+          orderedPlayers.indexOf(parseInt(b[0].toString(), 10))
+      )
       .sort((a, b) => b[1] - a[1])
       .forEach(([playerId, score], idx) => {
         const pId = parseInt(playerId.toString(), 10);

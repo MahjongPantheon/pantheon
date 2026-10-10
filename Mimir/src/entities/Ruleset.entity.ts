@@ -304,7 +304,7 @@ export class RulesetEntity {
     }
 
     if (sortedScores[1] === sortedScores[2] && sortedScores[2] === sortedScores[3]) {
-      // 2 == 3 == 3 places
+      // 2 == 3 == 4 places
       const eqUma = (uma[1] + uma[2] + uma[3]) / 3;
       return [uma[0], eqUma, eqUma, eqUma];
     }
