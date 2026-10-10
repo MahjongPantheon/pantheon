@@ -37,7 +37,7 @@ import { filterPersonalData } from '../helpers/filterPersonalData.js';
 export class AchievementsModel extends Model {
   async scheduleRebuildAchievements(eventId: number) {
     const job = new JobsQueueEntity();
-    job.createdAt = moment.utc().format('YYYY-MM-DD hh:mm:ss');
+    job.createdAt = moment.utc().format('YYYY-MM-DD HH:mm:ss');
     job.jobName = 'achievements';
     job.jobArguments = JSON.stringify({ eventId });
 
@@ -70,7 +70,7 @@ export class AchievementsModel extends Model {
       lastUpdate = moment
         .utc(achievements[0].lastUpdate)
         .tz(events[0].timezone)
-        .format('YYYY-MM-DD hh:mm:ss');
+        .format('YYYY-MM-DD HH:mm:ss');
       for (const achievement of payload.achievementsList) {
         if (achievementData[achievement as keyof typeof achievementData]) {
           results.push({

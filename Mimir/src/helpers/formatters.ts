@@ -24,7 +24,7 @@ export function formatGameResult(
   return {
     sessionHash: session.representationalHash!,
     date: session.endDate
-      ? moment.utc(session.endDate).tz(event.timezone).format('YYYY-MM-DD hh:mm:ss')
+      ? moment.utc(session.endDate).tz(event.timezone).format('YYYY-MM-DD HH:mm:ss')
       : undefined,
     replayLink: makeReplayLink(session.replayHash ?? null, sessionPlatform),
     players,

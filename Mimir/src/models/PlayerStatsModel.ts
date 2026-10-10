@@ -64,7 +64,7 @@ export class PlayerStatsModel extends Model {
 
   async scheduleRebuildSinglePlayerStats(playerId: number, eventId: number) {
     const job = new JobsQueueEntity();
-    job.createdAt = moment.utc().format('YYYY-MM-DD hh:mm:ss');
+    job.createdAt = moment.utc().format('YYYY-MM-DD HH:mm:ss');
     job.jobName = 'playerStats';
     job.jobArguments = JSON.stringify({ playerId, eventId });
     await this.repo.em.persistAndFlush(job);
