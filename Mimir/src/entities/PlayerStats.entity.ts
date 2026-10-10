@@ -3,6 +3,7 @@ import { EventEntity } from './Event.entity.js';
 
 type PlayerStatsData = Partial<{
   ratingHistory: number[];
+  scoreHistoryOrder: number[];
   scoreHistory: Record<
     number, // session id
     Array<{
@@ -15,6 +16,7 @@ type PlayerStatsData = Partial<{
       score: number;
       ratingDelta: number;
       place: number;
+      chips?: number;
     }>
   >;
   playersInfo: Array<{

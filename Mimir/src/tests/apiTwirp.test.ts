@@ -229,6 +229,15 @@ describe('Mimir Twirp API', () => {
       expect(response.totalPlayedGames).toBe(playerStats.data.totalPlayedGames);
       expect(response.totalPlayedRounds).toBe(playerStats.data.totalPlayedRounds);
       expect(response.ratingHistory).toEqual(playerStats.data.ratingHistory);
+      expect(response.playersInfo.length).toBeGreaterThan(0);
+      expect(response.playersInfo).toEqual(playerStats.data.playersInfo);
+      expect(response.scoreHistory).toHaveLength(playerStats.data.totalPlayedGames);
+      expect(response.scoreHistory.flatMap((session) => session.tables).length).toBeGreaterThan(0);
+      expect(response.placesSummary.reduce((sum, item) => sum + item.count, 0)).toBe(
+        response.totalPlayedGames
+      );
+      expect(response.handsValueSummary.length).toBeGreaterThan(0);
+      expect(response.yakuSummary.length).toBeGreaterThan(0);
     } finally {
       await db.end();
     }

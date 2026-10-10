@@ -109,34 +109,33 @@ export class PlayerStatsModel extends Model {
               playerId: input.playerId,
             },
           });
-          if (stats.length > 0) {
+          // Older rebuilds stored empty summaries even when games existed.
+          const cachedData = stats[0]?.data;
+          const incompleteCache =
+            (cachedData?.totalPlayedGames ?? 0) > 0 &&
+            (!cachedData?.playersInfo?.length ||
+              !Object.keys(cachedData.scoreHistory ?? {}).length ||
+              !Object.keys(cachedData.placesSummary ?? {}).length);
+          if (stats.length > 0 && !incompleteCache) {
             return {
               ratingHistory: stats[0].data.ratingHistory ?? [],
-              scoreHistory: Object.entries(stats[0].data.scoreHistory ?? {}).map(
-                ([_sessionId, data]) => ({
-                  tables: data.map((item) => ({
-                    sessionHash: item.sessionHash,
-                    eventId: item.eventId,
-                    playerId: item.playerId,
-                    score: item.score,
-                    ratingDelta: item.ratingDelta,
-                    place: item.place,
-                    title: item.title,
-                    hasAvatar: item.hasAvatar,
-                    lastUpdate: item.lastUpdate,
-                  })),
-                })
-              ),
-              playersInfo: stats[0].data.playersInfo!.map((i) => ({
+              scoreHistory: (
+                stats[0].data.scoreHistoryOrder ??
+                Object.keys(stats[0].data.scoreHistory ?? {}).map(Number)
+              ).map((sessionId) => ({
+                tables: (stats[0].data.scoreHistory?.[sessionId] ?? []).map((item) => ({
+                  ...item,
+                  chips: item.chips ?? 0,
+                })),
+              })),
+              playersInfo: (stats[0].data.playersInfo ?? []).map((i) => ({
                 ...i,
                 tenhouId: i.tenhouId ?? '',
               })),
-              placesSummary: Object.entries(stats[0].data.placesSummary ?? {}).map(
-                ([place, count]) => ({
-                  place: +place,
-                  count,
-                })
-              ),
+              placesSummary: [1, 2, 3, 4].map((place) => ({
+                place,
+                count: stats[0].data.placesSummary?.[place] ?? 0,
+              })),
               totalPlayedGames: stats[0].data.totalPlayedGames ?? 0,
               totalPlayedRounds: stats[0].data.totalPlayedRounds ?? 0,
               winSummary: stats[0].data.winSummary!,
@@ -231,7 +230,7 @@ export class PlayerStatsModel extends Model {
       scoreHistory: scoresAndPlayers.scores.map((s) => ({
         tables: s.map((t) => ({ ...t, sessionHash: t.sessionHash ?? '' })),
       })),
-      playersInfo: Object.values(scoresAndPlayers.players).map((p: PersonEx) => ({
+      playersInfo: Array.from(scoresAndPlayers.players.values()).map((p: PersonEx) => ({
         id: p.id,
         title: p.title,
         tenhouId: p.tenhouId,
@@ -256,34 +255,27 @@ export class PlayerStatsModel extends Model {
         event: this.repo.em.getReference(EventEntity, eventIdList[0]),
       });
 
-      if (!stats) {
-        const entity = new PlayerStatsEntity();
-        entity.data = {
-          ...data,
-          scoreHistory: {},
-          playersInfo: [],
-          placesSummary: [],
-          handsValueSummary: [],
-          yakuSummary: [],
-        };
-        entity.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
-        entity.playerId = playerId;
-        entity.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
-        this.repo.em.persist(entity);
-      } else {
-        stats.data = {
-          ...data,
-          scoreHistory: {},
-          playersInfo: [],
-          placesSummary: [],
-          handsValueSummary: [],
-          yakuSummary: [],
-        };
-        stats.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
-        stats.playerId = playerId;
-        stats.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
-        this.repo.em.persist(stats);
-      }
+      const entity = stats ?? new PlayerStatsEntity();
+      entity.data = {
+        ...data,
+        scoreHistoryOrder: gameIds,
+        scoreHistory: Object.fromEntries(
+          gameIds.map((id, index) => [id, data.scoreHistory[index].tables])
+        ),
+        placesSummary: Object.fromEntries(
+          data.placesSummary.map(({ place, count }) => [place, count])
+        ),
+        handsValueSummary: Object.fromEntries(
+          data.handsValueSummary.map(({ hanCount, count }) => [hanCount, count])
+        ),
+        yakuSummary: Object.fromEntries(
+          data.yakuSummary.map(({ yakuId, count }) => [yakuId, count])
+        ),
+      };
+      entity.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
+      entity.playerId = playerId;
+      entity.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
+      this.repo.em.persist(entity);
     }
 
     return data;
@@ -401,7 +393,7 @@ export class PlayerStatsModel extends Model {
 
     return {
       scores: scoreHistory,
-      players: await this._fetchPlayerInfo(Array.from(games.keys())),
+      players: playerInfo,
     };
   }
 
@@ -428,17 +420,20 @@ export class PlayerStatsModel extends Model {
     playerId: number,
     games: Map<number, { session: SessionEntity; results: Map<number, SessionResultsEntity> }>
   ): Promise<PlacesSummaryItem[]> {
-    return games.values().reduce((acc, game) => {
-      const result = game.results.get(playerId);
-      if (result) {
-        const place = result.place;
-        acc.push({
-          place,
-          count: (acc.find((item) => item.place === place)?.count ?? 0) + 1,
-        });
-      }
-      return acc;
-    }, [] as PlacesSummaryItem[]);
+    const summary = games.values().reduce(
+      (acc, game) => {
+        const result = game.results.get(playerId);
+        if (result) {
+          const place = result.place;
+          acc.set(place, (acc.get(place) ?? 0) + 1);
+        }
+        return acc;
+      },
+      new Map<number, number>([1, 2, 3, 4].map((place) => [place, 0]))
+    );
+    return Array.from(summary, ([place, count]) => ({ place, count })).sort(
+      (a, b) => a.place - b.place
+    );
   }
 
   _getOutcomeSummary(
@@ -744,10 +739,12 @@ export class PlayerStatsModel extends Model {
         }
       }
     }
-    return Array.from(summary.entries()).map(([han, count]) => ({
-      hanCount: han,
-      count,
-    }));
+    return Array.from(summary.entries())
+      .sort(([a], [b]) => a - b)
+      .map(([han, count]) => ({
+        hanCount: han,
+        count,
+      }));
   }
 
   _getYakuSummary(playerId: number, rounds: RoundEntity[]): YakuStat[] {
@@ -761,10 +758,12 @@ export class PlayerStatsModel extends Model {
         }
       }
     }
-    return Array.from(summary.entries()).map(([yaku, count]) => ({
-      yakuId: yaku,
-      count,
-    }));
+    return Array.from(summary.entries())
+      .sort(([a], [b]) => a - b)
+      .map(([yaku, count]) => ({
+        yakuId: yaku,
+        count,
+      }));
   }
 
   _getRiichiSummary(ruleset: RulesetEntity, playerId: number, rounds: RoundEntity[]): RiichiStats {

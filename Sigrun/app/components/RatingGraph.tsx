@@ -105,7 +105,7 @@ export const RatingGraph = ({
           if (d.length) {
             const { index } = d[0];
             setLastSelectionX(index);
-            setLastSelectionHash(games?.[gamesIdx[index - 1]].tables[0].sessionHash ?? null);
+            setLastSelectionHash(games?.[gamesIdx[index - 1]]?.tables[0]?.sessionHash ?? null);
             if (games?.[gamesIdx[index - 1]]) {
               onSelectGame(games?.[gamesIdx[index - 1]]);
             }
@@ -137,7 +137,7 @@ export const RatingGraph = ({
                 return undefined;
               }
               if (
-                games?.[gamesIdx[context.dataIndex - 1]].tables.every(
+                games?.[gamesIdx[context.dataIndex - 1]]?.tables?.every(
                   (v) => v.playerId === playerId || v.ratingDelta < 0
                 )
               ) {

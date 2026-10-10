@@ -774,7 +774,7 @@ export class EventModel extends Model {
             event.isPrescripted = 0;
             break;
           case EventType.EVENT_TYPE_LOCAL:
-            event.allowPlayerAppend = 0;
+            event.allowPlayerAppend = 1;
             event.autoSeating = 0;
             event.syncStart = 0;
             event.syncEnd = 0;
