@@ -61,10 +61,10 @@ export class SessionState {
       return false; // not oorasu
     }
 
-    const scores = Object.values(this.getScores());
-    const dealerScores = scores[scores.length - 1];
-    const maxScore = Math.max(...scores);
-    return dealerScores === maxScore && dealerScores >= this._ruleset.rules.goalPoints;
+    const dealerId = this._state.playerIds[this._state.playerIds.length - 1];
+    const dealerScore = this.getScores()[dealerId];
+    const maxScore = Math.max(...Object.values(this.getScores()));
+    return dealerScore === maxScore && dealerScore >= this._ruleset.rules.goalPoints;
   }
 
   protected _lastPossibleRoundWasPlayed(): boolean {
