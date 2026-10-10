@@ -342,7 +342,7 @@ export class SessionState {
     p2: Record<string, number>
   ): Record<string, number> => {
     const merged: Record<string, number> = {};
-    Object.keys(p1).forEach((key) => {
+    [...Object.keys(p1), ...Object.keys(p2)].forEach((key) => {
       merged[key] = (p1[key] ?? 0) + (p2[key] ?? 0);
     });
     return merged;

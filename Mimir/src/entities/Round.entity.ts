@@ -113,6 +113,7 @@ export class RoundEntity {
     } else if (round.multiron) {
       entity.outcome = RoundOutcome.ROUND_OUTCOME_MULTIRON;
       entity.hands = round.multiron.wins.map((win) => HandEntity.fromMessage(win));
+      entity.hands.forEach((h) => (h.loserId = round.multiron!.loserId));
       entity.round = round.multiron.roundIndex;
       entity.honba = round.multiron.honba;
       entity.riichi = round.multiron.riichiBets;

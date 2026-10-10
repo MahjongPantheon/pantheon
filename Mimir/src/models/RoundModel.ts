@@ -256,7 +256,7 @@ export class RoundModel extends Model {
             hand.han!,
             hand.fu!,
             riichiWinners[hand.winnerId!].fromPlayers,
-            riichiWinners[hand.loserId!].honba,
+            riichiWinners[hand.winnerId!].honba,
             riichiWinners[hand.winnerId!].fromTable,
             round.hands[0].paoPlayerId,
             null, // TODO: why closest winner is not required here?
