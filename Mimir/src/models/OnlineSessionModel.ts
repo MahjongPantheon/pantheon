@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import {
   GamesAddOnlineReplayPayload,
   GamesAddOnlineReplayResponse,
@@ -26,54 +27,64 @@ enum ContentType {
 
 export class OnlineSessionModel extends Model {
   async addGame(data: GamesAddOnlineReplayPayload): Promise<GamesAddOnlineReplayResponse> {
-    if (!data.link) {
-      throw new Error(`Link to replay is required`);
-    }
-    const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
-    if (!event) {
-      throw new Error(`Event ${data.eventId} not found`);
-    }
-    if (event.isOnline) {
-      throw new Error(`Event ${data.eventId} is not online`);
-    }
-    if (event.finished) {
-      throw new Error(`Event ${data.eventId} is already finished`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        if (!data.link) {
+          throw new Error(`Link to replay is required`);
+        }
+        const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
+        if (!event) {
+          throw new Error(`Event ${data.eventId} not found`);
+        }
+        if (event.isOnline) {
+          throw new Error(`Event ${data.eventId} is not online`);
+        }
+        if (event.finished) {
+          throw new Error(`Event ${data.eventId} is already finished`);
+        }
 
-    const downloader = new Downloader();
-    downloader.validateUrl(data.link);
-    const replayHash = downloader.getReplayHash(data.link);
+        const downloader = new Downloader();
+        downloader.validateUrl(data.link);
+        const replayHash = downloader.getReplayHash(data.link);
 
-    this._checkGameExpired(replayHash, event.ruleset.rules);
-    this._checkReplayHash(event.id, replayHash);
+        this._checkGameExpired(replayHash, event.ruleset.rules);
+        this._checkReplayHash(event.id, replayHash);
 
-    const replay = await downloader.getReplay(data.link);
-    return this.addGameContent(event, replayHash, replay.content);
+        const replay = await downloader.getReplay(data.link);
+        return this.addGameContent(event, replayHash, replay.content);
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async addTypedGame(
     data: TypedGamesAddOnlineReplayPayload
   ): Promise<GamesAddOnlineReplayResponse> {
-    const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
-    if (!event) {
-      throw new Error(`Event ${data.eventId} not found`);
-    }
-    if (event.isOnline) {
-      throw new Error(`Event ${data.eventId} is not online`);
-    }
-    if (event.finished) {
-      throw new Error(`Event ${data.eventId} is already finished`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
+        if (!event) {
+          throw new Error(`Event ${data.eventId} not found`);
+        }
+        if (event.isOnline) {
+          throw new Error(`Event ${data.eventId} is not online`);
+        }
+        if (event.finished) {
+          throw new Error(`Event ${data.eventId} is already finished`);
+        }
 
-    this._checkGameTimestampExpired(data.logTimestamp, event.ruleset.rules);
-    this._checkReplayHash(event.id, data.replayHash);
+        this._checkGameTimestampExpired(data.logTimestamp, event.ruleset.rules);
+        this._checkReplayHash(event.id, data.replayHash);
 
-    return this.addGameContent(
-      event,
-      data.replayHash,
-      data.content,
-      data.contentType,
-      data.platformId
+        return this.addGameContent(
+          event,
+          data.replayHash,
+          data.content,
+          data.contentType,
+          data.platformId
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
   }
 
@@ -121,7 +132,14 @@ export class OnlineSessionModel extends Model {
       session.intermediateResults.yakitori = yakitori;
     }
 
-    await this.repo.em.persistAndFlush([session, ...rounds]);
+    // History stores the session ID as a scalar, so reserve it before the final flush.
+    if (!session.id) {
+      const [{ id }] = await this.repo.em.execute<{ id: number }[]>(
+        "select nextval('session_id_seq')::int as id"
+      );
+      session.id = id;
+    }
+    this.repo.em.persist([session, ...rounds]);
 
     const playerIds = session.intermediateResults?.playerIds ?? [];
     const sessionResultsModel = this.getModel(SessionResultsModel);
@@ -167,9 +185,9 @@ export class OnlineSessionModel extends Model {
     const playerModel = this.getModel(PlayerModel);
     const cronModel = this.getModel(CronModel);
 
+    this.repo.em.persist([session, ...playerHistoryItems, ...sessionResults]);
     const [players] = await Promise.all([
       playerModel.findById(playerIds),
-      this.repo.em.persistAndFlush([session, ...playerHistoryItems, ...sessionResults]),
       cronModel.scheduleRecalcAchievements(event.id),
     ]);
 

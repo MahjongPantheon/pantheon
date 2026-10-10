@@ -47,7 +47,7 @@ describe('Round persistence', () => {
       expect(round.hands).toHaveLength(kind === 'multiron' ? 2 : 1);
       expect(round.hands.every((hand) => hand.round === round)).toBe(true);
       expect(round.riichi).toEqual(kind === 'chombo' ? undefined : [2]);
-      expect(flush).toHaveBeenCalledTimes(1);
+      expect(flush).not.toHaveBeenCalled();
     }
   );
 

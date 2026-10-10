@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import { EventEntity } from '../entities/Event.entity.js';
 import { Model } from './Model.js';
 import {
@@ -61,12 +62,17 @@ const ID_PLACEHOLDER = '##ID##';
 
 export class EventModel extends Model {
   async findById(id: number[]) {
-    return await this.repo.em.findAll(EventEntity, {
-      where: {
-        id,
+    return this.repo.em.transactional(
+      async () => {
+        return await this.repo.em.findAll(EventEntity, {
+          where: {
+            id,
+          },
+          populate: ['onlinePlatform', 'ruleset'],
+        });
       },
-      populate: ['onlinePlatform', 'ruleset'],
-    });
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   protected _formatEventList(
@@ -118,126 +124,147 @@ export class EventModel extends Model {
   async getEvents(
     eventsGetEventsPayload: EventsGetEventsPayload
   ): Promise<EventsGetEventsResponse> {
-    const [data, total] = await this.repo.em.findAndCount(
-      EventEntity,
-      {
-        ...(eventsGetEventsPayload.filter
-          ? {
-              title: {
-                $ilike: `%${eventsGetEventsPayload.filter}%`,
-              },
-            }
-          : {}),
-        ...(eventsGetEventsPayload.filterUnlisted
-          ? {
-              isListed: 1,
-            }
-          : {}),
+    return this.repo.em.transactional(
+      async () => {
+        const [data, total] = await this.repo.em.findAndCount(
+          EventEntity,
+          {
+            ...(eventsGetEventsPayload.filter
+              ? {
+                  title: {
+                    $ilike: `%${eventsGetEventsPayload.filter}%`,
+                  },
+                }
+              : {}),
+            ...(eventsGetEventsPayload.filterUnlisted
+              ? {
+                  isListed: 1,
+                }
+              : {}),
+          },
+          {
+            populate: ['ruleset'],
+            limit: Math.min(eventsGetEventsPayload.limit, 100),
+            offset: eventsGetEventsPayload.offset,
+            orderBy: { id: -1 },
+          }
+        );
+
+        const sessionCounts = await this._getSessionCounts(data.map((e) => e.id));
+
+        return {
+          events: this._formatEventList(data, sessionCounts),
+          total,
+        };
       },
-      {
-        populate: ['ruleset'],
-        limit: Math.min(eventsGetEventsPayload.limit, 100),
-        offset: eventsGetEventsPayload.offset,
-        orderBy: { id: -1 },
-      }
+      { propagation: TransactionPropagation.REQUIRED }
     );
-
-    const sessionCounts = await this._getSessionCounts(data.map((e) => e.id));
-
-    return {
-      events: this._formatEventList(data, sessionCounts),
-      total,
-    };
   }
 
   async getEventsById(
     eventsGetEventsByIdPayload: EventsGetEventsByIdPayload
   ): Promise<EventsGetEventsByIdResponse> {
-    const data = await this.repo.em.findAll(EventEntity, {
-      where: {
-        id: eventsGetEventsByIdPayload.ids,
+    return this.repo.em.transactional(
+      async () => {
+        const data = await this.repo.em.findAll(EventEntity, {
+          where: {
+            id: eventsGetEventsByIdPayload.ids,
+          },
+          orderBy: { id: -1 },
+        });
+
+        const sessionCounts = await this._getSessionCounts(data.map((e) => e.id));
+
+        return {
+          events: this._formatEventList(data, sessionCounts),
+        };
       },
-      orderBy: { id: -1 },
-    });
-
-    const sessionCounts = await this._getSessionCounts(data.map((e) => e.id));
-
-    return {
-      events: this._formatEventList(data, sessionCounts),
-    };
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async getMyEvents(personId: number): Promise<PlayersGetMyEventsResponse> {
-    const regs = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: {
-        playerId: personId,
-      },
-      fields: ['event'],
-    });
+    return this.repo.em.transactional(
+      async () => {
+        const regs = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
+          where: {
+            playerId: personId,
+          },
+          fields: ['event'],
+        });
 
-    const events =
-      regs.length === 0
-        ? []
-        : await this.repo.em.findAll(EventEntity, {
-            where: {
-              id: regs.map((r) => r.event.id),
-              finished: 0,
-            },
-            fields: ['id', 'title', 'isOnline', 'description'],
-          });
-    return {
-      events: events.map((e) => ({
-        id: e.id,
-        title: e.title,
-        description: e.description, // TODO md transform
-        isOnline: !!e.isOnline,
-      })),
-    };
+        const events =
+          regs.length === 0
+            ? []
+            : await this.repo.em.findAll(EventEntity, {
+                where: {
+                  id: regs.map((r) => r.event.id),
+                  finished: 0,
+                },
+                fields: ['id', 'title', 'isOnline', 'description'],
+              });
+        return {
+          events: events.map((e) => ({
+            id: e.id,
+            title: e.title,
+            description: e.description, // TODO md transform
+            isOnline: !!e.isOnline,
+          })),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async getGameConfig(genericEventPayload: GenericEventPayload): Promise<GameConfig> {
-    const data = await this.repo.em.findOne(
-      EventEntity,
-      {
-        id: genericEventPayload.eventId,
+    return this.repo.em.transactional(
+      async () => {
+        const data = await this.repo.em.findOne(
+          EventEntity,
+          {
+            id: genericEventPayload.eventId,
+          },
+          {
+            orderBy: {
+              id: -1,
+            },
+          }
+        );
+
+        if (!data) {
+          throw new Error('Event not found');
+        }
+
+        return {
+          allowPlayerAppend: !!data.allowPlayerAppend,
+          allowViewOtherTables: !!data.allowViewOtherTables,
+          autoSeating: !!data.autoSeating,
+          eventDescription: data.description,
+          eventStatHost: data.statHost,
+          eventTitle: data.title,
+          gameDuration: data.gameDuration ?? 0,
+          gamesStatus:
+            data.gamesStatus ?? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_UNSPECIFIED,
+          hideAddReplayButton: !data.isOnline,
+          hideResults: !!data.hideResults,
+          isFinished: !!data.finished,
+          isOnline: !!data.isOnline,
+          isPrescripted: !!data.isPrescripted,
+          isTeam: !!data.isTeam,
+          lobbyId: data.lobbyId ?? 0,
+          minGamesCount: data.minGamesCount,
+          rulesetConfig: data.ruleset.rules,
+          rulesetTitle: data.ruleset.title,
+          seriesLength: data.seriesLength,
+          syncEnd: !!data.syncEnd,
+          syncStart: !!data.syncStart,
+          timezone: data.timezone,
+          usePenalty: !!data.usePenalty,
+          useTimer: !!data.useTimer,
+        };
       },
-      {
-        orderBy: {
-          id: -1,
-        },
-      }
+      { propagation: TransactionPropagation.REQUIRED }
     );
-
-    if (!data) {
-      throw new Error('Event not found');
-    }
-
-    return {
-      allowPlayerAppend: !!data.allowPlayerAppend,
-      allowViewOtherTables: !!data.allowViewOtherTables,
-      autoSeating: !!data.autoSeating,
-      eventDescription: data.description,
-      eventStatHost: data.statHost,
-      eventTitle: data.title,
-      gameDuration: data.gameDuration ?? 0,
-      gamesStatus: data.gamesStatus ?? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_UNSPECIFIED,
-      hideAddReplayButton: !data.isOnline,
-      hideResults: !!data.hideResults,
-      isFinished: !!data.finished,
-      isOnline: !!data.isOnline,
-      isPrescripted: !!data.isPrescripted,
-      isTeam: !!data.isTeam,
-      lobbyId: data.lobbyId ?? 0,
-      minGamesCount: data.minGamesCount,
-      rulesetConfig: data.ruleset.rules,
-      rulesetTitle: data.ruleset.title,
-      seriesLength: data.seriesLength,
-      syncEnd: !!data.syncEnd,
-      syncStart: !!data.syncStart,
-      timezone: data.timezone,
-      usePenalty: !!data.usePenalty,
-      useTimer: !!data.useTimer,
-    };
   }
 
   async getRatingTable(
@@ -249,91 +276,97 @@ export class EventModel extends Model {
     dateFrom: string | null,
     dateTo: string | null
   ): Promise<EventsGetRatingTableResponse> {
-    const events = await this.repo.em.findAll(EventEntity, {
-      where: {
-        id: { $in: eventIdList },
-      },
-      populate: ['ruleset'],
-    });
-    const mainEvent = events.find((e) => e.id === eventIdList[0]);
-    if (!mainEvent) {
-      throw new Error('Main event not found');
-    }
-
-    const sessionModel = this.getModel(SessionModel);
-    const playerHistoryModel = this.getModel(PlayerHistoryModel);
-
-    const dataItems: PlayerHistoryEntity[] = isAdmin
-      ? await sessionModel.getPrefinishedItems(mainEvent.ruleset, eventIdList)
-      : await playerHistoryModel.getHistoryItems(
-          mainEvent.ruleset,
-          eventIdList,
-          mainEvent.timezone,
-          dateFrom,
-          dateTo
-        );
-
-    const [{ people: playerItems }, regData, penalties] = await Promise.all([
-      this.repo.frey.GetPersonalInfo({
-        ids: dataItems.map((item) => item.playerId),
-      }),
-      this.repo.em.findAll(EventRegisteredPlayersEntity, {
-        where: { event: mainEvent },
-      }),
-      this.repo.em.findAll(PenaltyEntity, {
-        where: {
-          event: {
+    return this.repo.em.transactional(
+      async () => {
+        const events = await this.repo.em.findAll(EventEntity, {
+          where: {
             id: { $in: eventIdList },
           },
-        },
-      }),
-    ]);
+          populate: ['ruleset'],
+        });
+        const mainEvent = events.find((e) => e.id === eventIdList[0]);
+        if (!mainEvent) {
+          throw new Error('Main event not found');
+        }
 
-    const historyItems = playerHistoryModel.mergeData(
-      playerHistoryModel.mergeSeveralEvents(dataItems, mainEvent.ruleset),
-      playerItems,
-      regData,
-      penalties
+        const sessionModel = this.getModel(SessionModel);
+        const playerHistoryModel = this.getModel(PlayerHistoryModel);
+
+        const dataItems: PlayerHistoryEntity[] = isAdmin
+          ? await sessionModel.getPrefinishedItems(mainEvent.ruleset, eventIdList)
+          : await playerHistoryModel.getHistoryItems(
+              mainEvent.ruleset,
+              eventIdList,
+              mainEvent.timezone,
+              dateFrom,
+              dateTo
+            );
+
+        const [{ people: playerItems }, regData, penalties] = await Promise.all([
+          this.repo.frey.GetPersonalInfo({
+            ids: dataItems.map((item) => item.playerId),
+          }),
+          this.repo.em.findAll(EventRegisteredPlayersEntity, {
+            where: { event: mainEvent },
+          }),
+          this.repo.em.findAll(PenaltyEntity, {
+            where: {
+              event: {
+                id: { $in: eventIdList },
+              },
+            },
+          }),
+        ]);
+
+        const historyItems = playerHistoryModel.mergeData(
+          playerHistoryModel.mergeSeveralEvents(dataItems, mainEvent.ruleset),
+          playerItems,
+          regData,
+          penalties
+        );
+        const data = playerHistoryModel.sortItems(
+          orderBy,
+          playerItems.reduce(
+            (acc, p) => {
+              acc[p.id] = p;
+              return acc;
+            },
+            {} as Record<number, PersonEx>
+          ),
+          historyItems
+        );
+
+        if (order === 'desc') {
+          data.reverse();
+        }
+
+        if (onlyMinGames) {
+          data.filter((r) => r.gamesPlayed >= mainEvent.minGamesCount);
+        }
+
+        return {
+          list: data.map((item) => ({
+            id: item.playerId,
+            title: item.playerTitle!,
+            tenhouId: item.playerTenhouId ?? '',
+            rating: item.rating,
+            chips: item.chips ?? 0,
+            winnerZone:
+              item.rating - (item.penaltiesAmount ?? 0) >=
+              (mainEvent.ruleset.rules.startRating ?? 0),
+            avgPlace: item.avgPlace ?? 0,
+            avgScore: item.avgScore ?? 0,
+            gamesPlayed: item.gamesPlayed ?? 0,
+            teamName: item.playerTeamName ?? '',
+            hasAvatar: item.playerHasAvatar ?? false,
+            lastUpdate: item.playerLastUpdate ?? '',
+            penaltiesAmount: item.penaltiesAmount ?? 0,
+            penaltiesCount: item.penaltiesCount ?? 0,
+          })),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
-    const data = playerHistoryModel.sortItems(
-      orderBy,
-      playerItems.reduce(
-        (acc, p) => {
-          acc[p.id] = p;
-          return acc;
-        },
-        {} as Record<number, PersonEx>
-      ),
-      historyItems
-    );
-
-    if (order === 'desc') {
-      data.reverse();
-    }
-
-    if (onlyMinGames) {
-      data.filter((r) => r.gamesPlayed >= mainEvent.minGamesCount);
-    }
-
-    return {
-      list: data.map((item) => ({
-        id: item.playerId,
-        title: item.playerTitle!,
-        tenhouId: item.playerTenhouId ?? '',
-        rating: item.rating,
-        chips: item.chips ?? 0,
-        winnerZone:
-          item.rating - (item.penaltiesAmount ?? 0) >= (mainEvent.ruleset.rules.startRating ?? 0),
-        avgPlace: item.avgPlace ?? 0,
-        avgScore: item.avgScore ?? 0,
-        gamesPlayed: item.gamesPlayed ?? 0,
-        teamName: item.playerTeamName ?? '',
-        hasAvatar: item.playerHasAvatar ?? false,
-        lastUpdate: item.playerLastUpdate ?? '',
-        penaltiesAmount: item.penaltiesAmount ?? 0,
-        penaltiesCount: item.penaltiesCount ?? 0,
-      })),
-    };
   }
 
   async getLastFinishedGames(
@@ -382,45 +415,50 @@ export class EventModel extends Model {
   }
 
   async getTimerState(eventId: number) {
-    const event = await this.findById([eventId]);
-    if (event.length === 0) {
-      throw new Error('Event not found');
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.findById([eventId]);
+        if (event.length === 0) {
+          throw new Error('Event not found');
+        }
 
-    if (!event[0].useTimer) {
-      return {
-        started: false,
-        finished: false,
-        timeRemaining: 0,
-        waitingForTimer: false,
-        hideSeatingAfter: 0,
-      };
-    }
+        if (!event[0].useTimer) {
+          return {
+            started: false,
+            finished: false,
+            timeRemaining: 0,
+            waitingForTimer: false,
+            hideSeatingAfter: 0,
+          };
+        }
 
-    const timerState: EventsGetTimerStateResponse = {
-      started: false,
-      finished: false,
-      timeRemaining: 0,
-      waitingForTimer:
-        event[0].gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY,
-      // show seating for 10 mins after start
-      hideSeatingAfter: (event[0].gameDuration! - 10) * 60,
-    };
-    if (!event[0].lastTimer) {
-      timerState.started = false;
-      timerState.finished = false;
-      timerState.timeRemaining = 0;
-    } else if (
-      event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 >
-      Math.floor(Date.now() / 1000)
-    ) {
-      // game in progress
-      timerState.started = true;
-      timerState.finished = false;
-      timerState.timeRemaining =
-        event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 - Math.floor(Date.now() / 1000);
-    }
-    return timerState;
+        const timerState: EventsGetTimerStateResponse = {
+          started: false,
+          finished: false,
+          timeRemaining: 0,
+          waitingForTimer:
+            event[0].gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY,
+          // show seating for 10 mins after start
+          hideSeatingAfter: (event[0].gameDuration! - 10) * 60,
+        };
+        if (!event[0].lastTimer) {
+          timerState.started = false;
+          timerState.finished = false;
+          timerState.timeRemaining = 0;
+        } else if (
+          event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 >
+          Math.floor(Date.now() / 1000)
+        ) {
+          // game in progress
+          timerState.started = true;
+          timerState.finished = false;
+          timerState.timeRemaining =
+            event[0].lastTimer + (event[0].gameDuration ?? 0) * 60 - Math.floor(Date.now() / 1000);
+        }
+        return timerState;
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async getTimerStateForSessions(
@@ -479,541 +517,588 @@ export class EventModel extends Model {
   }
 
   async getLastGames(eventsGetLastGamesPayload: EventsGetLastGamesPayload) {
-    if (eventsGetLastGamesPayload.eventIdList.length === 0) {
-      throw new Error('Event id list is empty');
-    }
+    return this.repo.em.transactional(
+      async () => {
+        if (eventsGetLastGamesPayload.eventIdList.length === 0) {
+          throw new Error('Event id list is empty');
+        }
 
-    const events = await this.findById(eventsGetLastGamesPayload.eventIdList);
+        const events = await this.findById(eventsGetLastGamesPayload.eventIdList);
 
-    if (events.length !== eventsGetLastGamesPayload.eventIdList.length) {
-      throw new Error('Some of events were not found in database');
-    }
+        if (events.length !== eventsGetLastGamesPayload.eventIdList.length) {
+          throw new Error('Some of events were not found in database');
+        }
 
-    if (
-      eventsGetLastGamesPayload.orderBy &&
-      !['id', 'endDate'].includes(eventsGetLastGamesPayload.orderBy)
-    ) {
-      throw new Error('Invalid orderBy parameter; Valid options: id, endDate');
-    }
+        if (
+          eventsGetLastGamesPayload.orderBy &&
+          !['id', 'endDate'].includes(eventsGetLastGamesPayload.orderBy)
+        ) {
+          throw new Error('Invalid orderBy parameter; Valid options: id, endDate');
+        }
 
-    if (
-      eventsGetLastGamesPayload.order &&
-      !['asc', 'desc'].includes(eventsGetLastGamesPayload.order)
-    ) {
-      throw new Error('Invalid order parameter; Valid options: asc, desc');
-    }
+        if (
+          eventsGetLastGamesPayload.order &&
+          !['asc', 'desc'].includes(eventsGetLastGamesPayload.order)
+        ) {
+          throw new Error('Invalid order parameter; Valid options: asc, desc');
+        }
 
-    return this.getLastFinishedGames(
-      events,
-      eventsGetLastGamesPayload.limit,
-      eventsGetLastGamesPayload.offset,
-      eventsGetLastGamesPayload.orderBy as 'id' | 'endDate',
-      eventsGetLastGamesPayload.order as 'asc' | 'desc'
+        return this.getLastFinishedGames(
+          events,
+          eventsGetLastGamesPayload.limit,
+          eventsGetLastGamesPayload.offset,
+          eventsGetLastGamesPayload.orderBy as 'id' | 'endDate',
+          eventsGetLastGamesPayload.order as 'asc' | 'desc'
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
   }
 
   async getCurrentGames(
     playersGetCurrentSessionsPayload: PlayersGetCurrentSessionsPayload
   ): Promise<PlayersGetCurrentSessionsResponse> {
-    const event = await this.findById([playersGetCurrentSessionsPayload.eventId]);
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.findById([playersGetCurrentSessionsPayload.eventId]);
 
-    if (event.length === 0) {
-      throw new Error('Event not found');
-    }
+        if (event.length === 0) {
+          throw new Error('Event not found');
+        }
 
-    const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findByPlayerAndEvent(
-      playersGetCurrentSessionsPayload.playerId,
-      playersGetCurrentSessionsPayload.eventId,
-      SessionStatus.SESSION_STATUS_INPROGRESS
+        const sessionModel = this.getModel(SessionModel);
+        const sessions = await sessionModel.findByPlayerAndEvent(
+          playersGetCurrentSessionsPayload.playerId,
+          playersGetCurrentSessionsPayload.eventId,
+          SessionStatus.SESSION_STATUS_INPROGRESS
+        );
+        const sessionMap = new Map(sessions.map((s) => [s.id, s]));
+
+        const [timerState, { players, replaceMap }] = await Promise.all([
+          this.getTimerStateForSessions(playersGetCurrentSessionsPayload.eventId, sessions),
+          sessionModel.getPlayersOfGames(sessions, true),
+        ]);
+
+        return {
+          sessions: sessions.map((s) => ({
+            ...s,
+            status: s.status!,
+            sessionHash: s.representationalHash!,
+            timerState: timerState[s.representationalHash!],
+            players: players.get(s.id)!.map((p) => ({
+              id: p.id,
+              title: p.title,
+              score: sessionMap.get(s.id)!.intermediateResults?.scores[p.id] ?? 0,
+              replacedBy: replaceMap.has(p.id)
+                ? {
+                    id: replaceMap.get(p.id)!.id,
+                    title: replaceMap.get(p.id)!.title,
+                    hasAvatar: replaceMap.get(p.id)!.hasAvatar,
+                    lastUpdate: replaceMap.get(p.id)!.lastUpdate,
+                  }
+                : undefined,
+              ratingDelta: 0, // unused, remove some day
+              hasAvatar: p.hasAvatar,
+              lastUpdate: p.lastUpdate,
+              yakitori: sessionMap.get(s.id)!.intermediateResults?.yakitori?.[p.id] ?? false,
+            })),
+          })),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
-    const sessionMap = new Map(sessions.map((s) => [s.id, s]));
-
-    const [timerState, { players, replaceMap }] = await Promise.all([
-      this.getTimerStateForSessions(playersGetCurrentSessionsPayload.eventId, sessions),
-      sessionModel.getPlayersOfGames(sessions, true),
-    ]);
-
-    return {
-      sessions: sessions.map((s) => ({
-        ...s,
-        status: s.status!,
-        sessionHash: s.representationalHash!,
-        timerState: timerState[s.representationalHash!],
-        players: players.get(s.id)!.map((p) => ({
-          id: p.id,
-          title: p.title,
-          score: sessionMap.get(s.id)!.intermediateResults?.scores[p.id] ?? 0,
-          replacedBy: replaceMap.has(p.id)
-            ? {
-                id: replaceMap.get(p.id)!.id,
-                title: replaceMap.get(p.id)!.title,
-                hasAvatar: replaceMap.get(p.id)!.hasAvatar,
-                lastUpdate: replaceMap.get(p.id)!.lastUpdate,
-              }
-            : undefined,
-          ratingDelta: 0, // unused, remove some day
-          hasAvatar: p.hasAvatar,
-          lastUpdate: p.lastUpdate,
-          yakitori: sessionMap.get(s.id)!.intermediateResults?.yakitori?.[p.id] ?? false,
-        })),
-      })),
-    };
   }
 
   async getAllRegisteredPlayers(
     eventsGetAllRegisteredPlayersPayload: EventsGetAllRegisteredPlayersPayload
   ): Promise<EventsGetAllRegisteredPlayersResponse> {
-    if (eventsGetAllRegisteredPlayersPayload.eventIds.length === 0) {
-      throw new Error('Event IDs parameter is required');
-    }
-    const events = await this.findById(eventsGetAllRegisteredPlayersPayload.eventIds);
-    if (events.length !== eventsGetAllRegisteredPlayersPayload.eventIds.length) {
-      throw new Error('One or more events not found');
-    }
-    const needLocalIds = events.length === 1 && events[0].isPrescripted;
+    return this.repo.em.transactional(
+      async () => {
+        if (eventsGetAllRegisteredPlayersPayload.eventIds.length === 0) {
+          throw new Error('Event IDs parameter is required');
+        }
+        const events = await this.findById(eventsGetAllRegisteredPlayersPayload.eventIds);
+        if (events.length !== eventsGetAllRegisteredPlayersPayload.eventIds.length) {
+          throw new Error('One or more events not found');
+        }
+        const needLocalIds = events.length === 1 && events[0].isPrescripted;
 
-    const playerModel = this.getModel(PlayerModel);
-    const eventRegModel = this.getModel(EventRegistrationModel);
+        const playerModel = this.getModel(PlayerModel);
+        const eventRegModel = this.getModel(EventRegistrationModel);
 
-    const [{ players, replaceMap }, ignoredPlayers, localMap, teamNames] = await Promise.all([
-      playerModel.findPlayersForEvents(eventsGetAllRegisteredPlayersPayload.eventIds),
-      eventRegModel.findIgnoredPlayersIdsByEvent(eventsGetAllRegisteredPlayersPayload.eventIds),
-      needLocalIds
-        ? eventRegModel
-            .findLocalIdsMapByEvent(events[0].id)
-            .then((m) => new Map(m.entries().map(([key, value]) => [value, key])))
-        : Promise.resolve(new Map<number, number>()),
-      events[0].isTeam
-        ? eventRegModel.findTeamNameMapByEvent(events[0].id)
-        : Promise.resolve(new Map<number, string>()),
-    ]);
+        const [{ players, replaceMap }, ignoredPlayers, localMap, teamNames] = await Promise.all([
+          playerModel.findPlayersForEvents(eventsGetAllRegisteredPlayersPayload.eventIds),
+          eventRegModel.findIgnoredPlayersIdsByEvent(eventsGetAllRegisteredPlayersPayload.eventIds),
+          needLocalIds
+            ? eventRegModel
+                .findLocalIdsMapByEvent(events[0].id)
+                .then((m) => new Map(m.entries().map(([key, value]) => [value, key])))
+            : Promise.resolve(new Map<number, number>()),
+          events[0].isTeam
+            ? eventRegModel.findTeamNameMapByEvent(events[0].id)
+            : Promise.resolve(new Map<number, string>()),
+        ]);
 
-    return {
-      players: players.map((player) => {
-        const localId = localMap.get(player.id);
-        const teamName = teamNames.get(player.id);
-        const data: RegisteredPlayer = {
-          id: player.id,
-          title: player.title,
-          localId,
-          teamName,
-          tenhouId: player.tenhouId,
-          majsoulId: player.msAccountId,
-          majsoulNickname: player.msNickname,
-          hasAvatar: player.hasAvatar,
-          lastUpdate: player.lastUpdate,
-          ignoreSeating: ignoredPlayers.includes(player.id),
-          replacedBy: replaceMap.has(player.id)
-            ? {
-                id: replaceMap.get(player.id)!.id,
-                title: replaceMap.get(player.id)!.title,
-                hasAvatar: replaceMap.get(player.id)!.hasAvatar,
-                lastUpdate: replaceMap.get(player.id)!.lastUpdate,
-              }
-            : null,
+        return {
+          players: players.map((player) => {
+            const localId = localMap.get(player.id);
+            const teamName = teamNames.get(player.id);
+            const data: RegisteredPlayer = {
+              id: player.id,
+              title: player.title,
+              localId,
+              teamName,
+              tenhouId: player.tenhouId,
+              majsoulId: player.msAccountId,
+              majsoulNickname: player.msNickname,
+              hasAvatar: player.hasAvatar,
+              lastUpdate: player.lastUpdate,
+              ignoreSeating: ignoredPlayers.includes(player.id),
+              replacedBy: replaceMap.has(player.id)
+                ? {
+                    id: replaceMap.get(player.id)!.id,
+                    title: replaceMap.get(player.id)!.title,
+                    hasAvatar: replaceMap.get(player.id)!.hasAvatar,
+                    lastUpdate: replaceMap.get(player.id)!.lastUpdate,
+                  }
+                : null,
+            };
+            return data;
+          }),
         };
-        return data;
-      }),
-    };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async getEventForEdit(
     eventsGetEventForEditPayload: EventsGetEventForEditPayload
   ): Promise<EventsGetEventForEditResponse> {
-    const event = await this.repo.em.findOne(
-      EventEntity,
-      {
-        id: eventsGetEventForEditPayload.id,
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(
+          EventEntity,
+          {
+            id: eventsGetEventForEditPayload.id,
+          },
+          { populate: ['onlinePlatform', 'ruleset'] }
+        );
+
+        if (!event) {
+          throw new Error(`Event ${eventsGetEventForEditPayload.id} not found`);
+        }
+
+        return {
+          id: eventsGetEventForEditPayload.id,
+          event: {
+            type: event.isOnline
+              ? EventType.EVENT_TYPE_ONLINE
+              : event.syncStart
+                ? EventType.EVENT_TYPE_TOURNAMENT
+                : EventType.EVENT_TYPE_LOCAL,
+            title: event.title,
+            description: event.description,
+            duration: event.gameDuration ?? 0,
+            timezone: event.timezone,
+            lobbyId: event.lobbyId ?? 0,
+            seriesLength: event.seriesLength,
+            minGames: event.minGamesCount,
+            isTeam: event.isTeam === 1,
+            isPrescripted: event.isPrescripted === 1,
+            rulesetConfig: event.ruleset.rules,
+            isListed: event.isListed === 1,
+            isRatingShown: event.hideResults === 0,
+            achievementsShown: event.hideAchievements === 0,
+            allowViewOtherTables: event.allowViewOtherTables === 1,
+            platformId: event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+            allowManualAddReplay: !!event.allowManualAddReplay,
+            windShuffleMode: event.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED,
+          },
+          finished: event.finished === 1,
+        };
       },
-      { populate: ['onlinePlatform', 'ruleset'] }
+      { propagation: TransactionPropagation.REQUIRED }
     );
-
-    if (!event) {
-      throw new Error(`Event ${eventsGetEventForEditPayload.id} not found`);
-    }
-
-    return {
-      id: eventsGetEventForEditPayload.id,
-      event: {
-        type: event.isOnline
-          ? EventType.EVENT_TYPE_ONLINE
-          : event.syncStart
-            ? EventType.EVENT_TYPE_TOURNAMENT
-            : EventType.EVENT_TYPE_LOCAL,
-        title: event.title,
-        description: event.description,
-        duration: event.gameDuration ?? 0,
-        timezone: event.timezone,
-        lobbyId: event.lobbyId ?? 0,
-        seriesLength: event.seriesLength,
-        minGames: event.minGamesCount,
-        isTeam: event.isTeam === 1,
-        isPrescripted: event.isPrescripted === 1,
-        rulesetConfig: event.ruleset.rules,
-        isListed: event.isListed === 1,
-        isRatingShown: event.hideResults === 0,
-        achievementsShown: event.hideAchievements === 0,
-        allowViewOtherTables: event.allowViewOtherTables === 1,
-        platformId: event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
-        allowManualAddReplay: !!event.allowManualAddReplay,
-        windShuffleMode: event.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED,
-      },
-      finished: event.finished === 1,
-    };
   }
 
   async createEvent(eventData: EventData): Promise<GenericEventPayload> {
-    if (!eventData.rulesetConfig) {
-      throw new Error('Ruleset configuration is required');
-    }
+    const createdEvent = await this.repo.em.transactional(
+      async () => {
+        if (!eventData.rulesetConfig) {
+          throw new Error('Ruleset configuration is required');
+        }
 
-    // Check if we have rights to create new event
-    if (!this.repo.meta.personId) {
-      throw new Error("You don't have the necessary permissions to create a new event");
-    }
+        // Check if we have rights to create new event
+        if (!this.repo.meta.personId) {
+          throw new Error("You don't have the necessary permissions to create a new event");
+        }
 
-    const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
-    const event = new EventEntity();
-    event.title = eventData.title;
-    event.description = eventData.description;
-    event.gameDuration = eventData.duration;
-    event.timezone = eventData.timezone;
-    event.isListed = eventData.isListed ? 1 : 0;
-    event.hideResults = eventData.isRatingShown ? 0 : 1;
-    event.hideAchievements = eventData.achievementsShown ? 0 : 1;
-    event.seriesLength = eventData.seriesLength;
-    event.minGamesCount = eventData.minGames;
-    event.ruleset = new RulesetEntity('custom', 'custom', eventData.rulesetConfig);
-    event.allowViewOtherTables = eventData.allowViewOtherTables ? 1 : 0;
-    event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
-    event.onlinePlatform = eventData.platformId;
-    event.statHost = statHost;
-    event.finished = 0;
+        const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
+        const event = new EventEntity();
+        event.title = eventData.title;
+        event.description = eventData.description;
+        event.gameDuration = eventData.duration;
+        event.timezone = eventData.timezone;
+        event.isListed = eventData.isListed ? 1 : 0;
+        event.hideResults = eventData.isRatingShown ? 0 : 1;
+        event.hideAchievements = eventData.achievementsShown ? 0 : 1;
+        event.seriesLength = eventData.seriesLength;
+        event.minGamesCount = eventData.minGames;
+        event.ruleset = new RulesetEntity('custom', 'custom', eventData.rulesetConfig);
+        event.allowViewOtherTables = eventData.allowViewOtherTables ? 1 : 0;
+        event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
+        event.onlinePlatform = eventData.platformId;
+        event.statHost = statHost;
+        event.finished = 0;
 
-    switch (eventData.type) {
-      case EventType.EVENT_TYPE_TOURNAMENT:
-        event.allowPlayerAppend = 0;
-        event.autoSeating = eventData.isPrescripted ? 0 : 1;
-        event.syncStart = 1;
-        event.syncEnd = 1;
-        event.isOnline = 0;
-        event.useTimer = 1;
-        event.usePenalty = 1;
-        event.isTeam = eventData.isTeam ? 1 : 0;
-        event.isPrescripted = eventData.isPrescripted ? 1 : 0;
-        break;
-      case EventType.EVENT_TYPE_ONLINE:
-        event.allowPlayerAppend = 0;
-        event.autoSeating = 0;
-        event.syncStart = 0;
-        event.syncEnd = 0;
-        event.isOnline = 1;
-        event.useTimer = 0;
-        event.usePenalty = 1;
-        event.isTeam = eventData.isTeam ? 1 : 0;
-        event.lobbyId = eventData.lobbyId;
-        event.isPrescripted = 0;
-        break;
-      case EventType.EVENT_TYPE_LOCAL:
-        event.allowPlayerAppend = 0;
-        event.autoSeating = 0;
-        event.syncStart = 0;
-        event.syncEnd = 0;
-        event.isOnline = 0;
-        event.useTimer = 0;
-        event.usePenalty = 1;
-        event.isTeam = 0;
-        event.isPrescripted = 0;
-        break;
-      case EventType.EVENT_TYPE_UNSPECIFIED:
-      case null:
-      case undefined:
-      default:
-        throw new Error('Invalid event type');
-    }
+        switch (eventData.type) {
+          case EventType.EVENT_TYPE_TOURNAMENT:
+            event.allowPlayerAppend = 0;
+            event.autoSeating = eventData.isPrescripted ? 0 : 1;
+            event.syncStart = 1;
+            event.syncEnd = 1;
+            event.isOnline = 0;
+            event.useTimer = 1;
+            event.usePenalty = 1;
+            event.isTeam = eventData.isTeam ? 1 : 0;
+            event.isPrescripted = eventData.isPrescripted ? 1 : 0;
+            break;
+          case EventType.EVENT_TYPE_ONLINE:
+            event.allowPlayerAppend = 0;
+            event.autoSeating = 0;
+            event.syncStart = 0;
+            event.syncEnd = 0;
+            event.isOnline = 1;
+            event.useTimer = 0;
+            event.usePenalty = 1;
+            event.isTeam = eventData.isTeam ? 1 : 0;
+            event.lobbyId = eventData.lobbyId;
+            event.isPrescripted = 0;
+            break;
+          case EventType.EVENT_TYPE_LOCAL:
+            event.allowPlayerAppend = 0;
+            event.autoSeating = 0;
+            event.syncStart = 0;
+            event.syncEnd = 0;
+            event.isOnline = 0;
+            event.useTimer = 0;
+            event.usePenalty = 1;
+            event.isTeam = 0;
+            event.isPrescripted = 0;
+            break;
+          case EventType.EVENT_TYPE_UNSPECIFIED:
+          case null:
+          case undefined:
+          default:
+            throw new Error('Invalid event type');
+        }
 
-    await this.repo.em.persistAndFlush(event);
-    await this.repo.em.refresh(event);
-
+        this.repo.em.persist(event);
+        return event;
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+    await this.repo.em.refresh(createdEvent);
     await this.repo.frey.AddRuleForPerson({
-      eventId: event.id,
-      personId: this.repo.meta.personId,
+      eventId: createdEvent.id,
+      personId: this.repo.meta.personId!,
       ruleName: 'ADMIN_EVENT',
       ruleValue: 1,
     });
-
-    return { eventId: event.id };
+    return { eventId: createdEvent.id };
   }
 
   async updateEvent(eventData: EventsUpdateEventPayload): Promise<GenericSuccessResponse> {
-    if (!eventData.event.rulesetConfig) {
-      throw new Error('Ruleset configuration is required');
-    }
+    return this.repo.em.transactional(
+      async () => {
+        if (!eventData.event.rulesetConfig) {
+          throw new Error('Ruleset configuration is required');
+        }
 
-    const event = await this.repo.em.findOneOrFail(EventEntity, {
-      id: eventData.id,
-    });
-    if (!event) {
-      throw new Error(`Event with id ${eventData.id} not found`);
-    }
+        const event = await this.repo.em.findOneOrFail(EventEntity, {
+          id: eventData.id,
+        });
+        if (!event) {
+          throw new Error(`Event with id ${eventData.id} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventData.id))) {
-      throw new Error("You don't have the necessary permissions to update the event");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventData.id))) {
+          throw new Error("You don't have the necessary permissions to update the event");
+        }
 
-    const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
-    event.title = eventData.event.title;
-    event.description = eventData.event.description;
-    event.gameDuration = eventData.event.duration;
-    event.timezone = eventData.event.timezone;
-    event.isListed = eventData.event.isListed ? 1 : 0;
-    event.hideResults = eventData.event.isRatingShown ? 0 : 1;
-    event.hideAchievements = eventData.event.achievementsShown ? 0 : 1;
-    event.seriesLength = eventData.event.seriesLength;
-    event.minGamesCount = eventData.event.minGames;
-    event.ruleset = new RulesetEntity('custom', 'custom', eventData.event.rulesetConfig);
-    event.allowViewOtherTables = eventData.event.allowViewOtherTables ? 1 : 0;
-    event.allowManualAddReplay = eventData.event.allowManualAddReplay ? 1 : 0;
-    event.statHost = statHost;
+        const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
+        event.title = eventData.event.title;
+        event.description = eventData.event.description;
+        event.gameDuration = eventData.event.duration;
+        event.timezone = eventData.event.timezone;
+        event.isListed = eventData.event.isListed ? 1 : 0;
+        event.hideResults = eventData.event.isRatingShown ? 0 : 1;
+        event.hideAchievements = eventData.event.achievementsShown ? 0 : 1;
+        event.seriesLength = eventData.event.seriesLength;
+        event.minGamesCount = eventData.event.minGames;
+        event.ruleset = new RulesetEntity('custom', 'custom', eventData.event.rulesetConfig);
+        event.allowViewOtherTables = eventData.event.allowViewOtherTables ? 1 : 0;
+        event.allowManualAddReplay = eventData.event.allowManualAddReplay ? 1 : 0;
+        event.statHost = statHost;
 
-    if (
-      this.repo.meta.personId &&
-      (await this.repo.frey.GetSuperadminFlag({
-        personId: this.repo.meta.personId,
-      }))
-    ) {
-      event.onlinePlatform = eventData.event.platformId;
-    } else {
-      if (event.isOnline) {
-        // fixes online event created by users
-        event.onlinePlatform = PlatformType.PLATFORM_TYPE_TENHOUNET;
-      }
-    }
+        if (
+          this.repo.meta.personId &&
+          (await this.repo.frey.GetSuperadminFlag({
+            personId: this.repo.meta.personId,
+          }))
+        ) {
+          event.onlinePlatform = eventData.event.platformId;
+        } else {
+          if (event.isOnline) {
+            // fixes online event created by users
+            event.onlinePlatform = PlatformType.PLATFORM_TYPE_TENHOUNET;
+          }
+        }
 
-    if (event.syncStart) {
-      // should be a tournament
-      event.autoSeating = eventData.event.isPrescripted ? 0 : 1;
-      event.isTeam = eventData.event.isTeam ? 1 : 0;
-      event.isPrescripted = eventData.event.isPrescripted ? 1 : 0;
-    } else if (event.isOnline) {
-      // should be online tournament
-      event.isTeam = eventData.event.isTeam ? 1 : 0;
-      event.lobbyId = eventData.event.lobbyId;
-    } else {
-      // should be local event, nothing to update here
-    }
+        if (event.syncStart) {
+          // should be a tournament
+          event.autoSeating = eventData.event.isPrescripted ? 0 : 1;
+          event.isTeam = eventData.event.isTeam ? 1 : 0;
+          event.isPrescripted = eventData.event.isPrescripted ? 1 : 0;
+        } else if (event.isOnline) {
+          // should be online tournament
+          event.isTeam = eventData.event.isTeam ? 1 : 0;
+          event.lobbyId = eventData.event.lobbyId;
+        } else {
+          // should be local event, nothing to update here
+        }
 
-    await this.repo.em.persistAndFlush(event);
+        this.repo.em.persist(event);
 
-    return { success: true };
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async finishEvent(genericEventPayload: GenericEventPayload): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
-    if (!event) {
-      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+        if (!event) {
+          throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (
-      !this.repo.meta.personId ||
-      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
-    ) {
-      throw new Error("You don't have the necessary permissions to update the event");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (
+          !this.repo.meta.personId ||
+          !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+        ) {
+          throw new Error("You don't have the necessary permissions to update the event");
+        }
 
-    event.finished = 1;
-    await this.repo.em.persistAndFlush(event);
+        event.finished = 1;
+        this.repo.em.persist(event);
 
-    return { success: true };
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async toggleListed(genericEventPayload: GenericEventPayload): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
-    if (!event) {
-      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+        if (!event) {
+          throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (
-      !this.repo.meta.personId ||
-      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
-    ) {
-      throw new Error("You don't have the necessary permissions to update the event");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (
+          !this.repo.meta.personId ||
+          !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+        ) {
+          throw new Error("You don't have the necessary permissions to update the event");
+        }
 
-    event.isListed = event.isListed === 1 ? 0 : 1;
-    await this.repo.em.persistAndFlush(event);
+        event.isListed = event.isListed === 1 ? 0 : 1;
+        this.repo.em.persist(event);
 
-    return { success: true };
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async toggleHideResults(
     genericEventPayload: GenericEventPayload
   ): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
-    if (!event) {
-      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+        if (!event) {
+          throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (
-      !this.repo.meta.personId ||
-      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
-    ) {
-      throw new Error("You don't have the necessary permissions to update the event");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (
+          !this.repo.meta.personId ||
+          !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+        ) {
+          throw new Error("You don't have the necessary permissions to update the event");
+        }
 
-    event.hideResults = event.hideResults === 1 ? 0 : 1;
-    await this.repo.em.persistAndFlush(event);
+        event.hideResults = event.hideResults === 1 ? 0 : 1;
+        this.repo.em.persist(event);
 
-    return { success: true };
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async toggleHideAchievements(
     genericEventPayload: GenericEventPayload
   ): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
-    if (!event) {
-      throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, genericEventPayload.eventId);
+        if (!event) {
+          throw new Error(`Event with id ${genericEventPayload.eventId} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (
-      !this.repo.meta.personId ||
-      !(await playerModel.isEventAdmin(genericEventPayload.eventId))
-    ) {
-      throw new Error("You don't have the necessary permissions to update the event");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (
+          !this.repo.meta.personId ||
+          !(await playerModel.isEventAdmin(genericEventPayload.eventId))
+        ) {
+          throw new Error("You don't have the necessary permissions to update the event");
+        }
 
-    event.hideAchievements = event.hideAchievements === 1 ? 0 : 1;
-    await this.repo.em.persistAndFlush(event);
+        event.hideAchievements = event.hideAchievements === 1 ? 0 : 1;
+        this.repo.em.persist(event);
 
-    return { success: true };
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async rebuildScoring(eventId: number) {
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
-      throw new Error("You don't have the necessary permissions to update the event");
-    }
+    return this.repo.em.transactional(
+      async () => {
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+          throw new Error("You don't have the necessary permissions to update the event");
+        }
 
-    const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findByEventAndStatus(
-      [eventId],
-      [SessionStatus.SESSION_STATUS_FINISHED],
-      0,
-      null,
-      'id',
-      'asc'
+        const sessionModel = this.getModel(SessionModel);
+        const sessions = await sessionModel.findByEventAndStatus(
+          [eventId],
+          [SessionStatus.SESSION_STATUS_FINISHED],
+          0,
+          null,
+          'id',
+          'asc'
+        );
+        if (sessions.length === 0) {
+          return { success: true };
+        }
+        await this.repo.em.populate(sessions, ['event']);
+
+        await this.repo.em.nativeDelete(SessionResultsEntity, { event: eventId });
+        await this.repo.em.nativeDelete(PlayerHistoryEntity, { event: eventId });
+
+        const promises = [];
+        for (const session of sessions) {
+          promises.push(
+            sessionModel.finalizeGame(
+              session.event,
+              session,
+              new SessionState(
+                session.event.ruleset,
+                session.intermediateResults?.playerIds ?? [],
+                session.intermediateResults
+              ),
+              true
+            )
+          );
+        }
+        await Promise.all(promises);
+
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
-    if (sessions.length === 0) {
-      return { success: true };
-    }
-    await this.repo.em.populate(sessions, ['event']);
-
-    const [sessionResults, playerResults] = await Promise.all([
-      this.repo.em.findAll(SessionResultsEntity, {
-        where: { event: this.repo.em.getReference(EventEntity, eventId) },
-      }),
-
-      this.repo.em.findAll(PlayerHistoryEntity, {
-        where: { event: this.repo.em.getReference(EventEntity, eventId) },
-      }),
-    ]);
-
-    this.repo.em.remove(sessionResults);
-    this.repo.em.remove(playerResults);
-
-    // flush all removals
-    await this.repo.em.flush();
-
-    for (const session of sessions) {
-      sessionModel.finalizeGame(
-        session.event,
-        session,
-        new SessionState(
-          session.event.ruleset,
-          session.intermediateResults?.playerIds ?? [],
-          session.intermediateResults
-        ),
-        true
-      );
-    }
-
-    // flush new data
-    await this.repo.em.flush();
-
-    return { success: true };
   }
 
   async getTablesState(
     eventsGetTablesStatePayload: EventsGetTablesStatePayload
   ): Promise<EventsGetTablesStateResponse> {
-    const eventModel = this.getModel(EventModel);
-    const events = await eventModel.findById([eventsGetTablesStatePayload.eventId]);
+    return this.repo.em.transactional(
+      async () => {
+        const eventModel = this.getModel(EventModel);
+        const events = await eventModel.findById([eventsGetTablesStatePayload.eventId]);
 
-    if (!events.length) {
-      throw new Error(`Event ${eventsGetTablesStatePayload.eventId} not found`);
-    }
-
-    const sessionModel = this.getModel(SessionModel);
-    const playerModel = this.getModel(PlayerModel);
-    const eventRegistrationModel = this.getModel(EventRegistrationModel);
-
-    const personId = this.repo.meta.personId;
-    const currentlyPlayedSession = personId
-      ? await sessionModel.findByPlayerAndEvent(personId, events[0].id)
-      : [];
-    const canViewOtherTables =
-      events[0].allowViewOtherTables ||
-      currentlyPlayedSession.length === 0 ||
-      (await playerModel.isEventAdmin(events[0].id)) ||
-      (await playerModel.isEventReferee(events[0].id));
-
-    if (!canViewOtherTables) {
-      throw new Error(`Viewing other tables is not allowed for this event`);
-    }
-
-    const registeredPlayers = (await eventRegistrationModel.findByEventId([events[0].id])).filter(
-      (reg) => {
-        if (reg.ignoreSeating) {
-          return false;
+        if (!events.length) {
+          throw new Error(`Event ${eventsGetTablesStatePayload.eventId} not found`);
         }
-        if (events[0].isPrescripted && !reg.localId) {
-          return false;
+
+        const sessionModel = this.getModel(SessionModel);
+        const playerModel = this.getModel(PlayerModel);
+        const eventRegistrationModel = this.getModel(EventRegistrationModel);
+
+        const personId = this.repo.meta.personId;
+        const currentlyPlayedSession = personId
+          ? await sessionModel.findByPlayerAndEvent(personId, events[0].id)
+          : [];
+        const canViewOtherTables =
+          events[0].allowViewOtherTables ||
+          currentlyPlayedSession.length === 0 ||
+          (await playerModel.isEventAdmin(events[0].id)) ||
+          (await playerModel.isEventReferee(events[0].id));
+
+        if (!canViewOtherTables) {
+          throw new Error(`Viewing other tables is not allowed for this event`);
         }
-        return true;
-      }
-    );
 
-    const tablesCount = events[0].syncStart ? Math.floor(registeredPlayers.length / 4) : 10;
+        const registeredPlayers = (
+          await eventRegistrationModel.findByEventId([events[0].id])
+        ).filter((reg) => {
+          if (reg.ignoreSeating) {
+            return false;
+          }
+          if (events[0].isPrescripted && !reg.localId) {
+            return false;
+          }
+          return true;
+        });
 
-    const lastGames = await sessionModel.findByEventAndStatus(
-      [events[0].id],
-      [
-        SessionStatus.SESSION_STATUS_FINISHED,
-        SessionStatus.SESSION_STATUS_PREFINISHED,
-        SessionStatus.SESSION_STATUS_INPROGRESS,
-      ],
-      0,
-      tablesCount,
-      'endDate'
-    );
+        const tablesCount = events[0].syncStart ? Math.floor(registeredPlayers.length / 4) : 10;
 
-    return this._formatTablesState(
-      events[0],
-      lastGames,
-      registeredPlayers,
-      eventsGetTablesStatePayload.omitLastRound
+        const lastGames = await sessionModel.findByEventAndStatus(
+          [events[0].id],
+          [
+            SessionStatus.SESSION_STATUS_FINISHED,
+            SessionStatus.SESSION_STATUS_PREFINISHED,
+            SessionStatus.SESSION_STATUS_INPROGRESS,
+          ],
+          0,
+          tablesCount,
+          'endDate'
+        );
+
+        return this._formatTablesState(
+          events[0],
+          lastGames,
+          registeredPlayers,
+          eventsGetTablesStatePayload.omitLastRound
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
   }
 
@@ -1137,113 +1222,140 @@ export class EventModel extends Model {
   }
 
   async startTimer(eventId: number) {
-    const event = await this.repo.em.findOne(EventEntity, { id: eventId });
-    if (!event) throw new Error(`Event ${eventId} not found`);
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, { id: eventId });
+        if (!event) throw new Error(`Event ${eventId} not found`);
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (
-      !this.repo.meta.personId ||
-      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
-    ) {
-      throw new Error("You don't have the necessary permissions to start timer");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (
+          !this.repo.meta.personId ||
+          !(
+            (await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId))
+          )
+        ) {
+          throw new Error("You don't have the necessary permissions to start timer");
+        }
 
-    if (event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
-      event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
-    }
+        if (event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
+          event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
+        }
 
-    event.lastTimer = Math.floor(Date.now() / 1000);
-    await this.repo.em.persistAndFlush(event);
-    return { success: true };
+        event.lastTimer = Math.floor(Date.now() / 1000);
+        this.repo.em.persist(event);
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async getPrescriptedConfig(eventId: number): Promise<EventsGetPrescriptedEventConfigResponse> {
-    const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
-      event: { id: eventId },
-    });
+    return this.repo.em.transactional(
+      async () => {
+        const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
+          event: { id: eventId },
+        });
 
-    if (!prescript || !prescript.script) {
-      return {
-        eventId,
-        nextSessionIndex: 1,
-        prescript: '',
-        errors: ['No predefined seating yet'],
-      };
-    }
+        if (!prescript || !prescript.script) {
+          return {
+            eventId,
+            nextSessionIndex: 1,
+            prescript: '',
+            errors: ['No predefined seating yet'],
+          };
+        }
 
-    const regModel = this.getModel(EventRegistrationModel);
-    const regData = await regModel.findLocalIdsMapByEvent(eventId);
+        const regModel = this.getModel(EventRegistrationModel);
+        const regData = await regModel.findLocalIdsMapByEvent(eventId);
 
-    return {
-      eventId,
-      nextSessionIndex: prescript.nextGame + 1,
-      prescript: prescript.script,
-      errors: checkForErrors(unpackScript(prescript.script), regData),
-    };
+        return {
+          eventId,
+          nextSessionIndex: prescript.nextGame + 1,
+          prescript: prescript.script,
+          errors: checkForErrors(unpackScript(prescript.script), regData),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async updatePrescriptedConfig(
     payload: EventsUpdatePrescriptedEventConfigPayload
   ): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, {
-      id: payload.eventId,
-    });
-    if (!event) {
-      throw new Error(`Event ${payload.eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, {
+          id: payload.eventId,
+        });
+        if (!event) {
+          throw new Error(`Event ${payload.eventId} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(payload.eventId))) {
-      throw new Error(
-        "You don't have the necessary permissions to update the prescripted event config"
-      );
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(payload.eventId))) {
+          throw new Error(
+            "You don't have the necessary permissions to update the prescripted event config"
+          );
+        }
 
-    const prescript =
-      (await this.repo.em.findOne(EventPrescriptEntity, {
-        id: payload.eventId,
-      })) ?? new EventPrescriptEntity();
+        const prescript =
+          (await this.repo.em.findOne(EventPrescriptEntity, {
+            id: payload.eventId,
+          })) ?? new EventPrescriptEntity();
 
-    prescript.event = event;
-    prescript.script = payload.prescript;
-    prescript.nextGame = payload.nextSessionIndex - 1;
-    await this.repo.em.persistAndFlush(prescript);
-    return { success: true };
+        prescript.event = event;
+        prescript.script = payload.prescript;
+        prescript.nextGame = payload.nextSessionIndex - 1;
+        this.repo.em.persist(prescript);
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async recalcAchievements(eventId: number): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, { id: eventId });
-    if (!event) {
-      throw new Error(`Event ${eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, { id: eventId });
+        if (!event) {
+          throw new Error(`Event ${eventId} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
-      throw new Error("You don't have the necessary permissions to rebuild achievements");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+          throw new Error("You don't have the necessary permissions to rebuild achievements");
+        }
 
-    const achievementsModel = this.getModel(AchievementsModel);
-    await achievementsModel.scheduleRebuildAchievements(eventId);
-    return { success: true };
+        const achievementsModel = this.getModel(AchievementsModel);
+        await achievementsModel.scheduleRebuildAchievements(eventId);
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async recalcPlayerStats(eventId: number): Promise<GenericSuccessResponse> {
-    const event = await this.repo.em.findOne(EventEntity, { id: eventId });
-    if (!event) {
-      throw new Error(`Event ${eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, { id: eventId });
+        if (!event) {
+          throw new Error(`Event ${eventId} not found`);
+        }
 
-    // Check if we have rights to update the event
-    const playerModel = this.getModel(PlayerModel);
-    if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
-      throw new Error("You don't have the necessary permissions to rebuild player stats");
-    }
+        // Check if we have rights to update the event
+        const playerModel = this.getModel(PlayerModel);
+        if (!this.repo.meta.personId || !(await playerModel.isEventAdmin(eventId))) {
+          throw new Error("You don't have the necessary permissions to rebuild player stats");
+        }
 
-    const playerStatsModel = this.getModel(PlayerStatsModel);
-    await playerStatsModel.scheduleRebuildPlayersStats(eventId);
-    return { success: true };
+        const playerStatsModel = this.getModel(PlayerStatsModel);
+        await playerStatsModel.scheduleRebuildPlayersStats(eventId);
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 }

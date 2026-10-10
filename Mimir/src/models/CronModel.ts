@@ -17,8 +17,6 @@ export class CronModel extends Model {
       job.jobArguments = JSON.stringify({ eventId, playerId: id });
       this.repo.em.persist(job);
     });
-
-    await this.repo.em.flush();
   }
 
   public async scheduleRecalcAchievements(eventId: number) {
@@ -26,6 +24,6 @@ export class CronModel extends Model {
     job.createdAt = new Date().toISOString();
     job.jobName = 'achievements';
     job.jobArguments = JSON.stringify({ eventId });
-    await this.repo.em.persistAndFlush(job);
+    this.repo.em.persist(job);
   }
 }

@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
 import { Model } from './Model.js';
 import { EventEntity } from '../entities/Event.entity.js';
@@ -37,266 +38,300 @@ import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
 
 export class SeatingModel extends Model {
   public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
-    const event = await this.repo.em.findOne(EventEntity, eventId, {
-      populate: ['ruleset'],
-    });
-    if (!event) {
-      throw new Error('Event not found');
-    }
-    const startRating = event.ruleset?.rules.startRating;
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, eventId, {
+          populate: ['ruleset'],
+        });
+        if (!event) {
+          throw new Error('Event not found');
+        }
+        const startRating = event.ruleset?.rules.startRating;
 
-    const registrations = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
-      where: {
-        event: this.repo.em.getReference(EventEntity, eventId),
-        ignoreSeating: 0,
+        const registrations = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
+          where: {
+            event: this.repo.em.getReference(EventEntity, eventId),
+            ignoreSeating: 0,
+          },
+        });
+
+        const regIds = registrations.map((r) => r.id);
+
+        const playerModel = this.getModel(PlayerModel);
+        const historyModel = this.getModel(PlayerHistoryModel);
+        const playerInSessionModel = this.getModel(PlayerInSessionModel);
+
+        const [players, history, seating] = await Promise.all([
+          playerModel.findById(regIds),
+          historyModel.findLastByEvent([eventId]),
+          playerInSessionModel.getPlayersSeatingInEvent(eventId, regIds.length),
+        ]);
+
+        const ratings: Record<number, number> = {};
+        for (const player of players) {
+          ratings[player.id] = startRating;
+        }
+        for (const hItem of history) {
+          if (hItem.rating) {
+            ratings[hItem.playerId] = hItem.rating;
+          }
+        }
+
+        const playerById = players.reduce(
+          (acc, player) => {
+            acc[player.id] = player;
+            return acc;
+          },
+          {} as Record<number, (typeof players)[0]>
+        );
+
+        return {
+          seating: seating
+            .map((seat) => ({
+              playerId: seat.player_id,
+              order: seat.order,
+              tableIndex: seat.table_index,
+              sessionId: seat.session_id,
+              playerTitle: playerById[seat.player_id]?.title,
+              rating: ratings[seat.player_id] ?? 0,
+              hasAvatar: playerById[seat.player_id]?.hasAvatar ?? false,
+              lastUpdate: playerById[seat.player_id]?.lastUpdate,
+            }))
+            .filter((s) => !!s.tableIndex),
+        };
       },
-    });
-
-    const regIds = registrations.map((r) => r.id);
-
-    const playerModel = this.getModel(PlayerModel);
-    const historyModel = this.getModel(PlayerHistoryModel);
-    const playerInSessionModel = this.getModel(PlayerInSessionModel);
-
-    const [players, history, seating] = await Promise.all([
-      playerModel.findById(regIds),
-      historyModel.findLastByEvent([eventId]),
-      playerInSessionModel.getPlayersSeatingInEvent(eventId, regIds.length),
-    ]);
-
-    const ratings: Record<number, number> = {};
-    for (const player of players) {
-      ratings[player.id] = startRating;
-    }
-    for (const hItem of history) {
-      if (hItem.rating) {
-        ratings[hItem.playerId] = hItem.rating;
-      }
-    }
-
-    const playerById = players.reduce(
-      (acc, player) => {
-        acc[player.id] = player;
-        return acc;
-      },
-      {} as Record<number, (typeof players)[0]>
+      { propagation: TransactionPropagation.REQUIRED }
     );
-
-    return {
-      seating: seating
-        .map((seat) => ({
-          playerId: seat.player_id,
-          order: seat.order,
-          tableIndex: seat.table_index,
-          sessionId: seat.session_id,
-          playerTitle: playerById[seat.player_id]?.title,
-          rating: ratings[seat.player_id] ?? 0,
-          hasAvatar: playerById[seat.player_id]?.hasAvatar ?? false,
-          lastUpdate: playerById[seat.player_id]?.lastUpdate,
-        }))
-        .filter((s) => !!s.tableIndex),
-    };
   }
 
   async makeShuffledSeating(
     payload: SeatingMakeShuffledSeatingPayload
   ): Promise<GenericSuccessResponse> {
-    const { eventId, groupsCount, seed, windShuffleMode } = payload;
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, groupsCount, seed, windShuffleMode } = payload;
 
-    const seatingGetter = (
-      playersMap: Array<[number, number]>,
-      _seed: number,
-      previousSeatings: number[][],
-      _windShuffleMode?: WindShuffleMode
-    ) =>
-      make_seating_shuffled({
-        playersMap,
-        groupsCount,
-        randFactor: _seed,
-        windShuffle: this._getWindShuffleMode(_windShuffleMode),
-        previousSeatings,
-      });
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_shuffled({
+            playersMap,
+            groupsCount,
+            randFactor: _seed,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+            previousSeatings,
+          });
 
-    return this.makeSeatingAndStartGames(
-      eventId,
-      seed,
-      seatingGetter,
-      windShuffleMode ?? undefined
+        return this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
   }
 
   async makeSwissSeating(payload: SeatingMakeSwissSeatingPayload): Promise<GenericSuccessResponse> {
-    const { eventId, windShuffleMode } = payload;
-    const seed = randomInt(999999);
-    const seatingGetter = (
-      playersMap: Array<[number, number]>,
-      _seed: number,
-      previousSeatings: number[][],
-      _windShuffleMode?: WindShuffleMode
-    ) =>
-      make_seating_swiss({
-        playersMap,
-        randFactor: _seed,
-        windShuffle: this._getWindShuffleMode(_windShuffleMode),
-        previousSeatings,
-      });
-    return this.makeSeatingAndStartGames(
-      eventId,
-      seed,
-      seatingGetter,
-      windShuffleMode ?? undefined
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, windShuffleMode } = payload;
+        const seed = randomInt(999999);
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_swiss({
+            playersMap,
+            randFactor: _seed,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+            previousSeatings,
+          });
+        return this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
   }
 
   async makeIntervalSeating(
     payload: SeatingMakeIntervalSeatingPayload
   ): Promise<GenericSuccessResponse> {
-    const { eventId, step, windShuffleMode } = payload;
-    const seed = randomInt(999999);
-    const seatingGetter = (
-      playersMap: Array<[number, number]>,
-      _seed: number,
-      previousSeatings: number[][],
-      _windShuffleMode?: WindShuffleMode
-    ) =>
-      make_seating_interval({
-        playersMap,
-        randFactor: seed,
-        step,
-        windShuffle: this._getWindShuffleMode(_windShuffleMode),
-        previousSeatings,
-      });
-    return this.makeSeatingAndStartGames(
-      eventId,
-      seed,
-      seatingGetter,
-      windShuffleMode ?? undefined
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, step, windShuffleMode } = payload;
+        const seed = randomInt(999999);
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_interval({
+            playersMap,
+            randFactor: seed,
+            step,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+            previousSeatings,
+          });
+        return this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
   }
 
   async makePrescriptedSeating(
     payload: SeatingMakePrescriptedSeatingPayload
   ): Promise<GenericSuccessResponse> {
-    const { eventId, windShuffleMode } = payload;
-    const seed = randomInt(999999);
-    const prescriptEntity = await this.repo.em.findOne(EventPrescriptEntity, {
-      event: this.repo.em.getReference(EventEntity, eventId),
-    });
-    if (!prescriptEntity) {
-      throw new Error('No prescript entity found for event');
-    }
-    const seating = await this._getNextPrescriptedSeating(
-      eventId,
-      prescriptEntity.script,
-      prescriptEntity.nextGame
-    );
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, windShuffleMode } = payload;
+        const seed = randomInt(999999);
+        const prescriptEntity = await this.repo.em.findOne(EventPrescriptEntity, {
+          event: this.repo.em.getReference(EventEntity, eventId),
+        });
+        if (!prescriptEntity) {
+          throw new Error('No prescript entity found for event');
+        }
+        const seating = await this._getNextPrescriptedSeating(
+          eventId,
+          prescriptEntity.script,
+          prescriptEntity.nextGame
+        );
 
-    const seatingGetter = (
-      _playersMap: Array<[number, number]>, // ignored in this case
-      _seed: number,
-      previousSeatings: number[][],
-      _windShuffleMode?: WindShuffleMode
-    ) => {
-      return update_wind_placing_only({
-        playersMap: seating.map((id) => [id, 0]), // zero rating as it does not really matter in case of prescripted seating
-        previousSeatings,
-        randFactor: _seed,
-        windShuffle: this._getWindShuffleMode(_windShuffleMode),
-      });
-    };
-    const result = await this.makeSeatingAndStartGames(
-      eventId,
-      seed,
-      seatingGetter,
-      windShuffleMode ?? undefined
+        const seatingGetter = (
+          _playersMap: Array<[number, number]>, // ignored in this case
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) => {
+          return update_wind_placing_only({
+            playersMap: seating.map((id) => [id, 0]), // zero rating as it does not really matter in case of prescripted seating
+            previousSeatings,
+            randFactor: _seed,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+          });
+        };
+        const result = await this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+        prescriptEntity.nextGame++;
+        this.repo.em.persist(prescriptEntity);
+        return result;
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
-    prescriptEntity.nextGame++;
-    await this.repo.em.persistAndFlush(prescriptEntity);
-    return result;
   }
 
   public async resetSeating(eventId: number): Promise<GenericSuccessResponse> {
-    await this._ensureActionAllowed(eventId);
-    const event = await this.repo.em.findOne(EventEntity, eventId);
-    if (
-      !event ||
-      event.gamesStatus !== TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
-    ) {
-      throw new Error(`Event #${eventId} not found or not in proper state`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        await this._ensureActionAllowed(eventId);
+        const event = await this.repo.em.findOne(EventEntity, eventId);
+        if (
+          !event ||
+          event.gamesStatus !== TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
+        ) {
+          throw new Error(`Event #${eventId} not found or not in proper state`);
+        }
 
-    if (event.isPrescripted) {
-      const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
-        event,
-      });
-      if (prescript) {
-        prescript.nextGame--;
-        this.repo.em.persist(prescript);
-      }
-    }
+        if (event.isPrescripted) {
+          const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
+            event,
+          });
+          if (prescript) {
+            prescript.nextGame--;
+            this.repo.em.persist(prescript);
+          }
+        }
 
-    event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
-    this.repo.em.persist(event);
+        event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
+        this.repo.em.persist(event);
 
-    const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findByEventAndStatus(
-      [eventId],
-      [SessionStatus.SESSION_STATUS_INPROGRESS]
+        const sessionModel = this.getModel(SessionModel);
+        const sessions = await sessionModel.findByEventAndStatus(
+          [eventId],
+          [SessionStatus.SESSION_STATUS_INPROGRESS]
+        );
+        const sp = await this.repo.em.findAll(SessionPlayerEntity, {
+          where: { session: { id: { $in: sessions.map((s) => s.id) } } },
+        });
+
+        sp.map((e) => this.repo.em.remove(e));
+        sessions.map((s) => this.repo.em.remove(s));
+
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
-    const sp = await this.repo.em.findAll(SessionPlayerEntity, {
-      where: { session: { id: { $in: sessions.map((s) => s.id) } } },
-    });
-
-    sp.map((e) => this.repo.em.remove(e));
-    sessions.map((s) => this.repo.em.remove(s));
-
-    await this.repo.em.flush();
-    return { success: true };
   }
 
   async generateSwissSeating(
     payload: SeatingGenerateSwissSeatingPayload
   ): Promise<SeatingGenerateSwissSeatingResponse> {
-    const event = await this.repo.em.findOne(EventEntity, payload.eventId);
-    if (!event) {
-      throw new Error(`Event #${payload.eventId} not found`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, payload.eventId);
+        if (!event) {
+          throw new Error(`Event #${payload.eventId} not found`);
+        }
 
-    const seatingGetter = (
-      playersMap: Array<[number, number]>,
-      seed: number,
-      previousSeatings: number[][],
-      windShuffleMode?: WindShuffleMode
-    ) =>
-      make_seating_swiss({
-        playersMap,
-        randFactor: seed,
-        windShuffle: this._getWindShuffleMode(windShuffleMode),
-        previousSeatings,
-      });
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          seed: number,
+          previousSeatings: number[][],
+          windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_swiss({
+            playersMap,
+            randFactor: seed,
+            windShuffle: this._getWindShuffleMode(windShuffleMode),
+            previousSeatings,
+          });
 
-    const { chunks, replacements } = await this.makeSeating(
-      event,
-      randomInt(999999),
-      seatingGetter,
-      payload.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM
-    );
+        const { chunks, replacements } = await this.makeSeating(
+          event,
+          randomInt(999999),
+          seatingGetter,
+          payload.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM
+        );
 
-    if (payload.substituteReplacementPlayers) {
-      for (const table of chunks) {
-        for (const idx in table) {
-          if (replacements[table[idx]]) {
-            table[idx] = replacements[table[idx]];
+        if (payload.substituteReplacementPlayers) {
+          for (const table of chunks) {
+            for (const idx in table) {
+              if (replacements[table[idx]]) {
+                table[idx] = replacements[table[idx]];
+              }
+            }
           }
         }
-      }
-    }
 
-    return {
-      tables: chunks.map((table) => ({
-        players: table.map((playerId) => ({ playerId })),
-      })),
-    };
+        return {
+          tables: chunks.map((table) => ({
+            players: table.map((playerId) => ({ playerId })),
+          })),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   private async makeSeating(
@@ -384,7 +419,6 @@ export class SeatingModel extends Model {
       tableIndex++;
     }
 
-    await this.repo.em.flush();
     await Promise.all(promises);
 
     return { success: true };

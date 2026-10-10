@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import { PersonEx, Player } from 'tsclients/proto/atoms.pb.js';
 import { Model } from './Model.js';
 import { playerInfo } from '../helpers/cache/schema.js';
@@ -165,12 +166,17 @@ export class PlayerModel extends Model {
   }
 
   async isEventAdmin(eventId: number) {
-    const personId = this.repo.meta.personId;
-    if (!personId) return false;
-    const isSuperadmin = await this.repo.frey.GetSuperadminFlag({ personId });
-    if (isSuperadmin) return true;
-    const data = await this.repo.frey.GetEventAdmins({ eventId });
-    return data.admins.some((admin) => admin.personId === personId);
+    return this.repo.em.transactional(
+      async () => {
+        const personId = this.repo.meta.personId;
+        if (!personId) return false;
+        const isSuperadmin = await this.repo.frey.GetSuperadminFlag({ personId });
+        if (isSuperadmin) return true;
+        const data = await this.repo.frey.GetEventAdmins({ eventId });
+        return data.admins.some((admin) => admin.personId === personId);
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async isEventReferee(eventId: number) {
@@ -181,34 +187,51 @@ export class PlayerModel extends Model {
   }
 
   async getPlayer(playerId: number): Promise<{ players: Player }> {
-    const data = await this.repo.frey.GetPersonalInfo({
-      ids: [playerId],
-    });
-    return {
-      players: {
-        id: data.people[0].id,
-        title: data.people[0].title,
-        tenhouId: data.people[0].tenhouId,
-        hasAvatar: data.people[0].hasAvatar,
-        lastUpdate: data.people[0].lastUpdate,
+    return this.repo.em.transactional(
+      async () => {
+        const data = await this.repo.frey.GetPersonalInfo({
+          ids: [playerId],
+        });
+        return {
+          players: {
+            id: data.people[0].id,
+            title: data.people[0].title,
+            tenhouId: data.people[0].tenhouId,
+            hasAvatar: data.people[0].hasAvatar,
+            lastUpdate: data.people[0].lastUpdate,
+          },
+        };
       },
-    };
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async notifyGameStartingSoon(eventId: number) {
-    const regModel = this.getModel(EventRegistrationModel);
-    const eventRegModel = this.getModel(EventRegistrationModel);
-    const [whoPlays, replacements] = await Promise.all([
-      regModel.findByEventId([eventId]),
-      eventRegModel.getSubstitutionPlayers(eventId),
-    ]);
-    const playerIds = whoPlays.map((player) => replacements[player.playerId] ?? player.playerId);
-    await this.repo.skirnir.messageSessionStartingSoon(playerIds, eventId);
-    return { success: true };
+    return this.repo.em.transactional(
+      async () => {
+        const regModel = this.getModel(EventRegistrationModel);
+        const eventRegModel = this.getModel(EventRegistrationModel);
+        const [whoPlays, replacements] = await Promise.all([
+          regModel.findByEventId([eventId]),
+          eventRegModel.getSubstitutionPlayers(eventId),
+        ]);
+        const playerIds = whoPlays.map(
+          (player) => replacements[player.playerId] ?? player.playerId
+        );
+        await this.repo.skirnir.messageSessionStartingSoon(playerIds, eventId);
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async callReferee(eventId: number, tableIndex: number) {
-    await this.repo.skirnir.messageCallReferee(eventId, tableIndex);
-    return { success: true };
+    return this.repo.em.transactional(
+      async () => {
+        await this.repo.skirnir.messageCallReferee(eventId, tableIndex);
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 }

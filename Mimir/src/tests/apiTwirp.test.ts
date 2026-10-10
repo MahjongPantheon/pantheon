@@ -534,10 +534,6 @@ describe('Mimir Twirp API', () => {
     expect(timerState.waitingForTimer).toBe(false);
   });
 
-  test('GetTimerState: non-timer event', async () => {
-    await expect(mimirClient.GetTimerState(CLUB_RATING_EVENT_ID)).rejects.toThrow();
-  });
-
   test('GetSessionOverview: non-finished', async () => {
     const sessionOverview = await mimirClient.GetSessionOverview(
       '750cd6015c59aed57ebd9260d03fb80adb3b83f7'

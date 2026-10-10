@@ -15,6 +15,7 @@ export default () =>
     password: config.db.password,
     host: config.db.host,
     port: config.db.port,
+    implicitTransactions: false,
     // folder-based discovery setup, using common filename suffix
     entities: [import.meta.dirname + '/../dist/**/*.entity.js'],
     entitiesTs: [import.meta.dirname + '/../src/**/*.entity.ts'],

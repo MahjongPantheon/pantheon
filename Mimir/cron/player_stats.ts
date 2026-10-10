@@ -4,31 +4,30 @@ import { Model } from '../src/models/Model';
 import { PlayerStatsModel } from '../src/models/PlayerStatsModel';
 
 export async function rebuildPlayerStats(repo: Repository) {
-  const jobs = await repo.em.findAll(JobsQueueEntity, {
-    where: {
-      jobName: 'playerStats',
-    },
-  });
+  return repo.em.transactional(async () => {
+    const jobs = await repo.em.findAll(JobsQueueEntity, {
+      where: {
+        jobName: 'playerStats',
+      },
+    });
 
-  if (jobs.length === 0) {
-    return;
-  }
+    if (jobs.length === 0) {
+      return;
+    }
 
-  const playerModel = Model.getModel(repo, PlayerStatsModel);
-  const results = await Promise.allSettled(
-    jobs.map((job) => {
+    const playerModel = Model.getModel(repo, PlayerStatsModel);
+    const promises = [];
+    for (const job of jobs) {
       const { playerId, eventId } = JSON.parse(job.jobArguments);
-      return playerModel.getPlayerStats(
-        { playerId: +playerId, eventIdList: [+eventId] },
-        { forceRebuild: true, deferFlush: true }
+      promises.push(
+        playerModel.getPlayerStats(
+          { playerId: +playerId, eventIdList: [+eventId] },
+          { forceRebuild: true }
+        )
       );
-    })
-  );
-  const failed = results.find((result) => result.status === 'rejected');
-  if (failed?.status === 'rejected') {
-    throw failed.reason;
-  }
+    }
+    await Promise.all(promises);
 
-  repo.em.remove(jobs);
-  await repo.em.flush();
+    repo.em.remove(jobs);
+  });
 }

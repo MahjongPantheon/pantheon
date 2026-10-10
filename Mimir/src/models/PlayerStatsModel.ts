@@ -1,3 +1,4 @@
+import { Collection, TransactionPropagation } from '@mikro-orm/core';
 import { JobsQueueEntity } from '../entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
 import moment from 'moment';
@@ -25,7 +26,6 @@ import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { PointsCalc, RiichiBetAssignment } from '../helpers/PointsCalc.js';
 import { HandEntity } from '../entities/Hand.entity.js';
 import { SessionState } from '../helpers/SessionState.js';
-import { Collection } from '@mikro-orm/core';
 
 type OutcomeStats = {
   ron: number;
@@ -67,93 +67,106 @@ export class PlayerStatsModel extends Model {
     job.createdAt = moment.utc().format('YYYY-MM-DD HH:mm:ss');
     job.jobName = 'playerStats';
     job.jobArguments = JSON.stringify({ playerId, eventId });
-    await this.repo.em.persistAndFlush(job);
+    this.repo.em.persist(job);
   }
 
   async invalidatePlayerStats(playerId: number) {
-    const registrations = await this.getModel(EventRegistrationModel).findByPlayerId(playerId);
-    const eventIds = new Set(registrations.map((registration) => registration.event.id));
-    for (const eventId of eventIds) {
-      await this.scheduleRebuildSinglePlayerStats(playerId, eventId);
-    }
-    return { success: true };
+    return this.repo.em.transactional(
+      async () => {
+        const registrations = await this.getModel(EventRegistrationModel).findByPlayerId(playerId);
+        const eventIds = new Set(registrations.map((registration) => registration.event.id));
+        await Promise.all(
+          Array.from(eventIds, (eventId) =>
+            this.scheduleRebuildSinglePlayerStats(playerId, eventId)
+          )
+        );
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async getPlayerStats(
     input: PlayersGetPlayerStatsPayload,
-    options: { forceRebuild?: boolean; deferFlush?: boolean } = {}
+    options: { forceRebuild?: boolean } = {}
   ): Promise<PlayersGetPlayerStatsResponse> {
-    if (input.eventIdList.length === 0) {
-      throw new Error('Event ID list cannot be empty');
-    }
+    return this.repo.em.transactional(
+      async () => {
+        if (input.eventIdList.length === 0) {
+          throw new Error('Event ID list cannot be empty');
+        }
 
-    // Find precalculated stats if any
-    if (
-      !options.forceRebuild &&
-      input.eventIdList.length === 1 &&
-      !input.dateFrom &&
-      !input.dateTo
-    ) {
-      const stats = await this.repo.em.findAll(PlayerStatsEntity, {
-        where: {
-          event: input.eventIdList[0],
-          playerId: input.playerId,
-        },
-      });
-      if (stats.length > 0) {
-        return {
-          ratingHistory: stats[0].data.ratingHistory ?? [],
-          scoreHistory: Object.entries(stats[0].data.scoreHistory ?? {}).map(
-            ([_sessionId, data]) => ({
-              tables: data.map((item) => ({
-                sessionHash: item.sessionHash,
-                eventId: item.eventId,
-                playerId: item.playerId,
-                score: item.score,
-                ratingDelta: item.ratingDelta,
-                place: item.place,
-                title: item.title,
-                hasAvatar: item.hasAvatar,
-                lastUpdate: item.lastUpdate,
+        // Find precalculated stats if any
+        if (
+          !options.forceRebuild &&
+          input.eventIdList.length === 1 &&
+          !input.dateFrom &&
+          !input.dateTo
+        ) {
+          const stats = await this.repo.em.findAll(PlayerStatsEntity, {
+            where: {
+              event: input.eventIdList[0],
+              playerId: input.playerId,
+            },
+          });
+          if (stats.length > 0) {
+            return {
+              ratingHistory: stats[0].data.ratingHistory ?? [],
+              scoreHistory: Object.entries(stats[0].data.scoreHistory ?? {}).map(
+                ([_sessionId, data]) => ({
+                  tables: data.map((item) => ({
+                    sessionHash: item.sessionHash,
+                    eventId: item.eventId,
+                    playerId: item.playerId,
+                    score: item.score,
+                    ratingDelta: item.ratingDelta,
+                    place: item.place,
+                    title: item.title,
+                    hasAvatar: item.hasAvatar,
+                    lastUpdate: item.lastUpdate,
+                  })),
+                })
+              ),
+              playersInfo: stats[0].data.playersInfo!.map((i) => ({
+                ...i,
+                tenhouId: i.tenhouId ?? '',
               })),
-            })
-          ),
-          playersInfo: stats[0].data.playersInfo!.map((i) => ({
-            ...i,
-            tenhouId: i.tenhouId ?? '',
-          })),
-          placesSummary: Object.entries(stats[0].data.placesSummary ?? {}).map(
-            ([place, count]) => ({
-              place: +place,
-              count,
-            })
-          ),
-          totalPlayedGames: stats[0].data.totalPlayedGames ?? 0,
-          totalPlayedRounds: stats[0].data.totalPlayedRounds ?? 0,
-          winSummary: stats[0].data.winSummary!,
-          handsValueSummary: Object.entries(stats[0].data.handsValueSummary ?? {}).map(
-            ([hanCount, count]) => ({
-              hanCount: +hanCount,
-              count,
-            })
-          ),
-          yakuSummary: Object.entries(stats[0].data.yakuSummary ?? {}).map(([yakuId, count]) => ({
-            yakuId: +yakuId,
-            count,
-          })),
-          riichiSummary: stats[0].data.riichiSummary!,
-          doraStat: stats[0].data.doraStat!,
-          lastUpdate: stats[0].data.lastUpdate ?? new Date().toISOString(),
-        };
-      }
-    }
+              placesSummary: Object.entries(stats[0].data.placesSummary ?? {}).map(
+                ([place, count]) => ({
+                  place: +place,
+                  count,
+                })
+              ),
+              totalPlayedGames: stats[0].data.totalPlayedGames ?? 0,
+              totalPlayedRounds: stats[0].data.totalPlayedRounds ?? 0,
+              winSummary: stats[0].data.winSummary!,
+              handsValueSummary: Object.entries(stats[0].data.handsValueSummary ?? {}).map(
+                ([hanCount, count]) => ({
+                  hanCount: +hanCount,
+                  count,
+                })
+              ),
+              yakuSummary: Object.entries(stats[0].data.yakuSummary ?? {}).map(
+                ([yakuId, count]) => ({
+                  yakuId: +yakuId,
+                  count,
+                })
+              ),
+              riichiSummary: stats[0].data.riichiSummary!,
+              doraStat: stats[0].data.doraStat!,
+              lastUpdate: stats[0].data.lastUpdate ?? new Date().toISOString(),
+            };
+          }
+        }
 
-    return this._calculateStat(
-      input.eventIdList,
-      input.playerId,
-      input.dateFrom ?? undefined,
-      input.dateTo ?? undefined,
-      options.deferFlush
+        return this._calculateStat(
+          input.eventIdList,
+          input.playerId,
+          input.dateFrom ?? undefined,
+          input.dateTo ?? undefined
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
   }
 
@@ -161,8 +174,7 @@ export class PlayerStatsModel extends Model {
     eventIdList: number[],
     playerId: number,
     dateFrom?: string,
-    dateTo?: string,
-    deferFlush = false
+    dateTo?: string
   ): Promise<PlayersGetPlayerStatsResponse> {
     const events = await this.repo.em.findAll(EventEntity, {
       where: {
@@ -271,10 +283,6 @@ export class PlayerStatsModel extends Model {
         stats.playerId = playerId;
         stats.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
         this.repo.em.persist(stats);
-      }
-
-      if (!deferFlush) {
-        await this.repo.em.flush();
       }
     }
 

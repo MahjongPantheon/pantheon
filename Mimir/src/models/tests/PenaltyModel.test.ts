@@ -28,6 +28,10 @@ const rounds = Model.getModel(repo, RoundModel);
 const playerData = [1, 2, 3, 4].map(makePlayer);
 
 describe('Penalty games', () => {
+  beforeEach(() => {
+    // Persistence is mocked here; transaction behavior has its own database-backed tests.
+    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+  });
   afterEach(() => {
     jest.restoreAllMocks();
     repo.em.clear();
@@ -43,9 +47,7 @@ describe('Penalty games', () => {
     jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
     jest.spyOn(players, 'findById').mockResolvedValue(playerData);
     jest.spyOn(events, 'findById').mockResolvedValue([event]);
-    jest.spyOn(repo.em, 'persistAndFlush').mockImplementation(async (entity) => {
-      if (entity instanceof SessionEntity) entity.id = 21;
-    });
+    jest.spyOn(repo.em, 'execute').mockResolvedValue([{ id: 21 }]);
     const persist = jest.spyOn(repo.em, 'persist');
     jest.spyOn(repo.em, 'flush').mockResolvedValue();
     const newHistory = jest.spyOn(history, 'makeNewHistoryItem').mockResolvedValue();

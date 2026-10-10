@@ -36,6 +36,11 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 | `Redis/` | Redis image and entrypoint configuration. Check effects on Frey/Mimir caches when changing it. |
 | `Common/` | Shared protobuf contracts, generated clients, storage helpers, common images, and reverse-proxy configuration. Run `make -C Common lint` for `.proto` edits and check all affected services after shared changes. |
 
+### Mimir
+
+- Do not use `await` inside loops. Collect promises and await them with `Promise.all` instead.
+- Only model methods called directly from `Mimir/src/mimir.ts` should be wrapped in `this.repo.em.transactional`. Keep other model methods unwrapped to prevent nested transactions.
+
 ## Validation and workflow
 
 - Run lint, format, and type checks through the **root Makefile** against the development containers: `make <service>_oxlint <service>_oxfmt <service>_typecheck` from the repository root, using lowercase service names (for example, `make forseti_oxlint forseti_oxfmt forseti_typecheck`). For broad changes, run `make lint`. The root recipes redirect output to `tmp/<service>_*.log`; inspect those logs and do not rely on the terminal exit status alone, because a missing container can be reported without failing its wrapper target. Do not substitute `make -C <Service> ...` host checks for these container checks.

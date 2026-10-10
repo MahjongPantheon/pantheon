@@ -161,8 +161,6 @@ export class RoundModel extends Model {
       });
       this.repo.em.persist(r);
     }
-
-    await this.repo.em.flush();
   }
 
   getRoundPaymentsInfo(event: EventEntity, session: SessionEntity, round: RoundEntity) {

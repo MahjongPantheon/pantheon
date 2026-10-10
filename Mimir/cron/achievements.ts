@@ -4,24 +4,24 @@ import { Model } from '../src/models/Model';
 import { AchievementsModel } from '../src/models/AchievementsModel.js';
 
 export async function rebuildAchievements(repo: Repository) {
-  const jobs = await repo.em.findAll(JobsQueueEntity, {
-    where: {
-      jobName: 'achievements',
-    },
+  return repo.em.transactional(async () => {
+    const jobs = await repo.em.findAll(JobsQueueEntity, {
+      where: {
+        jobName: 'achievements',
+      },
+    });
+
+    if (jobs.length === 0) {
+      return;
+    }
+
+    const achievementsModel = Model.getModel(repo, AchievementsModel);
+    const promises = [];
+    for (const job of jobs) {
+      const { eventId } = JSON.parse(job.jobArguments);
+      promises.push(achievementsModel.precalculateAchievements(eventId));
+    }
+    await Promise.all(promises);
+    repo.em.remove(jobs);
   });
-
-  if (jobs.length === 0) {
-    return;
-  }
-
-  const achievementsModel = Model.getModel(repo, AchievementsModel);
-  const promises = [];
-  for (const job of jobs) {
-    const { eventId } = JSON.parse(job.jobArguments);
-    promises.push(achievementsModel.precalculateAchievements(eventId));
-    repo.em.remove(job);
-  }
-
-  await Promise.all(promises);
-  await repo.em.flush();
 }

@@ -6,6 +6,8 @@ import { SessionModel } from '../SessionModel.js';
 import { CronModel } from '../CronModel.js';
 import { EventRegistrationModel } from '../EventRegistrationModel.js';
 import { PlayerHistoryModel } from '../PlayerHistoryModel.js';
+import { PlayerModel } from '../PlayerModel.js';
+import { AchievementsModel } from '../AchievementsModel.js';
 import { Repository } from '../../services/Repository.js';
 import { EventEntity } from '../../entities/Event.entity.js';
 import { SessionEntity } from '../../entities/Session.entity.js';
@@ -54,6 +56,10 @@ function makeSession(endingPolicy: EndingPolicy, syncEnd = false, round = 2) {
 }
 
 describe('Session previews and finalization', () => {
+  beforeEach(() => {
+    // Persistence is mocked here; transaction behavior has its own database-backed tests.
+    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+  });
   afterAll(() => repo.destroy());
   afterEach(() => {
     jest.restoreAllMocks();
@@ -132,7 +138,7 @@ describe('Session previews and finalization', () => {
         );
         expect(session.endDate).toEqual(expect.any(String));
         expect(history).toHaveBeenCalledTimes(syncEnd ? 0 : 4);
-        expect(flush).toHaveBeenCalledTimes(syncEnd ? 0 : 1);
+        expect(flush).not.toHaveBeenCalled();
       } else {
         expect(state.isFinished()).toBe(false);
         expect(session.status).toBe(SessionStatus.SESSION_STATUS_INPROGRESS);
@@ -156,7 +162,7 @@ describe('Session previews and finalization', () => {
     }
   );
 
-  it('waits for every player history and the database flush before finalization completes', async () => {
+  it('waits for every player history before finalization completes', async () => {
     const { event, session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
     const state = new SessionState(event.ruleset, players, saved);
     state.forceFinish();
@@ -172,14 +178,7 @@ describe('Session previews and finalization', () => {
         completed.push(playerId);
       });
     const persist = jest.spyOn(repo.em, 'persist');
-    let releaseFlush!: () => void;
-    const flush = jest.spyOn(repo.em, 'flush').mockImplementation(async () => {
-      expect(completed.sort((a, b) => a - b)).toEqual([...players]);
-      expect(session.intermediateResults).toBe(state.state);
-      await new Promise<void>((resolve) => {
-        releaseFlush = resolve;
-      });
-    });
+    const flush = jest.spyOn(repo.em, 'flush').mockResolvedValue();
     let finished = false;
     const finalization = model.finalizeGame(event, session, state, true).then(() => {
       finished = true;
@@ -209,11 +208,42 @@ describe('Session previews and finalization', () => {
     expect(finished).toBe(false);
 
     releases[3]();
-    await setImmediate();
-    expect(flush).toHaveBeenCalledTimes(1);
-    expect(finished).toBe(false);
-    releaseFlush();
     await finalization;
+    expect(completed.sort((a, b) => a - b)).toEqual([...players]);
+    expect(session.intermediateResults).toBe(state.state);
+    expect(flush).not.toHaveBeenCalled();
+    expect(finished).toBe(true);
+  });
+
+  it('waits for session-end notification queries before force finishing returns', async () => {
+    const { session } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
+    jest.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
+    jest.spyOn(Model.getModel(repo, PlayerModel), 'isEventAdmin').mockResolvedValue(true);
+    jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+    jest.spyOn(model, 'finish').mockResolvedValue();
+    jest
+      .spyOn(Model.getModel(repo, AchievementsModel), 'scheduleRebuildAchievements')
+      .mockResolvedValue();
+    jest
+      .spyOn(Model.getModel(repo, EventRegistrationModel), 'getSubstitutionPlayers')
+      .mockResolvedValue({});
+    let release!: () => void;
+    const notify = jest.spyOn(repo.skirnir, 'messageClubSessionEnd').mockImplementation(
+      () =>
+        new Promise<void>((resolve) => {
+          release = resolve;
+        })
+    );
+    let finished = false;
+    const completion = model.forceFinishGame(session.representationalHash).then(() => {
+      finished = true;
+    });
+
+    await setImmediate();
+    expect(notify).toHaveBeenCalledTimes(1);
+    expect(finished).toBe(false);
+    release();
+    await completion;
     expect(finished).toBe(true);
   });
 });

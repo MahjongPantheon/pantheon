@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import {
   PlayersGetAllRoundsResponse,
   PlayersGetLastRoundByHashResponse,
@@ -15,26 +16,41 @@ import { toPaymentLog } from '../helpers/PointsCalc.js';
 
 export class PlayerInSessionModel extends Model {
   async getLastRound(input: PlayersGetLastRoundPayload): Promise<PlayersGetLastRoundResponse> {
-    const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findLastByPlayerAndEvent(input.playerId, input.eventId);
-    await this.repo.em.populate(sessions, ['event']);
-    if (sessions.length === 0) {
-      throw new Error(`Session not found for player ${input.playerId} and event ${input.eventId}`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const sessionModel = this.getModel(SessionModel);
+        const sessions = await sessionModel.findLastByPlayerAndEvent(input.playerId, input.eventId);
+        await this.repo.em.populate(sessions, ['event']);
+        if (sessions.length === 0) {
+          throw new Error(
+            `Session not found for player ${input.playerId} and event ${input.eventId}`
+          );
+        }
 
-    return this._getLastRoundCommon(sessions[0]);
+        return this._getLastRoundCommon(sessions[0]);
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async getLastRoundByHash(
     input: GenericSessionPayload
   ): Promise<PlayersGetLastRoundByHashResponse> {
-    const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findByRepresentationalHash([input.sessionHash], ['event']);
-    if (sessions.length === 0) {
-      throw new Error(`Session not found for hash ${input.sessionHash}`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const sessionModel = this.getModel(SessionModel);
+        const sessions = await sessionModel.findByRepresentationalHash(
+          [input.sessionHash],
+          ['event']
+        );
+        if (sessions.length === 0) {
+          throw new Error(`Session not found for hash ${input.sessionHash}`);
+        }
 
-    return this._getLastRoundCommon(sessions[0]);
+        return this._getLastRoundCommon(sessions[0]);
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async _getLastRoundCommon(session: SessionEntity): Promise<PlayersGetLastRoundResponse> {
@@ -91,13 +107,21 @@ export class PlayerInSessionModel extends Model {
   }
 
   async getAllRounds(input: GenericSessionPayload): Promise<PlayersGetAllRoundsResponse> {
-    const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findByRepresentationalHash([input.sessionHash], ['event']);
-    if (sessions.length === 0) {
-      throw new Error(`Session not found for hash ${input.sessionHash}`);
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const sessionModel = this.getModel(SessionModel);
+        const sessions = await sessionModel.findByRepresentationalHash(
+          [input.sessionHash],
+          ['event']
+        );
+        if (sessions.length === 0) {
+          throw new Error(`Session not found for hash ${input.sessionHash}`);
+        }
 
-    return this._getAllRounds(sessions[0]);
+        return this._getAllRounds(sessions[0]);
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async _getAllRounds(session: SessionEntity): Promise<PlayersGetAllRoundsResponse> {

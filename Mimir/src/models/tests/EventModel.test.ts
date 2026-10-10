@@ -41,13 +41,20 @@ describe('Event creation', () => {
 
   it('grants the creator admin rights only after the event has been saved and refreshed', async () => {
     let savedEvent: EventEntity | undefined;
+    let committed = false;
     let refreshed = false;
-    jest.spyOn(repo.em, 'persistAndFlush').mockImplementation(async (entity) => {
-      await Promise.resolve();
+    jest.spyOn(repo.em, 'persist').mockImplementation((entity) => {
       savedEvent = entity as EventEntity;
-      savedEvent.id = 123;
+      return repo.em;
+    });
+    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => {
+      const result = await callback(repo.em);
+      savedEvent!.id = 123;
+      committed = true;
+      return result;
     });
     jest.spyOn(repo.em, 'refresh').mockImplementation(async (entity) => {
+      expect(committed).toBe(true);
       expect(entity).toBe(savedEvent);
       await Promise.resolve();
       refreshed = true;
@@ -69,7 +76,7 @@ describe('Event creation', () => {
   });
 
   it('does not grant rights when saving the event fails', async () => {
-    jest.spyOn(repo.em, 'persistAndFlush').mockRejectedValue(new Error('Save failed'));
+    jest.spyOn(repo.em, 'transactional').mockRejectedValue(new Error('Save failed'));
     const refresh = jest.spyOn(repo.em, 'refresh');
     const grant = jest.spyOn(repo.frey, 'AddRuleForPerson');
 

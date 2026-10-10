@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import { EventEntity } from '../entities/Event.entity.js';
 import { Model } from './Model.js';
 import { SessionModel } from './SessionModel.js';
@@ -20,24 +21,29 @@ type SeriesResult = {
 
 export class EventGameSeriesModel extends Model {
   async getGamesSeries(event: EventEntity): Promise<EventsGetGamesSeriesResponse['results']> {
-    if (event.seriesLength < 1) {
-      throw new Error('This event does not support series');
-    }
+    return this.repo.em.transactional(
+      async () => {
+        if (event.seriesLength < 1) {
+          throw new Error('This event does not support series');
+        }
 
-    const sessionModel = this.getModel(SessionModel);
-    const sessionResultsModel = this.getModel(SessionResultsModel);
+        const sessionModel = this.getModel(SessionModel);
+        const sessionResultsModel = this.getModel(SessionResultsModel);
 
-    const games = await sessionModel.findByEventAndStatus(
-      [event.id],
-      [SessionStatus.SESSION_STATUS_FINISHED]
+        const games = await sessionModel.findByEventAndStatus(
+          [event.id],
+          [SessionStatus.SESSION_STATUS_FINISHED]
+        );
+        const [sessionResults, { players }] = await Promise.all([
+          sessionResultsModel.findByEvent([event.id]),
+          sessionModel.getPlayersOfGames(games, false),
+        ]);
+        const playersData = this.getPlayersData(sessionResults, event.seriesLength);
+        const series = this.findBestSeriesResults(playersData, event.seriesLength);
+        return this.formatSeriesResults(players, games, sessionResults, series);
+      },
+      { propagation: TransactionPropagation.REQUIRED }
     );
-    const [sessionResults, { players }] = await Promise.all([
-      sessionResultsModel.findByEvent([event.id]),
-      sessionModel.getPlayersOfGames(games, false),
-    ]);
-    const playersData = this.getPlayersData(sessionResults, event.seriesLength);
-    const series = this.findBestSeriesResults(playersData, event.seriesLength);
-    return this.formatSeriesResults(players, games, sessionResults, series);
   }
 
   protected getPlayersData(sessionResults: SessionResultsEntity[], seriesLength: number) {

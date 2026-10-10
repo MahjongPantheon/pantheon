@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import { JobsQueueEntity } from '../entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
 import moment from 'moment-timezone';
@@ -41,55 +42,61 @@ export class AchievementsModel extends Model {
     job.jobName = 'achievements';
     job.jobArguments = JSON.stringify({ eventId });
 
-    await this.repo.em.persistAndFlush(job);
+    this.repo.em.persist(job);
   }
 
   async getAchievements(
     payload: EventsGetAchievementsPayload
   ): Promise<EventsGetAchievementsResponse> {
-    const eventModel = this.getModel(EventModel);
-    const events = await eventModel.findById([payload.eventId]);
-    if (events.length === 0) {
-      throw new Error('Event not found');
-    }
-
-    const playerModel = this.getModel(PlayerModel);
-    const isAdmin = this.repo.meta.personId && (await playerModel.isEventAdmin(payload.eventId));
-
-    const results: EventsGetAchievementsResponse['achievements'] = [];
-    let players: EventsGetAchievementsResponse['players'] = [];
-    let lastUpdate = '';
-
-    if (!events[0].hideAchievements || isAdmin) {
-      const achievements = await this.repo.em.findAll(AchievementsEntity, {
-        where: {
-          event: this.repo.em.getReference(EventEntity, payload.eventId),
-        },
-      });
-      const achievementData = achievements[0].data;
-      lastUpdate = moment
-        .utc(achievements[0].lastUpdate)
-        .tz(events[0].timezone)
-        .format('YYYY-MM-DD HH:mm:ss');
-      for (const achievement of payload.achievementsList) {
-        if (achievementData[achievement as keyof typeof achievementData]) {
-          results.push({
-            achievementId: achievement,
-            achievementData: JSON.stringify(
-              achievementData[achievement as keyof typeof achievementData]
-            ),
-          });
+    return this.repo.em.transactional(
+      async () => {
+        const eventModel = this.getModel(EventModel);
+        const events = await eventModel.findById([payload.eventId]);
+        if (events.length === 0) {
+          throw new Error('Event not found');
         }
-      }
-      const playersIds = achievements[0].getAllPlayersIds();
-      players = filterPersonalData(await playerModel.findById(playersIds));
-    }
 
-    return {
-      achievements: results,
-      lastUpdate,
-      players,
-    };
+        const playerModel = this.getModel(PlayerModel);
+        const isAdmin =
+          this.repo.meta.personId && (await playerModel.isEventAdmin(payload.eventId));
+
+        const results: EventsGetAchievementsResponse['achievements'] = [];
+        let players: EventsGetAchievementsResponse['players'] = [];
+        let lastUpdate = '';
+
+        if (!events[0].hideAchievements || isAdmin) {
+          const achievements = await this.repo.em.findAll(AchievementsEntity, {
+            where: {
+              event: this.repo.em.getReference(EventEntity, payload.eventId),
+            },
+          });
+          const achievementData = achievements[0].data;
+          lastUpdate = moment
+            .utc(achievements[0].lastUpdate)
+            .tz(events[0].timezone)
+            .format('YYYY-MM-DD HH:mm:ss');
+          for (const achievement of payload.achievementsList) {
+            if (achievementData[achievement as keyof typeof achievementData]) {
+              results.push({
+                achievementId: achievement,
+                achievementData: JSON.stringify(
+                  achievementData[achievement as keyof typeof achievementData]
+                ),
+              });
+            }
+          }
+          const playersIds = achievements[0].getAllPlayersIds();
+          players = filterPersonalData(await playerModel.findById(playersIds));
+        }
+
+        return {
+          achievements: results,
+          lastUpdate,
+          players,
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 
   async precalculateAchievements(eventId: number) {
@@ -143,6 +150,6 @@ export class AchievementsModel extends Model {
     achievements.event = event;
     achievements.lastUpdate = new Date().toISOString();
 
-    await this.repo.em.persistAndFlush(achievements);
+    this.repo.em.persist(achievements);
   }
 }

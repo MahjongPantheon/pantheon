@@ -1,3 +1,4 @@
+import { TransactionPropagation } from '@mikro-orm/core';
 import { Model } from './Model.js';
 import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
 import { EventEntity } from '../entities/Event.entity.js';
@@ -27,7 +28,7 @@ export class SessionResultsModel extends Model {
 
   findByEvent(eventId: number[]): Promise<SessionResultsEntity[]> {
     return this.repo.em.find(SessionResultsEntity, {
-      event: this.repo.em.getReference(EventEntity, eventId),
+      event: { id: { $in: eventId } },
     });
   }
 
@@ -221,44 +222,49 @@ export class SessionResultsModel extends Model {
   async getLastResults(
     input: PlayersGetLastResultsPayload
   ): Promise<PlayersGetLastResultsResponse> {
-    const eventModel = this.getModel(EventModel);
-    const event = await eventModel.findById([input.eventId]);
-    if (event.length === 0) {
-      return {
-        results: [],
-      };
-    }
+    return this.repo.em.transactional(
+      async () => {
+        const eventModel = this.getModel(EventModel);
+        const event = await eventModel.findById([input.eventId]);
+        if (event.length === 0) {
+          return {
+            results: [],
+          };
+        }
 
-    let results: SessionResultsEntity[] = [];
-    let players: Record<number, PersonEx> = {};
-    if (event[0].syncEnd) {
-      // try to get prefinished results
-      [results, players] = await this.getPrefinishedSessionResults(input, event[0]);
-      if (results.length === 0) {
-        // fallback to finished results
-        [results, players] = await this.getFinishedSessionResults(input);
-      }
-    } else {
-      [results, players] = await this.getFinishedSessionResults(input);
-    }
+        let results: SessionResultsEntity[] = [];
+        let players: Record<number, PersonEx> = {};
+        if (event[0].syncEnd) {
+          // try to get prefinished results
+          [results, players] = await this.getPrefinishedSessionResults(input, event[0]);
+          if (results.length === 0) {
+            // fallback to finished results
+            [results, players] = await this.getFinishedSessionResults(input);
+          }
+        } else {
+          [results, players] = await this.getFinishedSessionResults(input);
+        }
 
-    if (results.length > 0) {
-      return {
-        results: results.map((result) => ({
-          sessionHash: result.session.representationalHash ?? '',
-          eventId: result.event.id,
-          playerId: result.playerId,
-          score: result.score,
-          ratingDelta: result.ratingDelta,
-          place: result.place,
-          title: players[result.playerId]?.title,
-          hasAvatar: players[result.playerId]?.hasAvatar,
-          lastUpdate: players[result.playerId]?.lastUpdate,
-        })),
-      };
-    }
-    return {
-      results: [],
-    };
+        if (results.length > 0) {
+          return {
+            results: results.map((result) => ({
+              sessionHash: result.session.representationalHash ?? '',
+              eventId: result.event.id,
+              playerId: result.playerId,
+              score: result.score,
+              ratingDelta: result.ratingDelta,
+              place: result.place,
+              title: players[result.playerId]?.title,
+              hasAvatar: players[result.playerId]?.hasAvatar,
+              lastUpdate: players[result.playerId]?.lastUpdate,
+            })),
+          };
+        }
+        return {
+          results: [],
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
   }
 }

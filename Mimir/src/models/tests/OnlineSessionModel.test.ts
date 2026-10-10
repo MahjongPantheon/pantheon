@@ -70,7 +70,7 @@ describe('Online replay import', () => {
           'parseToSession'
         )
         .mockResolvedValue([session, {}, rounds, []]);
-      const persist = jest.spyOn(repo.em, 'persistAndFlush').mockResolvedValue();
+      const persist = jest.spyOn(repo.em, 'persist');
       const histories = ids.map((playerId) =>
         Object.assign(new PlayerHistoryEntity(), {
           playerId,
