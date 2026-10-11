@@ -16,7 +16,8 @@ export class OnlineParser {
   protected _repo: Repository;
   protected _checkScores: string[][] = [];
   protected _roundData: Round[] = [];
-  protected _players: Record<string, number> = {}; // tenhouNickname -> userId
+  // Player IDs in replay seat order, defined by UN attributes n0 through n3.
+  protected _players: number[] = [];
   protected _riichi: number[] = [];
   protected _lastTokenIsAgari = false;
   protected _ankanCache: string[][] = [[], [], [], []];
@@ -67,7 +68,7 @@ export class OnlineParser {
     const debug: string[] = [];
     for (let i = 0; i < this._checkScores.length; i++) {
       debug.push(
-        `Expected\t${this._checkScores[i].join('\t')}\t:: Got\t${Object.values(scores[i]).join('\t')}`
+        `Expected\t${this._checkScores[i].join('\t')}\t:: Got\t${this._players.map((id) => scores[i][id]).join('\t')}`
       );
     }
 
@@ -130,7 +131,7 @@ export class OnlineParser {
 
     if (matches) {
       const parts = matches[1].split(',');
-      const playerIds = Object.values(this._players);
+      const playerIds = this._players;
 
       const scores = [
         parseInt(parts[0] + '00'),
@@ -163,7 +164,7 @@ export class OnlineParser {
 
     if (matches) {
       const parts = matches[1].split(',');
-      const playerIds = Object.values(this._players);
+      const playerIds = this._players;
 
       const chips = [
         parseInt(parts[8]),
@@ -193,7 +194,7 @@ export class OnlineParser {
     const ids: number[] = [];
     [delta1, delta2, delta3, delta4].forEach((val, idx) => {
       if (val > 0) {
-        const playerId = Object.values(this._players)[idx];
+        const playerId = this._players[idx];
         if (playerId !== undefined) {
           ids.push(playerId);
         }
@@ -230,35 +231,31 @@ export class OnlineParser {
     session: SessionEntity,
     sessionState: SessionState
   ): Promise<void> {
-    if (Object.keys(this._players).length === 0) {
-      const parsedPlayers: Record<string, number> = {
-        [decodeURIComponent(attributes['n0'] ?? '')]: 1,
-        [decodeURIComponent(attributes['n1'] ?? '')]: 1,
-        [decodeURIComponent(attributes['n2'] ?? '')]: 1,
-        [decodeURIComponent(attributes['n3'] ?? '')]: 1,
-      };
+    if (this._players.length === 0) {
+      const playerKeys = [0, 1, 2, 3].map((seat) =>
+        decodeURIComponent(attributes[`n${seat}`] ?? '')
+      );
 
-      if (parsedPlayers['NoName']) {
+      if (playerKeys.includes('NoName')) {
         throw new Error('"NoName" players are not allowed in replays');
       }
 
       const playerModel = Model.getModel(this._repo, PlayerModel);
-      const players = await playerModel.findByTenhouId(Object.keys(parsedPlayers));
-
-      if (Object.keys(players).length !== Object.keys(parsedPlayers).length) {
-        const registeredPlayers = Object.keys(players);
-        const missedPlayers = Object.keys(parsedPlayers)
-          .filter((p) => !registeredPlayers.includes(p))
-          .join(', ');
-        throw new Error(`Not all tenhou nicknames were registered in the system: ${missedPlayers}`);
+      const playersByKey = await playerModel.findByTenhouId(playerKeys);
+      const missedPlayers = playerKeys.filter((key) => !playersByKey[key]);
+      if (missedPlayers.length > 0) {
+        throw new Error(
+          `Not all tenhou nicknames were registered in the system: ${missedPlayers.join(', ')}`
+        );
       }
+      const players = playerKeys.map((key) => playersByKey[key]);
 
       if (session.event.allowPlayerAppend) {
         const regModel = Model.getModel(this._repo, EventRegistrationModel);
         const regs = await regModel.findByEventId([session.event.id]);
         const registeredPlayers = regs.map((p) => p.playerId);
 
-        for (const player of Object.values(players)) {
+        for (const player of players) {
           const playerId = player.id;
           if (playerId && !registeredPlayers.includes(playerId)) {
             const reg = new EventRegisteredPlayersEntity();
@@ -269,14 +266,8 @@ export class OnlineParser {
         }
       }
 
-      sessionState.setPlayers(Object.values(players).map((player) => player.id));
-
-      const playerKeys = Object.keys(parsedPlayers);
-      const playersMap: Record<string, number> = {};
-      playerKeys.forEach((key, idx) => {
-        playersMap[key] = Object.values(players)[idx].id;
-      });
-      this._players = playersMap;
+      this._players = players.map((player) => player.id);
+      sessionState.setPlayers(this._players);
     }
   }
 
@@ -285,14 +276,13 @@ export class OnlineParser {
    */
   protected _tokenAGARI(attributes: any, sessionState: SessionState): void {
     const who = parseInt(attributes['who'] ?? '0');
-    const playerKeys = Object.keys(this._players);
-    const winner = playerKeys[who];
-    const loser = playerKeys[parseInt(attributes['fromWho'] ?? '0')];
+    const winner = this._players[who];
+    const loser = this._players[parseInt(attributes['fromWho'] ?? '0')];
     const paoWho = attributes['paoWho'];
-    const paoPlayer = paoWho ? playerKeys[parseInt(paoWho)] : null;
+    const paoPlayer = paoWho !== undefined ? this._players[parseInt(paoWho)] : 0;
 
     let openHand = false;
-    const winnerId = this._players[winner];
+    const winnerId = winner;
     if (winnerId && !this._riichi.includes(winnerId)) {
       const mAttribute = attributes['m'];
       if (mAttribute) {
@@ -321,9 +311,9 @@ export class OnlineParser {
       if (outcomeType === 'ron') {
         this._roundData.push({
           ron: {
-            winnerId: this._players[winner],
-            loserId: this._players[loser],
-            paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
+            winnerId: winner,
+            loserId: loser,
+            paoPlayerId: paoPlayer,
             han: yakuData.han,
             fu: +fu,
             dora: yakuData.dora,
@@ -340,8 +330,8 @@ export class OnlineParser {
       } else {
         this._roundData.push({
           tsumo: {
-            winnerId: this._players[winner],
-            paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
+            winnerId: winner,
+            paoPlayerId: paoPlayer,
             han: yakuData.han,
             fu: +fu,
             dora: yakuData.dora,
@@ -366,7 +356,7 @@ export class OnlineParser {
         roundRecord = {
           multiron: {
             multiRon: 1,
-            loserId: this._players[loser],
+            loserId: loser,
             riichiBets: roundRecord.ron.riichiBets,
             roundIndex: sessionState.getRound(),
             honba: sessionState.getHonba(),
@@ -391,8 +381,8 @@ export class OnlineParser {
       if (roundRecord.multiron) {
         roundRecord.multiron.multiRon = roundRecord.multiron.multiRon + 1;
         roundRecord.multiron.wins.push({
-          winnerId: this._players[winner],
-          paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
+          winnerId: winner,
+          paoPlayerId: paoPlayer,
           han: yakuData.han,
           fu: +fu,
           dora: yakuData.dora,
@@ -442,7 +432,7 @@ export class OnlineParser {
     }
 
     // Form array of player id => tempai status
-    const playerIds = Object.values(this._players);
+    const playerIds = this._players;
 
     const tempaiStatuses = [
       !!attributes['hai0'],
@@ -455,14 +445,7 @@ export class OnlineParser {
       throw new Error('Attempt to combine inequal arrays');
     }
 
-    const tempaiMap: Record<number, boolean> = {};
-    playerIds.forEach((id, idx) => {
-      tempaiMap[id] = tempaiStatuses[idx];
-    });
-
-    const tempai = Object.entries(tempaiMap)
-      .filter(([, status]) => status)
-      .map(([id]) => +id);
+    const tempai = playerIds.filter((_, seat) => tempaiStatuses[seat]);
 
     // Special case for nagashi
     if (rkType) {
@@ -498,8 +481,7 @@ export class OnlineParser {
       return;
     }
 
-    const playerKeys = Object.keys(this._players);
-    const id = this._players[playerKeys[player]];
+    const id = this._players[player];
     if (id) {
       this._riichi.push(id);
     }

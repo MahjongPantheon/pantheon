@@ -272,6 +272,7 @@ export class SessionModel extends Model {
           this.findByRepresentationalHash([representationalHash], ['event']),
           playerModel.findPlayersForSessions([representationalHash], substituteReplacementPlayers),
         ]);
+
         if (session.length === 0) {
           throw new Error('No session found in database');
         }

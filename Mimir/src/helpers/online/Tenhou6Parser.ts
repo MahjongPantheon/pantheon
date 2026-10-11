@@ -71,7 +71,8 @@ export class Tenhou6OnlineParser {
   protected _repo: Repository;
   protected _checkScores: string[][] = [];
   protected _roundData: Round[] = [];
-  protected _players: Record<string, number> = {};
+  // Player IDs in replay seat order, defined by tokenUN.
+  protected _players: number[] = [];
   protected _riichi: number[] = [];
   protected _lastTokenIsAgari = false;
 
@@ -141,7 +142,7 @@ export class Tenhou6OnlineParser {
     const debug: string[] = [];
     for (let i = 0; i < this._checkScores.length; i++) {
       debug.push(
-        `Expected\t${this._checkScores[i].join('\t')}\t:: Got\t${Object.values(scores[i]).join('\t')}`
+        `Expected\t${this._checkScores[i].join('\t')}\t:: Got\t${this._players.map((id) => scores[i][id]).join('\t')}`
       );
     }
 
@@ -171,7 +172,7 @@ export class Tenhou6OnlineParser {
    * Much simpler to get final scores by regex :)
    */
   protected parseOutcome(owari: number[]): Record<number, number> {
-    const playerIds = Object.values(this._players);
+    const playerIds = this._players;
 
     const scores = [
       parseInt(String(owari[0])),
@@ -199,12 +200,12 @@ export class Tenhou6OnlineParser {
     const [delta1, delta2, delta3, delta4] = arrayWithScores.map((s) => parseInt(s));
 
     const ids: number[] = [];
-    const playersList = Object.values(this._players);
+    const playersList = this._players;
 
     [delta1, delta2, delta3, delta4].forEach((val, idx) => {
       if (val > 0) {
         const playerId = playersList[idx];
-        if (playerId !== null) {
+        if (playerId !== undefined) {
           ids.push(playerId);
         }
       }
@@ -239,73 +240,36 @@ export class Tenhou6OnlineParser {
     session: SessionEntity,
     sessionState: SessionState
   ): Promise<void> {
-    if (Object.keys(this._players).length === 0) {
-      let parsedPlayers: Record<string, string | number>;
-      let playersLookup: string[];
-
-      if (tenhou6Model.getPlatformId() === PlatformType.PLATFORM_TYPE_TENHOUNET) {
-        parsedPlayers = {
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[0])]: 1,
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[1])]: 1,
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[2])]: 1,
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[3])]: 1,
-        };
-        playersLookup = Object.keys(parsedPlayers);
-      } else {
-        parsedPlayers = {
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[0])]: decodeURIComponent(
-            tenhou6Model.getTokenUN()[0].player_name
-          ),
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[1])]: decodeURIComponent(
-            tenhou6Model.getTokenUN()[1].player_name
-          ),
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[2])]: decodeURIComponent(
-            tenhou6Model.getTokenUN()[2].player_name
-          ),
-          [this.getParsedPlayerKey(tenhou6Model, tenhou6Model.getTokenUN()[3])]: decodeURIComponent(
-            tenhou6Model.getTokenUN()[3].player_name
-          ),
-        };
-        playersLookup = Object.keys(parsedPlayers);
-      }
-
+    if (this._players.length === 0) {
+      const playerKeys = tenhou6Model
+        .getTokenUN()
+        .map((token) => this.getParsedPlayerKey(tenhou6Model, token));
       if (
         tenhou6Model.getPlatformId() === PlatformType.PLATFORM_TYPE_TENHOUNET &&
-        parsedPlayers['NoName']
+        playerKeys.includes('NoName')
       ) {
         throw new Error('"NoName" players are not allowed in replays');
       }
 
-      const players = await this.loadPlayers(tenhou6Model, parsedPlayers);
-
-      if (Object.values(players).length !== Object.keys(parsedPlayers).length) {
-        const registeredPlayers = Object.values(players).map((p) => p.msNickname);
-        const missedPlayers = playersLookup.filter((p) => !registeredPlayers.includes(p));
-        const missedPlayersStr = missedPlayers.join(', ');
-
-        let platformName: string;
-
-        switch (tenhou6Model.getPlatformId()) {
-          case PlatformType.PLATFORM_TYPE_MAHJONGSOUL:
-            platformName = 'Mahjongsoul';
-            break;
-          case PlatformType.PLATFORM_TYPE_TENHOUNET:
-          case PlatformType.PLATFORM_TYPE_UNSPECIFIED:
-          default:
-            platformName = 'Tenhou';
-            break;
-        }
+      const playersByKey = await this.loadPlayers(tenhou6Model, playerKeys);
+      const missedPlayers = playerKeys.filter((key) => !playersByKey[key]);
+      if (missedPlayers.length > 0) {
+        const platformName =
+          tenhou6Model.getPlatformId() === PlatformType.PLATFORM_TYPE_MAHJONGSOUL
+            ? 'Mahjongsoul'
+            : 'Tenhou';
         throw new Error(
-          `Not all ${platformName} nicknames were registered in the system: ${missedPlayersStr}`
+          `Not all ${platformName} nicknames were registered in the system: ${missedPlayers.join(', ')}`
         );
       }
+      const players = playerKeys.map((key) => playersByKey[key]);
 
       const regModel = Model.getModel(this._repo, EventRegistrationModel);
       const regs = await regModel.findByEventId([session.event.id]);
       if (session.event.allowPlayerAppend) {
         const registeredPlayers = regs.map((p) => p.playerId);
 
-        for (const player of Object.values(players)) {
+        for (const player of players) {
           const playerId = player.id;
           if (playerId && !registeredPlayers.includes(playerId)) {
             const reg = new EventRegisteredPlayersEntity();
@@ -340,7 +304,7 @@ export class Tenhou6OnlineParser {
         }
       }
 
-      const regPlayers = Object.values(players).map((player) => {
+      const regPlayers = players.map((player) => {
         const playerId = player.id;
         if (playerId !== null && backreplMap[playerId] && mapToPlayer[backreplMap[playerId]]) {
           return mapToPlayer[backreplMap[playerId]];
@@ -348,15 +312,8 @@ export class Tenhou6OnlineParser {
         return player;
       });
 
-      sessionState.setPlayers(regPlayers.map((player) => player.id));
-
-      const playerKeys = Object.keys(parsedPlayers);
-      const playersRecord: Record<string, number> = {};
-      playerKeys.forEach((key, index) => {
-        playersRecord[key] = regPlayers[index].id;
-      });
-
-      this._players = playersRecord;
+      this._players = regPlayers.map((player) => player.id);
+      sessionState.setPlayers(this._players);
     }
   }
 
@@ -365,33 +322,32 @@ export class Tenhou6OnlineParser {
    */
   private async loadPlayers(
     tenhou6Model: Tenhou6Model,
-    parsedPlayers: Record<string, string | number>
-  ): Promise<Record<number, PersonEx>> {
+    playerKeys: string[]
+  ): Promise<Record<string, PersonEx>> {
     const playerModel = Model.getModel(this._repo, PlayerModel);
 
     if (tenhou6Model.getPlatformId() === PlatformType.PLATFORM_TYPE_TENHOUNET) {
-      return await playerModel.findByTenhouId(Object.keys(parsedPlayers));
+      return await playerModel.findByTenhouId(playerKeys);
     }
 
     if (tenhou6Model.getPlatformId() === PlatformType.PLATFORM_TYPE_MAHJONGSOUL) {
       return await playerModel.findMajsoulAccounts(
         tenhou6Model
           .getTokenUN()
-          .map((token) => [token.player_name, token.account_id ?? 0] as const)
+          .map((token) => [decodeURIComponent(token.player_name), token.account_id ?? 0] as const)
       );
     }
 
-    return [];
+    return {};
   }
 
   /**
    * Process token AGARI
    */
   protected tokenAGARI(tokenAgari: TokenAgari, sessionState: SessionState): void {
-    const playerKeys = Object.keys(this._players);
-    const winner = playerKeys[tokenAgari.who];
-    const loser = playerKeys[tokenAgari.fromWho];
-    const paoPlayer = tokenAgari.paoWho !== -1 ? playerKeys[tokenAgari.paoWho] : null;
+    const winner = this._players[tokenAgari.who];
+    const loser = this._players[tokenAgari.fromWho];
+    const paoPlayer = tokenAgari.paoWho !== -1 ? this._players[tokenAgari.paoWho] : 0;
     const openHand = tokenAgari.openHand;
     const outcomeType = winner === loser ? 'tsumo' : 'ron';
 
@@ -420,9 +376,9 @@ export class Tenhou6OnlineParser {
       if (outcomeType === 'ron') {
         this._roundData.push({
           ron: {
-            winnerId: this._players[winner],
-            loserId: this._players[loser],
-            paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
+            winnerId: winner,
+            loserId: loser,
+            paoPlayerId: paoPlayer,
             han: yakuData.han,
             fu: calculatedFu,
             dora: yakuData.dora,
@@ -439,8 +395,8 @@ export class Tenhou6OnlineParser {
       } else {
         this._roundData.push({
           tsumo: {
-            winnerId: this._players[winner],
-            paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
+            winnerId: winner,
+            paoPlayerId: paoPlayer,
             han: yakuData.han,
             fu: calculatedFu,
             dora: yakuData.dora,
@@ -477,7 +433,7 @@ export class Tenhou6OnlineParser {
         roundRecord = {
           multiron: {
             multiRon: 1,
-            loserId: this._players[loser],
+            loserId: loser,
             riichiBets: roundRecord.ron.riichiBets,
             roundIndex: sessionState.getRound(),
             honba: sessionState.getHonba(),
@@ -514,8 +470,8 @@ export class Tenhou6OnlineParser {
           }
         }
         roundRecord.multiron.wins.push({
-          winnerId: this._players[winner],
-          paoPlayerId: paoPlayer ? this._players[paoPlayer] : 0,
+          winnerId: winner,
+          paoPlayerId: paoPlayer,
           han: yakuData.han,
           fu: calculatedFu,
           dora: yakuData.dora,
@@ -561,26 +517,13 @@ export class Tenhou6OnlineParser {
       return;
     }
 
-    // form array in form of [player id => tempai?]
-    const playerIds = Object.values(this._players);
-
-    const combined: Record<number, boolean> = {};
-    playerIds.forEach((id, index) => {
-      combined[id] = [
-        tokenRyuukyoku.hai0,
-        tokenRyuukyoku.hai1,
-        tokenRyuukyoku.hai2,
-        tokenRyuukyoku.hai3,
-      ][index];
-    });
-
-    if (Object.keys(combined).length === 0) {
-      throw new Error('Attempt to combine inequal arrays');
-    }
-
-    const tempai = Object.entries(combined)
-      .filter(([_, isTempai]) => isTempai)
-      .map(([id, _]) => +id);
+    const tempaiBySeat = [
+      tokenRyuukyoku.hai0,
+      tokenRyuukyoku.hai1,
+      tokenRyuukyoku.hai2,
+      tokenRyuukyoku.hai3,
+    ];
+    const tempai = this._players.filter((_, index) => tempaiBySeat[index]);
 
     // Special case for nagashi, implied that rkType == 'nm'
     if (rkType === 'nm') {
@@ -610,10 +553,8 @@ export class Tenhou6OnlineParser {
    * Process token REACH
    */
   protected tokenREACH(tokenReach: TokenReach): void {
-    const player = tokenReach.who;
-    const playerKeys = Object.keys(this._players);
-    const id = this._players[playerKeys[player]];
-    if (id !== null) {
+    const id = this._players[tokenReach.who];
+    if (id !== undefined) {
       this._riichi.push(id);
     }
   }

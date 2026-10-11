@@ -19,6 +19,9 @@ import { SessionState } from '../helpers/SessionState.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
 import { PlayerModel } from './PlayerModel.js';
+import { sha1 } from '../helpers/crypto.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
+import moment from 'moment-timezone';
 
 enum ContentType {
   Xml = 1,
@@ -36,7 +39,7 @@ export class OnlineSessionModel extends Model {
         if (!event) {
           throw new Error(`Event ${data.eventId} not found`);
         }
-        if (event.isOnline) {
+        if (!event.isOnline) {
           throw new Error(`Event ${data.eventId} is not online`);
         }
         if (event.finished) {
@@ -51,7 +54,7 @@ export class OnlineSessionModel extends Model {
         this._checkReplayHash(event.id, replayHash);
 
         const replay = await downloader.getReplay(data.link);
-        return this.addGameContent(event, replayHash, replay.content);
+        return this.addGameContent(event, replayHash, replay.content, data.link);
       },
       { propagation: TransactionPropagation.REQUIRED }
     );
@@ -80,6 +83,7 @@ export class OnlineSessionModel extends Model {
           event,
           data.replayHash,
           data.content,
+          '',
           data.contentType,
           data.platformId
         );
@@ -92,6 +96,7 @@ export class OnlineSessionModel extends Model {
     event: EventEntity,
     replayHash: string,
     content: string,
+    replayLink: string,
     contentType: ContentType = ContentType.Xml,
     platformId: PlatformType = PlatformType.PLATFORM_TYPE_TENHOUNET
   ): Promise<GamesAddOnlineReplayResponse> {
@@ -114,6 +119,10 @@ export class OnlineSessionModel extends Model {
       );
     }
 
+    session.extraTime = 0;
+    session.replayHash = replayHash;
+    session.origLink = replayLink;
+
     const yakitori: Record<number, boolean> = {};
     for (const id of session.intermediateResults?.playerIds ?? []) {
       yakitori[id] = true;
@@ -132,6 +141,10 @@ export class OnlineSessionModel extends Model {
       session.intermediateResults.yakitori = yakitori;
     }
 
+    const playerIds = session.intermediateResults?.playerIds ?? [];
+    session.representationalHash = sha1(playerIds.join(',') + new Date().getTime().toString());
+    session.endDate = moment.utc().format('YYYY-MM-DD HH:ii:ss');
+
     // History stores the session ID as a scalar, so reserve it before the final flush.
     if (!session.id) {
       const [{ id }] = await this.repo.em.execute<{ id: number }[]>(
@@ -141,7 +154,6 @@ export class OnlineSessionModel extends Model {
     }
     this.repo.em.persist([session, ...rounds]);
 
-    const playerIds = session.intermediateResults?.playerIds ?? [];
     const sessionResultsModel = this.getModel(SessionResultsModel);
     const sessionResults = sessionResultsModel.calc(
       event.ruleset,
@@ -160,6 +172,19 @@ export class OnlineSessionModel extends Model {
         },
         {} as Record<number, PlayerHistoryEntity>
       );
+    const playerIdsInLastResults = Object.keys(lastResults).map(Number);
+    const missingPlayerResults = playerIds.filter((id) => !playerIdsInLastResults.includes(id));
+    for (const id of missingPlayerResults) {
+      lastResults[id] = new PlayerHistoryEntity();
+      lastResults[id].avgPlace = 0;
+      lastResults[id].event = event;
+      lastResults[id].gamesPlayed = 0;
+      lastResults[id].playerId = id;
+      lastResults[id].rating = event.ruleset.rules.startRating;
+      lastResults[id].sessionId = session.id;
+      this.repo.em.persist(lastResults[id]);
+    }
+
     const playerHistoryItems = Object.values(
       playerHistoryModel.makeNewHistoryItemsForSession(
         lastResults,
@@ -185,7 +210,21 @@ export class OnlineSessionModel extends Model {
     const playerModel = this.getModel(PlayerModel);
     const cronModel = this.getModel(CronModel);
 
-    this.repo.em.persist([session, ...playerHistoryItems, ...sessionResults]);
+    const sessionPlayerEntities = playerIds.map((id, idx) => {
+      const e = new SessionPlayerEntity();
+      e.order = idx + 1;
+      e.playerId = id;
+      e.session = session;
+      return e;
+    });
+
+    this.repo.em.persist([
+      session,
+      ...playerHistoryItems,
+      ...sessionResults,
+      ...sessionPlayerEntities,
+    ]);
+
     const [players] = await Promise.all([
       playerModel.findById(playerIds),
       cronModel.scheduleRecalcAchievements(event.id),

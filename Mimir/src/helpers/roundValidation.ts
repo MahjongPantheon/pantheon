@@ -195,32 +195,47 @@ export function validateAndCreateFromOnlineData(
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_RON;
     roundEntity.riichi = round.ron.riichiBets;
     roundEntity.hands = [HandEntity.fromMessage(round.ron, roundEntity)];
+    roundEntity.round = round.ron.roundIndex;
+    roundEntity.honba = round.ron.honba;
   } else if (round.tsumo) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_TSUMO;
     roundEntity.riichi = round.tsumo.riichiBets;
     roundEntity.hands = [HandEntity.fromMessage(round.tsumo, roundEntity)];
+    roundEntity.round = round.tsumo.roundIndex;
+    roundEntity.honba = round.tsumo.honba;
   } else if (round.draw) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_DRAW;
     roundEntity.riichi = round.draw.riichiBets;
     roundEntity.hands = [HandEntity.fromMessage(round.draw, roundEntity)];
+    roundEntity.round = round.draw.roundIndex;
+    roundEntity.honba = round.draw.honba;
   } else if (round.abort) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_ABORT;
     roundEntity.riichi = round.abort.riichiBets;
     roundEntity.hands = [HandEntity.fromMessage(round.abort, roundEntity)];
+    roundEntity.round = round.abort.roundIndex;
+    roundEntity.honba = round.abort.honba;
   } else if (round.nagashi) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_NAGASHI;
     roundEntity.riichi = round.nagashi.riichiBets;
     roundEntity.hands = [HandEntity.fromMessage(round.nagashi, roundEntity)];
+    roundEntity.round = round.nagashi.roundIndex;
+    roundEntity.honba = round.nagashi.honba;
   } else if (round.chombo) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_CHOMBO;
     roundEntity.hands = [HandEntity.fromMessage(round.chombo, roundEntity)];
+    roundEntity.round = round.chombo.roundIndex;
+    roundEntity.honba = round.chombo.honba;
   } else if (round.multiron) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_MULTIRON;
     roundEntity.riichi = round.multiron.riichiBets;
-    roundEntity.hands = round.multiron.wins.map((win) => ({
-      ...HandEntity.fromMessage(win, roundEntity),
-      loserId: round.multiron?.loserId,
-    }));
+    roundEntity.hands = round.multiron.wins.map((win) => {
+      const e = HandEntity.fromMessage(win, roundEntity);
+      e.loserId = round.multiron?.loserId;
+      return e;
+    });
+    roundEntity.round = round.multiron.roundIndex;
+    roundEntity.honba = round.multiron.honba;
   }
 
   return roundEntity;
