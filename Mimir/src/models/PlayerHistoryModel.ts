@@ -145,21 +145,25 @@ export class PlayerHistoryModel extends Model {
   ) {
     const lastResults: Record<number, PlayerHistoryEntity> = {};
     for (const playerId in lastResultsMap) {
-      const item = new PlayerHistoryEntity();
-      item.playerId = parseInt(playerId, 10);
-      item.event = this.repo.em.getReference(EventEntity, eventId);
-      item.sessionId = sessionId;
-      item.gamesPlayed = lastResultsMap[playerId].gamesPlayed;
-      item.avgPlace = lastResultsMap[playerId].avgPlace;
-      item.rating = lastResultsMap[playerId].rating + playersData[playerId].ratingDelta;
-      item.chips =
-        ruleset.rules.chipsValue > 0
-          ? (lastResultsMap[playerId].chips ?? 0) + (playersData[playerId].chips ?? 0)
-          : 0;
-      lastResults[parseInt(playerId, 10)] = this.updateAvgPlaceAndGamesCount(
-        item,
-        playersData[playerId].place
-      );
+      if (!playersData[+playerId]) {
+        lastResults[+playerId] = lastResultsMap[+playerId];
+      } else {
+        const item = new PlayerHistoryEntity();
+        item.playerId = +playerId;
+        item.event = this.repo.em.getReference(EventEntity, eventId);
+        item.sessionId = sessionId;
+        item.gamesPlayed = lastResultsMap[+playerId].gamesPlayed;
+        item.avgPlace = lastResultsMap[+playerId].avgPlace;
+        item.rating = lastResultsMap[+playerId].rating + playersData[+playerId].ratingDelta;
+        item.chips =
+          ruleset.rules.chipsValue > 0
+            ? (lastResultsMap[+playerId].chips ?? 0) + (playersData[+playerId].chips ?? 0)
+            : 0;
+        lastResults[+playerId] = this.updateAvgPlaceAndGamesCount(
+          item,
+          playersData[+playerId].place
+        );
+      }
     }
 
     return lastResults;
@@ -311,7 +315,9 @@ export class PlayerHistoryModel extends Model {
       },
       {} as Record<number, { penaltiesCount: number; penaltiesAmount: number }>
     );
-    return items.map((item) => {
+    return items.map((itemOrig) => {
+      const item = itemOrig.clone();
+      item.rating -= penaltiesMap[item.playerId]?.penaltiesAmount ?? 0;
       item.avgScore = item.rating / item.gamesPlayed;
       item.playerTitle = playersMap[item.playerId]?.title;
       item.playerTenhouId = playersMap[item.playerId]?.tenhouId;

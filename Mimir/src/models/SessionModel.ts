@@ -213,6 +213,20 @@ export class SessionModel extends Model {
       )
     );
 
+    const lastResultsFlatten = Object.fromEntries(
+      Object.entries(lastResults).map(([eventId, sessions]) => {
+        return [
+          +eventId,
+          Object.fromEntries(
+            Object.values(sessions)
+              .map((s) => Object.values(s))
+              .flat()
+              .map((hi) => [+hi.playerId, hi])
+          ),
+        ];
+      })
+    );
+
     // Apply prefinished results to the last state hash
     for (const session of sessions) {
       if (!session.intermediateResults) {
@@ -230,8 +244,8 @@ export class SessionModel extends Model {
         sessionState,
         sessionPlayers[session.id]
       );
-      lastResults[session.event.id][session.id] = phMdl.makeNewHistoryItemsForSession(
-        lastResults[session.event.id][session.id],
+      lastResultsFlatten[session.event.id] = phMdl.makeNewHistoryItemsForSession(
+        lastResultsFlatten[session.event.id], // note: on first game this is empty, so no results will appear even for admin
         ruleset,
         session.event.id,
         session.id,
@@ -250,16 +264,9 @@ export class SessionModel extends Model {
     }
 
     // Flatten last results back, no sorting required
-    let historyItems: PlayerHistoryEntity[] = [];
-    for (const eventId in lastResults) {
-      historyItems = historyItems.concat(
-        Object.values(lastResults[eventId])
-          .map((res) => Object.values(res))
-          .flat()
-      );
-    }
-
-    return historyItems;
+    return Object.values(lastResultsFlatten)
+      .map((results) => Object.values(results).flat())
+      .flat();
   }
 
   async getFinishedGame(representationalHash: string, substituteReplacementPlayers = false) {
@@ -439,6 +446,14 @@ export class SessionModel extends Model {
           session[0].intermediateResults?.playerIds ?? [], // TODO check if this is populated properly on game start
           session[0].intermediateResults
         );
+
+        if (
+          (roundData.ron && roundData.ron.yaku.length === 0) ||
+          (roundData.tsumo && roundData.tsumo.yaku.length === 0) ||
+          (roundData.multiron && roundData.multiron.wins.some((w) => w.yaku.length === 0))
+        ) {
+          throw new Error("Can't record hand without yaku");
+        }
 
         const round =
           roundData.ron ??
@@ -942,6 +957,14 @@ export class SessionModel extends Model {
           round.honba !== sessionState.getHonba()
         ) {
           throw new Error('This round is already recorded (or other round index/honba mismatch)');
+        }
+
+        if (
+          (roundData.ron && roundData.ron.yaku.length === 0) ||
+          (roundData.tsumo && roundData.tsumo.yaku.length === 0) ||
+          (roundData.multiron && roundData.multiron.wins.some((w) => w.yaku.length === 0))
+        ) {
+          throw new Error("Can't record hand without yaku");
         }
 
         const currentDealer = sessionState.getCurrentDealer();
