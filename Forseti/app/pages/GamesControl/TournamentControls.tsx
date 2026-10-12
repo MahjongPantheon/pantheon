@@ -39,6 +39,7 @@ import {
   IconSortAscending2,
   IconSquareX,
 } from '@tabler/icons-react';
+import { EventsGetPrescriptedEventConfigResponse } from 'tsclients/proto/mimir.pb';
 enum Stage {
   NOT_READY = 'not_ready',
   READY_BUT_NOT_STARTED = 'ready_not_started',
@@ -52,6 +53,7 @@ type TournamentControlsProps = {
   players: RegisteredPlayer[];
   tablesState: TableState[];
   eventConfig: GameConfig | null;
+  prescriptedConfig: EventsGetPrescriptedEventConfigResponse | null;
   toggleResults: () => void;
   makeRandomSeating: (windShuffleMode: WindShuffleMode) => void;
   makeIntervalSeating: (interval: number, windShuffleMode: WindShuffleMode) => void;
@@ -68,6 +70,7 @@ export function TournamentControls({
   players,
   tablesState,
   eventConfig,
+  prescriptedConfig,
   toggleResults,
   makeIntervalSeating,
   makeRandomSeating,
@@ -83,7 +86,13 @@ export function TournamentControls({
   const i18n = useI18n();
   const [interval, setInterval] = useState<string | null>('1');
   const [extraTime, setExtraTime] = useState<string | null>('60');
-  const currentStage = determineStage(tablesState, players, eventConfig, seatingLoading);
+  const currentStage = determineStage(
+    tablesState,
+    players,
+    eventConfig,
+    prescriptedConfig,
+    seatingLoading
+  );
 
   return (
     <>
@@ -347,6 +356,7 @@ function determineStage(
   tablesState: TableState[],
   players: RegisteredPlayer[],
   eventConfig: GameConfig | null,
+  prescriptedConfig: EventsGetPrescriptedEventConfigResponse | null,
   seatingLoading: boolean
 ) {
   if (seatingLoading) {
@@ -371,7 +381,7 @@ function determineStage(
 
   const playersFiltered = players.filter((p) => !p.ignoreSeating);
 
-  if (playersFiltered.length % 4 !== 0) {
+  if (playersFiltered.length % 4 !== 0 && !eventConfig?.isPrescripted) {
     return Stage.NOT_READY;
   }
 
@@ -391,8 +401,11 @@ function determineStage(
         return Stage.SEATING_INPROGRESS;
       }
     } else {
-      const assignedPlayersCount = playersFiltered.reduce((acc, p) => acc + (p.localId ? 1 : 0), 0);
-      if (notFinishedTablesCount === Math.round(assignedPlayersCount / 4)) {
+      const expectedTablesCount =
+        prescriptedConfig?.prescript
+          ?.split('\n\n')
+          [prescriptedConfig?.nextSessionIndex - 1]?.split('\n')?.length ?? 0;
+      if (notFinishedTablesCount === expectedTablesCount) {
         return Stage.SEATING_READY;
       } else {
         return Stage.SEATING_INPROGRESS;

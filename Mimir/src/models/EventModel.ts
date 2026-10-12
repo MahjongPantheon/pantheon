@@ -207,7 +207,7 @@ export class EventModel extends Model {
           events: events.map((e) => ({
             id: e.id,
             title: e.title,
-            description: e.description, // TODO md transform
+            description: e.description,
             isOnline: !!e.isOnline,
           })),
         };
@@ -261,6 +261,7 @@ export class EventModel extends Model {
           timezone: data.timezone,
           usePenalty: !!data.usePenalty,
           useTimer: !!data.useTimer,
+          windShuffleMode: data.windShuffleMode,
         };
       },
       { propagation: TransactionPropagation.REQUIRED }
@@ -840,6 +841,7 @@ export class EventModel extends Model {
         event.allowViewOtherTables = eventData.event.allowViewOtherTables ? 1 : 0;
         event.allowManualAddReplay = eventData.event.allowManualAddReplay ? 1 : 0;
         event.statHost = statHost;
+        event.windShuffleMode = eventData.event.windShuffleMode ?? undefined;
 
         if (
           this.repo.meta.personId &&
@@ -1240,6 +1242,17 @@ export class EventModel extends Model {
           event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
         }
 
+        if (event.isPrescripted) {
+          const prescriptEntity = await this.repo.em.findOne(EventPrescriptEntity, {
+            event: { id: eventId },
+          });
+
+          if (prescriptEntity) {
+            prescriptEntity.nextGame++;
+            this.repo.em.persist(prescriptEntity);
+          }
+        }
+
         event.lastTimer = Math.floor(Date.now() / 1000);
         this.repo.em.persist(event);
         return { success: true };
@@ -1300,7 +1313,7 @@ export class EventModel extends Model {
 
         const prescript =
           (await this.repo.em.findOne(EventPrescriptEntity, {
-            id: payload.eventId,
+            event: { id: payload.eventId },
           })) ?? new EventPrescriptEntity();
 
         prescript.event = event;

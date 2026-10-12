@@ -61,7 +61,6 @@ export class SessionModel extends Model {
     });
   }
 
-  // TODO: memoize
   async findByRepresentationalHash(
     hashList: string[],
     populate?: Populate<SessionEntity, 'event' | 'event.ruleset' | 'event.ruleset.rules'>

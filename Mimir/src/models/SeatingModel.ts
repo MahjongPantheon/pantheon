@@ -214,6 +214,10 @@ export class SeatingModel extends Model {
           prescriptEntity.nextGame
         );
 
+        if (seating.length === 0) {
+          throw new Error('Next session is not defined in script');
+        }
+
         const seatingGetter = (
           _playersMap: Array<[number, number]>, // ignored in this case
           _seed: number,
@@ -233,8 +237,6 @@ export class SeatingModel extends Model {
           seatingGetter,
           windShuffleMode ?? undefined
         );
-        prescriptEntity.nextGame++;
-        this.repo.em.persist(prescriptEntity);
         return result;
       },
       { propagation: TransactionPropagation.REQUIRED }
@@ -251,16 +253,6 @@ export class SeatingModel extends Model {
           event.gamesStatus !== TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
         ) {
           throw new Error(`Event #${eventId} not found or not in proper state`);
-        }
-
-        if (event.isPrescripted) {
-          const prescript = await this.repo.em.findOne(EventPrescriptEntity, {
-            event,
-          });
-          if (prescript) {
-            prescript.nextGame--;
-            this.repo.em.persist(prescript);
-          }
         }
 
         event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;

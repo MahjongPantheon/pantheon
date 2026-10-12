@@ -22,6 +22,7 @@ export function packScript(script: number[][][]): string {
 
 export function checkForErrors(script: number[][][], localIdMap: Map<number, number>): string[] {
   const errors: string[] = [];
+  const localIds = new Set(localIdMap.values());
 
   script.forEach((session, sessionIdx) => {
     const map = new Map<number, boolean>();
@@ -35,7 +36,7 @@ export function checkForErrors(script: number[][][], localIdMap: Map<number, num
         map.set(player, true);
 
         // Check for existence
-        if (!localIdMap.has(player)) {
+        if (!localIds.has(player)) {
           errors.push(
             `Player doesn't exist: wrong local id #${player} (at session #${sessionIdx + 1}, at table #${tableIdx + 1}, position #${playerIdx + 1})`
           );

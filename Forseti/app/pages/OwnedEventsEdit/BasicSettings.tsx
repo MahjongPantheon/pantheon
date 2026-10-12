@@ -158,38 +158,6 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           data-testid='forseti-event-settings-basic-settings-event-allow-view-other-tables'
           {...form.getInputProps('event.allowViewOtherTables', { type: 'checkbox' })}
         />
-        {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
-          <Radio.Group
-            label={i18n._t('Wind shuffle mode')}
-            description={i18n._t('How players on the same table are shuffled')}
-            withAsterisk
-            data-testid='forseti-event-settings-basic-settings-event-wind-shuffle-mode'
-            {...form.getInputProps('event.windShuffleMode')}
-          >
-            <Group mt='xs'>
-              <Radio
-                data-testid='forseti-event-settings-wind-shuffle-random'
-                value={WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM}
-                label={i18n._t('Random wind shuffle')}
-                description={i18n._t('Shuffle players on the same table randomly')}
-              />
-              <Radio
-                data-testid='forseti-event-settings-wind-shuffle-balanced'
-                value={WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED}
-                label={i18n._t('Balanced wind shuffle')}
-                description={i18n._t('Try to place players on winds they previously played less')}
-              />
-              {form.getTransformedValues().event.isPrescripted && (
-                <Radio
-                  data-testid='forseti-event-settings-wind-shuffle-prescripted'
-                  value={WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED}
-                  label={i18n._t('Prescripted wind shuffle')}
-                  description={i18n._t('Only for prescripted events, just follow the script')}
-                />
-              )}
-            </Group>
-          </Radio.Group>
-        )}
       </Stack>
     </>
   );
