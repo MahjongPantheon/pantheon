@@ -2,6 +2,23 @@ import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { PointsCalc } from './PointsCalc.js';
 
 describe('PointsCalc', () => {
+  it('assigns multi-ron riichi bets without changing the supplied player lists', () => {
+    const calc = new PointsCalc();
+    const winners = [2, 4];
+    const riichiIds = [1, 2, 4];
+    const playerIds = [1, 2, 3, 4];
+    const expected = {
+      2: { fromPlayers: [2], fromTable: 0, honba: 1, closestWinner: 4 },
+      4: { fromPlayers: [4, 1], fromTable: 2, honba: 1, closestWinner: 4 },
+    };
+
+    expect(calc.assignRiichiBets(winners, riichiIds, 3, 2, 1, playerIds)).toEqual(expected);
+    expect(calc.assignRiichiBets(winners, riichiIds, 3, 2, 1, playerIds)).toEqual(expected);
+    expect(winners).toEqual([2, 4]);
+    expect(riichiIds).toEqual([1, 2, 4]);
+    expect(playerIds).toEqual([1, 2, 3, 4]);
+  });
+
   it('should calculate basic ron', () => {
     const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;

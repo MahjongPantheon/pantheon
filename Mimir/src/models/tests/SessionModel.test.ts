@@ -154,11 +154,43 @@ describe('Session previews and finalization', () => {
     async (_kind, roundData) => {
       const { session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
       const snapshot = saved.clone();
+      const roundSnapshot = structuredClone(roundData);
       jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
       const first = await model.previewRound(session.representationalHash, roundData);
       expect(await model.previewRound(session.representationalHash, roundData)).toEqual(first);
       expect(session.intermediateResults).toBe(saved);
       expect(saved).toEqual(snapshot);
+      expect(roundData).toEqual(roundSnapshot);
+    }
+  );
+
+  it.each(roundFixtures.filter(([kind]) => ['ron', 'tsumo', 'multiron'].includes(kind)))(
+    'rejects a %s without yaku when previewing or recording',
+    async (_kind, roundData) => {
+      const { session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
+      const snapshot = saved.clone();
+      const invalidRound = structuredClone(roundData);
+      if (invalidRound.ron) {
+        invalidRound.ron.yaku = [];
+      } else if (invalidRound.tsumo) {
+        invalidRound.tsumo.yaku = [];
+      } else if (invalidRound.multiron) {
+        invalidRound.multiron.wins[1].yaku = [];
+      }
+      jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+      const persist = jest.spyOn(repo.em, 'persist');
+      const flush = jest.spyOn(repo.em, 'flush').mockResolvedValue();
+
+      await expect(model.previewRound(session.representationalHash, invalidRound)).rejects.toThrow(
+        "Can't record hand without yaku"
+      );
+      await expect(model.addRound(session.representationalHash, invalidRound)).rejects.toThrow(
+        "Can't record hand without yaku"
+      );
+      expect(session.intermediateResults).toBe(saved);
+      expect(saved).toEqual(snapshot);
+      expect(persist).not.toHaveBeenCalled();
+      expect(flush).not.toHaveBeenCalled();
     }
   );
 

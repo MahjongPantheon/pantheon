@@ -87,6 +87,7 @@ describe('Online replay import', () => {
         event,
         'replay-hash',
         'replay-content',
+        link,
         contentType
       );
       expect(parser).toHaveBeenCalledTimes(1);
@@ -95,7 +96,9 @@ describe('Online replay import', () => {
           ? [event, 'replay-content', false]
           : [event, 'replay-hash', 'replay-content', false, PlatformType.PLATFORM_TYPE_TENHOUNET])
       );
-      expect(result.game.sessionHash).toBe('session-hash');
+      expect(result.game.sessionHash).toBe(session.representationalHash);
+      expect(result.game.sessionHash).toMatch(/^[a-f0-9]{40}$/);
+      expect(session.origLink).toBe(link);
       expect(result.game.rounds).toHaveLength(2);
       expect(result.players.map((p) => p.id)).toEqual(ids);
       expect(
@@ -127,6 +130,7 @@ describe('Online replay import', () => {
 
   it('downloads a validated replay and passes its content to the importer', async () => {
     const { event } = fixture();
+    event.isOnline = 1;
     jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
     jest.spyOn(model, '_checkReplayHash').mockResolvedValue();
     jest
@@ -137,7 +141,12 @@ describe('Online replay import', () => {
       players: [],
     });
     await model.addGame({ eventId: event.id, link });
-    expect(importer).toHaveBeenCalledWith(event, '2026010100gm-0001-0000-12345678', 'xml-content');
+    expect(importer).toHaveBeenCalledWith(
+      event,
+      '2026010100gm-0001-0000-12345678',
+      'xml-content',
+      link
+    );
   });
 
   it('passes typed replay content and its platform to the importer', async () => {
@@ -160,6 +169,7 @@ describe('Online replay import', () => {
       event,
       'hash',
       '{}',
+      '',
       2,
       PlatformType.PLATFORM_TYPE_MAHJONGSOUL
     );
@@ -175,11 +185,15 @@ describe('Online replay import', () => {
 
   it.each([
     [null, 'not found'],
-    [Object.assign(new EventEntity(), { id: 19, isOnline: 1 }), 'not online'],
-    [Object.assign(new EventEntity(), { id: 19, isOnline: 0, finished: 1 }), 'already finished'],
+    [Object.assign(new EventEntity(), { id: 19, isOnline: 0 }), 'not online'],
+    [Object.assign(new EventEntity(), { id: 19, isOnline: 1, finished: 1 }), 'already finished'],
   ])('rejects an unavailable event', async (event, error) => {
     jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
     await expect(model.addGame({ eventId: 19, link })).rejects.toThrow(error);
+    if (event) {
+      // Typed replays are imported into offline events.
+      event.isOnline = event.finished ? 0 : 1;
+    }
     await expect(
       model.addTypedGame({
         eventId: 19,

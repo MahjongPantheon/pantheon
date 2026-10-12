@@ -1,4 +1,5 @@
 import { Round } from 'tsclients/proto/atoms.pb.js';
+import { Yaku } from '../helpers/yaku.js';
 
 const win = {
   roundIndex: 2,
@@ -10,7 +11,7 @@ const win = {
   openHand: false,
   han: 1,
   fu: 30,
-  yaku: [],
+  yaku: [Yaku.TANYAO],
   dora: 0,
   uradora: 0,
   kandora: 0,
@@ -31,7 +32,7 @@ export const roundFixtures: Array<[string, Round]> = [
         openHand: false,
         han: 1,
         fu: 30,
-        yaku: [],
+        yaku: [Yaku.TANYAO],
         dora: 0,
         uradora: 0,
         kandora: 0,

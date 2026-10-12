@@ -214,11 +214,11 @@ export class SessionModel extends Model {
     );
 
     const lastResultsFlatten = Object.fromEntries(
-      Object.entries(lastResults).map(([eventId, sessions]) => {
+      Object.entries(lastResults).map(([eventId, eventSessions]) => {
         return [
           +eventId,
           Object.fromEntries(
-            Object.values(sessions)
+            Object.values(eventSessions)
               .map((s) => Object.values(s))
               .flat()
               .map((hi) => [+hi.playerId, hi])
