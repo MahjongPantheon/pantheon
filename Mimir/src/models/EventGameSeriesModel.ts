@@ -58,7 +58,7 @@ export class EventGameSeriesModel extends Model {
       playersData[sessionResult.playerId].push({
         sessionId: sessionResult.session.id,
         score: sessionResult.score,
-        place: 0,
+        place: sessionResult.place,
       });
     });
     // filter out players with incomplete series
