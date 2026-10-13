@@ -1007,27 +1007,59 @@ export class EventModel extends Model {
         if (sessions.length === 0) {
           return { success: true };
         }
-        await this.repo.em.populate(sessions, ['event']);
+        await this.repo.em.populate(sessions, ['event.ruleset']);
 
         await this.repo.em.nativeDelete(SessionResultsEntity, { event: eventId });
         await this.repo.em.nativeDelete(PlayerHistoryEntity, { event: eventId });
 
-        const promises = [];
+        const resultsModel = this.getModel(SessionResultsModel);
+        const historyModel = this.getModel(PlayerHistoryModel);
+        const lastHistory: Record<number, PlayerHistoryEntity> = {};
         for (const session of sessions) {
-          promises.push(
-            sessionModel.finalizeGame(
-              session.event,
-              session,
-              new SessionState(
-                session.event.ruleset,
-                session.intermediateResults?.playerIds ?? [],
-                session.intermediateResults
-              ),
-              true
-            )
+          const playerIds = session.intermediateResults?.playerIds ?? [];
+          // Finished state already includes the final riichi payout and saved replacements.
+          const results = resultsModel.calc(
+            session.event.ruleset,
+            new SessionState(session.event.ruleset, playerIds, session.intermediateResults),
+            playerIds,
+            eventId,
+            session.id
           );
+          this.repo.em.persist(results);
+
+          // Accumulate in session order without querying unflushed history rows.
+          for (const result of results) {
+            let previous = lastHistory[result.playerId];
+            if (!previous) {
+              previous = new PlayerHistoryEntity();
+              previous.playerId = result.playerId;
+              previous.event = session.event;
+              previous.sessionId = session.id;
+              previous.gamesPlayed = 0;
+              previous.avgPlace = 0;
+              previous.rating = session.event.ruleset.rules.startRating;
+              previous.chips = 0;
+              this.repo.em.persist(previous);
+            }
+
+            const item = new PlayerHistoryEntity();
+            item.playerId = result.playerId;
+            item.event = session.event;
+            item.sessionId = session.id;
+            item.gamesPlayed = previous.gamesPlayed;
+            item.avgPlace = previous.avgPlace;
+            item.rating = previous.rating + result.ratingDelta;
+            item.chips =
+              session.event.ruleset.rules.chipsValue > 0
+                ? (previous.chips ?? 0) + (result.chips ?? 0)
+                : 0;
+            lastHistory[result.playerId] = historyModel.updateAvgPlaceAndGamesCount(
+              item,
+              result.place
+            );
+            this.repo.em.persist(lastHistory[result.playerId]);
+          }
         }
-        await Promise.all(promises);
 
         return { success: true };
       },

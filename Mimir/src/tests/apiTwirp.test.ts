@@ -2615,6 +2615,84 @@ describe('Mimir Twirp API', () => {
     }
   });
 
+  test('RebuildScoring preserves all games and cumulative history across repeated rebuilds', async () => {
+    const { eventId } = await prepareFinishedClubGame();
+    const { sessionHash } = await mimirClient.StartGame(eventId, gameFlowPlayerIds);
+    await mimirClient.AddRound({
+      sessionHash,
+      roundData: {
+        draw: {
+          roundIndex: 1,
+          honba: 0,
+          riichiBets: [gameFlowPlayerIds[0]],
+          tempai: [gameFlowPlayerIds[1]],
+        },
+      },
+    });
+    await mimirClient.ForceFinishGame(sessionHash);
+    // An unfinished game must remain untouched and excluded from rebuilt scoring.
+    await mimirClient.StartGame(eventId, gameFlowPlayerIds);
+
+    const config = new ConfigService().db;
+    const db = new Client({
+      host: config.host,
+      port: config.port,
+      user: config.username,
+      password: config.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    try {
+      const getSourceData = async () => {
+        const sessions = await db.query('select * from session where event_id = $1 order by id', [
+          eventId,
+        ]);
+        const rounds = await db.query('select * from round where event_id = $1 order by id', [
+          eventId,
+        ]);
+        const hands = await db.query(
+          'select h.* from hand h join round r on r.id = h.round_id where r.event_id = $1 order by h.id',
+          [eventId]
+        );
+        const players = await db.query(
+          'select p.* from session_players p join session s on s.id = p.session_id where s.event_id = $1 order by p.id',
+          [eventId]
+        );
+        return [sessions.rows, rounds.rows, hands.rows, players.rows];
+      };
+      const getScoring = async () => {
+        const results = await db.query(
+          'select session_id, player_id, score, place, rating_delta, chips from session_results where event_id = $1 order by session_id, player_id',
+          [eventId]
+        );
+        const history = await db.query(
+          'select session_id, player_id, games_played, avg_place, rating, chips from player_history where event_id = $1 order by player_id, games_played',
+          [eventId]
+        );
+        return { results: results.rows, history: history.rows };
+      };
+      const sourceBefore = await getSourceData();
+      const scoringBefore = await getScoring();
+      expect(sourceBefore[0]).toHaveLength(3);
+      expect(scoringBefore.results).toHaveLength(8);
+      expect(scoringBefore.results.some((item) => item.rating_delta !== 0)).toBe(true);
+      expect(scoringBefore.history).toHaveLength(12);
+      expect(scoringBefore.history.filter((item) => item.games_played === 2)).toHaveLength(4);
+
+      await db.query('delete from session_results where event_id = $1', [eventId]);
+      await db.query('delete from player_history where event_id = $1', [eventId]);
+      expect((await mimirClient.RebuildScoring(eventId)).success).toBe(true);
+      expect(await getScoring()).toEqual(scoringBefore);
+      expect(await getSourceData()).toEqual(sourceBefore);
+
+      expect((await mimirClient.RebuildScoring(eventId)).success).toBe(true);
+      expect(await getScoring()).toEqual(scoringBefore);
+      expect(await getSourceData()).toEqual(sourceBefore);
+    } finally {
+      await db.end();
+    }
+  });
+
   test('UpdatePlayersTeams applies team names to a single-table tournament', async () => {
     const eventId = await createEventWithRegisteredPlayers(
       EventType.EVENT_TYPE_TOURNAMENT,
