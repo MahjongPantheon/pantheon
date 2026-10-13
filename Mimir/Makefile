@@ -340,3 +340,19 @@ container_dump_users: get_container_id
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user cat /tmp/dump_users.txt' ; \
 	fi
+
+# Development seeders. Never set NODE_ENV here: the runner must reject production.
+.PHONY: seed seed_tournament seed_bigevent confirm_seed
+seed seed_tournament seed_bigevent:
+	SEED_CONFIRMED=$(SEED_CONFIRMED) pnpm exec tsx src/development/seed.ts $@
+
+confirm_seed:
+	pnpm exec tsx src/development/seed.ts confirm
+
+.PHONY: container_seed container_seed_tournament container_seed_bigevent container_confirm_seed
+container_seed container_seed_tournament container_seed_bigevent container_confirm_seed: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "Mimir container is not running, cannot seed development data."; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make $(patsubst container_%,%,$@) SEED_CONFIRMED=$(SEED_CONFIRMED)'; \
+	fi

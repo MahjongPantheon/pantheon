@@ -293,18 +293,21 @@ shell_fenrir:
 
 .PHONY: seed
 seed:
+	cd Mimir && ${MAKE} container_confirm_seed
 	${MAKE} bootstrap_admin
-	cd Mimir && ${MAKE} container_seed
+	cd Mimir && ${MAKE} container_seed SEED_CONFIRMED=1
 
 .PHONY: seed_bigevent
 seed_bigevent:
+	cd Mimir && ${MAKE} container_confirm_seed
 	${MAKE} bootstrap_admin
-	cd Mimir && ${MAKE} container_seed_bigevent
+	cd Mimir && ${MAKE} container_seed_bigevent SEED_CONFIRMED=1
 
 .PHONY: seed_tournament
 seed_tournament:
+	cd Mimir && ${MAKE} container_confirm_seed
 	${MAKE} bootstrap_admin
-	cd Mimir && ${MAKE} container_seed_tournament
+	cd Mimir && ${MAKE} container_seed_tournament SEED_CONFIRMED=1
 
 .PHONY: dump_last_mail
 dump_last_mail:
