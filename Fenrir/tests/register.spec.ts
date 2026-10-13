@@ -6,7 +6,7 @@ import { withScreenshotsOnTestFail } from './utils/screenshots';
 
 withScreenshotsOnTestFail();
 
-test('Register link from assistant', async ({ page, context }) => {
+test('AUTH-002: Visitor can open account sign-up from Tyr', async ({ page, context }) => {
   await page.goto(process.env.TYR_URL!);
   const [newTab] = await Promise.all([
     context.waitForEvent('page'),
@@ -15,7 +15,7 @@ test('Register link from assistant', async ({ page, context }) => {
   await expect(newTab.getByRole('heading', { name: 'Register new account' })).toBeVisible();
 });
 
-test('Reset password link from assistant', async ({ page, context }) => {
+test('AUTH-003: Visitor can open password recovery from Tyr', async ({ page, context }) => {
   await page.goto(process.env.TYR_URL!);
   const [newTab] = await Promise.all([
     context.waitForEvent('page'),
@@ -24,7 +24,7 @@ test('Reset password link from assistant', async ({ page, context }) => {
   await expect(newTab.getByText(/Recover password/)).toBeVisible();
 });
 
-test('Register and login from admin panel', async ({ page }) => {
+test('AUTH-001: Visitor can sign up, confirm their email, and log in', async ({ page }) => {
   const email = uuid.v4() + '@test.com';
 
   // Register

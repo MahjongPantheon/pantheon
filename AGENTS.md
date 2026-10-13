@@ -41,6 +41,16 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 - Do not use `await` inside loops. Collect promises and await them with `Promise.all` instead.
 - Only model methods called directly from `Mimir/src/mimir.ts` should be wrapped in `this.repo.em.transactional`. Keep other model methods unwrapped to prevent nested transactions.
 
+### Fenrir test cases
+
+- Describe new or changed end-to-end scenarios in `Fenrir/testcases/` using `template.md`. Use one file per case, a stable ID, and a title describing the actor, outcome, and relevant condition. See that folder's README and examples.
+- Specify purpose, service scope, preconditions (including permissions), test data, an action/expected-result table, and cleanup or isolation. Use observable, specific results and Pantheon domain terminology. Distinguish current automated coverage from proposed additional assertions.
+- Implement each case as an independent `test()` in `Fenrir/tests/*.spec.ts`. Include the case ID in the test title and link the description to the implementing file and test title. Keep descriptions and implementations synchronized. Before creating a test for a supplied case, search the existing specs and case index for its ID and equivalent behavior. Update the matching test instead of duplicating it; preserve established IDs and assign an unused ID only to a new case.
+- Translate each expected result into an assertion. Use `test.step()` for meaningful stages of longer journeys, roles/labels or stable test IDs for locators, and awaited Playwright assertions. Wait for UI conditions or browser events rather than fixed sleeps; register new-tab listeners before triggering navigation.
+- Exercise the real Pantheon services involved in the described integration and assert the final user-visible outcome. Keep smoke checks separate from cases proving persisted data, permissions, scoring, or cross-service behavior.
+- Create or seed required data independently of other tests. Give each attempt unique mutable data, including retries, and document cleanup or retention. Browser isolation does not isolate shared databases or mailboxes. Match email to the case's recipient; while using the current unfiltered `getLastMail()` helper, prevent competing email-producing tests from running concurrently.
+- Preserve the failure-screenshot helper and configured reporting. Validate implementation changes through root `make fenrir_oxlint fenrir_oxfmt fenrir_typecheck`, inspect `tmp/fenrir_*.log`, and run affected flows with `make e2e_dev` against the development stack. This development flow does not validate SSR; use the root README's production-build e2e flow when SSR is part of the case.
+
 ## Validation and workflow
 
 - Run lint, format, and type checks through the **root Makefile** against the development containers: `make <service>_oxlint <service>_oxfmt <service>_typecheck` from the repository root, using lowercase service names (for example, `make forseti_oxlint forseti_oxfmt forseti_typecheck`). For broad changes, run `make lint`. The root recipes redirect output to `tmp/<service>_*.log`; inspect those logs and do not rely on the terminal exit status alone, because a missing container can be reported without failing its wrapper target. Do not substitute `make -C <Service> ...` host checks for these container checks.
