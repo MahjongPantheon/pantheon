@@ -477,6 +477,7 @@ export class PointsCalc {
     playerIds: number[] // ordered by e-s-w-n
   ): Record<number, RiichiBetAssignment> {
     const winners: Record<number, number[]> = {};
+    const remainingRiichiIds = [...riichiIds];
 
     // initialize the list
     for (const playerId of playerIds) {
@@ -487,9 +488,9 @@ export class PointsCalc {
 
     // fill with own bets
     for (const winnerId of winnerIds) {
-      if (riichiIds.includes(winnerId)) {
+      if (remainingRiichiIds.includes(winnerId)) {
         winners[winnerId].push(winnerId); // winner always gets back his bet
-        riichiIds.splice(riichiIds.indexOf(winnerId), 1);
+        remainingRiichiIds.splice(remainingRiichiIds.indexOf(winnerId), 1);
       }
     }
 
@@ -515,7 +516,7 @@ export class PointsCalc {
       throw new Error('No closest winner was found when calculation riichi bets assignment');
     }
 
-    winners[closestWinner] = [...(winners[closestWinner] || []), ...riichiIds];
+    winners[closestWinner] = [...(winners[closestWinner] || []), ...remainingRiichiIds];
 
     // assign riichi counts, add riichi on table for first (closest) winner
     const result: Record<number, RiichiBetAssignment> = {};
