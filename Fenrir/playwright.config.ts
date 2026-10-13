@@ -10,6 +10,8 @@ if (process.env.RUN_IN_DOCKER) {
 } else {
   dotenv.config({ path: '/env/.env.development' });
 }
+// Optional local credentials; exported environment variables take precedence.
+dotenv.config({ path: '.env.e2e.local' });
 
 /**
  * Read environment variables from file.

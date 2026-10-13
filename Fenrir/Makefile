@@ -75,7 +75,6 @@ autofix:
 	./node_modules/.bin/oxlint . --fix
 	./node_modules/.bin/oxfmt
 run:
-	env | sort
 	CI=true ./node_modules/.bin/playwright test
 
 .PHONY: container_run

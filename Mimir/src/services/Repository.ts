@@ -28,7 +28,8 @@ export class Repository {
   // objects shared between different forks to save a little memory
   protected static _config?: ConfigService; // mimir service configuration
   protected static _cache?: CacheService;
-  protected static _frey?: FreyService;
+  // Frey calls carry this request's identity and must not be shared between forks.
+  protected _frey?: FreyService;
   protected static _log?: LogService;
   protected static _skirnir?: ISkirnirService;
 
@@ -64,8 +65,8 @@ export class Repository {
   }
 
   get frey(): FreyService {
-    Repository._frey ??= new FreyService(Repository.config, this.meta);
-    return Repository._frey;
+    this._frey ??= new FreyService(Repository.config, this.meta);
+    return this._frey;
   }
 
   get meta(): MetaService {
@@ -79,7 +80,7 @@ export class Repository {
 
   // For testing purposes
   mockFrey() {
-    Repository._frey = new FreyServiceMock(Repository.config, this.meta);
+    this._frey = new FreyServiceMock(Repository.config, this.meta);
   }
 
   mockCache() {

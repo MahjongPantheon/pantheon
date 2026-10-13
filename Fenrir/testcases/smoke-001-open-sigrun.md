@@ -19,9 +19,9 @@ None.
 
 ## Steps and expected results
 
-| Step | Action | Expected result |
-| --- | --- | --- |
-| 1 | Open `SIGRUN_URL`. | The browser title contains “Sigrun”. |
+| Step | Action             | Expected result                      |
+| ---- | ------------------ | ------------------------------------ |
+| 1    | Open `SIGRUN_URL`. | The browser title contains “Sigrun”. |
 
 ## Cleanup and isolation
 

@@ -19,10 +19,10 @@ None.
 
 ## Steps and expected results
 
-| Step | Action | Expected result |
-| --- | --- | --- |
-| 1 | Open `TYR_URL` and click `tyr-login-signup`, with the new-page listener registered before the click. | A new browser tab opens. |
-| 2 | Inspect the new tab. | The heading “Register new account” is visible. |
+| Step | Action                                                                                               | Expected result                                |
+| ---- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| 1    | Open `TYR_URL` and click `tyr-login-signup`, with the new-page listener registered before the click. | A new browser tab opens.                       |
+| 2    | Inspect the new tab.                                                                                 | The heading “Register new account” is visible. |
 
 ## Cleanup and isolation
 

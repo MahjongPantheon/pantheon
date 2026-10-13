@@ -19,9 +19,9 @@ None.
 
 ## Steps and expected results
 
-| Step | Action | Expected result |
-| --- | --- | --- |
-| 1 | Open `FORSETI_URL`. | The browser title contains “Forseti”. |
+| Step | Action              | Expected result                       |
+| ---- | ------------------- | ------------------------------------- |
+| 1    | Open `FORSETI_URL`. | The browser title contains “Forseti”. |
 
 ## Cleanup and isolation
 

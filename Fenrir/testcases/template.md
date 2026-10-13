@@ -16,16 +16,16 @@ Identify the entry UI and services involved.
 
 ## Test data
 
-| Input | Value or generation rule |
-| --- | --- |
+| Input   | Value or generation rule                                   |
+| ------- | ---------------------------------------------------------- |
 | <Input> | <Exact value; specify uniqueness per attempt where needed> |
 
 ## Steps and expected results
 
-| Step | Action | Expected result |
-| --- | --- | --- |
-| 1 | <User action> | <Specific observable result to assert> |
-| 2 | <User action> | <Specific observable result to assert> |
+| Step | Action        | Expected result                        |
+| ---- | ------------- | -------------------------------------- |
+| 1    | <User action> | <Specific observable result to assert> |
+| 2    | <User action> | <Specific observable result to assert> |
 
 ## Cleanup and isolation
 

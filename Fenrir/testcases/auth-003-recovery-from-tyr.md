@@ -19,10 +19,10 @@ None.
 
 ## Steps and expected results
 
-| Step | Action | Expected result |
-| --- | --- | --- |
-| 1 | Open `TYR_URL` and click `tyr-login-recovery`, registering the new-page listener before the click. | A new browser tab opens. |
-| 2 | Inspect the new tab. | Text matching “Recover password” is visible. |
+| Step | Action                                                                                             | Expected result                              |
+| ---- | -------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| 1    | Open `TYR_URL` and click `tyr-login-recovery`, registering the new-page listener before the click. | A new browser tab opens.                     |
+| 2    | Inspect the new tab.                                                                               | Text matching “Recover password” is visible. |
 
 ## Cleanup and isolation
 

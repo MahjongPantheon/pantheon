@@ -19,9 +19,9 @@ None.
 
 ## Steps and expected results
 
-| Step | Action | Expected result |
-| --- | --- | --- |
-| 1 | Open `TYR_URL`. | The browser title contains “Tyr”. |
+| Step | Action          | Expected result                   |
+| ---- | --------------- | --------------------------------- |
+| 1    | Open `TYR_URL`. | The browser title contains “Tyr”. |
 
 ## Cleanup and isolation
 
